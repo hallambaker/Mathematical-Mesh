@@ -20,6 +20,25 @@
 global using Goedel.Utilities;
 global using Goedel.Protocol.Service;
 
+global using Goedel.Cryptography;
+global using Goedel.Cryptography.Dare;
+global using Goedel.Cryptography.Jose;
+global using Goedel.IO;
+global using Goedel.Mesh;
+global using Goedel.Mesh.Client;
+global using Goedel.Protocol;
+global using Goedel.Callsign;
+global using Goedel.Protocol.Presentation;
+global using Goedel.Protocol.Service;
+global using Goedel.Utilities;
+global using Goedel.Protocol.GenericHost;
+
+
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Hosting;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.Extensions.Options;
+
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 
 namespace Goedel.CallSign.Registrar; 

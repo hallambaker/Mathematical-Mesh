@@ -19,5 +19,19 @@ public class CallsignResolverConfiguration : ServiceConfiguration {
     ///<summary>The sevice address of the registry to resolve.</summary> 
     public string Registry { get; set; }
 
+    public string Resolver { get; set; }
+    public static CallsignResolverConfiguration Create(
+                IMeshMachineClient meshMachine,
+                GenericHostConfiguration GenericHostConfiguration,
+                string registry,
+                string resolver) {
 
+        return new CallsignResolverConfiguration() {
+            Registry = registry,
+            Resolver = resolver,
+            HostPath = meshMachine.GetServiceDirectory(MeshConstants.DirectoryResolver),
+            //ServiceDNS = new List<string> { serviceDns },
+            ServicePath = meshMachine.GetServiceDirectory(MeshConstants.DirectoryResolver),
+            };
+        }
     }

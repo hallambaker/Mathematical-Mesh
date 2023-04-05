@@ -53,6 +53,9 @@ public abstract class TestEnvironmentBase : UnitTestSet {
 
     public List<TestCLI> testCLIs = new();
 
+    public Enveloped<ProfileAccount> EnvelopedProfileRegistry { get; set; }
+
+
     public virtual PublicCallsignResolver Resolver => callsignResolver ??
              GetCallsignResolver().CacheValue(out callsignResolver);
     PublicCallsignResolver callsignResolver;

@@ -62,6 +62,20 @@ partial class Program {
 
         /* Minor */
 
+        ShellTestsAdmin.Test().NewFileTestAll();
+
+
+        ShellTestsAdmin.Test().NewArchiveTestOnce(true, true, false, false);
+
+
+
+        //ShellTestsAdmin.Test().TestHello();
+        ShellTestsAdmin.Test().TestParseFile(true, true);
+
+
+        //ShellTestsAdmin.Test().TestHello();
+        //TestService.Test().ProtocolHello();
+
         //TestService.Test().MeshServiceFull();
         //TestService.Test().MeshCatalogGroup();
         //TestService.Test().MeshMessageConfirm();
@@ -120,8 +134,8 @@ partial class Program {
         //TestDareArchive.Test().ArchiveRelativeDirectory();
         //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
-        ShellTests.Test().NewArchiveTestOnce(true, false, false, false);
-        ShellTests.Test().NewArchiveTestOnce(true, true, false, false);
+        //ShellTests.Test().NewArchiveTestOnce(true, false, false, false);
+        //ShellTests.Test().NewArchiveTestOnce(true, true, false, false);
 
         /* Callsigns */
 

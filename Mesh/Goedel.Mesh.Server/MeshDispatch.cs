@@ -146,7 +146,7 @@ public class PublicMeshService : MeshService {
             meshServiceConfiguration.ServiceUdf, GenericHostConfiguration.HostUdf);
 
         // Load the Mesh persistence base
-        var path = MeshHostConfiguration.HostPath ?? meshMachine.DirectoryMesh;
+        var path = MeshHostConfiguration.HostPath ?? meshMachine.DirectoryAccounts;
         MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate, Logger, PresenceService);
 
 
@@ -236,6 +236,35 @@ public class PublicMeshService : MeshService {
         //localLog.Readers = new List<string> { adminSin };
         return contextUser;
         }
+
+
+    /// <summary>
+    /// Add administrator account <paramref name="admin"/> to the service.
+    /// </summary>
+    /// <param name="meshMachine">The mesh machine context.</param>
+    /// <param name="admin">The administration account to create.</param>
+    /// <param name="serviceConfiguration">The service configuration.</param>
+    /// <param name="dareLogger">Logger configuration.</param>
+    /// <returns></returns>
+    public virtual ContextUser AddAdministratorDirect(
+                IMeshMachineClient meshMachine,
+                string admin,
+                MeshServiceConfiguration serviceConfiguration,
+                DareLoggerConfiguration dareLogger) {
+        serviceConfiguration.Administrators.Add(admin);
+        dareLogger.Recipients.Add(admin);
+        // bind to the service instance directly
+        //using var directMachine = new MeshMachineDirect(meshMachine, this);
+        using var meshHost = new MeshHost(meshMachine.MeshHost, meshMachine);
+        var contextUser = meshHost.ConfigureMesh(admin, "admin");
+        var udf = contextUser.ProfileUser.UdfString;
+
+        // Set the log files to encrypt to the newly created admin account.
+        var adminSin = $"{admin}.mm-{udf}";
+        //localLog.Readers = new List<string> { adminSin };
+        return contextUser;
+        }
+
 
 
 

@@ -40,21 +40,21 @@ namespace Goedel.Callsign.Resolver;
 
 
 
-public class PublicCallsignResolver : CallsignResolver, IDisposable{
+public class PublicCallsignResolver : ResolverService, IDisposable{
 
 
 
 
     public ResolverServiceClient GetClient() =>
             new ResolverServiceDirect() {
-                Service = PublicResolverService
+                Service = this
                 };
 
 
     #region // Properties
 
-    ///<summary>The resolver service.</summary> 
-    public PublicResolverService PublicResolverService { get; }
+    /////<summary>The resolver service.</summary> 
+    //public PublicCallsignResolver PublicResolverService { get; }
 
     ///<summary>The Mesh Machine base</summary> 
     public IMeshMachine MeshMachine { get; init; }
@@ -87,6 +87,11 @@ public class PublicCallsignResolver : CallsignResolver, IDisposable{
     MeshServiceClient MeshClient { get;}
 
     LogService LogService { get; }
+
+
+
+    ///<summary>The service endpoints</summary> 
+    public List<Endpoint> Endpoints { get; } = new();
     #endregion
 
 
@@ -135,10 +140,10 @@ public class PublicCallsignResolver : CallsignResolver, IDisposable{
     #region // Constructors
 
     public PublicCallsignResolver(
-        IMeshMachine meshMachine,
-        GenericHostConfiguration hostConfiguration,
-        CallsignResolverConfiguration resolverServiceConfiguration,
-        LogService logService) {
+            IMeshMachine meshMachine,
+            GenericHostConfiguration hostConfiguration,
+            CallsignResolverConfiguration resolverServiceConfiguration,
+            LogService logService) {
 
         // load up the persistence store here.
 
@@ -147,7 +152,6 @@ public class PublicCallsignResolver : CallsignResolver, IDisposable{
         MeshMachine = meshMachine;
         LogService = logService;
         KeyCollection = meshMachine.KeyCollection;
-
 
 
         var meshHost = MeshHost.GetCatalogHost(MeshMachine);
@@ -173,14 +177,18 @@ public class PublicCallsignResolver : CallsignResolver, IDisposable{
         MeshClient = meshMachine.GetMeshClient(keyCredential, Registry);
 
         var directory = resolverServiceConfiguration.HostPath;
+
+        InitializeRepository(meshMachine, ActivationDevice.AccountAuthentication, resolverServiceConfiguration.Registry,
+            directory, CatalogRegistration.Label);
+        InitializeRepository(meshMachine, ActivationDevice.AccountAuthentication, resolverServiceConfiguration.Registry,
+                directory, CatalogNotary.Label);
+
         CatalogRegistration = new CatalogRegistration(directory);
         CatalogNotary = new CatalogNotary(directory);
 
-        SyncToRegistry();
+        ////Finally, create the actual resolver service
 
-        //Finally, create the actual resolver service
-
-        PublicResolverService = new PublicResolverService(this);
+        //PublicResolverService = new PublicResolverService(this);
 
         }
 
@@ -188,6 +196,7 @@ public class PublicCallsignResolver : CallsignResolver, IDisposable{
 
     public static PublicCallsignResolver Create(
         IMeshMachineClient meshMachine,
+        Enveloped<ProfileAccount> envelopedProfileRegistry,
         GenericHostConfiguration hostConfiguration,
         CallsignResolverConfiguration resolverServiceConfiguration,
         LogService logService) {
@@ -197,7 +206,7 @@ public class PublicCallsignResolver : CallsignResolver, IDisposable{
         ActivationHost activationDevice;
         ConnectionService connectionDevice;
 
-        ProfileService.CreateService(meshMachine,
+        ProfileResolver.CreateService(meshMachine, envelopedProfileRegistry,
             out profileService, out profileHost, out activationDevice, out connectionDevice);
 
         var catalogedService = new CatalogedService() {
@@ -216,11 +225,11 @@ public class PublicCallsignResolver : CallsignResolver, IDisposable{
 
         // Check for persistence store files and create blank if they do not exist.
 
-        var directory = resolverServiceConfiguration.HostPath;
-        InitializeRepository(meshMachine, activationDevice.AccountAuthentication, resolverServiceConfiguration.Registry,
-                directory, CatalogRegistration.Label);
-        InitializeRepository(meshMachine, activationDevice.AccountAuthentication, resolverServiceConfiguration.Registry,
-                directory, CatalogNotary.Label);
+        var directory = resolverServiceConfiguration.HostPath ?? hostConfiguration.HostPath;
+        //InitializeRepository(meshMachine, activationDevice.AccountAuthentication, resolverServiceConfiguration.Registry,
+        //        directory, CatalogRegistration.Label);
+        //InitializeRepository(meshMachine, activationDevice.AccountAuthentication, resolverServiceConfiguration.Registry,
+        //        directory, CatalogNotary.Label);
 
         var result = new PublicCallsignResolver(
             meshMachine, hostConfiguration, resolverServiceConfiguration, logService) {
@@ -238,7 +247,7 @@ public class PublicCallsignResolver : CallsignResolver, IDisposable{
 
 
     static void InitializeRepository(
-                IMeshMachineClient meshMachine,
+                IMeshMachine meshMachine,
                 KeyPairAdvanced authenticationKey,
                 string registry,
                 string directory, 
@@ -322,53 +331,65 @@ public class PublicCallsignResolver : CallsignResolver, IDisposable{
 
         }
 
-    #endregion
-
-
-    }
-
-
-public class PublicResolverService : ResolverService {
-
-
-    public CatalogRegistration CatalogRegistration { get; }
-
-    PublicCallsignResolver PublicCallsignResolver { get; }
-
-
-    public PublicResolverService(
-                PublicCallsignResolver publicCallsignResolver) {
-        PublicCallsignResolver = publicCallsignResolver;
-        CatalogRegistration = publicCallsignResolver.CatalogRegistration;
-        }
-
-
-    #region // Override Methods
-
-    public override QueryResponse Query(
-        QueryRequest request, IJpcSession session) {
-
-        var callsign = request.CallSign;
-        callsign.AssertNotNull(NYI.Throw);
-
-
-        if (CatalogRegistration.TryGetValue(callsign, out var result)) {
-            var catalogedRegistration = result.JsonObject as CatalogedRegistration;
-            return new QueryResponse(catalogedRegistration.EnvelopedRegistration);
-
-            }
-        return new QueryResponse(null);
-
+    public override QueryResponse Query(QueryRequest request, IJpcSession session) {
+        throw new NotImplementedException();
         }
 
     public override SyncResponse Sync(SyncRequest request, IJpcSession session) {
-        PublicCallsignResolver.SyncToRegistry();
-        return new SyncResponse();
+        throw new NotImplementedException();
         }
 
-
     #endregion
+
+
     }
+
+
+//public class PublicResolverService : ResolverService {
+
+
+//    public CatalogRegistration CatalogRegistration { get; }
+
+//    PublicCallsignResolver PublicCallsignResolver { get; }
+
+
+//    ///<summary>The service endpoints</summary> 
+//    public List<Endpoint> Endpoints { get; } = new();
+
+//    public PublicResolverService(
+
+//                PublicCallsignResolver publicCallsignResolver) {
+//        PublicCallsignResolver = publicCallsignResolver;
+//        CatalogRegistration = publicCallsignResolver.CatalogRegistration;
+//        }
+
+
+//    #region // Override Methods
+
+//    public override QueryResponse Query(
+//        QueryRequest request, IJpcSession session) {
+
+//        var callsign = request.CallSign;
+//        callsign.AssertNotNull(NYI.Throw);
+
+
+//        if (CatalogRegistration.TryGetValue(callsign, out var result)) {
+//            var catalogedRegistration = result.JsonObject as CatalogedRegistration;
+//            return new QueryResponse(catalogedRegistration.EnvelopedRegistration);
+
+//            }
+//        return new QueryResponse(null);
+
+//        }
+
+//    public override SyncResponse Sync(SyncRequest request, IJpcSession session) {
+//        PublicCallsignResolver.SyncToRegistry();
+//        return new SyncResponse();
+//        }
+
+
+//    #endregion
+//    }
 
 
 

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 23-Mar-23 1:11:46 PM
+//  This file was automatically generated at 04-Apr-23 10:31:33 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -89,6 +89,7 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"ProfileUser", ProfileUser._Factory},
 	    {"ProfileGroup", ProfileGroup._Factory},
 	    {"ProfileService", ProfileService._Factory},
+	    {"ProfileMeshService", ProfileMeshService._Factory},
 	    {"ProfileHost", ProfileHost._Factory},
 	    {"Connection", Connection._Factory},
 	    {"CallsignBinding", CallsignBinding._Factory},
@@ -2035,6 +2036,98 @@ public partial class ProfileService : Profile {
 			return Out as ProfileService;
 			}
 		var Result = new ProfileService ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// Profile of a Mesh Service
+	/// </summary>
+public partial class ProfileMeshService : ProfileService {
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, ProfileService._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ProfileMeshService";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ProfileMeshService();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ProfileMeshService FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ProfileMeshService;
+			}
+		var Result = new ProfileMeshService ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

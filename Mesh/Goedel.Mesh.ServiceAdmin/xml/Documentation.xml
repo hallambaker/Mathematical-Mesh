@@ -12,22 +12,28 @@
         <member name="F:Goedel.Mesh.ServiceAdmin.Configuration.Dictionary">
             <summary>Maps configuration entry to configuration.</summary> 
         </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.GenericHostConfiguration">
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.DareLogger">
+            <summary>The logger service configuration.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.GenericHost">
             <summary>The host configuration.</summary> 
         </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.MeshServiceConfiguration">
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.MeshService">
             <summary>The Mesh service configuration.</summary> 
         </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.CallsignResolverConfiguration">
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.CallsignRegistry">
             <summary>The Mesh service configuration.</summary> 
         </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.CarnetServiceConfiguration">
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.CallsignResolver">
             <summary>The Mesh service configuration.</summary> 
         </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.PersistanceServiceConfiguration">
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.CarnetService">
             <summary>The Mesh service configuration.</summary> 
         </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.PresenceServiceConfiguration">
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.RepositoryService">
+            <summary>The Mesh service configuration.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.PresenceService">
             <summary>The Mesh service configuration.</summary> 
         </member>
         <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.#ctor">
@@ -53,12 +59,12 @@
             <param name="configurationEntry">The configuration description.</param>
             <returns>The parsed configuration.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.Add(Goedel.Utilities.ConfigurationEntry,System.Object)">
+        <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.Add(Goedel.Utilities.IConfigurationEntry)">
             <summary>
             Add a configuration entry to the configuration.
             </summary>
-            <param name="configurationEntry">Configuration entry description.</param>
             <param name="entry">The entry.</param>
+            
         </member>
         <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.ToFile(System.String)">
             <summary>
@@ -251,7 +257,7 @@
             Static class containing convenience extensions.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.Extensions.CreatePublicMeshService(Goedel.Mesh.Client.IMeshMachineClient,System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:Goedel.Mesh.ServiceAdmin.Extensions.CreatePublicMeshService(Goedel.Mesh.Client.IMeshMachineClient,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Create a new Mesh Service
             </summary>

@@ -240,10 +240,13 @@
         <member name="M:Goedel.Mesh.Shell.Shell.CallsignBind(Goedel.Mesh.Shell.CallsignBind)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.CallsignResolve(Goedel.Mesh.Shell.CallsignResolve)">
+        <member name="M:Goedel.Mesh.Shell.Shell.CallsignTransfer(Goedel.Mesh.Shell.CallsignTransfer)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.CallsignTransfer(Goedel.Mesh.Shell.CallsignTransfer)">
+        <member name="M:Goedel.Mesh.Shell.Shell.CallsignStatus(Goedel.Mesh.Shell.CallsignStatus)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.CallsignResolve(Goedel.Mesh.Shell.CallsignResolve)">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.CallsignList(Goedel.Mesh.Shell.CallsignList)">
@@ -4952,10 +4955,10 @@
         <member name="P:Goedel.Mesh.Shell._CallsignResolve.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignTransfer.Recipient">
+        <member name="P:Goedel.Mesh.Shell._CallsignTransfer.Identifier">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignTransfer.Identifier">
+        <member name="P:Goedel.Mesh.Shell._CallsignTransfer.Recipient">
             <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._CallsignTransfer.AccountAddress">
@@ -4979,6 +4982,9 @@
         <member name="P:Goedel.Mesh.Shell._CallsignTransfer.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignStatus.Identifier">
+            <summary>Field accessor for parameter []</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._CallsignStatus.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
@@ -4998,27 +5004,6 @@
             <summary>Field accessor for option [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._CallsignStatus.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignGet.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignGet.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignGet.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignGet.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignGet.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignGet.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignGet.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._CallsignList.AccountAddress">
@@ -8190,6 +8175,120 @@
         </member>
         <member name="M:Goedel.Mesh.Shell.ResultApplicationList.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ResultCallsign">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsign.CallsignBinding">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsign.Status">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsign.Message">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultCallsign.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultCallsign.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ResultCallsign._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ResultCallsign._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsign._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsign._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsign._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsign._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ResultCallsign.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultCallsign._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultCallsign.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ResultCallsignList">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsignList.CallsignBindings">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultCallsignList.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultCallsignList.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ResultCallsignList._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ResultCallsignList._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsignList._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsignList._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsignList._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsignList._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ResultCallsignList.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultCallsignList._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultCallsignList.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Mesh.NamespaceDoc">
             <summary>

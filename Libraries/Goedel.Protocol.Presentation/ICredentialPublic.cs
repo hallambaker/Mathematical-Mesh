@@ -131,5 +131,8 @@ public interface ICredentialPrivate : ICredentialPublic {
     (KeyPairAdvanced, KeyPairAdvanced) SelectKey(
             string keyId, byte[] ephemeral);
 
+
+
+    public ICredentialPublic GetICredentialPublic();
     #endregion
     }

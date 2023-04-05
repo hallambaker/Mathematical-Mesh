@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 23-Mar-23 1:11:52 PM
+//  This file was automatically generated at 04-Apr-23 3:49:46 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -215,54 +215,19 @@ public partial class ProfileRegistry : ProfileAccount {
 	/// </summary>
 public partial class ProfileResolver : ProfileService {
         /// <summary>
-        ///The address of the registry
-        /// </summary>
-
-	public virtual string						RegistryAddress  {get; set;}
-        /// <summary>
         ///The registry that this resolver resolves.
         /// </summary>
 
 	public virtual Enveloped<ProfileAccount>						EnvelopedProfileRegistry  {get; set;}
-        /// <summary>
-        ///Key currently used to encrypt data under this profile
-        /// </summary>
-
-	public virtual KeyData						CommonEncryption  {get; set;}
-        /// <summary>
-        ///Key used to authenticate requests made under this user account.
-        ///This key SHOULD NOT be provisioned to any device except for the
-        ///purpose of enabling account recovery.
-        /// </summary>
-
-	public virtual KeyData						CommonAuthentication  {get; set;}
 
 
     ///<inheritdoc/>
 	public override void Setter(
 			string tag, TokenValue value) { 
 		switch (tag) {
-			case "RegistryAddress" : {
-				if (value is TokenValueString vvalue) {
-					RegistryAddress = vvalue.Value;
-					}
-				break;
-				}
 			case "EnvelopedProfileRegistry" : {
 				if (value is TokenValueStructObject vvalue) {
 					EnvelopedProfileRegistry = vvalue.Value as Enveloped<ProfileAccount>;
-					}
-				break;
-				}
-			case "CommonEncryption" : {
-				if (value is TokenValueStructObject vvalue) {
-					CommonEncryption = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "CommonAuthentication" : {
-				if (value is TokenValueStructObject vvalue) {
-					CommonAuthentication = vvalue.Value as KeyData;
 					}
 				break;
 				}
@@ -278,17 +243,8 @@ public partial class ProfileResolver : ProfileService {
     public override TokenValue Getter(
             string tag) {
         switch (tag) {
-			case "RegistryAddress" : {
-				return new TokenValueString (RegistryAddress);
-				}
 			case "EnvelopedProfileRegistry" : {
 				return new TokenValueStruct<Enveloped<ProfileAccount>> (EnvelopedProfileRegistry);
-				}
-			case "CommonEncryption" : {
-				return new TokenValueStruct<KeyData> (CommonEncryption);
-				}
-			case "CommonAuthentication" : {
-				return new TokenValueStruct<KeyData> (CommonAuthentication);
 				}
 
             default: {
@@ -301,13 +257,8 @@ public partial class ProfileResolver : ProfileService {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "RegistryAddress", new Property (typeof(TokenValueString), false)} ,
 			{ "EnvelopedProfileRegistry", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>(), false)} ,
-			{ "CommonEncryption", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "CommonAuthentication", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} 
+					()=>new Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>(), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

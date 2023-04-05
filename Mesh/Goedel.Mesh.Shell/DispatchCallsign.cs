@@ -20,9 +20,16 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Callsign;
+using Goedel.Cryptography.Jose;
+using System.Runtime.CompilerServices;
+
 namespace Goedel.Mesh.Shell;
 
 public partial class Shell {
+
+
+
 
     ///<inheritdoc/>
     public override ShellResult CallsignRegister(CallsignRegister options) {
@@ -31,7 +38,7 @@ public partial class Shell {
         var contextAccount = GetContextUser(options);
         var message = contextAccount.CallsignRequest(callsign, null);
 
-        var result = new ResultSent() {
+        var result = new ResultCallsign() {
             Success = true,
             Message = message
             };
@@ -45,30 +52,69 @@ public partial class Shell {
         var contextAccount = GetContextUser(options);
         var message = contextAccount.CallsignRequest(callsign, bind: true, transfer: null);
 
-        var result = new ResultSent() {
+        var result = new ResultCallsign() {
             Success = true,
             Message = message
             };
         return result;
         }
 
+    ///<inheritdoc/>
+    public override ShellResult CallsignTransfer(CallsignTransfer options) {
+        var callsign = options.Identifier.Value;
+        var recipient = options.Recipient.Value;
+        var contextAccount = GetContextUser(options);
+
+        var message = contextAccount.CallsignTransfer(callsign, recipient);
+
+        var result = new ResultCallsign() {
+            Success = true,
+            CallsignBinding = message
+            };
+        return result;
+        }
+
+
+    ///<inheritdoc/>
+    public override ShellResult CallsignStatus(CallsignStatus options) {
+        var callsign = options.Identifier.Value;
+        var contextAccount = GetContextUser(options);
+
+        var (callsignBinding, status) = contextAccount.CallsignRequestStatus(callsign);
+
+        var result = new ResultCallsign() {
+            Success = true,
+            Status = status,
+            CallsignBinding = callsignBinding
+            };
+        return result;
+        }
 
     ///<inheritdoc/>
     public override ShellResult CallsignResolve(CallsignResolve options) {
+        var callsign = options.Identifier.Value;
+        var contextAccount = GetContextUser(options);
 
-        throw new NYI();
+        var callsignBinding = contextAccount.ResolveCallsign(callsign);
+        var result = new ResultCallsign() {
+            Success = true,
+            CallsignBinding = callsignBinding
+            };
+        return result;
         }
 
-    ///<inheritdoc/>
-    public override ShellResult CallsignTransfer(CallsignTransfer options) {
 
-        throw new NYI();
-        }
 
     ///<inheritdoc/>
     public override ShellResult CallsignList(CallsignList options) {
+        var contextAccount = GetContextUser(options);
+        var callsignBindings = new List<CallsignBinding>();
 
-        throw new NYI();
+        var result = new ResultCallsignList() {
+            Success = true,
+            CallsignBindings = callsignBindings
+            };
+        return result;
         }
 
 

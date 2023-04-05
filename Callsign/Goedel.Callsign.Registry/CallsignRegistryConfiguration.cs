@@ -1,44 +1,36 @@
-﻿//namespace Goedel.Callsign.Registry;
+﻿namespace Goedel.Callsign.Registry;
 
-///// <summary>
-///// The Mesh service configuration.
-///// </summary>
-//public class CallsignRegistryConfiguration : ServiceConfiguration {
+/// <summary>
+/// The Mesh service configuration.
+/// </summary>
+public class CallsignRegistryConfiguration  : IConfigurationEntry {
 
-//    ///<summary>The configuration entry.</summary> 
-//    public static readonly ConfigurationEntry ConfigurationEntry =
-//        new("CallsignRegistry", typeof(CallsignRegistryConfiguration),
-//            RegistryService.Discovery, RegistryService.WellKnown);
+    ///<summary>The configuration entry.</summary> 
+    public static readonly ConfigurationEntry ConfigurationEntry =
+        new("CallsignRegistry", typeof(CallsignRegistryConfiguration),
+            null, null);
+    ///<inheritdoc/>
+    public ConfigurationEntry GetConfigurationEntry() => ConfigurationEntry;
+    public string RegistryAccount { get; set; }
 
-//    ///<inheritdoc/>
-//    public override ConfigurationEntry GetConfigurationEntry() => ConfigurationEntry;
-
-
-//    ///<summary>The signature schedule</summary> 
-//    public string SignatureSchedule { get; set; } = "1h";
-
-//    ///<summary>Cross certifiers.</summary> 
-//    public List<CrossCertifier> CrossCertifiers { get; set; } = new();
+    ///<summary>The signature schedule</summary> 
+    public string SignatureSchedule { get; set; } = "1h";
 
 
-//    ///<summary>Service addresses of resolver services to which the callsign data is to be
-//    ///immediately published via a push notification.</summary> 
-//    public List<string> Publish { get; set; } = new();
+    /// <summary>
+    /// Create a new instance and return the corresponding configuration file.
+    /// </summary>
+    /// <param name="GenericHostConfiguration">Generic service configuration.</param>
+    /// <param name="service">The service endpoing.</param>
+    /// <returns>The configuration setting,</returns>
+    public static CallsignRegistryConfiguration Create(
+                IMeshMachineClient meshMachine,
+                string accountAddress) {
 
+        return new CallsignRegistryConfiguration() {
+            RegistryAccount = accountAddress
+            };
+        }
 
-//    }
+    }
 
-
-///// <summary>
-///// Cross certification entry.
-///// </summary>
-//public class CrossCertifier {
-
-//    ///<summary>The cross certification frequency (defaults to value specified in enclosing 
-//    ///<see cref="CallsignRegistryConfiguration.SignatureSchedule"/></summary>.
-//    public string Frequency { get; set; } = "1h";
-
-
-//    ///<summary>Party to which the signature request is directed.</summary> 
-//    public string Signer { get; set; }
-//    }

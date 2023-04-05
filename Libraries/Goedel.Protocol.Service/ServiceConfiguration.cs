@@ -26,11 +26,12 @@ namespace Goedel.Protocol.Service;
 /// <summary>
 /// Base class for service configurations.
 /// </summary>
-public abstract class ServiceConfiguration {
+public abstract class ServiceConfiguration : IConfigurationEntry {
 
      
     ///<summary>Returns the configuration entry.</summary> 
     public abstract ConfigurationEntry GetConfigurationEntry();
+
 
     ///<summary>The default</summary>
     public GenericHostConfiguration DefaultHostConfiguration { get; set; }

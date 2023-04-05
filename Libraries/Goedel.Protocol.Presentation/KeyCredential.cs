@@ -127,6 +127,8 @@ public class KeyCredentialPrivate : KeyCredentialPublic, ICredentialPrivate {
     #endregion
     #region // Implement Interface: ICredentialPrivate
 
+    public virtual ICredentialPublic GetICredentialPublic() => GetKeyCredentialPublic();
+
     ///<inheritdoc/>
     public KeyCredentialPublic GetKeyCredentialPublic() =>
                 new(

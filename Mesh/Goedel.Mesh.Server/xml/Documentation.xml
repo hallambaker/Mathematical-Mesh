@@ -1253,6 +1253,16 @@
             <param name="dareLogger">Logger configuration.</param>
             <returns></returns>
         </member>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.AddAdministratorDirect(Goedel.Mesh.Client.IMeshMachineClient,System.String,Goedel.Mesh.Server.MeshServiceConfiguration,Goedel.Protocol.GenericHost.DareLoggerConfiguration)">
+            <summary>
+            Add administrator account <paramref name="admin"/> to the service.
+            </summary>
+            <param name="meshMachine">The mesh machine context.</param>
+            <param name="admin">The administration account to create.</param>
+            <param name="serviceConfiguration">The service configuration.</param>
+            <param name="dareLogger">Logger configuration.</param>
+            <returns></returns>
+        </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.Client.IMeshMachineClient,Goedel.Mesh.Server.MeshServiceConfiguration,Goedel.Protocol.GenericHostConfiguration,System.String)">
             <summary>
             Create new service and host configurations and attach the service to the host.
@@ -1543,11 +1553,32 @@
             The Mesh service configuration.
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Server.MeshServiceConfiguration.ProfileRegistryCallsign">
+            <summary>
+            File in which the callsign registry profile is recorded.
+            </summary>
+        </member>
         <member name="F:Goedel.Mesh.Server.MeshServiceConfiguration.ConfigurationEntry">
             <summary>The configuration entry.</summary> 
         </member>
         <member name="M:Goedel.Mesh.Server.MeshServiceConfiguration.GetConfigurationEntry">
             <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshServiceConfiguration.Create(Goedel.Mesh.Client.IMeshMachineClient,Goedel.Protocol.GenericHostConfiguration,System.String)">
+            <summary>
+            Create a new instance and return the corresponding configuration file.
+            </summary>
+            <param name="GenericHostConfiguration">Generic service configuration.</param>
+            <param name="service">The service endpoing.</param>
+            <returns>The configuration setting,</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshServiceConfiguration.AddProfileRegistryCallsign(Goedel.Mesh.ProfileAccount,System.String)">
+            <summary>
+            Save the callsign registry profile <paramref name="profileAccount"/> to a file and record the file
+            location in <paramref name="filename"/>.
+            </summary>
+            <param name="profileAccount">The callsign registry profile.</param>
+            <param name="filename">The file to save the profile to.</param>
         </member>
         <member name="T:Goedel.Mesh.Server.NamespaceDoc">
             <summary>

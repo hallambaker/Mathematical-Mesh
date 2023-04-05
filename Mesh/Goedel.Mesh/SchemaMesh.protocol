@@ -252,6 +252,13 @@
 			Description
 				|Key used to sign data under the account.
 
+	Structure ProfileMeshService
+		Inherits ProfileService
+		Description 
+			|Profile of a Mesh Service
+
+
+
 	Structure ProfileHost
 		Inherits ProfileDevice
 		Description 

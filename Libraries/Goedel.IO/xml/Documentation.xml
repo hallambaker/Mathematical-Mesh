@@ -152,6 +152,14 @@
             <param name="filename">The new file name.</param>
             <returns>File stream to write to the file.</returns>
         </member>
+        <member name="M:Goedel.IO.Extension.OpenFileNewRW(System.String)">
+            <summary>
+            Create a new file for exclusive write access, overwriting 
+            any existing file.
+            </summary>
+            <param name="filename">The new file name.</param>
+            <returns>File stream to write to the file.</returns>
+        </member>
         <member name="M:Goedel.IO.Extension.OpenFileWrite(System.String)">
             <summary>
             Open an existing file for exclusive write access, or create new file.

@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 23-Mar-23 1:11:45 PM
+//  This file was automatically generated at 04-Apr-23 10:31:33 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -759,6 +759,22 @@ public static partial class MeshConstants {
     ///To be requested IANA service name for Mesh presence service
     ///</summary>
     public const string MeshPresenceService = "mmm_presence";
+
+    ///<summary>
+    ///</summary>
+    public const string DirectoryKeys = "Keys";
+
+    ///<summary>
+    ///</summary>
+    public const string DirectoryProfiles = "Profiles";
+
+    ///<summary>
+    ///</summary>
+    public const string DirectoryAccounts = "Accounts";
+
+    ///<summary>
+    ///</summary>
+    public const string DirectoryResolver = "Resolver";
 
     }
 

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using Microsoft.Extensions.Configuration;
-using Goedel.Protocol.Service;
+﻿
+
+
+
+using Goedel.Repository;
 
 namespace Goedel.Mesh.ServiceAdmin;
 
@@ -18,27 +14,28 @@ public class Configuration : Disposable {
     ///<summary>Maps configuration entry to configuration.</summary> 
     public Dictionary<string, object> Dictionary = new();
 
-
+    ///<summary>The logger service configuration.</summary> 
+    public DareLoggerConfiguration DareLogger { get;  set; }
 
     ///<summary>The host configuration.</summary> 
-    public GenericHostConfiguration GenericHostConfiguration { get; set; }
+    public GenericHostConfiguration GenericHost { get;  set; }
 
     ///<summary>The Mesh service configuration.</summary> 
-    public MeshServiceConfiguration MeshServiceConfiguration { get; set; }
+    public MeshServiceConfiguration MeshService { get;  set; }
 
     ///<summary>The Mesh service configuration.</summary> 
-    //public CallsignRegistryConfiguration CallsignRegistryConfiguration { get; set; }
+    public CallsignRegistryConfiguration CallsignRegistry { get;  set; }
 
     ///<summary>The Mesh service configuration.</summary> 
-    public CallsignResolverConfiguration CallsignResolverConfiguration { get; set; }
+    public CallsignResolverConfiguration CallsignResolver { get;  set; }
 
     ///<summary>The Mesh service configuration.</summary> 
-    public CarnetServiceConfiguration CarnetServiceConfiguration { get; set; }
+    public CarnetServiceConfiguration CarnetService { get;  set; }
     ///<summary>The Mesh service configuration.</summary> 
-    public RepositoryServiceConfiguration PersistanceServiceConfiguration { get; set; }
+    public RepositoryServiceConfiguration RepositoryService { get;  set; }
 
     ///<summary>The Mesh service configuration.</summary> 
-    public PresenceServiceConfiguration PresenceServiceConfiguration { get; set; }
+    public PresenceServiceConfiguration PresenceService { get;  set; }
 
 
     JsonDocument JsonDocument { get;  init; }
@@ -69,8 +66,15 @@ public class Configuration : Disposable {
             JsonDocument = dom
             };
 
-        result.MeshServiceConfiguration = result.Get<MeshServiceConfiguration>(MeshServiceConfiguration.ConfigurationEntry);
-        result.GenericHostConfiguration = result.Get<GenericHostConfiguration>(GenericHostConfiguration.ConfigurationEntry);
+        result.DareLogger = result.Get<DareLoggerConfiguration>(DareLoggerConfiguration.ConfigurationEntry);
+        result.GenericHost = result.Get<GenericHostConfiguration>(GenericHostConfiguration.ConfigurationEntry);
+        result.MeshService = result.Get<MeshServiceConfiguration>(MeshServiceConfiguration.ConfigurationEntry);
+
+        result.CallsignRegistry = result.Get<CallsignRegistryConfiguration>(CallsignRegistryConfiguration.ConfigurationEntry);
+        result.CallsignResolver = result.Get<CallsignResolverConfiguration>(CallsignResolverConfiguration.ConfigurationEntry);
+        result.CarnetService = result.Get<CarnetServiceConfiguration>(CarnetServiceConfiguration.ConfigurationEntry);
+        result.RepositoryService = result.Get<RepositoryServiceConfiguration>(RepositoryServiceConfiguration.ConfigurationEntry);
+        result.PresenceService = result.Get<PresenceServiceConfiguration>(PresenceServiceConfiguration.ConfigurationEntry);
 
         return result;
         }
@@ -94,22 +98,48 @@ public class Configuration : Disposable {
     /// <summary>
     /// Add a configuration entry to the configuration.
     /// </summary>
-    /// <param name="configurationEntry">Configuration entry description.</param>
     /// <param name="entry">The entry.</param>
-    public void Add(ConfigurationEntry configurationEntry, object entry) {
+    /// 
+    public void Add(IConfigurationEntry entry) {
+
+        var configurationEntry = entry.GetConfigurationEntry();
+
         Dictionary.Add(configurationEntry.Name, entry);
 
-
-        if (configurationEntry.Name == MeshServiceConfiguration.ConfigurationEntry.Name) {
-            MeshServiceConfiguration = entry as MeshServiceConfiguration;
-
+        switch (entry) {
+            case DareLoggerConfiguration dareLogger: {
+                DareLogger = dareLogger;
+                break;
+                }
+            case GenericHostConfiguration genericHost: {
+                GenericHost = genericHost;
+                break;
+                }
+            case MeshServiceConfiguration meshService : {
+                MeshService = meshService;
+                break;
+                }
+            case CallsignRegistryConfiguration callsignRegistry: {
+                CallsignRegistry = callsignRegistry;
+                break;
+                }
+            case CallsignResolverConfiguration callsignResolver: {
+                CallsignResolver = callsignResolver;
+                break;
+                }
+            case CarnetServiceConfiguration carnetService: {
+                CarnetService = carnetService;
+                break;
+                }
+            case RepositoryServiceConfiguration repositoryService: {
+                RepositoryService = repositoryService;
+                break;
+                }
+            case PresenceServiceConfiguration presenceService: {
+                PresenceService = presenceService;
+                break;
+                }
             }
-        if (configurationEntry.Name == GenericHostConfiguration.ConfigurationEntry.Name) {
-            GenericHostConfiguration = entry as GenericHostConfiguration;
-
-            }
-
-
         }
 
     /// <summary>

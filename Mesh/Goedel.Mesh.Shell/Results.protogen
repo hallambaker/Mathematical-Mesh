@@ -261,3 +261,14 @@
 		TStruct CatalogedApplication Applications
 			Multiple
 		
+
+	Structure ResultCallsign
+		Inherits		Result
+		Struct CallsignBinding CallsignBinding
+		String Status
+		Struct Message	Message
+
+	Structure ResultCallsignList
+		Inherits		Result
+		Struct CallsignBinding CallsignBindings
+			Multiple

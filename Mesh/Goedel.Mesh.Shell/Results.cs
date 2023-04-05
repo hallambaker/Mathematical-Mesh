@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 23-Mar-23 1:11:58 PM
+//  This file was automatically generated at 04-Apr-23 3:50:42 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -121,7 +121,9 @@ public abstract partial class MeshmanShellResult : global::Goedel.Protocol.JsonO
 	    {"ResultTransactionRequest", ResultTransactionRequest._Factory},
 	    {"ResultReceived", ResultReceived._Factory},
 	    {"ResultApplication", ResultApplication._Factory},
-	    {"ResultApplicationList", ResultApplicationList._Factory}
+	    {"ResultApplicationList", ResultApplicationList._Factory},
+	    {"ResultCallsign", ResultCallsign._Factory},
+	    {"ResultCallsignList", ResultCallsignList._Factory}
 		};
 
     [ModuleInitializer]
@@ -5441,6 +5443,245 @@ public partial class ResultApplicationList : Result {
 			return Out as ResultApplicationList;
 			}
 		var Result = new ResultApplicationList ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class ResultCallsign : Result {
+        /// <summary>
+        /// </summary>
+
+	public virtual CallsignBinding						CallsignBinding  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string						Status  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual Message						Message  {get; set;}
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "CallsignBinding" : {
+				if (value is TokenValueStructObject vvalue) {
+					CallsignBinding = vvalue.Value as CallsignBinding;
+					}
+				break;
+				}
+			case "Status" : {
+				if (value is TokenValueString vvalue) {
+					Status = vvalue.Value;
+					}
+				break;
+				}
+			case "Message" : {
+				if (value is TokenValueStructObject vvalue) {
+					Message = vvalue.Value as Message;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "CallsignBinding" : {
+				return new TokenValueStruct<CallsignBinding> (CallsignBinding);
+				}
+			case "Status" : {
+				return new TokenValueString (Status);
+				}
+			case "Message" : {
+				return new TokenValueStruct<Message> (Message);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "CallsignBinding", new Property ( typeof(TokenValueStruct), false,
+					()=>new CallsignBinding(), ()=>new CallsignBinding(), false)} ,
+			{ "Status", new Property (typeof(TokenValueString), false)} ,
+			{ "Message", new Property ( typeof(TokenValueStruct), false,
+					()=>new Message(), ()=>new Message(), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, Result._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ResultCallsign";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ResultCallsign();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ResultCallsign FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ResultCallsign;
+			}
+		var Result = new ResultCallsign ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class ResultCallsignList : Result {
+        /// <summary>
+        /// </summary>
+
+	public virtual List<CallsignBinding>				CallsignBindings  {get; set;}
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "CallsignBindings" : {
+				if (value is TokenValueListStructObject vvalue) {
+					CallsignBindings = vvalue.Value as List<CallsignBinding>;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "CallsignBindings" : {
+				return new TokenValueListStruct<CallsignBinding> (CallsignBindings);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "CallsignBindings", new Property ( typeof(TokenValueListStruct), true,
+					()=>new List<CallsignBinding>(), ()=>new CallsignBinding(), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, Result._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ResultCallsignList";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ResultCallsignList();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ResultCallsignList FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ResultCallsignList;
+			}
+		var Result = new ResultCallsignList ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

@@ -1317,7 +1317,7 @@
             <param name="key">The key</param>
             <returns>The signature entry.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.FromJSON(System.IO.Stream,System.Boolean,System.Boolean,Goedel.Cryptography.IKeyLocate)">
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.FromJSON(System.IO.Stream,System.Boolean,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Deserialize 
             </summary>

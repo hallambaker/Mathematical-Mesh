@@ -20,6 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Utilities;
+
 namespace Goedel.Protocol;
 
 /// <summary>
@@ -28,7 +30,7 @@ namespace Goedel.Protocol;
 public interface IJcbdDocument {
 
     ///<summary>The root result.</summary> 
-    public JbcdValueObject Root { get; set; }
+    public JbcdValue Root { get; set; }
 
     ///<summary>The character to be used to overwrite data being erased.</summary> 
     public byte Overwrite { get; }
@@ -77,7 +79,7 @@ public interface IJcbdDocument {
             return true;
             }
 
-        var element = Root.GetProperty(path[0] as string);
+        var element = Root.GetProperty(path[0]);
         return TryGetPath(element.Value, out value, 1, path);
         }
 
@@ -145,190 +147,13 @@ public enum NumberPrecision {
 
     }
 
-public abstract class JbcdDocument : IJcbdDocument {
-
-    ///<inheritdoc/>
-    public JbcdValueObject Root { get; set; }
-
-    ///<inheritdoc/>
-    public byte Overwrite { get; } = 32;
-
-    ///<summary>The starting point for the document within the byte stream</summary> 
-    protected long Start { get; init; }
-
-    ///<summary>The length the document within the byte stream</summary> 
-    protected long Length { get; init; }
-
-    ///<inheritdoc/>
-    public abstract void Erase(long start, int length, byte[] data = null);
-
-    ///<inheritdoc/>
-    public abstract string TryReadString(long position);
-
-    /// <summary>
-    /// Parse data from the stream <paramref name="file"/> in the interval
-    /// <paramref name="start"/> through <paramref name="length"/> to return a 
-    /// <see cref="JbcdDocument"/>.
-    /// </summary>
-    /// <param name="file">The file to read data from.</param>
-    /// <param name="start">The first byte in the file to parse.</param>
-    /// <param name="length">The number of bytes to parse.</param>
-    /// <param name="lazy">If true, lazy evaluation should be used.</param>
-    /// <returns>The parsed data.</returns>
-    public static JbcdDocument Parse(
-                FileStream file,
-                long start = 0,
-                long length = -1,
-                bool lazy = false) {
-        var result = new JbcdDocumentFile(file) {
-            Start= start,
-            Length= length
-            };
-        result.Parse(lazy);
-        return result;
-        }
-
-    /// <summary>
-    /// Parse data from the buffer <paramref name="data"/> in the interval
-    /// <paramref name="start"/> through <paramref name="length"/> to return a 
-    /// <see cref="JbcdDocument"/>.
-    /// </summary>
-    /// <param name="data">The data to be read.</param>
-    /// <param name="start">The first byte in the file to parse.</param>
-    /// <param name="length">The number of bytes to parse.</param>
-    /// <param name="lazy">If true, lazy evaluation should be used.</param>
-    /// <returns>The parsed data.</returns>
-    public static JbcdDocument Parse(
-                byte[] data, 
-                long start = 0, 
-                long length = -1,
-                bool lazy = false) {
-        var result = new JbcdDocumentMemory(data) {
-            Start = start,
-            Length = length
-            };
-        result.Parse(lazy);
-        return result;
-        }
-
-
-    /// <summary>
-    /// Parse the document to create a DOM.
-    /// </summary>
-    /// <param name="lazy">If true, use lazy evaluation.</param>
-    /// <param name="properties">Properties dictionary.</param>
-    /// <returns>The parsed <see cref="JsonObject"/></returns>
-    public JsonObject Parse(
-                    bool lazy = false,
-                    Dictionary<string, Property> properties = null) {
-        throw new NYI();
-        }
-
-
-    }
-
-
-
-/// <summary>
-/// A document containing a JSON or JSON-BCD file. The naming is purposefully 
-/// different to avoid conflict with the .NET JSON parser clases.
-/// </summary>
-public class JbcdDocumentFile : JbcdDocument {
-
-    ///<summary>The backing file.</summary> 
-    public FileStream File { get; }
-
-
-
-
-    /// <summary>
-    /// Constructor returning an instance from the file <paramref queries="file"/>
-    /// which must allow write access for the values modification functions to work.
-    /// </summary>
-    /// <param queries="file">The file to be read.</param>
-    public JbcdDocumentFile(
-                FileStream file,
-                long start = 0,
-                long length = -1) {
-        File = file;
-        }
-
-
-    ///<inheritdoc/>
-    public override string TryReadString(
-                long position) {
-        throw new NYI();
-        }
-
-
-    ///<inheritdoc/>
-    ///<remarks>Since erasure is expected to be an infrequent event, this implementation is
-    ///not optimized for speed, each byte in the target file being individually overwritten.</remarks>
-    public override void Erase(
-                long start,
-                int length,
-                byte[] data = null) {
-
-        File.Position= start;
-        if (data != null) {
-            File.Write(data, 0, data.Length);
-            }
-
-        for (var i = start; i < length; i++) {
-            File.WriteByte(Overwrite);
-            }
-        }
-
-    }
-
-/// <summary>
-/// A document containing a JSON or JSON-BCD file. The naming is purposefully 
-/// different to avoid conflict with the .NET JSON parser clases.
-/// </summary>
-public class JbcdDocumentMemory : JbcdDocument {
-
-    ///<summary>The data buffer.</summary> 
-    public byte[] Data { get; }
-
-    /// <summary>
-    /// Constructor returning an instance from the file <paramref queries="file"/>
-    /// which must allow write access for the values modification functions to work.
-    /// </summary>
-    /// <param queries="file">The file to be read.</param>
-    public JbcdDocumentMemory(
-                byte []data,
-                long start = 0,
-                long length = -1) {
-        Data = data;
-        }
-
-
-    ///<inheritdoc/>
-    public override string TryReadString(
-                long position) {
-        throw new NYI();
-        }
-
-
-    ///<inheritdoc/>
-    ///<remarks>Since erasure is expected to be an infrequent event, this implementation is
-    ///not optimized for speed, each byte in the target file being individually overwritten.</remarks>
-    public override void Erase(
-                long start,
-                int length,
-                byte[] data = null) {
-
-        throw new NYI();
-        }
-
-    }
 
 
 
 /// <summary>
 /// Record describing a parsed Jbcd result.
 /// </summary>
-public abstract record JbcdElement {
+public record JbcdElement {
 
     ///<summary>Enclosing document.</summary> 
     public IJcbdDocument Document { get; init; }
@@ -397,6 +222,16 @@ public abstract record JbcdElement {
         return true;
         }
 
+
+    public virtual void ClearValue(Stream file) {
+        file.Position = ElementStartPosition;
+
+        for (var i = 0; i < ElementLength; i++) {
+            file.WriteByte((byte)' ');
+            }
+        }
+
+
     }
 
 
@@ -409,7 +244,28 @@ public abstract record JbcdValue  {
     public long DataStartPosition { get; set; }
 
     ///<summary></summary> 
-    public int DataLength { get; set; }
+    public long DataLength { get; set; }
+
+    /// <summary>
+    /// Need to rethunk this.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    /// <exception cref="NYI"></exception>
+    public virtual JbcdElement GetProperty(object name) => throw new NYI();
+
+
+
+    public virtual void ClearValue(Stream file) {
+        file.Position = DataStartPosition;
+
+        for (var i = 0; i < DataLength; i++) {
+            file.WriteByte((byte)' ');
+            }
+        }
+
+
+
     }
 
 /// <summary>
@@ -422,7 +278,11 @@ public abstract record JbcdValue  {
 public record JbcdValueObject : JbcdValue {
 
     ///<summary>The elements.</summary> 
-    public virtual IEnumerable<JbcdElement> Elements { get; init; }
+    public virtual IList<JbcdElement> Elements { get; } = new List<JbcdElement>();
+
+
+
+    public override JbcdElement GetProperty(object name) => GetProperty(name as string);
 
     /// <summary>
     /// Gets a <see cref="JbcdElement"/> representing the values of a required property identified by 
@@ -439,8 +299,15 @@ public record JbcdValueObject : JbcdValue {
 
         return null;
         }
-    }
 
+    //public virtual void ClearValue(Stream file) {
+    //    file.Position = 
+
+    //    }
+
+
+
+    }
 
 /// <summary>
 /// Record describing a parsed Jbcd array result.
@@ -448,7 +315,9 @@ public record JbcdValueObject : JbcdValue {
 public record JbcdValueArray : JbcdValue {
 
     ///<summary>The array of elements.</summary> 
-    public virtual IList<JbcdValue> Values { get; set; }
+    public virtual IList<JbcdValue> Values { get; } = new List<JbcdValue> ();
+
+    public override JbcdElement GetProperty(object name) => throw new NYI();
 
     /// <summary>
     /// Gets a <see cref="JbcdElement"/> representing the values of a required property identified by 
@@ -508,13 +377,40 @@ public record JbcdValueString : JbcdValue {
 
     }
 
+/// <summary>
+/// Record describing a parsed Jbcd string result.
+/// </summary>
+public record JbcdValueBinary : JbcdValue {
+
+    ///<summary>The string values</summary> 
+    public virtual byte[] Value { get; init; }
+
+    /// <summary>
+    /// Constructor for use by derrived records.
+    /// </summary>
+    protected JbcdValueBinary() {
+        }
+
+    /// <summary>
+    /// Constructor returning an instance for the values <paramref name="value"/>.
+    /// </summary>
+    /// <param name="value">The values of the string.</param>
+    public JbcdValueBinary(byte[] value) {
+        Value = value;
+        }
+
+    }
+
+
+
+
 
 /// <summary>
 /// Record describing a parsed Jbcd values result. The values itself
 /// is kept in string form to allow 
 /// </summary>
 public record JbcdValueNumber : JbcdValue {
-
+    public long Integer {get; init; }
 
     ///<summary>The number values</summary> 
     public virtual string Value { get; init; }
@@ -522,18 +418,18 @@ public record JbcdValueNumber : JbcdValue {
     ///<summary>The number precision</summary> 
     public virtual NumberPrecision Precision { get; init; }
 
-    /// <summary>
-    /// Constructor returning an instance for the values <paramref name="value"/>
-    /// with specified precision <paramref name="precision"/>.
-    /// </summary>
-    /// <param name="value">The values of the string.</param>
-    /// <param name="precision">The number precision.</param>
-    public JbcdValueNumber (
-                string value,
-                NumberPrecision precision ) { 
-        Value = value;
-        Precision = precision;
-        }
+    ///// <summary>
+    ///// Constructor returning an instance for the values <paramref name="value"/>
+    ///// with specified precision <paramref name="precision"/>.
+    ///// </summary>
+    ///// <param name="value">The values of the string.</param>
+    ///// <param name="precision">The number precision.</param>
+    //public JbcdValueNumber (
+    //            string value,
+    //            NumberPrecision precision ) { 
+    //    Value = value;
+    //    Precision = precision;
+    //    }
 
     /// <summary>
     /// Attempt to parse <see cref="Value"/> as an int32 integer
@@ -606,7 +502,7 @@ public record JbcdValueObjectLazy : JbcdValueObject, ICachable {
     public IJcbdDocument Document { get; init; }
 
     ///<inheritdoc/>
-    public override IEnumerable<JbcdElement> Elements {
+    public override IList<JbcdElement> Elements {
         get {
             if (read) {
                 return value;
@@ -616,7 +512,7 @@ public record JbcdValueObjectLazy : JbcdValueObject, ICachable {
             }
         }
     bool read = false;
-    IEnumerable<JbcdElement> value;
+    IList<JbcdElement> value;
 
     ///<inheritdoc/>
     public void Load() {

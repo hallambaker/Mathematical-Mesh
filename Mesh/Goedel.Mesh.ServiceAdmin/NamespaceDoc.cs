@@ -39,6 +39,10 @@ global using Goedel.Carnet.Server;
 global using Goedel.Mesh.Server;
 global using Goedel.Presence.Server;
 global using Goedel.Repository.Server;
+global using Goedel.Protocol.GenericHost;
+global using System.Text.Json;
+global using System.Text.Json.Serialization;
+
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif

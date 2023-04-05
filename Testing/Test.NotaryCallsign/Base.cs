@@ -50,7 +50,8 @@ public partial class RegistrationTests : Disposable {
 
     #region // The test environment specific calls
     public virtual TestEnvironmentRdpShell GetTestEnvironment() => new TestEnvironmentRdpShell() {
-        JpcConnection = Protocol.JpcConnection.Http
+        JpcConnection = Protocol.JpcConnection.Http,
+        InitializeResolver = true
         };
     public virtual TestCLI GetTestCLI(string machineName = null) => TestEnvironment.GetTestCLI(machineName);
 

@@ -164,8 +164,6 @@ public class ContextRegistry : ContextAccount {
             transaction.Transact();
             }
 
-        callsignMapping ??= CallsignMapping.Default;
-
 
         //contextUser.CallsignRegistry = RegistryName;
         contextUser.ProfileRegistryCallsign = profileRegistry;

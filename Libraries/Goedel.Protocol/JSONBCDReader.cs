@@ -41,11 +41,21 @@ public class JsonBcdReader : JsonReader {
 
     IBinaryStream ByteInput => CharacterInput as IBinaryStream;
 
+
+
+    /// <summary>
+    /// Construct a JSONReader from an ICharacterStream.
+    /// </summary>
+    /// <param name="input">The stream to be read.</param>
+    public JsonBcdReader(ICharacterStream input) : base(input) { }
+
+
     /// <summary>
     /// Construct a JSONReader from a byte Stream.
     /// </summary>
     /// <param name="input">The stream to be read.</param>
     public JsonBcdReader(Stream input) : base(input) { }
+
 
     /// <summary>
     /// Construct a JSONReader from a byte array.

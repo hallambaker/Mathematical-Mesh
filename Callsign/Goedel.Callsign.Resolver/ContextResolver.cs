@@ -93,8 +93,8 @@ public class ContextResolver : ContextAccount {
 
         ProfileResolver = catalogedService.EnvelopedProfileService.Decode() as ProfileResolver;
 
-        ProfileRegistry  = ProfileResolver.EnvelopedProfileRegistry.Decode() as ProfileRegistry;
-        //ActivationCommon = catalogedService.EnvelopedActivationCommon.Decode() ;
+        ProfileRegistry = ProfileResolver.EnvelopedProfileRegistry.Decode() as ProfileRegistry;
+        ActivationCommon = catalogedService.EnvelopedActivationCommon.Decode();
 
         var SecretSeed = meshHost.KeyCollection.LocatePrivateKey(ProfileResolver.UdfString) as PrivateKeyUDF;
         (KeyAuthentication, _) = SecretSeed.GenerateContributionKey(
@@ -117,43 +117,43 @@ public class ContextResolver : ContextAccount {
         }
 
 
-    /// <summary>
-    /// Create a new client resolver context.
-    /// </summary>
-    /// <param name="meshHost">The mesh host.</param>
-    /// <param name="resolverAddress">The address of the resolver account.</param>
-    /// <param name="accountSeed">Optional account seed.</param>
-    /// <param name="roles">The authorized roles.</param>
-    /// <param name="envelopedProfileRegistry">The enveloped registry profile.</param>
-    /// <returns></returns>
-    public static ContextResolver Create(
-                MeshHost meshHost,
-                string resolverAddress,
-                Enveloped<ProfileAccount> envelopedProfileRegistry,
-                    PrivateKeyUDF accountSeed = null,
-                    List<string> roles = null
-                ) {
-        var meshMachine = meshHost.MeshMachine;
-        // Create the service profile
+    ///// <summary>
+    ///// Create a new client resolver context.
+    ///// </summary>
+    ///// <param name="meshHost">The mesh host.</param>
+    ///// <param name="resolverAddress">The address of the resolver account.</param>
+    ///// <param name="accountSeed">Optional account seed.</param>
+    ///// <param name="roles">The authorized roles.</param>
+    ///// <param name="envelopedProfileRegistry">The enveloped registry profile.</param>
+    ///// <returns></returns>
+    //public static ContextResolver Create(
+    //            MeshHost meshHost,
+    //            string resolverAddress,
+    //            Enveloped<ProfileAccount> envelopedProfileRegistry,
+    //                PrivateKeyUDF accountSeed = null,
+    //                List<string> roles = null
+    //            ) {
+    //    var meshMachine = meshHost.MeshMachine;
+    //    // Create the service profile
 
-        var profileResolver = ProfileResolver.Generate(resolverAddress, envelopedProfileRegistry, meshMachine.KeyCollection);
-        profileResolver.PersistSeed(meshMachine.KeyCollection);
-
-
-        // create the cataloged machine entry for the service
-        var catalogedService = new CatalogedService() {
-            EnvelopedProfileService = profileResolver.GetEnvelopedProfileAccount(),
-            };
-
-        // create the directory
-        var storesDirectory = ContextAccount.GetStoresDirectory(meshHost, profileResolver);
-        Directory.CreateDirectory(storesDirectory);
-
-        var contextResolver = new ContextResolver(meshHost, catalogedService);
+    //    var profileResolver = ProfileService.Generate(resolverAddress, envelopedProfileRegistry, meshMachine.KeyCollection);
+    //    profileResolver.PersistSeed(meshMachine.KeyCollection);
 
 
-        return contextResolver;
-        } 
+    //    // create the cataloged machine entry for the service
+    //    var catalogedService = new CatalogedService() {
+    //        EnvelopedProfileService = profileResolver.GetEnvelopedProfileAccount(),
+    //        };
+
+    //    // create the directory
+    //    var storesDirectory = ContextAccount.GetStoresDirectory(meshHost, profileResolver);
+    //    Directory.CreateDirectory(storesDirectory);
+
+    //    var contextResolver = new ContextResolver(meshHost, catalogedService);
+
+
+    //    return contextResolver;
+    //    } 
 
 
 

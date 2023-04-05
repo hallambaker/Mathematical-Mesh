@@ -36,19 +36,31 @@ public class MeshMachineCoreServer : Disposable, IMeshMachine {
     public virtual string? Instance => null;
 
     ///<summary>The directory used to store the master data.</summary>
-    public virtual string DirectoryMaster { get; }
+    public virtual string DirectoryRoot { get; } = null;
 
-    ///<summary>The directory used to store the account mesh data.</summary>
+    ////<inheritdoc/>
     public virtual string DirectoryMesh { get; }
 
-    ///<summary>The directory used to store host keys.</summary>
+    ////<inheritdoc/>
     public virtual string DirectoryKeys { get; }
+
+    ////<inheritdoc/>
+    public virtual string DirectoryAccounts { get; }
+
+
+
 
     ///<summary>The host key collection.</summary>
     public virtual IKeyCollection KeyCollection { get; }
 
     ///<summary>The IANA media type for the host file data.</summary>
     public const string FileTypeHost = "application/mmm-host";
+
+    ///<inheritdoc/>
+    public string GetServiceDirectory(string service) =>
+        DirectoryRoot != null ? Path.Combine(DirectoryRoot, service) :
+            KeyCollectionCore.GetServiceDirectory(service);
+
     #endregion
 
     /// <summary>
@@ -57,21 +69,22 @@ public class MeshMachineCoreServer : Disposable, IMeshMachine {
     /// <param name="directory">Directory to store the server information.</param>
     /// <param name="direct">If true, force use of the platform key stores.</param>
     public MeshMachineCoreServer(string? directory) {
+        DirectoryRoot = directory;
+        DirectoryMesh = GetServiceDirectory(MeshConstants.DirectoryProfiles);
+        DirectoryKeys = GetServiceDirectory(MeshConstants.DirectoryKeys);
+        DirectoryAccounts = GetServiceDirectory(MeshConstants.DirectoryAccounts);
 
 
         if (directory != null) {
-            DirectoryMaster = directory;
-            DirectoryMesh = Path.Combine(directory, "Profiles");
-            DirectoryKeys = Path.Combine(directory, "Keys");
+
             KeyCollection = GetKeyCollection(directory);
             }
         else {
-            KeyCollection = GetKeyCollection(null);
+            KeyCollection = GetKeyCollection();
 
-            var keyCollectionCore = KeyCollection as KeyCollectionCore;
-            DirectoryMesh = keyCollectionCore.DirectoryMesh;
-            DirectoryKeys = keyCollectionCore.DirectoryKeys;
             }
+        //KeyCollection = GetKeyCollection(directory);
+
         Directory.CreateDirectory(DirectoryMesh);
         Directory.CreateDirectory(DirectoryKeys);
         }

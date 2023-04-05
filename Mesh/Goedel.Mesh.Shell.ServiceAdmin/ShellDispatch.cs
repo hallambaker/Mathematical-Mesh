@@ -20,11 +20,10 @@
 //  THE SOFTWARE.
 #endregion
 
-using Goedel.Cryptography;
-using Goedel.Protocol;
-using Goedel.Command;
-using Goedel.Registry;
-using System.Net;
+
+using Goedel.Callsign.Registry;
+using Goedel.Mesh.ServiceAdmin;
+
 namespace Goedel.Mesh.Shell.ServiceAdmin;
 
 
@@ -151,9 +150,67 @@ public partial class Shell : _Shell {
         var hostDns = Options.HostDns.Value ?? serviceDns;
         var admin = Options.Admin.Value;
         var runAs = Options.Account.Value;
+        var resolver = Options.Resolver.Value;
+        var registry = Options.Registry.Value;
+        var carnet = Options.Carnet.Value;
+        var persist = Options.Persist.Value;
+        var presence = Options.Presence.Value;
 
-        var configuration = MeshMachine.CreatePublicMeshService(
-                multiConfig, serviceDns, hostIp, hostDns, admin, runAs);
+        //var configuration = MeshMachine.CreatePublicMeshService(
+        //        multiConfig, serviceDns, hostIp, hostDns, admin, runAs, resolver, registry);
+
+        //var configuration = new Configuration();
+
+        var configuration = MeshMachine.CreateConfig(
+                serviceDns, hostIp, hostDns, runAs);
+
+       if (true) {
+            configuration.Add (
+                MeshServiceConfiguration.Create(
+                            MeshMachine,
+                            configuration.GenericHost,
+                            serviceDns));
+            }
+
+        if (registry != null) {
+            configuration.Add(
+                CallsignRegistryConfiguration.Create(
+                            MeshMachine,
+                            registry));
+            configuration.Add(
+                CallsignResolverConfiguration.Create(
+                MeshMachine,
+                configuration.GenericHost,
+                registry,
+                resolver));
+            }
+        if (carnet != null) {
+            configuration.Add(
+                CarnetServiceConfiguration.Create(
+                            MeshMachine,
+                            configuration.GenericHost,
+                            carnet));
+            }
+        if (persist != null) {
+            configuration.Add(
+                RepositoryServiceConfiguration.Create(
+                            MeshMachine,
+                            configuration.GenericHost,
+                            persist));
+            }
+        if (presence != null) {
+            configuration.Add(
+                PresenceServiceConfiguration.Create(
+                            MeshMachine,
+                            configuration.GenericHost,
+                            presence));
+            }
+
+        // Perform the actual initialization of everything
+        MeshMachine.BuildConfiguration(configuration, admin);
+
+        multiConfig.MakePath();
+        configuration.ToFile(multiConfig);
 
         // here populate a status response from configuration
 

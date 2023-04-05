@@ -48,6 +48,17 @@
 			Default "HostsAndServices"
 		Option Account "account" String
 			Brief "The account under which the service is to run (defaults to account executing command)."
+		Option Resolver "resolver" String
+			Brief "The resolver service"
+		Option Registry "registry" String
+			Brief "The registry account"
+		Option Carnet "carnet" String
+			Brief "The carnet service"			
+		Option Persist "persist" String
+			Brief "The persistence service"		
+		Option Presence "presence" String
+			Brief "The presence service"	
+
 
 	Command DNS "dns"
 		Include Reporting

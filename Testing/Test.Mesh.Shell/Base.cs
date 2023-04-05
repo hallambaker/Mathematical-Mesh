@@ -79,7 +79,7 @@ public partial class ShellTestBase : Disposable {
 
     ///<summary>The test environment, base for all </summary>
     public TestEnvironmentBase TestEnvironment => testEnvironment ??
-        GetTestEnvironment(DeterministicSeed.Auto()).CacheValue(out testEnvironment);
+        GetTestEnvironment(Seed ).CacheValue(out testEnvironment);
     TestEnvironmentBase testEnvironment;
 
     public virtual TestEnvironmentBase GetTestEnvironment(DeterministicSeed seed) => 

@@ -57,16 +57,16 @@ public class TestEnvironmentPresence : TestEnvironmentCommon {
         HostFile = System.IO.Path.Combine(MeshMachineHost.DirectoryMesh, "mmmconfiguration.json");
         Configuration = MeshMachineHost.CreatePublicMeshService(HostFile, ServiceDns);
 
-        Logger = new LogService(Configuration.GenericHostConfiguration, Configuration.MeshServiceConfiguration, null);
+        Logger = new LogService(Configuration.GenericHost, Configuration.MeshService, null);
 
         PresenceServer = new PresenceServerTesting(
-            Configuration.GenericHostConfiguration,
-            Configuration.PresenceServiceConfiguration,
+            Configuration.GenericHost,
+            Configuration.PresenceService,
             CommunicationConditions);
 
         return new PublicMeshService(MeshMachineHost,
-            Configuration.GenericHostConfiguration, 
-            Configuration.MeshServiceConfiguration, 
+            Configuration.GenericHost, 
+            Configuration.MeshService, 
             Logger, PresenceServer);
         }
 

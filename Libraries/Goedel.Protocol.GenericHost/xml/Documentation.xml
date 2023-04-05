@@ -74,6 +74,9 @@
         <member name="F:Goedel.Protocol.GenericHost.DareLoggerConfiguration.ConfigurationEntry">
             <summary>Return configuration entry description.</summary> 
         </member>
+        <member name="M:Goedel.Protocol.GenericHost.DareLoggerConfiguration.GetConfigurationEntry">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Protocol.GenericHost.DareLoggerConfiguration.Recipients">
             <summary>List of recipients for which decryption blocks are to be created in the log.</summary> 
         </member>

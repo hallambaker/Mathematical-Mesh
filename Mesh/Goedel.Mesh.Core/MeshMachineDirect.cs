@@ -20,6 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Cryptography.Core;
+
 namespace Goedel.Mesh.Core;
 
 /// <summary>
@@ -63,6 +65,9 @@ public class MeshMachineDirect : Disposable, IMeshMachineClient {
     public string DirectoryKeys => MeshMachineClient.DirectoryKeys;
 
     ///<inheritdoc/>
+    public string DirectoryAccounts => MeshMachineClient.DirectoryAccounts;
+
+    ///<inheritdoc/>
     public IKeyCollection KeyCollection => MeshMachineClient.KeyCollection;
 
     ///<summary>The Callsign resolution service (if bound).</summary> 
@@ -84,8 +89,14 @@ public class MeshMachineDirect : Disposable, IMeshMachineClient {
         MeshMachineClient.GetFilePath(filepath);
 
     ///<inheritdoc/>
+    public string GetServiceDirectory(string service) =>
+        KeyCollectionCore.GetServiceDirectory(service);
+
+    ///<inheritdoc/>
     public MeshServiceClient GetMeshClient(ICredentialPrivate credential, string accountAddress) {
-        var jpcSessionSerialized = new JpcSessionSerialized(PublicMeshService, credential) {
+
+        var publicCredential = credential.GetICredentialPublic();
+        var jpcSessionSerialized = new JpcSessionSerialized(PublicMeshService, publicCredential) {
             TargetAccount = accountAddress
             };
         return jpcSessionSerialized.GetWebClient<MeshServiceClient>();

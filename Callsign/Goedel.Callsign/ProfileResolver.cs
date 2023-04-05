@@ -35,25 +35,25 @@ public partial class ProfileResolver {
     public ProfileResolver() {
         }
 
-    /// <summary>
-    /// Construct a Profile Account instance  from <paramref name="accountAddress"/>.
-    /// </summary>
-    /// <param name="accountAddress">The account address</param>
-    /// <param name="activationAccount">The activation used to create the account data.</param>
-    /// <param name="envelopedProfileRegistry">The enveloped registry profile.</param>
-    public ProfileResolver(
-                string accountAddress,
-                Enveloped<ProfileAccount> envelopedProfileRegistry,
-                ActivationCommon activationAccount) {
-        EnvelopedProfileRegistry = envelopedProfileRegistry;
-        ProfileSignature = new KeyData(activationAccount.ProfileSignatureKey);
+    ///// <summary>
+    ///// Construct a Profile Account instance  from <paramref name="accountAddress"/>.
+    ///// </summary>
+    ///// <param name="accountAddress">The account address</param>
+    ///// <param name="activationAccount">The activation used to create the account data.</param>
+    ///// <param name="envelopedProfileRegistry">The enveloped registry profile.</param>
+    //public ProfileResolver(
+    //            string accountAddress,
+    //            Enveloped<ProfileAccount> envelopedProfileRegistry,
+    //            ActivationCommon activationAccount) {
+    //    EnvelopedProfileRegistry = envelopedProfileRegistry;
+    //    ProfileSignature = new KeyData(activationAccount.ProfileSignatureKey);
 
-        CommonEncryption = new KeyData(activationAccount.CommonEncryptionKey);
-        CommonAuthentication = new KeyData(activationAccount.CommonAuthenticationKey);
+    //    //CommonEncryption = new KeyData(activationAccount.CommonEncryptionKey);
+    //    //CommonAuthentication = new KeyData(activationAccount.CommonAuthenticationKey);
 
 
-        Envelope(activationAccount.ProfileSignatureKey);
-        }
+    //    Envelope(activationAccount.ProfileSignatureKey);
+    //    }
 
     /// <summary>
     /// Construct a Profile Host instance  from a <see cref="PrivateKeyUDF"/>
@@ -65,7 +65,6 @@ public partial class ProfileResolver {
     /// <param name="envelopedProfileRegistry">The enveloped registry profile</param>
     /// store.</param>
     ProfileResolver(
-                string accountAddress,
                 Enveloped<ProfileAccount> envelopedProfileRegistry,
                 PrivateKeyUDF secretSeed,
                 IKeyCollection keyCollection,
@@ -103,7 +102,6 @@ public partial class ProfileResolver {
     /// <paramref name="keyCollection"/>.</param>
     /// <returns>The created profile.</returns>
     public static ProfileResolver Generate(
-                string resolverAddress,
                 Enveloped<ProfileAccount> envelopedProfileRegistry,
                 IKeyCollection keyCollection,
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
@@ -115,24 +113,42 @@ public partial class ProfileResolver {
         secretSeed ??= new PrivateKeyUDF(
             udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount, secret: null, algorithmEncrypt: algorithmEncrypt,
             algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate, bits: bits);
-        return new ProfileResolver(resolverAddress, envelopedProfileRegistry, 
-                    secretSeed, keyCollection, persist);
+        return new ProfileResolver(envelopedProfileRegistry, secretSeed,
+                    keyCollection, persist);
         }
 
 
 
 
-    /// <summary>
-    /// Verify the profile to check that it is correctly signed and consistent.
-    /// </summary>
-    /// <returns></returns>
-    public override void Validate() {
-        base.Validate();
+    public static void CreateService(
+                IMeshMachine meshMachine,
+                Enveloped<ProfileAccount> envelopedProfileRegistry,
+                out ProfileService profileService,
+                out ProfileHost profileHost,
+                out ActivationHost activationDevice,
+                out ConnectionService connectionDevice) {
 
-        //AccountEncryptionKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
-        //AdministratorSignatureKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
+        profileService = Generate(envelopedProfileRegistry, meshMachine.KeyCollection);
 
+
+        CreateService(meshMachine, profileService, out profileHost, out activationDevice,
+            out connectionDevice);
         }
+
+         
+
+
+    ///// <summary>
+    ///// Verify the profile to check that it is correctly signed and consistent.
+    ///// </summary>
+    ///// <returns></returns>
+    //public override void Validate() {
+    //    base.Validate();
+
+    //    //AccountEncryptionKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
+    //    //AdministratorSignatureKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
+
+    //    }
 
 
     }

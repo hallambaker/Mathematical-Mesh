@@ -496,11 +496,10 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     /// <param name="keyCollection">Key collection to be used to discover decryption keys</param>
     /// <returns>The created object.</returns>	
     public static DareEnvelope FromJSON(Stream stream,
-        bool tagged = true,
         bool decrypt = false,
         IKeyLocate keyCollection = null) {
         var jsonBcdReader = new JsonBcdReader(stream); // Hack: should merge this with GetPlaintext
-        return FromJSON(jsonBcdReader, tagged, decrypt, keyCollection);
+        return FromJSON(jsonBcdReader, false, decrypt, keyCollection);
         }
 
     /// <summary>
@@ -735,7 +734,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
             outputStream.Flush();
             }
         else {
-            var filename = outputFile ?? message.Header.ContentMeta.Filename;
+            var filename = outputFile ?? message.Header?.ContentMeta.Filename;
             using var output = filename.OpenFileNew();
             Reader.CopyTo(output);
             output.Flush();

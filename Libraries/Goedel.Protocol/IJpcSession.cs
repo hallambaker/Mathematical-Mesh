@@ -36,13 +36,16 @@ namespace Goedel.Protocol;
 /// <summary>
 /// Service configuration
 /// </summary>
-public class GenericHostConfiguration {
+public class GenericHostConfiguration : IConfigurationEntry {
 
     static int defaultPort = 15099;
 
     ///<summary>The configuration entry.</summary> 
     public readonly static ConfigurationEntry ConfigurationEntry =
             new ("Host", typeof(GenericHostConfiguration));
+
+    ///<inheritdoc/>
+    public ConfigurationEntry GetConfigurationEntry() => ConfigurationEntry;
 
     ///<summary>The platform account under which the host process is to run.</summary> 
     public string? RunAs { get; set; } = null;
@@ -61,6 +64,9 @@ public class GenericHostConfiguration {
 
     ///<summary>The IP address and port numbers</summary> 
     public List<string> IP { get; set; } = new();
+
+    ///<summary>Path to the host data.</summary> 
+    public string? HostPath { get; set; } = null;
 
 
     ///<summary>The maximum number of cores, if zero, all cores on the machine

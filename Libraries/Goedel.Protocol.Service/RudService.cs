@@ -162,18 +162,20 @@ public class RudService : Disposable {
         HttpListener.IsSupported.AssertTrue(ServerNotSupported.Throw);
         httpListener = new HttpListener();
         foreach (var provider in providers) {
-            foreach (var endpoint in provider.Endpoints) {
-                if (endpoint is HttpEndpoint httpEndpoint) {
+            if (provider.Endpoints != null) {
+                foreach (var endpoint in provider.Endpoints) {
+                    if (endpoint is HttpEndpoint httpEndpoint) {
 
 
-                    var uri = httpEndpoint.GetUriPrefix();
-                    //uri = "http://+:15099/.well-known/";
-                    //Screen.WriteLine($"Connect to URI {uri}");
+                        var uri = httpEndpoint.GetUriPrefix();
+                        //uri = "http://+:15099/.well-known/";
+                        //Screen.WriteLine($"Connect to URI {uri}");
 
-                    httpListener.Prefixes.Add(uri);
-                    providerMap.Add(uri, provider);
+                        httpListener.Prefixes.Add(uri);
+                        providerMap.Add(uri, provider);
 
-                    Logger.LogInformation("Listen on URI {uri}", uri);
+                        Logger.LogInformation("Listen on URI {uri}", uri);
+                        }
                     }
                 }
             //udpListenerCount += provider.UdpEndpoints.Count;

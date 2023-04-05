@@ -152,11 +152,42 @@ public static class Extensions {
         }
 
 
-    public static CatalogedRegistration ResolveCallsign(
-            string callsign) {
+    public static CallsignBinding ResolveCallsign(
+                this ContextAccount contextAccount,
+                string callsign) {
 
 
         throw new NYI();
         }
 
+
+    public static (CallsignBinding, string) CallsignRequestStatus(
+                this ContextAccount contextAccount,
+                string callsign) {
+
+
+        throw new NYI();
+        }
+
+    public static CallsignBinding CallsignTransfer(
+            this ContextAccount contextAccount,
+            string callsign,
+            string recipient) {
+
+
+        throw new NYI();
+        }
+
+
+    public static CallsignBinding ListCallsigns(
+                this ContextAccount contextAccount,
+                string callsign) {
+
+
+        throw new NYI();
+        }
+
+
     }
+
+

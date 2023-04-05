@@ -225,3 +225,7 @@ File MiscUnsorted
 			|To be requested IANA service name for Mesh presence service
 
 
+	String DirectoryKeys "Keys"
+	String DirectoryProfiles "Profiles"
+	String DirectoryAccounts "Accounts"
+	String DirectoryResolver "Resolver"

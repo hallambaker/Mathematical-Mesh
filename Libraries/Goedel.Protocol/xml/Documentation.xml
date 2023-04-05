@@ -1311,6 +1311,9 @@
         <member name="F:Goedel.Protocol.GenericHostConfiguration.ConfigurationEntry">
             <summary>The configuration entry.</summary> 
         </member>
+        <member name="M:Goedel.Protocol.GenericHostConfiguration.GetConfigurationEntry">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Protocol.GenericHostConfiguration.RunAs">
             <summary>The platform account under which the host process is to run.</summary> 
         </member>
@@ -1328,6 +1331,9 @@
         </member>
         <member name="P:Goedel.Protocol.GenericHostConfiguration.IP">
             <summary>The IP address and port numbers</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.GenericHostConfiguration.HostPath">
+            <summary>Path to the host data.</summary> 
         </member>
         <member name="P:Goedel.Protocol.GenericHostConfiguration.MaxCores">
             <summary>The maximum number of cores, if zero, all cores on the machine
@@ -1434,6 +1440,104 @@
         </member>
         <member name="F:Goedel.Protocol.LogLevelSeverity.None">
             <summary>No report</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.JbcdDocument.Root">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.JbcdDocument.Overwrite">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.JbcdDocument.Start">
+            <summary>The starting point for the document within the byte stream</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.JbcdDocument.Length">
+            <summary>The length the document within the byte stream</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.JbcdDocument.Erase(System.Int64,System.Int32,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdDocument.TryReadString(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdDocument.Parse(System.IO.FileStream,System.Int64,System.Int64,System.Boolean)">
+            <summary>
+            Parse data from the stream <paramref name="file"/> in the interval
+            <paramref name="start"/> through <paramref name="length"/> to return a 
+            <see cref="T:Goedel.Protocol.JbcdDocument"/>.
+            </summary>
+            <param name="file">The file to read data from.</param>
+            <param name="start">The first byte in the file to parse.</param>
+            <param name="length">The number of bytes to parse.</param>
+            <param name="lazy">If true, lazy evaluation should be used.</param>
+            <returns>The parsed data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdDocument.Parse(System.Byte[],System.Int64,System.Int64,System.Boolean)">
+            <summary>
+            Parse data from the buffer <paramref name="data"/> in the interval
+            <paramref name="start"/> through <paramref name="length"/> to return a 
+            <see cref="T:Goedel.Protocol.JbcdDocument"/>.
+            </summary>
+            <param name="data">The data to be read.</param>
+            <param name="start">The first byte in the file to parse.</param>
+            <param name="length">The number of bytes to parse.</param>
+            <param name="lazy">If true, lazy evaluation should be used.</param>
+            <returns>The parsed data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdDocument.Parse(System.Boolean,System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property})">
+            <summary>
+            Parse the document to create a DOM.
+            </summary>
+            <param name="lazy">If true, use lazy evaluation.</param>
+            <param name="properties">Properties dictionary.</param>
+            <returns>The parsed <see cref="T:Goedel.Protocol.JsonObject"/></returns>
+        </member>
+        <member name="T:Goedel.Protocol.JbcdDocumentFile">
+            <summary>
+            A document containing a JSON or JSON-BCD file. The naming is purposefully 
+            different to avoid conflict with the .NET JSON parser clases.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JbcdDocumentFile.File">
+            <summary>The backing file.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.JbcdDocumentFile.#ctor(System.IO.FileStream,System.Int64,System.Int64)">
+            <summary>
+            Constructor returning an instance from the file <paramref queries="file"/>
+            which must allow write access for the values modification functions to work.
+            </summary>
+            <param queries="file">The file to be read.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdDocumentFile.TryReadString(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdDocumentFile.Erase(System.Int64,System.Int32,System.Byte[])">
+            <inheritdoc/>
+            <remarks>Since erasure is expected to be an infrequent event, this implementation is
+            not optimized for speed, each byte in the target file being individually overwritten.</remarks>
+        </member>
+        <member name="T:Goedel.Protocol.JbcdDocumentMemory">
+            <summary>
+            A document containing a JSON or JSON-BCD file. The naming is purposefully 
+            different to avoid conflict with the .NET JSON parser clases.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JbcdDocumentMemory.Data">
+            <summary>The data buffer.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.JbcdDocumentMemory.#ctor(System.Byte[],System.Int64,System.Int64)">
+            <summary>
+            Constructor returning an instance from the file <paramref queries="file"/>
+            which must allow write access for the values modification functions to work.
+            </summary>
+            <param queries="file">The file to be read.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdDocumentMemory.TryReadString(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdDocumentMemory.Erase(System.Int64,System.Int32,System.Byte[])">
+            <inheritdoc/>
+            <remarks>Since erasure is expected to be an infrequent event, this implementation is
+            not optimized for speed, each byte in the target file being individually overwritten.</remarks>
         </member>
         <member name="T:Goedel.Protocol.JpcInterface">
             <summary>
@@ -1916,6 +2020,12 @@
             Returns a factory delegate that returns a reader of this type.
             </summary>
         </member>
+        <member name="M:Goedel.Protocol.JsonBcdReader.#ctor(Goedel.Protocol.ICharacterStream)">
+            <summary>
+            Construct a JSONReader from an ICharacterStream.
+            </summary>
+            <param name="input">The stream to be read.</param>
+        </member>
         <member name="M:Goedel.Protocol.JsonBcdReader.#ctor(System.IO.Stream)">
             <summary>
             Construct a JSONReader from a byte Stream.
@@ -2247,104 +2357,6 @@
         <member name="F:Goedel.Protocol.NumberPrecision.Double">
             <summary>The number is a floating point values.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.JbcdDocument.Root">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Protocol.JbcdDocument.Overwrite">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Protocol.JbcdDocument.Start">
-            <summary>The starting point for the document within the byte stream</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.JbcdDocument.Length">
-            <summary>The length the document within the byte stream</summary> 
-        </member>
-        <member name="M:Goedel.Protocol.JbcdDocument.Erase(System.Int64,System.Int32,System.Byte[])">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Protocol.JbcdDocument.TryReadString(System.Int64)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Protocol.JbcdDocument.Parse(System.IO.FileStream,System.Int64,System.Int64,System.Boolean)">
-            <summary>
-            Parse data from the stream <paramref name="file"/> in the interval
-            <paramref name="start"/> through <paramref name="length"/> to return a 
-            <see cref="T:Goedel.Protocol.JbcdDocument"/>.
-            </summary>
-            <param name="file">The file to read data from.</param>
-            <param name="start">The first byte in the file to parse.</param>
-            <param name="length">The number of bytes to parse.</param>
-            <param name="lazy">If true, lazy evaluation should be used.</param>
-            <returns>The parsed data.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.JbcdDocument.Parse(System.Byte[],System.Int64,System.Int64,System.Boolean)">
-            <summary>
-            Parse data from the buffer <paramref name="data"/> in the interval
-            <paramref name="start"/> through <paramref name="length"/> to return a 
-            <see cref="T:Goedel.Protocol.JbcdDocument"/>.
-            </summary>
-            <param name="data">The data to be read.</param>
-            <param name="start">The first byte in the file to parse.</param>
-            <param name="length">The number of bytes to parse.</param>
-            <param name="lazy">If true, lazy evaluation should be used.</param>
-            <returns>The parsed data.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.JbcdDocument.Parse(System.Boolean,System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property})">
-            <summary>
-            Parse the document to create a DOM.
-            </summary>
-            <param name="lazy">If true, use lazy evaluation.</param>
-            <param name="properties">Properties dictionary.</param>
-            <returns>The parsed <see cref="T:Goedel.Protocol.JsonObject"/></returns>
-        </member>
-        <member name="T:Goedel.Protocol.JbcdDocumentFile">
-            <summary>
-            A document containing a JSON or JSON-BCD file. The naming is purposefully 
-            different to avoid conflict with the .NET JSON parser clases.
-            </summary>
-        </member>
-        <member name="P:Goedel.Protocol.JbcdDocumentFile.File">
-            <summary>The backing file.</summary> 
-        </member>
-        <member name="M:Goedel.Protocol.JbcdDocumentFile.#ctor(System.IO.FileStream,System.Int64,System.Int64)">
-            <summary>
-            Constructor returning an instance from the file <paramref queries="file"/>
-            which must allow write access for the values modification functions to work.
-            </summary>
-            <param queries="file">The file to be read.</param>
-        </member>
-        <member name="M:Goedel.Protocol.JbcdDocumentFile.TryReadString(System.Int64)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Protocol.JbcdDocumentFile.Erase(System.Int64,System.Int32,System.Byte[])">
-            <inheritdoc/>
-            <remarks>Since erasure is expected to be an infrequent event, this implementation is
-            not optimized for speed, each byte in the target file being individually overwritten.</remarks>
-        </member>
-        <member name="T:Goedel.Protocol.JbcdDocumentMemory">
-            <summary>
-            A document containing a JSON or JSON-BCD file. The naming is purposefully 
-            different to avoid conflict with the .NET JSON parser clases.
-            </summary>
-        </member>
-        <member name="P:Goedel.Protocol.JbcdDocumentMemory.Data">
-            <summary>The data buffer.</summary> 
-        </member>
-        <member name="M:Goedel.Protocol.JbcdDocumentMemory.#ctor(System.Byte[],System.Int64,System.Int64)">
-            <summary>
-            Constructor returning an instance from the file <paramref queries="file"/>
-            which must allow write access for the values modification functions to work.
-            </summary>
-            <param queries="file">The file to be read.</param>
-        </member>
-        <member name="M:Goedel.Protocol.JbcdDocumentMemory.TryReadString(System.Int64)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Protocol.JbcdDocumentMemory.Erase(System.Int64,System.Int32,System.Byte[])">
-            <inheritdoc/>
-            <remarks>Since erasure is expected to be an infrequent event, this implementation is
-            not optimized for speed, each byte in the target file being individually overwritten.</remarks>
-        </member>
         <member name="T:Goedel.Protocol.JbcdElement">
             <summary>
             Record describing a parsed Jbcd result.
@@ -2391,6 +2403,14 @@
         </member>
         <member name="P:Goedel.Protocol.JbcdValue.DataLength">
             <summary></summary> 
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValue.GetProperty(System.Object)">
+            <summary>
+            Need to rethunk this.
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
         </member>
         <member name="T:Goedel.Protocol.JbcdValueObject">
             <summary>
@@ -2467,6 +2487,25 @@
             the default values for the type.</param>
             <returns>True if the parse succeeded, otherwise false.</returns>
         </member>
+        <member name="T:Goedel.Protocol.JbcdValueBinary">
+            <summary>
+            Record describing a parsed Jbcd string result.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JbcdValueBinary.Value">
+            <summary>The string values</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValueBinary.#ctor">
+            <summary>
+            Constructor for use by derrived records.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValueBinary.#ctor(System.Byte[])">
+            <summary>
+            Constructor returning an instance for the values <paramref name="value"/>.
+            </summary>
+            <param name="value">The values of the string.</param>
+        </member>
         <member name="T:Goedel.Protocol.JbcdValueNumber">
             <summary>
             Record describing a parsed Jbcd values result. The values itself
@@ -2478,14 +2517,6 @@
         </member>
         <member name="P:Goedel.Protocol.JbcdValueNumber.Precision">
             <summary>The number precision</summary> 
-        </member>
-        <member name="M:Goedel.Protocol.JbcdValueNumber.#ctor(System.String,Goedel.Protocol.NumberPrecision)">
-            <summary>
-            Constructor returning an instance for the values <paramref name="value"/>
-            with specified precision <paramref name="precision"/>.
-            </summary>
-            <param name="value">The values of the string.</param>
-            <param name="precision">The number precision.</param>
         </member>
         <member name="M:Goedel.Protocol.JbcdValueNumber.TryGetInt(System.Int32@)">
             <summary>
@@ -3274,6 +3305,12 @@
             <summary>
             The underlying character stream.
             </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.#ctor(Goedel.Protocol.ICharacterStream)">
+            <summary>
+            Construct a JSONReader from an ICharacterStream stream.
+            </summary>
+            <param name="Input">The stream to be read.</param>
         </member>
         <member name="M:Goedel.Protocol.JsonReader.#ctor(System.IO.TextReader)">
             <summary>

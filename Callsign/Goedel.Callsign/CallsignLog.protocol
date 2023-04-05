@@ -25,20 +25,20 @@
 		External ProfileService
 		Description 
 			|Describes a callsign resolver.
-		String RegistryAddress
-			Description
-				|The address of the registry
+		//String RegistryAddress
+		//	Description
+		//		|The address of the registry
 		Struct Enveloped<ProfileAccount> EnvelopedProfileRegistry
 			Description
 				|The registry that this resolver resolves.
-		Struct KeyData CommonEncryption
-			Description
-				|Key currently used to encrypt data under this profile
-		Struct KeyData CommonAuthentication
-			Description
-				|Key used to authenticate requests made under this user account.
-				|This key SHOULD NOT be provisioned to any device except for the
-				|purpose of enabling account recovery.
+		//Struct KeyData CommonEncryption
+		//	Description
+		//		|Key currently used to encrypt data under this profile
+		//Struct KeyData CommonAuthentication
+		//	Description
+		//		|Key used to authenticate requests made under this user account.
+		//		|This key SHOULD NOT be provisioned to any device except for the
+		//		|purpose of enabling account recovery.
 
 
 	Section 3 "Callsign registration and transfer"

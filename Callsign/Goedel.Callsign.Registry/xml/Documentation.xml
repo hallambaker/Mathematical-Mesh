@@ -739,6 +739,28 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="T:Goedel.Callsign.Registry.CallsignRegistryConfiguration">
+            <summary>
+            The Mesh service configuration.
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.Registry.CallsignRegistryConfiguration.ConfigurationEntry">
+            <summary>The configuration entry.</summary> 
+        </member>
+        <member name="M:Goedel.Callsign.Registry.CallsignRegistryConfiguration.GetConfigurationEntry">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.CallsignRegistryConfiguration.SignatureSchedule">
+            <summary>The signature schedule</summary> 
+        </member>
+        <member name="M:Goedel.Callsign.Registry.CallsignRegistryConfiguration.Create(Goedel.Mesh.Client.IMeshMachineClient,System.String)">
+            <summary>
+            Create a new instance and return the corresponding configuration file.
+            </summary>
+            <param name="GenericHostConfiguration">Generic service configuration.</param>
+            <param name="service">The service endpoing.</param>
+            <returns>The configuration setting,</returns>
+        </member>
         <member name="T:Goedel.Callsign.Registry.ContextRegistry">
             <summary>
             Context for managing the callsign registry account.

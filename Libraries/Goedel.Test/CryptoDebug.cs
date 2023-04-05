@@ -23,6 +23,8 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
+using Goedel.Protocol;
+using Xunit.Abstractions;
 
 namespace Goedel.Test.Core;
 
@@ -51,6 +53,33 @@ public enum DataValidity {
     }
 
 public static class Extension {
+
+
+    static byte[] CorruptCharacter = new byte[256];
+
+    static Extension() {
+        for (var i= 0; i< 256 ; i++) {
+            CorruptCharacter[i] = (byte)i;
+            }
+        CorruptCharacters('0', 10);
+        CorruptCharacters('a', 26);
+        CorruptCharacters('A', 26);
+        CorruptCharacter['+'] = (byte)'/';
+        CorruptCharacter['/'] = (byte)'+';
+        CorruptCharacter['-'] = (byte)'_';
+        CorruptCharacter['_'] = (byte)'-';
+        }
+
+    static void CorruptCharacters(char start, int count) {
+        var count2 = count / 2;
+        for (var i = 0; i < count; i++) {
+            CorruptCharacter[start + i] = (byte)(start + ((i+ count2) % count) );
+            }
+
+        }
+
+
+
 
     public static string CorruptedPIN(this string data) =>
         $"{data[0]}{data[1]}{data[2].Corrupt()}" + data[3..];
@@ -115,6 +144,145 @@ public static class Extension {
             return data;
             }
         }
+
+    public static void CorruptSignatureField(this Stream file, JcbdEnvelope envelope, string item) {
+        var signatures = envelope.Header.GetProperty("signatures") ??
+            envelope.Trailer.GetProperty("signatures");
+
+        var signaturesValue = signatures.Value as JbcdValueArray;
+
+        foreach (var sig in signaturesValue.Values) {
+            var sigObject = sig as JbcdValueObject;
+
+            var kid = sigObject.GetProperty(item);
+            CorruptBinary(kid.Value, file);
+            }
+        }
+
+    public static void CorruptSignature(this Stream file, JcbdEnvelope envelope) =>
+        CorruptSignatureField(file, envelope, "signature");
+
+    public static void CorruptSigner(this Stream file, JcbdEnvelope envelope) =>
+        CorruptSignatureField(file, envelope, "kid");
+
+    public static void CorruptMissingSignature(this Stream file, JcbdEnvelope envelope) {
+        var signatures = envelope.Header.GetProperty("signatures") ??
+            envelope.Trailer.GetProperty("signatures");
+
+        signatures.ClearValue(file);
+        }
+
+    public static void CorruptSalt(this Stream file, JcbdEnvelope envelope) {
+        var salt = envelope.Header.GetProperty("Salt");
+        CorruptBinary(salt.Value, file);
+        }
+
+    public static void EraseSalt(this Stream file, JcbdEnvelope envelope) {
+        var salt = envelope.Header.GetProperty("Salt");
+        salt.ClearValue(file);
+        }
+
+
+
+
+
+    public static void CorruptDigestAlg(this Stream file, JcbdEnvelope envelope) {
+
+        var digest = envelope.Header.GetProperty("dig") ;
+        digest.AssertNotNull(NYI.Throw);
+
+        Corrupt(digest.Value as JbcdValueString, file);
+
+        }
+
+
+    public static void CorruptDigestValue(this Stream file, JcbdEnvelope envelope) {
+
+        // Corrupt the header value first if present
+        var digest = envelope.Header.GetProperty("PayloadDigest");
+        if (digest != null) {
+            CorruptBinary(digest.Value, file);
+
+            // If there is a header payload value, the trailer value MUST be null
+            digest = envelope.Trailer?.GetProperty("PayloadDigest");
+            digest.AssertNull(NYI.Throw);
+            return;
+            }
+
+        // Corrupt the trailer value
+        digest = envelope.Trailer.GetProperty("PayloadDigest");
+        digest.AssertNotNull(NYI.Throw);
+        CorruptBinary(digest.Value, file);
+
+
+        }
+
+    public static void CorruptPayloadValue(this Stream file, JcbdEnvelope envelope) {
+        CorruptBinary (envelope.Body, file);
+        }
+
+    public static void Corrupt(this JbcdValueString jbcdValue, Stream file) {
+        file.Position = jbcdValue.DataStartPosition;
+
+        var b = file.ReadByte();
+
+
+        if (b == '\"') {
+            var position = file.Position;
+            b = file.ReadByte();
+
+            file.Position = position;
+            file.WriteByte(CorruptCharacter[b]);
+            }
+
+        }
+
+    public static void Corrupt(this JbcdValueBinary jbcdValue, Stream file) {
+        file.Position = jbcdValue.DataStartPosition;
+
+        var b = file.ReadByte();
+        while (b.IsWhite()) {
+            b = file.ReadByte();
+            }
+
+
+        var length = ModifierToLength(b);
+        var position = file.Position + length;
+        file.Position = position;
+        b = file.ReadByte();
+        b ^= 0x1;
+
+        file.Position = position;
+        file.WriteByte((byte)b);
+        }
+
+    static int ModifierToLength(int c) {
+        var code = c & 0x03;
+        return code switch {
+            0 => 1,
+            1 => 2,
+            2 => 4,
+            3 => 8,
+            _ => throw new NYI(),
+            };
+        }
+
+
+    public static void CorruptBinary(this JbcdValue jbcdValue, Stream file) {
+        switch (jbcdValue) {
+            case JbcdValueBinary jbcdValueBinary: {
+                Corrupt(jbcdValueBinary, file);
+                break;
+                }
+            case JbcdValueString jbcdValueString: {
+                Corrupt(jbcdValueString, file);
+                break;
+                }
+            }
+        }
+
+
+
     }
 public class CryptoStackDebug : CryptoStackEncode {
     public byte[] KeyEncrypt;

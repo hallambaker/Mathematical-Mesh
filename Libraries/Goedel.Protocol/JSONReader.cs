@@ -252,10 +252,10 @@ public partial class JsonReader : Reader {
     protected bool Lookahead = false;
 
     /// <summary>The current token string values</summary>
-    protected virtual string ResultString { get; set; }
+    public virtual string ResultString { get; set; }
 
     /// <summary>The current token binary values</summary>
-    protected virtual byte[] ResultBinary { get; set; }
+    public virtual byte[] ResultBinary { get; set; }
 
     /// <summary>Last Real32/single precision floating point values.</summary>
     public float ResultFloat;
@@ -291,6 +291,15 @@ public partial class JsonReader : Reader {
     /// The underlying character stream.
     /// </summary>
     protected ICharacterStream CharacterInput;
+
+
+    /// <summary>
+    /// Construct a JSONReader from an ICharacterStream stream.
+    /// </summary>
+    /// <param name="Input">The stream to be read.</param>
+    public JsonReader(ICharacterStream Input) => CharacterInput = Input;
+
+
 
     /// <summary>
     /// Construct a JSONReader from a TextReader stream.
@@ -380,6 +389,7 @@ public partial class JsonReader : Reader {
 
         //string In = "";
         while (Going & !EOF) {
+            
             var c = (char)CharacterInput.PeekByte();
             //In = In + c;
 

@@ -42,23 +42,27 @@ public partial class DnsConfiguration : global::Goedel.Registry.Script {
 		_Output.Write ("; Generated on {1}\n{0}", _Indent, DateTime.Now);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
-		 var hostConfig = configuration.GenericHostConfiguration;
-		 var serviceConfig = configuration.MeshServiceConfiguration;
-		 var configEntry = serviceConfig.GetConfigurationEntry();
-		 var discovery = configEntry.Discovery;
-		 var wellknown = configEntry.WellKnown;
+		 var hostConfig = configuration.GenericHost;
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
-		foreach  (var serviceDns in serviceConfig.ServiceDNS) {
-			_Output.Write ("{1}.{2}. IN TXT \"udf={3}\"\n{0}", _Indent, discovery, serviceDns, serviceConfig.ServiceUdf);
-			_Output.Write ("{1}.{2}. IN SRV 1 1 {3} {4}.\n{0}", _Indent, discovery, serviceDns, hostConfig.Port, hostConfig.HostDns);
+		foreach  (var entry in configuration.Dictionary) {
+			 var configEntry = (entry.Value as IConfigurationEntry).GetConfigurationEntry();
+			 var discovery = configEntry.Discovery;
+			 var wellknown = configEntry.WellKnown;
+			if (  (entry.Value is ServiceConfiguration serviceConfig) ) {
+				_Output.Write ("\n{0}", _Indent);
+				foreach  (var serviceDns in serviceConfig.ServiceDNS) {
+					_Output.Write ("{1}.{2}. IN TXT \"udf={3}\"\n{0}", _Indent, discovery, serviceDns, serviceConfig.ServiceUdf);
+					_Output.Write ("{1}.{2}. IN SRV 1 1 {3} {4}.\n{0}", _Indent, discovery, serviceDns, hostConfig.Port, hostConfig.HostDns);
+					}
+				_Output.Write ("\n{0}", _Indent);
+				foreach  (var ip in hostConfig.IP)  {
+					_Output.Write ("{1}. IN {2}\n{0}", _Indent, hostConfig.HostDns, GetAQuadA(ip));
+					_Output.Write ("{1}.{2}. IN TXT \"udf={3}\"\n{0}", _Indent, discovery, hostConfig.HostDns, hostConfig.HostUdf);
+					}
+				_Output.Write ("\n{0}", _Indent);
+				}
 			}
-		_Output.Write ("\n{0}", _Indent);
-		foreach  (var ip in hostConfig.IP)  {
-			_Output.Write ("{1}. IN {2}\n{0}", _Indent, hostConfig.HostDns, GetAQuadA(ip));
-			_Output.Write ("{1}.{2}. IN TXT \"udf={3}\"\n{0}", _Indent, discovery, hostConfig.HostDns, hostConfig.HostUdf);
-			}
-		_Output.Write ("\n{0}", _Indent);
 		}
 	
 
@@ -66,17 +70,20 @@ public partial class DnsConfiguration : global::Goedel.Registry.Script {
 	// NetshConfig
 	//
 	public void NetshConfig (Configuration configuration) {
-		 var hostConfig = configuration.GenericHostConfiguration;
-		 var serviceConfig = configuration.MeshServiceConfiguration;
-		 var configEntry = serviceConfig.GetConfigurationEntry();
-		 var discovery = configEntry.Discovery;
-		 var wellknown = configEntry.WellKnown;
+		 var hostConfig = configuration.GenericHost;
 		 var account = hostConfig.RunAs;
 		 var userdomain = Environment.UserDomainName;
 		 var username = Environment.UserName;
-		_Output.Write ("netsh http add urlacl url=http://+:{1}/.well-known/{2} user={3}\\{4}\n{0}", _Indent, hostConfig.Port, wellknown, userdomain, username);
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("\n{0}", _Indent);
+		foreach  (var entry in configuration.Dictionary) {
+			 var configEntry = (entry.Value as IConfigurationEntry).GetConfigurationEntry();
+			if (  (entry.Value is ServiceConfiguration serviceConfig) ) {
+				 var discovery = configEntry.Discovery;
+				 var wellknown = configEntry.WellKnown;
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("netsh http add urlacl url=http://+:{1}/.well-known/{2} user={3}\\{4}\n{0}", _Indent, hostConfig.Port, wellknown, userdomain, username);
+				_Output.Write ("\n{0}", _Indent);
+				}
+			}
 		}
 
 	}

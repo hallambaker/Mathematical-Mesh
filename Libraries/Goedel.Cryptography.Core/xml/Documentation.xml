@@ -25,9 +25,6 @@
         <member name="P:Goedel.Cryptography.Core.KeyCollectionCore.DirectoryKeys">
             <summary>Directory in which to store keys</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.Core.KeyCollectionCore.DirectoryMesh">
-            <summary>Directory in which to store Mesh application data.</summary> 
-        </member>
         <member name="M:Goedel.Cryptography.Core.KeyCollectionCore.#ctor(System.String)">
             <summary>
             Constructor returning an instance. If not-null, <paramref name="directory"/>

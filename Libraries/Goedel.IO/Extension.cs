@@ -304,6 +304,16 @@ public static partial class Extension {
         new(filename, System.IO.FileMode.Create, System.IO.FileAccess.Write);
 
     /// <summary>
+    /// Create a new file for exclusive write access, overwriting 
+    /// any existing file.
+    /// </summary>
+    /// <param name="filename">The new file name.</param>
+    /// <returns>File stream to write to the file.</returns>
+    public static FileStream OpenFileNewRW(this string filename) =>
+        new(filename, System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite);
+
+
+    /// <summary>
     /// Open an existing file for exclusive write access, or create new file.
     /// </summary>
     /// <param name="filename">The file to write to.</param>

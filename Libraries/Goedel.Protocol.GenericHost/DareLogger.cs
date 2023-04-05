@@ -69,11 +69,14 @@ public sealed class DareLoggerProvider : ILoggerProvider {
 /// <summary>
 /// The DARE file logger configuration.
 /// </summary>
-public class DareLoggerConfiguration {
+public class DareLoggerConfiguration : IConfigurationEntry {
 
     ///<summary>Return configuration entry description.</summary> 
     public readonly static ConfigurationEntry ConfigurationEntry =
         new("Dare", typeof(DareLoggerConfiguration));
+
+    ///<inheritdoc/>
+    public ConfigurationEntry GetConfigurationEntry() => ConfigurationEntry;
 
     ///<summary>List of recipients for which decryption blocks are to be created in the log.</summary> 
     public List<string> Recipients { get; set; } = new ();

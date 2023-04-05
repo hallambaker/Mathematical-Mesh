@@ -18,6 +18,43 @@
         <member name="P:Goedel.Callsign.Resolver.CallsignResolverConfiguration.Registry">
             <summary>The sevice address of the registry to resolve.</summary> 
         </member>
+        <member name="T:Goedel.Callsign.Resolver.ConsoleLoggerExtensions">
+            <summary>
+            Extensions class for adding a Mesh Service Provider to a host.
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.ConsoleLoggerExtensions.AddResolverService(Microsoft.Extensions.Hosting.IHostBuilder)">
+            <summary>
+            Inject Mesh service and options to the builder <paramref name="host"/>
+            </summary>
+            <param name="host">The service to inject.</param>
+            <returns>The value of <paramref name="host"/> for chaining.</returns>
+        </member>
+        <member name="T:Goedel.Callsign.Resolver.ResolverConfiguredService">
+            <summary>
+            A Mesh service provider in a form suited for dependency injection.
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.ResolverConfiguredService.JpcInterface">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.ResolverConfiguredService.Endpoints">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.ResolverConfiguredService.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.ResolverConfiguredService.#ctor(Microsoft.Extensions.Logging.ILogger{Goedel.Protocol.GenericHost.ManagedListener},Goedel.Mesh.IMeshMachine,Goedel.Protocol.Service.HostMonitor,Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Callsign.Resolver.CallsignResolverConfiguration},Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Protocol.GenericHostConfiguration})">
+            <summary>
+            Mesh service provider instance configured with options specifie in 
+            <paramref name="meshHostConfiguration"/> and <paramref name="genericHostConfiguration"/>.
+            </summary>
+            <param name="logger">The system logger service.</param>
+            <param name="meshMachine">The Mesh machine instance.</param>
+            <param name="hostMonitor">The host monitor for tracking host load and performance.</param>
+            <param name="meshHostConfiguration">The Mesh service configuration.</param>
+            <param name="genericHostConfiguration">The host configuration.</param>
+        </member>
         <member name="T:Goedel.Callsign.Resolver.ContextResolver">
             <summary>
             Callsign resolution service.
@@ -61,17 +98,6 @@
             <param name="meshHost">The mesh host.</param>
             <param name="catalogedService">The resolver configuration description.</param>
         </member>
-        <member name="M:Goedel.Callsign.Resolver.ContextResolver.Create(Goedel.Mesh.Client.MeshHost,System.String,Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.ProfileAccount},Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.List{System.String})">
-            <summary>
-            Create a new client resolver context.
-            </summary>
-            <param name="meshHost">The mesh host.</param>
-            <param name="resolverAddress">The address of the resolver account.</param>
-            <param name="accountSeed">Optional account seed.</param>
-            <param name="roles">The authorized roles.</param>
-            <param name="envelopedProfileRegistry">The enveloped registry profile.</param>
-            <returns></returns>
-        </member>
         <member name="M:Goedel.Callsign.Resolver.ContextResolver.Update">
             <summary>
             Update the resolver state.
@@ -94,9 +120,6 @@
             Static initializer, is called once when the module loads.
             </summary>
         </member>
-        <member name="P:Goedel.Callsign.Resolver.PublicCallsignResolver.PublicResolverService">
-            <summary>The resolver service.</summary> 
-        </member>
         <member name="P:Goedel.Callsign.Resolver.PublicCallsignResolver.MeshMachine">
             <summary>The Mesh Machine base</summary> 
         </member>
@@ -114,6 +137,9 @@
         </member>
         <member name="F:Goedel.Callsign.Resolver.PublicCallsignResolver.CatalogRegistration">
             <summary>The registation catalog.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.PublicCallsignResolver.Endpoints">
+            <summary>The service endpoints</summary> 
         </member>
         <member name="M:Goedel.Callsign.Resolver.PublicCallsignResolver.Dispose">
             <summary>

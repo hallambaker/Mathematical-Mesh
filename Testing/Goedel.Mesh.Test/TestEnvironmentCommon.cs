@@ -63,7 +63,7 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
         }
 
 
-    
+
 
 
     protected virtual PublicMeshService GetPublicMeshService() {
@@ -78,11 +78,11 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
         HostFile = System.IO.Path.Combine(MeshMachineHost.DirectoryMesh, "mmmconfiguration.json");
         Configuration = MeshMachineHost.CreatePublicMeshService( HostFile, ServiceDns);
 
-        Logger = new LogService(Configuration.GenericHostConfiguration, Configuration.MeshServiceConfiguration, null);
+        Logger = new LogService(Configuration.GenericHost, Configuration.MeshService, null);
 
 
         return new PublicMeshService(MeshMachineHost,
-            Configuration.GenericHostConfiguration, Configuration.MeshServiceConfiguration, Logger);
+            Configuration.GenericHost, Configuration.MeshService, Logger);
         }
 
     protected override PublicCallsignResolver GetCallsignResolver() {
@@ -92,18 +92,23 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
         var pathHost = System.IO.Path.Combine(
                 MeshMachineHost.DirectoryMesh, CallsignResolver.__Tag) ; ;
 
-        Configuration.CallsignResolverConfiguration = new CallsignResolverConfiguration() {
+        var callsignResolver = new CallsignResolverConfiguration() {
             Registry = CallsignRegistry,
             HostPath = pathHost
             };
+        Configuration.Add(callsignResolver);
 
-        var result = PublicCallsignResolver.Create(MeshMachineHost,
-                    Configuration.GenericHostConfiguration,
-                    Configuration.CallsignResolverConfiguration,
+
+        var result = PublicCallsignResolver.Create(
+                    MeshMachineHost,
+                    EnvelopedProfileRegistry,
+                    Configuration.GenericHost,
+                    Configuration.CallsignResolver,
                     Logger);
+        result.SyncToRegistry();
 
         if (MeshMachineHost is MeshMachineDirect meshMachineDirect) {
-            meshMachineDirect.AddService(result.PublicResolverService);
+            meshMachineDirect.AddService(result);
             }
 
 

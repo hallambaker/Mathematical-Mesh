@@ -5613,6 +5613,22 @@
             To be requested IANA service name for Mesh presence service
             </summary>
         </member>
+        <member name="F:Goedel.Mesh.MeshConstants.DirectoryKeys">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.DirectoryProfiles">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.DirectoryAccounts">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.DirectoryResolver">
+            <summary>
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.DevicePreconfigurationPrivate">
              <summary>
             
@@ -7373,8 +7389,18 @@
         <member name="P:Goedel.Mesh.IMeshMachine.DirectoryKeys">
             <summary>The directory the Mesh data is stored in.</summary>
         </member>
+        <member name="P:Goedel.Mesh.IMeshMachine.DirectoryAccounts">
+            <summary>The directory the Mesh data is stored in.</summary>
+        </member>
         <member name="P:Goedel.Mesh.IMeshMachine.KeyCollection">
             <summary>The key collection to use.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.IMeshMachine.GetServiceDirectory(System.String)">
+            <summary>
+            Retujrn the service directory for <paramref name="service"/>.
+            </summary>
+            <param name="service">The subdirectory for the service data</param>
+            <returns>The fully qualified path.</returns>
         </member>
         <member name="M:Goedel.Mesh.IMeshMachine.CreateKeyPair(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeySecurity,System.Int32,Goedel.Cryptography.KeyUses)">
             <summary>
@@ -13577,6 +13603,57 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Mesh.ActivationEntry.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.ProfileMeshService">
+             <summary>
+            
+             Profile of a Mesh Service
+             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileMeshService.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileMeshService.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Mesh.ProfileMeshService._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ProfileMeshService._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ProfileMeshService._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileMeshService._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileMeshService._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileMeshService._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ProfileMeshService.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileMeshService._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileMeshService.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>

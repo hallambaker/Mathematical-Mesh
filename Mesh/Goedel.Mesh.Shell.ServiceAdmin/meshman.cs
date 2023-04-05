@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 23-Mar-23 1:12:05 PM
+//  This file was automatically generated at 04-Apr-23 3:51:10 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -272,6 +272,11 @@ public class _Create : Goedel.Command.Dispatch ,
 		new String (),
 		new String (),
 		new ExistingFile (),
+		new String (),
+		new String (),
+		new String (),
+		new String (),
+		new String (),
 		new String ()		} ;
 
 
@@ -368,6 +373,51 @@ public class _Create : Goedel.Command.Dispatch ,
 	public virtual string _Account {
 		set => _Data[9].Parameter (value);
 		}
+	/// <summary>Field accessor for option [resolver]</summary>
+	public virtual String Resolver {
+		get => _Data[10] as String;
+		set => _Data[10]  = value;
+		}
+
+	public virtual string _Resolver {
+		set => _Data[10].Parameter (value);
+		}
+	/// <summary>Field accessor for option [registry]</summary>
+	public virtual String Registry {
+		get => _Data[11] as String;
+		set => _Data[11]  = value;
+		}
+
+	public virtual string _Registry {
+		set => _Data[11].Parameter (value);
+		}
+	/// <summary>Field accessor for option [carnet]</summary>
+	public virtual String Carnet {
+		get => _Data[12] as String;
+		set => _Data[12]  = value;
+		}
+
+	public virtual string _Carnet {
+		set => _Data[12].Parameter (value);
+		}
+	/// <summary>Field accessor for option [persist]</summary>
+	public virtual String Persist {
+		get => _Data[13] as String;
+		set => _Data[13]  = value;
+		}
+
+	public virtual string _Persist {
+		set => _Data[13].Parameter (value);
+		}
+	/// <summary>Field accessor for option [presence]</summary>
+	public virtual String Presence {
+		get => _Data[14] as String;
+		set => _Data[14]  = value;
+		}
+
+	public virtual string _Presence {
+		set => _Data[14].Parameter (value);
+		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
@@ -445,6 +495,41 @@ public class _Create : Goedel.Command.Dispatch ,
 				Brief = "The account under which the service is to run (defaults to account executing command).",
 				Index = 9,
 				Key = "account"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Resolver", 
+				Default = null, // null if null
+				Brief = "The resolver service",
+				Index = 10,
+				Key = "resolver"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Registry", 
+				Default = null, // null if null
+				Brief = "The registry account",
+				Index = 11,
+				Key = "registry"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Carnet", 
+				Default = null, // null if null
+				Brief = "The carnet service",
+				Index = 12,
+				Key = "carnet"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Persist", 
+				Default = null, // null if null
+				Brief = "The persistence service",
+				Index = 13,
+				Key = "persist"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Presence", 
+				Default = null, // null if null
+				Brief = "The presence service",
+				Index = 14,
+				Key = "presence"
 				}
 			}
 		};

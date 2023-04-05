@@ -101,7 +101,7 @@ public class CharacterStreamStringReader : ICharacterBufferedStream {
 
     #region // Properties
     /// <summary>If true, end of file has been reached. </summary>
-    public bool EOF { get; private set; } = false;
+    public virtual bool EOF { get; private set; } = false;
     #endregion
 
     readonly string Input;
@@ -116,7 +116,7 @@ public class CharacterStreamStringReader : ICharacterBufferedStream {
     #region // methods
     /// <summary>Return the next character in the stream without advancing the stream</summary>
     /// <returns>The next character in the stream</returns>
-    public char PeekChar() {
+    public virtual char PeekChar() {
         if (Position >= Input.Length) {
             EOF = true;
             return (char)0;
@@ -126,7 +126,7 @@ public class CharacterStreamStringReader : ICharacterBufferedStream {
 
     /// <summary>Return the next character in the stream and advance the stream.</summary>
     /// <returns>The next character in the stream</returns>
-    public char ReadChar() {
+    public virtual char ReadChar() {
         if (Position >= Input.Length) {
             EOF = true;
             return (char)0;
@@ -409,6 +409,58 @@ public class CharacterStreamSeekReader : CharacterStreamReader, IBufferedStream 
 
 
     #endregion
+    }
+
+public class CharacterStreamSeekBoundedReader : CharacterStreamSeekReader {
+
+    long Start;
+    long Length;
+
+
+
+    public CharacterStreamSeekBoundedReader (Stream Input,
+                long start = 0,
+                long length = -1) : base(Input) { 
+        }
+
+
+    public override byte ReadByte() {
+        var value = base.ReadByte();
+
+        //Console.WriteLine($"{value} - '{(char)value}'");
+        return value;
+        }
+
+
+    public override byte PeekByte() {
+        var value = base.PeekByte();
+
+        //Console.WriteLine($"    {value} - '{(char)value}'");
+        return value;
+        }
+
+
+    ///// <summary>Return the next character in the stream without advancing the stream</summary>
+    ///// <returns>The next character in the stream</returns>
+    //public virtual char PeekChar() {
+    //    if (Position >= Input.Length) {
+    //        EOF = true;
+    //        return (char)0;
+    //        }
+    //    return Input[Position];
+    //    }
+
+    ///// <summary>Return the next character in the stream and advance the stream.</summary>
+    ///// <returns>The next character in the stream</returns>
+    //public virtual char ReadChar() {
+    //    if (Position >= Input.Length) {
+    //        EOF = true;
+    //        return (char)0;
+    //        }
+    //    return Input[Position++];
+    //    }
+
+
     }
 
 

@@ -7,6 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Net;
 using Goedel.Discovery;
+using Goedel.Protocol.Service;
+using Goedel.Callsign.Registry;
+using Goedel.Callsign;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
+using Goedel.Mesh.Core;
 
 namespace Goedel.Mesh.ServiceAdmin;
 
@@ -15,6 +21,125 @@ namespace Goedel.Mesh.ServiceAdmin;
 /// Static class containing convenience extensions.
 /// </summary>
 public static class Extensions {
+
+
+
+    public static void BuildConfiguration(
+                    this IMeshMachineClient meshMachine,
+                    Configuration configuration,
+                    string admin) {
+
+
+        // first build the host profile and activate.
+
+
+        // Phase 1: Create the Mesh Service
+        using var service = PublicMeshService.Create(meshMachine,
+            configuration.MeshService, configuration.GenericHost);
+
+        // Mesh machine with captive direct mesh host.
+        using var directMachine = new MeshMachineDirect(meshMachine, service);
+
+        ProfileUser AdminProfile;
+        ProfileAccount ProfileRegistry = null;
+         
+
+
+
+        // Phase 2: create the administration account and add layered application admin controls.
+        if (admin != null) {
+            using var contextUser = service.AddAdministratorDirect(directMachine,
+                admin, configuration.MeshService, 
+                configuration.DareLogger);
+
+            if (configuration.CallsignRegistry != null) {
+                using var contextRegistry = contextUser.CreateRegistry(
+                        configuration.CallsignRegistry.RegistryAccount);
+                ProfileRegistry = contextRegistry.ProfileRegistryCallsign;
+                configuration.MeshService.AddProfileRegistryCallsign(ProfileRegistry);
+                }
+
+            if (configuration.CarnetService != null) {
+                throw new NYI();
+                //using var contextCarnet = contextUser.CreateRegistry(
+                //        configuration.CarnetServiceConfiguration.AdminAccount);
+                }
+            }
+
+        // Phase 3: Initialize the Mesh services
+        if (configuration.CallsignResolver != null) {
+            var resolver = PublicCallsignResolver.Create(directMachine, ProfileRegistry.GetEnvelopedProfileAccount(),
+                    configuration.GenericHost, configuration.CallsignResolver, service.LogService);
+            }
+        if (configuration.CarnetService != null) {
+            }
+        if (configuration.RepositoryService != null) {
+            }
+        if (configuration.PresenceService != null) {
+            }
+
+
+        // At this point, all the services have been created on disk, none has been started.
+        }
+
+
+    public static Configuration CreateConfig(
+                this IMeshMachineClient meshMachine,
+                string serviceDns,
+                string hostIp = null,
+                string hostDns = null,
+                string? hostAccount = null
+                ) {
+
+        hostDns ??= Dns.GetHostName();
+        hostDns ??= serviceDns;
+
+        var localEndPoints = HostNetwork.GetLocalEndpoints();
+        var ip = new List<string>();
+
+        if (hostIp is null) {
+            foreach (var localEndpoint in localEndPoints) {
+                ip.Add(localEndpoint.ToString());
+            }
+            }
+        else {
+            ip.Add(hostIp);
+            }
+
+        var pathHost = GetHost(meshMachine, hostDns);
+        var pathLog = GetHost(meshMachine, "Logs");
+
+        var hostConfiguration = new GenericHostConfiguration {
+            // HostUdf later
+            // DeviceUdf later
+            Description = $"New service configuration created on {DateTime.Now.ToRFC3339()}",
+            HostDns = hostDns,
+            IP = ip,
+            RunAs = hostAccount,
+            HostPath = pathHost
+        };
+
+        var dareLogger = new DareLoggerConfiguration {
+            Path = pathLog,
+            };
+        var consoleLogger = new ConsoleLoggerConfiguration {
+            Default = LogLevel.Trace
+            };
+
+        var logging = new Dictionary<string, object> {
+                { "Default", "Trace" },
+                { "Dare", dareLogger },
+                { "Console", consoleLogger },
+            };
+
+
+        // Create the initial service application
+        var configuration = new Configuration();
+        configuration.Add(hostConfiguration);
+        configuration.Add(dareLogger);
+
+        return configuration;
+        }
 
 
     /// <summary>
@@ -35,7 +160,9 @@ public static class Extensions {
         string hostIp = null,
         string hostDns = null,
         string admin = null,
-        string? hostAccount = null) {
+        string? hostAccount = null,
+        string resolver = null,
+        string registry = null) {
 
         hostDns ??= Dns.GetHostName();
         hostDns ??= serviceDns;
@@ -82,7 +209,8 @@ public static class Extensions {
             Description = $"New service configuration created on {DateTime.Now.ToRFC3339()}",
             HostDns = hostDns,
             IP = ip,
-            RunAs = hostAccount
+            RunAs = hostAccount,
+            HostPath = pathHost
             };
 
         var dareLogger = new DareLoggerConfiguration {
@@ -99,10 +227,10 @@ public static class Extensions {
             };
 
 
-        configuration.Add(MeshServiceConfiguration.ConfigurationEntry, serviceConfiguration);
-        configuration.Add(PresenceServiceConfiguration.ConfigurationEntry, presenceServiceConfiguration);
-        configuration.Add(GenericHostConfiguration.ConfigurationEntry, hostConfiguration);
-        configuration.Dictionary.Add("Logging", logging);
+        configuration.Add(serviceConfiguration);
+        configuration.Add(presenceServiceConfiguration);
+        configuration.Add(hostConfiguration);
+        //configuration.Dictionary.Add("Logging", logging);
 
         // create the service. This will populate the UDF fields.
         using var service = PublicMeshService.Create(meshMachine, serviceConfiguration, hostConfiguration);
@@ -115,6 +243,18 @@ public static class Extensions {
         // Write the configuration out to the file
         serviceConfig.MakePath();
         configuration.ToFile(serviceConfig);
+
+        //if (resolver != null) {
+        //    configuration.CallsignResolver = new CallsignResolverConfiguration() {
+        //        Registry = registry,
+        //        HostPath = pathHost
+        //        };
+
+
+
+        //    }
+
+
 
         return configuration;
         }

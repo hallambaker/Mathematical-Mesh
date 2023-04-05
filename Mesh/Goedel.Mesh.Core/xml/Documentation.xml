@@ -25,20 +25,17 @@
         <member name="P:Goedel.Mesh.MeshMachineCoreServer.Instance">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.MeshMachineCoreServer.DirectoryMaster">
+        <member name="P:Goedel.Mesh.MeshMachineCoreServer.DirectoryRoot">
             <summary>The directory used to store the master data.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.MeshMachineCoreServer.DirectoryMesh">
-            <summary>The directory used to store the account mesh data.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.MeshMachineCoreServer.DirectoryKeys">
-            <summary>The directory used to store host keys.</summary>
         </member>
         <member name="P:Goedel.Mesh.MeshMachineCoreServer.KeyCollection">
             <summary>The host key collection.</summary>
         </member>
         <member name="F:Goedel.Mesh.MeshMachineCoreServer.FileTypeHost">
             <summary>The IANA media type for the host file data.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.MeshMachineCoreServer.GetServiceDirectory(System.String)">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.MeshMachineCoreServer.#ctor(System.String)">
             <summary>
@@ -139,6 +136,9 @@
         <member name="P:Goedel.Mesh.Core.MeshMachineDirect.DirectoryKeys">
             <inheritdoc/>
         </member>
+        <member name="P:Goedel.Mesh.Core.MeshMachineDirect.DirectoryAccounts">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Core.MeshMachineDirect.KeyCollection">
             <inheritdoc/>
         </member>
@@ -155,6 +155,9 @@
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.Core.MeshMachineDirect.GetFilePath(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Core.MeshMachineDirect.GetServiceDirectory(System.String)">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.Core.MeshMachineDirect.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate,System.String)">

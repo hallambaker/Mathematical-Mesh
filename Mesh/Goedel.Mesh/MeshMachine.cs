@@ -71,8 +71,19 @@ public interface IMeshMachine {
     ///<summary>The directory the Mesh data is stored in.</summary>
     string DirectoryKeys { get; }
 
+    ///<summary>The directory the Mesh data is stored in.</summary>
+    string DirectoryAccounts { get; }
+
     ///<summary>The key collection to use.</summary>
     IKeyCollection KeyCollection { get; }
+
+    /// <summary>
+    /// Retujrn the service directory for <paramref name="service"/>.
+    /// </summary>
+    /// <param name="service">The subdirectory for the service data</param>
+    /// <returns>The fully qualified path.</returns>
+    string GetServiceDirectory (string service);
+
 
     /// <summary>
     /// Factory method to generate a keypair of a type specified by <paramref name="algorithmID"/>

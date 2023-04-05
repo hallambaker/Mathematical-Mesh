@@ -49,8 +49,8 @@ public partial class ResultServiceConfiguration {
 
     ///<inheritdoc/>
     public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
-        var service = Configuration.MeshServiceConfiguration;
-        var host = Configuration.GenericHostConfiguration;
+        var service = Configuration.MeshService;
+        var host = Configuration.GenericHost;
 
         builder.AppendLine($"Created Service");
         builder.AppendLine($"  Service { service.ServiceUdf}");

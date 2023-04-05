@@ -92,20 +92,20 @@ public class MeshMachineTest : MeshMachineCore {
 
 
     public ContextMeshPreconfigured Install(string filename) {
-        var machine = new MeshMachineTest(TestEnvironmentCommon, DirectoryMaster);
+        var machine = new MeshMachineTest(TestEnvironmentCommon, DirectoryRoot);
         return machine.MeshHost.Install(filename);
         }
 
     public ContextUser GetContextAccount(string localName = null, string accountName = null) {
         accountName.Future();
 
-        var machine = new MeshMachineTest(TestEnvironmentCommon, DirectoryMaster);
+        var machine = new MeshMachineTest(TestEnvironmentCommon, DirectoryRoot);
         return machine.MeshHost.GetContextMesh(localName) as ContextUser;
         }
 
 
     public static ContextUser GenerateAccountUser(
-                TestEnvironmentCommon testEnvironmentCommon,
+                TestEnvironmentBase testEnvironmentCommon,
                 string machineName,
                 string accountAddress,
                 string localName = null) {
@@ -223,7 +223,7 @@ public class KeyCollectionTest : KeyCollectionCore {
         }
 
     public KeyCollectionTest(string directory) {
-        directory = directoryKeys;
+        directoryKeys = directory;
         }
 
     }

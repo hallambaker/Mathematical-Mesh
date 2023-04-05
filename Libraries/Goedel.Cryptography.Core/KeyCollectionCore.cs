@@ -29,35 +29,61 @@ namespace Goedel.Cryptography.Core;
 /// KeyCollection implementation using platform agnostic .NET 5.0 
 /// </summary>
 public class KeyCollectionCore : KeyCollection, IKeyCollection {
+
+    const string WindowsMeshDirectory = @"Mesh";
+    const string LinuxMeshDirectory = @"Mesh";
+
     const string WindowsMeshKeys = @"Mesh\Keys";
     const string WindowsMeshProfiles = @"Mesh\Profiles";
+    const string WindowsMeshAccounts = @"Mesh\Accounts";
     const string LinuxMeshKeys = @".Mesh/Keys";
     const string LinuxMeshProfiles = @".Mesh/Profiles";
+    const string LinuxMeshAccounts = @".Mesh/Accounts";
 
     static string directoryKeys;
-    static string directoryMesh;
 
     ///<summary>Directory in which to store keys</summary> 
     public virtual string DirectoryKeys => directoryKeys;
 
-    ///<summary>Directory in which to store Mesh application data.</summary> 
-    public virtual string DirectoryMesh => directoryMesh;
 
-    static KeyCollectionCore() {
+
+
+    public static string GetServiceDirectory(string service) {
         var platform = Environment.OSVersion.Platform;
         switch (platform) {
             case PlatformID.Win32NT: {
-                    var appsRoot = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                    directoryKeys = Path.Combine(appsRoot, WindowsMeshKeys);
-                    directoryMesh = Path.Combine(appsRoot, WindowsMeshProfiles);
-                    break;
-                    }
-            default:
+                var appsRoot = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                return Path.Combine(appsRoot, WindowsMeshDirectory, service);
+                }
+            default: {
                 var userRoot = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-                directoryKeys = Path.Combine(userRoot, LinuxMeshKeys);
-                directoryMesh = Path.Combine(userRoot, LinuxMeshProfiles);
-                break;
+                return Path.Combine(userRoot, LinuxMeshDirectory, service);
+                }
             }
+        }
+
+
+    static KeyCollectionCore() {
+        directoryKeys = GetServiceDirectory("Keys");
+
+        //var platform = Environment.OSVersion.Platform;
+        //switch (platform) {
+        //    case PlatformID.Win32NT: {
+        //        var appsRoot = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        //        directoryKeys = Path.Combine(appsRoot, WindowsMeshKeys);
+        //        directoryMesh = Path.Combine(appsRoot, WindowsMeshProfiles);
+        //        directoryAccount = Path.Combine(appsRoot, WindowsMeshAccounts);
+
+        //        break;
+        //        }
+        //    default: {
+        //        var userRoot = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        //        directoryKeys = Path.Combine(userRoot, LinuxMeshKeys);
+        //        directoryMesh = Path.Combine(userRoot, LinuxMeshProfiles);
+        //        directoryAccount = Path.Combine(userRoot, LinuxMeshAccounts);
+        //        break;
+        //        }
+        //    }
         }
 
     /// <summary>
@@ -75,7 +101,8 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
 
     static void SetPlatformDirect(string directory) {
         directoryKeys = Path.Combine(directory, "Keys");
-        directoryMesh = Path.Combine(directory, "Profiles");
+        //directoryMesh = Path.Combine(directory, "Profiles");
+        //directoryAccount = Path.Combine(directory, "Accounts");
         }
 
 

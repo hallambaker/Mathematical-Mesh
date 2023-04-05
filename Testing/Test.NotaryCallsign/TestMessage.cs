@@ -36,7 +36,7 @@ namespace Goedel.XUnit;
 
 
 public partial class RegistrationTests {
-
+   
 
     [Fact]
     public void CallsignBind() {

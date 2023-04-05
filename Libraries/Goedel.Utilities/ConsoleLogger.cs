@@ -10,6 +10,11 @@ using System.Runtime.Versioning;
 namespace Goedel.Utilities;
 
 
+
+public interface IConfigurationEntry {
+    public  ConfigurationEntry GetConfigurationEntry();
+    }
+
 /// <summary>
 /// A configuration entry for a service.
 /// </summary>

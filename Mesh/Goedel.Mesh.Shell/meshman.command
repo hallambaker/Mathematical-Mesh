@@ -1253,22 +1253,19 @@
 		
 		Command CallsignTransfer "transfer"
 			Brief "Transfer a callsign to another user."
-			Parameter Recipient "recipient" String
-				Brief "The recipient to send the callsign to"
 			Parameter Identifier "id" String
 				Brief "The callsign to bind"
+			Parameter Recipient "recipient" String
+				Brief "The recipient to send the callsign to"
 			Include AccountOptions
 			Include Reporting
 		
 		Command CallsignStatus "status"
 			Brief "Report callsign registration status."
+			Parameter Identifier "id" String
+				Brief "The callsign to resolve"
 			Include AccountOptions
 			Include Reporting
-
-		Command CallsignGet "get"
-			Brief "Report callsign registration status."
-			Include AccountOptions
-			Include Reporting		
 		
 		Command CallsignList "list"
 			Brief "List callsign registrations."

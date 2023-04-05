@@ -108,13 +108,30 @@ public partial class ProfileService {
                 out ActivationHost activationDevice,
                 out ConnectionService connectionDevice) {
 
+
         // Create the service profile
         profileService = ProfileService.Generate(meshMachine.KeyCollection);
 
+
+        CreateService (meshMachine, profileService, out profileHost, out activationDevice,  
+            out connectionDevice);
+
+
+        }
+
+    public static void CreateService(
+            IMeshMachine meshMachine,
+            ProfileService profileService,
+            out ProfileHost profileHost,
+            out ActivationHost activationDevice,
+            out ConnectionService connectionDevice) {
         // Create a host profile and add create a connection to the host.
+
         profileHost = ProfileHost.CreateHost(meshMachine);
         activationDevice = new ActivationHost(profileHost, profileService.UdfString);
         activationDevice.Envelope(encryptionKey: profileHost.KeyEncrypt);
+
+
         // Persist the profile keys
         profileService.PersistSeed(meshMachine.KeyCollection);
         profileHost.PersistSeed(meshMachine.KeyCollection);
@@ -134,9 +151,9 @@ public partial class ProfileService {
         // Strip and sign the device connection.
         connectionDevice.Strip();
         profileService.Sign(connectionDevice, ObjectEncoding.JSON_B);
-
-
         }
+
+
 
 
     /// <summary>

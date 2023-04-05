@@ -31,6 +31,17 @@
         <member name="M:Goedel.Carnet.Server.CarnetServiceConfiguration.GetConfigurationEntry">
             <inheritdoc/>
         </member>
+        <member name="P:Goedel.Carnet.Server.CarnetServiceConfiguration.Service">
+            <summary>The sevice address of the registry to resolve.</summary> 
+        </member>
+        <member name="M:Goedel.Carnet.Server.CarnetServiceConfiguration.Create(Goedel.Mesh.Client.IMeshMachineClient,Goedel.Protocol.GenericHostConfiguration,System.String)">
+            <summary>
+            Create a new instance and return the corresponding configuration file.
+            </summary>
+            <param name="GenericHostConfiguration">Generic service configuration.</param>
+            <param name="service">The service endpoing.</param>
+            <returns>The configuration setting,</returns>
+        </member>
         <member name="T:Goedel.Caarnet.Server.TBS">
             <summary>
             TBS

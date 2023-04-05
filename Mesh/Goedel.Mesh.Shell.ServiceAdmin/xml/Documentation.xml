@@ -358,6 +358,21 @@
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.Account">
             <summary>Field accessor for option [account]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.Resolver">
+            <summary>Field accessor for option [resolver]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.Registry">
+            <summary>Field accessor for option [registry]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.Carnet">
+            <summary>Field accessor for option [carnet]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.Persist">
+            <summary>Field accessor for option [persist]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.Presence">
+            <summary>Field accessor for option [presence]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>

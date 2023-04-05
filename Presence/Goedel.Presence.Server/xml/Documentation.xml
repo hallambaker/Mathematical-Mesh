@@ -211,11 +211,22 @@
         <member name="F:Goedel.Presence.Server.PresenceServiceConfiguration.UdpSocketListeners">
             <summary>Number of UDP socket listeners per protocol.</summary> 
         </member>
+        <member name="P:Goedel.Presence.Server.PresenceServiceConfiguration.Service">
+            <summary>The sevice address of the registry to resolve.</summary> 
+        </member>
         <member name="F:Goedel.Presence.Server.PresenceServiceConfiguration.ConfigurationEntry">
             <summary>The configuration entry.</summary> 
         </member>
         <member name="M:Goedel.Presence.Server.PresenceServiceConfiguration.GetConfigurationEntry">
             <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Presence.Server.PresenceServiceConfiguration.Create(Goedel.Mesh.Client.IMeshMachineClient,Goedel.Protocol.GenericHostConfiguration,System.String)">
+            <summary>
+            Create a new instance and return the corresponding configuration file.
+            </summary>
+            <param name="GenericHostConfiguration">Generic service configuration.</param>
+            <param name="service">The service endpoing.</param>
+            <returns>The configuration setting,</returns>
         </member>
     </members>
 </doc>

@@ -20,12 +20,18 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Callsign;
+using Goedel.Callsign.Resolver;
+using Goedel.Mesh.Core;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System.Net;
 
 namespace Goedel.Mesh.Test;
 
 public class TestEnvironmentRdpShell : TestEnvironmentBase {
+
+
 
     public const string ServiceDnsMesh          = "example.com";
     public const string ServiceDnsRegistry      = "registry.example.com";
@@ -62,6 +68,11 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
 
     public TestEnvironmentRdpShell(DeterministicSeed seed = null) : base(seed) { 
         }
+
+
+    public bool InitializeResolver {get; init;} = false;
+
+    public bool InitializeCarnet { get; init; } = false;
 
 
     RudService RudService { get; set; }
@@ -102,14 +113,22 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
 
         var settings = PublicMeshService.GetService(hostMachine);
 
+        //var builder = Host.CreateDefaultBuilder();
+        //var config = builder.ConfigureAppConfiguration((hostingContext, configuration) => {
+        //            configuration.Sources.Clear();
+        //            IHostEnvironment env = hostingContext.HostingEnvironment;
+        //            configuration.AddJsonFile(settings, true, true);
+        //        });
+
+
+
         return Host.CreateDefaultBuilder()
 
                 // read in the options file here.
                 .ConfigureAppConfiguration((hostingContext, configuration) => {
                     configuration.Sources.Clear();
                     IHostEnvironment env = hostingContext.HostingEnvironment;
-                    configuration
-                        .AddJsonFile(settings, true, true);
+                    configuration.AddJsonFile(settings, true, true);
                 })
                 .ConfigureLogging(logging => {
                     logging.ClearProviders();
@@ -118,8 +137,7 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
                 .ConfigureServices((hostContext, services) => {
                     services.AddSingleton<HostMonitor, HostMonitor>();
                     services.AddSingleton<IServiceListener, MeshRudListener>();
-                    services.AddSingleton<IMeshMachine, MeshMachineCore>(
-                            s => hostMachine);
+                    services.AddSingleton<IMeshMachine, MeshMachineCore>(s => hostMachine);
                 });
 
         }
@@ -134,19 +152,36 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
 
         HostMachineMesh = new MeshMachineTest(this, "hostMesh");
 
+
+
+
         // initialize the service and host configuration
         ServiceAdminShell = new Shell.ServiceAdmin.Shell() {
             MeshMachine = HostMachineMesh
             };
         ServiceAdminCLI = new();
-        ServiceAdmin(ServiceAdminShell, 
-            $"create {ServiceDnsMesh} /host=host1.{ServiceDnsMesh} /ip={ServiceIpMesh} /admin=admin@{ServiceDnsMesh} /account=Domain\\user");
+
+        var createCommand = $"create {ServiceDnsMesh} /host=host1.{ServiceDnsMesh} " +
+            $"/ip={ServiceIpMesh} /admin=admin@{ServiceDnsMesh} /account=Domain\\user";
+        if (InitializeResolver) {
+            createCommand += $"/resolver /registry={AccountRegistry}";
+            }
+        if (InitializeCarnet) {
+            }
+
+        ServiceAdmin(ServiceAdminShell, createCommand);
 
         ServiceAdmin(ServiceAdminShell, $"dns {dnsConfig}");
         ServiceAdmin(ServiceAdminShell, $"netsh {netshConfig}");
         var hostbuilder = DependencyInjectionHostMesh(HostMachineMesh);
 
-        using var host = hostbuilder.AddMeshService().Build();
+        using var host = hostbuilder.
+            AddGenericHost().
+            AddMeshService().
+            AddResolverService().Build();
+
+
+
 
         var services = host.Services;
         var listener = services.GetRequiredService<IServiceListener>() as MeshRudListener;
@@ -158,35 +193,94 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
 
         }
 
+    MeshConfiguredService MeshConfiguredService { get; set; }
+    public PublicMeshService GetMeshService() {
+        foreach (var provider in Providers) {
+            if (provider.JpcInterface is PublicMeshService publicMeshService) {
+                MeshConfiguredService = provider as MeshConfiguredService;
+                return publicMeshService;
+                }
+            }
 
-    public void StartServiceCallSign() {
-
-        //CancellationToken = new();
-
-
-        HostMachineRegistry = new MeshMachineTest(this, "hostCallsign");
-
-        // initialize the service and host configuration
-        ServiceAdminShellCallSign = new Shell.ServiceAdmin.Shell() {
-            MeshMachine = HostMachineRegistry
-            };
-        ServiceAdminCLI = new();
-        ServiceAdmin(ServiceAdminShellCallSign,
-            $"create {ServiceDnsRegistry} /host=host1.{ServiceDnsRegistry} /ip={ServiceIpRegistry} /admin=registry@{ServiceDnsRegistry} /account=Domain\\user");
-
-        var hostbuilder = DependencyInjectionHostMesh(HostMachineRegistry);
-
-        using var host = hostbuilder.AddMeshService().Build();
-
-        var services = host.Services;
-        var listener = services.GetRequiredService<IServiceListener>() as MeshRudListener;
-        Providers1 = services.GetServices<IConfguredService>();
-
-
-        RudServiceCallSign = listener.RudService;
-
-
+        return null;
         }
+
+    public PublicMeshService GetCallsignResolver() {
+        foreach (var provider in Providers) {
+            if (provider.JpcInterface is PublicMeshService publicMeshService) {
+                MeshConfiguredService = provider as MeshConfiguredService;
+                return publicMeshService;
+                }
+            }
+
+        return null;
+        }
+
+
+
+    //protected override PublicCallsignResolver GetCallsignResolverX() {
+
+    //    var pathHost = System.IO.Path.Combine(
+    //            HostMachineMesh.DirectoryMesh, CallsignResolver.__Tag); ;
+
+    //    var meshService = GetMeshService() ;
+    //    var genericHostConfiguration = MeshConfiguredService.GenericHostConfiguration;
+
+
+    //    var callsignResolverConfiguration = new CallsignResolverConfiguration() {
+    //        Registry = CallsignRegistry,
+    //        HostPath = pathHost
+    //        };
+
+
+    //    HostMachineRegistry = new MeshMachineTest(this, "hostMesh");
+
+    //    var result = PublicCallsignResolver.Create(HostMachineRegistry,
+    //                genericHostConfiguration,
+    //                callsignResolverConfiguration,
+    //                meshService.LogService);
+
+    //    // here we establish an end point and add the resolver to the service.
+
+    //    //if (HostMachineMesh is MeshMachineDirect meshMachineDirect) {
+    //    //    meshMachineDirect.AddService(result.PublicResolverService);
+    //    //    }
+    //    throw new NYI();
+
+    //    //return result;
+
+  
+    //    }
+
+
+    //public void StartServiceCallSign() {
+
+    //    //CancellationToken = new();
+
+
+    //    HostMachineRegistry = new MeshMachineTest(this, "hostCallsign");
+
+    //    // initialize the service and host configuration
+    //    ServiceAdminShellCallSign = new Shell.ServiceAdmin.Shell() {
+    //        MeshMachine = HostMachineRegistry
+    //        };
+    //    ServiceAdminCLI = new();
+    //    ServiceAdmin(ServiceAdminShellCallSign,
+    //        $"create {ServiceDnsRegistry} /host=host1.{ServiceDnsRegistry} /ip={ServiceIpRegistry} /admin=registry@{ServiceDnsRegistry} /account=Domain\\user");
+
+    //    var hostbuilder = DependencyInjectionHostMesh(HostMachineRegistry);
+
+    //    using var host = hostbuilder.AddMeshService().Build();
+
+    //    var services = host.Services;
+    //    var listener = services.GetRequiredService<IServiceListener>() as MeshRudListener;
+    //    Providers1 = services.GetServices<IConfguredService>();
+
+
+    //    RudServiceCallSign = listener.RudService;
+
+
+    //    }
 
 
 

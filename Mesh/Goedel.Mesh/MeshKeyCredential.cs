@@ -76,6 +76,9 @@ public class MeshKeyCredentialPrivate : KeyCredentialPrivate, ICredentialPrivate
             };
 
 
+    public override ICredentialPublic GetICredentialPublic() => GetMeshKeyCredentialPublic();
+
+
     ///<inheritdoc/>
     public override ICredentialPublic GetCredentials(List<PacketExtension> extensions) {
 

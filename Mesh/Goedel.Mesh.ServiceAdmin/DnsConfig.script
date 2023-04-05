@@ -12,12 +12,14 @@
 ; Generated on #{DateTime.Now}
 
 
-#% var hostConfig = configuration.GenericHostConfiguration;
-#% var serviceConfig = configuration.MeshServiceConfiguration;
-#% var configEntry = serviceConfig.GetConfigurationEntry();
+#% var hostConfig = configuration.GenericHost;
+
+
+#foreach (var entry in configuration.Dictionary)
+#% var configEntry = (entry.Value as IConfigurationEntry).GetConfigurationEntry();
 #% var discovery = configEntry.Discovery;
 #% var wellknown = configEntry.WellKnown;
-
+#if (entry.Value is ServiceConfiguration serviceConfig)
 
 #foreach (var serviceDns in serviceConfig.ServiceDNS)
 #{discovery}.#{serviceDns}. IN TXT "udf=#{serviceConfig.ServiceUdf}"
@@ -29,6 +31,8 @@
 #{discovery}.#{hostConfig.HostDns}. IN TXT "udf=#{hostConfig.HostUdf}"
 #end foreach
 
+#end if
+#end foreach
 #end method
 
 
@@ -36,17 +40,20 @@
 
 
 #method NetshConfig Configuration configuration
-#% var hostConfig = configuration.GenericHostConfiguration;
-#% var serviceConfig = configuration.MeshServiceConfiguration;
-#% var configEntry = serviceConfig.GetConfigurationEntry();
-#% var discovery = configEntry.Discovery;
-#% var wellknown = configEntry.WellKnown;
+#% var hostConfig = configuration.GenericHost;
 #% var account = hostConfig.RunAs;
 #% var userdomain = Environment.UserDomainName;
 #% var username = Environment.UserName;
+#foreach (var entry in configuration.Dictionary)
+#% var configEntry = (entry.Value as IConfigurationEntry).GetConfigurationEntry();
+#if (entry.Value is ServiceConfiguration serviceConfig)
+#% var discovery = configEntry.Discovery;
+#% var wellknown = configEntry.WellKnown;
+
 netsh http add urlacl url=http://+:#{hostConfig.Port}/.well-known/#{wellknown} user=#{userdomain}\#{username}
 
-
+#end if
+#end foreach
 #end method
 
 #end pclass

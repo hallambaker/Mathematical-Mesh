@@ -28,6 +28,7 @@ using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
+using Goedel.Protocol;
 using Goedel.Test;
 using Goedel.Test.Core;
 using Goedel.Utilities;
@@ -183,15 +184,60 @@ namespace Goedel.XUnit;
 //    }
 
 
+
+
+
+
 public partial class ShellTests {
 
     public static string CommonData => "../../../CommonData/";
+
+
+
+    [Theory]
+    [InlineData(false, false)]
+
+    public void TestParseFile(
+                    bool encrypt = false,
+                    bool sign = false) {
+        StartTest(encrypt, sign);
+
+
+        var alice = CreateMasterDevice("Device1A", AliceAccount);
+
+        var filename = Seed.GetTempFileName();
+
+        // make a file 
+
+
+        Seed.MakeTestFile(filename, 100);
+
+
+        var options = encrypt ? $" /encrypt={alice.ContextUser.AccountAddress}" : "";
+        options += sign ? $" /sign={alice.ContextUser.AccountAddress}" : "";
+
+
+        var fileEncoded = Seed.GetTempFileName();
+        alice.Dispatch($"dare encode {filename} {fileEncoded} {options}");
+
+        //using var input = fileEncoded.OpenFileRead();
+        //var envelope = DareEnvelope.FromJSON(input);
+
+
+        var corruptedFile = CorruptFile(fileEncoded, encrypt, sign);
+
+        var redactedFile = RedactFile(fileEncoded, encrypt, sign);
+
+        }
 
 
     [Fact]
     public void NewFileTestAll() {
         StartTest();
         CreateAliceBobMallet(out var alice, out var bob, out var mallet);
+
+        NewFileTest(Seed, false, true, false, alice, bob, mallet, info: "sign");
+
 
         // Plaintext
         NewFileTest(Seed, false, false, false, alice, bob, mallet, info: "plaintext");
@@ -266,7 +312,7 @@ public partial class ShellTests {
             }
 
         if (sign | notarize) {
-            var corruptedFile = CorruptFile(fileEncoded); 
+            var corruptedFile = CorruptFile(fileEncoded, encrypt, sign); 
             var aliceDecoded2 = seed.GetTempFileName();
             alice.Dispatch($"dare decode {fileEncoded} {aliceDecoded2}, fail:true");
             seed.CheckTestFileNotExist(aliceDecoded2);
@@ -274,11 +320,72 @@ public partial class ShellTests {
 
         }
 
-    static string CorruptFile(string file1) {
-        throw new NYI();
+    static string CorruptFile(string file1, bool encrypt, bool sign) {
+        var result = file1 + ".corrupt";
+        using var inputStream = file1.OpenFileReadWrite();
+        var document = JbcdDocumentFile.Parse(inputStream);
+        var envelope = new JcbdEnvelope(document);
+
+        inputStream.Position = 0;
+        using var outputStream = result.OpenFileNewRW();
+
+        inputStream.CopyTo( outputStream );
+
+        outputStream.CorruptDigestAlg(envelope);
+        outputStream.CorruptDigestValue(envelope);
+        outputStream.CorruptPayloadValue(envelope);
+
+        if (encrypt) {
+            outputStream.CorruptSalt(envelope);
+            }
+
+        if (sign) {
+            outputStream.CorruptSignature(envelope);
+            outputStream.CorruptSigner(envelope);
+            }
+
+        return result;
         }
 
+    static string RedactFile(string file1, bool encrypt, bool sign) {
+        var result = file1 + ".redact";
+        using var inputStream = file1.OpenFileReadWrite();
+        var document = JbcdDocumentFile.Parse(inputStream);
+        var envelope = new JcbdEnvelope(document);
+
+        inputStream.Position = 0;
+        using var outputStream = result.OpenFileNewRW();
+
+        inputStream.CopyTo(outputStream);
+
+        if (encrypt) {
+            outputStream.EraseSalt(envelope);
+            }
+
+        if (sign) {
+            outputStream.CorruptMissingSignature(envelope);
+            }
+
+        return result;
+        }
+
+
+    //static void CorruptDigestAlg(Stream file, JcbdEnvelope envelope) {
+
+    //    var digest = envelope.Header.GetProperty("dig");
+    //    digest.AssertNotNull(NYI.Throw);
+
+    //    file.Position = digest.Value.DataStartPosition;
+    //    for (var i = 0; i < digest.Value.DataLength; i++) {
+    //        var b = file.ReadByte();
+    //        Console.WriteLine($"[b]  -> {(char) b}");
+    //        }
+
+    //    }
+
+
     [Theory]
+    [InlineData(true, false, false, false)]
     [InlineData(true, true, false, false)]
     public void NewArchiveTestOnce(
                     bool encrypt,
@@ -327,7 +434,7 @@ public partial class ShellTests {
             };
 
         var options = encrypt ? $" /encrypt={bob.ContextUser.AccountAddress} " : "";
-        options += self ? $" /encrypt={alice.ContextUser.AccountAddress} " : "";
+        options += self ? $" /self={alice.ContextUser.AccountAddress} " : "";
 
         bool checkSelf = !encrypt | self;
 

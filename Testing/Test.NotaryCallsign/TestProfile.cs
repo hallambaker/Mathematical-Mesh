@@ -31,8 +31,11 @@ using Goedel.Mesh.Test;
 using Goedel.Protocol.Service;
 using Goedel.Test;
 using Goedel.Test.Core;
+using Goedel.Callsign.Registry;
 
 using Xunit;
+using Goedel.Callsign;
+using Goedel.Callsign.Resolver;
 
 #pragma warning disable IDE0059
 #pragma warning disable IDE0060
@@ -58,12 +61,26 @@ public partial class RegistrationTests {
     string AccountC => $"carol@{ServiceDns}";
 
     string AccountQ => $"quartermaster@{ServiceDns}";
+    string AccountRegistry => $"registry@{ServiceDns}";
+
+
 
     static string DeviceQName => "DeviceQ";
 
     static string DeviceAdminName => "DeviceAdmin";
 
     static string DeviceConnect1Name => "DeviceConnect1";
+
+    public string CallsignAlice => "@alice";
+    public string CallsignBob => "@bob";
+    public string CallsignMallet => "@mallet";
+    public string CallsignRegistry => "@registry";
+
+
+
+    public PublicCallsignResolver CallsignResolver { get; set; }
+
+    public ResolverServiceClient ResolverServiceClient { get; set; }
 
     Result MakeAccount(TestCLI device, string account) {
         var result = device.Dispatch($"account create {account}");
@@ -145,12 +162,38 @@ public partial class RegistrationTests {
 
 
 
-    public ContextUser GetCallSignService(
+    public ContextRegistry GetCallSignService(
                     int charge = 0) {
 
-        TestEnvironment.StartServiceCallSign();
+        //TestEnvironment.StartServiceCallSign();
 
-        throw new NYI();
+
+        var contextAccountQ = MeshMachineTest.GenerateAccountUser(TestEnvironment,
+                 DeviceQName, AccountQ, "main");
+
+        var pages = Page.LoadResources();
+
+        var callsignMapping = new CallsignMapping();
+
+
+        var contextRegistry = contextAccountQ.CreateRegistry(AccountRegistry);
+
+        TestEnvironment.EnvelopedProfileRegistry = contextRegistry.ProfileRegistryCallsign.GetEnvelopedProfileAccount();
+
+        //// Bind to the callsign @callsign
+        var meshService = TestEnvironment.GetMeshService();
+        meshService.CallsignServiceProfile = contextRegistry.Profile as ProfileAccount;
+        var bindRegistry = contextRegistry.CallsignRequest(CallsignRegistry, bind: true, transfer: null);
+        contextRegistry.Process();
+
+        CallsignResolver = TestEnvironment.Resolver;
+        ResolverServiceClient = CallsignResolver.GetClient();
+
+        CallsignResolver.SyncToRegistry();
+
+
+
+        return contextRegistry;
         }
 
     public TestCLI GetCarnetService() {
