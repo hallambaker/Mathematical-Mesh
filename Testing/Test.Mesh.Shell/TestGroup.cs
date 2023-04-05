@@ -36,8 +36,7 @@ public partial class ShellTests {
     ///after he is removed.</summary>
     [Fact]
     public void TestMessageGroup() {
-        Seed = DeterministicSeed.AutoClean();
-        StartTest();
+        StartTest(Mode);
 
 
         var accountGroup = "groupw@example.com";

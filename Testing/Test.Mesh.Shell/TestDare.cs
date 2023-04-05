@@ -200,7 +200,7 @@ public partial class ShellTests {
     public void TestParseFile(
                     bool encrypt = false,
                     bool sign = false) {
-        StartTest(encrypt, sign);
+        StartTest(Mode, encrypt, sign);
 
 
         var alice = CreateMasterDevice("Device1A", AliceAccount);
@@ -233,7 +233,7 @@ public partial class ShellTests {
 
     [Fact]
     public void NewFileTestAll() {
-        StartTest();
+        StartTest(Mode);
         CreateAliceBobMallet(out var alice, out var bob, out var mallet);
 
         NewFileTest(Seed, false, true, false, alice, bob, mallet, info: "sign");
@@ -261,7 +261,7 @@ public partial class ShellTests {
                     bool encrypt=false,
                     bool sign = false,
                     bool notarize = false) {
-        StartTest(encrypt, sign, notarize);
+        StartTest(Mode, encrypt, sign, notarize);
 
         CreateAliceBobMallet(out var alice, out var bob, out var mallet);
 
@@ -293,11 +293,11 @@ public partial class ShellTests {
         options += sign ? $" /sign={alice.ContextUser.AccountAddress}" : "";
 
         // encode
-        var fileEncoded = seed.GetTempFileName();
+        var fileEncoded = seed.GetTempFilePath();
         alice.Dispatch($"dare encode {filename} {fileEncoded} {options}");
 
         // decode as Alice
-        var aliceDecoded = seed.GetTempFileName();
+        var aliceDecoded = seed.GetTempFilePath();
         alice.Dispatch($"dare decode {fileEncoded} {aliceDecoded}");
         seed.CheckTestFile(aliceDecoded, length, info);
 
@@ -307,16 +307,14 @@ public partial class ShellTests {
         //seed.CheckTestFile(bobDecoded, length, info);
 
         if (encrypt) {
-            var malletDecoded = seed.GetTempFileName();
+            var malletDecoded = seed.GetTempFilePath();
             mallet.Dispatch($"dare decode {fileEncoded} {malletDecoded}", fail: true);
             seed.CheckTestFileNotExist(malletDecoded);
             }
 
         if (sign | notarize) {
-            alice.Dispatch($"dare decode {fileEncoded} {aliceDecoded} /verify");
-
             var corruptedFile = CorruptFile(fileEncoded, encrypt, sign); 
-            var aliceDecoded2 = seed.GetTempFileName();
+            var aliceDecoded2 = seed.GetTempFilePath();
             alice.Dispatch($"dare decode {corruptedFile} {aliceDecoded2} /verify", fail:true);
             seed.CheckTestFileNotExist(aliceDecoded2);
             }
@@ -396,7 +394,8 @@ public partial class ShellTests {
                     bool sign,
                     bool notarize,
                     bool checkErase = false) {
-        Seed = DeterministicSeed.AutoClean(encrypt, self, sign, notarize, checkErase);
+
+        Seed = DeterministicSeed.AutoClean(Mode, encrypt, self, sign, notarize, checkErase);
         CreateAliceBobMallet(out var alice, out var bob, out var mallet);
 
 
@@ -422,7 +421,7 @@ public partial class ShellTests {
 
         var source = Path.Combine(sourceDir, sourcePath);
         var archive = seed.GetTempFilePath();
-        var extraFile = seed.GetTempFileName();
+        var extraFile = seed.GetTempFilePath();
         var deleteFile = Path.Combine(sourcePath, "Test_Key_RSA_Alice.prv");
         var eraseFile = Path.Combine(sourcePath, "Test_Key_RSA_Bob.prv");
 
@@ -658,7 +657,7 @@ public partial class ShellTests {
                 string sign = null
         ) {
 
-        Seed = DeterministicSeed.AutoClean(encrypt, sign );
+        Seed = DeterministicSeed.AutoClean(Mode, encrypt, sign );
         // create Alice account
         var accountAlice = AliceAccount;
         CreateAccount(accountAlice);

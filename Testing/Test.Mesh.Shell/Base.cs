@@ -44,7 +44,7 @@ namespace Goedel.XUnit;
 
 public partial class ShellTestBase : Disposable {
 
-
+    public virtual string Mode => "";
 
 
 
@@ -73,7 +73,7 @@ public partial class ShellTestBase : Disposable {
     #region // The test environment specific calls
 
     public DeterministicSeed Seed { 
-            get => seed ?? DeterministicSeed.AutoClean().CacheValue (out seed); 
+            get => seed ?? DeterministicSeed.AutoClean(Mode).CacheValue (out seed); 
             set => seed = value; }
     DeterministicSeed seed;
 
@@ -108,6 +108,10 @@ public partial class ShellTestBase : Disposable {
 
 
 public partial class ShellTestsAdmin : ShellTests {
+
+
+    public override string Mode => "Shell";
+
     TestEnvironmentBase testEnvironmentCommon;
 
 

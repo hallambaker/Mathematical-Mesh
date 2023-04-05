@@ -83,8 +83,8 @@ public partial class ShellTests {
 
     [Fact]
     public void TestProfileContact() {
-        Seed = DeterministicSeed.AutoClean();
-        StartTest();
+
+        StartTest(Mode);
 
         var device1 = GetTestCLI("Device1");
         var device2 = GetTestCLI("Device2");

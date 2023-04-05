@@ -117,6 +117,7 @@ public partial class ShellTests {
     [InlineData(256)]
     [InlineData(512)]
     public void TestRandom(int bits) {
+        StartTest(Mode, bits);
 
         var bitsClause = bits == 0 ? "" : $" /bits {bits}";
         bits = bits == 0 ? 128 : bits;
@@ -137,6 +138,8 @@ public partial class ShellTests {
             results.Contains(random).TestFalse();
             results.Add(random);
             }
+
+        EndTest();
         }
 
     [Theory]
@@ -146,6 +149,8 @@ public partial class ShellTests {
     [InlineData(256)]
     [InlineData(512)]
     public void TestKey(int bits) {
+        StartTest(Mode, bits);
+
         var bitsClause = bits == 0 ? "" : $" /bits {bits}";
         bits = bits == 0 ? 128 : bits;
         var length = (bits + 12) / 5;
@@ -164,6 +169,8 @@ public partial class ShellTests {
             results.Contains(random).TestFalse();
             results.Add(random);
             }
+
+        EndTest();
         }
 
     #endregion
