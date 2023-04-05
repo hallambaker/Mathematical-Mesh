@@ -20,6 +20,7 @@
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
 using Goedel.Mesh;
 using Goedel.Mesh.Client;
 using Goedel.Protocol;
@@ -291,8 +292,23 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
 
 
     #endregion
-    #region // Dispatch Methods
+    #region // Implement IResolver
 
+    public bool TryResolveCallsign(string callsign, out Enveloped<Registration> callsignBinding) {
+
+        if (CatalogRegistration.TryGetValue(callsign, out var index)) {
+            var result = index.JsonObject as CatalogedRegistration;
+            callsignBinding = result.EnvelopedRegistration;
+            return true;
+            }
+
+        callsignBinding = null;
+        return false;
+        }
+
+
+    #endregion
+    #region // Dispatch Methods
 
     public void SyncToRegistry() {
         var registrySelect = new ConstraintsSelect() {
@@ -330,11 +346,17 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
             }
 
         }
-
+    
+    
+    ///<inheritdoc/>
     public override QueryResponse Query(QueryRequest request, IJpcSession session) {
-        throw new NotImplementedException();
+        TryResolveCallsign(request.CallSign, out var envelopedRegistration);
+        return new QueryResponse(envelopedRegistration);
         }
 
+    ///<inheritdoc/>
+    ///<remarks>Not currently implemented as this operation requires checking the request is
+    ///from an authorized administrator.</remarks>
     public override SyncResponse Sync(SyncRequest request, IJpcSession session) {
         throw new NotImplementedException();
         }

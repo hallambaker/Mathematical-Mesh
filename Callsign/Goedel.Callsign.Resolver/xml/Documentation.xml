@@ -162,6 +162,14 @@
             The class specific disposal routine.
             </summary>
         </member>
+        <member name="M:Goedel.Callsign.Resolver.PublicCallsignResolver.Query(Goedel.Callsign.QueryRequest,Goedel.Protocol.IJpcSession)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.PublicCallsignResolver.Sync(Goedel.Callsign.SyncRequest,Goedel.Protocol.IJpcSession)">
+            <inheritdoc/>
+            <remarks>Not currently implemented as this operation requires checking the request is
+            from an authorized administrator.</remarks>
+        </member>
         <member name="T:Goedel.Callsign.Resolver.ResolverServer">
             <summary>
             The resolver server.

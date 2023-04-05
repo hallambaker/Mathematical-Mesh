@@ -56,6 +56,7 @@ public partial class QueryResponse {
         }
 
     public QueryResponse(Enveloped<Registration> result) {
+        
         Result = result;
         Status = result == null ? 404 : 201;
         if (result != null) {

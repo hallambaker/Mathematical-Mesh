@@ -60,88 +60,14 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
-        /* Minor */
-        //ShellTestsAdmin.Test().NewFileTestAll();
-
-
-
-        //ShellTestsAdmin.Test().NewArchiveTestOnce(true, true, false, false);
-
-
-
-
-
-
-
-
-
-        //ShellTestsAdmin.Test().TestHello();
-        //ShellTestsAdmin.Test().TestParseFile(true, true);
-
-
-        //ShellTestsAdmin.Test().TestHello();
-        //TestService.Test().ProtocolHello();
-
-        //TestService.Test().MeshServiceFull();
-        //TestService.Test().MeshCatalogGroup();
-        //TestService.Test().MeshMessageConfirm();
-        //TestService.Test().MeshMessageContact();
-
-
-
-        //ShellTests.Test().TestMessageGroup();
-        //ShellTests.Test().TestProfileConnect();
-
-        //ShellTests.Test().TestProfileContact();
-
-
-
-        //TestSequences.Test().ZContainerIsolatedPolicy();
-        //TestSequences.Test().ZContainerOnceExchange();
-        //TestSequences.Test().ZContainerSessionPolicy();
-
-
-        //TestDareArchive.Test().ArchiveTest();
-
-        //ShellTests.Test().NewFileTestOnce(false, false, false);
-        //ShellTests.Test().NewArchiveTestOnce(false, false, false);
-
-        /* Need thinking */
-
-        //ShellTests.Test().TestArchive(); 
-        //ShellTests.Test().TestSequence();
-        //ShellTests.Test().TestMessageConfirmationAccept();
-
-
-
-
-        //ShellTests.Test().TestProfileConnectPin();
-        //ShellTests.Test().TestProfileConnectPinReused();
-        //ShellTests.Test().TestProfileContact();
-        //ShellTests.Test().TestLog();
-
-        //CallsignDirect.Test().CreateRegistry();
-        //CallsignDirect.Test().RegisterAlice();
-        //CallsignDirect.Test().RegisterAliceDuplicate();
-
-
-
-
-        //CallsignDirect.Test().RegisterAliceTransferBob();
-
-        //CallsignDirect.Test().TestRegisterFail();
-        //CallsignDirect.Test().TestRegisterSuccess();
-        //CallsignDirect.Test().RegisterAliceConnectBob();
-
-
-
-        //TestService.Test().MeshDeviceThresholdKey();
-
-        //TestDareArchive.Test().ArchiveRelativeDirectory();
-        //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
-
-        //ShellTests.Test().NewArchiveTestOnce(true, false, false, false);
         //ShellTests.Test().NewArchiveTestOnce(true, true, false, false);
+
+        /* Minor */
+
+        //CallsignDirect.Test().RegisterAlice();
+        //CallsignDirect.Test().RegisterAliceConnectBob();
+        //CallsignDirect.Test().RegisterAliceDuplicate();
+        //CallsignDirect.Test().RegisterAliceTransferBob();
 
         /* Callsigns */
 
@@ -153,6 +79,15 @@ partial class Program {
         RegistrationTests.Test().CallsignPresencePresent();
         RegistrationTests.Test().CallsignPresenceAbsent();
 
+
+        /* The presence stuff */
+        TestPresence.Test().PresenceStatusUpdate();
+        TestPresence.Test().PresenceSessionRequest();
+        TestPresence.Test().PresenceHeartbeat();
+        TestService.Test().MeshPresence();
+
+
+
         /* Callsigns But likely redundant */
         TCallsign.Test().TestIssue();
         TCallsign.Test().TestResolve();
@@ -163,12 +98,7 @@ partial class Program {
 
 
 
-        /* The presence stuff */
 
-        TestPresence.Test().PresenceStatusUpdate();
-        TestPresence.Test().PresenceSessionRequest();
-        TestPresence.Test().PresenceHeartbeat();
-        TestService.Test().MeshPresence();
 
         /* Save for later */
 
