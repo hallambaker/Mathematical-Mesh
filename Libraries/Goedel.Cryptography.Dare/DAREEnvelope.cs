@@ -528,7 +528,9 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         using (var buffer = new MemoryStream()) {
             var decoder = message.Header.GetDecoder(
                 jsonReader, out var reader,
-                keyCollection: keyCollection);
+                keyCollection: keyCollection,
+                decrypt: decrypt,
+                verify: verify);
             reader.CopyTo(buffer);
             decoder.Close();
             message.PayloadDigestComputed = decoder.DigestValue;
@@ -701,11 +703,22 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     /// <param name="outputFile">The output file, must support writing</param>
     /// <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
     public static long Decode(
-        string inputFile,
-        string outputFile = null,
-        IKeyLocate keyCollection = null) {
+            string inputFile,
+            string outputFile = null,
+            IKeyLocate keyCollection = null,
+            bool verify = false) {
         using var input = inputFile.OpenFileRead();
-        return Decode(input, null, outputFile, keyCollection);
+
+        var tempFile = verify ? outputFile+".tmp" : outputFile;
+
+        var length = Decode(input, null, tempFile, keyCollection, verify);
+
+        if (verify) {
+            File.Move(tempFile, outputFile, true);
+            }
+
+
+        return length;
         }
 
     /// <summary>
@@ -716,10 +729,11 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     /// <param name="outputFile">The output file, must support writing</param>
     /// <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
     public static long Decode(
-        Stream inputStream,
-        Stream outputStream,
-        string outputFile = null,
-        IKeyLocate keyCollection = null) {
+            Stream inputStream,
+            Stream outputStream,
+            string outputFile = null,
+            IKeyLocate keyCollection = null,
+            bool verify = false) {
         long length = -1;
         keyCollection ??= Cryptography.KeyCollection.Default;
 
@@ -727,7 +741,8 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         using var message = DecodeHeader(jsonBcdReader);
         var decoder = message.Header.GetDecoder(
             jsonBcdReader, out var Reader,
-            keyCollection: keyCollection);
+            keyCollection: keyCollection,
+            verify: verify);
 
         if (outputStream != null) {
             Reader.CopyTo(outputStream);
@@ -741,6 +756,27 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
             length = output.Length;
             }
         decoder.Close();
+
+        if (verify) {
+
+
+
+
+        // read in the trailer
+            if (jsonBcdReader.NextArray()) {
+                message.Trailer = DareTrailer.FromJson(jsonBcdReader, false);
+                }
+
+            var payloadDigest = message.Trailer?.PayloadDigest ??
+                 message.Header.PayloadDigest;
+
+            payloadDigest.AssertEqual(decoder.DigestValue, NYI.Throw);
+
+            // here we check the digest value
+            }
+
+
+        // here flip the temporary files into the final
 
         return length;
         }
@@ -756,7 +792,8 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         Stream inputStream,
         Stream outputStream,
         IKeyLocate keyCollection,
-        out DareHeader dareHeader
+        out DareHeader dareHeader,
+        bool verify = false
         ) {
         keyCollection ??= Cryptography.KeyCollection.Default;
 
@@ -767,7 +804,8 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         try {
             var decoder = message.Header.GetDecoder(
                 jsonBcdReader, out var Reader,
-                keyCollection: keyCollection);
+                keyCollection: keyCollection,
+                verify: verify);
 
             Reader.CopyTo(outputStream);
             outputStream.Flush();
@@ -809,7 +847,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
 
         var decoder = message.Header.GetDecoder(
             jsonBcdReader, out var Reader,
-            keyCollection: keyCollection, decrypt: false);
+            keyCollection: keyCollection, decrypt: false, verify: true);
 
         Reader.CopyTo(Stream.Null);
         decoder.Close();

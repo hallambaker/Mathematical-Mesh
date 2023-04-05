@@ -259,10 +259,11 @@ public partial class DareHeader {
     /// <param name="decrypt">If true, attempt to decrypt.</param>
     /// <returns>The decoder. </returns>
     public CryptoStackStream GetDecoder(
-                    JsonBcdReader jsonBcdReader,
-                    out Stream reader,
-                   IKeyLocate keyCollection = null,
-                   bool decrypt = true) {
+                JsonBcdReader jsonBcdReader,
+                out Stream reader,
+                IKeyLocate keyCollection = null,
+                bool decrypt = true,
+                bool verify = false) {
         CryptoStack = GetCryptoStack(keyCollection, decrypt: decrypt);
 
         return CryptoStack.GetDecoder(jsonBcdReader, out reader);

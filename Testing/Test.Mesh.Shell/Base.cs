@@ -73,7 +73,7 @@ public partial class ShellTestBase : Disposable {
     #region // The test environment specific calls
 
     public DeterministicSeed Seed { 
-            get => seed ?? DeterministicSeed.Auto().CacheValue (out seed); 
+            get => seed ?? DeterministicSeed.AutoClean().CacheValue (out seed); 
             set => seed = value; }
     DeterministicSeed seed;
 
@@ -90,7 +90,7 @@ public partial class ShellTestBase : Disposable {
 
 
     public virtual void StartTest(params object[] parameters) {
-        Seed = DeterministicSeed.Auto(parameters);
+        Seed = DeterministicSeed.AutoClean(parameters);
         testEnvironment = GetTestEnvironment(Seed);
         }
 

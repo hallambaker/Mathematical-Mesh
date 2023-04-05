@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 04-Apr-23 3:50:42 PM
+//  This file was automatically generated at 05-Apr-23 12:35:20 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -15858,7 +15858,8 @@ public class _DareDecode : Goedel.Command.Dispatch ,
 		new Flag (),
 		new ExistingFile (),
 		new NewFile (),
-		new String ()		} ;
+		new String (),
+		new Flag ()		} ;
 
 
 
@@ -15954,6 +15955,15 @@ public class _DareDecode : Goedel.Command.Dispatch ,
 	public virtual string _SymmetrictKey {
 		set => _Data[9].Parameter (value);
 		}
+	/// <summary>Field accessor for option [verify]</summary>
+	public virtual Flag Verify {
+		get => _Data[10] as Flag;
+		set => _Data[10]  = value;
+		}
+
+	public virtual string _Verify {
+		set => _Data[10].Parameter (value);
+		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
@@ -16031,6 +16041,13 @@ public class _DareDecode : Goedel.Command.Dispatch ,
 				Brief = "Specifies the value of the master key",
 				Index = 9,
 				Key = "key"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Verify", 
+				Default = "false", // null if null
+				Brief = "Verify the message digest and signature if present.",
+				Index = 10,
+				Key = "verify"
 				}
 			}
 		};

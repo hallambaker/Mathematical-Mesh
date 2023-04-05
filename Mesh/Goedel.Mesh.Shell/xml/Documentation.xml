@@ -3776,6 +3776,9 @@
         <member name="P:Goedel.Mesh.Shell._DareDecode.SymmetrictKey">
             <summary>Field accessor for option [key]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DareDecode.Verify">
+            <summary>Field accessor for option [verify]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DareVerify.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>

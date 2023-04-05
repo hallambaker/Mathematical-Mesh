@@ -1413,7 +1413,7 @@
             <param name="keyCollection">Key collection to be used for decryption.</param>
             <returns>The decoded object.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Decode(System.String,System.String,Goedel.Cryptography.IKeyLocate)">
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Decode(System.String,System.String,Goedel.Cryptography.IKeyLocate,System.Boolean)">
             <summary>
             Decode a streamed message
             </summary>
@@ -1421,7 +1421,7 @@
             <param name="outputFile">The output file, must support writing</param>
             <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Decode(System.IO.Stream,System.IO.Stream,System.String,Goedel.Cryptography.IKeyLocate)">
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Decode(System.IO.Stream,System.IO.Stream,System.String,Goedel.Cryptography.IKeyLocate,System.Boolean)">
             <summary>
             Decode a streamed message
             </summary>
@@ -1430,7 +1430,7 @@
             <param name="outputFile">The output file, must support writing</param>
             <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.TryDecode(System.IO.Stream,System.IO.Stream,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.DareHeader@)">
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.TryDecode(System.IO.Stream,System.IO.Stream,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.DareHeader@,System.Boolean)">
             <summary>
             Decode a streamed message
             </summary>
@@ -1719,7 +1719,7 @@
             </summary>
             <returns>The created CryptoStack</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareHeader.GetDecoder(Goedel.Protocol.JsonBcdReader,System.IO.Stream@,Goedel.Cryptography.IKeyLocate,System.Boolean)">
+        <member name="M:Goedel.Cryptography.Dare.DareHeader.GetDecoder(Goedel.Protocol.JsonBcdReader,System.IO.Stream@,Goedel.Cryptography.IKeyLocate,System.Boolean,System.Boolean)">
             <summary>
             Return a decoder for the specified data source.
             </summary>

@@ -290,6 +290,7 @@ public partial class ShellTests {
         seed.MakeTestFile(filename, length, info);
 
         var options = encrypt ? $" /encrypt={alice.ContextUser.AccountAddress}" : "";
+        options += sign ? $" /sign={alice.ContextUser.AccountAddress}" : "";
 
         // encode
         var fileEncoded = seed.GetTempFileName();
@@ -312,9 +313,11 @@ public partial class ShellTests {
             }
 
         if (sign | notarize) {
+            alice.Dispatch($"dare decode {fileEncoded} {aliceDecoded} /verify");
+
             var corruptedFile = CorruptFile(fileEncoded, encrypt, sign); 
             var aliceDecoded2 = seed.GetTempFileName();
-            alice.Dispatch($"dare decode {fileEncoded} {aliceDecoded2}, fail:true");
+            alice.Dispatch($"dare decode {corruptedFile} {aliceDecoded2} /verify", fail:true);
             seed.CheckTestFileNotExist(aliceDecoded2);
             }
 

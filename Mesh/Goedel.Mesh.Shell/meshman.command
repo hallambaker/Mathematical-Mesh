@@ -902,6 +902,9 @@
 				Brief "Decrypted File"
 			Option SymmetrictKey "key" String
 				Brief "Specifies the value of the master key"	
+			Option Verify "verify" Flag
+				Brief "Verify the message digest and signature if present."
+				Default "false"
 
 		Command DareVerify "verify"
 			Brief "Verify a DARE Message."
