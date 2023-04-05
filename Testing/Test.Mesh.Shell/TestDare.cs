@@ -284,7 +284,7 @@ public partial class ShellTests {
                     ) {
 
 
-        var filename = seed.GetTempFileName();
+        var filename = seed.GetTempFilePath();
 
         // make a file 
         seed.MakeTestFile(filename, length, info);

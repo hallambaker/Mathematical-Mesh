@@ -61,11 +61,11 @@ partial class Program {
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
         /* Minor */
-        ShellTestsAdmin.Test().NewFileTestAll();
+        //ShellTestsAdmin.Test().NewFileTestAll();
 
 
 
-        ShellTestsAdmin.Test().NewArchiveTestOnce(true, true, false, false);
+        //ShellTestsAdmin.Test().NewArchiveTestOnce(true, true, false, false);
 
 
 
@@ -76,7 +76,7 @@ partial class Program {
 
 
         //ShellTestsAdmin.Test().TestHello();
-        ShellTestsAdmin.Test().TestParseFile(true, true);
+        //ShellTestsAdmin.Test().TestParseFile(true, true);
 
 
         //ShellTestsAdmin.Test().TestHello();
