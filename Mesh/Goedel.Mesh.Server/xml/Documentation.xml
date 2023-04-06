@@ -1588,7 +1588,7 @@
             <param name="service">The service endpoing.</param>
             <returns>The configuration setting,</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshServiceConfiguration.AddProfileRegistryCallsign(Goedel.Mesh.ProfileAccount,System.String)">
+        <member name="M:Goedel.Mesh.Server.MeshServiceConfiguration.AddProfileRegistryCallsign(Goedel.Cryptography.Dare.DareEnvelope,System.String)">
             <summary>
             Save the callsign registry profile <paramref name="profileAccount"/> to a file and record the file
             location in <paramref name="filename"/>.

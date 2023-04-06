@@ -44,8 +44,8 @@ public static class Extensions {
         // Mesh machine with captive direct mesh host.
         using var directMachine = new MeshMachineDirect(meshMachine, service);
 
-        ProfileUser AdminProfile;
-        ProfileAccount ProfileRegistry = null;
+        ProfileUser adminProfile;
+        ProfileAccount profileRegistry = null;
          
 
 
@@ -59,8 +59,9 @@ public static class Extensions {
             if (configuration.CallsignRegistry != null) {
                 using var contextRegistry = contextUser.CreateRegistry(
                         configuration.CallsignRegistry.RegistryAccount);
-                ProfileRegistry = contextRegistry.ProfileRegistryCallsign;
-                configuration.MeshService.AddProfileRegistryCallsign(ProfileRegistry);
+                profileRegistry = contextRegistry.ProfileRegistryCallsign;
+                var envelope = contextRegistry.ProfileRegistryCallsign.DareEnvelope;
+                configuration.MeshService.AddProfileRegistryCallsign(envelope);
                 }
 
             if (configuration.CarnetService != null) {
@@ -72,7 +73,7 @@ public static class Extensions {
 
         // Phase 3: Initialize the Mesh services
         if (configuration.CallsignResolver != null) {
-            var resolver = PublicCallsignResolver.Create(directMachine, ProfileRegistry.GetEnvelopedProfileAccount(),
+            var resolver = PublicCallsignResolver.Create(directMachine, profileRegistry.GetEnvelopedProfileAccount(),
                     configuration.GenericHost, configuration.CallsignResolver, service.LogService);
             }
         if (configuration.CarnetService != null) {

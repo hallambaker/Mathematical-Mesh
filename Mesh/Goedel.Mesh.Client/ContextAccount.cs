@@ -120,6 +120,9 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     ProfileAccount profileRegistryCallsign;
 
     ProfileAccount GetProfileRegistryCallsign() {
+
+        // failing here because CallsignServiceProfile is not being set up in the service.
+
         ProfileRegistryCallsign = AccountHostAssignment.CallsignServiceProfile;
         return ProfileRegistryCallsign;
         }

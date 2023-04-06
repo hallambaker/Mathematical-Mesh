@@ -766,7 +766,7 @@ public partial class JsonReader : Reader {
     /// <param name="file"></param>
     /// <param name="tagged"></param>
     /// <returns></returns>
-    public static T ReadFile<T>(string file, bool tagged) where T : JsonObject, new() {
+    public static T ReadFile<T>(string file, bool tagged= false) where T : JsonObject, new() {
         var result = new T();
         using var stream = file.OpenFileReadShared();
         var countedStream = new CountedUtf8StreamReader(stream);

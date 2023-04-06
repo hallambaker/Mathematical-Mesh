@@ -143,6 +143,10 @@ public static class Extensions {
             };
 
         using (var transact = contextAccount.TransactBegin()) {
+
+            // ToDo: add the Callsign application entry to the application catalog
+
+
             transact.OutboundMessageAdmin(registry, message);
             contextAccount.Transact(transact);
             }
@@ -156,6 +160,9 @@ public static class Extensions {
                 this ContextAccount contextAccount,
                 string callsign) {
 
+        // Make request to resolver
+
+
 
         throw new NYI();
         }
@@ -164,6 +171,13 @@ public static class Extensions {
     public static (CallsignBinding, string) CallsignRequestStatus(
                 this ContextAccount contextAccount,
                 string callsign) {
+        
+        // synchronize the account and process messages
+        
+        // pull the application entry
+
+
+
 
 
         throw new NYI();
@@ -174,6 +188,11 @@ public static class Extensions {
             string callsign,
             string recipient) {
 
+        // pull the contact entry for the recipient
+
+
+        // create the transfer request
+
 
         throw new NYI();
         }
@@ -182,6 +201,11 @@ public static class Extensions {
     public static CallsignBinding ListCallsigns(
                 this ContextAccount contextAccount,
                 string callsign) {
+
+        // get the application catalog
+
+        // print the entry for everything that is a callsign entry.
+
 
 
         throw new NYI();

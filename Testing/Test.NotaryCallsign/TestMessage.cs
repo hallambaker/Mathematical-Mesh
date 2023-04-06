@@ -53,7 +53,7 @@ public partial class RegistrationTests {
 
 
         // Replace this with some command that waits until a completion message is received.
-        var resultSync = deviceA.Dispatch($"callsign sync {AliceCallsign}");
+        var resultSync = deviceA.Dispatch($"callsign status {AliceCallsign}");
 
         CheckCallsign(deviceA);
 

@@ -149,8 +149,14 @@ public class PublicMeshService : MeshService {
         var path = MeshHostConfiguration.HostPath ?? meshMachine.DirectoryAccounts;
         MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate, Logger, PresenceService);
 
-
-
+        if (!meshServiceConfiguration.ProfileRegistryCallsign.IsBlank()) {
+            var envelope = JsonReader.ReadFile<DareEnvelope>(meshServiceConfiguration.ProfileRegistryCallsign);
+            var jsonObject = envelope.DecodeJsonObject();
+            //using var file = meshServiceConfiguration.ProfileRegistryCallsign.OpenFileRead() ;
+            //using var jsonReader = new JsonBcdReader(file);
+            //var envelope = DareEnvelope.FromJson(jsonReader);
+            CallsignServiceProfile = jsonObject as ProfileRegistry;
+            }
         //var instance = GenericHostConfiguration.Instance ?? meshMachine.Instance;
 
         //Endpoints.Add(
