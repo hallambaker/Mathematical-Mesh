@@ -46,6 +46,8 @@ public enum AccountPrivilege {
     Operate = 0b0100_0000,
     ///<summary>???</summary> 
     Read = 0b1000_0000,
+    ///<summary>???</summary> 
+    ReadPublic = 0b1_0000_0000,
     ///<summary>All privileges.</summary> 
     All = 0xFFF
     }

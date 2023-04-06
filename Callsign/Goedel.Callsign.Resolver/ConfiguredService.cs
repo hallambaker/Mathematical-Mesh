@@ -21,7 +21,7 @@ public static class ConsoleLoggerExtensions {
         //Screen.WriteLine($"Add Mesh Service");
 
         host.ConfigureServices((hostContext, services) => {
-            var serviceConfig = hostContext.Configuration.GetSection(GenericHostConfiguration.ConfigurationEntry.Name);
+            var serviceConfig = hostContext.Configuration.GetSection(CallsignResolverConfiguration.ConfigurationEntry.Name);
             services.AddSingleton<IConfguredService, ResolverConfiguredService>();
             var configurationService = services.Configure<CallsignResolverConfiguration>(serviceConfig);
                 //var configurationHost = services.Configure<GenericHostConfiguration>(
@@ -93,7 +93,7 @@ public class ResolverConfiguredService : IConfguredService {
         GenericHostConfiguration = genericHostConfiguration.CurrentValue;
 
 
-        if ((CallsignResolverConfiguration?.ServicePath).IsBlank()) {
+        if ((CallsignResolverConfiguration?.HostPath).IsBlank()) {
             return;
             }
 

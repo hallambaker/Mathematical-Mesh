@@ -9820,6 +9820,14 @@
             <param name="session">The request context.</param>
             <returns>The response object from the service</returns>
         </member>
+        <member name="M:Goedel.Mesh.MeshService.PublicRead(Goedel.Mesh.PublicRequest,Goedel.Protocol.IJpcSession)">
+            <summary>
+            Base method for implementing the transaction PublicRead.
+            </summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="session">The request context.</param>
+            <returns>The response object from the service</returns>
+        </member>
         <member name="M:Goedel.Mesh.MeshService.Post(Goedel.Mesh.PostRequest,Goedel.Protocol.IJpcSession)">
             <summary>
             Base method for implementing the transaction Post.
@@ -9933,6 +9941,13 @@
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
+        <member name="M:Goedel.Mesh.MeshServiceClient.PublicRead(Goedel.Mesh.PublicRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
         <member name="M:Goedel.Mesh.MeshServiceClient.Post(Goedel.Mesh.PostRequest)">
             <summary>
             Implement the transaction
@@ -10021,6 +10036,13 @@
             <returns>The response object</returns>
         </member>
         <member name="M:Goedel.Mesh.MeshServiceDirect.Transact(Goedel.Mesh.TransactRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceDirect.PublicRead(Goedel.Mesh.PublicRequest)">
             <summary>
             Implement the transaction
             </summary>		
@@ -11933,6 +11955,57 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Mesh.EntryResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.PublicRequest">
+             <summary>
+            
+             Request download from a public store (which may be encrypted).
+             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.PublicRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.PublicRequest.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Mesh.PublicRequest._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.PublicRequest._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.PublicRequest._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.PublicRequest._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.PublicRequest._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.PublicRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.PublicRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.PublicRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.PublicRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>

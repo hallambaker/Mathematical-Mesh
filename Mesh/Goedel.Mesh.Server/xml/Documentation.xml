@@ -266,6 +266,9 @@
         <member name="F:Goedel.Mesh.Server.AccountPrivilege.Read">
             <summary>???</summary> 
         </member>
+        <member name="F:Goedel.Mesh.Server.AccountPrivilege.ReadPublic">
+            <summary>???</summary> 
+        </member>
         <member name="F:Goedel.Mesh.Server.AccountPrivilege.All">
             <summary>All privileges.</summary> 
         </member>
@@ -1213,9 +1216,6 @@
         <member name="P:Goedel.Mesh.Server.PublicMeshService.LogService">
             <summary>The logging service.</summary> 
         </member>
-        <member name="P:Goedel.Mesh.Server.PublicMeshService.Endpoints">
-            <summary>The service endpoints</summary> 
-        </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Disposing">
             <inheritdoc/>
         </member>
@@ -1338,6 +1338,14 @@
             <returns>The response object from the service</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Download(Goedel.Mesh.DownloadRequest,Goedel.Protocol.IJpcSession)">
+            <summary>
+            Server method implementing the transaction  Download.
+            </summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="jpcSession">The connection authentication context.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.PublicRead(Goedel.Mesh.PublicRequest,Goedel.Protocol.IJpcSession)">
             <summary>
             Server method implementing the transaction  Download.
             </summary>
@@ -1484,6 +1492,14 @@
             <param name="deviceStatus">If true return the device status vector from the presence service.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountDownload(Goedel.Protocol.IJpcSession,System.Collections.Generic.List{Goedel.Mesh.ConstraintsSelect})">
+            <summary>
+            Update an account record. There must be an existing record and the request must
+            be appropriately authenticated.
+            </summary>
+            <param name="session">The session connection data.</param>
+            <param name="selections">The selection criteria.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshPersist.PublicDownload(Goedel.Protocol.IJpcSession,System.String,System.Collections.Generic.List{Goedel.Mesh.ConstraintsSelect})">
             <summary>
             Update an account record. There must be an existing record and the request must
             be appropriately authenticated.

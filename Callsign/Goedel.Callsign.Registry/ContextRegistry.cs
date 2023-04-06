@@ -6,6 +6,7 @@ using Goedel.Cryptography;
 using Microsoft.Extensions.Logging;
 using Goedel.Mesh;
 using System.Data.SqlTypes;
+using Goedel.Cryptography.PKIX;
 
 namespace Goedel.Callsign.Registry;
 
@@ -82,8 +83,18 @@ public class ContextRegistry : ContextAccount {
 
         CallsignMapping = new CallsignMapping();
 
-        CatalogRegistration = GetStore(CatalogRegistration.Label) as CatalogRegistration;
-        CatalogNotary = GetStore(CatalogNotary.Label) as CatalogNotary;
+        var policy = new DarePolicy() {
+            Public = true
+            };
+
+        CatalogRegistration = new CatalogRegistration(StoresDirectory, policy: policy);
+        AddStore(CatalogRegistration);
+
+        CatalogNotary = new CatalogNotary(StoresDirectory, policy: policy);
+        AddStore(CatalogNotary);
+
+        //CatalogRegistration = GetStore(CatalogRegistration.Label) as CatalogRegistration;
+        //CatalogNotary = GetStore(CatalogNotary.Label) as CatalogNotary;
         CatalogRegistration.CallsignMapping = CallsignMapping;
 
         KeyCollection.Add(KeyCommonEncryption);
@@ -91,6 +102,14 @@ public class ContextRegistry : ContextAccount {
         CallsignMapping = CallsignMapping.Default;
 
         }
+
+    void AddStore(Store store) {
+
+        var syncStore = new SyncStatus(store);
+
+        DictionaryStores.Add(store.StoreName, syncStore);
+        }
+
 
 
     /// <summary>

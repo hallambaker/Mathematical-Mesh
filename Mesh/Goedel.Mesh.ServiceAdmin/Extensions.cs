@@ -13,6 +13,7 @@ using Goedel.Callsign;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Goedel.Mesh.Core;
+using Goedel.Protocol;
 
 namespace Goedel.Mesh.ServiceAdmin;
 
@@ -21,6 +22,9 @@ namespace Goedel.Mesh.ServiceAdmin;
 /// Static class containing convenience extensions.
 /// </summary>
 public static class Extensions {
+
+
+
 
 
 

@@ -397,6 +397,8 @@
 			Description
 				|The updated data
 
+
+
 	Transaction User Transact TransactRequest TransactResponse
 		Description
 			|Attempt an atomic transaction on the containers and spools associated with an account.
@@ -470,6 +472,16 @@
 
 
 	// Public requests
+
+	Transaction Public PublicRead PublicRequest DownloadResponse
+		Description
+			|Request objects from the specified container with the specified search
+			|criteria.
+
+	Message PublicRequest
+		Inherits DownloadRequest
+		Description
+			|Request download from a public store (which may be encrypted).
 
 	Transaction Public Post PostRequest PostResponse
 		Description

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 05-Apr-23 12:31:59 PM
+//  This file was automatically generated at 06-Apr-23 12:38:20 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -104,6 +104,7 @@ public abstract partial class MeshProtocol : global::Goedel.Protocol.JsonObject 
 	    {"TransactRequest", TransactRequest._Factory},
 	    {"TransactResponse", TransactResponse._Factory},
 	    {"EntryResponse", EntryResponse._Factory},
+	    {"PublicRequest", PublicRequest._Factory},
 	    {"PostRequest", PostRequest._Factory},
 	    {"PostResponse", PostResponse._Factory},
 	    {"ClaimRequest", ClaimRequest._Factory},
@@ -175,6 +176,7 @@ public abstract partial class MeshService : Goedel.Protocol.JpcInterface {
 				{"Status", StatusRequest._Factory},
 				{"Download", DownloadRequest._Factory},
 				{"Transact", TransactRequest._Factory},
+				{"PublicRead", PublicRequest._Factory},
 				{"Post", PostRequest._Factory},
 				{"Claim", ClaimRequest._Factory},
 				{"PollClaim", PollClaimRequest._Factory},
@@ -194,6 +196,7 @@ public abstract partial class MeshService : Goedel.Protocol.JpcInterface {
 		"Status" => Status(request as StatusRequest, session),
 		"Download" => Download(request as DownloadRequest, session),
 		"Transact" => Transact(request as TransactRequest, session),
+		"PublicRead" => PublicRead(request as PublicRequest, session),
 		"Post" => Post(request as PostRequest, session),
 		"Claim" => Claim(request as ClaimRequest, session),
 		"PollClaim" => PollClaim(request as PollClaimRequest, session),
@@ -289,6 +292,15 @@ public abstract partial class MeshService : Goedel.Protocol.JpcInterface {
 	/// <returns>The response object from the service</returns>
     public abstract TransactResponse Transact (
             TransactRequest request, IJpcSession session);
+
+    /// <summary>
+	/// Base method for implementing the transaction PublicRead.
+    /// </summary>
+    /// <param name="request">The request object to send to the host.</param>
+	/// <param name="session">The request context.</param>
+	/// <returns>The response object from the service</returns>
+    public abstract DownloadResponse PublicRead (
+            PublicRequest request, IJpcSession session);
 
     /// <summary>
 	/// Base method for implementing the transaction Post.
@@ -422,6 +434,14 @@ public partial class MeshServiceClient : Goedel.Protocol.JpcClientInterface {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
+    public virtual DownloadResponse PublicRead (PublicRequest request) =>
+			JpcSession.Post("PublicRead", request) as DownloadResponse;
+
+    /// <summary>
+	/// Implement the transaction
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
     public virtual PostResponse Post (PostRequest request) =>
 			JpcSession.Post("Post", request) as PostResponse;
 
@@ -533,6 +553,15 @@ public partial class MeshServiceDirect: MeshServiceClient {
 	/// <returns>The response object</returns>
     public override TransactResponse Transact (TransactRequest request) =>
 			Service.Transact (request, JpcSession);
+
+
+    /// <summary>
+	/// Implement the transaction
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public override DownloadResponse PublicRead (PublicRequest request) =>
+			Service.PublicRead (request, JpcSession);
 
 
     /// <summary>
@@ -4233,6 +4262,98 @@ public partial class EntryResponse : MeshProtocol {
 			return Out as EntryResponse;
 			}
 		var Result = new EntryResponse ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// Request download from a public store (which may be encrypted).
+	/// </summary>
+public partial class PublicRequest : DownloadRequest {
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, DownloadRequest._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "PublicRequest";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new PublicRequest();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new PublicRequest FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as PublicRequest;
+			}
+		var Result = new PublicRequest ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

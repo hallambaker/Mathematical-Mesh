@@ -138,9 +138,6 @@
         <member name="F:Goedel.Callsign.Resolver.PublicCallsignResolver.CatalogRegistration">
             <summary>The registation catalog.</summary> 
         </member>
-        <member name="P:Goedel.Callsign.Resolver.PublicCallsignResolver.Endpoints">
-            <summary>The service endpoints</summary> 
-        </member>
         <member name="M:Goedel.Callsign.Resolver.PublicCallsignResolver.Dispose">
             <summary>
             Dispose method, frees all resources.

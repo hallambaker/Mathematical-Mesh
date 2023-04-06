@@ -325,6 +325,9 @@
 
 
 	Structure DarePolicy
+		Boolean Public
+			Description
+				|When applied to a store, indicates it is world readable.
 		String EncryptionAlgorithm
 			Tag "enc"
 			Description

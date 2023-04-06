@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 05-Apr-23 12:31:52 PM
+//  This file was automatically generated at 06-Apr-23 12:38:16 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1849,6 +1849,11 @@ public partial class DareRecipient : Dare {
 	/// </summary>
 public partial class DarePolicy : Dare {
         /// <summary>
+        ///When applied to a store, indicates it is world readable.
+        /// </summary>
+
+	public virtual bool?						Public  {get; set;}
+        /// <summary>
         ///The encryption algorithm to be used to compute the payload.
         /// </summary>
 
@@ -1900,6 +1905,12 @@ public partial class DarePolicy : Dare {
 	public override void Setter(
 			string tag, TokenValue value) { 
 		switch (tag) {
+			case "Public" : {
+				if (value is TokenValueBoolean vvalue) {
+					Public = vvalue.Value;
+					}
+				break;
+				}
 			case "enc" : {
 				if (value is TokenValueString vvalue) {
 					EncryptionAlgorithm = vvalue.Value;
@@ -1954,6 +1965,9 @@ public partial class DarePolicy : Dare {
     public override TokenValue Getter(
             string tag) {
         switch (tag) {
+			case "Public" : {
+				return new TokenValueBoolean (Public);
+				}
 			case "enc" : {
 				return new TokenValueString (EncryptionAlgorithm);
 				}
@@ -1986,6 +2000,7 @@ public partial class DarePolicy : Dare {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
+			{ "Public", new Property (typeof(TokenValueBoolean), false)} ,
 			{ "enc", new Property (typeof(TokenValueString), false)} ,
 			{ "dig", new Property (typeof(TokenValueString), false)} ,
 			{ "Encryption", new Property (typeof(TokenValueString), false)} ,

@@ -1358,22 +1358,6 @@
             <param name="cancellationToken">Cancellation, listener will abort when triggered.</param>
             <returns>The listener task.</returns>
         </member>
-        <member name="T:Goedel.Protocol.IConfguredService">
-            <summary>
-            Service provider interface.
-            </summary>
-        </member>
-        <member name="P:Goedel.Protocol.IConfguredService.JpcInterface">
-            <summary>The provider interface.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.IConfguredService.Endpoints">
-            <summary>The Service endpoints.</summary> 
-        </member>
-        <member name="M:Goedel.Protocol.IConfguredService.Dispose">
-            <summary>
-            Service dispose routine.
-            </summary>
-        </member>
         <member name="T:Goedel.Protocol.IJpcSession">
             <summary>
             Jpc Session interface.
@@ -1599,6 +1583,22 @@
         </member>
         <member name="M:Goedel.Protocol.JpcInterface.GetTagDictionary">
             <summary>Tag dictionary mapping operation tags to requests.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.IConfguredService">
+            <summary>
+            Service provider interface.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.IConfguredService.JpcInterface">
+            <summary>The provider interface.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.IConfguredService.Endpoints">
+            <summary>The Service endpoints.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.IConfguredService.Dispose">
+            <summary>
+            Service dispose routine.
+            </summary>
         </member>
         <member name="T:Goedel.Protocol.JpcClientInterface">
             <summary>

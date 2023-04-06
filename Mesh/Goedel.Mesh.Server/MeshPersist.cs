@@ -422,6 +422,43 @@ public class MeshPersist : Disposable {
         return updates;
         }
 
+    /// <summary>
+    /// Update an account record. There must be an existing record and the request must
+    /// be appropriately authenticated.
+    /// </summary>
+    /// <param name="session">The session connection data.</param>
+    /// <param name="selections">The selection criteria.</param>
+    public List<StoreUpdate> PublicDownload(
+                IJpcSession session,
+                string account,
+                List<ConstraintsSelect> selections) {
+
+        using var accountHandle = GetAccountHandleLocked(account, session, AccountPrivilege.ReadPublic);
+
+        //using var accountEntry = GetAccountVerified(account, jpcSession);
+        var updates = new List<StoreUpdate>();
+        foreach (var selection in selections) {
+            using var store = accountHandle.GetSequence(selection.Store);
+
+            store.HeaderFirst.Policy?.Public.AssertTrue(NYI.Throw);
+
+
+            var update = new StoreUpdate() {
+                Store = selection.Store,
+                Envelopes = new List<DareEnvelope>()
+                };
+
+            foreach (var message in store.SelectEnvelope(selection.IndexMin ?? 0)) {
+                message.LoadBody();
+                update.Envelopes.Add(message);
+                }
+
+            updates.Add(update);
+            }
+        return updates;
+        }
+
+
 
     /// <summary>
     /// Update an account record. There must be an existing record and the request must

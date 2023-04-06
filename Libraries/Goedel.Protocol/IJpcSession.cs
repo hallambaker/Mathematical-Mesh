@@ -111,23 +111,7 @@ public interface IServiceListener {
     }
 
 
-/// <summary>
-/// Service provider interface.
-/// </summary>
-public interface IConfguredService {
 
-    ///<summary>The provider interface.</summary> 
-    JpcInterface JpcInterface { get; }
-
-    ///<summary>The Service endpoints.</summary> 
-    public List<Endpoint> Endpoints { get; }
-
-    /// <summary>
-    /// Service dispose routine.
-    /// </summary>
-    public void Dispose();
-
-    }
 
 
 

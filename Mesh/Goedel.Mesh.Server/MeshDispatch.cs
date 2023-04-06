@@ -94,8 +94,8 @@ public class PublicMeshService : MeshService {
 
     ILogger Logger => LogService.Logger;
 
-    ///<summary>The service endpoints</summary> 
-    public List<Endpoint> Endpoints { get; } = new();
+    /////<summary>The service endpoints</summary> 
+    //public List<Endpoint> Endpoints { get; } = new();
 
 
     GenericHostConfiguration GenericHostConfiguration { get; }
@@ -150,11 +150,12 @@ public class PublicMeshService : MeshService {
         MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate, Logger, PresenceService);
 
 
-        var instance = GenericHostConfiguration.Instance ?? meshMachine.Instance;
 
-        Endpoints.Add(
-            new HttpEndpoint(GenericHostConfiguration.HostDns, GetWellKnown,
-                    GenericHostConfiguration.Port, instance, this));
+        //var instance = GenericHostConfiguration.Instance ?? meshMachine.Instance;
+
+        //Endpoints.Add(
+        //    new HttpEndpoint(GenericHostConfiguration.HostDns, GetWellKnown,
+        //            GenericHostConfiguration.Port, instance, this));
 
         var meshHost = MeshHost.GetCatalogHost(MeshMachine);
         if (meshHost?.GetStoreEntry(GenericHostConfiguration.HostUdf) is CatalogedService hostServiceDescription) {
@@ -170,6 +171,8 @@ public class PublicMeshService : MeshService {
             ActivationDevice = hostServiceDescription.EnvelopedActivationHost.Decode(KeyCollection);
             ConnectionDevice = hostServiceDescription.EnvelopedConnectionService.Decode(KeyCollection);
             }
+
+        AddEndpoints(hostConfiguration, meshMachine.Instance);
 
         }
 
@@ -599,6 +602,25 @@ public class PublicMeshService : MeshService {
 
             }
         }
+
+    /// <summary>
+    /// Server method implementing the transaction  Download.
+    /// </summary>
+    /// <param name="request">The request object to send to the host.</param>
+    /// <param name="jpcSession">The connection authentication context.</param>
+    /// <returns>The response object from the service</returns>
+    public override DownloadResponse PublicRead(
+            PublicRequest request, IJpcSession jpcSession) {
+        try {
+            var Updates = MeshPersist.PublicDownload(jpcSession, request.Account, request.Select);
+            return new DownloadResponse() { Updates = Updates };
+            }
+        catch (System.Exception exception) {
+            return new DownloadResponse(exception);
+
+            }
+        }
+
 
     /// <summary>
     /// Server method implementing the transaction  Upload.

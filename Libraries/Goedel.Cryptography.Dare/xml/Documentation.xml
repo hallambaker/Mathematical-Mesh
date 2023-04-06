@@ -2299,6 +2299,11 @@
             <param name="encrypt">The bulk encryption algorithm.</param>
             <param name="digest">The bulk digest algorithm.</param>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.DarePolicy.Public">
+             <summary>
+            When applied to a store, indicates it is world readable.
+             </summary>
+        </member>
         <member name="P:Goedel.Cryptography.Dare.DarePolicy.EncryptionAlgorithm">
              <summary>
             The encryption algorithm to be used to compute the payload.

@@ -85,14 +85,13 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
 
     public IKeyCollection KeyCollection { get; }
 
-    MeshServiceClient MeshClient { get;}
-
+    MeshServiceClient MeshClient => meshClient ?? 
+            MeshMachine.GetMeshClient(MeshKeyCredentialPrivate, Registry).CacheValue(out meshClient);
+    MeshServiceClient meshClient;
     LogService LogService { get; }
 
+    MeshKeyCredentialPrivate MeshKeyCredentialPrivate { get; }
 
-
-    ///<summary>The service endpoints</summary> 
-    public List<Endpoint> Endpoints { get; } = new();
     #endregion
 
 
@@ -155,6 +154,8 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
         KeyCollection = meshMachine.KeyCollection;
 
 
+
+
         var meshHost = MeshHost.GetCatalogHost(MeshMachine);
         // Unpack the profiles
         if (meshHost?.GetStoreEntry(hostConfiguration.HostUdf) is CatalogedService hostServiceDescription) {
@@ -172,25 +173,33 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
             ActivationDevice.Activate(ProfileHost.SecretSeed);
             }
 
-        var keyCredential = new MeshKeyCredentialPrivate(ActivationDevice.AccountAuthentication as KeyPairAdvanced, "anonymous");
+        MeshKeyCredentialPrivate = 
+            new MeshKeyCredentialPrivate(ActivationDevice.AccountAuthentication as KeyPairAdvanced, "anonymous");
 
 
-        MeshClient = meshMachine.GetMeshClient(keyCredential, Registry);
 
-        var directory = resolverServiceConfiguration.HostPath;
 
-        InitializeRepository(meshMachine, ActivationDevice.AccountAuthentication, resolverServiceConfiguration.Registry,
-            directory, CatalogRegistration.Label);
-        InitializeRepository(meshMachine, ActivationDevice.AccountAuthentication, resolverServiceConfiguration.Registry,
+
+        AddEndpoints(hostConfiguration, meshMachine.Instance);
+
+        }
+
+
+
+    public override bool Initialize(IEnumerable<IConfguredService> Services) {
+
+        var directory = CallsignResolverConfiguration.HostPath;
+
+        InitializeRepository(MeshMachine, ActivationDevice.AccountAuthentication, CallsignResolverConfiguration.Registry,
+                directory, CatalogRegistration.Label);
+        InitializeRepository(MeshMachine, ActivationDevice.AccountAuthentication, CallsignResolverConfiguration.Registry,
                 directory, CatalogNotary.Label);
 
         CatalogRegistration = new CatalogRegistration(directory);
         CatalogNotary = new CatalogNotary(directory);
 
-        ////Finally, create the actual resolver service
 
-        //PublicResolverService = new PublicResolverService(this);
-
+        return true;
         }
 
 
@@ -272,14 +281,16 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
             IndexMin = 0
             };
 
-        var downloadRequest = new DownloadRequest() {
+        var downloadRequest = new PublicRequest() {
+            Account = registry,
             Select = new() {
                 registrySelect, notarySelect
                 }
+            
             };
 
 
-        var response = meshClient.Download(downloadRequest);
+        var response = meshClient.PublicRead(downloadRequest);
         response.Success().AssertTrue(NYI.Throw);
         // here we create a new sequence by writing the envelopes to it
 
@@ -321,14 +332,15 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
             IndexMin = (int)CatalogNotary.FrameCount
             };
 
-        var downloadRequest = new DownloadRequest() {
+        var downloadRequest = new PublicRequest() {
+            Account = Registry,
             Select = new() {
                 registrySelect, notarySelect
                 }
             };
 
 
-        var response = MeshClient.Download(downloadRequest);
+        var response = MeshClient.PublicRead(downloadRequest);
 
 
 

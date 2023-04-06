@@ -31,6 +31,11 @@ namespace Goedel.Protocol;
 /// </summary>
 public abstract class JpcInterface : Disposable {
 
+    public virtual List<Endpoint> Endpoints { get; }  = new List<Endpoint>();
+
+
+
+
     /////<summary>List of DNS domains serviced by this interface.</summary> 
     //public List<string> Domains { get; set; }
 
@@ -130,6 +135,18 @@ public abstract class JpcInterface : Disposable {
 
 
 
+    public void AddEndpoints(
+                GenericHostConfiguration hostConfiguration,
+                string instance) {
+
+        instance = hostConfiguration.Instance ?? instance;
+
+        Endpoints.Add(
+            new HttpEndpoint(hostConfiguration.HostDns, GetWellKnown,
+                    hostConfiguration.Port, instance, this));
+
+        }
+
 
     /// <summary>
     /// Return a client tapping the service API directly without serialization bound to
@@ -147,6 +164,32 @@ public abstract class JpcInterface : Disposable {
 
     ///<summary>Tag dictionary mapping operation tags to requests.</summary> 
     public abstract Dictionary<string, JsonFactoryDelegate> GetTagDictionary();
+
+
+
+
+    public virtual bool Initialize(IEnumerable<IConfguredService> Providers) => true;
+
+
+    }
+
+
+/// <summary>
+/// Service provider interface.
+/// </summary>
+public interface IConfguredService {
+
+    ///<summary>The provider interface.</summary> 
+    JpcInterface JpcInterface { get; }
+
+    ///<summary>The Service endpoints.</summary> 
+    public List<Endpoint> Endpoints { get; }
+
+    /// <summary>
+    /// Service dispose routine.
+    /// </summary>
+    public void Dispose();
+
     }
 
 /// <summary>
