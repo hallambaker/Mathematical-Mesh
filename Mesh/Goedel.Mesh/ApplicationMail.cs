@@ -84,10 +84,7 @@ public partial class CatalogedApplicationMail {
     ///<summary>The OpenPGP encryption key.</summary> 
     public KeyPair OpenpgpEncryptKeyPair { get; set; }
 
-    /// <summary>
-    /// Return an escrow record for the application.
-    /// </summary>
-    /// <returns>The escrow record.</returns>
+    ///<inheritdoc/>
     public override KeyData[] GetEscrow() => new KeyData[] {
                 new KeyData(SmimeSignKeyPair, true),
                 new KeyData(SmimeEncryptKeyPair, true),

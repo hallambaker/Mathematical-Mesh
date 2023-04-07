@@ -8183,11 +8183,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ResultCallsign.CallsignBinding">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ResultCallsign.Status">
+        <member name="P:Goedel.Mesh.Shell.ResultCallsign.CallsignApplication">
             <summary>
             </summary>
         </member>
@@ -8244,7 +8240,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ResultCallsignList.CallsignBindings">
+        <member name="P:Goedel.Mesh.Shell.ResultCallsignList.CallsignApplication">
             <summary>
             </summary>
         </member>
@@ -8286,6 +8282,63 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.ResultCallsignList.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ResultCallsignResolution">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsignResolution.CallsignRegistration">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsignResolution.Message">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultCallsignResolution.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultCallsignResolution.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ResultCallsignResolution._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ResultCallsignResolution._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsignResolution._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsignResolution._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsignResolution._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsignResolution._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ResultCallsignResolution.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultCallsignResolution._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultCallsignResolution.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>

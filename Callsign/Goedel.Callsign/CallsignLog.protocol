@@ -25,21 +25,9 @@
 		External ProfileService
 		Description 
 			|Describes a callsign resolver.
-		//String RegistryAddress
-		//	Description
-		//		|The address of the registry
 		Struct Enveloped<ProfileAccount> EnvelopedProfileRegistry
 			Description
 				|The registry that this resolver resolves.
-		//Struct KeyData CommonEncryption
-		//	Description
-		//		|Key currently used to encrypt data under this profile
-		//Struct KeyData CommonAuthentication
-		//	Description
-		//		|Key used to authenticate requests made under this user account.
-		//		|This key SHOULD NOT be provisioned to any device except for the
-		//		|purpose of enabling account recovery.
-
 
 	Section 3 "Callsign registration and transfer"
 		Description
@@ -191,9 +179,32 @@
 				|The resulting catalog entry if accepted or the prior registration otherwise.
 		String Reason
 			Description
-				|Reason for refusing the registration.
+				|Reason for refusing the registration (if refused)
+				.
 
 	Structure ProcessResultCallsignRegistration
 		External ProcessResult
 		Struct CallsignRegistrationResponse CallsignRegistrationResponse
 
+	Section 3 "Application Entry"	
+
+
+	Structure CatalogedApplicationCallsign
+		External CatalogedApplication
+		Description
+			|Application entry tracking the status of a callsign binding request
+		String CallSign
+			Description
+				|The registered callsign in canonical form.		
+		String RequestId
+			Description
+				|The MessageId of the request message
+		Struct Enveloped<CallsignBinding> EnvelopedCallsignBinding
+			Description
+				|The callsign binding  
+		Struct CatalogedRegistration CatalogedRegistration
+			Description
+				|The resulting catalog entry if accepted or the prior registration otherwise.
+		String Reason
+			Description
+				|Reason for refusing the registration (if refused)

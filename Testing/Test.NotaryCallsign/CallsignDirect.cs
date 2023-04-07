@@ -66,7 +66,7 @@ public partial class CallsignDirect : UnitTestSet {
 
         // Bind to the callsign @callsign
         TestEnvironmentCommon.MeshService.CallsignServiceProfile = contextRegistry.Profile as ProfileAccount;
-        var bindRegistry = contextRegistry.CallsignRequest(CallsignRegistry, bind: true, transfer: null);
+        var bindRegistry = contextAccountAlice.CallsignRequest(CallsignRegistry, bind: true, transfer: null);
         contextRegistry.Process();
 
 

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 06-Apr-23 3:51:11 PM
+//  This file was automatically generated at 07-Apr-23 7:00:40 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -92,7 +92,8 @@ public abstract partial class CallsignEntry : global::Goedel.Protocol.JsonObject
 	    {"Challenge", Challenge._Factory},
 	    {"CallsignRegistrationRequest", CallsignRegistrationRequest._Factory},
 	    {"CallsignRegistrationResponse", CallsignRegistrationResponse._Factory},
-	    {"ProcessResultCallsignRegistration", ProcessResultCallsignRegistration._Factory}
+	    {"ProcessResultCallsignRegistration", ProcessResultCallsignRegistration._Factory},
+	    {"CatalogedApplicationCallsign", CatalogedApplicationCallsign._Factory}
 		};
 
     [ModuleInitializer]
@@ -1583,7 +1584,7 @@ public partial class CallsignRegistrationResponse : Message {
 
 	public virtual CatalogedRegistration						CatalogedRegistration  {get; set;}
         /// <summary>
-        ///Reason for refusing the registration.
+        ///Reason for refusing the registration (if refused)
         /// </summary>
 
 	public virtual string						Reason  {get; set;}
@@ -1802,6 +1803,175 @@ public partial class ProcessResultCallsignRegistration : ProcessResult {
 			return Out as ProcessResultCallsignRegistration;
 			}
 		var Result = new ProcessResultCallsignRegistration ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// Application entry tracking the status of a callsign binding request
+	/// </summary>
+public partial class CatalogedApplicationCallsign : CatalogedApplication {
+        /// <summary>
+        ///The registered callsign in canonical form.		
+        /// </summary>
+
+	public virtual string						CallSign  {get; set;}
+        /// <summary>
+        ///The MessageId of the request message
+        /// </summary>
+
+	public virtual string						RequestId  {get; set;}
+        /// <summary>
+        ///The callsign binding  
+        /// </summary>
+
+	public virtual Enveloped<CallsignBinding>						EnvelopedCallsignBinding  {get; set;}
+        /// <summary>
+        ///The resulting catalog entry if accepted or the prior registration otherwise.
+        /// </summary>
+
+	public virtual CatalogedRegistration						CatalogedRegistration  {get; set;}
+        /// <summary>
+        ///Reason for refusing the registration (if refused)
+        /// </summary>
+
+	public virtual string						Reason  {get; set;}
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "CallSign" : {
+				if (value is TokenValueString vvalue) {
+					CallSign = vvalue.Value;
+					}
+				break;
+				}
+			case "RequestId" : {
+				if (value is TokenValueString vvalue) {
+					RequestId = vvalue.Value;
+					}
+				break;
+				}
+			case "EnvelopedCallsignBinding" : {
+				if (value is TokenValueStructObject vvalue) {
+					EnvelopedCallsignBinding = vvalue.Value as Enveloped<CallsignBinding>;
+					}
+				break;
+				}
+			case "CatalogedRegistration" : {
+				if (value is TokenValueStructObject vvalue) {
+					CatalogedRegistration = vvalue.Value as CatalogedRegistration;
+					}
+				break;
+				}
+			case "Reason" : {
+				if (value is TokenValueString vvalue) {
+					Reason = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "CallSign" : {
+				return new TokenValueString (CallSign);
+				}
+			case "RequestId" : {
+				return new TokenValueString (RequestId);
+				}
+			case "EnvelopedCallsignBinding" : {
+				return new TokenValueStruct<Enveloped<CallsignBinding>> (EnvelopedCallsignBinding);
+				}
+			case "CatalogedRegistration" : {
+				return new TokenValueStruct<CatalogedRegistration> (CatalogedRegistration);
+				}
+			case "Reason" : {
+				return new TokenValueString (Reason);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "CallSign", new Property (typeof(TokenValueString), false)} ,
+			{ "RequestId", new Property (typeof(TokenValueString), false)} ,
+			{ "EnvelopedCallsignBinding", new Property ( typeof(TokenValueStruct), false,
+					()=>new Enveloped<CallsignBinding>(), ()=>new Enveloped<CallsignBinding>(), false)} ,
+			{ "CatalogedRegistration", new Property ( typeof(TokenValueStruct), false,
+					()=>new CatalogedRegistration(), ()=>new CatalogedRegistration(), false)} ,
+			{ "Reason", new Property (typeof(TokenValueString), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, CatalogedApplication._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "CatalogedApplicationCallsign";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new CatalogedApplicationCallsign();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new CatalogedApplicationCallsign FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as CatalogedApplicationCallsign;
+			}
+		var Result = new CatalogedApplicationCallsign ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

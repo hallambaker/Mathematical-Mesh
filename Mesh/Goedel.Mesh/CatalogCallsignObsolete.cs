@@ -27,7 +27,7 @@ namespace Goedel.Mesh;
 /// <summary>
 /// Bookmark catalog. Describes the bookmarks in the user's Mesh account.
 /// </summary>
-public class CatalogCallsign : Catalog<CatalogedCallsign> {
+public class CatalogCallsignObsolete : Catalog<CatalogedCallsignObsolete> {
     #region // Properties
     ///<summary>The canonical label for the catalog</summary>
     public const string Label = MeshConstants.StoreTypeCallsignTag;
@@ -60,7 +60,7 @@ public class CatalogCallsign : Catalog<CatalogedCallsign> {
                 bool decrypt = true,
                 bool create = true,
                 byte[] bitmask = null) =>
-        new CatalogCallsign(directory, storeId, policy, cryptoParameters, keyCollection, 
+        new CatalogCallsignObsolete(directory, storeId, policy, cryptoParameters, keyCollection, 
             meshClient, decrypt, create, bitmask);
 
     /// <summary>
@@ -76,7 +76,7 @@ public class CatalogCallsign : Catalog<CatalogedCallsign> {
     /// <param name="policy">The cryptographic policy to be applied to the container.</param>
     /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
-    public CatalogCallsign(
+    public CatalogCallsignObsolete(
                 string directory,
                 string storeName = null,
                 DarePolicy policy = null,
@@ -107,7 +107,7 @@ public class CatalogCallsign : Catalog<CatalogedCallsign> {
     }
 
 
-public partial class CatalogedCallsign {
+public partial class CatalogedCallsignObsolete {
 
     ///<summary>Convenience accessor to the callsign binding content.</summary> 
 
@@ -129,7 +129,7 @@ public partial class CatalogedCallsign {
 
     ///<inheritdoc/>
     public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) =>
-                new ApplicationEntryCallsign();
+                new ApplicationEntryCallsignObsolete();
 
     ///<inheritdoc/>
     public override KeyData[] GetEscrow() => new KeyData[0];
@@ -152,7 +152,7 @@ public partial class CatalogedCallsign {
     }
 
 
-public partial class ApplicationEntryCallsign {
+public partial class ApplicationEntryCallsignObsolete {
 
     ///<inheritdoc/> 
     public override void Decode(IKeyCollection keyCollection) {

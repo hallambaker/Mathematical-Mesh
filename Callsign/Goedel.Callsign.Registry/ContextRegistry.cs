@@ -169,6 +169,9 @@ public class ContextRegistry : ContextAccount {
         contextRegistry.MeshClient = registryClient;
         var contact = contextRegistry.CreateContact();
 
+
+
+
         // Commit all changes to the administrator context in a single transaction.
         using (var transaction = contextUser.TransactBegin()) {
             // Add the Registry to the application catalog

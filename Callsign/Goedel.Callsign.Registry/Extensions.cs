@@ -30,6 +30,29 @@ public static class Extensions {
             contextUser, accountAddress, accountSeed, callsignMapping:callsignMapping);
 
 
+    public static ContextRegistry GetRegistry(
+                    this ContextUser contextUser,
+                    string accountAddress,
+                    string key=null) {
+        contextUser.Sync();
 
+        var applicationCatalog = contextUser.GetStore(CatalogApplication.Label) as CatalogApplication;
+
+        foreach (var application in applicationCatalog) {
+            if (application is CatalogedRegistry catalogedRegistry) {
+                if (key == null | key == catalogedRegistry.Key) {
+
+
+
+
+                    return new ContextRegistry(contextUser, catalogedRegistry, null);
+
+                    }
+                }
+            }
+
+
+        throw new NYI();
+        }
 
     }

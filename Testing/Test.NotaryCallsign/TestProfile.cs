@@ -63,7 +63,7 @@ public partial class RegistrationTests {
     string AccountQ => $"quartermaster@{ServiceDns}";
     string AccountRegistry => $"registry@{ServiceDns}";
 
-
+    string AccountServiceAdmin => $"admin@{ServiceDns}";
 
     static string DeviceQName => "DeviceQ";
 
@@ -156,35 +156,46 @@ public partial class RegistrationTests {
     Configuration ConfigurationCallSign { get; set; }
     PublicMeshService CallSignServiceProvider { get; set; }
 
+    ContextRegistry ContextRegistry { get; set; }
 
     const string CallSignDns = "registry.example.net";
     const string CallSignIP = "127.0.0.1:666";
 
 
 
-    public ContextRegistry GetCallSignService(
+    public ContextRegistry GetContextRegistry(
                     int charge = 0) {
 
         //TestEnvironment.StartServiceCallSign();
 
+        // Create admin context
+        var adminContext = testEnvironment.HostMachineMesh.MeshHost.GetContextMesh(AccountServiceAdmin) as ContextUser;
 
-        var contextAccountQ = MeshMachineTest.GenerateAccountUser(TestEnvironment,
-                 DeviceQName, AccountQ, "main");
+        // Fetch the Callsign Registry context.
+
+
+
+        ContextRegistry = adminContext.GetRegistry(AccountRegistry);
+
+
+        //var contextAccountQ = MeshMachineTest.GenerateAccountUser(TestEnvironment,
+        //         DeviceQName, AccountQ, "main");
 
         var pages = Page.LoadResources();
 
         var callsignMapping = new CallsignMapping();
 
 
-        var contextRegistry = contextAccountQ.CreateRegistry(AccountRegistry);
+        //var contextRegistry = contextAccountQ.CreateRegistry(AccountRegistry);
 
-        TestEnvironment.EnvelopedProfileRegistry = contextRegistry.ProfileRegistryCallsign.GetEnvelopedProfileAccount();
+        TestEnvironment.EnvelopedProfileRegistry = ContextRegistry.ProfileRegistryCallsign.GetEnvelopedProfileAccount();
 
         //// Bind to the callsign @callsign
         var meshService = TestEnvironment.GetMeshService();
-        meshService.CallsignServiceProfile = contextRegistry.Profile as ProfileAccount;
-        var bindRegistry = contextRegistry.CallsignRequest(CallsignRegistry, bind: true, transfer: null);
-        contextRegistry.Process();
+        meshService.CallsignServiceProfile = ContextRegistry.Profile as ProfileAccount;
+
+        var bindRegistry = adminContext.CallsignRequest(CallsignRegistry, bind: true, transfer: null);
+        ContextRegistry.Process();
 
         CallsignResolver = TestEnvironment.Resolver;
         ResolverServiceClient = CallsignResolver.GetClient();
@@ -193,7 +204,7 @@ public partial class RegistrationTests {
 
 
 
-        return contextRegistry;
+        return ContextRegistry;
         }
 
     public TestCLI GetCarnetService() {

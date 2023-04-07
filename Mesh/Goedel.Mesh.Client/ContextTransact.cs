@@ -294,9 +294,9 @@ public abstract class Transaction<TAccount> : Disposable
         ContextAccount.GetStore(CatalogAccess.Label, decrypt:true) as CatalogAccess;
 
 
-
-
-
+    /////<summary>Returns the capability catalog for the account</summary>
+    //public CatalogApplication GetCatalogApplication() =>
+    //    ContextAccount.GetStore(CatalogApplication.Label, decrypt: true) as CatalogApplication;
     #endregion
 
 

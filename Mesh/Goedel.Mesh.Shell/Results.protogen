@@ -264,11 +264,15 @@
 
 	Structure ResultCallsign
 		Inherits		Result
-		Struct CallsignBinding CallsignBinding
-		String Status
+		Struct CatalogedApplicationCallsign CallsignApplication
 		Struct Message	Message
 
 	Structure ResultCallsignList
 		Inherits		Result
-		Struct CallsignBinding CallsignBindings
+		Struct CatalogedApplicationCallsign CallsignApplication
 			Multiple
+
+	Structure ResultCallsignResolution
+		Inherits		Result
+		Struct Registration CallsignRegistration
+		Struct Message	Message

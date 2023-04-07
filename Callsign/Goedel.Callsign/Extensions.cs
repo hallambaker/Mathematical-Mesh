@@ -88,7 +88,7 @@ public static class Extensions {
     /// <param name="contextAccount">The account context in which to make the request.</param>
     /// <param name="display">The display form of the callsign.</param>
     public static CallsignRegistrationRequest CallsignRequest(
-                this ContextAccount contextAccount,
+                this ContextUser contextAccount,
                 string callsign,
                 string display = null,
                 bool bind = false, 
@@ -135,19 +135,30 @@ public static class Extensions {
             }
         var envelopedBinding = callsignBinding.Envelope(signingKey: contextAccount.KeyAdministratorSign);
 
-        var enveloped = new Enveloped<Profile> (contextAccount.Profile.DareEnvelope);
+        var envelopedProfile = new Enveloped<Profile> (contextAccount.Profile.DareEnvelope);
 
         var message = new CallsignRegistrationRequest() {
             EnvelopedCallsignBinding = new Enveloped<CallsignBinding>(envelopedBinding),
-            Profiles = new List<Enveloped<Profile>> () { enveloped }
+            Profiles = new List<Enveloped<Profile>> () { envelopedProfile }
             };
 
+
+
+
         using (var transact = contextAccount.TransactBegin()) {
-
-            // ToDo: add the Callsign application entry to the application catalog
-
-
+            // need to add copy to self here!
             transact.OutboundMessageAdmin(registry, message);
+
+            var envelopedBindingTyped = new Enveloped<CallsignBinding>(envelopedBinding);
+            var application = new CatalogedApplicationCallsign {
+                CallSign = callsign,
+                RequestId = message.MessageId,
+                EnvelopedCallsignBinding = envelopedBindingTyped
+                };
+
+            var applicationCatalog = transact.GetCatalogApplication();
+            transact.CatalogUpdate(applicationCatalog, application);
+
             contextAccount.Transact(transact);
             }
 
@@ -156,7 +167,7 @@ public static class Extensions {
         }
 
 
-    public static CallsignBinding ResolveCallsign(
+    public static Registration ResolveCallsign(
                 this ContextAccount contextAccount,
                 string callsign) {
 
@@ -168,22 +179,23 @@ public static class Extensions {
         }
 
 
-    public static (CallsignBinding, string) CallsignRequestStatus(
-                this ContextAccount contextAccount,
+    public static CatalogedApplicationCallsign CallsignRequestStatus(
+                this ContextUser contextAccount,
                 string callsign) {
-        
+
+        contextAccount.Sync();
+        contextAccount.ProcessAutomatics();
+
         // synchronize the account and process messages
-        
+        var canonical = CallsignMapping.Default.Canonicalize(CallsignMapping.Strip(callsign));
+        var key = CatalogedApplicationCallsign.GetKey(canonical);
+        var catalogedApplication = contextAccount.GetApplication(key);
         // pull the application entry
 
-
-
-
-
-        throw new NYI();
+        return catalogedApplication as CatalogedApplicationCallsign;
         }
 
-    public static CallsignBinding CallsignTransfer(
+    public static CatalogedApplicationCallsign CallsignTransfer(
             this ContextAccount contextAccount,
             string callsign,
             string recipient) {
@@ -198,9 +210,8 @@ public static class Extensions {
         }
 
 
-    public static CallsignBinding ListCallsigns(
-                this ContextAccount contextAccount,
-                string callsign) {
+    public static List<CatalogedApplicationCallsign> ListCallsigns(
+                this ContextAccount contextAccount) {
 
         // get the application catalog
 

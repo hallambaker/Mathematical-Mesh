@@ -1205,6 +1205,12 @@ public partial class ContextUser : ContextAccount {
                             results.Add(ProcessAutomatic(groupInvitation));
                             break;
                             }
+                    default: {
+
+                        // need to add in a mechanism to hook this so that we can process the message type.
+
+                        break;
+                        }
                     }
                 }
             }

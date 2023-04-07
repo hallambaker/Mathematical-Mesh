@@ -37,6 +37,7 @@ public partial class Shell {
 
         var contextAccount = GetContextUser(options);
         var message = contextAccount.CallsignRequest(callsign, null);
+        //contextAccount.Sync();
 
         var result = new ResultCallsign() {
             Success = true,
@@ -51,6 +52,7 @@ public partial class Shell {
 
         var contextAccount = GetContextUser(options);
         var message = contextAccount.CallsignRequest(callsign, bind: true, transfer: null);
+        //contextAccount.Sync();
 
         var result = new ResultCallsign() {
             Success = true,
@@ -69,7 +71,7 @@ public partial class Shell {
 
         var result = new ResultCallsign() {
             Success = true,
-            CallsignBinding = message
+            CallsignApplication = message
             };
         return result;
         }
@@ -80,12 +82,11 @@ public partial class Shell {
         var callsign = options.Identifier.Value;
         var contextAccount = GetContextUser(options);
 
-        var (callsignBinding, status) = contextAccount.CallsignRequestStatus(callsign);
+        var callsignApplication = contextAccount.CallsignRequestStatus(callsign);
 
         var result = new ResultCallsign() {
             Success = true,
-            Status = status,
-            CallsignBinding = callsignBinding
+            CallsignApplication = callsignApplication
             };
         return result;
         }
@@ -95,10 +96,10 @@ public partial class Shell {
         var callsign = options.Identifier.Value;
         var contextAccount = GetContextUser(options);
 
-        var callsignBinding = contextAccount.ResolveCallsign(callsign);
-        var result = new ResultCallsign() {
+        var registration = contextAccount.ResolveCallsign(callsign);
+        var result = new ResultCallsignResolution() {
             Success = true,
-            CallsignBinding = callsignBinding
+            CallsignRegistration = registration
             };
         return result;
         }
@@ -108,11 +109,11 @@ public partial class Shell {
     ///<inheritdoc/>
     public override ShellResult CallsignList(CallsignList options) {
         var contextAccount = GetContextUser(options);
-        var callsignBindings = new List<CallsignBinding>();
+        var callsignBindings = contextAccount.ListCallsigns();
 
         var result = new ResultCallsignList() {
             Success = true,
-            CallsignBindings = callsignBindings
+            CallsignApplication = callsignBindings
             };
         return result;
         }

@@ -23,11 +23,32 @@
 
 namespace Goedel.Callsign;
 
-
-public partial class CallsignRegistrationRequest {
-
-
-    public bool Validate(string udf) => Profile.ValidateAny(DareEnvelope, Profiles, udf);
+public partial class CatalogedApplicationCallsign {
 
 
+    /// <summary>
+    /// The primary key used to catalog the entry.
+    /// </summary>
+    public override string _PrimaryKey => GetKey(CallSign);
+
+
+    /// <summary>
+    /// Return a catalog key for the SMTP mail account <paramref name="callsign"/>.
+    /// </summary>
+    /// <param name="callsign">The input, an RFC822 address.</param>
+    /// <returns>The catalog key.</returns>
+    public static string GetKey(string callsign) => $"Callsign:{callsign}";
+
+    public override void Activate(List<ApplicationEntry> activationEntry, IKeyCollection keyCollection) {
+        }
+
+    public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) => null;
+
+
+    ///<inheritdoc/>
+    public override KeyData[] GetEscrow() => null;
+
+    public override void ToBuilder(StringBuilder output) {
+        throw new NotImplementedException();
+        }
     }

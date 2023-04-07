@@ -80,7 +80,7 @@ public class PublicMeshService : MeshService {
 
 
     ///<summary>The callsign catalog mapping account names to profiles.</summary> 
-    public CatalogCallsign CatalogCallsign => MeshPersist.CatalogCallsign;
+    public CatalogCallsignObsolete CatalogCallsign => MeshPersist.CatalogCallsignObsolete;
 
     /////<summary>The service description.</summary> 
     //public static ServiceDescription ServiceDescription => new(WellKnown, Factory);
@@ -450,7 +450,7 @@ public class PublicMeshService : MeshService {
             var profileAccount = request.EnvelopedProfileAccount.Decode();
             VerifyDevice(profileAccount, jpcSession).AssertTrue(NotAuthenticated.Throw);
 
-            var catalogedCallsigns = new List<CatalogedCallsign>();
+            var catalogedCallsigns = new List<CatalogedCallsignObsolete>();
 
             if (request.EnvelopedCallsignBinding != null) {
 
@@ -462,7 +462,7 @@ public class PublicMeshService : MeshService {
                     // check to see if the binding is in the name catalog
                     if (ServiceBinding(binding)) {
                         // 
-                        catalogedCallsigns.Add(new CatalogedCallsign() {
+                        catalogedCallsigns.Add(new CatalogedCallsignObsolete() {
                             EnvelopedCallsignBinding = envelopedBinding,
                             Canonical = binding.Canonical.CannonicalAccountAddress(),
                             ProfileUdf = binding.ProfileUdf

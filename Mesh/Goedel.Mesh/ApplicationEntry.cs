@@ -30,7 +30,9 @@ abstract public partial class ApplicationEntry {
     /// </summary>
     /// <param name="keyCollection">Key collection to use to resolve decryption keys</param>
 
-    public abstract void Decode(IKeyCollection keyCollection);
+    public virtual void Decode(IKeyCollection keyCollection) {
+        // Do nothing when the application has no keys to decode.
+        }
 
     }
 

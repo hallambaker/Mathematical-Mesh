@@ -46,6 +46,8 @@ public class UnitTestSet : Disposable {
     public static readonly string AccountResolver = "resolver@example.com";
     public static readonly string AccountCarnet = "carnet@example.com";
 
+    public static readonly string AccountServiceAdmin = "admin@example.com";
+
 
     public string DeviceAliceAdmin = "Alice Admin";
     public string DeviceAlice2 = "Alice Device 2";

@@ -44,12 +44,12 @@ public partial class RegistrationTests {
 
         var resulta = MakeAccount(deviceA, AliceAccount);
 
-        var serviceCallsign = GetCallSignService();
+        var serviceCallsign = GetContextRegistry();
         Console.WriteLine("Created Callsign Service");
 
 
         var resultBind = deviceA.Dispatch($"callsign bind {AliceCallsign}") as ResultPublish;
-        serviceCallsign.Sync();
+        ContextRegistry.Process();
 
 
         // Replace this with some command that waits until a completion message is received.
@@ -65,7 +65,7 @@ public partial class RegistrationTests {
     [Fact]
     public void CallsignRegistration() {
 
-        var serviceCallsign = GetCallSignService();
+        var serviceCallsign = GetContextRegistry();
 
         var deviceA = GetTestCLI("MachineAlice");
         var resulta = MakeAccount(deviceA, AliceAccount);
@@ -88,7 +88,7 @@ public partial class RegistrationTests {
 
 
         var serviceCarnet = GetCarnetService();
-        var serviceCallsign = GetCallSignService(10);
+        var serviceCallsign = GetContextRegistry(10);
 
 
 
@@ -114,7 +114,7 @@ public partial class RegistrationTests {
 
 
         var serviceCarnet = GetCarnetService();
-        var serviceCallsign = GetCallSignService(10);
+        var serviceCallsign = GetContextRegistry(10);
 
 
 
@@ -136,7 +136,7 @@ public partial class RegistrationTests {
     [Fact]
     public void CallsignTransfer() {
 
-        var serviceCallsign = GetCallSignService();
+        var serviceCallsign = GetContextRegistry();
 
         var deviceC = GetTestCLI("MachineCarol");
         var resultC = MakeAccount(deviceC, CarolAccount);
@@ -165,7 +165,7 @@ public partial class RegistrationTests {
 
 
         var serviceCarnet = GetPresenceService();
-        var serviceCallsign = GetCallSignService(10);
+        var serviceCallsign = GetContextRegistry(10);
 
 
 
@@ -195,7 +195,7 @@ public partial class RegistrationTests {
 
 
         var serviceCarnet = GetPresenceService();
-        var serviceCallsign = GetCallSignService(10);
+        var serviceCallsign = GetContextRegistry(10);
 
 
 

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 06-Apr-23 3:51:01 PM
+//  This file was automatically generated at 07-Apr-23 7:00:35 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -108,12 +108,12 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"ActivationApplicationSsh", ActivationApplicationSsh._Factory},
 	    {"ActivationApplicationMail", ActivationApplicationMail._Factory},
 	    {"ActivationApplicationGroup", ActivationApplicationGroup._Factory},
-	    {"ActivationApplicationCallsign", ActivationApplicationCallsign._Factory},
+	    {"ActivationApplicationCallsignObsolete", ActivationApplicationCallsignObsolete._Factory},
 	    {"ApplicationEntry", ApplicationEntry._Factory},
 	    {"ApplicationEntrySsh", ApplicationEntrySsh._Factory},
 	    {"ApplicationEntryGroup", ApplicationEntryGroup._Factory},
 	    {"ApplicationEntryMail", ApplicationEntryMail._Factory},
-	    {"ApplicationEntryCallsign", ApplicationEntryCallsign._Factory},
+	    {"ApplicationEntryCallsignObsolete", ApplicationEntryCallsignObsolete._Factory},
 	    {"Contact", Contact._Factory},
 	    {"Anchor", Anchor._Factory},
 	    {"TaggedSource", TaggedSource._Factory},
@@ -149,7 +149,7 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"CapabilitySign", CapabilitySign._Factory},
 	    {"CapabilityKeyGenerate", CapabilityKeyGenerate._Factory},
 	    {"CapabilityFairExchange", CapabilityFairExchange._Factory},
-	    {"CatalogedCallsign", CatalogedCallsign._Factory},
+	    {"CatalogedCallsignObsolete", CatalogedCallsignObsolete._Factory},
 	    {"NamedService", NamedService._Factory},
 	    {"ServiceAccessToken", ServiceAccessToken._Factory},
 	    {"CatalogedBookmark", CatalogedBookmark._Factory},
@@ -2913,7 +2913,7 @@ public partial class ConnectionService : Connection {
         ///The account callsign
         /// </summary>
 
-	public virtual CatalogedCallsign						Callsign  {get; set;}
+	public virtual CatalogedCallsignObsolete						Callsign  {get; set;}
 
 
     ///<inheritdoc/>
@@ -2928,7 +2928,7 @@ public partial class ConnectionService : Connection {
 				}
 			case "Callsign" : {
 				if (value is TokenValueStructObject vvalue) {
-					Callsign = vvalue.Value as CatalogedCallsign;
+					Callsign = vvalue.Value as CatalogedCallsignObsolete;
 					}
 				break;
 				}
@@ -2948,7 +2948,7 @@ public partial class ConnectionService : Connection {
 				return new TokenValueString (ProfileUdf);
 				}
 			case "Callsign" : {
-				return new TokenValueStruct<CatalogedCallsign> (Callsign);
+				return new TokenValueStruct<CatalogedCallsignObsolete> (Callsign);
 				}
 
             default: {
@@ -2963,7 +2963,7 @@ public partial class ConnectionService : Connection {
 
 			{ "ProfileUdf", new Property (typeof(TokenValueString), false)} ,
 			{ "Callsign", new Property ( typeof(TokenValueStruct), false,
-					()=>new CatalogedCallsign(), ()=>new CatalogedCallsign(), false)} 
+					()=>new CatalogedCallsignObsolete(), ()=>new CatalogedCallsignObsolete(), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4468,13 +4468,44 @@ public partial class ActivationApplicationGroup : ActivationApplication {
 
 	/// <summary>
 	/// </summary>
-public partial class ActivationApplicationCallsign : ActivationApplication {
+public partial class ActivationApplicationCallsignObsolete : ActivationApplication {
+        /// <summary>
+        /// </summary>
+
+	public virtual string						RequestId  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string						Status  {get; set;}
+        /// <summary>
+        ///
+        /// </summary>
+
+	public virtual Enveloped<CallsignBinding>						EnvelopedCallsignBinding  {get; set;}
 
 
     ///<inheritdoc/>
 	public override void Setter(
 			string tag, TokenValue value) { 
 		switch (tag) {
+			case "RequestId" : {
+				if (value is TokenValueString vvalue) {
+					RequestId = vvalue.Value;
+					}
+				break;
+				}
+			case "Status" : {
+				if (value is TokenValueString vvalue) {
+					Status = vvalue.Value;
+					}
+				break;
+				}
+			case "EnvelopedCallsignBinding" : {
+				if (value is TokenValueStructObject vvalue) {
+					EnvelopedCallsignBinding = vvalue.Value as Enveloped<CallsignBinding>;
+					}
+				break;
+				}
 
 			default: {
 				base.Setter(tag, value);
@@ -4487,6 +4518,15 @@ public partial class ActivationApplicationCallsign : ActivationApplication {
     public override TokenValue Getter(
             string tag) {
         switch (tag) {
+			case "RequestId" : {
+				return new TokenValueString (RequestId);
+				}
+			case "Status" : {
+				return new TokenValueString (Status);
+				}
+			case "EnvelopedCallsignBinding" : {
+				return new TokenValueStruct<Enveloped<CallsignBinding>> (EnvelopedCallsignBinding);
+				}
 
             default: {
                 return base.Getter(tag);
@@ -4498,6 +4538,10 @@ public partial class ActivationApplicationCallsign : ActivationApplication {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
+			{ "RequestId", new Property (typeof(TokenValueString), false)} ,
+			{ "Status", new Property (typeof(TokenValueString), false)} ,
+			{ "EnvelopedCallsignBinding", new Property ( typeof(TokenValueStruct), false,
+					()=>new Enveloped<CallsignBinding>(), ()=>new Enveloped<CallsignBinding>(), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4524,13 +4568,13 @@ public partial class ActivationApplicationCallsign : ActivationApplication {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "ActivationApplicationCallsign";
+	public new const string __Tag = "ActivationApplicationCallsignObsolete";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new ActivationApplicationCallsign();
+	public static new JsonObject _Factory () => new ActivationApplicationCallsignObsolete();
 
 
     /// <summary>
@@ -4539,15 +4583,15 @@ public partial class ActivationApplicationCallsign : ActivationApplication {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new ActivationApplicationCallsign FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new ActivationApplicationCallsignObsolete FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ActivationApplicationCallsign;
+			return Out as ActivationApplicationCallsignObsolete;
 			}
-		var Result = new ActivationApplicationCallsign ();
+		var Result = new ActivationApplicationCallsignObsolete ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -4973,11 +5017,11 @@ public partial class ApplicationEntryMail : ApplicationEntry {
 
 	/// <summary>
 	/// </summary>
-public partial class ApplicationEntryCallsign : ApplicationEntry {
+public partial class ApplicationEntryCallsignObsolete : ApplicationEntry {
         /// <summary>
         /// </summary>
 
-	public virtual Enveloped<ActivationApplicationCallsign>						EnvelopedActivation  {get; set;}
+	public virtual Enveloped<ActivationApplicationCallsignObsolete>						EnvelopedActivation  {get; set;}
 
 
     ///<inheritdoc/>
@@ -4986,7 +5030,7 @@ public partial class ApplicationEntryCallsign : ApplicationEntry {
 		switch (tag) {
 			case "EnvelopedActivation" : {
 				if (value is TokenValueStructObject vvalue) {
-					EnvelopedActivation = vvalue.Value as Enveloped<ActivationApplicationCallsign>;
+					EnvelopedActivation = vvalue.Value as Enveloped<ActivationApplicationCallsignObsolete>;
 					}
 				break;
 				}
@@ -5003,7 +5047,7 @@ public partial class ApplicationEntryCallsign : ApplicationEntry {
             string tag) {
         switch (tag) {
 			case "EnvelopedActivation" : {
-				return new TokenValueStruct<Enveloped<ActivationApplicationCallsign>> (EnvelopedActivation);
+				return new TokenValueStruct<Enveloped<ActivationApplicationCallsignObsolete>> (EnvelopedActivation);
 				}
 
             default: {
@@ -5017,7 +5061,7 @@ public partial class ApplicationEntryCallsign : ApplicationEntry {
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
 			{ "EnvelopedActivation", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ActivationApplicationCallsign>(), ()=>new Enveloped<ActivationApplicationCallsign>(), false)} 
+					()=>new Enveloped<ActivationApplicationCallsignObsolete>(), ()=>new Enveloped<ActivationApplicationCallsignObsolete>(), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -5044,13 +5088,13 @@ public partial class ApplicationEntryCallsign : ApplicationEntry {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "ApplicationEntryCallsign";
+	public new const string __Tag = "ApplicationEntryCallsignObsolete";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new ApplicationEntryCallsign();
+	public static new JsonObject _Factory () => new ApplicationEntryCallsignObsolete();
 
 
     /// <summary>
@@ -5059,15 +5103,15 @@ public partial class ApplicationEntryCallsign : ApplicationEntry {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new ApplicationEntryCallsign FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new ApplicationEntryCallsignObsolete FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ApplicationEntryCallsign;
+			return Out as ApplicationEntryCallsignObsolete;
 			}
-		var Result = new ApplicationEntryCallsign ();
+		var Result = new ApplicationEntryCallsignObsolete ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -9966,7 +10010,7 @@ public partial class CapabilityFairExchange : CryptographicCapability {
 
 	/// <summary>
 	/// </summary>
-public partial class CatalogedCallsign : CatalogedApplication {
+public partial class CatalogedCallsignObsolete : CatalogedApplication {
         /// <summary>
         ///Fast lookup for the canonical form of the callsign.
         /// </summary>
@@ -10068,13 +10112,13 @@ public partial class CatalogedCallsign : CatalogedApplication {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "CatalogedCallsign";
+	public new const string __Tag = "CatalogedCallsignObsolete";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new CatalogedCallsign();
+	public static new JsonObject _Factory () => new CatalogedCallsignObsolete();
 
 
     /// <summary>
@@ -10083,15 +10127,15 @@ public partial class CatalogedCallsign : CatalogedApplication {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new CatalogedCallsign FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new CatalogedCallsignObsolete FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CatalogedCallsign;
+			return Out as CatalogedCallsignObsolete;
 			}
-		var Result = new CatalogedCallsign ();
+		var Result = new CatalogedCallsignObsolete ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

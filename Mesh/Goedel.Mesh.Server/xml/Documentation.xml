@@ -1421,7 +1421,7 @@
         <member name="F:Goedel.Mesh.Server.MeshPersist.AccountStore">
             <summary>The underlying persistence store for the account catalog.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.MeshPersist.CatalogCallsign">
+        <member name="P:Goedel.Mesh.Server.MeshPersist.CatalogCallsignObsolete">
             <summary>The callsign catalog mapping account names to profiles.</summary> 
         </member>
         <member name="F:Goedel.Mesh.Server.MeshPersist.DirectoryRoot">
@@ -1449,7 +1449,7 @@
             <param name="logger">Output logger.</param>
             <param name="presenceService">Optional presence service.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountBind(Goedel.Mesh.Server.AccountEntry,System.Collections.Generic.List{Goedel.Mesh.CatalogedCallsign})">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountBind(Goedel.Mesh.Server.AccountEntry,System.Collections.Generic.List{Goedel.Mesh.CatalogedCallsignObsolete})">
             <summary>
             Add a new account. The account name must be unique.
             </summary>

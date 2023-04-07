@@ -1060,7 +1060,7 @@
         </member>
         <member name="P:Goedel.Callsign.CallsignRegistrationResponse.Reason">
              <summary>
-            Reason for refusing the registration.
+            Reason for refusing the registration (if refused)
              </summary>
         </member>
         <member name="M:Goedel.Callsign.CallsignRegistrationResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
@@ -1160,6 +1160,97 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Callsign.CatalogedApplicationCallsign">
+             <summary>
+            
+             Application entry tracking the status of a callsign binding request
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.CatalogedApplicationCallsign.CallSign">
+             <summary>
+            The registered callsign in canonical form.		
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.CatalogedApplicationCallsign.RequestId">
+             <summary>
+            The MessageId of the request message
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.CatalogedApplicationCallsign.EnvelopedCallsignBinding">
+             <summary>
+            The callsign binding  
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.CatalogedApplicationCallsign.CatalogedRegistration">
+             <summary>
+            The resulting catalog entry if accepted or the prior registration otherwise.
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.CatalogedApplicationCallsign.Reason">
+             <summary>
+            Reason for refusing the registration (if refused)
+             </summary>
+        </member>
+        <member name="M:Goedel.Callsign.CatalogedApplicationCallsign.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.CatalogedApplicationCallsign.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.CatalogedApplicationCallsign._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.CatalogedApplicationCallsign._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.CatalogedApplicationCallsign._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.CatalogedApplicationCallsign._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.CatalogedApplicationCallsign._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.CatalogedApplicationCallsign._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.CatalogedApplicationCallsign.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.CatalogedApplicationCallsign._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Callsign.CatalogedApplicationCallsign.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="P:Goedel.Callsign.CatalogedApplicationCallsign._PrimaryKey">
+            <summary>
+            The primary key used to catalog the entry.
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.CatalogedApplicationCallsign.GetKey(System.String)">
+            <summary>
+            Return a catalog key for the SMTP mail account <paramref name="callsign"/>.
+            </summary>
+            <param name="callsign">The input, an RFC822 address.</param>
+            <returns>The catalog key.</returns>
+        </member>
+        <member name="M:Goedel.Callsign.CatalogedApplicationCallsign.GetEscrow">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Callsign.CallsignMapping">
             <summary>
@@ -2139,7 +2230,7 @@
             Extensions class. Provides static convenience extensions.
             </summary>
         </member>
-        <member name="M:Goedel.Callsign.Extensions.CallsignRequest(Goedel.Mesh.Client.ContextAccount,System.String,System.String,System.Boolean,Goedel.Mesh.ProfileAccount)">
+        <member name="M:Goedel.Callsign.Extensions.CallsignRequest(Goedel.Mesh.Client.ContextUser,System.String,System.String,System.Boolean,Goedel.Mesh.ProfileAccount)">
             <summary>
             Make a callsign registration, binding or transfer request
             </summary>

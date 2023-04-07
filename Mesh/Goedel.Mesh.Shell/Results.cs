@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 06-Apr-23 3:51:23 PM
+//  This file was automatically generated at 07-Apr-23 7:00:49 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -123,7 +123,8 @@ public abstract partial class MeshmanShellResult : global::Goedel.Protocol.JsonO
 	    {"ResultApplication", ResultApplication._Factory},
 	    {"ResultApplicationList", ResultApplicationList._Factory},
 	    {"ResultCallsign", ResultCallsign._Factory},
-	    {"ResultCallsignList", ResultCallsignList._Factory}
+	    {"ResultCallsignList", ResultCallsignList._Factory},
+	    {"ResultCallsignResolution", ResultCallsignResolution._Factory}
 		};
 
     [ModuleInitializer]
@@ -5457,11 +5458,7 @@ public partial class ResultCallsign : Result {
         /// <summary>
         /// </summary>
 
-	public virtual CallsignBinding						CallsignBinding  {get; set;}
-        /// <summary>
-        /// </summary>
-
-	public virtual string						Status  {get; set;}
+	public virtual CatalogedApplicationCallsign						CallsignApplication  {get; set;}
         /// <summary>
         /// </summary>
 
@@ -5472,15 +5469,9 @@ public partial class ResultCallsign : Result {
 	public override void Setter(
 			string tag, TokenValue value) { 
 		switch (tag) {
-			case "CallsignBinding" : {
+			case "CallsignApplication" : {
 				if (value is TokenValueStructObject vvalue) {
-					CallsignBinding = vvalue.Value as CallsignBinding;
-					}
-				break;
-				}
-			case "Status" : {
-				if (value is TokenValueString vvalue) {
-					Status = vvalue.Value;
+					CallsignApplication = vvalue.Value as CatalogedApplicationCallsign;
 					}
 				break;
 				}
@@ -5502,11 +5493,8 @@ public partial class ResultCallsign : Result {
     public override TokenValue Getter(
             string tag) {
         switch (tag) {
-			case "CallsignBinding" : {
-				return new TokenValueStruct<CallsignBinding> (CallsignBinding);
-				}
-			case "Status" : {
-				return new TokenValueString (Status);
+			case "CallsignApplication" : {
+				return new TokenValueStruct<CatalogedApplicationCallsign> (CallsignApplication);
 				}
 			case "Message" : {
 				return new TokenValueStruct<Message> (Message);
@@ -5522,9 +5510,8 @@ public partial class ResultCallsign : Result {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "CallsignBinding", new Property ( typeof(TokenValueStruct), false,
-					()=>new CallsignBinding(), ()=>new CallsignBinding(), false)} ,
-			{ "Status", new Property (typeof(TokenValueString), false)} ,
+			{ "CallsignApplication", new Property ( typeof(TokenValueStruct), false,
+					()=>new CatalogedApplicationCallsign(), ()=>new CatalogedApplicationCallsign(), false)} ,
 			{ "Message", new Property ( typeof(TokenValueStruct), false,
 					()=>new Message(), ()=>new Message(), false)} 
         };
@@ -5591,16 +5578,16 @@ public partial class ResultCallsignList : Result {
         /// <summary>
         /// </summary>
 
-	public virtual List<CallsignBinding>				CallsignBindings  {get; set;}
+	public virtual List<CatalogedApplicationCallsign>				CallsignApplication  {get; set;}
 
 
     ///<inheritdoc/>
 	public override void Setter(
 			string tag, TokenValue value) { 
 		switch (tag) {
-			case "CallsignBindings" : {
+			case "CallsignApplication" : {
 				if (value is TokenValueListStructObject vvalue) {
-					CallsignBindings = vvalue.Value as List<CallsignBinding>;
+					CallsignApplication = vvalue.Value as List<CatalogedApplicationCallsign>;
 					}
 				break;
 				}
@@ -5616,8 +5603,8 @@ public partial class ResultCallsignList : Result {
     public override TokenValue Getter(
             string tag) {
         switch (tag) {
-			case "CallsignBindings" : {
-				return new TokenValueListStruct<CallsignBinding> (CallsignBindings);
+			case "CallsignApplication" : {
+				return new TokenValueListStruct<CatalogedApplicationCallsign> (CallsignApplication);
 				}
 
             default: {
@@ -5630,8 +5617,8 @@ public partial class ResultCallsignList : Result {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "CallsignBindings", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<CallsignBinding>(), ()=>new CallsignBinding(), false)} 
+			{ "CallsignApplication", new Property ( typeof(TokenValueListStruct), true,
+					()=>new List<CatalogedApplicationCallsign>(), ()=>new CatalogedApplicationCallsign(), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -5682,6 +5669,126 @@ public partial class ResultCallsignList : Result {
 			return Out as ResultCallsignList;
 			}
 		var Result = new ResultCallsignList ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class ResultCallsignResolution : Result {
+        /// <summary>
+        /// </summary>
+
+	public virtual Registration						CallsignRegistration  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual Message						Message  {get; set;}
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "CallsignRegistration" : {
+				if (value is TokenValueStructObject vvalue) {
+					CallsignRegistration = vvalue.Value as Registration;
+					}
+				break;
+				}
+			case "Message" : {
+				if (value is TokenValueStructObject vvalue) {
+					Message = vvalue.Value as Message;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "CallsignRegistration" : {
+				return new TokenValueStruct<Registration> (CallsignRegistration);
+				}
+			case "Message" : {
+				return new TokenValueStruct<Message> (Message);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "CallsignRegistration", new Property ( typeof(TokenValueStruct), false,
+					()=>new Registration(), ()=>new Registration(), false)} ,
+			{ "Message", new Property ( typeof(TokenValueStruct), false,
+					()=>new Message(), ()=>new Message(), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, Result._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ResultCallsignResolution";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ResultCallsignResolution();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ResultCallsignResolution FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ResultCallsignResolution;
+			}
+		var Result = new ResultCallsignResolution ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

@@ -22,6 +22,7 @@
 
 
 using Goedel.Cryptography.Dare;
+using System.Reflection.Emit;
 
 namespace Goedel.Callsign.Registry;
 
@@ -71,7 +72,7 @@ public partial class ApplicationEntryRegistry {
 public partial class CatalogedRegistry{
     #region // Properties
     ///<summary>Return the catalog identifier for the group <paramref name="groupAddress"/>.</summary>
-    public static string GetGroupID(string groupAddress) => MeshConstants.PrefixCatalogedGroup + groupAddress;
+    public static string GetGroupID(string groupAddress) => "CatalogedRegistry:" + groupAddress;
 
     /// <summary>
     /// The primary key used to catalog the entry.

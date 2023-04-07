@@ -80,7 +80,7 @@ public class MeshPersist : Disposable {
     public PersistenceStore AccountStore;
 
     ///<summary>The callsign catalog mapping account names to profiles.</summary> 
-    public CatalogCallsign CatalogCallsign { get; init; }
+    public CatalogCallsignObsolete CatalogCallsignObsolete { get; init; }
 
     ///<summary>The root directory in which the files are stored.</summary>
     public string DirectoryRoot;
@@ -107,7 +107,7 @@ public class MeshPersist : Disposable {
 
         base.Disposing();
         AccountStore.Dispose();
-        CatalogCallsign.Dispose();
+        CatalogCallsignObsolete.Dispose();
         }
 
     #endregion
@@ -143,7 +143,7 @@ public class MeshPersist : Disposable {
             sequenceType: SequenceType.Merkle
             );
 
-        CatalogCallsign = new CatalogCallsign(directory);
+        CatalogCallsignObsolete = new CatalogCallsignObsolete(directory);
 
         }
     #endregion
@@ -183,7 +183,7 @@ public class MeshPersist : Disposable {
     /// <param name="catalogedCallsigns">The catalogued callsigns to bind.</param>
     public void AccountBind(
                     AccountEntry accountEntry,
-                    List<CatalogedCallsign> catalogedCallsigns) {
+                    List<CatalogedCallsignObsolete> catalogedCallsigns) {
         IPersistenceEntry containerEntry;
         //Console.WriteLine("Start Bind");
         accountEntry.ProfileUdf = accountEntry.ProfileUdf.CannonicalAccountAddress();
@@ -195,7 +195,7 @@ public class MeshPersist : Disposable {
         // causing contention.
         lock (AccountStore) {
             foreach (var catalogedCallsign in catalogedCallsigns) {
-                CatalogCallsign.Get(catalogedCallsign.Canonical).AssertNull(NYI.Throw);
+                CatalogCallsignObsolete.Get(catalogedCallsign.Canonical).AssertNull(NYI.Throw);
                 }
 
 
@@ -203,7 +203,7 @@ public class MeshPersist : Disposable {
             //Console.WriteLine("Start write");
             foreach (var catalogedCallsign in catalogedCallsigns) {
                 //Console.WriteLine($"Callsign {catalogedCallsign.Canonical} -> {catalogedCallsign.ProfileUdf}");
-                CatalogCallsign.New(catalogedCallsign);
+                CatalogCallsignObsolete.New(catalogedCallsign);
                 }
             //Console.WriteLine("End write");
             }
@@ -580,7 +580,7 @@ public class MeshPersist : Disposable {
         //var senderService = senderAccount.AccountAddress.GetService();
 
         foreach (var recipient in accounts) {
-            var recipientUdf = CatalogCallsign.Get(recipient);
+            var recipientUdf = CatalogCallsignObsolete.Get(recipient);
 
             if (recipientUdf is null) {
                 MessagePostRemote(recipient, dareMessage);
@@ -876,7 +876,7 @@ public class MeshPersist : Disposable {
 
     string GetAccountKey(string accountIn) {
         var account = accountIn.CannonicalAccountAddress();
-        if (CatalogCallsign.TryLocate(account, out var catalogedCallsign)) {
+        if (CatalogCallsignObsolete.TryLocate(account, out var catalogedCallsign)) {
             return catalogedCallsign.ProfileUdf.ToLower();
             }
 

@@ -179,7 +179,7 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
         ServiceAdminCLI = new();
 
         var createCommand = $"create {ServiceDnsMesh} /host=host1.{ServiceDnsMesh} " +
-            $"/ip={ServiceIpMesh} /admin=admin@{ServiceDnsMesh} /account=Domain\\user";
+            $"/ip={ServiceIpMesh} /admin={AccountServiceAdmin} /account=Domain\\user";
         if (InitializeResolver) {
             createCommand += $"/resolver /registry={AccountRegistry}";
             }
