@@ -39,15 +39,19 @@ public partial class CatalogedApplicationCallsign {
     /// <returns>The catalog key.</returns>
     public static string GetKey(string callsign) => $"Callsign:{callsign}";
 
+    ///<inheritdoc/>
     public override void Activate(List<ApplicationEntry> activationEntry, IKeyCollection keyCollection) {
         }
 
+    ///<inheritdoc/>
     public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) => null;
+
 
 
     ///<inheritdoc/>
     public override KeyData[] GetEscrow() => null;
 
+    ///<inheritdoc/>
     public override void ToBuilder(StringBuilder output) {
         throw new NotImplementedException();
         }

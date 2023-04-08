@@ -30,7 +30,7 @@ namespace Goedel.Callsign.Registry;
 public partial class ActivationApplicationRegistry {
     #region // Properties
     ///<summary>The enveloped object</summary> 
-    public Enveloped<ActivationApplicationRegistry> GetEnvelopedActivationApplicationGroup() =>
+    public Enveloped<ActivationApplicationRegistry> GetEnvelopedActivationApplicationRegistry() =>
         new(DareEnvelope);
 
     #endregion
@@ -88,6 +88,12 @@ public partial class CatalogedRegistry{
 
     ActivationCommon ActivationAccount { get; set; }
 
+
+    ///<inheritdoc/>
+    public override bool DeviceAuthorized(CatalogedDevice catalogedDevice) {
+        return true;
+        }
+
     /// <summary>
     /// Return the escrowed keys.
     /// </summary>
@@ -139,19 +145,19 @@ public partial class CatalogedRegistry{
 
     ///<inheritdoc/>
     public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
-        var activation = new ActivationApplicationGroup() {
+        var activation = new ActivationApplicationRegistry() {
             AccountEncryption = new KeyData(ActivationAccount.CommonEncryptionKey, true),
             AdministratorSignature = new KeyData(ActivationAccount.AdministratorSignatureKey, true),
-            AccountAuthentication = new KeyData(ActivationAccount.CommonAuthenticationKey, true),
+            //AccountAuthentication = new KeyData(ActivationAccount.CommonAuthenticationKey, true),
             };
 
         activation.Envelope(encryptionKey: catalogedDevice.ConnectionDevice.Encryption.GetKeyPair());
 
 
 
-        return new ApplicationEntryGroup() {
+        return new ApplicationEntryRegistry() {
             Identifier = ProfileRegistry.AccountAddress,
-            EnvelopedActivation = activation.GetEnvelopedActivationApplicationGroup()
+            EnvelopedActivation = activation.GetEnvelopedActivationApplicationRegistry()
             };
 
         }

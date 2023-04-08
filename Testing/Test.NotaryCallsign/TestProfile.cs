@@ -188,7 +188,7 @@ public partial class RegistrationTests {
 
         //var contextRegistry = contextAccountQ.CreateRegistry(AccountRegistry);
 
-        TestEnvironment.EnvelopedProfileRegistry = ContextRegistry.ProfileRegistryCallsign.GetEnvelopedProfileAccount();
+        TestEnvironment.EnvelopedProfileRegistry = new Enveloped<ProfileAccount> (ContextRegistry.Profile.DareEnvelope);
 
         //// Bind to the callsign @callsign
         var meshService = TestEnvironment.GetMeshService();

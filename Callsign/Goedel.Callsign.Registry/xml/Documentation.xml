@@ -8,7 +8,7 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Callsign.Registry.ActivationApplicationRegistry.GetEnvelopedActivationApplicationGroup">
+        <member name="M:Goedel.Callsign.Registry.ActivationApplicationRegistry.GetEnvelopedActivationApplicationRegistry">
             <summary>The enveloped object</summary> 
         </member>
         <member name="P:Goedel.Callsign.Registry.ActivationApplicationRegistry.AccountEncryption">
@@ -152,6 +152,9 @@
         <member name="P:Goedel.Callsign.Registry.CatalogedRegistry.ProfileRegistry">
             <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Callsign.Registry.CatalogedRegistry.EnvelopedProfileRegistry"/>
             to return the <see cref="P:Goedel.Callsign.Registry.CatalogedRegistry.ProfileRegistry"/> value.</summary>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.DeviceAuthorized(Goedel.Mesh.CatalogedDevice)">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.GetEscrow">
             <summary>
