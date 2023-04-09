@@ -553,7 +553,7 @@ public partial class ActivationCommon {
     /// </summary>
     /// <param name="containerName">The store to return parameters for.</param>
     /// <returns>Cryptographic parameters for the store.</returns>
-    public DarePolicy GetDarePolicy(string containerName) {
+    public virtual DarePolicy GetDarePolicy(string containerName) {
         if (DictionaryStoreEncryptionKey.TryGetValue(containerName, out var encryptionKey)) {
             encryptionKey = KeyPair.FactoryExchange(CryptoAlgorithmId.Default,
                     KeySecurity.Exportable, KeyCollection);

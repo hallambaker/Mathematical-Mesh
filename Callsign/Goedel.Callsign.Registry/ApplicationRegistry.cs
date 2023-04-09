@@ -22,6 +22,9 @@
 
 
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
+using Goedel.Mesh;
+using Goedel.Protocol;
 using System.Reflection.Emit;
 
 namespace Goedel.Callsign.Registry;
@@ -86,8 +89,10 @@ public partial class CatalogedRegistry{
                 (EnvelopedProfileRegistry.Decode(KeyCollection) as ProfileRegistry).CacheValue(out profileRegistry);
     ProfileRegistry? profileRegistry;
 
-    ActivationCommon ActivationAccount { get; set; }
 
+    PrivateKeyUDF SecretSeed { get; }
+    KeyPair CommonEncryptionKey { get; }
+    KeyPair AdministratorSignatureKey { get; }
 
     ///<inheritdoc/>
     public override bool DeviceAuthorized(CatalogedDevice catalogedDevice) {
@@ -100,7 +105,7 @@ public partial class CatalogedRegistry{
     /// <returns></returns>
     public override KeyData[] GetEscrow() =>
         new KeyData[] { new KeyData () {
-                PrivateParameters =ActivationAccount.SecretSeed } };
+                PrivateParameters = SecretSeed } };
 
 
 
@@ -114,15 +119,15 @@ public partial class CatalogedRegistry{
 
 
     /// <summary>
-    /// Create and return a new catalog entry for <paramref name="profileGroup"/> with
+    /// Create and return a new catalog entry for <paramref name="profile"/> with
     /// the activation data <paramref name="activationAccount"/>.
     /// </summary>
-    /// <param name="profileGroup">The group profile.</param>
+    /// <param name="profile">The group profile.</param>
     /// <param name="activationAccount">The activation data.</param>
     /// <param name="encryptionKey">Key under which the activation is to be encrypted.</param>
     /// <returns>The created group.</returns>
     public CatalogedRegistry(
-                    ProfileRegistry profileGroup,
+                    ProfileRegistry profile,
                     ActivationCommon activationAccount,
                     CryptoKey encryptionKey
         //,
@@ -131,11 +136,17 @@ public partial class CatalogedRegistry{
         encryptionKey.Future();
         //connectionAddress.Future();
 
-        profileGroup?.DareEnvelope.AssertNotNull(Internal.Throw);
+        profileRegistry = profile;
+        profile?.DareEnvelope.AssertNotNull(Internal.Throw);
 
-        ActivationAccount = activationAccount;
-        Key = profileGroup.AccountAddress;
-        EnvelopedProfileRegistry = profileGroup.GetEnvelopedProfileAccount();
+
+        Key = profile.AccountAddress;
+        EnvelopedProfileRegistry = profile.GetEnvelopedProfileAccount();
+
+
+        SecretSeed = activationAccount.SecretSeed;
+        CommonEncryptionKey = activationAccount.CommonEncryptionKey;
+        AdministratorSignatureKey = activationAccount.AdministratorSignatureKey;
         }
 
 
@@ -145,19 +156,40 @@ public partial class CatalogedRegistry{
 
     ///<inheritdoc/>
     public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
+        //connectionDevice = new ConnectionDevice() {
+        //    Authentication = profileDevice.Encryption
+        //    };
+        //connectionDevice.Envelope(KeyAdministratorSign);
+
+
+        var profileDevice = catalogedDevice.ProfileDevice;
+        var accountSeed = new PrivateKeyUDF(
+                udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount);
+
+        var AccountAuthentication = accountSeed.ActivatePublic(
+            profileDevice.Authentication.GetKeyPairAdvanced(), MeshActor.Service, MeshKeyOperation.Authenticate);
+
+
         var activation = new ActivationApplicationRegistry() {
-            AccountEncryption = new KeyData(ActivationAccount.CommonEncryptionKey, true),
-            AdministratorSignature = new KeyData(ActivationAccount.AdministratorSignatureKey, true),
-            //AccountAuthentication = new KeyData(ActivationAccount.CommonAuthenticationKey, true),
+            ActivationKey = accountSeed.PrivateValue,
+            AccountEncryption = new KeyData(CommonEncryptionKey, true),
+            AdministratorSignature = new KeyData(AdministratorSignatureKey, true),
             };
 
         activation.Envelope(encryptionKey: catalogedDevice.ConnectionDevice.Encryption.GetKeyPair());
 
 
+        var connectionService = new ConnectionService() {
+            ProfileUdf = ProfileRegistry.UdfString,
+            Authentication = new KeyData(AccountAuthentication)
+            };
+        connectionService.Envelope(AdministratorSignatureKey, objectEncoding:
+            ObjectEncoding.JSON_B);
 
         return new ApplicationEntryRegistry() {
             Identifier = ProfileRegistry.AccountAddress,
-            EnvelopedActivation = activation.GetEnvelopedActivationApplicationRegistry()
+            EnvelopedActivation = activation.GetEnvelopedActivationApplicationRegistry(),
+            EnvelopedConnectionService = connectionService?.GetEnvelopedConnectionService()
             };
 
         }

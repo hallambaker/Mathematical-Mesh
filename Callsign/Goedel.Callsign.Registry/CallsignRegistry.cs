@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 08-Apr-23 4:23:52 PM
+//  This file was automatically generated at 09-Apr-23 6:08:51 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -284,12 +284,6 @@ public partial class ActivationApplicationRegistry : ActivationApplication {
         /// </summary>
 
 	public virtual KeyData						AdministratorSignature  {get; set;}
-        /// <summary>
-        ///Signed connection service delegation allowing the device to
-        ///access the account.
-        /// </summary>
-
-	public virtual Enveloped<ConnectionService>						EnvelopedConnectionService  {get; set;}
 
 
     ///<inheritdoc/>
@@ -305,12 +299,6 @@ public partial class ActivationApplicationRegistry : ActivationApplication {
 			case "AdministratorSignature" : {
 				if (value is TokenValueStructObject vvalue) {
 					AdministratorSignature = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "EnvelopedConnectionService" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedConnectionService = vvalue.Value as Enveloped<ConnectionService>;
 					}
 				break;
 				}
@@ -332,9 +320,6 @@ public partial class ActivationApplicationRegistry : ActivationApplication {
 			case "AdministratorSignature" : {
 				return new TokenValueStruct<KeyData> (AdministratorSignature);
 				}
-			case "EnvelopedConnectionService" : {
-				return new TokenValueStruct<Enveloped<ConnectionService>> (EnvelopedConnectionService);
-				}
 
             default: {
                 return base.Getter(tag);
@@ -349,9 +334,7 @@ public partial class ActivationApplicationRegistry : ActivationApplication {
 			{ "AccountEncryption", new Property ( typeof(TokenValueStruct), false,
 					()=>new KeyData(), ()=>new KeyData(), false)} ,
 			{ "AdministratorSignature", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "EnvelopedConnectionService", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>(), false)} 
+					()=>new KeyData(), ()=>new KeyData(), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -417,6 +400,12 @@ public partial class ApplicationEntryRegistry : ApplicationEntry {
         /// </summary>
 
 	public virtual Enveloped<ActivationApplicationRegistry>						EnvelopedActivation  {get; set;}
+        /// <summary>
+        ///Signed connection service delegation allowing the device to
+        ///access the account.
+        /// </summary>
+
+	public virtual Enveloped<ConnectionService>						EnvelopedConnectionService  {get; set;}
 
 
     ///<inheritdoc/>
@@ -426,6 +415,12 @@ public partial class ApplicationEntryRegistry : ApplicationEntry {
 			case "EnvelopedActivation" : {
 				if (value is TokenValueStructObject vvalue) {
 					EnvelopedActivation = vvalue.Value as Enveloped<ActivationApplicationRegistry>;
+					}
+				break;
+				}
+			case "EnvelopedConnectionService" : {
+				if (value is TokenValueStructObject vvalue) {
+					EnvelopedConnectionService = vvalue.Value as Enveloped<ConnectionService>;
 					}
 				break;
 				}
@@ -444,6 +439,9 @@ public partial class ApplicationEntryRegistry : ApplicationEntry {
 			case "EnvelopedActivation" : {
 				return new TokenValueStruct<Enveloped<ActivationApplicationRegistry>> (EnvelopedActivation);
 				}
+			case "EnvelopedConnectionService" : {
+				return new TokenValueStruct<Enveloped<ConnectionService>> (EnvelopedConnectionService);
+				}
 
             default: {
                 return base.Getter(tag);
@@ -456,7 +454,9 @@ public partial class ApplicationEntryRegistry : ApplicationEntry {
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
 			{ "EnvelopedActivation", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ActivationApplicationRegistry>(), ()=>new Enveloped<ActivationApplicationRegistry>(), false)} 
+					()=>new Enveloped<ActivationApplicationRegistry>(), ()=>new Enveloped<ActivationApplicationRegistry>(), false)} ,
+			{ "EnvelopedConnectionService", new Property ( typeof(TokenValueStruct), false,
+					()=>new Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>(), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

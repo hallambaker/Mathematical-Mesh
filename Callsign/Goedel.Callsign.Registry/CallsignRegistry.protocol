@@ -34,13 +34,13 @@
 		Struct KeyData AdministratorSignature
 			Description
 				|Key or capability used to sign the registry log
-		Struct Enveloped<ConnectionService> EnvelopedConnectionService
-			Description
-				|Signed connection service delegation allowing the device to
-				|access the account.
+
 
 	Structure ApplicationEntryRegistry
 		External ApplicationEntry
 		Struct Enveloped<ActivationApplicationRegistry> EnvelopedActivation
-
+		Struct Enveloped<ConnectionService> EnvelopedConnectionService
+			Description
+				|Signed connection service delegation allowing the device to
+				|access the account.
 

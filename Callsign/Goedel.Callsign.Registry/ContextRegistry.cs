@@ -24,7 +24,7 @@ public class ContextRegistry : ContextAccount {
     public override Profile Profile => CatalogedRegistry.ProfileRegistry;
 
     ///<inheritdoc/>
-    public override Connection Connection => throw new NotImplementedException();
+    public override Connection Connection { get; }
 
 
     ///<summary>The catalogued Registry description.</summary>
@@ -69,7 +69,9 @@ public class ContextRegistry : ContextAccount {
     public ContextRegistry(
                 ContextUser contextAccount,
                 CatalogedRegistry catalogedCallsign,
-                ActivationCommon activationAccount) :
+                //ActivationApplicationRegistry activationApplicationRegistry
+                ActivationCommon activationAccount
+        ) :
                 base(contextAccount.MeshHost, null) {
 
         // Set the service account address
@@ -100,7 +102,6 @@ public class ContextRegistry : ContextAccount {
         KeyCollection.Add(KeyCommonEncryption);
 
         CallsignMapping = CallsignMapping.Default;
-
         }
 
     void AddStore(Store store) {

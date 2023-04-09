@@ -21,12 +21,6 @@
             Key or capability used to sign the registry log
              </summary>
         </member>
-        <member name="P:Goedel.Callsign.Registry.ActivationApplicationRegistry.EnvelopedConnectionService">
-             <summary>
-            Signed connection service delegation allowing the device to
-            access the account.
-             </summary>
-        </member>
         <member name="M:Goedel.Callsign.Registry.ActivationApplicationRegistry.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
@@ -91,6 +85,12 @@
         <member name="P:Goedel.Callsign.Registry.ApplicationEntryRegistry.EnvelopedActivation">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ApplicationEntryRegistry.EnvelopedConnectionService">
+             <summary>
+            Signed connection service delegation allowing the device to
+            access the account.
+             </summary>
         </member>
         <member name="M:Goedel.Callsign.Registry.ApplicationEntryRegistry.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
@@ -169,10 +169,10 @@
         </member>
         <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.#ctor(Goedel.Callsign.ProfileRegistry,Goedel.Mesh.ActivationCommon,Goedel.Cryptography.CryptoKey)">
             <summary>
-            Create and return a new catalog entry for <paramref name="profileGroup"/> with
+            Create and return a new catalog entry for <paramref name="profile"/> with
             the activation data <paramref name="activationAccount"/>.
             </summary>
-            <param name="profileGroup">The group profile.</param>
+            <param name="profile">The group profile.</param>
             <param name="activationAccount">The activation data.</param>
             <param name="encryptionKey">Key under which the activation is to be encrypted.</param>
             <returns>The created group.</returns>
