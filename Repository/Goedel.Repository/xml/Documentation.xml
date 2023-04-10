@@ -174,7 +174,7 @@
             <param name="encryptionKey">Key under which the activation is to be encrypted.</param>
             <returns>The created group.</returns>
         </member>
-        <member name="M:Goedel.Repository.CatalogedRepository.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Repository.CatalogedRepository.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Repository.CatalogedRepository.GetActivation(Goedel.Mesh.CatalogedDevice)">

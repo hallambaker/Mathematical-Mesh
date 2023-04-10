@@ -36,9 +36,21 @@ public partial class ActivationApplicationRegistry {
     public Enveloped<ActivationApplicationRegistry> GetEnvelopedActivationApplicationRegistry() =>
         new(DareEnvelope);
 
+    public KeyPair CommonEncryptionKey { get; private set; }
+    public KeyPair AdministratorSignatureKey { get; private set; }
+
+    public KeyPair AccountAuthentication { get; private set; }
     #endregion
 
+    public void Activate(ProfileDevice profileDevice) {
+        CommonEncryptionKey = AccountEncryption.GetKeyPair();
+        AdministratorSignatureKey = AdministratorSignature.GetKeyPair();
 
+        var accountSeed = new PrivateKeyUDF(ActivationKey);
+        AccountAuthentication = accountSeed.ActivatePublic(
+            profileDevice.Authentication.GetKeyPairAdvanced(), MeshActor.Service, MeshKeyOperation.Authenticate);
+
+        }
     }
 #endregion
 
@@ -90,6 +102,9 @@ public partial class CatalogedRegistry{
     ProfileRegistry? profileRegistry;
 
 
+    public ConnectionService ConnectionService {get; set;}
+    public ActivationApplicationRegistry ActivationApplicationRegistry { get; set; }
+
     PrivateKeyUDF SecretSeed { get; }
     KeyPair CommonEncryptionKey { get; }
     KeyPair AdministratorSignatureKey { get; }
@@ -128,12 +143,12 @@ public partial class CatalogedRegistry{
     /// <returns>The created group.</returns>
     public CatalogedRegistry(
                     ProfileRegistry profile,
-                    ActivationCommon activationAccount,
-                    CryptoKey encryptionKey
+                    ActivationCommon activationAccount
+                    //CryptoKey encryptionKey
         //,
         //            ConnectionStripped connectionAddress
                     ) {
-        encryptionKey.Future();
+        //encryptionKey.Future();
         //connectionAddress.Future();
 
         profileRegistry = profile;
@@ -151,7 +166,31 @@ public partial class CatalogedRegistry{
 
 
     ///<inheritdoc/>
-    public override void Activate(List<ApplicationEntry> activationEntry, IKeyCollection keyCollection) {
+    public override void Activate(
+                List<ApplicationEntry> activationEntries, 
+                ProfileDevice profileDevice, 
+                IKeyCollection keyCollection) {
+
+        foreach (var entry in activationEntries) {
+            if (entry is ApplicationEntryRegistry applicationEntry) {
+                if (applicationEntry.Identifier == ProfileRegistry.UdfString) {
+                    Activate(applicationEntry, profileDevice, keyCollection);
+                    }
+                }
+
+
+            }
+
+        }
+
+
+    void Activate(
+                ApplicationEntryRegistry applicationEntry, 
+                ProfileDevice profileDevice, 
+                IKeyCollection keyCollection) {
+        ActivationApplicationRegistry = applicationEntry.EnvelopedActivation.Decode(keyCollection);
+        ConnectionService = applicationEntry.EnvelopedConnectionService.Decode(keyCollection);
+        ActivationApplicationRegistry.Activate(profileDevice);
         }
 
     ///<inheritdoc/>
@@ -187,7 +226,7 @@ public partial class CatalogedRegistry{
             ObjectEncoding.JSON_B);
 
         return new ApplicationEntryRegistry() {
-            Identifier = ProfileRegistry.AccountAddress,
+            Identifier = ProfileRegistry.UdfString,
             EnvelopedActivation = activation.GetEnvelopedActivationApplicationRegistry(),
             EnvelopedConnectionService = connectionService?.GetEnvelopedConnectionService()
             };

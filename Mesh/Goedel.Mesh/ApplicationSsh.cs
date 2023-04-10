@@ -115,7 +115,7 @@ public partial class CatalogedApplicationSsh {
         }
 
     ///<inheritdoc/>
-    public override void Activate(List<ApplicationEntry> applicationEntries, IKeyCollection keyCollection) {
+    public override void Activate(List<ApplicationEntry> applicationEntries, ProfileDevice profileDevice, IKeyCollection keyCollection) {
 
         var applicationEntrySsh = GetApplicationEntry(applicationEntries) ;
         applicationEntrySsh.AssertNotNull(NYI.Throw);

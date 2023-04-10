@@ -118,7 +118,7 @@ public partial class CatalogedCallsignObsolete {
     public override string _PrimaryKey => Canonical;
 
     ///<inheritdoc/>
-    public override void Activate(List<ApplicationEntry> activationEntry, IKeyCollection keyCollection) {
+    public override void Activate(List<ApplicationEntry> activationEntry, ProfileDevice profileDevice, IKeyCollection keyCollection) {
         throw new NotImplementedException();
         }
 

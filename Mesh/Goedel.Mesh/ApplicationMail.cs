@@ -149,7 +149,7 @@ public partial class CatalogedApplicationMail {
         }
 
     ///<inheritdoc/>
-    public override void Activate(List<ApplicationEntry> applicationEntries, IKeyCollection keyCollection) {
+    public override void Activate(List<ApplicationEntry> applicationEntries, ProfileDevice profileDevice, IKeyCollection keyCollection) {
         var applicationEntryMail = GetApplicationEntry(applicationEntries);
         applicationEntryMail.AssertNotNull(NYI.Throw);
 

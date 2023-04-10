@@ -205,8 +205,9 @@ public partial class CatalogedApplication {
     /// Apply information from the activation entry <paramref name="activationEntry"/>;
     /// </summary>
     /// <param name="activationEntry"></param>
+    /// <param name="profileDevice"></param>
     /// <param name="keyCollection"></param>
-    public abstract void Activate(List<ApplicationEntry> activationEntry, IKeyCollection keyCollection);
+    public abstract void Activate(List<ApplicationEntry> activationEntry, ProfileDevice profileDevice, IKeyCollection keyCollection);
 
 
     /// <summary>
@@ -261,7 +262,7 @@ public partial class CatalogedApplicationNetwork {
 
 
     ///<inheritdoc/>
-    public override void Activate(List<ApplicationEntry> activationEntry, IKeyCollection keyCollection) {
+    public override void Activate(List<ApplicationEntry> activationEntry, ProfileDevice profileDevice, IKeyCollection keyCollection) {
         }
 
 

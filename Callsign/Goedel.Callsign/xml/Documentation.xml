@@ -1249,7 +1249,7 @@
             <param name="callsign">The input, an RFC822 address.</param>
             <returns>The catalog key.</returns>
         </member>
-        <member name="M:Goedel.Callsign.CatalogedApplicationCallsign.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Callsign.CatalogedApplicationCallsign.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Callsign.CatalogedApplicationCallsign.GetActivation(Goedel.Mesh.CatalogedDevice)">

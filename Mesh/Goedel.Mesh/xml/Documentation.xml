@@ -803,7 +803,7 @@
             <param name="encryptionKey">Key under which the activation is to be encrypted.</param>
             <returns>The created group.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedGroup.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Mesh.CatalogedGroup.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.CatalogedGroup.GetActivation(Goedel.Mesh.CatalogedDevice)">
@@ -1042,7 +1042,7 @@
             <param name="address">The input, an RFC822 address.</param>
             <returns>The catalog key.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationMail.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Mesh.CatalogedApplicationMail.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationMail.GetActivation(Goedel.Mesh.CatalogedDevice)">
@@ -1264,7 +1264,7 @@
             <param name="roles">The roles to which the key is to be granted.</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationSsh.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Mesh.CatalogedApplicationSsh.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationSsh.GetActivation(Goedel.Mesh.CatalogedDevice)">
@@ -2579,11 +2579,12 @@
             </summary>
             <returns>The activation record.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplication.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Mesh.CatalogedApplication.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Apply information from the activation entry <paramref name="activationEntry"/>;
             </summary>
             <param name="activationEntry"></param>
+            <param name="profileDevice"></param>
             <param name="keyCollection"></param>
         </member>
         <member name="M:Goedel.Mesh.CatalogedApplication.DeviceAuthorized(Goedel.Mesh.CatalogedDevice)">
@@ -2675,7 +2676,7 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationNetwork.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Mesh.CatalogedApplicationNetwork.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationNetwork.GetEscrow">
@@ -2922,7 +2923,7 @@
         <member name="P:Goedel.Mesh.CatalogedCallsignObsolete._PrimaryKey">
             <summary>The primary key is protocol:site </summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedCallsignObsolete.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Mesh.CatalogedCallsignObsolete.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.CatalogedCallsignObsolete.Describe(System.Text.StringBuilder,System.Boolean)">

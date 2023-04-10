@@ -1388,7 +1388,7 @@ public partial class ContextUser : ContextAccount {
             if (!application.Deny.Intersects(roles) &&
                 application.Grant.Intersects(roles)) {
 
-                application.Activate(ApplicationEntries, this);
+                application.Activate(ApplicationEntries, ProfileDevice, this);
 
                 result ??= new();
                 result.Add(application.GetActivation(catalogedDevice));

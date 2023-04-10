@@ -40,7 +40,7 @@ public partial class CatalogedApplicationCallsign {
     public static string GetKey(string callsign) => $"Callsign:{callsign}";
 
     ///<inheritdoc/>
-    public override void Activate(List<ApplicationEntry> activationEntry, IKeyCollection keyCollection) {
+    public override void Activate(List<ApplicationEntry> activationEntry, ProfileDevice profileDevice, IKeyCollection keyCollection) {
         }
 
     ///<inheritdoc/>

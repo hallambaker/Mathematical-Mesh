@@ -169,19 +169,19 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
 
     ///<summary>The account profile key</summary>
-    public KeyPair KeyProfile => ActivationCommon?.ProfileSignatureKey;
+    public virtual KeyPair KeyProfile => ActivationCommon?.ProfileSignatureKey;
     ///<summary>The administration signature key</summary>
-    public KeyPair KeyAdministratorSign => ActivationCommon?.AdministratorSignatureKey;
+    public virtual KeyPair KeyAdministratorSign => ActivationCommon?.AdministratorSignatureKey;
     ///<summary>The administration signature key</summary>
-    public KeyPair KeyAdministratorEncrypt => ActivationCommon?.AdministratorEncryptionKey;
+    public virtual KeyPair KeyAdministratorEncrypt => ActivationCommon?.AdministratorEncryptionKey;
 
 
     ///<summary>The account encryption key </summary>
-    public KeyPair KeyCommonSignature => ActivationCommon?.CommonSignatureKey;
+    public virtual KeyPair KeyCommonSignature => ActivationCommon?.CommonSignatureKey;
     ///<summary>The account encryption key </summary>
-    public KeyPair KeyCommonEncryption => ActivationCommon?.CommonEncryptionKey;
+    public virtual KeyPair KeyCommonEncryption => ActivationCommon?.CommonEncryptionKey;
     ///<summary>The authentication key used to authenticate as the account.</summary>
-    public KeyPair KeyCommonAuthentication => ActivationCommon?.CommonAuthenticationKey;
+    public virtual KeyPair KeyCommonAuthentication => ActivationCommon?.CommonAuthenticationKey;
 
 
     ///<summary>True iff the device has administrator privilege.</summary> 

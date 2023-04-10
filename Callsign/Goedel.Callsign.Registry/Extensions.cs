@@ -42,7 +42,10 @@ public static class Extensions {
             if (application is CatalogedRegistry catalogedRegistry) {
                 if (key == null | key == catalogedRegistry.Key) {
 
-                    catalogedRegistry.Activate(contextUser.ApplicationEntries, contextUser.KeyCollection);
+                    catalogedRegistry.Activate(
+                                contextUser.ApplicationEntries, contextUser.ProfileDevice, 
+                                contextUser
+                                );
 
 
                     return new ContextRegistry(contextUser, catalogedRegistry, null);

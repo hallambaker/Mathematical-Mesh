@@ -54,8 +54,21 @@ public class ContextRegistry : ContextAccount {
             { CatalogPublication.Label, CatalogPublication.Factory }
         };
 
+    ActivationApplicationRegistry ActivationApplicationRegistry;
+    public override KeyPair KeyCommonEncryption =>
+            ActivationApplicationRegistry?.CommonEncryptionKey ??
+            ActivationCommon?.CommonEncryptionKey;
 
 
+    /// <summary>
+    /// ////////////// here
+    /// </summary>
+    /// <returns></returns>
+    public override MeshCredentialPrivate GetMeshCredentialPrivate() {
+        var profileDevice = ProfileDevice;
+        profileDevice.Activate(KeyCollection);
+        return new(profileDevice, null, null, profileDevice.KeyAuthentication as KeyPairAdvanced);
+        }
 
     #endregion
     #region Constructors and factories
@@ -69,8 +82,8 @@ public class ContextRegistry : ContextAccount {
     public ContextRegistry(
                 ContextUser contextAccount,
                 CatalogedRegistry catalogedCallsign,
-                //ActivationApplicationRegistry activationApplicationRegistry
-                ActivationCommon activationAccount
+                ActivationApplicationRegistry activationApplicationRegistry = null,
+                ActivationCommon activationAccount = null
         ) :
                 base(contextAccount.MeshHost, null) {
 
@@ -80,6 +93,8 @@ public class ContextRegistry : ContextAccount {
         ServiceDns = AccountAddress.GetService();
 
         ActivationCommon = activationAccount;
+        ActivationApplicationRegistry = activationApplicationRegistry;
+
         CatalogedRegistry = catalogedCallsign;
         ContextUser = contextAccount;
 
@@ -141,7 +156,7 @@ public class ContextRegistry : ContextAccount {
 
         // Wrap the registry profile in an application entry.
         var catalogedRegistry = new CatalogedRegistry(profileRegistry,
-            activationRegistry, contextUser.KeyCommonEncryption) {
+            activationRegistry) {
             Grant = roles,
             MaximumRequestLength = 8191,
             MaximumCallsignLength = 31
@@ -213,7 +228,7 @@ public class ContextRegistry : ContextAccount {
         var storesDirectory = GetStoresDirectory(contextAccount.MeshMachine, catalogedRegistry.ProfileRegistry);
         Directory.CreateDirectory(storesDirectory);
 
-        var result = new ContextRegistry(contextAccount, catalogedRegistry, activationAccount) {
+        var result = new ContextRegistry(contextAccount, catalogedRegistry, activationAccount: activationAccount) {
             MeshClient = client
             };
 

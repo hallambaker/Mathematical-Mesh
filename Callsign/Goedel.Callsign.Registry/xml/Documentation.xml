@@ -167,7 +167,7 @@
             Default constructor for serialization.
             </summary>     
         </member>
-        <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.#ctor(Goedel.Callsign.ProfileRegistry,Goedel.Mesh.ActivationCommon,Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.#ctor(Goedel.Callsign.ProfileRegistry,Goedel.Mesh.ActivationCommon)">
             <summary>
             Create and return a new catalog entry for <paramref name="profile"/> with
             the activation data <paramref name="activationAccount"/>.
@@ -177,7 +177,7 @@
             <param name="encryptionKey">Key under which the activation is to be encrypted.</param>
             <returns>The created group.</returns>
         </member>
-        <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.GetActivation(Goedel.Mesh.CatalogedDevice)">
@@ -333,7 +333,7 @@
         <member name="P:Goedel.Callsign.Registry.ContextRegistry.DictionaryCatalogDelegates">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Callsign.Registry.ContextRegistry.#ctor(Goedel.Mesh.Client.ContextUser,Goedel.Callsign.Registry.CatalogedRegistry,Goedel.Mesh.ActivationCommon)">
+        <member name="M:Goedel.Callsign.Registry.ContextRegistry.#ctor(Goedel.Mesh.Client.ContextUser,Goedel.Callsign.Registry.CatalogedRegistry,Goedel.Callsign.Registry.ActivationApplicationRegistry,Goedel.Mesh.ActivationCommon)">
             <summary>
             Default constuctor, creates a Registry context for <paramref name="catalogedCallsign"/>
             </summary>
