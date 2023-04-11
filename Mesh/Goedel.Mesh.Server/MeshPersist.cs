@@ -28,11 +28,12 @@ using System.Security.Principal;
 
 namespace Goedel.Mesh.Server;
 
+
 /// <summary>
 /// Wrapper providing a locked accessor to a CatalogedEntry of type <typeparamref name="T"/>.
 /// </summary>
 /// <typeparam name="T">The locked entry</typeparam>
-public class LockedCatalogedEntry<T> : Disposable where T:CatalogItem{
+public class LockedCatalogedEntry<T> : Disposable where T: AccountEntry {
 
     private bool locked;
 
@@ -77,10 +78,10 @@ public class MeshPersist : Disposable {
 
     #region // Properties
     ///<summary>The underlying persistence store for the account catalog.</summary>
-    public PersistenceStore AccountStore;
+    public CatalogAccount CatalogAccount;
 
-    ///<summary>The callsign catalog mapping account names to profiles.</summary> 
-    public CatalogCallsignObsolete CatalogCallsignObsolete { get; init; }
+    /////<summary>The callsign catalog mapping account names to profiles.</summary> 
+    //public CatalogCallsignObsolete CatalogCallsignObsolete { get; init; }
 
     ///<summary>The root directory in which the files are stored.</summary>
     public string DirectoryRoot;
@@ -97,6 +98,9 @@ public class MeshPersist : Disposable {
 
     private ILogger Logger { get; }
 
+
+    int count = 0;
+    static int counter = 0;
     IPresence PresenceService { get; }
     #endregion
 
@@ -106,8 +110,8 @@ public class MeshPersist : Disposable {
     protected override void Disposing() {
 
         base.Disposing();
-        AccountStore.Dispose();
-        CatalogCallsignObsolete.Dispose();
+        CatalogAccount.Dispose();
+        //CatalogCallsignObsolete.Dispose();
         }
 
     #endregion
@@ -134,16 +138,18 @@ public class MeshPersist : Disposable {
         KeyCollection = keyCollection;
         // Load/create the accounts catalog
         DirectoryRoot = directory;
-
+        Console.WriteLine("$$$$$$$$$$$$$$$$ create account catalog");
 
         Directory.CreateDirectory(directory);
-        var fileName = Path.Combine(directory, "Master.cat");
-        AccountStore = new PersistenceStore(fileName, "application/mmm-catalog",
-            fileStatus: fileStatus,
-            sequenceType: SequenceType.Merkle
-            );
+        //var fileName = Path.Combine(directory, "Master.cat");
+        CatalogAccount = new CatalogAccount(directory);
+        count = ++counter;
+        //AccountStore = new PersistenceStore(fileName, "application/mmm-catalog",
+        //    fileStatus: fileStatus,
+        //    sequenceType: SequenceType.Merkle
+        //    );
 
-        CatalogCallsignObsolete = new CatalogCallsignObsolete(directory);
+        //CatalogCallsignObsolete = new CatalogCallsignObsolete(directory);
 
         }
     #endregion
@@ -182,9 +188,8 @@ public class MeshPersist : Disposable {
     /// <param name="accountEntry">Account data to add.</param>
     /// <param name="catalogedCallsigns">The catalogued callsigns to bind.</param>
     public void AccountBind(
-                    AccountEntry accountEntry,
-                    List<CatalogedCallsignObsolete> catalogedCallsigns) {
-        IPersistenceEntry containerEntry;
+                    AccountEntry accountEntry) {
+        PersistentIndexEntry containerEntry;
         //Console.WriteLine("Start Bind");
         accountEntry.ProfileUdf = accountEntry.ProfileUdf.CannonicalAccountAddress();
 
@@ -193,29 +198,30 @@ public class MeshPersist : Disposable {
 
         // Lock the container so that we can create the new account entry without 
         // causing contention.
-        lock (AccountStore) {
-            foreach (var catalogedCallsign in catalogedCallsigns) {
-                CatalogCallsignObsolete.Get(catalogedCallsign.Canonical).AssertNull(NYI.Throw);
+        lock (CatalogAccount) {
+            if (CatalogAccount.TryGetAccount(accountEntry.LocalAddress, out _)) {
+                throw new NYI();
                 }
+            containerEntry = CatalogAccount.New(accountEntry);
 
 
-            containerEntry = AccountStore.New(accountEntry);
-            //Console.WriteLine("Start write");
-            foreach (var catalogedCallsign in catalogedCallsigns) {
-                //Console.WriteLine($"Callsign {catalogedCallsign.Canonical} -> {catalogedCallsign.ProfileUdf}");
-                CatalogCallsignObsolete.New(catalogedCallsign);
-                }
+            //foreach (var catalogedCallsign in catalogedCallsigns) {
+            //    CatalogAccount.Get(catalogedCallsign.Canonical).AssertNull(NYI.Throw);
+            //    }
+
+
+            ////Console.WriteLine("Start write");
+            //foreach (var catalogedCallsign in catalogedCallsigns) {
+            //    //Console.WriteLine($"Callsign {catalogedCallsign.Canonical} -> {catalogedCallsign.ProfileUdf}");
+            //    CatalogAccount.New(catalogedCallsign);
+            //    }
             //Console.WriteLine("End write");
             }
 
+        accountEntry = CatalogAccount.Get(accountEntry.ProfileUdf);
         // Lock the container entry so that we can initialize it.
-        lock (containerEntry) {
+        lock (accountEntry) {
             Directory.CreateDirectory(directory);
-            //if (storeEntries != null) {
-            //    foreach (var entry in storeEntries) {
-            //        Store.Append(directory, null, entry.Envelopes, entry.Sequence);
-            //        }
-            //    }
             new SpoolInbound(directory, SpoolInbound.Label).Dispose();
             new SpoolOutbound(directory, SpoolOutbound.Label).Dispose();
             new SpoolLocal(directory, SpoolLocal.Label).Dispose();
@@ -230,13 +236,16 @@ public class MeshPersist : Disposable {
     /// </summary>
     /// <param name="jpcSession">The session connection data.</param>
     /// <param name="accountAddress">The account address.</param>
-    public bool AccountUnbind(IJpcSession jpcSession, string accountAddress) {
+    public void AccountUnbind(IJpcSession jpcSession, string accountAddress) {
 
         using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Unbind);
         //accountAddress.CannonicalAccountAddress().AssertEqual(accountHandle.AccountAddress, NYI.Throw);
 
-        lock (AccountStore) {
-            return AccountStore.Delete(jpcSession.TargetAccount);
+        lock (CatalogAccount) {
+            var accountEntry = CatalogAccount.Get(jpcSession.TargetAccount);
+            CatalogAccount.Delete(accountEntry);
+
+
             }
         }
 
@@ -497,6 +506,12 @@ public class MeshPersist : Disposable {
         // report the updates to be applied here
         using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Connected);
 
+        Console.WriteLine($"Transact, Account entries = {CatalogAccount.AccountByAddress.Count} / {CatalogAccount.DictionaryByLocalName.Count} ");
+        Console.WriteLine($"Transact {count} file {CatalogAccount.Sequence.Filename}");
+
+        if (count < counter) {
+            }
+
         //using var accountEntry = GetAccountVerified(account, jpcSession);
         //accountEntry.AssertNotNull(MeshUnknownAccount.Throw);
 
@@ -580,14 +595,23 @@ public class MeshPersist : Disposable {
         //var senderService = senderAccount.AccountAddress.GetService();
 
         foreach (var recipient in accounts) {
-            var recipientUdf = CatalogCallsignObsolete.Get(recipient);
 
-            if (recipientUdf is null) {
-                MessagePostRemote(recipient, dareMessage);
-                }
-            else {
+            if (CatalogAccount.TryGetAccountByAny(recipient, out var accountEntry)) {
                 MessagePostLocal(jpcSession, recipient, dareMessage);
                 }
+            else {
+                MessagePostRemote(recipient, dareMessage);
+                }
+
+
+            //var recipientUdf = CatalogCallsignObsolete.Get(recipient);
+
+            //if (recipientUdf is null) {
+                
+            //    }
+            //else {
+                
+            //    }
 
             }
         return identifier;
@@ -704,7 +728,6 @@ public class MeshPersist : Disposable {
 
         var share = capability.DecryptShare(KeyCollection);
 
-
         var keyAgreement = share.Agreement(publicEphemeral);
 
         var cryptographicResultKeyAgreement = new CryptographicResultKeyAgreement() {
@@ -812,11 +835,9 @@ public class MeshPersist : Disposable {
 
         var key = GetAccountKey(accountAddress);
 
-        lock (AccountStore) {
-            PersistentIndexEntry containerEntry = null;
+        lock (CatalogAccount) {
 
-            containerEntry = AccountStore.Get(key)  as PersistentIndexEntry;
-            result = containerEntry?.JsonObject as AccountEntry;
+            result = CatalogAccount.Get(key) ;
             result.AssertNotNull(MeshUnknownAccount.Throw);
 
             return new LockedCatalogedEntry<AccountEntry>(result, Logger);
@@ -876,7 +897,7 @@ public class MeshPersist : Disposable {
 
     string GetAccountKey(string accountIn) {
         var account = accountIn.CannonicalAccountAddress();
-        if (CatalogCallsignObsolete.TryLocate(account, out var catalogedCallsign)) {
+        if (CatalogAccount.TryGetAccount(account, out var catalogedCallsign)) {
             return catalogedCallsign.ProfileUdf.ToLower();
             }
 

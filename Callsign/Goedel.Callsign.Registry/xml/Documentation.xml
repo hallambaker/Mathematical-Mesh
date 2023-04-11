@@ -73,6 +73,9 @@
         <member name="P:Goedel.Callsign.Registry.ApplicationEntryRegistry.Activation">
             <summary>The decrypted activation.</summary> 
         </member>
+        <member name="M:Goedel.Callsign.Registry.ApplicationEntryRegistry.GetCatalogedAccess">
+            <inheritdoc/>
+        </member>
         <member name="M:Goedel.Callsign.Registry.ApplicationEntryRegistry.Decode(Goedel.Cryptography.Dare.IKeyCollection)">
             <inheritdoc/>
         </member>
@@ -331,6 +334,18 @@
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.Registry.ContextRegistry.DictionaryCatalogDelegates">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ContextRegistry.KeyCommonEncryption">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ContextRegistry.KeyAdministratorSign">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ContextRegistry.AccountAuthentication">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ContextRegistry.GetMeshCredentialPrivate">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Callsign.Registry.ContextRegistry.#ctor(Goedel.Mesh.Client.ContextUser,Goedel.Callsign.Registry.CatalogedRegistry,Goedel.Callsign.Registry.ActivationApplicationRegistry,Goedel.Mesh.ActivationCommon)">

@@ -210,7 +210,7 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
             provider.JpcInterface.Initialize(Providers);
             }
 
-
+        HostMachineMesh.MeshHost.ReloadContexts();
 
         }
 

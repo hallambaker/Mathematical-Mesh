@@ -46,8 +46,10 @@ public partial class ActivationApplicationRegistry {
         CommonEncryptionKey = AccountEncryption.GetKeyPair();
         AdministratorSignatureKey = AdministratorSignature.GetKeyPair();
 
+
+
         var accountSeed = new PrivateKeyUDF(ActivationKey);
-        AccountAuthentication = accountSeed.ActivatePublic(
+        AccountAuthentication = accountSeed.ActivatePrivate(
             profileDevice.Authentication.GetKeyPairAdvanced(), MeshActor.Service, MeshKeyOperation.Authenticate);
 
         }
@@ -61,6 +63,25 @@ public partial class ApplicationEntryRegistry {
     #region // Properties
     ///<summary>The decrypted activation.</summary> 
     public ActivationApplicationRegistry Activation { get; set; }
+
+    ///<inheritdoc/>
+    public override CatalogedAccess GetCatalogedAccess() {
+
+        var connectionService = EnvelopedConnectionService.Decode();
+
+
+        var capability = new AccessCapability() {
+            Id = connectionService.Authentication.Udf,
+            Active = true
+            };
+
+        var result = new CatalogedAccess() {
+            Capability = capability
+            };
+
+        return result;
+        
+        }
 
     #endregion
     #region // Methods
@@ -188,6 +209,8 @@ public partial class CatalogedRegistry{
                 ApplicationEntryRegistry applicationEntry, 
                 ProfileDevice profileDevice, 
                 IKeyCollection keyCollection) {
+        profileDevice.Activate(keyCollection);
+
         ActivationApplicationRegistry = applicationEntry.EnvelopedActivation.Decode(keyCollection);
         ConnectionService = applicationEntry.EnvelopedConnectionService.Decode(keyCollection);
         ActivationApplicationRegistry.Activate(profileDevice);

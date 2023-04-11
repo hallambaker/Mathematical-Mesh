@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10-Apr-23 1:18:04 AM
+//  This file was automatically generated at 11-Apr-23 2:04:43 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -106,7 +106,7 @@ public abstract partial class CatalogItem : global::Goedel.Protocol.JsonObject {
 	///
 	/// Represents a Mesh Account.
 	/// </summary>
-abstract public partial class AccountEntry : CatalogItem {
+abstract public partial class AccountEntry : CatalogedEntry {
         /// <summary>
         ///Subdirectory containing the catalogs and spools for the account.
         /// </summary>
@@ -127,6 +127,11 @@ abstract public partial class AccountEntry : CatalogItem {
         /// </summary>
 
 	public virtual string						Status  {get; set;}
+        /// <summary>
+        ///Account address in user@domain format
+        /// </summary>
+
+	public virtual string						LocalAddress  {get; set;}
 
 
     ///<inheritdoc/>
@@ -157,6 +162,12 @@ abstract public partial class AccountEntry : CatalogItem {
 					}
 				break;
 				}
+			case "LocalAddress" : {
+				if (value is TokenValueString vvalue) {
+					LocalAddress = vvalue.Value;
+					}
+				break;
+				}
 
 			default: {
 				base.Setter(tag, value);
@@ -181,6 +192,9 @@ abstract public partial class AccountEntry : CatalogItem {
 			case "Status" : {
 				return new TokenValueString (Status);
 				}
+			case "LocalAddress" : {
+				return new TokenValueString (LocalAddress);
+				}
 
             default: {
                 return base.Getter(tag);
@@ -195,11 +209,13 @@ abstract public partial class AccountEntry : CatalogItem {
 			{ "Directory", new Property (typeof(TokenValueString), false)} ,
 			{ "ProfileUdf", new Property (typeof(TokenValueString), false)} ,
 			{ "Quota", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "Status", new Property (typeof(TokenValueString), false)} 
+			{ "Status", new Property (typeof(TokenValueString), false)} ,
+			{ "LocalAddress", new Property (typeof(TokenValueString), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
 
 
     ///<inheritdoc/>

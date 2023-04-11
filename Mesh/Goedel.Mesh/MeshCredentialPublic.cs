@@ -167,6 +167,10 @@ public class MeshCredentialPrivate : MeshKeyCredentialPrivate {
         AuthenticationPrivate = authenticationKey ?? meshCredentialPrivate?.AuthenticationPrivate;
         AuthenticationPublic = AuthenticationPrivate;
 
+        if (AuthenticationPrivate.PublicOnly) {
+            throw new NYI();
+            }
+
         ProfileDevice = profileDevice ?? meshCredentialPrivate?.ProfileDevice;
         ConnectionDevice = connectionDevice ?? meshCredentialPrivate?.ConnectionDevice;
         ConnectionAccount = connectionAccount ?? meshCredentialPrivate?.ConnectionAccount;

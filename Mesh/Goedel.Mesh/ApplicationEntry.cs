@@ -34,5 +34,7 @@ abstract public partial class ApplicationEntry {
         // Do nothing when the application has no keys to decode.
         }
 
+
+    public virtual CatalogedAccess GetCatalogedAccess() => null;
     }
 

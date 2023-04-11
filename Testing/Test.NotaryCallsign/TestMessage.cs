@@ -49,7 +49,7 @@ public partial class RegistrationTests {
 
 
         var resultBind = deviceA.Dispatch($"callsign bind {AliceCallsign}") as ResultPublish;
-        ContextRegistry.Process();
+        serviceCallsign.Process();
 
 
         // Replace this with some command that waits until a completion message is received.

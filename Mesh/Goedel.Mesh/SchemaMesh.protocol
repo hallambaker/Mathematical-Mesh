@@ -368,9 +368,9 @@
 		String ProfileUdf
 			Description
 				|The account address
-		Struct CatalogedCallsignObsolete Callsign
-			Description
-				|The account callsign
+		//Struct CatalogedCallsignObsolete Callsign
+		//	Description
+		//		|The account callsign
 
 	Structure ConnectionDevice
 		Inherits ConnectionService
@@ -500,13 +500,13 @@
 				|Signed connection service delegation allowing the device to
 				|access the account.
 
-	Structure ActivationApplicationCallsignObsolete				
-		Inherits ActivationApplication
-		String RequestId
-		String Status
-		Struct Enveloped<CallsignBinding> EnvelopedCallsignBinding
-			Description
-				|
+	//Structure ActivationApplicationCallsignObsolete				
+	//	Inherits ActivationApplication
+	//	String RequestId
+	//	String Status
+	//	Struct Enveloped<CallsignBinding> EnvelopedCallsignBinding
+	//		Description
+	//			|
 
 
 	Section 2 "Application Data"
@@ -529,9 +529,9 @@
 		Inherits ApplicationEntry
 		Struct Enveloped<ActivationApplicationMail> EnvelopedActivation
 
-	Structure ApplicationEntryCallsignObsolete
-		Inherits ApplicationEntry
-		Struct Enveloped<ActivationApplicationCallsignObsolete> EnvelopedActivation
+	//Structure ApplicationEntryCallsignObsolete
+	//	Inherits ApplicationEntry
+	//	Struct Enveloped<ActivationApplicationCallsignObsolete> EnvelopedActivation
 
 	Section 2 "Data Structures"
 		Description
@@ -1028,17 +1028,17 @@
 			|protocol.
 
 
-	Structure CatalogedCallsignObsolete
-		Inherits CatalogedApplication
-		String Canonical
-			Description
-				|Fast lookup for the canonical form of the callsign.
-		String ProfileUdf
-			Description
-				|Fast lookup for the profile to which the name is bound.		
-		Struct Enveloped<CallsignBinding> EnvelopedCallsignBinding
-			Description
-				|The enveloped binnding of the callsign to the profile.		
+	//Structure CatalogedCallsignObsolete
+	//	Inherits CatalogedApplication
+	//	String Canonical
+	//		Description
+	//			|Fast lookup for the canonical form of the callsign.
+	//	String ProfileUdf
+	//		Description
+	//			|Fast lookup for the profile to which the name is bound.		
+	//	Struct Enveloped<CallsignBinding> EnvelopedCallsignBinding
+	//		Description
+	//			|The enveloped binnding of the callsign to the profile.		
 
 	Structure NamedService
 		String Prefix

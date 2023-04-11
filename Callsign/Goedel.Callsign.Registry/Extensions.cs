@@ -48,7 +48,8 @@ public static class Extensions {
                                 );
 
 
-                    return new ContextRegistry(contextUser, catalogedRegistry, null);
+                    return new ContextRegistry(contextUser, catalogedRegistry, 
+                        catalogedRegistry.ActivationApplicationRegistry);
 
                     }
                 }

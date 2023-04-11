@@ -20,6 +20,9 @@ public class ContextRegistry : ContextAccount {
     ///<summary>The enclosing user context.</summary>
     public ContextUser ContextUser;
 
+    public override ProfileDevice ProfileDevice => ContextUser.ProfileDevice; 
+
+
     ///<inheritdoc/>
     public override Profile Profile => CatalogedRegistry.ProfileRegistry;
 
@@ -55,19 +58,27 @@ public class ContextRegistry : ContextAccount {
         };
 
     ActivationApplicationRegistry ActivationApplicationRegistry;
+
+    ///<inheritdoc/>
     public override KeyPair KeyCommonEncryption =>
             ActivationApplicationRegistry?.CommonEncryptionKey ??
             ActivationCommon?.CommonEncryptionKey;
 
+    ///<inheritdoc/>
+    public override KeyPair KeyAdministratorSign =>
+        ActivationApplicationRegistry?.AdministratorSignatureKey ??
+        ActivationCommon?.AdministratorSignatureKey;
 
-    /// <summary>
-    /// ////////////// here
-    /// </summary>
-    /// <returns></returns>
+    ///<inheritdoc/>
+    public KeyPair AccountAuthentication =>
+        ActivationApplicationRegistry?.AccountAuthentication ;
+
+
+    ///<inheritdoc/>
     public override MeshCredentialPrivate GetMeshCredentialPrivate() {
-        var profileDevice = ProfileDevice;
-        profileDevice.Activate(KeyCollection);
-        return new(profileDevice, null, null, profileDevice.KeyAuthentication as KeyPairAdvanced);
+        ProfileDevice.Activate(KeyCollection);
+        return new(ProfileDevice, CatalogedRegistry.ConnectionService, 
+                null, AccountAuthentication as KeyPairAdvanced);
         }
 
     #endregion
@@ -185,13 +196,13 @@ public class ContextRegistry : ContextAccount {
         contextRegistry.MeshClient = registryClient;
         var contact = contextRegistry.CreateContact();
 
-
+        var applicationEntries = new List<ApplicationEntry>();
 
 
         // Commit all changes to the administrator context in a single transaction.
         using (var transaction = contextUser.TransactBegin()) {
             // Add the Registry to the application catalog
-            transaction.ApplicationCreate(catalogedRegistry);
+            applicationEntries = transaction.ApplicationCreate(catalogedRegistry);
             var catalogAccess = transaction.GetCatalogAccess();
 
             // Create a contact for the Registry and add to the contact catalog
@@ -202,6 +213,20 @@ public class ContextRegistry : ContextAccount {
             transaction.Transact();
             }
 
+
+        using (var transaction = contextRegistry.TransactBegin()) {
+            var catalogAccess = transaction.GetCatalogAccess();
+            foreach (var applicationEntry in applicationEntries) {
+
+
+                var access = applicationEntry.GetCatalogedAccess();
+                if (access != null) {
+                    transaction.CatalogUpdate(catalogAccess, access);
+                    }
+                }
+
+            transaction.Transact();
+            }
 
         //contextUser.CallsignRegistry = RegistryName;
         contextUser.ProfileRegistryCallsign = profileRegistry;

@@ -129,7 +129,7 @@ public partial class TransactUser : Transaction<ContextUser>, ITransactContextAc
     /// profile and create application entries for each authorized device.
     /// </summary>
     /// <param name="catalogedApplication"></param>
-    public void ApplicationCreate(
+    public List<ApplicationEntry> ApplicationCreate(
                 CatalogedApplication catalogedApplication) {
 
         var escrow = catalogedApplication.GetEscrow();
@@ -140,7 +140,11 @@ public partial class TransactUser : Transaction<ContextUser>, ITransactContextAc
         CatalogUpdate(catalog, catalogedApplication);
 
         var catalogDevice = GetCatalogDevice();
+
         var updated = new List<CatalogedDevice>();
+
+        var applicationEntries = new List<ApplicationEntry>();
+
         foreach (var device in catalogDevice.GetEntries) {
 
             //Screen.WriteLine("Got device");
@@ -151,6 +155,9 @@ public partial class TransactUser : Transaction<ContextUser>, ITransactContextAc
                 device.ApplicationEntries.Add(applicationEntry);
 
                 updated.Add(device);
+                applicationEntries.Add(applicationEntry);
+
+
                 }
             }
         foreach (var device in updated) {
@@ -162,6 +169,8 @@ public partial class TransactUser : Transaction<ContextUser>, ITransactContextAc
 
             //CatalogUpdate(catalogDevice, device);
             }
+
+        return applicationEntries;
 
         }
 

@@ -12,6 +12,7 @@
 
 	Structure AccountEntry
 		Abstract
+		External CatalogedEntry
 		Description
 			|Represents a Mesh Account.
 		String Directory
@@ -26,6 +27,9 @@
 		String Status
 			Description
 				|The profile status. Valid values are "Pending", "Connected", "Blocked"
+		String LocalAddress
+			Description
+				|Account address in user@domain format
 
 
 	Structure AccountUser

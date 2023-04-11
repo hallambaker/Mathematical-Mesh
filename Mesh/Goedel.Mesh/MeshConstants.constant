@@ -74,7 +74,9 @@ File CatalogLabels
 			Description
 				|Tasks and appointments assigned to the user including calendar entries and to do lists.
 
-
+		Code Account "Account Catalog"
+			Description
+				|Catalog identifier for the service account catalog.
 
 
 

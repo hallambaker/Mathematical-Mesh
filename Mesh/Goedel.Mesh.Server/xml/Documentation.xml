@@ -104,6 +104,11 @@
             The profile status. Valid values are "Pending", "Connected", "Blocked"
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Server.AccountEntry.LocalAddress">
+             <summary>
+            Account address in user@domain format
+             </summary>
+        </member>
         <member name="M:Goedel.Mesh.Server.AccountEntry.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
@@ -394,6 +399,33 @@
             <summary>
             Return the bit field vector.
             </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.CatalogAccount.Label">
+            <summary>The canonical label for the catalog</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.CatalogAccount.StoreType">
+            <inheritdocs/>
+        </member>
+        <member name="P:Goedel.Mesh.Server.CatalogAccount.SequenceDefault">
+            <summary>The catalog label</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.CatalogAccount.AccountByAddress">
+            <summary>Dictionary tracking accounts by their account address.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Server.CatalogAccount.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[])">
+            <summary>
+            Constructor for a catalog named <paramref name="storeName"/> in directory
+            <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
+            and key collection <paramref name="keyCollection"/>.
+            </summary>
+            <param name="create">Create a new persistence store on disk if it does not already exist.</param>
+            <param name="decrypt">Attempt to decrypt the contents of the catalog if encrypted.</param>
+            <param name="directory">The directory in which the catalog persistence container is stored.</param>
+            <param name="storeName">The catalog persistence container file name.</param>
+            <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
+            <param name="policy">The cryptographic policy to be applied to the container.</param>
+            <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         </member>
         <member name="T:Goedel.Mesh.Server.ConsoleLoggerExtensions">
             <summary>
@@ -1207,7 +1239,7 @@
             The mesh persistence provider.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.PublicMeshService.CatalogCallsign">
+        <member name="P:Goedel.Mesh.Server.PublicMeshService.CatalogAccount">
             <summary>The callsign catalog mapping account names to profiles.</summary> 
         </member>
         <member name="P:Goedel.Mesh.Server.PublicMeshService.KeyCollection">
@@ -1418,11 +1450,8 @@
             The Mathematical Mesh persistence store.
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Server.MeshPersist.AccountStore">
+        <member name="F:Goedel.Mesh.Server.MeshPersist.CatalogAccount">
             <summary>The underlying persistence store for the account catalog.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Server.MeshPersist.CatalogCallsignObsolete">
-            <summary>The callsign catalog mapping account names to profiles.</summary> 
         </member>
         <member name="F:Goedel.Mesh.Server.MeshPersist.DirectoryRoot">
             <summary>The root directory in which the files are stored.</summary>
@@ -1449,7 +1478,7 @@
             <param name="logger">Output logger.</param>
             <param name="presenceService">Optional presence service.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountBind(Goedel.Mesh.Server.AccountEntry,System.Collections.Generic.List{Goedel.Mesh.CatalogedCallsignObsolete})">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountBind(Goedel.Mesh.Server.AccountEntry)">
             <summary>
             Add a new account. The account name must be unique.
             </summary>

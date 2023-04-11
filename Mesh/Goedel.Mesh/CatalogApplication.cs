@@ -195,6 +195,10 @@ public partial class CatalogedApplication {
     public abstract ApplicationEntry GetActivation(CatalogedDevice catalogedDevice);
 
 
+
+
+
+
     /// <summary>
     /// Construct an activation record for the application.
     /// </summary>

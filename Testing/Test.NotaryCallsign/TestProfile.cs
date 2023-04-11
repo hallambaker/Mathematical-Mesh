@@ -167,6 +167,7 @@ public partial class RegistrationTests {
                     int charge = 0) {
 
         //TestEnvironment.StartServiceCallSign();
+        //testEnvironment.HostMachineMesh.MeshHost.ReloadContexts();
 
         // Create admin context
         var adminContext = testEnvironment.HostMachineMesh.MeshHost.GetContextMesh(AccountServiceAdmin) as ContextUser;
@@ -193,6 +194,9 @@ public partial class RegistrationTests {
         //// Bind to the callsign @callsign
         var meshService = TestEnvironment.GetMeshService();
         meshService.CallsignServiceProfile = ContextRegistry.Profile as ProfileAccount;
+        adminContext.Sync();
+
+        adminContext.AccountHostAssignment.CallsignServiceProfile = ContextRegistry.Profile as ProfileRegistry;
 
         var bindRegistry = adminContext.CallsignRequest(CallsignRegistry, bind: true, transfer: null);
         ContextRegistry.Process();

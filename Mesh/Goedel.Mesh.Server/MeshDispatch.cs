@@ -80,7 +80,7 @@ public class PublicMeshService : MeshService {
 
 
     ///<summary>The callsign catalog mapping account names to profiles.</summary> 
-    public CatalogCallsignObsolete CatalogCallsign => MeshPersist.CatalogCallsignObsolete;
+    public CatalogAccount CatalogAccount => MeshPersist.CatalogAccount;
 
     /////<summary>The service description.</summary> 
     //public static ServiceDescription ServiceDescription => new(WellKnown, Factory);
@@ -427,7 +427,8 @@ public class PublicMeshService : MeshService {
 
 
     bool VerifyBinding(ProfileAccount profileAccount, CallsignBinding callsignBinding) {
-        CatalogCallsign.Get(callsignBinding.Canonical).AssertNull(NYI.Throw);
+        //CatalogCallsign.Get(callsignBinding.Canonical).AssertNull(NYI.Throw);
+        throw new NYI();
 
         profileAccount.Future();
 
@@ -450,31 +451,31 @@ public class PublicMeshService : MeshService {
             var profileAccount = request.EnvelopedProfileAccount.Decode();
             VerifyDevice(profileAccount, jpcSession).AssertTrue(NotAuthenticated.Throw);
 
-            var catalogedCallsigns = new List<CatalogedCallsignObsolete>();
+            //var catalogedCallsigns = new List<CatalogedCallsignObsolete>();
 
-            if (request.EnvelopedCallsignBinding != null) {
+            //if (request.EnvelopedCallsignBinding != null) {
 
-                foreach (var envelopedBinding in request.EnvelopedCallsignBinding) {
+            //    foreach (var envelopedBinding in request.EnvelopedCallsignBinding) {
 
-                    var binding = envelopedBinding.Decode();
-                    VerifyBinding(profileAccount, binding).AssertTrue(NYI.Throw);
+            //        var binding = envelopedBinding.Decode();
+            //        VerifyBinding(profileAccount, binding).AssertTrue(NYI.Throw);
 
-                    // check to see if the binding is in the name catalog
-                    if (ServiceBinding(binding)) {
-                        // 
-                        catalogedCallsigns.Add(new CatalogedCallsignObsolete() {
-                            EnvelopedCallsignBinding = envelopedBinding,
-                            Canonical = binding.Canonical.CannonicalAccountAddress(),
-                            ProfileUdf = binding.ProfileUdf
-                            });
-                        }
-                    }
-                }
+            //        // check to see if the binding is in the name catalog
+            //        if (ServiceBinding(binding)) {
+            //            // 
+            //            catalogedCallsigns.Add(new CatalogedCallsignObsolete() {
+            //                EnvelopedCallsignBinding = envelopedBinding,
+            //                Canonical = binding.Canonical.CannonicalAccountAddress(),
+            //                ProfileUdf = binding.ProfileUdf
+            //                });
+            //            }
+            //        }
+            //    }
 
 
 
             // canonicalize the account address to ensure consistency.
-                request.AccountAddress = request.AccountAddress.CannonicalAccountAddress();
+            request.AccountAddress = request.AccountAddress.CannonicalAccountAddress();
             var account = request.AccountAddress;
 
             var accountHostAssignment = new AccountHostAssignment() {
@@ -486,11 +487,13 @@ public class PublicMeshService : MeshService {
 
             // Create the account (not transactional)
             var accountEntry = new AccountUser(request) {
-                EnvelopedAccountHostAssignment = accountHostAssignment.GetEnvelopedAccountHostAssignment()
+                EnvelopedAccountHostAssignment = accountHostAssignment.GetEnvelopedAccountHostAssignment(),
+                LocalAddress = account,
+                LocalName = account
                 };
 
             // Perform the transaction.
-            MeshPersist.AccountBind(accountEntry, catalogedCallsigns);
+            MeshPersist.AccountBind(accountEntry);
 
             // ToDo: Allow the BindResponse to specify a different host
             // ToDo: Allow the BindResponse to specify a unique service encryption key for the acount                

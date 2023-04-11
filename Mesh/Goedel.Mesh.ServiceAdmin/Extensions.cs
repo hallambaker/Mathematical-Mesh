@@ -69,7 +69,12 @@ public static class Extensions {
                 //using var contextCarnet = contextUser.CreateRegistry(
                 //        configuration.CarnetServiceConfiguration.AdminAccount);
                 }
+
+            // Must deregister the administration context or bad things will happen.
+            meshMachine.MeshHost.Deregister(contextUser);
             }
+
+
 
         // Phase 3: Initialize the Mesh services
         if (configuration.CallsignResolver != null) {

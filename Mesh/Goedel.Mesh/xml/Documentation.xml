@@ -2871,192 +2871,6 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="T:Goedel.Mesh.CatalogCallsignObsolete">
-            <summary>
-            Bookmark catalog. Describes the bookmarks in the user's Mesh account.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.CatalogCallsignObsolete.Label">
-            <summary>The canonical label for the catalog</summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogCallsignObsolete.StoreType">
-            <inheritdocs/>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogCallsignObsolete.SequenceDefault">
-            <summary>The catalog label</summary>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogCallsignObsolete.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
-            <summary>
-            Factory delegate
-            </summary>
-            <param name="directory">Directory of store file on local machine.</param>
-            <param name="storeId">Store identifier.</param>
-            <param name="cryptoParameters">Cryptographic parameters for the store.</param>
-            <param name="policy">The cryptographic policy to be applied to the catalog.</param>
-            <param name="keyCollection">Key collection to be used to resolve keys</param>
-            <param name="decrypt">If true, attempt decryption of payload contents./</param>
-            <param name="create">If true, create a new file if none exists.</param>
-            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogCallsignObsolete.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[])">
-            <summary>
-            Constructor for a catalog named <paramref name="storeName"/> in directory
-            <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
-            and key collection <paramref name="keyCollection"/>.
-            </summary>
-            <param name="create">Create a new persistence store on disk if it does not already exist.</param>
-            <param name="decrypt">Attempt to decrypt the contents of the catalog if encrypted.</param>
-            <param name="directory">The directory in which the catalog persistence container is stored.</param>
-            <param name="storeName">The catalog persistence container file name.</param>
-            <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
-            <param name="policy">The cryptographic policy to be applied to the container.</param>
-            <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
-            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
-        </member>
-        <member name="T:Goedel.Mesh.CatalogedCallsignObsolete">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedCallsignObsolete.CallsignBinding">
-            <summary>Convenience accessor to the callsign binding content.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedCallsignObsolete._PrimaryKey">
-            <summary>The primary key is protocol:site </summary>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedCallsignObsolete.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedCallsignObsolete.Describe(System.Text.StringBuilder,System.Boolean)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedCallsignObsolete.GetActivation(Goedel.Mesh.CatalogedDevice)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedCallsignObsolete.GetEscrow">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedCallsignObsolete.ItemToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedCallsignObsolete.ToBuilder(System.Text.StringBuilder)">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedCallsignObsolete.Canonical">
-             <summary>
-            Fast lookup for the canonical form of the callsign.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedCallsignObsolete.ProfileUdf">
-             <summary>
-            Fast lookup for the profile to which the name is bound.		
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedCallsignObsolete.EnvelopedCallsignBinding">
-             <summary>
-            The enveloped binnding of the callsign to the profile.		
-             </summary>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedCallsignObsolete.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedCallsignObsolete.Getter(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="F:Goedel.Mesh.CatalogedCallsignObsolete._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.CatalogedCallsignObsolete._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedCallsignObsolete._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedCallsignObsolete._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedCallsignObsolete._ParentProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedCallsignObsolete._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.CatalogedCallsignObsolete.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedCallsignObsolete._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedCallsignObsolete.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="T:Goedel.Mesh.ApplicationEntryCallsignObsolete">
-            <summary>
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.ApplicationEntryCallsignObsolete.Decode(Goedel.Cryptography.Dare.IKeyCollection)">
-            <inheritdoc/> 
-        </member>
-        <member name="P:Goedel.Mesh.ApplicationEntryCallsignObsolete.EnvelopedActivation">
-            <summary>
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.ApplicationEntryCallsignObsolete.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.ApplicationEntryCallsignObsolete.Getter(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="F:Goedel.Mesh.ApplicationEntryCallsignObsolete._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.ApplicationEntryCallsignObsolete._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.ApplicationEntryCallsignObsolete._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.ApplicationEntryCallsignObsolete._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.ApplicationEntryCallsignObsolete._ParentProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.ApplicationEntryCallsignObsolete._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.ApplicationEntryCallsignObsolete.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.ApplicationEntryCallsignObsolete._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.ApplicationEntryCallsignObsolete.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Mesh.CatalogContact">
             <summary>
             Device catalog. Describes the properties of all devices connected to the user's Mesh account.
@@ -5043,11 +4857,6 @@
             The account address
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ConnectionService.Callsign">
-             <summary>
-            The account callsign
-             </summary>
-        </member>
         <member name="M:Goedel.Mesh.ConnectionService.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
@@ -5223,6 +5032,9 @@
         </member>
         <member name="F:Goedel.Mesh.MeshConstants.StoreTypeTaskTag">
             <summary>Jose enumeration tag for StoreType.Task</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.StoreTypeAccountTag">
+            <summary>Jose enumeration tag for StoreType.Account</summary>
         </member>
         <member name="M:Goedel.Mesh.MeshConstants.ToStoreType(System.String)">
             <summary>
@@ -7089,6 +6901,9 @@
         </member>
         <member name="F:Goedel.Mesh.StoreType.Task">
             <summary>Task Catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StoreType.Account">
+            <summary>Account Catalog</summary>
         </member>
         <member name="T:Goedel.Mesh.StateSpoolMessage">
             <summary>Inbound spool message state</summary>
@@ -14153,68 +13968,6 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Mesh.ActivationApplication.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="T:Goedel.Mesh.ActivationApplicationCallsignObsolete">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ActivationApplicationCallsignObsolete.RequestId">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ActivationApplicationCallsignObsolete.Status">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ActivationApplicationCallsignObsolete.EnvelopedCallsignBinding">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="M:Goedel.Mesh.ActivationApplicationCallsignObsolete.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.ActivationApplicationCallsignObsolete.Getter(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="F:Goedel.Mesh.ActivationApplicationCallsignObsolete._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.ActivationApplicationCallsignObsolete._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.ActivationApplicationCallsignObsolete._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.ActivationApplicationCallsignObsolete._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.ActivationApplicationCallsignObsolete._ParentProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.ActivationApplicationCallsignObsolete._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.ActivationApplicationCallsignObsolete.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.ActivationApplicationCallsignObsolete._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.ActivationApplicationCallsignObsolete.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
