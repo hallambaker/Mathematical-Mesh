@@ -947,7 +947,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// </summary>
     /// <param name="udf"></param>
     /// <returns>True if the key was found, otherwise false.</returns>
-    public void ErasePrivateKey(string udf) => throw new NotImplementedException();
+    public void ErasePrivateKey(string udf) => KeyCollection.ErasePrivateKey(udf);
 
     /// <summary>
     /// Locate the private key with fingerprint <paramref name="udf"/> and return
@@ -955,7 +955,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// </summary>
     /// <param name="udf">Key to locate</param>
     /// <returns>The JSON description (if found).</returns>
-    public IJson LocatePrivateKey(string udf) => throw new NotImplementedException();
+    public IJson LocatePrivateKey(string udf) => KeyCollection.LocatePrivateKey(udf);
 
     /// <summary>
     /// Persist the key pair specified by <paramref name="privateKey"/> and mark as exportable
