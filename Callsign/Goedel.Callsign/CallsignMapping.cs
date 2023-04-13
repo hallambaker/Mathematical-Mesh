@@ -40,8 +40,11 @@ public partial class CallsignMapping {
 
     ///<summary>List of callsign code pages.</summary> 
     public List<Page> Pages { get; } = new();
-    public Dictionary<string, Page> PageDictionary = new Dictionary<string, Page>();
 
+    ///<summary>Dictionary mapping page name to page.</summary> 
+    public Dictionary<string, Page> PageDictionary = new();
+
+    ///<summary>The default callsign mapping.</summary> 
     public static CallsignMapping Default => defaultMapping ?? 
             new CallsignMapping(true).CacheValue (out defaultMapping);
     static CallsignMapping defaultMapping = null;
@@ -53,9 +56,6 @@ public partial class CallsignMapping {
 
     #endregion
     #region // Constructors
-
-
-
 
     /// <summary>
     /// Constructor returning a callsign mapping instance. 

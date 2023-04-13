@@ -194,7 +194,7 @@ public class MeshMachineTest : MeshMachineCore {
     public override IResolver GetResolver(ICredentialPrivate credential) {
         var resolver = TestEnvironmentCommon.Resolver;
         var client = resolver.GetClient();
-        return new ResolveClient(client, null);
+        return new ResolveClient(client);
         }
 
     ///<inheritdoc/>

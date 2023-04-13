@@ -12,29 +12,40 @@ namespace Goedel.Callsign;
 
 
 
-
+/// <summary>
+/// Callsign state values.
+/// </summary>
 public enum CallsignState {
-    
+    ///<summary>The callsign is not registered.</summary> 
     Unregistered,
 
+    ///<summary>The callsign is registered but not bound to a service address.</summary> 
     Registered,
 
+    ///<summary>The callsign is registered and bound to a service address.</summary> 
     Bound,
 
+    ///<summary>The callsign is registered but the registration is on hold.</summary> 
     Hold
-    
+
     }
 
 
-
+/// <summary>
+/// Context resolver class, binds a 
+/// </summary>
 public class ContextResolver : IResolver {
+
 
     ContextAccount ContextAccount { get; }
 
+    ///<summary></summary> 
+    public  ResolverServiceClient ResolverServiceClient { get; set; }
 
-    public 
-        ResolverServiceClient ResolverServiceClient { get; set; }
-
+    /// <summary>
+    /// Constructor returning an instance bound to the account context <paramref name="contextAccount"/>.
+    /// </summary>
+    /// <param name="contextAccount">The account context using the resolver.</param>
     public ContextResolver(
                 ContextAccount contextAccount
                 ) {
@@ -43,6 +54,7 @@ public class ContextResolver : IResolver {
         //contextAccount.CallsignResolver = this;
         }
 
+    ///<inheritdoc/>
     public bool TryResolveCallsign(string callsign, out CallsignBinding callsignBinding) {
         throw new NotImplementedException();
         }
@@ -61,8 +73,6 @@ public static class Extensions {
     [ModuleInitializer]
 
     internal static void _Initialize() {
-
-        //Console.WriteLine($"^^^^^^^^^^^^^^^^^^^^^^Initialize");
         ContextUser.ProcessDictionary.Add(typeof(CallsignRegistrationResponse), ProcessMessage);
         }
 
@@ -192,7 +202,13 @@ public static class Extensions {
         throw new NYI();
         }
 
-
+    /// <summary>
+    /// Return the status of the callsign registration <paramref name="callsign"/> within the 
+    /// account context <paramref name="contextAccount"/>.
+    /// </summary>
+    /// <param name="contextAccount">The account context.</param>
+    /// <param name="callsign">The callsign to query.</param>
+    /// <returns></returns>
     public static CatalogedApplicationCallsign CallsignRequestStatus(
                 this ContextUser contextAccount,
                 string callsign) {

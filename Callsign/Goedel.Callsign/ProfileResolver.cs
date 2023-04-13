@@ -35,25 +35,7 @@ public partial class ProfileResolver {
     public ProfileResolver() {
         }
 
-    ///// <summary>
-    ///// Construct a Profile Account instance  from <paramref name="accountAddress"/>.
-    ///// </summary>
-    ///// <param name="accountAddress">The account address</param>
-    ///// <param name="activationAccount">The activation used to create the account data.</param>
-    ///// <param name="envelopedProfileRegistry">The enveloped registry profile.</param>
-    //public ProfileResolver(
-    //            string accountAddress,
-    //            Enveloped<ProfileAccount> envelopedProfileRegistry,
-    //            ActivationCommon activationAccount) {
-    //    EnvelopedProfileRegistry = envelopedProfileRegistry;
-    //    ProfileSignature = new KeyData(activationAccount.ProfileSignatureKey);
 
-    //    //CommonEncryption = new KeyData(activationAccount.CommonEncryptionKey);
-    //    //CommonAuthentication = new KeyData(activationAccount.CommonAuthenticationKey);
-
-
-    //    Envelope(activationAccount.ProfileSignatureKey);
-    //    }
 
     /// <summary>
     /// Construct a Profile Host instance  from a <see cref="PrivateKeyUDF"/>
@@ -61,7 +43,6 @@ public partial class ProfileResolver {
     /// <param name="secretSeed">The secret seed value.</param>
     /// <param name="keyCollection">The base key collection</param>
     /// <param name="persist">If true, persist the service record to the local machine
-    /// <param name="accountAddress">The account address.</param>
     /// <param name="envelopedProfileRegistry">The enveloped registry profile</param>
     /// store.</param>
     ProfileResolver(
@@ -90,7 +71,6 @@ public partial class ProfileResolver {
     /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
     /// seed.
     /// </summary>
-    /// <param name="resolverAddress">The resolver address</param>
     /// <param name="envelopedProfileRegistry">The enveloped registry profile.</param>
     /// <param name="secretSeed">The secret seed value.</param>
     /// <param name="algorithmEncrypt">The encryption algorithm.</param>
@@ -119,7 +99,15 @@ public partial class ProfileResolver {
 
 
 
-
+    /// <summary>
+    /// Create a new configuration of the resolver service.
+    /// </summary>
+    /// <param name="meshMachine">The Mesh Machine</param>
+    /// <param name="envelopedProfileRegistry">The enveloped registry profile.</param>
+    /// <param name="profileService">The service profile.</param>
+    /// <param name="profileHost">The host profile.</param>
+    /// <param name="activationDevice">The device activation.</param>
+    /// <param name="connectionDevice">The device connection.</param>
     public static void CreateService(
                 IMeshMachine meshMachine,
                 Enveloped<ProfileAccount> envelopedProfileRegistry,
@@ -130,25 +118,8 @@ public partial class ProfileResolver {
 
         profileService = Generate(envelopedProfileRegistry, meshMachine.KeyCollection);
 
-
         CreateService(meshMachine, profileService, out profileHost, out activationDevice,
             out connectionDevice);
         }
-
-         
-
-
-    ///// <summary>
-    ///// Verify the profile to check that it is correctly signed and consistent.
-    ///// </summary>
-    ///// <returns></returns>
-    //public override void Validate() {
-    //    base.Validate();
-
-    //    //AccountEncryptionKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
-    //    //AdministratorSignatureKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
-
-    //    }
-
 
     }

@@ -35,8 +35,10 @@ namespace Goedel.Callsign;
 
 public partial class Page {
 
+    ///<summary>Dictionary listing the valid sub pages.</summary> 
     public Dictionary<string, Page> SubPages = new Dictionary<string, Page>();
 
+    ///<summary>Expand the dictionary with entries from <paramref name="pages"/>.</summary> 
     public void Expand(Dictionary<string, Page> pages) {
         if (Allow is null) {
             return;
@@ -53,6 +55,7 @@ public partial class Page {
 
         }
 
+
     void Expand(Dictionary<string, Page> pages, Page page) {
         foreach (var allow in Allow) {
             if (!SubPages.TryGetValue(allow, out _)) {
@@ -62,7 +65,12 @@ public partial class Page {
             }
         }
 
-
+    /// <summary>
+    /// Return true if the character <paramref name="c"/> is allowed in this page
+    /// (or a sub-page), otherwise false.
+    /// </summary>
+    /// <param name="c">The character to check.</param>
+    /// <returns>True if the character is allowed, otherwise false.</returns>
     public bool IsAllowed(char c) {
         foreach (var span in CharacterSpans) {
             if ((c == span.First) & (span.Last == null)) {
@@ -77,11 +85,20 @@ public partial class Page {
         }
 
 
-
+    ///<summary>The resource identifier for the digits character page.</summary> 
     public const string FileCharacterPageDigits = "Resources.CharacterPageDigits.json";
+
+    ///<summary>The resource identifier for the Latin character page.</summary> 
     public const string FileCharacterPageLatin = "Resources.CharacterPageLatin.json";
+
+    ///<summary>The resource identifier for the reserved character page.</summary> 
     public const string FileCharacterPageReserved = "Resources.CharacterPageReserved.json";
 
+    /// <summary>
+    /// Load the resource with identifier <paramref name="file"/>
+    /// </summary>
+    /// <param name="file">The resource to load.</param>
+    /// <returns>The page resulting from parsing the resource.</returns>
     public static Page LoadResource(string file) {
         var assembly = typeof(CallsignEntry).Assembly;
         var name = assembly.GetName().Name;
@@ -95,12 +112,16 @@ public partial class Page {
         return result;
         }
 
+    /// <summary>
+    /// Load the default pages and return the pages as a list.
+    /// </summary>
+    /// <returns></returns>
     public static List<Page> LoadResources() {
-        var result = new List<Page>();
-
-        result.Add(LoadResource(FileCharacterPageDigits));
-        result.Add(LoadResource(FileCharacterPageLatin));
-        result.Add(LoadResource(FileCharacterPageReserved));
+        var result = new List<Page> {
+            LoadResource(FileCharacterPageDigits),
+            LoadResource(FileCharacterPageLatin),
+            LoadResource(FileCharacterPageReserved)
+            };
 
         return result;
         }
@@ -110,11 +131,6 @@ public partial class Page {
 
 
 public partial class Registration {
-    #region // Properties
-
-
-
-    #endregion
     #region // Constructors
 
 
@@ -122,9 +138,6 @@ public partial class Registration {
     /// Default constructor, returns an empty instance.
     /// </summary>
     public Registration() {
-
-
-
         }
 
     /// <summary>
@@ -156,13 +169,5 @@ public partial class Registration {
         }
 
     #endregion
-
-
-    #region // Methods
-
-
-
-    #endregion
-
 
     }

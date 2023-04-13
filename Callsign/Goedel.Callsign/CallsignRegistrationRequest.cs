@@ -26,7 +26,12 @@ namespace Goedel.Callsign;
 
 public partial class CallsignRegistrationRequest {
 
-
+    /// <summary>
+    /// Validate that the profile presented as purporting to bind to <paramref name="udf"/>
+    /// and return true if valid, false otherwise.
+    /// </summary>
+    /// <param name="udf">The fingerprint value to validate.</param>
+    /// <returns>True if the specified profile is present in <see cref="Profiles"/></returns>
     public bool Validate(string udf) => Profile.ValidateAny(DareEnvelope, Profiles, udf);
 
 
