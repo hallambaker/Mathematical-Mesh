@@ -50,7 +50,7 @@ public partial class ActivationApplicationRegistry {
 
         var accountSeed = new PrivateKeyUDF(ActivationKey);
         AccountAuthentication = accountSeed.ActivatePrivate(
-            profileDevice.Authentication.GetKeyPairAdvanced(), MeshActor.Service, MeshKeyOperation.Authenticate);
+            profileDevice.KeyAuthentication, MeshActor.Service, MeshKeyOperation.Authenticate);
 
         }
     }

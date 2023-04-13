@@ -71,7 +71,7 @@ public partial class Shell {
 
         var result = new ResultCallsign() {
             Success = true,
-            CallsignApplication = message
+            Message = message
             };
         return result;
         }

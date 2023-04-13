@@ -207,7 +207,7 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
         RudService = listener.RudService;
 
         foreach (var provider in Providers) {
-            provider.JpcInterface.Initialize(Providers);
+            provider.JpcInterface?.Initialize(Providers);
             }
 
         HostMachineMesh.MeshHost.ReloadContexts();

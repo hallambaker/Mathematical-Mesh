@@ -105,6 +105,10 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
                     Configuration.GenericHost,
                     Configuration.CallsignResolver,
                     Logger);
+
+
+        result.Initialize(null);
+
         result.SyncToRegistry();
 
         if (MeshMachineHost is MeshMachineDirect meshMachineDirect) {

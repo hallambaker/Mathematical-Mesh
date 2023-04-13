@@ -8326,7 +8326,7 @@
         <member name="T:Goedel.Mesh.ProcessResult">
              <summary>
             
-             For future use, allows logging of operations and results	
+             Report result of message processing.	
              </summary>
         </member>
         <member name="M:Goedel.Mesh.ProcessResult.GetEnvelopedProcessResult">
@@ -15175,6 +15175,106 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Mesh.DevicePreconfigurationPublic.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.ProcessResultNotSupported">
+             <summary>
+            
+             The message type is not supported.
+             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ProcessResultNotSupported.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.ProcessResultNotSupported.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Mesh.ProcessResultNotSupported._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ProcessResultNotSupported._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ProcessResultNotSupported._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ProcessResultNotSupported._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ProcessResultNotSupported._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ProcessResultNotSupported._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ProcessResultNotSupported.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ProcessResultNotSupported._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ProcessResultNotSupported.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.ProcessResultNotFound">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ProcessResultNotFound.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.ProcessResultNotFound.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Mesh.ProcessResultNotFound._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ProcessResultNotFound._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ProcessResultNotFound._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ProcessResultNotFound._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ProcessResultNotFound._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ProcessResultNotFound._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ProcessResultNotFound.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ProcessResultNotFound._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ProcessResultNotFound.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>

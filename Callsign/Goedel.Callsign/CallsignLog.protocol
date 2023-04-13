@@ -180,7 +180,10 @@
 		String Reason
 			Description
 				|Reason for refusing the registration (if refused)
-				.
+		String Callsign
+			Description
+				|The value specified as the Canonical field in the callsign request if present,
+				|otherwise the value specified in the Display field, otherwise null.
 
 	Structure ProcessResultCallsignRegistration
 		External ProcessResult
@@ -208,3 +211,10 @@
 		String Reason
 			Description
 				|Reason for refusing the registration (if refused)
+	
+	Structure ProcessResultCallsign
+		External ProcessResult
+		Struct CatalogedApplicationCallsign CatalogedApplicationCallsign
+			Description
+				|The cataloged application
+				

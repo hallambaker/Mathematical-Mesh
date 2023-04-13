@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 11-Apr-23 2:10:47 AM
+//  This file was automatically generated at 13-Apr-23 5:29:26 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -93,7 +93,8 @@ public abstract partial class CallsignEntry : global::Goedel.Protocol.JsonObject
 	    {"CallsignRegistrationRequest", CallsignRegistrationRequest._Factory},
 	    {"CallsignRegistrationResponse", CallsignRegistrationResponse._Factory},
 	    {"ProcessResultCallsignRegistration", ProcessResultCallsignRegistration._Factory},
-	    {"CatalogedApplicationCallsign", CatalogedApplicationCallsign._Factory}
+	    {"CatalogedApplicationCallsign", CatalogedApplicationCallsign._Factory},
+	    {"ProcessResultCallsign", ProcessResultCallsign._Factory}
 		};
 
     [ModuleInitializer]
@@ -1588,6 +1589,12 @@ public partial class CallsignRegistrationResponse : Message {
         /// </summary>
 
 	public virtual string						Reason  {get; set;}
+        /// <summary>
+        ///The value specified as the Canonical field in the callsign request if present,
+        ///otherwise the value specified in the Display field, otherwise null.
+        /// </summary>
+
+	public virtual string						Callsign  {get; set;}
 
 
     ///<inheritdoc/>
@@ -1612,6 +1619,12 @@ public partial class CallsignRegistrationResponse : Message {
 					}
 				break;
 				}
+			case "Callsign" : {
+				if (value is TokenValueString vvalue) {
+					Callsign = vvalue.Value;
+					}
+				break;
+				}
 
 			default: {
 				base.Setter(tag, value);
@@ -1633,6 +1646,9 @@ public partial class CallsignRegistrationResponse : Message {
 			case "Reason" : {
 				return new TokenValueString (Reason);
 				}
+			case "Callsign" : {
+				return new TokenValueString (Callsign);
+				}
 
             default: {
                 return base.Getter(tag);
@@ -1647,7 +1663,8 @@ public partial class CallsignRegistrationResponse : Message {
 			{ "Registered", new Property (typeof(TokenValueBoolean), false)} ,
 			{ "CatalogedRegistration", new Property ( typeof(TokenValueStruct), false,
 					()=>new CatalogedRegistration(), ()=>new CatalogedRegistration(), false)} ,
-			{ "Reason", new Property (typeof(TokenValueString), false)} 
+			{ "Reason", new Property (typeof(TokenValueString), false)} ,
+			{ "Callsign", new Property (typeof(TokenValueString), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1972,6 +1989,112 @@ public partial class CatalogedApplicationCallsign : CatalogedApplication {
 			return Out as CatalogedApplicationCallsign;
 			}
 		var Result = new CatalogedApplicationCallsign ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class ProcessResultCallsign : ProcessResult {
+        /// <summary>
+        ///The cataloged application
+        /// </summary>
+
+	public virtual CatalogedApplicationCallsign						CatalogedApplicationCallsign  {get; set;}
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "CatalogedApplicationCallsign" : {
+				if (value is TokenValueStructObject vvalue) {
+					CatalogedApplicationCallsign = vvalue.Value as CatalogedApplicationCallsign;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "CatalogedApplicationCallsign" : {
+				return new TokenValueStruct<CatalogedApplicationCallsign> (CatalogedApplicationCallsign);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "CatalogedApplicationCallsign", new Property ( typeof(TokenValueStruct), false,
+					()=>new CatalogedApplicationCallsign(), ()=>new CatalogedApplicationCallsign(), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, ProcessResult._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ProcessResultCallsign";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ProcessResultCallsign();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ProcessResultCallsign FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ProcessResultCallsign;
+			}
+		var Result = new ProcessResultCallsign ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

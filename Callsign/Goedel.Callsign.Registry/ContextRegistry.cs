@@ -313,9 +313,7 @@ public class ContextRegistry : ContextAccount {
                 CallsignRegistrationRequest registrationRequest) {
 
 
-        CallsignBinding binding;
-
-
+        CallsignBinding binding = null;
         ProcessResult result;
         try {
             // Extract binding request
@@ -370,7 +368,7 @@ public class ContextRegistry : ContextAccount {
             return result;
             }
         catch (Exception ex) {
-            return RefuseRequest(registrationRequest, ex);
+            return RefuseRequest(registrationRequest, binding, ex);
             }
         }
 
@@ -384,6 +382,7 @@ public class ContextRegistry : ContextAccount {
     /// <returns>Processing result with <see cref="ProcessResult.Success"/> set false.</returns>
     public ProcessResult RefuseRequest (
                 CallsignRegistrationRequest registrationRequest,
+                CallsignBinding? binding,
                 Exception exception) {
         var reason = exception switch {
             CanonicalFormInvalid => RegistrationRefusal.CanonicalFormInvalid,
@@ -402,6 +401,7 @@ public class ContextRegistry : ContextAccount {
             Reason = reason.ToLabel(),
             Registered = false,
             MessageId = registrationRequest.GetResponseId(),
+            Callsign = binding?.Canonical ?? binding?.Display
             };
 
         transactRequest.OutboundMessage(registrationRequest.Sender, registrationResponse);

@@ -64,26 +64,46 @@ partial class Program {
 
         /* Minor */
 
-        //CallsignDirect.Test().RegisterAlice();
+
         //CallsignDirect.Test().RegisterAliceConnectBob();
         //CallsignDirect.Test().RegisterAliceDuplicate();
         //CallsignDirect.Test().RegisterAliceTransferBob();
 
+
+        //ShellTests.Test().TestHello();
+        //ShellTestsAdmin.Test().TestHello();
+
         /* Callsigns */
 
-        RegistrationTests.Test().CallsignBind();
-        RegistrationTests.Test().CallsignRegistration();
-        RegistrationTests.Test().CallsignRegistrationPaid();
-        RegistrationTests.Test().CallsignRegistrationInsufficient();
-        RegistrationTests.Test().CallsignTransfer();
+        //RegistrationTests.Test().CallsignBind();
+        //RegistrationTests.Test().CallsignRegistration();
+
+
+        //ShellTests.Test().TestAccountDelete();
+        //ShellTests.Test().TestEscrowDeleteDevice();
+
+
+
+        //CallsignDirect.Test().RegisterAlice();
+
+        //RegistrationTests.Test().CallsignBind();
+        //RegistrationTests.Test().CallsignTransfer();
+
+        TestPresence.Test().PresenceStatusUpdate();
+        TestPresence.Test().PresenceSessionRequest();
+        TestPresence.Test().PresenceHeartbeat();
+
         RegistrationTests.Test().CallsignPresencePresent();
         RegistrationTests.Test().CallsignPresenceAbsent();
 
 
+
+
+
+
+
         /* The presence stuff */
-        TestPresence.Test().PresenceStatusUpdate();
-        TestPresence.Test().PresenceSessionRequest();
-        TestPresence.Test().PresenceHeartbeat();
+
         TestService.Test().MeshPresence();
 
 
@@ -129,7 +149,8 @@ partial class Program {
         TestService.Test().MeshRepository();
         TCallsign.Test().TestPurchase();
         TCallsign.Test().TestPurchaseIndirect();
-
+        RegistrationTests.Test().CallsignRegistrationPaid();
+        RegistrationTests.Test().CallsignRegistrationInsufficient();
 
         /* Signatures */
         TSignatures.Test().TestSignatureProfile();

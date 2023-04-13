@@ -69,7 +69,7 @@ public class AccountHandleLocked : Disposable {
     /// <summary>
     /// The account description. This is only accessible through the account handle.
     /// </summary>
-    protected AccountContext AccountContext { get; }
+    public AccountContext AccountContext { get; }
 
 
     ///<summary>Convenience accessor for the account address</summary> 

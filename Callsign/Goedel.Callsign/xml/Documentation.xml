@@ -1063,6 +1063,12 @@
             Reason for refusing the registration (if refused)
              </summary>
         </member>
+        <member name="P:Goedel.Callsign.CallsignRegistrationResponse.Callsign">
+             <summary>
+            The value specified as the Canonical field in the callsign request if present,
+            otherwise the value specified in the Display field, otherwise null.
+             </summary>
+        </member>
         <member name="M:Goedel.Callsign.CallsignRegistrationResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
@@ -1260,6 +1266,60 @@
         </member>
         <member name="M:Goedel.Callsign.CatalogedApplicationCallsign.ToBuilder(System.Text.StringBuilder)">
             <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Callsign.ProcessResultCallsign">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.ProcessResultCallsign.CatalogedApplicationCallsign">
+             <summary>
+            The cataloged application
+             </summary>
+        </member>
+        <member name="M:Goedel.Callsign.ProcessResultCallsign.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.ProcessResultCallsign.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.ProcessResultCallsign._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.ProcessResultCallsign._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.ProcessResultCallsign._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.ProcessResultCallsign._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.ProcessResultCallsign._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.ProcessResultCallsign._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.ProcessResultCallsign.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.ProcessResultCallsign._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Callsign.ProcessResultCallsign.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Callsign.CallsignMapping">
             <summary>
@@ -2239,7 +2299,7 @@
             Extensions class. Provides static convenience extensions.
             </summary>
         </member>
-        <member name="M:Goedel.Callsign.Extensions.CallsignRequest(Goedel.Mesh.Client.ContextUser,System.String,System.String,System.Boolean,Goedel.Mesh.ProfileAccount)">
+        <member name="M:Goedel.Callsign.Extensions.CallsignRequest(Goedel.Mesh.Client.ContextUser,System.String,System.String,System.Boolean,Goedel.Mesh.ProfileAccount,System.String)">
             <summary>
             Make a callsign registration, binding or transfer request
             </summary>

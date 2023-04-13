@@ -389,7 +389,7 @@
             <param name="registrationRequest">The request to process.</param>
             <returns>Reports the processing result.</returns>
         </member>
-        <member name="M:Goedel.Callsign.Registry.ContextRegistry.RefuseRequest(Goedel.Callsign.CallsignRegistrationRequest,System.Exception)">
+        <member name="M:Goedel.Callsign.Registry.ContextRegistry.RefuseRequest(Goedel.Callsign.CallsignRegistrationRequest,Goedel.Mesh.CallsignBinding,System.Exception)">
             <summary>
             Return a message refusing the request <paramref name="registrationRequest"/> for the
             reason corresponding to <paramref name="exception"/>. The request is returned

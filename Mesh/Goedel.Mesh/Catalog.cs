@@ -286,6 +286,9 @@ public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEnt
     /// <param name="key">Unique identifier of the entry to locate.</param>
     /// <returns>The entry (if found).</returns>
     public T Locate(string key) {
+
+
+
         if (DictionaryByLocalName.TryGetValue(key, out var value)) {
             return value as T;
             }

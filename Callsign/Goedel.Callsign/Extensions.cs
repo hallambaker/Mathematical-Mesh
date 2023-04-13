@@ -1,8 +1,10 @@
 ﻿using Goedel.Cryptography.Dare;
 using Goedel.Mesh;
+using Goedel.Protocol;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -55,6 +57,16 @@ public class ContextResolver : IResolver {
 public static class Extensions {
 
 
+
+    [ModuleInitializer]
+
+    internal static void _Initialize() {
+
+        //Console.WriteLine($"^^^^^^^^^^^^^^^^^^^^^^Initialize");
+        ContextUser.ProcessDictionary.Add(typeof(CallsignRegistrationResponse), ProcessMessage);
+        }
+
+
     public static IResolver GetResolver(
                 this ContextAccount contextAccount) {
         if (contextAccount == null) {
@@ -92,7 +104,8 @@ public static class Extensions {
                 string callsign,
                 string display = null,
                 bool bind = false, 
-                ProfileAccount transfer = null) {
+                ProfileAccount transfer = null,
+                string transferUdf = null) {
 
         display = CallsignMapping.Strip(display ?? callsign);
         callsign = CallsignMapping.Default.Canonicalize(CallsignMapping.Strip(callsign));
@@ -117,6 +130,7 @@ public static class Extensions {
 
         if (transfer == null) {
             callsignBinding.ProfileUdf = contextAccount.Profile.UdfString;
+            callsignBinding.TransferUdf = transferUdf;
             }
         else {
             callsignBinding.TransferUdf = transfer.UdfString;
@@ -195,31 +209,117 @@ public static class Extensions {
         return catalogedApplication as CatalogedApplicationCallsign;
         }
 
-    public static CatalogedApplicationCallsign CallsignTransfer(
-            this ContextAccount contextAccount,
+    public static CallsignRegistrationRequest CallsignTransfer(
+            this ContextUser contextAccount,
             string callsign,
             string recipient) {
 
         // pull the contact entry for the recipient
+        var contact = contextAccount.GetContact (recipient);
 
-
+        var profile = GetProfile (contact.Contact, recipient);
         // create the transfer request
+        return contextAccount.CallsignRequest(callsign, bind:false, transfer: profile );
 
-
-        throw new NYI();
         }
 
 
+    static ProfileAccount GetProfile(Contact contact, string address) {
+        foreach (var entry in contact.NetworkAddresses) {
+            if (entry.Address == address) {
+                var profile = entry.EnvelopedProfileAccount.Decode();
+                return profile;
+
+                }
+            }
+
+        return null;
+        }
+
     public static List<CatalogedApplicationCallsign> ListCallsigns(
-                this ContextAccount contextAccount) {
+                this ContextUser contextAccount) {
 
         // get the application catalog
+        var catalog = contextAccount.GetStore(CatalogApplication.Label) as CatalogApplication;
+
+        var result = new List<CatalogedApplicationCallsign>();
 
         // print the entry for everything that is a callsign entry.
+        foreach (var application in catalog) {
+            if (application is CatalogedApplicationCallsign applicationCallsign) {
+                result.Add(applicationCallsign);
+                // ToDo: here we will eventually YIELD
+                }
+
+            }
 
 
+        return result;
+        }
 
-        throw new NYI();
+
+    public static ProcessResult ProcessMessage(
+                ContextUser contextUser,
+                Message meshMessage, bool accept = true, bool reciprocate = true,
+                List<string> roles = null) {
+
+        ProcessResult result;
+
+        // here we need to:
+        var message = meshMessage as CallsignRegistrationResponse;
+
+        // fetch the corresponding request
+
+        // mark the status of the request
+
+
+        // return the result of processing.
+        using var transact = contextUser.TransactBegin();
+        var applicationCatalog = transact.GetCatalogApplication();
+
+
+        var key = CatalogedApplicationCallsign.GetKey(message.Callsign);
+        if (applicationCatalog.TryLocate(key, out var application)) {
+            var applicationCallsign = application as CatalogedApplicationCallsign;
+
+            result = new ProcessResultCallsign() {
+                CatalogedApplicationCallsign = applicationCallsign,
+                };
+            if (message.Registered != true) {
+                //applicationCallsign
+                applicationCallsign.RequestId = null;
+                applicationCallsign.Reason = message.Reason;
+                result.Success = false;
+                result.ErrorReport = message.Reason;
+                }
+            else {
+                applicationCallsign.CatalogedRegistration = message.CatalogedRegistration;
+                result.Success = true;
+                }
+            applicationCatalog.Update(applicationCallsign);
+
+
+            }
+
+        else {
+            // Response received for unknown callsign request.
+
+            // This could be a transfer of course.
+
+
+            result = new ProcessResultNotFound() {
+                };
+            }
+
+        result.MessageId = message.MessageId;
+        result.Sender = message.Sender;
+        result.Recipient = message.Recipient;
+
+        transact.InboundComplete(StateSpoolMessage.Closed, meshMessage);
+        transact.Transact();
+
+
+        return result;
         }
 
 

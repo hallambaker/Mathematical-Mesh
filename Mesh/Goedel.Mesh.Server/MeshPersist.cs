@@ -138,7 +138,6 @@ public class MeshPersist : Disposable {
         KeyCollection = keyCollection;
         // Load/create the accounts catalog
         DirectoryRoot = directory;
-        Console.WriteLine("$$$$$$$$$$$$$$$$ create account catalog");
 
         Directory.CreateDirectory(directory);
         //var fileName = Path.Combine(directory, "Master.cat");
@@ -154,31 +153,6 @@ public class MeshPersist : Disposable {
         }
     #endregion
 
-
-    ////string GetAccountKey(string accountAddress) {
-
-    ////    var addressType = accountAddress.SplitAccountAddress(out var service, out var account);
-    ////    account = account.CannonicalAccountAddress();
-
-
-    ////    switch (addressType) {
-    ////        case AddressType.AccountOnly: {
-    ////            break;
-    ////            }
-    ////        case AddressType.AccountAtDns: {
-    ////            break;
-    ////            }
-    ////        default: {
-    ////            // we should never be presented with a callsign at the service.
-    ////            throw new NYI();
-    ////            }
-    ////        }
-
-    ////    //GetProfileUdf(accountAddress)
-    ////    }
-
-
-
     #region // Account maintenance AccountBind/AccountUnbind
 
 
@@ -190,7 +164,6 @@ public class MeshPersist : Disposable {
     public void AccountBind(
                     AccountEntry accountEntry) {
         PersistentIndexEntry containerEntry;
-        //Console.WriteLine("Start Bind");
         accountEntry.ProfileUdf = accountEntry.ProfileUdf.CannonicalAccountAddress();
 
         var directory = Path.Combine(DirectoryRoot, accountEntry.Directory);
@@ -203,19 +176,6 @@ public class MeshPersist : Disposable {
                 throw new NYI();
                 }
             containerEntry = CatalogAccount.New(accountEntry);
-
-
-            //foreach (var catalogedCallsign in catalogedCallsigns) {
-            //    CatalogAccount.Get(catalogedCallsign.Canonical).AssertNull(NYI.Throw);
-            //    }
-
-
-            ////Console.WriteLine("Start write");
-            //foreach (var catalogedCallsign in catalogedCallsigns) {
-            //    //Console.WriteLine($"Callsign {catalogedCallsign.Canonical} -> {catalogedCallsign.ProfileUdf}");
-            //    CatalogAccount.New(catalogedCallsign);
-            //    }
-            //Console.WriteLine("End write");
             }
 
         accountEntry = CatalogAccount.Get(accountEntry.ProfileUdf);
@@ -242,8 +202,8 @@ public class MeshPersist : Disposable {
         //accountAddress.CannonicalAccountAddress().AssertEqual(accountHandle.AccountAddress, NYI.Throw);
 
         lock (CatalogAccount) {
-            var accountEntry = CatalogAccount.Get(jpcSession.TargetAccount);
-            CatalogAccount.Delete(accountEntry);
+            //var accountEntry = CatalogAccount.Get(jpcSession.TargetAccount);
+            CatalogAccount.Delete(accountHandle.AccountContext.AccountEntry);
 
 
             }
@@ -506,11 +466,8 @@ public class MeshPersist : Disposable {
         // report the updates to be applied here
         using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Connected);
 
-        Console.WriteLine($"Transact, Account entries = {CatalogAccount.AccountByAddress.Count} / {CatalogAccount.DictionaryByLocalName.Count} ");
-        Console.WriteLine($"Transact {count} file {CatalogAccount.Sequence.Filename}");
-
-        if (count < counter) {
-            }
+        //Console.WriteLine($"Transact, Account entries = {CatalogAccount.AccountByAddress.Count} / {CatalogAccount.DictionaryByLocalName.Count} ");
+        //Console.WriteLine($"Transact {count} file {CatalogAccount.Sequence.Filename}");
 
         //using var accountEntry = GetAccountVerified(account, jpcSession);
         //accountEntry.AssertNotNull(MeshUnknownAccount.Throw);

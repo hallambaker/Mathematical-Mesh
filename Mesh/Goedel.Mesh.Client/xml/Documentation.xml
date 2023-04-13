@@ -1178,6 +1178,9 @@
             </summary>
             <returns>The credential</returns>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextUser.ProcessDictionary">
+            <summary>Dictionary mapping message type to processing delegate.</summary> 
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedMachine)">
             <summary>
             Constructor, creates a <see cref="T:Goedel.Mesh.Client.ContextUser"/> instance for the catalog entry 

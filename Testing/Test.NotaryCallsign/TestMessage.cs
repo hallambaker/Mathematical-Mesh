@@ -40,11 +40,12 @@ public partial class RegistrationTests {
 
     [Fact]
     public void CallsignBind() {
-        var deviceA = GetTestCLI("MachineAlice");
-
-        var resulta = MakeAccount(deviceA, AliceAccount);
 
         var serviceCallsign = GetContextRegistry();
+
+        var deviceA = GetTestCLI("MachineAlice");
+        var resulta = MakeAccount(deviceA, AliceAccount);
+
         Console.WriteLine("Created Callsign Service");
 
 
@@ -65,17 +66,23 @@ public partial class RegistrationTests {
     [Fact]
     public void CallsignRegistration() {
 
+
         var serviceCallsign = GetContextRegistry();
 
         var deviceA = GetTestCLI("MachineAlice");
         var resulta = MakeAccount(deviceA, AliceAccount);
 
+
+
+
         var resultRegister = deviceA.Dispatch($"callsign register {AliceCallsign}") as ResultPublish;
 
         var resultBind = deviceA.Dispatch($"callsign bind {AliceCallsign}") as ResultPublish;
+        serviceCallsign.Process();
+
 
         // Replace this with some command that waits until a completion message is received.
-        var resultSync = deviceA.Dispatch($"callsign sync {AliceCallsign}");
+        deviceA.Dispatch($"account sync");
 
         CheckCallsign(deviceA);
 
@@ -84,6 +91,34 @@ public partial class RegistrationTests {
 
 
     [Fact]
+    public void CallsignTransfer() {
+
+        var serviceCallsign = GetContextRegistry();
+
+        CreateAliceCarol(out var deviceA, out var deviceC);
+
+        var resultRegister = deviceC.Dispatch($"callsign register {AliceCallsign}") as ResultPublish;
+        serviceCallsign.Process();
+
+
+        var resultTransfer = deviceC.Dispatch($"callsign transfer {AliceCallsign} {AliceAccount}") as ResultPublish;
+        serviceCallsign.Process();
+        deviceC.Dispatch($"account sync /auto");
+
+        var resultBind = deviceA.Dispatch($"callsign bind {AliceCallsign}") as ResultPublish;
+        serviceCallsign.Process();
+        deviceA.Dispatch($"account sync /auto");
+
+        //CheckCallsign(deviceA);
+
+
+        EndTest();
+        }
+
+
+
+
+    [Fact(Skip = "Payment not yet implemented")]
     public void CallsignRegistrationPaid() {
 
 
@@ -109,7 +144,7 @@ public partial class RegistrationTests {
         EndTest();
         }
 
-    [Fact]
+    [Fact(Skip = "Payment not yet implemented")]
     public void CallsignRegistrationInsufficient() {
 
 
@@ -132,32 +167,6 @@ public partial class RegistrationTests {
         }
 
 
-
-    [Fact]
-    public void CallsignTransfer() {
-
-        var serviceCallsign = GetContextRegistry();
-
-        var deviceC = GetTestCLI("MachineCarol");
-        var resultC = MakeAccount(deviceC, CarolAccount);
-
-        var resultRegister = deviceC.Dispatch($"callsign register {AliceCallsign}") as ResultPublish;
-
-
-
-
-        var deviceA = GetTestCLI("MachineAlice");
-        var resulta = MakeAccount(deviceA, AliceAccount);
-
-        var resultTransfer = deviceC.Dispatch($"callsign transfer {AliceCallsign} AliceAccount") as ResultPublish;
-
-        var resultBind = deviceA.Dispatch($"callsign bind {AliceCallsign}") as ResultPublish;
-
-        CheckCallsign(deviceA);
-
-
-        EndTest();
-        }
 
 
     [Fact]

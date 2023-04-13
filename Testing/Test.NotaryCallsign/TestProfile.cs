@@ -95,6 +95,33 @@ public partial class RegistrationTests {
         return result;
         }
 
+    bool CreateAliceCarol(out TestCLI deviceA, out TestCLI deviceC) {
+
+        deviceA = GetTestCLI("MachineAlice");
+        deviceC = GetTestCLI("MachineCarol");
+
+        var resulta = MakeAccount(deviceA, AliceAccount);
+        var resultb = MakeAccount(deviceC, CarolAccount);
+
+        // Create a dynamic QR code contact.
+        var resultcuri = deviceA.Dispatch($"contact dynamic") as ResultPublish;
+
+        var uri = resultcuri.Uri;
+
+        // fetch the contact, request reciprocation
+        var resultfetch = deviceC.Dispatch($"contact exchange {uri}");
+        ValidContact(deviceC, CarolAccount, AliceAccount);
+
+        // Automatically accept the contact request.
+        var result6 = deviceA.Dispatch($"account sync /auto");
+        ValidContact(deviceA, AliceAccount, CarolAccount);
+
+        return true;
+        }
+
+
+
+
     static Result ProcessMessage(TestCLI device, bool accept, int length) {
 
         var resultPending = device.Dispatch("message pending") as ResultPending;
@@ -135,16 +162,28 @@ public partial class RegistrationTests {
 
 
     private TestCLI CheckCallsign(TestCLI deviceA) {
+
+
         var deviceB = GetTestCLI("DeviceBobName");
         var resultb = MakeAccount(deviceB, AccountB);
+        return CheckCallsign(deviceA, deviceB);
+        }
+    private TestCLI CheckCallsign(TestCLI deviceA, TestCLI deviceB) {
 
+        CallsignResolver.SyncToRegistry();
 
         var result2 = deviceB.Dispatch($"contact request {AliceCallsign}");
         var result3 = deviceA.Dispatch("message pending") as ResultPending;
 
-        ValidContact(deviceA, AliceAccount, AliceCallsign, AccountB);
+        var messageId = result3.Messages[0].MessageId;
+        var result4 = deviceA.Dispatch($"message accept {messageId}");
+
+
+        ValidContact(deviceA, AliceAccount, AccountB);
+
+
         var result6 = deviceB.Dispatch($"account sync /auto");
-        ValidContact(deviceB, AccountB, AliceCallsign);
+        ValidContact(deviceB, AccountB, AliceAccount);
 
 
         return deviceB;
@@ -166,16 +205,10 @@ public partial class RegistrationTests {
     public ContextRegistry GetContextRegistry(
                     int charge = 0) {
 
-        //TestEnvironment.StartServiceCallSign();
-        //testEnvironment.HostMachineMesh.MeshHost.ReloadContexts();
+        TestEnvironment.StartService();
 
         // Create admin context
-        var adminContext = testEnvironment.HostMachineMesh.MeshHost.GetContextMesh(AccountServiceAdmin) as ContextUser;
-
-        // Fetch the Callsign Registry context.
-
-
-
+        var adminContext = TestEnvironment.HostMachineMesh.MeshHost.GetContextMesh(AccountServiceAdmin) as ContextUser;
         ContextRegistry = adminContext.GetRegistry(AccountRegistry);
 
 
@@ -194,7 +227,7 @@ public partial class RegistrationTests {
         //// Bind to the callsign @callsign
         var meshService = TestEnvironment.GetMeshService();
         meshService.CallsignServiceProfile = ContextRegistry.Profile as ProfileAccount;
-        adminContext.Sync();
+
 
         adminContext.AccountHostAssignment.CallsignServiceProfile = ContextRegistry.Profile as ProfileRegistry;
 
@@ -210,6 +243,11 @@ public partial class RegistrationTests {
 
         return ContextRegistry;
         }
+
+
+
+
+
 
     public TestCLI GetCarnetService() {
 

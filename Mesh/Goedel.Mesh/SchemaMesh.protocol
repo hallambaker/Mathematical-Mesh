@@ -1346,11 +1346,17 @@
 
 	Structure ProcessResult
 		Description
-			|For future use, allows logging of operations and results	
+			|Report result of message processing.	
 		Inherits Message
 		Boolean Success
 		String ErrorReport
 			Description
 				|The error report code.
 
+	Structure ProcessResultNotSupported
+		Description
+			|The message type is not supported.
+		Inherits ProcessResult
 
+	Structure ProcessResultNotFound
+		Inherits ProcessResult

@@ -186,7 +186,7 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
 
 
 
-    public override bool Initialize(IEnumerable<IConfguredService> Services) {
+    public override bool Initialize(IEnumerable<IConfguredService> services) {
 
         var directory = CallsignResolverConfiguration.HostPath;
 

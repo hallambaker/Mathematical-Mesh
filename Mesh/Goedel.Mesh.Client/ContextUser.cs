@@ -27,6 +27,13 @@ using Goedel.Utilities;
 
 namespace Goedel.Mesh.Client;
 
+
+
+public delegate ProcessResult ProcessMessageDelegate (
+                ContextUser contextUser,
+                Message meshMessage, bool accept = true, bool reciprocate = true,
+                List<string> roles = null);
+
 /// <summary>
 /// Context for interacting with a Mesh Account
 /// </summary>
@@ -114,6 +121,10 @@ public partial class ContextUser : ContextAccount {
     public override MeshCredentialPrivate GetMeshCredentialPrivate() => 
         new(ProfileDevice, ConnectionService, null,
             AccountAuthentication ?? BaseAuthenticate);
+
+    ///<summary>Dictionary mapping message type to processing delegate.</summary> 
+    public static Dictionary<Type, ProcessMessageDelegate> ProcessDictionary { get; } = new();
+
 
     #endregion
     #region // Constructors
@@ -1453,7 +1464,25 @@ public partial class ContextUser : ContextAccount {
                     break;
                     }
 
-            default: throw new NYI();
+            default: {
+                if (ProcessDictionary.TryGetValue(meshMessage.GetType(), out var messageDelegate)) {
+                    return messageDelegate(this, meshMessage, accept, reciprocate, roles);
+                    }
+                else {
+                    // ToDo: should probably flag that we ignored the unknown message type
+                    return new ProcessResultNotSupported() {
+                        MessageId = meshMessage.MessageId,
+                        Sender = meshMessage.Sender,
+                        Recipient = meshMessage.Recipient,
+                        ErrorReport = $"Message type {meshMessage._Tag} not supported",
+                        Success = false
+                        };
+
+
+                    throw new NYI();
+                    }
+                break;
+                }
             }
 
 
@@ -1475,7 +1504,7 @@ public partial class ContextUser : ContextAccount {
 
         // Do nothing if the request is rejected.
         if (!accept) {
-            var transact = TransactBegin();
+            using var transact = TransactBegin();
             transact.InboundComplete(StateSpoolMessage.Closed, requestContact);
             transact.Transact();
 
@@ -1487,7 +1516,7 @@ public partial class ContextUser : ContextAccount {
             var contact = MeshItem.Decode(requestContact.AuthenticatedData) as Contact;
             var cataloged = contact.CatalogedContact();
 
-            var transact = TransactBegin();
+            using var transact = TransactBegin();
             var catalog = transact.GetCatalogContact();
             
             transact.CatalogUpdate(catalog, cataloged);
