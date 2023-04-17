@@ -78,7 +78,11 @@ public partial class CallsignMapping {
     #endregion
     #region // Methods
 
-
+    /// <summary>
+    /// Strip the leading @ off a callsign if present.
+    /// </summary>
+    /// <param name="callsign">The callsign to strip</param>
+    /// <returns>The stripped callsign.</returns>
     public static string Strip(string callsign) =>
         callsign[0] == '@' ? callsign.Substring(1) : callsign;
 
@@ -94,11 +98,6 @@ public partial class CallsignMapping {
 
         return true;
         }
-
-
-
-
-
 
     /// <summary>
     /// Add the code page <paramref name="page"/>
@@ -125,11 +124,14 @@ public partial class CallsignMapping {
         VariantList = variantList;
         }
 
+    /// <summary>
+    /// Strip the callsign presentation <paramref name="presentation"/> and
+    /// return the canonicalized form.
+    /// </summary>
+    /// <param name="presentation">The presentation of the callsign.</param>
+    /// <returns>The stripped, canonical form of <paramref name="presentation"/>.</returns>
     public string CanonicalizeStripped(string presentation) =>
         Canonicalize(Strip(presentation));
-
-
-
 
     /// <summary>
     /// Return the canonical form of the page <paramref name="presentation"/> according
@@ -167,8 +169,15 @@ public partial class CallsignMapping {
         return builder.ToString();
         }
 
-
-
+    /// <summary>
+    /// Check to see if <paramref name="presentation"/> is valid within 
+    /// the character page <paramref name="pageName"/> returning true is
+    /// so and false otherwise.
+    /// </summary>
+    /// <param name="presentation">The presentation to check</param>
+    /// <param name="pageName">Name of the page to check.</param>
+    /// <returns>True if <paramref name="presentation"/> is valid within
+    /// <paramref name="pageName"/>, otherwise false.</returns>
     public bool CheckPage(string presentation, string pageName) {
         var hasNonDigit = false;
 
@@ -183,11 +192,19 @@ public partial class CallsignMapping {
             hasNonDigit |= !Char.IsDigit(c);
             }
 
-
         return hasNonDigit;
         }
 
-    public bool CheckPage(char c, Page page) {
+    /// <summary>
+    /// Check to see if <paramref name="c"/>is valid within 
+    /// the character page <paramref name="page"/> returning true is
+    /// so and false otherwise.
+    /// </summary>
+    /// <param name="c">The character to check</param>
+    /// <param name="page">The page to check.</param>
+    /// <returns>True if <paramref name="c"/> is valid within
+    /// <paramref name="page"/>, otherwise false.</returns>
+    public static bool CheckPage(char c, Page page) {
 
         if (page.IsAllowed(c)) {
             return true;

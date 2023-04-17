@@ -359,7 +359,6 @@
             <param name="secretSeed">The secret seed value.</param>
             <param name="keyCollection">The base key collection</param>
             <param name="persist">If true, persist the service record to the local machine
-            <param name="accountAddress">The account address.</param>
             <param name="envelopedProfileRegistry">The enveloped registry profile</param>
             store.</param>
         </member>
@@ -373,7 +372,6 @@
             Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
             seed.
             </summary>
-            <param name="resolverAddress">The resolver address</param>
             <param name="envelopedProfileRegistry">The enveloped registry profile.</param>
             <param name="secretSeed">The secret seed value.</param>
             <param name="algorithmEncrypt">The encryption algorithm.</param>
@@ -384,6 +382,17 @@
             <param name="persist">If <see langword="true"/> persist the secret seed value to
             <paramref name="keyCollection"/>.</param>
             <returns>The created profile.</returns>
+        </member>
+        <member name="M:Goedel.Callsign.ProfileResolver.CreateService(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.ProfileAccount},Goedel.Mesh.ProfileService@,Goedel.Mesh.ProfileHost@,Goedel.Mesh.ActivationHost@,Goedel.Mesh.ConnectionService@)">
+            <summary>
+            Create a new configuration of the resolver service.
+            </summary>
+            <param name="meshMachine">The Mesh Machine</param>
+            <param name="envelopedProfileRegistry">The enveloped registry profile.</param>
+            <param name="profileService">The service profile.</param>
+            <param name="profileHost">The host profile.</param>
+            <param name="activationDevice">The device activation.</param>
+            <param name="connectionDevice">The device connection.</param>
         </member>
         <member name="T:Goedel.Callsign.Registration">
              <summary>
@@ -627,6 +636,42 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
+        </member>
+        <member name="F:Goedel.Callsign.Page.SubPages">
+            <summary>Dictionary listing the valid sub pages.</summary> 
+        </member>
+        <member name="M:Goedel.Callsign.Page.Expand(System.Collections.Generic.Dictionary{System.String,Goedel.Callsign.Page})">
+            <summary>Expand the dictionary with entries from <paramref name="pages"/>.</summary> 
+        </member>
+        <member name="M:Goedel.Callsign.Page.IsAllowed(System.Char)">
+            <summary>
+            Return true if the character <paramref name="c"/> is allowed in this page
+            (or a sub-page), otherwise false.
+            </summary>
+            <param name="c">The character to check.</param>
+            <returns>True if the character is allowed, otherwise false.</returns>
+        </member>
+        <member name="F:Goedel.Callsign.Page.FileCharacterPageDigits">
+            <summary>The resource identifier for the digits character page.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.Page.FileCharacterPageLatin">
+            <summary>The resource identifier for the Latin character page.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.Page.FileCharacterPageReserved">
+            <summary>The resource identifier for the reserved character page.</summary> 
+        </member>
+        <member name="M:Goedel.Callsign.Page.LoadResource(System.String)">
+            <summary>
+            Load the resource with identifier <paramref name="file"/>
+            </summary>
+            <param name="file">The resource to load.</param>
+            <returns>The page resulting from parsing the resource.</returns>
+        </member>
+        <member name="M:Goedel.Callsign.Page.LoadResources">
+            <summary>
+            Load the default pages and return the pages as a list.
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:Goedel.Callsign.CharacterSpan">
             <summary>
@@ -1044,6 +1089,14 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="M:Goedel.Callsign.CallsignRegistrationRequest.Validate(System.String)">
+            <summary>
+            Validate that the profile presented as purporting to bind to <paramref name="udf"/>
+            and return true if valid, false otherwise.
+            </summary>
+            <param name="udf">The fingerprint value to validate.</param>
+            <returns>True if the specified profile is present in <see cref="P:Goedel.Callsign.CallsignRegistrationRequest.Profiles"/></returns>
+        </member>
         <member name="T:Goedel.Callsign.CallsignRegistrationResponse">
             <summary>
             </summary>
@@ -1329,6 +1382,12 @@
         <member name="P:Goedel.Callsign.CallsignMapping.Pages">
             <summary>List of callsign code pages.</summary> 
         </member>
+        <member name="F:Goedel.Callsign.CallsignMapping.PageDictionary">
+            <summary>Dictionary mapping page name to page.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.CallsignMapping.Default">
+            <summary>The default callsign mapping.</summary> 
+        </member>
         <member name="P:Goedel.Callsign.CallsignMapping.VariantList">
             <summary>List of variant characters specified in the code page.</summary> 
         </member>
@@ -1495,6 +1554,15 @@
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
+        <member name="M:Goedel.Callsign.ResolverServiceClient.Query(System.String,System.String,System.String)">
+            <summary>
+            Perform a query attempting to resolve the callsign <paramref name="callSign"/>,
+            </summary>
+            <param name="callSign">The callsign to resolve.</param>
+            <param name="registrationId">Optional registration identifier (used to query prior registrations)</param>
+            <param name="logId">Optional log entry identifier (used to query prior registrations)</param>
+            <returns>The query response</returns>
+        </member>
         <member name="T:Goedel.Callsign.ResolverServiceDirect">
             <summary>
             Direct API class for ResolverService.
@@ -1621,6 +1689,12 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Callsign.ResolverResponse.#ctor(System.Int32)">
+            <summary>
+            Constructor returning an instance of a resolver response.
+            </summary>
+            <param name="status">The status value to specify.</param>
         </member>
         <member name="T:Goedel.Callsign.QueryRequest">
              <summary>
@@ -1750,6 +1824,17 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="M:Goedel.Callsign.QueryResponse.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.QueryResponse.#ctor(Goedel.Cryptography.Dare.Enveloped{Goedel.Callsign.Registration})">
+            <summary>
+            Constructor returning an instance for the registration value <paramref name="result"/>.
+            </summary>
+            <param name="result">The enveloped registration value.</param>
+        </member>
         <member name="T:Goedel.Callsign.SyncRequest">
              <summary>
             
@@ -1851,6 +1936,20 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Callsign.ResolveClient">
+            <summary>
+            Client resolver class
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.ResolveClient.#ctor(Goedel.Callsign.ResolverServiceClient)">
+            <summary>
+            Constructor, returning an instance using the client <paramref name="client"/>.
+            </summary>
+            <param name="client">The client to use.</param>
+        </member>
+        <member name="M:Goedel.Callsign.ResolveClient.TryResolveCallsign(System.String,Goedel.Mesh.CallsignBinding@)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Callsign.CatalogRegistration">
             <summary>
@@ -2294,6 +2393,40 @@
             Static initializer, is called once when the module loads.
             </summary>
         </member>
+        <member name="T:Goedel.Callsign.CallsignState">
+            <summary>
+            Callsign state values.
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.CallsignState.Unregistered">
+            <summary>The callsign is not registered.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.CallsignState.Registered">
+            <summary>The callsign is registered but not bound to a service address.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.CallsignState.Bound">
+            <summary>The callsign is registered and bound to a service address.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.CallsignState.Hold">
+            <summary>The callsign is registered but the registration is on hold.</summary> 
+        </member>
+        <member name="T:Goedel.Callsign.ContextResolver">
+            <summary>
+            Context resolver class, binds a 
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.ContextResolver.ResolverServiceClient">
+            <summary></summary> 
+        </member>
+        <member name="M:Goedel.Callsign.ContextResolver.#ctor(Goedel.Mesh.Client.ContextAccount)">
+            <summary>
+            Constructor returning an instance bound to the account context <paramref name="contextAccount"/>.
+            </summary>
+            <param name="contextAccount">The account context using the resolver.</param>
+        </member>
+        <member name="M:Goedel.Callsign.ContextResolver.TryResolveCallsign(System.String,Goedel.Mesh.CallsignBinding@)">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Callsign.Extensions">
             <summary>
             Extensions class. Provides static convenience extensions.
@@ -2308,6 +2441,15 @@
             <param name="transfer">Transfer the callsign to the specified address.</param>
             <param name="contextAccount">The account context in which to make the request.</param>
             <param name="display">The display form of the callsign.</param>
+        </member>
+        <member name="M:Goedel.Callsign.Extensions.CallsignRequestStatus(Goedel.Mesh.Client.ContextUser,System.String)">
+            <summary>
+            Return the status of the callsign registration <paramref name="callsign"/> within the 
+            account context <paramref name="contextAccount"/>.
+            </summary>
+            <param name="contextAccount">The account context.</param>
+            <param name="callsign">The callsign to query.</param>
+            <returns></returns>
         </member>
         <member name="T:Goedel.Callsign.NamespaceDoc">
             <summary>

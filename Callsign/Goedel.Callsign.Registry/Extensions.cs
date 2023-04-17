@@ -17,10 +17,11 @@ public static class Extensions {
     /// <summary>
     /// Create a registry account under the name <paramref name="accountAddress"/> 
     /// </summary>
-    /// <param name="contextUser"></param>
-    /// <param name="accountAddress"></param>
-    /// <returns></returns>
-    /// <exception cref="NYI"></exception>
+    /// <param name="contextUser">The user context under which the registry is to be created.</param>
+    /// <param name="accountAddress">The registry account service address.</param>
+    /// <param name="accountSeed">Optional account seed.</param>
+    /// <param name="callsignMapping">Optional callsign mapping specifier.</param>
+    /// <returns>The registry account context.</returns>
     public static ContextRegistry CreateRegistry(
                         this ContextUser contextUser, 
                         string accountAddress,
@@ -29,11 +30,16 @@ public static class Extensions {
         ContextRegistry.CreateRegistry(
             contextUser, accountAddress, accountSeed, callsignMapping:callsignMapping);
 
-
+    /// <summary>
+    /// Return the registry account context for the <paramref name="contextUser"/> context.
+    /// 
+    /// </summary>
+    /// <param name="contextUser"></param>
+    /// <param name="key">Key used to disambiguate multiple registries (why would you need that???).</param>
+    /// <returns>The registry context.</returns>
     public static ContextRegistry GetRegistry(
                     this ContextUser contextUser,
-                    string accountAddress,
-                    string key=null) {
+                    string key = null) {
         contextUser.Sync();
 
         var applicationCatalog = contextUser.GetStore(CatalogApplication.Label) as CatalogApplication;

@@ -209,7 +209,7 @@ public partial class RegistrationTests {
 
         // Create admin context
         var adminContext = TestEnvironment.HostMachineMesh.MeshHost.GetContextMesh(AccountServiceAdmin) as ContextUser;
-        ContextRegistry = adminContext.GetRegistry(AccountRegistry);
+        ContextRegistry = adminContext.GetRegistry();
 
 
         //var contextAccountQ = MeshMachineTest.GenerateAccountUser(TestEnvironment,

@@ -28,7 +28,16 @@ using Goedel.Utilities;
 namespace Goedel.Mesh.Client;
 
 
-
+/// <summary>
+/// Process a mesh message received.
+/// </summary>
+/// <param name="contextUser">The user context to process the message.</param>
+/// <param name="meshMessage">The message to process.</param>
+/// <param name="accept">If relevant, accept offer made by message.</param>
+/// <param name="reciprocate">If relevant respond to message by reciprocating.</param>
+/// <param name="roles">Roles to be assigned to devices/applications create
+/// in response to the message.</param>
+/// <returns>The result of processing the message.</returns>
 public delegate ProcessResult ProcessMessageDelegate (
                 ContextUser contextUser,
                 Message meshMessage, bool accept = true, bool reciprocate = true,

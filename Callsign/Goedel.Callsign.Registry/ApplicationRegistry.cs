@@ -36,17 +36,23 @@ public partial class ActivationApplicationRegistry {
     public Enveloped<ActivationApplicationRegistry> GetEnvelopedActivationApplicationRegistry() =>
         new(DareEnvelope);
 
+    ///<summary>The encryption key used to decrypt messages sent to the registry.</summary> 
     public KeyPair CommonEncryptionKey { get; private set; }
+
+    ///<summary>The signaturee key used to sign registry registrations..</summary> 
     public KeyPair AdministratorSignatureKey { get; private set; }
 
+    ///<summary>The  key used to authenticate the device to the registry.</summary> 
     public KeyPair AccountAuthentication { get; private set; }
     #endregion
 
+    /// <summary>
+    /// Activate the application for the device <paramref name="profileDevice"/>.
+    /// </summary>
+    /// <param name="profileDevice">The activated device profile.</param>
     public void Activate(ProfileDevice profileDevice) {
         CommonEncryptionKey = AccountEncryption.GetKeyPair();
         AdministratorSignatureKey = AdministratorSignature.GetKeyPair();
-
-
 
         var accountSeed = new PrivateKeyUDF(ActivationKey);
         AccountAuthentication = accountSeed.ActivatePrivate(
@@ -68,7 +74,6 @@ public partial class ApplicationEntryRegistry {
     public override CatalogedAccess GetCatalogedAccess() {
 
         var connectionService = EnvelopedConnectionService.Decode();
-
 
         var capability = new AccessCapability() {
             Id = connectionService.Authentication.Udf,
@@ -122,8 +127,10 @@ public partial class CatalogedRegistry{
                 (EnvelopedProfileRegistry.Decode(KeyCollection) as ProfileRegistry).CacheValue(out profileRegistry);
     ProfileRegistry? profileRegistry;
 
-
+    ///<summary>The connection used to authenticate the client to the service.</summary> 
     public ConnectionService ConnectionService {get; set;}
+
+    ///<summary>The activation record.</summary> 
     public ActivationApplicationRegistry ActivationApplicationRegistry { get; set; }
 
     PrivateKeyUDF SecretSeed { get; }
@@ -160,17 +167,12 @@ public partial class CatalogedRegistry{
     /// </summary>
     /// <param name="profile">The group profile.</param>
     /// <param name="activationAccount">The activation data.</param>
-    /// <param name="encryptionKey">Key under which the activation is to be encrypted.</param>
     /// <returns>The created group.</returns>
     public CatalogedRegistry(
                     ProfileRegistry profile,
                     ActivationCommon activationAccount
-                    //CryptoKey encryptionKey
-        //,
-        //            ConnectionStripped connectionAddress
                     ) {
-        //encryptionKey.Future();
-        //connectionAddress.Future();
+
 
         profileRegistry = profile;
         profile?.DareEnvelope.AssertNotNull(Internal.Throw);
