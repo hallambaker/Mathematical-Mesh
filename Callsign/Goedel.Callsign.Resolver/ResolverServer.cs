@@ -40,12 +40,17 @@ using System.Threading.Tasks;
 namespace Goedel.Callsign.Resolver;
 
 
-
+/// <summary>
+/// Reference implementation of a callsign resolver.
+/// </summary>
 public class PublicCallsignResolver : ResolverService, IDisposable{
 
 
 
-
+    /// <summary>
+    /// Return a new direct service client instance.
+    /// </summary>
+    /// <returns>The direct service client instance.</returns>    
     public ResolverServiceClient GetClient() =>
             new ResolverServiceDirect() {
                 Service = this
@@ -76,17 +81,20 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
     GenericHostConfiguration HostConfiguration { get; }
     CallsignResolverConfiguration CallsignResolverConfiguration { get; }
 
-    public string Registry => CallsignResolverConfiguration.Registry;
+    ///<summary>The registry service address.</summary> 
+    public string RegistryServiceAddress => CallsignResolverConfiguration.RegistryServiceAddress;
+    
     ///<summary>The registation catalog.</summary> 
-
     public CatalogRegistration CatalogRegistration = null;
+
+    ///<summary>The notary catalog.</summary> 
     public CatalogNotary CatalogNotary = null;
 
-
+    ///<summary>The key collection.</summary> 
     public IKeyCollection KeyCollection { get; }
 
     MeshServiceClient MeshClient => meshClient ?? 
-            MeshMachine.GetMeshClient(MeshKeyCredentialPrivate, Registry).CacheValue(out meshClient);
+            MeshMachine.GetMeshClient(MeshKeyCredentialPrivate, RegistryServiceAddress).CacheValue(out meshClient);
     MeshServiceClient meshClient;
     LogService LogService { get; }
 
@@ -97,41 +105,9 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
 
     #region // Dsiposing
     /// <summary>
-    /// Dispose method, frees all resources.
-    /// </summary>
-    public void Dispose() {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-        }
-
-    bool disposed = false;
-    /// <summary>
-    /// Dispose method, frees resources when disposing, 
-    /// </summary>
-    /// <param name="disposing"></param>
-    protected virtual void Dispose(bool disposing) {
-        if (disposed) {
-            return;
-            }
-
-        if (disposing) {
-            Disposing();
-            }
-
-        disposed = true;
-        }
-
-    /// <summary>
-    /// Destructor.
-    /// </summary>
-    ~PublicCallsignResolver() {
-        Dispose(false);
-        }
-
-    /// <summary>
     /// The class specific disposal routine.
     /// </summary>
-    protected virtual void Disposing() {
+    protected override void Disposing() {
         CatalogRegistration?.Dispose();
         CatalogNotary?.Dispose();
         }
@@ -139,6 +115,16 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
 
     #region // Constructors
 
+    /// <summary>
+    /// Return a new instance of the resolver service on <paramref name="meshMachine"/> using
+    /// configuration data from <paramref name="hostConfiguration"/> and 
+    /// <paramref name="resolverServiceConfiguration"/> with the log service 
+    /// <paramref name="logService"/>.
+    /// </summary>
+    /// <param name="meshMachine">The mesh machine.</param>
+    /// <param name="hostConfiguration">The generic host configuration.</param>
+    /// <param name="resolverServiceConfiguration">The resolver specific configuration.</param>
+    /// <param name="logService">The logging service to use.</param>
     public PublicCallsignResolver(
             IMeshMachine meshMachine,
             GenericHostConfiguration hostConfiguration,
@@ -146,15 +132,11 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
             LogService logService) {
 
         // load up the persistence store here.
-
         HostConfiguration = hostConfiguration;
         CallsignResolverConfiguration = resolverServiceConfiguration;
         MeshMachine = meshMachine;
         LogService = logService;
         KeyCollection = meshMachine.KeyCollection;
-
-
-
 
         var meshHost = MeshHost.GetCatalogHost(MeshMachine);
         // Unpack the profiles
@@ -176,23 +158,23 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
         MeshKeyCredentialPrivate = 
             new MeshKeyCredentialPrivate(ActivationDevice.AccountAuthentication as KeyPairAdvanced, "anonymous");
 
-
-
-
-
         AddEndpoints(hostConfiguration, meshMachine.Instance);
 
         }
 
 
-
+    /// <summary>
+    /// Initialize the service. This MUST be called after the registry account it is acting
+    /// as resolver for has been created and the corresponding Mesh service started.
+    /// </summary>
+    ///<inheritdoc/>
     public override bool Initialize(IEnumerable<IConfguredService> services) {
 
         var directory = CallsignResolverConfiguration.HostPath;
 
-        InitializeRepository(MeshMachine, ActivationDevice.AccountAuthentication, CallsignResolverConfiguration.Registry,
+        InitializeRepository(MeshMachine, ActivationDevice.AccountAuthentication, CallsignResolverConfiguration.RegistryServiceAddress,
                 directory, CatalogRegistration.Label);
-        InitializeRepository(MeshMachine, ActivationDevice.AccountAuthentication, CallsignResolverConfiguration.Registry,
+        InitializeRepository(MeshMachine, ActivationDevice.AccountAuthentication, CallsignResolverConfiguration.RegistryServiceAddress,
                 directory, CatalogNotary.Label);
 
         CatalogRegistration = new CatalogRegistration(directory);
@@ -203,7 +185,15 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
         }
 
 
-
+    /// <summary>
+    /// Create a callsign resolver configuration.
+    /// </summary>
+    /// <param name="meshMachine">The mesh machine.</param>
+    /// <param name="envelopedProfileRegistry">The enveloped profile of the registry to be resolved.</param>
+    /// <param name="hostConfiguration">The host configuration.</param>
+    /// <param name="resolverServiceConfiguration">The resolver service specific configuration.</param>
+    /// <param name="logService">The logging service.</param>
+    /// <returns>The resolver configuration.</returns>
     public static PublicCallsignResolver Create(
         IMeshMachineClient meshMachine,
         Enveloped<ProfileAccount> envelopedProfileRegistry,
@@ -305,6 +295,7 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
     #endregion
     #region // Implement IResolver
 
+    ///<inheritdoc/>
     public bool TryResolveCallsign(string callsign, out Enveloped<Registration> callsignBinding) {
 
         if (CatalogRegistration.TryGetValue(callsign, out var index)) {
@@ -321,6 +312,10 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
     #endregion
     #region // Dispatch Methods
 
+    /// <summary>
+    /// Synchronize the resolver to the registry. This is typically called on a timed basis or on
+    /// receipt of a notification.
+    /// </summary>
     public void SyncToRegistry() {
         var registrySelect = new ConstraintsSelect() {
             Store = CatalogRegistration.Label,
@@ -333,16 +328,13 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
             };
 
         var downloadRequest = new PublicRequest() {
-            Account = Registry,
+            Account = RegistryServiceAddress,
             Select = new() {
                 registrySelect, notarySelect
                 }
             };
 
-
         var response = MeshClient.PublicRead(downloadRequest);
-
-
 
         foreach (var update in response.Updates) {
             switch (update.Store) {
@@ -356,7 +348,6 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
                     }
                 }
             }
-
         }
     
     
@@ -377,55 +368,6 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
 
 
     }
-
-
-//public class PublicResolverService : ResolverService {
-
-
-//    public CatalogRegistration CatalogRegistration { get; }
-
-//    PublicCallsignResolver PublicCallsignResolver { get; }
-
-
-//    ///<summary>The service endpoints</summary> 
-//    public List<Endpoint> Endpoints { get; } = new();
-
-//    public PublicResolverService(
-
-//                PublicCallsignResolver publicCallsignResolver) {
-//        PublicCallsignResolver = publicCallsignResolver;
-//        CatalogRegistration = publicCallsignResolver.CatalogRegistration;
-//        }
-
-
-//    #region // Override Methods
-
-//    public override QueryResponse Query(
-//        QueryRequest request, IJpcSession session) {
-
-//        var callsign = request.CallSign;
-//        callsign.AssertNotNull(NYI.Throw);
-
-
-//        if (CatalogRegistration.TryGetValue(callsign, out var result)) {
-//            var catalogedRegistration = result.JsonObject as CatalogedRegistration;
-//            return new QueryResponse(catalogedRegistration.EnvelopedRegistration);
-
-//            }
-//        return new QueryResponse(null);
-
-//        }
-
-//    public override SyncResponse Sync(SyncRequest request, IJpcSession session) {
-//        PublicCallsignResolver.SyncToRegistry();
-//        return new SyncResponse();
-//        }
-
-
-//    #endregion
-//    }
-
-
 
 
 /// <summary>

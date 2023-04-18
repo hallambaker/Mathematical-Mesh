@@ -43,12 +43,24 @@ public static class ExtensionMethods {
             }
         }
 
+    /// <summary>
+    /// Compute the SHA3-512 hash of the file <paramref name="file"/>
+    /// and return the result.
+    /// </summary>
+    /// <param name="file">The file to digest.</param>
+    /// <returns>The SHA3-512 digest of the contents of the file.</returns>
     public static byte[] Sha3_512(this string file) {
         using var provider = new SHA3Managed(512);
         using var stream = file.OpenFileReadShared();
         return provider.ComputeHash(stream);
         }
 
+    /// <summary>
+    /// Compute the SHA3-256 hash of the file <paramref name="file"/>
+    /// and return the result.
+    /// </summary>
+    /// <param name="file">The file to digest.</param>
+    /// <returns>The SHA3-256 digest of the contents of the file.</returns>
     public static byte[] Sha3_256(this string file) {
         using var provider = new SHA3Managed(256);
         using var stream = file.OpenFileReadShared();

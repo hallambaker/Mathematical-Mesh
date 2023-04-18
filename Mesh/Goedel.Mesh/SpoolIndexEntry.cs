@@ -86,7 +86,7 @@ public class SpoolPlaceholder : ISpoolItem {
 
 
     ///<summary>The underlying spool.</summary> 
-    public Spool Spool => Sequence.Store as Spool;
+    public Spool Spool => Sequence.InternDelegate as Spool;
 
 
     ///<summary>The list of references to the message, most recently added first.</summary>

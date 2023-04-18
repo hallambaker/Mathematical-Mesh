@@ -82,8 +82,8 @@ public enum ItemResult {
 /// <param name="frameLength">Value for the <see cref="SequenceIndexEntry.FrameLength"/> property.</param>
 /// <param name="dataPosition">Value for the <see cref="SequenceIndexEntry.DataPosition"/> property.</param>
 /// <param name="dataLength">Value for the <see cref="SequenceIndexEntry.DataLength"/> property.</param>
-/// <param name="header">Value for the <see cref="SequenceIndexEntry.Header"/> property.</param>
-/// <param name="trailer">Value for the <see cref="SequenceIndexEntry.Trailer"/> property.</param>
+/// <param name="header">Value for the <see cref="DareEnvelopeSequence.Header"/> property.</param>
+/// <param name="trailer">Value for the <see cref="DareEnvelopeSequence.Trailer"/> property.</param>
 /// <param name="jsonObject">Value for the <see cref="SequenceIndexEntry.JsonObject"/> property.</param>
 /// <returns></returns>
 public delegate SequenceIndexEntry SequenceIndexEntryFactoryDelegate(
@@ -129,17 +129,8 @@ public partial class SequenceIndexEntry : DareEnvelope {
     ///<summary>The length of the data segment.</summary>
     public long DataLength { get; set; }
 
-    ///<summary>The frame header</summary>
-    //public DareHeader Header { get; init; }
-
-    ///<summary>The frame index.</summary> 
-    //public long Index => Header.Index;
-
     ///<summary>The frame index.</summary> 
     public long? TreePosition => Header.SequenceInfo.TreePosition;
-
-    ///<summary>The frame trailer</summary>
-    //public DareTrailer Trailer { get; set; }
 
     ///<summary>If true, the frame has a payload section</summary>
     public bool HasPayload => DataLength > 0;
@@ -149,9 +140,6 @@ public partial class SequenceIndexEntry : DareEnvelope {
         get => jsonObject;
         set => jsonObject = value; }
     JsonObject jsonObject = null;
-
-    ///<summary>Convenience accessor for the envelope identifier.</summary> 
-    //public string EnvelopeId => Header.EnvelopeId;
 
     ///<summary>The sequenced envelope is unread in the case of a message in a spool or
     ///not deleted or overwritten in the case of an entry in a catalog.</summary> 
@@ -171,10 +159,6 @@ public partial class SequenceIndexEntry : DareEnvelope {
 
     ///<summary>Convenience property, set true iff header contains direct key exchange.</summary> 
     public bool KeyExchange => Header?.Recipients != null;
-
-
-    ///<summary>Convenience accessor for the payload digest</summary> 
-    //public byte[] PayloadDigest => Trailer?.PayloadDigest ?? Header.PayloadDigest;
 
     ///<summary>Convenience accessor for the payload digest</summary> 
     public byte[] ChainDigest => Trailer?.ChainDigest ?? Header.ChainDigest;
@@ -217,7 +201,13 @@ public partial class SequenceIndexEntry : DareEnvelope {
                         prototype.Header, prototype.Trailer, prototype.JsonObject);
 
 
-
+    /// <summary>
+    /// Return a stream reading the sequence payload,
+    /// </summary>
+    /// <param name="sequence">The enclosing sequence.</param>
+    /// <param name="keyCollection">The key collection to use for decryption and signature
+    /// verification.</param>
+    /// <returns>A stream reading the stream payload.</returns>
     public Stream GetPayloadStreamn(Sequence sequence, IKeyLocate keyCollection) {
         DareHeader exchange = null;
         if (Header?.SequenceInfo?.ExchangePosition is not null) {
@@ -289,6 +279,7 @@ public partial class SequenceIndexEntry : DareEnvelope {
     /// <paramref name="previous"/> is true, the previous record is read, 
     /// otherwise the next record is read.
     /// </summary>
+    /// <param name="sequence">The sequence containing the entry.</param>
     /// <param name="jbcdStream">The stream to read.</param>
     /// <param name="position">The starting point for the read operation.</param>
     /// <param name="previous">If true, read the previous frame, otherwise 
@@ -338,6 +329,9 @@ public partial class SequenceIndexEntry : DareEnvelope {
     /// </summary>
     /// <param name="jbcdStream">The stream to read.</param>
     /// <param name="position">The starting point for the read operation.</param>
+    /// <param name="sequence">The sequence value.</param>
+    /// <param name="previous">Read backwards instead of forwards returning the previous
+    /// entry.</param>
     /// <returns>The index entry.</returns>
     public static SequenceIndexEntry Read(
                     JbcdStream jbcdStream,
@@ -351,6 +345,7 @@ public partial class SequenceIndexEntry : DareEnvelope {
     /// Read the last frame from <paramref name="jbcdStream"/>. 
     /// </summary>
     /// <param name="jbcdStream">The stream to read.</param>
+    /// <param name="sequence">The sequence to which the entry is bound.</param>
     /// <returns>The index entry.</returns>
     public static SequenceIndexEntry ReadLast(
                     JbcdStream jbcdStream,
@@ -396,7 +391,10 @@ public partial class SequenceIndexEntry : DareEnvelope {
         return output.ToArray();
         }
 
-
+    /// <summary>
+    /// Compute the digest value over the payload bytes.
+    /// </summary>
+    /// <returns>The computed digest.</returns>
     public byte[] ComputeDigest() {
         if (PayloadDigestComputed != null) {
             return PayloadDigestComputed;
@@ -413,10 +411,8 @@ public partial class SequenceIndexEntry : DareEnvelope {
 
 
     /// <summary>
-    /// Read the payload data from the specified position in <paramref name="sequence"/>
-    /// and deserialize to return the corresponding object.
+    /// Read the object corresponding to the payload data.
     /// </summary>
-    /// <param name="sequence">The Sequence that was indexed.</param>
     /// <returns>The deserialized object.</returns>
     /// <exception cref="NotInDecryptionMode">The envelope could not be decrypted 
     /// because the sequence was not opened in decryption mode.</exception>

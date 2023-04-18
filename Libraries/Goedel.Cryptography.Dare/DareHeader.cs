@@ -257,6 +257,7 @@ public partial class DareHeader {
     /// <param name="keyCollection">Key collection to be used to resolve private
     /// keys.</param>
     /// <param name="decrypt">If true, attempt to decrypt.</param>
+    /// <param name="verify">If true, verify the payload digest on the payload.</param>
     /// <returns>The decoder. </returns>
     public CryptoStackStream GetDecoder(
                 JsonBcdReader jsonBcdReader,

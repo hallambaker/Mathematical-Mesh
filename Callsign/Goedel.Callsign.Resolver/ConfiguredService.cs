@@ -42,15 +42,20 @@ public static class ConsoleLoggerExtensions {
 public class ResolverConfiguredService : IConfguredService {
 
 
-
+    ///<summary>The resolver configuration.</summary> 
     public CallsignResolverConfiguration CallsignResolverConfiguration { get; }
 
+    ///<summary>The generic host configuration.</summary> 
     public GenericHostConfiguration GenericHostConfiguration { get; }
 
-    IOptionsMonitor<CallsignResolverConfiguration> MeshHostConfigurationMonitor;
+
+    IOptionsMonitor<CallsignResolverConfiguration> MeshHostConfigurationMonitor { get; }
     IMeshMachine MeshMachine { get; }
+
+    ///<summary>The logger interface.</summary> 
     public ILogger<ManagedListener> Logger { get; }
 
+    ///<summary>The resolver service context.</summary> 
     PublicCallsignResolver ResolverService { get; set; }
 
     ///<inheritdoc/>
@@ -78,9 +83,6 @@ public class ResolverConfiguredService : IConfguredService {
                 IOptionsMonitor<CallsignResolverConfiguration> meshHostConfiguration,
                 IOptionsMonitor<GenericHostConfiguration> genericHostConfiguration
                 ) {
-
-
-
         MeshMachine = meshMachine;
         Logger = logger;
 
@@ -91,7 +93,6 @@ public class ResolverConfiguredService : IConfguredService {
 
         CallsignResolverConfiguration = meshHostConfiguration.CurrentValue;
         GenericHostConfiguration = genericHostConfiguration.CurrentValue;
-
 
         if ((CallsignResolverConfiguration?.HostPath).IsBlank()) {
             return;

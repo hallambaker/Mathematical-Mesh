@@ -17,9 +17,19 @@ public class CallsignResolverConfiguration : ServiceConfiguration {
 
 
     ///<summary>The sevice address of the registry to resolve.</summary> 
-    public string Registry { get; set; }
+    public string RegistryServiceAddress { get; set; }
 
-    public string Resolver { get; set; }
+    ///<summary>The resolver service DNS.</summary> 
+    public string ResolverDNS { get; set; }
+
+    /// <summary>
+    /// Create a callsign resolver configuration.
+    /// </summary>
+    /// <param name="meshMachine">The mesh machine for which the configuration is to be created.</param>
+    /// <param name="GenericHostConfiguration">The generic host configuration.</param>
+    /// <param name="registry">The registry service address.</param>
+    /// <param name="resolver">The resolver DNS address.</param>
+    /// <returns></returns>
     public static CallsignResolverConfiguration Create(
                 IMeshMachineClient meshMachine,
                 GenericHostConfiguration GenericHostConfiguration,
@@ -27,10 +37,9 @@ public class CallsignResolverConfiguration : ServiceConfiguration {
                 string resolver) {
 
         return new CallsignResolverConfiguration() {
-            Registry = registry,
-            Resolver = resolver,
+            RegistryServiceAddress = registry,
+            ResolverDNS = resolver,
             HostPath = meshMachine.GetServiceDirectory(MeshConstants.DirectoryResolver),
-            //ServiceDNS = new List<string> { serviceDns },
             ServicePath = meshMachine.GetServiceDirectory(MeshConstants.DirectoryResolver),
             };
         }

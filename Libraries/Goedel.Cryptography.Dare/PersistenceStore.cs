@@ -105,7 +105,6 @@ public class PersistenceStoreEphemeral : PersistenceStore {
     /// <param name="dataEncoding">The data encoding.</param>
     /// <param name="fileStatus">The file status in which to open the Sequence.</param>
     /// <param name="keyLocate">The key collection to use to resolve private keys.</param>
-    /// <param name="read">If true read the Sequence to initialize the persistence store.</param>
     /// <param name="decrypt">If false, the contents of the store will never be decrypted (deprecated, use CatalogBlind)</param>
     public PersistenceStoreEphemeral(string fileName, string contentType = null,
                 FileStatus fileStatus = FileStatus.OpenOrCreate,
@@ -174,6 +173,8 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
 
 
     string Filename { get; }
+
+    ///<summary>The key collection to use for decryption etc.</summary> 
     protected IKeyLocate KeyLocate { get; }
 
     bool Decrypt { get; }
@@ -472,6 +473,8 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
     /// <threadsafety static="true" instance="true"/>
     /// <param name="uniqueID">The UniqueID of the object to delete</param>
     /// <param name="transaction">The transaction context in which to perform the update.</param>
+    /// <param name="erase">If true, render the payload data unavailable by either deleting the 
+    /// decryption salt or erasing the payload itself.</param>
     /// <returns>True if the object was updated, otherwise false.</returns>
     public virtual bool Delete(string uniqueID, Transaction transaction = null, bool erase = false) {
         erase.AssertFalse(NYI.Throw);

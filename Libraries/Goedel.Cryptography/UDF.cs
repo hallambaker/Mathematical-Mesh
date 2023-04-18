@@ -79,9 +79,18 @@ public class Udf {
     #endregion
 
     byte[] Value { get; }
+
     byte Code { get; }
+
+    /// <summary>
+    /// Constructor, returns a UDF instance with code byte specified by <paramref name="presentation"/>
+    /// and extended binary value <paramref name="value"/>.
+    /// </summary>
+    /// <param name="presentation">The presentation value.</param>
+    /// <param name="value"></param>
     public Udf(string presentation, byte[] value) {
         var parsed = Parse(presentation, out var code);
+
         Code = code;
         Value = value;
         }

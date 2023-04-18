@@ -16,19 +16,17 @@ namespace Goedel.Callsign.Registry;
 public class ContextRegistry : ContextAccount {
 
     #region Properties
-
     ///<summary>The enclosing user context.</summary>
     public ContextUser ContextUser;
 
+    ///<inheritdoc/>
     public override ProfileDevice ProfileDevice => ContextUser.ProfileDevice; 
-
 
     ///<inheritdoc/>
     public override Profile Profile => CatalogedRegistry.ProfileRegistry;
 
     ///<inheritdoc/>
     public override Connection Connection { get; }
-
 
     ///<summary>The catalogued Registry description.</summary>
     public CatalogedRegistry CatalogedRegistry;
@@ -37,14 +35,19 @@ public class ContextRegistry : ContextAccount {
 
     public CatalogRegistration CatalogRegistration;
 
+    ///<summary>The notary catalog.</summary> 
     public CatalogNotary CatalogNotary;
+
     ///<summary>The callsign mapping</summary> 
     public CallsignMapping CallsignMapping { get; }
 
+    ///<summary>The default page to be assumed if none is specified in a binding request.</summary> 
     public  string DefaultPage => "CharacterPageLatin";
+
     ///<inheritdoc/>
     public override string AccountAddress { get; }
 
+    ///<inheritdoc/>
     public override string ServiceDns { get; }
 
     ///<inheritdoc/>
@@ -89,13 +92,13 @@ public class ContextRegistry : ContextAccount {
     /// <param name="contextAccount">The enclosing account context.</param>
     /// <param name="catalogedCallsign">Description of the Registry to return the
     /// context for.</param>
+    /// <param name="activationApplicationRegistry">The application activation data.</param>
     /// <param name="activationAccount">The account activation.</param>
     public ContextRegistry(
                 ContextUser contextAccount,
                 CatalogedRegistry catalogedCallsign,
                 ActivationApplicationRegistry activationApplicationRegistry = null,
-                ActivationCommon activationAccount = null
-        ) :
+                ActivationCommon activationAccount = null) :
                 base(contextAccount.MeshHost, null) {
 
         // Set the service account address
@@ -121,8 +124,6 @@ public class ContextRegistry : ContextAccount {
         CatalogNotary = new CatalogNotary(StoresDirectory, policy: policy);
         AddStore(CatalogNotary);
 
-        //CatalogRegistration = GetStore(CatalogRegistration.Label) as CatalogRegistration;
-        //CatalogNotary = GetStore(CatalogNotary.Label) as CatalogNotary;
         CatalogRegistration.CallsignMapping = CallsignMapping;
 
         KeyCollection.Add(KeyCommonEncryption);
@@ -152,9 +153,7 @@ public class ContextRegistry : ContextAccount {
                     ContextUser contextUser,
                     string RegistryName,
                     PrivateKeyUDF accountSeed = null,
-                    List<string> roles = null,
-                    CallsignMapping callsignMapping = null
-                    ) {
+                    List<string> roles = null) {
 
         // create the registry profile
         accountSeed ??= new PrivateKeyUDF(udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount);
@@ -173,7 +172,6 @@ public class ContextRegistry : ContextAccount {
             MaximumCallsignLength = 31
             };
 
-
         var envelopedBindings = contextUser.MakeBindings(profileRegistry, RegistryName);
 
         // here we request creation of the Registry at the service.
@@ -182,7 +180,6 @@ public class ContextRegistry : ContextAccount {
             EnvelopedProfileAccount = profileRegistry.GetEnvelopedProfileAccount(),
             EnvelopedCallsignBinding = envelopedBindings
             };
-
 
         // Since the service does not know this account (yet)
         var credentialPrivate = new MeshKeyCredentialPrivate(
@@ -197,7 +194,6 @@ public class ContextRegistry : ContextAccount {
         var contact = contextRegistry.CreateContact();
 
         var applicationEntries = new List<ApplicationEntry>();
-
 
         // Commit all changes to the administrator context in a single transaction.
         using (var transaction = contextUser.TransactBegin()) {
@@ -217,8 +213,6 @@ public class ContextRegistry : ContextAccount {
         using (var transaction = contextRegistry.TransactBegin()) {
             var catalogAccess = transaction.GetCatalogAccess();
             foreach (var applicationEntry in applicationEntries) {
-
-
                 var access = applicationEntry.GetCatalogedAccess();
                 if (access != null) {
                     transaction.CatalogUpdate(catalogAccess, access);
@@ -228,7 +222,6 @@ public class ContextRegistry : ContextAccount {
             transaction.Transact();
             }
 
-        //contextUser.CallsignRegistry = RegistryName;
         contextUser.ProfileRegistryCallsign = profileRegistry;
         contextRegistry.ProfileRegistryCallsign = profileRegistry;
 
@@ -276,15 +269,12 @@ public class ContextRegistry : ContextAccount {
         Sync();
 
         var results = new List<ProcessResult>();
-
-
         var x = new FilterSequenceIndex();
 
         var spoolInbound = GetSpoolInbound();
         foreach (var spoolEntry in spoolInbound.GetMessages(open: true)) {
             var meshMessage = spoolEntry.Message;
 
-            //Logger.GotMessage(meshMessage.GetType().ToString(), meshMessage.MessageId, spoolEntry.MessageStatus);
             if (spoolEntry.IsOpen) {
                 switch (meshMessage) {
                     case CallsignRegistrationRequest callsignRegistrationRequest: {
@@ -296,9 +286,6 @@ public class ContextRegistry : ContextAccount {
                 }
             }
 
-        // Perform the transaction
-
-
         return results;
         }
 
@@ -307,6 +294,7 @@ public class ContextRegistry : ContextAccount {
     /// Process the callsign registration request <paramref name="registrationRequest"/>.
     /// </summary>
     /// <param name="registrationRequest">The request to process.</param>
+    /// <param name="spoolEntry">The spool entry containing the request.</param>
     /// <returns>Reports the processing result.</returns>
     public ProcessResult Process(
                 SpoolIndexEntry spoolEntry,
@@ -321,12 +309,7 @@ public class ContextRegistry : ContextAccount {
             var canonical = MessageValidate(spoolEntry, registrationRequest, binding, out var previous);
             PaymentValidate(registrationRequest, binding);
 
-
-
-
             var transactRequest = TransactBegin();
-
-
             var id = Udf.Nonce();
 
             var registration = new Registration() {
@@ -379,6 +362,7 @@ public class ContextRegistry : ContextAccount {
     /// </summary>
     /// <param name="registrationRequest">The request that caused the exception to be raised.</param>
     /// <param name="exception">The exception raised.</param>
+    /// <param name="binding">The callsign binding.</param>
     /// <returns>Processing result with <see cref="ProcessResult.Success"/> set false.</returns>
     public ProcessResult RefuseRequest (
                 CallsignRegistrationRequest registrationRequest,
@@ -406,8 +390,7 @@ public class ContextRegistry : ContextAccount {
 
         transactRequest.OutboundMessage(registrationRequest.Sender, registrationResponse);
         transactRequest.InboundComplete(StateSpoolMessage.Closed, registrationRequest, registrationResponse);
-        var responseTransaction = Transact(transactRequest);
-
+        Transact(transactRequest);
 
         return new ProcessResultCallsignRegistration() {
             Success = false,
@@ -421,6 +404,9 @@ public class ContextRegistry : ContextAccount {
     /// </summary>
     /// <param name="registrationRequest"></param>
     /// <param name="binding"></param>
+    /// <param name="spoolEntry">The spool entry containing the request.</param>
+    /// <param name="previous">If it exists, the previous registration for this callsign,
+    /// otherwise null.</param>
     /// <exception cref="RegistrationRefused">The callsign registration was refused</exception>
     /// <exception cref="RequestTooLarge">The binding request was larger than the maximum permitted size.</exception>
     /// <exception cref="CanonicalFormInvalid">The canonical form is not valid.</exception>
@@ -444,11 +430,8 @@ public class ContextRegistry : ContextAccount {
         var canonical = StripAt(binding.Canonical);
         var display = StripAt(binding.Display);
 
-
-        Console.WriteLine();
-        Console.WriteLine($"got request for @{canonical} = @{display}");
-
-
+        //Console.WriteLine();
+        //Console.WriteLine($"got request for @{canonical} = @{display}");
 
         string page = binding.CharacterPage ?? DefaultPage;
         DefaultPage.Equals(page).AssertTrue(CanonicalFormInvalid.Throw);
@@ -461,7 +444,6 @@ public class ContextRegistry : ContextAccount {
         (canonical == canonical2).AssertTrue(CanonicalFormInvalid.Throw);
 
         CallsignMapping.CheckPage(canonical, page).AssertTrue(CanonicalFormInvalid.Throw);
-        //page.Id.AssertEqual("CharacterPageLatin", CanonicalFormInvalid.Throw);
 
         if (display != null) {
             (display.Length <= CatalogedRegistry.MaximumCallsignLength).AssertTrue(CallsignLengthInvalid.Throw);
@@ -478,7 +460,6 @@ public class ContextRegistry : ContextAccount {
             binding.Validate(registrationRequest.Profiles).AssertTrue(BindingSignatureInvalid.Throw);
             }
         else if (binding.TransferUdf != null) {
-            
             }
 
         // Check the signature on the registrationRequest

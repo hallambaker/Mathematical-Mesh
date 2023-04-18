@@ -208,7 +208,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     ///<summary>Delegate called to create a Sequence entry for a catalog or store.</summary> 
     public SequenceIndexEntryFactoryDelegate SequenceIndexEntryFactoryDelegate { get; init; } = SequenceIndexEntry.Factory;
 
-    public IInternSequenceIndexEntry Store { get; set; }
+    ///<summary>Delegate to intern an entry into a sequence backing store.</summary> 
+    public IInternSequenceIndexEntry InternDelegate { get; set; }
 
     #endregion
     #endregion
@@ -477,7 +478,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         var sequence = MakeNewSequence(jbcdStream, decrypt, 
                      sequenceIndexEntryFactoryDelegate,
                      sequenceType: sequenceType);
-        sequence.Store = store;
+        sequence.InternDelegate = store;
 
         // Common initialization
         sequenceIndexEntryFirst.Sequence= sequence;
@@ -569,10 +570,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     ///     as an EDSS headerData entry.</param>
     /// <param name="decrypt">If true, decrypt the Sequence payload contents.</param>
     /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
-    /// <param name="internSequenceIndexEntryDelegate">Delegate to intern items into the sequence.</param>
-    /// <param name="sequenceIndexEntryFactoryDelegate">Delegate to create index entries for
-    /// items in the sequence.</param>
     /// <param name="store">Context information to be passed in when creating sequence index entries.</param>
+    /// <param name="jsonObject">An object to be serialized to form the first payload value.</param>
     public static Sequence NewSequence(
                     JbcdStream jbcdStream,
                     IKeyLocate? keyLocate = null,
@@ -612,7 +611,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                      sequenceType: sequenceType);
 
 
-        sequence.Store = store;
+        sequence.InternDelegate = store;
         sequence.CryptoParametersSequence =
             new CryptoParametersSequence(sequenceType, header);
         sequence.DataEncoding = dataEncoding;
@@ -649,7 +648,6 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// a tree index is to be created or not and if so, whether </param>
     /// <returns>The newly constructed Sequence.</returns>
     /// <param name="decrypt">If true, decrypt the Sequence payload contents.</param>
-    /// <param name="internSequenceIndexEntryDelegate">Delegate to intern items into the sequence.</param>
     /// <param name="sequenceIndexEntryFactoryDelegate">Delegate to create index entries for
     /// items in the sequence.</param>
     public static Sequence MakeNewSequence(
@@ -741,18 +739,15 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     public virtual void MakeTrailer(ref DareTrailer trailer) {
         }
 
-
- 
-
-
-
+    /// <summary>
+    /// Return a bounded reader on the sequence data.
+    /// </summary>
+    /// <param name="DataPosition">The start position for reading.</param>
+    /// <param name="DataLength">The maximum number of bytes to read (will return
+    /// EOF if exceeded)</param>
+    /// <returns>The bounded reader.</returns>
     public StreamReaderBounded FramerGetReader(long DataPosition, long DataLength) =>
         JbcdStream.FramerGetReader(DataPosition, DataLength);
-
-
-
-
-
 
     /// <summary>
     /// Initialize a <see cref="SequenceInfo"/> instance for the current Sequence
@@ -818,10 +813,15 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         FrameIndexToEntry.Add(indexEntry.Index, indexEntry);
 
 
-        Store?.Intern(indexEntry);
+        InternDelegate?.Intern(indexEntry);
         }
 
 
+    /// <summary>
+    /// Intern the element <paramref name="indexEntry"/> into the sequence.
+    /// </summary>
+    /// <param name="indexEntry">The index entry.</param>
+    /// <param name="previous">Prior instance of the underlying object.</param>
     protected virtual void Intern(SequenceIndexEntry indexEntry, bool previous) {
         Intern(indexEntry);
         }
@@ -1418,6 +1418,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// <paramref name="Index"/>
     /// </summary>
     /// <param name="Index">Index of the frame to return.</param>
+    /// <param name="skip">If true, search process may skip entries to 
+    /// locate faster (this may cause entry status to be missed).</param>
     /// <returns>The Frame index.</returns>
     public abstract SequenceIndexEntry Frame(long Index, bool skip=true);
 

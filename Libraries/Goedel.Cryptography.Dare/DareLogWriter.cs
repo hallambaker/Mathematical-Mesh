@@ -40,9 +40,6 @@ public class DareLogWriter : DareLogReader {
     /// Open a new file Sequence for write access.
     /// </summary>
     /// <param name="fileName">The file name to create</param>
-    /// <param name="archive">If true, the Sequence is intended to be used to create a multi-file
-    /// archive.</param>
-    /// <param name="digest">If true, construct a digest </param>
     /// <param name="fileStatus">The mode to open the file in, this must be a mode
     /// that permits write access.</param>
     /// <param name="containerType">The Sequence type to use. If unspecified,
@@ -63,9 +60,6 @@ public class DareLogWriter : DareLogReader {
     /// Open a new file Sequence for write access.
     /// </summary>
     /// <param name="jbcdStream">The stream to use to write the Sequence.</param>
-    /// <param name="archive">If true, the Sequence is intended to be used to create a multi-file
-    /// archive.</param>
-    /// <param name="digest">If true, construct a digest </param>
     /// <param name="containerType">The Sequence type to use. If unspecified,
     /// a type appropriate for the type of use will be selected.</param>
     /// <returns>File Sequence instance</returns>

@@ -30,12 +30,12 @@ public class CatalogIndexEntry<T> : PersistentIndexEntry where T : CatalogedEntr
     public override PersistenceStore PersistenceStore => Catalog.PersistenceStore;
 
     ///<summary>The underlying spool.</summary> 
-    public Catalog<T> Catalog => Sequence.Store as Catalog<T>;
+    public Catalog<T> Catalog => Sequence.InternDelegate as Catalog<T>;
 
     public T CatalogedEntry => JsonObject as T;
 
     public CatalogIndexEntry(Sequence sequence): base() {
-        (sequence?.Store as Catalog<T>).AssertNotNull(NYI.Throw);
+        (sequence?.InternDelegate as Catalog<T>).AssertNotNull(NYI.Throw);
         Sequence = sequence;
         }
 

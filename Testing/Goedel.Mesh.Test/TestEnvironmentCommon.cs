@@ -93,7 +93,7 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
                 MeshMachineHost.DirectoryMesh, CallsignResolver.__Tag) ; ;
 
         var callsignResolver = new CallsignResolverConfiguration() {
-            Registry = CallsignRegistry,
+            RegistryServiceAddress = CallsignRegistry,
             HostPath = pathHost
             };
         Configuration.Add(callsignResolver);

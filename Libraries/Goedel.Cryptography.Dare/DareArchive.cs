@@ -27,20 +27,31 @@ using System.Runtime.InteropServices;
 
 namespace Goedel.Cryptography.Dare;
 
+
+/// <summary>
+/// Oersistent index of an archive entry.
+/// </summary>
 public class ArchiveIndexEntry : PersistentIndexEntry {
 
+    ///<summary>The content metadata.</summary> 
     public ContentMeta ContentMeta  => Header?.ContentMeta;
 
+    ///<summary>The file entry data.</summary> 
     public FileEntry FileEntry => ContentMeta?.FileEntry;
+
+    ///<summary>If true, the item has been deleted from the archive. It may be 
+    ///possible to recover it if it has not been erased.</summary> 
     public override bool IsDeleted => IsErased | Event == DareConstants.SequenceEventDeleteTag;
 
+    ///<summary>If true, the item has been deleted and erased from the archive and 
+    ///cannot be recovered.</summary> 
     public override bool IsErased => Event == DareConstants.SequenceEventEraseTag;
+
     ///<inheritdoc/>
     public override JsonObject JsonObject {
         get => Header.ContentMeta;
         set => _ = value;
         }
-
 
     /// <summary>
     /// Factory method implementing <see cref="SequenceIndexEntryFactoryDelegate"/>.
@@ -70,19 +81,34 @@ public class ArchiveIndexEntry : PersistentIndexEntry {
     /// </summary>
     /// <param name="sequence">The sequence the index is bound to.</param>
     ArchiveIndexEntry(Sequence sequence) {
-        (sequence?.Store as DareArchive).AssertNotNull(NYI.Throw);
+        (sequence?.InternDelegate as DareArchive).AssertNotNull(NYI.Throw);
         Sequence = sequence;
         }
 
     }
 
-
+/// <summary>
+/// A DARE archive handle.
+/// </summary>
 public class DareArchive : PersistenceStore {
 
+    ///<summary>The IANA content type of the archive.</summary> 
     public static string ContentType => "mmm-tbs";
+
+    ///<inheritdoc/>
     public override SequenceIndexEntryFactoryDelegate SequenceIndexEntryFactory =>
                 ArchiveIndexEntry.Factory;
 
+    /// <summary>
+    /// Constructor returning an instance from <paramref name="fileName"/>.
+    /// </summary>
+    /// <param name="fileName">The file name.</param>
+    /// <param name="fileStatus">The file status.</param>
+    /// <param name="sequenceType">The sequence type (usually Merkle Tree).</param>
+    /// <param name="policy">The default security policy.</param>
+    /// <param name="dataEncoding">The data encoding for headers and trailers.</param>
+    /// <param name="keyLocate">Key location instance.</param>
+    /// <param name="read">If true, load the entire archive contents on opening.</param>
     public DareArchive(
                 string fileName,
                 FileStatus fileStatus = FileStatus.OpenOrCreate,
@@ -94,18 +120,23 @@ public class DareArchive : PersistenceStore {
                     policy, dataEncoding, keyLocate, read, false) {
         }
 
-
-
+    ///<inheritdoc/>
     public override void Intern(SequenceIndexEntry indexEntry) {
         var entry = indexEntry as ArchiveIndexEntry;
 
         base.Intern(indexEntry);
-
-
-
         }
 
-
+    /// <summary>
+    /// Add the file <paramref name="fileName"/> in disk directory <paramref name="diskPath"/>
+    /// to the archive at archive directory <paramref name="directoryPath"/> with content
+    /// metadata <paramref name="contentMeta"/>
+    /// </summary>
+    /// <param name="diskPath">The source path directory.</param>
+    /// <param name="directoryPath">The archive directory path.</param>
+    /// <param name="fileName">The file name.</param>
+    /// <param name="contentMeta">The content metadata to associate with the file.</param>
+    /// <returns>The archive index entry.</returns>
     public ArchiveIndexEntry AddFile(
                 string diskPath,
                 string directoryPath,
@@ -121,8 +152,10 @@ public class DareArchive : PersistenceStore {
     /// Add the file <paramref name="fileInfo"/> into the archive with the directory 
     /// path prefix <paramref name="directoryPath"/>.
     /// </summary>
-    /// <param name="directoryPath"></param>
-    /// <param name="fileInfo"></param>
+    /// <param name="directoryPath">The archive directory path.</param>
+    /// <param name="fileInfo">The source file.</param>
+    /// <param name="contentMeta">The content metadata to associate with the file.</param>
+    /// <returns>The archive index entry.</returns>
     public ArchiveIndexEntry AddFile(
                 string directoryPath,
                 FileInfo fileInfo,
@@ -146,24 +179,42 @@ public class DareArchive : PersistenceStore {
         }
 
 
-
+    /// <summary>
+    /// Add data from the stream <paramref name="dataStream"/> of length <paramref name="length"/>
+    /// into the archive with content metadata <paramref name="contentMeta"/>.
+    /// </summary>
+    /// <param name="dataStream">The data stream.</param>
+    /// <param name="length">Length of the data stream. This must be known in advance as there
+    /// is (currently) no provision for indefinite length archive entries.</param>
+    /// <param name="contentMeta">The content metadata to associate with the file.</param>
+    /// <returns>The archive index entry.</returns>
     public ArchiveIndexEntry AddFile(
-                Stream data,
+                Stream dataStream,
                 long length,
                 ContentMeta contentMeta = null) {
 
-        var result = Sequence.AppendFromStream(data, length, contentMeta) as
+        var result = Sequence.AppendFromStream(dataStream, length, contentMeta) as
                     ArchiveIndexEntry;
 
         return result;
         }
 
+    /// <summary>
+    /// Add an index to the end of the archive.
+    /// </summary>
+    /// <param name="incremental">If true, write an incremental archive.</param>
+    /// <exception cref="NYI">Not currently implemented.</exception>
     public void AddIndex(
                 bool incremental = false) {
         throw new NYI();
         }
 
-
+    /// <summary>
+    /// Add files from the directory <paramref name="diskPath"/> to the archive at
+    /// directory <paramref name="directoryPath"/>.
+    /// </summary>
+    /// <param name="diskPath">The source path directory.</param>
+    /// <param name="directoryPath">The archive directory path.</param>
     public void AddDirectory(
                         string diskPath,
                         string directoryPath) {
@@ -175,7 +226,12 @@ public class DareArchive : PersistenceStore {
         }
 
 
-
+    /// <summary>
+    /// Add files from the directory <paramref name="directoryInfo"/> to the archive at
+    /// directory <paramref name="directoryPath"/>.
+    /// </summary>
+    /// <param name="directoryInfo">The source path directory.</param>
+    /// <param name="directoryPath">The archive directory path.</param>
     public void AddDirectory(
                 string directoryPath,
                 DirectoryInfo directoryInfo
@@ -193,20 +249,14 @@ public class DareArchive : PersistenceStore {
             }
         }
 
-
-    public byte[] GetBytes(
-                string archivePath,
-                bool recover = false) {
-
-        using var input = GetStream(archivePath);
-        using var output = new MemoryStream();
-
-
-        input.CopyTo(output);
-        return output.ToArray();
-        }
-
-
+    /// <summary>
+    /// Extract the file <paramref name="archivePath"/> from the archive and
+    /// write to <paramref name="outputPath"/>.
+    /// </summary>
+    /// <param name="archivePath">The path of the file within the archive.</param>
+    /// <param name="outputPath">Destination to write the file to.</param>
+    /// <param name="recover">If true, attempt to recover a file marked as deleted.</param>
+    /// <returns>True if the file is found, otherwise false.</returns>
     public bool GetFile(
                 string archivePath,
                 string outputPath,
@@ -222,15 +272,12 @@ public class DareArchive : PersistenceStore {
             }
         }
 
-    public bool GetFiles(
-                string outputPath
-                ) {
-
-
-
-        throw new NYI();
-        }
-
+    /// <summary>
+    /// Locate the file <paramref name="archivePath"/> from the archive and
+    /// return a stream reading it.
+    /// </summary>
+    /// <param name="archivePath">The path of the file within the archive.</param>
+    /// <returns>Stream reader reading the file.</returns>
     public Stream GetStream(
                 string archivePath
                 ) {
@@ -243,14 +290,22 @@ public class DareArchive : PersistenceStore {
         }
 
 
+    /// <summary>
+    /// Copy the contents of the archive to a newly created archive <paramref name="outputPath"/>.
+    /// If <paramref name="purge"/> is true, remove deleted items.
+    /// </summary>
+    /// <param name="outputPath">The new archive file to be created.</param>
+    /// <param name="purge">If true, do not copy deleted items.</param>
+    /// <exception cref="NYI"></exception>
     public void Copy(
-                string archivePath,
+                string outputPath,
                 bool purge = true
                 ) {
         throw new NYI();
         }
 
 
+    ///<inheritdoc/>
     public override bool Delete(string uniqueID, Transaction transaction = null, bool erase = false) {
         var envelope = PrepareDelete(out var Previous, uniqueID);
         if (envelope == null) {
@@ -273,7 +328,6 @@ public class DareArchive : PersistenceStore {
     /// </summary>
     /// <param name="archiveName">The file name to create</param>
     /// <param name="fileName">The file name to create</param>
-    /// <param name="data">The content data</param>
     /// <param name="contentMeta">The content metadata</param>
     /// <param name="fileStatus">The mode to open the file in, this must be a mode
     /// that permits write access.</param>
@@ -294,10 +348,11 @@ public class DareArchive : PersistenceStore {
 
     /// <summary>
     /// Open a new file Sequence for write access and append all the files in the directory 
-    /// <paramref name="directory"/>.
+    /// <paramref name="sourceDir"/>.
     /// </summary>
     /// <param name="archiveName">The file name to create</param>
-    /// <param name="directory">The directory to append files from.</param>
+    /// <param name="sourceDir">The directory to append files from.</param>
+    /// <param name="directory">The directory in the archive.</param>
     /// <param name="contentMeta">The content metadata</param>
     /// <param name="fileStatus">The mode to open the file in, this must be a mode
     /// that permits write access.</param>
@@ -354,19 +409,27 @@ public class DareArchive : PersistenceStore {
 
         }
 
+    /// <summary>
+    /// Unpack the archive.
+    /// </summary>
     public void UnpackArchive() {
         foreach (var file in ObjectIndex) {
             var index = file.Value as ArchiveIndexEntry;
-
 
             if (!index.IsDeleted) {
                 Unpack(index);
                 }
 
             }
+
+        throw new NYI(); // need to add in the directory to unpack to.
         }
 
-
+    /// <summary>
+    /// Unpack the archive, <paramref name="archiveName"/>, 
+    /// </summary>
+    /// <param name="archiveName">Archive filename.</param>
+    /// <param name="keyLocate">The key collection to use for decryption of the contents.</param>
     public static void UnpackArchive (
                     string archiveName,
                     IKeyLocate keyLocate=null) {

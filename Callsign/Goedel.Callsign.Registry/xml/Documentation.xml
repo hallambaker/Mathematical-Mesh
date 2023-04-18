@@ -11,6 +11,21 @@
         <member name="M:Goedel.Callsign.Registry.ActivationApplicationRegistry.GetEnvelopedActivationApplicationRegistry">
             <summary>The enveloped object</summary> 
         </member>
+        <member name="P:Goedel.Callsign.Registry.ActivationApplicationRegistry.CommonEncryptionKey">
+            <summary>The encryption key used to decrypt messages sent to the registry.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ActivationApplicationRegistry.AdministratorSignatureKey">
+            <summary>The signaturee key used to sign registry registrations..</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ActivationApplicationRegistry.AccountAuthentication">
+            <summary>The  key used to authenticate the device to the registry.</summary> 
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ActivationApplicationRegistry.Activate(Goedel.Mesh.ProfileDevice)">
+            <summary>
+            Activate the application for the device <paramref name="profileDevice"/>.
+            </summary>
+            <param name="profileDevice">The activated device profile.</param>
+        </member>
         <member name="P:Goedel.Callsign.Registry.ActivationApplicationRegistry.AccountEncryption">
              <summary>
             Key used to decrypt registry messages.
@@ -156,6 +171,12 @@
             <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Callsign.Registry.CatalogedRegistry.EnvelopedProfileRegistry"/>
             to return the <see cref="P:Goedel.Callsign.Registry.CatalogedRegistry.ProfileRegistry"/> value.</summary>
         </member>
+        <member name="P:Goedel.Callsign.Registry.CatalogedRegistry.ConnectionService">
+            <summary>The connection used to authenticate the client to the service.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Registry.CatalogedRegistry.ActivationApplicationRegistry">
+            <summary>The activation record.</summary> 
+        </member>
         <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.DeviceAuthorized(Goedel.Mesh.CatalogedDevice)">
             <inheritdoc/>
         </member>
@@ -177,7 +198,6 @@
             </summary>
             <param name="profile">The group profile.</param>
             <param name="activationAccount">The activation data.</param>
-            <param name="encryptionKey">Key under which the activation is to be encrypted.</param>
             <returns>The created group.</returns>
         </member>
         <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
@@ -474,10 +494,20 @@
             <summary>
             Create a registry account under the name <paramref name="accountAddress"/> 
             </summary>
+            <param name="contextUser">The user context under which the registry is to be created.</param>
+            <param name="accountAddress">The registry account service address.</param>
+            <param name="accountSeed">Optional account seed.</param>
+            <param name="callsignMapping">Optional callsign mapping specifier.</param>
+            <returns>The registry account context.</returns>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.Extensions.GetRegistry(Goedel.Mesh.Client.ContextUser,System.String)">
+            <summary>
+            Return the registry account context for the <paramref name="contextUser"/> context.
+            
+            </summary>
             <param name="contextUser"></param>
-            <param name="accountAddress"></param>
-            <returns></returns>
-            <exception cref="T:Goedel.Utilities.NYI"></exception>
+            <param name="key">Key used to disambiguate multiple registries (why would you need that???).</param>
+            <returns>The registry context.</returns>
         </member>
         <member name="T:CallsignRegistry.NamespaceDoc">
             <summary>

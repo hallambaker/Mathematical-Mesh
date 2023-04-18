@@ -47,7 +47,11 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
 
 
 
-
+    /// <summary>
+    /// Return the service directory for storing Mesh data on the current platform.
+    /// </summary>
+    /// <param name="service">The service for which the directory is required.</param>
+    /// <returns>The full directory path of the directory.</returns>
     public static string GetServiceDirectory(string service) {
         var platform = Environment.OSVersion.Platform;
         switch (platform) {
@@ -62,30 +66,6 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
             }
         }
 
-
-    static KeyCollectionCore() {
-        directoryKeys = GetServiceDirectory("Keys");
-
-        //var platform = Environment.OSVersion.Platform;
-        //switch (platform) {
-        //    case PlatformID.Win32NT: {
-        //        var appsRoot = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        //        directoryKeys = Path.Combine(appsRoot, WindowsMeshKeys);
-        //        directoryMesh = Path.Combine(appsRoot, WindowsMeshProfiles);
-        //        directoryAccount = Path.Combine(appsRoot, WindowsMeshAccounts);
-
-        //        break;
-        //        }
-        //    default: {
-        //        var userRoot = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        //        directoryKeys = Path.Combine(userRoot, LinuxMeshKeys);
-        //        directoryMesh = Path.Combine(userRoot, LinuxMeshProfiles);
-        //        directoryAccount = Path.Combine(userRoot, LinuxMeshAccounts);
-        //        break;
-        //        }
-        //    }
-        }
-
     /// <summary>
     /// Constructor returning an instance. If not-null, <paramref name="directory"/>
     /// overrides the location of the key stores. This may be used in testing or to enable 
@@ -98,11 +78,8 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
             }
         }
 
-
     static void SetPlatformDirect(string directory) {
         directoryKeys = Path.Combine(directory, "Keys");
-        //directoryMesh = Path.Combine(directory, "Profiles");
-        //directoryAccount = Path.Combine(directory, "Accounts");
         }
 
 

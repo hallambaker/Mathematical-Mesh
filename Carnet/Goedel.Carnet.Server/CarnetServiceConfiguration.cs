@@ -8,8 +8,8 @@ namespace Goedel.Carnet.Server;
 /// </summary>
 public class CarnetServiceConfiguration : ServiceConfiguration {
 
-    public string AdminAccount { get; set; }
-
+    ///<summary>The administration account service address.</summary> 
+    public string AdminServiceAddress { get; set; }
 
     ///<summary>The configuration entry.</summary> 
     public static readonly ConfigurationEntry ConfigurationEntry =
@@ -25,6 +25,7 @@ public class CarnetServiceConfiguration : ServiceConfiguration {
     /// <summary>
     /// Create a new instance and return the corresponding configuration file.
     /// </summary>
+    /// <param name="meshMachine">The mesh machine.</param>
     /// <param name="GenericHostConfiguration">Generic service configuration.</param>
     /// <param name="service">The service endpoing.</param>
     /// <returns>The configuration setting,</returns>

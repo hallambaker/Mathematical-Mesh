@@ -72,9 +72,6 @@ public class SequenceEnumeratorIndex : IEnumerator<SequenceIndexEntry>, IEnumera
     /// <param name="reverse">If true, return results in the reverse order.</param>
     /// <param name="filter">If not null, specifies a filtering function on the 
     /// store entries.</param>
-    /// <param name="skip">If true, the search MAY optimize search time by performing a binary
-    /// search on the records. Note however that since this will cause entry update entries to
-    /// be skipped, the status might be affected by one or more skipped records.</param>
     /// <param name="count">Maximum number of records to return.</param>
     public SequenceEnumeratorIndex(
                 Sequence sequence,

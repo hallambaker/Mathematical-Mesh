@@ -55,6 +55,7 @@ public abstract class KeyCollection : IKeyLocate {
     /// Add a keypair to the collection.
     /// </summary>
     /// <param name="keyPair">The key pair to add.</param>
+    /// <param name="accounts">Addresses of accounts using the key for encryption.</param>
     public virtual void Add(KeyPair keyPair, List<string> accounts=null) {
         if (keyPair == null) {
             return;

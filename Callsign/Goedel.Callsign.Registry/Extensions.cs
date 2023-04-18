@@ -28,7 +28,7 @@ public static class Extensions {
                     PrivateKeyUDF accountSeed = null,
                     CallsignMapping callsignMapping = null) =>
         ContextRegistry.CreateRegistry(
-            contextUser, accountAddress, accountSeed, callsignMapping:callsignMapping);
+            contextUser, accountAddress, accountSeed);
 
     /// <summary>
     /// Return the registry account context for the <paramref name="contextUser"/> context.

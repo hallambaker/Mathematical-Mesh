@@ -29,12 +29,15 @@ namespace Goedel.Cryptography.Dare;
 public partial class PersistentIndexEntry : SequenceIndexEntry, IPersistenceEntry {
 
     ///<summary>The underlying spool.</summary> 
-    public virtual PersistenceStore PersistenceStore => Sequence.Store as PersistenceStore;
+    public virtual PersistenceStore PersistenceStore => Sequence.InternDelegate as PersistenceStore;
 
+    ///<summary>The frame in which the status of the entry object is specified.</summary> 
     public long EntryStatusFrame;
 
+    ///<summary>The event specified in this entry.</summary> 
     public string Event => Header?.ContentMeta?.Event;
 
+    ///<summary>The event specified in this entry.</summary> 
     public SequenceEvent SequenceEvent => Event.ToSequenceEvent();
 
     ///<inheritdoc/>
@@ -43,7 +46,8 @@ public partial class PersistentIndexEntry : SequenceIndexEntry, IPersistenceEntr
     ///<inheritdoc/>
     public bool Deleted => SequenceEvent == SequenceEvent.Delete;
 
-    public PersistentIndexEntry Previous { get; set; }
+    ///<summary>If the event has been updated, a link to the previous index.</summary> 
+    public new PersistentIndexEntry Previous { get; set; }
 
     ///<summary>The decoded JSONObject</summary>
     public override JsonObject JsonObject {
@@ -51,16 +55,6 @@ public partial class PersistentIndexEntry : SequenceIndexEntry, IPersistenceEntr
         set => jsonObject = value;
         }
     JsonObject jsonObject = null;
-
-
-
-    //IPersistenceEntry IPersistenceEntry.X_Previous => throw new NotImplementedException();
-
-    //public IPersistenceEntry X_First => throw new NotImplementedException();
-
-
-
-
 
     /// <summary>
     /// Factory method implementing <see cref="SequenceIndexEntryFactoryDelegate"/>.
@@ -90,14 +84,13 @@ public partial class PersistentIndexEntry : SequenceIndexEntry, IPersistenceEntr
     /// </summary>
     /// <param name="sequence">The sequence the index is bound to.</param>
     PersistentIndexEntry(Sequence sequence) {
-        (sequence?.Store as PersistenceStore).AssertNotNull(NYI.Throw);
+        (sequence?.InternDelegate as PersistenceStore).AssertNotNull(NYI.Throw);
         Sequence = sequence;
         }
 
     /// <summary>
-    /// Constructor returning a in instance bound to the sequence <paramref name="sequence"/>
+    /// Default constructor.
     /// </summary>
-    /// <param name="sequence">The sequence the index is bound to.</param>
     protected PersistentIndexEntry() {
         }
 

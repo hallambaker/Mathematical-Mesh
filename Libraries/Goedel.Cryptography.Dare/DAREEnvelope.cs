@@ -487,20 +487,19 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
 
 
 
-    /// <summary>
-    /// Deserialize 
-    /// </summary>
-    /// <param name="stream">The input stream</param>
-    /// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <param name="decrypt">If true, attempt to decrypt the message body as it is read.</param>
-    /// <param name="keyCollection">Key collection to be used to discover decryption keys</param>
-    /// <returns>The created object.</returns>	
-    public static DareEnvelope FromJSON(Stream stream,
-        bool decrypt = false,
-        IKeyLocate keyCollection = null) {
-        var jsonBcdReader = new JsonBcdReader(stream); // Hack: should merge this with GetPlaintext
-        return FromJSON(jsonBcdReader, false, decrypt, keyCollection);
-        }
+    ///// <summary>
+    ///// Deserialize 
+    ///// </summary>
+    ///// <param name="stream">The input stream</param>
+    ///// <param name="decrypt">If true, attempt to decrypt the message body as it is read.</param>
+    ///// <param name="keyCollection">Key collection to be used to discover decryption keys</param>
+    ///// <returns>The created object.</returns>	
+    //public static DareEnvelope FromJSON(Stream stream,
+    //    bool decrypt = false,
+    //    IKeyLocate keyCollection = null) {
+    //    var jsonBcdReader = new JsonBcdReader(stream); // Hack: should merge this with GetPlaintext
+    //    return FromJSON(jsonBcdReader, false, decrypt, keyCollection);
+    //    }
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -702,6 +701,9 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     /// <param name="inputFile">The input file, must support reading.</param>
     /// <param name="outputFile">The output file, must support writing</param>
     /// <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
+    /// <param name="verify">If true, verify the payload digest on the payload. The decoded data is 
+    /// written out to a temporary file which is deleted if the verification fails and renamed
+    /// to the output file otherwise.</param>
     public static long Decode(
             string inputFile,
             string outputFile = null,
@@ -728,6 +730,9 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     /// <param name="outputStream">The output stream, must support writing</param>
     /// <param name="outputFile">The output file, must support writing</param>
     /// <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
+    /// <param name="verify">If true, verify the payload digest on the payload. The decoded data is 
+    /// written out to a temporary file which is deleted if the verification fails and renamed
+    /// to the output file otherwise.</param>
     public static long Decode(
             Stream inputStream,
             Stream outputStream,
@@ -758,10 +763,6 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         decoder.Close();
 
         if (verify) {
-
-
-
-
         // read in the trailer
             if (jsonBcdReader.NextArray()) {
                 message.Trailer = DareTrailer.FromJson(jsonBcdReader, false);
@@ -788,6 +789,10 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     /// <param name="outputStream">The output stream, must support writing</param>
     /// <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
     /// <param name="dareHeader">The header data.</param>
+    /// <param name="verify">If true, verify the payload digest on the payload. The decoded data is 
+    /// written out to a temporary file which is deleted if the verification fails and renamed
+    /// to the output file otherwise.</param>
+
     public static bool TryDecode(
         Stream inputStream,
         Stream outputStream,

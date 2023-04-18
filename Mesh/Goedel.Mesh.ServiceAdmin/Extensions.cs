@@ -58,7 +58,7 @@ public static class Extensions {
 
             if (configuration.CallsignRegistry != null) {
                 using var contextRegistry = contextUser.CreateRegistry(
-                        configuration.CallsignRegistry.RegistryAccount);
+                        configuration.CallsignRegistry.ServiceAddress);
                 profileRegistry = contextRegistry.ProfileRegistryCallsign;
                 var envelope = contextRegistry.ProfileRegistryCallsign.DareEnvelope;
                 configuration.MeshService.AddProfileRegistryCallsign(envelope);

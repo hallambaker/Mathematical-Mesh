@@ -1396,6 +1396,13 @@
             Constructor returning a callsign mapping instance. 
             </summary>
         </member>
+        <member name="M:Goedel.Callsign.CallsignMapping.Strip(System.String)">
+            <summary>
+            Strip the leading @ off a callsign if present.
+            </summary>
+            <param name="callsign">The callsign to strip</param>
+            <returns>The stripped callsign.</returns>
+        </member>
         <member name="M:Goedel.Callsign.CallsignMapping.Validate(Goedel.Mesh.CallsignBinding)">
             <summary>
             Validate the callsign binding <paramref name="callsignBinding"/> for consistency of the
@@ -1415,6 +1422,14 @@
             Create an index over the code page.
             </summary>
         </member>
+        <member name="M:Goedel.Callsign.CallsignMapping.CanonicalizeStripped(System.String)">
+            <summary>
+            Strip the callsign presentation <paramref name="presentation"/> and
+            return the canonicalized form.
+            </summary>
+            <param name="presentation">The presentation of the callsign.</param>
+            <returns>The stripped, canonical form of <paramref name="presentation"/>.</returns>
+        </member>
         <member name="M:Goedel.Callsign.CallsignMapping.Canonicalize(System.String)">
             <summary>
             Return the canonical form of the page <paramref name="presentation"/> according
@@ -1423,6 +1438,28 @@
             <param name="presentation">The presentation to canonicalize</param>
             <returns>The canonical form of <paramref name="presentation"/>.</returns>
             <exception cref="T:Goedel.Callsign.InvalidCharacter">A character is invalid</exception>
+        </member>
+        <member name="M:Goedel.Callsign.CallsignMapping.CheckPage(System.String,System.String)">
+            <summary>
+            Check to see if <paramref name="presentation"/> is valid within 
+            the character page <paramref name="pageName"/> returning true is
+            so and false otherwise.
+            </summary>
+            <param name="presentation">The presentation to check</param>
+            <param name="pageName">Name of the page to check.</param>
+            <returns>True if <paramref name="presentation"/> is valid within
+            <paramref name="pageName"/>, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Callsign.CallsignMapping.CheckPage(System.Char,Goedel.Callsign.Page)">
+            <summary>
+            Check to see if <paramref name="c"/>is valid within 
+            the character page <paramref name="page"/> returning true is
+            so and false otherwise.
+            </summary>
+            <param name="c">The character to check</param>
+            <param name="page">The page to check.</param>
+            <returns>True if <paramref name="c"/> is valid within
+            <paramref name="page"/>, otherwise false.</returns>
         </member>
         <member name="M:Goedel.Callsign.CallsignMapping.IsAllowed(System.Char,Goedel.Callsign.CharacterSpan@)">
             <summary>
@@ -2432,6 +2469,26 @@
             Extensions class. Provides static convenience extensions.
             </summary>
         </member>
+        <member name="M:Goedel.Callsign.Extensions.GetResolver(Goedel.Mesh.Client.ContextAccount)">
+            <summary>
+            Return the callsign resolver for the account context <paramref name="contextAccount"/>.
+            </summary>
+            <param name="contextAccount">Account context.</param>
+            <returns>The resolver.</returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Goedel.Callsign.Extensions.TryResolveCallsign(Goedel.Mesh.Client.ContextAccount,System.String,Goedel.Mesh.CallsignBinding@)">
+            <summary>
+            Attempt resolution of the callsign <paramref name="callsign"/> from the account context
+            <paramref name="contextAccount"/>. If successful, the value true is returned and 
+            the binding returned in <paramref name="callsignBinding"/>. Otherwise the value
+            false is returned and null.
+            </summary>
+            <param name="contextAccount">Account context.</param>
+            <param name="callsign">The callsign to query.</param>
+            <param name="callsignBinding">The result of attempting to resolve the callsign.</param>
+            <returns>True if the callsign resolved to a registration, otherwise false.</returns>
+        </member>
         <member name="M:Goedel.Callsign.Extensions.CallsignRequest(Goedel.Mesh.Client.ContextUser,System.String,System.String,System.Boolean,Goedel.Mesh.ProfileAccount,System.String)">
             <summary>
             Make a callsign registration, binding or transfer request
@@ -2441,6 +2498,16 @@
             <param name="transfer">Transfer the callsign to the specified address.</param>
             <param name="contextAccount">The account context in which to make the request.</param>
             <param name="display">The display form of the callsign.</param>
+            <param name="transferUdf">UDF of party to be given ability to control the callsign binding.</param>
+        </member>
+        <member name="M:Goedel.Callsign.Extensions.ResolveCallsign(Goedel.Mesh.Client.ContextAccount,System.String)">
+            <summary>
+            Resolve the callsign <paramref name="callsign"/> using the account context
+            <paramref name="contextAccount"/>.
+            </summary>
+            <param name="contextAccount">The account context.</param>
+            <param name="callsign">The callsign to resolve.</param>
+            <returns>The callsign registration.</returns>
         </member>
         <member name="M:Goedel.Callsign.Extensions.CallsignRequestStatus(Goedel.Mesh.Client.ContextUser,System.String)">
             <summary>
@@ -2450,6 +2517,44 @@
             <param name="contextAccount">The account context.</param>
             <param name="callsign">The callsign to query.</param>
             <returns></returns>
+        </member>
+        <member name="M:Goedel.Callsign.Extensions.CallsignTransfer(Goedel.Mesh.Client.ContextUser,System.String,System.String)">
+            <summary>
+            Transfer the callsign <paramref name="callsign"/> to <paramref name="recipient"/>.
+            </summary>
+            <param name="contextAccount">The account context to which the callsikgn is currently bound.</param>
+            <param name="callsign">The callsign to transfer.</param>
+            <param name="recipient">The party to receive the callsign.</param>
+            <returns>The resulting registration request (if successful), otherwise
+            throws an exception.</returns>
+        </member>
+        <member name="M:Goedel.Callsign.Extensions.GetProfile(Goedel.Mesh.Contact,System.String)">
+            <summary>
+            Return the Mesh profile bound to the address <paramref name="address"/>
+            in the contact assertion <paramref name="contact"/>.
+            </summary>
+            <param name="contact">The contact assertion to return.</param>
+            <param name="address">The address (used to disambiguate multiple 
+            profiles bound to the same contact).</param>
+            <returns>The account profile.</returns>
+        </member>
+        <member name="M:Goedel.Callsign.Extensions.ListCallsigns(Goedel.Mesh.Client.ContextUser)">
+            <summary>
+            List the callsigns owned by <paramref name="contextAccount"/>.
+            </summary>
+            <param name="contextAccount">The account context.</param>
+            <returns>The list of callsign application bindings.</returns>
+        </member>
+        <member name="M:Goedel.Callsign.Extensions.ProcessMessage(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.Message,System.Boolean,System.Boolean,System.Collections.Generic.List{System.String})">
+            <summary>
+            Process CallsignRegistrationResponse messages in context.
+            </summary>
+            <param name="contextUser">The user context to process the message.</param>
+            <param name="meshMessage">The message to process, must be of type CallsignRegistrationResponse.</param>
+            <param name="accept">Ignored</param>
+            <param name="reciprocate">Ignored</param>
+            <param name="roles">Ignored</param>
+            <returns>The result of processing the message.</returns>
         </member>
         <member name="T:Goedel.Callsign.NamespaceDoc">
             <summary>
