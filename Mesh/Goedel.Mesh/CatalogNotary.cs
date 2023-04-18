@@ -97,14 +97,7 @@ public class CatalogNotary : Catalog<CatalogedSignature> {
 
 public partial class CatalogedSignature {
 
-    ///<summary>Convenience accessor to the callsign binding content.</summary> 
-
-    //public CallsignBinding CallsignBinding => EnvelopedCallsignBinding.EnvelopedObject;
-
     #region // Properties
-    ///<summary>The primary key is protocol:site </summary>
-    //public override string _PrimaryKey => Canonical;
-
 
     ///<inheritdoc/>
     public override void Describe(StringBuilder builder, bool detail = false) => ItemToBuilder(builder);

@@ -427,13 +427,15 @@ public class PublicMeshService : MeshService {
 
 
     bool VerifyBinding(ProfileAccount profileAccount, CallsignBinding callsignBinding) {
+        profileAccount.Future();
         //CatalogCallsign.Get(callsignBinding.Canonical).AssertNull(NYI.Throw);
         throw new NYI();
 
-        profileAccount.Future();
+
 
         return true;
         }
+
     bool ServiceBinding(CallsignBinding callsignBinding) => true;
 
     /// <summary>

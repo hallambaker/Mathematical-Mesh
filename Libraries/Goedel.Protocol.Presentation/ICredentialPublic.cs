@@ -132,7 +132,10 @@ public interface ICredentialPrivate : ICredentialPublic {
             string keyId, byte[] ephemeral);
 
 
-
+    /// <summary>
+    /// Return the public credential corresponding to the private.
+    /// </summary>
+    /// <returns></returns>
     public ICredentialPublic GetICredentialPublic();
     #endregion
     }

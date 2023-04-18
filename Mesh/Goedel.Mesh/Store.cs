@@ -91,11 +91,10 @@ public class Store : Disposable, IInternSequenceIndexEntry {
 
 
     /// <summary>
-    /// Constructor, returns an enumerator on the sequence <paramref name="sequence"/>, starting
+    /// Constructor, returns an enumerator on the sequence, starting
     /// with the frame numbered <paramref name="start"/>. If <paramref name="reverse"/> is true, 
     /// results are returned from the last match first.
     /// </summary>
-    /// <param name="sequence">The sequence to enumerate.</param>
     /// <param name="start">The starting point for the enumeration. If it matches, this will 
     /// be the first result returned.</param>
     /// <param name="reverse">If true, return results in the reverse order.</param>

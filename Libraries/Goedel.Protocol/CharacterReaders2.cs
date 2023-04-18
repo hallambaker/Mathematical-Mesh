@@ -411,55 +411,43 @@ public class CharacterStreamSeekReader : CharacterStreamReader, IBufferedStream 
     #endregion
     }
 
+/// <summary>
+/// A subclass of the <see cref="CharacterStreamSeekReader"/> in which the start and end 
+/// position of the stream are bound to a subset of the stream.
+/// </summary>
 public class CharacterStreamSeekBoundedReader : CharacterStreamSeekReader {
 
     long Start;
     long Length;
 
 
-
-    public CharacterStreamSeekBoundedReader (Stream Input,
+    /// <summary>
+    /// Constructor returning an instance that bounds read on <paramref name="input"/>
+    /// to being at <paramref name="start"/> for <paramref name="length"/> bytes.
+    /// </summary>
+    /// <param name="input">The input stream.</param>
+    /// <param name="start">The first byte to return.</param>
+    /// <param name="length">The number of bytes to return (defaults to remainder of the stream.</param>
+    public CharacterStreamSeekBoundedReader (Stream input,
                 long start = 0,
-                long length = -1) : base(Input) { 
+                long length = -1) : base(input) { 
         }
 
-
+    ///<inheritdoc/>
     public override byte ReadByte() {
         var value = base.ReadByte();
 
-        //Console.WriteLine($"{value} - '{(char)value}'");
+        "Need to implement the stream bounding behavior".TaskFunctionality();
         return value;
         }
 
-
+    ///<inheritdoc/>
     public override byte PeekByte() {
         var value = base.PeekByte();
 
-        //Console.WriteLine($"    {value} - '{(char)value}'");
+        "Need to implement the stream bounding behavior".TaskFunctionality();
         return value;
         }
-
-
-    ///// <summary>Return the next character in the stream without advancing the stream</summary>
-    ///// <returns>The next character in the stream</returns>
-    //public virtual char PeekChar() {
-    //    if (Position >= Input.Length) {
-    //        EOF = true;
-    //        return (char)0;
-    //        }
-    //    return Input[Position];
-    //    }
-
-    ///// <summary>Return the next character in the stream and advance the stream.</summary>
-    ///// <returns>The next character in the stream</returns>
-    //public virtual char ReadChar() {
-    //    if (Position >= Input.Length) {
-    //        EOF = true;
-    //        return (char)0;
-    //        }
-    //    return Input[Position++];
-    //    }
-
 
     }
 

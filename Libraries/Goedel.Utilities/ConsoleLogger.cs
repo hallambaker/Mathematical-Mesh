@@ -10,8 +10,16 @@ using System.Runtime.Versioning;
 namespace Goedel.Utilities;
 
 
-
+/// <summary>
+/// Interface declaring that the record or class supports the 
+/// <see cref="GetConfigurationEntry"/> method to return a configuration entry.
+/// </summary>
 public interface IConfigurationEntry {
+
+    /// <summary>
+    /// Return a configuration entry describing the configuration data.
+    /// </summary>
+    /// <returns>The configuration entry.</returns>
     public  ConfigurationEntry GetConfigurationEntry();
     }
 
@@ -28,9 +36,6 @@ public record struct ConfigurationEntry(
             string? Discovery = null,
             string? WellKnown = null
             ) {
-
-
-
     }
 
 

@@ -1,4 +1,5 @@
-﻿//  © 2021 by Phill Hallam-Baker
+﻿#region // Copyright - MIT License
+//  © 2021 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -17,27 +18,20 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-//  
+#endregion
 
-namespace Goedel.Mesh;
+global using System.Diagnostics;
+
+#if !(_Github_)
+[assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
+#endif
+
+namespace Goedel.Debug;
 
 /// <summary>
+/// Utilities used in debugging and testing.
 /// </summary>
-abstract public partial class ApplicationEntry {
 
-    /// <summary>
-    /// Decode the application entry using keys from <paramref name="keyCollection"/>.
-    /// </summary>
-    /// <param name="keyCollection">Key collection to use to resolve decryption keys</param>
-
-    public virtual void Decode(IKeyCollection keyCollection) {
-        // Do nothing when the application has no keys to decode.
-        }
-
-    /// <summary>
-    /// Returns the access capability for the application entry.
-    /// </summary>
-    /// <returns></returns>
-    public virtual CatalogedAccess GetCatalogedAccess() => null;
+[System.Runtime.CompilerServices.CompilerGenerated]
+class NamespaceDoc {
     }
-

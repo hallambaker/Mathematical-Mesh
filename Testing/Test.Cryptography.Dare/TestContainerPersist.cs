@@ -55,7 +55,7 @@ public partial class TestPersist : UnitTestSet {
 
     // create new
     readonly static System.DateTime Now = System.DateTime.Now;
-    readonly static TestItem AccountAlice = new() {
+    readonly static TestItem TestAccountAlice = new() {
         AccountID = AccountIDAlice,
         Status = "Open",
         Created = Now,
@@ -63,7 +63,7 @@ public partial class TestPersist : UnitTestSet {
         UserProfileUDF = Udf.PresentationBase32(AccountIDAlice.ToBytes())
         };
 
-    readonly static TestItem AccountBob = new() {
+    readonly static TestItem TestAccountBob = new() {
         AccountID = AccountIDBob,
         Status = "Open",
         Created = Now,
@@ -95,7 +95,7 @@ public partial class TestPersist : UnitTestSet {
         (TestStore.Sequence.FrameCount == 1).TestTrue();
 
 
-        TestStore.New(AccountAlice);
+        TestStore.New(TestAccountAlice);
 
         (TestStore.Sequence.FrameCount == 2).TestTrue();
 
@@ -104,7 +104,7 @@ public partial class TestPersist : UnitTestSet {
         AssertTest.TestFalse(TestStore.Contains(AccountIDInvalid));
 
         var AccountTest = TestStore.GetAccountID(AccountIDAlice);
-        AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTest));
+        AssertTest.TestTrue(CheckEqual(TestAccountAlice, AccountTest));
 
         //var AccountTest2 = TestStore.GetUserProfileUDF(AccountAlice.UserProfileUDF);
         //AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTest2));
@@ -119,13 +119,13 @@ public partial class TestPersist : UnitTestSet {
                 filename, "application/test", FileStatus: FileStatus.Overwrite)) {
             // retrieve by master key -fail
             AssertTest.TestFalse(TestStore.Contains(AccountIDAlice));
-            TestStore.New(AccountAlice);
+            TestStore.New(TestAccountAlice);
 
             AssertTest.TestTrue(TestStore.Contains(AccountIDAlice));
             AssertTest.TestFalse(TestStore.Contains(AccountIDInvalid));
 
             var AccountTest = TestStore.GetAccountID(AccountIDAlice);
-            AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTest));
+            AssertTest.TestTrue(CheckEqual(TestAccountAlice, AccountTest));
 
             }
 
@@ -136,7 +136,7 @@ public partial class TestPersist : UnitTestSet {
             AssertTest.TestFalse(TestStore.Contains(AccountIDInvalid));
 
             var AccountTest = TestStore.GetAccountID(AccountIDAlice);
-            AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTest));
+            AssertTest.TestTrue(CheckEqual(TestAccountAlice, AccountTest));
 
 
             }
@@ -147,23 +147,23 @@ public partial class TestPersist : UnitTestSet {
             AssertTest.TestFalse(TestStore.Contains(AccountIDInvalid));
 
             var AccountTest = TestStore.GetAccountID(AccountIDAlice);
-            AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTest));
+            AssertTest.TestTrue(CheckEqual(TestAccountAlice, AccountTest));
             }
 
         //Check we can read record back when opening the file in create or use existing mode
         using (var TestStore = new TestItemContainerPersistenceStore(filename)) {
             // retrieve by master key -fail
             AssertTest.TestFalse(TestStore.Contains(AccountIDBob));
-            TestStore.New(AccountBob);
+            TestStore.New(TestAccountBob);
 
             AssertTest.TestTrue(TestStore.Contains(AccountIDBob));
             AssertTest.TestFalse(TestStore.Contains(AccountIDInvalid));
 
             var AccountTestA = TestStore.GetAccountID(AccountIDAlice);
-            AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTestA));
+            AssertTest.TestTrue(CheckEqual(TestAccountAlice, AccountTestA));
 
             var AccountTestB = TestStore.GetAccountID(AccountIDBob);
-            AssertTest.TestTrue(CheckEqual(AccountBob, AccountTestB));
+            AssertTest.TestTrue(CheckEqual(TestAccountBob, AccountTestB));
             }
 
         // Check we can delete an entry
@@ -177,7 +177,7 @@ public partial class TestPersist : UnitTestSet {
             AssertTest.TestFalse(TestStore.Contains(AccountIDInvalid));
 
             var AccountTestA = TestStore.GetAccountID(AccountIDAlice);
-            AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTestA));
+            AssertTest.TestTrue(CheckEqual(TestAccountAlice, AccountTestA));
 
             var AccountTestB = TestStore.GetAccountID(AccountIDBob);
 

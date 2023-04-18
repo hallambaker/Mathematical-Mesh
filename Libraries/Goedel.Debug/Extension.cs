@@ -63,6 +63,9 @@ public static partial class Extension {
     }
 
 
+/// <summary>
+/// Corruptable form of <see cref="KeyPairX448"/>
+/// </summary>
 public class KeyPairX448Corrupt: KeyPairX448 {
 
 
@@ -76,6 +79,11 @@ public class KeyPairX448Corrupt: KeyPairX448 {
 
         }
 
+    /// <summary>
+    /// Return a corrupted private scalar derived from <paramref name="curvePrivate"/>.
+    /// </summary>
+    /// <param name="curvePrivate">The uncorrupted private key value.</param>
+    /// <returns>The corrupted scalar.</returns>
     public static CurveX448Private Corrupt(CurveX448Private curvePrivate) {
         var privateKey = curvePrivate.Private + 1;
 
@@ -88,6 +96,10 @@ public class KeyPairX448Corrupt: KeyPairX448 {
     }
 
 
+
+/// <summary>
+/// Corruptable form of <see cref="KeyPairEd448"/>
+/// </summary>
 public class KeyPairEd448Corrupt : KeyPairEd448 {
 
 
@@ -99,6 +111,11 @@ public class KeyPairEd448Corrupt : KeyPairEd448 {
             base(Corrupt(keyPair.PrivateKey)) {
         }
 
+    /// <summary>
+    /// Return a corrupted private scalar derived from <paramref name="curvePrivate"/>.
+    /// </summary>
+    /// <param name="curvePrivate">The uncorrupted private key value.</param>
+    /// <returns>The corrupted scalar.</returns>
     public static CurveEdwards448Private Corrupt(CurveEdwards448Private curvePrivate) {
         var privateKey = curvePrivate.Private + 1;
 

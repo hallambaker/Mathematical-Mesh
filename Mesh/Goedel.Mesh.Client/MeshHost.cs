@@ -65,23 +65,22 @@ public class MeshHost : Disposable {
     ///<summary>Dictionary mapping mesh local name to Context.</summary>
     protected Dictionary<string, ContextAccount> DictionaryLocalContextMesh = new();
 
-    ///<summary>The object index</summary> 
-    //protected Dictionary<string, StoreEntry> ObjectIndex = new();
-
-
-
     ///<summary>The default context</summary> 
     public CatalogedStandard DefaultAccount=> defaultAccount;
     CatalogedStandard defaultAccount;
+
     ///<summary>The default context</summary> 
     public CatalogedService DefaultService => defaultService;
     CatalogedService defaultService;
+
     ///<summary>The default context</summary> 
     public CatalogedPending DefaultPending => defaultPending; 
     CatalogedPending defaultPending;
+
     ///<summary>The default context</summary> 
     public CatalogedPreconfigured DefaultPreconfigured => defaultPreconfigured;
     CatalogedPreconfigured defaultPreconfigured;
+
     static ILogger Logger => Component.Logger;
 
     string Filename { get; }

@@ -1477,20 +1477,14 @@ public partial class ContextUser : ContextAccount {
                 if (ProcessDictionary.TryGetValue(meshMessage.GetType(), out var messageDelegate)) {
                     return messageDelegate(this, meshMessage, accept, reciprocate, roles);
                     }
-                else {
-                    // ToDo: should probably flag that we ignored the unknown message type
-                    return new ProcessResultNotSupported() {
-                        MessageId = meshMessage.MessageId,
-                        Sender = meshMessage.Sender,
-                        Recipient = meshMessage.Recipient,
-                        ErrorReport = $"Message type {meshMessage._Tag} not supported",
-                        Success = false
-                        };
+                return new ProcessResultNotSupported() {
+                    MessageId = meshMessage.MessageId,
+                    Sender = meshMessage.Sender,
+                    Recipient = meshMessage.Recipient,
+                    ErrorReport = $"Message type {meshMessage._Tag} not supported",
+                    Success = false
+                    };
 
-
-                    throw new NYI();
-                    }
-                break;
                 }
             }
 

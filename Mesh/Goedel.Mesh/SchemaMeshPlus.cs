@@ -84,17 +84,6 @@ public partial class MeshItem {
         }
 
 
-
-    /////<summary>Initialization property, used to force initialization of the 
-    /////Json parser dictionaries.</summary>
-    //public static object Initialize => null;
-
-    ///<summary>Reports the status of the item. </summary>
-    //public MessageStatus Status = MessageStatus.None;
-
-    //static MeshItem() => AddDictionary(ref _TagDictionary);
-
-
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>

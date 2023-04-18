@@ -251,7 +251,17 @@ public static class Assert {
         }
 
 
-
+    /// <summary>
+    /// Cache and return a value. This is used to produce compact expression
+    /// body methods for properties that are only evaluated the first time
+    /// they are called.
+    /// </summary>
+    /// <typeparam name="T">The type of data to be cached.</typeparam>
+    /// <param name="Value">The value to be stored.</param>
+    /// <param name="Store">The store that the value is to be written to.</param>
+    /// <param name="read">Value to be set to true to indicate that the cached value
+    /// has been initialized.</param>
+    /// <returns>The stored value.</returns>
     public static T CacheValue<T>(this T Value, ref bool read, out T Store) {
         Store = Value;
         read = true;
