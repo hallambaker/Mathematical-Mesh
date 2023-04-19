@@ -155,6 +155,7 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
                 break;
             }
 
+
         Register(keyPair, keySecurity, keyCollection);
         return keyPair;
 

@@ -96,7 +96,7 @@ public partial class ConnectionResponder : RudConnection {
     /// </summary>
     public virtual void RollEphemerals() {
         EphemeralsPrevious = EphemeralsCurrent;
-        var ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
+        var ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Ephemeral) as KeyPairAdvanced;
         EphemeralsCurrent = new List<KeyPairAdvanced> { ephemeral };
         var extension = new PacketExtension() {
             Tag = ephemeral.CryptoAlgorithmId.ToJoseID(),

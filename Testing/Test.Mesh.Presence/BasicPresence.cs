@@ -11,7 +11,7 @@ public partial class TestPresence  {
     [Fact]
     public void PresenceStatusUpdate() {
         "Disable".TaskFunctionality(true);
-
+        Z
         var aliceCli = GetAlice(out var contextAlice, out var presenceAlice);
         var pollResult = presenceAlice.Poll();
 

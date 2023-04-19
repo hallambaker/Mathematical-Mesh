@@ -112,6 +112,13 @@ public class DeterministicSeed {
 
     public string GetTempFilePath() => Path.Combine(Directory, GetTempFileName());
 
+    public string GetTempDir() {
+        var result = GetTempFilePath();
+        System.IO.Directory.CreateDirectory(result);
+
+        return result;
+        }
+
 
     public string GetTempFileName() => $"Temp{TempCount++}";
 

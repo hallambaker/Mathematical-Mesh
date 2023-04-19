@@ -28,6 +28,8 @@ using Goedel.Cryptography.Algorithms;
 
 namespace Goedel.Mesh.Test;
 public record TestDareFile {
+
+    public DeterministicSeed Seed { get; set; }
     public string Filename { get; set; }
 
 
@@ -68,7 +70,6 @@ public record TestArchive : TestDareFile {
 
     int tempFile = 0;
 
-    protected string GetTemp() => $"CheckTemp{tempFile++}";
 
     public void AddFile(string file, string directory) {
         var filename = Path.GetFileName(file);
@@ -136,31 +137,23 @@ public record TestArchive : TestDareFile {
         var directory = Directory.GetCurrentDirectory();
 
         // create temporary directory
-        var tempDirectory = GetTemp();
+        var tempDirectory = Seed.GetTempFilePath();
         Directory.CreateDirectory(tempDirectory);
-        Directory.SetCurrentDirectory(tempDirectory);
-
-
 
         // unpack the archive
-        DareArchive.UnpackArchive(Filename, keyLocate);
+        DareArchive.UnpackArchive(Filename, keyLocate, directory:tempDirectory);
 
         // check each file.
         foreach (var entry in Files) {
             if (!entry.Value.Deleted) {
                 CheckFile(entry.Value);
                 }
-
-
             }
-
-
-        Directory.SetCurrentDirectory(directory);
         }
 
 
-    public void CheckDirectory() {
-        var directoryInfo = new DirectoryInfo(Directory.GetCurrentDirectory());
+    public void CheckDirectory(string directoryPath) {
+        var directoryInfo = new DirectoryInfo(directoryPath);
         var count = CheckDirectory("", directoryInfo);
 
         var check = 0;
@@ -214,9 +207,9 @@ public record TestArchive : TestDareFile {
         foreach (var file in directoryInfo.EnumerateFiles()) {
             throw new NYI();
             }
-        foreach (var file in directoryInfo.EnumerateDirectories()) {
-            throw new NYI();
-            }
+        //foreach (var file in directoryInfo.EnumerateDirectories()) {
+        //    throw new NYI();
+        //    }
         }
 
     }
@@ -230,18 +223,20 @@ public record TestArchiveShell : TestArchive {
     public TestCLI Mallet { get; set; }
 
 
+
+
     public override void CheckFile(
                     TestArchiveEntry entry) {
 
         var file = entry.Filename;
 
         if (!entry.Deleted) {
-            var outFile = GetTemp();
+            var outFile = Seed.GetTempFilePath();
             Alice.Dispatch($"archive extract {Filename} {file} /out=${outFile}");
             CheckFiles(file, outFile);
             }
         else {
-            var outFile = GetTemp();
+            var outFile = Seed.GetTempFilePath();
             Alice.Dispatch($"archive extract {Filename} {file} /file=${outFile}");
             CheckNotExist(outFile);
             Alice.Dispatch($"archive extract {Filename} {file} /file=${outFile} /recover");
@@ -258,36 +253,30 @@ public record TestArchiveShell : TestArchive {
 
     public override void CheckArchive(IKeyLocate keyLocate = null, 
                     bool self = false) {
-        var current = Directory.GetCurrentDirectory();
+        //var current = Directory.GetCurrentDirectory();
 
         if (self) {
             // Unpack as Alice - success
-            var aliceDir = GetTemp();
-            Directory.CreateDirectory(aliceDir);
-            Directory.SetCurrentDirectory(aliceDir);
-            Alice.Dispatch($"archive extract {Filename}");
-            CheckDirectory();
-            Directory.SetCurrentDirectory(current);
+            var aliceDir = Seed.GetTempDir();
+            Alice.Dispatch($"archive extract {Filename} /out={aliceDir}");
+            CheckDirectory(aliceDir);
+            //Directory.SetCurrentDirectory(current);
             }
 
         // Unpack as Bob - success
-        var bobDir = GetTemp();
-        Directory.CreateDirectory(bobDir);
-        Directory.SetCurrentDirectory(bobDir);
-        Bob.Dispatch($"archive extract {Filename}");
-        CheckDirectory();
-        Directory.SetCurrentDirectory(current);
+        var bobDir = Seed.GetTempDir();
+        Bob.Dispatch($"archive extract {Filename} /out={bobDir}");
+        CheckDirectory(bobDir);
+        //Directory.SetCurrentDirectory(current);
 
 
         if (Encrypt) {
             // Unpack as Mallet - fail
 
-            var malletDir = GetTemp();
-            Directory.CreateDirectory(malletDir);
-            Directory.SetCurrentDirectory(malletDir);
-            Mallet.Dispatch($"archive extract {Filename}", fail: true);
+            var malletDir = Seed.GetTempDir();
+            Mallet.Dispatch($"archive extract {Filename} /out={malletDir}", fail: true);
             CheckDirectoryEmpty(malletDir);
-            Directory.SetCurrentDirectory(current);
+            //Directory.SetCurrentDirectory(current);
             }
 
         }

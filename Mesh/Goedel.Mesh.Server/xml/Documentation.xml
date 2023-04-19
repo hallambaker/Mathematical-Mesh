@@ -365,6 +365,7 @@
             that is supported for a device that is not connected to the account profile.
             </summary>
             <param name="envelope">The message to post.</param>
+            <param name="bitmask">Bitmask to be updated.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.AccountHandleLocked.StoreAppend(System.String,System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},Goedel.Mesh.Server.Bitmask)">
             <summary>
@@ -373,6 +374,7 @@
             </summary>
             <param name="label">The store to add the envelopes to.</param>
             <param name="envelopes">The envelopes to append.</param>
+             <param name="bitmask">Bitmask to be updated.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.AccountHandleLocked.GetContainerStatuses(System.Collections.Generic.List{System.String})">
             <summary>
@@ -406,6 +408,11 @@
             Return the bit field vector.
             </summary>
         </member>
+        <member name="T:Goedel.Mesh.Server.CatalogAccount">
+            <summary>
+            Catalog tracking the accounts created at a server.
+            </summary>
+        </member>
         <member name="F:Goedel.Mesh.Server.CatalogAccount.Label">
             <summary>The canonical label for the catalog</summary>
         </member>
@@ -434,6 +441,31 @@
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
             <param name="bitmask">The bitmask value to be used to advertise update to this catalog.</param>
         </member>
+        <member name="M:Goedel.Mesh.Server.CatalogAccount.Intern(Goedel.Cryptography.Dare.SequenceIndexEntry)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Server.CatalogAccount.TryGetAccountByAny(System.String,Goedel.Mesh.Server.AccountEntry@)">
+            <summary>
+            Attempt to resolve the account address <paramref name="identifier"/>. If
+            found, return the value true and set <paramref name="account"/> to the
+            account value. Otherwise return false.
+            </summary>
+            <param name="identifier">The account identifier, this may be a service address
+            or a profile UDF.</param>
+            <param name="account">The account, if found otherwise null.</param>
+            <returns>True if successful, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.CatalogAccount.TryGetAccount(System.String,Goedel.Mesh.Server.AccountEntry@)">
+            <summary>
+            Attempt to resolve the account address <paramref name="identifier"/>. If
+            found, return the value true and set <paramref name="account"/> to the
+            account value. Otherwise return false.
+            </summary>
+            <param name="identifier">The account identifier, this may be a service address
+            or a profile UDF.</param>
+            <param name="account">The account, if found otherwise null.</param>
+            <returns>True if successful, otherwise false.</returns>
+        </member>
         <member name="T:Goedel.Mesh.Server.ConsoleLoggerExtensions">
             <summary>
             Extensions class for adding a Mesh Service Provider to a host.
@@ -458,6 +490,15 @@
             <summary>
             A Mesh service provider in a form suited for dependency injection.
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshConfiguredService.MeshHostConfiguration">
+            <summary>The service configuration.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshConfiguredService.GenericHostConfiguration">
+            <summary>The generic host configuration.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshConfiguredService.Logger">
+            <summary>The logger interface.</summary> 
         </member>
         <member name="P:Goedel.Mesh.Server.MeshConfiguredService.JpcInterface">
             <inheritdoc/>
@@ -1188,8 +1229,6 @@
             Return a presence service endpoint for the specified account.
             </summary>
             <param name="accountHandle">The handle of the account making the request.</param>
-            <param name="presenceConnection">Existing presence connection, if deffined (used
-            to reconnect to disconnected device).</param>
             <returns>A unique device connection identifier and a service endpoint allowing the client to access the service..</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.IPresence.Notify(System.String,System.Byte[])">
@@ -1562,6 +1601,7 @@
             </summary>
             <param name="session">The session connection data.</param>
             <param name="selections">The selection criteria.</param>
+            <param name="account">The account address (UDF or service address)</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountTransact(Goedel.Protocol.IJpcSession,System.Collections.Generic.List{Goedel.Mesh.StoreUpdate},System.Collections.Generic.List{Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.Message}},System.Collections.Generic.List{Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.Message}},System.Collections.Generic.List{Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.Message}},System.Collections.Generic.List{System.String})">
             <summary>

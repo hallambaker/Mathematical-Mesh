@@ -421,6 +421,11 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.CallsignRegistry">
             <summary>Contact address for the callsign registry broker.</summary> 
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.ProfileRegistryCallsign">
+            <summary>
+            The Callsign Registry Profile.
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetMeshCredentialPrivate">
             <summary>
             Create a new ICredential.
@@ -520,6 +525,9 @@
             </summary>
             <param name="catalogedMachine">Description of the device profile.</param>
             <param name="meshHost">The Mesh host to add the admin context to.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.TryResolveCallsign(System.String,Goedel.Mesh.CallsignBinding@)">
+            <inheritdoc cref="M:Goedel.Mesh.IResolver.TryResolveCallsign(System.String,Goedel.Mesh.CallsignBinding@)"/>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetPIN(System.String,System.Boolean,System.Int32,System.Int64,System.Boolean,Goedel.Cryptography.CryptoKey,System.Collections.Generic.List{System.String})">
             <summary>
@@ -691,6 +699,8 @@
             Add a keypair to the collection.
             </summary>
             <param name="keyPair">The key pair to add.</param>
+            <param name="accounts">Accounts for which the key may be used for encryption
+            or signature.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.Persist(Goedel.Cryptography.KeyPair)">
             <summary>
@@ -1129,6 +1139,9 @@
         <member name="P:Goedel.Mesh.Client.ContextUser.ProfileUser">
             <summary>The profile</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextUser.ServiceDns">
+            <summary>The service DNS value.</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionService">
             <summary>The connection device</summary>
         </member>
@@ -1313,6 +1326,43 @@
             Return the latest unprocessed MessageConfirmationResponse that was received.
             </summary>
             <returns>The latest unprocessed MessageConfirmationResponse</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetOpenMessages(System.String)">
+             <summary>
+             Return the list of open messages.
+             </summary>
+            <param name="tag">If not null, return only messages of this type.</param>
+             <returns>The list of messages.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetOpenMessageLast(System.String)">
+            <summary>
+            Return the last open message received.
+            </summary>
+            <param name="tag">If not null, return the last message received of this type.</param>
+            <returns>The message (if found).</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.TryGetMessageResponse(Goedel.Mesh.Message,Goedel.Mesh.SpoolIndexEntry@)">
+            <summary>
+            Attempt to return a message received in response to the request message 
+            <paramref name="request"/>. If successful, returns true and the response message
+            in <paramref name="response"/>. Otherwise the value false is returned.
+            </summary>
+            <param name="request">The request message.</param>
+            <param name="response">The response (if found).</param>
+            <returns>True if found, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.TryGetMessageByMessageId(System.String,Goedel.Mesh.SpoolIndexEntry@,System.Nullable{System.DateTime})">
+            <summary>
+            Attempt to return a message received with message ID  
+            <paramref name="messageID"/>. If successful, returns true and the response message
+            in <paramref name="index"/>. Otherwise the value false is returned.
+            </summary>
+            <param name="messageID">The request message.</param>
+            <param name="index">The message (if found).</param>
+            <param name="notBefore">If found, only return a message if received after 
+            this date. This may be used to bound searching for a response message by only
+            looking at messages after the request was sent.</param>
+            <returns>True if found, otherwise false.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetPendingMessage(System.String)">
             <summary>
@@ -1804,6 +1854,7 @@
             </summary>
             <param name="recipientAddress">The message recipient</param>
             <param name="message">The message to send</param>
+            <param name="admin">If true, sign the message with the administrator key.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.Transaction`1.OutboundMessageAdmin(System.String,Goedel.Mesh.Message)">
             <summary>
@@ -1830,6 +1881,8 @@
             <param name="recipientAddress">The message recipient address</param>
             <param name="recipientEncryptionKey">The message recipient encryption key</param>
             <param name="message">The message to send</param>
+            <param name="admin">If true, the message is to be signed with the administrator
+            key rather than the account key.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.Transaction`1.InboundMessage(Goedel.Mesh.Message)">
             <summary>
@@ -3158,6 +3211,9 @@
             <param name="fileStatus">The file status in which to open the container.</param>
             <param name="keyCollection">The key collection to use to resolve private keys.</param>
             <param name="readContainer">If true read the container to initialize the persistence store.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.PersistHost.Intern(Goedel.Cryptography.Dare.SequenceIndexEntry)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Client.TransactGroup">
             <summary>

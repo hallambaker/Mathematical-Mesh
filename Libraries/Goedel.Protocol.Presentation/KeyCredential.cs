@@ -60,7 +60,7 @@ public class KeyCredentialPublic : ICredentialPublic {
 
     ///<inheritdoc/>
     public virtual (KeyPairAdvanced, KeyPairAdvanced) SelectKey() =>
-        (KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced,
+        (KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Ephemeral) as KeyPairAdvanced,
                     AuthenticationPublic);
 
     ///<inheritdoc/>
@@ -156,7 +156,7 @@ public class KeyCredentialPrivate : KeyCredentialPublic, ICredentialPrivate {
 
             }
         else {
-            ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
+            ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Ephemeral) as KeyPairAdvanced;
             ephmeralsOffered = new List<KeyPairAdvanced> { ephemeral };
             //Screen.WriteLine($"Make Offer of = {ephemeral}");
             }

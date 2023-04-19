@@ -432,7 +432,8 @@ public partial class ShellTests {
             Notarize = notarize,
             Alice = alice,
             Bob = bob,
-            Mallet= mallet
+            Mallet= mallet,
+            Seed= seed
             };
 
         var options = encrypt ? $" /encrypt={bob.ContextUser.AccountAddress} " : "";

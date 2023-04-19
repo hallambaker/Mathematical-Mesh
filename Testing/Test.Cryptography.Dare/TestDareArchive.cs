@@ -166,6 +166,7 @@ public partial class TestDareArchive {
             Encrypt = encrypt,
             Sign = sign,
             Notarize = notarize,
+            Seed= seed
             };
 
         var archive = new DareArchive(archiveFile);

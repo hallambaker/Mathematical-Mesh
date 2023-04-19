@@ -209,7 +209,7 @@ public class RudStream {
         string tag,
         JsonObject request) {
 
-        var span = PrePost(tag, request);
+         var span = PrePost(tag, request);
 
         var spantxt = span.ToUTF8();
         /*

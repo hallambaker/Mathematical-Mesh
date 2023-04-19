@@ -28,6 +28,15 @@
         <member name="P:Goedel.Mesh.MeshMachineCoreServer.DirectoryRoot">
             <summary>The directory used to store the master data.</summary>
         </member>
+        <member name="P:Goedel.Mesh.MeshMachineCoreServer.DirectoryMesh">
+            <summary>Directory to store Mesh data</summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshMachineCoreServer.DirectoryKeys">
+            <summary>Directory to store service keys</summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshMachineCoreServer.DirectoryAccounts">
+            <summary>Directory to store account data</summary> 
+        </member>
         <member name="P:Goedel.Mesh.MeshMachineCoreServer.KeyCollection">
             <summary>The host key collection.</summary>
         </member>
@@ -42,7 +51,6 @@
             Default constructor
             </summary>
             <param name="directory">Directory to store the server information.</param>
-            <param name="direct">If true, force use of the platform key stores.</param>
         </member>
         <member name="M:Goedel.Mesh.MeshMachineCoreServer.GetKeyCollection(System.String)">
             <summary>
@@ -113,6 +121,9 @@
             <summary>
             Machine using a client directly bound to the underlying service.
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Core.MeshMachineDirect.DirectServices">
+            <summary>Services that are reachable by direct interface.</summary> 
         </member>
         <member name="M:Goedel.Mesh.Core.MeshMachineDirect.#ctor(Goedel.Mesh.Client.IMeshMachineClient,Goedel.Mesh.MeshService)">
             <summary>

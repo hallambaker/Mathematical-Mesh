@@ -204,8 +204,13 @@ public partial class Shell {
     /// <returns>Mesh result instance</returns>
     public override ShellResult ArchiveExtract(ArchiveExtract options) {
         var archiveFile = options.Archive.Value;
-        var outputFile = options.Output.Value;
-        var file = options.Filename.Value;
+
+        var file = options.File.Value;
+        var output = options.Out.Value;
+
+
+
+
         var recover = options.Recover.Value;
 
         var keyLocate = GetKeyCollection(options);
@@ -214,17 +219,17 @@ public partial class Shell {
                 archiveFile, fileStatus: FileStatus.Existing, keyLocate: keyLocate)) {
 
             if (file != null) {
-                outputFile ??= Path.GetFileName(file);
-                archive.GetFile(file, outputFile, recover);
+                output ??= Path.GetFileName(file);
+                archive.GetFile(file, output, recover);
 
                 return new ResultFile() {
                     Filename = file
                     };
                 }
             else {
-                archive.UnpackArchive();
+                archive.UnpackArchive(output);
                 return new ResultFile() {
-                    Filename = outputFile
+                    Filename = output
                     };
                 }
             }

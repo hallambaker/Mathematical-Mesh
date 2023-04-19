@@ -937,17 +937,19 @@
             <param name="index">If true add an index record to the end of the archive.</param>
             <returns>File Sequence instance</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareArchive.UnpackArchive">
+        <member name="M:Goedel.Cryptography.Dare.DareArchive.UnpackArchive(System.String)">
             <summary>
             Unpack the archive.
             </summary>
+            <param name="directory">Directory to extract the archive to.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareArchive.UnpackArchive(System.String,Goedel.Cryptography.IKeyLocate)">
+        <member name="M:Goedel.Cryptography.Dare.DareArchive.UnpackArchive(System.String,Goedel.Cryptography.IKeyLocate,System.String)">
             <summary>
             Unpack the archive, <paramref name="archiveName"/>, 
             </summary>
             <param name="archiveName">Archive filename.</param>
             <param name="keyLocate">The key collection to use for decryption of the contents.</param>
+            <param name="directory">Directory to extract the archive to.</param>
         </member>
         <member name="T:Goedel.Cryptography.Dare.SequenceType">
             <summary>Sequence types</summary>
@@ -5072,6 +5074,17 @@
             be skipped, the status might be affected by one or more skipped records.</param>
             <param name="count">Maximum number of records to return.</param>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.Sequence.ReadForward">
+            <summary>
+            Return an enumerator that reads the spool from frame 1 (the second frame) in the 
+            forwards direction.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Sequence.SelectFromUnread(Goedel.Cryptography.Dare.FilterIndexDelegate)">
+            <summary>
+            Return an enumerator that returns items that have not previously been read.
+            </summary>
+        </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.SelectIndex(System.Int64,System.Int64)">
             <summary>
             Returns an enumerator over the Sequence contents starting with the
@@ -6469,6 +6482,21 @@
             </summary>
             <param name="headers">List of headers to check</param>
         </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceMerkleTree.GetProofChain(System.Collections.Generic.IEnumerable{System.Int64})">
+            <summary>
+            Return a proof chain over <paramref name="entries"/>.
+            </summary>
+            <param name="entries">The entries to provide prood over.</param>
+            <returns>The proof chain.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceMerkleTree.GetProofChain(Goedel.Cryptography.Dare.SequenceIndexEntry,Goedel.Cryptography.Dare.SequenceIndexEntry)">
+            <summary>
+            Return a proof chain over <paramref name="first"/> to <paramref name="second"/>.
+            </summary>
+            <param name="first">The first element in the chain.</param>
+            <param name="second">The second element in the chain.</param>
+            <returns>The proof chain.</returns>
+        </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceMerkleTree.GetProofChain(System.Collections.Generic.IEnumerable{Goedel.Cryptography.Dare.SequenceIndexEntry})">
             <summary>
             
@@ -6575,11 +6603,16 @@
         </member>
         <member name="T:Goedel.Cryptography.Dare.SequenceWriterFile">
             <summary>
-            Sequence writer to write direct to a file.
+            Sequence writer to write direct to a file. (Orphan code???)
             </summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceWriterFile.FrameStart">
             <summary>PositionRead of the frame start.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceWriterFile.SequenceIndexEntry">
+            <summary>
+            The sequence index entry for the item to be modified.
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceWriterFile.#ctor(Goedel.Cryptography.Dare.Sequence,Goedel.Cryptography.Dare.DareHeader,Goedel.Cryptography.Dare.JbcdStream,System.Int64,System.Int64,System.Int64)">
             <summary>
@@ -6588,6 +6621,9 @@
             <param name="sequence">The Sequence to be written</param>
             <param name="header">The Sequence header???</param>
             <param name="JBCDStream">The stream???</param>
+            <param name="dataLength">Data length.</param>
+            <param name="dataPosition">Data position.</param>
+            <param name="frameLength">The frame length??</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceWriterFile.CommitFrame(Goedel.Cryptography.Dare.DareTrailer)">
             <summary>

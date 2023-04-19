@@ -4058,13 +4058,13 @@
         <member name="P:Goedel.Mesh.Shell._ArchiveExtract.Archive">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ArchiveExtract.Output">
+        <member name="P:Goedel.Mesh.Shell._ArchiveExtract.File">
             <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveExtract.Record">
             <summary>Field accessor for option [record]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ArchiveExtract.Filename">
+        <member name="P:Goedel.Mesh.Shell._ArchiveExtract.Out">
             <summary>Field accessor for option [out]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveExtract.Key">

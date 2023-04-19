@@ -48,7 +48,12 @@ public static class UriClient {
         //var webClient = new WebClient();
         //var bytes = webClient.UploadData(address, data);
 
+
+        Console.WriteLine($"Send request to {address}");
+
         var request = new ByteArrayContent(data);
+
+        //address = address + "/";
         var response = await HttpClient.PostAsync(address, request);
         var content = response.Content;
         var bytes = await content.ReadAsByteArrayAsync();

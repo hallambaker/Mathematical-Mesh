@@ -391,19 +391,22 @@ public class DareArchive : PersistenceStore {
 
         }
 
-    void Unpack(ArchiveIndexEntry index) {
+    void Unpack(ArchiveIndexEntry index,
+                string directory = null) {
         var contentMeta = index.JsonObject as ContentMeta;
         var fileEntry = contentMeta.FileEntry;
 
         CheckPathIsValid(index.UniqueID);
 
+        var targetDir = directory == null? Directory.GetCurrentDirectory() : directory;
+        targetDir = fileEntry.Path.IsBlank() ? targetDir: Path.Combine(targetDir, fileEntry.Path);
+        Directory.CreateDirectory(targetDir);
 
-        if (fileEntry.Path is not null && fileEntry.Path != "") {
-            Directory.CreateDirectory(fileEntry.Path);
-            }
+        var destination = Path.Combine (targetDir, contentMeta.Filename);
+        
 
-        var stream = index.GetPayloadStreamn(Sequence, KeyLocate);
-        stream.CopyToFile(index.UniqueID);
+        using var stream = index.GetPayloadStreamn(Sequence, KeyLocate);
+        stream.CopyToFile(destination);
         // create the directory
 
 
@@ -412,17 +415,17 @@ public class DareArchive : PersistenceStore {
     /// <summary>
     /// Unpack the archive.
     /// </summary>
-    public void UnpackArchive() {
+    /// <param name="directory">Directory to extract the archive to.</param>
+    public void UnpackArchive(
+                string directory = null) {
         foreach (var file in ObjectIndex) {
             var index = file.Value as ArchiveIndexEntry;
 
             if (!index.IsDeleted) {
-                Unpack(index);
+                Unpack(index, directory);
                 }
 
             }
-
-        throw new NYI(); // need to add in the directory to unpack to.
         }
 
     /// <summary>
@@ -430,12 +433,14 @@ public class DareArchive : PersistenceStore {
     /// </summary>
     /// <param name="archiveName">Archive filename.</param>
     /// <param name="keyLocate">The key collection to use for decryption of the contents.</param>
+    /// <param name="directory">Directory to extract the archive to.</param>
     public static void UnpackArchive (
                     string archiveName,
-                    IKeyLocate keyLocate=null) {
+                    IKeyLocate keyLocate=null,
+                    string directory = null) {
         using var reader = new DareArchive(archiveName);
 
-        reader.UnpackArchive();
+        reader.UnpackArchive(directory);
 
 
         }

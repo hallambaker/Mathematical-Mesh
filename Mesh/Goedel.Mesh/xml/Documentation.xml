@@ -2172,6 +2172,17 @@
         <member name="M:Goedel.Mesh.Catalog`1.Intern(Goedel.Cryptography.Dare.SequenceIndexEntry)">
             <inheritdoc/>
         </member>
+        <member name="M:Goedel.Mesh.Catalog`1.InternCatalog(Goedel.Mesh.CatalogIndexEntry{`0})">
+            <summary>
+            Intern the entry <paramref name="catalogIndexEntry"/> into the catalog.
+            </summary>
+            <param name="catalogIndexEntry">The entry to intern.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog`1.Complete">
+            <summary>
+            Intern loaded persistence store objects into the catalog.
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.Catalog`1.New(`0)">
             <summary>
             Add <paramref name="catalogEntry"/> to the catalog as a new entry.
@@ -2210,7 +2221,7 @@
             Callback called before deleting an entry from the catalog. May be overriden in 
             derrived classes to update local indexes.
             </summary>
-            <param name="key">The entry being deleted.</param>
+            <param name="deletedIndex">The entry being deleted.</param>
         </member>
         <member name="M:Goedel.Mesh.Catalog`1.TryGetValue(System.String,Goedel.Cryptography.Dare.PersistentIndexEntry@)">
             <summary>
@@ -3933,6 +3944,9 @@
              Base class for cataloged Mesh data.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedEntry.SequenceIndexEntry">
+            <summary>The sequence entry.</summary> 
+        </member>
         <member name="F:Goedel.Mesh.CatalogedEntry.AdditionalRecipients">
             <summary>Additional encryption keys to which the encrypted catalog entry is to be written.</summary> 
         </member>
@@ -3956,7 +3970,6 @@
             </summary>
             <param name="stream">The stream to write the data to.</param>
             <param name="format">The file format to write the output in.</param>
-            <returns></returns>
         </member>
         <member name="P:Goedel.Mesh.CatalogedEntry.Labels">
              <summary>
@@ -4018,11 +4031,26 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="T:Goedel.Mesh.CatalogIndexEntry`1">
+            <summary>
+            PersistentIndexEntry for a catalog entry.
+            </summary>
+            <typeparam name="T">The cataloged type.</typeparam>
+        </member>
         <member name="P:Goedel.Mesh.CatalogIndexEntry`1.PersistenceStore">
             <summary>The underlying spool.</summary> 
         </member>
         <member name="P:Goedel.Mesh.CatalogIndexEntry`1.Catalog">
             <summary>The underlying spool.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.CatalogIndexEntry`1.CatalogedEntry">
+            <summary>Convenience property returning the cataloged entry in its native type.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.CatalogIndexEntry`1.#ctor(Goedel.Cryptography.Dare.Sequence)">
+            <summary>
+            Constructor, returns a catalog index entry in the sequence <paramref name="sequence"/>.
+            </summary>
+            <param name="sequence">The sequence to which the entry is bound.</param>
         </member>
         <member name="M:Goedel.Mesh.CatalogIndexEntry`1.Factory(Goedel.Cryptography.Dare.Sequence,System.Int64,System.Int64,System.Int64,System.Int64,Goedel.Cryptography.Dare.DareHeader,Goedel.Cryptography.Dare.DareTrailer,Goedel.Protocol.JsonObject)">
             <summary>
@@ -4313,6 +4341,7 @@
             <param name="decrypt">If true, attempt decryption of payload contents./</param>
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">Bitmask value to be used to signal store updates.</param>
         </member>
         <member name="M:Goedel.Mesh.CatalogNotary.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
@@ -4328,6 +4357,7 @@
             <param name="policy">The cryptographic policy to be applied to the container.</param>
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">Bitmask value to be used to signal store updates.</param>
         </member>
         <member name="T:Goedel.Mesh.CatalogedSignature">
              <summary>
@@ -6697,6 +6727,11 @@
             <param name="sequenceIndexEntry"></param>
             <returns></returns>
         </member>
+        <member name="P:Goedel.Mesh.FilterSequenceIndex.GetOpen">
+            <summary>
+            Convenience property returning a filter that returns open messages.
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.IResolver">
             <summary>
             Callsign resolution interface.
@@ -6707,10 +6742,15 @@
             Resolve the callsign <paramref name="callsign"/> and return the associated binding
             if found.
             </summary>
-            <param name="callsign"></param>
-            <returns></returns>
+            <param name="callsign">The callsign binding if found, otherwise null.</param>
+            <param name="callsignBinding">The callsign binding (if found).</param>
+            <returns>True if the callsign could be resolved, otherwise false.</returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "T:Goedel.Mesh.ICarnet" -->
+        <member name="T:Goedel.Mesh.ICarnet">
+            <summary>
+            Carnet payment interface.
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.KeyShare">
             <summary>
             </summary>
@@ -7147,6 +7187,9 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Goedel.Mesh.MeshCredentialPrivate.GetICredentialPublic">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Mesh.MeshKeyCredentialPublic">
             <summary>
             Mesh device key public credential.
@@ -7175,6 +7218,9 @@
             Return the public credential.
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshKeyCredentialPrivate.GetICredentialPublic">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.MeshKeyCredentialPrivate.GetCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <inheritdoc/>
@@ -7247,6 +7293,20 @@
             </summary>
             <typeparam name="T"></typeparam>
             <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.IMeshMachine.GetResolver(Goedel.Protocol.Presentation.ICredentialPrivate)">
+            <summary>
+            Return a callsign resolver service accessed using <paramref name="credential"/>.
+            </summary>
+            <param name="credential">Private credential to be used for authentication.</param>
+            <returns>The resolver service.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.IMeshMachine.GetCarnet(Goedel.Protocol.Presentation.ICredentialPrivate)">
+            <summary>
+            Return a callsign carnet service accessed using <paramref name="credential"/>.
+            </summary>
+            <param name="credential">Private credential to be used for authentication.</param>
+            <returns>The carnet service.</returns>
         </member>
         <member name="M:Goedel.Mesh.IMeshMachine.GetCredential(System.String,System.String)">
             <summary>
@@ -8730,6 +8790,9 @@
         <member name="P:Goedel.Mesh.Profile.UdfString">
             <summary>The UDF of the profile, that is the UDF of the offline signature.</summary>
         </member>
+        <member name="P:Goedel.Mesh.Profile.Udf">
+            <summary>The profile exended UDF used for matching.</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Profile.SecretSeed">
             <summary>The secret seed value used to derrive the private keys.</summary>
         </member>
@@ -8793,6 +8856,15 @@
             <param name="envelopedAssertion">Envelope containing the assertion 
             to be verified.</param>
             <returns>True if there is a valid signature under this profile, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Profile.Verify(Goedel.Cryptography.Dare.DareSignature,System.Byte[],System.String)">
+            <summary>
+            Verify the profile and return the value true if successful, otherwise false.
+            </summary>
+            <param name="signature">The envelope signature.</param>
+            <param name="digest">The payload digest value.</param>
+            <param name="keyIdentifier">The signature key identifier.</param>
+            <returns>True if the profile is valid, otherwise false.</returns>
         </member>
         <member name="M:Goedel.Mesh.Profile.Validate(System.Collections.Generic.IEnumerable{Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.Profile}},Goedel.Cryptography.Dare.DareSignature,System.Byte[],System.String)">
             <summary>
@@ -9347,6 +9419,26 @@
             <param name="persist">If <see langword="true"/> persist the secret seed value to
             <paramref name="keyCollection"/>.</param>
             <returns>The created profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileService.CreateService(Goedel.Mesh.IMeshMachine,Goedel.Mesh.ProfileService@,Goedel.Mesh.ProfileHost@,Goedel.Mesh.ActivationHost@,Goedel.Mesh.ConnectionService@)">
+            <summary>
+            Create a new service profile.
+            </summary>
+            <param name="meshMachine">Mesh machine to host the service.</param>
+            <param name="profileService">The created service profile,</param>
+            <param name="profileHost">The created host instance profile.</param>
+            <param name="activationDevice">Activation of the host device.</param>
+            <param name="connectionDevice">Connection of the host to the service.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileService.CreateService(Goedel.Mesh.IMeshMachine,Goedel.Mesh.ProfileService,Goedel.Mesh.ProfileHost@,Goedel.Mesh.ActivationHost@,Goedel.Mesh.ConnectionService@)">
+            <summary>
+            Create a new service profile.
+            </summary>
+            <param name="meshMachine">Mesh machine to host the service.</param>
+            <param name="profileService">The service profile,</param>
+            <param name="profileHost">The created host instance profile.</param>
+            <param name="activationDevice">Activation of the host device.</param>
+            <param name="connectionDevice">Connection of the host to the service.</param>
         </member>
         <member name="M:Goedel.Mesh.ProfileService.#ctor(Goedel.Cryptography.KeyPair,Goedel.Cryptography.KeyPair)">
             <summary>
@@ -11548,6 +11640,13 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.DownloadResponse.GetUpdate(System.String)">
+            <summary>
+            Get the store status value for store <paramref name="store"/>.
+            </summary>
+            <param name="store">The store to return staus for.</param>
+            <returns>The store status.</returns>
         </member>
         <member name="M:Goedel.Mesh.DownloadResponse.#ctor(System.Exception)">
             <summary>
@@ -15331,6 +15430,20 @@
             store.
             </summary>
         </member>
+        <member name="M:Goedel.Mesh.Spool.GetByMessageId(System.String)">
+            <summary>
+            Return the index of the message with identifier <paramref name="messageID"/>.
+            </summary>
+            <param name="messageID">The message identifier.</param>
+            <returns>The index entry.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Spool.GetById(System.String)">
+            <summary>
+            Return the index of the envelope with identifier <paramref name="envelopeId"/>.
+            </summary>
+            <param name="envelopeId">The envelope identifier.</param>
+            <returns>The index entry.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Spool.GetMessages(Goedel.Mesh.SpoolIndexEntry,System.Boolean,System.Boolean,Goedel.Cryptography.Dare.FilterIndexDelegate)">
             <summary>
             Return an enumerator returning a sequence of <see cref="T:Goedel.Mesh.SpoolIndexEntry"/> entries
@@ -15340,6 +15453,7 @@
             <param name="reverse">Return items in reverse order, i.e. most recently received
             first.</param>
             <param name="evaluateIndex">Evaluation delegate specifying if the item is a match.</param>
+            <param name="open">If true, only return open messages.</param>
             <returns>The enumeration.</returns>
         </member>
         <member name="T:Goedel.Mesh.SpoolLocal">
@@ -15608,11 +15722,10 @@
         <member name="M:Goedel.Mesh.SpoolIndexEntry.AddReference(Goedel.Mesh.Reference,System.Int64)">
             <summary>
             Add a reference to this entry. The reference will cause the message status to be 
-            updated if either this is the first reference to be added or the 
-            <paramref name="force"/> parameter is true.
+            updated if this reference is new or later than the existing one.
             </summary>
             <param name="reference">The reference to add.</param>
-            <param name="force">Force updating of the status.</param>
+            <param name="index">The index value of the reference being added.</param>
         </member>
         <member name="T:Goedel.Mesh.StoreFactoryDelegate">
             <summary>
