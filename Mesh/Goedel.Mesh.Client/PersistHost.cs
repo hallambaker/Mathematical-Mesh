@@ -59,7 +59,7 @@ public class PersistHost : PersistenceStoreEphemeral {
                     readContainer) {
         }
 
-
+    ///<inheritdoc/>
     public override void Intern(
                SequenceIndexEntry indexEntry) {
         base.Intern(indexEntry);

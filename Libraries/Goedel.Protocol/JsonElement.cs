@@ -222,12 +222,15 @@ public record JbcdElement {
         return true;
         }
 
-
-    public virtual void ClearValue(Stream file) {
-        file.Position = ElementStartPosition;
+    /// <summary>
+    /// Erase the tag-value element from the document.
+    /// </summary>
+    /// <param name="writeStream">Stream with write capability.</param>
+    public virtual void ClearValue(Stream writeStream) {
+        writeStream.Position = ElementStartPosition;
 
         for (var i = 0; i < ElementLength; i++) {
-            file.WriteByte((byte)' ');
+            writeStream.WriteByte((byte)' ');
             }
         }
 
@@ -255,12 +258,15 @@ public abstract record JbcdValue  {
     public virtual JbcdElement GetProperty(object name) => throw new NYI();
 
 
-
-    public virtual void ClearValue(Stream file) {
-        file.Position = DataStartPosition;
+    /// <summary>
+    /// Clear the value associated with the field in <paramref name="writeStream"/>
+    /// </summary>
+    /// <param name="writeStream">Stream with write capability.</param>
+    public virtual void ClearValue(Stream writeStream) {
+        writeStream.Position = DataStartPosition;
 
         for (var i = 0; i < DataLength; i++) {
-            file.WriteByte((byte)' ');
+            writeStream.WriteByte((byte)' ');
             }
         }
 
@@ -280,8 +286,7 @@ public record JbcdValueObject : JbcdValue {
     ///<summary>The elements.</summary> 
     public virtual IList<JbcdElement> Elements { get; } = new List<JbcdElement>();
 
-
-
+    ///<inheritdoc/>
     public override JbcdElement GetProperty(object name) => GetProperty(name as string);
 
     /// <summary>
@@ -300,13 +305,6 @@ public record JbcdValueObject : JbcdValue {
         return null;
         }
 
-    //public virtual void ClearValue(Stream file) {
-    //    file.Position = 
-
-    //    }
-
-
-
     }
 
 /// <summary>
@@ -317,6 +315,7 @@ public record JbcdValueArray : JbcdValue {
     ///<summary>The array of elements.</summary> 
     public virtual IList<JbcdValue> Values { get; } = new List<JbcdValue> ();
 
+    ///<inheritdoc/>
     public override JbcdElement GetProperty(object name) => throw new NYI();
 
     /// <summary>
@@ -382,7 +381,7 @@ public record JbcdValueString : JbcdValue {
 /// </summary>
 public record JbcdValueBinary : JbcdValue {
 
-    ///<summary>The string values</summary> 
+    ///<summary>The binary value</summary> 
     public virtual byte[] Value { get; init; }
 
     /// <summary>
@@ -410,6 +409,8 @@ public record JbcdValueBinary : JbcdValue {
 /// is kept in string form to allow 
 /// </summary>
 public record JbcdValueNumber : JbcdValue {
+
+    ///<summary>The integer value</summary> 
     public long Integer {get; init; }
 
     ///<summary>The number values</summary> 
@@ -417,19 +418,6 @@ public record JbcdValueNumber : JbcdValue {
 
     ///<summary>The number precision</summary> 
     public virtual NumberPrecision Precision { get; init; }
-
-    ///// <summary>
-    ///// Constructor returning an instance for the values <paramref name="value"/>
-    ///// with specified precision <paramref name="precision"/>.
-    ///// </summary>
-    ///// <param name="value">The values of the string.</param>
-    ///// <param name="precision">The number precision.</param>
-    //public JbcdValueNumber (
-    //            string value,
-    //            NumberPrecision precision ) { 
-    //    Value = value;
-    //    Precision = precision;
-    //    }
 
     /// <summary>
     /// Attempt to parse <see cref="Value"/> as an int32 integer
@@ -517,6 +505,7 @@ public record JbcdValueObjectLazy : JbcdValueObject, ICachable {
     ///<inheritdoc/>
     public void Load() {
         read = true;
+        value = null;
         throw new NotImplementedException();
         }
 
@@ -551,6 +540,7 @@ public record JbcdValueArrayLazy : JbcdValueArray, ICachable {
     ///<inheritdoc/>
     public void Load() {
         read = true;
+        values = null;
         throw new NotImplementedException();
         }
 

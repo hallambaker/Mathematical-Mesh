@@ -577,6 +577,12 @@
             </summary>
             <param name="keyCollection">Key collection to use to resolve decryption keys</param>
         </member>
+        <member name="M:Goedel.Mesh.ApplicationEntry.GetCatalogedAccess">
+            <summary>
+            Returns the access capability for the application entry.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:Goedel.Mesh.ApplicationEntry.Identifier">
             <summary>
             </summary>
@@ -15654,11 +15660,10 @@
         </member>
         <member name="M:Goedel.Mesh.Store.Select(System.Int64,System.Boolean,System.Int64,Goedel.Cryptography.Dare.FilterIndexDelegate,System.Boolean)">
             <summary>
-            Constructor, returns an enumerator on the sequence <paramref name="sequence"/>, starting
+            Constructor, returns an enumerator on the sequence, starting
             with the frame numbered <paramref name="start"/>. If <paramref name="reverse"/> is true, 
             results are returned from the last match first.
             </summary>
-            <param name="sequence">The sequence to enumerate.</param>
             <param name="start">The starting point for the enumeration. If it matches, this will 
             be the first result returned.</param>
             <param name="reverse">If true, return results in the reverse order.</param>

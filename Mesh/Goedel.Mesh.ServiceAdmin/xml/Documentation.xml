@@ -257,7 +257,27 @@
             Static class containing convenience extensions.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.Extensions.CreatePublicMeshService(Goedel.Mesh.Client.IMeshMachineClient,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:Goedel.Mesh.ServiceAdmin.Extensions.BuildConfiguration(Goedel.Mesh.Client.IMeshMachineClient,Goedel.Mesh.ServiceAdmin.Configuration,System.String)">
+            <summary>
+            Build the service configuration described in <paramref name="configuration"/> on
+            <paramref name="meshMachine"/>.
+            </summary>
+            <param name="meshMachine">The mesh machine supporting the host.</param>
+            <param name="configuration">The service configuration.</param>
+            <param name="admin">Administration account service address.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Extensions.CreateConfig(Goedel.Mesh.Client.IMeshMachineClient,System.String,System.String,System.String,System.String)">
+            <summary>
+            Create a base service configuration file for use on <paramref name="meshMachine"/>.
+            </summary>
+            <param name="meshMachine">The mesh Machine on which the service is to run.</param>
+            <param name="serviceDns">The service DNS address to use.</param>
+            <param name="hostIp">The host IP addreess</param>
+            <param name="hostDns">The host DNS address,</param>
+            <param name="hostAccount">Optional host account.</param>
+            <returns>The configuration created.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Extensions.CreatePublicMeshService(Goedel.Mesh.Client.IMeshMachineClient,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Create a new Mesh Service
             </summary>

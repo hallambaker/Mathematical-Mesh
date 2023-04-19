@@ -75,7 +75,7 @@ public class MeshKeyCredentialPrivate : KeyCredentialPrivate, ICredentialPrivate
             Account = Account
             };
 
-
+    ///<inheritdoc/>
     public override ICredentialPublic GetICredentialPublic() => GetMeshKeyCredentialPublic();
 
 

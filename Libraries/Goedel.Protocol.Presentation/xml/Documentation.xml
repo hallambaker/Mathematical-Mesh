@@ -670,6 +670,12 @@
             <param name="ephemeral">Ephemeral data specifying a public key </param>
             <returns>The ephemeral private key and credential public key.</returns>
         </member>
+        <member name="M:Goedel.Protocol.Presentation.ICredentialPrivate.GetICredentialPublic">
+            <summary>
+            Return the public credential corresponding to the private.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Goedel.Protocol.Presentation.IQueuableTask">
             <summary>
             Describes a queueable task. Used to schedule UDP packet delivery for 
@@ -728,6 +734,9 @@
             </summary>
             <param name="authenticationPrivate">The private key.</param>
             <param name="account">The account claimed.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.KeyCredentialPrivate.GetICredentialPublic">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Protocol.Presentation.KeyCredentialPrivate.GetKeyCredentialPublic">
             <inheritdoc/>

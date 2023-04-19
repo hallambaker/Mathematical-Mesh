@@ -23,6 +23,9 @@
 
 namespace Goedel.Mesh.Server;
 
+/// <summary>
+/// Catalog tracking the accounts created at a server.
+/// </summary>
 public class CatalogAccount : Catalog<AccountEntry> {
 
     ///<summary>The canonical label for the catalog</summary>
@@ -37,7 +40,6 @@ public class CatalogAccount : Catalog<AccountEntry> {
     ///<summary>Dictionary tracking accounts by their account address.</summary> 
     public Dictionary<string, AccountEntry> AccountByAddress = new();
 
-
     /// <summary>
     /// Constructor for a catalog named <paramref name="storeName"/> in directory
     /// <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -51,6 +53,7 @@ public class CatalogAccount : Catalog<AccountEntry> {
     /// <param name="policy">The cryptographic policy to be applied to the container.</param>
     /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">The bitmask value to be used to advertise update to this catalog.</param>
     public CatalogAccount(
                 string directory,
                 string storeName = null,
@@ -66,6 +69,7 @@ public class CatalogAccount : Catalog<AccountEntry> {
                     decrypt: decrypt, create: create, bitmask: bitmask) {
         }
 
+    ///<inheritdoc/>
     public override void Intern(SequenceIndexEntry indexEntry) {
         base.Intern(indexEntry);
 
@@ -91,24 +95,29 @@ public class CatalogAccount : Catalog<AccountEntry> {
             }
         }
 
+    /// <summary>
+    /// Attempt to resolve the account address <paramref name="identifier"/>. If
+    /// found, return the value true and set <paramref name="account"/> to the
+    /// account value. Otherwise return false.
+    /// </summary>
+    /// <param name="identifier">The account identifier, this may be a service address
+    /// or a profile UDF.</param>
+    /// <param name="account">The account, if found otherwise null.</param>
+    /// <returns>True if successful, otherwise false.</returns>
     public bool TryGetAccountByAny(string identifier, out AccountEntry account) =>
-    AccountByAddress.TryGetValue(identifier, out account);
+        AccountByAddress.TryGetValue(identifier, out account);
 
 
-
+    /// <summary>
+    /// Attempt to resolve the account address <paramref name="identifier"/>. If
+    /// found, return the value true and set <paramref name="account"/> to the
+    /// account value. Otherwise return false.
+    /// </summary>
+    /// <param name="identifier">The account identifier, this may be a service address
+    /// or a profile UDF.</param>
+    /// <param name="account">The account, if found otherwise null.</param>
+    /// <returns>True if successful, otherwise false.</returns>
     public bool TryGetAccount(string identifier, out AccountEntry account) =>
         AccountByAddress.TryGetValue(identifier, out account);
     
-    //{
-    //    if () {
-    //        return true;
-    //        }
-
-    //    //if (TryLocate(identifier, out account)) {
-    //    //    return true;
-    //    //    }
-    //    //account = null;
-    //    return false;
-    //    }
-
     }

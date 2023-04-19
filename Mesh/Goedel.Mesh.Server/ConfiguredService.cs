@@ -8,18 +8,18 @@ namespace Goedel.Mesh.Server;
 /// </summary>
 public static class ConsoleLoggerExtensions {
 
-
+    /// <summary>
+    /// Add a <see cref="ConsoleLoggerExtensions"/> instance to a generic host 
+    /// configuration.
+    /// </summary>
+    /// <param name="host">The host to add the configuration to.</param>
+    /// <returns></returns>
     public static IHostBuilder AddGenericHost(this IHostBuilder host) {
-
-        //host.ConfigureAppConfiguration((hostingContext, configuration) => {
-        //});
-
-        //Screen.WriteLine($"Add Mesh Service");
 
         host.ConfigureServices((hostContext, services) => {
             var configurationHost = services.Configure<GenericHostConfiguration>(
                 hostContext.Configuration.GetSection(GenericHostConfiguration.ConfigurationEntry.Name));
-        });
+            });
 
         return host;
         }
@@ -33,29 +33,11 @@ public static class ConsoleLoggerExtensions {
 
     public static IHostBuilder AddMeshService(this IHostBuilder host) {
 
-        //host.ConfigureAppConfiguration((hostingContext, configuration) => {
-        //});
-
-        //Screen.WriteLine($"Add Mesh Service");
-
         host.ConfigureServices((hostContext, services) => {
-
-
             var serviceConfig = hostContext.Configuration.GetSection(MeshServiceConfiguration.ConfigurationEntry.Name);
             services.AddSingleton<IConfguredService, MeshConfiguredService>();
             var configurationService = services.Configure<MeshServiceConfiguration>(serviceConfig);
-
-
-            //var xml = serviceConfig.GetChildren();
-            //var configurationService1 = services.Configure<MeshServiceConfiguration>(serviceConfig);
-            //var fred = serviceConfig as MeshServiceConfiguration;
-            //if (serviceConfig.Value != null) {
-            //    services.AddSingleton<IConfguredService, MeshConfiguredService>();
-            //    var configurationService = services.Configure<MeshServiceConfiguration>(serviceConfig);
-            //    }
-            //var configurationHost = services.Configure<GenericHostConfiguration>(
-            //    hostContext.Configuration.GetSection(GenericHostConfiguration.ConfigurationEntry.Name));
-        });
+            });
 
         return host;
         }
@@ -70,13 +52,16 @@ public static class ConsoleLoggerExtensions {
 public class MeshConfiguredService : IConfguredService {
 
 
-
+    ///<summary>The service configuration.</summary> 
     public MeshServiceConfiguration MeshHostConfiguration { get; }
 
+    ///<summary>The generic host configuration.</summary> 
     public GenericHostConfiguration GenericHostConfiguration { get; }
 
     IOptionsMonitor<MeshServiceConfiguration> MeshHostConfigurationMonitor;
     IMeshMachine MeshMachine { get; }
+
+    ///<summary>The logger interface.</summary> 
     public ILogger<ManagedListener> Logger { get; }
 
     PublicMeshService PublicMeshService { get; set; }

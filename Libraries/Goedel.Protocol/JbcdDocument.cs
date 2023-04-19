@@ -25,13 +25,15 @@ namespace Goedel.Protocol;
 
 
 
-
+/// <summary>
+/// Class representing a Json DOM.
+/// </summary>
 public abstract class JbcdDocument : IJcbdDocument {
 
     ///<inheritdoc/>
     public JbcdValue Root { get; set; }
 
-
+    ///<summary>The reader used to traverse the document.</summary> 
     protected JsonBcdReader Reader { get; set; }
 
     ///<inheritdoc/>
@@ -43,9 +45,8 @@ public abstract class JbcdDocument : IJcbdDocument {
     ///<summary>The length the document within the byte stream</summary> 
     protected long Length { get; init; }
 
-
+    ///<summary>Position in the document stream</summary> 
     protected abstract long Position { get; }
-
 
     ///<inheritdoc/>
     public abstract void Erase(long start, int length, byte[] data = null);
@@ -305,6 +306,7 @@ public class JbcdDocumentFile : JbcdDocument {
     ///<summary>The backing file.</summary> 
     public FileStream File { get; }
 
+    ///<inheritdoc/>
     protected override long Position => File.Position;
 
 
@@ -358,8 +360,10 @@ public class JbcdDocumentFile : JbcdDocument {
 /// </summary>
 public class JbcdDocumentMemory : JbcdDocument {
 
-    long index;
-    protected override long Position => index;
+    //long index;
+
+    ///<inheritdoc/>
+    protected override long Position => throw new NYI();
 
     ///<summary>The data buffer.</summary> 
     public byte[] Data { get; }
@@ -398,18 +402,25 @@ public class JbcdDocumentMemory : JbcdDocument {
     }
 
 
+/// <summary>
+/// Parsed DARE envelope.
+/// </summary>
 public class JcbdEnvelope {
 
 
+    ///<summary>DARE Header</summary> 
     public JbcdValueObject Header;
 
-
+    ///<summary>DARE Body</summary> 
     public JbcdValueBinary Body;
 
-
+    ///<summary>DARE Trailer</summary> 
     public JbcdValueObject Trailer;
 
-
+    /// <summary>
+    /// Constructor, return the envelope contained in <paramref name="document"/>.
+    /// </summary>
+    /// <param name="document">The parsed document.</param>
     public JcbdEnvelope(JbcdDocument document) {
 
         var array = document.Root as JbcdValueArray;

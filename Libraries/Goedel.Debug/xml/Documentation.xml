@@ -35,17 +35,46 @@
             <param name="keyCollection">The key collection to add it to.</param>
             <returns>The corrupted key</returns>
         </member>
+        <member name="T:Goedel.Debug.KeyPairX448Corrupt">
+            <summary>
+            Corruptable form of <see cref="T:Goedel.Cryptography.KeyPairX448"/>
+            </summary>
+        </member>
         <member name="M:Goedel.Debug.KeyPairX448Corrupt.#ctor(Goedel.Cryptography.KeyPairX448)">
             <summary>
             Constructor returning a corrupted version of 
             </summary>
             <param name="keyPair"></param>
         </member>
+        <member name="M:Goedel.Debug.KeyPairX448Corrupt.Corrupt(Goedel.Cryptography.Algorithms.CurveX448Private)">
+            <summary>
+            Return a corrupted private scalar derived from <paramref name="curvePrivate"/>.
+            </summary>
+            <param name="curvePrivate">The uncorrupted private key value.</param>
+            <returns>The corrupted scalar.</returns>
+        </member>
+        <member name="T:Goedel.Debug.KeyPairEd448Corrupt">
+            <summary>
+            Corruptable form of <see cref="T:Goedel.Cryptography.KeyPairEd448"/>
+            </summary>
+        </member>
         <member name="M:Goedel.Debug.KeyPairEd448Corrupt.#ctor(Goedel.Cryptography.KeyPairEd448)">
             <summary>
             Constructor returning a corrupted version of 
             </summary>
             <param name="keyPair"></param>
+        </member>
+        <member name="M:Goedel.Debug.KeyPairEd448Corrupt.Corrupt(Goedel.Cryptography.Algorithms.CurveEdwards448Private)">
+            <summary>
+            Return a corrupted private scalar derived from <paramref name="curvePrivate"/>.
+            </summary>
+            <param name="curvePrivate">The uncorrupted private key value.</param>
+            <returns>The corrupted scalar.</returns>
+        </member>
+        <member name="T:Goedel.Debug.NamespaceDoc">
+            <summary>
+            Utilities used in debugging and testing.
+            </summary>
         </member>
         <member name="T:Goedel.Cryptography.Test.Initialization">
             <summary>Static class whose only function is to contain the initialization 

@@ -27,7 +27,13 @@ public static class Extensions {
 
 
 
-
+    /// <summary>
+    /// Build the service configuration described in <paramref name="configuration"/> on
+    /// <paramref name="meshMachine"/>.
+    /// </summary>
+    /// <param name="meshMachine">The mesh machine supporting the host.</param>
+    /// <param name="configuration">The service configuration.</param>
+    /// <param name="admin">Administration account service address.</param>
     public static void BuildConfiguration(
                     this IMeshMachineClient meshMachine,
                     Configuration configuration,
@@ -44,10 +50,7 @@ public static class Extensions {
         // Mesh machine with captive direct mesh host.
         using var directMachine = new MeshMachineDirect(meshMachine, service);
 
-        ProfileUser adminProfile;
         ProfileAccount profileRegistry = null;
-         
-
 
 
         // Phase 2: create the administration account and add layered application admin controls.
@@ -92,7 +95,15 @@ public static class Extensions {
         // At this point, all the services have been created on disk, none has been started.
         }
 
-
+    /// <summary>
+    /// Create a base service configuration file for use on <paramref name="meshMachine"/>.
+    /// </summary>
+    /// <param name="meshMachine">The mesh Machine on which the service is to run.</param>
+    /// <param name="serviceDns">The service DNS address to use.</param>
+    /// <param name="hostIp">The host IP addreess</param>
+    /// <param name="hostDns">The host DNS address,</param>
+    /// <param name="hostAccount">Optional host account.</param>
+    /// <returns>The configuration created.</returns>
     public static Configuration CreateConfig(
                 this IMeshMachineClient meshMachine,
                 string serviceDns,
@@ -170,9 +181,7 @@ public static class Extensions {
         string hostIp = null,
         string hostDns = null,
         string admin = null,
-        string? hostAccount = null,
-        string resolver = null,
-        string registry = null) {
+        string? hostAccount = null) {
 
         hostDns ??= Dns.GetHostName();
         hostDns ??= serviceDns;
@@ -208,9 +217,6 @@ public static class Extensions {
 
         var presenceServiceConfiguration = new PresenceServiceConfiguration {
             };
-
-
-
 
 
         var hostConfiguration = new GenericHostConfiguration {

@@ -137,12 +137,20 @@ public class Spool : Store {
         }
 
 
-
+    /// <summary>
+    /// Return the index of the message with identifier <paramref name="messageID"/>.
+    /// </summary>
+    /// <param name="messageID">The message identifier.</param>
+    /// <returns>The index entry.</returns>
     public SpoolIndexEntry GetByMessageId(
                 string messageID) => GetById(Message.GetEnvelopeId(messageID));
 
 
-
+    /// <summary>
+    /// Return the index of the envelope with identifier <paramref name="envelopeId"/>.
+    /// </summary>
+    /// <param name="envelopeId">The envelope identifier.</param>
+    /// <returns>The index entry.</returns>
     public SpoolIndexEntry GetById(
             string envelopeId) {
         if (SequenceIndexEntryByEnvelopeId.TryGetValue(envelopeId, out var value)) {
@@ -168,6 +176,7 @@ public class Spool : Store {
     /// <param name="reverse">Return items in reverse order, i.e. most recently received
     /// first.</param>
     /// <param name="evaluateIndex">Evaluation delegate specifying if the item is a match.</param>
+    /// <param name="open">If true, only return open messages.</param>
     /// <returns>The enumeration.</returns>
     public IEnumerable<SpoolIndexEntry> GetMessages(
                 SpoolIndexEntry start = null,

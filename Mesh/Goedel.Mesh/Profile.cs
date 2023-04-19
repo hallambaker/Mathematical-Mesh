@@ -57,7 +57,7 @@ public partial class Profile {
     ///<summary>The UDF of the profile, that is the UDF of the offline signature.</summary>
     public string UdfString => ProfileSignature.Udf;
 
-
+    ///<summary>The profile exended UDF used for matching.</summary> 
     public Udf Udf => udf ?? new Udf(UdfString, ProfileSignatureKey.UDFBytes).CacheValue(out udf);
     Udf udf;
 
@@ -181,7 +181,13 @@ public partial class Profile {
                 envelopedAssertion.Verify(ProfileSignatureKey);
 
 
-
+    /// <summary>
+    /// Verify the profile and return the value true if successful, otherwise false.
+    /// </summary>
+    /// <param name="signature">The envelope signature.</param>
+    /// <param name="digest">The payload digest value.</param>
+    /// <param name="keyIdentifier">The signature key identifier.</param>
+    /// <returns>True if the profile is valid, otherwise false.</returns>
     public virtual bool Verify(
                 DareSignature signature,
                 byte[] digest,

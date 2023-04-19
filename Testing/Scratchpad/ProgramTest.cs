@@ -71,7 +71,7 @@ partial class Program {
 
 
         //ShellTests.Test().TestHello();
-        //ShellTestsAdmin.Test().TestHello();
+        ShellTestsAdmin.Test().TestHello();
 
         /* Callsigns */
 

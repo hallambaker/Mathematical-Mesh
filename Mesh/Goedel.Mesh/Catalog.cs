@@ -128,7 +128,10 @@ public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEnt
             }
         }
 
-
+    /// <summary>
+    /// Intern the entry <paramref name="catalogIndexEntry"/> into the catalog.
+    /// </summary>
+    /// <param name="catalogIndexEntry">The entry to intern.</param>
     protected virtual void InternCatalog(CatalogIndexEntry<T> catalogIndexEntry) {
         var catalogedEntry = catalogIndexEntry.JsonObject as T;
 
@@ -148,6 +151,9 @@ public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEnt
             }
         }
 
+    /// <summary>
+    /// Intern loaded persistence store objects into the catalog.
+    /// </summary>
     public virtual void Complete() {
         foreach (var entry in PersistenceStore.ObjectIndex) {
             InternCatalog(entry.Value as CatalogIndexEntry<T>);
@@ -212,7 +218,7 @@ public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEnt
     /// Callback called before deleting an entry from the catalog. May be overriden in 
     /// derrived classes to update local indexes.
     /// </summary>
-    /// <param name="key">The entry being deleted.</param>
+    /// <param name="deletedIndex">The entry being deleted.</param>
     protected virtual void DeleteEntry(CatalogIndexEntry<T> deletedIndex) {
         var deletedEntry = deletedIndex?.CatalogedEntry;
         if (deletedEntry?.LocalName != null) {

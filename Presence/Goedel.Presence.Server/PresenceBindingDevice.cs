@@ -103,7 +103,11 @@ public record PresenceBindingDevice : IQueuableTask, IPresenceDevice {
     #endregion
 
 
-
+    /// <summary>
+    /// Return the status of the devices attached.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="NYI"></exception>
     public DeviceStatus GetDeviceStatus() => throw new NYI();
     }
 

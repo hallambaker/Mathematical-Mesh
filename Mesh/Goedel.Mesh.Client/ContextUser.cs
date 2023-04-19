@@ -69,6 +69,7 @@ public partial class ContextUser : ContextAccount {
     ///<summary>The profile</summary>
     public ProfileUser ProfileUser { get; }
 
+    ///<summary>The service DNS value.</summary> 
     public override string ServiceDns { get; }
 
     ///<summary>The connection device</summary>
@@ -645,7 +646,11 @@ public partial class ContextUser : ContextAccount {
         GetOpenMessageLast(ResponseConfirmation.__Tag);
 
 
-
+    /// <summary>
+    /// Return the list of open messages.
+    /// </summary>
+    ///<param name="tag">If not null, return only messages of this type.</param>
+    /// <returns>The list of messages.</returns>
     public List<Message> GetOpenMessages(
                     string tag = null) {
         // get the inbound spool
@@ -663,6 +668,11 @@ public partial class ContextUser : ContextAccount {
         return messages;
         }
 
+    /// <summary>
+    /// Return the last open message received.
+    /// </summary>
+    /// <param name="tag">If not null, return the last message received of this type.</param>
+    /// <returns>The message (if found).</returns>
     public Message GetOpenMessageLast(
                 string tag = null) {
         // get the inbound spool
@@ -677,7 +687,14 @@ public partial class ContextUser : ContextAccount {
         return null;
         }
 
-
+    /// <summary>
+    /// Attempt to return a message received in response to the request message 
+    /// <paramref name="request"/>. If successful, returns true and the response message
+    /// in <paramref name="response"/>. Otherwise the value false is returned.
+    /// </summary>
+    /// <param name="request">The request message.</param>
+    /// <param name="response">The response (if found).</param>
+    /// <returns>True if found, otherwise false.</returns>
     public bool TryGetMessageResponse(
                 Message request,
                 out SpoolIndexEntry response) {
@@ -689,7 +706,17 @@ public partial class ContextUser : ContextAccount {
 
         }
 
-
+    /// <summary>
+    /// Attempt to return a message received with message ID  
+    /// <paramref name="messageID"/>. If successful, returns true and the response message
+    /// in <paramref name="index"/>. Otherwise the value false is returned.
+    /// </summary>
+    /// <param name="messageID">The request message.</param>
+    /// <param name="index">The message (if found).</param>
+    /// <param name="notBefore">If found, only return a message if received after 
+    /// this date. This may be used to bound searching for a response message by only
+    /// looking at messages after the request was sent.</param>
+    /// <returns>True if found, otherwise false.</returns>
     public bool TryGetMessageByMessageId(
                 string messageID, out SpoolIndexEntry index,
                 DateTime? notBefore=null) {

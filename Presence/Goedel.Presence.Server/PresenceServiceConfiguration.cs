@@ -32,6 +32,7 @@ public class PresenceServiceConfiguration : ServiceConfiguration {
     /// <summary>
     /// Create a new instance and return the corresponding configuration file.
     /// </summary>
+    /// <param name="meshMachine">The mesh machine.</param>
     /// <param name="GenericHostConfiguration">Generic service configuration.</param>
     /// <param name="service">The service endpoing.</param>
     /// <returns>The configuration setting,</returns>

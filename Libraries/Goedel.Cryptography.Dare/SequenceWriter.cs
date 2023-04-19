@@ -60,7 +60,7 @@ public class SequenceWriter {
     }
 
 /// <summary>
-/// Sequence writer to write direct to a file.
+/// Sequence writer to write direct to a file. (Orphan code???)
 /// </summary>
 public class SequenceWriterFile : SequenceWriter {
 
@@ -69,6 +69,9 @@ public class SequenceWriterFile : SequenceWriter {
 
     readonly long frameStart;
 
+    /// <summary>
+    /// The sequence index entry for the item to be modified.
+    /// </summary>
     public SequenceIndexEntry SequenceIndexEntry { get; }
 
     /// <summary>
@@ -77,6 +80,9 @@ public class SequenceWriterFile : SequenceWriter {
     /// <param name="sequence">The Sequence to be written</param>
     /// <param name="header">The Sequence header???</param>
     /// <param name="JBCDStream">The stream???</param>
+    /// <param name="dataLength">Data length.</param>
+    /// <param name="dataPosition">Data position.</param>
+    /// <param name="frameLength">The frame length??</param>
     public SequenceWriterFile(
                 Sequence sequence,
                 DareHeader header,
@@ -88,7 +94,6 @@ public class SequenceWriterFile : SequenceWriter {
         frameStart = JBCDStream.PositionWrite;
         SequenceHeader = header;
 
-
         SequenceIndexEntry = sequence.SequenceIndexEntryFactoryDelegate(
             sequence: sequence,
             framePosition: JBCDStream.PositionWrite,
@@ -96,8 +101,6 @@ public class SequenceWriterFile : SequenceWriter {
             dataPosition: dataPosition,
             dataLength: dataLength,
             header: header);
-
-
         }
 
     /// <summary>
@@ -168,9 +171,7 @@ public class SequenceWriterDeferred : SequenceWriter {
     /// <returns></returns>
     public DareEnvelope End(byte[] body) {
 
-
         Sequence.MakeTrailer(ref DareTrailer);
-
 
         return new DareEnvelope() {
             Header = SequenceHeader,

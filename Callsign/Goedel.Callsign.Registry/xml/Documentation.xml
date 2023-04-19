@@ -316,6 +316,9 @@
         <member name="M:Goedel.Callsign.Registry.CallsignRegistryConfiguration.GetConfigurationEntry">
             <inheritdoc/>
         </member>
+        <member name="P:Goedel.Callsign.Registry.CallsignRegistryConfiguration.ServiceAddress">
+            <summary>The service address by which the registry is reached.</summary> 
+        </member>
         <member name="P:Goedel.Callsign.Registry.CallsignRegistryConfiguration.SignatureSchedule">
             <summary>The signature schedule</summary> 
         </member>
@@ -323,8 +326,9 @@
             <summary>
             Create a new instance and return the corresponding configuration file.
             </summary>
-            <param name="GenericHostConfiguration">Generic service configuration.</param>
-            <param name="service">The service endpoing.</param>
+            <param name="meshMachine">The Mesh machine to which the registry 
+            account context is to be saved..</param>
+            <param name="serviceAddress">The service endpoing.</param>
             <returns>The configuration setting,</returns>
         </member>
         <member name="T:Goedel.Callsign.Registry.ContextRegistry">
@@ -334,6 +338,9 @@
         </member>
         <member name="F:Goedel.Callsign.Registry.ContextRegistry.ContextUser">
             <summary>The enclosing user context.</summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ContextRegistry.ProfileDevice">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.Registry.ContextRegistry.Profile">
             <inheritdoc/>
@@ -347,10 +354,19 @@
         <member name="F:Goedel.Callsign.Registry.ContextRegistry.CatalogRegistration">
             <summary>The registation catalog.</summary> 
         </member>
+        <member name="F:Goedel.Callsign.Registry.ContextRegistry.CatalogNotary">
+            <summary>The notary catalog.</summary> 
+        </member>
         <member name="P:Goedel.Callsign.Registry.ContextRegistry.CallsignMapping">
             <summary>The callsign mapping</summary> 
         </member>
+        <member name="P:Goedel.Callsign.Registry.ContextRegistry.DefaultPage">
+            <summary>The default page to be assumed if none is specified in a binding request.</summary> 
+        </member>
         <member name="P:Goedel.Callsign.Registry.ContextRegistry.AccountAddress">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ContextRegistry.ServiceDns">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.Registry.ContextRegistry.DictionaryCatalogDelegates">
@@ -375,9 +391,10 @@
             <param name="contextAccount">The enclosing account context.</param>
             <param name="catalogedCallsign">Description of the Registry to return the
             context for.</param>
+            <param name="activationApplicationRegistry">The application activation data.</param>
             <param name="activationAccount">The account activation.</param>
         </member>
-        <member name="M:Goedel.Callsign.Registry.ContextRegistry.CreateRegistry(Goedel.Mesh.Client.ContextUser,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.List{System.String},Goedel.Callsign.CallsignMapping)">
+        <member name="M:Goedel.Callsign.Registry.ContextRegistry.CreateRegistry(Goedel.Mesh.Client.ContextUser,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.List{System.String})">
             <summary>
             Create the callsign Registry.
             </summary>
@@ -407,6 +424,7 @@
             Process the callsign registration request <paramref name="registrationRequest"/>.
             </summary>
             <param name="registrationRequest">The request to process.</param>
+            <param name="spoolEntry">The spool entry containing the request.</param>
             <returns>Reports the processing result.</returns>
         </member>
         <member name="M:Goedel.Callsign.Registry.ContextRegistry.RefuseRequest(Goedel.Callsign.CallsignRegistrationRequest,Goedel.Mesh.CallsignBinding,System.Exception)">
@@ -417,6 +435,7 @@
             </summary>
             <param name="registrationRequest">The request that caused the exception to be raised.</param>
             <param name="exception">The exception raised.</param>
+            <param name="binding">The callsign binding.</param>
             <returns>Processing result with <see cref="P:Goedel.Mesh.ProcessResult.Success"/> set false.</returns>
         </member>
         <member name="M:Goedel.Callsign.Registry.ContextRegistry.MessageValidate(Goedel.Mesh.SpoolIndexEntry,Goedel.Callsign.CallsignRegistrationRequest,Goedel.Mesh.CallsignBinding,Goedel.Callsign.CatalogedRegistration@)">
@@ -425,6 +444,9 @@
             </summary>
             <param name="registrationRequest"></param>
             <param name="binding"></param>
+            <param name="spoolEntry">The spool entry containing the request.</param>
+            <param name="previous">If it exists, the previous registration for this callsign,
+            otherwise null.</param>
             <exception cref="T:Goedel.Callsign.RegistrationRefused">The callsign registration was refused</exception>
             <exception cref="T:Goedel.Callsign.RequestTooLarge">The binding request was larger than the maximum permitted size.</exception>
             <exception cref="T:Goedel.Callsign.CanonicalFormInvalid">The canonical form is not valid.</exception>

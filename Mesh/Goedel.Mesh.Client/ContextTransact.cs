@@ -308,6 +308,7 @@ public abstract class Transaction<TAccount> : Disposable
     /// </summary>
     /// <param name="recipientAddress">The message recipient</param>
     /// <param name="message">The message to send</param>
+    /// <param name="admin">If true, sign the message with the administrator key.</param>
     public void OutboundMessage(
             string recipientAddress,
             Message message,
@@ -354,6 +355,8 @@ public abstract class Transaction<TAccount> : Disposable
     /// <param name="recipientAddress">The message recipient address</param>
     /// <param name="recipientEncryptionKey">The message recipient encryption key</param>
     /// <param name="message">The message to send</param>
+    /// <param name="admin">If true, the message is to be signed with the administrator
+    /// key rather than the account key.</param>
     public void OutboundMessage(
             string recipientAddress,
             CryptoKey recipientEncryptionKey,

@@ -357,6 +357,7 @@
             that is supported for a device that is not connected to the account profile.
             </summary>
             <param name="envelope">The message to post.</param>
+            <param name="bitmask">Bitmask value to update.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.AccountHandleLocked.PostLocal(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Mesh.Server.Bitmask)">
             <summary>
@@ -387,6 +388,11 @@
             </summary>
             <param name="messageId">Message to return.</param>
             <returns>The message (if found).</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Server.Bitmask">
+            <summary>
+            Represents a bitmask used to specify which stores were affected by an update.
+            </summary>
         </member>
         <member name="M:Goedel.Mesh.Server.Bitmask.Add(System.Byte[])">
             <summary>
@@ -426,11 +432,20 @@
             <param name="policy">The cryptographic policy to be applied to the container.</param>
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask value to be used to advertise update to this catalog.</param>
         </member>
         <member name="T:Goedel.Mesh.Server.ConsoleLoggerExtensions">
             <summary>
             Extensions class for adding a Mesh Service Provider to a host.
             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.ConsoleLoggerExtensions.AddGenericHost(Microsoft.Extensions.Hosting.IHostBuilder)">
+            <summary>
+            Add a <see cref="T:Goedel.Mesh.Server.ConsoleLoggerExtensions"/> instance to a generic host 
+            configuration.
+            </summary>
+            <param name="host">The host to add the configuration to.</param>
+            <returns></returns>
         </member>
         <member name="M:Goedel.Mesh.Server.ConsoleLoggerExtensions.AddMeshService(Microsoft.Extensions.Hosting.IHostBuilder)">
             <summary>
@@ -1147,6 +1162,16 @@
         <member name="F:Goedel.Mesh.Server.DeviceState.Closed">
             <summary>Connection pending deletion.</summary> 
         </member>
+        <member name="T:Goedel.Mesh.Server.IPresenceAccount">
+            <summary>
+            Presence account interface.
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Server.IPresenceDevice">
+            <summary>
+            Presence device interface.
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Server.IPresenceDevice.DeviceId">
             <summary>The device profile UDF.</summary> 
         </member>
@@ -1247,6 +1272,9 @@
         </member>
         <member name="P:Goedel.Mesh.Server.PublicMeshService.LogService">
             <summary>The logging service.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Server.PublicMeshService.CallsignServiceProfile">
+            <summary>The callsign registry service profile.</summary> 
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Disposing">
             <inheritdoc/>
@@ -1483,7 +1511,6 @@
             Add a new account. The account name must be unique.
             </summary>
             <param name="accountEntry">Account data to add.</param>
-            <param name="catalogedCallsigns">The catalogued callsigns to bind.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountUnbind(Goedel.Protocol.IJpcSession,System.String)">
             <summary>
@@ -1613,8 +1640,9 @@
             <summary>
             Create a new instance and return the corresponding configuration file.
             </summary>
+            <param name="meshMachine">The mesh machine to create the instance for.</param>
             <param name="GenericHostConfiguration">Generic service configuration.</param>
-            <param name="service">The service endpoing.</param>
+            <param name="serviceDns">The service endpoint DNS.</param>
             <returns>The configuration setting,</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshServiceConfiguration.AddProfileRegistryCallsign(Goedel.Cryptography.Dare.DareEnvelope,System.String)">

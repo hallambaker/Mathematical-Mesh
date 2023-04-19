@@ -27,11 +27,17 @@ namespace Goedel.Presence.Server;
 /// </summary>
 public class PresenceBindingAccount : IPresenceAccount {
 
+    /// <summary>
+    /// Bitmask describing the set of catalogs that were updated.
+    /// </summary>
     public byte[] Bitmask { get; set; } = null;
 
+    /// <summary>
+    /// The presence serial value.
+    /// </summary>
     public int Serial { get; set;  } =0;
 
-    ///<summary></summary> 
+    ///<summary>The account identifier.</summary> 
     public string AccountId;
 
     ///<summary>Time at which the binding was created.</summary> 

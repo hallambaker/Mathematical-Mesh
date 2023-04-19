@@ -25,10 +25,6 @@ namespace Goedel.Mesh.Server;
 
 public abstract partial class AccountEntry {
 
-
-
-    public SequenceIndexEntry SequenceIndexEntry { get; set; }
-
     /// <summary>
     /// Default constructor for serialization.
     /// </summary>

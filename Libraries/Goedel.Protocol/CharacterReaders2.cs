@@ -404,6 +404,7 @@ public class CharacterStreamSeekReader : CharacterStreamReader, IBufferedStream 
         EOF = false;
         MarkedPosition = -1;
         }
+     
 
     #region // methods
 
@@ -417,9 +418,11 @@ public class CharacterStreamSeekReader : CharacterStreamReader, IBufferedStream 
 /// </summary>
 public class CharacterStreamSeekBoundedReader : CharacterStreamSeekReader {
 
-    long Start;
-    long Length;
+    long Start { get; }
+    long Last { get; }
+    long Position { get; set; }
 
+    bool IsValid => ((Position >= Start) & (Position <= Last));
 
     /// <summary>
     /// Constructor returning an instance that bounds read on <paramref name="input"/>
@@ -430,22 +433,29 @@ public class CharacterStreamSeekBoundedReader : CharacterStreamSeekReader {
     /// <param name="length">The number of bytes to return (defaults to remainder of the stream.</param>
     public CharacterStreamSeekBoundedReader (Stream input,
                 long start = 0,
-                long length = -1) : base(input) { 
+                long length = -1) : base(input) {
+        Start = start;
+        Position = input.Position;
+        Last = Start + length;
+
+        IsValid.AssertTrue(NYI.Throw);
         }
 
     ///<inheritdoc/>
     public override byte ReadByte() {
-        var value = base.ReadByte();
+        IsValid.AssertTrue(NYI.Throw);
 
-        "Need to implement the stream bounding behavior".TaskFunctionality();
+        var value = base.ReadByte();
+        Position++;
+
         return value;
         }
 
     ///<inheritdoc/>
     public override byte PeekByte() {
+        IsValid.AssertTrue(NYI.Throw);
         var value = base.PeekByte();
 
-        "Need to implement the stream bounding behavior".TaskFunctionality();
         return value;
         }
 

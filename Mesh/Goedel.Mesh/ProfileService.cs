@@ -101,6 +101,14 @@ public partial class ProfileService {
         return new ProfileService(secretSeed, keyCollection, persist);
         }
 
+    /// <summary>
+    /// Create a new service profile.
+    /// </summary>
+    /// <param name="meshMachine">Mesh machine to host the service.</param>
+    /// <param name="profileService">The created service profile,</param>
+    /// <param name="profileHost">The created host instance profile.</param>
+    /// <param name="activationDevice">Activation of the host device.</param>
+    /// <param name="connectionDevice">Connection of the host to the service.</param>
     public static void CreateService(
                 IMeshMachine meshMachine,
                 out ProfileService profileService,
@@ -108,17 +116,21 @@ public partial class ProfileService {
                 out ActivationHost activationDevice,
                 out ConnectionService connectionDevice) {
 
-
         // Create the service profile
         profileService = ProfileService.Generate(meshMachine.KeyCollection);
 
-
         CreateService (meshMachine, profileService, out profileHost, out activationDevice,  
             out connectionDevice);
-
-
         }
 
+    /// <summary>
+    /// Create a new service profile.
+    /// </summary>
+    /// <param name="meshMachine">Mesh machine to host the service.</param>
+    /// <param name="profileService">The service profile,</param>
+    /// <param name="profileHost">The created host instance profile.</param>
+    /// <param name="activationDevice">Activation of the host device.</param>
+    /// <param name="connectionDevice">Connection of the host to the service.</param>
     public static void CreateService(
             IMeshMachine meshMachine,
             ProfileService profileService,

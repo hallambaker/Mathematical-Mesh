@@ -25,6 +25,9 @@
             The Mesh service configuration.
             </summary>
         </member>
+        <member name="P:Goedel.Carnet.Server.CarnetServiceConfiguration.AdminServiceAddress">
+            <summary>The administration account service address.</summary> 
+        </member>
         <member name="F:Goedel.Carnet.Server.CarnetServiceConfiguration.ConfigurationEntry">
             <summary>The configuration entry.</summary> 
         </member>
@@ -38,6 +41,7 @@
             <summary>
             Create a new instance and return the corresponding configuration file.
             </summary>
+            <param name="meshMachine">The mesh machine.</param>
             <param name="GenericHostConfiguration">Generic service configuration.</param>
             <param name="service">The service endpoing.</param>
             <returns>The configuration setting,</returns>

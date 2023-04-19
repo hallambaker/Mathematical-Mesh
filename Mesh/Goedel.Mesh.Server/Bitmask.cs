@@ -23,6 +23,9 @@
 
 namespace Goedel.Mesh.Server;
 
+/// <summary>
+/// Represents a bitmask used to specify which stores were affected by an update.
+/// </summary>
 public record Bitmask {
 
     byte[] bitmask;
@@ -53,7 +56,6 @@ public record Bitmask {
         for (var i = 0; i < data.Length; i++) {
             bitmask[i] |= data[i];
             }
-
         }
 
     /// <summary>

@@ -248,6 +248,27 @@
             <summary>Return the stream to the position that the reader was at the last time
             Mark() was called.</summary>
         </member>
+        <member name="T:Goedel.Protocol.CharacterStreamSeekBoundedReader">
+            <summary>
+            A subclass of the <see cref="T:Goedel.Protocol.CharacterStreamSeekReader"/> in which the start and end 
+            position of the stream are bound to a subset of the stream.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamSeekBoundedReader.#ctor(System.IO.Stream,System.Int64,System.Int64)">
+            <summary>
+            Constructor returning an instance that bounds read on <paramref name="input"/>
+            to being at <paramref name="start"/> for <paramref name="length"/> bytes.
+            </summary>
+            <param name="input">The input stream.</param>
+            <param name="start">The first byte to return.</param>
+            <param name="length">The number of bytes to return (defaults to remainder of the stream.</param>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamSeekBoundedReader.ReadByte">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamSeekBoundedReader.PeekByte">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Protocol.CharacterStreamDataReader">
             <summary>
             An IBinaryStream that reads from a byte array.
@@ -1425,8 +1446,16 @@
         <member name="F:Goedel.Protocol.LogLevelSeverity.None">
             <summary>No report</summary> 
         </member>
+        <member name="T:Goedel.Protocol.JbcdDocument">
+            <summary>
+            Class representing a Json DOM.
+            </summary>
+        </member>
         <member name="P:Goedel.Protocol.JbcdDocument.Root">
             <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.JbcdDocument.Reader">
+            <summary>The reader used to traverse the document.</summary> 
         </member>
         <member name="P:Goedel.Protocol.JbcdDocument.Overwrite">
             <inheritdoc/>
@@ -1436,6 +1465,9 @@
         </member>
         <member name="P:Goedel.Protocol.JbcdDocument.Length">
             <summary>The length the document within the byte stream</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.JbcdDocument.Position">
+            <summary>Position in the document stream</summary> 
         </member>
         <member name="M:Goedel.Protocol.JbcdDocument.Erase(System.Int64,System.Int32,System.Byte[])">
             <inheritdoc/>
@@ -1484,6 +1516,9 @@
         <member name="P:Goedel.Protocol.JbcdDocumentFile.File">
             <summary>The backing file.</summary> 
         </member>
+        <member name="P:Goedel.Protocol.JbcdDocumentFile.Position">
+            <inheritdoc/>
+        </member>
         <member name="M:Goedel.Protocol.JbcdDocumentFile.#ctor(System.IO.FileStream,System.Int64,System.Int64)">
             <summary>
             Constructor returning an instance from the file <paramref queries="file"/>
@@ -1505,6 +1540,9 @@
             different to avoid conflict with the .NET JSON parser clases.
             </summary>
         </member>
+        <member name="P:Goedel.Protocol.JbcdDocumentMemory.Position">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Protocol.JbcdDocumentMemory.Data">
             <summary>The data buffer.</summary> 
         </member>
@@ -1523,10 +1561,33 @@
             <remarks>Since erasure is expected to be an infrequent event, this implementation is
             not optimized for speed, each byte in the target file being individually overwritten.</remarks>
         </member>
+        <member name="T:Goedel.Protocol.JcbdEnvelope">
+            <summary>
+            Parsed DARE envelope.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.JcbdEnvelope.Header">
+            <summary>DARE Header</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.JcbdEnvelope.Body">
+            <summary>DARE Body</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.JcbdEnvelope.Trailer">
+            <summary>DARE Trailer</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.JcbdEnvelope.#ctor(Goedel.Protocol.JbcdDocument)">
+            <summary>
+            Constructor, return the envelope contained in <paramref name="document"/>.
+            </summary>
+            <param name="document">The parsed document.</param>
+        </member>
         <member name="T:Goedel.Protocol.JpcInterface">
             <summary>
             Base class for all JPC server classes.
             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JpcInterface.Endpoints">
+            <summary>The network endpoints to which the interface is bound.</summary> 
         </member>
         <member name="P:Goedel.Protocol.JpcInterface.GetWellKnown">
             <summary>
@@ -1573,6 +1634,13 @@
             <returns>The parsed request.</returns>
             <exception cref="T:Goedel.Protocol.UnknownOperation">Thrown if am unknown operation is attempted.</exception>
         </member>
+        <member name="M:Goedel.Protocol.JpcInterface.AddEndpoints(Goedel.Protocol.GenericHostConfiguration,System.String)">
+            <summary>
+            Add the endpoints described in <paramref name="hostConfiguration"/>.
+            </summary>
+            <param name="hostConfiguration">The host configuration.</param>
+            <param name="instance">Optional instance specifier used to disambiguate test cases.</param>
+        </member>
         <member name="M:Goedel.Protocol.JpcInterface.GetDirect(Goedel.Protocol.IJpcSession)">
             <summary>
             Return a client tapping the service API directly without serialization bound to
@@ -1583,6 +1651,17 @@
         </member>
         <member name="M:Goedel.Protocol.JpcInterface.GetTagDictionary">
             <summary>Tag dictionary mapping operation tags to requests.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.JpcInterface.Initialize(System.Collections.Generic.IEnumerable{Goedel.Protocol.IConfguredService})">
+            <summary>
+            Service initialization. This is called after all the services on a host have 
+            been initialized and started but before the services are published. This allows 
+            services to resolve configuration dependencies that depend on the services running.
+            </summary>
+            <param name="Providers">The list of providers supported by the host.</param>
+            <returns>True if the initialization has completed. If the value false is returned, 
+            the initialization has not completed because it depends on initialization of a 
+            service that has not yet started.</returns>
         </member>
         <member name="T:Goedel.Protocol.IConfguredService">
             <summary>
@@ -2393,6 +2472,12 @@
             <param queries="queries">The list of property queries defining the path whose values is to be returned.</param>
             <returns>A <see cref="T:Goedel.Protocol.JbcdElement"/> representing the values of the requested property.</returns>
         </member>
+        <member name="M:Goedel.Protocol.JbcdElement.ClearValue(System.IO.Stream)">
+            <summary>
+            Erase the tag-value element from the document.
+            </summary>
+            <param name="writeStream">Stream with write capability.</param>
+        </member>
         <member name="T:Goedel.Protocol.JbcdValue">
             <summary>
             Record describing a parsed Jbcd values result.
@@ -2412,6 +2497,12 @@
             <returns></returns>
             <exception cref="T:Goedel.Utilities.NYI"></exception>
         </member>
+        <member name="M:Goedel.Protocol.JbcdValue.ClearValue(System.IO.Stream)">
+            <summary>
+            Clear the value associated with the field in <paramref name="writeStream"/>
+            </summary>
+            <param name="writeStream">Stream with write capability.</param>
+        </member>
         <member name="T:Goedel.Protocol.JbcdValueObject">
             <summary>
             Record describing a parsed Jbcd object result.
@@ -2423,6 +2514,9 @@
         </member>
         <member name="P:Goedel.Protocol.JbcdValueObject.Elements">
             <summary>The elements.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValueObject.GetProperty(System.Object)">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Protocol.JbcdValueObject.GetProperty(System.String)">
             <summary>
@@ -2439,6 +2533,9 @@
         </member>
         <member name="P:Goedel.Protocol.JbcdValueArray.Values">
             <summary>The array of elements.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValueArray.GetProperty(System.Object)">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Protocol.JbcdValueArray.GetProperty(System.Int32)">
             <summary>
@@ -2493,7 +2590,7 @@
             </summary>
         </member>
         <member name="P:Goedel.Protocol.JbcdValueBinary.Value">
-            <summary>The string values</summary> 
+            <summary>The binary value</summary> 
         </member>
         <member name="M:Goedel.Protocol.JbcdValueBinary.#ctor">
             <summary>
@@ -2511,6 +2608,9 @@
             Record describing a parsed Jbcd values result. The values itself
             is kept in string form to allow 
             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JbcdValueNumber.Integer">
+            <summary>The integer value</summary> 
         </member>
         <member name="P:Goedel.Protocol.JbcdValueNumber.Value">
             <summary>The number values</summary> 

@@ -56,8 +56,18 @@
             Tracks an account with device(s) connected to the service.
             </summary>
         </member>
+        <member name="P:Goedel.Presence.Server.PresenceBindingAccount.Bitmask">
+            <summary>
+            Bitmask describing the set of catalogs that were updated.
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.Server.PresenceBindingAccount.Serial">
+            <summary>
+            The presence serial value.
+            </summary>
+        </member>
         <member name="F:Goedel.Presence.Server.PresenceBindingAccount.AccountId">
-            <summary></summary> 
+            <summary>The account identifier.</summary> 
         </member>
         <member name="P:Goedel.Presence.Server.PresenceBindingAccount.FirstContact">
             <summary>Time at which the binding was created.</summary> 
@@ -129,6 +139,13 @@
         </member>
         <member name="M:Goedel.Presence.Server.PresenceBindingDevice.CompareTo(System.Object)">
             <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Presence.Server.PresenceBindingDevice.GetDeviceStatus">
+            <summary>
+            Return the status of the devices attached.
+            </summary>
+            <returns></returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
         </member>
         <member name="T:Goedel.Presence.Server.PresenceServer">
             <summary>
@@ -224,6 +241,7 @@
             <summary>
             Create a new instance and return the corresponding configuration file.
             </summary>
+            <param name="meshMachine">The mesh machine.</param>
             <param name="GenericHostConfiguration">Generic service configuration.</param>
             <param name="service">The service endpoing.</param>
             <returns>The configuration setting,</returns>

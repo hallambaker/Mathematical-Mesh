@@ -847,6 +847,19 @@
             <param name="Store">The store that the value is to be written to.</param>
             <returns>The stored value.</returns>
         </member>
+        <member name="M:Goedel.Utilities.Assert.CacheValue``1(``0,System.Boolean@,``0@)">
+            <summary>
+            Cache and return a value. This is used to produce compact expression
+            body methods for properties that are only evaluated the first time
+            they are called.
+            </summary>
+            <typeparam name="T">The type of data to be cached.</typeparam>
+            <param name="Value">The value to be stored.</param>
+            <param name="Store">The store that the value is to be written to.</param>
+            <param name="read">Value to be set to true to indicate that the cached value
+            has been initialized.</param>
+            <returns>The stored value.</returns>
+        </member>
         <member name="M:Goedel.Utilities.Assert.AssertFalse(System.Boolean,Goedel.Utilities.ThrowDelegate,System.Object[])">
             <summary>Throw an exception if <paramref name="condition"/> is true. 
             (test, NYIException.Throw, "test was false").AssertTrue();
@@ -1538,6 +1551,18 @@
             <summary>
             Complete input and reset converter for next session.
             </summary>
+        </member>
+        <member name="T:Goedel.Utilities.IConfigurationEntry">
+            <summary>
+            Interface declaring that the record or class supports the 
+            <see cref="M:Goedel.Utilities.IConfigurationEntry.GetConfigurationEntry"/> method to return a configuration entry.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.IConfigurationEntry.GetConfigurationEntry">
+            <summary>
+            Return a configuration entry describing the configuration data.
+            </summary>
+            <returns>The configuration entry.</returns>
         </member>
         <member name="T:Goedel.Utilities.ConfigurationEntry">
             <summary>

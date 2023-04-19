@@ -50,6 +50,7 @@ public class CatalogNotary : Catalog<CatalogedSignature> {
     /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
     /// <param name="create">If true, create a new file if none exists.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">Bitmask value to be used to signal store updates.</param>
     public static new Store Factory(
             string directory,
                 string storeId,
@@ -76,6 +77,7 @@ public class CatalogNotary : Catalog<CatalogedSignature> {
     /// <param name="policy">The cryptographic policy to be applied to the container.</param>
     /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">Bitmask value to be used to signal store updates.</param>
     public CatalogNotary(
                 string directory,
                 string storeName = null,

@@ -115,10 +115,13 @@ public class FilterSequenceIndex {
         return result;
         }
 
-
     static readonly FilterSequenceIndex EvaluateIsOpen = new FilterSequenceIndex() { 
             IsOpen = true
             };
+
+    /// <summary>
+    /// Convenience property returning a filter that returns open messages.
+    /// </summary>
     public static FilterIndexDelegate GetOpen => EvaluateIsOpen.Get;
 
 

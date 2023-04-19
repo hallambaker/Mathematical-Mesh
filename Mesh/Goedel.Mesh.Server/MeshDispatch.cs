@@ -105,7 +105,7 @@ public class PublicMeshService : MeshService {
     IPresence PresenceService { get; }
 
 
-
+    ///<summary>The callsign registry service profile.</summary> 
     public ProfileAccount CallsignServiceProfile { get; set; }
 
     #endregion
@@ -433,7 +433,7 @@ public class PublicMeshService : MeshService {
 
 
 
-        return true;
+        //return true;
         }
 
     bool ServiceBinding(CallsignBinding callsignBinding) => true;

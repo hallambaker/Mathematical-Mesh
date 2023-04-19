@@ -32,7 +32,7 @@ public class MeshMachineDirect : Disposable, IMeshMachineClient {
     IMeshMachineClient MeshMachineClient { get; }
     MeshService PublicMeshService { get; }
 
-
+    ///<summary>Services that are reachable by direct interface.</summary> 
     public Dictionary<string, JpcInterface> DirectServices { get; } = new();
 
 

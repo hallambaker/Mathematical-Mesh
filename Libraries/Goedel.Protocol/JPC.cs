@@ -31,13 +31,8 @@ namespace Goedel.Protocol;
 /// </summary>
 public abstract class JpcInterface : Disposable {
 
+    ///<summary>The network endpoints to which the interface is bound.</summary> 
     public virtual List<Endpoint> Endpoints { get; }  = new List<Endpoint>();
-
-
-
-
-    /////<summary>List of DNS domains serviced by this interface.</summary> 
-    //public List<string> Domains { get; set; }
 
     /// <summary>
     /// The WellKnown service name for HTTP and DNS prefix use.
@@ -52,9 +47,6 @@ public abstract class JpcInterface : Disposable {
     public abstract string GetDiscovery {
         get;
         }
-
-
-
 
 
     /// <summary>
@@ -134,7 +126,11 @@ public abstract class JpcInterface : Disposable {
         }
 
 
-
+    /// <summary>
+    /// Add the endpoints described in <paramref name="hostConfiguration"/>.
+    /// </summary>
+    /// <param name="hostConfiguration">The host configuration.</param>
+    /// <param name="instance">Optional instance specifier used to disambiguate test cases.</param>
     public void AddEndpoints(
                 GenericHostConfiguration hostConfiguration,
                 string instance) {
@@ -167,7 +163,15 @@ public abstract class JpcInterface : Disposable {
 
 
 
-
+    /// <summary>
+    /// Service initialization. This is called after all the services on a host have 
+    /// been initialized and started but before the services are published. This allows 
+    /// services to resolve configuration dependencies that depend on the services running.
+    /// </summary>
+    /// <param name="Providers">The list of providers supported by the host.</param>
+    /// <returns>True if the initialization has completed. If the value false is returned, 
+    /// the initialization has not completed because it depends on initialization of a 
+    /// service that has not yet started.</returns>
     public virtual bool Initialize(IEnumerable<IConfguredService> Providers) => true;
 
 

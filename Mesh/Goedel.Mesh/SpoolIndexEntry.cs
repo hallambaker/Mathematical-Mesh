@@ -163,11 +163,10 @@ public class SpoolPlaceholder : ISpoolItem {
 
     /// <summary>
     /// Add a reference to this entry. The reference will cause the message status to be 
-    /// updated if either this is the first reference to be added or the 
-    /// <paramref name="force"/> parameter is true.
+    /// updated if this reference is new or later than the existing one.
     /// </summary>
     /// <param name="reference">The reference to add.</param>
-    /// <param name="force">Force updating of the status.</param>
+    /// <param name="index">The index value of the reference being added.</param>
     public void AddReference(Reference reference, long index) {
         References ??= new();
 

@@ -79,11 +79,7 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
     RudService RudService { get; set; }
     RudService RudServiceCallSign { get; set; }
 
-
-
     IEnumerable<IConfguredService> Providers;
-    IEnumerable<IConfguredService> Providers1;
-
 
     protected override PublicCallsignResolver GetCallsignResolver() => GetService<PublicCallsignResolver>();
 
@@ -112,11 +108,6 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
 
         if (Providers != null) {
             foreach (var provider in Providers) {
-                provider.Dispose();
-                }
-            }
-        if (Providers1 != null) {
-            foreach (var provider in Providers1) {
                 provider.Dispose();
                 }
             }

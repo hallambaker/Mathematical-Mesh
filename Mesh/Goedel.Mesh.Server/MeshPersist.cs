@@ -160,7 +160,6 @@ public class MeshPersist : Disposable {
     /// Add a new account. The account name must be unique.
     /// </summary>
     /// <param name="accountEntry">Account data to add.</param>
-    /// <param name="catalogedCallsigns">The catalogued callsigns to bind.</param>
     public void AccountBind(
                     AccountEntry accountEntry) {
         PersistentIndexEntry containerEntry;
@@ -397,6 +396,7 @@ public class MeshPersist : Disposable {
     /// </summary>
     /// <param name="session">The session connection data.</param>
     /// <param name="selections">The selection criteria.</param>
+    /// <param name="account">The account address (UDF or service address)</param>
     public List<StoreUpdate> PublicDownload(
                 IJpcSession session,
                 string account,

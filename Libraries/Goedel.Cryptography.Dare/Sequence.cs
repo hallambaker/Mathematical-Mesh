@@ -264,17 +264,20 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                 bool skip = false) => new SequenceEnumeratorIndex(
                     this, start, reverse, count, filter, skip);
 
+    /// <summary>
+    /// Return an enumerator that reads the spool from frame 1 (the second frame) in the 
+    /// forwards direction.
+    /// </summary>
     public virtual IEnumerable<SequenceIndexEntry> ReadForward =>
             Select(1, false);
 
 
+    /// <summary>
+    /// Return an enumerator that returns items that have not previously been read.
+    /// </summary>
     public virtual IEnumerable<SequenceIndexEntry> SelectFromUnread (
             FilterIndexDelegate evaluate=null) => new SequenceEnumeratorIndex(
                     this, IndexedFromEnd.Previous(), true);
-
-
-
-
 
     /// <summary>
     /// Returns an enumerator over the Sequence contents starting with the

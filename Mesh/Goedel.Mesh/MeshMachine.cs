@@ -123,10 +123,19 @@ public interface IMeshMachine {
         string wellKnown, ICredentialPrivate credential = null,
                 string accountAddress = null) where T : JpcClientInterface, new();
 
-    
+    /// <summary>
+    /// Return a callsign resolver service accessed using <paramref name="credential"/>.
+    /// </summary>
+    /// <param name="credential">Private credential to be used for authentication.</param>
+    /// <returns>The resolver service.</returns>
     public IResolver GetResolver(ICredentialPrivate credential);
 
 
+    /// <summary>
+    /// Return a callsign carnet service accessed using <paramref name="credential"/>.
+    /// </summary>
+    /// <param name="credential">Private credential to be used for authentication.</param>
+    /// <returns>The carnet service.</returns>
     public ICarnet GetCarnet(ICredentialPrivate credential);
 
 

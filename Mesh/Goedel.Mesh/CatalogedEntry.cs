@@ -54,8 +54,6 @@ public enum CatalogedEntryFormat {
     ///<summary>Mesh JSON device exchange</summary>
     Mjdx,
 
-
-
     ///<summary>PKCS#7 enveloped format.</summary>
     Pkcs7,
 
@@ -84,11 +82,8 @@ public enum CatalogedEntryFormat {
 
 public partial class CatalogedEntry {
 
-
-
+    ///<summary>The sequence entry.</summary> 
     public SequenceIndexEntry SequenceIndexEntry {get; set; }
-
-
 
     ///<summary>Additional encryption keys to which the encrypted catalog entry is to be written.</summary> 
     public List<KeyPair> AdditionalRecipients;
@@ -113,24 +108,12 @@ public partial class CatalogedEntry {
 
         }
 
-
-    // need to create a static method.
-
-    //public virtual CatalogedEntry FromFile(
-    //            string filename,
-    //            CatalogedEntryFormat entryFormat
-    //            ) {
-    //    }
-
-
     /// <summary>
     /// Add the catalog entry to the stream <paramref name="stream"/> in the
     /// format specified by <paramref name="format"/>.
     /// </summary>
     /// <param name="stream">The stream to write the data to.</param>
     /// <param name="format">The file format to write the output in.</param>
-
-    /// <returns></returns>
     public virtual void WriteToStream(
                 Stream stream,
                 CatalogedEntryFormat format = CatalogedEntryFormat.Default) {
@@ -142,8 +125,6 @@ public partial class CatalogedEntry {
                     return;
                     }
             }
-
-
 
         throw new InvalidFormat(args: format);
         }

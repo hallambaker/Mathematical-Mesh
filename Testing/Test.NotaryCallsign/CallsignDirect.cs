@@ -48,13 +48,12 @@ public partial class CallsignDirect : UnitTestSet {
 
     public virtual TestEnvironmentCommon GetTestEnvironmentCommon(DeterministicSeed seed = null) =>
             new(seed ?? Seed) {
-                CallsignRegistry = AccountRegistry
                 };
 
 
-    void Initialize(out ContextUser contextAccountAlice, out ContextRegistry contextRegistry) {
+    void Initialize(out ContextUser contextAccountRegistry, out ContextRegistry contextRegistry) {
 
-        contextAccountAlice = MeshMachineTest.GenerateAccountUser(TestEnvironmentCommon,
+        contextAccountRegistry = MeshMachineTest.GenerateAccountUser(TestEnvironmentCommon,
                 DeviceAliceAdmin, AccountAlice, "main");
 
         var pages = Page.LoadResources();
@@ -62,11 +61,11 @@ public partial class CallsignDirect : UnitTestSet {
         var callsignMapping = new CallsignMapping();
 
 
-        contextRegistry = contextAccountAlice.CreateRegistry(AccountRegistry);
+        contextRegistry = contextAccountRegistry.CreateRegistry(AccountRegistry);
 
         // Bind to the callsign @callsign
         TestEnvironmentCommon.MeshService.CallsignServiceProfile = contextRegistry.Profile as ProfileAccount;
-        var bindRegistry = contextAccountAlice.CallsignRequest(CallsignRegistry, bind: true, transfer: null);
+        var bindRegistry = contextAccountRegistry.CallsignRequest(CallsignRegistry, bind: true, transfer: null);
         contextRegistry.Process();
 
 

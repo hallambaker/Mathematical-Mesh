@@ -32,13 +32,14 @@ public interface IResolver {
     /// Resolve the callsign <paramref name="callsign"/> and return the associated binding
     /// if found.
     /// </summary>
-    /// <param name="callsign"></param>
-    /// <returns></returns>
+    /// <param name="callsign">The callsign binding if found, otherwise null.</param>
+    /// <param name="callsignBinding">The callsign binding (if found).</param>
+    /// <returns>True if the callsign could be resolved, otherwise false.</returns>
     bool TryResolveCallsign(string callsign, out CallsignBinding callsignBinding);
 
     }
 
-
+/// <summary>
 /// Carnet payment interface.
 /// </summary>
 public interface ICarnet {

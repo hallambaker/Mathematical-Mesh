@@ -211,6 +211,7 @@ public class MeshCredentialPrivate : MeshKeyCredentialPrivate {
                 ConnectionAccount,
                 AuthenticationPrivate.KeyPairPublic() as KeyPairAdvanced);
 
+    ///<inheritdoc/>
     public override ICredentialPublic GetICredentialPublic() => GetMeshCredentialPublic();
 
     #endregion

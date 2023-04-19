@@ -312,6 +312,11 @@ public partial class PostResponse {
 
 public partial class DownloadResponse {
 
+    /// <summary>
+    /// Get the store status value for store <paramref name="store"/>.
+    /// </summary>
+    /// <param name="store">The store to return staus for.</param>
+    /// <returns>The store status.</returns>
     public StoreUpdate GetUpdate(string store) {
         if (Updates == null) {
             return null;

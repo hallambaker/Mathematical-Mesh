@@ -163,10 +163,20 @@ public class SequenceMerkleTree : SequenceTree {
     IEnumerable<SequenceIndexEntry> GetSequenceIndexEntries (IEnumerable<long> entries) =>
                 throw new NYI();
 
+    /// <summary>
+    /// Return a proof chain over <paramref name="entries"/>.
+    /// </summary>
+    /// <param name="entries">The entries to provide prood over.</param>
+    /// <returns>The proof chain.</returns>
     public IntervalSignature GetProofChain(
         IEnumerable<long> entries) =>GetProofChain(GetSequenceIndexEntries(entries));
 
-
+    /// <summary>
+    /// Return a proof chain over <paramref name="first"/> to <paramref name="second"/>.
+    /// </summary>
+    /// <param name="first">The first element in the chain.</param>
+    /// <param name="second">The second element in the chain.</param>
+    /// <returns>The proof chain.</returns>
     public IntervalSignature GetProofChain(
             SequenceIndexEntry first,
             SequenceIndexEntry second) =>

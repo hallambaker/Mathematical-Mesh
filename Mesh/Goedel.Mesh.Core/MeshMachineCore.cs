@@ -38,13 +38,13 @@ public class MeshMachineCoreServer : Disposable, IMeshMachine {
     ///<summary>The directory used to store the master data.</summary>
     public virtual string DirectoryRoot { get; } = null;
 
-    ////<inheritdoc/>
+    ///<summary>Directory to store Mesh data</summary>
     public virtual string DirectoryMesh { get; }
 
-    ////<inheritdoc/>
+    ///<summary>Directory to store service keys</summary>
     public virtual string DirectoryKeys { get; }
 
-    ////<inheritdoc/>
+    ///<summary>Directory to store account data</summary> 
     public virtual string DirectoryAccounts { get; }
 
 
@@ -67,7 +67,6 @@ public class MeshMachineCoreServer : Disposable, IMeshMachine {
     /// Default constructor
     /// </summary>
     /// <param name="directory">Directory to store the server information.</param>
-    /// <param name="direct">If true, force use of the platform key stores.</param>
     public MeshMachineCoreServer(string? directory) {
         DirectoryRoot = directory;
         DirectoryMesh = GetServiceDirectory(MeshConstants.DirectoryProfiles);

@@ -5881,6 +5881,22 @@
             <param name="hashAlgorithm">The digest function to use.</param>
             <param name="buffer">The data to be digested.</param>
         </member>
+        <member name="M:Goedel.Cryptography.ExtensionMethods.Sha3_512(System.String)">
+            <summary>
+            Compute the SHA3-512 hash of the file <paramref name="file"/>
+            and return the result.
+            </summary>
+            <param name="file">The file to digest.</param>
+            <returns>The SHA3-512 digest of the contents of the file.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.ExtensionMethods.Sha3_256(System.String)">
+            <summary>
+            Compute the SHA3-256 hash of the file <paramref name="file"/>
+            and return the result.
+            </summary>
+            <param name="file">The file to digest.</param>
+            <returns>The SHA3-256 digest of the contents of the file.</returns>
+        </member>
         <member name="M:Goedel.Cryptography.ExtensionMethods.GetPkixPrivateKeyRSA(System.Security.Cryptography.RSAParameters)">
             <summary>
             Create PKIX RSAPrivateKey from RSAParameters structure.
@@ -6092,6 +6108,7 @@
             Add a keypair to the collection.
             </summary>
             <param name="keyPair">The key pair to add.</param>
+            <param name="accounts">Addresses of accounts using the key for encryption.</param>
         </member>
         <member name="M:Goedel.Cryptography.KeyCollection.TryFindKeyDecryption(System.String,Goedel.Cryptography.IKeyDecrypt@)">
             <summary>
@@ -13532,6 +13549,14 @@
             </summary>
             <param name="typeIdentifier">The cryptographic algorithm identifier.</param>
             <returns>The UDF type identifier.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Udf.#ctor(System.String,System.Byte[])">
+            <summary>
+            Constructor, returns a UDF instance with code byte specified by <paramref name="presentation"/>
+            and extended binary value <paramref name="value"/>.
+            </summary>
+            <param name="presentation">The presentation value.</param>
+            <param name="value"></param>
         </member>
         <member name="M:Goedel.Cryptography.Udf.Matches(System.String,System.Int32)">
             <summary>

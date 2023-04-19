@@ -23,6 +23,10 @@
 
 namespace Goedel.Mesh;
 
+/// <summary>
+/// PersistentIndexEntry for a catalog entry.
+/// </summary>
+/// <typeparam name="T">The cataloged type.</typeparam>
 public class CatalogIndexEntry<T> : PersistentIndexEntry where T : CatalogedEntry {
 
 
@@ -32,8 +36,13 @@ public class CatalogIndexEntry<T> : PersistentIndexEntry where T : CatalogedEntr
     ///<summary>The underlying spool.</summary> 
     public Catalog<T> Catalog => Sequence.InternDelegate as Catalog<T>;
 
+    ///<summary>Convenience property returning the cataloged entry in its native type.</summary> 
     public T CatalogedEntry => JsonObject as T;
 
+    /// <summary>
+    /// Constructor, returns a catalog index entry in the sequence <paramref name="sequence"/>.
+    /// </summary>
+    /// <param name="sequence">The sequence to which the entry is bound.</param>
     public CatalogIndexEntry(Sequence sequence): base() {
         (sequence?.InternDelegate as Catalog<T>).AssertNotNull(NYI.Throw);
         Sequence = sequence;

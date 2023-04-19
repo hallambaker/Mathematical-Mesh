@@ -47,12 +47,17 @@ public enum DeviceState {
     }
 
 
-
+/// <summary>
+/// Presence account interface.
+/// </summary>
 public interface IPresenceAccount {
     
     
     }
 
+/// <summary>
+/// Presence device interface.
+/// </summary>
 public interface IPresenceDevice {
 
 
@@ -74,8 +79,6 @@ public interface IPresence {
     /// Return a presence service endpoint for the specified account.
     /// </summary>
     /// <param name="accountHandle">The handle of the account making the request.</param>
-    /// <param name="presenceConnection">Existing presence connection, if deffined (used
-    /// to reconnect to disconnected device).</param>
     /// <returns>A unique device connection identifier and a service endpoint allowing the client to access the service..</returns>
     ServiceAccessToken GetEndPoint(
         AccountHandleLocked accountHandle);

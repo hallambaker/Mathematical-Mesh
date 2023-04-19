@@ -15,8 +15,21 @@
         <member name="M:Goedel.Callsign.Resolver.CallsignResolverConfiguration.GetConfigurationEntry">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Callsign.Resolver.CallsignResolverConfiguration.Registry">
+        <member name="P:Goedel.Callsign.Resolver.CallsignResolverConfiguration.RegistryServiceAddress">
             <summary>The sevice address of the registry to resolve.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.CallsignResolverConfiguration.ResolverDNS">
+            <summary>The resolver service DNS.</summary> 
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.CallsignResolverConfiguration.Create(Goedel.Mesh.Client.IMeshMachineClient,Goedel.Protocol.GenericHostConfiguration,System.String,System.String)">
+            <summary>
+            Create a callsign resolver configuration.
+            </summary>
+            <param name="meshMachine">The mesh machine for which the configuration is to be created.</param>
+            <param name="GenericHostConfiguration">The generic host configuration.</param>
+            <param name="registry">The registry service address.</param>
+            <param name="resolver">The resolver DNS address.</param>
+            <returns></returns>
         </member>
         <member name="T:Goedel.Callsign.Resolver.ConsoleLoggerExtensions">
             <summary>
@@ -34,6 +47,18 @@
             <summary>
             A Mesh service provider in a form suited for dependency injection.
             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.ResolverConfiguredService.CallsignResolverConfiguration">
+            <summary>The resolver configuration.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.ResolverConfiguredService.GenericHostConfiguration">
+            <summary>The generic host configuration.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.ResolverConfiguredService.Logger">
+            <summary>The logger interface.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.ResolverConfiguredService.ResolverService">
+            <summary>The resolver service context.</summary> 
         </member>
         <member name="P:Goedel.Callsign.Resolver.ResolverConfiguredService.JpcInterface">
             <inheritdoc/>
@@ -120,6 +145,17 @@
             Static initializer, is called once when the module loads.
             </summary>
         </member>
+        <member name="T:Goedel.Callsign.Resolver.PublicCallsignResolver">
+            <summary>
+            Reference implementation of a callsign resolver.
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.PublicCallsignResolver.GetClient">
+            <summary>
+            Return a new direct service client instance.
+            </summary>
+            <returns>The direct service client instance.</returns>    
+        </member>
         <member name="P:Goedel.Callsign.Resolver.PublicCallsignResolver.MeshMachine">
             <summary>The Mesh Machine base</summary> 
         </member>
@@ -135,28 +171,60 @@
         <member name="P:Goedel.Callsign.Resolver.PublicCallsignResolver.ConnectionDevice">
             <summary>The host connection record.</summary> 
         </member>
+        <member name="P:Goedel.Callsign.Resolver.PublicCallsignResolver.RegistryServiceAddress">
+            <summary>The registry service address.</summary> 
+        </member>
         <member name="F:Goedel.Callsign.Resolver.PublicCallsignResolver.CatalogRegistration">
             <summary>The registation catalog.</summary> 
         </member>
-        <member name="M:Goedel.Callsign.Resolver.PublicCallsignResolver.Dispose">
-            <summary>
-            Dispose method, frees all resources.
-            </summary>
+        <member name="F:Goedel.Callsign.Resolver.PublicCallsignResolver.CatalogNotary">
+            <summary>The notary catalog.</summary> 
         </member>
-        <member name="M:Goedel.Callsign.Resolver.PublicCallsignResolver.Dispose(System.Boolean)">
-            <summary>
-            Dispose method, frees resources when disposing, 
-            </summary>
-            <param name="disposing"></param>
-        </member>
-        <member name="M:Goedel.Callsign.Resolver.PublicCallsignResolver.Finalize">
-            <summary>
-            Destructor.
-            </summary>
+        <member name="P:Goedel.Callsign.Resolver.PublicCallsignResolver.KeyCollection">
+            <summary>The key collection.</summary> 
         </member>
         <member name="M:Goedel.Callsign.Resolver.PublicCallsignResolver.Disposing">
             <summary>
             The class specific disposal routine.
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.PublicCallsignResolver.#ctor(Goedel.Mesh.IMeshMachine,Goedel.Protocol.GenericHostConfiguration,Goedel.Callsign.Resolver.CallsignResolverConfiguration,Goedel.Protocol.Service.LogService)">
+            <summary>
+            Return a new instance of the resolver service on <paramref name="meshMachine"/> using
+            configuration data from <paramref name="hostConfiguration"/> and 
+            <paramref name="resolverServiceConfiguration"/> with the log service 
+            <paramref name="logService"/>.
+            </summary>
+            <param name="meshMachine">The mesh machine.</param>
+            <param name="hostConfiguration">The generic host configuration.</param>
+            <param name="resolverServiceConfiguration">The resolver specific configuration.</param>
+            <param name="logService">The logging service to use.</param>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.PublicCallsignResolver.Initialize(System.Collections.Generic.IEnumerable{Goedel.Protocol.IConfguredService})">
+             <summary>
+             Initialize the service. This MUST be called after the registry account it is acting
+             as resolver for has been created and the corresponding Mesh service started.
+             </summary>
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.PublicCallsignResolver.Create(Goedel.Mesh.Client.IMeshMachineClient,Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.ProfileAccount},Goedel.Protocol.GenericHostConfiguration,Goedel.Callsign.Resolver.CallsignResolverConfiguration,Goedel.Protocol.Service.LogService)">
+            <summary>
+            Create a callsign resolver configuration.
+            </summary>
+            <param name="meshMachine">The mesh machine.</param>
+            <param name="envelopedProfileRegistry">The enveloped profile of the registry to be resolved.</param>
+            <param name="hostConfiguration">The host configuration.</param>
+            <param name="resolverServiceConfiguration">The resolver service specific configuration.</param>
+            <param name="logService">The logging service.</param>
+            <returns>The resolver configuration.</returns>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.PublicCallsignResolver.TryResolveCallsign(System.String,Goedel.Cryptography.Dare.Enveloped{Goedel.Callsign.Registration}@)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.PublicCallsignResolver.SyncToRegistry">
+            <summary>
+            Synchronize the resolver to the registry. This is typically called on a timed basis or on
+            receipt of a notification.
             </summary>
         </member>
         <member name="M:Goedel.Callsign.Resolver.PublicCallsignResolver.Query(Goedel.Callsign.QueryRequest,Goedel.Protocol.IJpcSession)">

@@ -107,7 +107,9 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     public string CallsignRegistry => ProfileRegistryCallsign?.AccountAddress;
 
 
-
+    /// <summary>
+    /// The Callsign Registry Profile.
+    /// </summary>
     public ProfileAccount ProfileRegistryCallsign { 
                 get => profileRegistryCallsign ?? GetProfileRegistryCallsign();
                 set {
@@ -304,6 +306,8 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
     #endregion
     #region // Calls to layered services
+
+    ///<inheritdoc cref="IResolver.TryResolveCallsign(string, out CallsignBinding)"/>
     public bool TryResolveCallsign(string callsign, out CallsignBinding callsignBinding) =>
         CallsignResolver.TryResolveCallsign(callsign, out callsignBinding);
 
@@ -828,6 +832,8 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// Add a keypair to the collection.
     /// </summary>
     /// <param name="keyPair">The key pair to add.</param>
+    /// <param name="accounts">Accounts for which the key may be used for encryption
+    /// or signature.</param>
     public void Add(KeyPair keyPair, List<string> accounts = null) => 
         KeyCollection.Add(keyPair, accounts);
 

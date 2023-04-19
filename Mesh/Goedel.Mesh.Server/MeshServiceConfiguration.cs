@@ -7,7 +7,6 @@ namespace Goedel.Mesh.Server;
 /// </summary>
 public class MeshServiceConfiguration : ServiceConfiguration {
 
-
     /// <summary>
     /// File in which the callsign registry profile is recorded.
     /// </summary>
@@ -21,12 +20,12 @@ public class MeshServiceConfiguration : ServiceConfiguration {
     ///<inheritdoc/>
     public override ConfigurationEntry GetConfigurationEntry() => ConfigurationEntry;
 
-
     /// <summary>
     /// Create a new instance and return the corresponding configuration file.
     /// </summary>
+    /// <param name="meshMachine">The mesh machine to create the instance for.</param>
     /// <param name="GenericHostConfiguration">Generic service configuration.</param>
-    /// <param name="service">The service endpoing.</param>
+    /// <param name="serviceDns">The service endpoint DNS.</param>
     /// <returns>The configuration setting,</returns>
     public static MeshServiceConfiguration Create(
                 IMeshMachineClient meshMachine,
@@ -41,7 +40,6 @@ public class MeshServiceConfiguration : ServiceConfiguration {
             ServicePath = meshMachine.DirectoryAccounts,
             };
         }
-
 
 
     /// <summary>

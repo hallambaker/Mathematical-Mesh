@@ -37,7 +37,7 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
     protected Configuration Configuration { get; set; }
 
 
-    public string CallsignRegistry { get; set; }
+    //public string CallsignRegistry { get; set; }
 
     protected override void Disposing() {
         base.Disposing();
@@ -93,7 +93,7 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
                 MeshMachineHost.DirectoryMesh, CallsignResolver.__Tag) ; ;
 
         var callsignResolver = new CallsignResolverConfiguration() {
-            RegistryServiceAddress = CallsignRegistry,
+            RegistryServiceAddress = AccountRegistry,
             HostPath = pathHost
             };
         Configuration.Add(callsignResolver);
