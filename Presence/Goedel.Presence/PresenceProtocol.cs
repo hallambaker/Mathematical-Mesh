@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 19-Apr-23 5:59:27 PM
+//  This file was automatically generated at 20-Apr-23 5:44:41 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -115,6 +115,103 @@ public abstract partial class PresenceProtocol : global::Goedel.Protocol.JsonObj
 
 
 // Service Dispatch Classes
+
+
+/// <summary>
+/// The new base class for the client and service side APIs.
+/// </summary>		
+public abstract partial class PresenceService : Goedel.Protocol.JpcInterface {
+		
+    /// <summary>
+    /// Well Known service identifier.
+    /// </summary>
+	public const string WellKnown = "mmmpresence";
+
+	///<inheritdoc/>
+	public override string GetWellKnown => WellKnown;
+
+    /// <summary>
+    /// Well Known service identifier.
+    /// </summary>
+	public const string Discovery = "_mmmpresence._tcp";
+
+	///<inheritdoc/>
+	public override string GetDiscovery => Discovery;
+
+	///<inheritdoc/>
+	public override Dictionary<string, JsonFactoryDelegate>  GetTagDictionary() => _TagDictionary;
+		
+	static Dictionary<string, JsonFactoryDelegate> _TagDictionary = new () {
+		};
+
+    ///<inheritdoc/>
+	public override Goedel.Protocol.JsonObject Dispatch(
+			string token,
+			Goedel.Protocol.JsonObject request,
+			IJpcSession session) => token switch {
+		_ => throw new Goedel.Protocol.UnknownOperation(),
+        };
+
+
+
+
+
+    /// <summary>
+    /// Return a client tapping the service API directly without serialization bound to
+    /// the session <paramref name="jpcSession"/>. This is intended for use in testing etc.
+    /// </summary>
+    /// <param name="jpcSession">Session to which requests are to be bound.</param>
+    /// <returns>The direct client instance.</returns>
+	public override Goedel.Protocol.JpcClientInterface GetDirect (IJpcSession jpcSession) =>
+			new PresenceServiceDirect () {
+					JpcSession = jpcSession,
+					Service = this
+					};
+
+
+    }
+
+/// <summary>
+/// Client class for PresenceService.
+/// </summary>		
+public partial class PresenceServiceClient : Goedel.Protocol.JpcClientInterface {
+
+	/// <summary>
+    /// Well Known service identifier.
+    /// </summary>
+	public const string WellKnown = "mmmpresence";
+
+    /// <summary>
+    /// Well Known service identifier.
+    /// </summary>
+	public override string GetWellKnown => WellKnown;
+
+    /// <summary>
+    /// Well Known service identifier.
+    /// </summary>
+	public const string Discovery = "_mmmpresence._tcp";
+
+    /// <summary>
+    /// Well Known service identifier.
+    /// </summary>
+	public override string GetDiscovery => Discovery;
+
+
+	}
+
+/// <summary>
+/// Direct API class for PresenceService.
+/// </summary>		
+public partial class PresenceServiceDirect: PresenceServiceClient {
+ 		
+	/// <summary>
+	/// Interface object to dispatch requests to.
+	/// </summary>	
+	public PresenceService Service {get; set;}
+
+
+		}
+
 
 
 

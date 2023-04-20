@@ -12,9 +12,15 @@
 	
 	Section 3 "Shared Classes"
 
-
 	Description
 		|Protocol interactions supported by the Mesh Service.
+
+	Service PresenceService "_mmmpresence._tcp" "mmmpresence" PresenceFromClient PresenceFromService
+		Description
+			
+
+
+
 
 
 	Section 3 "Client to Service"	

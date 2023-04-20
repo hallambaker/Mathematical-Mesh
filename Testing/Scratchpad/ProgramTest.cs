@@ -65,7 +65,11 @@ partial class Program {
         /* Minor */
 
 
-        //CallsignDirect.Test().RegisterAliceConnectBob();
+        //TestDareArchive.Test().ArchiveTest();
+        //ShellTests.Test().NewFileTestAll();
+
+        //ShellTests.Test().TestParseFile(false, false);
+
         //CallsignDirect.Test().RegisterAliceDuplicate();
         //CallsignDirect.Test().RegisterAliceTransferBob();
 

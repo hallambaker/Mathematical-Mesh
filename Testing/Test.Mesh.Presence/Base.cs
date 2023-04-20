@@ -43,8 +43,10 @@ public partial class TestPresence : ShellTestBase {
     //public int BobStride = 0;
 
     public override TestEnvironmentBase GetTestEnvironment(DeterministicSeed seed) =>
-            new TestEnvironmentPresence(seed) {
-                CommunicationConditions = CommunicationConditions
+            new TestEnvironmentRdpShell(seed) {
+                InitializeResolver = true,
+                InitializePresence = true
+                //CommunicationConditions = CommunicationConditions
                 };
 
 

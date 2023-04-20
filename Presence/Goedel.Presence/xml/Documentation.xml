@@ -85,6 +85,76 @@
             <param name="jsonReader">Input stream</param>
             <param name="result">The created object</param>
         </member>
+        <member name="T:Goedel.Presence.PresenceService">
+            <summary>
+            The new base class for the client and service side APIs.
+            </summary>		
+        </member>
+        <member name="F:Goedel.Presence.PresenceService.WellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.PresenceService.GetWellKnown">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Presence.PresenceService.Discovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.PresenceService.GetDiscovery">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Presence.PresenceService.GetTagDictionary">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Presence.PresenceService.Dispatch(System.String,Goedel.Protocol.JsonObject,Goedel.Protocol.IJpcSession)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Presence.PresenceService.GetDirect(Goedel.Protocol.IJpcSession)">
+            <summary>
+            Return a client tapping the service API directly without serialization bound to
+            the session <paramref name="jpcSession"/>. This is intended for use in testing etc.
+            </summary>
+            <param name="jpcSession">Session to which requests are to be bound.</param>
+            <returns>The direct client instance.</returns>
+        </member>
+        <member name="T:Goedel.Presence.PresenceServiceClient">
+            <summary>
+            Client class for PresenceService.
+            </summary>		
+        </member>
+        <member name="F:Goedel.Presence.PresenceServiceClient.WellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.PresenceServiceClient.GetWellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="F:Goedel.Presence.PresenceServiceClient.Discovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.PresenceServiceClient.GetDiscovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="T:Goedel.Presence.PresenceServiceDirect">
+            <summary>
+            Direct API class for PresenceService.
+            </summary>		
+        </member>
+        <member name="P:Goedel.Presence.PresenceServiceDirect.Service">
+            <summary>
+            Interface object to dispatch requests to.
+            </summary>	
+        </member>
         <member name="T:Goedel.Presence.PresenceFromClient">
              <summary>
             

@@ -25,10 +25,16 @@ using Goedel.Protocol;
 using System.Net.Sockets;
 using System.Net;
 using System;
+using Goedel.Mesh;
+using Goedel.Protocol.GenericHost;
+using Microsoft.Extensions.Logging;
 //using Goedel.Mesh.Shell.ServiceAdmin;
 
 
 namespace Goedel.XUnit;
+
+// This is now merged into TestEnvironmentRdpShell
+
 
 public class PresenceServerTesting : PresenceServer {
 
@@ -40,10 +46,12 @@ public class PresenceServerTesting : PresenceServer {
     public CommunicationConditions CommunicationConditions { get; set; }
 
     public PresenceServerTesting(
+            IMeshMachine meshMachine,
             GenericHostConfiguration hostConfiguration,
             PresenceServiceConfiguration presenceServiceConfiguration,
-            CommunicationConditions communicationConditions) : 
-                base (hostConfiguration, presenceServiceConfiguration) {
+            CommunicationConditions communicationConditions,
+            ILogger<ManagedListener> logger) :
+                base(meshMachine,hostConfiguration, presenceServiceConfiguration, logger) {
         CommunicationConditions = communicationConditions ??
                 CommunicationConditions.Normal;
         }
@@ -73,7 +81,7 @@ public class PresenceServerTesting : PresenceServer {
         //Console.WriteLine("Skip server");
         //if (Count > Skip + Stride) {
         //    Count = 0;
-            
+
         //    }
         }
 

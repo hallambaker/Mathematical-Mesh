@@ -4,6 +4,55 @@
         <name>Goedel.Presence.Server</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Presence.Server.PresenceServiceExtensions">
+            <summary>
+            Extensions class for adding a Mesh Service Provider to a host.
+            </summary>
+        </member>
+        <member name="M:Goedel.Presence.Server.PresenceServiceExtensions.AddPresenceService(Microsoft.Extensions.Hosting.IHostBuilder)">
+            <summary>
+            Inject Mesh service and options to the builder <paramref name="host"/>
+            </summary>
+            <param name="host">The service to inject.</param>
+            <returns>The value of <paramref name="host"/> for chaining.</returns>
+        </member>
+        <member name="T:Goedel.Presence.Server.ResolverConfiguredService">
+            <summary>
+            A Mesh service provider in a form suited for dependency injection.
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.Server.ResolverConfiguredService.PresenceServiceConfiguration">
+            <summary>The resolver configuration.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.ResolverConfiguredService.GenericHostConfiguration">
+            <summary>The generic host configuration.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.ResolverConfiguredService.Logger">
+            <summary>The logger interface.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.ResolverConfiguredService.PresenceServer">
+            <summary>The resolver service context.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.ResolverConfiguredService.JpcInterface">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.Server.ResolverConfiguredService.Endpoints">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Presence.Server.ResolverConfiguredService.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Presence.Server.ResolverConfiguredService.#ctor(Microsoft.Extensions.Logging.ILogger{Goedel.Protocol.GenericHost.ManagedListener},Goedel.Mesh.IMeshMachine,Goedel.Protocol.Service.HostMonitor,Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Presence.Server.PresenceServiceConfiguration},Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Protocol.GenericHostConfiguration})">
+            <summary>
+            Mesh service provider instance configured with options specifie in 
+            <paramref name="meshHostConfiguration"/> and <paramref name="genericHostConfiguration"/>.
+            </summary>
+            <param name="logger">The system logger service.</param>
+            <param name="meshMachine">The Mesh machine instance.</param>
+            <param name="hostMonitor">The host monitor for tracking host load and performance.</param>
+            <param name="meshHostConfiguration">The Mesh service configuration.</param>
+            <param name="genericHostConfiguration">The host configuration.</param>
+        </member>
         <member name="T:Goedel.Presence.Server.TBS">
             <summary>
             TBS
@@ -158,6 +207,12 @@
         <member name="P:Goedel.Presence.Server.PresenceServer.UdpServiceIpv6">
             <summary>Client for IPv6 traffic.</summary> 
         </member>
+        <member name="P:Goedel.Presence.Server.PresenceServer.IP">
+            <summary>List of bound IP addresses.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.PresenceServer.UdpEndpoints">
+            <summary>List of bound endpoints.</summary> 
+        </member>
         <member name="P:Goedel.Presence.Server.PresenceServer.TimeOutInitialMilliSeconds">
             <summary>Time to wait before cancelling connection request.</summary> 
         </member>
@@ -181,10 +236,13 @@
         <member name="M:Goedel.Presence.Server.PresenceServer.Disposing">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Presence.Server.PresenceServer.#ctor(Goedel.Protocol.GenericHostConfiguration,Goedel.Presence.Server.PresenceServiceConfiguration)">
+        <member name="M:Goedel.Presence.Server.PresenceServer.#ctor(Goedel.Mesh.IMeshMachine,Goedel.Protocol.GenericHostConfiguration,Goedel.Presence.Server.PresenceServiceConfiguration,Microsoft.Extensions.Logging.ILogger{Goedel.Protocol.GenericHost.ManagedListener})">
             <summary>
             Default constructor, returns an empty instance.
             </summary>
+        </member>
+        <member name="M:Goedel.Presence.Server.PresenceServer.Initialize(System.Collections.Generic.IEnumerable{Goedel.Protocol.IConfguredService})">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Presence.Server.PresenceServer.WaitQueuedTasks">
             <summary>
@@ -228,7 +286,7 @@
         <member name="F:Goedel.Presence.Server.PresenceServiceConfiguration.UdpSocketListeners">
             <summary>Number of UDP socket listeners per protocol.</summary> 
         </member>
-        <member name="P:Goedel.Presence.Server.PresenceServiceConfiguration.Service">
+        <member name="P:Goedel.Presence.Server.PresenceServiceConfiguration.PresenceDNS">
             <summary>The sevice address of the registry to resolve.</summary> 
         </member>
         <member name="F:Goedel.Presence.Server.PresenceServiceConfiguration.ConfigurationEntry">

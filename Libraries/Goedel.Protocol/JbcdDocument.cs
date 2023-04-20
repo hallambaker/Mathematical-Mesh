@@ -320,6 +320,7 @@ public class JbcdDocumentFile : JbcdDocument {
                 long start = 0,
                 long length = -1) {
         File = file;
+        length = length < 0 ? file.Length : length;
 
         var boundedReader = new CharacterStreamSeekBoundedReader(File, start, length);
 

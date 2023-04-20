@@ -5475,6 +5475,14 @@
             <summary>
             </summary>
         </member>
+        <member name="F:Goedel.Mesh.MeshConstants.DirectoryPresentation">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.DirectoryCarnet">
+            <summary>
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.DevicePreconfigurationPrivate">
              <summary>
             

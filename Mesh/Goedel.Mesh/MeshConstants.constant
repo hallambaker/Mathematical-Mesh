@@ -231,3 +231,5 @@ File MiscUnsorted
 	String DirectoryProfiles "Profiles"
 	String DirectoryAccounts "Accounts"
 	String DirectoryResolver "Resolver"
+	String DirectoryPresentation "Presentation"
+	String DirectoryCarnet "Carnet"

@@ -23,6 +23,7 @@
 using Goedel.Callsign;
 using Goedel.Callsign.Resolver;
 using Goedel.Carnet.Server;
+using Goedel.Presence.Server;
 using Goedel.Mesh.Core;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -75,7 +76,7 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
 
     public bool InitializeCarnet { get; init; } = false;
 
-
+    public bool InitializePresence { get; init; } = false;
     RudService RudService { get; set; }
     RudService RudServiceCallSign { get; set; }
 
@@ -172,9 +173,13 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
         var createCommand = $"create {ServiceDnsMesh} /host=host1.{ServiceDnsMesh} " +
             $"/ip={ServiceIpMesh} /admin={AccountServiceAdmin} /account=Domain\\user";
         if (InitializeResolver) {
-            createCommand += $"/resolver /registry={AccountRegistry}";
+            createCommand += $" /resolver /registry={AccountRegistry}";
+            }
+        if (InitializePresence) {
+            createCommand += $" /presence={ServiceDnsMesh} ";
             }
         if (InitializeCarnet) {
+            createCommand += $" /carnet={ServiceDnsMesh}";
             }
 
         ServiceAdmin(ServiceAdminShell, createCommand);
@@ -186,7 +191,8 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
         using var host = hostbuilder.
             AddGenericHost().
             AddMeshService().
-            AddResolverService().Build();
+            AddResolverService().
+            AddPresenceService().Build();
 
 
 

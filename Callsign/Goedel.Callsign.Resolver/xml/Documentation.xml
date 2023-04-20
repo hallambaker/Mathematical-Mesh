@@ -31,12 +31,12 @@
             <param name="resolver">The resolver DNS address.</param>
             <returns></returns>
         </member>
-        <member name="T:Goedel.Callsign.Resolver.ConsoleLoggerExtensions">
+        <member name="T:Goedel.Callsign.Resolver.CallsignResolverExtensions">
             <summary>
             Extensions class for adding a Mesh Service Provider to a host.
             </summary>
         </member>
-        <member name="M:Goedel.Callsign.Resolver.ConsoleLoggerExtensions.AddResolverService(Microsoft.Extensions.Hosting.IHostBuilder)">
+        <member name="M:Goedel.Callsign.Resolver.CallsignResolverExtensions.AddResolverService(Microsoft.Extensions.Hosting.IHostBuilder)">
             <summary>
             Inject Mesh service and options to the builder <paramref name="host"/>
             </summary>

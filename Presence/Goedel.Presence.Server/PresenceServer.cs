@@ -50,7 +50,7 @@ namespace Goedel.Presence.Server;
 /// <summary>
 /// The presence service.
 /// </summary>
-public class PresenceServer : Disposable, IPresence {
+public class PresenceServer : PresenceService, IPresence {
     #region // Properties and fields
 
     ///<summary>Client for IPv4 traffic.</summary> 
@@ -65,10 +65,11 @@ public class PresenceServer : Disposable, IPresence {
     bool ListenIpv4 { get; } = false;
     bool ListenIpv6 { get; } = false;
 
+    ///<summary>List of bound IP addresses.</summary> 
+    public List<string> IP { get; }
 
-    List<string> IP { get; }
-
-    List<string> Endpoints { get; } = new();
+    ///<summary>List of bound endpoints.</summary> 
+    public List<string> UdpEndpoints { get; } = new();
 
 
     Dictionary<string, PresenceBindingAccount> Accounts { get; } = new();
@@ -126,8 +127,10 @@ public class PresenceServer : Disposable, IPresence {
     /// Default constructor, returns an empty instance.
     /// </summary>
     public PresenceServer(
+            IMeshMachine meshMachine,
             GenericHostConfiguration hostConfiguration,
-            PresenceServiceConfiguration presenceServiceConfiguration) {
+            PresenceServiceConfiguration presenceServiceConfiguration,
+            ILogger<ManagedListener> logger) {
  
         // Assign a service port.
         UdpServiceIpv4 = HostNetwork.GetUDPClient();
@@ -168,7 +171,7 @@ public class PresenceServer : Disposable, IPresence {
                 else {
                     ListenIpv4 = true;
                     }
-                Endpoints.Add(endpoint.ToString());
+                UdpEndpoints.Add(endpoint.ToString());
                 }
             }
 
@@ -182,6 +185,15 @@ public class PresenceServer : Disposable, IPresence {
         ReceiverThread = Start(UdpReceiver);
         ThreadQueuedTasks = Start(WaitQueuedTasks);
         }
+
+    ///<inheritdoc/>
+    public override bool Initialize(IEnumerable<IConfguredService> Providers) {
+
+
+        return true;
+        }
+
+
 
 
     static Thread Start(ThreadStart start) {
@@ -404,7 +416,7 @@ public class PresenceServer : Disposable, IPresence {
             Prefix = MeshConstants.MeshPresenceService,
             SharedSecret = null, // ToDo Make a key and pass in the token!!!
             Token = tokenId,
-            Endpoints = Endpoints
+            Endpoints = UdpEndpoints
             };
         return result;
 

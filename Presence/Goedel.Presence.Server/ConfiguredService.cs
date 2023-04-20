@@ -1,11 +1,11 @@
 ﻿
 
-namespace Goedel.Callsign.Resolver;
+namespace Goedel.Presence.Server;
 
 /// <summary>
 /// Extensions class for adding a Mesh Service Provider to a host.
 /// </summary>
-public static class CallsignResolverExtensions {
+public static class PresenceServiceExtensions {
 
     /// <summary>
     /// Inject Mesh service and options to the builder <paramref name="host"/>
@@ -13,7 +13,7 @@ public static class CallsignResolverExtensions {
     /// <param name="host">The service to inject.</param>
     /// <returns>The value of <paramref name="host"/> for chaining.</returns>
 
-    public static IHostBuilder AddResolverService(this IHostBuilder host) {
+    public static IHostBuilder AddPresenceService(this IHostBuilder host) {
 
         //host.ConfigureAppConfiguration((hostingContext, configuration) => {
         //});
@@ -21,9 +21,9 @@ public static class CallsignResolverExtensions {
         //Screen.WriteLine($"Add Mesh Service");
 
         host.ConfigureServices((hostContext, services) => {
-            var serviceConfig = hostContext.Configuration.GetSection(CallsignResolverConfiguration.ConfigurationEntry.Name);
+            var serviceConfig = hostContext.Configuration.GetSection(PresenceServiceConfiguration.ConfigurationEntry.Name);
             services.AddSingleton<IConfguredService, ResolverConfiguredService>();
-            var configurationService = services.Configure<CallsignResolverConfiguration>(serviceConfig);
+            var configurationService = services.Configure<PresenceServiceConfiguration>(serviceConfig);
                 //var configurationHost = services.Configure<GenericHostConfiguration>(
                 //    hostContext.Configuration.GetSection(GenericHostConfiguration.ConfigurationEntry.Name));
 
@@ -43,29 +43,29 @@ public class ResolverConfiguredService : IConfguredService {
 
 
     ///<summary>The resolver configuration.</summary> 
-    public CallsignResolverConfiguration CallsignResolverConfiguration { get; }
+    public PresenceServiceConfiguration PresenceServiceConfiguration { get; }
 
     ///<summary>The generic host configuration.</summary> 
     public GenericHostConfiguration GenericHostConfiguration { get; }
 
 
-    IOptionsMonitor<CallsignResolverConfiguration> MeshHostConfigurationMonitor { get; }
+    IOptionsMonitor<PresenceServiceConfiguration> MeshHostConfigurationMonitor { get; }
     IMeshMachine MeshMachine { get; }
 
     ///<summary>The logger interface.</summary> 
     public ILogger<ManagedListener> Logger { get; }
 
     ///<summary>The resolver service context.</summary> 
-    PublicCallsignResolver ResolverService { get; set; }
+    PresenceServer PresenceServer { get; set; }
 
     ///<inheritdoc/>
-    public JpcInterface JpcInterface => ResolverService;
+    public JpcInterface JpcInterface => PresenceServer;
 
     ///<inheritdoc/>
     public List<Endpoint> Endpoints { get; }
 
     ///<inheritdoc/>
-    public void Dispose () => ResolverService?.Dispose ();
+    public void Dispose () => PresenceServer?.Dispose ();
 
     /// <summary>
     /// Mesh service provider instance configured with options specifie in 
@@ -80,7 +80,7 @@ public class ResolverConfiguredService : IConfguredService {
                 ILogger<ManagedListener> logger,
                 IMeshMachine meshMachine,
                 HostMonitor hostMonitor,
-                IOptionsMonitor<CallsignResolverConfiguration> meshHostConfiguration,
+                IOptionsMonitor<PresenceServiceConfiguration> meshHostConfiguration,
                 IOptionsMonitor<GenericHostConfiguration> genericHostConfiguration
                 ) {
         MeshMachine = meshMachine;
@@ -91,24 +91,24 @@ public class ResolverConfiguredService : IConfguredService {
             config => Register(config));
 
 
-        CallsignResolverConfiguration = meshHostConfiguration.CurrentValue;
+        PresenceServiceConfiguration = meshHostConfiguration.CurrentValue;
         GenericHostConfiguration = genericHostConfiguration.CurrentValue;
 
-        if ((CallsignResolverConfiguration?.HostPath).IsBlank()) {
+            if ((PresenceServiceConfiguration?.HostPath).IsBlank()) {
             return;
             }
 
 
-        var transactionLogger = new LogService
-            (GenericHostConfiguration, CallsignResolverConfiguration, hostMonitor);
+        //var transactionLogger = new LogService
+        //    (GenericHostConfiguration, PresenceServiceConfiguration, hostMonitor);
 
-        ResolverService = new PublicCallsignResolver(MeshMachine,
-            GenericHostConfiguration, CallsignResolverConfiguration, transactionLogger);
-        Endpoints = ResolverService.Endpoints;
+        PresenceServer = new PresenceServer(MeshMachine,
+            GenericHostConfiguration, PresenceServiceConfiguration, Logger);
+        Endpoints = PresenceServer.Endpoints;
 
         }
 
-    void Register(CallsignResolverConfiguration meshHostConfiguration) {
+    void Register(PresenceServiceConfiguration meshHostConfiguration) {
 
         // the only thing we are going to be able to change with the service
         // running is the administrator list

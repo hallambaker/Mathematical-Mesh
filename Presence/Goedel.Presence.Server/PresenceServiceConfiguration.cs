@@ -17,7 +17,7 @@ public class PresenceServiceConfiguration : ServiceConfiguration {
 
 
     ///<summary>The sevice address of the registry to resolve.</summary> 
-    public string Service { get; set; }
+    public string PresenceDNS { get; init; }
 
 
     ///<summary>The configuration entry.</summary> 
@@ -42,7 +42,8 @@ public class PresenceServiceConfiguration : ServiceConfiguration {
                 string service) {
 
         return new PresenceServiceConfiguration() {
-            Service = service
+            PresenceDNS = service,
+            HostPath = meshMachine.GetServiceDirectory(MeshConstants.DirectoryPresentation),
             };
         }
     }

@@ -18,6 +18,8 @@
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Shell.ServiceAdmin\Goedel.Mesh.Shell.ServiceAdmin.csproj" />
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Shell\Goedel.Mesh.Shell.csproj" />
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
+    <ProjectReference Include="..\..\Presence\Goedel.Presence.Server\Goedel.Presence.Server.csproj" />
+    <ProjectReference Include="..\..\Presence\Goedel.Presence\Goedel.Presence.csproj" />
   </ItemGroup>
 
 </Project>

@@ -126,10 +126,12 @@ public record TestArchive : TestDareFile {
         }
 
     public virtual void CheckFile(
-                    TestArchiveEntry entry) {
+                    TestArchiveEntry entry,
+                    string directory=null) {
+        var filename = directory == null ? entry.FullFilename :
+            Path.Combine(directory, entry.FullFilename);
 
-
-        var digest = entry.FullFilename.Sha3_512();
+        var digest = filename.Sha3_512();
         digest.TestEqual(entry.Digest);
         }
 
@@ -146,7 +148,7 @@ public record TestArchive : TestDareFile {
         // check each file.
         foreach (var entry in Files) {
             if (!entry.Value.Deleted) {
-                CheckFile(entry.Value);
+                CheckFile(entry.Value, tempDirectory);
                 }
             }
         }
@@ -226,7 +228,8 @@ public record TestArchiveShell : TestArchive {
 
 
     public override void CheckFile(
-                    TestArchiveEntry entry) {
+                    TestArchiveEntry entry,
+                    string directory = null) {
 
         var file = entry.Filename;
 

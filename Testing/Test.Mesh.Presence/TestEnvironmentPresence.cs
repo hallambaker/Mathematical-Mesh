@@ -30,47 +30,47 @@ namespace Goedel.XUnit;
 //            Random.GetBytes(length, tag);
 
 //    }
-public class TestEnvironmentPresence : TestEnvironmentCommon {
+//public class TestEnvironmentPresence : TestEnvironmentCommon {
 
-    public CommunicationConditions CommunicationConditions { get; set; }
+//    public CommunicationConditions CommunicationConditions { get; set; }
 
-    PresenceServer PresenceServer;
-
-
-    public TestEnvironmentPresence (DeterministicSeed seed) : base(seed) { }
-
-    protected override void Disposing() {
-        base.Disposing();
-        PresenceServer.Dispose();
-        }
+//    PresenceServer PresenceServer;
 
 
-    protected override PublicMeshService GetPublicMeshService() {
-        // create the Mesh service
+//    public TestEnvironmentPresence (DeterministicSeed seed) : base(seed) { }
 
-        //ServiceAdmin($"create example.com /host=host1.example.com /admin=alice.example.com /account=Domain\\user");
-        // PublicMeshService.Create(MeshMachine, multiConfig, serviceDns, hostConfig, hostIp, hostDns, admin, runAs);
-
-
-        MeshMachineHost = new MeshMachineTest(this, "host1");
-
-        HostFile = System.IO.Path.Combine(MeshMachineHost.DirectoryMesh, "mmmconfiguration.json");
-        Configuration = MeshMachineHost.CreatePublicMeshService(HostFile, ServiceDns);
-
-        Logger = new LogService(Configuration.GenericHost, Configuration.MeshService, null);
-
-        PresenceServer = new PresenceServerTesting(
-            Configuration.GenericHost,
-            Configuration.PresenceService,
-            CommunicationConditions);
-
-        return new PublicMeshService(MeshMachineHost,
-            Configuration.GenericHost, 
-            Configuration.MeshService, 
-            Logger, PresenceServer);
-        }
+//    protected override void Disposing() {
+//        base.Disposing();
+//        PresenceServer.Dispose();
+//        }
 
 
-    }
+//    protected override PublicMeshService GetPublicMeshService() {
+//        // create the Mesh service
+
+//        //ServiceAdmin($"create example.com /host=host1.example.com /admin=alice.example.com /account=Domain\\user");
+//        // PublicMeshService.Create(MeshMachine, multiConfig, serviceDns, hostConfig, hostIp, hostDns, admin, runAs);
+
+
+//        MeshMachineHost = new MeshMachineTest(this, "host1");
+
+//        HostFile = System.IO.Path.Combine(MeshMachineHost.DirectoryMesh, "mmmconfiguration.json");
+//        Configuration = MeshMachineHost.CreatePublicMeshService(HostFile, ServiceDns);
+
+//        Logger = new LogService(Configuration.GenericHost, Configuration.MeshService, null);
+
+//        PresenceServer = new PresenceServerTesting(
+//            Configuration.GenericHost,
+//            Configuration.PresenceService,
+//            CommunicationConditions);
+
+//        return new PublicMeshService(MeshMachineHost,
+//            Configuration.GenericHost, 
+//            Configuration.MeshService, 
+//            Logger, PresenceServer);
+//        }
+
+
+//    }
 
 

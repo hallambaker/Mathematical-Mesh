@@ -436,6 +436,7 @@ public class CharacterStreamSeekBoundedReader : CharacterStreamSeekReader {
                 long length = -1) : base(input) {
         Start = start;
         Position = input.Position;
+        length = length < 0 ? input.Length: length;
         Last = Start + length;
 
         IsValid.AssertTrue(NYI.Throw);
