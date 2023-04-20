@@ -51,4 +51,13 @@ public abstract class ServiceConfiguration : IConfigurationEntry {
     ///<summary>Path to the host data.</summary> 
     public string? HostPath { get; set; } = null;
 
+
+
+    public void InheritDefaults(GenericHostConfiguration genericHost) {
+
+
+
+
+        }
+
     }

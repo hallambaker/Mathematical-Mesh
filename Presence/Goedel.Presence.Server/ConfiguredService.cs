@@ -94,7 +94,7 @@ public class ResolverConfiguredService : IConfguredService {
         PresenceServiceConfiguration = meshHostConfiguration.CurrentValue;
         GenericHostConfiguration = genericHostConfiguration.CurrentValue;
 
-            if ((PresenceServiceConfiguration?.HostPath).IsBlank()) {
+        if ((PresenceServiceConfiguration?.HostPath).IsBlank()) {
             return;
             }
 

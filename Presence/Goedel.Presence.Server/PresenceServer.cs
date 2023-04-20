@@ -131,7 +131,10 @@ public class PresenceServer : PresenceService, IPresence {
             GenericHostConfiguration hostConfiguration,
             PresenceServiceConfiguration presenceServiceConfiguration,
             ILogger<ManagedListener> logger) {
- 
+
+        presenceServiceConfiguration.InheritDefaults(hostConfiguration);
+
+
         // Assign a service port.
         UdpServiceIpv4 = HostNetwork.GetUDPClient();
         UdpServiceIpv6 = HostNetwork.GetUDPClient(AddressFamily.InterNetworkV6);
@@ -148,10 +151,9 @@ public class PresenceServer : PresenceService, IPresence {
                 }
             }
 
-        IP = presenceServiceConfiguration?.IP ?? hostConfiguration?.IP;
+        IP = presenceServiceConfiguration?.IP ?? hostConfiguration?.IP ?? new ();
 
-        if (IP is null) {
-            IP = new();
+        if (IP.Count == 0) {
             var localEndPoints = HostNetwork.GetLocalEndpoints();
             foreach (var localEndpoint in localEndPoints) {
                 IP.Add(localEndpoint.ToString());

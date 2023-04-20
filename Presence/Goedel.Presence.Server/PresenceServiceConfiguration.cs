@@ -10,7 +10,7 @@ public class PresenceServiceConfiguration : ServiceConfiguration {
 
 
     ///<summary>The IP address and port numbers</summary> 
-    public List<string> IP { get; set; } = new();
+    public List<string> IP { get; set; }
 
     ///<summary>Number of UDP socket listeners per protocol.</summary> 
     public int UdpSocketListeners = 0;
