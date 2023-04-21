@@ -96,3 +96,17 @@ public interface IPresence {
     List<DeviceStatus> GetDevices(string accountIdentifier);
 
     }
+
+
+/// <summary>
+/// Presence Service interface.
+/// </summary>
+public interface IPresenceProvider {
+
+    /// <summary>
+    /// Return the configured IPresence service.
+    /// </summary>
+    /// <returns></returns>
+    IPresence GetPresenceProvider();
+
+    }

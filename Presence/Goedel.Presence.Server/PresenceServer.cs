@@ -133,7 +133,7 @@ public class PresenceServer : PresenceService, IPresence {
             ILogger<ManagedListener> logger) {
 
         presenceServiceConfiguration.InheritDefaults(hostConfiguration);
-
+        Console.WriteLine($"Start presence");
 
         // Assign a service port.
         UdpServiceIpv4 = HostNetwork.GetUDPClient();

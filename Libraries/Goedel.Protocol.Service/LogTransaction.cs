@@ -139,9 +139,6 @@ public class LogService {
         //    logTransaction.Token);
         }
 
-    //static bool ReportStart(LogLevelSeverity reportMode) =>
-    //    reportMode == LogLevelSeverity.Trace | reportMode == LogLevelSeverity.Warning;
-
     }
 
 

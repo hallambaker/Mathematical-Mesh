@@ -16,33 +16,33 @@
             <param name="host">The service to inject.</param>
             <returns>The value of <paramref name="host"/> for chaining.</returns>
         </member>
-        <member name="T:Goedel.Presence.Server.ResolverConfiguredService">
+        <member name="T:Goedel.Presence.Server.PresenceConfiguredService">
             <summary>
             A Mesh service provider in a form suited for dependency injection.
             </summary>
         </member>
-        <member name="P:Goedel.Presence.Server.ResolverConfiguredService.PresenceServiceConfiguration">
+        <member name="P:Goedel.Presence.Server.PresenceConfiguredService.PresenceServiceConfiguration">
             <summary>The resolver configuration.</summary> 
         </member>
-        <member name="P:Goedel.Presence.Server.ResolverConfiguredService.GenericHostConfiguration">
+        <member name="P:Goedel.Presence.Server.PresenceConfiguredService.GenericHostConfiguration">
             <summary>The generic host configuration.</summary> 
         </member>
-        <member name="P:Goedel.Presence.Server.ResolverConfiguredService.Logger">
+        <member name="P:Goedel.Presence.Server.PresenceConfiguredService.Logger">
             <summary>The logger interface.</summary> 
         </member>
-        <member name="P:Goedel.Presence.Server.ResolverConfiguredService.PresenceServer">
+        <member name="P:Goedel.Presence.Server.PresenceConfiguredService.PresenceServer">
             <summary>The resolver service context.</summary> 
         </member>
-        <member name="P:Goedel.Presence.Server.ResolverConfiguredService.JpcInterface">
+        <member name="P:Goedel.Presence.Server.PresenceConfiguredService.JpcInterface">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Presence.Server.ResolverConfiguredService.Endpoints">
+        <member name="P:Goedel.Presence.Server.PresenceConfiguredService.Endpoints">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Presence.Server.ResolverConfiguredService.Dispose">
+        <member name="M:Goedel.Presence.Server.PresenceConfiguredService.Dispose">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Presence.Server.ResolverConfiguredService.#ctor(Microsoft.Extensions.Logging.ILogger{Goedel.Protocol.GenericHost.ManagedListener},Goedel.Mesh.IMeshMachine,Goedel.Protocol.Service.HostMonitor,Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Presence.Server.PresenceServiceConfiguration},Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Protocol.GenericHostConfiguration})">
+        <member name="M:Goedel.Presence.Server.PresenceConfiguredService.#ctor(Microsoft.Extensions.Logging.ILogger{Goedel.Protocol.GenericHost.ManagedListener},Goedel.Mesh.IMeshMachine,Goedel.Protocol.Service.HostMonitor,Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Presence.Server.PresenceServiceConfiguration},Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Protocol.GenericHostConfiguration})">
             <summary>
             Mesh service provider instance configured with options specifie in 
             <paramref name="meshHostConfiguration"/> and <paramref name="genericHostConfiguration"/>.
@@ -52,6 +52,9 @@
             <param name="hostMonitor">The host monitor for tracking host load and performance.</param>
             <param name="meshHostConfiguration">The Mesh service configuration.</param>
             <param name="genericHostConfiguration">The host configuration.</param>
+        </member>
+        <member name="M:Goedel.Presence.Server.PresenceConfiguredService.GetPresenceProvider">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Presence.Server.TBS">
             <summary>

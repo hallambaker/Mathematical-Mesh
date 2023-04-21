@@ -509,7 +509,7 @@
         <member name="M:Goedel.Mesh.Server.MeshConfiguredService.Dispose">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshConfiguredService.#ctor(Microsoft.Extensions.Logging.ILogger{Goedel.Protocol.GenericHost.ManagedListener},Goedel.Mesh.IMeshMachine,Goedel.Protocol.Service.HostMonitor,Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Mesh.Server.MeshServiceConfiguration},Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Protocol.GenericHostConfiguration})">
+        <member name="M:Goedel.Mesh.Server.MeshConfiguredService.#ctor(Microsoft.Extensions.Logging.ILogger{Goedel.Protocol.GenericHost.ManagedListener},Goedel.Mesh.IMeshMachine,Goedel.Protocol.Service.HostMonitor,Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Mesh.Server.MeshServiceConfiguration},Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Protocol.GenericHostConfiguration},Goedel.Mesh.Server.IPresenceProvider)">
             <summary>
             Mesh service provider instance configured with options specifie in 
             <paramref name="meshHostConfiguration"/> and <paramref name="genericHostConfiguration"/>.
@@ -519,6 +519,7 @@
             <param name="hostMonitor">The host monitor for tracking host load and performance.</param>
             <param name="meshHostConfiguration">The Mesh service configuration.</param>
             <param name="genericHostConfiguration">The host configuration.</param>
+            <param name="presenceServiceProvider">The presence service.</param>
         </member>
         <member name="T:Goedel.Mesh.Server.MeshServerException">
             <summary>
@@ -1242,6 +1243,17 @@
             </summary>
             <returns>List of the device identifiers of the connected devices.</returns>
         </member>
+        <member name="T:Goedel.Mesh.Server.IPresenceProvider">
+            <summary>
+            Presence Service interface.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.IPresenceProvider.GetPresenceProvider">
+            <summary>
+            Return the configured IPresence service.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Goedel.Mesh.Server.CatalogItem">
              <summary>
             
@@ -1318,7 +1330,7 @@
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Disposing">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.#ctor(Goedel.Mesh.IMeshMachine,Goedel.Protocol.GenericHostConfiguration,Goedel.Mesh.Server.MeshServiceConfiguration,Goedel.Protocol.Service.LogService,Goedel.Mesh.Server.IPresence)">
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.#ctor(Goedel.Mesh.IMeshMachine,Goedel.Protocol.GenericHostConfiguration,Goedel.Mesh.Server.MeshServiceConfiguration,Goedel.Protocol.Service.LogService,Goedel.Mesh.Server.IPresenceProvider)">
             <summary>
             A Mesh service provider.
             </summary>
@@ -1326,7 +1338,7 @@
             <param name="hostConfiguration">Host configuration.</param>
             <param name="meshServiceConfiguration">Service configuration.</param>
             <param name="logService">The transaction logging service.</param>
-            <param name="presenceService">Optional presence service.</param>
+            <param name="presenceServiceProvider">Optional presence service.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.GetService(Goedel.Mesh.Client.IMeshMachineClient,System.String)">
             <summary>

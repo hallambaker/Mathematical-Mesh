@@ -1,5 +1,7 @@
 ﻿
 
+using Goedel.Mesh.Server;
+
 namespace Goedel.Presence.Server;
 
 /// <summary>
@@ -22,7 +24,7 @@ public static class PresenceServiceExtensions {
 
         host.ConfigureServices((hostContext, services) => {
             var serviceConfig = hostContext.Configuration.GetSection(PresenceServiceConfiguration.ConfigurationEntry.Name);
-            services.AddSingleton<IConfguredService, ResolverConfiguredService>();
+            services.AddSingleton<IPresenceProvider, PresenceConfiguredService>();
             var configurationService = services.Configure<PresenceServiceConfiguration>(serviceConfig);
                 //var configurationHost = services.Configure<GenericHostConfiguration>(
                 //    hostContext.Configuration.GetSection(GenericHostConfiguration.ConfigurationEntry.Name));
@@ -39,7 +41,7 @@ public static class PresenceServiceExtensions {
 /// <summary>
 /// A Mesh service provider in a form suited for dependency injection.
 /// </summary>
-public class ResolverConfiguredService : IConfguredService {
+public class PresenceConfiguredService : IPresenceProvider {
 
 
     ///<summary>The resolver configuration.</summary> 
@@ -76,7 +78,7 @@ public class ResolverConfiguredService : IConfguredService {
     /// <param name="hostMonitor">The host monitor for tracking host load and performance.</param>
     /// <param name="meshHostConfiguration">The Mesh service configuration.</param>
     /// <param name="genericHostConfiguration">The host configuration.</param>
-    public ResolverConfiguredService(
+    public PresenceConfiguredService(
                 ILogger<ManagedListener> logger,
                 IMeshMachine meshMachine,
                 HostMonitor hostMonitor,
@@ -107,6 +109,9 @@ public class ResolverConfiguredService : IConfguredService {
         Endpoints = PresenceServer.Endpoints;
 
         }
+
+    ///<inheritdoc/>
+    public IPresence GetPresenceProvider() => PresenceServer;
 
     void Register(PresenceServiceConfiguration meshHostConfiguration) {
 

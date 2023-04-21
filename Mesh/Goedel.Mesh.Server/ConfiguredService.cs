@@ -84,13 +84,16 @@ public class MeshConfiguredService : IConfguredService {
     /// <param name="hostMonitor">The host monitor for tracking host load and performance.</param>
     /// <param name="meshHostConfiguration">The Mesh service configuration.</param>
     /// <param name="genericHostConfiguration">The host configuration.</param>
+    /// <param name="presenceServiceProvider">The presence service.</param>
     public MeshConfiguredService(
                 ILogger<ManagedListener> logger,
                 IMeshMachine meshMachine,
                 HostMonitor hostMonitor,
                 IOptionsMonitor<MeshServiceConfiguration> meshHostConfiguration,
-                IOptionsMonitor<GenericHostConfiguration> genericHostConfiguration
+                IOptionsMonitor<GenericHostConfiguration> genericHostConfiguration,
+                IPresenceProvider presenceServiceProvider
                 ) {
+        Console.WriteLine($"Start mesh");
 
         MeshMachine = meshMachine;
         Logger = logger;
@@ -112,7 +115,7 @@ public class MeshConfiguredService : IConfguredService {
             (GenericHostConfiguration, MeshHostConfiguration, hostMonitor);
 
         PublicMeshService = new PublicMeshService(MeshMachine, 
-            GenericHostConfiguration, MeshHostConfiguration, transactionLogger);
+            GenericHostConfiguration, MeshHostConfiguration, transactionLogger, presenceServiceProvider);
         Endpoints = PublicMeshService.Endpoints;
 
         }

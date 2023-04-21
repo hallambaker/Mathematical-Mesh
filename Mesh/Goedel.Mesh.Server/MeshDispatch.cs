@@ -19,13 +19,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using Goedel.Protocol.Service;
-using Microsoft.Extensions.Logging;
-using Microsoft.VisualBasic;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
-
 
 namespace Goedel.Mesh.Server;
 
@@ -128,19 +121,19 @@ public class PublicMeshService : MeshService {
     /// <param name="hostConfiguration">Host configuration.</param>
     /// <param name="meshServiceConfiguration">Service configuration.</param>
     /// <param name="logService">The transaction logging service.</param>
-    /// <param name="presenceService">Optional presence service.</param>
+    /// <param name="presenceServiceProvider">Optional presence service.</param>
     public PublicMeshService(
             IMeshMachine meshMachine,
             GenericHostConfiguration hostConfiguration,
             MeshServiceConfiguration meshServiceConfiguration,
             LogService logService,
-            IPresence presenceService=null) {
+            IPresenceProvider presenceServiceProvider =null) {
         LogService = logService;
         MeshMachine = meshMachine;
         GenericHostConfiguration = hostConfiguration;
         MeshHostConfiguration = meshServiceConfiguration;
         KeyCollection = MeshMachine.KeyCollection;
-        PresenceService = presenceService;
+        PresenceService = presenceServiceProvider?.GetPresenceProvider();
 
         Logger.ServiceStart(PublicMeshService.WellKnown, 
             meshServiceConfiguration.ServiceUdf, GenericHostConfiguration.HostUdf);
