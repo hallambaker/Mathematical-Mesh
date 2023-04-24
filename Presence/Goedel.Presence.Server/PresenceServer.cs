@@ -151,7 +151,8 @@ public class PresenceServer : PresenceService, IPresence {
                 }
             }
 
-        IP = presenceServiceConfiguration?.IP ?? hostConfiguration?.IP ?? new ();
+        // Do NOT use the host service IP addresses, these should only be for the Mesh host
+        IP = presenceServiceConfiguration?.IP ?? new ();
 
         if (IP.Count == 0) {
             var localEndPoints = HostNetwork.GetLocalEndpoints();

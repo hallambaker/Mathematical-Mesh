@@ -475,10 +475,14 @@ public class ContextPresence : Disposable {
         SendData(UdpClient, message, token);
 
     void SendData(UdpClient udpClient, PresenceFromClient message, byte[] token) {
+
+
+
+        var endpoint = IPEndpoints[currentEndPoint];
         message.Serial = MessageSerial++;
         var data = message.ToBytes(token);
-        udpClient.Send(data, data.Length, IPEndpoints[currentEndPoint]);
-
+        udpClient.Send(data, data.Length, endpoint);
+        Console.WriteLine($"Send ${data.Length} bytes to {endpoint.Address}:{endpoint.Port}");
         }
 
 

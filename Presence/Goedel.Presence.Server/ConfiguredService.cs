@@ -63,8 +63,8 @@ public class PresenceConfiguredService : IPresenceProvider {
     ///<inheritdoc/>
     public JpcInterface JpcInterface => PresenceServer;
 
-    ///<inheritdoc/>
-    public List<Endpoint> Endpoints { get; }
+    /////<inheritdoc/>
+    //public List<Endpoint> Endpoints { get; }
 
     ///<inheritdoc/>
     public void Dispose () => PresenceServer?.Dispose ();
@@ -106,7 +106,7 @@ public class PresenceConfiguredService : IPresenceProvider {
 
         PresenceServer = new PresenceServer(MeshMachine,
             GenericHostConfiguration, PresenceServiceConfiguration, Logger);
-        Endpoints = PresenceServer.Endpoints;
+        //Endpoints = PresenceServer.Endpoints;
 
         }
 

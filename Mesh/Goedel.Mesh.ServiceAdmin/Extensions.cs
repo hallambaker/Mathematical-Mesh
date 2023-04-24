@@ -260,17 +260,6 @@ public static class Extensions {
         serviceConfig.MakePath();
         configuration.ToFile(serviceConfig);
 
-        //if (resolver != null) {
-        //    configuration.CallsignResolver = new CallsignResolverConfiguration() {
-        //        Registry = registry,
-        //        HostPath = pathHost
-        //        };
-
-
-
-        //    }
-
-
 
         return configuration;
         }

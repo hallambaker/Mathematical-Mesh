@@ -95,7 +95,7 @@ partial class Program {
         //RegistrationTests.Test().CallsignBind();
         //RegistrationTests.Test().CallsignTransfer();
 
-        TestPresence.Test().PresenceStatusUpdate();
+        //TestPresence.Test().PresenceStatusUpdate();
         TestPresence.Test().PresenceSessionRequest();
         TestPresence.Test().PresenceHeartbeat();
 

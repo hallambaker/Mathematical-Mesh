@@ -56,7 +56,7 @@ public partial class TestPresence  {
     /// </summary>
     [Fact]
     public void PresenceSessionRequest() {
-        "Disable".TaskFunctionality(true);
+
 
 
         ThreadPool.SetMinThreads(100, 100);

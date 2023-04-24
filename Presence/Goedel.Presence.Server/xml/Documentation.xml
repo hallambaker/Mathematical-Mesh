@@ -36,9 +36,6 @@
         <member name="P:Goedel.Presence.Server.PresenceConfiguredService.JpcInterface">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Presence.Server.PresenceConfiguredService.Endpoints">
-            <inheritdoc/>
-        </member>
         <member name="M:Goedel.Presence.Server.PresenceConfiguredService.Dispose">
             <inheritdoc/>
         </member>
