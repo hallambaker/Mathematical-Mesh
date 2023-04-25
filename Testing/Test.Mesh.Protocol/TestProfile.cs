@@ -28,6 +28,28 @@ namespace Goedel.XUnit;
 
 public partial class TSignatures {
 
+
+    [Fact(Skip = "Signature testing skiped pending invalidation library")]
+    public void TestAuthorizationGood() => throw new NYI();
+
+    [Fact(Skip = "Signature testing skiped pending invalidation library")]
+    public void TestAuthorizationInsufficientTransact() => throw new NYI();
+
+    [Fact(Skip = "Signature testing skiped pending invalidation library")]
+    public void TestAuthorizationInsufficientDownload() => throw new NYI();
+
+    [Fact(Skip = "Signature testing skiped pending invalidation library")]
+    public void TestAuthorizationInsufficientPost() => throw new NYI();
+
+    [Fact(Skip = "Signature testing skiped pending invalidation library")]
+    public void TestAuthorizationInsufficientPublicRead() => throw new NYI();
+
+    [Fact(Skip = "Signature testing skiped pending invalidation library")]
+    public void TestAuthorizationInsufficientComplete() => throw new NYI();
+
+    [Fact(Skip = "Signature testing skiped pending invalidation library")]
+    public void TestAuthorizationInsufficientStatus() => throw new NYI();
+
     public static TSignatures Test() => new();
 
     [Fact(Skip = "Signature testing skiped pending invalidation library")]

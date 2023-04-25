@@ -230,7 +230,7 @@ public class AccountHandleLocked : Disposable {
     /// <param name="bitmask">Bitmask value to update.</param>
     public void PostInbound(DareEnvelope envelope, Bitmask bitmask) {
 
-        "Implement fine grain access control".TaskFunctionality(suppress: Assert.HaltPhase1);
+        //"Implement fine grain access control".TaskFunctionality(suppress: Assert.HaltPhase1);
 
         //AccountPrivilege.HasFlag(AccountPrivilege.Post).AssertTrue(NotAuthorized.Throw);
 
@@ -259,7 +259,7 @@ public class AccountHandleLocked : Disposable {
     public void PostLocal(DareEnvelope envelope, Bitmask bitmask) {
         //AccountPrivilege.HasFlag(AccountPrivilege.Local).AssertTrue(NotAuthorized.Throw);
 
-        "Implement fine grain access control".TaskFunctionality(suppress: Assert.HaltPhase1);
+        //"Implement fine grain access control".TaskFunctionality(suppress: Assert.HaltPhase1);
 
         //using var container = new Spool(Directory, SpoolLocal.Label);
         //container.Add(envelope);
@@ -280,7 +280,7 @@ public class AccountHandleLocked : Disposable {
     /// <param name="envelopes">The envelopes to append.</param>
     ///  <param name="bitmask">Bitmask to be updated.</param>
     public void StoreAppend(string label, List<DareEnvelope> envelopes, Bitmask bitmask) {
-        "Implement fine grain access control".TaskFunctionality(suppress: Assert.HaltPhase1);
+        //"Implement fine grain access control".TaskFunctionality(suppress: Assert.HaltPhase1);
 
 
 
