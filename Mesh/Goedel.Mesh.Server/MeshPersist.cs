@@ -378,17 +378,25 @@ public class MeshPersist : Disposable {
 
             using var store = accountHandle.GetSequence(selection.Store);
 
-            var update = new StoreUpdate() {
-                Store = selection.Store,
-                Envelopes = new List<DareEnvelope>()
-                };
-
-            foreach (var message in store.SelectEnvelope(selection.IndexMin??0)) {
-                message.LoadBody();
-                update.Envelopes.Add(message);
+            if (store is SequenceNull) {
+                updates.Add(new StoreUpdate() {
+                    Store = selection.Store,
+                    Envelopes = null
+                    });
                 }
+            else {
+                var update = new StoreUpdate() {
+                    Store = selection.Store,
+                    Envelopes = new List<DareEnvelope>()
+                    };
 
-            updates.Add(update);
+                foreach (var message in store.SelectEnvelope(selection.IndexMin ?? 0)) {
+                    message.LoadBody();
+                    update.Envelopes.Add(message);
+                    }
+
+                updates.Add(update);
+                }
             }
         return updates;
         }

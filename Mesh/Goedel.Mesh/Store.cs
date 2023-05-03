@@ -204,13 +204,21 @@ public class Store : Disposable, IInternSequenceIndexEntry {
                 string directory,
                 string storeName) {
 
-        var path = Path.Combine(directory, storeName);   
+        var path = FileName(directory, storeName);
+        if (!File.Exists(path)) {
+            return new ConstraintsSelect() {
+                Store = storeName,
+                IndexMin =  0
+                };
+            }
+
+
         var jbcdStream = new JbcdStream(path, FileStatus.Read);
         var sequenceIndexEntryLast = SequenceIndexEntry.ReadLast(jbcdStream, sequence: SequenceDummy);
 
         return new ConstraintsSelect() {
             Store = storeName,
-            IndexMin = sequenceIndexEntryLast?.Index ?? 0
+            IndexMin = sequenceIndexEntryLast?.Index +1 ?? 0
             };
         }
 

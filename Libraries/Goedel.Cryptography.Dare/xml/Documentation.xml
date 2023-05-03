@@ -6510,6 +6510,30 @@
             <returns></returns>
             <exception cref="T:Goedel.Utilities.NYI"></exception>
         </member>
+        <member name="T:Goedel.Cryptography.Dare.SequenceNull">
+            <summary>
+            Null sequence returned when there is a file of zero length waiting for a 
+            first item to be appended.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceNull.CheckSequence(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareHeader})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceNull.Frame(System.Int64,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceNull.FrameLast">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceNull.Position(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceNull.FillDictionary(Goedel.Cryptography.Dare.SequenceInfo,System.Int64,System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceNull.FillDictionary">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Cryptography.Dare.SequenceTree">
             <summary>
             Simple Sequence that supports the append and index functions but does not 

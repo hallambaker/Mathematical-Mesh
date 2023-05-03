@@ -241,8 +241,8 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     protected static Dictionary<string, StoreFactoryDelegate> StaticSpoolDelegates { get; set; } = new() {
             { SpoolInbound.Label, SpoolInbound.Factory },
             { SpoolOutbound.Label, SpoolOutbound.Factory },
-            { SpoolLocal.Label, SpoolLocal.Factory },
-            { SpoolArchive.Label, SpoolArchive.Factory },
+            { SpoolLocal.Label, SpoolLocal.Factory }
+            //{ SpoolArchive.Label, SpoolArchive.Factory },
         };
 
     ///<summary>Returns the inbound spool for the account</summary>
@@ -422,10 +422,10 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="stores">The stores to be synchronized.</param>
     /// <param name="maxResuts">If </param>
     /// <returns>Response returned by the service</returns>
-    public bool SyncNew(
+    public bool SyncPartial(
             int maxResuts = -1,
             params string[] stores) {
-        var partial = SyncNew(stores as IEnumerable<string>, maxResuts);
+        var partial = SyncPartial(stores as IEnumerable<string>, maxResuts);
         return partial;
         }
 
@@ -434,10 +434,12 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// </summary>
     /// <param name="stores">The stores to be synchronized.</param>
     /// <param name="maxResuts">The maximum number of results to return.</param>
+    /// <param name="catalogedDeviceDigest">The payload digest of the Cataloged device</param>
     /// <returns>True if the synchronization completed, otherwise false.</returns>
-    public bool SyncNew(
+    public bool SyncPartial(
             IEnumerable< string> stores,
-            int maxResuts = -1) {
+            int maxResuts = -1,
+            string catalogedDeviceDigest=null) {
 
         var constraintsSelects = new List<ConstraintsSelect>();
 
@@ -446,11 +448,12 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             }
 
         var downloadRequest = new DownloadRequest() {
+            CatalogedDeviceDigest = catalogedDeviceDigest,
             Select = constraintsSelects,
             MaxResults = maxResuts
             };
 
-        var (partial, _) = SyncNewInner(MeshClient, constraintsSelects, maxResuts);
+        var (partial, _) = SyncPartial(MeshClient, constraintsSelects, maxResuts, catalogedDeviceDigest);
         return partial;
         }
 
@@ -458,19 +461,37 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// Synchronize the core stores specified in <see cref="DictionaryStores"/> to this device to the 
     /// service copies. 
     /// </summary>
+    /// <param name="meshClient"></param>
+    /// <param name="maxResuts">The maximum number of results to return.</param>
+    /// <param name="catalogedDeviceDigest">The payload digest of the Cataloged device</param>
+    /// <param name="full">If true, synchronize all the core stores.</param>
     /// <returns>True if the synchronization completed, otherwise false.</returns>
-    public (bool, int) SyncNew(
+    public (bool, int) SyncPartial(
             int maxResuts = -1,
-            MeshServiceClient? meshClient=null) {
+            MeshServiceClient? meshClient=null,
+            string catalogedDeviceDigest = null,
+            bool full=true) {
         
         var constraintsSelects = new List<ConstraintsSelect>();
 
-        foreach (var entry in DictionaryStores) {
-            var store = entry.Key;
-            constraintsSelects.Add(GetConstraint(store));
+        if (full) {
+            foreach (var entry in DictionaryCatalogDelegates) {
+                var store = entry.Key;
+                constraintsSelects.Add(GetConstraint(store));
+                }
+            foreach (var entry in DictionarySpoolDelegates) {
+                var store = entry.Key;
+                constraintsSelects.Add(GetConstraint(store));
+                }
+            }
+        else {
+            foreach (var entry in DictionaryStores) {
+                var store = entry.Key;
+                constraintsSelects.Add(GetConstraint(store));
+                }
             }
 
-        var(partial, count) =  SyncNewInner(meshClient?? MeshClient, constraintsSelects, maxResuts);
+        var (partial, count) =  SyncPartial(meshClient?? MeshClient, constraintsSelects, maxResuts, catalogedDeviceDigest);
 
         return (partial, count);
         }
@@ -479,11 +500,11 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     ConstraintsSelect GetConstraint(
             string storeName) {
         if (DictionaryStores.TryGetValue(storeName, out var syncStatus)) {
-            
+            var store = syncStatus.Store;
             // Request the next envelope after the envelope we already have.
             return new ConstraintsSelect() {
                 Store = storeName,
-                IndexMin = syncStatus.Index +1
+                IndexMin = store.Sequence.FrameIndexLast +1
                 };
             }
         return Store.GetConstraintsSelect(StoresDirectory, storeName);
@@ -496,16 +517,17 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// </summary>
     /// <param name="meshClient"></param>
     /// <param name="constraintsSelects"></param>
+    /// <param name="catalogedDeviceDigest">The payload digest of the Cataloged device</param>
     /// <returns>(partial, count) where partial is true if the </returns>
-    public virtual (bool, int) SyncNewInner(
-
+    public virtual (bool, int) SyncPartial(
                 MeshServiceClient meshClient,
                 List<ConstraintsSelect> constraintsSelects,
-                int maxResuts = -1) {
+                int maxResuts = -1,
+                string catalogedDeviceDigest = null) {
 
         var downloadRequest = new DownloadRequest() {
-            DeviceUDF = ProfileDevice.UdfString,
-            CatalogedDeviceDigest = CatalogedMachine?.CatalogedDeviceDigest ?? "",
+            DeviceUDF = catalogedDeviceDigest==null ? null : ProfileDevice.UdfString,
+            CatalogedDeviceDigest = catalogedDeviceDigest,
             MaxResults = maxResuts,
             Select = constraintsSelects
             };
@@ -520,7 +542,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// </summary>
     /// <returns>The number of items synchronized</returns>
     public virtual int Sync() {
-        var (_, count ) = SyncNew();
+        var (_, count ) = SyncPartial();
         return count;
         }
         //{
@@ -1191,18 +1213,4 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
     }
 
-/// <summary>
-/// A UDP Service Endpoint
-/// </summary>
-/// <param name="IPEndPoint">The IP address and port.</param>
-/// <param name="Priority">SRV record Priority.</param>
-/// <param name="Weight">SRV record weight.</param>
-public record UdpServiceEndpoint(
-        IPEndPoint IPEndPoint,
-        int Priority=1,
-        int Weight=1) {
 
-
-
-
-    }

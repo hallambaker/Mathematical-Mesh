@@ -430,7 +430,9 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             IKeyLocate keyCollection = null, bool decrypt = true,
                     IInternSequenceIndexEntry store = null) {
         var jbcdStream = new JbcdStream(fileName, fileStatus: fileStatus);
-
+        if (jbcdStream.Length == 0) {
+            return new SequenceNull();
+            }
         var sequence = OpenExisting(jbcdStream, keyCollection, decrypt: decrypt, store:store);
         sequence.DisposeJBCDStream = jbcdStream;
 

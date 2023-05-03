@@ -608,10 +608,13 @@ public partial class ContextUser : ContextAccount {
 
     ///<inheritdoc/>
     public override int Sync() {
-        var statusRequest = new StatusRequest() {
-            CatalogedDeviceDigest = CatalogedMachine?.CatalogedDeviceDigest ?? ""
-            };
-        return Sync(statusRequest).Count;
+        var (_, count) = SyncPartial(catalogedDeviceDigest: CatalogedMachine?.CatalogedDeviceDigest ?? "");
+        return count;
+
+        //var statusRequest = new StatusRequest() {
+        //    CatalogedDeviceDigest = CatalogedMachine?.CatalogedDeviceDigest ?? ""
+        //    };
+        //return Sync(statusRequest).Count;
 
         }
 

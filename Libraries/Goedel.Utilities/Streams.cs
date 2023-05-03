@@ -22,9 +22,6 @@
 
 namespace Goedel.Utilities;
 
-
-
-
 public static partial class Extension {
 
     /// <summary>

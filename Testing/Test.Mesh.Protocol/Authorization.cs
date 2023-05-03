@@ -128,10 +128,10 @@ public partial class TestService {
         // Create an ssh application
         var applicationSSH = CatalogedApplicationSsh.Create(id, roles);
 
-        var transaction1 = contextAccountAlice.TransactBegin();
+        var transaction1 = contextAccountAlice.TransactBegin();4
         transaction1.ApplicationCreate(applicationSSH);
         var result1 = transaction1.Transact();
-
+        4
 
         // Connect a third device
         var contextOnboardPending2 = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3, AccountAlice);
@@ -146,6 +146,8 @@ public partial class TestService {
         ExerciseAccount(contextOnboarded2);
 
         contextOnboarded.Sync();
+        // this is likely failing because the updates are not being correctly 
+        // processd on the cataloged devices...
 
         var applicationSsh1 = contextAccountAlice.GetApplicationSsh(id);
         var applicationEntrySsh1 = contextAccountAlice.GetApplicationEntrySsh(applicationSsh1.Key);

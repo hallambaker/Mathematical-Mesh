@@ -2410,6 +2410,36 @@
             <param name="index">The starting index.</param>
             <returns>The converted data.</returns>
         </member>
+        <member name="T:Goedel.Utilities.PartialOperationResult">
+            <summary>
+            Reports the result of a partial operation
+            </summary>
+            <param name="Complete">True if the operation completed, otherwise false.</param>
+            <param name="Processed">The number of items processed on the last update.</param>
+            <param name="Remaining">The number of items remaining if known, -1 otherwise.</param>
+            <param name="Estimated">If true, the number of remaining items is an estimate.</param>
+        </member>
+        <member name="M:Goedel.Utilities.PartialOperationResult.#ctor(System.Boolean,System.Int64,System.Int64,System.Boolean)">
+            <summary>
+            Reports the result of a partial operation
+            </summary>
+            <param name="Complete">True if the operation completed, otherwise false.</param>
+            <param name="Processed">The number of items processed on the last update.</param>
+            <param name="Remaining">The number of items remaining if known, -1 otherwise.</param>
+            <param name="Estimated">If true, the number of remaining items is an estimate.</param>
+        </member>
+        <member name="P:Goedel.Utilities.PartialOperationResult.Complete">
+            <summary>True if the operation completed, otherwise false.</summary>
+        </member>
+        <member name="P:Goedel.Utilities.PartialOperationResult.Processed">
+            <summary>The number of items processed on the last update.</summary>
+        </member>
+        <member name="P:Goedel.Utilities.PartialOperationResult.Remaining">
+            <summary>The number of items remaining if known, -1 otherwise.</summary>
+        </member>
+        <member name="P:Goedel.Utilities.PartialOperationResult.Estimated">
+            <summary>If true, the number of remaining items is an estimate.</summary>
+        </member>
         <member name="T:Goedel.Utilities.AddressType">
             <summary>
             Account addresses used in the Mesh.

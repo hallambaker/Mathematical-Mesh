@@ -569,7 +569,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.SyncNew(System.Int32,System.String[])">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.SyncPartial(System.Int32,System.String[])">
             <summary>
             Synchronize the stores <paramref name="stores"/> to this device to the service copies. 
             </summary>
@@ -577,28 +577,34 @@
             <param name="maxResuts">If </param>
             <returns>Response returned by the service</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.SyncNew(System.Collections.Generic.IEnumerable{System.String},System.Int32)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.SyncPartial(System.Collections.Generic.IEnumerable{System.String},System.Int32,System.String)">
             <summary>
             Synchronize the stores <paramref name="stores"/> to this device to the service copies. 
             </summary>
             <param name="stores">The stores to be synchronized.</param>
             <param name="maxResuts">The maximum number of results to return.</param>
+            <param name="catalogedDeviceDigest">The payload digest of the Cataloged device</param>
             <returns>True if the synchronization completed, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.SyncNew(System.Int32,Goedel.Mesh.MeshServiceClient)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.SyncPartial(System.Int32,Goedel.Mesh.MeshServiceClient,System.String,System.Boolean)">
             <summary>
             Synchronize the core stores specified in <see cref="F:Goedel.Mesh.Client.ContextAccount.DictionaryStores"/> to this device to the 
             service copies. 
             </summary>
+            <param name="meshClient"></param>
+            <param name="maxResuts">The maximum number of results to return.</param>
+            <param name="catalogedDeviceDigest">The payload digest of the Cataloged device</param>
+            <param name="full">If true, synchronize all the core stores.</param>
             <returns>True if the synchronization completed, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.SyncNewInner(Goedel.Mesh.MeshServiceClient,System.Collections.Generic.List{Goedel.Mesh.ConstraintsSelect},System.Int32)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.SyncPartial(Goedel.Mesh.MeshServiceClient,System.Collections.Generic.List{Goedel.Mesh.ConstraintsSelect},System.Int32,System.String)">
             <summary>
             Compile a download request for the constraint set <paramref name="constraintsSelects"/>
             and synchronize the local copies of the stores.
             </summary>
             <param name="meshClient"></param>
             <param name="constraintsSelects"></param>
+            <param name="catalogedDeviceDigest">The payload digest of the Cataloged device</param>
             <returns>(partial, count) where partial is true if the </returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.Sync">
@@ -845,31 +851,6 @@
             </summary>
             <param name="transact">The transaction to perform.</param>
             <returns>Response from the Mesh service.</returns>
-        </member>
-        <member name="T:Goedel.Mesh.Client.UdpServiceEndpoint">
-            <summary>
-            A UDP Service Endpoint
-            </summary>
-            <param name="IPEndPoint">The IP address and port.</param>
-            <param name="Priority">SRV record Priority.</param>
-            <param name="Weight">SRV record weight.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.UdpServiceEndpoint.#ctor(System.Net.IPEndPoint,System.Int32,System.Int32)">
-            <summary>
-            A UDP Service Endpoint
-            </summary>
-            <param name="IPEndPoint">The IP address and port.</param>
-            <param name="Priority">SRV record Priority.</param>
-            <param name="Weight">SRV record weight.</param>
-        </member>
-        <member name="P:Goedel.Mesh.Client.UdpServiceEndpoint.IPEndPoint">
-            <summary>The IP address and port.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.UdpServiceEndpoint.Priority">
-            <summary>SRV record Priority.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.UdpServiceEndpoint.Weight">
-            <summary>SRV record weight.</summary>
         </member>
         <member name="T:Goedel.Mesh.Client.ContextGroup">
             <summary>
