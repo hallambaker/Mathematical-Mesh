@@ -78,7 +78,7 @@ public class CatalogAccount : Catalog<AccountEntry> {
             var accountUser = indexEntry.GetJSONObject() as AccountUser;
             //var hostAssignment = accountUser.EnvelopedAccountHostAssignment.Decode();
 
-            Console.WriteLine($"*** Add account {accountUser.LocalName}");
+            //Console.WriteLine($"*** Add account {accountUser.LocalName}");
 
 
             if (AccountByAddress.TryGetValue(accountUser.LocalAddress, out var previous)) {

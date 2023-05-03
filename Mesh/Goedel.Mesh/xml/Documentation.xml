@@ -10521,8 +10521,10 @@
             </summary>
         </member>
         <member name="P:Goedel.Mesh.StoreStatus.Digest">
-            <summary>
-            </summary>
+             <summary>
+            In a status response, the apex digest value of the store 
+            whose status is reported.
+             </summary>
         </member>
         <member name="M:Goedel.Mesh.StoreStatus.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
@@ -10584,6 +10586,18 @@
         <member name="P:Goedel.Mesh.StoreUpdate.Envelopes">
              <summary>
             The entries to be uploaded. 
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.StoreUpdate.Partial">
+             <summary>
+            If false, the store update does not contain the last index entry
+            in the store.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.StoreUpdate.FinalIndex">
+             <summary>
+            If the value Partial is true, this value MUST specify the index
+            value of the last entry in the store.
              </summary>
         </member>
         <member name="M:Goedel.Mesh.StoreUpdate.Setter(System.String,Goedel.Protocol.TokenValue)">
@@ -11532,6 +11546,19 @@
              payload be returned.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.DownloadRequest.MaxResults">
+             <summary>
+            The maximum number of results to be returned.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DownloadRequest.DeviceUDF">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DownloadRequest.CatalogedDeviceDigest">
+            <summary>
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.DownloadRequest.Select">
              <summary>
             Specifies constraints to be applied to a search result. These 
@@ -11602,6 +11629,15 @@
         <member name="P:Goedel.Mesh.DownloadResponse.Updates">
              <summary>
             The updated data
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DownloadResponse.CatalogedDeviceDigest">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DownloadResponse.EnvelopedCatalogedDevice">
+             <summary>
+            The catalog device entry. This is only returned if the 
              </summary>
         </member>
         <member name="M:Goedel.Mesh.DownloadResponse.Setter(System.String,Goedel.Protocol.TokenValue)">

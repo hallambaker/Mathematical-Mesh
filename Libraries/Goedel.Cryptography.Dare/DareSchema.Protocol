@@ -166,7 +166,9 @@
 			Description
 				|Bitmask used to identify a container within a group for use in update notification
 				|etc.
-
+		String Debug
+			Description
+				|Field reserved for use in debugging.
 
 
 	Structure ContentMeta
@@ -208,10 +210,12 @@
 			Description
 				|Date at which the associated transaction will expire
 		Integer First
+			LengthBits 64
 			Description
 				|Frame number of the first object instance value.
 
 		Integer Previous
+			LengthBits 64
 			Description
 				|Frame number of the immediately prior object instance value	
 		Struct FileEntry FileEntry
@@ -267,6 +271,7 @@
 		Description
 			|A digital signature over one or more envelopes consisting of an apex signature value 
 		Integer Index
+			LengthBits 64
 			Description
 				|The index number of the frame containing the apex signature.
 		Struct SignedEnvelope Envelopes
@@ -277,6 +282,7 @@
 		Description
 			|An entry describing one signed envelope within an IntervalSignature
 		Integer Index
+			LengthBits 64
 			Description
 				|The index number of the envelope.
 		Binary Digest
@@ -399,6 +405,7 @@
 			Description
 				|The Apex hash value
 		Integer Index
+			LengthBits 64
 			Description
 				|Specifies the index number assigned to the entry in the log.
 
@@ -413,6 +420,7 @@
 			Description
 				|
 		Integer Index
+			LengthBits 64
 			Description
 				|Specifies the index number assigned to the entry in the log.
 		Binary Path

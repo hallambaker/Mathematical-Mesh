@@ -1377,7 +1377,7 @@ public partial class ContextUser : ContextAccount {
 
         var deviceEncrypt = request.MessageConnectionRequest.ProfileDevice.Encryption.GetKeyPair();
 
-        Console.WriteLine($"Make response message {respondConnection.MessageId}");
+        //Console.WriteLine($"Make response message {respondConnection.MessageId}");
 
         transactRequest.InboundComplete(StateSpoolMessage.Closed, request, respondConnection);
         transactRequest.LocalMessage(respondConnection, deviceEncrypt);
@@ -1806,8 +1806,8 @@ public partial class ContextUser : ContextAccount {
         // prepare the contact request
 
         var recipientAddress = requestConfirmation.Sender;
-        Console.WriteLine(
-            $"Message is {requestConfirmation.MessageId}, response will be {requestConfirmation.GetResponseId()}");
+        //Console.WriteLine(
+            //$"Message is {requestConfirmation.MessageId}, response will be {requestConfirmation.GetResponseId()}");
 
 
         var message = new ResponseConfirmation() {

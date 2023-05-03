@@ -94,10 +94,12 @@
 			Description
 				|The container to be searched.
 		Integer IndexMin
+			LengthBits 64
 			Description
 				|Only return objects with an index value that is equal to or
 				|higher than the value specified.
 		Integer IndexMax
+			LengthBits 64
 			Description
 				|Only return objects with an index value that is equal to or
 				|lower than the value specified.
@@ -123,13 +125,16 @@
 		Description
 			|Specifies constraints on the data to be sent.
 		Integer MaxEntries
+			LengthBits 64
 			Description
 				|Maximum number of entries to send.
 		Integer BytesOffset
+			LengthBits 64
 			Description
 				|Specifies an offset to be applied to the payload data before it is sent. 
 				|This allows large payloads to be transferred incrementally.
 		Integer BytesMax
+			LengthBits 64
 			Description
 				|Maximum number of payload bytes to send.
 		Boolean Header
@@ -162,7 +167,12 @@
 	Structure StoreStatus
 		String Store
 		Integer Index
+			LengthBits 64
 		Binary Digest
+			Description
+				|In a status response, the apex digest value of the store 
+				|whose status is reported.
+
 
 	Structure StoreUpdate
 		Inherits StoreStatus
@@ -170,6 +180,15 @@
 			Multiple
 			Description
 				|The entries to be uploaded. 
+		Boolean Partial
+			Description
+				|If false, the store update does not contain the last index entry
+				|in the store.
+		Integer FinalIndex
+			LengthBits 64
+			Description
+				|If the value Partial is true, this value MUST specify the index
+				|value of the last entry in the store.
 
 	//Hello
     Transaction Public Hello HelloRequest MeshHelloResponse
@@ -373,6 +392,11 @@
 			|A client MAY request only objects matching specified search criteria
 			|be returned and MAY request that only specific fields or parts of the 
 			|payload be returned.
+		Integer MaxResults
+			Description
+				|The maximum number of results to be returned.
+		String DeviceUDF
+		String CatalogedDeviceDigest
 		Struct ConstraintsSelect Select
 			Multiple
 			Description
@@ -396,7 +420,10 @@
 			Multiple
 			Description
 				|The updated data
-
+		String CatalogedDeviceDigest
+		Struct Enveloped<CatalogedDevice> EnvelopedCatalogedDevice
+			Description
+				|The catalog device entry. This is only returned if the 
 
 
 	Transaction User Transact TransactRequest TransactResponse
@@ -453,10 +480,14 @@
 
 
 	Structure EntryResponse
+
 		Integer IndexRequest
+			LengthBits 64
+
 			Description
 				|The index value of the entry in the request.
 		Integer IndexContainer
+			LengthBits 64
 			Description
 				|The index value assigned to the entry in the container.
 		String Result

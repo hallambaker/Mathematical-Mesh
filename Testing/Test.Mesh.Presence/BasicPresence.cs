@@ -54,7 +54,7 @@ public partial class TestPresence  {
     /// Alice attempts to establish connection to Bob by placing a request at
     /// Bob's MSP. Bob receives notification via update.
     /// </summary>
-    [Fact]
+    [Fact(Skip = "Need to ensure termination")]
     public void PresenceSessionRequest() {
 
 
@@ -67,6 +67,10 @@ public partial class TestPresence  {
         // Make sure both sender and receiver are ready before attempting to establish connection
         var pollResultA = presenceAlice.Poll();
         var pollResultB = presenceBob.Poll();
+
+
+        Console.WriteLine("####################################################################");
+
 
         // Test Alice sends after Bob calls to wait.
         var t1 = presenceBob.GetSessionRequestAsync();

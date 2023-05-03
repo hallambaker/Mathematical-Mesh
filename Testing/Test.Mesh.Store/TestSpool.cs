@@ -95,7 +95,7 @@ public partial class StoreTests {
             var j = 0;
             foreach (var entry in store.GetMessages(start: spoolEntry.Next(), reverse:false)) {
                 j++;
-                Console.WriteLine($"Got {j}/{items} ${entry.Index}");
+                //Console.WriteLine($"Got {j}/{items} ${entry.Index}");
                 }
 
             (i == count).TestTrue();

@@ -216,7 +216,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// <summary>
     /// Default constructor.
     /// </summary>
-    public Sequence() { 
+    public Sequence() {
         }
 
 
@@ -275,8 +275,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// <summary>
     /// Return an enumerator that returns items that have not previously been read.
     /// </summary>
-    public virtual IEnumerable<SequenceIndexEntry> SelectFromUnread (
-            FilterIndexDelegate evaluate=null) => new SequenceEnumeratorIndex(
+    public virtual IEnumerable<SequenceIndexEntry> SelectFromUnread(
+            FilterIndexDelegate evaluate = null) => new SequenceEnumeratorIndex(
                     this, IndexedFromEnd.Previous(), true);
 
     /// <summary>
@@ -348,10 +348,10 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             // Create new Sequence if empty or read the old one.
             if (jbcdStream.Length == 0) {
                 keyLocate ??= policy?.KeyLocation;
-                sequence = NewSequence(jbcdStream, decrypt:decrypt,
-                    keyLocate: keyLocate, sequenceType: sequenceType, policy: policy, 
+                sequence = NewSequence(jbcdStream, decrypt: decrypt,
+                    keyLocate: keyLocate, sequenceType: sequenceType, policy: policy,
                     contentType: contentType, bitmask: bitmask,
-                    store:store
+                    store: store
                     );
                 }
             else {

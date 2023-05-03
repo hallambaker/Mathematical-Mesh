@@ -1978,6 +1978,11 @@
             etc.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.DareHeader.Debug">
+             <summary>
+            Field reserved for use in debugging.
+             </summary>
+        </member>
         <member name="M:Goedel.Cryptography.Dare.DareHeader.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>

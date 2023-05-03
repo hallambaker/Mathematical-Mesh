@@ -64,7 +64,7 @@ public class TestRandom {
         Count++;
 
 
-        Console.WriteLine($"Seed {seed} [{length}]");
+        //Console.WriteLine($"Seed {seed} [{length}]");
 
         return SHAKE256.GetBytes(length);
         }

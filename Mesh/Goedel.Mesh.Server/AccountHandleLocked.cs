@@ -78,6 +78,9 @@ public class AccountHandleLocked : Disposable {
     ///<summary>The account entry in the service catalog.</summary> 
     protected AccountUser AccountUser => AccountContext.AccountEntry as AccountUser;
 
+
+    public string LocalAddress => AccountUser.LocalAddress;
+
     ///<summary>The account profile</summary> 
     public ProfileAccount ProfileAccount => AccountUser.GetProfileAccount();
 
@@ -196,6 +199,12 @@ public class AccountHandleLocked : Disposable {
     /// <returns>The status vector.</returns>
     public StoreStatus GetStatusStore(string label) {
         var sequence = GetSequence(label, false);
+
+        if (label == SpoolInbound.Label) {
+            Console.WriteLine ($"   Sequence {sequence.FrameCount}");
+            
+            }
+
         return sequence == null ? null : new StoreStatus() {
             // Bug: This should populate the TreeDigest
             Digest = sequence.HeaderFinal?.TreeDigest ?? sequence.TrailerLast?.TreeDigest,
@@ -239,15 +248,17 @@ public class AccountHandleLocked : Disposable {
 
 
         var sequence = GetSequence(SpoolInbound.Label);
+        Console.Write($"Append to inbound sequence {sequence.FrameCount}/{sequence.Length}");
+
         sequence.Append(envelope);
         if (sequence.Bitmask != null) {
             bitmask?.Add(sequence.Bitmask);
             }
 
+        Console.WriteLine($"->{sequence.FrameCount}/{sequence.Length}");
+        Console.WriteLine($"{AccountUser.LocalAddress}: Receive message {sequence.FrameCount}");
 
-        Console.WriteLine($"{AccountAddress}: Receive message {sequence.FrameCount}");
-
-
+        Console.WriteLine(envelope.Header.Debug??"null");
         }
 
     /// <summary>

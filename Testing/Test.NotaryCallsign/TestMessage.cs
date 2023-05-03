@@ -46,7 +46,7 @@ public partial class RegistrationTests {
         var deviceA = GetTestCLI("MachineAlice");
         var resulta = MakeAccount(deviceA, AliceAccount);
 
-        Console.WriteLine("Created Callsign Service");
+        //Console.WriteLine("Created Callsign Service");
 
 
         var resultBind = deviceA.Dispatch($"callsign bind {AliceCallsign}") as ResultPublish;

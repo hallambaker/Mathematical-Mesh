@@ -416,9 +416,103 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         return MeshClient.Status(statusRequest);
         }
 
+    /// <summary>
+    /// Synchronize the stores <paramref name="stores"/> to this device to the service copies. 
+    /// </summary>
+    /// <param name="stores">The stores to be synchronized.</param>
+    /// <param name="maxResuts">If </param>
+    /// <returns>Response returned by the service</returns>
+    public bool SyncNew(
+            int maxResuts = -1,
+            params string[] stores) {
+        var partial = SyncNew(stores as IEnumerable<string>, maxResuts);
+        return partial;
+        }
+
+    /// <summary>
+    /// Synchronize the stores <paramref name="stores"/> to this device to the service copies. 
+    /// </summary>
+    /// <param name="stores">The stores to be synchronized.</param>
+    /// <param name="maxResuts">The maximum number of results to return.</param>
+    /// <returns>True if the synchronization completed, otherwise false.</returns>
+    public bool SyncNew(
+            IEnumerable< string> stores,
+            int maxResuts = -1) {
+
+        var constraintsSelects = new List<ConstraintsSelect>();
+
+        foreach (var store in stores) {
+            constraintsSelects.Add(GetConstraint(store));
+            }
+
+        var downloadRequest = new DownloadRequest() {
+            Select = constraintsSelects,
+            MaxResults = maxResuts
+            };
+
+        var (partial, _) = SyncNewInner(MeshClient, constraintsSelects, maxResuts);
+        return partial;
+        }
+
+    /// <summary>
+    /// Synchronize the core stores specified in <see cref="DictionaryStores"/> to this device to the 
+    /// service copies. 
+    /// </summary>
+    /// <returns>True if the synchronization completed, otherwise false.</returns>
+    public (bool, int) SyncNew(
+            int maxResuts = -1,
+            MeshServiceClient? meshClient=null) {
+        
+        var constraintsSelects = new List<ConstraintsSelect>();
+
+        foreach (var entry in DictionaryStores) {
+            var store = entry.Key;
+            constraintsSelects.Add(GetConstraint(store));
+            }
+
+        var(partial, count) =  SyncNewInner(meshClient?? MeshClient, constraintsSelects, maxResuts);
+
+        return (partial, count);
+        }
 
 
+    ConstraintsSelect GetConstraint(
+            string storeName) {
+        if (DictionaryStores.TryGetValue(storeName, out var syncStatus)) {
+            
+            // Request the next envelope after the envelope we already have.
+            return new ConstraintsSelect() {
+                Store = storeName,
+                IndexMin = syncStatus.Index +1
+                };
+            }
+        return Store.GetConstraintsSelect(StoresDirectory, storeName);
+        }
 
+
+    /// <summary>
+    /// Compile a download request for the constraint set <paramref name="constraintsSelects"/>
+    /// and synchronize the local copies of the stores.
+    /// </summary>
+    /// <param name="meshClient"></param>
+    /// <param name="constraintsSelects"></param>
+    /// <returns>(partial, count) where partial is true if the </returns>
+    public virtual (bool, int) SyncNewInner(
+
+                MeshServiceClient meshClient,
+                List<ConstraintsSelect> constraintsSelects,
+                int maxResuts = -1) {
+
+        var downloadRequest = new DownloadRequest() {
+            DeviceUDF = ProfileDevice.UdfString,
+            CatalogedDeviceDigest = CatalogedMachine?.CatalogedDeviceDigest ?? "",
+            MaxResults = maxResuts,
+            Select = constraintsSelects
+            };
+
+        return NewMethod(meshClient, downloadRequest);
+
+        }
 
     /// <summary>
     /// Synchronize this device to the catalogs at the service. Since the authoritative copy of
@@ -426,10 +520,14 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// </summary>
     /// <returns>The number of items synchronized</returns>
     public virtual int Sync() {
-        var statusRequest = new StatusRequest() {
-            };
-        return Sync(statusRequest).Count;
+        var (_, count ) = SyncNew();
+        return count;
         }
+        //{
+        //var statusRequest = new StatusRequest() {
+        //    };
+        //return Sync(statusRequest).Count;
+        //}
 
     /// <summary>
     /// Synchronize this device to the catalogs at the service. Since the authoritative copy of
@@ -440,12 +538,16 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// client (used to synchronize against other accounts).</param>
     /// <returns>The number of items synchronized</returns>
     public StatusResponse Sync (StatusRequest statusRequest, MeshServiceClient meshClient =null) {
-        int count = 0;
+
         meshClient ??= MeshClient;
 
         Console.WriteLine($"Sync account {AccountAddress}");
 
         var status = meshClient.Status(statusRequest);
+
+        // Compile download request
+        // Enumerate the core stores
+        // Add current status to the request.
 
         status.StoreStatus.AssertNotNull(ServerResponseInvalid.Throw, status);
 
@@ -468,10 +570,21 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             }
 
         var downloadRequest = new DownloadRequest() {
-
             Select = constraintsSelects
             };
 
+        var (_, count) =  NewMethod(meshClient,  downloadRequest);
+
+        status.Count = count;
+
+        return status;
+        }
+
+    private (bool, int) NewMethod(
+                MeshServiceClient meshClient, 
+                //StatusResponse status, 
+                DownloadRequest downloadRequest) {
+        int count = 0;
         // what is it with the ranges here? make sure they are all correct.
         // Then check that the remote versions are correct.
 
@@ -479,19 +592,25 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
         // check here to see if we have an update to the Cataloged Device
 
-
+        var partial = false;
         foreach (var update in download.Updates) {
-            count += UpdateStore(update);
+            var records = UpdateStore(update);
+            count += records;
+
+            if (update.Partial == true) {
+                partial = true;
+                }
             }
 
-        // At this point we want to look at all the pending messages and see if there
-        // are any PIN authenticated auto-executing messages.
-        // TBS: If we have synchronized the catalogs, upload cached offline updates here.
-        status.Count = count;
+        Console.WriteLine($"Sync {(partial ? "partial": "complete")} {AccountAddress} {count} updates");
 
-        Console.WriteLine($"Sync complete {AccountAddress}");
+        if (downloadRequest.CatalogedDeviceDigest != null & download.EnvelopedCatalogedDevice != null) {
+            var catalogedDevice = download.EnvelopedCatalogedDevice.Decode(this);
+            UpdateCatalogedMachine(catalogedDevice, download.CatalogedDeviceDigest, true);
+            }
 
-        return status;
+
+        return (partial, count);
         }
 
     //public bool SyncProgress(int maxEnvelopes = -1) => SyncProgressUpload(maxEnvelopes);
@@ -637,8 +756,13 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="statusRemote">Status of the remote store.</param>
     /// <returns>The selection constraints.</returns>
     public ConstraintsSelect GetStoreStatus(StoreStatus statusRemote) {
+        if (statusRemote.Store == SpoolInbound.Label) {
+            }
+
         if (DictionaryStores.TryGetValue(statusRemote.Store, out var syncStore)) {
             var storeLocal = syncStore.Store;
+            if (statusRemote.Store == SpoolInbound.Label) {
+                }
 
             return storeLocal.FrameCount >= statusRemote.Index ? null :
                 new ConstraintsSelect() {
@@ -652,8 +776,11 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             //using var storeLocal = new Store(StoresDirectory, statusRemote.Container,
             //            decrypt: false, create: false);
             //var frameCount = storeLocal.FrameCount;
-            var frameCount = Store.GetFrameCount(StoresDirectory, statusRemote.Store);
 
+            if (statusRemote.Store == SpoolInbound.Label) {
+                }
+
+            var frameCount = Store.GetFrameCount(StoresDirectory, statusRemote.Store);
             //Console.WriteLine($"Sequence {statusRemote.Sequence}   Local {storeLocal.FrameCount} Remote {statusRemote.Index}");
             return frameCount >= statusRemote.Index ? null :
                 new ConstraintsSelect() {
@@ -672,6 +799,11 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     public virtual int UpdateStore(StoreUpdate containerUpdate) {
         int count = 0;
         if (DictionaryStores.TryGetValue(containerUpdate.Store, out var syncStore)) {
+
+            //if (containerUpdate.Store == SpoolInbound.Label) {
+            //    Screen.Write($"Loaded store Items: {syncStore.Store.FrameCount}");
+            //    }
+
             var store = syncStore.Store;
             foreach (var entry in containerUpdate.Envelopes) {
                 if (entry.Index == 0) {
@@ -681,7 +813,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
                 count++;
                 store.AppendDirect(entry, true);
                 }
-
+            Screen.Write($"Finished update {syncStore.Store.FrameCount}");
 
             // need to set the store end frame!!!
 
@@ -689,6 +821,11 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             }
 
         else {
+            //if (containerUpdate.Store == SpoolInbound.Label) {
+            //    Screen.Write("Direct store !!!!");
+            //    }
+
+
             // we have zero envelopes being returned in this update.
 
             Store.Append(StoresDirectory, this, containerUpdate.Envelopes, containerUpdate.Store);
@@ -710,8 +847,23 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
                 bool blind = false, 
                 bool decrypt = true,
                 bool create = true) {
+
+        if (name == SpoolInbound.Label) {
+            Screen.WriteLine($"Get the inbound store as {blind}");
+            }
+
+
         if (DictionaryStores.TryGetValue(name, out var syncStore)) {
+            if (name == SpoolInbound.Label) {
+                Screen.WriteLine($"Exists type is {syncStore.Store.GetType()}");
+                }
+
+
             if (!blind & (syncStore.Store is CatalogBlind)) {
+                if (name == SpoolInbound.Label) {
+                    Screen.WriteLine($"Was blind, remake");
+                    }
+
                 // if we have a blind store from a sync operation but need a populated one,
                 // remake it.
                 syncStore.Store.Dispose();

@@ -119,7 +119,7 @@ public partial class TransactUser : Transaction<ContextUser>, ITransactContextAc
             }
 
 
-        Console.WriteLine($"Make Access control entry for Auth public {accessCapability._PrimaryKey}");
+        //Console.WriteLine($"Make Access control entry for Auth public {accessCapability._PrimaryKey}");
         }
 
 

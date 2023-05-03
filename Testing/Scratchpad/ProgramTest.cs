@@ -60,48 +60,15 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
-        //ShellTests.Test().NewArchiveTestOnce(true, true, false, false);
-
-        /* Minor */
 
 
-        //TestDareArchive.Test().ArchiveTest();
-        //ShellTests.Test().NewFileTestAll();
+        TestService.Test().MeshCatalogAccount();
 
-        //ShellTests.Test().TestParseFile(false, false);
-
-        //CallsignDirect.Test().RegisterAliceDuplicate();
-        //CallsignDirect.Test().RegisterAliceTransferBob();
-
-
-        //ShellTests.Test().TestHello();
-        //ShellTestsAdmin.Test().TestHello();
-
-        //ShellTests.Test().NewArchiveTestOnce(true, false, false, false);
-
-        /* Callsigns */
-
-        //RegistrationTests.Test().CallsignBind();
-        //RegistrationTests.Test().CallsignRegistration();
-
-
-        //ShellTests.Test().TestAccountDelete();
-        //ShellTests.Test().TestEscrowDeleteDevice();
-
-
-
-        //CallsignDirect.Test().RegisterAlice();
-
-        //RegistrationTests.Test().CallsignBind();
-        //RegistrationTests.Test().CallsignTransfer();
-
-        //TestPresence.Test().PresenceStatusUpdate();
         TestPresence.Test().PresenceSessionRequest();
         TestPresence.Test().PresenceHeartbeat();
 
         RegistrationTests.Test().CallsignPresencePresent();
         RegistrationTests.Test().CallsignPresenceAbsent();
-
 
 
 
@@ -151,7 +118,7 @@ partial class Program {
 
 
         /* Carnet */
-        TestService.Test().MeshCarnet();
+        TestService.Test().MeshCarnet(); 
         TestService.Test().MeshRepository();
         TCallsign.Test().TestPurchase();
         TCallsign.Test().TestPurchaseIndirect();

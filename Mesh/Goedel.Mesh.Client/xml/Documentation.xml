@@ -569,6 +569,38 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.SyncNew(System.Int32,System.String[])">
+            <summary>
+            Synchronize the stores <paramref name="stores"/> to this device to the service copies. 
+            </summary>
+            <param name="stores">The stores to be synchronized.</param>
+            <param name="maxResuts">If </param>
+            <returns>Response returned by the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.SyncNew(System.Collections.Generic.IEnumerable{System.String},System.Int32)">
+            <summary>
+            Synchronize the stores <paramref name="stores"/> to this device to the service copies. 
+            </summary>
+            <param name="stores">The stores to be synchronized.</param>
+            <param name="maxResuts">The maximum number of results to return.</param>
+            <returns>True if the synchronization completed, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.SyncNew(System.Int32,Goedel.Mesh.MeshServiceClient)">
+            <summary>
+            Synchronize the core stores specified in <see cref="F:Goedel.Mesh.Client.ContextAccount.DictionaryStores"/> to this device to the 
+            service copies. 
+            </summary>
+            <returns>True if the synchronization completed, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.SyncNewInner(Goedel.Mesh.MeshServiceClient,System.Collections.Generic.List{Goedel.Mesh.ConstraintsSelect},System.Int32)">
+            <summary>
+            Compile a download request for the constraint set <paramref name="constraintsSelects"/>
+            and synchronize the local copies of the stores.
+            </summary>
+            <param name="meshClient"></param>
+            <param name="constraintsSelects"></param>
+            <returns>(partial, count) where partial is true if the </returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.Sync">
             <summary>
             Synchronize this device to the catalogs at the service. Since the authoritative copy of

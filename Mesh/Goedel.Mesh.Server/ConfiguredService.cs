@@ -93,7 +93,7 @@ public class MeshConfiguredService : IConfguredService {
                 IOptionsMonitor<GenericHostConfiguration> genericHostConfiguration,
                 IPresenceProvider presenceServiceProvider
                 ) {
-        Console.WriteLine($"Start mesh");
+        //Console.WriteLine($"Start mesh");
 
         MeshMachine = meshMachine;
         Logger = logger;

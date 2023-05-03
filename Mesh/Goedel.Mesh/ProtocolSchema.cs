@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 25-Apr-23 2:24:14 PM
+//  This file was automatically generated at 03-May-23 12:22:17 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1069,13 +1069,13 @@ public partial class ConstraintsSelect : MeshProtocol {
         ///higher than the value specified.
         /// </summary>
 
-	public virtual int?						IndexMin  {get; set;}
+	public virtual long?						IndexMin  {get; set;}
         /// <summary>
         ///Only return objects with an index value that is equal to or
         ///lower than the value specified.
         /// </summary>
 
-	public virtual int?						IndexMax  {get; set;}
+	public virtual long?						IndexMax  {get; set;}
         /// <summary>
         ///Only data published on or after the specified time instant 
         ///is requested.
@@ -1110,13 +1110,13 @@ public partial class ConstraintsSelect : MeshProtocol {
 				break;
 				}
 			case "IndexMin" : {
-				if (value is TokenValueInteger32 vvalue) {
+				if (value is TokenValueInteger64 vvalue) {
 					IndexMin = vvalue.Value;
 					}
 				break;
 				}
 			case "IndexMax" : {
-				if (value is TokenValueInteger32 vvalue) {
+				if (value is TokenValueInteger64 vvalue) {
 					IndexMax = vvalue.Value;
 					}
 				break;
@@ -1155,10 +1155,10 @@ public partial class ConstraintsSelect : MeshProtocol {
 				return new TokenValueString (Store);
 				}
 			case "IndexMin" : {
-				return new TokenValueInteger32 (IndexMin);
+				return new TokenValueInteger64 (IndexMin);
 				}
 			case "IndexMax" : {
-				return new TokenValueInteger32 (IndexMax);
+				return new TokenValueInteger64 (IndexMax);
 				}
 			case "NotBefore" : {
 				return new TokenValueDateTime (NotBefore);
@@ -1181,8 +1181,8 @@ public partial class ConstraintsSelect : MeshProtocol {
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
 			{ "Store", new Property (typeof(TokenValueString), false)} ,
-			{ "IndexMin", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "IndexMax", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "IndexMin", new Property (typeof(TokenValueInteger64), false)} ,
+			{ "IndexMax", new Property (typeof(TokenValueInteger64), false)} ,
 			{ "NotBefore", new Property (typeof(TokenValueDateTime), false)} ,
 			{ "Before", new Property (typeof(TokenValueDateTime), false)} ,
 			{ "PageKey", new Property (typeof(TokenValueString), false)} 
@@ -1252,18 +1252,18 @@ public partial class ConstraintsData : MeshProtocol {
         ///Maximum number of entries to send.
         /// </summary>
 
-	public virtual int?						MaxEntries  {get; set;}
+	public virtual long?						MaxEntries  {get; set;}
         /// <summary>
         ///Specifies an offset to be applied to the payload data before it is sent. 
         ///This allows large payloads to be transferred incrementally.
         /// </summary>
 
-	public virtual int?						BytesOffset  {get; set;}
+	public virtual long?						BytesOffset  {get; set;}
         /// <summary>
         ///Maximum number of payload bytes to send.
         /// </summary>
 
-	public virtual int?						BytesMax  {get; set;}
+	public virtual long?						BytesMax  {get; set;}
         /// <summary>
         ///Return the entry header
         /// </summary>
@@ -1286,19 +1286,19 @@ public partial class ConstraintsData : MeshProtocol {
 			string tag, TokenValue value) { 
 		switch (tag) {
 			case "MaxEntries" : {
-				if (value is TokenValueInteger32 vvalue) {
+				if (value is TokenValueInteger64 vvalue) {
 					MaxEntries = vvalue.Value;
 					}
 				break;
 				}
 			case "BytesOffset" : {
-				if (value is TokenValueInteger32 vvalue) {
+				if (value is TokenValueInteger64 vvalue) {
 					BytesOffset = vvalue.Value;
 					}
 				break;
 				}
 			case "BytesMax" : {
-				if (value is TokenValueInteger32 vvalue) {
+				if (value is TokenValueInteger64 vvalue) {
 					BytesMax = vvalue.Value;
 					}
 				break;
@@ -1334,13 +1334,13 @@ public partial class ConstraintsData : MeshProtocol {
             string tag) {
         switch (tag) {
 			case "MaxEntries" : {
-				return new TokenValueInteger32 (MaxEntries);
+				return new TokenValueInteger64 (MaxEntries);
 				}
 			case "BytesOffset" : {
-				return new TokenValueInteger32 (BytesOffset);
+				return new TokenValueInteger64 (BytesOffset);
 				}
 			case "BytesMax" : {
-				return new TokenValueInteger32 (BytesMax);
+				return new TokenValueInteger64 (BytesMax);
 				}
 			case "Header" : {
 				return new TokenValueBoolean (Header);
@@ -1362,9 +1362,9 @@ public partial class ConstraintsData : MeshProtocol {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "MaxEntries", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "BytesOffset", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "BytesMax", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "MaxEntries", new Property (typeof(TokenValueInteger64), false)} ,
+			{ "BytesOffset", new Property (typeof(TokenValueInteger64), false)} ,
+			{ "BytesMax", new Property (typeof(TokenValueInteger64), false)} ,
 			{ "Header", new Property (typeof(TokenValueBoolean), false)} ,
 			{ "Payload", new Property (typeof(TokenValueBoolean), false)} ,
 			{ "Trailer", new Property (typeof(TokenValueBoolean), false)} 
@@ -1575,8 +1575,10 @@ public partial class StoreStatus : MeshProtocol {
         /// <summary>
         /// </summary>
 
-	public virtual int?						Index  {get; set;}
+	public virtual long?						Index  {get; set;}
         /// <summary>
+        ///In a status response, the apex digest value of the store 
+        ///whose status is reported.
         /// </summary>
 
 	public virtual byte[]						Digest  {get; set;}
@@ -1593,7 +1595,7 @@ public partial class StoreStatus : MeshProtocol {
 				break;
 				}
 			case "Index" : {
-				if (value is TokenValueInteger32 vvalue) {
+				if (value is TokenValueInteger64 vvalue) {
 					Index = vvalue.Value;
 					}
 				break;
@@ -1620,7 +1622,7 @@ public partial class StoreStatus : MeshProtocol {
 				return new TokenValueString (Store);
 				}
 			case "Index" : {
-				return new TokenValueInteger32 (Index);
+				return new TokenValueInteger64 (Index);
 				}
 			case "Digest" : {
 				return new TokenValueBinary (Digest);
@@ -1637,7 +1639,7 @@ public partial class StoreStatus : MeshProtocol {
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
 			{ "Store", new Property (typeof(TokenValueString), false)} ,
-			{ "Index", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "Index", new Property (typeof(TokenValueInteger64), false)} ,
 			{ "Digest", new Property (typeof(TokenValueBinary), false)} 
         };
 
@@ -1704,6 +1706,18 @@ public partial class StoreUpdate : StoreStatus {
         /// </summary>
 
 	public virtual List<DareEnvelope>				Envelopes  {get; set;}
+        /// <summary>
+        ///If false, the store update does not contain the last index entry
+        ///in the store.
+        /// </summary>
+
+	public virtual bool?						Partial  {get; set;}
+        /// <summary>
+        ///If the value Partial is true, this value MUST specify the index
+        ///value of the last entry in the store.
+        /// </summary>
+
+	public virtual long?						FinalIndex  {get; set;}
 
 
     ///<inheritdoc/>
@@ -1713,6 +1727,18 @@ public partial class StoreUpdate : StoreStatus {
 			case "Envelopes" : {
 				if (value is TokenValueListStructObject vvalue) {
 					Envelopes = vvalue.Value as List<DareEnvelope>;
+					}
+				break;
+				}
+			case "Partial" : {
+				if (value is TokenValueBoolean vvalue) {
+					Partial = vvalue.Value;
+					}
+				break;
+				}
+			case "FinalIndex" : {
+				if (value is TokenValueInteger64 vvalue) {
+					FinalIndex = vvalue.Value;
 					}
 				break;
 				}
@@ -1731,6 +1757,12 @@ public partial class StoreUpdate : StoreStatus {
 			case "Envelopes" : {
 				return new TokenValueListStruct<DareEnvelope> (Envelopes);
 				}
+			case "Partial" : {
+				return new TokenValueBoolean (Partial);
+				}
+			case "FinalIndex" : {
+				return new TokenValueInteger64 (FinalIndex);
+				}
 
             default: {
                 return base.Getter(tag);
@@ -1743,7 +1775,9 @@ public partial class StoreUpdate : StoreStatus {
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
 			{ "Envelopes", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<DareEnvelope>(), ()=>new DareEnvelope(), false)} 
+					()=>new List<DareEnvelope>(), ()=>new DareEnvelope(), false)} ,
+			{ "Partial", new Property (typeof(TokenValueBoolean), false)} ,
+			{ "FinalIndex", new Property (typeof(TokenValueInteger64), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3569,6 +3603,19 @@ public partial class DeviceStatus : MeshProtocol {
 	/// </summary>
 public partial class DownloadRequest : MeshRequestUser {
         /// <summary>
+        ///The maximum number of results to be returned.
+        /// </summary>
+
+	public virtual int?						MaxResults  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string						DeviceUDF  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string						CatalogedDeviceDigest  {get; set;}
+        /// <summary>
         ///Specifies constraints to be applied to a search result. These 
         ///allow a client to limit the number of records returned, the quantity
         ///of data returned, the earliest and latest data returned, etc.
@@ -3586,6 +3633,24 @@ public partial class DownloadRequest : MeshRequestUser {
 	public override void Setter(
 			string tag, TokenValue value) { 
 		switch (tag) {
+			case "MaxResults" : {
+				if (value is TokenValueInteger32 vvalue) {
+					MaxResults = vvalue.Value;
+					}
+				break;
+				}
+			case "DeviceUDF" : {
+				if (value is TokenValueString vvalue) {
+					DeviceUDF = vvalue.Value;
+					}
+				break;
+				}
+			case "CatalogedDeviceDigest" : {
+				if (value is TokenValueString vvalue) {
+					CatalogedDeviceDigest = vvalue.Value;
+					}
+				break;
+				}
 			case "Select" : {
 				if (value is TokenValueListStructObject vvalue) {
 					Select = vvalue.Value as List<ConstraintsSelect>;
@@ -3610,6 +3675,15 @@ public partial class DownloadRequest : MeshRequestUser {
     public override TokenValue Getter(
             string tag) {
         switch (tag) {
+			case "MaxResults" : {
+				return new TokenValueInteger32 (MaxResults);
+				}
+			case "DeviceUDF" : {
+				return new TokenValueString (DeviceUDF);
+				}
+			case "CatalogedDeviceDigest" : {
+				return new TokenValueString (CatalogedDeviceDigest);
+				}
 			case "Select" : {
 				return new TokenValueListStruct<ConstraintsSelect> (Select);
 				}
@@ -3627,6 +3701,9 @@ public partial class DownloadRequest : MeshRequestUser {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
+			{ "MaxResults", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "DeviceUDF", new Property (typeof(TokenValueString), false)} ,
+			{ "CatalogedDeviceDigest", new Property (typeof(TokenValueString), false)} ,
 			{ "Select", new Property ( typeof(TokenValueListStruct), true,
 					()=>new List<ConstraintsSelect>(), ()=>new ConstraintsSelect(), false)} ,
 			{ "ConstraintsPost", new Property ( typeof(TokenValueStruct), false,
@@ -3703,6 +3780,15 @@ public partial class DownloadResponse : MeshResponse {
         /// </summary>
 
 	public virtual List<StoreUpdate>				Updates  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string						CatalogedDeviceDigest  {get; set;}
+        /// <summary>
+        ///The catalog device entry. This is only returned if the 
+        /// </summary>
+
+	public virtual Enveloped<CatalogedDevice>						EnvelopedCatalogedDevice  {get; set;}
 
 
     ///<inheritdoc/>
@@ -3712,6 +3798,18 @@ public partial class DownloadResponse : MeshResponse {
 			case "Updates" : {
 				if (value is TokenValueListStructObject vvalue) {
 					Updates = vvalue.Value as List<StoreUpdate>;
+					}
+				break;
+				}
+			case "CatalogedDeviceDigest" : {
+				if (value is TokenValueString vvalue) {
+					CatalogedDeviceDigest = vvalue.Value;
+					}
+				break;
+				}
+			case "EnvelopedCatalogedDevice" : {
+				if (value is TokenValueStructObject vvalue) {
+					EnvelopedCatalogedDevice = vvalue.Value as Enveloped<CatalogedDevice>;
 					}
 				break;
 				}
@@ -3730,6 +3828,12 @@ public partial class DownloadResponse : MeshResponse {
 			case "Updates" : {
 				return new TokenValueListStruct<StoreUpdate> (Updates);
 				}
+			case "CatalogedDeviceDigest" : {
+				return new TokenValueString (CatalogedDeviceDigest);
+				}
+			case "EnvelopedCatalogedDevice" : {
+				return new TokenValueStruct<Enveloped<CatalogedDevice>> (EnvelopedCatalogedDevice);
+				}
 
             default: {
                 return base.Getter(tag);
@@ -3742,7 +3846,10 @@ public partial class DownloadResponse : MeshResponse {
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
 			{ "Updates", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<StoreUpdate>(), ()=>new StoreUpdate(), false)} 
+					()=>new List<StoreUpdate>(), ()=>new StoreUpdate(), false)} ,
+			{ "CatalogedDeviceDigest", new Property (typeof(TokenValueString), false)} ,
+			{ "EnvelopedCatalogedDevice", new Property ( typeof(TokenValueStruct), false,
+					()=>new Enveloped<CatalogedDevice>(), ()=>new Enveloped<CatalogedDevice>(), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4123,12 +4230,12 @@ public partial class EntryResponse : MeshProtocol {
         ///The index value of the entry in the request.
         /// </summary>
 
-	public virtual int?						IndexRequest  {get; set;}
+	public virtual long?						IndexRequest  {get; set;}
         /// <summary>
         ///The index value assigned to the entry in the container.
         /// </summary>
 
-	public virtual int?						IndexContainer  {get; set;}
+	public virtual long?						IndexContainer  {get; set;}
         /// <summary>
         ///Specifies the result of attempting to add the entry to a catalog
         ///or spool. Valid values for a message are 'Accept', 'Reject'. Valid 
@@ -4150,13 +4257,13 @@ public partial class EntryResponse : MeshProtocol {
 			string tag, TokenValue value) { 
 		switch (tag) {
 			case "IndexRequest" : {
-				if (value is TokenValueInteger32 vvalue) {
+				if (value is TokenValueInteger64 vvalue) {
 					IndexRequest = vvalue.Value;
 					}
 				break;
 				}
 			case "IndexContainer" : {
-				if (value is TokenValueInteger32 vvalue) {
+				if (value is TokenValueInteger64 vvalue) {
 					IndexContainer = vvalue.Value;
 					}
 				break;
@@ -4186,10 +4293,10 @@ public partial class EntryResponse : MeshProtocol {
             string tag) {
         switch (tag) {
 			case "IndexRequest" : {
-				return new TokenValueInteger32 (IndexRequest);
+				return new TokenValueInteger64 (IndexRequest);
 				}
 			case "IndexContainer" : {
-				return new TokenValueInteger32 (IndexContainer);
+				return new TokenValueInteger64 (IndexContainer);
 				}
 			case "Result" : {
 				return new TokenValueString (Result);
@@ -4208,8 +4315,8 @@ public partial class EntryResponse : MeshProtocol {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "IndexRequest", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "IndexContainer", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "IndexRequest", new Property (typeof(TokenValueInteger64), false)} ,
+			{ "IndexContainer", new Property (typeof(TokenValueInteger64), false)} ,
 			{ "Result", new Property (typeof(TokenValueString), false)} ,
 			{ "ConstraintsData", new Property ( typeof(TokenValueStruct), false,
 					()=>new ConstraintsData(), ()=>new ConstraintsData(), false)} 

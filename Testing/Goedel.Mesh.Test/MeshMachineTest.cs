@@ -177,7 +177,7 @@ public class MeshMachineTest : MeshMachineCore {
 
         using var stream = filename.OpenFileReadShared();
 
-        Console.WriteLine($"Stream {stream.Length}");
+        //Console.WriteLine($"Stream {stream.Length}");
 
         (stream.Length > checkLength).TestTrue();
         checkLength = stream.Length;

@@ -123,26 +123,8 @@ public partial class ContextAccount {
 
         transact.ContextAccount.AssertEqual(this, NYI.Throw);
 
-
-
-
-
         TransactResponse response = null;
         var transactRequest = transact.TransactRequest;
-
-        //if (transactRequest.Updates != null) {
-        //    foreach (var update in transactRequest.Updates) {
-        //        if (update.Sequence == CatalogAccess.Label) {
-        //            if (update.Envelopes != null) {
-        //                foreach (var envelope in update.Envelopes) {
-        //                    if (envelope.Header?.Recipients?.Count != 2) {
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
-
-        //    }
 
         if (!transact.Local) {
 
@@ -371,6 +353,11 @@ public abstract class Transaction<TAccount> : Disposable
             ContextAccount.KeyCommonSignature;
 
         var envelope = message.Envelope(signingKey, recipientEncryptionKey);
+
+#if DEBUG
+        envelope.Header.Debug = $"From:{message.Sender} To: {recipientAddress} Type {message.GetType()}";
+
+#endif
         envelope.JsonObject = message;
 
         TransactRequest.Outbound.Add(new Enveloped<Message>(envelope));

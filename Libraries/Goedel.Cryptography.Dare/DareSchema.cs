@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 25-Apr-23 2:24:10 PM
+//  This file was automatically generated at 03-May-23 12:22:03 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -547,6 +547,11 @@ public partial class DareHeader : DareTrailer {
         /// </summary>
 
 	public virtual byte[]						Bitmask  {get; set;}
+        /// <summary>
+        ///Field reserved for use in debugging.
+        /// </summary>
+
+	public virtual string						Debug  {get; set;}
 
 
     ///<inheritdoc/>
@@ -649,6 +654,12 @@ public partial class DareHeader : DareTrailer {
 					}
 				break;
 				}
+			case "Debug" : {
+				if (value is TokenValueString vvalue) {
+					Debug = vvalue.Value;
+					}
+				break;
+				}
 
 			default: {
 				base.Setter(tag, value);
@@ -709,6 +720,9 @@ public partial class DareHeader : DareTrailer {
 			case "Bitmask" : {
 				return new TokenValueBinary (Bitmask);
 				}
+			case "Debug" : {
+				return new TokenValueString (Debug);
+				}
 
             default: {
                 return base.Getter(tag);
@@ -739,7 +753,8 @@ public partial class DareHeader : DareTrailer {
 					()=>new SequenceIndex(), ()=>new SequenceIndex(), false)} ,
 			{ "Received", new Property (typeof(TokenValueDateTime), false)} ,
 			{ "Cover", new Property (typeof(TokenValueBinary), false)} ,
-			{ "Bitmask", new Property (typeof(TokenValueBinary), false)} 
+			{ "Bitmask", new Property (typeof(TokenValueBinary), false)} ,
+			{ "Debug", new Property (typeof(TokenValueString), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -860,12 +875,12 @@ public partial class ContentMeta : Dare {
         ///Frame number of the first object instance value.
         /// </summary>
 
-	public virtual int?						First  {get; set;}
+	public virtual long?						First  {get; set;}
         /// <summary>
         ///Frame number of the immediately prior object instance value	
         /// </summary>
 
-	public virtual int?						Previous  {get; set;}
+	public virtual long?						Previous  {get; set;}
         /// <summary>
         ///Information describing the file entry on disk.
         /// </summary>
@@ -944,13 +959,13 @@ public partial class ContentMeta : Dare {
 				break;
 				}
 			case "First" : {
-				if (value is TokenValueInteger32 vvalue) {
+				if (value is TokenValueInteger64 vvalue) {
 					First = vvalue.Value;
 					}
 				break;
 				}
 			case "Previous" : {
-				if (value is TokenValueInteger32 vvalue) {
+				if (value is TokenValueInteger64 vvalue) {
 					Previous = vvalue.Value;
 					}
 				break;
@@ -1007,10 +1022,10 @@ public partial class ContentMeta : Dare {
 				return new TokenValueDateTime (Expire);
 				}
 			case "First" : {
-				return new TokenValueInteger32 (First);
+				return new TokenValueInteger64 (First);
 				}
 			case "Previous" : {
-				return new TokenValueInteger32 (Previous);
+				return new TokenValueInteger64 (Previous);
 				}
 			case "FileEntry" : {
 				return new TokenValueStruct<FileEntry> (FileEntry);
@@ -1038,8 +1053,8 @@ public partial class ContentMeta : Dare {
 			{ "Created", new Property (typeof(TokenValueDateTime), false)} ,
 			{ "Modified", new Property (typeof(TokenValueDateTime), false)} ,
 			{ "Expire", new Property (typeof(TokenValueDateTime), false)} ,
-			{ "First", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "Previous", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "First", new Property (typeof(TokenValueInteger64), false)} ,
+			{ "Previous", new Property (typeof(TokenValueInteger64), false)} ,
 			{ "FileEntry", new Property ( typeof(TokenValueStruct), false,
 					()=>new FileEntry(), ()=>new FileEntry(), false)} 
         };
@@ -1324,7 +1339,7 @@ public partial class IntervalSignature : Dare {
         ///The index number of the frame containing the apex signature.
         /// </summary>
 
-	public virtual int?						Index  {get; set;}
+	public virtual long?						Index  {get; set;}
         /// <summary>
         ///The signed envelopes in order, lowest index first.
         /// </summary>
@@ -1337,7 +1352,7 @@ public partial class IntervalSignature : Dare {
 			string tag, TokenValue value) { 
 		switch (tag) {
 			case "Index" : {
-				if (value is TokenValueInteger32 vvalue) {
+				if (value is TokenValueInteger64 vvalue) {
 					Index = vvalue.Value;
 					}
 				break;
@@ -1361,7 +1376,7 @@ public partial class IntervalSignature : Dare {
             string tag) {
         switch (tag) {
 			case "Index" : {
-				return new TokenValueInteger32 (Index);
+				return new TokenValueInteger64 (Index);
 				}
 			case "Envelopes" : {
 				return new TokenValueStruct<SignedEnvelope> (Envelopes);
@@ -1377,7 +1392,7 @@ public partial class IntervalSignature : Dare {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Index", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "Index", new Property (typeof(TokenValueInteger64), false)} ,
 			{ "Envelopes", new Property ( typeof(TokenValueStruct), false,
 					()=>new SignedEnvelope(), ()=>new SignedEnvelope(), false)} 
         };
@@ -1446,7 +1461,7 @@ public partial class SignedEnvelope : Dare {
         ///The index number of the envelope.
         /// </summary>
 
-	public virtual int?						Index  {get; set;}
+	public virtual long?						Index  {get; set;}
         /// <summary>
         ///The digests required to complete the verification of the signature.		
         /// </summary>
@@ -1459,7 +1474,7 @@ public partial class SignedEnvelope : Dare {
 			string tag, TokenValue value) { 
 		switch (tag) {
 			case "Index" : {
-				if (value is TokenValueInteger32 vvalue) {
+				if (value is TokenValueInteger64 vvalue) {
 					Index = vvalue.Value;
 					}
 				break;
@@ -1483,7 +1498,7 @@ public partial class SignedEnvelope : Dare {
             string tag) {
         switch (tag) {
 			case "Index" : {
-				return new TokenValueInteger32 (Index);
+				return new TokenValueInteger64 (Index);
 				}
 			case "Digest" : {
 				return new TokenValueListBinary (Digest);
@@ -1499,7 +1514,7 @@ public partial class SignedEnvelope : Dare {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Index", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "Index", new Property (typeof(TokenValueInteger64), false)} ,
 			{ "Digest", new Property (typeof(TokenValueListBinary), true)} 
         };
 
@@ -2255,7 +2270,7 @@ public partial class Witness : Dare {
         ///Specifies the index number assigned to the entry in the log.
         /// </summary>
 
-	public virtual int?						Index  {get; set;}
+	public virtual long?						Index  {get; set;}
 
 
     ///<inheritdoc/>
@@ -2281,7 +2296,7 @@ public partial class Witness : Dare {
 				break;
 				}
 			case "Index" : {
-				if (value is TokenValueInteger32 vvalue) {
+				if (value is TokenValueInteger64 vvalue) {
 					Index = vvalue.Value;
 					}
 				break;
@@ -2308,7 +2323,7 @@ public partial class Witness : Dare {
 				return new TokenValueBinary (Apex);
 				}
 			case "Index" : {
-				return new TokenValueInteger32 (Index);
+				return new TokenValueInteger64 (Index);
 				}
 
             default: {
@@ -2324,7 +2339,7 @@ public partial class Witness : Dare {
 			{ "Id", new Property (typeof(TokenValueString), false)} ,
 			{ "Issuer", new Property (typeof(TokenValueString), false)} ,
 			{ "Apex", new Property (typeof(TokenValueBinary), false)} ,
-			{ "Index", new Property (typeof(TokenValueInteger32), false)} 
+			{ "Index", new Property (typeof(TokenValueInteger64), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -2402,7 +2417,7 @@ public partial class Proof : Dare {
         ///Specifies the index number assigned to the entry in the log.
         /// </summary>
 
-	public virtual int?						Index  {get; set;}
+	public virtual long?						Index  {get; set;}
         /// <summary>
         ///The list of entries from which the proof path is computed.
         /// </summary>
@@ -2427,7 +2442,7 @@ public partial class Proof : Dare {
 				break;
 				}
 			case "Index" : {
-				if (value is TokenValueInteger32 vvalue) {
+				if (value is TokenValueInteger64 vvalue) {
 					Index = vvalue.Value;
 					}
 				break;
@@ -2457,7 +2472,7 @@ public partial class Proof : Dare {
 				return new TokenValueBinary (Hash);
 				}
 			case "Index" : {
-				return new TokenValueInteger32 (Index);
+				return new TokenValueInteger64 (Index);
 				}
 			case "Path" : {
 				return new TokenValueListBinary (Path);
@@ -2476,7 +2491,7 @@ public partial class Proof : Dare {
 			{ "SignedWitness", new Property ( typeof(TokenValueStruct), false,
 					()=>new DareEnvelope(), ()=>new DareEnvelope(), false)} ,
 			{ "Hash", new Property (typeof(TokenValueBinary), false)} ,
-			{ "Index", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "Index", new Property (typeof(TokenValueInteger64), false)} ,
 			{ "Path", new Property (typeof(TokenValueListBinary), true)} 
         };
 

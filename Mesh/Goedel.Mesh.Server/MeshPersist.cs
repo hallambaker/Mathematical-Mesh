@@ -271,16 +271,16 @@ public class MeshPersist : Disposable {
     /// <param name="completeRequest">The completion request.</param>
     public CompleteResponse AccountComplete(IJpcSession jpcSession,
                 CompleteRequest completeRequest) {
-        Console.WriteLine($"AccountComplete {jpcSession.Credential.AuthenticationKeyId}");
+        //Console.WriteLine($"AccountComplete {jpcSession.Credential.AuthenticationKeyId}");
         //using var accountHandle = GetAccountUnverified(completeRequest.AccountAddress);
         using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Device);
 
-        Console.WriteLine($"AccountComplete Got handle, find message {completeRequest.ResponseID}");
+        //Console.WriteLine($"AccountComplete Got handle, find message {completeRequest.ResponseID}");
         // pull the request off SpoolLocal
         var envelope = accountHandle.GetLocal(completeRequest.ResponseID);
 
         if (envelope == null) {
-            Console.WriteLine($"Not found");
+            //Console.WriteLine($"Not found");
             return new CompleteResponse() {
                 StatusCode = 400,
                 StatusDescriptionCode = "MeshResponseNotFound",
@@ -373,6 +373,9 @@ public class MeshPersist : Disposable {
         //using var accountEntry = GetAccountVerified(account, jpcSession);
         var updates = new List<StoreUpdate>();
         foreach (var selection in selections) {
+            Console.WriteLine($"Selection of {accountHandle.LocalAddress} {selection.Store}, [{selection.IndexMin}..{selection.IndexMax}]");
+
+
             using var store = accountHandle.GetSequence(selection.Store);
 
             var update = new StoreUpdate() {
@@ -549,6 +552,9 @@ public class MeshPersist : Disposable {
         var identifier = dareMessage.Header?.ContentMeta?.UniqueId;
         identifier.AssertNotNull(InvalidMessageID.Throw);
 
+
+        Screen.WriteLine($"Post message {dareMessage.Header.Debug?? "NULL!"}");
+
         //var senderService = senderAccount.AccountAddress.GetService();
 
         foreach (var recipient in accounts) {
@@ -588,9 +594,9 @@ public class MeshPersist : Disposable {
 
         recipientAccount.PostInbound(dareMessage, bitmask);
 
+        Screen.WriteLine($"Notify account {recipientAccount.ProfileAccount.AccountAddress}");
+
         Notify(recipientAccount, bitmask.GetBits);
-
-
 
         return true;
         }
@@ -830,7 +836,7 @@ public class MeshPersist : Disposable {
     AccountHandleLocked GetAccountHandleLocked(IJpcSession session,
             AccountPrivilege accountPrivilege) {
 
-        Console.WriteLine($"Request to access {session.TargetAccount} for {accountPrivilege}");
+        //Console.WriteLine($"Request to access {session.TargetAccount} for {accountPrivilege}");
 
 
         LockedCatalogedEntry<AccountEntry> accountEntry = null;
@@ -846,7 +852,7 @@ public class MeshPersist : Disposable {
                 };
             }
         catch (Exception) {
-            Console.WriteLine($"Refused {session.TargetAccount} for {accountPrivilege}");
+            //Console.WriteLine($"Refused {session.TargetAccount} for {accountPrivilege}");
             accountEntry?.Dispose();
             throw;
             }

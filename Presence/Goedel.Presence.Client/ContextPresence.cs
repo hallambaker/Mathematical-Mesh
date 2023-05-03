@@ -505,6 +505,9 @@ public class ContextPresence : Disposable {
                 WaitPoll.Reset();
                 }
             }
+
+
+
         return ListenerActive;
 
         }
@@ -574,6 +577,11 @@ public class ContextPresence : Disposable {
         var inbound = ContextUser.GetSpoolInbound();
         // wait on notification of an update.
         while (ListenerActive) {
+            Screen.WriteLine($"Synchronize store {ContextUser.AccountAddress}");
+
+            var count = ContextUser.Sync();
+            Screen.WriteLine($"Synchronize store {ContextUser.AccountAddress} Got {count}");
+
             foreach (var envelope in inbound.Select(1)) {
                 var message = Message.Decode(envelope, ContextUser.KeyCollection);
                 Console.WriteLine($"{ContextUser.AccountAddress}: Message {envelope.Header.Index} type {message.GetType()} (Want {messageType})");
@@ -630,7 +638,7 @@ public class ContextPresence : Disposable {
     /// <param name="account">The account to connect to.</param>
     /// <returns>The created session context (asynchronously).</returns>
     public ContextSession SessionRequest(string account) {
-        Console.WriteLine($"SessionRequestAsync {account}");
+        Screen.WriteLine($"SessionRequestAsync {account}");
 
         // Create a local endpoint
         var udpClient = HostNetwork.GetUDPClient();
@@ -648,6 +656,7 @@ public class ContextPresence : Disposable {
             };
 
         ContextUser.SendMessage(account, sessionRequest);
+        Screen.WriteLine($"Message Sent {account}");
 
         // Wait for response
         var sessionResponse = MessageWait(typeof(SessionResponse), inboxCount) as SessionResponse;
@@ -658,8 +667,6 @@ public class ContextPresence : Disposable {
             ExternalEndpoint = externalEndpoint
             };
         return result;
-
-
         }
 
     /// <summary>
@@ -680,7 +687,7 @@ public class ContextPresence : Disposable {
     /// </summary>
     /// <returns>The created session context (asynchronously).</returns>
     public ContextSession GetSessionRequest() {
-        Console.WriteLine("GetSessionRequestAsync");
+        Screen.WriteLine("GetSessionRequestAsync");
 
         var inboxCount = GetInboxCount();
 

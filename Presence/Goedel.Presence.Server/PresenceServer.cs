@@ -449,7 +449,7 @@ public class PresenceServer : PresenceService, IPresence {
 
     ///<inheritdoc/>
     public void Notify(string accountId, byte[] bitmask) {
-
+        Screen.WriteLine();
         lock (Accounts){
             if (!Accounts.TryGetValue(accountId, out var accountBinding)) {
                 return;
