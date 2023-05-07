@@ -446,29 +446,6 @@ public class PublicMeshService : MeshService {
             var profileAccount = request.EnvelopedProfileAccount.Decode();
             VerifyDevice(profileAccount, jpcSession).AssertTrue(NotAuthenticated.Throw);
 
-            //var catalogedCallsigns = new List<CatalogedCallsignObsolete>();
-
-            //if (request.EnvelopedCallsignBinding != null) {
-
-            //    foreach (var envelopedBinding in request.EnvelopedCallsignBinding) {
-
-            //        var binding = envelopedBinding.Decode();
-            //        VerifyBinding(profileAccount, binding).AssertTrue(NYI.Throw);
-
-            //        // check to see if the binding is in the name catalog
-            //        if (ServiceBinding(binding)) {
-            //            // 
-            //            catalogedCallsigns.Add(new CatalogedCallsignObsolete() {
-            //                EnvelopedCallsignBinding = envelopedBinding,
-            //                Canonical = binding.Canonical.CannonicalAccountAddress(),
-            //                ProfileUdf = binding.ProfileUdf
-            //                });
-            //            }
-            //        }
-            //    }
-
-
-
             // canonicalize the account address to ensure consistency.
             request.AccountAddress = request.AccountAddress.CannonicalAccountAddress();
             var account = request.AccountAddress;
@@ -573,7 +550,8 @@ public class PublicMeshService : MeshService {
     /// <param name="jpcSession">The connection authentication context.</param>
     /// <returns>The response object from the service</returns>
     public override StatusResponse Status(
-            StatusRequest request, IJpcSession jpcSession) {
+                StatusRequest request, 
+                IJpcSession jpcSession) {
         try {
             return MeshPersist.AccountStatus(jpcSession, 
                     request.CatalogedDeviceDigest,
@@ -596,10 +574,10 @@ public class PublicMeshService : MeshService {
     /// <param name="jpcSession">The connection authentication context.</param>
     /// <returns>The response object from the service</returns>
     public override DownloadResponse Download(
-            DownloadRequest request, IJpcSession jpcSession) {
+                DownloadRequest request, 
+                IJpcSession jpcSession) {
         try {
-            var Updates = MeshPersist.AccountDownload(jpcSession, request.Select);
-            return new DownloadResponse() { Updates = Updates };
+            return MeshPersist.AccountDownload(jpcSession, request);
             }
         catch (System.Exception exception) {
             return new DownloadResponse(exception);

@@ -49,7 +49,7 @@ public static class UriClient {
         //var bytes = webClient.UploadData(address, data);
 
 
-        Console.WriteLine($"Send request to {address}");
+        //Console.WriteLine($"Send request to {address}");
 
         var request = new ByteArrayContent(data);
 

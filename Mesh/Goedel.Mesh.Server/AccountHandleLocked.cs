@@ -248,7 +248,7 @@ public class AccountHandleLocked : Disposable {
 
 
         var sequence = GetSequence(SpoolInbound.Label);
-        Console.Write($"Append to inbound sequence {sequence.FrameCount}/{sequence.Length}");
+        Console.Write($"Append {envelope.EnvelopeId} to inbound sequence {sequence.FrameCount}/{sequence.Length}");
 
         sequence.Append(envelope);
         if (sequence.Bitmask != null) {

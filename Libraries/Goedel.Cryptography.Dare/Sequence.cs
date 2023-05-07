@@ -966,10 +966,17 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// </summary>
     /// <param name="envelopes">The enveolpes to append</param>
     /// <param name="index">The starting point at which to begin appending.</param>
-    public void Append(List<DareEnvelope> envelopes, long index = 0) {
+    public void Append(List<DareEnvelope> envelopes, long index = 0, bool unverified = true) {
 
         for (var i = (int)index; i < envelopes.Count; i++) {
-            Append(envelopes[i]);
+
+            if (unverified | envelopes[i].Index > FrameIndexLast) {
+
+                Append(envelopes[i]);
+                }
+            //else {
+            //    Console.WriteLine($"   $$$$$$ >>>> {envelopes[i].Index} already added");
+            //    }
             }
         }
 

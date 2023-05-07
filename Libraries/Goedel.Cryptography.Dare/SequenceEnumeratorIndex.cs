@@ -137,6 +137,7 @@ public class SequenceEnumeratorIndex : IEnumerator<SequenceIndexEntry>, IEnumera
     /// <code>false</code> if the enumerator has passed the end of the collection.</returns>
     public bool MoveNext() {
         if (Next is null | ((Count > 0) & (Items >= Count)) ) {
+            Current = null;
             return false;
             }
 

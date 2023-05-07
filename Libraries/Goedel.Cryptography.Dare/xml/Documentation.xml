@@ -5329,7 +5329,7 @@
             <param name="sequenceIndex">The SequenceIndex to append.</param>
             <param name="contentMeta">The ContentMeta to append.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.Append(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.Int64)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.Append(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.Int64,System.Boolean)">
             <summary>
             Append the envelopes <paramref name="envelopes"/> to the Sequence starting
             with the <paramref name="index"/>th envelope.

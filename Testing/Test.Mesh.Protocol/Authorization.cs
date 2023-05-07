@@ -128,10 +128,10 @@ public partial class TestService {
         // Create an ssh application
         var applicationSSH = CatalogedApplicationSsh.Create(id, roles);
 
-        var transaction1 = contextAccountAlice.TransactBegin();4
+        var transaction1 = contextAccountAlice.TransactBegin();
         transaction1.ApplicationCreate(applicationSSH);
         var result1 = transaction1.Transact();
-        4
+        
 
         // Connect a third device
         var contextOnboardPending2 = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3, AccountAlice);

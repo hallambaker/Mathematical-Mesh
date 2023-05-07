@@ -62,7 +62,7 @@ partial class Program {
 
 
 
-        TestService.Test().MeshDeviceSsh();
+        //TestService.Test().MeshDeviceSsh();
 
         TestPresence.Test().PresenceSessionRequest();
         TestPresence.Test().PresenceHeartbeat();

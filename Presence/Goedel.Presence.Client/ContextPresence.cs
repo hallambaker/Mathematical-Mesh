@@ -203,11 +203,14 @@ public class ContextPresence : Disposable {
     /// <returns>The context created.</returns>
     public static ServiceAccessToken GetService(
                 ContextUser contextAccount) {
-        var statusRequest = new StatusRequest() {
-            Services = new List<String>() { MeshConstants.MeshPresenceService }
-            };
-        var status = contextAccount.Sync(statusRequest);
-        return status.GetService(MeshConstants.MeshPresenceService);
+        return contextAccount.GetService(MeshConstants.MeshPresenceService);
+
+
+        //var statusRequest = new StatusRequest() {
+        //    Services = new List<String>() { MeshConstants.MeshPresenceService }
+        //    };
+        //var status = contextAccount.Sync(statusRequest);
+        //return status.GetService(MeshConstants.MeshPresenceService);
         }
 
 
@@ -574,18 +577,22 @@ public class ContextPresence : Disposable {
     /// <returns>The message received.</returns>
     public Message MessageWait (Type messageType, long outBoxCount) {
 
+
+        
+
+
         var inbound = ContextUser.GetSpoolInbound();
         // wait on notification of an update.
         while (ListenerActive) {
-            Screen.WriteLine($"Synchronize store {ContextUser.AccountAddress}");
+            //Screen.WriteLine($"Synchronize store {ContextUser.AccountAddress}");
 
             var count = ContextUser.Sync();
-            Screen.WriteLine($"Synchronize store {ContextUser.AccountAddress} Got {count}");
+            Screen.WriteLine($"Synchronize store {ContextUser.AccountAddress} Got {inbound.FrameCount}");
 
             foreach (var envelope in inbound.Select(1)) {
                 var message = Message.Decode(envelope, ContextUser.KeyCollection);
-                Console.WriteLine($"{ContextUser.AccountAddress}: Message {envelope.Header.Index} type {message.GetType()} (Want {messageType})");
-
+                Console.WriteLine($"{ContextUser.AccountAddress}: Message {envelope.Header.Index} type {message.GetType()} Id: {message.EnvelopeId}");
+                Console.WriteLine($"    (Want {messageType})");
                 if (message.GetType() == messageType) {
                     return message;
                     }

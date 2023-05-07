@@ -375,6 +375,8 @@ public partial class SequenceIndexEntry : DareEnvelope {
     /// </summary>
     /// <returns></returns>
     public byte[] GetBody() {
+        Console.WriteLine($"Get Body! -- {DataPosition} for {DataLength}");
+
         using var input = Sequence.FramerGetReader(DataPosition, DataLength);
         using var output = new MemoryStream();
         input.CopyTo(output);

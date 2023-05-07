@@ -363,22 +363,44 @@ public class MeshPersist : Disposable {
     /// </summary>
     /// <param name="session">The session connection data.</param>
     /// <param name="selections">The selection criteria.</param>
-    public List<StoreUpdate> AccountDownload(
+    public DownloadResponse AccountDownload(
                 IJpcSession session,
+                DownloadRequest request) {
 
-                List<ConstraintsSelect> selections) {
+        var result = new DownloadResponse() {
+            };
+
 
         using var accountHandle = GetAccountHandleLocked(session, AccountPrivilege.Read);
 
+        if (accountHandle.EnvelopedCatalogedDevice != null) {
+            if (accountHandle.CatalogedDeviceDigest != request.CatalogedDeviceDigest) {
+                result.EnvelopedCatalogedDevice = accountHandle.EnvelopedCatalogedDevice; 
+                result.CatalogedDeviceDigest = accountHandle.CatalogedDeviceDigest;
+                }
+            }
+
+
         //using var accountEntry = GetAccountVerified(account, jpcSession);
         var updates = new List<StoreUpdate>();
-        foreach (var selection in selections) {
-            Console.WriteLine($"Selection of {accountHandle.LocalAddress} {selection.Store}, [{selection.IndexMin}..{selection.IndexMax}]");
-
+        foreach (var selection in request.Select) {
+            var debug = false;
 
             using var store = accountHandle.GetSequence(selection.Store);
 
+            if (selection.Store == SpoolInbound.Label) {
+                Console.WriteLine($"Selection of {accountHandle.LocalAddress} {selection.Store}, [{selection.IndexMin}..{selection.IndexMax}]");
+                if (selection.IndexMin > 1 & accountHandle.LocalAddress == "bob@example.com") {
+                    Console.WriteLine();
+                    Console.WriteLine($"Server Download: last index is {store.SequenceIndexEntryLast.Index} Want {selection.IndexMin}");
+                    Console.WriteLine();
+                    debug = true;
+                    }
+
+                }
+
             if (store is SequenceNull) {
+
                 updates.Add(new StoreUpdate() {
                     Store = selection.Store,
                     Envelopes = null
@@ -390,7 +412,20 @@ public class MeshPersist : Disposable {
                     Envelopes = new List<DareEnvelope>()
                     };
 
+                if (debug) {
+                    foreach (var index in store.SelectIndex(selection.IndexMin ?? 0)) {
+
+
+                        }
+                    }
+
+
+                    // This is the place we are screwing up
                 foreach (var message in store.SelectEnvelope(selection.IndexMin ?? 0)) {
+
+                    // Oh fucketty fuck fuck fuck!
+                    // This is loading up the wrong bloody message!
+
                     message.LoadBody();
                     update.Envelopes.Add(message);
                     }
@@ -398,7 +433,10 @@ public class MeshPersist : Disposable {
                 updates.Add(update);
                 }
             }
-        return updates;
+
+        result.Updates = updates;
+
+        return result;
         }
 
     /// <summary>
@@ -602,7 +640,7 @@ public class MeshPersist : Disposable {
 
         recipientAccount.PostInbound(dareMessage, bitmask);
 
-        Screen.WriteLine($"Notify account {recipientAccount.ProfileAccount.AccountAddress}");
+        Screen.WriteLine($"Notify account {recipientAccount.ProfileAccount.AccountAddress} {dareMessage.Header.Debug} {dareMessage.EnvelopeId}");
 
         Notify(recipientAccount, bitmask.GetBits);
 

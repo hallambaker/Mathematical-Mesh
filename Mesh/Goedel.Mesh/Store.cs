@@ -204,6 +204,10 @@ public class Store : Disposable, IInternSequenceIndexEntry {
                 string directory,
                 string storeName) {
 
+
+
+        if (storeName == SpoolInbound.Label) {
+            }
         var path = FileName(directory, storeName);
         if (!File.Exists(path)) {
             return new ConstraintsSelect() {
@@ -262,7 +266,7 @@ public class Store : Disposable, IInternSequenceIndexEntry {
         else {
             // here open the existing container.
             using var container = Sequence.OpenExisting(fileName, FileStatus.ConcurrentLocked, decrypt: false);
-            container.Append(envelopes);
+            container.Append(envelopes, unverified: false);
             }
 
         }
