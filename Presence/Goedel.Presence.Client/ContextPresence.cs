@@ -25,7 +25,9 @@ using Goedel.Cryptography.Dare;
 using Goedel.Discovery;
 using Goedel.Mesh;
 using Goedel.Protocol;
+using System.Diagnostics;
 using System.Net;
+using System.Security.Principal;
 using System.Threading.Tasks.Dataflow;
 
 namespace Goedel.Presence.Client;
@@ -259,9 +261,7 @@ public class ContextPresence : Disposable {
                 var waitTask = UdpReceiveBuffer.ReceiveAsync(wakeup, ListenerCancel.Token);
                 await waitTask;
 
-
                 if (waitTask.IsCompleted) {
-                    Console.WriteLine("Client got data");
                     Process(waitTask.Result);
                     }
                 }
@@ -337,7 +337,7 @@ public class ContextPresence : Disposable {
         ProcessStatus(status);
         }
     void Process(PresenceNotify notify) {
-        Console.WriteLine("Got notification");
+        //Console.WriteLine("Got notification");
         ProcessStatus(notify);
 
         var message = new PresenceAcknowledge() {
@@ -436,7 +436,7 @@ public class ContextPresence : Disposable {
         var connectRequest = new PresenceConnectRequest() {
             };
         SendData(connectRequest, ServiceAccessToken.Token);
-        Console.WriteLine($"Send ConnectRequest: {connectRequest.ToString()}");
+        //Trace.WriteLine($"Send ConnectRequest: {connectRequest.ToString()}");
         }
 
 
@@ -449,7 +449,7 @@ public class ContextPresence : Disposable {
         
         WakeupUnacknowledged = DateTime.Now.AddMilliseconds(RetransmitOrReconnect);
         SendData(heartbeat, ServiceAccessToken.Token);
-        Console.WriteLine($"Send Heartbeat: {heartbeat.ToString()}");
+        //Trace.WriteLine($"Send Heartbeat: {heartbeat.ToString()}");
         }
 
     /// <summary>
@@ -485,7 +485,7 @@ public class ContextPresence : Disposable {
         message.Serial = MessageSerial++;
         var data = message.ToBytes(token);
         udpClient.Send(data, data.Length, endpoint);
-        Console.WriteLine($"Send ${data.Length} bytes to {endpoint.Address}:{endpoint.Port}");
+        //Trace.WriteLine($"Send ${data.Length} bytes to {endpoint.Address}:{endpoint.Port}");
         }
 
 
@@ -577,40 +577,26 @@ public class ContextPresence : Disposable {
     /// <returns>The message received.</returns>
     public Message MessageWait (Type messageType, long outBoxCount) {
 
-
-        
-
-
         var inbound = ContextUser.GetSpoolInbound();
         // wait on notification of an update.
         while (ListenerActive) {
+            "Message wait should only check for new messages.".TaskFunctionality();
+
+
             //Screen.WriteLine($"Synchronize store {ContextUser.AccountAddress}");
 
             var count = ContextUser.Sync();
-            Screen.WriteLine($"Synchronize store {ContextUser.AccountAddress} Got {inbound.FrameCount}");
 
             foreach (var envelope in inbound.Select(1)) {
                 var message = Message.Decode(envelope, ContextUser.KeyCollection);
-                Console.WriteLine($"{ContextUser.AccountAddress}: Message {envelope.Header.Index} type {message.GetType()} Id: {message.EnvelopeId}");
-                Console.WriteLine($"    (Want {messageType})");
+                //Console.WriteLine($"{ContextUser.AccountAddress}: Message {envelope.Header.Index} type {message.GetType()} Id: {message.EnvelopeId}");
+                //Console.WriteLine($"    (Want {messageType})");
                 if (message.GetType() == messageType) {
                     return message;
                     }
                 outBoxCount = inbound.FrameCount;
                 }
 
-
-
-            //if (inbound.FrameCount > outBoxCount) {
-            //    foreach (var envelope in inbound.SelectEnvelope((int)outBoxCount + 1)) {
-            //        var message = Message.Decode(envelope, ContextUser.KeyCollection);
-
-            //        if (message.GetType() == messageType) { 
-            //            return message; 
-            //            }
-            //        outBoxCount = inbound.FrameCount;
-            //        }
-            //    }
             Poll();
             }
 
@@ -663,7 +649,6 @@ public class ContextPresence : Disposable {
             };
 
         ContextUser.SendMessage(account, sessionRequest);
-        Screen.WriteLine($"Message Sent {account}");
 
         // Wait for response
         var sessionResponse = MessageWait(typeof(SessionResponse), inboxCount) as SessionResponse;
@@ -694,7 +679,6 @@ public class ContextPresence : Disposable {
     /// </summary>
     /// <returns>The created session context (asynchronously).</returns>
     public ContextSession GetSessionRequest() {
-        Screen.WriteLine("GetSessionRequestAsync");
 
         var inboxCount = GetInboxCount();
 
@@ -709,7 +693,10 @@ public class ContextPresence : Disposable {
         // Send response
         var sessionResponse = new SessionResponse() {
             Inbound = externalEndpoint
-            };
+        };
+
+
+        ContextUser.SendMessage(sessionRequest.Sender, sessionResponse);
 
         // Build session for request/response and endpoint bindings
         var result = new ContextSession(sessionRequest, sessionResponse) {

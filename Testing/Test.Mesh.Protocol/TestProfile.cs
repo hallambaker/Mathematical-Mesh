@@ -28,6 +28,20 @@ namespace Goedel.XUnit;
 
 public partial class TSignatures {
 
+    [Fact(Skip = "PQC not yet implemented")]
+    public void NYI_PQCProfile() {
+
+        "Verify valid PQC profile".TaskTest();
+        "Fail PQC profile with invalid ECC".TaskTest();
+        "Fail PQC profile with invalid PQC".TaskTest();
+
+
+        }
+
+
+
+
+
 
     [Fact(Skip = "Signature testing skiped pending invalidation library")]
     public void TestAuthorizationGood() => throw new NYI();

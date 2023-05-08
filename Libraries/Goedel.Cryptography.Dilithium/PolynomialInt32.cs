@@ -886,8 +886,14 @@ public class PolynomialInt32 : Disposable {
     /// is not null, writes the tag and fingerprint to the console.
     /// </summary>
     /// <param name="tag">Optional tag for identifying console output.</param>
+    /// <param name="output">Output to write the result to if <paramref name="tag"/> is
+    /// not null.</param>
     /// <returns>String containing the base16 representation of the values.</returns>
-    public string GetHash(string tag) {
+    public string GetHash(
+                    string tag,
+                    TextWriter output = null) {
+
+        output ??= Console.Out;
 
         var d2 = Coefficients.Length;
 
@@ -905,8 +911,8 @@ public class PolynomialInt32 : Disposable {
         var v = buffer.GetBufferFingerprint();
 
         if (tag != null) {
-            Console.WriteLine(tag);
-            Console.WriteLine(v);
+            output.WriteLine(tag);
+            output.WriteLine(v);
             }
 
         return v;

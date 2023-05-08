@@ -2828,22 +2828,15 @@
             <param name="buffer"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Algorithms.Extensions.DumpBufferFingerprint(System.Byte[],System.String)">
+        <member name="M:Goedel.Cryptography.Algorithms.Extensions.DumpBufferFingerprint(System.Byte[],System.String,System.IO.TextWriter)">
             <summary>
-            
+            Output SHAKE128 digest of <paramref name="buffer"/> in hexadecimal.
             </summary>
-            <param name="buffer"></param>
-            <param name="tag"></param>
+            <param name="buffer">The buffer to output.</param>
+            <param name="tag">Optional descriptive tag.</param>
+            <param name="output">Output to write the result to.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Algorithms.Extensions.DumpBufferHex(System.Byte[],System.String,System.Int32,System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="buffer"></param>
-            <param name="tag"></param>
-            <param name="length"></param>
-            <param name="first"></param>
-        </member>
+        <!-- Badly formed XML comment ignored for member "M:Goedel.Cryptography.Algorithms.Extensions.DumpBufferHex(System.Byte[],System.String,System.Int32,System.Int32,System.IO.TextWriter)" -->
         <member name="T:Goedel.Cryptography.Algorithms.ShortBlockPermute">
             <summary>
             Short block permutation.

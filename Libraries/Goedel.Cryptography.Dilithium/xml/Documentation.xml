@@ -593,12 +593,14 @@
             <param name="buffer">Output buffer.</param>
             <param name="offset">Index of first byte to be written.</param>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.GetHash(System.String)">
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.GetHash(System.String,System.IO.TextWriter)">
             <summary>
             Return a SHAKE128 fingerprint of the matrix coefficients. If <paramref name="tag"/>
             is not null, writes the tag and fingerprint to the console.
             </summary>
             <param name="tag">Optional tag for identifying console output.</param>
+            <param name="output">Output to write the result to if <paramref name="tag"/> is
+            not null.</param>
             <returns>String containing the base16 representation of the values.</returns>
         </member>
         <member name="T:Goedel.Cryptography.PQC.PolynomialMatrixInt32">
@@ -648,12 +650,14 @@
             <param name="t">The result vector.</param>
             <returns>The result vector.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.PolynomialMatrixInt32.GetHash(System.String)">
+        <member name="M:Goedel.Cryptography.PQC.PolynomialMatrixInt32.GetHash(System.String,System.IO.TextWriter)">
             <summary>
             Return a SHAKE128 fingerprint of the matrix coefficients. If <paramref name="tag"/>
             is not null, writes the tag and fingerprint to the console.
             </summary>
             <param name="tag">Optional tag for identifying console output.</param>
+            <param name="output">Output to write the result to if <paramref name="tag"/> is
+            not null.</param>
             <returns>String containing the base16 representation of the values.</returns>
         </member>
         <member name="T:Goedel.Cryptography.PQC.PolynomialVectorInt32">
@@ -826,12 +830,14 @@
             <param name="offset">Index of first byte to write on entry and index of
             next byte to write to on exit.</param>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.GetHash(System.String)">
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.GetHash(System.String,System.IO.TextWriter)">
             <summary>
             Return a SHAKE128 fingerprint of the matrix coefficients. If <paramref name="tag"/>
             is not null, writes the tag and fingerprint to the console.
             </summary>
             <param name="tag">Optional tag for identifying console output.</param>
+            <param name="output">Output to write the result to if <paramref name="tag"/> is
+            not null.</param>
             <returns>String containing the base16 representation of the values.</returns>
         </member>
     </members>

@@ -6292,7 +6292,7 @@
             <summary>
             Return the raw body bytes.
             </summary>
-            <returns></returns>
+            <returns>The raw body bytes.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.GetPayload">
             <summary>

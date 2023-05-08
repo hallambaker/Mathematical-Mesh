@@ -22,7 +22,7 @@
 
 namespace Goedel.Test.Core;
 
-public class Trace {
+public class TraceTransaction {
 
     public byte[] Request;
     public byte[] Response;
@@ -41,7 +41,7 @@ public class Trace {
     public List<Packet> RequestPackets;
     public List<Packet> ResponsePackets;
 
-    public Trace(byte[] request, byte[] response, JpcInterface service) {
+    public TraceTransaction(byte[] request, byte[] response, JpcInterface service) {
         Request = request;
         Response = response;
         RequestText = Request.ToUTF8();

@@ -71,7 +71,7 @@
 ~~~~
 #end method
 
-#method DescribeRequest Trace trace
+#method DescribeRequest TraceTransaction trace
 #% if (trace == null) {ReportMissing(); return;}
 
 #% Format(trace.RequestObject);
@@ -79,14 +79,14 @@
 #end method
 
 
-#method DescribeResponse Trace trace
+#method DescribeResponse TraceTransaction trace
 #% if (trace == null) {ReportMissing(); return;}
 
 #% Format(trace.ResponseObject);
 
 #end method
 
-#method DescribeRequestBinding Trace trace
+#method DescribeRequestBinding TraceTransaction trace
 #% if (trace == null) {ReportMissing(); return;}
 ~~~~
 
@@ -97,7 +97,7 @@
 #end method
 
 
-#method DescribeResponseBinding Trace trace
+#method DescribeResponseBinding TraceTransaction trace
 #% if (trace == null) {ReportMissing(); return;}
 ~~~~
 

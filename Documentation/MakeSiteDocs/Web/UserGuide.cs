@@ -87,7 +87,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	//
 	// DescribeRequest
 	//
-	public void DescribeRequest (Trace trace) {
+	public void DescribeRequest (TraceTransaction trace) {
 		 if (trace == null) {ReportMissing(); return;}
 		_Output.Write ("\n{0}", _Indent);
 		 Format(trace.RequestObject);
@@ -98,7 +98,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	//
 	// DescribeResponse
 	//
-	public void DescribeResponse (Trace trace) {
+	public void DescribeResponse (TraceTransaction trace) {
 		 if (trace == null) {ReportMissing(); return;}
 		_Output.Write ("\n{0}", _Indent);
 		 Format(trace.ResponseObject);
@@ -109,7 +109,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	//
 	// DescribeRequestBinding
 	//
-	public void DescribeRequestBinding (Trace trace) {
+	public void DescribeRequestBinding (TraceTransaction trace) {
 		 if (trace == null) {ReportMissing(); return;}
 		_Output.Write ("~~~~\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
@@ -123,7 +123,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	//
 	// DescribeResponseBinding
 	//
-	public void DescribeResponseBinding (Trace trace) {
+	public void DescribeResponseBinding (TraceTransaction trace) {
 		 if (trace == null) {ReportMissing(); return;}
 		_Output.Write ("~~~~\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);

@@ -22,10 +22,12 @@
 
 
 using System;
+using System.Diagnostics;
 using ExampleGenerator;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.Dare;
+using Goedel.Debug;
 //using Goedel.Cryptography.PQC;
 using Goedel.Mesh;
 using Goedel.Mesh.Shell;
@@ -36,6 +38,7 @@ using Goedel.Utilities;
 using Goedel.XUnit;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
 
 namespace Scratchpad;
 
@@ -54,17 +57,19 @@ partial class Program {
 
 
     static void Main() {
-
+        Trace.Listeners.Add(new GoedelTraceListener());
 
 
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
-
+        Trace.WriteLine($"Trace enabled");
+        TestService.Test().MeshDeviceDirectKey();
+        TestService.Test().MeshDeviceThresholdKey();
 
         //TestService.Test().MeshDeviceSsh();
 
-        TestPresence.Test().PresenceSessionRequest();
+        //TestPresence.Test().PresenceSessionRequest();
         TestPresence.Test().PresenceHeartbeat();
 
         RegistrationTests.Test().CallsignPresencePresent();
@@ -182,9 +187,11 @@ partial class Program {
                 CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_3_512) {
         //  Magic number for SHA2 is 4187123
         //  Magic number for SHA3 is  774665
+        var output = Console.Out;
+
         for (var i = 0; true; i++) {
             if ((i % 1000) == 0) {
-                Console.WriteLine(i);
+                output.WriteLine(i);
                 }
 
             var document = $"UDF Compressed Document {i}";
@@ -196,7 +203,7 @@ partial class Program {
             var UDFData = buffer.GetDigest(cryptoAlgorithmID);
 
             if (Udf.GetCompression(UDFData) > 0) {
-                Console.WriteLine($"!!!!!!!!!!!!!!!!  {i}");
+                output.WriteLine($"!!!!!!!!!!!!!!!!  {i}");
                 return;
                 }
 

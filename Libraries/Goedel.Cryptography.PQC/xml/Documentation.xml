@@ -488,10 +488,13 @@
             <param name="offset">starting point at which to fill the <paramref name="output"/></param>
             <param name="output">The buffer to which the output is to be written.</param>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.GetHash(System.String)">
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.GetHash(System.String,System.IO.TextWriter)">
             <summary>
             Return a SHAKE128 fingerprint of the polynomial coefficients.
             </summary>
+            <param name="tag">Optional descriptive tag.</param>
+            <param name="output">Output to write the result to if <paramref name="tag"/> is
+            not null.</param>
             <returns>String containing the base16 representation of the values.</returns>
         </member>
         <member name="T:Goedel.Cryptography.PQC.PolynomialMatrixInt16">
@@ -526,12 +529,14 @@
             <returns>A matrix of short integers [K,K,N] initialized according to
             the seed <paramref name="seed"/></returns>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.PolynomialMatrixInt16.GetHash(System.String)">
+        <member name="M:Goedel.Cryptography.PQC.PolynomialMatrixInt16.GetHash(System.String,System.IO.TextWriter)">
             <summary>
             Return a SHAKE128 fingerprint of the matrix coefficients. If <paramref name="tag"/>
             is not null, writes the tag and fingerprint to the console.
             </summary>
             <param name="tag">Optional tag for identifying console output.</param>
+            <param name="output">Output to write the result to if <paramref name="tag"/> is
+            not null.</param>
             <returns>String containing the base16 representation of the values.</returns>
         </member>
         <member name="T:Goedel.Cryptography.PQC.PolynomialVectorInt16">
@@ -704,10 +709,13 @@
             <returns>Serialization of the polynomial.</returns>
             <exception cref="T:Goedel.Utilities.NYI"></exception>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.GetHash(System.String)">
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.GetHash(System.String,System.IO.TextWriter)">
             <summary>
             Return a SHAKE128 fingerprint of the polynomial coefficients.
             </summary>
+             <param name="tag">Optional tag for identifying console output.</param>
+            <param name="output">Output to write the result to if <paramref name="tag"/> is
+            not null.</param>
             <returns>String containing the base16 representation of the values.</returns>
         </member>
     </members>

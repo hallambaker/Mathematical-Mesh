@@ -23,7 +23,6 @@ public partial class TestPresence  {
     [InlineData(null, 30)]
     public void PresenceHeartbeat(CommunicationConditions communicationConditions = null,
                 int cycles = 30) {
-        "Disable".TaskFunctionality(true);
         //ServiceSkip = serviceSkip; 
         //ServiceStride = serviceStride;
         //AliceSkip = clientSkip; 
@@ -54,7 +53,7 @@ public partial class TestPresence  {
     /// Alice attempts to establish connection to Bob by placing a request at
     /// Bob's MSP. Bob receives notification via update.
     /// </summary>
-    [Fact(Skip = "Need to ensure termination")]
+    [Fact (Skip ="Not terminating reliably")]
     public void PresenceSessionRequest() {
 
 
@@ -69,16 +68,16 @@ public partial class TestPresence  {
         var pollResultB = presenceBob.Poll();
 
 
-        Console.WriteLine("####################################################################");
+        //Console.WriteLine("####################################################################");
 
 
         // Test Alice sends after Bob calls to wait.
         var t1 = presenceBob.GetSessionRequestAsync();
-        Console.WriteLine("Next!!!!");
+        //Console.WriteLine("Next!!!!");
         var t2 = presenceAlice.SessionRequestAsync(AccountB);
-        Console.WriteLine("Nex???");
+        //Console.WriteLine("Nex???");
         Task.WaitAll(t1, t2);
-        Console.WriteLine("Done!!!!");
+        //Console.WriteLine("Done!!!!");
 
         //// Test Alice sends before Bob calls to wait.
         //var t3 = presenceAlice.SessionRequestAsync(AccountB);

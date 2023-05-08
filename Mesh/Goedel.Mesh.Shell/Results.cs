@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 07-May-23 1:08:50 PM
+//  This file was automatically generated at 08-May-23 5:38:16 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -3029,7 +3029,7 @@ public partial class ResultSync : Result {
         /// <summary>
         /// </summary>
 
-	public virtual int?						Fetched  {get; set;}
+	public virtual long?						Fetched  {get; set;}
         /// <summary>
         /// </summary>
 
@@ -3045,7 +3045,7 @@ public partial class ResultSync : Result {
 			string tag, TokenValue value) { 
 		switch (tag) {
 			case "Fetched" : {
-				if (value is TokenValueInteger32 vvalue) {
+				if (value is TokenValueInteger64 vvalue) {
 					Fetched = vvalue.Value;
 					}
 				break;
@@ -3075,7 +3075,7 @@ public partial class ResultSync : Result {
             string tag) {
         switch (tag) {
 			case "Fetched" : {
-				return new TokenValueInteger32 (Fetched);
+				return new TokenValueInteger64 (Fetched);
 				}
 			case "ProcessedResults" : {
 				return new TokenValueInteger32 (ProcessedResults);
@@ -3094,7 +3094,7 @@ public partial class ResultSync : Result {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Fetched", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "Fetched", new Property (typeof(TokenValueInteger64), false)} ,
 			{ "ProcessedResults", new Property (typeof(TokenValueInteger32), false)} ,
 			{ "ProcessResults", new Property ( typeof(TokenValueListStruct), true,
 					()=>new List<ProcessResult>(), null, true)} 

@@ -43,7 +43,7 @@ public partial class TestSessionRud : TestSession {
     /// <param name="Account">User account</param>
     /// <param name="UDF">Authentication key identifier.</param>
     public TestSessionRud(TestServiceRud testServiceRud, ICredentialPrivate clientCredential,
-                List<Trace> meshProtocolMessages, object machine) :
+                List<TraceTransaction> meshProtocolMessages, object machine) :
                     base(testServiceRud.Host, clientCredential, meshProtocolMessages, machine) {
         TestServiceRud = testServiceRud;
         Machine = machine;
@@ -108,7 +108,7 @@ public class TestServiceRud {
         }
 
 
-    public (byte[], Trace) Dispatch(byte[] requestBytes, TestSessionRud session) =>
+    public (byte[], TraceTransaction) Dispatch(byte[] requestBytes, TestSessionRud session) =>
             RudListenerTest.Dispatch(requestBytes, session);
 
 

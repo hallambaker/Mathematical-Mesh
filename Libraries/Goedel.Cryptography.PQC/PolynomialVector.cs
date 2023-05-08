@@ -381,8 +381,14 @@ public struct PolynomialVectorInt16 {
     /// <summary>
     /// Return a SHAKE128 fingerprint of the polynomial coefficients.
     /// </summary>
+    ///  <param name="tag">Optional tag for identifying console output.</param>
+    /// <param name="output">Output to write the result to if <paramref name="tag"/> is
+    /// not null.</param>
     /// <returns>String containing the base16 representation of the values.</returns>
-    public string GetHash(string tag=null) {
+    public string GetHash(string tag=null,
+                    TextWriter output = null) {
+
+        output ??= Console.Out;
 
         var d1 = Vector.GetLength(0);
         var d2 = Vector[0].Coefficients.Length;
@@ -401,8 +407,8 @@ public struct PolynomialVectorInt16 {
         var v= buffer.GetBufferFingerprint();
 
         if (tag != null) {
-            Console.WriteLine(tag); 
-            Console.WriteLine(v);
+            output.WriteLine(tag);
+            output.WriteLine(v);
             }
 
         return v;

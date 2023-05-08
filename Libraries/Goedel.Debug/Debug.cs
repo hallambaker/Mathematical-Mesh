@@ -35,11 +35,11 @@ public class GoedelTraceListener : TraceListener {
     /// 
     /// </summary>
     /// <param name="message"></param>
-    public override void Write(string? message) => Console.Write(message);
+    public override void Write(string? message) => Console.Out.Write(message);
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="message"></param>
-    public override void WriteLine(string? message) => Console.WriteLine(message);
+    public override void WriteLine(string? message) => Console.Out.WriteLine(message);
     }

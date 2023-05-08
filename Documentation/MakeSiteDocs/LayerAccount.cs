@@ -128,19 +128,19 @@ public partial class LayerConnect : ExampleSet {
 
     public string ClaimUri;
     public MessageClaim MessageClaim;
-    public Trace RequestClaim;
-    public Trace ResponseClaim;
-    public Trace RequestPollClaim;
-    public Trace ResponsePollClaim;
+    public TraceTransaction RequestClaim;
+    public TraceTransaction ResponseClaim;
+    public TraceTransaction RequestPollClaim;
+    public TraceTransaction ResponsePollClaim;
 
     // The witness connection example.
-    public Trace ConnectPINRequestConnection;
+    public TraceTransaction ConnectPINRequestConnection;
     //public AcknowledgeConnection WitnessAcknowledgeConnection;
-    public Trace ConnectPINResponseConnection;
+    public TraceTransaction ConnectPINResponseConnection;
     public ActivationAccount ConnectPINActivationDevice;
     public CatalogedDevice ConnectPINCatalogedDevice;
-    public Trace ConnectPINRequestComplete;
-    public Trace ConnectPINRespondComplete;
+    public TraceTransaction ConnectPINRequestComplete;
+    public TraceTransaction ConnectPINRespondComplete;
 
 
     public string Device2Id;

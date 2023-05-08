@@ -110,9 +110,6 @@ public class PresenceServer : PresenceService, IPresence {
 
     ///<inheritdoc/>
     protected override void Disposing() {
-        Console.WriteLine("Disposing PresenceServer");
-
-        // dispose the send and receive threads.
         active = false;
         CancellationTokenSource.Cancel();
         PendingEvent.Set();
@@ -133,7 +130,6 @@ public class PresenceServer : PresenceService, IPresence {
             ILogger<ManagedListener> logger) {
 
         presenceServiceConfiguration.InheritDefaults(hostConfiguration);
-        Console.WriteLine($"Start presence");
 
         // Assign a service port.
         UdpServiceIpv4 = HostNetwork.GetUDPClient();
@@ -238,7 +234,7 @@ public class PresenceServer : PresenceService, IPresence {
 
             // drain the queue of pending tasks.
             for (var next = PendingQueue.Next(); next != null; next = PendingQueue.Next()) {
-                Console.WriteLine("Wakeup for device");
+                Trace.WriteLine("Wakeup for device");
 
 
                 //QueueNotification(next);
@@ -502,7 +498,7 @@ public class PresenceServer : PresenceService, IPresence {
 
 
     void Connect(PresenceBindingDevice deviceBinding, PresenceConnectRequest connectRequest) {
-        Console.WriteLine("Received Connect Request");
+        //Console.WriteLine("Received Connect Request");
         lock (deviceBinding) {
 
             // Prevent replay attack 
@@ -528,7 +524,7 @@ public class PresenceServer : PresenceService, IPresence {
 
 
     void Heartbeat(PresenceBindingDevice deviceBinding, PresenceHeartbeat heartbeat) {
-        Console.WriteLine($"Received Heartbeat");
+        //Console.WriteLine($"Received Heartbeat");
         lock (deviceBinding) {
             var message = new PresenceStatus() {
                 Acknowledge = heartbeat.Serial
@@ -541,7 +537,7 @@ public class PresenceServer : PresenceService, IPresence {
         }
 
     void Endpoint(PresenceBindingDevice deviceBinding, PresenceEndpointRequest request) {
-        Console.WriteLine($"Received Endpoint");
+        //Console.WriteLine($"Received Endpoint");
         lock (deviceBinding) {
             var message = new PresenceEndpointResponse() {
                 Acknowledge = request.Serial
@@ -555,7 +551,7 @@ public class PresenceServer : PresenceService, IPresence {
 
 
     void Acknowledge(PresenceBindingDevice deviceBinding, PresenceAcknowledge acknowledge) {
-        Console.WriteLine($"Received Acknowledge");
+        //Console.WriteLine($"Received Acknowledge");
         lock (deviceBinding) {
             // have recieved a keepalive here so update the connection state
             deviceBinding.Expire = DateTime.Now.AddMilliseconds(TimeOutHeartbeatMilliSeconds);
@@ -563,7 +559,7 @@ public class PresenceServer : PresenceService, IPresence {
         }
 
     void Resolve(PresenceBindingDevice deviceBinding, PresenceResolveRequest resolveRequest) {
-        Console.WriteLine($"Received Resolve");
+        //Console.WriteLine($"Received Resolve");
         }
 
 

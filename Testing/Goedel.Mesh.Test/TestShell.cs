@@ -68,8 +68,9 @@ public partial class TestShell : Goedel.Mesh.Shell.Shell {
     /// Override the post processing hook to save the result.
     /// </summary>
     /// <param name="shellResult"></param>
-    public override void _PostProcess(ShellResult shellResult) {
-        Console.WriteLine(shellResult.ToString());
+    public override void _PostProcess(
+                ShellResult shellResult) {
+        Console.Out.WriteLine(shellResult.ToString());
         ShellResult = shellResult;
         }
     }
@@ -102,7 +103,7 @@ public partial class ExampleResult {
 
     public string MachineName => TestCLI.MachineName;
 
-    public List<Trace> Traces;
+    public List<TraceTransaction> Traces;
 
 
 

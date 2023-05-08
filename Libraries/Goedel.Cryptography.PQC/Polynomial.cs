@@ -484,9 +484,13 @@ public struct PolynomialInt16 {
     /// <summary>
     /// Return a SHAKE128 fingerprint of the polynomial coefficients.
     /// </summary>
+    /// <param name="tag">Optional descriptive tag.</param>
+    /// <param name="output">Output to write the result to if <paramref name="tag"/> is
+    /// not null.</param>
     /// <returns>String containing the base16 representation of the values.</returns>
-    public string GetHash(string tag = null) {
-
+    public string GetHash(string tag = null,
+                    TextWriter output = null) {
+        output ??= Console.Out;
         var d2 = Coefficients.Length;
 
         int size = d2 * 2;
@@ -500,8 +504,8 @@ public struct PolynomialInt16 {
         var v = buffer.GetBufferFingerprint();
 
         if (tag != null) {
-            Console.WriteLine(tag);
-            Console.WriteLine(v);
+            output.WriteLine(tag);
+            output.WriteLine(v);
             }
 
         return v;

@@ -199,12 +199,6 @@ public class AccountHandleLocked : Disposable {
     /// <returns>The status vector.</returns>
     public StoreStatus GetStatusStore(string label) {
         var sequence = GetSequence(label, false);
-
-        if (label == SpoolInbound.Label) {
-            Console.WriteLine ($"   Sequence {sequence.FrameCount}");
-            
-            }
-
         return sequence == null ? null : new StoreStatus() {
             // Bug: This should populate the TreeDigest
             Digest = sequence.HeaderFinal?.TreeDigest ?? sequence.TrailerLast?.TreeDigest,
@@ -238,27 +232,12 @@ public class AccountHandleLocked : Disposable {
     /// <param name="envelope">The message to post.</param>
     /// <param name="bitmask">Bitmask value to update.</param>
     public void PostInbound(DareEnvelope envelope, Bitmask bitmask) {
-
-        //"Implement fine grain access control".TaskFunctionality(suppress: Assert.HaltPhase1);
-
-        //AccountPrivilege.HasFlag(AccountPrivilege.Post).AssertTrue(NotAuthorized.Throw);
-
-        //using var container = new Spool(Directory, SpoolInbound.Label);
-        //container.Add(dareMessage);
-
-
         var sequence = GetSequence(SpoolInbound.Label);
-        Console.Write($"Append {envelope.EnvelopeId} to inbound sequence {sequence.FrameCount}/{sequence.Length}");
 
         sequence.Append(envelope);
         if (sequence.Bitmask != null) {
             bitmask?.Add(sequence.Bitmask);
             }
-
-        Console.WriteLine($"->{sequence.FrameCount}/{sequence.Length}");
-        Console.WriteLine($"{AccountUser.LocalAddress}: Receive message {sequence.FrameCount}");
-
-        Console.WriteLine(envelope.Header.Debug??"null");
         }
 
     /// <summary>
@@ -268,14 +247,6 @@ public class AccountHandleLocked : Disposable {
     /// <param name="envelope">The message to post.</param>
     /// <param name="bitmask">Bitmask to be updated.</param>
     public void PostLocal(DareEnvelope envelope, Bitmask bitmask) {
-        //AccountPrivilege.HasFlag(AccountPrivilege.Local).AssertTrue(NotAuthorized.Throw);
-
-        //"Implement fine grain access control".TaskFunctionality(suppress: Assert.HaltPhase1);
-
-        //using var container = new Spool(Directory, SpoolLocal.Label);
-        //container.Add(envelope);
-
-
         var sequence = GetSequence(SpoolLocal.Label);
         sequence.Append(envelope);
         if (sequence.Bitmask != null) {
@@ -378,15 +349,14 @@ public class AccountHandleLocked : Disposable {
         var envelopeId = Message.GetEnvelopeId(messageId);
 
         using var spoolLocal = GetSequence(SpoolLocal.Label);
-        Console.WriteLine($"Items on spoolLocal {spoolLocal.FrameCount}");
-        Console.WriteLine($"Last Frame {spoolLocal.SequenceIndexEntryLast.Index}");
+        //Console.WriteLine($"Items on spoolLocal {spoolLocal.FrameCount}");
+        //Console.WriteLine($"Last Frame {spoolLocal.SequenceIndexEntryLast.Index}");
         foreach (var message in spoolLocal.SelectEnvelope(-1, reverse: true)) {
-
             if (message?.EnvelopeId == envelopeId) {
                 message.LoadBody();
                 return message;
                 }
-            Console.WriteLine($"not match {message.Index} ID={message?.EnvelopeId}");
+            //Console.WriteLine($"not match {message.Index} ID={message?.EnvelopeId}");
             }
         return null;
         }

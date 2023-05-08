@@ -351,30 +351,44 @@ public static class Extensions {
         }
 
     /// <summary>
-    /// 
+    /// Output SHAKE128 digest of <paramref name="buffer"/> in hexadecimal.
     /// </summary>
-    /// <param name="buffer"></param>
-    /// <param name="tag"></param>
-    public static void DumpBufferFingerprint(this byte[] buffer, string? tag = null) {
+    /// <param name="buffer">The buffer to output.</param>
+    /// <param name="tag">Optional descriptive tag.</param>
+    /// <param name="output">Output to write the result to.</param>
+    public static void DumpBufferFingerprint(
+                    this byte[] buffer, 
+                    string? tag = null,
+                    TextWriter output = null) {
+
+        output ??= Console.Out;
         if (tag != null) {
-            Console.WriteLine(tag);
+            output.WriteLine(tag);
             }
 
-        Console.WriteLine(GetBufferFingerprint(buffer));
+        output.WriteLine(GetBufferFingerprint(buffer));
         }
 
     /// <summary>
-    /// 
+    /// Output selected byte values of <paramref name="buffer"/> in hexadecimal.
     /// </summary>
-    /// <param name="buffer"></param>
-    /// <param name="tag"></param>
-    /// <param name="length"></param>
-    /// <param name="first"></param>
-    public static void DumpBufferHex(this byte[] buffer, string? tag = null, int length = -1, int first = 0) {
+    /// <param name="buffer">The buffer to write.</param>
+    /// <param name="tag">Optional descriptive tag.</param>
+    /// <param name="length">Length to be written (if <0, the entire buffer length)</param>
+    /// <param name="first">First byte to be written</param>
+    /// <param name="output">Output to write the result to.</param>
+    public static void DumpBufferHex(
+                    this byte[] buffer, 
+                    string? tag = null, 
+                    int length = -1, 
+                    int first = 0, 
+                    TextWriter output = null) {
+
+        output ??= Console.Out;
         if (tag != null) {
-            Console.WriteLine(tag);
+            output.WriteLine(tag);
             }
-        Console.WriteLine(buffer.ToStringBase16(length: length, Format: ConversionFormat.Dash4, first: first));
+        output.WriteLine(buffer.ToStringBase16(length: length, Format: ConversionFormat.Dash4, first: first));
         }
 
     }

@@ -122,6 +122,41 @@ public partial class ShellTests {
         TestEnvironment.Dispose();
         EndTest();
         }
+
+
+
+    [Fact(Skip = "PQC archive")]
+    public void NYI_PQCArchive() {
+        "Encrypt to PQC secured archive".TaskTest();
+        "Encrypt to hybrid secured archive".TaskTest();
+        TestEnvironment.Dispose();
+        EndTest();
+        }
+
+
+    [Fact(Skip = "PQC catalogs")]
+    public void NYI_PQCCatalogs() {
+        "Encrypt to PQC secured catalogs".TaskTest();
+        "Encrypt to hybrid secured catalogs".TaskTest();
+
+        TestEnvironment.Dispose();
+        EndTest();
+        }
+
+
+    [Fact(Skip = "PQC connect")]
+    public void NYI_PQCConnect() {
+        "Connect device with hybrid key exchange".TaskTest();
+
+        TestEnvironment.Dispose();
+        EndTest();
+        }
+
+
+
+
+
+
     [Fact(Skip = "Additional checks on Shell")]
     public void NYI_KeyData() {
         "Write out key data in all known formats".TaskTest();
@@ -154,4 +189,28 @@ public partial class ShellTests {
         TestEnvironment.Dispose();
         EndTest();
         }
+
+
+    [Fact(Skip = "Additional checks on Shell")]
+    public void NYI_SyncPartial() {
+        "Parial sync, client side limited".TaskTest();
+        "Parial sync, server side limited".TaskTest();
+        "Incremental sync with interim reports".TaskTest();
+
+        TestEnvironment.Dispose();
+        EndTest();
+        }
+
+    [Fact(Skip = "Additional checks on Shell")]
+    public void NYI_SyncCorrupted() {
+
+        "Reject attempt to double update".TaskTest();
+        "Reject update from incorrect apex".TaskTest();
+
+        TestEnvironment.Dispose();
+        EndTest();
+        }
+
+
+
     }

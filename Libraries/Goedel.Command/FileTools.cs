@@ -48,16 +48,19 @@ public class FileTools {
     /// <summary>
     /// Write short form description of the current program to the console.
     /// </summary>
-    public static void About() {
+    public static void About(
+                    TextWriter output = null) {
+
+        output ??= Console.Out;
         var compilationDate = Script.AssemblyBuildTime;
 
         string Build = Script.LocalizeTime(compilationDate, false);
 
-        Console.WriteLine(Script.AssemblyTitle);
-        Console.WriteLine("  {0}", Script.AssemblyDescription);
-        Console.WriteLine("  CopyRight : {0} {1}", Script.AssemblyCopyright, Script.AssemblyCompany);
-        Console.WriteLine("  Version   : {0}", Script.AssemblyVersion);
-        Console.WriteLine("  Compiled  : {0}", Build);
+        output.WriteLine(Script.AssemblyTitle);
+        output.WriteLine("  {0}", Script.AssemblyDescription);
+        output.WriteLine("  CopyRight : {0} {1}", Script.AssemblyCopyright, Script.AssemblyCompany);
+        output.WriteLine("  Version   : {0}", Script.AssemblyVersion);
+        output.WriteLine("  Compiled  : {0}", Build);
         }
 
     /// <summary>

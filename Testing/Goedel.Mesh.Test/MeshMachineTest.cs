@@ -40,7 +40,7 @@ namespace Goedel.Mesh.Test;
 /// </summary>
 public class MeshMachineTest : MeshMachineCore {
 
-    public List<Trace> MeshProtocolMessages = new();
+    public List<TraceTransaction> MeshProtocolMessages = new();
 
     //    {
     //    get {

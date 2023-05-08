@@ -97,17 +97,10 @@ public partial class Shell {
         var contextAccount = GetContextUser(options);
         var messageID = options.RequestID.Value;
 
-        // pull out the message here.
-
-        Console.WriteLine($"Look for message {messageID}");
-
 
         //var message = contextAccount.GetPendingMessageByID(messageID, out var found);
         contextAccount.TryGetMessageByMessageId(messageID, out var index).AssertTrue(MessageIdNotFound.Throw);
         var message = index.Message;
-
-
-        // return status as Pending / Accepted / Rejected
 
         var result = new ResultReceived() {
             Message = message,

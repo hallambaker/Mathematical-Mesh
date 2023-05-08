@@ -31,6 +31,7 @@ global using Goedel.Protocol;
 global using Goedel.Protocol.Presentation;
 global using Goedel.Utilities;
 global using Microsoft.Extensions.Logging;
+global using System.Diagnostics;
 
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]

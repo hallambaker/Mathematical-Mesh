@@ -113,9 +113,12 @@ public struct PolynomialMatrixInt16 {
     /// is not null, writes the tag and fingerprint to the console.
     /// </summary>
     /// <param name="tag">Optional tag for identifying console output.</param>
+    /// <param name="output">Output to write the result to if <paramref name="tag"/> is
+    /// not null.</param>
     /// <returns>String containing the base16 representation of the values.</returns>
-    public string GetHash(string? tag = null) {
-
+    public string GetHash(string? tag = null,
+                    TextWriter output = null) {
+        output ??= Console.Out;
         var d0 = PolynomialVector.GetLength(0);
         var d1 = d0;
         var d2 = Kyber.N;
@@ -136,8 +139,8 @@ public struct PolynomialMatrixInt16 {
         var hash = buffer.GetBufferFingerprint();
 
         if (tag != null) {
-            Console.WriteLine(tag);
-            Console.WriteLine(hash);
+            output.WriteLine(tag);
+            output.WriteLine(hash);
             }
 
         return hash;

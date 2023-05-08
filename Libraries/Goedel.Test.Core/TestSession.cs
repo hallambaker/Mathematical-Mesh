@@ -34,7 +34,7 @@ public partial class TestSession : JpcSessionSerialized {
 
     public object Machine;
 
-    public List<Trace> MeshProtocolMessages;
+    public List<TraceTransaction> MeshProtocolMessages;
 
 
     static ICredential GetPublic(ICredential credential) {
@@ -60,7 +60,7 @@ public partial class TestSession : JpcSessionSerialized {
     /// <param name="Account">User account</param>
     /// <param name="UDF">Authentication key identifier.</param>
     public TestSession(JpcInterface host, ICredential credential,
-                List<Trace> meshProtocolMessages, object machine) :
+                List<TraceTransaction> meshProtocolMessages, object machine) :
                     base(host, GetPublic(credential)) {
         Machine = machine;
         MeshProtocolMessages = meshProtocolMessages;
@@ -79,7 +79,7 @@ public partial class TestSession : JpcSessionSerialized {
         var result = Host.Dispatch(this, JSONReader);
         var responseBytes = result.GetBytes();
 
-        var trace = new Trace(requestBytes, responseBytes, Host);
+        var trace = new TraceTransaction(requestBytes, responseBytes, Host);
 
         MeshProtocolMessages.Add(trace);
         return new MemoryStream(responseBytes);

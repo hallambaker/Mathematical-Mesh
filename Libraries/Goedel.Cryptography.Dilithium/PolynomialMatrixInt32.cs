@@ -110,8 +110,14 @@ public class PolynomialMatrixInt32 : Disposable {
     /// is not null, writes the tag and fingerprint to the console.
     /// </summary>
     /// <param name="tag">Optional tag for identifying console output.</param>
+    /// <param name="output">Output to write the result to if <paramref name="tag"/> is
+    /// not null.</param>
     /// <returns>String containing the base16 representation of the values.</returns>
-    public string GetHash(string? tag=null) {
+    public string GetHash(
+                    string? tag=null,
+                    TextWriter output = null) {
+
+        output ??= Console.Out;
         int size = Parameters.K * Parameters.L * Dilithium.N * 4;
         byte[] buffer = new byte[size];
 
@@ -130,8 +136,8 @@ public class PolynomialMatrixInt32 : Disposable {
         var hash = buffer.GetBufferFingerprint();
 
         if (tag != null) {
-            Console.WriteLine(tag);
-            Console.WriteLine(hash);
+            output.WriteLine(tag);
+            output.WriteLine(hash);
             }
 
         return hash;

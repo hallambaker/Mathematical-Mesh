@@ -384,20 +384,7 @@ public class MeshPersist : Disposable {
         //using var accountEntry = GetAccountVerified(account, jpcSession);
         var updates = new List<StoreUpdate>();
         foreach (var selection in request.Select) {
-            var debug = false;
-
             using var store = accountHandle.GetSequence(selection.Store);
-
-            if (selection.Store == SpoolInbound.Label) {
-                Console.WriteLine($"Selection of {accountHandle.LocalAddress} {selection.Store}, [{selection.IndexMin}..{selection.IndexMax}]");
-                if (selection.IndexMin > 1 & accountHandle.LocalAddress == "bob@example.com") {
-                    Console.WriteLine();
-                    Console.WriteLine($"Server Download: last index is {store.SequenceIndexEntryLast.Index} Want {selection.IndexMin}");
-                    Console.WriteLine();
-                    debug = true;
-                    }
-
-                }
 
             if (store is SequenceNull) {
 
@@ -412,20 +399,7 @@ public class MeshPersist : Disposable {
                     Envelopes = new List<DareEnvelope>()
                     };
 
-                if (debug) {
-                    foreach (var index in store.SelectIndex(selection.IndexMin ?? 0)) {
-
-
-                        }
-                    }
-
-
-                    // This is the place we are screwing up
                 foreach (var message in store.SelectEnvelope(selection.IndexMin ?? 0)) {
-
-                    // Oh fucketty fuck fuck fuck!
-                    // This is loading up the wrong bloody message!
-
                     message.LoadBody();
                     update.Envelopes.Add(message);
                     }
@@ -598,11 +572,6 @@ public class MeshPersist : Disposable {
         var identifier = dareMessage.Header?.ContentMeta?.UniqueId;
         identifier.AssertNotNull(InvalidMessageID.Throw);
 
-
-        Screen.WriteLine($"Post message {dareMessage.Header.Debug?? "NULL!"}");
-
-        //var senderService = senderAccount.AccountAddress.GetService();
-
         foreach (var recipient in accounts) {
 
             if (CatalogAccount.TryGetAccountByAny(recipient, out var accountEntry)) {
@@ -611,17 +580,6 @@ public class MeshPersist : Disposable {
             else {
                 MessagePostRemote(recipient, dareMessage);
                 }
-
-
-            //var recipientUdf = CatalogCallsignObsolete.Get(recipient);
-
-            //if (recipientUdf is null) {
-                
-            //    }
-            //else {
-                
-            //    }
-
             }
         return identifier;
         }
@@ -630,17 +588,13 @@ public class MeshPersist : Disposable {
         IJpcSession jpcSession,
         string recipient, DareEnvelope dareMessage) {
 
-
-        // ToDo: refactor mapping of callsigns/Udfs to account records and returning a handle.
-
-
         using var recipientAccount = GetAccountHandleLocked(recipient, jpcSession, AccountPrivilege.Local);
 
         var bitmask = new Bitmask();
 
         recipientAccount.PostInbound(dareMessage, bitmask);
 
-        Screen.WriteLine($"Notify account {recipientAccount.ProfileAccount.AccountAddress} {dareMessage.Header.Debug} {dareMessage.EnvelopeId}");
+        //Screen.WriteLine($"Notify account {recipientAccount.ProfileAccount.AccountAddress} {dareMessage.Header.Debug} {dareMessage.EnvelopeId}");
 
         Notify(recipientAccount, bitmask.GetBits);
 

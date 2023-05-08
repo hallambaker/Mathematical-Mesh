@@ -607,15 +607,8 @@ public partial class ContextUser : ContextAccount {
 
 
     ///<inheritdoc/>
-    public override int Sync() {
-        var (_, count) = SyncPartial(catalogedDeviceDigest: CatalogedMachine?.CatalogedDeviceDigest ?? "");
-        return count;
-
-        //var statusRequest = new StatusRequest() {
-        //    CatalogedDeviceDigest = CatalogedMachine?.CatalogedDeviceDigest ?? ""
-        //    };
-        //return Sync(statusRequest).Count;
-
+    public override long Sync() {
+        return SyncPartial(catalogedDeviceDigest: CatalogedMachine?.CatalogedDeviceDigest ?? "").Processed;
         }
 
 

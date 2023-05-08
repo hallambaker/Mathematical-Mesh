@@ -336,7 +336,7 @@ partial class Program {
         //  Magic number for SHA3 is  774665
         for (var i = 0; true; i++) {
             if ((i % 1000) == 0) {
-                Console.WriteLine(i);
+                Console.Out.WriteLine(i);
                 }
 
             var document = $"UDF Compressed Document {i}";
@@ -348,7 +348,7 @@ partial class Program {
             var UDFData = buffer.GetDigest(cryptoAlgorithmID);
 
             if (Udf.GetCompression(UDFData) > 0) {
-                Console.WriteLine($"!!!!!!!!!!!!!!!!  {i}");
+                Console.Out.WriteLine($"!!!!!!!!!!!!!!!!  {i}");
                 return;
                 }
 

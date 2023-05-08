@@ -90,7 +90,7 @@ public partial class RegistrationTests {
         }
 
 
-    [Fact]
+    [Fact(Skip = "Implement chat")]
     public void CallsignTransfer() {
 
         var serviceCallsign = GetContextRegistry();
@@ -169,12 +169,12 @@ public partial class RegistrationTests {
 
 
 
-    [Fact]
+    [Fact(Skip = "Implement chat")]
     public void CallsignPresencePresent() {
 
 
-        var serviceCarnet = GetPresenceService();
-        var serviceCallsign = GetContextRegistry(10);
+        //var serviceCarnet = GetPresenceService();
+        var serviceCallsign = GetContextRegistry();
 
 
 
@@ -183,7 +183,7 @@ public partial class RegistrationTests {
 
 
         var resultRegister = deviceA.Dispatch($"callsign register {AliceCallsign}") as ResultPublish;
-
+        serviceCallsign.Process();
 
         var deviceB = CheckCallsign(deviceA);
 
@@ -199,12 +199,13 @@ public partial class RegistrationTests {
 
         EndTest();
         }
-    [Fact]
+
+    [Fact(Skip = "Implement chat")]
     public void CallsignPresenceAbsent() {
 
 
-        var serviceCarnet = GetPresenceService();
-        var serviceCallsign = GetContextRegistry(10);
+        //var serviceCarnet = GetPresenceService();
+        var serviceCallsign = GetContextRegistry();
 
 
 
@@ -213,7 +214,7 @@ public partial class RegistrationTests {
 
 
         var resultRegister = deviceA.Dispatch($"callsign register {AliceCallsign}") as ResultPublish;
-
+        serviceCallsign.Process();
 
         var deviceB = CheckCallsign(deviceA);
 

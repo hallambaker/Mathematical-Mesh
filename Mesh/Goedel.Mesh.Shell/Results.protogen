@@ -149,6 +149,7 @@
 	Structure ResultSync
 		Inherits					Result
 		Integer						Fetched
+			LengthBits 64
 		Integer						ProcessedResults
 		TStruct ProcessResult		ProcessResults
 			Multiple

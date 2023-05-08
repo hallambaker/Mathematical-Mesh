@@ -291,6 +291,12 @@ public partial class TestSequences {
         }
 
 
+    [Fact(Skip = "Terminal record not yet implemented")]
+    public void NYI_TerminalRecord() {
+
+        "Verify terminal record".TaskTest();
+        "Detect corrupt terminal record".TaskTest();
+        }
 
 
     [Fact]

@@ -801,7 +801,7 @@
             <param name="fileName">The file to test</param>
             <returns>The time the file was created.</returns>
         </member>
-        <member name="M:Goedel.Command.FileTools.About">
+        <member name="M:Goedel.Command.FileTools.About(System.IO.TextWriter)">
             <summary>
             Write short form description of the current program to the console.
             </summary>

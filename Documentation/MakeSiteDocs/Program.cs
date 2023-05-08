@@ -197,6 +197,7 @@ public partial class CreateExamples {
 
     string deviceId;
     public void Examples() {
+        var output = Console.Out;
 
         outputPath = Directory.GetCurrentDirectory();
         testEnvironment = new TestEnvironmentCommon();
@@ -247,7 +248,7 @@ public partial class CreateExamples {
         Directory.SetCurrentDirectory(outputPath);
         var CreateExamples = new CreateExamples();
 
-        Console.WriteLine($"***** WebDocs");
+        output.WriteLine($"***** WebDocs");
         WebDocs(this);
 
         Directory.SetCurrentDirectory("..\\Outputs\\Documents");
@@ -256,26 +257,26 @@ public partial class CreateExamples {
 
         //// Call the generators to create output.
         ///
-        Console.WriteLine($"***** Architecture");
+        output.WriteLine($"***** Architecture");
         MakeArchitectureExamples(this);
-        Console.WriteLine($"***** UDF");
+        output.WriteLine($"***** UDF");
         MakeUDFExamples(this);
-        Console.WriteLine($"***** DARE");
+        output.WriteLine($"***** DARE");
         MakeDareExamples(this);
-        Console.WriteLine($"***** Schema");
+        output.WriteLine($"***** Schema");
         MakeSchemaExamples(this);
-        Console.WriteLine($"***** Protocol");
+        output.WriteLine($"***** Protocol");
         MakeProtocolExamples(this);
-        Console.WriteLine($"***** Presentation");
+        output.WriteLine($"***** Presentation");
         MakePresentationExamples(this);
-        Console.WriteLine($"***** Cryptography");
+        output.WriteLine($"***** Cryptography");
         MakeCryptographyExamples(this);
 
 
 
 
-        Console.WriteLine($"*****");
-        Console.WriteLine($"Missing {CountMissing} of which {CountObsolete} obsolete");
+        output.WriteLine($"*****");
+        output.WriteLine($"Missing {CountMissing} of which {CountObsolete} obsolete");
 
         MakeDocs();
         }

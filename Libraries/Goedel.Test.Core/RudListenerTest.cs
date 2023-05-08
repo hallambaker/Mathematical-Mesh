@@ -54,7 +54,7 @@ public class RudListenerTest : RudListener {
         return new RudStream(null, null, rudConnection: responder);
         }
 
-    public (byte[], Trace) Dispatch(byte[] requestBytes, TestSessionRud session) {
+    public (byte[], TraceTransaction) Dispatch(byte[] requestBytes, TestSessionRud session) {
         //var jsonReader = new JsonReader(requestBytes);
 
         //var result = Host.Dispatch(session, jsonReader);

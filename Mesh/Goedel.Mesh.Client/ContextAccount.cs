@@ -423,11 +423,10 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="stores">The stores to be synchronized.</param>
     /// <param name="maxResuts">If </param>
     /// <returns>Response returned by the service</returns>
-    public bool SyncPartial(
+    public PartialOperationResult SyncPartial(
             int maxResuts = -1,
             params string[] stores) {
-        var partial = SyncPartial(stores as IEnumerable<string>, maxResuts);
-        return partial;
+        return SyncPartial(stores as IEnumerable<string>, maxResuts);
         }
 
     /// <summary>
@@ -437,7 +436,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="maxResuts">The maximum number of results to return.</param>
     /// <param name="catalogedDeviceDigest">The payload digest of the Cataloged device</param>
     /// <returns>True if the synchronization completed, otherwise false.</returns>
-    public bool SyncPartial(
+    public PartialOperationResult SyncPartial(
             IEnumerable< string> stores,
             int maxResuts = -1,
             string catalogedDeviceDigest=null) {
@@ -454,8 +453,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             MaxResults = maxResuts
             };
 
-        var (partial, _) = SyncPartial(MeshClient, constraintsSelects, maxResuts, catalogedDeviceDigest);
-        return partial;
+        return SyncPartial(MeshClient, constraintsSelects, maxResuts, catalogedDeviceDigest);
         }
 
     /// <summary>
@@ -467,7 +465,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="catalogedDeviceDigest">The payload digest of the Cataloged device</param>
     /// <param name="full">If true, synchronize all the core stores.</param>
     /// <returns>True if the synchronization completed, otherwise false.</returns>
-    public (bool, int) SyncPartial(
+    public PartialOperationResult SyncPartial(
             int maxResuts = -1,
             MeshServiceClient? meshClient=null,
             string catalogedDeviceDigest = null,
@@ -492,53 +490,23 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
                 }
             }
 
-        var (partial, count) =  SyncPartial(meshClient?? MeshClient, constraintsSelects, maxResuts, catalogedDeviceDigest);
-
-        return (partial, count);
+        return SyncPartial(meshClient?? MeshClient, constraintsSelects, maxResuts, catalogedDeviceDigest);
         }
+
 
     ConstraintsSelect GetConstraint(
-        string storeName) {
-
-        if (AccountAddress == "bob@example.com" & storeName == SpoolInbound.Label) {
-
-            }
-
-        var result = GetConstraint1(storeName); 
-        
-        if (AccountAddress=="bob@example.com" & storeName == SpoolInbound.Label) {
-            Console.WriteLine($"$$$$$$$$$$$$$${result.IndexMin}");
-            }
-        
-        return result;
-
-        }
-    ConstraintsSelect GetConstraint1(
             string storeName) {
         
-
-
         if (DictionaryStores.TryGetValue(storeName, out var syncStatus)) {
             var store = syncStatus.Store;
             // Request the next envelope after the envelope we already have.
-
-            if (AccountAddress == "bob@example.com" & storeName == SpoolInbound.Label) {
-                Console.WriteLine($"Fail here???");
-                }
             return new ConstraintsSelect() {
                 Store = storeName,
                 IndexMin = store.Sequence.SequenceIndexEntryLast.Index + 1
                 };
             }
 
-        if (AccountAddress == "bob@example.com" & storeName == SpoolInbound.Label) {
-            Console.WriteLine($"About to get store");
-            }
         return Store.GetConstraintsSelect(StoresDirectory, storeName);
-
-
-
-
         }
 
 
@@ -550,7 +518,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="constraintsSelects"></param>
     /// <param name="catalogedDeviceDigest">The payload digest of the Cataloged device</param>
     /// <returns>(partial, count) where partial is true if the </returns>
-    public virtual (bool, int) SyncPartial(
+    public virtual PartialOperationResult SyncPartial(
                 MeshServiceClient meshClient,
                 List<ConstraintsSelect> constraintsSelects,
                 int maxResuts = -1,
@@ -563,8 +531,27 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             Select = constraintsSelects
             };
 
-        return NewMethod(meshClient, downloadRequest);
+        //return NewMethod(meshClient, downloadRequest);
 
+        int count = 0;
+        var download = meshClient.Download(downloadRequest);
+        download.AssertSuccess(ServerResponseInvalid.Throw);
+
+        var partial = false;
+        foreach (var update in download.Updates) {
+            var records = UpdateStore(update);
+            count += records;
+            partial |= update.Partial == true;
+            }
+
+
+        if (downloadRequest.CatalogedDeviceDigest != null & download.EnvelopedCatalogedDevice != null) {
+            var catalogedDevice = download.EnvelopedCatalogedDevice.Decode(this);
+            UpdateCatalogedMachine(catalogedDevice, download.CatalogedDeviceDigest, true);
+            }
+
+
+        return new PartialOperationResult (!partial, count);
         }
 
     /// <summary>
@@ -572,10 +559,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// the service is held at the service, this means only downloading updates at present.
     /// </summary>
     /// <returns>The number of items synchronized</returns>
-    public virtual int Sync() {
-        var (_, count ) = SyncPartial();
-        return count;
-        }
+    public virtual long Sync() => SyncPartial().Processed;
     //{
     //var statusRequest = new StatusRequest() {
     //    };
@@ -592,7 +576,11 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         return status;
         }
 
-
+    /// <summary>
+    /// Get a service access token for the MSP provided service <paramref name="service"/>.
+    /// </summary>
+    /// <param name="service">IANA name of the service to return.</param>
+    /// <returns>The service access token if found, otherwise null.</returns>
     public ServiceAccessToken GetService(
                     string service) {
         var status = GetStatus(new List<String>() { service });
@@ -653,66 +641,45 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         //return status;
         }
 
-    private (bool, int) NewMethod(
-                MeshServiceClient meshClient, 
-                //StatusResponse status, 
-                DownloadRequest downloadRequest) {
-        int count = 0;
-        // what is it with the ranges here? make sure they are all correct.
-        // Then check that the remote versions are correct.
+    //private (bool, int) NewMethod(
+    //            MeshServiceClient meshClient, 
+    //            DownloadRequest downloadRequest) {
+    //    int count = 0;
+    //    var download = meshClient.Download(downloadRequest);
 
-        foreach (var request in downloadRequest.Select) {
-            if (request.Store == SpoolInbound.Label & 
-                        AccountAddress == "bob@example.com" & request.IndexMin > 0) {
-                Console.WriteLine("--------- About to make faulty request ??");
+    //    var partial = false;
+    //    foreach (var update in download.Updates) {
+    //        var records = UpdateStore(update);
+    //        count += records;
 
+    //        if (update.Partial == true) {
+    //            partial = true;
+    //            }
 
-                }
-            }
-        if (AccountAddress == "bob@example.com" ) {
-            Console.WriteLine($"&&&&& Download for Bob here");
+    //        if (update.Store == SpoolInbound.Label) {
 
-            }
+    //            if (AccountAddress == "bob@example.com" & records > 0) {
+    //                Console.WriteLine($"&&&&& Add to bob here.");
 
-        var download = meshClient.Download(downloadRequest);
-
-        // check here to see if we have an update to the Cataloged Device
-
-        //Console.WriteLine($"Sync {(partial ? "partial" : "complete")} {AccountAddress} {count} updates");
-
-        var partial = false;
-        foreach (var update in download.Updates) {
-            var records = UpdateStore(update);
-            count += records;
-
-            if (update.Partial == true) {
-                partial = true;
-                }
-
-            if (update.Store == SpoolInbound.Label) {
-
-                if (AccountAddress == "bob@example.com" & records > 0) {
-                    Console.WriteLine($"&&&&& Add to bob here.");
-
-                    }
+    //                }
 
 
-                Console.WriteLine($"Client Sync: {AccountAddress}: {update.Store} Added {records}");
-                foreach (var envelope in update.Envelopes) {
-                    Console.WriteLine($"    {envelope.Index}: {envelope.EnvelopeId}");
-                    }
-                }
-            }
+    //            Console.WriteLine($"Client Sync: {AccountAddress}: {update.Store} Added {records}");
+    //            foreach (var envelope in update.Envelopes) {
+    //                Console.WriteLine($"    {envelope.Index}: {envelope.EnvelopeId}");
+    //                }
+    //            }
+    //        }
 
  
-        if (downloadRequest.CatalogedDeviceDigest != null & download.EnvelopedCatalogedDevice != null) {
-            var catalogedDevice = download.EnvelopedCatalogedDevice.Decode(this);
-            UpdateCatalogedMachine(catalogedDevice, download.CatalogedDeviceDigest, true);
-            }
+    //    if (downloadRequest.CatalogedDeviceDigest != null & download.EnvelopedCatalogedDevice != null) {
+    //        var catalogedDevice = download.EnvelopedCatalogedDevice.Decode(this);
+    //        UpdateCatalogedMachine(catalogedDevice, download.CatalogedDeviceDigest, true);
+    //        }
 
 
-        return (partial, count);
-        }
+    //    return (partial, count);
+    //    }
 
     //public bool SyncProgress(int maxEnvelopes = -1) => SyncProgressUpload(maxEnvelopes);
 
@@ -911,16 +878,16 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             var preIndex = store.Sequence.SequenceIndexEntryLast.Index;
             foreach (var entry in containerUpdate.Envelopes) {
                 if (entry.Index <= store.Sequence.FrameIndexLast) {
-                    Console.WriteLine($"    ###### >>>> {entry.Index} already added");
+                    Trace.WriteLine($"    ###### >>>> {entry.Index} already added");
                     //throw new NYI();
                     }
 
                 count++;
                 store.AppendDirect(entry, true);
                 }
-            Console.WriteLine($"Update index {preIndex}->{store.Sequence.SequenceIndexEntryLast.Index} (+{containerUpdate.Envelopes.Count})");
+            //Console.WriteLine($"Update index {preIndex}->{store.Sequence.SequenceIndexEntryLast.Index} (+{containerUpdate.Envelopes.Count})");
             
-            Screen.Write($"Finished update {syncStore.Store.FrameCount}");
+            //Screen.Write($"Finished update {syncStore.Store.FrameCount}");
 
             // need to set the store end frame!!!
 

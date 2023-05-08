@@ -614,6 +614,13 @@
             </summary>
             <returns>The number of items synchronized</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetService(System.String)">
+            <summary>
+            Get a service access token for the MSP provided service <paramref name="service"/>.
+            </summary>
+            <param name="service">IANA name of the service to return.</param>
+            <returns>The service access token if found, otherwise null.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.Sync(Goedel.Mesh.StatusRequest,Goedel.Mesh.MeshServiceClient)">
             <summary>
             Synchronize this device to the catalogs at the service. Since the authoritative copy of
