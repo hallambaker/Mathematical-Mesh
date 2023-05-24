@@ -25,7 +25,7 @@ Section Messages "Messages" "messages"
 
 	Chooser UrgentMessage "Urgent" "urgent_messages" Message
 
-	Chooser ContactMessage "Contact Requests" "contact_messages" Message
+	Chooser ContactRequests "Contact Requests" "contact_messages" Message
 
 	Chooser OtherMessage "Messages" "inbox_messages" Message
 
@@ -33,7 +33,7 @@ Section Contacts "Contacts" "contacts"
 	Primary
 	Chooser ChooseSelf "Self" "contact_self" Contact
 		
-	Chooser ContactMessage "Contact Requests" "contact_message" Messages
+	Chooser ContactMessage "Contact Requests" "contact_message" Message
 		
 	Chooser ChooseOther "Contacts" "contact_other" Contact
 
@@ -129,7 +129,7 @@ Dialog AccountUser
 	Text Local "Friendly name"
 	Text Description "Description"
 
-	Chooser ChooseDevice "Devices" "device" Device
+	Chooser UserChooseDevice "Devices" "device" Device
 	
 
 
@@ -142,8 +142,8 @@ Dialog Contact
 	Text Prefix "Prefix"
 	Text Suffix "Suffix"
 
-	Chooser ContactNetworkAddress "Network Addresses" "network" ContactNetworkAddresses
-	Chooser ContactPhysicalAddress "Locations" "location" ContactPhysicalAddresses
+	Chooser NetworkAddress "Network Addresses" "network" ContactNetworkAddress
+	Chooser PhysicalAddress "Locations" "location" ContactPhysicalAddress
 
 
 Dialog ContactNetworkAddress

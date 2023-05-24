@@ -398,6 +398,27 @@
             <param name="stream">Stream to write to.</param>
             <param name="buffer">the data to be written.</param>
         </member>
+        <member name="M:Goedel.Utilities.Extension.QuotedNull(System.String)">
+            <summary>
+            Create a quoted, escaped string in the current language
+            </summary>
+            <param name="text">Unescaped string</param>
+            <returns>Quoted escaped string.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.Quoted(System.String)">
+            <summary>
+            Create a quoted, escaped string in the current language
+            </summary>
+            <param name="text">Unescaped string</param>
+            <returns>Quoted escaped string.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.Quoted(System.Collections.Generic.List{System.String})">
+            <summary>
+            Create an escaped string in the current language
+            </summary>
+            <param name="base">Unescaped string</param>
+            <returns>Escaped string.</returns>
+        </member>
         <member name="M:Goedel.Utilities.Extension.GetAwaiter(System.Threading.CancellationToken)">
             <summary>
             Allows a cancellation token to be awaited.

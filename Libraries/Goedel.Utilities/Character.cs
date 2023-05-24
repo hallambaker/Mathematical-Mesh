@@ -171,15 +171,15 @@ public static partial class Extension {
 
         foreach (char c in text) {
             switch (c) {
-                case '…': Result.Append("..."); break;
-                case '‘': Result.Append('\''); break;
-                case '’': Result.Append('\''); break;
-                case '“': Result.Append('"'); break;
-                case '”': Result.Append('"'); break;
-                case '®': Result.Append("(R)"); break;
-                case '©': Result.Append("(C)"); break;
-                case '\u2011':
-                    Result.Append('-'); break;
+                //case '…': Result.Append("..."); break;
+                //case '‘': Result.Append('\''); break;
+                //case '’': Result.Append('\''); break;
+                //case '“': Result.Append('"'); break;
+                //case '”': Result.Append('"'); break;
+                //case '®': Result.Append("(R)"); break;
+                //case '©': Result.Append("(C)"); break;
+                //case '\u2011':
+                //    Result.Append('-'); break;
                 case '<': Result.Append("&lt;"); break;
                 case '>': Result.Append("&gt;"); break;
                 case '&': Result.Append("&amp;"); break;

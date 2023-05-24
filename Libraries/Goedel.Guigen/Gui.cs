@@ -1,7 +1,9 @@
-﻿namespace Goedel.Guigen;
+﻿using Goedel.Utilities;
+
+namespace Goedel.Guigen;
 public abstract class Gui {
     ///<summary>List of all the Icon Descriptions</summary> 
-    public abstract List<GuiIcon> Icons { get; }
+    public abstract List<GuiImage> Icons { get; }
 
     ///<summary>List of all the Section Descriptions</summary> 
     public abstract List<GuiSection> Sections { get; }
@@ -15,10 +17,18 @@ public abstract class Gui {
     }
 
 ///<summary></summary> 
-public record GuiIcon (
+public record GuiImage (
             string Icon
             ){
     }
+
+public record GuiItem(
+            string Id) {
+
+
+    }
+
+
 
 public record GuiSection (
             string Id,
@@ -26,7 +36,7 @@ public record GuiSection (
             string Icon,
             bool Primary,
             List<ISectionEntry>Entries
-            ) : IButtonTarget {
+            ) : GuiItem(Id), IButtonTarget {
     }
 
 public record GuiAction (
@@ -34,31 +44,71 @@ public record GuiAction (
             string Prompt,
             string Icon,
             List<IActionEntry> Entries
-            ) : IButtonTarget {
+            ) : GuiItem(Id), IButtonTarget {
     }
 
 public record GuiDialog (
             string Id,
             List<IDialogEntry> Entries
-            ) : ISectionEntry {
+            ) : GuiItem(Id), ISectionEntry {
     }
 
 public record GuiChooser (
             string Id,
             string Prompt,
-            string Icon
-            ) : ISectionEntry, IActionEntry, IDialogEntry {
+            string Icon,
+            List<IChooserEntry> Entries
+            ) : GuiItem(Id), ISectionEntry, IActionEntry, IDialogEntry {
 
 
     }
 
 public record GuiButton(
             string Id
-            ) : ISectionEntry, IChooserEntry {
+            ) : GuiItem(Id), ISectionEntry, IChooserEntry {
 
 
     }
 
+
+public record GuiField(
+            string Id,
+            string Prompt
+            ) : GuiItem(Id), IDialogEntry, IActionEntry {
+    }
+
+public record GuiContext(
+            string Id,
+            string Prompt
+            ) : GuiField (Id, Prompt) { 
+    }
+
+public record GuiText(
+            string Id,
+            string Prompt
+            ) : GuiField(Id, Prompt) {
+    }
+
+public record GuiColor(
+            string Id,
+            string Prompt
+            ) : GuiField(Id, Prompt) {
+    }
+public record GuiSize(
+            string Id,
+            string Prompt
+            ) : GuiField(Id, Prompt) {
+    }
+public record GuiDecimal(
+            string Id,
+            string Prompt
+            ) : GuiField(Id, Prompt) {
+    }
+public record GuiIcon(
+            string Id,
+            string Prompt
+            ) : GuiField(Id, Prompt) {
+    }
 
 public interface ISectionEntry {
     }

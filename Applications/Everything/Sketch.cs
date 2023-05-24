@@ -34,32 +34,32 @@ public partial class EverythingMaui : Gui {
 
 
 	///<inheritdoc/>
-	public override List<GuiIcon> Icons => icons;
-	readonly List<GuiIcon> icons = new () {  
-		new GuiIcon ("user") , 
-		new GuiIcon ("messages") , 
-		new GuiIcon ("contacts") , 
-		new GuiIcon ("Documents") , 
-		new GuiIcon ("groups") , 
-		new GuiIcon ("feeds") , 
-		new GuiIcon ("credentials") , 
-		new GuiIcon ("tasks") , 
-		new GuiIcon ("calendar") , 
-		new GuiIcon ("applications") , 
-		new GuiIcon ("devices") , 
-		new GuiIcon ("Services") , 
-		new GuiIcon ("settings") , 
-		new GuiIcon ("test_service") , 
-		new GuiIcon ("new") , 
-		new GuiIcon ("connect") , 
-		new GuiIcon ("recover") , 
-		new GuiIcon ("contact") , 
-		new GuiIcon ("mail") , 
-		new GuiIcon ("chat") , 
-		new GuiIcon ("voice") , 
-		new GuiIcon ("video") , 
-		new GuiIcon ("document_send") , 
-		new GuiIcon ("document_share") 
+	public override List<GuiImage> Icons => icons;
+	readonly List<GuiImage> icons = new () {  
+		new GuiImage ("user") , 
+		new GuiImage ("messages") , 
+		new GuiImage ("contacts") , 
+		new GuiImage ("Documents") , 
+		new GuiImage ("groups") , 
+		new GuiImage ("feeds") , 
+		new GuiImage ("credentials") , 
+		new GuiImage ("tasks") , 
+		new GuiImage ("calendar") , 
+		new GuiImage ("applications") , 
+		new GuiImage ("devices") , 
+		new GuiImage ("Services") , 
+		new GuiImage ("settings") , 
+		new GuiImage ("test_service") , 
+		new GuiImage ("new") , 
+		new GuiImage ("connect") , 
+		new GuiImage ("recover") , 
+		new GuiImage ("contact") , 
+		new GuiImage ("mail") , 
+		new GuiImage ("chat") , 
+		new GuiImage ("voice") , 
+		new GuiImage ("video") , 
+		new GuiImage ("document_send") , 
+		new GuiImage ("document_share") 
 		};
 
 	///<inheritdoc/>
@@ -112,92 +112,120 @@ public partial class EverythingMaui : Gui {
 	// Sections
 	static readonly GuiSection SectionAccounts = new (
 			"Accounts", "Accounts", "user", false, new List<ISectionEntry>() {  
-			// Button , 
-			// Button , 
-			// Chooser 
+			new GuiButton ("Groups"), 
+			new GuiButton ("Services"), 
+			new GuiChooser ("ChooseUser", "User", "account_user", new List<IChooserEntry>() { 
+				new GuiButton ("AccountCreate"), 
+				new GuiButton ("AccountConnect"), 
+				new GuiButton ("AccountRecover"), 
+				new GuiButton ("TestService")
+					}) 
 			}) {
 		};
 
 	static readonly GuiSection SectionMessages = new (
 			"Messages", "Messages", "messages", true, new List<ISectionEntry>() {  
-			// Button , 
-			// Button , 
-			// Button , 
-			// Button , 
-			// Button , 
-			// Chooser , 
-			// Chooser , 
-			// Chooser 
+			new GuiButton ("RequestContact"), 
+			new GuiButton ("CreateMail"), 
+			new GuiButton ("CreateChat"), 
+			new GuiButton ("StartVoice"), 
+			new GuiButton ("StartVideo"), 
+			new GuiChooser ("UrgentMessage", "Urgent", "urgent_messages", new List<IChooserEntry>() {
+					}) , 
+			new GuiChooser ("ContactRequests", "Contact Requests", "contact_messages", new List<IChooserEntry>() {
+					}) , 
+			new GuiChooser ("OtherMessage", "Messages", "inbox_messages", new List<IChooserEntry>() {
+					}) 
 			}) {
 		};
 
 	static readonly GuiSection SectionContacts = new (
 			"Contacts", "Contacts", "contacts", true, new List<ISectionEntry>() {  
-			// Chooser , 
-			// Chooser , 
-			// Chooser 
+			new GuiChooser ("ChooseSelf", "Self", "contact_self", new List<IChooserEntry>() {
+					}) , 
+			new GuiChooser ("ContactMessage", "Contact Requests", "contact_message", new List<IChooserEntry>() {
+					}) , 
+			new GuiChooser ("ChooseOther", "Contacts", "contact_other", new List<IChooserEntry>() {
+					}) 
 			}) {
 		};
 
 	static readonly GuiSection SectionDocuments = new (
 			"Documents", "Documents", "Documents", false, new List<ISectionEntry>() {  
-			// Button , 
-			// Button , 
-			// Chooser 
+			new GuiButton ("SendDocument"), 
+			new GuiButton ("ShareDocument"), 
+			new GuiChooser ("ChooseDocuments", "Documents", "documents", new List<IChooserEntry>() {
+					}) 
 			}) {
 		};
 
 	static readonly GuiSection SectionGroups = new (
 			"Groups", "Groups", "groups", false, new List<ISectionEntry>() {  
-			// Chooser 
+			new GuiChooser ("ChooseGroup", "User", "account_group", new List<IChooserEntry>() { 
+				new GuiButton ("AccountCreate")
+					}) 
 			}) {
 		};
 
 	static readonly GuiSection SectionFeeds = new (
 			"Feeds", "Feeds", "feeds", false, new List<ISectionEntry>() {  
-			// Chooser 
+			new GuiChooser ("ChooseFeed", "Feeds", "feeds", new List<IChooserEntry>() {
+					}) 
 			}) {
 		};
 
 	static readonly GuiSection SectionCredentials = new (
 			"Credentials", "Credentials", "credentials", false, new List<ISectionEntry>() {  
-			// Chooser 
+			new GuiChooser ("ChooseCredential", "Credentials", "credentials", new List<IChooserEntry>() {
+					}) 
 			}) {
 		};
 
 	static readonly GuiSection SectionTasks = new (
 			"Tasks", "Tasks", "tasks", false, new List<ISectionEntry>() {  
-			// Chooser 
+			new GuiChooser ("ChooseTask", "Tasks", "Tasks", new List<IChooserEntry>() {
+					}) 
 			}) {
 		};
 
 	static readonly GuiSection SectionCalendar = new (
 			"Calendar", "Calendar", "calendar", false, new List<ISectionEntry>() {  
-			// Chooser 
+			new GuiChooser ("ChooseAppointment", "Calendar", "Calendar", new List<IChooserEntry>() {
+					}) 
 			}) {
 		};
 
 	static readonly GuiSection SectionApplications = new (
 			"Applications", "Applications", "applications", false, new List<ISectionEntry>() {  
-			// Chooser 
+			new GuiChooser ("ChooseApplication", "Applications", "Applications", new List<IChooserEntry>() {
+					}) 
 			}) {
 		};
 
 	static readonly GuiSection SectionDevices = new (
 			"Devices", "Devices", "devices", false, new List<ISectionEntry>() {  
-			// Chooser 
+			new GuiChooser ("ChooseDevice", "Devices", "Devices", new List<IChooserEntry>() {
+					}) 
 			}) {
 		};
 
 	static readonly GuiSection SectionServices = new (
 			"Services", "Services", "Services", false, new List<ISectionEntry>() {  
-			// Chooser 
+			new GuiChooser ("ChooseService", "Services", "account_service.png", new List<IChooserEntry>() { 
+				new GuiButton ("AccountCreate")
+					}) 
 			}) {
 		};
 
 	static readonly GuiSection SectionSettings = new (
 			"Settings", "Settings", "settings", true, new List<ISectionEntry>() {  
-			// Dialog 
+			new GuiDialog ("Appearance", new List<IDialogEntry>() { 
+				new GuiColor ("BackgroundColor", "Background Color"), 
+				new GuiColor ("HighlightColor", "Highlight Color"), 
+				new GuiColor ("TextColor", "Text Color"), 
+				new GuiSize ("TextSize", "Text Size"), 
+				new GuiSize ("IconSize", "Icon Size")
+					}) 
 			}) {
 		};
 
@@ -205,38 +233,38 @@ public partial class EverythingMaui : Gui {
 	// Actions
 	static readonly GuiAction ActionTestService = new (
 			"TestService", "Test Service", "test_service", new List<IActionEntry>() { 
-			// Text 
+			new GuiText ("ServiceAddress", "Service address")
 			}) {
 		};
 
 	static readonly GuiAction ActionAccountCreate = new (
 			"AccountCreate", "Create Mesh Account", "new", new List<IActionEntry>() { 
-			// Text , 
-			// Text , 
-			// Text 
+			new GuiText ("ServiceAddress", "Account service address"), 
+			new GuiText ("LocalName", "Friendly name (optional)"), 
+			new GuiText ("Coupon", "Activation code (if provided)")
 			}) {
 		};
 
 	static readonly GuiAction ActionAccountConnect = new (
 			"AccountConnect", "Connect To Existing Account", "connect", new List<IActionEntry>() { 
-			// Text , 
-			// Text 
+			new GuiText ("ConnectionString", "Account address"), 
+			new GuiText ("ConnectionPin", "Activation code (if provided)")
 			}) {
 		};
 
 	static readonly GuiAction ActionAccountRecover = new (
 			"AccountRecover", "Recover Mesh Account", "recover", new List<IActionEntry>() { 
-			// Text , 
-			// Text , 
-			// Text , 
-			// Text , 
-			// Text , 
-			// Text , 
-			// Text , 
-			// Text , 
-			// Text , 
-			// Text , 
-			// Text 
+			new GuiText ("ServiceAddress", "Account service address"), 
+			new GuiText ("LocalName", "Friendly name (optional)"), 
+			new GuiText ("Coupon", "Activation code (if provided)"), 
+			new GuiText ("Share1", "Recovery share"), 
+			new GuiText ("Share2", "Recovery share"), 
+			new GuiText ("Share3", "Recovery share"), 
+			new GuiText ("Share4", "Recovery share"), 
+			new GuiText ("Share5", "Recovery share"), 
+			new GuiText ("Share6", "Recovery share"), 
+			new GuiText ("Share7", "Recovery share"), 
+			new GuiText ("Share8", "Recovery share")
 			}) {
 		};
 
@@ -279,79 +307,82 @@ public partial class EverythingMaui : Gui {
 	// Dialogs
 	static readonly GuiDialog DialogAppearance = new (
 			"Appearance", new List<IDialogEntry>() { 
-			// Color , 
-			// Color , 
-			// Color , 
-			// Text , 
-			// Text 
+			new GuiColor ("BackgroundColor", "Background Color"), 
+			new GuiColor ("HighlightColor", "Highlight Color"), 
+			new GuiColor ("TextColor", "Text Color"), 
+			new GuiSize ("TextSize", "Text Size"), 
+			new GuiSize ("IconSize", "Icon Size")
 			}) {
 		};
 
 	static readonly GuiDialog DialogAccountUser = new (
 			"AccountUser", new List<IDialogEntry>() { 
-			// Text , 
-			// Text , 
-			// Text , 
-			// Text , 
-			// Chooser 
+			new GuiText ("Udf", "Fingerprint"), 
+			new GuiText ("ServiceAddress", "Account service address"), 
+			new GuiText ("Local", "Friendly name"), 
+			new GuiText ("Description", "Description"), 
+			new GuiChooser ("UserChooseDevice", "Devices", "device", new List<IChooserEntry>() {
+					}) 
 			}) {
 		};
 
 	static readonly GuiDialog DialogContact = new (
 			"Contact", new List<IDialogEntry>() { 
-			// Text , 
-			// Text , 
-			// Text , 
-			// Text , 
-			// Text , 
-			// Text , 
-			// Chooser , 
-			// Chooser 
+			new GuiText ("Local", "Friendly name"), 
+			new GuiText ("Full", "Full name"), 
+			new GuiText ("First", "First name"), 
+			new GuiText ("Last", "Last name"), 
+			new GuiText ("Prefix", "Prefix"), 
+			new GuiText ("Suffix", "Suffix"), 
+			new GuiChooser ("NetworkAddress", "Network Addresses", "network", new List<IChooserEntry>() {
+					}) , 
+			new GuiChooser ("PhysicalAddress", "Locations", "location", new List<IChooserEntry>() {
+					}) 
 			}) {
 		};
 
 	static readonly GuiDialog DialogContactNetworkAddress = new (
 			"ContactNetworkAddress", new List<IDialogEntry>() { 
-			// Icon , 
-			// Text , 
-			// Text , 
-			// Text 
+			new GuiIcon ("ProtocolIcon", "protocol_icon"), 
+			new GuiText ("Protocol", "Protocol"), 
+			new GuiText ("Address", "Address"), 
+			new GuiText ("Fingerprint", "Fingerprint")
 			}) {
 		};
 
 	static readonly GuiDialog DialogContactPhysicalAddress = new (
 			"ContactPhysicalAddress", new List<IDialogEntry>() { 
-			// Text , 
-			// Text , 
-			// Text , 
-			// Text , 
-			// Text , 
-			// Text , 
-			// Text , 
-			// Decimal , 
-			// Decimal 
+			new GuiText ("Appartment", "Appartment"), 
+			new GuiText ("Street", "Street"), 
+			new GuiText ("District", "District"), 
+			new GuiText ("Locality", "Locality"), 
+			new GuiText ("County", "County"), 
+			new GuiText ("Postcode", "Postcode"), 
+			new GuiText ("Country", "Country"), 
+			new GuiDecimal ("Latitude", "Latitude"), 
+			new GuiDecimal ("Longitude", "Longitude")
 			}) {
 		};
 
 	static readonly GuiDialog DialogMessageContactRequest = new (
 			"MessageContactRequest", new List<IDialogEntry>() { 
-			// Text , 
-			// Text 
+			new GuiText ("To", "To"), 
+			new GuiText ("Comment", "Comment")
 			}) {
 		};
 
 	static readonly GuiDialog DialogMessageConfirmationRequest = new (
 			"MessageConfirmationRequest", new List<IDialogEntry>() { 
-			// Text , 
-			// Text 
+			new GuiText ("To", "To"), 
+			new GuiText ("Request", "Request")
 			}) {
 		};
 
 	static readonly GuiDialog DialogMessageMail = new (
 			"MessageMail", new List<IDialogEntry>() { 
-			// Text , 
-			// Text , 
-			// Text 
+			new GuiText ("To", "To"), 
+			new GuiText ("Subject", "Subject"), 
+			new GuiText ("Body", "Body")
 			}) {
 		};
 

@@ -9,5 +9,43 @@
             The mesh Everything application
             </summary>
         </member>
+        <member name="T:Everything.Resources.Resource1">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Resource1.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Resource1.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Resource1.String1">
+            <summary>
+              Looks up a localized string similar to fred.
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything.EverythingMaui">
+            <summary>
+            Defines the graphical user interface.
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything.EverythingMaui.Icons">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Everything.EverythingMaui.Sections">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Everything.EverythingMaui.Actions">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Everything.EverythingMaui.Dialogs">
+            <inheritdoc/>
+        </member>
     </members>
 </doc>
