@@ -24,24 +24,14 @@ LinkFiles = \
     Goedel.Cryptography.dll\
     Goedel.Cryptography.Jose.dll\
     Goedel.Mesh.dll\
-    Goedel.Discovery.dll\
-    Goedel.IO.dll\
-    Goedel.Protocol.dll\
-    Goedel.ASN1.Test-xunit.dll\
-    Goedel.Callsign.Test-xunit.dll\
-    Goedel.Cryptography.Dare.Test-xunit.dll\
-    Goedel.Cryptography.Jose.Test-xunit.dll\
-    Goedel.Cryptography.Keyfile.Test-xunit.dll\
-    Goedel.Cryptography.Test-xunit.dll\
-    Goedel.Discovery.Test-xunit.dll\
-    Goedel.Mesh.Protocol.Test-xunit.dll\
-    Goedel.Mesh.Shell.Test-xunit.dll\
-    Goedel.Mesh.Store.Test-xunit.dll\
-    Goedel.Protocol.Test-xunit.dll\
-    Goedel.Utilities.Test-xunit.dll\
-    Test.Cryptography.PQC.dll\
+    Test.Cryptography.Dare.dll\
+    Test.Cryptography.Platform.dll\
+    Test.Cryptography.dll\
     Test.MakeSiteDocs.dll\
-    Test.Mesh.Presence.dll
+    Test.Mesh.Presence.dll\
+    Test.Mesh.Protocol.dll\
+    Test.Mesh.Store.dll\
+    Test.NotaryCallsign.dll
 
 ToolTargets = 
 

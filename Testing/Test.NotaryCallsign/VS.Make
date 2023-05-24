@@ -45,5 +45,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Callsign.Test-xunit.dll
+	powershell publishtarget Test.NotaryCallsign.dll
 

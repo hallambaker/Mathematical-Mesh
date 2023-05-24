@@ -21,6 +21,7 @@ LinkFiles = \
     Goedel.Protocol.Service.dll\
     Goedel.Utilities.dll\
     Goedel.Protocol.Presentation.dll\
+    Goedel.Mesh.Server.dll\
     Goedel.Presence.dll
 
 ToolTargets = \

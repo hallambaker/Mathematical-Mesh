@@ -38,5 +38,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Utilities.Test-xunit.dll
+	powershell publishtarget Test.Utilities.dll
 

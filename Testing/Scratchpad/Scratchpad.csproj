@@ -17,31 +17,6 @@
 		<ProjectReference Include="..\Test.Cryptography\Test.Cryptography.csproj" />
 		<ProjectReference Include="..\Test.MakeSiteDocs\Test.MakeSiteDocs.csproj" />
 	</ItemGroup>
-	
-  <ItemGroup Condition="'$(Configuration)'=='Never'">
-    <ProjectReference Include="..\..\Libraries\Goedel.Discovery\Goedel.Discovery.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.IO\Goedel.IO.csproj" />
-
-
-    <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
-
-    <ProjectReference Include="..\Goedel.ASN1.Test-xunit\Goedel.ASN1.Test-xunit.csproj" />
-    <ProjectReference Include="..\Goedel.Callsign.Test-xunit\Goedel.Callsign.Test-xunit.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography.Dare.Test-xunit\Goedel.Cryptography.Dare.Test-xunit.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography.Jose.Test-xunit\Goedel.Cryptography.Jose.Test-xunit.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography.Keyfile.Test-xunit\Goedel.Cryptography.Keyfile.Test-xunit.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography.Test-xunit\Goedel.Cryptography.Test-xunit.csproj" />
-    <ProjectReference Include="..\Goedel.Discovery.Test-xunit\Goedel.Discovery.Test-xunit.csproj" />
-    <ProjectReference Include="..\Goedel.Mesh.Protocol.Test-xunit\Goedel.Mesh.Protocol.Test-xunit.csproj" />
-    <ProjectReference Include="..\Goedel.Mesh.Shell.Test-xunit\Goedel.Mesh.Shell.Test-xunit.csproj" />
-    <ProjectReference Include="..\Goedel.Mesh.Store.Test-xunit\Goedel.Mesh.Store.Test-xunit.csproj" />
-    <ProjectReference Include="..\Goedel.Protocol.Test-xunit\Goedel.Protocol.Test-xunit.csproj" />
-    <ProjectReference Include="..\Goedel.Utilities.Test-xunit\Goedel.Utilities.Test-xunit.csproj" />
-
-    <ProjectReference Include="..\Test.Cryptography.PQC\Test.Cryptography.PQC.csproj" />
-    <ProjectReference Include="..\Test.MakeSiteDocs\Test.MakeSiteDocs.csproj" />
-
-  </ItemGroup>
 
 
 	<ItemGroup>

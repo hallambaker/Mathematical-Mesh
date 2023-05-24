@@ -25,7 +25,8 @@ LinkFiles = \
     Goedel.Presence.Client.dll\
     Goedel.Presence.Server.dll\
     Goedel.Presence.dll\
-    Goedel.Mesh.Test.dll
+    Goedel.Mesh.Test.dll\
+    Test.Mesh.Shell.dll
 
 ToolTargets = 
 

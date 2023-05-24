@@ -19,7 +19,7 @@ MSBuildThisFileDirectory =
 
 LinkFiles = \
     Goedel.Cryptography.Windows.dll\
-    Goedel.Cryptography.Platform.Test-xunit.dll
+    Test.Cryptography.Platform.dll
 
 ToolTargets = 
 
@@ -37,5 +37,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Cryptography.Windows.Test-xunit.dll
+	powershell publishtarget Test.Windows.dll
 

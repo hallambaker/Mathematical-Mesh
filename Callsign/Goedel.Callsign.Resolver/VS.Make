@@ -20,6 +20,7 @@ MSBuildThisFileDirectory =
 LinkFiles = \
     Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.Jose.dll\
+    Goedel.Protocol.GenericHost.dll\
     Goedel.Protocol.Service.dll\
     Goedel.Protocol.dll\
     Goedel.Utilities.dll\
@@ -27,8 +28,6 @@ LinkFiles = \
 
 ToolTargets = \
 	Exceptions.cs
-
-
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 

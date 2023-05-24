@@ -374,7 +374,7 @@ public static class Extensions {
     /// </summary>
     /// <param name="buffer">The buffer to write.</param>
     /// <param name="tag">Optional descriptive tag.</param>
-    /// <param name="length">Length to be written (if <0, the entire buffer length)</param>
+    /// <param name="length">Length to be written (if &lt;0, the entire buffer length)</param>
     /// <param name="first">First byte to be written</param>
     /// <param name="output">Output to write the result to.</param>
     public static void DumpBufferHex(

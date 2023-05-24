@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettingsFrameworks.xml" />
+	<Import Project="$(SolutionDir)Settings/CommonSettingsLinemode.xml" />
 	<PropertyGroup>
 		<AssemblyName>serviceadmin</AssemblyName>
 		<Product>serviceadmin</Product>

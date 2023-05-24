@@ -3,7 +3,8 @@
 	<PropertyGroup>
 		<SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
 		<TargetFramework>net7.0-macos</TargetFramework>
-		<TargetPlatformVersion>10.14</TargetPlatformVersion>
+		<RuntimeIdentifiers>macos-x64</RuntimeIdentifiers>
+		<!--<TargetPlatformVersion>10.14</TargetPlatformVersion>-->
 		<ImplicitUsings>enable</ImplicitUsings>
 		<!--<Nullable>enable</Nullable>-->
     <!--
@@ -14,7 +15,7 @@
 		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
 		<Configurations>Debug;Release;Sandcastle;Github</Configurations>
 		<DocumentationFile>xml\Documentation.xml</DocumentationFile>
-    <UseSharedCompilation>false</UseSharedCompilation>
+    <!--<UseSharedCompilation>false</UseSharedCompilation>-->
 	</PropertyGroup>
 	
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">

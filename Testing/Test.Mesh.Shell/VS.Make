@@ -45,5 +45,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Mesh.Shell.Test-xunit.dll
+	powershell publishtarget Test.Mesh.Shell.dll
 

@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="$(SolutionDir)Settings/CommonSettingsWindows.xml" />
+  <PropertyGroup>
+	  <TargetFramework>net7.0-windows10.0.19041.0</TargetFramework>
+    <RootNamespace>Goedel.Cryptography.Windows</RootNamespace>
+    <Product>Goedel.Cryptography.Windows</Product>
+    <Description>Platform specific windows libraries.</Description>
+    <Copyright>© 2020</Copyright>
+    <Title>Goedel.Cryptography.Windows</Title>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
+    <ProjectReference Include="..\..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+    <ProjectReference Include="..\..\Goedel.Protocol\Goedel.Protocol.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Exceptions.cs">
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Exceptions.Exceptional">
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+      <Generator>exceptional</Generator>
+    </None>
+  </ItemGroup>
+  
+</Project>

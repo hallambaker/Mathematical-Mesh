@@ -46,6 +46,8 @@ ToolTargets = \
 	IDs\MakeExamples-6-Presentation.cs\
 	IDs\MakeExamples-5-Protocol.cs\
 	IDs\MakeExamples-8-Cryptography.cs\
+	Web\CommandsetLog.cs\
+	Web\CommandsetArchive.cs\
 	Web\CommandsetKey.cs\
 	Web\ToDo.cs\
 	Web\UserGuide.cs\
@@ -60,8 +62,6 @@ ToolTargets = \
 	Web\CommandsetMessage.cs\
 	Web\CommandsetGroup.cs\
 	Web\CommandsetDare.cs\
-	Web\CommandsetLog.cs\
-	Web\CommandsetArchive.cs\
 	Web\CommandsetHash.cs\
 	Web\CommandsetDevice.cs
 Exceptions.cs : Exceptions.exceptional 
@@ -87,6 +87,12 @@ IDs\MakeExamples-5-Protocol.cs : IDs\MakeExamples-5-Protocol.script
 
 IDs\MakeExamples-8-Cryptography.cs : IDs\MakeExamples-8-Cryptography.script 
 	gscript IDs\MakeExamples-8-Cryptography.script  IDs\MakeExamples-8-Cryptography.cs
+
+Web\CommandsetLog.cs : Web\CommandsetLog.script 
+	gscript Web\CommandsetLog.script  Web\CommandsetLog.cs
+
+Web\CommandsetArchive.cs : Web\CommandsetArchive.script 
+	gscript Web\CommandsetArchive.script  Web\CommandsetArchive.cs
 
 Web\CommandsetKey.cs : Web\CommandsetKey.script 
 	gscript Web\CommandsetKey.script  Web\CommandsetKey.cs
@@ -129,12 +135,6 @@ Web\CommandsetGroup.cs : Web\CommandsetGroup.script
 
 Web\CommandsetDare.cs : Web\CommandsetDare.script 
 	gscript Web\CommandsetDare.script  Web\CommandsetDare.cs
-
-Web\CommandsetArchive.cs : Web\CommandsetArchive.script 
-	gscript Web\CommandsetArchive.script  Web\CommandsetArchive.cs
-
-Web\CommandsetLog.cs : Web\CommandsetLog.script 
-	gscript Web\CommandsetLog.script  Web\CommandsetLog.cs
 
 Web\CommandsetHash.cs : Web\CommandsetHash.script 
 	gscript Web\CommandsetHash.script  Web\CommandsetHash.cs

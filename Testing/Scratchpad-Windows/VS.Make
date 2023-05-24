@@ -18,30 +18,12 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Test.Common.dll\
     Goedel.Utilities.dll\
     Goedel.Test.dll\
     Goedel.Cryptography.dll\
     Goedel.Cryptography.Jose.dll\
     Goedel.Mesh.dll\
-    Goedel.Discovery.dll\
-    Goedel.IO.dll\
-    Goedel.Protocol.dll\
-    Goedel.ASN1.Test-xunit.dll\
-    Goedel.Callsign.Test-xunit.dll\
-    Goedel.Cryptography.Dare.Test-xunit.dll\
-    Goedel.Cryptography.Jose.Test-xunit.dll\
-    Goedel.Cryptography.Keyfile.Test-xunit.dll\
-    Goedel.Cryptography.Test-xunit.dll\
-    Goedel.Discovery.Test-xunit.dll\
-    Goedel.Mesh.Protocol.Test-xunit.dll\
-    Goedel.Mesh.Shell.Test-xunit.dll\
-    Goedel.Mesh.Store.Test-xunit.dll\
-    Goedel.Protocol.Test-xunit.dll\
-    Goedel.Utilities.Test-xunit.dll\
-    Test.Cryptography.PQC.dll\
-    Test.MakeSiteDocs.dll\
-    Test.Mesh.Presence.dll
+    Test.Windows.dll
 
 ToolTargets = 
 
@@ -59,5 +41,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Scratchpad.exe $(LinkFiles) 
+	powershell publishtarget Scratchpad-Windows.exe $(LinkFiles) 
 

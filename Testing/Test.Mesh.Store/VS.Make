@@ -26,8 +26,7 @@ LinkFiles = \
     Goedel.Test.dll\
     Goedel.Mesh.Core.dll\
     Goedel.Mesh.dll\
-    Goedel.Mesh.Test.dll\
-    Goedel.Utilities.Test-xunit.dll
+    Goedel.Mesh.Test.dll
 
 ToolTargets = 
 
@@ -45,5 +44,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Mesh.Store.Test-xunit.dll
+	powershell publishtarget Test.Mesh.Store.dll
 

@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="$(SolutionDir)Settings/CommonSettingsIos.xml" />
+  <PropertyGroup>
+	  <TargetFramework>net7.0-ios</TargetFramework>
+    <RootNamespace>Goedel.Cryptography.Ios</RootNamespace>
+    <Product>Goedel.Cryptography.Ios</Product>
+    <Description>Platform specific Ios libraries.</Description>
+    <Copyright>© 2020</Copyright>
+    <Title>Goedel.Cryptography.Ios</Title>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
+    <ProjectReference Include="..\..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+    <ProjectReference Include="..\..\Goedel.Protocol\Goedel.Protocol.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Exceptions.cs">
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Exceptions.Exceptional">
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+      <Generator>exceptional</Generator>
+    </None>
+  </ItemGroup>
+  
+</Project>

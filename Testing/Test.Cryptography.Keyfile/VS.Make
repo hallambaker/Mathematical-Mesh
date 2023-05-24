@@ -40,5 +40,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Cryptography.Keyfile.Test-xunit.dll
+	powershell publishtarget Test.Cryptography.Keyfile.dll
 

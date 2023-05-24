@@ -1,0 +1,35 @@
+<Project DefaultTargets="Build">
+
+	<PropertyGroup>
+		<SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+		<TargetFramework>net7.0-ios</TargetFramework>
+		<!--<TargetPlatformVersion>10.14</TargetPlatformVersion>-->
+		<ImplicitUsings>enable</ImplicitUsings>
+		<!--<Nullable>enable</Nullable>-->
+    <!--
+    <RuntimeIdentifiers>osx-x64;osx-arm</RuntimeIdentifiers>	
+		-->
+    <Company>Threshold Secrets LLC.</Company>
+		<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+		<Configurations>Debug;Release;Sandcastle;Github</Configurations>
+		<DocumentationFile>xml\Documentation.xml</DocumentationFile>
+    <!--<UseSharedCompilation>false</UseSharedCompilation>-->
+	</PropertyGroup>
+	
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">
+		<Exec Command="VSPreBuild" />
+	</Target>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'!='Github'">
+		<!--<Exec Command="VSPostBuild" />-->
+	</Target>
+
+	<PropertyGroup Condition="'$(Configuration)'=='Github'">
+		<DefineConstants>TRACE;_Github_</DefineConstants>
+	</PropertyGroup>
+
+
+	<PropertyGroup>
+		<NoWarn>1701;1702;cs8632</NoWarn>
+	</PropertyGroup>
+</Project>

@@ -18,6 +18,7 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
+    Goedel.Carnet.dll\
     Goedel.Command.Json.dll\
     Goedel.Utilities.dll\
     Goedel.Cryptography.Core.dll\
@@ -32,7 +33,9 @@ LinkFiles = \
     Goedel.Mesh.Shell.Host.dll\
     Goedel.Mesh.Shell.ServiceAdmin.dll\
     Goedel.Mesh.Shell.dll\
-    Goedel.Mesh.dll
+    Goedel.Mesh.dll\
+    Goedel.Presence.Server.dll\
+    Goedel.Presence.dll
 
 ToolTargets = 
 

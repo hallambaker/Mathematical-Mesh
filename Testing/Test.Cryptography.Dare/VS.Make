@@ -47,5 +47,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Cryptography.Dare.Test-xunit.dll
+	powershell publishtarget Test.Cryptography.Dare.dll
 

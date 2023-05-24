@@ -1,0 +1,9 @@
+<Project DefaultTargets="Build">
+
+	<PropertyGroup>
+		<TargetFrameworks>net7.0-windows10.0.19041.0;net7.0</TargetFrameworks>
+	</PropertyGroup>
+	<Import Project="$(SolutionDir)Settings/CommonSettingsExecutable.xml" />
+
+
+</Project>

@@ -2836,7 +2836,16 @@
             <param name="tag">Optional descriptive tag.</param>
             <param name="output">Output to write the result to.</param>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Goedel.Cryptography.Algorithms.Extensions.DumpBufferHex(System.Byte[],System.String,System.Int32,System.Int32,System.IO.TextWriter)" -->
+        <member name="M:Goedel.Cryptography.Algorithms.Extensions.DumpBufferHex(System.Byte[],System.String,System.Int32,System.Int32,System.IO.TextWriter)">
+            <summary>
+            Output selected byte values of <paramref name="buffer"/> in hexadecimal.
+            </summary>
+            <param name="buffer">The buffer to write.</param>
+            <param name="tag">Optional descriptive tag.</param>
+            <param name="length">Length to be written (if &lt;0, the entire buffer length)</param>
+            <param name="first">First byte to be written</param>
+            <param name="output">Output to write the result to.</param>
+        </member>
         <member name="T:Goedel.Cryptography.Algorithms.ShortBlockPermute">
             <summary>
             Short block permutation.

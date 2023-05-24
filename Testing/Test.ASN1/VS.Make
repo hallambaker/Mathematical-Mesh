@@ -38,5 +38,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.ASN1.Test-xunit.dll
+	powershell publishtarget Test.ASN1.dll
 

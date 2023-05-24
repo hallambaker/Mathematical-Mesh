@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Everything</name>
+    </assembly>
+    <members>
+        <member name="T:Everything.NamespaceDoc">
+            <summary>
+            The mesh Everything application
+            </summary>
+        </member>
+    </members>
+</doc>

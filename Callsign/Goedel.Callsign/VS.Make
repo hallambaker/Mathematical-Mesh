@@ -30,6 +30,8 @@ ToolTargets = \
 	Exceptions.cs\
 	CallsignLog.cs\
 	CallsignConstants.cs
+CallsignResolver.cs : CallsignResolver.protocol 
+	protogen CallsignResolver.protocol  /cs  CallsignResolver.cs
 
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
@@ -40,8 +42,7 @@ CallsignLog.cs : CallsignLog.protocol
 CallsignConstants.cs : CallsignConstants.constant 
 	constant CallsignConstants.constant  /cs  CallsignConstants.cs
 
-CallsignResolver.cs : CallsignResolver.protocol 
-	protogen CallsignResolver.protocol  /cs  CallsignResolver.cs
+
 
 prebuildRecurse : 
 
