@@ -1,0 +1,181 @@
+﻿Copyright "2023" "Threshold Secrets LLC" MITLicense
+
+Class Goedel.Everything EverythingMaui
+	|Defines the graphical user interface.
+
+
+// Sections
+
+Section Accounts "Accounts" "user"
+	Button Groups
+	Button Services
+	Chooser ChooseUser "User" "account_user" AccountUser
+		Button AccountCreate 
+		Button AccountConnect 
+		Button AccountRecover 
+		Button TestService 
+
+Section Messages "Messages" "messages"
+	Primary
+	Button RequestContact 
+	Button CreateMail 
+	Button CreateChat
+	Button StartVoice
+	Button StartVideo
+
+	Chooser UrgentMessage "Urgent" "urgent_messages" Message
+
+	Chooser ContactRequests "Contact Requests" "contact_messages" Message
+
+	Chooser OtherMessage "Messages" "inbox_messages" Message
+
+Section Contacts "Contacts" "contacts"
+	Primary
+	Chooser ChooseSelf "Self" "contact_self" Contact
+		
+	Chooser ContactMessage "Contact Requests" "contact_message" Message
+		
+	Chooser ChooseOther "Contacts" "contact_other" Contact
+
+Section Documents "Documents" "Documents"
+	Button SendDocument "Send document" "document_send"
+	Button ShareDocument "Share document" "document_share"
+	Chooser ChooseDocuments "Documents" "documents" Document
+
+Section Groups "Groups" "groups"
+	Chooser ChooseGroup "User" "account_group" AccountGroup
+		Button AccountCreate "Create Mesh Group" "new"
+
+Section Feeds "Feeds" "feeds"
+	Chooser ChooseFeed "Feeds" "feeds" Feed
+
+Section Credentials "Credentials" "credentials"
+	Chooser ChooseCredential "Credentials" "credentials" Credential
+
+Section Tasks "Tasks" "tasks"
+	Chooser ChooseTask "Tasks" "Tasks" Task
+
+Section Calendar "Calendar" "calendar"
+	Chooser ChooseAppointment "Calendar" "Calendar" Appointment
+
+Section Applications "Applications" "applications"
+	Chooser ChooseApplication "Applications" "Applications" Application
+
+Section Devices "Devices" "devices"
+	Chooser ChooseDevice "Devices" "Devices" Device
+
+Section Services "Services" "Services"
+	Chooser ChooseService "Services" "account_service.png" AccountGroup
+		Button AccountCreate "Create Mesh Service" "new"
+
+Section Settings "Settings" "settings"
+	Primary
+	Dialog Appearance
+		Color BackgroundColor  "Background Color"
+		Color HighlightColor "Highlight Color"
+		Color TextColor "Text Color"
+		Size TextSize "Text Size"
+		Size IconSize "Icon Size"
+
+
+
+
+
+// Actions
+
+Action TestService "Test Service" "test_service"
+	Text ServiceAddress "Service address"
+	
+
+Action AccountCreate "Create Mesh Account" "new"
+	Text ServiceAddress "Account service address"
+	Text LocalName "Friendly name (optional)"
+	Text Coupon "Activation code (if provided)"
+	
+
+Action AccountConnect  "Connect To Existing Account" "connect"
+	Text ConnectionString "Account address"
+	Text ConnectionPin "Activation code (if provided)"
+	
+
+Action AccountRecover "Recover Mesh Account" "recover"
+	Text ServiceAddress "Account service address"
+	Text LocalName "Friendly name (optional)"
+	Text Coupon "Activation code (if provided)"
+
+	Text Share1 "Recovery share"
+	Text Share2 "Recovery share"
+	Text Share3 "Recovery share"
+	Text Share4 "Recovery share"
+	Text Share5 "Recovery share"
+	Text Share6 "Recovery share"
+	Text Share7 "Recovery share"
+	Text Share8 "Recovery share"
+
+
+
+Action RequestContact "New Contact" "contact"
+Action CreateMail "New Mail" "mail"
+Action CreateChat "New Chat" "chat"
+Action StartVoice "New Voice" "voice"
+Action StartVideo "New Video" "video"
+Action SendDocument "Send document" "document_send"
+Action ShareDocument "Share document" "document_share"
+
+
+Dialog AccountUser
+	Text Udf "Fingerprint"
+	Text ServiceAddress "Account service address"
+	Text Local "Friendly name"
+	Text Description "Description"
+
+	Chooser UserChooseDevice "Devices" "device" Device
+	
+
+
+
+Dialog Contact
+	Text Local "Friendly name"
+	Text Full "Full name"
+	Text First "First name"
+	Text Last "Last name"
+	Text Prefix "Prefix"
+	Text Suffix "Suffix"
+
+	Chooser NetworkAddress "Network Addresses" "network" ContactNetworkAddress
+	Chooser PhysicalAddress "Locations" "location" ContactPhysicalAddress
+
+
+Dialog ContactNetworkAddress
+	Icon ProtocolIcon "protocol_icon"
+	Text Protocol "Protocol"
+	Text Address "Address"
+	Text Fingerprint "Fingerprint"
+
+Dialog ContactPhysicalAddress
+	Text Appartment "Appartment"
+	Text Street "Street"
+	Text District "District"
+	Text Locality "Locality"
+	Text County "County"
+	Text Postcode "Postcode"
+	Text Country "Country"
+	Decimal Latitude "Latitude"
+	Decimal Longitude "Longitude"
+
+
+
+Dialog MessageContactRequest
+	Text To "To"
+	Text Comment "Comment"
+
+Dialog MessageConfirmationRequest
+	Text To "To"
+	Text Request "Request"
+
+Dialog MessageMail
+	Text To "To"
+	Text Subject "Subject"
+	Text Body "Body"
+
+

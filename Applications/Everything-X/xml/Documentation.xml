@@ -1,0 +1,484 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Everything</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Everything.NamespaceDoc">
+            <summary>
+            The mesh Everything application
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything.EverythingMaui">
+            <summary>
+            Defines the graphical user interface.
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything.EverythingMaui.Icons">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Everything.EverythingMaui.Sections">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Everything.EverythingMaui.Actions">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Everything.EverythingMaui.Dialogs">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Everything.EverythingMaui.GetPrompt(Goedel.Guigen.GuiPrompt)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Everything.Resources.Sketch_resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.AccountConnect">
+            <summary>
+              Looks up a localized string similar to Connect To Existing Account.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.AccountCreate">
+            <summary>
+              Looks up a localized string similar to Create Mesh Account.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.AccountRecover">
+            <summary>
+              Looks up a localized string similar to Recover Mesh Account.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Accounts">
+            <summary>
+              Looks up a localized string similar to Accounts.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Address">
+            <summary>
+              Looks up a localized string similar to Address.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Appartment">
+            <summary>
+              Looks up a localized string similar to Appartment.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Applications">
+            <summary>
+              Looks up a localized string similar to Applications.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.BackgroundColor">
+            <summary>
+              Looks up a localized string similar to Background Color.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Body">
+            <summary>
+              Looks up a localized string similar to Body.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Calendar">
+            <summary>
+              Looks up a localized string similar to Calendar.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ChooseApplication">
+            <summary>
+              Looks up a localized string similar to Applications.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ChooseAppointment">
+            <summary>
+              Looks up a localized string similar to Calendar.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ChooseCredential">
+            <summary>
+              Looks up a localized string similar to Credentials.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ChooseDevice">
+            <summary>
+              Looks up a localized string similar to Devices.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ChooseDocuments">
+            <summary>
+              Looks up a localized string similar to Documents.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ChooseFeed">
+            <summary>
+              Looks up a localized string similar to Feeds.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ChooseGroup">
+            <summary>
+              Looks up a localized string similar to User.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ChooseOther">
+            <summary>
+              Looks up a localized string similar to Contacts.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ChooseSelf">
+            <summary>
+              Looks up a localized string similar to Self.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ChooseService">
+            <summary>
+              Looks up a localized string similar to Services.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ChooseTask">
+            <summary>
+              Looks up a localized string similar to Tasks.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ChooseUser">
+            <summary>
+              Looks up a localized string similar to User.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Comment">
+            <summary>
+              Looks up a localized string similar to Comment.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ConnectionPin">
+            <summary>
+              Looks up a localized string similar to Activation code (if provided).
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ConnectionString">
+            <summary>
+              Looks up a localized string similar to Account address.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ContactMessage">
+            <summary>
+              Looks up a localized string similar to Contact Requests.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ContactRequests">
+            <summary>
+              Looks up a localized string similar to Contact Requests.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Contacts">
+            <summary>
+              Looks up a localized string similar to Contacts.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Country">
+            <summary>
+              Looks up a localized string similar to Country.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.County">
+            <summary>
+              Looks up a localized string similar to County.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Coupon">
+            <summary>
+              Looks up a localized string similar to Activation code (if provided).
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.CreateChat">
+            <summary>
+              Looks up a localized string similar to New Chat.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.CreateMail">
+            <summary>
+              Looks up a localized string similar to New Mail.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Credentials">
+            <summary>
+              Looks up a localized string similar to Credentials.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Description">
+            <summary>
+              Looks up a localized string similar to Description.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Devices">
+            <summary>
+              Looks up a localized string similar to Devices.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.District">
+            <summary>
+              Looks up a localized string similar to District.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Documents">
+            <summary>
+              Looks up a localized string similar to Documents.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Feeds">
+            <summary>
+              Looks up a localized string similar to Feeds.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Fingerprint">
+            <summary>
+              Looks up a localized string similar to Fingerprint.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.First">
+            <summary>
+              Looks up a localized string similar to First name.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Full">
+            <summary>
+              Looks up a localized string similar to Full name.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Groups">
+            <summary>
+              Looks up a localized string similar to Groups.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.HighlightColor">
+            <summary>
+              Looks up a localized string similar to Highlight Color.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.IconSize">
+            <summary>
+              Looks up a localized string similar to Icon Size.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Last">
+            <summary>
+              Looks up a localized string similar to Last name.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Latitude">
+            <summary>
+              Looks up a localized string similar to Latitude.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Local">
+            <summary>
+              Looks up a localized string similar to Friendly name.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Locality">
+            <summary>
+              Looks up a localized string similar to Locality.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.LocalName">
+            <summary>
+              Looks up a localized string similar to Friendly name (optional).
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Longitude">
+            <summary>
+              Looks up a localized string similar to Longitude.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Messages">
+            <summary>
+              Looks up a localized string similar to Messages.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.NetworkAddress">
+            <summary>
+              Looks up a localized string similar to Network Addresses.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.OtherMessage">
+            <summary>
+              Looks up a localized string similar to Messages.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.PhysicalAddress">
+            <summary>
+              Looks up a localized string similar to Locations.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Postcode">
+            <summary>
+              Looks up a localized string similar to Postcode.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Prefix">
+            <summary>
+              Looks up a localized string similar to Prefix.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Protocol">
+            <summary>
+              Looks up a localized string similar to Protocol.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ProtocolIcon">
+            <summary>
+              Looks up a localized string similar to protocol_icon.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Request">
+            <summary>
+              Looks up a localized string similar to Request.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.RequestContact">
+            <summary>
+              Looks up a localized string similar to New Contact.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.SendDocument">
+            <summary>
+              Looks up a localized string similar to Send document.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ServiceAddress">
+            <summary>
+              Looks up a localized string similar to Service address.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Services">
+            <summary>
+              Looks up a localized string similar to Services.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Settings">
+            <summary>
+              Looks up a localized string similar to Settings.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Share1">
+            <summary>
+              Looks up a localized string similar to Recovery share.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Share2">
+            <summary>
+              Looks up a localized string similar to Recovery share.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Share3">
+            <summary>
+              Looks up a localized string similar to Recovery share.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Share4">
+            <summary>
+              Looks up a localized string similar to Recovery share.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Share5">
+            <summary>
+              Looks up a localized string similar to Recovery share.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Share6">
+            <summary>
+              Looks up a localized string similar to Recovery share.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Share7">
+            <summary>
+              Looks up a localized string similar to Recovery share.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Share8">
+            <summary>
+              Looks up a localized string similar to Recovery share.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ShareDocument">
+            <summary>
+              Looks up a localized string similar to Share document.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.StartVideo">
+            <summary>
+              Looks up a localized string similar to New Video.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.StartVoice">
+            <summary>
+              Looks up a localized string similar to New Voice.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Street">
+            <summary>
+              Looks up a localized string similar to Street.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Subject">
+            <summary>
+              Looks up a localized string similar to Subject.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Suffix">
+            <summary>
+              Looks up a localized string similar to Suffix.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Tasks">
+            <summary>
+              Looks up a localized string similar to Tasks.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.TestService">
+            <summary>
+              Looks up a localized string similar to Test Service.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.TextColor">
+            <summary>
+              Looks up a localized string similar to Text Color.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.TextSize">
+            <summary>
+              Looks up a localized string similar to Text Size.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.To">
+            <summary>
+              Looks up a localized string similar to To.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Udf">
+            <summary>
+              Looks up a localized string similar to Fingerprint.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.UrgentMessage">
+            <summary>
+              Looks up a localized string similar to Urgent.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.UserChooseDevice">
+            <summary>
+              Looks up a localized string similar to Devices.
+            </summary>
+        </member>
+    </members>
+</doc>

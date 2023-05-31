@@ -1,8 +1,16 @@
 ﻿using Microsoft.Extensions.Logging;
 
+using Goedel.Everything;
+
 namespace Everything;
 public static class MauiProgram {
     public static MauiApp CreateMauiApp() {
+
+        var app = new EverythingMaui();
+
+        var prompt = app.GetPrompt(app.Sections[0]);
+
+
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()

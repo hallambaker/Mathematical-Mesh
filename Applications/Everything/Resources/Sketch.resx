@@ -1,0 +1,472 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="Accounts" xml:space="preserve">
+    <value>Accounts</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="ChooseUser" xml:space="preserve">
+    <value>User</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Messages" xml:space="preserve">
+    <value>Messages</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="UrgentMessage" xml:space="preserve">
+    <value>Urgent</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="ContactRequests" xml:space="preserve">
+    <value>Contact Requests</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="OtherMessage" xml:space="preserve">
+    <value>Messages</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Contacts</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="ChooseSelf" xml:space="preserve">
+    <value>Self</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="ContactMessage" xml:space="preserve">
+    <value>Contact Requests</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="ChooseOther" xml:space="preserve">
+    <value>Contacts</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Documents" xml:space="preserve">
+    <value>Documents</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="ChooseDocuments" xml:space="preserve">
+    <value>Documents</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Groups" xml:space="preserve">
+    <value>Groups</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="ChooseGroup" xml:space="preserve">
+    <value>User</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Feeds" xml:space="preserve">
+    <value>Feeds</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="ChooseFeed" xml:space="preserve">
+    <value>Feeds</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Credentials" xml:space="preserve">
+    <value>Credentials</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="ChooseCredential" xml:space="preserve">
+    <value>Credentials</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>Tasks</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="ChooseTask" xml:space="preserve">
+    <value>Tasks</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>Calendar</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="ChooseAppointment" xml:space="preserve">
+    <value>Calendar</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Applications" xml:space="preserve">
+    <value>Applications</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="ChooseApplication" xml:space="preserve">
+    <value>Applications</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Devices" xml:space="preserve">
+    <value>Devices</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="ChooseDevice" xml:space="preserve">
+    <value>Devices</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>Services</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="ChooseService" xml:space="preserve">
+    <value>Services</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="BackgroundColor" xml:space="preserve">
+    <value>Background Color</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="HighlightColor" xml:space="preserve">
+    <value>Highlight Color</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="TextColor" xml:space="preserve">
+    <value>Text Color</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="TextSize" xml:space="preserve">
+    <value>Text Size</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="IconSize" xml:space="preserve">
+    <value>Icon Size</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="TestService" xml:space="preserve">
+    <value>Test Service</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="ServiceAddress" xml:space="preserve">
+    <value>Service address</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="AccountCreate" xml:space="preserve">
+    <value>Create Mesh Account</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="LocalName" xml:space="preserve">
+    <value>Friendly name (optional)</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Coupon" xml:space="preserve">
+    <value>Activation code (if provided)</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="AccountConnect" xml:space="preserve">
+    <value>Connect To Existing Account</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="ConnectionString" xml:space="preserve">
+    <value>Account address</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="ConnectionPin" xml:space="preserve">
+    <value>Activation code (if provided)</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="AccountRecover" xml:space="preserve">
+    <value>Recover Mesh Account</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Share1" xml:space="preserve">
+    <value>Recovery share</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Share2" xml:space="preserve">
+    <value>Recovery share</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Share3" xml:space="preserve">
+    <value>Recovery share</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Share4" xml:space="preserve">
+    <value>Recovery share</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Share5" xml:space="preserve">
+    <value>Recovery share</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Share6" xml:space="preserve">
+    <value>Recovery share</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Share7" xml:space="preserve">
+    <value>Recovery share</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Share8" xml:space="preserve">
+    <value>Recovery share</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="RequestContact" xml:space="preserve">
+    <value>New Contact</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="CreateMail" xml:space="preserve">
+    <value>New Mail</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="CreateChat" xml:space="preserve">
+    <value>New Chat</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="StartVoice" xml:space="preserve">
+    <value>New Voice</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="StartVideo" xml:space="preserve">
+    <value>New Video</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="SendDocument" xml:space="preserve">
+    <value>Send document</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="ShareDocument" xml:space="preserve">
+    <value>Share document</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Udf" xml:space="preserve">
+    <value>Fingerprint</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Local" xml:space="preserve">
+    <value>Friendly name</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="UserChooseDevice" xml:space="preserve">
+    <value>Devices</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Full" xml:space="preserve">
+    <value>Full name</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="First" xml:space="preserve">
+    <value>First name</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Last" xml:space="preserve">
+    <value>Last name</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Prefix" xml:space="preserve">
+    <value>Prefix</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Suffix" xml:space="preserve">
+    <value>Suffix</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="NetworkAddress" xml:space="preserve">
+    <value>Network Addresses</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="PhysicalAddress" xml:space="preserve">
+    <value>Locations</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="ProtocolIcon" xml:space="preserve">
+    <value>protocol_icon</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Protocol" xml:space="preserve">
+    <value>Protocol</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Fingerprint" xml:space="preserve">
+    <value>Fingerprint</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Appartment" xml:space="preserve">
+    <value>Appartment</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Street" xml:space="preserve">
+    <value>Street</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="District" xml:space="preserve">
+    <value>District</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Locality" xml:space="preserve">
+    <value>Locality</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="County" xml:space="preserve">
+    <value>County</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Postcode" xml:space="preserve">
+    <value>Postcode</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Country</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>Latitude</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>Longitude</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>To</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Comment</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Request" xml:space="preserve">
+    <value>Request</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Subject</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+  <data name="Body" xml:space="preserve">
+    <value>Body</value>
+    <comment>Generated by Guigen</comment>
+  </data>
+
+</root>
+
+

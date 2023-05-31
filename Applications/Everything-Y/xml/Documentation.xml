@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Everything</name>
+    </assembly>
+    <members>
+        <member name="T:Everything.WinUI.App">
+            <summary>
+            Provides application-specific behavior to supplement the default Application class.
+            </summary>
+        </member>
+        <member name="M:Everything.WinUI.App.#ctor">
+            <summary>
+            Initializes the singleton application object.  This is the first line of authored code
+            executed, and as such is the logical equivalent of main() or WinMain().
+            </summary>
+        </member>
+        <member name="M:Everything.WinUI.App.InitializeComponent">
+            <summary>
+            InitializeComponent()
+            </summary>
+        </member>
+        <member name="M:Everything.WinUI.App.GetXamlType(System.Type)">
+            <summary>
+            GetXamlType(Type)
+            </summary>
+        </member>
+        <member name="M:Everything.WinUI.App.GetXamlType(System.String)">
+            <summary>
+            GetXamlType(String)
+            </summary>
+        </member>
+        <member name="M:Everything.WinUI.App.GetXmlnsDefinitions">
+            <summary>
+            GetXmlnsDefinitions()
+            </summary>
+        </member>
+        <member name="T:Everything.WinUI.Program">
+            <summary>
+            Program class
+            </summary>
+        </member>
+        <member name="T:Everything.Everything_XamlTypeInfo.XamlMetaDataProvider">
+            <summary>
+            Main class for providing metadata for the app or library
+            </summary>
+        </member>
+        <member name="M:Everything.Everything_XamlTypeInfo.XamlMetaDataProvider.GetXamlType(System.Type)">
+            <summary>
+            GetXamlType(Type)
+            </summary>
+        </member>
+        <member name="M:Everything.Everything_XamlTypeInfo.XamlMetaDataProvider.GetXamlType(System.String)">
+            <summary>
+            GetXamlType(String)
+            </summary>
+        </member>
+        <member name="M:Everything.Everything_XamlTypeInfo.XamlMetaDataProvider.GetXmlnsDefinitions">
+            <summary>
+            GetXmlnsDefinitions()
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything.NamespaceDoc">
+            <summary>
+            The mesh Everything application
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything.EverythingMaui">
+            <summary>
+            Defines the graphical user interface.
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything.EverythingMaui.Icons">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Everything.EverythingMaui.Sections">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Everything.EverythingMaui.Actions">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Everything.EverythingMaui.Dialogs">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>

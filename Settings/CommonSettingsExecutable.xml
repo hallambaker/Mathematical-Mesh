@@ -19,6 +19,7 @@
 	<Choose>
 		<When Condition="$(TargetFramework.Contains('-windows'))">
 			<PropertyGroup>
+				<OutputType>Exe</OutputType>
 				<RuntimeIdentifiers>win-x64;win-arm;win-x86;win-arm64</RuntimeIdentifiers>
 				<DefineConstants>$(DefineConstants);USE_PLATFORM_WINDOWS</DefineConstants>
 			</PropertyGroup>

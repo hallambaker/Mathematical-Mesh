@@ -22,12 +22,15 @@
 
 //global using Goedel.Mesh;
 //global using Goedel.Protocol;
-//global using Goedel.Utilities;
+global using Goedel.Utilities;
+global using Goedel.Everything;
+global using Goedel.Guigen;
+global using Goedel.Guigen.Maui;
 global using Microsoft.Extensions.Logging;
 
 
 #if !(_Github_)
-[assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
+//[assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif
 
 namespace Everything;

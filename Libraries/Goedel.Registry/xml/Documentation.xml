@@ -38,27 +38,6 @@
             <param name="text">Input string</param>
             <returns>Character safe label.</returns>
         </member>
-        <member name="M:Goedel.Registry.ExtensionMethods.QuotedNull(System.String)">
-            <summary>
-            Create a quoted, escaped string in the current language
-            </summary>
-            <param name="text">Unescaped string</param>
-            <returns>Quoted escaped string.</returns>
-        </member>
-        <member name="M:Goedel.Registry.ExtensionMethods.Quoted(System.String)">
-            <summary>
-            Create a quoted, escaped string in the current language
-            </summary>
-            <param name="text">Unescaped string</param>
-            <returns>Quoted escaped string.</returns>
-        </member>
-        <member name="M:Goedel.Registry.ExtensionMethods.Quoted(System.Collections.Generic.List{System.String})">
-            <summary>
-            Create an escaped string in the current language
-            </summary>
-            <param name="base">Unescaped string</param>
-            <returns>Escaped string.</returns>
-        </member>
         <member name="M:Goedel.Registry.ExtensionMethods.If(System.String)">
             <summary>
             Return the string value if a condition is met, otherwise return an

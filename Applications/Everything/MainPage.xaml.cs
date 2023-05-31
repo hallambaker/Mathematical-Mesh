@@ -1,6 +1,13 @@
-﻿namespace Everything;
+﻿
+using Goedel.Everything;
+using Goedel.Guigen;
+
+namespace Everything;
 
 public partial class MainPage : ContentPage {
+
+
+    public Gui Gui = new EverythingMaui();
     int count = 0;
 
     public MainPage() {

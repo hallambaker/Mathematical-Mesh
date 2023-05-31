@@ -24,6 +24,7 @@
 #endregion
 
 using Goedel.Guigen;
+using Goedel.Utilities;
 
 namespace Goedel.Everything;
 
@@ -36,35 +37,35 @@ public partial class EverythingMaui : Gui {
 	///<inheritdoc/>
 	public override List<GuiImage> Icons => icons;
 	readonly List<GuiImage> icons = new () {  
-		new GuiImage ("user") , 
-		new GuiImage ("messages") , 
-		new GuiImage ("contacts") , 
-		new GuiImage ("Documents") , 
-		new GuiImage ("groups") , 
-		new GuiImage ("feeds") , 
-		new GuiImage ("credentials") , 
-		new GuiImage ("tasks") , 
-		new GuiImage ("calendar") , 
 		new GuiImage ("applications") , 
-		new GuiImage ("devices") , 
-		new GuiImage ("Services") , 
-		new GuiImage ("settings") , 
-		new GuiImage ("test_service") , 
-		new GuiImage ("new") , 
-		new GuiImage ("connect") , 
-		new GuiImage ("recover") , 
-		new GuiImage ("contact") , 
-		new GuiImage ("mail") , 
+		new GuiImage ("calendar") , 
 		new GuiImage ("chat") , 
-		new GuiImage ("voice") , 
-		new GuiImage ("video") , 
+		new GuiImage ("connect") , 
+		new GuiImage ("contact") , 
+		new GuiImage ("contacts") , 
+		new GuiImage ("credentials") , 
+		new GuiImage ("devices") , 
 		new GuiImage ("document_send") , 
-		new GuiImage ("document_share") 
+		new GuiImage ("document_share") , 
+		new GuiImage ("documents") , 
+		new GuiImage ("feeds") , 
+		new GuiImage ("groups") , 
+		new GuiImage ("mail") , 
+		new GuiImage ("messages") , 
+		new GuiImage ("new") , 
+		new GuiImage ("recover") , 
+		new GuiImage ("services") , 
+		new GuiImage ("settings") , 
+		new GuiImage ("tasks") , 
+		new GuiImage ("test_service") , 
+		new GuiImage ("user") , 
+		new GuiImage ("video") , 
+		new GuiImage ("voice") 
 		};
 
 	///<inheritdoc/>
 	public override List<GuiSection> Sections => sections;
-	readonly List<GuiSection> sections = new () {  
+    readonly List<GuiSection> sections = new List<GuiSection> () {  
 		SectionAccounts, 
 		SectionMessages, 
 		SectionContacts, 
@@ -80,9 +81,10 @@ public partial class EverythingMaui : Gui {
 		SectionSettings
 		};
 
+
 	///<inheritdoc/>
 	public override List<GuiAction> Actions => actions;
-	readonly List<GuiAction> actions = new () {  
+    readonly List<GuiAction> actions = new List<GuiAction>() {  
 		ActionTestService, 
 		ActionAccountCreate, 
 		ActionAccountConnect, 
@@ -96,9 +98,10 @@ public partial class EverythingMaui : Gui {
 		ActionShareDocument
 		};
 
+
 	///<inheritdoc/>
 	public override List<GuiDialog> Dialogs => dialogs;
-	readonly List<GuiDialog> dialogs = new () {  
+    readonly List<GuiDialog> dialogs = new List<GuiDialog>() {  
 		DialogAppearance, 
 		DialogAccountUser, 
 		DialogContact, 
@@ -112,24 +115,24 @@ public partial class EverythingMaui : Gui {
 	// Sections
 	static readonly GuiSection SectionAccounts = new (
 			"Accounts", "Accounts", "user", false, new List<ISectionEntry>() {  
-			new GuiButton ("Groups"), 
-			new GuiButton ("Services"), 
+			new GuiButton ("Groups", SectionGroups), 
+			new GuiButton ("Services", SectionServices), 
 			new GuiChooser ("ChooseUser", "User", "account_user", new List<IChooserEntry>() { 
-				new GuiButton ("AccountCreate"), 
-				new GuiButton ("AccountConnect"), 
-				new GuiButton ("AccountRecover"), 
-				new GuiButton ("TestService")
+				new GuiButton ("AccountCreate", ActionAccountCreate), 
+				new GuiButton ("AccountConnect", ActionAccountConnect), 
+				new GuiButton ("AccountRecover", ActionAccountRecover), 
+				new GuiButton ("TestService", ActionTestService)
 					}) 
 			}) {
 		};
 
 	static readonly GuiSection SectionMessages = new (
 			"Messages", "Messages", "messages", true, new List<ISectionEntry>() {  
-			new GuiButton ("RequestContact"), 
-			new GuiButton ("CreateMail"), 
-			new GuiButton ("CreateChat"), 
-			new GuiButton ("StartVoice"), 
-			new GuiButton ("StartVideo"), 
+			new GuiButton ("RequestContact", ActionRequestContact), 
+			new GuiButton ("CreateMail", ActionCreateMail), 
+			new GuiButton ("CreateChat", ActionCreateChat), 
+			new GuiButton ("StartVoice", ActionStartVoice), 
+			new GuiButton ("StartVideo", ActionStartVideo), 
 			new GuiChooser ("UrgentMessage", "Urgent", "urgent_messages", new List<IChooserEntry>() {
 					}) , 
 			new GuiChooser ("ContactRequests", "Contact Requests", "contact_messages", new List<IChooserEntry>() {
@@ -152,8 +155,8 @@ public partial class EverythingMaui : Gui {
 
 	static readonly GuiSection SectionDocuments = new (
 			"Documents", "Documents", "Documents", false, new List<ISectionEntry>() {  
-			new GuiButton ("SendDocument"), 
-			new GuiButton ("ShareDocument"), 
+			new GuiButton ("SendDocument", ActionSendDocument), 
+			new GuiButton ("ShareDocument", ActionShareDocument), 
 			new GuiChooser ("ChooseDocuments", "Documents", "documents", new List<IChooserEntry>() {
 					}) 
 			}) {
@@ -162,7 +165,7 @@ public partial class EverythingMaui : Gui {
 	static readonly GuiSection SectionGroups = new (
 			"Groups", "Groups", "groups", false, new List<ISectionEntry>() {  
 			new GuiChooser ("ChooseGroup", "User", "account_group", new List<IChooserEntry>() { 
-				new GuiButton ("AccountCreate")
+				new GuiButton ("AccountCreate", ActionAccountCreate)
 					}) 
 			}) {
 		};
@@ -212,7 +215,7 @@ public partial class EverythingMaui : Gui {
 	static readonly GuiSection SectionServices = new (
 			"Services", "Services", "Services", false, new List<ISectionEntry>() {  
 			new GuiChooser ("ChooseService", "Services", "account_service.png", new List<IChooserEntry>() { 
-				new GuiButton ("AccountCreate")
+				new GuiButton ("AccountCreate", ActionAccountCreate)
 					}) 
 			}) {
 		};

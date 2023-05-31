@@ -9,5 +9,18 @@
     <ProjectReference Include="..\..\Libraries\Platforms\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj" />
     <ProjectReference Include="..\Test.Cryptography.Platform\Test.Cryptography.Platform.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Update="coverlet.collector" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.6.0" />
+    <PackageReference Update="xunit" Version="2.4.2" />
+    <PackageReference Update="xunit.runner.visualstudio" Version="2.4.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 
 </Project>
