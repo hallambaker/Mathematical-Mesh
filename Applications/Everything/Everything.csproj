@@ -56,6 +56,7 @@
 	  <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
 	  <ProjectReference Include="..\..\Libraries\Goedel.Guigen.Maui\Goedel.Guigen.Maui.csproj" />
 	  <ProjectReference Include="..\..\Libraries\Goedel.Guigen\Goedel.Guigen.csproj" />
+	  <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj" />
 	  <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
 	</ItemGroup>
 

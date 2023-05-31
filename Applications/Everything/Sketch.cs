@@ -28,10 +28,32 @@ using Goedel.Utilities;
 
 namespace Goedel.Everything;
 
+
 /// <summary>
 /// Defines the graphical user interface.
 /// </summary>
-public partial class EverythingMaui : Gui {
+public partial class EverythingMaui :  _EverythingMaui {
+
+
+
+    
+    }
+
+
+/// <summary>
+/// Defines the graphical user interface.
+/// </summary>
+public class _EverythingMaui : Gui {
+
+
+    ///<inheritdoc/> 
+    public override List<GuiDialog> Dialogs { get; }
+
+    ///<inheritdoc/> 
+    public override List<GuiSection> Sections { get; }
+
+    ///<inheritdoc/> 
+    public override List<GuiAction> Actions { get; }
 
 
 	///<inheritdoc/>
@@ -63,57 +85,51 @@ public partial class EverythingMaui : Gui {
 		new GuiImage ("voice") 
 		};
 
-	///<inheritdoc/>
-	public override List<GuiSection> Sections => sections;
-    readonly List<GuiSection> sections = new List<GuiSection> () {  
-		SectionAccounts, 
-		SectionMessages, 
-		SectionContacts, 
-		SectionDocuments, 
-		SectionGroups, 
-		SectionFeeds, 
-		SectionCredentials, 
-		SectionTasks, 
-		SectionCalendar, 
-		SectionApplications, 
-		SectionDevices, 
-		SectionServices, 
-		SectionSettings
-		};
-
-
-	///<inheritdoc/>
-	public override List<GuiAction> Actions => actions;
-    readonly List<GuiAction> actions = new List<GuiAction>() {  
-		ActionTestService, 
-		ActionAccountCreate, 
-		ActionAccountConnect, 
-		ActionAccountRecover, 
-		ActionRequestContact, 
-		ActionCreateMail, 
-		ActionCreateChat, 
-		ActionStartVoice, 
-		ActionStartVideo, 
-		ActionSendDocument, 
-		ActionShareDocument
-		};
-
-
-	///<inheritdoc/>
-	public override List<GuiDialog> Dialogs => dialogs;
-    readonly List<GuiDialog> dialogs = new List<GuiDialog>() {  
-		DialogAppearance, 
-		DialogAccountUser, 
-		DialogContact, 
-		DialogContactNetworkAddress, 
-		DialogContactPhysicalAddress, 
-		DialogMessageContactRequest, 
-		DialogMessageConfirmationRequest, 
-		DialogMessageMail
-		};
 
 	// Sections
-	static readonly GuiSection SectionAccounts = new (
+	public GuiSection SectionAccounts { get; }
+	public GuiSection SectionMessages { get; }
+	public GuiSection SectionContacts { get; }
+	public GuiSection SectionDocuments { get; }
+	public GuiSection SectionGroups { get; }
+	public GuiSection SectionFeeds { get; }
+	public GuiSection SectionCredentials { get; }
+	public GuiSection SectionTasks { get; }
+	public GuiSection SectionCalendar { get; }
+	public GuiSection SectionApplications { get; }
+	public GuiSection SectionDevices { get; }
+	public GuiSection SectionServices { get; }
+	public GuiSection SectionSettings { get; }
+
+	
+	// Actions
+	public GuiAction ActionTestService { get; }
+	public GuiAction ActionAccountCreate { get; }
+	public GuiAction ActionAccountConnect { get; }
+	public GuiAction ActionAccountRecover { get; }
+	public GuiAction ActionRequestContact { get; }
+	public GuiAction ActionCreateMail { get; }
+	public GuiAction ActionCreateChat { get; }
+	public GuiAction ActionStartVoice { get; }
+	public GuiAction ActionStartVideo { get; }
+	public GuiAction ActionSendDocument { get; }
+	public GuiAction ActionShareDocument { get; }
+
+	// Dialogs
+	public GuiDialog DialogAppearance { get; }
+	public GuiDialog DialogAccountUser { get; }
+	public GuiDialog DialogContact { get; }
+	public GuiDialog DialogContactNetworkAddress { get; }
+	public GuiDialog DialogContactPhysicalAddress { get; }
+	public GuiDialog DialogMessageContactRequest { get; }
+	public GuiDialog DialogMessageConfirmationRequest { get; }
+	public GuiDialog DialogMessageMail { get; }
+	
+
+    public _EverythingMaui () {
+
+
+	    SectionAccounts = new (
 			"Accounts", "Accounts", "user", false, new List<ISectionEntry>() {  
 			new GuiButton ("Groups", SectionGroups), 
 			new GuiButton ("Services", SectionServices), 
@@ -122,11 +138,10 @@ public partial class EverythingMaui : Gui {
 				new GuiButton ("AccountConnect", ActionAccountConnect), 
 				new GuiButton ("AccountRecover", ActionAccountRecover), 
 				new GuiButton ("TestService", ActionTestService)
-					}) 
-			}) {
-		};
+				}) 		    
+            });
 
-	static readonly GuiSection SectionMessages = new (
+	    SectionMessages = new (
 			"Messages", "Messages", "messages", true, new List<ISectionEntry>() {  
 			new GuiButton ("RequestContact", ActionRequestContact), 
 			new GuiButton ("CreateMail", ActionCreateMail), 
@@ -134,93 +149,82 @@ public partial class EverythingMaui : Gui {
 			new GuiButton ("StartVoice", ActionStartVoice), 
 			new GuiButton ("StartVideo", ActionStartVideo), 
 			new GuiChooser ("UrgentMessage", "Urgent", "urgent_messages", new List<IChooserEntry>() {
-					}) , 
+				}) , 
 			new GuiChooser ("ContactRequests", "Contact Requests", "contact_messages", new List<IChooserEntry>() {
-					}) , 
+				}) , 
 			new GuiChooser ("OtherMessage", "Messages", "inbox_messages", new List<IChooserEntry>() {
-					}) 
-			}) {
-		};
+				}) 		    
+            });
 
-	static readonly GuiSection SectionContacts = new (
+	    SectionContacts = new (
 			"Contacts", "Contacts", "contacts", true, new List<ISectionEntry>() {  
 			new GuiChooser ("ChooseSelf", "Self", "contact_self", new List<IChooserEntry>() {
-					}) , 
+				}) , 
 			new GuiChooser ("ContactMessage", "Contact Requests", "contact_message", new List<IChooserEntry>() {
-					}) , 
+				}) , 
 			new GuiChooser ("ChooseOther", "Contacts", "contact_other", new List<IChooserEntry>() {
-					}) 
-			}) {
-		};
+				}) 		    
+            });
 
-	static readonly GuiSection SectionDocuments = new (
+	    SectionDocuments = new (
 			"Documents", "Documents", "Documents", false, new List<ISectionEntry>() {  
 			new GuiButton ("SendDocument", ActionSendDocument), 
 			new GuiButton ("ShareDocument", ActionShareDocument), 
 			new GuiChooser ("ChooseDocuments", "Documents", "documents", new List<IChooserEntry>() {
-					}) 
-			}) {
-		};
+				}) 		    
+            });
 
-	static readonly GuiSection SectionGroups = new (
+	    SectionGroups = new (
 			"Groups", "Groups", "groups", false, new List<ISectionEntry>() {  
 			new GuiChooser ("ChooseGroup", "User", "account_group", new List<IChooserEntry>() { 
 				new GuiButton ("AccountCreate", ActionAccountCreate)
-					}) 
-			}) {
-		};
+				}) 		    
+            });
 
-	static readonly GuiSection SectionFeeds = new (
+	    SectionFeeds = new (
 			"Feeds", "Feeds", "feeds", false, new List<ISectionEntry>() {  
 			new GuiChooser ("ChooseFeed", "Feeds", "feeds", new List<IChooserEntry>() {
-					}) 
-			}) {
-		};
+				}) 		    
+            });
 
-	static readonly GuiSection SectionCredentials = new (
+	    SectionCredentials = new (
 			"Credentials", "Credentials", "credentials", false, new List<ISectionEntry>() {  
 			new GuiChooser ("ChooseCredential", "Credentials", "credentials", new List<IChooserEntry>() {
-					}) 
-			}) {
-		};
+				}) 		    
+            });
 
-	static readonly GuiSection SectionTasks = new (
+	    SectionTasks = new (
 			"Tasks", "Tasks", "tasks", false, new List<ISectionEntry>() {  
 			new GuiChooser ("ChooseTask", "Tasks", "Tasks", new List<IChooserEntry>() {
-					}) 
-			}) {
-		};
+				}) 		    
+            });
 
-	static readonly GuiSection SectionCalendar = new (
+	    SectionCalendar = new (
 			"Calendar", "Calendar", "calendar", false, new List<ISectionEntry>() {  
 			new GuiChooser ("ChooseAppointment", "Calendar", "Calendar", new List<IChooserEntry>() {
-					}) 
-			}) {
-		};
+				}) 		    
+            });
 
-	static readonly GuiSection SectionApplications = new (
+	    SectionApplications = new (
 			"Applications", "Applications", "applications", false, new List<ISectionEntry>() {  
 			new GuiChooser ("ChooseApplication", "Applications", "Applications", new List<IChooserEntry>() {
-					}) 
-			}) {
-		};
+				}) 		    
+            });
 
-	static readonly GuiSection SectionDevices = new (
+	    SectionDevices = new (
 			"Devices", "Devices", "devices", false, new List<ISectionEntry>() {  
 			new GuiChooser ("ChooseDevice", "Devices", "Devices", new List<IChooserEntry>() {
-					}) 
-			}) {
-		};
+				}) 		    
+            });
 
-	static readonly GuiSection SectionServices = new (
+	    SectionServices = new (
 			"Services", "Services", "Services", false, new List<ISectionEntry>() {  
 			new GuiChooser ("ChooseService", "Services", "account_service.png", new List<IChooserEntry>() { 
 				new GuiButton ("AccountCreate", ActionAccountCreate)
-					}) 
-			}) {
-		};
+				}) 		    
+            });
 
-	static readonly GuiSection SectionSettings = new (
+	    SectionSettings = new (
 			"Settings", "Settings", "settings", true, new List<ISectionEntry>() {  
 			new GuiDialog ("Appearance", new List<IDialogEntry>() { 
 				new GuiColor ("BackgroundColor", "Background Color"), 
@@ -228,35 +232,46 @@ public partial class EverythingMaui : Gui {
 				new GuiColor ("TextColor", "Text Color"), 
 				new GuiSize ("TextSize", "Text Size"), 
 				new GuiSize ("IconSize", "Icon Size")
-					}) 
-			}) {
-		};
+			    }) 		    
+            });
 
-	
-	// Actions
-	static readonly GuiAction ActionTestService = new (
-			"TestService", "Test Service", "test_service", new List<IActionEntry>() { 
+
+        Sections = new List<GuiSection> () {  
+		    SectionAccounts, 
+		    SectionMessages, 
+		    SectionContacts, 
+		    SectionDocuments, 
+		    SectionGroups, 
+		    SectionFeeds, 
+		    SectionCredentials, 
+		    SectionTasks, 
+		    SectionCalendar, 
+		    SectionApplications, 
+		    SectionDevices, 
+		    SectionServices, 
+		    SectionSettings
+            };
+
+	ActionTestService = new (
+			"TestService", "Test Service", "test_service", TestService, () => new TestService(), new List<IActionEntry>() { 
 			new GuiText ("ServiceAddress", "Service address")
-			}) {
-		};
+		    });
 
-	static readonly GuiAction ActionAccountCreate = new (
-			"AccountCreate", "Create Mesh Account", "new", new List<IActionEntry>() { 
+	ActionAccountCreate = new (
+			"AccountCreate", "Create Mesh Account", "new", AccountCreate, () => new AccountCreate(), new List<IActionEntry>() { 
 			new GuiText ("ServiceAddress", "Account service address"), 
 			new GuiText ("LocalName", "Friendly name (optional)"), 
 			new GuiText ("Coupon", "Activation code (if provided)")
-			}) {
-		};
+		    });
 
-	static readonly GuiAction ActionAccountConnect = new (
-			"AccountConnect", "Connect To Existing Account", "connect", new List<IActionEntry>() { 
+	ActionAccountConnect = new (
+			"AccountConnect", "Connect To Existing Account", "connect", AccountConnect, () => new AccountConnect(), new List<IActionEntry>() { 
 			new GuiText ("ConnectionString", "Account address"), 
 			new GuiText ("ConnectionPin", "Activation code (if provided)")
-			}) {
-		};
+		    });
 
-	static readonly GuiAction ActionAccountRecover = new (
-			"AccountRecover", "Recover Mesh Account", "recover", new List<IActionEntry>() { 
+	ActionAccountRecover = new (
+			"AccountRecover", "Recover Mesh Account", "recover", AccountRecover, () => new AccountRecover(), new List<IActionEntry>() { 
 			new GuiText ("ServiceAddress", "Account service address"), 
 			new GuiText ("LocalName", "Friendly name (optional)"), 
 			new GuiText ("Coupon", "Activation code (if provided)"), 
@@ -268,68 +283,72 @@ public partial class EverythingMaui : Gui {
 			new GuiText ("Share6", "Recovery share"), 
 			new GuiText ("Share7", "Recovery share"), 
 			new GuiText ("Share8", "Recovery share")
-			}) {
-		};
+		    });
 
-	static readonly GuiAction ActionRequestContact = new (
-			"RequestContact", "New Contact", "contact", new List<IActionEntry>() {
-			}) {
-		};
+	ActionRequestContact = new (
+			"RequestContact", "New Contact", "contact", RequestContact, () => new RequestContact(), new List<IActionEntry>() {
+		    });
 
-	static readonly GuiAction ActionCreateMail = new (
-			"CreateMail", "New Mail", "mail", new List<IActionEntry>() {
-			}) {
-		};
+	ActionCreateMail = new (
+			"CreateMail", "New Mail", "mail", CreateMail, () => new CreateMail(), new List<IActionEntry>() {
+		    });
 
-	static readonly GuiAction ActionCreateChat = new (
-			"CreateChat", "New Chat", "chat", new List<IActionEntry>() {
-			}) {
-		};
+	ActionCreateChat = new (
+			"CreateChat", "New Chat", "chat", CreateChat, () => new CreateChat(), new List<IActionEntry>() {
+		    });
 
-	static readonly GuiAction ActionStartVoice = new (
-			"StartVoice", "New Voice", "voice", new List<IActionEntry>() {
-			}) {
-		};
+	ActionStartVoice = new (
+			"StartVoice", "New Voice", "voice", StartVoice, () => new StartVoice(), new List<IActionEntry>() {
+		    });
 
-	static readonly GuiAction ActionStartVideo = new (
-			"StartVideo", "New Video", "video", new List<IActionEntry>() {
-			}) {
-		};
+	ActionStartVideo = new (
+			"StartVideo", "New Video", "video", StartVideo, () => new StartVideo(), new List<IActionEntry>() {
+		    });
 
-	static readonly GuiAction ActionSendDocument = new (
-			"SendDocument", "Send document", "document_send", new List<IActionEntry>() {
-			}) {
-		};
+	ActionSendDocument = new (
+			"SendDocument", "Send document", "document_send", SendDocument, () => new SendDocument(), new List<IActionEntry>() {
+		    });
 
-	static readonly GuiAction ActionShareDocument = new (
-			"ShareDocument", "Share document", "document_share", new List<IActionEntry>() {
-			}) {
-		};
+	ActionShareDocument = new (
+			"ShareDocument", "Share document", "document_share", ShareDocument, () => new ShareDocument(), new List<IActionEntry>() {
+		    });
 
 
-	// Dialogs
-	static readonly GuiDialog DialogAppearance = new (
+    Actions = new List<GuiAction>() {  
+		    ActionTestService, 
+		    ActionAccountCreate, 
+		    ActionAccountConnect, 
+		    ActionAccountRecover, 
+		    ActionRequestContact, 
+		    ActionCreateMail, 
+		    ActionCreateChat, 
+		    ActionStartVoice, 
+		    ActionStartVideo, 
+		    ActionSendDocument, 
+		    ActionShareDocument
+		    };
+
+
+	DialogAppearance = new (
 			"Appearance", new List<IDialogEntry>() { 
 			new GuiColor ("BackgroundColor", "Background Color"), 
 			new GuiColor ("HighlightColor", "Highlight Color"), 
 			new GuiColor ("TextColor", "Text Color"), 
 			new GuiSize ("TextSize", "Text Size"), 
-			new GuiSize ("IconSize", "Icon Size")
-			}) {
-		};
+			new GuiSize ("IconSize", "Icon Size")			
+		    });
 
-	static readonly GuiDialog DialogAccountUser = new (
+	DialogAccountUser = new (
 			"AccountUser", new List<IDialogEntry>() { 
 			new GuiText ("Udf", "Fingerprint"), 
 			new GuiText ("ServiceAddress", "Account service address"), 
 			new GuiText ("Local", "Friendly name"), 
 			new GuiText ("Description", "Description"), 
 			new GuiChooser ("UserChooseDevice", "Devices", "device", new List<IChooserEntry>() {
-					}) 
-			}) {
-		};
+				}) 			
+		    });
 
-	static readonly GuiDialog DialogContact = new (
+	DialogContact = new (
 			"Contact", new List<IDialogEntry>() { 
 			new GuiText ("Local", "Friendly name"), 
 			new GuiText ("Full", "Full name"), 
@@ -338,22 +357,20 @@ public partial class EverythingMaui : Gui {
 			new GuiText ("Prefix", "Prefix"), 
 			new GuiText ("Suffix", "Suffix"), 
 			new GuiChooser ("NetworkAddress", "Network Addresses", "network", new List<IChooserEntry>() {
-					}) , 
+				}) , 
 			new GuiChooser ("PhysicalAddress", "Locations", "location", new List<IChooserEntry>() {
-					}) 
-			}) {
-		};
+				}) 			
+		    });
 
-	static readonly GuiDialog DialogContactNetworkAddress = new (
+	DialogContactNetworkAddress = new (
 			"ContactNetworkAddress", new List<IDialogEntry>() { 
 			new GuiIcon ("ProtocolIcon", "protocol_icon"), 
 			new GuiText ("Protocol", "Protocol"), 
 			new GuiText ("Address", "Address"), 
-			new GuiText ("Fingerprint", "Fingerprint")
-			}) {
-		};
+			new GuiText ("Fingerprint", "Fingerprint")			
+		    });
 
-	static readonly GuiDialog DialogContactPhysicalAddress = new (
+	DialogContactPhysicalAddress = new (
 			"ContactPhysicalAddress", new List<IDialogEntry>() { 
 			new GuiText ("Appartment", "Appartment"), 
 			new GuiText ("Street", "Street"), 
@@ -363,33 +380,207 @@ public partial class EverythingMaui : Gui {
 			new GuiText ("Postcode", "Postcode"), 
 			new GuiText ("Country", "Country"), 
 			new GuiDecimal ("Latitude", "Latitude"), 
-			new GuiDecimal ("Longitude", "Longitude")
-			}) {
-		};
+			new GuiDecimal ("Longitude", "Longitude")			
+		    });
 
-	static readonly GuiDialog DialogMessageContactRequest = new (
+	DialogMessageContactRequest = new (
 			"MessageContactRequest", new List<IDialogEntry>() { 
 			new GuiText ("To", "To"), 
-			new GuiText ("Comment", "Comment")
-			}) {
-		};
+			new GuiText ("Comment", "Comment")			
+		    });
 
-	static readonly GuiDialog DialogMessageConfirmationRequest = new (
+	DialogMessageConfirmationRequest = new (
 			"MessageConfirmationRequest", new List<IDialogEntry>() { 
 			new GuiText ("To", "To"), 
-			new GuiText ("Request", "Request")
-			}) {
-		};
+			new GuiText ("Request", "Request")			
+		    });
 
-	static readonly GuiDialog DialogMessageMail = new (
+	DialogMessageMail = new (
 			"MessageMail", new List<IDialogEntry>() { 
 			new GuiText ("To", "To"), 
 			new GuiText ("Subject", "Subject"), 
-			new GuiText ("Body", "Body")
-			}) {
-		};
+			new GuiText ("Body", "Body")			
+		    });
 
-	
+
+        Dialogs = new List<GuiDialog>() {  
+		    DialogAppearance, 
+		    DialogAccountUser, 
+		    DialogContact, 
+		    DialogContactNetworkAddress, 
+		    DialogContactPhysicalAddress, 
+		    DialogMessageContactRequest, 
+		    DialogMessageConfirmationRequest, 
+		    DialogMessageMail
+		    };
+
+        }
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual void TestService (object data) => NotYetImplemented ();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual void AccountCreate (object data) => NotYetImplemented ();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual void AccountConnect (object data) => NotYetImplemented ();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual void AccountRecover (object data) => NotYetImplemented ();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual void RequestContact (object data) => NotYetImplemented ();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual void CreateMail (object data) => NotYetImplemented ();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual void CreateChat (object data) => NotYetImplemented ();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual void StartVoice (object data) => NotYetImplemented ();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual void StartVideo (object data) => NotYetImplemented ();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual void SendDocument (object data) => NotYetImplemented ();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual void ShareDocument (object data) => NotYetImplemented ();
+
+    
+    
+    /// <summary>
+    /// Default action
+    /// </summary>    
+    void NotYetImplemented () {
+        }
+
 	}
+
+
+/// <summary>
+/// Callback parameters for action TestService 
+/// </summary>
+public partial class TestService {
+
+
+    public static object _Factory => new TestService ();
+    }
+
+/// <summary>
+/// Callback parameters for action AccountCreate 
+/// </summary>
+public partial class AccountCreate {
+
+
+    public static object _Factory => new AccountCreate ();
+    }
+
+/// <summary>
+/// Callback parameters for action AccountConnect 
+/// </summary>
+public partial class AccountConnect {
+
+
+    public static object _Factory => new AccountConnect ();
+    }
+
+/// <summary>
+/// Callback parameters for action AccountRecover 
+/// </summary>
+public partial class AccountRecover {
+
+
+    public static object _Factory => new AccountRecover ();
+    }
+
+/// <summary>
+/// Callback parameters for action RequestContact 
+/// </summary>
+public partial class RequestContact {
+
+
+    public static object _Factory => new RequestContact ();
+    }
+
+/// <summary>
+/// Callback parameters for action CreateMail 
+/// </summary>
+public partial class CreateMail {
+
+
+    public static object _Factory => new CreateMail ();
+    }
+
+/// <summary>
+/// Callback parameters for action CreateChat 
+/// </summary>
+public partial class CreateChat {
+
+
+    public static object _Factory => new CreateChat ();
+    }
+
+/// <summary>
+/// Callback parameters for action StartVoice 
+/// </summary>
+public partial class StartVoice {
+
+
+    public static object _Factory => new StartVoice ();
+    }
+
+/// <summary>
+/// Callback parameters for action StartVideo 
+/// </summary>
+public partial class StartVideo {
+
+
+    public static object _Factory => new StartVideo ();
+    }
+
+/// <summary>
+/// Callback parameters for action SendDocument 
+/// </summary>
+public partial class SendDocument {
+
+
+    public static object _Factory => new SendDocument ();
+    }
+
+/// <summary>
+/// Callback parameters for action ShareDocument 
+/// </summary>
+public partial class ShareDocument {
+
+
+    public static object _Factory => new ShareDocument ();
+    }
+
+
 
 

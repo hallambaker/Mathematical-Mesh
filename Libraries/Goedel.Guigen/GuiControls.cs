@@ -54,10 +54,14 @@ public record GuiSection (
 
     }
 
+
+public delegate void ActionCallback(object parameters);
+
 public record GuiAction(
             string Id,
             string Prompt,
             string Icon,
+            ActionCallback callback,
             List<IActionEntry> Entries
             ) : GuiPrompt(Id, Prompt), IButtonTarget {
     }
