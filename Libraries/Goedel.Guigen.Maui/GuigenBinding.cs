@@ -109,7 +109,6 @@ public class GuigenSectionMenu : ContentPage, IReformat {
         MainWindow = mainWindow;
         Title = "Fred";
 
-        var count = 0;
         var stack = new VerticalStackLayout();
         foreach (var section in Gui.Sections) {
             var button = new GuigenSectionButton(mainWindow, section);
