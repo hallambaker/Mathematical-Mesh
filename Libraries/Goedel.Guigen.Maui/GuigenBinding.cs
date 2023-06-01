@@ -39,6 +39,8 @@ public interface IMainWindow {
 
     public void SetDetailWindow(GuiSection section);
 
+    public void SetDetailWindow(GuiAction action);
+
     }
 
 
@@ -64,14 +66,20 @@ public class GuigenBinding(Gui gui, DisplayMode display = DisplayMode.Default) {
 
 public class GuigenMainFlyout : FlyoutPage, IReformat, IMainWindow {
     public GuigenBinding Binding { get; }
+
+
+    GuiSection CurrentSection { get; set; }
+
+
+
     Gui Gui => Binding.Gui;
 
     public GuigenMainFlyout(GuigenBinding binding) {
         Binding = binding;
         Title = "Fred";
 
-        Flyout = new GuigenSectionMenu(this);
-        Detail = new GuigenDetailPane(this, Gui.DefaultSection);
+        Flyout = new GuigenSectionMenu(this).Page;
+        Detail = new GuigenDetailSection(this, Gui.DefaultSection).Page;
         }
 
     /// <summary>
@@ -79,11 +87,14 @@ public class GuigenMainFlyout : FlyoutPage, IReformat, IMainWindow {
     /// if it exists, otherwise create a new detail window.
     /// </summary>
     /// <param name="section"></param>
-    public void SetDetailWindow(GuiSection section) {
-        var detail = section.Presentation as GuigenDetailPane;
+    public void SetDetailWindow(GuiSection section = null) {
+        section ??= CurrentSection;
+
+        CurrentSection = section;
+        var detail = section.Presentation as GuigenDetailSection;
 
         if (detail is null) {
-            Detail = new GuigenDetailPane(this, section);
+            Detail = new GuigenDetailSection(this, section).Page;
             return;
             }
 
@@ -91,6 +102,25 @@ public class GuigenMainFlyout : FlyoutPage, IReformat, IMainWindow {
         detail.Refresh();
         Detail = detail;
         }
+
+    /// <summary>
+    /// Event callback. Display the cached detail window associated with <paramref name="section"/>
+    /// if it exists, otherwise create a new detail window.
+    /// </summary>
+    /// <param name="section"></param>
+    public void SetDetailWindow(GuiAction action) {
+        var detail = action.Presentation as GuigenDetailSection;
+
+        if (detail is null) {
+            Detail = new GuigenDetailAction(this, action).Page;
+            return;
+            }
+
+        // Call refresh only if the window is newly created.
+        detail.Refresh();
+        Detail = detail;
+        }
+
 
     }
 
@@ -104,6 +134,8 @@ public class GuigenSectionMenu : ContentPage, IReformat {
     Gui Gui => Binding.Gui;
 
     List<VisualElement> Items = new();
+
+    public Page Page => this;
 
     public GuigenSectionMenu(IMainWindow mainWindow) {
         MainWindow = mainWindow;
@@ -150,18 +182,44 @@ public class GuigenSectionButton : Button {
 
     }
 
-
-
-
-public class GuigenDetailPane : ContentPage, IPresentation {
+public class GuigenActionButton : Button {
     IMainWindow MainWindow { get; }
     GuigenBinding Binding => MainWindow.Binding;
+    GuiAction Action { get; }
+
+    public GuigenActionButton(IMainWindow mainWindow, GuiAction action) {
+        MainWindow = mainWindow;
+        Action = action;
+
+        Text = action.Prompt;
+        ImageSource = action.Icon.GetFilename();
+        HeightRequest = Binding.IconHeight * 2;
+
+        Clicked += OnClick;
+
+        }
+
+    private void OnClick(object sender, EventArgs e) {
+        MainWindow.SetDetailWindow(Action);
+        }
+
+
+    }
+
+
+public class GuigenDetailSection : ContentPage, IPresentation {
+    IMainWindow MainWindow { get; }
+    GuigenBinding Binding => MainWindow.Binding;
+
+    public Page Page => this;
+
+
 
     GuiSection Section { get; }
     Gui Gui => Binding.Gui;
 
 
-    public GuigenDetailPane(IMainWindow mainWindow, GuiSection section) {
+    public GuigenDetailSection(IMainWindow mainWindow, GuiSection section) {
         MainWindow = mainWindow;
         Section = section;
 
@@ -169,6 +227,7 @@ public class GuigenDetailPane : ContentPage, IPresentation {
 
         Title = section.Prompt;
         var stack = new VerticalStackLayout();
+        HorizontalStackLayout buttonbar = null;
 
         var label = new Label() {
             Text = section.Prompt,
@@ -176,8 +235,89 @@ public class GuigenDetailPane : ContentPage, IPresentation {
 
         stack.Add(label);
 
+        foreach (var entry in section.Entries) {
+            switch (entry) {
+                case GuiButton button: {
+                    buttonbar ??= new HorizontalStackLayout();
+                    buttonbar.Add(AddButton(button));
+                    break;
+                    }
+                }
+            }
+        if (buttonbar != null) {
+            stack.Add(buttonbar);
+            }
+
+
         Content = stack;
         }
+
+
+    IView AddButton(GuiButton button) {
+
+        switch (button.Target) {
+
+            case GuiSection section: {
+                return new GuigenSectionButton (MainWindow, section);
+                }
+            case GuiAction action: {
+                return new GuigenActionButton(MainWindow, action);
+                }
+
+
+            }
+        throw new NotImplementedException();
+
+
+        }
+
+    public void Refresh() {
+        }
+    }
+
+public class GuigenDetailAction : ContentPage, IPresentation {
+    IMainWindow MainWindow { get; }
+    GuigenBinding Binding => MainWindow.Binding;
+
+    public Page Page => this;
+
+
+    GuiAction Action { get; }
+    Gui Gui => Binding.Gui;
+
+
+    public GuigenDetailAction(IMainWindow mainWindow, GuiAction action) {
+        MainWindow = mainWindow;
+        Action = action;
+
+        action.Presentation = this;
+
+        Title = action.Prompt;
+        var stack = new VerticalStackLayout();
+
+
+        var label = new Label() {
+            Text = action.Prompt,
+            };
+
+        stack.Add(label);
+
+        foreach (var entry in action.Entries) {
+            switch (entry) {
+                case GuiText text: {
+                    var fieldLabel = new Label() {
+                        Text = text.Prompt
+                        };
+                    stack.Add(fieldLabel);
+
+                    break;
+                    }
+                }
+            }
+
+        Content = stack;
+        }
+
 
     public void Refresh() {
         }

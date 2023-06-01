@@ -114,7 +114,10 @@ Action AccountRecover "Recover Mesh Account" "recover"
 
 
 
-Action RequestContact "New Contact" "contact"
+Action RequestContact "Contact Request" "contact"
+	Text Address "Address"
+
+
 Action CreateMail "New Mail" "mail"
 Action CreateChat "New Chat" "chat"
 Action StartVoice "New Voice" "voice"

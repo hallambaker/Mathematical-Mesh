@@ -87,50 +87,49 @@ public class _EverythingMaui : Gui {
 
 
 	// Sections
-	public GuiSection SectionAccounts { get; }
-	public GuiSection SectionMessages { get; }
-	public GuiSection SectionContacts { get; }
-	public GuiSection SectionDocuments { get; }
-	public GuiSection SectionGroups { get; }
-	public GuiSection SectionFeeds { get; }
-	public GuiSection SectionCredentials { get; }
-	public GuiSection SectionTasks { get; }
-	public GuiSection SectionCalendar { get; }
-	public GuiSection SectionApplications { get; }
-	public GuiSection SectionDevices { get; }
-	public GuiSection SectionServices { get; }
-	public GuiSection SectionSettings { get; }
+	public GuiSection SectionAccounts { get; } = new ("Accounts", "Accounts", "user", false);
+	public GuiSection SectionMessages { get; } = new ("Messages", "Messages", "messages", true);
+	public GuiSection SectionContacts { get; } = new ("Contacts", "Contacts", "contacts", true);
+	public GuiSection SectionDocuments { get; } = new ("Documents", "Documents", "Documents", false);
+	public GuiSection SectionGroups { get; } = new ("Groups", "Groups", "groups", false);
+	public GuiSection SectionFeeds { get; } = new ("Feeds", "Feeds", "feeds", false);
+	public GuiSection SectionCredentials { get; } = new ("Credentials", "Credentials", "credentials", false);
+	public GuiSection SectionTasks { get; } = new ("Tasks", "Tasks", "tasks", false);
+	public GuiSection SectionCalendar { get; } = new ("Calendar", "Calendar", "calendar", false);
+	public GuiSection SectionApplications { get; } = new ("Applications", "Applications", "applications", false);
+	public GuiSection SectionDevices { get; } = new ("Devices", "Devices", "devices", false);
+	public GuiSection SectionServices { get; } = new ("Services", "Services", "Services", false);
+	public GuiSection SectionSettings { get; } = new ("Settings", "Settings", "settings", true);
 
 	
 	// Actions
-	public GuiAction ActionTestService { get; }
-	public GuiAction ActionAccountCreate { get; }
-	public GuiAction ActionAccountConnect { get; }
-	public GuiAction ActionAccountRecover { get; }
-	public GuiAction ActionRequestContact { get; }
-	public GuiAction ActionCreateMail { get; }
-	public GuiAction ActionCreateChat { get; }
-	public GuiAction ActionStartVoice { get; }
-	public GuiAction ActionStartVideo { get; }
-	public GuiAction ActionSendDocument { get; }
-	public GuiAction ActionShareDocument { get; }
+	public GuiAction ActionTestService { get; } = new ("TestService", "Test Service", "test_service", () => new TestService());
+	public GuiAction ActionAccountCreate { get; } = new ("AccountCreate", "Create Mesh Account", "new", () => new AccountCreate());
+	public GuiAction ActionAccountConnect { get; } = new ("AccountConnect", "Connect To Existing Account", "connect", () => new AccountConnect());
+	public GuiAction ActionAccountRecover { get; } = new ("AccountRecover", "Recover Mesh Account", "recover", () => new AccountRecover());
+	public GuiAction ActionRequestContact { get; } = new ("RequestContact", "New Contact", "contact", () => new RequestContact());
+	public GuiAction ActionCreateMail { get; } = new ("CreateMail", "New Mail", "mail", () => new CreateMail());
+	public GuiAction ActionCreateChat { get; } = new ("CreateChat", "New Chat", "chat", () => new CreateChat());
+	public GuiAction ActionStartVoice { get; } = new ("StartVoice", "New Voice", "voice", () => new StartVoice());
+	public GuiAction ActionStartVideo { get; } = new ("StartVideo", "New Video", "video", () => new StartVideo());
+	public GuiAction ActionSendDocument { get; } = new ("SendDocument", "Send document", "document_send", () => new SendDocument());
+	public GuiAction ActionShareDocument { get; } = new ("ShareDocument", "Share document", "document_share", () => new ShareDocument());
 
 	// Dialogs
-	public GuiDialog DialogAppearance { get; }
-	public GuiDialog DialogAccountUser { get; }
-	public GuiDialog DialogContact { get; }
-	public GuiDialog DialogContactNetworkAddress { get; }
-	public GuiDialog DialogContactPhysicalAddress { get; }
-	public GuiDialog DialogMessageContactRequest { get; }
-	public GuiDialog DialogMessageConfirmationRequest { get; }
-	public GuiDialog DialogMessageMail { get; }
+	public GuiDialog DialogAppearance { get; } = new ("Appearance");
+	public GuiDialog DialogAccountUser { get; } = new ("AccountUser");
+	public GuiDialog DialogContact { get; } = new ("Contact");
+	public GuiDialog DialogContactNetworkAddress { get; } = new ("ContactNetworkAddress");
+	public GuiDialog DialogContactPhysicalAddress { get; } = new ("ContactPhysicalAddress");
+	public GuiDialog DialogMessageContactRequest { get; } = new ("MessageContactRequest");
+	public GuiDialog DialogMessageConfirmationRequest { get; } = new ("MessageConfirmationRequest");
+	public GuiDialog DialogMessageMail { get; } = new ("MessageMail");
 	
 
     public _EverythingMaui () {
 
 
-	    SectionAccounts = new (
-			"Accounts", "Accounts", "user", false, new List<ISectionEntry>() {  
+	    SectionAccounts.Entries =  new List<ISectionEntry>() {  
 			new GuiButton ("Groups", SectionGroups), 
 			new GuiButton ("Services", SectionServices), 
 			new GuiChooser ("ChooseUser", "User", "account_user", new List<IChooserEntry>() { 
@@ -139,10 +138,9 @@ public class _EverythingMaui : Gui {
 				new GuiButton ("AccountRecover", ActionAccountRecover), 
 				new GuiButton ("TestService", ActionTestService)
 				}) 		    
-            });
+            };
 
-	    SectionMessages = new (
-			"Messages", "Messages", "messages", true, new List<ISectionEntry>() {  
+	    SectionMessages.Entries =  new List<ISectionEntry>() {  
 			new GuiButton ("RequestContact", ActionRequestContact), 
 			new GuiButton ("CreateMail", ActionCreateMail), 
 			new GuiButton ("CreateChat", ActionCreateChat), 
@@ -154,78 +152,67 @@ public class _EverythingMaui : Gui {
 				}) , 
 			new GuiChooser ("OtherMessage", "Messages", "inbox_messages", new List<IChooserEntry>() {
 				}) 		    
-            });
+            };
 
-	    SectionContacts = new (
-			"Contacts", "Contacts", "contacts", true, new List<ISectionEntry>() {  
+	    SectionContacts.Entries =  new List<ISectionEntry>() {  
 			new GuiChooser ("ChooseSelf", "Self", "contact_self", new List<IChooserEntry>() {
 				}) , 
 			new GuiChooser ("ContactMessage", "Contact Requests", "contact_message", new List<IChooserEntry>() {
 				}) , 
 			new GuiChooser ("ChooseOther", "Contacts", "contact_other", new List<IChooserEntry>() {
 				}) 		    
-            });
+            };
 
-	    SectionDocuments = new (
-			"Documents", "Documents", "Documents", false, new List<ISectionEntry>() {  
+	    SectionDocuments.Entries =  new List<ISectionEntry>() {  
 			new GuiButton ("SendDocument", ActionSendDocument), 
 			new GuiButton ("ShareDocument", ActionShareDocument), 
 			new GuiChooser ("ChooseDocuments", "Documents", "documents", new List<IChooserEntry>() {
 				}) 		    
-            });
+            };
 
-	    SectionGroups = new (
-			"Groups", "Groups", "groups", false, new List<ISectionEntry>() {  
+	    SectionGroups.Entries =  new List<ISectionEntry>() {  
 			new GuiChooser ("ChooseGroup", "User", "account_group", new List<IChooserEntry>() { 
 				new GuiButton ("AccountCreate", ActionAccountCreate)
 				}) 		    
-            });
+            };
 
-	    SectionFeeds = new (
-			"Feeds", "Feeds", "feeds", false, new List<ISectionEntry>() {  
+	    SectionFeeds.Entries =  new List<ISectionEntry>() {  
 			new GuiChooser ("ChooseFeed", "Feeds", "feeds", new List<IChooserEntry>() {
 				}) 		    
-            });
+            };
 
-	    SectionCredentials = new (
-			"Credentials", "Credentials", "credentials", false, new List<ISectionEntry>() {  
+	    SectionCredentials.Entries =  new List<ISectionEntry>() {  
 			new GuiChooser ("ChooseCredential", "Credentials", "credentials", new List<IChooserEntry>() {
 				}) 		    
-            });
+            };
 
-	    SectionTasks = new (
-			"Tasks", "Tasks", "tasks", false, new List<ISectionEntry>() {  
+	    SectionTasks.Entries =  new List<ISectionEntry>() {  
 			new GuiChooser ("ChooseTask", "Tasks", "Tasks", new List<IChooserEntry>() {
 				}) 		    
-            });
+            };
 
-	    SectionCalendar = new (
-			"Calendar", "Calendar", "calendar", false, new List<ISectionEntry>() {  
+	    SectionCalendar.Entries =  new List<ISectionEntry>() {  
 			new GuiChooser ("ChooseAppointment", "Calendar", "Calendar", new List<IChooserEntry>() {
 				}) 		    
-            });
+            };
 
-	    SectionApplications = new (
-			"Applications", "Applications", "applications", false, new List<ISectionEntry>() {  
+	    SectionApplications.Entries =  new List<ISectionEntry>() {  
 			new GuiChooser ("ChooseApplication", "Applications", "Applications", new List<IChooserEntry>() {
 				}) 		    
-            });
+            };
 
-	    SectionDevices = new (
-			"Devices", "Devices", "devices", false, new List<ISectionEntry>() {  
+	    SectionDevices.Entries =  new List<ISectionEntry>() {  
 			new GuiChooser ("ChooseDevice", "Devices", "Devices", new List<IChooserEntry>() {
 				}) 		    
-            });
+            };
 
-	    SectionServices = new (
-			"Services", "Services", "Services", false, new List<ISectionEntry>() {  
+	    SectionServices.Entries =  new List<ISectionEntry>() {  
 			new GuiChooser ("ChooseService", "Services", "account_service.png", new List<IChooserEntry>() { 
 				new GuiButton ("AccountCreate", ActionAccountCreate)
 				}) 		    
-            });
+            };
 
-	    SectionSettings = new (
-			"Settings", "Settings", "settings", true, new List<ISectionEntry>() {  
+	    SectionSettings.Entries =  new List<ISectionEntry>() {  
 			new GuiDialog ("Appearance", new List<IDialogEntry>() { 
 				new GuiColor ("BackgroundColor", "Background Color"), 
 				new GuiColor ("HighlightColor", "Highlight Color"), 
@@ -233,7 +220,7 @@ public class _EverythingMaui : Gui {
 				new GuiSize ("TextSize", "Text Size"), 
 				new GuiSize ("IconSize", "Icon Size")
 			    }) 		    
-            });
+            };
 
 
         Sections = new List<GuiSection> () {  
@@ -252,26 +239,26 @@ public class _EverythingMaui : Gui {
 		    SectionSettings
             };
 
-	ActionTestService = new (
-			"TestService", "Test Service", "test_service", TestService, () => new TestService(), new List<IActionEntry>() { 
+    ActionTestService.Callback = TestService;
+	ActionTestService.Entries = new List<IActionEntry>() { 
 			new GuiText ("ServiceAddress", "Service address")
-		    });
+		    };
 
-	ActionAccountCreate = new (
-			"AccountCreate", "Create Mesh Account", "new", AccountCreate, () => new AccountCreate(), new List<IActionEntry>() { 
+    ActionAccountCreate.Callback = AccountCreate;
+	ActionAccountCreate.Entries = new List<IActionEntry>() { 
 			new GuiText ("ServiceAddress", "Account service address"), 
 			new GuiText ("LocalName", "Friendly name (optional)"), 
 			new GuiText ("Coupon", "Activation code (if provided)")
-		    });
+		    };
 
-	ActionAccountConnect = new (
-			"AccountConnect", "Connect To Existing Account", "connect", AccountConnect, () => new AccountConnect(), new List<IActionEntry>() { 
+    ActionAccountConnect.Callback = AccountConnect;
+	ActionAccountConnect.Entries = new List<IActionEntry>() { 
 			new GuiText ("ConnectionString", "Account address"), 
 			new GuiText ("ConnectionPin", "Activation code (if provided)")
-		    });
+		    };
 
-	ActionAccountRecover = new (
-			"AccountRecover", "Recover Mesh Account", "recover", AccountRecover, () => new AccountRecover(), new List<IActionEntry>() { 
+    ActionAccountRecover.Callback = AccountRecover;
+	ActionAccountRecover.Entries = new List<IActionEntry>() { 
 			new GuiText ("ServiceAddress", "Account service address"), 
 			new GuiText ("LocalName", "Friendly name (optional)"), 
 			new GuiText ("Coupon", "Activation code (if provided)"), 
@@ -283,35 +270,35 @@ public class _EverythingMaui : Gui {
 			new GuiText ("Share6", "Recovery share"), 
 			new GuiText ("Share7", "Recovery share"), 
 			new GuiText ("Share8", "Recovery share")
-		    });
+		    };
 
-	ActionRequestContact = new (
-			"RequestContact", "New Contact", "contact", RequestContact, () => new RequestContact(), new List<IActionEntry>() {
-		    });
+    ActionRequestContact.Callback = RequestContact;
+	ActionRequestContact.Entries = new List<IActionEntry>() {
+		    };
 
-	ActionCreateMail = new (
-			"CreateMail", "New Mail", "mail", CreateMail, () => new CreateMail(), new List<IActionEntry>() {
-		    });
+    ActionCreateMail.Callback = CreateMail;
+	ActionCreateMail.Entries = new List<IActionEntry>() {
+		    };
 
-	ActionCreateChat = new (
-			"CreateChat", "New Chat", "chat", CreateChat, () => new CreateChat(), new List<IActionEntry>() {
-		    });
+    ActionCreateChat.Callback = CreateChat;
+	ActionCreateChat.Entries = new List<IActionEntry>() {
+		    };
 
-	ActionStartVoice = new (
-			"StartVoice", "New Voice", "voice", StartVoice, () => new StartVoice(), new List<IActionEntry>() {
-		    });
+    ActionStartVoice.Callback = StartVoice;
+	ActionStartVoice.Entries = new List<IActionEntry>() {
+		    };
 
-	ActionStartVideo = new (
-			"StartVideo", "New Video", "video", StartVideo, () => new StartVideo(), new List<IActionEntry>() {
-		    });
+    ActionStartVideo.Callback = StartVideo;
+	ActionStartVideo.Entries = new List<IActionEntry>() {
+		    };
 
-	ActionSendDocument = new (
-			"SendDocument", "Send document", "document_send", SendDocument, () => new SendDocument(), new List<IActionEntry>() {
-		    });
+    ActionSendDocument.Callback = SendDocument;
+	ActionSendDocument.Entries = new List<IActionEntry>() {
+		    };
 
-	ActionShareDocument = new (
-			"ShareDocument", "Share document", "document_share", ShareDocument, () => new ShareDocument(), new List<IActionEntry>() {
-		    });
+    ActionShareDocument.Callback = ShareDocument;
+	ActionShareDocument.Entries = new List<IActionEntry>() {
+		    };
 
 
     Actions = new List<GuiAction>() {  
@@ -329,27 +316,24 @@ public class _EverythingMaui : Gui {
 		    };
 
 
-	DialogAppearance = new (
-			"Appearance", new List<IDialogEntry>() { 
+	DialogAppearance.Entries = new List<IDialogEntry>() { 
 			new GuiColor ("BackgroundColor", "Background Color"), 
 			new GuiColor ("HighlightColor", "Highlight Color"), 
 			new GuiColor ("TextColor", "Text Color"), 
 			new GuiSize ("TextSize", "Text Size"), 
 			new GuiSize ("IconSize", "Icon Size")			
-		    });
+		    };
 
-	DialogAccountUser = new (
-			"AccountUser", new List<IDialogEntry>() { 
+	DialogAccountUser.Entries = new List<IDialogEntry>() { 
 			new GuiText ("Udf", "Fingerprint"), 
 			new GuiText ("ServiceAddress", "Account service address"), 
 			new GuiText ("Local", "Friendly name"), 
 			new GuiText ("Description", "Description"), 
 			new GuiChooser ("UserChooseDevice", "Devices", "device", new List<IChooserEntry>() {
 				}) 			
-		    });
+		    };
 
-	DialogContact = new (
-			"Contact", new List<IDialogEntry>() { 
+	DialogContact.Entries = new List<IDialogEntry>() { 
 			new GuiText ("Local", "Friendly name"), 
 			new GuiText ("Full", "Full name"), 
 			new GuiText ("First", "First name"), 
@@ -360,18 +344,16 @@ public class _EverythingMaui : Gui {
 				}) , 
 			new GuiChooser ("PhysicalAddress", "Locations", "location", new List<IChooserEntry>() {
 				}) 			
-		    });
+		    };
 
-	DialogContactNetworkAddress = new (
-			"ContactNetworkAddress", new List<IDialogEntry>() { 
+	DialogContactNetworkAddress.Entries = new List<IDialogEntry>() { 
 			new GuiIcon ("ProtocolIcon", "protocol_icon"), 
 			new GuiText ("Protocol", "Protocol"), 
 			new GuiText ("Address", "Address"), 
 			new GuiText ("Fingerprint", "Fingerprint")			
-		    });
+		    };
 
-	DialogContactPhysicalAddress = new (
-			"ContactPhysicalAddress", new List<IDialogEntry>() { 
+	DialogContactPhysicalAddress.Entries = new List<IDialogEntry>() { 
 			new GuiText ("Appartment", "Appartment"), 
 			new GuiText ("Street", "Street"), 
 			new GuiText ("District", "District"), 
@@ -381,26 +363,23 @@ public class _EverythingMaui : Gui {
 			new GuiText ("Country", "Country"), 
 			new GuiDecimal ("Latitude", "Latitude"), 
 			new GuiDecimal ("Longitude", "Longitude")			
-		    });
+		    };
 
-	DialogMessageContactRequest = new (
-			"MessageContactRequest", new List<IDialogEntry>() { 
+	DialogMessageContactRequest.Entries = new List<IDialogEntry>() { 
 			new GuiText ("To", "To"), 
 			new GuiText ("Comment", "Comment")			
-		    });
+		    };
 
-	DialogMessageConfirmationRequest = new (
-			"MessageConfirmationRequest", new List<IDialogEntry>() { 
+	DialogMessageConfirmationRequest.Entries = new List<IDialogEntry>() { 
 			new GuiText ("To", "To"), 
 			new GuiText ("Request", "Request")			
-		    });
+		    };
 
-	DialogMessageMail = new (
-			"MessageMail", new List<IDialogEntry>() { 
+	DialogMessageMail.Entries = new List<IDialogEntry>() { 
 			new GuiText ("To", "To"), 
 			new GuiText ("Subject", "Subject"), 
 			new GuiText ("Body", "Body")			
-		    });
+		    };
 
 
         Dialogs = new List<GuiDialog>() {  
