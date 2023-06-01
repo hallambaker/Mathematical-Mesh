@@ -16,11 +16,16 @@ public interface IBindable {
     ///<summary>Returns the binding for the data type</summary> 
     public GuiBinding Binding { get; }
 
+
+    public bool Validate();
+
     }
 
 public record GuiBinding {
 
     public GuiBoundProperty[] BoundProperties { get; }
+
+
 
     public GuiBinding(GuiBoundProperty[] boundProperties) {
         BoundProperties = boundProperties;
@@ -28,18 +33,21 @@ public record GuiBinding {
 
     }
 
-public record GuiBoundProperty (int Index) {
+public record GuiBoundProperty  {
+    ///<summary>Error to be filled if Validate is called and finds an error</summary> 
+    public string? Error { get; set; } = null;
 
     }
 
 
 public delegate void SetterString(string field);
 public delegate string GetterString();
-public record GuiBoundPropertyString(int Index) : GuiBoundProperty (Index) {
+public record GuiBoundPropertyString (
+                GetterString GetterString,
+            SetterString SetterString
 
+            ) : GuiBoundProperty {
 
-    public SetterString SetterString;
-    public GetterString GetterString;
 
 
     }
@@ -114,7 +122,7 @@ public record GuiSection (
 
 
 public delegate void ActionCallback(object parameters);
-public delegate object FactoryCallback();
+public delegate IBindable FactoryCallback();
 public record GuiAction(
             string Id,
             string Prompt,
@@ -157,7 +165,8 @@ public record GuiContext(
 
 public record GuiText(
             string Id,
-            string Prompt
+            string Prompt,
+            int Index = -1
             ) : GuiField(Id, Prompt) {
     }
 

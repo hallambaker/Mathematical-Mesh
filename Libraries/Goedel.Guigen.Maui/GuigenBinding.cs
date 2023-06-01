@@ -37,7 +37,7 @@ public interface IReformat{
 public interface IMainWindow {
     GuigenBinding Binding { get; }
 
-    public void SetDetailWindow(GuiSection section);
+    public void SetDetailWindow(GuiSection section = null);
 
     public void SetDetailWindow(GuiAction action);
 
@@ -79,7 +79,7 @@ public class GuigenMainFlyout : FlyoutPage, IReformat, IMainWindow {
         Title = "Fred";
 
         Flyout = new GuigenSectionMenu(this).Page;
-        Detail = new GuigenDetailSection(this, Gui.DefaultSection).Page;
+        SetDetailWindow(Gui.DefaultSection);
         }
 
     /// <summary>
@@ -285,10 +285,16 @@ public class GuigenDetailAction : ContentPage, IPresentation {
     GuiAction Action { get; }
     Gui Gui => Binding.Gui;
 
+    List<GuigenField> Fields = new();
+
+    IBindable BoundValue;
+
 
     public GuigenDetailAction(IMainWindow mainWindow, GuiAction action) {
         MainWindow = mainWindow;
         Action = action;
+
+        BoundValue = action.Factory();
 
         action.Presentation = this;
 
@@ -305,21 +311,72 @@ public class GuigenDetailAction : ContentPage, IPresentation {
         foreach (var entry in action.Entries) {
             switch (entry) {
                 case GuiText text: {
-                    var fieldLabel = new Label() {
-                        Text = text.Prompt
-                        };
-                    stack.Add(fieldLabel);
-
+                    var field = new GuigenFieldString(text);
+                    Fields.Add(field);
+                    stack.Add(field.View);
                     break;
                     }
                 }
             }
+        var view = new HorizontalStackLayout();
+
+        var confirmButton = new Button() {
+            Text = "Accept"
+            };
+        confirmButton.Clicked += OnClickConfirm;
+
+        var cancelButton = new Button() {
+            Text = "Cancel",
+            };
+        cancelButton.Clicked += OnClickCancel;
+
+
+        view.Add(confirmButton);
+        view.Add(cancelButton);
+        stack.Add(view);
 
         Content = stack;
         }
 
+    private void OnClickCancel(object sender, EventArgs e) {
+        MainWindow.SetDetailWindow();
+        }
+
+    private void OnClickConfirm(object sender, EventArgs e) {
+        MainWindow.SetDetailWindow();
+        }
 
     public void Refresh() {
         }
     }
+
+public class GuigenField{
+    public IBindable Value { get; set; }
+
+    }
+
+public class GuigenFieldString: GuigenField {
+
+    public IView View { get; private set; }
+
+    public GuigenFieldString(GuiText text) {
+        var view = new HorizontalStackLayout();
+        var fieldLabel = new Label() {
+            Text = text.Prompt
+            };
+        var fieldValue = new Entry() {
+            };
+
+
+        view.Add(fieldLabel);
+        view.Add(fieldValue);
+        View = view;
+        }
+
+
+
+    }
+
+
+
 

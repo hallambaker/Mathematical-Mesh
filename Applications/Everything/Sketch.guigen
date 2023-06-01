@@ -9,11 +9,12 @@ Class Goedel.Everything EverythingMaui
 Section Accounts "Accounts" "user"
 	Button Groups
 	Button Services
+	Button AccountCreate 
+	Button AccountConnect 
+	Button AccountRecover 
+	Button TestService 
 	Chooser ChooseUser "User" "account_user" AccountUser
-		Button AccountCreate 
-		Button AccountConnect 
-		Button AccountRecover 
-		Button TestService 
+
 
 Section Messages "Messages" "messages"
 	Primary

@@ -29,6 +29,302 @@ using Goedel.Utilities;
 namespace Goedel.Everything;
 
 
+
+
+/// <summary>
+/// Callback parameters for action TestService 
+/// </summary>
+public partial class TestService : _TestService {
+    }
+
+
+/// <summary>
+/// Callback parameters for action TestService 
+/// </summary>
+public partial class _TestService : IBindable {
+
+
+        ///<summary></summary> 
+        public string ServiceAddress {get; set;} 
+
+    public GuiBinding Binding => new GuiBinding (new GuiBoundProperty[] {  
+            new GuiBoundPropertyString (() => ServiceAddress, (string value) => ServiceAddress = value)
+            });
+
+    public virtual bool Validate() => true;
+    }
+
+
+/// <summary>
+/// Callback parameters for action AccountCreate 
+/// </summary>
+public partial class AccountCreate : _AccountCreate {
+    }
+
+
+/// <summary>
+/// Callback parameters for action AccountCreate 
+/// </summary>
+public partial class _AccountCreate : IBindable {
+
+
+        ///<summary></summary> 
+        public string ServiceAddress {get; set;} 
+
+        ///<summary></summary> 
+        public string LocalName {get; set;} 
+
+        ///<summary></summary> 
+        public string Coupon {get; set;} 
+
+    public GuiBinding Binding => new GuiBinding (new GuiBoundProperty[] {  
+            new GuiBoundPropertyString (() => ServiceAddress, (string value) => ServiceAddress = value), 
+            new GuiBoundPropertyString (() => LocalName, (string value) => LocalName = value), 
+            new GuiBoundPropertyString (() => Coupon, (string value) => Coupon = value)
+            });
+
+    public virtual bool Validate() => true;
+    }
+
+
+/// <summary>
+/// Callback parameters for action AccountConnect 
+/// </summary>
+public partial class AccountConnect : _AccountConnect {
+    }
+
+
+/// <summary>
+/// Callback parameters for action AccountConnect 
+/// </summary>
+public partial class _AccountConnect : IBindable {
+
+
+        ///<summary></summary> 
+        public string ConnectionString {get; set;} 
+
+        ///<summary></summary> 
+        public string ConnectionPin {get; set;} 
+
+    public GuiBinding Binding => new GuiBinding (new GuiBoundProperty[] {  
+            new GuiBoundPropertyString (() => ConnectionString, (string value) => ConnectionString = value), 
+            new GuiBoundPropertyString (() => ConnectionPin, (string value) => ConnectionPin = value)
+            });
+
+    public virtual bool Validate() => true;
+    }
+
+
+/// <summary>
+/// Callback parameters for action AccountRecover 
+/// </summary>
+public partial class AccountRecover : _AccountRecover {
+    }
+
+
+/// <summary>
+/// Callback parameters for action AccountRecover 
+/// </summary>
+public partial class _AccountRecover : IBindable {
+
+
+        ///<summary></summary> 
+        public string ServiceAddress {get; set;} 
+
+        ///<summary></summary> 
+        public string LocalName {get; set;} 
+
+        ///<summary></summary> 
+        public string Coupon {get; set;} 
+
+        ///<summary></summary> 
+        public string Share1 {get; set;} 
+
+        ///<summary></summary> 
+        public string Share2 {get; set;} 
+
+        ///<summary></summary> 
+        public string Share3 {get; set;} 
+
+        ///<summary></summary> 
+        public string Share4 {get; set;} 
+
+        ///<summary></summary> 
+        public string Share5 {get; set;} 
+
+        ///<summary></summary> 
+        public string Share6 {get; set;} 
+
+        ///<summary></summary> 
+        public string Share7 {get; set;} 
+
+        ///<summary></summary> 
+        public string Share8 {get; set;} 
+
+    public GuiBinding Binding => new GuiBinding (new GuiBoundProperty[] {  
+            new GuiBoundPropertyString (() => ServiceAddress, (string value) => ServiceAddress = value), 
+            new GuiBoundPropertyString (() => LocalName, (string value) => LocalName = value), 
+            new GuiBoundPropertyString (() => Coupon, (string value) => Coupon = value), 
+            new GuiBoundPropertyString (() => Share1, (string value) => Share1 = value), 
+            new GuiBoundPropertyString (() => Share2, (string value) => Share2 = value), 
+            new GuiBoundPropertyString (() => Share3, (string value) => Share3 = value), 
+            new GuiBoundPropertyString (() => Share4, (string value) => Share4 = value), 
+            new GuiBoundPropertyString (() => Share5, (string value) => Share5 = value), 
+            new GuiBoundPropertyString (() => Share6, (string value) => Share6 = value), 
+            new GuiBoundPropertyString (() => Share7, (string value) => Share7 = value), 
+            new GuiBoundPropertyString (() => Share8, (string value) => Share8 = value)
+            });
+
+    public virtual bool Validate() => true;
+    }
+
+
+/// <summary>
+/// Callback parameters for action RequestContact 
+/// </summary>
+public partial class RequestContact : _RequestContact {
+    }
+
+
+/// <summary>
+/// Callback parameters for action RequestContact 
+/// </summary>
+public partial class _RequestContact : IBindable {
+
+
+        ///<summary></summary> 
+        public string Address {get; set;} 
+
+    public GuiBinding Binding => new GuiBinding (new GuiBoundProperty[] {  
+            new GuiBoundPropertyString (() => Address, (string value) => Address = value)
+            });
+
+    public virtual bool Validate() => true;
+    }
+
+
+/// <summary>
+/// Callback parameters for action CreateMail 
+/// </summary>
+public partial class CreateMail : _CreateMail {
+    }
+
+
+/// <summary>
+/// Callback parameters for action CreateMail 
+/// </summary>
+public partial class _CreateMail : IBindable {
+
+
+    public GuiBinding Binding => new GuiBinding (new GuiBoundProperty[] { 
+            });
+
+    public virtual bool Validate() => true;
+    }
+
+
+/// <summary>
+/// Callback parameters for action CreateChat 
+/// </summary>
+public partial class CreateChat : _CreateChat {
+    }
+
+
+/// <summary>
+/// Callback parameters for action CreateChat 
+/// </summary>
+public partial class _CreateChat : IBindable {
+
+
+    public GuiBinding Binding => new GuiBinding (new GuiBoundProperty[] { 
+            });
+
+    public virtual bool Validate() => true;
+    }
+
+
+/// <summary>
+/// Callback parameters for action StartVoice 
+/// </summary>
+public partial class StartVoice : _StartVoice {
+    }
+
+
+/// <summary>
+/// Callback parameters for action StartVoice 
+/// </summary>
+public partial class _StartVoice : IBindable {
+
+
+    public GuiBinding Binding => new GuiBinding (new GuiBoundProperty[] { 
+            });
+
+    public virtual bool Validate() => true;
+    }
+
+
+/// <summary>
+/// Callback parameters for action StartVideo 
+/// </summary>
+public partial class StartVideo : _StartVideo {
+    }
+
+
+/// <summary>
+/// Callback parameters for action StartVideo 
+/// </summary>
+public partial class _StartVideo : IBindable {
+
+
+    public GuiBinding Binding => new GuiBinding (new GuiBoundProperty[] { 
+            });
+
+    public virtual bool Validate() => true;
+    }
+
+
+/// <summary>
+/// Callback parameters for action SendDocument 
+/// </summary>
+public partial class SendDocument : _SendDocument {
+    }
+
+
+/// <summary>
+/// Callback parameters for action SendDocument 
+/// </summary>
+public partial class _SendDocument : IBindable {
+
+
+    public GuiBinding Binding => new GuiBinding (new GuiBoundProperty[] { 
+            });
+
+    public virtual bool Validate() => true;
+    }
+
+
+/// <summary>
+/// Callback parameters for action ShareDocument 
+/// </summary>
+public partial class ShareDocument : _ShareDocument {
+    }
+
+
+/// <summary>
+/// Callback parameters for action ShareDocument 
+/// </summary>
+public partial class _ShareDocument : IBindable {
+
+
+    public GuiBinding Binding => new GuiBinding (new GuiBoundProperty[] { 
+            });
+
+    public virtual bool Validate() => true;
+    }
+
+
+
+
 /// <summary>
 /// Defines the graphical user interface.
 /// </summary>
@@ -107,7 +403,7 @@ public class _EverythingMaui : Gui {
 	public GuiAction ActionAccountCreate { get; } = new ("AccountCreate", "Create Mesh Account", "new", () => new AccountCreate());
 	public GuiAction ActionAccountConnect { get; } = new ("AccountConnect", "Connect To Existing Account", "connect", () => new AccountConnect());
 	public GuiAction ActionAccountRecover { get; } = new ("AccountRecover", "Recover Mesh Account", "recover", () => new AccountRecover());
-	public GuiAction ActionRequestContact { get; } = new ("RequestContact", "New Contact", "contact", () => new RequestContact());
+	public GuiAction ActionRequestContact { get; } = new ("RequestContact", "Contact Request", "contact", () => new RequestContact());
 	public GuiAction ActionCreateMail { get; } = new ("CreateMail", "New Mail", "mail", () => new CreateMail());
 	public GuiAction ActionCreateChat { get; } = new ("CreateChat", "New Chat", "chat", () => new CreateChat());
 	public GuiAction ActionStartVoice { get; } = new ("StartVoice", "New Voice", "voice", () => new StartVoice());
@@ -132,11 +428,11 @@ public class _EverythingMaui : Gui {
 	    SectionAccounts.Entries =  new List<ISectionEntry>() {  
 			new GuiButton ("Groups", SectionGroups), 
 			new GuiButton ("Services", SectionServices), 
-			new GuiChooser ("ChooseUser", "User", "account_user", new List<IChooserEntry>() { 
-				new GuiButton ("AccountCreate", ActionAccountCreate), 
-				new GuiButton ("AccountConnect", ActionAccountConnect), 
-				new GuiButton ("AccountRecover", ActionAccountRecover), 
-				new GuiButton ("TestService", ActionTestService)
+			new GuiButton ("AccountCreate", ActionAccountCreate), 
+			new GuiButton ("AccountConnect", ActionAccountConnect), 
+			new GuiButton ("AccountRecover", ActionAccountRecover), 
+			new GuiButton ("TestService", ActionTestService), 
+			new GuiChooser ("ChooseUser", "User", "account_user", new List<IChooserEntry>() {
 				}) 		    
             };
 
@@ -241,39 +537,40 @@ public class _EverythingMaui : Gui {
 
     ActionTestService.Callback = TestService;
 	ActionTestService.Entries = new List<IActionEntry>() { 
-			new GuiText ("ServiceAddress", "Service address")
+			new GuiText ("ServiceAddress", "Service address", 0)
 		    };
 
     ActionAccountCreate.Callback = AccountCreate;
 	ActionAccountCreate.Entries = new List<IActionEntry>() { 
-			new GuiText ("ServiceAddress", "Account service address"), 
-			new GuiText ("LocalName", "Friendly name (optional)"), 
-			new GuiText ("Coupon", "Activation code (if provided)")
+			new GuiText ("ServiceAddress", "Account service address", 0), 
+			new GuiText ("LocalName", "Friendly name (optional)", 1), 
+			new GuiText ("Coupon", "Activation code (if provided)", 2)
 		    };
 
     ActionAccountConnect.Callback = AccountConnect;
 	ActionAccountConnect.Entries = new List<IActionEntry>() { 
-			new GuiText ("ConnectionString", "Account address"), 
-			new GuiText ("ConnectionPin", "Activation code (if provided)")
+			new GuiText ("ConnectionString", "Account address", 0), 
+			new GuiText ("ConnectionPin", "Activation code (if provided)", 1)
 		    };
 
     ActionAccountRecover.Callback = AccountRecover;
 	ActionAccountRecover.Entries = new List<IActionEntry>() { 
-			new GuiText ("ServiceAddress", "Account service address"), 
-			new GuiText ("LocalName", "Friendly name (optional)"), 
-			new GuiText ("Coupon", "Activation code (if provided)"), 
-			new GuiText ("Share1", "Recovery share"), 
-			new GuiText ("Share2", "Recovery share"), 
-			new GuiText ("Share3", "Recovery share"), 
-			new GuiText ("Share4", "Recovery share"), 
-			new GuiText ("Share5", "Recovery share"), 
-			new GuiText ("Share6", "Recovery share"), 
-			new GuiText ("Share7", "Recovery share"), 
-			new GuiText ("Share8", "Recovery share")
+			new GuiText ("ServiceAddress", "Account service address", 0), 
+			new GuiText ("LocalName", "Friendly name (optional)", 1), 
+			new GuiText ("Coupon", "Activation code (if provided)", 2), 
+			new GuiText ("Share1", "Recovery share", 3), 
+			new GuiText ("Share2", "Recovery share", 4), 
+			new GuiText ("Share3", "Recovery share", 5), 
+			new GuiText ("Share4", "Recovery share", 6), 
+			new GuiText ("Share5", "Recovery share", 7), 
+			new GuiText ("Share6", "Recovery share", 8), 
+			new GuiText ("Share7", "Recovery share", 9), 
+			new GuiText ("Share8", "Recovery share", 10)
 		    };
 
     ActionRequestContact.Callback = RequestContact;
-	ActionRequestContact.Entries = new List<IActionEntry>() {
+	ActionRequestContact.Entries = new List<IActionEntry>() { 
+			new GuiText ("Address", "Address", 0)
 		    };
 
     ActionCreateMail.Callback = CreateMail;
@@ -325,21 +622,21 @@ public class _EverythingMaui : Gui {
 		    };
 
 	DialogAccountUser.Entries = new List<IDialogEntry>() { 
-			new GuiText ("Udf", "Fingerprint"), 
-			new GuiText ("ServiceAddress", "Account service address"), 
-			new GuiText ("Local", "Friendly name"), 
-			new GuiText ("Description", "Description"), 
+			new GuiText ("Udf", "Fingerprint", -1), 
+			new GuiText ("ServiceAddress", "Account service address", -1), 
+			new GuiText ("Local", "Friendly name", -1), 
+			new GuiText ("Description", "Description", -1), 
 			new GuiChooser ("UserChooseDevice", "Devices", "device", new List<IChooserEntry>() {
 				}) 			
 		    };
 
 	DialogContact.Entries = new List<IDialogEntry>() { 
-			new GuiText ("Local", "Friendly name"), 
-			new GuiText ("Full", "Full name"), 
-			new GuiText ("First", "First name"), 
-			new GuiText ("Last", "Last name"), 
-			new GuiText ("Prefix", "Prefix"), 
-			new GuiText ("Suffix", "Suffix"), 
+			new GuiText ("Local", "Friendly name", -1), 
+			new GuiText ("Full", "Full name", -1), 
+			new GuiText ("First", "First name", -1), 
+			new GuiText ("Last", "Last name", -1), 
+			new GuiText ("Prefix", "Prefix", -1), 
+			new GuiText ("Suffix", "Suffix", -1), 
 			new GuiChooser ("NetworkAddress", "Network Addresses", "network", new List<IChooserEntry>() {
 				}) , 
 			new GuiChooser ("PhysicalAddress", "Locations", "location", new List<IChooserEntry>() {
@@ -348,37 +645,37 @@ public class _EverythingMaui : Gui {
 
 	DialogContactNetworkAddress.Entries = new List<IDialogEntry>() { 
 			new GuiIcon ("ProtocolIcon", "protocol_icon"), 
-			new GuiText ("Protocol", "Protocol"), 
-			new GuiText ("Address", "Address"), 
-			new GuiText ("Fingerprint", "Fingerprint")			
+			new GuiText ("Protocol", "Protocol", -1), 
+			new GuiText ("Address", "Address", -1), 
+			new GuiText ("Fingerprint", "Fingerprint", -1)			
 		    };
 
 	DialogContactPhysicalAddress.Entries = new List<IDialogEntry>() { 
-			new GuiText ("Appartment", "Appartment"), 
-			new GuiText ("Street", "Street"), 
-			new GuiText ("District", "District"), 
-			new GuiText ("Locality", "Locality"), 
-			new GuiText ("County", "County"), 
-			new GuiText ("Postcode", "Postcode"), 
-			new GuiText ("Country", "Country"), 
+			new GuiText ("Appartment", "Appartment", -1), 
+			new GuiText ("Street", "Street", -1), 
+			new GuiText ("District", "District", -1), 
+			new GuiText ("Locality", "Locality", -1), 
+			new GuiText ("County", "County", -1), 
+			new GuiText ("Postcode", "Postcode", -1), 
+			new GuiText ("Country", "Country", -1), 
 			new GuiDecimal ("Latitude", "Latitude"), 
 			new GuiDecimal ("Longitude", "Longitude")			
 		    };
 
 	DialogMessageContactRequest.Entries = new List<IDialogEntry>() { 
-			new GuiText ("To", "To"), 
-			new GuiText ("Comment", "Comment")			
+			new GuiText ("To", "To", -1), 
+			new GuiText ("Comment", "Comment", -1)			
 		    };
 
 	DialogMessageConfirmationRequest.Entries = new List<IDialogEntry>() { 
-			new GuiText ("To", "To"), 
-			new GuiText ("Request", "Request")			
+			new GuiText ("To", "To", -1), 
+			new GuiText ("Request", "Request", -1)			
 		    };
 
 	DialogMessageMail.Entries = new List<IDialogEntry>() { 
-			new GuiText ("To", "To"), 
-			new GuiText ("Subject", "Subject"), 
-			new GuiText ("Body", "Body")			
+			new GuiText ("To", "To", -1), 
+			new GuiText ("Subject", "Subject", -1), 
+			new GuiText ("Body", "Body", -1)			
 		    };
 
 
@@ -459,107 +756,6 @@ public class _EverythingMaui : Gui {
         }
 
 	}
-
-
-/// <summary>
-/// Callback parameters for action TestService 
-/// </summary>
-public partial class TestService {
-
-
-    public static object _Factory => new TestService ();
-    }
-
-/// <summary>
-/// Callback parameters for action AccountCreate 
-/// </summary>
-public partial class AccountCreate {
-
-
-    public static object _Factory => new AccountCreate ();
-    }
-
-/// <summary>
-/// Callback parameters for action AccountConnect 
-/// </summary>
-public partial class AccountConnect {
-
-
-    public static object _Factory => new AccountConnect ();
-    }
-
-/// <summary>
-/// Callback parameters for action AccountRecover 
-/// </summary>
-public partial class AccountRecover {
-
-
-    public static object _Factory => new AccountRecover ();
-    }
-
-/// <summary>
-/// Callback parameters for action RequestContact 
-/// </summary>
-public partial class RequestContact {
-
-
-    public static object _Factory => new RequestContact ();
-    }
-
-/// <summary>
-/// Callback parameters for action CreateMail 
-/// </summary>
-public partial class CreateMail {
-
-
-    public static object _Factory => new CreateMail ();
-    }
-
-/// <summary>
-/// Callback parameters for action CreateChat 
-/// </summary>
-public partial class CreateChat {
-
-
-    public static object _Factory => new CreateChat ();
-    }
-
-/// <summary>
-/// Callback parameters for action StartVoice 
-/// </summary>
-public partial class StartVoice {
-
-
-    public static object _Factory => new StartVoice ();
-    }
-
-/// <summary>
-/// Callback parameters for action StartVideo 
-/// </summary>
-public partial class StartVideo {
-
-
-    public static object _Factory => new StartVideo ();
-    }
-
-/// <summary>
-/// Callback parameters for action SendDocument 
-/// </summary>
-public partial class SendDocument {
-
-
-    public static object _Factory => new SendDocument ();
-    }
-
-/// <summary>
-/// Callback parameters for action ShareDocument 
-/// </summary>
-public partial class ShareDocument {
-
-
-    public static object _Factory => new ShareDocument ();
-    }
-
 
 
 
