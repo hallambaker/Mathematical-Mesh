@@ -137,6 +137,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Settings", "Settings", "{5A
 		Settings\CommonSettingsMacos.xml = Settings\CommonSettingsMacos.xml
 		Settings\CommonSettingsMaui.xml = Settings\CommonSettingsMaui.xml
 		Settings\CommonSettingsNoDocs.xml = Settings\CommonSettingsNoDocs.xml
+		Settings\CommonSettingsPlatform.xml = Settings\CommonSettingsPlatform.xml
 		Settings\CommonSettingsTest.xml = Settings\CommonSettingsTest.xml
 		Settings\CommonSettingsWindows.xml = Settings\CommonSettingsWindows.xml
 		Settings\Nuget.xml = Settings\Nuget.xml
@@ -255,7 +256,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Everything", "Applications\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Everything-Y", "Applications\Everything-Y\Everything-Y.csproj", "{5C76A514-4539-4D0B-9287-BDA4A6CFE0F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Guigen.Maui", "Libraries\Goedel.Guigen.Maui\Goedel.Guigen.Maui.csproj", "{D727DD2C-F440-4955-B814-DC2DABD18C38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Guigen.Maui", "Libraries\Goedel.Guigen.Maui\Goedel.Guigen.Maui.csproj", "{D727DD2C-F440-4955-B814-DC2DABD18C38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

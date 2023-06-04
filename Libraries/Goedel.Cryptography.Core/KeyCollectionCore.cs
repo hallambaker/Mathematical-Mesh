@@ -78,7 +78,7 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
             }
         }
 
-    static void SetPlatformDirect(string directory) {
+    public static void SetPlatformDirect(string directory) {
         directoryKeys = Path.Combine(directory, "Keys");
         }
 

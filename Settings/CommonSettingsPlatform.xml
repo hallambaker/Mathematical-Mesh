@@ -1,0 +1,56 @@
+<Project DefaultTargets="Build">
+	<!-- The platform specific items -->
+	<Choose>
+		<When Condition="$(TargetFramework.Contains('-windows'))">
+			<PropertyGroup>
+				<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+				<!--<RuntimeIdentifiers>win10-x64;win10-arm;win10-x86;win10-arm64</RuntimeIdentifiers>-->
+				<DefineConstants>$(DefineConstants);USE_PLATFORM_WINDOWS</DefineConstants>
+			</PropertyGroup>
+			<ItemGroup>
+				<ProjectReference Include="..\..\Libraries\Platforms\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj" />
+			</ItemGroup>
+		</When>
+		<!--<When Condition="$(TargetFramework.Contains('-android'))">
+			--><!--<PropertyGroup>
+
+				<RuntimeIdentifiers>android-arm;android-arm64;android-x86;android-x64</RuntimeIdentifiers>
+				<DefineConstants>$(DefineConstants);USE_PLATFORM_ANDROID</DefineConstants>
+			</PropertyGroup>--><!--
+			<ItemGroup>
+				<ProjectReference Include="..\..\Libraries\Platforms\Goedel.Cryptography.Android\Goedel.Cryptography.Android.csproj" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(TargetFramework.Contains('-ios'))">
+			--><!--<PropertyGroup>
+
+				<RuntimeIdentifiers>iossimulator-x64</RuntimeIdentifiers>
+				<DefineConstants>$(DefineConstants);USE_PLATFORM_IOS</DefineConstants>
+			</PropertyGroup>--><!--
+			<ItemGroup>
+				<ProjectReference Include="..\..\Libraries\Platforms\Goedel.Cryptography.Ios\Goedel.Cryptography.Ios.csproj" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(TargetFramework.Contains('-maccatalyst'))">
+			--><!--<PropertyGroup>
+
+				<RuntimeIdentifiers>maccatalyst-arm64;maccatalyst-x64</RuntimeIdentifiers>
+				<DefineConstants>$(DefineConstants);USE_PLATFORM_MACCATALYST</DefineConstants>
+			</PropertyGroup>--><!--
+			<ItemGroup>
+				<ProjectReference Include="..\..\Libraries\Platforms\Goedel.Cryptography.Maccatalyst\Goedel.Cryptography.Maccatalyst.csproj" />
+			</ItemGroup>
+		</When>
+		<Otherwise>
+			--><!--<PropertyGroup>
+
+				<RuntimeIdentifiers>linux-x64;linux-arm;linux-arm64</RuntimeIdentifiers>
+				<DefineConstants>$(DefineConstants);USE_PLATFORM_LINUX</DefineConstants>
+			</PropertyGroup>--><!--
+			<ItemGroup>
+				<ProjectReference Include="..\..\Libraries\Platforms\Goedel.Cryptography.Linux\Goedel.Cryptography.Linux.csproj" />
+			</ItemGroup>
+		</Otherwise>-->
+	</Choose>
+
+</Project>
