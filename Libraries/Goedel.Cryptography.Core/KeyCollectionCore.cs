@@ -21,6 +21,8 @@
 #endregion
 
 
+using System.Net.NetworkInformation;
+
 namespace Goedel.Cryptography.Core;
 
 
@@ -32,18 +34,42 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
 
     const string WindowsMeshDirectory = @"Mesh";
     const string LinuxMeshDirectory = @"Mesh";
+    const string KeysDirectory = @"Keys";
 
-    const string WindowsMeshKeys = @"Mesh\Keys";
-    const string WindowsMeshProfiles = @"Mesh\Profiles";
-    const string WindowsMeshAccounts = @"Mesh\Accounts";
-    const string LinuxMeshKeys = @".Mesh/Keys";
-    const string LinuxMeshProfiles = @".Mesh/Profiles";
-    const string LinuxMeshAccounts = @".Mesh/Accounts";
+    //const string WindowsMeshKeys = @"Mesh\Keys";
+    //const string WindowsMeshProfiles = @"Mesh\Profiles";
+    //const string WindowsMeshAccounts = @"Mesh\Accounts";
+    //const string LinuxMeshKeys = @".Mesh/Keys";
+    //const string LinuxMeshProfiles = @".Mesh/Profiles";
+    //const string LinuxMeshAccounts = @".Mesh/Accounts";
 
     static string directoryKeys;
 
     ///<summary>Directory in which to store keys</summary> 
     public virtual string DirectoryKeys => directoryKeys;
+
+    public static string MeshConfigurationDirectory = null!;
+
+
+    static KeyCollectionCore() {
+        var platform = Environment.OSVersion.Platform;
+        switch (platform) {
+            case PlatformID.Win32NT: {
+                var appsRoot = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+                MeshConfigurationDirectory =  Path.Combine(appsRoot, WindowsMeshDirectory);
+                directoryKeys = Path.Combine(MeshConfigurationDirectory, KeysDirectory);
+                break;
+                }
+            default: {
+                var userRoot = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+
+                MeshConfigurationDirectory = Path.Combine(userRoot, WindowsMeshDirectory);
+                directoryKeys = Path.Combine(MeshConfigurationDirectory, KeysDirectory);
+                break;
+                }
+            }
+        }
 
 
 

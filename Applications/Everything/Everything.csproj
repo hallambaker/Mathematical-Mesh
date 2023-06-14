@@ -68,9 +68,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="FlyoutPage.xaml.cs">
-	    <DependentUpon>FlyoutPage.xaml</DependentUpon>
-	  </Compile>
 	  <Compile Update="FlyoutMenu.xaml.cs">
 	    <DependentUpon>FlyoutMenu.xaml</DependentUpon>
 	  </Compile>
@@ -90,12 +87,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="FlyoutDetail.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="FlyoutPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="FlyoutMenu.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

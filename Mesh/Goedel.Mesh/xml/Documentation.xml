@@ -2130,6 +2130,9 @@
         <member name="F:Goedel.Mesh.Catalog`1.MeshClient">
             <summary>Class exposing the Mesh Client locate interface.</summary>
         </member>
+        <member name="E:Goedel.Mesh.Catalog`1.CollectionChanged">
+            <summary>The event notifier</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Catalog`1.PersistenceStore">
             <summary>The persistence store.</summary>
         </member>

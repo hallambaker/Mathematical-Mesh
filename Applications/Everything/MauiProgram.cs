@@ -8,16 +8,13 @@ using Goedel.Cryptography.Core;
 
 namespace Everything;
 public static class MauiProgram {
-    static IMeshMachine MeshMachine;
 
-    static MauiProgram() => Goedel.Cryptography.Windows.Initialization.Initialized.AssertTrue(
-    Goedel.Mesh.Internal.Throw);
+
+    //static MauiProgram() => Goedel.Cryptography.Windows.Initialization.Initialized.AssertTrue(
+    //    Goedel.Mesh.Internal.Throw);
 
 
     public static MauiApp CreateMauiApp() {
-
-
-
 
         var components = new List<IComponent> {
 #if USE_PLATFORM_WINDOWS
@@ -25,13 +22,13 @@ public static class MauiProgram {
 #elif USE_PLATFORM_LINUX
 #endif
             };
-        KeyCollectionCore.SetPlatformDirect(@"C:\\Users\\hallam\\Test\\Deterministic");
-        MeshMachine = new MeshMachineCore();
+
+
         using var lifecycle = new LifeCycle(components);
 
-        var app = new EverythingMaui();
+        //var app = new EverythingMaui();
 
-        var prompt = app.GetPrompt(app.Sections[0]);
+        //var prompt = app.GetPrompt(app.Sections[0]);
 
 
         var builder = MauiApp.CreateBuilder();

@@ -1,7 +1,6 @@
 ﻿
 
 
-using Goedel.Everything;
 
 
 namespace Everything;
@@ -15,9 +14,6 @@ public partial class App : Application {
 
         var binding = new GuigenBinding(Gui);
         MainPage = binding.GetMain();
-
-
-
         }
 
     }
