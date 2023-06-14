@@ -45,7 +45,7 @@ public class ContextRegistry : ContextAccount {
     public  string DefaultPage => "CharacterPageLatin";
 
     ///<inheritdoc/>
-    public override string AccountAddress { get; }
+    public override string ServiceAddress { get; }
 
     ///<inheritdoc/>
     public override string ServiceDns { get; }
@@ -103,8 +103,8 @@ public class ContextRegistry : ContextAccount {
 
         // Set the service account address
         var profile = catalogedCallsign.ProfileRegistry;
-        AccountAddress = profile.AccountAddress;
-        ServiceDns = AccountAddress.GetService();
+        ServiceAddress = profile.AccountAddress;
+        ServiceDns = ServiceAddress.GetService();
 
         ActivationCommon = activationAccount;
         ActivationApplicationRegistry = activationApplicationRegistry;

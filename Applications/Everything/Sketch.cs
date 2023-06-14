@@ -41,12 +41,20 @@ public partial class Accounts : _Accounts {
 public partial class _Accounts : IBindable {
 
         ///<summary></summary> 
-        public virtual ISelectCollection ChooseUser { get; set;} 
+        public virtual string ServiceAddress { get;} 
+
+        ///<summary></summary> 
+        public virtual string ProfileUDF { get;} 
+
+        ///<summary></summary> 
+        public virtual string LocalAddress { get;} 
 
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyChooser ((IBindable data) => (data as _Accounts).ChooseUser, (IBindable data,ISelectCollection value) => (data as _Accounts).ChooseUser = value)
+            new GuiBoundPropertyString ((IBindable data) => (data as _Accounts).ServiceAddress, null), 
+            new GuiBoundPropertyString ((IBindable data) => (data as _Accounts).ProfileUDF, null), 
+            new GuiBoundPropertyString ((IBindable data) => (data as _Accounts).LocalAddress, null)
             });
 
     }
@@ -654,6 +662,31 @@ public partial class _TestService : IParameter {
 
 
 /// <summary>
+/// Callback parameters for action AccountSwitch 
+/// </summary>
+public partial class AccountSwitch : _AccountSwitch {
+    }
+
+
+/// <summary>
+/// Callback parameters for action AccountSwitch 
+/// </summary>
+public partial class _AccountSwitch : IParameter {
+
+        ///<summary></summary> 
+        public virtual ISelectCollection ChooseUser { get; set;} 
+
+
+    public GuiBinding Binding => BaseBinding;
+    public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
+            new GuiBoundPropertyChooser ((IBindable data) => (data as _AccountSwitch).ChooseUser, (IBindable data,ISelectCollection value) => (data as _AccountSwitch).ChooseUser = value)
+            });
+
+    public virtual bool Validate() => true;
+    }
+
+
+/// <summary>
 /// Callback parameters for action AccountCreate 
 /// </summary>
 public partial class AccountCreate : _AccountCreate {
@@ -707,8 +740,7 @@ public partial class _AccountConnect : IParameter {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((IBindable data) => (data as _AccountConnect).ConnectionString,
-                (IBindable data,string value) => (data as _AccountConnect).ConnectionString = value), 
+            new GuiBoundPropertyString ((IBindable data) => (data as _AccountConnect).ConnectionString, (IBindable data,string value) => (data as _AccountConnect).ConnectionString = value), 
             new GuiBoundPropertyString ((IBindable data) => (data as _AccountConnect).ConnectionPin, (IBindable data,string value) => (data as _AccountConnect).ConnectionPin = value)
             });
 
@@ -992,7 +1024,7 @@ public class _EverythingMaui : Gui {
 
 
 	// Sections
-	public GuiSection SectionAccounts { get; } = new ("Accounts", "Accounts", "user", false);
+	public GuiSection SectionAccounts { get; } = new ("Accounts", "Account", "user", false);
 	public GuiSection SectionMessages { get; } = new ("Messages", "Messages", "messages", true);
 	public GuiSection SectionContacts { get; } = new ("Contacts", "Contacts", "contacts", true);
 	public GuiSection SectionDocuments { get; } = new ("Documents", "Documents", "Documents", false);
@@ -1009,6 +1041,7 @@ public class _EverythingMaui : Gui {
 	
 	// Actions
 	public GuiAction ActionTestService { get; } = new ("TestService", "Test Service", "test_service", () => new TestService());
+	public GuiAction ActionAccountSwitch { get; } = new ("AccountSwitch", "Change Account", "test_service", () => new AccountSwitch());
 	public GuiAction ActionAccountCreate { get; } = new ("AccountCreate", "Create Mesh Account", "new", () => new AccountCreate());
 	public GuiAction ActionAccountConnect { get; } = new ("AccountConnect", "Connect To Existing Account", "connect", () => new AccountConnect());
 	public GuiAction ActionAccountRecover { get; } = new ("AccountRecover", "Recover Mesh Account", "recover", () => new AccountRecover());
@@ -1041,8 +1074,9 @@ public class _EverythingMaui : Gui {
 			new GuiButton ("AccountConnect", ActionAccountConnect), 
 			new GuiButton ("AccountRecover", ActionAccountRecover), 
 			new GuiButton ("TestService", ActionTestService), 
-			new GuiChooser ("ChooseUser", "User", "account_user", 0, new () {
-				}) 		    
+			new GuiText ("ServiceAddress", "Service Address", 0), 
+			new GuiText ("ProfileUDF", "Profile fingerprint", 1), 
+			new GuiText ("LocalAddress", "Local Address", 2)		    
             };
 
 	    SectionMessages.Entries =  new () {  
@@ -1149,6 +1183,12 @@ public class _EverythingMaui : Gui {
 			new GuiText ("ServiceAddress", "Service address", 0)
 		    };
 
+        ActionAccountSwitch.Callback = (x) => (AccountSwitch (x as AccountSwitch) as IResult);
+	    ActionAccountSwitch.Entries = new () { 
+			new GuiChooser ("ChooseUser", "User", "account_user", 0, new () {
+				}) 
+		    };
+
         ActionAccountCreate.Callback = (x) => (AccountCreate (x as AccountCreate) as IResult);
 	    ActionAccountCreate.Entries = new () { 
 			new GuiText ("ServiceAddress", "Account service address", 0), 
@@ -1209,6 +1249,7 @@ public class _EverythingMaui : Gui {
 
         Actions = new List<GuiAction>() {  
 		    ActionTestService, 
+		    ActionAccountSwitch, 
 		    ActionAccountCreate, 
 		    ActionAccountConnect, 
 		    ActionAccountRecover, 
@@ -1305,6 +1346,11 @@ public class _EverythingMaui : Gui {
     /// GUI action
     /// </summary>
     public virtual IResult TestService (TestService data) => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual IResult AccountSwitch (AccountSwitch data) => throw new NYI();
 
     /// <summary>
     /// GUI action

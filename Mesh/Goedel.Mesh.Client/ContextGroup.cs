@@ -52,10 +52,10 @@ public partial class ContextGroup : ContextAccount {
     //public override ProfileService ProfileService => ContextUser.ProfileService;
 
     ///<inheritdoc/>
-    public override string AccountAddress => ProfileGroup?.AccountAddress;
+    public override string ServiceAddress => ProfileGroup?.AccountAddress;
 
     ///<inheritdoc/>
-    public override string ServiceDns => AccountAddress.GetService();
+    public override string ServiceDns => ServiceAddress.GetService();
 
     ///<summary>The group profile.</summary>
     public ProfileGroup ProfileGroup => CatalogedGroup?.ProfileGroup;
@@ -71,7 +71,7 @@ public partial class ContextGroup : ContextAccount {
 
     ///<inheritdoc/>
     public MeshKeyCredentialPrivate GetKeyCredentialPrivate() =>
-       new(KeyCommonAuthentication as KeyPairAdvanced, AccountAddress);
+       new(KeyCommonAuthentication as KeyPairAdvanced, ServiceAddress);
     // have to get the credential from the client...
 
 
@@ -164,7 +164,7 @@ public partial class ContextGroup : ContextAccount {
 
         var keyGenerate = ActivationCommon.CommonEncryptionKey as KeyPairAdvanced;
         var (keyData, capabilityService) = CatalogAccess.MakeShare(
-                    keyGenerate, AccountAddress, serviceEncryptionKey, memberAddress);
+                    keyGenerate, ServiceAddress, serviceEncryptionKey, memberAddress);
 
         keyData.Envelope(encryptionKey: userEncryptionKey);
         var capabilityMember = new CapabilityDecryptPartial() {
@@ -180,7 +180,7 @@ public partial class ContextGroup : ContextAccount {
         var contact = CreateContact(listCapability);
 
         var groupInvitation = new GroupInvitation() {
-            Sender = ContextUser.AccountAddress,
+            Sender = ContextUser.ServiceAddress,
             Recipient = memberAddress,
             Text = text,
             Contact = contact
@@ -223,7 +223,7 @@ public partial class ContextGroup : ContextAccount {
                 List<CryptographicCapability> capabilities = null) {
 
 
-        var address = new NetworkAddress(AccountAddress, ProfileGroup) {
+        var address = new NetworkAddress(ServiceAddress, ProfileGroup) {
             Capabilities = capabilities
             };
 

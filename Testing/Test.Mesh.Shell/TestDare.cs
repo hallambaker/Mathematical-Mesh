@@ -213,8 +213,8 @@ public partial class ShellTests {
         Seed.MakeTestFile(filename, 100);
 
 
-        var options = encrypt ? $" /encrypt={alice.ContextUser.AccountAddress}" : "";
-        options += sign ? $" /sign={alice.ContextUser.AccountAddress}" : "";
+        var options = encrypt ? $" /encrypt={alice.ContextUser.ServiceAddress}" : "";
+        options += sign ? $" /sign={alice.ContextUser.ServiceAddress}" : "";
 
 
         var fileEncoded = Seed.GetTempFileName();
@@ -289,8 +289,8 @@ public partial class ShellTests {
         // make a file 
         seed.MakeTestFile(filename, length, info);
 
-        var options = encrypt ? $" /encrypt={alice.ContextUser.AccountAddress}" : "";
-        options += sign ? $" /sign={alice.ContextUser.AccountAddress}" : "";
+        var options = encrypt ? $" /encrypt={alice.ContextUser.ServiceAddress}" : "";
+        options += sign ? $" /sign={alice.ContextUser.ServiceAddress}" : "";
 
         // encode
         var fileEncoded = seed.GetTempFilePath();
@@ -436,8 +436,8 @@ public partial class ShellTests {
             Seed= seed
             };
 
-        var options = encrypt ? $" /encrypt={bob.ContextUser.AccountAddress} " : "";
-        options += self ? $" /self={alice.ContextUser.AccountAddress} " : "";
+        var options = encrypt ? $" /encrypt={bob.ContextUser.ServiceAddress} " : "";
+        options += self ? $" /self={alice.ContextUser.ServiceAddress} " : "";
 
         bool checkSelf = !encrypt | self;
 

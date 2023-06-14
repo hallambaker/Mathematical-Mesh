@@ -56,10 +56,10 @@ public class ContextResolver : ContextAccount {
     public override Connection Connection => throw new NotImplementedException();
 
     ///<inheritdoc/>
-    public override string AccountAddress { get; }
+    public override string ServiceAddress { get; }
 
     ///<inheritdoc/>
-    public override string ServiceDns => AccountAddress.GetService();
+    public override string ServiceDns => ServiceAddress.GetService();
 
     KeyPair KeyAuthentication { get; }
 
@@ -100,7 +100,7 @@ public class ContextResolver : ContextAccount {
         (KeyAuthentication, _) = SecretSeed.GenerateContributionKey(
         ProfileResolver.MeshKeyType, ProfileResolver.MeshActor, MeshKeyOperation.Authenticate);
 
-        var keyCredential = new MeshKeyCredentialPrivate(KeyAuthentication as KeyPairAdvanced, AccountAddress);
+        var keyCredential = new MeshKeyCredentialPrivate(KeyAuthentication as KeyPairAdvanced, ServiceAddress);
 
         MeshClient = MeshMachine.GetMeshClient(keyCredential, ProfileRegistry.AccountAddress);
 

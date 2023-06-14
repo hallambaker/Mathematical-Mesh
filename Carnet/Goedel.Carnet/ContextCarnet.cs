@@ -35,10 +35,10 @@ public class ContextCarnet : ContextAccount {
         };
 
     ///<inheritdoc/>
-    public override string AccountAddress { get; }
+    public override string ServiceAddress { get; }
 
     ///<inheritdoc/>
-    public override string ServiceDns => AccountAddress.GetService();
+    public override string ServiceDns => ServiceAddress.GetService();
     KeyPair KeyAuthentication { get; }
     ///<summary>Returns the inbound spool for the account</summary>
     public CatalogCarnet CatalogCarnet { get; }

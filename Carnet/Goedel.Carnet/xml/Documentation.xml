@@ -460,7 +460,7 @@
         <member name="P:Goedel.Carnet.ContextCarnet.DictionaryCatalogDelegates">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Carnet.ContextCarnet.AccountAddress">
+        <member name="P:Goedel.Carnet.ContextCarnet.ServiceAddress">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Carnet.ContextCarnet.ServiceDns">

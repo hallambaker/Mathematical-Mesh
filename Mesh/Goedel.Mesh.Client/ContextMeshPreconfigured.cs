@@ -39,10 +39,10 @@ public class ContextMeshPreconfigured : ContextAccount {
     public override Connection Connection => CatalogedPreconfigured.ConnectionDevice;
 
     ///<summary>The account address. This binds to the manufacturer account.</summary>
-    public override string AccountAddress => CatalogedPreconfigured?.AccountAddress;
+    public override string ServiceAddress => CatalogedPreconfigured?.AccountAddress;
 
     ///<inheritdoc/>
-    public override string ServiceDns => AccountAddress.GetService();
+    public override string ServiceDns => ServiceAddress.GetService();
 
 
     /// <summary>
@@ -57,11 +57,11 @@ public class ContextMeshPreconfigured : ContextAccount {
         profileDevice.Activate(KeyCollection);
 
         var meshCredentialPrivate = new MeshKeyCredentialPrivate(
-                profileDevice.KeyAuthentication as KeyPairAdvanced, AccountAddress); 
+                profileDevice.KeyAuthentication as KeyPairAdvanced, ServiceAddress); 
         
 
         MeshClient = MeshHost.MeshMachine.GetMeshClient(
-                meshCredentialPrivate, AccountAddress);
+                meshCredentialPrivate, ServiceAddress);
         }
 
 

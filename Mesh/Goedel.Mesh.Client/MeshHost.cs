@@ -209,13 +209,13 @@ public class MeshHost : Disposable {
             // consider adding a machine catalog entry for a group...
             case CatalogedStandard standardEntry: {
                     var context = new ContextUser(this, standardEntry);
-                    Logger.HostCreateContext(context.Profile.UdfString, context.AccountAddress);
+                    Logger.HostCreateContext(context.Profile.UdfString, context.ServiceAddress);
                     Register(context);
                     return context;
                     }
             case CatalogedPending pendingEntry: {
                     var context = new ContextMeshPending(this, pendingEntry);
-                    Logger.HostCreatePending(context.AccountAddress);
+                    Logger.HostCreatePending(context.ServiceAddress);
                     Register(context);
                     return context;
                     }
@@ -256,8 +256,8 @@ public class MeshHost : Disposable {
         DictionaryMachineIdContextMesh.Remove(machine.Id);
         DictionaryMachineIdContextMesh.Add(machine.Id, contextMesh);
 
-        if (contextMesh.AccountAddress != null) {
-            DictionaryLocalContextMesh.AddSafe(contextMesh.AccountAddress, contextMesh);
+        if (contextMesh.ServiceAddress != null) {
+            DictionaryLocalContextMesh.AddSafe(contextMesh.ServiceAddress, contextMesh);
             }
         if (contextMesh.Profile != null) {
             DictionaryUDFContextMesh.AddSafe(contextMesh.Profile.UdfString, contextMesh);
@@ -276,8 +276,8 @@ public class MeshHost : Disposable {
         var machine = contextMesh.CatalogedMachine;
         DictionaryUDFContextMesh.Remove(machine.Id);
 
-        if (contextMesh.AccountAddress != null) {
-            DictionaryLocalContextMesh.Remove(contextMesh.AccountAddress);
+        if (contextMesh.ServiceAddress != null) {
+            DictionaryLocalContextMesh.Remove(contextMesh.ServiceAddress);
             }
         if (contextMesh.Profile != null) {
             DictionaryUDFContextMesh.Remove(contextMesh.Profile.UdfString);

@@ -6,14 +6,19 @@ Class Goedel.Everything EverythingMaui
 
 // Sections
 
-Section Accounts "Accounts" "user"
+Section Accounts "Account" "user"
 	Button Groups
 	Button Services
 	Button AccountCreate 
 	Button AccountConnect 
 	Button AccountRecover 
 	Button TestService 
-	Chooser ChooseUser "User" "account_user" AccountUser
+	Text ServiceAddress "Service Address"
+		Readonly
+	Text ProfileUDF "Profile fingerprint"
+		Readonly
+	Text LocalAddress "Local Address"
+		Readonly
 
 
 Section Messages "Messages" "messages"
@@ -86,7 +91,9 @@ Section Settings "Settings" "settings"
 
 Action TestService "Test Service" "test_service"
 	Text ServiceAddress "Service address"
-	
+
+Action AccountSwitch "Change Account" "test_service"
+	Chooser ChooseUser "User" "account_user" AccountUser
 
 Action AccountCreate "Create Mesh Account" "new"
 	Text ServiceAddress "Account service address"

@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System;
+using System.Security.Cryptography.X509Certificates;
 
 using static System.Collections.Specialized.BitVector32;
 
@@ -59,11 +60,6 @@ public class GuigenBinding(Gui gui, DisplayMode display = DisplayMode.Default) {
 
     }
 
-
-
-
-
-
 public class GuigenMainFlyout : FlyoutPage, IReformat, IMainWindow {
     public GuigenBinding Binding { get; }
 
@@ -71,7 +67,7 @@ public class GuigenMainFlyout : FlyoutPage, IReformat, IMainWindow {
     GuiSection CurrentSection { get; set; }
 
 
-
+    public Page Page => this;
     Gui Gui => Binding.Gui;
 
     public GuigenMainFlyout(GuigenBinding binding) {
@@ -139,12 +135,12 @@ public class GuigenSectionMenu : ContentPage, IReformat {
 
     public GuigenSectionMenu(IMainWindow mainWindow) {
         MainWindow = mainWindow;
-        Title = "Fred";
+        Title = "Main";
 
         var stack = new VerticalStackLayout();
         foreach (var section in Gui.Sections) {
             var button = new GuigenSectionButton(mainWindow, section);
-            stack.Add(button);
+            stack.Add(button.View);
             }
 
         Content = stack;
@@ -162,6 +158,9 @@ public class GuigenSectionButton : Button {
     IMainWindow MainWindow { get; }
     GuigenBinding Binding => MainWindow.Binding;
     GuiSection Section { get; }
+
+
+    public View View => this;
 
     public GuigenSectionButton(IMainWindow mainWindow, GuiSection section) {
         MainWindow = mainWindow;
@@ -217,7 +216,7 @@ public class GuigenDetailSection : ContentPage, IPresentation {
 
     GuiSection Section { get; }
     Gui Gui => Binding.Gui;
-
+    FieldSet FieldSet { get; }
 
     public GuigenDetailSection(IMainWindow mainWindow, GuiSection section) {
         MainWindow = mainWindow;
@@ -248,6 +247,11 @@ public class GuigenDetailSection : ContentPage, IPresentation {
             stack.Add(buttonbar);
             }
 
+
+
+        FieldSet = new FieldSet(section.Entries, stack);
+
+        FieldSet.SetFields(section.Data);
 
         Content = stack;
         }
@@ -285,10 +289,10 @@ public class GuigenDetailAction : ContentPage, IPresentation {
     GuiAction Action { get; }
     Gui Gui => Binding.Gui;
 
-    List<GuigenField> Fields = new();
+    //List<GuigenField> Fields = new();
 
     IBindable BoundValue;
-
+    FieldSet FieldSet { get; }
 
     public GuigenDetailAction(IMainWindow mainWindow, GuiAction action) {
         MainWindow = mainWindow;
@@ -299,25 +303,16 @@ public class GuigenDetailAction : ContentPage, IPresentation {
         action.Presentation = this;
 
         Title = action.Prompt;
-        var stack = new VerticalStackLayout();
 
+        var stack = new VerticalStackLayout();
 
         var label = new Label() {
             Text = action.Prompt,
             };
-
         stack.Add(label);
+        
+        FieldSet = new FieldSet(action.Entries, stack);
 
-        foreach (var entry in action.Entries) {
-            switch (entry) {
-                case GuiText text: {
-                    var field = new GuigenFieldString(text);
-                    Fields.Add(field);
-                    stack.Add(field.View);
-                    break;
-                    }
-                }
-            }
         var view = new HorizontalStackLayout();
 
         var confirmButton = new Button() {
@@ -343,6 +338,10 @@ public class GuigenDetailAction : ContentPage, IPresentation {
         }
 
     private void OnClickConfirm(object sender, EventArgs e) {
+        var result = Action.Factory();
+        FieldSet.GetFields(result);
+
+
         MainWindow.SetDetailWindow();
         }
 
@@ -350,32 +349,7 @@ public class GuigenDetailAction : ContentPage, IPresentation {
         }
     }
 
-public class GuigenField{
-    public IBindable Value { get; set; }
 
-    }
-
-public class GuigenFieldString: GuigenField {
-
-    public IView View { get; private set; }
-
-    public GuigenFieldString(GuiText text) {
-        var view = new HorizontalStackLayout();
-        var fieldLabel = new Label() {
-            Text = text.Prompt
-            };
-        var fieldValue = new Entry() {
-            };
-
-
-        view.Add(fieldLabel);
-        view.Add(fieldValue);
-        View = view;
-        }
-
-
-
-    }
 
 
 

@@ -61,7 +61,7 @@ public partial class ContextUser : ContextAccount {
     public override Connection Connection => ConnectionAccount;
 
     ///<summary>Convenience accessor to the account address.</summary>
-    public override string AccountAddress => ProfileUser?.AccountAddress;
+    public override string ServiceAddress => ProfileUser?.AccountAddress;
 
 
     static ILogger Logger => Component.Logger;
@@ -554,7 +554,7 @@ public partial class ContextUser : ContextAccount {
     /// <param name="cryptoKey">The found key </param>
     /// <returns>The identifier.</returns>
     public override bool TryFindKeySignature(string keyId, out CryptoKey cryptoKey) {
-        if (keyId == AccountAddress) {
+        if (keyId == ServiceAddress) {
             cryptoKey = KeyCommonSignature;
             return true;
             }
@@ -1038,11 +1038,11 @@ public partial class ContextUser : ContextAccount {
             algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate, bits: bitsSecret);
 
 
-        pin = MeshUri.GetConnectPin(secretSeed, AccountAddress, length: bitsPin);
+        pin = MeshUri.GetConnectPin(secretSeed, ServiceAddress, length: bitsPin);
 
         var key = new CryptoKeySymmetric(pin);
 
-        connectURI = MeshUri.ConnectUri(AccountAddress, pin);
+        connectURI = MeshUri.ConnectUri(ServiceAddress, pin);
 
         // Create a device profile 
         profileDevice = new ProfileDevice(secretSeed);
@@ -1190,7 +1190,7 @@ public partial class ContextUser : ContextAccount {
         (var targetAccountAddress, var pin) = MeshUri.ParseConnectUri(uri);
 
         var key = new CryptoKeySymmetricSigner(pin);
-        var messageClaim = new MessageClaim(targetAccountAddress, AccountAddress, pin);
+        var messageClaim = new MessageClaim(targetAccountAddress, ServiceAddress, pin);
 
         messageClaim.Envelope(KeyCommonSignature);
 
@@ -1325,7 +1325,7 @@ public partial class ContextUser : ContextAccount {
             var messagePin = GetMessagePIN(messageConnectionRequest.PinId);
 
             var pinStatus = MessagePin.ValidatePin(messagePin,
-                    AccountAddress,
+                    ServiceAddress,
                     messageConnectionRequest.AuthenticatedData,
                     messageConnectionRequest.ClientNonce,
                     messageConnectionRequest.PinWitness);
@@ -1581,7 +1581,7 @@ public partial class ContextUser : ContextAccount {
         var messagePin = GetMessagePIN(request.PinId);
 
         // check the pin value
-        var pinStatus = request.ValidatePin(messagePin, AccountAddress);
+        var pinStatus = request.ValidatePin(messagePin, ServiceAddress);
         if (pinStatus != ProcessingResult.Success) {
             return new ProcessResultError(request, pinStatus, messagePin);
             }
@@ -1648,7 +1648,7 @@ public partial class ContextUser : ContextAccount {
 
         // Register the pin
         var messageConnectionPIN = new MessagePin(
-            pin, automatic, expire, AccountAddress, MeshConstants.MessagePINActionContact);
+            pin, automatic, expire, ServiceAddress, MeshConstants.MessagePINActionContact);
 
         using (var transactRequest = TransactBegin()) {
             transactRequest.LocalMessage(messageConnectionPIN, KeyCommonEncryption);
@@ -1658,7 +1658,7 @@ public partial class ContextUser : ContextAccount {
             }
 
         // return the contact address
-        return MeshUri.ConnectUri(AccountAddress, pin);
+        return MeshUri.ConnectUri(ServiceAddress, pin);
         }
 
 

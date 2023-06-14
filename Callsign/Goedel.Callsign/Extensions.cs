@@ -147,7 +147,7 @@ public static class Extensions {
         var callsignBinding = new CallsignBinding() {
             Canonical = callsign,
             Display = display,
-            ServiceAddress = contextAccount.AccountAddress,
+            ServiceAddress = contextAccount.ServiceAddress,
             };
 
         if (contextAccount.Profile is ProfileAccount profileAccount) {

@@ -26,10 +26,10 @@ public class ContextRepository : ContextAccount {
 
 
     ///<inheritdoc/>
-    public override string AccountAddress => "@Repository";
+    public override string ServiceAddress => "@Repository";
 
     ///<inheritdoc/>
-    public override string ServiceDns => AccountAddress.GetService();
+    public override string ServiceDns => ServiceAddress.GetService();
 
     ///<inheritdoc/>
     public override Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => StaticCatalogDelegates;

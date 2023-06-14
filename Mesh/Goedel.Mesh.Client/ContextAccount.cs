@@ -70,8 +70,8 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     public abstract Profile Profile { get; }
 
 
-    ///<summary>The account address in human readable format user@domain.</summary>
-    public abstract string AccountAddress { get; }
+    ///<summary>The DNS service address in human readable format user@domain.</summary>
+    public abstract string ServiceAddress { get; }
 
     ///<summary>The account address in canonical format udf@domain.</summary> 
     public string AccountAddressUdf => Profile.UdfString + "@" + ServiceDns;
@@ -336,7 +336,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
         var pin = Udf.AuthenticationKey(bits);
         var expires = System.DateTime.Now.AddTicks(validity);
-        var messagePin = new MessagePin(pin, automatic, expires, AccountAddress, action) {
+        var messagePin = new MessagePin(pin, automatic, expires, ServiceAddress, action) {
             Roles = roles
             };
 
@@ -378,7 +378,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// </summary>
     public void DeleteAccount() {
         var unbindRequest = new UnbindRequest() {
-            Account = AccountAddress
+            Account = ServiceAddress
             };
         var response = MeshClient.UnbindAccount(unbindRequest);
         response.AssertSuccess(NYI.Throw);
@@ -796,7 +796,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     public virtual Contact CreateContact(
             List<CryptographicCapability> capabilities = null) {
 
-        var address = new NetworkAddress(AccountAddress, Profile as ProfileAccount) {
+        var address = new NetworkAddress(ServiceAddress, Profile as ProfileAccount) {
             Capabilities = capabilities
             };
 

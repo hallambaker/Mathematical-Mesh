@@ -347,7 +347,7 @@ public abstract class Transaction<TAccount> : Disposable
         TransactRequest.Outbound ??= new List<Enveloped<Message>>();
         TransactRequest.Accounts ??= new List<string>();
 
-        message.Sender ??= ContextAccount.AccountAddress;
+        message.Sender ??= ContextAccount.ServiceAddress;
 
         var signingKey = admin ? ContextAccount.KeyAdministratorSign :
             ContextAccount.KeyCommonSignature;

@@ -388,8 +388,8 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.Profile">
             <summary>The account profile</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.AccountAddress">
-            <summary>The account address in human readable format user@domain.</summary>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.ServiceAddress">
+            <summary>The DNS service address in human readable format user@domain.</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.AccountAddressUdf">
             <summary>The account address in canonical format udf@domain.</summary> 
@@ -876,7 +876,7 @@
         <member name="P:Goedel.Mesh.Client.ContextGroup.ProfileDevice">
             <summary>The device profile</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextGroup.AccountAddress">
+        <member name="P:Goedel.Mesh.Client.ContextGroup.ServiceAddress">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextGroup.ServiceDns">
@@ -979,7 +979,7 @@
         <member name="P:Goedel.Mesh.Client.ContextMeshPending.CatalogedPending">
             <summary>Convenience accessor for the pending context.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextMeshPending.AccountAddress">
+        <member name="P:Goedel.Mesh.Client.ContextMeshPending.ServiceAddress">
             <summary>The account address from the cataloged pending record. Note that this
             address MUST be for the same service that the original request was made to.</summary>
         </member>
@@ -1053,7 +1053,7 @@
         <member name="P:Goedel.Mesh.Client.ContextMeshPreconfigured.Connection">
             <summary>Preconfigured devices have a connection to the manufacturer profile.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextMeshPreconfigured.AccountAddress">
+        <member name="P:Goedel.Mesh.Client.ContextMeshPreconfigured.ServiceAddress">
             <summary>The account address. This binds to the manufacturer account.</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextMeshPreconfigured.ServiceDns">
@@ -1153,7 +1153,7 @@
         <member name="P:Goedel.Mesh.Client.ContextUser.Connection">
             <summary>Convenience accessor for the connection.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextUser.AccountAddress">
+        <member name="P:Goedel.Mesh.Client.ContextUser.ServiceAddress">
             <summary>Convenience accessor to the account address.</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.ProfileUser">

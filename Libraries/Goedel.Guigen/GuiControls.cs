@@ -1,6 +1,7 @@
 ﻿using Goedel.Utilities;
 
 using System;
+using System.Collections;
 
 namespace Goedel.Guigen;
 
@@ -54,48 +55,42 @@ public record GuiBoundProperty  {
 
 
 public record GuiBoundPropertyString (
-                Func<IBindable, string> GetterString,
-                Action<IBindable, string> SetterString
-
-            ) : GuiBoundProperty {
+                Func<IBindable, string> Get,
+                Action<IBindable, string> Set,
+                string? Label = null) : GuiBoundProperty {
     }
 
 public record GuiBoundPropertyChooser(
-                Func<IBindable, ISelectCollection> GetterString,
-                Action<IBindable, ISelectCollection> SetterString
-
-            ) : GuiBoundProperty {
+                Func<IBindable, ISelectCollection> Get,
+                Action<IBindable, ISelectCollection> Set,
+                string? Label = null) : GuiBoundProperty {
     }
 
 public record GuiBoundPropertyColor(
-                Func<IBindable, IFieldColor> GetterString,
-                Action<IBindable, IFieldColor> SetterString
-
-            ) : GuiBoundProperty {
+                Func<IBindable, IFieldColor> Get,
+                Action<IBindable, IFieldColor> Set,
+                string? Label = null) : GuiBoundProperty {
     }
 
 
 public record GuiBoundPropertySize(
-                Func<IBindable, IFieldSize> GetterString,
-                Action<IBindable, IFieldSize> SetterString
-
-            ) : GuiBoundProperty {
+                Func<IBindable, IFieldSize> Get,
+                Action<IBindable, IFieldSize> Set,
+                string? Label = null) : GuiBoundProperty {
     }
 
 
 public record GuiBoundPropertyDecimal(
-                Func<IBindable, double> GetterString,
-                Action<IBindable, double> SetterString
-
-            ) : GuiBoundProperty {
+                Func<IBindable, double> Get,
+                Action<IBindable, double> Set,
+                string? Label = null) : GuiBoundProperty {
     }
 
 
 public record GuiBoundPropertyIcon(
-                Func<IBindable, IFieldIcon> GetterString,
-                Action<IBindable, IFieldIcon> SetterString
-
-            ) : GuiBoundProperty {
+                Func<IBindable, IFieldIcon> Get,
+                Action<IBindable, IFieldIcon> Set,
+                string? Label = null) : GuiBoundProperty {
     }
 
 
@@ -111,15 +106,15 @@ public record GuiItem(
             string Id) {
     }
 
-public record GuiDialog : GuiItem ,ISectionEntry {
+public record GuiDialog : GuiItem , IGuiEntry {
     public IPresentation? Presentation { get; set; } = null;
 
     public string Id { get; set; }
-    public List<IDialogEntry> Entries { get; set; } = null!;
+    public List<IGuiEntry> Entries { get; set; } = null!;
 
     public GuiDialog(
            string id,
-            List<IDialogEntry> entries = null!
+            List<IGuiEntry> entries = null!
            ) : base(id){
         Id = id;
         Entries = entries;
@@ -135,7 +130,7 @@ public record GuiDialog : GuiItem ,ISectionEntry {
 public record GuiButton(
             string Id,
             IButtonTarget Target
-            ) : GuiItem(Id), ISectionEntry, IChooserEntry {
+            ) : GuiItem(Id), IGuiEntry {
 
 
     }
@@ -144,7 +139,7 @@ public record GuiButton(
 public record GuiPrompt(
             string Id,
             string Prompt
-            ) : GuiItem(Id), IDialogEntry, IActionEntry {
+            ) : GuiItem(Id), IGuiEntry {
 
 
 
@@ -159,7 +154,15 @@ public record GuiSection (
             ) : GuiPrompt(Id, Prompt), IButtonTarget {
     public IPresentation? Presentation { get; set; } = null;
 
-    public List<ISectionEntry> Entries { get; set; } = null!;
+
+    public IBindable? Data {
+            get => data ?? BindData().CacheValue(out data);
+            set => data = value; } 
+    IBindable? data = null;
+
+    public Func<IBindable> BindData { get; set; } = null!;
+
+    public List<IGuiEntry> Entries { get; set; } = null!;
 
 
     }
@@ -175,20 +178,26 @@ public record GuiAction(
             ) : GuiPrompt(Id, Prompt), IButtonTarget {
     public IPresentation? Presentation { get; set; } = null;
 
-    public List<IActionEntry> Entries { get; set; } = null!;
+    public List<IGuiEntry> Entries { get; set; } = null!;
 
     public ActionCallback Callback { get; set; } = null!;
     }
 
 
+public record GuiField(
+            string Id,
+            string Prompt,
+            int Index
+            ) : GuiPrompt(Id, Prompt), IGuiEntry {
+    }
 
 public record GuiChooser(
             string Id,
             string Prompt,
             string Icon,
             int Index = -1,
-            List<IChooserEntry> Entries = null!
-            ) : GuiPrompt(Id, Prompt), ISectionEntry, IActionEntry, IDialogEntry {
+            List<IGuiEntry> Entries = null!
+            ) : GuiField(Id, Prompt, Index), IGuiEntry {
 
 
     }
@@ -196,62 +205,65 @@ public record GuiChooser(
 
 
 
-public record GuiField(
-            string Id,
-            string Prompt
-            ) : GuiPrompt(Id, Prompt), IDialogEntry, IActionEntry {
-    }
+
 
 public record GuiContext(
             string Id,
             string Prompt,
             int Index = -1
-            ) : GuiField (Id, Prompt) { 
+            ) : GuiField (Id, Prompt, Index) { 
     }
 
 public record GuiText(
             string Id,
             string Prompt,
             int Index = -1
-            ) : GuiField(Id, Prompt) {
+            ) : GuiField(Id, Prompt, Index) {
     }
 
 public record GuiColor(
             string Id,
             string Prompt,
             int Index = -1
-            ) : GuiField(Id, Prompt) {
+            ) : GuiField(Id, Prompt, Index) {
     }
 public record GuiSize(
             string Id,
             string Prompt,
             int Index = -1
-            ) : GuiField(Id, Prompt) {
+            ) : GuiField(Id, Prompt, Index) {
     }
 public record GuiDecimal(
             string Id,
             string Prompt,
             int Index = -1
-            ) : GuiField(Id, Prompt) {
+            ) : GuiField(Id, Prompt, Index) {
     }
 public record GuiIcon(
             string Id,
             string Prompt,
             int Index = -1
-            ) : GuiField(Id, Prompt) {
+            ) : GuiField(Id, Prompt, Index) {
     }
 
-public interface ISectionEntry {
+
+
+public interface IGuiEntry {
     }
 
-public interface IActionEntry {
-    }
 
-public interface IDialogEntry {
-    }
 
-public interface IChooserEntry {
-    }
+//public interface ISectionEntry {
+//    }
+
+//public interface IActionEntry {
+//    }
+
+//public interface IDialogEntry {
+//    }
+
+//public interface IChooserEntry {
+//    }
 
 public interface IButtonTarget {
     }
@@ -268,5 +280,5 @@ public interface IFieldIcon {
 
 
 
-public interface ISelectCollection {
+public interface ISelectCollection : IEnumerable{
     }

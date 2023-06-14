@@ -48,10 +48,10 @@ public class ContextMeshPending : ContextAccount {
 
     ///<summary>The account address from the cataloged pending record. Note that this
     ///address MUST be for the same service that the original request was made to.</summary>
-    public override string AccountAddress => CatalogedPending?.AccountAddress;
+    public override string ServiceAddress => CatalogedPending?.AccountAddress;
 
     ///<inheritdoc/>
-    public override string ServiceDns => AccountAddress.GetService();
+    public override string ServiceDns => ServiceAddress.GetService();
 
     ///<summary>The account profile. Always null.</summary>
     public override Profile Profile => null;
@@ -213,15 +213,15 @@ public class ContextMeshPending : ContextAccount {
 
         var completeRequest = new CompleteRequest() {
             ResponseID = CatalogedPending.GetResponseID(),
-            AccountAddress = AccountAddress
+            AccountAddress = ServiceAddress
             };
         var profileDevice = ProfileDevice;
         profileDevice.Activate(KeyCollection);
 
         var meshCredentialPrivate = new MeshKeyCredentialPrivate(
-                profileDevice.KeyAuthentication as KeyPairAdvanced, AccountAddress);
+                profileDevice.KeyAuthentication as KeyPairAdvanced, ServiceAddress);
         var meshClient = MeshHost.MeshMachine.GetMeshClient(
-                meshCredentialPrivate, AccountAddress);
+                meshCredentialPrivate, ServiceAddress);
 
         var completeResponse = meshClient.Complete(completeRequest);
         completeResponse.Success().AssertTrue(ConnectionAccountUnknown.Throw);
