@@ -183,3 +183,9 @@ Dialog MessageMail
 	Text Body "Body"
 
 
+Binding CatalogedCredential
+
+	Text Service "Site"
+	Text Username "Username""
+	Text Password "Password"
+	Text Protocol "Protocol"

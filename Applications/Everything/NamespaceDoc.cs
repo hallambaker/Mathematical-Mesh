@@ -26,6 +26,8 @@ global using Goedel.Utilities;
 global using Goedel.Everything;
 global using Goedel.Guigen;
 global using Goedel.Guigen.Maui;
+global using Goedel.Mesh;
+global using Goedel.Mesh.Client;
 global using Microsoft.Extensions.Logging;
 
 

@@ -15,13 +15,11 @@ public partial class EverythingMaui {
     public EverythingMaui() {
         ResourceManager = Sketch_resources.ResourceManager;
 
-        //var x = ResourceManager.GetString("Accounts");
         }
     public override string GetPrompt(GuiPrompt guiPrompt) {
 
         return ResourceManager.GetString(guiPrompt.Id);
 
 
-        //return base.GetPrompt(guiPrompt);
         }
     }

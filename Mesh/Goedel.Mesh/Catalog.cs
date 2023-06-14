@@ -25,6 +25,7 @@
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using System.Collections;
+using System.Collections.Specialized;
 
 namespace Goedel.Mesh;
 
@@ -33,10 +34,13 @@ namespace Goedel.Mesh;
 /// <summary>
 /// Base class for catalogs.
 /// </summary>
-public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEntry {
+public abstract class Catalog<T> : Store, IEnumerable<T>, INotifyCollectionChanged where T : CatalogedEntry {
 
     ///<summary>Class exposing the Mesh Client locate interface.</summary>
     public IMeshClient MeshClient;
+
+    ///<summary>The event notifier</summary> 
+    public event NotifyCollectionChangedEventHandler? CollectionChanged  = null;
 
     ///<summary>The persistence store.</summary>
     public PersistenceStore PersistenceStore { get; set; } = null;
@@ -148,6 +152,9 @@ public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEnt
                 DeleteEntry(catalogIndexEntry.Previous as CatalogIndexEntry<T>);
                 break;
                 }
+            }
+
+        if (CollectionChanged != null) {
             }
         }
 
