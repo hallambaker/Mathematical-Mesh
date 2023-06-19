@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Guigen;
+
 using System.Text;
 
 namespace Goedel.Mesh;
@@ -132,11 +134,13 @@ public class CatalogCredential : Catalog<CatalogedCredential> {
     }
 
 
-public partial class CatalogedCredential {
+public partial class CatalogedCredential : IBindable {
     #region // Properties
 
     ///<summary>The primary key is protocol:site </summary>
     public override string _PrimaryKey => GetKey(Protocol, Service);
+
+    public GuiBinding Binding => throw new NotImplementedException();
 
     #endregion
     #region // Override methods

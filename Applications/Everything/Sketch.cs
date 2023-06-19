@@ -1121,7 +1121,8 @@ public class _EverythingMaui : Gui {
             };
 
 	    SectionCredentials.Entries =  new () {  
-			new GuiChooser ("ChooseCredential", "Credentials", "credentials", 0, new () {
+			new GuiChooser ("ChooseCredential", "Credentials", "credentials", 0, new () { 
+				new GuiView (BindingCatalogedCredential)
 				}) 		    
             };
 

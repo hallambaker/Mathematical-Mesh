@@ -105,6 +105,8 @@ public class CatalogSelector : ISelectCollection {
 
     public Store Store;
 
+
+
     public List<string> Test => new List<string>() { "apple", "bob"};
 
     public GuiBinding Binding { get; set; }
@@ -116,7 +118,7 @@ public class CatalogSelector : ISelectCollection {
         BindingDelegate = EverythingMaui.GetBinding;
         }
 
-    public IEnumerator GetEnumerator() => Test.GetEnumerator();
+    public IEnumerator GetEnumerator() => Store.Enumerate();
     }
 
 

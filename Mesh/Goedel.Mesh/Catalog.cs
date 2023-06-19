@@ -63,6 +63,8 @@ public abstract class Catalog<T> : Store, IEnumerable<T>, INotifyCollectionChang
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
     private IEnumerator GetEnumerator1() => this.GetEnumerator();
 
+    public override IEnumerator Enumerate() => this.GetEnumerator();
+
     ///<inheritdoc/>
     public override SequenceIndexEntryFactoryDelegate SequenceIndexEntryFactory => CatalogIndexEntry<T>.Factory;
 

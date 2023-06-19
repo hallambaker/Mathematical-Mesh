@@ -56,7 +56,8 @@ Section Feeds "Feeds" "feeds"
 	Chooser ChooseFeed "Feeds" "feeds" Feed
 
 Section Credentials "Credentials" "credentials"
-	Chooser ChooseCredential "Credentials" "credentials" Credential
+	Chooser ChooseCredential "Credentials" "credentials" CatalogedCredential
+		View CatalogedCredential
 
 Section Tasks "Tasks" "tasks"
 	Chooser ChooseTask "Tasks" "Tasks" Task
@@ -191,8 +192,25 @@ Dialog MessageMail
 
 
 Binding CatalogedCredential
-
 	Text Service "Site"
 	Text Username "Username""
 	Text Password "Password"
 	Text Protocol "Protocol"
+
+//Binding Message
+//Binding Contact
+//Binding Document
+//Binding AccountGroup
+//Binding Feed
+//Binding Task
+
+//Binding Appintment
+//Binding Application
+//Binding Device
+//Binding User
+//Binding NetworkAddress
+
+//Binding PhysicalAddress
+
+
+

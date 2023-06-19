@@ -196,6 +196,7 @@ public record GuiChooser(
             string Prompt,
             string Icon,
             int Index = -1,
+            //GuiBinding Binding,
             List<IGuiEntry> Entries = null!
             ) : GuiField(Id, Prompt, Index), IGuiEntry {
 
@@ -244,6 +245,12 @@ public record GuiIcon(
             string Prompt,
             int Index = -1
             ) : GuiField(Id, Prompt, Index) {
+    }
+
+
+public record GuiView(
+            GuiBinding Binding
+            ) : IGuiEntry {
     }
 
 

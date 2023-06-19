@@ -86,7 +86,7 @@ public class Store : Disposable, IInternSequenceIndexEntry {
     ///<inheritdoc/>
     public virtual SequenceIndexEntryFactoryDelegate SequenceIndexEntryFactory => SpoolIndexEntry.Factory;
 
-
+    public virtual IEnumerator Enumerate() => throw new NYI();
 
     int BitmaskSizeBytes => 4;
 
