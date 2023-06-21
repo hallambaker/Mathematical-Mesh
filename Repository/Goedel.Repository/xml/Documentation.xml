@@ -260,7 +260,7 @@
         <member name="F:Goedel.Repository.ContextRepository.CatalogedCallsign">
             <summary>The catalogued group description.</summary>
         </member>
-        <member name="P:Goedel.Repository.ContextRepository.AccountAddress">
+        <member name="P:Goedel.Repository.ContextRepository.ServiceAddress">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Repository.ContextRepository.ServiceDns">

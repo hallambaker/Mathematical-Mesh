@@ -363,7 +363,7 @@
         <member name="P:Goedel.Callsign.Registry.ContextRegistry.DefaultPage">
             <summary>The default page to be assumed if none is specified in a binding request.</summary> 
         </member>
-        <member name="P:Goedel.Callsign.Registry.ContextRegistry.AccountAddress">
+        <member name="P:Goedel.Callsign.Registry.ContextRegistry.ServiceAddress">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.Registry.ContextRegistry.ServiceDns">

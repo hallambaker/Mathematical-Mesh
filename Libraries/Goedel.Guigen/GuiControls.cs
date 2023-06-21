@@ -15,7 +15,7 @@ public interface IPresentation {
 public interface IBindable {
     
     ///<summary>Returns the binding for the data type</summary> 
-    public GuiBinding Binding { get; }
+    public GuiBinding OldBind { get; }
 
 
 

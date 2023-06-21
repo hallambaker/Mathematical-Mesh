@@ -103,7 +103,7 @@
         <member name="P:Goedel.Callsign.Resolver.ContextResolver.Connection">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Callsign.Resolver.ContextResolver.AccountAddress">
+        <member name="P:Goedel.Callsign.Resolver.ContextResolver.ServiceAddress">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.Resolver.ContextResolver.ServiceDns">

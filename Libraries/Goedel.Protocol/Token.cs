@@ -24,6 +24,20 @@
 namespace Goedel.Protocol;
 
 
+
+public interface IBinding {
+
+    Binding Binding { get; }
+    }
+
+public record Binding(
+            Dictionary<string, Property> Properties,
+            Binding Parent = null
+            ) {
+    }
+
+
+
 /// <summary>
 /// Metadate record representing a property.
 /// </summary>
@@ -32,7 +46,7 @@ namespace Goedel.Protocol;
 /// <param name="Factory">Factory generating an instance of the node (if required).</param>
 /// <param name="IFactory">Factory generating an instance of a list member (if required).</param>
 /// <param name="Tagged">If true, structures are to be represented as a tagged structure.</param>
-/// <param name="tagDictionary">Tag dictionary to be used to deserialize the property.</param>
+///// <param name="tagDictionary">Tag dictionary to be used to deserialize the property.</param>
 public record Property(
 
             Type TokenType,
@@ -40,8 +54,126 @@ public record Property(
             Func<object> Factory=null,
             Func<object> IFactory=null,
             bool Tagged=false,
-            Dictionary<string, JsonFactoryDelegate> tagDictionary=null) {
+            //Dictionary<string, JsonFactoryDelegate> tagDictionary=null,
+            string Tag = null) {
      }
+
+
+public record PropertyBoolean(
+            string Tag,
+            Action<IBinding, bool?> Set,
+            Func<IBinding, bool?> Get) : Property(typeof(TokenValueBoolean), false, Tag:Tag) {
+    }
+
+public record PropertyListBoolean(
+            string Tag,
+            Action<IBinding, List<bool?>> Set,
+            Func<IBinding, List<bool?>> Get) : Property(typeof(TokenValueListBoolean), true, Tag: Tag) {
+    }
+
+public record PropertyString (
+            string Tag,
+            Action<IBinding, string?> Set,
+            Func<IBinding, string?> Get):  Property(typeof(TokenValueString), false, Tag: Tag) {
+    }
+
+public record PropertyListString(
+            string Tag,
+            Action<IBinding, List<string>?> Set,
+            Func<IBinding, List<string>?> Get) : Property(typeof(TokenValueListString), true, Tag: Tag) {
+    }
+
+public record PropertyBinary(
+            string Tag,
+            Action<IBinding, byte[]?> Set,
+            Func<IBinding, byte[]?> Get) : Property(typeof(TokenValueBinary), false, Tag: Tag) {
+    }
+
+public record PropertyListBinary(
+            string Tag,
+            Action<IBinding, List<byte[]?>> Set,
+            Func<IBinding, List<byte[]?>> Get) : Property(typeof(TokenValueListBinary), true, Tag: Tag) {
+    }
+
+
+public record PropertyDateTime(
+            string Tag,
+            Action<IBinding, DateTime?> Set,
+            Func<IBinding, DateTime?> Get) : Property(typeof(TokenValueDateTime), false, Tag: Tag) {
+    }
+
+public record PropertyListDateTime(
+            string Tag,
+            Action<IBinding, List<DateTime?>> Set,
+            Func<IBinding, List<DateTime?>> Get) : Property(typeof(TokenValueListDateTime), true, Tag: Tag) {
+    }
+
+
+public record PropertyInteger32(
+            string Tag,
+            Action<IBinding, int?> Set,
+            Func<IBinding, int?> Get) : Property(typeof(TokenValueInteger32), false, Tag: Tag) {
+    }
+
+public record PropertyListInteger32(
+            string Tag,
+            Action<IBinding, List<int?>> Set,
+            Func<IBinding, List<int?>> Get) : Property(typeof(TokenValueListInteger32), true, Tag: Tag) {
+    }
+
+
+public record PropertyInteger64(
+            string Tag,
+            Action<IBinding, long?> Set,
+            Func<IBinding, long?> Get) : Property(typeof(TokenValueInteger64), false, Tag: Tag) {
+    }
+
+public record PropertyListInteger64(
+            string Tag,
+            Action<IBinding, List<long?>> Set,
+            Func<IBinding, List<long?>> Get) : Property(typeof(TokenValueListInteger64), true, Tag: Tag) {
+    }
+
+
+public record PropertyReal32(
+            string Tag,
+            Action<IBinding, float?> Set,
+            Func<IBinding, float?> Get) : Property(typeof(TokenValueReal32), false, Tag: Tag) {
+    }
+
+public record PropertyListReal32(
+            string Tag,
+            Action<IBinding, List<float?>> Set,
+            Func<IBinding, List<float?>>? Get) : Property(typeof(TokenValueListReal32), true, Tag: Tag) {
+    }
+public record PropertyReal64(
+            string Tag,
+            Action<IBinding, double?> Set,
+            Func<IBinding, double> Get) : Property(typeof(TokenValueReal64), false, Tag: Tag) {
+    }
+
+public record PropertyListReal64(
+            string Tag,
+            Action<IBinding, List<double?>> Set,
+            Func<IBinding, List<double?>> Get) : Property(typeof(TokenValueListReal64), true, Tag: Tag) {
+    }
+public record PropertyStruct<T>(
+            string Tag,
+            Action<IBinding, T?> Set,
+            Func<IBinding, T?> Get,
+            bool Tagged = false,
+            Func<object> Factory = null,
+            Func<object> IFactory = null) : Property(typeof(TokenValueStruct), false, Tag: Tag) {
+    }
+
+public record PropertyListStruct<T>(
+            string Tag,
+            Action<IBinding, List<T>?> Set,
+            Func<IBinding, List<T>?> Get,
+            bool Tagged = false,
+            Func<object> Factory = null,
+            Func<object> IFactory = null) : Property(typeof(TokenValueListStruct), true, Factory, IFactory, Tag: Tag) {
+    }
 
 
 /// <summary>
@@ -264,16 +396,6 @@ public record TokenValueStructObject(object Value) : TokenValueStruct {
 
     }
 
-
-
-
-/// <summary>
-/// Base record representing a structure values at a node in a JSON tree.
-/// </summary>
-public abstract record TokenValueList() : TokenValue {
-
-
-    }
 
 /// <summary>
 /// Record representing a boolean values in a JSON tree.

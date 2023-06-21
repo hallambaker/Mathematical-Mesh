@@ -141,13 +141,13 @@ public class GuigenFieldString : GuigenField {
         View = view;
         }
     public override void SetField(IBindable data) {
-        var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyString;
+        var binding = data.OldBind.BoundProperties[Index] as GuiBoundPropertyString;
         ValueField.Text = binding.Get(data);
 
         }
 
     public override void GetField(IBindable data) {
-        var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyString;
+        var binding = data.OldBind.BoundProperties[Index] as GuiBoundPropertyString;
         binding.Set(data, ValueField.Text);
         }
 
@@ -232,7 +232,7 @@ public class GuigenFieldChooser : GuigenField {
 
 
 
-        var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyChooser;
+        var binding = data.OldBind.BoundProperties[Index] as GuiBoundPropertyChooser;
         var selector = binding.Get(data);
         ListView.ItemsSource = selector;
         }

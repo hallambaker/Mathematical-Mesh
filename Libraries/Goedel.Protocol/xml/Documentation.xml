@@ -4596,9 +4596,8 @@
             <param name="Factory">Factory generating an instance of the node (if required).</param>
             <param name="IFactory">Factory generating an instance of a list member (if required).</param>
             <param name="Tagged">If true, structures are to be represented as a tagged structure.</param>
-            <param name="tagDictionary">Tag dictionary to be used to deserialize the property.</param>
         </member>
-        <member name="M:Goedel.Protocol.Property.#ctor(System.Type,System.Boolean,System.Func{System.Object},System.Func{System.Object},System.Boolean,System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.JsonFactoryDelegate})">
+        <member name="M:Goedel.Protocol.Property.#ctor(System.Type,System.Boolean,System.Func{System.Object},System.Func{System.Object},System.Boolean,System.String)">
             <summary>
             Metadate record representing a property.
             </summary>
@@ -4607,7 +4606,6 @@
             <param name="Factory">Factory generating an instance of the node (if required).</param>
             <param name="IFactory">Factory generating an instance of a list member (if required).</param>
             <param name="Tagged">If true, structures are to be represented as a tagged structure.</param>
-            <param name="tagDictionary">Tag dictionary to be used to deserialize the property.</param>
         </member>
         <member name="P:Goedel.Protocol.Property.TokenType">
             <summary>The token type (consider removing).</summary>
@@ -4623,9 +4621,6 @@
         </member>
         <member name="P:Goedel.Protocol.Property.Tagged">
             <summary>If true, structures are to be represented as a tagged structure.</summary>
-        </member>
-        <member name="P:Goedel.Protocol.Property.tagDictionary">
-            <summary>Tag dictionary to be used to deserialize the property.</summary>
         </member>
         <member name="T:Goedel.Protocol.TokenValue">
             <summary>
@@ -4927,16 +4922,6 @@
         </member>
         <member name="P:Goedel.Protocol.TokenValueStructObject.IsEmpty">
             <inheritdoc/>
-        </member>
-        <member name="T:Goedel.Protocol.TokenValueList">
-            <summary>
-            Base record representing a structure values at a node in a JSON tree.
-            </summary>
-        </member>
-        <member name="M:Goedel.Protocol.TokenValueList.#ctor">
-            <summary>
-            Base record representing a structure values at a node in a JSON tree.
-            </summary>
         </member>
         <member name="T:Goedel.Protocol.TokenValueListBoolean">
             <summary>

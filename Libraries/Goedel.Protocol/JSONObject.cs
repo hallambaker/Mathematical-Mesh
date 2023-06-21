@@ -172,6 +172,12 @@ public abstract partial class JsonObject {
             }
         }
 
+
+    public virtual Binding Binding => _binding;
+    protected static Binding _binding = null;
+
+
+
     /// <summary>
     /// Sets the values of the property <paramref name="tag"/> to the values specified
     /// by <paramref name="value"/>.
