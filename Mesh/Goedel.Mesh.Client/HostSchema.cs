@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 21-Jun-23 1:40:01 AM
+//  This file was automatically generated at 21-Jun-23 7:08:51 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1015
+//  Generator:  protogen version 3.0.0.1113
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -114,140 +114,74 @@ public partial class CatalogedMachine : HostCatalogItem {
         ///Unique object instance identifier.
         /// </summary>
 
-	public virtual string						Id  {get; set;}
+	public virtual string?						Id  {get; set;}
+
         /// <summary>
         ///Local short name for the profile
         /// </summary>
 
-	public virtual string						Local  {get; set;}
+	public virtual string?						Local  {get; set;}
+
         /// <summary>
         ///If true, this is the default for the profile type (master, account)
         /// </summary>
 
 	public virtual bool?						Default  {get; set;}
+
         /// <summary>
         ///The master profile that provides the root of trust for this Mesh
         /// </summary>
 
-	public virtual Enveloped<ProfileAccount>						EnvelopedProfileAccount  {get; set;}
+	public virtual Enveloped<ProfileAccount>?						EnvelopedProfileAccount  {get; set;}
+
         /// <summary>
         ///The cataloged device profile
         /// </summary>
 
-	public virtual CatalogedDevice						CatalogedDevice  {get; set;}
+	public virtual CatalogedDevice?						CatalogedDevice  {get; set;}
+
         /// <summary>
         ///The digest of the cataloged device.
         /// </summary>
 
-	public virtual string						CatalogedDeviceDigest  {get; set;}
+	public virtual string?						CatalogedDeviceDigest  {get; set;}
+
         /// <summary>
         ///The enveloped assignment describing how the client should
         ///discover the host and encrypt data to it.
         /// </summary>
 
-	public virtual Enveloped<AccountHostAssignment>						EnvelopedAccountHostAssignment  {get; set;}
+	public virtual Enveloped<AccountHostAssignment>?						EnvelopedAccountHostAssignment  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Id" : {
-				if (value is TokenValueString vvalue) {
-					Id = vvalue.Value;
-					}
-				break;
-				}
-			case "Local" : {
-				if (value is TokenValueString vvalue) {
-					Local = vvalue.Value;
-					}
-				break;
-				}
-			case "Default" : {
-				if (value is TokenValueBoolean vvalue) {
-					Default = vvalue.Value;
-					}
-				break;
-				}
-			case "EnvelopedProfileAccount" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedProfileAccount = vvalue.Value as Enveloped<ProfileAccount>;
-					}
-				break;
-				}
-			case "CatalogedDevice" : {
-				if (value is TokenValueStructObject vvalue) {
-					CatalogedDevice = vvalue.Value as CatalogedDevice;
-					}
-				break;
-				}
-			case "CatalogedDeviceDigest" : {
-				if (value is TokenValueString vvalue) {
-					CatalogedDeviceDigest = vvalue.Value;
-					}
-				break;
-				}
-			case "EnvelopedAccountHostAssignment" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedAccountHostAssignment = vvalue.Value as Enveloped<AccountHostAssignment>;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Id" : {
-				return new TokenValueString (Id);
-				}
-			case "Local" : {
-				return new TokenValueString (Local);
-				}
-			case "Default" : {
-				return new TokenValueBoolean (Default);
-				}
-			case "EnvelopedProfileAccount" : {
-				return new TokenValueStruct<Enveloped<ProfileAccount>> (EnvelopedProfileAccount);
-				}
-			case "CatalogedDevice" : {
-				return new TokenValueStruct<CatalogedDevice> (CatalogedDevice);
-				}
-			case "CatalogedDeviceDigest" : {
-				return new TokenValueString (CatalogedDeviceDigest);
-				}
-			case "EnvelopedAccountHostAssignment" : {
-				return new TokenValueStruct<Enveloped<AccountHostAssignment>> (EnvelopedAccountHostAssignment);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedMachine(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Id", new Property (typeof(TokenValueString), false)} ,
-			{ "Local", new Property (typeof(TokenValueString), false)} ,
-			{ "Default", new Property (typeof(TokenValueBoolean), false)} ,
-			{ "EnvelopedProfileAccount", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>(), false)} ,
-			{ "CatalogedDevice", new Property ( typeof(TokenValueStruct), false,
-					()=>new CatalogedDevice(), ()=>new CatalogedDevice(), false)} ,
-			{ "CatalogedDeviceDigest", new Property (typeof(TokenValueString), false)} ,
-			{ "EnvelopedAccountHostAssignment", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>(), false)} 
+			{ "Id", new PropertyString ("Id", 
+					(IBinding data, string? value) => {(data as CatalogedMachine).Id = value;}, (IBinding data) => (data as CatalogedMachine).Id )},
+			{ "Local", new PropertyString ("Local", 
+					(IBinding data, string? value) => {(data as CatalogedMachine).Local = value;}, (IBinding data) => (data as CatalogedMachine).Local )},
+			{ "Default", new PropertyBoolean ("Default", 
+					(IBinding data, bool? value) => {(data as CatalogedMachine).Default = value;}, (IBinding data) => (data as CatalogedMachine).Default )},
+			{ "EnvelopedProfileAccount", new PropertyStruct ("EnvelopedProfileAccount", 
+					(IBinding data, object? value) => {(data as CatalogedMachine).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as CatalogedMachine).EnvelopedProfileAccount,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())} ,
+			{ "CatalogedDevice", new PropertyStruct ("CatalogedDevice", 
+					(IBinding data, object? value) => {(data as CatalogedMachine).CatalogedDevice = value as CatalogedDevice;}, (IBinding data) => (data as CatalogedMachine).CatalogedDevice,
+					false, ()=>new  CatalogedDevice(), ()=>new CatalogedDevice())} ,
+			{ "CatalogedDeviceDigest", new PropertyString ("CatalogedDeviceDigest", 
+					(IBinding data, string? value) => {(data as CatalogedMachine).CatalogedDeviceDigest = value;}, (IBinding data) => (data as CatalogedMachine).CatalogedDeviceDigest )},
+			{ "EnvelopedAccountHostAssignment", new PropertyStruct ("EnvelopedAccountHostAssignment", 
+					(IBinding data, object? value) => {(data as CatalogedMachine).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, (IBinding data) => (data as CatalogedMachine).EnvelopedAccountHostAssignment,
+					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -314,126 +248,67 @@ public partial class CatalogedService : CatalogedMachine {
         ///The service profile
         /// </summary>
 
-	public virtual Enveloped<ProfileService>						EnvelopedProfileService  {get; set;}
+	public virtual Enveloped<ProfileService>?						EnvelopedProfileService  {get; set;}
+
         /// <summary>
         ///The host profile
         /// </summary>
 
-	public virtual Enveloped<ProfileHost>						EnvelopedProfileHost  {get; set;}
+	public virtual Enveloped<ProfileHost>?						EnvelopedProfileHost  {get; set;}
+
         /// <summary>
         ///The activation record for the service client (if used)
         /// </summary>
 
-	public virtual Enveloped<ActivationCommon>						EnvelopedActivationCommon  {get; set;}
+	public virtual Enveloped<ActivationCommon>?						EnvelopedActivationCommon  {get; set;}
+
         /// <summary>
         ///The activation record for this host
         /// </summary>
 
-	public virtual Enveloped<ActivationHost>						EnvelopedActivationHost  {get; set;}
+	public virtual Enveloped<ActivationHost>?						EnvelopedActivationHost  {get; set;}
+
         /// <summary>
         ///The connection of the host to the service
         /// </summary>
 
-	public virtual Enveloped<ConnectionService>						EnvelopedConnectionService  {get; set;}
+	public virtual Enveloped<ConnectionService>?						EnvelopedConnectionService  {get; set;}
+
         /// <summary>
         ///Specifies the type of service 
         /// </summary>
 
-	public virtual string						ServiceIdentifier  {get; set;}
+	public virtual string?						ServiceIdentifier  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "EnvelopedProfileService" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedProfileService = vvalue.Value as Enveloped<ProfileService>;
-					}
-				break;
-				}
-			case "EnvelopedProfileHost" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedProfileHost = vvalue.Value as Enveloped<ProfileHost>;
-					}
-				break;
-				}
-			case "EnvelopedActivationCommon" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedActivationCommon = vvalue.Value as Enveloped<ActivationCommon>;
-					}
-				break;
-				}
-			case "EnvelopedActivationHost" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedActivationHost = vvalue.Value as Enveloped<ActivationHost>;
-					}
-				break;
-				}
-			case "EnvelopedConnectionService" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedConnectionService = vvalue.Value as Enveloped<ConnectionService>;
-					}
-				break;
-				}
-			case "ServiceIdentifier" : {
-				if (value is TokenValueString vvalue) {
-					ServiceIdentifier = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "EnvelopedProfileService" : {
-				return new TokenValueStruct<Enveloped<ProfileService>> (EnvelopedProfileService);
-				}
-			case "EnvelopedProfileHost" : {
-				return new TokenValueStruct<Enveloped<ProfileHost>> (EnvelopedProfileHost);
-				}
-			case "EnvelopedActivationCommon" : {
-				return new TokenValueStruct<Enveloped<ActivationCommon>> (EnvelopedActivationCommon);
-				}
-			case "EnvelopedActivationHost" : {
-				return new TokenValueStruct<Enveloped<ActivationHost>> (EnvelopedActivationHost);
-				}
-			case "EnvelopedConnectionService" : {
-				return new TokenValueStruct<Enveloped<ConnectionService>> (EnvelopedConnectionService);
-				}
-			case "ServiceIdentifier" : {
-				return new TokenValueString (ServiceIdentifier);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedService(), CatalogedMachine._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "EnvelopedProfileService", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ProfileService>(), ()=>new Enveloped<ProfileService>(), false)} ,
-			{ "EnvelopedProfileHost", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ProfileHost>(), ()=>new Enveloped<ProfileHost>(), false)} ,
-			{ "EnvelopedActivationCommon", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>(), false)} ,
-			{ "EnvelopedActivationHost", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ActivationHost>(), ()=>new Enveloped<ActivationHost>(), false)} ,
-			{ "EnvelopedConnectionService", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>(), false)} ,
-			{ "ServiceIdentifier", new Property (typeof(TokenValueString), false)} 
+			{ "EnvelopedProfileService", new PropertyStruct ("EnvelopedProfileService", 
+					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedProfileService = value as Enveloped<ProfileService>;}, (IBinding data) => (data as CatalogedService).EnvelopedProfileService,
+					false, ()=>new  Enveloped<ProfileService>(), ()=>new Enveloped<ProfileService>())} ,
+			{ "EnvelopedProfileHost", new PropertyStruct ("EnvelopedProfileHost", 
+					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedProfileHost = value as Enveloped<ProfileHost>;}, (IBinding data) => (data as CatalogedService).EnvelopedProfileHost,
+					false, ()=>new  Enveloped<ProfileHost>(), ()=>new Enveloped<ProfileHost>())} ,
+			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", 
+					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, (IBinding data) => (data as CatalogedService).EnvelopedActivationCommon,
+					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())} ,
+			{ "EnvelopedActivationHost", new PropertyStruct ("EnvelopedActivationHost", 
+					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedActivationHost = value as Enveloped<ActivationHost>;}, (IBinding data) => (data as CatalogedService).EnvelopedActivationHost,
+					false, ()=>new  Enveloped<ActivationHost>(), ()=>new Enveloped<ActivationHost>())} ,
+			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", 
+					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as CatalogedService).EnvelopedConnectionService,
+					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())} ,
+			{ "ServiceIdentifier", new PropertyString ("ServiceIdentifier", 
+					(IBinding data, string? value) => {(data as CatalogedService).ServiceIdentifier = value;}, (IBinding data) => (data as CatalogedService).ServiceIdentifier )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -499,29 +374,12 @@ public partial class CatalogedService : CatalogedMachine {
 public partial class CatalogedStandard : CatalogedMachine {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedStandard(), CatalogedMachine._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -594,93 +452,48 @@ public partial class CatalogedPending : CatalogedMachine {
         ///UDF of the connected device
         /// </summary>
 
-	public virtual string						DeviceUDF  {get; set;}
+	public virtual string?						DeviceUDF  {get; set;}
+
         /// <summary>
         ///The device profile presented to the service.
         /// </summary>
 
-	public virtual Enveloped<ProfileDevice>						EnvelopedProfileDevice  {get; set;}
+	public virtual Enveloped<ProfileDevice>?						EnvelopedProfileDevice  {get; set;}
+
         /// <summary>
         ///The response returned by the service when the registration was requested.
         /// </summary>
 
-	public virtual Enveloped<AcknowledgeConnection>						EnvelopedAcknowledgeConnection  {get; set;}
+	public virtual Enveloped<AcknowledgeConnection>?						EnvelopedAcknowledgeConnection  {get; set;}
+
         /// <summary>
         ///The account at which the request is pending.
         /// </summary>
 
-	public virtual string						AccountAddress  {get; set;}
+	public virtual string?						AccountAddress  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "DeviceUDF" : {
-				if (value is TokenValueString vvalue) {
-					DeviceUDF = vvalue.Value;
-					}
-				break;
-				}
-			case "EnvelopedProfileDevice" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedProfileDevice = vvalue.Value as Enveloped<ProfileDevice>;
-					}
-				break;
-				}
-			case "EnvelopedAcknowledgeConnection" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedAcknowledgeConnection = vvalue.Value as Enveloped<AcknowledgeConnection>;
-					}
-				break;
-				}
-			case "AccountAddress" : {
-				if (value is TokenValueString vvalue) {
-					AccountAddress = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "DeviceUDF" : {
-				return new TokenValueString (DeviceUDF);
-				}
-			case "EnvelopedProfileDevice" : {
-				return new TokenValueStruct<Enveloped<ProfileDevice>> (EnvelopedProfileDevice);
-				}
-			case "EnvelopedAcknowledgeConnection" : {
-				return new TokenValueStruct<Enveloped<AcknowledgeConnection>> (EnvelopedAcknowledgeConnection);
-				}
-			case "AccountAddress" : {
-				return new TokenValueString (AccountAddress);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedPending(), CatalogedMachine._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "DeviceUDF", new Property (typeof(TokenValueString), false)} ,
-			{ "EnvelopedProfileDevice", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>(), false)} ,
-			{ "EnvelopedAcknowledgeConnection", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<AcknowledgeConnection>(), ()=>new Enveloped<AcknowledgeConnection>(), false)} ,
-			{ "AccountAddress", new Property (typeof(TokenValueString), false)} 
+			{ "DeviceUDF", new PropertyString ("DeviceUDF", 
+					(IBinding data, string? value) => {(data as CatalogedPending).DeviceUDF = value;}, (IBinding data) => (data as CatalogedPending).DeviceUDF )},
+			{ "EnvelopedProfileDevice", new PropertyStruct ("EnvelopedProfileDevice", 
+					(IBinding data, object? value) => {(data as CatalogedPending).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;}, (IBinding data) => (data as CatalogedPending).EnvelopedProfileDevice,
+					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())} ,
+			{ "EnvelopedAcknowledgeConnection", new PropertyStruct ("EnvelopedAcknowledgeConnection", 
+					(IBinding data, object? value) => {(data as CatalogedPending).EnvelopedAcknowledgeConnection = value as Enveloped<AcknowledgeConnection>;}, (IBinding data) => (data as CatalogedPending).EnvelopedAcknowledgeConnection,
+					false, ()=>new  Enveloped<AcknowledgeConnection>(), ()=>new Enveloped<AcknowledgeConnection>())} ,
+			{ "AccountAddress", new PropertyString ("AccountAddress", 
+					(IBinding data, string? value) => {(data as CatalogedPending).AccountAddress = value;}, (IBinding data) => (data as CatalogedPending).AccountAddress )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -749,139 +562,73 @@ public partial class CatalogedPreconfigured : CatalogedMachine {
         ///The device profile presented to the service.
         /// </summary>
 
-	public virtual Enveloped<ProfileDevice>						EnvelopedProfileDevice  {get; set;}
+	public virtual Enveloped<ProfileDevice>?						EnvelopedProfileDevice  {get; set;}
+
         /// <summary>
         ///The device connection used to authenticate to the service.
         /// </summary>
 
-	public virtual Enveloped<ConnectionService>						EnvelopedConnectionService  {get; set;}
+	public virtual Enveloped<ConnectionService>?						EnvelopedConnectionService  {get; set;}
+
         /// <summary>
         ///The device connection used to authenticate to the service.
         /// </summary>
 
-	public virtual Enveloped<ConnectionDevice>						EnvelopedConnectionDevice  {get; set;}
+	public virtual Enveloped<ConnectionDevice>?						EnvelopedConnectionDevice  {get; set;}
+
         /// <summary>
         ///The account to which claims will be posted
         /// </summary>
 
-	public virtual string						AccountAddress  {get; set;}
+	public virtual string?						AccountAddress  {get; set;}
+
         /// <summary>
         ///The publication identifier
         /// </summary>
 
-	public virtual string						PublicationId  {get; set;}
+	public virtual string?						PublicationId  {get; set;}
+
         /// <summary>
         ///Authenticator key used to authenticate claim to the service.
         /// </summary>
 
-	public virtual string						ServiceAuthenticator  {get; set;}
+	public virtual string?						ServiceAuthenticator  {get; set;}
+
         /// <summary>
         ///Authenticator key used to authenticate claim to the device.	
         /// </summary>
 
-	public virtual string						DeviceAuthenticator  {get; set;}
+	public virtual string?						DeviceAuthenticator  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "EnvelopedProfileDevice" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedProfileDevice = vvalue.Value as Enveloped<ProfileDevice>;
-					}
-				break;
-				}
-			case "EnvelopedConnectionService" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedConnectionService = vvalue.Value as Enveloped<ConnectionService>;
-					}
-				break;
-				}
-			case "EnvelopedConnectionDevice" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedConnectionDevice = vvalue.Value as Enveloped<ConnectionDevice>;
-					}
-				break;
-				}
-			case "AccountAddress" : {
-				if (value is TokenValueString vvalue) {
-					AccountAddress = vvalue.Value;
-					}
-				break;
-				}
-			case "PublicationId" : {
-				if (value is TokenValueString vvalue) {
-					PublicationId = vvalue.Value;
-					}
-				break;
-				}
-			case "ServiceAuthenticator" : {
-				if (value is TokenValueString vvalue) {
-					ServiceAuthenticator = vvalue.Value;
-					}
-				break;
-				}
-			case "DeviceAuthenticator" : {
-				if (value is TokenValueString vvalue) {
-					DeviceAuthenticator = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "EnvelopedProfileDevice" : {
-				return new TokenValueStruct<Enveloped<ProfileDevice>> (EnvelopedProfileDevice);
-				}
-			case "EnvelopedConnectionService" : {
-				return new TokenValueStruct<Enveloped<ConnectionService>> (EnvelopedConnectionService);
-				}
-			case "EnvelopedConnectionDevice" : {
-				return new TokenValueStruct<Enveloped<ConnectionDevice>> (EnvelopedConnectionDevice);
-				}
-			case "AccountAddress" : {
-				return new TokenValueString (AccountAddress);
-				}
-			case "PublicationId" : {
-				return new TokenValueString (PublicationId);
-				}
-			case "ServiceAuthenticator" : {
-				return new TokenValueString (ServiceAuthenticator);
-				}
-			case "DeviceAuthenticator" : {
-				return new TokenValueString (DeviceAuthenticator);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedPreconfigured(), CatalogedMachine._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "EnvelopedProfileDevice", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>(), false)} ,
-			{ "EnvelopedConnectionService", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>(), false)} ,
-			{ "EnvelopedConnectionDevice", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ConnectionDevice>(), ()=>new Enveloped<ConnectionDevice>(), false)} ,
-			{ "AccountAddress", new Property (typeof(TokenValueString), false)} ,
-			{ "PublicationId", new Property (typeof(TokenValueString), false)} ,
-			{ "ServiceAuthenticator", new Property (typeof(TokenValueString), false)} ,
-			{ "DeviceAuthenticator", new Property (typeof(TokenValueString), false)} 
+			{ "EnvelopedProfileDevice", new PropertyStruct ("EnvelopedProfileDevice", 
+					(IBinding data, object? value) => {(data as CatalogedPreconfigured).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;}, (IBinding data) => (data as CatalogedPreconfigured).EnvelopedProfileDevice,
+					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())} ,
+			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", 
+					(IBinding data, object? value) => {(data as CatalogedPreconfigured).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as CatalogedPreconfigured).EnvelopedConnectionService,
+					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())} ,
+			{ "EnvelopedConnectionDevice", new PropertyStruct ("EnvelopedConnectionDevice", 
+					(IBinding data, object? value) => {(data as CatalogedPreconfigured).EnvelopedConnectionDevice = value as Enveloped<ConnectionDevice>;}, (IBinding data) => (data as CatalogedPreconfigured).EnvelopedConnectionDevice,
+					false, ()=>new  Enveloped<ConnectionDevice>(), ()=>new Enveloped<ConnectionDevice>())} ,
+			{ "AccountAddress", new PropertyString ("AccountAddress", 
+					(IBinding data, string? value) => {(data as CatalogedPreconfigured).AccountAddress = value;}, (IBinding data) => (data as CatalogedPreconfigured).AccountAddress )},
+			{ "PublicationId", new PropertyString ("PublicationId", 
+					(IBinding data, string? value) => {(data as CatalogedPreconfigured).PublicationId = value;}, (IBinding data) => (data as CatalogedPreconfigured).PublicationId )},
+			{ "ServiceAuthenticator", new PropertyString ("ServiceAuthenticator", 
+					(IBinding data, string? value) => {(data as CatalogedPreconfigured).ServiceAuthenticator = value;}, (IBinding data) => (data as CatalogedPreconfigured).ServiceAuthenticator )},
+			{ "DeviceAuthenticator", new PropertyString ("DeviceAuthenticator", 
+					(IBinding data, string? value) => {(data as CatalogedPreconfigured).DeviceAuthenticator = value;}, (IBinding data) => (data as CatalogedPreconfigured).DeviceAuthenticator )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

@@ -268,12 +268,13 @@
 		Struct CatalogedApplicationCallsign CallsignApplication
 		Struct Message	Message
 
-	Structure ResultCallsignList
-		Inherits		Result
-		Struct CatalogedApplicationCallsign CallsignApplication
-			Multiple
-
 	Structure ResultCallsignResolution
 		Inherits		Result
 		Struct Registration CallsignRegistration
 		Struct Message	Message
+
+	Structure ResultCallsignList
+		Inherits		Result
+		Struct CatalogedApplicationCallsign CallsignApplication
+			Multiple
+			Enumerated

@@ -24,6 +24,7 @@
 		<ProjectReference Include="..\Test.Mesh.Protocol\Test.Mesh.Protocol.csproj" />
 		<ProjectReference Include="..\Test.Mesh.Store\Test.Mesh.Store.csproj" />
 		<ProjectReference Include="..\Test.NotaryCallsign\Test.NotaryCallsign.csproj" />
+		<ProjectReference Include="..\Test.Protocol\Test.Protocol.csproj" />
 	</ItemGroup>
 	
   <ItemGroup>

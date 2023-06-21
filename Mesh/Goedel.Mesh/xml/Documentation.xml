@@ -52,11 +52,11 @@
             Application activations which are 
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Activation.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Activation._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Activation.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Activation._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Activation._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -130,11 +130,11 @@
             <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
             is null.</param>
         </member>
-        <member name="M:Goedel.Mesh.ActivationHost.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ActivationHost._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ActivationHost.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ActivationHost._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ActivationHost._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -252,11 +252,11 @@
             The UDF of the account
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ActivationAccount._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ActivationAccount._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ActivationAccount._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -520,11 +520,11 @@
             Grant access to ProfileUser account signature key
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ActivationCommon.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ActivationCommon._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ActivationCommon.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ActivationCommon._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ActivationCommon._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -587,11 +587,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ApplicationEntry.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ApplicationEntry._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ApplicationEntry.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ApplicationEntry._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ApplicationEntry._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -662,11 +662,11 @@
             access the account.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ActivationApplicationGroup.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ActivationApplicationGroup._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ActivationApplicationGroup.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ActivationApplicationGroup._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ActivationApplicationGroup._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -727,11 +727,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ApplicationEntryGroup.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ApplicationEntryGroup._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ApplicationEntryGroup.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ApplicationEntryGroup._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ApplicationEntryGroup._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -833,11 +833,11 @@
             The activation of the device within the Mesh account
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedGroup.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CatalogedGroup._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CatalogedGroup.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CatalogedGroup._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CatalogedGroup._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -905,11 +905,11 @@
             The OpenPGP encryption key
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ActivationApplicationMail.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ActivationApplicationMail._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ActivationApplicationMail.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ActivationApplicationMail._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ActivationApplicationMail._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -964,11 +964,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ApplicationEntryMail.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ApplicationEntryMail._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ApplicationEntryMail.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ApplicationEntryMail._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ApplicationEntryMail._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1089,11 +1089,11 @@
             The OpenPGP encryption key
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationMail.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CatalogedApplicationMail._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationMail.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CatalogedApplicationMail._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CatalogedApplicationMail._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1146,11 +1146,11 @@
             The SSH client key.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ActivationApplicationSsh.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ActivationApplicationSsh._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ActivationApplicationSsh.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ActivationApplicationSsh._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ActivationApplicationSsh._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1205,11 +1205,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ApplicationEntrySsh.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ApplicationEntrySsh._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ApplicationEntrySsh.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ApplicationEntrySsh._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ApplicationEntrySsh._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1287,11 +1287,11 @@
             The S/Mime encryption key
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationSsh.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CatalogedApplicationSsh._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationSsh.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CatalogedApplicationSsh._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CatalogedApplicationSsh._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1385,11 +1385,11 @@
             assertion. At present no condition classes are specified.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Assertion.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Assertion._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Assertion.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Assertion._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Assertion._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1498,11 +1498,11 @@
             Key currently used to encrypt data under this profile
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.CallsignBinding.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CallsignBinding._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CallsignBinding.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CallsignBinding._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CallsignBinding._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1594,11 +1594,11 @@
             Digest value used to signal updates to envelope		
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.AccessCapability.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.AccessCapability._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.AccessCapability.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.AccessCapability._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.AccessCapability._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1646,11 +1646,11 @@
         <member name="P:Goedel.Mesh.NullCapability._PrimaryKey">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.NullCapability.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.NullCapability._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.NullCapability.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.NullCapability._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.NullCapability._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1743,11 +1743,11 @@
             One or more enveloped key shares.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.CryptographicCapability.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CryptographicCapability._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CryptographicCapability.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CryptographicCapability._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CryptographicCapability._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1804,11 +1804,11 @@
             for protocol isolation.</param>
             <returns>The signature data</returns>       
         </member>
-        <member name="M:Goedel.Mesh.CapabilitySign.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CapabilitySign._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CapabilitySign.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CapabilitySign._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CapabilitySign._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1878,11 +1878,11 @@
             <param name="keyPair">The key pair to perform the agreement against.</param>
             <returns>The key agreement result.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CapabilityDecrypt.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CapabilityDecrypt._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CapabilityDecrypt.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CapabilityDecrypt._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CapabilityDecrypt._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1941,11 +1941,11 @@
             must match the salt used to encrypt.</param>        
             <returns>The decoded data instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.CapabilityDecryptPartial.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CapabilityDecryptPartial._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CapabilityDecryptPartial.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CapabilityDecryptPartial._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CapabilityDecryptPartial._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1998,11 +1998,11 @@
             authorized. [Only present for a serviced capability]
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.CapabilityDecryptServiced.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CapabilityDecryptServiced._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CapabilityDecryptServiced.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CapabilityDecryptServiced._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CapabilityDecryptServiced._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -2077,11 +2077,11 @@
             </summary>
             <param name="capabilities">The capabilities to augment.</param>
         </member>
-        <member name="M:Goedel.Mesh.CapabilityKeyGenerate.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CapabilityKeyGenerate._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CapabilityKeyGenerate.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CapabilityKeyGenerate._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CapabilityKeyGenerate._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -2453,11 +2453,11 @@
             The cataloged capability.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedAccess.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CatalogedAccess._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CatalogedAccess.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CatalogedAccess._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CatalogedAccess._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -2647,11 +2647,11 @@
             Escrow entries for the application.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplication.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CatalogedApplication._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplication.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CatalogedApplication._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CatalogedApplication._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -2708,11 +2708,11 @@
         <member name="M:Goedel.Mesh.CatalogedApplicationNetwork.ToBuilder(System.Text.StringBuilder)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationNetwork.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CatalogedApplicationNetwork._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationNetwork.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CatalogedApplicationNetwork._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CatalogedApplicationNetwork._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -2846,11 +2846,11 @@
             User comments on bookmark entry
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedBookmark.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CatalogedBookmark._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CatalogedBookmark.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CatalogedBookmark._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CatalogedBookmark._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -3070,11 +3070,11 @@
             The contact information as edited by the catalog owner.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedContact.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CatalogedContact._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CatalogedContact.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CatalogedContact._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CatalogedContact._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -3181,11 +3181,11 @@
             Source(s) from which this contact was constructed.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Contact.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Contact._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Contact.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Contact._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Contact._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -3250,11 +3250,11 @@
             List of person names in order of preference
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ContactPerson.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ContactPerson._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ContactPerson.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ContactPerson._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ContactPerson._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -3344,11 +3344,11 @@
             Cryptographic capabilities that may be claimed from this address
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.NetworkAddress.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.NetworkAddress._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.NetworkAddress.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.NetworkAddress._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.NetworkAddress._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -3438,11 +3438,11 @@
             Post nominal letters (if used).
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.PersonName.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.PersonName._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.PersonName.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.PersonName._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.PersonName._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -3611,11 +3611,11 @@
             Means of authenticating the host key
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedCredential.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CatalogedCredential._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CatalogedCredential.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CatalogedCredential._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CatalogedCredential._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -3840,11 +3840,11 @@
             Application activations granted to the device.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedDevice.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CatalogedDevice._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CatalogedDevice.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CatalogedDevice._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CatalogedDevice._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -3989,11 +3989,11 @@
             Globaly unique identifier
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedEntry.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CatalogedEntry._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CatalogedEntry.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CatalogedEntry._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CatalogedEntry._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -4138,11 +4138,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedMember.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CatalogedMember._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CatalogedMember.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CatalogedMember._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CatalogedMember._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -4273,11 +4273,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedNetwork.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CatalogedNetwork._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CatalogedNetwork.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CatalogedNetwork._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CatalogedNetwork._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -4374,11 +4374,11 @@
         <member name="M:Goedel.Mesh.CatalogedSignature.ItemToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedSignature.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CatalogedSignature._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CatalogedSignature.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CatalogedSignature._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CatalogedSignature._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -4558,11 +4558,11 @@
             Epiration time (inclusive)
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedPublication.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CatalogedPublication._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CatalogedPublication.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CatalogedPublication._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CatalogedPublication._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -4675,11 +4675,11 @@
             Unique key.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedTask.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CatalogedTask._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CatalogedTask.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CatalogedTask._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CatalogedTask._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -4740,11 +4740,11 @@
             To be removed
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionStripped.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ConnectionStripped._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ConnectionStripped.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ConnectionStripped._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ConnectionStripped._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -4808,11 +4808,11 @@
             The encryption key for use of the device under the profile
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionDevice.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ConnectionDevice._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ConnectionDevice.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ConnectionDevice._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ConnectionDevice._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -4896,11 +4896,11 @@
             The account address
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionService.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ConnectionService._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ConnectionService.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ConnectionService._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ConnectionService._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -5523,11 +5523,11 @@
             QR code.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.DevicePreconfigurationPrivate.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.DevicePreconfigurationPrivate._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.DevicePreconfigurationPrivate.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.DevicePreconfigurationPrivate._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.DevicePreconfigurationPrivate._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -6791,11 +6791,11 @@
             a partial key.]	
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.KeyShare.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.KeyShare._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.KeyShare.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.KeyShare._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.KeyShare._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7355,11 +7355,11 @@
             The relationship type. This can be Read, Unread, Accept, Reject.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Reference.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Reference._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Reference.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Reference._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Reference._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7463,11 +7463,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Message.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Message._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Message.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Message._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Message._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7519,11 +7519,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.MessageError.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.MessageError._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.MessageError.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.MessageError._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.MessageError._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7588,11 +7588,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.MessageComplete.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.MessageComplete._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.MessageComplete.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.MessageComplete._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.MessageComplete._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7678,11 +7678,11 @@
             Witness value calculated as KDF (Device.Udf + AccountAddress, ClientNonce)
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.MessageValidated.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.MessageValidated._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.MessageValidated.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.MessageValidated._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.MessageValidated._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7824,11 +7824,11 @@
             The set of rights bound to the PIN grant.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.MessagePin.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.MessagePin._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.MessagePin.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.MessagePin._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.MessagePin._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7907,11 +7907,11 @@
             
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.RequestConnection.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.RequestConnection._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.RequestConnection.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.RequestConnection._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.RequestConnection._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7980,11 +7980,11 @@
             
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.AcknowledgeConnection.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.AcknowledgeConnection._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.AcknowledgeConnection.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.AcknowledgeConnection._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.AcknowledgeConnection._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -8054,11 +8054,11 @@
             "Accept". MUST be absent or null otherwise.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.RespondConnection.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.RespondConnection._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.RespondConnection.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.RespondConnection._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.RespondConnection._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -8126,11 +8126,11 @@
             of the response.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.MessageContact.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.MessageContact._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.MessageContact.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.MessageContact._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.MessageContact._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -8187,11 +8187,11 @@
             The contact data.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.GroupInvitation.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.GroupInvitation._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.GroupInvitation.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.GroupInvitation._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.GroupInvitation._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -8243,11 +8243,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.RequestConfirmation.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.RequestConfirmation._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.RequestConfirmation.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.RequestConfirmation._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.RequestConfirmation._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -8303,11 +8303,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ResponseConfirmation.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ResponseConfirmation._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ResponseConfirmation.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ResponseConfirmation._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ResponseConfirmation._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -8355,11 +8355,11 @@
         <member name="M:Goedel.Mesh.RequestTask.GetEnvelopedRequestTask">
             <summary>Typed enveloped data</summary> 
         </member>
-        <member name="M:Goedel.Mesh.RequestTask.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.RequestTask._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.RequestTask.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.RequestTask._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.RequestTask._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -8437,11 +8437,11 @@
             The error report code.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProcessResult.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ProcessResult._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ProcessResult.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ProcessResult._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ProcessResult._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -8573,11 +8573,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.MessageClaim.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.MessageClaim._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.MessageClaim.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.MessageClaim._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.MessageClaim._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -8908,11 +8908,11 @@
             any circumstance.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Profile.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Profile._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Profile.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Profile._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Profile._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -9033,11 +9033,11 @@
             purpose of enabling account recovery.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProfileAccount.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ProfileAccount._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ProfileAccount.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ProfileAccount._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ProfileAccount._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -9172,11 +9172,11 @@
             during connection to an account.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProfileDevice.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ProfileDevice._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ProfileDevice.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ProfileDevice._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ProfileDevice._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -9243,11 +9243,11 @@
             encrypted under the group key cannot be decrypted.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProfileGroup.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ProfileGroup._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ProfileGroup.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ProfileGroup._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ProfileGroup._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -9331,11 +9331,11 @@
             <param name="algorithmSign">The signature algorithm.</param>
             <returns>The host profile.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ProfileHost.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ProfileHost._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ProfileHost.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ProfileHost._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ProfileHost._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -9480,11 +9480,11 @@
             Key used to sign data under the account.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProfileService.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ProfileService._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ProfileService.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ProfileService._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ProfileService._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -9570,11 +9570,11 @@
             Key used to sign data under the account.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProfileUser.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ProfileUser._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ProfileUser.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ProfileUser._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ProfileUser._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -10005,11 +10005,11 @@
              Base class for all request messages.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.MeshRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.MeshRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.MeshRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.MeshRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.MeshRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -10084,11 +10084,11 @@
             Device profile of the device making the request.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.MeshRequestUser.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.MeshRequestUser._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.MeshRequestUser.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.MeshRequestUser._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.MeshRequestUser._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -10136,11 +10136,11 @@
              status code and status description fields.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.MeshResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.MeshResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.MeshResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.MeshResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.MeshResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -10223,11 +10223,11 @@
             The data value to match.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.KeyValue.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.KeyValue._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.KeyValue.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.KeyValue._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.KeyValue._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -10314,11 +10314,11 @@
             returns the next set of data responding to the earlier query.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ConstraintsSelect.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ConstraintsSelect._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ConstraintsSelect.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ConstraintsSelect._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ConstraintsSelect._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -10396,11 +10396,11 @@
             Return the entry trailer
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ConstraintsData.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ConstraintsData._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ConstraintsData.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ConstraintsData._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ConstraintsData._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -10466,11 +10466,11 @@
             in the proposed account name.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.PolicyAccount.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.PolicyAccount._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.PolicyAccount.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.PolicyAccount._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.PolicyAccount._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -10529,11 +10529,11 @@
             whose status is reported.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.StoreStatus.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.StoreStatus._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.StoreStatus.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.StoreStatus._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.StoreStatus._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -10603,11 +10603,11 @@
             value of the last entry in the store.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.StoreUpdate.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.StoreUpdate._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.StoreUpdate.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.StoreUpdate._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.StoreUpdate._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -10665,11 +10665,11 @@
             Contains a proposed callsign binding to the account.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.MeshHelloRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.MeshHelloRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.MeshHelloRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.MeshHelloRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.MeshHelloRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -10740,11 +10740,11 @@
             the requested callsign.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.MeshHelloResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.MeshHelloResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.MeshHelloResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.MeshHelloResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.MeshHelloResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -10809,11 +10809,11 @@
             Contains one or more bindings of a callsign to the account.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.BindRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.BindRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.BindRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.BindRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.BindRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -10880,11 +10880,11 @@
             discover the host and encrypt data to it.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.BindResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.BindResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.BindResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.BindResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.BindResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -10942,11 +10942,11 @@
              with the account.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.UnbindRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.UnbindRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.UnbindRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.UnbindRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.UnbindRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -10993,11 +10993,11 @@
              Reports the success or failure of a Delete transaction.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.UnbindResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.UnbindResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.UnbindResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.UnbindResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.UnbindResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -11058,11 +11058,11 @@
             List of named access rights.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ConnectRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ConnectRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ConnectRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ConnectRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ConnectRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -11117,11 +11117,11 @@
             The user profile that provides the root of trust for this Mesh
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ConnectResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ConnectResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ConnectResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ConnectResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ConnectResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -11180,11 +11180,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.CompleteRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CompleteRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CompleteRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CompleteRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CompleteRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -11240,11 +11240,11 @@
             discover the host and encrypt data to it.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.CompleteResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CompleteResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CompleteResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CompleteResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CompleteResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -11319,11 +11319,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.StatusRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.StatusRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.StatusRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.StatusRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.StatusRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -11405,11 +11405,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.StatusResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.StatusResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.StatusResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.StatusResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.StatusResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -11495,11 +11495,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.DeviceStatus.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.DeviceStatus._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.DeviceStatus.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.DeviceStatus._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.DeviceStatus._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -11574,11 +11574,11 @@
             Specifies the data constraints to be applied to the responses.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.DownloadRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.DownloadRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.DownloadRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.DownloadRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.DownloadRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -11643,11 +11643,11 @@
             The catalog device entry. This is only returned if the 
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.DownloadResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.DownloadResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.DownloadResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.DownloadResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.DownloadResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -11736,11 +11736,11 @@
             devices to collect activation messages before they have connected to the mesh.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.TransactRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.TransactRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.TransactRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.TransactRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.TransactRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -11803,11 +11803,11 @@
             of all the messages must not exceed the specified value.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.TransactResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.TransactResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.TransactResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.TransactResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.TransactResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -11882,11 +11882,11 @@
             of all the messages must not exceed the specified value.	
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.EntryResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.EntryResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.EntryResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.EntryResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.EntryResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -11933,11 +11933,11 @@
              Request download from a public store (which may be encrypted).
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.PublicRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.PublicRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.PublicRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.PublicRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.PublicRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -11994,11 +11994,11 @@
             The messages to be sent to the addresses specified in Accounts. 
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.PostRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.PostRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.PostRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.PostRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.PostRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -12045,11 +12045,11 @@
              
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.PostResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.PostResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.PostResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.PostResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.PostResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -12105,11 +12105,11 @@
             The claim message
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ClaimRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ClaimRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ClaimRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ClaimRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ClaimRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -12159,11 +12159,11 @@
             The encrypted device profile
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ClaimResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ClaimResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ClaimResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ClaimResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ClaimResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -12224,11 +12224,11 @@
             Account to which the claim is directed
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.PollClaimRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.PollClaimRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.PollClaimRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.PollClaimRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.PollClaimRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -12278,11 +12278,11 @@
             The claim message
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.PollClaimResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.PollClaimResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.PollClaimResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.PollClaimResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.PollClaimResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -12343,11 +12343,11 @@
             Lagrange coefficient multiplier to be applied to the private key
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.CryptographicOperation.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CryptographicOperation._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CryptographicOperation.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CryptographicOperation._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CryptographicOperation._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -12402,11 +12402,11 @@
             Contribution to the R offset.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.CryptographicOperationSign.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CryptographicOperationSign._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CryptographicOperationSign.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CryptographicOperationSign._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CryptographicOperationSign._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -12456,11 +12456,11 @@
             The public key value to perform the agreement on.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.CryptographicOperationKeyAgreement.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CryptographicOperationKeyAgreement._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CryptographicOperationKeyAgreement.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CryptographicOperationKeyAgreement._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CryptographicOperationKeyAgreement._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -12505,11 +12505,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.CryptographicOperationGenerate.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CryptographicOperationGenerate._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CryptographicOperationGenerate.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CryptographicOperationGenerate._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CryptographicOperationGenerate._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -12562,11 +12562,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.CryptographicOperationShare.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CryptographicOperationShare._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CryptographicOperationShare.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CryptographicOperationShare._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CryptographicOperationShare._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -12615,11 +12615,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.CryptographicResult.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CryptographicResult._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CryptographicResult.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CryptographicResult._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CryptographicResult._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -12668,11 +12668,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.CryptographicResultKeyAgreement.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CryptographicResultKeyAgreement._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CryptographicResultKeyAgreement.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CryptographicResultKeyAgreement._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CryptographicResultKeyAgreement._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -12717,11 +12717,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.CryptographicResultShare.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CryptographicResultShare._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CryptographicResultShare.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CryptographicResultShare._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CryptographicResultShare._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -12775,11 +12775,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.OperateRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.OperateRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.OperateRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.OperateRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.OperateRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -12828,11 +12828,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.OperateResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.OperateResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.OperateResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.OperateResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.OperateResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -13023,11 +13023,11 @@
             The private key parameters as defined in the JOSE specification.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.KeyData.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.KeyData._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.KeyData.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.KeyData._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.KeyData._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -13481,11 +13481,11 @@
             Private parameters of serviced share
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.CompositePrivate.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CompositePrivate._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CompositePrivate.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CompositePrivate._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CompositePrivate._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -13532,11 +13532,11 @@
              Parent class from which all condition classes are derived.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Condition.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Condition._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Condition.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Condition._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Condition._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -13603,11 +13603,11 @@
             a partial capability.]
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ActivationEntry.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ActivationEntry._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ActivationEntry.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ActivationEntry._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ActivationEntry._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -13654,11 +13654,11 @@
              Profile of a Mesh Service
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProfileMeshService.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ProfileMeshService._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ProfileMeshService.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ProfileMeshService._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ProfileMeshService._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -13718,11 +13718,11 @@
             The authentication key for use of the device under the profile
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Connection.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Connection._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Connection.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Connection._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Connection._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -13810,11 +13810,11 @@
             The issuing practices under which the validation was performed.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Accreditation.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Accreditation._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Accreditation.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Accreditation._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Accreditation._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -13861,11 +13861,11 @@
              Connection assertion stating that a particular device is 
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionApplication.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ConnectionApplication._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ConnectionApplication.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ConnectionApplication._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ConnectionApplication._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -13912,11 +13912,11 @@
              Describes the connection of a member to a group.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionGroup.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ConnectionGroup._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ConnectionGroup.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ConnectionGroup._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ConnectionGroup._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -13981,11 +13981,11 @@
             Profile of the callsign registry used by the service.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.AccountHostAssignment.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.AccountHostAssignment._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.AccountHostAssignment.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.AccountHostAssignment._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.AccountHostAssignment._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -14033,11 +14033,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionHost.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ConnectionHost._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ConnectionHost.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ConnectionHost._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ConnectionHost._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -14082,11 +14082,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ActivationApplication.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ActivationApplication._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ActivationApplication.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ActivationApplication._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ActivationApplication._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -14143,11 +14143,11 @@
             The means of validation.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Anchor.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Anchor._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Anchor.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Anchor._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Anchor._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -14215,11 +14215,11 @@
             is ignored.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.TaggedSource.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.TaggedSource._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.TaggedSource.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.TaggedSource._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.TaggedSource._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -14266,11 +14266,11 @@
              Contact for a group, including encryption groups.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ContactGroup.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ContactGroup._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ContactGroup.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ContactGroup._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ContactGroup._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -14322,11 +14322,11 @@
             List of person names in order of preference
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ContactOrganization.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ContactOrganization._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ContactOrganization.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ContactOrganization._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ContactOrganization._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -14389,11 +14389,11 @@
             and doing business as names.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.OrganizationName.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.OrganizationName._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.OrganizationName.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.OrganizationName._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.OrganizationName._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -14449,11 +14449,11 @@
             Cryptographic keys representing capabilities.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.NetworkProtocol.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.NetworkProtocol._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.NetworkProtocol.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.NetworkProtocol._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.NetworkProtocol._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -14513,11 +14513,11 @@
             Postal or physical addresses associated with the role.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Role.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Role._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Role.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Role._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Role._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -14590,11 +14590,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Location.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Location._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Location.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Location._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Location._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -14651,11 +14651,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Bookmark.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Bookmark._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Bookmark.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Bookmark._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Bookmark._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -14753,11 +14753,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Engagement.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Engagement._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Engagement.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Engagement._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Engagement._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -14834,11 +14834,11 @@
             The verification value used to perform proof of knowledge of the secret.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Capability.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Capability._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Capability.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Capability._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Capability._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -14902,11 +14902,11 @@
             The published document.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.PublicationCapability.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.PublicationCapability._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.PublicationCapability.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.PublicationCapability._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.PublicationCapability._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -14955,11 +14955,11 @@
              protocol.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.CapabilityFairExchange.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CapabilityFairExchange._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CapabilityFairExchange.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CapabilityFairExchange._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CapabilityFairExchange._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -15021,11 +15021,11 @@
             qualified URI.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.NamedService.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.NamedService._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.NamedService.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.NamedService._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.NamedService._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -15080,11 +15080,11 @@
             Session shared secret
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ServiceAccessToken.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ServiceAccessToken._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ServiceAccessToken.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ServiceAccessToken._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ServiceAccessToken._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -15129,11 +15129,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.MessageInvoice.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.MessageInvoice._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.MessageInvoice.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.MessageInvoice._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.MessageInvoice._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -15178,11 +15178,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedReceipt.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CatalogedReceipt._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CatalogedReceipt.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CatalogedReceipt._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CatalogedReceipt._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -15227,11 +15227,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedTicket.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.CatalogedTicket._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CatalogedTicket.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.CatalogedTicket._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.CatalogedTicket._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -15289,11 +15289,11 @@
             private SSID, or by Bluetooth, IR etc. etc.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.DevicePreconfigurationPublic.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.DevicePreconfigurationPublic._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.DevicePreconfigurationPublic.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.DevicePreconfigurationPublic._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.DevicePreconfigurationPublic._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -15340,11 +15340,11 @@
              The message type is not supported.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProcessResultNotSupported.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ProcessResultNotSupported._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ProcessResultNotSupported.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ProcessResultNotSupported._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ProcessResultNotSupported._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -15389,11 +15389,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProcessResultNotFound.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.ProcessResultNotFound._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ProcessResultNotFound.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.ProcessResultNotFound._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.ProcessResultNotFound._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 

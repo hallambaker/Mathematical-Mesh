@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 21-Jun-23 1:40:03 AM
+//  This file was automatically generated at 21-Jun-23 7:08:53 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1015
+//  Generator:  protogen version 3.0.0.1113
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -241,29 +241,12 @@ public partial class RepositoryServiceDirect: RepositoryServiceClient {
 public partial class ProfileRepository : ProfileAccount {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ProfileRepository(), ProfileAccount._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -333,79 +316,41 @@ public partial class CatalogedRepository : CatalogedApplication {
         ///The connection allowing control of the registry.
         /// </summary>
 
-	public virtual Enveloped<ConnectionStripped>						EnvelopedConnectionAddress  {get; set;}
+	public virtual Enveloped<ConnectionStripped>?						EnvelopedConnectionAddress  {get; set;}
+
         /// <summary>
         ///The Mesh profile
         /// </summary>
 
-	public virtual Enveloped<ProfileAccount>						EnvelopedProfileRepository  {get; set;}
+	public virtual Enveloped<ProfileAccount>?						EnvelopedProfileRepository  {get; set;}
+
         /// <summary>
         ///The activation data for the registry.
         /// </summary>
 
-	public virtual Enveloped<ActivationCommon>						EnvelopedActivationCommon  {get; set;}
+	public virtual Enveloped<ActivationCommon>?						EnvelopedActivationCommon  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "EnvelopedConnectionAddress" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedConnectionAddress = vvalue.Value as Enveloped<ConnectionStripped>;
-					}
-				break;
-				}
-			case "EnvelopedProfileRepository" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedProfileRepository = vvalue.Value as Enveloped<ProfileAccount>;
-					}
-				break;
-				}
-			case "EnvelopedActivationCommon" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedActivationCommon = vvalue.Value as Enveloped<ActivationCommon>;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "EnvelopedConnectionAddress" : {
-				return new TokenValueStruct<Enveloped<ConnectionStripped>> (EnvelopedConnectionAddress);
-				}
-			case "EnvelopedProfileRepository" : {
-				return new TokenValueStruct<Enveloped<ProfileAccount>> (EnvelopedProfileRepository);
-				}
-			case "EnvelopedActivationCommon" : {
-				return new TokenValueStruct<Enveloped<ActivationCommon>> (EnvelopedActivationCommon);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedRepository(), CatalogedApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "EnvelopedConnectionAddress", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>(), false)} ,
-			{ "EnvelopedProfileRepository", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>(), false)} ,
-			{ "EnvelopedActivationCommon", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>(), false)} 
+			{ "EnvelopedConnectionAddress", new PropertyStruct ("EnvelopedConnectionAddress", 
+					(IBinding data, object? value) => {(data as CatalogedRepository).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, (IBinding data) => (data as CatalogedRepository).EnvelopedConnectionAddress,
+					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>())} ,
+			{ "EnvelopedProfileRepository", new PropertyStruct ("EnvelopedProfileRepository", 
+					(IBinding data, object? value) => {(data as CatalogedRepository).EnvelopedProfileRepository = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as CatalogedRepository).EnvelopedProfileRepository,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())} ,
+			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", 
+					(IBinding data, object? value) => {(data as CatalogedRepository).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, (IBinding data) => (data as CatalogedRepository).EnvelopedActivationCommon,
+					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -471,80 +416,42 @@ public partial class ActivationApplicationRepository : ActivationApplication {
         ///Key used to decrypt registry messages.
         /// </summary>
 
-	public virtual KeyData						AccountEncryption  {get; set;}
+	public virtual KeyData?						AccountEncryption  {get; set;}
+
         /// <summary>
         ///Key or capability used to sign the registry log
         /// </summary>
 
-	public virtual KeyData						AdministratorSignature  {get; set;}
+	public virtual KeyData?						AdministratorSignature  {get; set;}
+
         /// <summary>
         ///Signed connection service delegation allowing the device to
         ///access the account.
         /// </summary>
 
-	public virtual Enveloped<ConnectionService>						EnvelopedConnectionService  {get; set;}
+	public virtual Enveloped<ConnectionService>?						EnvelopedConnectionService  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "AccountEncryption" : {
-				if (value is TokenValueStructObject vvalue) {
-					AccountEncryption = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "AdministratorSignature" : {
-				if (value is TokenValueStructObject vvalue) {
-					AdministratorSignature = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "EnvelopedConnectionService" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedConnectionService = vvalue.Value as Enveloped<ConnectionService>;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "AccountEncryption" : {
-				return new TokenValueStruct<KeyData> (AccountEncryption);
-				}
-			case "AdministratorSignature" : {
-				return new TokenValueStruct<KeyData> (AdministratorSignature);
-				}
-			case "EnvelopedConnectionService" : {
-				return new TokenValueStruct<Enveloped<ConnectionService>> (EnvelopedConnectionService);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ActivationApplicationRepository(), ActivationApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "AccountEncryption", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "AdministratorSignature", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "EnvelopedConnectionService", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>(), false)} 
+			{ "AccountEncryption", new PropertyStruct ("AccountEncryption", 
+					(IBinding data, object? value) => {(data as ActivationApplicationRepository).AccountEncryption = value as KeyData;}, (IBinding data) => (data as ActivationApplicationRepository).AccountEncryption,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "AdministratorSignature", new PropertyStruct ("AdministratorSignature", 
+					(IBinding data, object? value) => {(data as ActivationApplicationRepository).AdministratorSignature = value as KeyData;}, (IBinding data) => (data as ActivationApplicationRepository).AdministratorSignature,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", 
+					(IBinding data, object? value) => {(data as ActivationApplicationRepository).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as ActivationApplicationRepository).EnvelopedConnectionService,
+					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -609,47 +516,23 @@ public partial class ApplicationEntryRepository : ApplicationEntry {
         /// <summary>
         /// </summary>
 
-	public virtual Enveloped<ActivationApplicationRepository>						EnvelopedActivation  {get; set;}
+	public virtual Enveloped<ActivationApplicationRepository>?						EnvelopedActivation  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "EnvelopedActivation" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedActivation = vvalue.Value as Enveloped<ActivationApplicationRepository>;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "EnvelopedActivation" : {
-				return new TokenValueStruct<Enveloped<ActivationApplicationRepository>> (EnvelopedActivation);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ApplicationEntryRepository(), ApplicationEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "EnvelopedActivation", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ActivationApplicationRepository>(), ()=>new Enveloped<ActivationApplicationRepository>(), false)} 
+			{ "EnvelopedActivation", new PropertyStruct ("EnvelopedActivation", 
+					(IBinding data, object? value) => {(data as ApplicationEntryRepository).EnvelopedActivation = value as Enveloped<ActivationApplicationRepository>;}, (IBinding data) => (data as ApplicationEntryRepository).EnvelopedActivation,
+					false, ()=>new  Enveloped<ActivationApplicationRepository>(), ()=>new Enveloped<ActivationApplicationRepository>())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -715,29 +598,12 @@ public partial class ApplicationEntryRepository : ApplicationEntry {
 public partial class PersistanceRequest : Goedel.Protocol.Request {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new PersistanceRequest(), Goedel.Protocol.Request._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -808,29 +674,12 @@ public partial class PersistanceRequest : Goedel.Protocol.Request {
 public partial class PersistanceResponse : Goedel.Protocol.Response {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new PersistanceResponse(), Goedel.Protocol.Response._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -900,29 +749,12 @@ public partial class PersistanceResponse : Goedel.Protocol.Response {
 public partial class QueryRequest : PersistanceRequest {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new QueryRequest(), PersistanceRequest._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -992,29 +824,12 @@ public partial class QueryRequest : PersistanceRequest {
 public partial class QueryResponse : PersistanceResponse {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new QueryResponse(), PersistanceResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {

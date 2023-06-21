@@ -108,11 +108,11 @@
              Describes a carnet issuer.
              </summary>
         </member>
-        <member name="M:Goedel.Carnet.ProfileCarnet.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Carnet.ProfileCarnet._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Carnet.ProfileCarnet.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Carnet.ProfileCarnet._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Carnet.ProfileCarnet._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -228,11 +228,11 @@
             The activation data for the registry.
              </summary>
         </member>
-        <member name="M:Goedel.Carnet.CatalogedCarnet.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Carnet.CatalogedCarnet._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Carnet.CatalogedCarnet.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Carnet.CatalogedCarnet._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Carnet.CatalogedCarnet._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -298,11 +298,11 @@
              Base class for all requests made to a registrar
              </summary>
         </member>
-        <member name="M:Goedel.Carnet.CarnetRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Carnet.CarnetRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Carnet.CarnetRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Carnet.CarnetRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Carnet.CarnetRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -350,11 +350,11 @@
              status code and status description fields.
              </summary>
         </member>
-        <member name="M:Goedel.Carnet.CarnetResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Carnet.CarnetResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Carnet.CarnetResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Carnet.CarnetResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Carnet.CarnetResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 

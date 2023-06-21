@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 21-Jun-23 1:40:05 AM
+//  This file was automatically generated at 21-Jun-23 7:08:55 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1015
+//  Generator:  protogen version 3.0.0.1113
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -112,107 +112,55 @@ public partial class CatalogedRegistry : CatalogedApplication {
         /// </summary>
 
 	public virtual int?						MaximumRequestLength  {get; set;}
+
         /// <summary>
         /// </summary>
 
 	public virtual int?						MaximumCallsignLength  {get; set;}
+
         /// <summary>
         ///The connection allowing control of the registry.
         /// </summary>
 
-	public virtual Enveloped<ConnectionStripped>						EnvelopedConnectionAddress  {get; set;}
+	public virtual Enveloped<ConnectionStripped>?						EnvelopedConnectionAddress  {get; set;}
+
         /// <summary>
         ///The Mesh profile
         /// </summary>
 
-	public virtual Enveloped<ProfileAccount>						EnvelopedProfileRegistry  {get; set;}
+	public virtual Enveloped<ProfileAccount>?						EnvelopedProfileRegistry  {get; set;}
+
         /// <summary>
         ///The activation data for the registry.
         /// </summary>
 
-	public virtual Enveloped<ActivationCommon>						EnvelopedActivationCommon  {get; set;}
+	public virtual Enveloped<ActivationCommon>?						EnvelopedActivationCommon  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "MaximumRequestLength" : {
-				if (value is TokenValueInteger32 vvalue) {
-					MaximumRequestLength = vvalue.Value;
-					}
-				break;
-				}
-			case "MaximumCallsignLength" : {
-				if (value is TokenValueInteger32 vvalue) {
-					MaximumCallsignLength = vvalue.Value;
-					}
-				break;
-				}
-			case "EnvelopedConnectionAddress" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedConnectionAddress = vvalue.Value as Enveloped<ConnectionStripped>;
-					}
-				break;
-				}
-			case "EnvelopedProfileRegistry" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedProfileRegistry = vvalue.Value as Enveloped<ProfileAccount>;
-					}
-				break;
-				}
-			case "EnvelopedActivationCommon" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedActivationCommon = vvalue.Value as Enveloped<ActivationCommon>;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "MaximumRequestLength" : {
-				return new TokenValueInteger32 (MaximumRequestLength);
-				}
-			case "MaximumCallsignLength" : {
-				return new TokenValueInteger32 (MaximumCallsignLength);
-				}
-			case "EnvelopedConnectionAddress" : {
-				return new TokenValueStruct<Enveloped<ConnectionStripped>> (EnvelopedConnectionAddress);
-				}
-			case "EnvelopedProfileRegistry" : {
-				return new TokenValueStruct<Enveloped<ProfileAccount>> (EnvelopedProfileRegistry);
-				}
-			case "EnvelopedActivationCommon" : {
-				return new TokenValueStruct<Enveloped<ActivationCommon>> (EnvelopedActivationCommon);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedRegistry(), CatalogedApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "MaximumRequestLength", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "MaximumCallsignLength", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "EnvelopedConnectionAddress", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>(), false)} ,
-			{ "EnvelopedProfileRegistry", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>(), false)} ,
-			{ "EnvelopedActivationCommon", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>(), false)} 
+			{ "MaximumRequestLength", new PropertyInteger32 ("MaximumRequestLength", 
+					(IBinding data, int? value) => {(data as CatalogedRegistry).MaximumRequestLength = value;}, (IBinding data) => (data as CatalogedRegistry).MaximumRequestLength )},
+			{ "MaximumCallsignLength", new PropertyInteger32 ("MaximumCallsignLength", 
+					(IBinding data, int? value) => {(data as CatalogedRegistry).MaximumCallsignLength = value;}, (IBinding data) => (data as CatalogedRegistry).MaximumCallsignLength )},
+			{ "EnvelopedConnectionAddress", new PropertyStruct ("EnvelopedConnectionAddress", 
+					(IBinding data, object? value) => {(data as CatalogedRegistry).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, (IBinding data) => (data as CatalogedRegistry).EnvelopedConnectionAddress,
+					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>())} ,
+			{ "EnvelopedProfileRegistry", new PropertyStruct ("EnvelopedProfileRegistry", 
+					(IBinding data, object? value) => {(data as CatalogedRegistry).EnvelopedProfileRegistry = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as CatalogedRegistry).EnvelopedProfileRegistry,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())} ,
+			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", 
+					(IBinding data, object? value) => {(data as CatalogedRegistry).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, (IBinding data) => (data as CatalogedRegistry).EnvelopedActivationCommon,
+					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -278,63 +226,32 @@ public partial class ActivationApplicationRegistry : ActivationApplication {
         ///Key used to decrypt registry messages.
         /// </summary>
 
-	public virtual KeyData						AccountEncryption  {get; set;}
+	public virtual KeyData?						AccountEncryption  {get; set;}
+
         /// <summary>
         ///Key or capability used to sign the registry log
         /// </summary>
 
-	public virtual KeyData						AdministratorSignature  {get; set;}
+	public virtual KeyData?						AdministratorSignature  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "AccountEncryption" : {
-				if (value is TokenValueStructObject vvalue) {
-					AccountEncryption = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "AdministratorSignature" : {
-				if (value is TokenValueStructObject vvalue) {
-					AdministratorSignature = vvalue.Value as KeyData;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "AccountEncryption" : {
-				return new TokenValueStruct<KeyData> (AccountEncryption);
-				}
-			case "AdministratorSignature" : {
-				return new TokenValueStruct<KeyData> (AdministratorSignature);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ActivationApplicationRegistry(), ActivationApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "AccountEncryption", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "AdministratorSignature", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} 
+			{ "AccountEncryption", new PropertyStruct ("AccountEncryption", 
+					(IBinding data, object? value) => {(data as ActivationApplicationRegistry).AccountEncryption = value as KeyData;}, (IBinding data) => (data as ActivationApplicationRegistry).AccountEncryption,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "AdministratorSignature", new PropertyStruct ("AdministratorSignature", 
+					(IBinding data, object? value) => {(data as ActivationApplicationRegistry).AdministratorSignature = value as KeyData;}, (IBinding data) => (data as ActivationApplicationRegistry).AdministratorSignature,
+					false, ()=>new  KeyData(), ()=>new KeyData())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -399,64 +316,33 @@ public partial class ApplicationEntryRegistry : ApplicationEntry {
         /// <summary>
         /// </summary>
 
-	public virtual Enveloped<ActivationApplicationRegistry>						EnvelopedActivation  {get; set;}
+	public virtual Enveloped<ActivationApplicationRegistry>?						EnvelopedActivation  {get; set;}
+
         /// <summary>
         ///Signed connection service delegation allowing the device to
         ///access the account.
         /// </summary>
 
-	public virtual Enveloped<ConnectionService>						EnvelopedConnectionService  {get; set;}
+	public virtual Enveloped<ConnectionService>?						EnvelopedConnectionService  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "EnvelopedActivation" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedActivation = vvalue.Value as Enveloped<ActivationApplicationRegistry>;
-					}
-				break;
-				}
-			case "EnvelopedConnectionService" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedConnectionService = vvalue.Value as Enveloped<ConnectionService>;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "EnvelopedActivation" : {
-				return new TokenValueStruct<Enveloped<ActivationApplicationRegistry>> (EnvelopedActivation);
-				}
-			case "EnvelopedConnectionService" : {
-				return new TokenValueStruct<Enveloped<ConnectionService>> (EnvelopedConnectionService);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ApplicationEntryRegistry(), ApplicationEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "EnvelopedActivation", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ActivationApplicationRegistry>(), ()=>new Enveloped<ActivationApplicationRegistry>(), false)} ,
-			{ "EnvelopedConnectionService", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>(), false)} 
+			{ "EnvelopedActivation", new PropertyStruct ("EnvelopedActivation", 
+					(IBinding data, object? value) => {(data as ApplicationEntryRegistry).EnvelopedActivation = value as Enveloped<ActivationApplicationRegistry>;}, (IBinding data) => (data as ApplicationEntryRegistry).EnvelopedActivation,
+					false, ()=>new  Enveloped<ActivationApplicationRegistry>(), ()=>new Enveloped<ActivationApplicationRegistry>())} ,
+			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", 
+					(IBinding data, object? value) => {(data as ApplicationEntryRegistry).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as ApplicationEntryRegistry).EnvelopedConnectionService,
+					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

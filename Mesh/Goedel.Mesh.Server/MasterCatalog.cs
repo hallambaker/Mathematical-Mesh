@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 21-Jun-23 1:40:09 AM
+//  This file was automatically generated at 21-Jun-23 7:08:57 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1015
+//  Generator:  protogen version 3.0.0.1113
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -111,106 +111,54 @@ abstract public partial class AccountEntry : CatalogedEntry {
         ///Subdirectory containing the catalogs and spools for the account.
         /// </summary>
 
-	public virtual string						Directory  {get; set;}
+	public virtual string?						Directory  {get; set;}
+
         /// <summary>
         ///The fingerprint of the profile
         /// </summary>
 
-	public virtual string						ProfileUdf  {get; set;}
+	public virtual string?						ProfileUdf  {get; set;}
+
         /// <summary>
         ///The quota assigned to this user in KB
         /// </summary>
 
 	public virtual int?						Quota  {get; set;}
+
         /// <summary>
         ///The profile status. Valid values are "Pending", "Connected", "Blocked"
         /// </summary>
 
-	public virtual string						Status  {get; set;}
+	public virtual string?						Status  {get; set;}
+
         /// <summary>
         ///Account address in user@domain format
         /// </summary>
 
-	public virtual string						LocalAddress  {get; set;}
+	public virtual string?						LocalAddress  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Directory" : {
-				if (value is TokenValueString vvalue) {
-					Directory = vvalue.Value;
-					}
-				break;
-				}
-			case "ProfileUdf" : {
-				if (value is TokenValueString vvalue) {
-					ProfileUdf = vvalue.Value;
-					}
-				break;
-				}
-			case "Quota" : {
-				if (value is TokenValueInteger32 vvalue) {
-					Quota = vvalue.Value;
-					}
-				break;
-				}
-			case "Status" : {
-				if (value is TokenValueString vvalue) {
-					Status = vvalue.Value;
-					}
-				break;
-				}
-			case "LocalAddress" : {
-				if (value is TokenValueString vvalue) {
-					LocalAddress = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Directory" : {
-				return new TokenValueString (Directory);
-				}
-			case "ProfileUdf" : {
-				return new TokenValueString (ProfileUdf);
-				}
-			case "Quota" : {
-				return new TokenValueInteger32 (Quota);
-				}
-			case "Status" : {
-				return new TokenValueString (Status);
-				}
-			case "LocalAddress" : {
-				return new TokenValueString (LocalAddress);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,null, CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Directory", new Property (typeof(TokenValueString), false)} ,
-			{ "ProfileUdf", new Property (typeof(TokenValueString), false)} ,
-			{ "Quota", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "Status", new Property (typeof(TokenValueString), false)} ,
-			{ "LocalAddress", new Property (typeof(TokenValueString), false)} 
+			{ "Directory", new PropertyString ("Directory", 
+					(IBinding data, string? value) => {(data as AccountEntry).Directory = value;}, (IBinding data) => (data as AccountEntry).Directory )},
+			{ "ProfileUdf", new PropertyString ("ProfileUdf", 
+					(IBinding data, string? value) => {(data as AccountEntry).ProfileUdf = value;}, (IBinding data) => (data as AccountEntry).ProfileUdf )},
+			{ "Quota", new PropertyInteger32 ("Quota", 
+					(IBinding data, int? value) => {(data as AccountEntry).Quota = value;}, (IBinding data) => (data as AccountEntry).Quota )},
+			{ "Status", new PropertyString ("Status", 
+					(IBinding data, string? value) => {(data as AccountEntry).Status = value;}, (IBinding data) => (data as AccountEntry).Status )},
+			{ "LocalAddress", new PropertyString ("LocalAddress", 
+					(IBinding data, string? value) => {(data as AccountEntry).LocalAddress = value;}, (IBinding data) => (data as AccountEntry).LocalAddress )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -275,64 +223,33 @@ public partial class AccountUser : AccountEntry {
         ///The signed assertion describing the account.
         /// </summary>
 
-	public virtual Enveloped<ProfileAccount>						EnvelopedProfileUser  {get; set;}
+	public virtual Enveloped<ProfileAccount>?						EnvelopedProfileUser  {get; set;}
+
         /// <summary>
         ///The enveloped assignment describing how the client should
         ///discover the host and encrypt data to it.
         /// </summary>
 
-	public virtual Enveloped<AccountHostAssignment>						EnvelopedAccountHostAssignment  {get; set;}
+	public virtual Enveloped<AccountHostAssignment>?						EnvelopedAccountHostAssignment  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "EnvelopedProfileUser" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedProfileUser = vvalue.Value as Enveloped<ProfileAccount>;
-					}
-				break;
-				}
-			case "EnvelopedAccountHostAssignment" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedAccountHostAssignment = vvalue.Value as Enveloped<AccountHostAssignment>;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "EnvelopedProfileUser" : {
-				return new TokenValueStruct<Enveloped<ProfileAccount>> (EnvelopedProfileUser);
-				}
-			case "EnvelopedAccountHostAssignment" : {
-				return new TokenValueStruct<Enveloped<AccountHostAssignment>> (EnvelopedAccountHostAssignment);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new AccountUser(), AccountEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "EnvelopedProfileUser", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>(), false)} ,
-			{ "EnvelopedAccountHostAssignment", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>(), false)} 
+			{ "EnvelopedProfileUser", new PropertyStruct ("EnvelopedProfileUser", 
+					(IBinding data, object? value) => {(data as AccountUser).EnvelopedProfileUser = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as AccountUser).EnvelopedProfileUser,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())} ,
+			{ "EnvelopedAccountHostAssignment", new PropertyStruct ("EnvelopedAccountHostAssignment", 
+					(IBinding data, object? value) => {(data as AccountUser).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, (IBinding data) => (data as AccountUser).EnvelopedAccountHostAssignment,
+					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

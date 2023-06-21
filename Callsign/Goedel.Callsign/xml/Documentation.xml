@@ -225,11 +225,11 @@
              Describes a callsign registry.
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.ProfileRegistry.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.ProfileRegistry._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.ProfileRegistry.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.ProfileRegistry._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.ProfileRegistry._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -299,11 +299,11 @@
             The registry that this resolver resolves.
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.ProfileResolver.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.ProfileResolver._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.ProfileResolver.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.ProfileResolver._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.ProfileResolver._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -431,11 +431,11 @@
             Initial/ Update/ Voluntary/ Administrative/ Revoke
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.Registration.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.Registration._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.Registration.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.Registration._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.Registration._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -511,11 +511,11 @@
             The registration entry for the item.
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.CatalogedRegistration.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.CatalogedRegistration._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.CatalogedRegistration.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.CatalogedRegistration._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.CatalogedRegistration._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -592,11 +592,11 @@
             Characters permitted within this code page.
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.Page.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.Page._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.Page.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.Page._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.Page._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -688,11 +688,11 @@
             equal to zero, this is the same as Last.
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.CharacterSpan.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.CharacterSpan._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.CharacterSpan.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.CharacterSpan._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.CharacterSpan._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -739,11 +739,11 @@
              Canonical character span.
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.Canonical.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.Canonical._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.Canonical.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.Canonical._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.Canonical._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -796,11 +796,11 @@
             The character that First is mapped to.
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.MapChar.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.MapChar._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.MapChar.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.MapChar._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.MapChar._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -854,11 +854,11 @@
             If count is greater than 1, all the characters map to the same string.
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.MapString.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.MapString._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.MapString.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.MapString._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.MapString._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -914,11 +914,11 @@
             log.
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.Notarization.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.Notarization._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.Notarization.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.Notarization._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.Notarization._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -982,11 +982,11 @@
             The basis for the challenge
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.Challenge.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.Challenge._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.Challenge.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.Challenge._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.Challenge._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1044,11 +1044,11 @@
             validlty signed.
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.CallsignRegistrationRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.CallsignRegistrationRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.CallsignRegistrationRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.CallsignRegistrationRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.CallsignRegistrationRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1122,11 +1122,11 @@
             otherwise the value specified in the Display field, otherwise null.
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.CallsignRegistrationResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.CallsignRegistrationResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.CallsignRegistrationResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.CallsignRegistrationResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.CallsignRegistrationResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1175,11 +1175,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Callsign.ProcessResultCallsignRegistration.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.ProcessResultCallsignRegistration._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.ProcessResultCallsignRegistration.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.ProcessResultCallsignRegistration._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.ProcessResultCallsignRegistration._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1251,11 +1251,11 @@
             Reason for refusing the registration (if refused)
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.CatalogedApplicationCallsign.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.CatalogedApplicationCallsign._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.CatalogedApplicationCallsign.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.CatalogedApplicationCallsign._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.CatalogedApplicationCallsign._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1329,11 +1329,11 @@
             The cataloged application
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.ProcessResultCallsign.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.ProcessResultCallsign._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.ProcessResultCallsign.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.ProcessResultCallsign._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.ProcessResultCallsign._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1630,11 +1630,11 @@
              Base class for all requests made to a registrar
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.ResolverRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.ResolverRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.ResolverRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.ResolverRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.ResolverRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1682,11 +1682,11 @@
              status code and status description fields.
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.ResolverResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.ResolverResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.ResolverResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.ResolverResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.ResolverResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1755,11 +1755,11 @@
             entry is requested.
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.QueryRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.QueryRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.QueryRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.QueryRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.QueryRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1816,11 +1816,11 @@
             The latest notarization entry corresponding to the specified log.
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.QueryResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.QueryResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.QueryResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.QueryResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.QueryResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1878,11 +1878,11 @@
              
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.SyncRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.SyncRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.SyncRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.SyncRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.SyncRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1929,11 +1929,11 @@
              
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.SyncResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.SyncResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.SyncResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.SyncResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.SyncResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 

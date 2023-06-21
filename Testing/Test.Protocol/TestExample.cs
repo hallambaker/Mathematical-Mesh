@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 21-Jun-23 1:40:14 AM
+//  This file was automatically generated at 21-Jun-23 7:08:59 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1015
+//  Generator:  protogen version 3.0.0.1113
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -110,101 +110,49 @@ public partial class MultiInstance : TestSchema {
         /// </summary>
 
 	public virtual bool?						FieldBoolean  {get; set;}
+
         /// <summary>
         /// </summary>
 
 	public virtual int?						FieldInteger  {get; set;}
+
         /// <summary>
         /// </summary>
 
 	public virtual DateTime?						FieldDateTime  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						FieldString  {get; set;}
+	public virtual string?						FieldString  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual byte[]						FieldBinary  {get; set;}
+	public virtual byte[]?						FieldBinary  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "FieldBoolean" : {
-				if (value is TokenValueBoolean vvalue) {
-					FieldBoolean = vvalue.Value;
-					}
-				break;
-				}
-			case "FieldInteger" : {
-				if (value is TokenValueInteger32 vvalue) {
-					FieldInteger = vvalue.Value;
-					}
-				break;
-				}
-			case "FieldDateTime" : {
-				if (value is TokenValueDateTime vvalue) {
-					FieldDateTime = vvalue.Value;
-					}
-				break;
-				}
-			case "FieldString" : {
-				if (value is TokenValueString vvalue) {
-					FieldString = vvalue.Value;
-					}
-				break;
-				}
-			case "FieldBinary" : {
-				if (value is TokenValueBinary vvalue) {
-					FieldBinary = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "FieldBoolean" : {
-				return new TokenValueBoolean (FieldBoolean);
-				}
-			case "FieldInteger" : {
-				return new TokenValueInteger32 (FieldInteger);
-				}
-			case "FieldDateTime" : {
-				return new TokenValueDateTime (FieldDateTime);
-				}
-			case "FieldString" : {
-				return new TokenValueString (FieldString);
-				}
-			case "FieldBinary" : {
-				return new TokenValueBinary (FieldBinary);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new MultiInstance(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "FieldBoolean", new Property (typeof(TokenValueBoolean), false)} ,
-			{ "FieldInteger", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "FieldDateTime", new Property (typeof(TokenValueDateTime), false)} ,
-			{ "FieldString", new Property (typeof(TokenValueString), false)} ,
-			{ "FieldBinary", new Property (typeof(TokenValueBinary), false)} 
+			{ "FieldBoolean", new PropertyBoolean ("FieldBoolean", 
+					(IBinding data, bool? value) => {(data as MultiInstance).FieldBoolean = value;}, (IBinding data) => (data as MultiInstance).FieldBoolean )},
+			{ "FieldInteger", new PropertyInteger32 ("FieldInteger", 
+					(IBinding data, int? value) => {(data as MultiInstance).FieldInteger = value;}, (IBinding data) => (data as MultiInstance).FieldInteger )},
+			{ "FieldDateTime", new PropertyDateTime ("FieldDateTime", 
+					(IBinding data, DateTime? value) => {(data as MultiInstance).FieldDateTime = value;}, (IBinding data) => (data as MultiInstance).FieldDateTime )},
+			{ "FieldString", new PropertyString ("FieldString", 
+					(IBinding data, string? value) => {(data as MultiInstance).FieldString = value;}, (IBinding data) => (data as MultiInstance).FieldString )},
+			{ "FieldBinary", new PropertyBinary ("FieldBinary", 
+					(IBinding data, byte[]? value) => {(data as MultiInstance).FieldBinary = value;}, (IBinding data) => (data as MultiInstance).FieldBinary )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -268,102 +216,45 @@ public partial class MultiArray : MultiInstance {
         /// <summary>
         /// </summary>
 
-	public virtual List<bool?>				ArrayBoolean  {get; set;}
+	public virtual List<bool>?					ArrayBoolean  {get; set;}
         /// <summary>
         /// </summary>
 
-	public virtual List<int?>				ArrayInteger  {get; set;}
+	public virtual List<int>?					ArrayInteger  {get; set;}
         /// <summary>
         /// </summary>
 
-	public virtual List<DateTime?>				ArrayDateTime  {get; set;}
+	public virtual List<DateTime>?					ArrayDateTime  {get; set;}
         /// <summary>
         /// </summary>
 
-	public virtual List<string>				ArrayString  {get; set;}
+	public virtual List<string>?					ArrayString  {get; set;}
         /// <summary>
         /// </summary>
 
-	public virtual List<byte[]>				ArrayBinary  {get; set;}
+	public virtual List<byte[]>?					ArrayBinary  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "ArrayBoolean" : {
-				if (value is TokenValueListBoolean vvalue) {
-					ArrayBoolean = vvalue.Value;
-					}
-				break;
-				}
-			case "ArrayInteger" : {
-				if (value is TokenValueListInteger32 vvalue) {
-					ArrayInteger = vvalue.Value;
-					}
-				break;
-				}
-			case "ArrayDateTime" : {
-				if (value is TokenValueListDateTime vvalue) {
-					ArrayDateTime = vvalue.Value;
-					}
-				break;
-				}
-			case "ArrayString" : {
-				if (value is TokenValueListString vvalue) {
-					ArrayString = vvalue.Value;
-					}
-				break;
-				}
-			case "ArrayBinary" : {
-				if (value is TokenValueListBinary vvalue) {
-					ArrayBinary = vvalue.Value;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "ArrayBoolean" : {
-				return new TokenValueListBoolean (ArrayBoolean);
-				}
-			case "ArrayInteger" : {
-				return new TokenValueListInteger32 (ArrayInteger);
-				}
-			case "ArrayDateTime" : {
-				return new TokenValueListDateTime (ArrayDateTime);
-				}
-			case "ArrayString" : {
-				return new TokenValueListString (ArrayString);
-				}
-			case "ArrayBinary" : {
-				return new TokenValueListBinary (ArrayBinary);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new MultiArray(), MultiInstance._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "ArrayBoolean", new Property (typeof(TokenValueListBoolean), true)} ,
-			{ "ArrayInteger", new Property (typeof(TokenValueListInteger32), true)} ,
-			{ "ArrayDateTime", new Property (typeof(TokenValueListDateTime), true)} ,
-			{ "ArrayString", new Property (typeof(TokenValueListString), true)} ,
-			{ "ArrayBinary", new Property (typeof(TokenValueListBinary), true)} 
+			{ "ArrayBoolean", new PropertyListBoolean ("ArrayBoolean", 
+					(IBinding data, List<bool>? value) => {(data as MultiArray).ArrayBoolean = value;}, (IBinding data) => (data as MultiArray).ArrayBoolean )},
+			{ "ArrayInteger", new PropertyListInteger32 ("ArrayInteger", 
+					(IBinding data, List<int>? value) => {(data as MultiArray).ArrayInteger = value;}, (IBinding data) => (data as MultiArray).ArrayInteger )},
+			{ "ArrayDateTime", new PropertyListDateTime ("ArrayDateTime", 
+					(IBinding data, List<DateTime>? value) => {(data as MultiArray).ArrayDateTime = value;}, (IBinding data) => (data as MultiArray).ArrayDateTime )},
+			{ "ArrayString", new PropertyListString ("ArrayString", 
+					(IBinding data, List<string>? value) => {(data as MultiArray).ArrayString = value;}, (IBinding data) => (data as MultiArray).ArrayString )},
+			{ "ArrayBinary", new PropertyListBinary ("ArrayBinary", 
+					(IBinding data, List<byte[]>? value) => {(data as MultiArray).ArrayBinary = value;}, (IBinding data) => (data as MultiArray).ArrayBinary )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -428,92 +319,46 @@ public partial class MultiStruct : MultiArray {
         /// <summary>
         /// </summary>
 
-	public virtual MultiInstance						FieldMultiInstance  {get; set;}
+	public virtual MultiInstance?						FieldMultiInstance  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual List<MultiInstance>				ArrayMultiInstance  {get; set;}
+	public virtual List<MultiInstance>?					ArrayMultiInstance  {get; set;}
         /// <summary>
         /// </summary>
 
-	public virtual MultiInstance						TFieldMultiInstance  {get; set;}
+	public virtual MultiInstance?						TFieldMultiInstance  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual List<MultiInstance>				TArrayMultiInstance  {get; set;}
+	public virtual List<MultiInstance>?					TArrayMultiInstance  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "FieldMultiInstance" : {
-				if (value is TokenValueStructObject vvalue) {
-					FieldMultiInstance = vvalue.Value as MultiInstance;
-					}
-				break;
-				}
-			case "ArrayMultiInstance" : {
-				if (value is TokenValueListStructObject vvalue) {
-					ArrayMultiInstance = vvalue.Value as List<MultiInstance>;
-					}
-				break;
-				}
-			case "TFieldMultiInstance" : {
-				if (value is TokenValueStructObject vvalue) {
-					TFieldMultiInstance = vvalue.Value as MultiInstance;
-					}
-				break;
-				}
-			case "TArrayMultiInstance" : {
-				if (value is TokenValueListStructObject vvalue) {
-					TArrayMultiInstance = vvalue.Value as List<MultiInstance>;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "FieldMultiInstance" : {
-				return new TokenValueStruct<MultiInstance> (FieldMultiInstance);
-				}
-			case "ArrayMultiInstance" : {
-				return new TokenValueListStruct<MultiInstance> (ArrayMultiInstance);
-				}
-			case "TFieldMultiInstance" : {
-				return new TokenValueStruct<MultiInstance> (TFieldMultiInstance);
-				}
-			case "TArrayMultiInstance" : {
-				return new TokenValueListStruct<MultiInstance> (TArrayMultiInstance);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new MultiStruct(), MultiArray._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "FieldMultiInstance", new Property ( typeof(TokenValueStruct), false,
-					()=>new MultiInstance(), ()=>new MultiInstance(), false)} ,
-			{ "ArrayMultiInstance", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<MultiInstance>(), ()=>new MultiInstance(), false)} ,
-			{ "TFieldMultiInstance", new Property ( typeof(TokenValueStruct), false,
-					null, null, true)} ,
-			{ "TArrayMultiInstance", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<MultiInstance>(), null, true)} 
+			{ "FieldMultiInstance", new PropertyStruct ("FieldMultiInstance", 
+					(IBinding data, object? value) => {(data as MultiStruct).FieldMultiInstance = value as MultiInstance;}, (IBinding data) => (data as MultiStruct).FieldMultiInstance,
+					false, ()=>new  MultiInstance(), ()=>new MultiInstance())} ,
+			{ "ArrayMultiInstance", new PropertyListStruct ("ArrayMultiInstance", 
+					(IBinding data, object? value) => {(data as MultiStruct).ArrayMultiInstance = value as List<MultiInstance>;}, (IBinding data) => (data as MultiStruct).ArrayMultiInstance,
+					false, ()=>new  List<MultiInstance>(), ()=>new MultiInstance())} ,
+			{ "TFieldMultiInstance", new PropertyStruct ("TFieldMultiInstance", 
+					(IBinding data, object? value) => {(data as MultiStruct).TFieldMultiInstance = value as MultiInstance;}, (IBinding data) => (data as MultiStruct).TFieldMultiInstance,
+					true)} ,
+			{ "TArrayMultiInstance", new PropertyListStruct ("TArrayMultiInstance", 
+					(IBinding data, object? value) => {(data as MultiStruct).TArrayMultiInstance = value as List<MultiInstance>;}, (IBinding data) => (data as MultiStruct).TArrayMultiInstance,
+					true, ()=>new List<MultiInstance>()
+)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

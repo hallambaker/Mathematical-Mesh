@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 21-Jun-23 1:40:16 AM
+//  This file was automatically generated at 21-Jun-23 7:09:02 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1015
+//  Generator:  protogen version 3.0.0.1113
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -111,29 +111,12 @@ public abstract partial class ServiceAdminShellResult : global::Goedel.Protocol.
 public partial class Result : ShellResult {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new Result(), ShellResult._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -201,29 +184,12 @@ public partial class Result : ShellResult {
 public partial class ResultServiceConfiguration : Result {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ResultServiceConfiguration(), Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -292,144 +258,71 @@ public partial class ResultAbout : Result {
         /// <summary>
         /// </summary>
 
-	public virtual string						DirectoryKeys  {get; set;}
+	public virtual string?						DirectoryKeys  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						DirectoryMesh  {get; set;}
+	public virtual string?						DirectoryMesh  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						AssemblyTitle  {get; set;}
+	public virtual string?						AssemblyTitle  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						AssemblyDescription  {get; set;}
+	public virtual string?						AssemblyDescription  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						AssemblyCopyright  {get; set;}
+	public virtual string?						AssemblyCopyright  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						AssemblyCompany  {get; set;}
+	public virtual string?						AssemblyCompany  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						AssemblyVersion  {get; set;}
+	public virtual string?						AssemblyVersion  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Build  {get; set;}
+	public virtual string?						Build  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "DirectoryKeys" : {
-				if (value is TokenValueString vvalue) {
-					DirectoryKeys = vvalue.Value;
-					}
-				break;
-				}
-			case "DirectoryMesh" : {
-				if (value is TokenValueString vvalue) {
-					DirectoryMesh = vvalue.Value;
-					}
-				break;
-				}
-			case "AssemblyTitle" : {
-				if (value is TokenValueString vvalue) {
-					AssemblyTitle = vvalue.Value;
-					}
-				break;
-				}
-			case "AssemblyDescription" : {
-				if (value is TokenValueString vvalue) {
-					AssemblyDescription = vvalue.Value;
-					}
-				break;
-				}
-			case "AssemblyCopyright" : {
-				if (value is TokenValueString vvalue) {
-					AssemblyCopyright = vvalue.Value;
-					}
-				break;
-				}
-			case "AssemblyCompany" : {
-				if (value is TokenValueString vvalue) {
-					AssemblyCompany = vvalue.Value;
-					}
-				break;
-				}
-			case "AssemblyVersion" : {
-				if (value is TokenValueString vvalue) {
-					AssemblyVersion = vvalue.Value;
-					}
-				break;
-				}
-			case "Build" : {
-				if (value is TokenValueString vvalue) {
-					Build = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "DirectoryKeys" : {
-				return new TokenValueString (DirectoryKeys);
-				}
-			case "DirectoryMesh" : {
-				return new TokenValueString (DirectoryMesh);
-				}
-			case "AssemblyTitle" : {
-				return new TokenValueString (AssemblyTitle);
-				}
-			case "AssemblyDescription" : {
-				return new TokenValueString (AssemblyDescription);
-				}
-			case "AssemblyCopyright" : {
-				return new TokenValueString (AssemblyCopyright);
-				}
-			case "AssemblyCompany" : {
-				return new TokenValueString (AssemblyCompany);
-				}
-			case "AssemblyVersion" : {
-				return new TokenValueString (AssemblyVersion);
-				}
-			case "Build" : {
-				return new TokenValueString (Build);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ResultAbout(), Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "DirectoryKeys", new Property (typeof(TokenValueString), false)} ,
-			{ "DirectoryMesh", new Property (typeof(TokenValueString), false)} ,
-			{ "AssemblyTitle", new Property (typeof(TokenValueString), false)} ,
-			{ "AssemblyDescription", new Property (typeof(TokenValueString), false)} ,
-			{ "AssemblyCopyright", new Property (typeof(TokenValueString), false)} ,
-			{ "AssemblyCompany", new Property (typeof(TokenValueString), false)} ,
-			{ "AssemblyVersion", new Property (typeof(TokenValueString), false)} ,
-			{ "Build", new Property (typeof(TokenValueString), false)} 
+			{ "DirectoryKeys", new PropertyString ("DirectoryKeys", 
+					(IBinding data, string? value) => {(data as ResultAbout).DirectoryKeys = value;}, (IBinding data) => (data as ResultAbout).DirectoryKeys )},
+			{ "DirectoryMesh", new PropertyString ("DirectoryMesh", 
+					(IBinding data, string? value) => {(data as ResultAbout).DirectoryMesh = value;}, (IBinding data) => (data as ResultAbout).DirectoryMesh )},
+			{ "AssemblyTitle", new PropertyString ("AssemblyTitle", 
+					(IBinding data, string? value) => {(data as ResultAbout).AssemblyTitle = value;}, (IBinding data) => (data as ResultAbout).AssemblyTitle )},
+			{ "AssemblyDescription", new PropertyString ("AssemblyDescription", 
+					(IBinding data, string? value) => {(data as ResultAbout).AssemblyDescription = value;}, (IBinding data) => (data as ResultAbout).AssemblyDescription )},
+			{ "AssemblyCopyright", new PropertyString ("AssemblyCopyright", 
+					(IBinding data, string? value) => {(data as ResultAbout).AssemblyCopyright = value;}, (IBinding data) => (data as ResultAbout).AssemblyCopyright )},
+			{ "AssemblyCompany", new PropertyString ("AssemblyCompany", 
+					(IBinding data, string? value) => {(data as ResultAbout).AssemblyCompany = value;}, (IBinding data) => (data as ResultAbout).AssemblyCompany )},
+			{ "AssemblyVersion", new PropertyString ("AssemblyVersion", 
+					(IBinding data, string? value) => {(data as ResultAbout).AssemblyVersion = value;}, (IBinding data) => (data as ResultAbout).AssemblyVersion )},
+			{ "Build", new PropertyString ("Build", 
+					(IBinding data, string? value) => {(data as ResultAbout).Build = value;}, (IBinding data) => (data as ResultAbout).Build )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

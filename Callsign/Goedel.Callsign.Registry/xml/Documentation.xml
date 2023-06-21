@@ -36,11 +36,11 @@
             Key or capability used to sign the registry log
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.Registry.ActivationApplicationRegistry.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.Registry.ActivationApplicationRegistry._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.Registry.ActivationApplicationRegistry.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.Registry.ActivationApplicationRegistry._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.Registry.ActivationApplicationRegistry._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -110,11 +110,11 @@
             access the account.
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.Registry.ApplicationEntryRegistry.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.Registry.ApplicationEntryRegistry._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.Registry.ApplicationEntryRegistry.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.Registry.ApplicationEntryRegistry._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.Registry.ApplicationEntryRegistry._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -232,11 +232,11 @@
             The activation data for the registry.
              </summary>
         </member>
-        <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Callsign.Registry.CatalogedRegistry._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Callsign.Registry.CatalogedRegistry._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Callsign.Registry.CatalogedRegistry._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 

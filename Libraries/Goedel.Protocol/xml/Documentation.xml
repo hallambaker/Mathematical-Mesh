@@ -2750,11 +2750,11 @@
             duplicates.
              </summary>
         </member>
-        <member name="M:Goedel.Protocol.Request.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Protocol.Request._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Request.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Protocol.Request._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Protocol.Request._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -2853,11 +2853,11 @@
             The request to which the response corresponds.
              </summary>
         </member>
-        <member name="M:Goedel.Protocol.Response.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Protocol.Response._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Response.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Protocol.Response._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Protocol.Response._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -3207,7 +3207,7 @@
             </summary>
             <param name="jsonReader">Input data</param>
         </member>
-        <member name="M:Goedel.Protocol.JsonObject.DeserializeToken2(Goedel.Protocol.JsonReader,System.String)">
+        <member name="M:Goedel.Protocol.JsonObject.DeserializeToken3(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Deserialize the input stream to populate this object having recieved the specified tag.
             </summary>
@@ -3835,11 +3835,11 @@
             a redirect in the case that a service moves.
              </summary>
         </member>
-        <member name="M:Goedel.Protocol.Version.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Protocol.Version._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Version.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Protocol.Version._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Protocol.Version._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -3898,11 +3898,11 @@
             encoding scheme. 
              </summary>
         </member>
-        <member name="M:Goedel.Protocol.Encoding.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Protocol.Encoding._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Encoding.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Protocol.Encoding._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Protocol.Encoding._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -3949,11 +3949,11 @@
              Request service description.
              </summary>
         </member>
-        <member name="M:Goedel.Protocol.HelloRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Protocol.HelloRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Protocol.HelloRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Protocol.HelloRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Protocol.HelloRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -4010,11 +4010,11 @@
             Enumerates alternate protocol version(s) supported
              </summary>
         </member>
-        <member name="M:Goedel.Protocol.HelloResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Protocol.HelloResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Protocol.HelloResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Protocol.HelloResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Protocol.HelloResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -4596,8 +4596,9 @@
             <param name="Factory">Factory generating an instance of the node (if required).</param>
             <param name="IFactory">Factory generating an instance of a list member (if required).</param>
             <param name="Tagged">If true, structures are to be represented as a tagged structure.</param>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
         </member>
-        <member name="M:Goedel.Protocol.Property.#ctor(System.Type,System.Boolean,System.Func{System.Object},System.Func{System.Object},System.Boolean,System.String)">
+        <member name="M:Goedel.Protocol.Property.#ctor(System.Type,System.Boolean,System.Boolean,System.String)">
             <summary>
             Metadate record representing a property.
             </summary>
@@ -4606,6 +4607,7 @@
             <param name="Factory">Factory generating an instance of the node (if required).</param>
             <param name="IFactory">Factory generating an instance of a list member (if required).</param>
             <param name="Tagged">If true, structures are to be represented as a tagged structure.</param>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
         </member>
         <member name="P:Goedel.Protocol.Property.TokenType">
             <summary>The token type (consider removing).</summary>
@@ -4613,14 +4615,530 @@
         <member name="P:Goedel.Protocol.Property.Multiple">
             <summary>If true, represents a list of entries.</summary>
         </member>
-        <member name="P:Goedel.Protocol.Property.Factory">
-            <summary>Factory generating an instance of the node (if required).</summary>
-        </member>
-        <member name="P:Goedel.Protocol.Property.IFactory">
-            <summary>Factory generating an instance of a list member (if required).</summary>
-        </member>
         <member name="P:Goedel.Protocol.Property.Tagged">
             <summary>If true, structures are to be represented as a tagged structure.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Property.Tag">
+            <summary>Tag identifying this property in JSON serialization</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Property.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <summary>
+            Serialize a token to the writer <paramref name="writer"/>.
+            </summary>
+            <param name="writer">The writer to emit the structured data to.</param>
+            
+            
+        </member>
+        <member name="M:Goedel.Protocol.Property.IsNull(Goedel.Protocol.IBinding)">
+            <summary>
+            Return true if and only if the property in <paramref name="data"/> is null.
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Protocol.PropertyBoolean">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyBoolean.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Nullable{System.Boolean}},System.Func{Goedel.Protocol.IBinding,System.Nullable{System.Boolean}})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyBoolean.Set">
+            <summary>Set the property to the specified value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyBoolean.Get">
+            <summary>Return the value of the property.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyBoolean.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyBoolean.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.PropertyListBoolean">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListBoolean.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Collections.Generic.List{System.Boolean}},System.Func{Goedel.Protocol.IBinding,System.Collections.Generic.List{System.Boolean}})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListBoolean.Set">
+            <summary>Set the property to the specified value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListBoolean.Get">
+            <summary>Return the value of the property.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListBoolean.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListBoolean.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.PropertyString">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyString.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.String},System.Func{Goedel.Protocol.IBinding,System.String})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyString.Set">
+            <summary>Set the property to the specified value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyString.Get">
+            <summary>Return the value of the property.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyString.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyString.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.PropertyListString">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListString.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Collections.Generic.List{System.String}},System.Func{Goedel.Protocol.IBinding,System.Collections.Generic.List{System.String}})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListString.Set">
+            <summary>Set the property to the specified value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListString.Get">
+            <summary>Return the value of the property.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListString.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListString.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.PropertyBinary">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyBinary.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Byte[]},System.Func{Goedel.Protocol.IBinding,System.Byte[]})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyBinary.Set">
+            <summary>Set the property to the specified value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyBinary.Get">
+            <summary>Return the value of the property.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyBinary.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyBinary.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.PropertyListBinary">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListBinary.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Collections.Generic.List{System.Byte[]}},System.Func{Goedel.Protocol.IBinding,System.Collections.Generic.List{System.Byte[]}})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListBinary.Set">
+            <summary>Set the property to the specified value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListBinary.Get">
+            <summary>Return the value of the property.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListBinary.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListBinary.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.PropertyDateTime">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyDateTime.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Nullable{System.DateTime}},System.Func{Goedel.Protocol.IBinding,System.Nullable{System.DateTime}})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyDateTime.Set">
+            <summary>Set the property to the specified value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyDateTime.Get">
+            <summary>Return the value of the property.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyDateTime.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyDateTime.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.PropertyListDateTime">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListDateTime.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Collections.Generic.List{System.DateTime}},System.Func{Goedel.Protocol.IBinding,System.Collections.Generic.List{System.DateTime}})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListDateTime.Set">
+            <summary>Set the property to the specified value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListDateTime.Get">
+            <summary>Return the value of the property.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListDateTime.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListDateTime.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.PropertyInteger32">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyInteger32.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Nullable{System.Int32}},System.Func{Goedel.Protocol.IBinding,System.Nullable{System.Int32}})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyInteger32.Set">
+            <summary>Set the property to the specified value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyInteger32.Get">
+            <summary>Return the value of the property.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyInteger32.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyInteger32.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.PropertyListInteger32">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListInteger32.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Collections.Generic.List{System.Int32}},System.Func{Goedel.Protocol.IBinding,System.Collections.Generic.List{System.Int32}})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListInteger32.Set">
+            <summary>Set the property to the specified value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListInteger32.Get">
+            <summary>Return the value of the property.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListInteger32.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListInteger32.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.PropertyInteger64">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyInteger64.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Nullable{System.Int64}},System.Func{Goedel.Protocol.IBinding,System.Nullable{System.Int64}})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyInteger64.Set">
+            <summary>Set the property to the specified value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyInteger64.Get">
+            <summary>Return the value of the property.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyInteger64.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyInteger64.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.PropertyListInteger64">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListInteger64.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Collections.Generic.List{System.Int64}},System.Func{Goedel.Protocol.IBinding,System.Collections.Generic.List{System.Int64}})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListInteger64.Set">
+            <summary>Set the property to the specified value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListInteger64.Get">
+            <summary>Return the value of the property.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListInteger64.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListInteger64.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.PropertyReal32">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyReal32.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Nullable{System.Single}},System.Func{Goedel.Protocol.IBinding,System.Nullable{System.Single}})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyReal32.Set">
+            <summary>Set the property to the specified value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyReal32.Get">
+            <summary>Return the value of the property.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyReal32.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyReal32.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.PropertyListReal32">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListReal32.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Collections.Generic.List{System.Single}},System.Func{Goedel.Protocol.IBinding,System.Collections.Generic.List{System.Single}})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListReal32.Set">
+            <summary>Set the property to the specified value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListReal32.Get">
+            <summary>Return the value of the property.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListReal32.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListReal32.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.PropertyReal64">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyReal64.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Nullable{System.Double}},System.Func{Goedel.Protocol.IBinding,System.Nullable{System.Double}})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyReal64.Set">
+            <summary>Set the property to the specified value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyReal64.Get">
+            <summary>Return the value of the property.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyReal64.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyReal64.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.PropertyListReal64">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListReal64.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Collections.Generic.List{System.Double}},System.Func{Goedel.Protocol.IBinding,System.Collections.Generic.List{System.Double}})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListReal64.Set">
+            <summary>Set the property to the specified value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListReal64.Get">
+            <summary>Return the value of the property.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListReal64.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListReal64.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.PropertyStruct">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyStruct.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Object},System.Func{Goedel.Protocol.IBinding,System.Object},System.Boolean,System.Func{System.Object},System.Func{System.Object})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyStruct.Set">
+            <summary>Set the property to the specified value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyStruct.Get">
+            <summary>Return the value of the property.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyStruct.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyStruct.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.PropertyListStruct">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListStruct.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Object},System.Func{Goedel.Protocol.IBinding,System.Object},System.Boolean,System.Func{System.Object},System.Func{System.Object})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListStruct.Set">
+            <summary>Set the property to the specified value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListStruct.Get">
+            <summary>Return the value of the property.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListStruct.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListStruct.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Protocol.TokenValue">
             <summary>

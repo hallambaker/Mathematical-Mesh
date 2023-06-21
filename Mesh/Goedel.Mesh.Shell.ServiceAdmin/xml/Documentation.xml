@@ -491,11 +491,11 @@
              Placeholder class to allow insertion of application specific properties.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Result.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Result._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Result.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.Result._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ServiceAdmin.Result._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -540,11 +540,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -627,11 +627,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 

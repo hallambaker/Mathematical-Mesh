@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 21-Jun-23 1:39:47 AM
+//  This file was automatically generated at 21-Jun-23 7:08:44 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1015
+//  Generator:  protogen version 3.0.0.1113
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -113,62 +113,31 @@ abstract public partial class Request : BaseMessage {
         ///Name of the Service to which the request is directed.
         /// </summary>
 
-	public virtual string						Service  {get; set;}
+	public virtual string?						Service  {get; set;}
+
         /// <summary>
         ///Optional unique transaction request used to detect replay attacks and 
         ///duplicates.
         /// </summary>
 
-	public virtual byte[]						ID  {get; set;}
+	public virtual byte[]?						ID  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Service" : {
-				if (value is TokenValueString vvalue) {
-					Service = vvalue.Value;
-					}
-				break;
-				}
-			case "ID" : {
-				if (value is TokenValueBinary vvalue) {
-					ID = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Service" : {
-				return new TokenValueString (Service);
-				}
-			case "ID" : {
-				return new TokenValueBinary (ID);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,null, null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Service", new Property (typeof(TokenValueString), false)} ,
-			{ "ID", new Property (typeof(TokenValueBinary), false)} 
+			{ "Service", new PropertyString ("Service", 
+					(IBinding data, string? value) => {(data as Request).Service = value;}, (IBinding data) => (data as Request).Service )},
+			{ "ID", new PropertyBinary ("ID", 
+					(IBinding data, byte[]? value) => {(data as Request).ID = value;}, (IBinding data) => (data as Request).ID )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -239,91 +208,46 @@ abstract public partial class Response : BaseMessage {
         /// </summary>
 
 	public virtual int?						Status  {get; set;}
+
         /// <summary>
         ///Application level status report giving additional information.
         /// </summary>
 
 	public virtual int?						StatusExtended  {get; set;}
+
         /// <summary>
         ///Text description of the status return code for debugging 
         ///and log file use.
         /// </summary>
 
-	public virtual string						StatusDescription  {get; set;}
+	public virtual string?						StatusDescription  {get; set;}
+
         /// <summary>
         ///The request to which the response corresponds.
         /// </summary>
 
-	public virtual byte[]						ID  {get; set;}
+	public virtual byte[]?						ID  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Status" : {
-				if (value is TokenValueInteger32 vvalue) {
-					Status = vvalue.Value;
-					}
-				break;
-				}
-			case "StatusExtended" : {
-				if (value is TokenValueInteger32 vvalue) {
-					StatusExtended = vvalue.Value;
-					}
-				break;
-				}
-			case "StatusDescription" : {
-				if (value is TokenValueString vvalue) {
-					StatusDescription = vvalue.Value;
-					}
-				break;
-				}
-			case "ID" : {
-				if (value is TokenValueBinary vvalue) {
-					ID = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Status" : {
-				return new TokenValueInteger32 (Status);
-				}
-			case "StatusExtended" : {
-				return new TokenValueInteger32 (StatusExtended);
-				}
-			case "StatusDescription" : {
-				return new TokenValueString (StatusDescription);
-				}
-			case "ID" : {
-				return new TokenValueBinary (ID);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,null, null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Status", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "StatusExtended", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "StatusDescription", new Property (typeof(TokenValueString), false)} ,
-			{ "ID", new Property (typeof(TokenValueBinary), false)} 
+			{ "Status", new PropertyInteger32 ("Status", 
+					(IBinding data, int? value) => {(data as Response).Status = value;}, (IBinding data) => (data as Response).Status )},
+			{ "StatusExtended", new PropertyInteger32 ("StatusExtended", 
+					(IBinding data, int? value) => {(data as Response).StatusExtended = value;}, (IBinding data) => (data as Response).StatusExtended )},
+			{ "StatusDescription", new PropertyString ("StatusDescription", 
+					(IBinding data, string? value) => {(data as Response).StatusDescription = value;}, (IBinding data) => (data as Response).StatusDescription )},
+			{ "ID", new PropertyBinary ("ID", 
+					(IBinding data, byte[]? value) => {(data as Response).ID = value;}, (IBinding data) => (data as Response).ID )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -388,94 +312,47 @@ public partial class Version : BaseMessage {
         /// </summary>
 
 	public virtual int?						Major  {get; set;}
+
         /// <summary>
         ///Minor version number of the service protocol.
         /// </summary>
 
 	public virtual int?						Minor  {get; set;}
+
         /// <summary>
         ///Enumerates alternative encodings (e.g. ASN.1, XML, JSON-B)
         ///supported by the service. If no encodings are specified, the
         ///JSON encoding is assumed.
         /// </summary>
 
-	public virtual List<Encoding>				Encodings  {get; set;}
+	public virtual List<Encoding>?					Encodings  {get; set;}
         /// <summary>
         ///The preferred URI for this service. This MAY be used to effect
         ///a redirect in the case that a service moves.
         /// </summary>
 
-	public virtual List<string>				URI  {get; set;}
+	public virtual List<string>?					URI  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Major" : {
-				if (value is TokenValueInteger32 vvalue) {
-					Major = vvalue.Value;
-					}
-				break;
-				}
-			case "Minor" : {
-				if (value is TokenValueInteger32 vvalue) {
-					Minor = vvalue.Value;
-					}
-				break;
-				}
-			case "Encodings" : {
-				if (value is TokenValueListStructObject vvalue) {
-					Encodings = vvalue.Value as List<Encoding>;
-					}
-				break;
-				}
-			case "URI" : {
-				if (value is TokenValueListString vvalue) {
-					URI = vvalue.Value;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Major" : {
-				return new TokenValueInteger32 (Major);
-				}
-			case "Minor" : {
-				return new TokenValueInteger32 (Minor);
-				}
-			case "Encodings" : {
-				return new TokenValueListStruct<Encoding> (Encodings);
-				}
-			case "URI" : {
-				return new TokenValueListString (URI);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new Version(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Major", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "Minor", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "Encodings", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<Encoding>(), ()=>new Encoding(), false)} ,
-			{ "URI", new Property (typeof(TokenValueListString), true)} 
+			{ "Major", new PropertyInteger32 ("Major", 
+					(IBinding data, int? value) => {(data as Version).Major = value;}, (IBinding data) => (data as Version).Major )},
+			{ "Minor", new PropertyInteger32 ("Minor", 
+					(IBinding data, int? value) => {(data as Version).Minor = value;}, (IBinding data) => (data as Version).Minor )},
+			{ "Encodings", new PropertyListStruct ("Encodings", 
+					(IBinding data, object? value) => {(data as Version).Encodings = value as List<Encoding>;}, (IBinding data) => (data as Version).Encodings,
+					false, ()=>new  List<Encoding>(), ()=>new Encoding())} ,
+			{ "URI", new PropertyListString ("URI", 
+					(IBinding data, List<string>? value) => {(data as Version).URI = value;}, (IBinding data) => (data as Version).URI )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -542,63 +419,30 @@ public partial class Encoding : BaseMessage {
         ///The IANA encoding name
         /// </summary>
 
-	public virtual List<string>				ID  {get; set;}
+	public virtual List<string>?					ID  {get; set;}
         /// <summary>
         ///For encodings that employ a named dictionary for tag or data
         ///compression, the name of the dictionary as defined by that 
         ///encoding scheme. 
         /// </summary>
 
-	public virtual List<string>				Dictionary  {get; set;}
+	public virtual List<string>?					Dictionary  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "ID" : {
-				if (value is TokenValueListString vvalue) {
-					ID = vvalue.Value;
-					}
-				break;
-				}
-			case "Dictionary" : {
-				if (value is TokenValueListString vvalue) {
-					Dictionary = vvalue.Value;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "ID" : {
-				return new TokenValueListString (ID);
-				}
-			case "Dictionary" : {
-				return new TokenValueListString (Dictionary);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new Encoding(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "ID", new Property (typeof(TokenValueListString), true)} ,
-			{ "Dictionary", new Property (typeof(TokenValueListString), true)} 
+			{ "ID", new PropertyListString ("ID", 
+					(IBinding data, List<string>? value) => {(data as Encoding).ID = value;}, (IBinding data) => (data as Encoding).ID )},
+			{ "Dictionary", new PropertyListString ("Dictionary", 
+					(IBinding data, List<string>? value) => {(data as Encoding).Dictionary = value;}, (IBinding data) => (data as Encoding).Dictionary )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -663,29 +507,12 @@ public partial class Encoding : BaseMessage {
 public partial class HelloRequest : Request {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new HelloRequest(), Request._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -757,63 +584,31 @@ public partial class HelloResponse : Response {
         ///Enumerates the protocol versions supported
         /// </summary>
 
-	public virtual Version						Version  {get; set;}
+	public virtual Version?						Version  {get; set;}
+
         /// <summary>
         ///Enumerates alternate protocol version(s) supported
         /// </summary>
 
-	public virtual List<Version>				Alternates  {get; set;}
+	public virtual List<Version>?					Alternates  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Version" : {
-				if (value is TokenValueStructObject vvalue) {
-					Version = vvalue.Value as Version;
-					}
-				break;
-				}
-			case "Alternates" : {
-				if (value is TokenValueListStructObject vvalue) {
-					Alternates = vvalue.Value as List<Version>;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Version" : {
-				return new TokenValueStruct<Version> (Version);
-				}
-			case "Alternates" : {
-				return new TokenValueListStruct<Version> (Alternates);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new HelloResponse(), Response._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Version", new Property ( typeof(TokenValueStruct), false,
-					()=>new Version(), ()=>new Version(), false)} ,
-			{ "Alternates", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<Version>(), ()=>new Version(), false)} 
+			{ "Version", new PropertyStruct ("Version", 
+					(IBinding data, object? value) => {(data as HelloResponse).Version = value as Version;}, (IBinding data) => (data as HelloResponse).Version,
+					false, ()=>new  Version(), ()=>new Version())} ,
+			{ "Alternates", new PropertyListStruct ("Alternates", 
+					(IBinding data, object? value) => {(data as HelloResponse).Alternates = value as List<Version>;}, (IBinding data) => (data as HelloResponse).Alternates,
+					false, ()=>new  List<Version>(), ()=>new Version())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

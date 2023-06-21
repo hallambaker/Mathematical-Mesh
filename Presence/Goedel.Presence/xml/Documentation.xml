@@ -171,11 +171,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Presence.PresenceFromClient.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Presence.PresenceFromClient._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Presence.PresenceFromClient.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Presence.PresenceFromClient._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceFromClient._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -238,11 +238,11 @@
              Register connection request. 
              </summary>
         </member>
-        <member name="M:Goedel.Presence.PresenceConnectRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Presence.PresenceConnectRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Presence.PresenceConnectRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Presence.PresenceConnectRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceConnectRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -287,11 +287,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Presence.PresenceHeartbeat.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Presence.PresenceHeartbeat._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Presence.PresenceHeartbeat.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Presence.PresenceHeartbeat._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceHeartbeat._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -336,11 +336,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Presence.PresenceEndpointRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Presence.PresenceEndpointRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Presence.PresenceEndpointRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Presence.PresenceEndpointRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceEndpointRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -385,11 +385,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Presence.PresenceAcknowledge.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Presence.PresenceAcknowledge._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Presence.PresenceAcknowledge.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Presence.PresenceAcknowledge._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceAcknowledge._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -438,11 +438,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Presence.PresenceResolveRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Presence.PresenceResolveRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Presence.PresenceResolveRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Presence.PresenceResolveRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceResolveRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -502,11 +502,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Presence.PresenceFromService.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Presence.PresenceFromService._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Presence.PresenceFromService.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Presence.PresenceFromService._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceFromService._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -577,11 +577,11 @@
             assume the device has disconnected in milliseconds.
              </summary>
         </member>
-        <member name="M:Goedel.Presence.PresenceConnectResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Presence.PresenceConnectResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Presence.PresenceConnectResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Presence.PresenceConnectResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceConnectResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -630,11 +630,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Presence.PresenceErrorInvalidSerial.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Presence.PresenceErrorInvalidSerial._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Presence.PresenceErrorInvalidSerial.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Presence.PresenceErrorInvalidSerial._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceErrorInvalidSerial._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -679,11 +679,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Presence.PresenceStatus.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Presence.PresenceStatus._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Presence.PresenceStatus.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Presence.PresenceStatus._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceStatus._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -728,11 +728,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Presence.PresenceEndpointResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Presence.PresenceEndpointResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Presence.PresenceEndpointResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Presence.PresenceEndpointResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceEndpointResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -785,11 +785,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Presence.PresenceNotify.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Presence.PresenceNotify._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Presence.PresenceNotify.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Presence.PresenceNotify._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceNotify._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -838,11 +838,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Presence.PresenceResolveResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Presence.PresenceResolveResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Presence.PresenceResolveResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Presence.PresenceResolveResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceResolveResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -903,11 +903,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Presence.SessionRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Presence.SessionRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Presence.SessionRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Presence.SessionRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Presence.SessionRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -968,11 +968,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Presence.SessionResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Presence.SessionResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Presence.SessionResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Presence.SessionResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Presence.SessionResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1033,11 +1033,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Presence.SessionEndpoint.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Presence.SessionEndpoint._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Presence.SessionEndpoint.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Presence.SessionEndpoint._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Presence.SessionEndpoint._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1090,11 +1090,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Presence.UdpEndpoint.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Presence.UdpEndpoint._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Presence.UdpEndpoint.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Presence.UdpEndpoint._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Presence.UdpEndpoint._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 

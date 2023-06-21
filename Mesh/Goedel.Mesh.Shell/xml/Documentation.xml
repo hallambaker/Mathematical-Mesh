@@ -5558,11 +5558,11 @@
              Placeholder class to allow insertion of application specific properties.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Result.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.Result._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.Result.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.Result._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.Result._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -5639,11 +5639,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultAbout.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultAbout._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultAbout.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultAbout._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultAbout._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -5691,11 +5691,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultFail.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultFail._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultFail.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultFail._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultFail._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -5752,11 +5752,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultKey.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultKey._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultKey.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultKey._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultKey._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -5816,11 +5816,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultDigest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultDigest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultDigest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultDigest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultDigest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -5880,11 +5880,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultFile.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultFile._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultFile.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultFile._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultFile._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -5945,11 +5945,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultKeyFile.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultKeyFile._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultKeyFile.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultKeyFile._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultKeyFile._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -6002,11 +6002,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultListLog.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultListLog._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultListLog.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultListLog._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultListLog._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -6055,11 +6055,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultLog.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultLog._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultLog.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultLog._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultLog._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -6120,11 +6120,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultArchive.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultArchive._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultArchive.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultArchive._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultArchive._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -6173,11 +6173,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultFileDare.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultFileDare._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultFileDare.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultFileDare._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultFileDare._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -6237,11 +6237,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultFileEARL.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultFileEARL._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultFileEARL.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultFileEARL._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultFileEARL._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -6290,11 +6290,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultDump.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultDump._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultDump.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultDump._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultDump._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -6350,11 +6350,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultList.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultList._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultList.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultList._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultList._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -6403,11 +6403,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultAccountConnect.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultAccountConnect._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultAccountConnect.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultAccountConnect._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultAccountConnect._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -6456,11 +6456,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultPublish.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultPublish._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultPublish.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultPublish._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultPublish._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -6521,11 +6521,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultPublishDevice.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultPublishDevice._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultPublishDevice.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultPublishDevice._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultPublishDevice._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -6585,11 +6585,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultCreateDevice.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultCreateDevice._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultCreateDevice.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultCreateDevice._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultCreateDevice._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -6641,11 +6641,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultCreatePersonal.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultCreatePersonal._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultCreatePersonal.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultCreatePersonal._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultCreatePersonal._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -6704,11 +6704,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultCreateAccount.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultCreateAccount._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultCreateAccount.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultCreateAccount._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultCreateAccount._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -6763,11 +6763,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultDeleteAccount.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultDeleteAccount._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultDeleteAccount.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultDeleteAccount._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultDeleteAccount._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -6816,11 +6816,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultRegisterService.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultRegisterService._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultRegisterService.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultRegisterService._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultRegisterService._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -6868,11 +6868,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultRecover.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultRecover._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultRecover.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultRecover._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultRecover._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -6921,11 +6921,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultStatus.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultStatus._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultStatus.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultStatus._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultStatus._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -6985,11 +6985,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultSync.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultSync._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultSync.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultSync._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultSync._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7042,11 +7042,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultEscrow.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultEscrow._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultEscrow.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultEscrow._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultEscrow._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7098,11 +7098,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultMachine.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultMachine._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultMachine.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultMachine._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultMachine._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7155,11 +7155,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultPIN.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultPIN._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultPIN.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultPIN._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultPIN._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7211,11 +7211,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultHello.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultHello._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultHello.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultHello._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultHello._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7267,11 +7267,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultSequence.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultSequence._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultSequence.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultSequence._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultSequence._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7344,11 +7344,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.LogEntry.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.LogEntry._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.LogEntry.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.LogEntry._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.LogEntry._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7397,11 +7397,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultEntry.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultEntry._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultEntry.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultEntry._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultEntry._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7457,11 +7457,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultEntrySent.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultEntrySent._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultEntrySent.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultEntrySent._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultEntrySent._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7506,11 +7506,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultMail.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultMail._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultMail.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultMail._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultMail._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7555,11 +7555,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultSSH.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultSSH._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultSSH.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultSSH._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultSSH._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7604,11 +7604,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultGroupCreate.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultGroupCreate._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultGroupCreate.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultGroupCreate._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultGroupCreate._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7661,11 +7661,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultSent.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultSent._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultSent.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultSent._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultSent._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7717,11 +7717,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultPending.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultPending._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultPending.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultPending._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultPending._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7773,11 +7773,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultAuthorize.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultAuthorize._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultAuthorize.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultAuthorize._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultAuthorize._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7826,11 +7826,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultProcess.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultProcess._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultProcess.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultProcess._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultProcess._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7906,11 +7906,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultConnect.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultConnect._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultConnect.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultConnect._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultConnect._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -7962,11 +7962,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultTransactionRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultTransactionRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultTransactionRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultTransactionRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultTransactionRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -8019,11 +8019,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultReceived.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultReceived._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultReceived.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultReceived._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultReceived._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -8075,11 +8075,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultApplication.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultApplication._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultApplication.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultApplication._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultApplication._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -8131,11 +8131,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultApplicationList.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultApplicationList._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultApplicationList.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultApplicationList._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultApplicationList._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -8191,11 +8191,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultCallsign.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsign._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultCallsign.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultCallsign._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultCallsign._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -8236,59 +8236,6 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="T:Goedel.Mesh.Shell.ResultCallsignList">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ResultCallsignList.CallsignApplication">
-            <summary>
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ResultCallsignList.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ResultCallsignList.Getter(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="F:Goedel.Mesh.Shell.ResultCallsignList._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Shell.ResultCallsignList._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ResultCallsignList._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ResultCallsignList._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ResultCallsignList._ParentProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ResultCallsignList._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Shell.ResultCallsignList.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ResultCallsignList._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ResultCallsignList.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Mesh.Shell.ResultCallsignResolution">
             <summary>
             </summary>
@@ -8301,11 +8248,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultCallsignResolution.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsignResolution._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultCallsignResolution.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.ResultCallsignResolution._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultCallsignResolution._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -8339,6 +8286,59 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.ResultCallsignResolution.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ResultCallsignList">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsignList.CallsignApplication">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsignList._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ResultCallsignList._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ResultCallsignList._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ResultCallsignList._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsignList._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsignList._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsignList._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCallsignList._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ResultCallsignList.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultCallsignList._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultCallsignList.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>

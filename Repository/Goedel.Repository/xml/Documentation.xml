@@ -27,11 +27,11 @@
             access the account.
              </summary>
         </member>
-        <member name="M:Goedel.Repository.ActivationApplicationRepository.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Repository.ActivationApplicationRepository._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Repository.ActivationApplicationRepository.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Repository.ActivationApplicationRepository._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Repository.ActivationApplicationRepository._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -92,11 +92,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Repository.ApplicationEntryRepository.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Repository.ApplicationEntryRepository._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Repository.ApplicationEntryRepository.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Repository.ApplicationEntryRepository._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Repository.ApplicationEntryRepository._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -198,11 +198,11 @@
             The activation data for the registry.
              </summary>
         </member>
-        <member name="M:Goedel.Repository.CatalogedRepository.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Repository.CatalogedRepository._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Repository.CatalogedRepository.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Repository.CatalogedRepository._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Repository.CatalogedRepository._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -489,11 +489,11 @@
              Describes a Repository issuer.
              </summary>
         </member>
-        <member name="M:Goedel.Repository.ProfileRepository.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Repository.ProfileRepository._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Repository.ProfileRepository.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Repository.ProfileRepository._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Repository.ProfileRepository._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -558,11 +558,11 @@
              Base class for all requests made to a registrar
              </summary>
         </member>
-        <member name="M:Goedel.Repository.PersistanceRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Repository.PersistanceRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Repository.PersistanceRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Repository.PersistanceRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Repository.PersistanceRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -610,11 +610,11 @@
              status code and status description fields.
              </summary>
         </member>
-        <member name="M:Goedel.Repository.PersistanceResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Repository.PersistanceResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Repository.PersistanceResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Repository.PersistanceResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Repository.PersistanceResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -661,11 +661,11 @@
              Register connection request. 
              </summary>
         </member>
-        <member name="M:Goedel.Repository.QueryRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Repository.QueryRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Repository.QueryRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Repository.QueryRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Repository.QueryRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -712,11 +712,11 @@
              Return the result of a connection request
              </summary>
         </member>
-        <member name="M:Goedel.Repository.QueryResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Repository.QueryResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Repository.QueryResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Repository.QueryResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Repository.QueryResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 

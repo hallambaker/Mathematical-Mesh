@@ -109,11 +109,11 @@
             Account address in user@domain format
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountEntry.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Server.AccountEntry._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountEntry.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Server.AccountEntry._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Server.AccountEntry._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -197,11 +197,11 @@
             discover the host and encrypt data to it.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountUser.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Server.AccountUser._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountUser.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Server.AccountUser._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Server.AccountUser._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 

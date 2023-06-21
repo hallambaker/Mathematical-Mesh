@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 21-Jun-23 1:40:23 AM
+//  This file was automatically generated at 21-Jun-23 7:09:05 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1015
+//  Generator:  protogen version 3.0.0.1113
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -113,6 +113,7 @@ abstract public partial class TestEntry : TestSchema {
         /// </summary>
 
 	public virtual DateTime?						Created  {get; set;}
+
         /// <summary>
         ///Time the pending item was last modified.
         /// </summary>
@@ -120,53 +121,21 @@ abstract public partial class TestEntry : TestSchema {
 	public virtual DateTime?						Modified  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Created" : {
-				if (value is TokenValueDateTime vvalue) {
-					Created = vvalue.Value;
-					}
-				break;
-				}
-			case "Modified" : {
-				if (value is TokenValueDateTime vvalue) {
-					Modified = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Created" : {
-				return new TokenValueDateTime (Created);
-				}
-			case "Modified" : {
-				return new TokenValueDateTime (Modified);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,null, null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Created", new Property (typeof(TokenValueDateTime), false)} ,
-			{ "Modified", new Property (typeof(TokenValueDateTime), false)} 
+			{ "Created", new PropertyDateTime ("Created", 
+					(IBinding data, DateTime? value) => {(data as TestEntry).Created = value;}, (IBinding data) => (data as TestEntry).Created )},
+			{ "Modified", new PropertyDateTime ("Modified", 
+					(IBinding data, DateTime? value) => {(data as TestEntry).Modified = value;}, (IBinding data) => (data as TestEntry).Modified )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -231,77 +200,39 @@ public partial class TestItem : TestEntry {
         ///not case sensitive.
         /// </summary>
 
-	public virtual string						AccountID  {get; set;}
+	public virtual string?						AccountID  {get; set;}
+
         /// <summary>
         ///Fingerprint of associated user profile
         /// </summary>
 
-	public virtual string						UserProfileUDF  {get; set;}
+	public virtual string?						UserProfileUDF  {get; set;}
+
         /// <summary>
         ///Status of the account, valid values are 'Open', 'Closed',
         ///'Suspended'
         /// </summary>
 
-	public virtual string						Status  {get; set;}
+	public virtual string?						Status  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "AccountID" : {
-				if (value is TokenValueString vvalue) {
-					AccountID = vvalue.Value;
-					}
-				break;
-				}
-			case "UserProfileUDF" : {
-				if (value is TokenValueString vvalue) {
-					UserProfileUDF = vvalue.Value;
-					}
-				break;
-				}
-			case "Status" : {
-				if (value is TokenValueString vvalue) {
-					Status = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "AccountID" : {
-				return new TokenValueString (AccountID);
-				}
-			case "UserProfileUDF" : {
-				return new TokenValueString (UserProfileUDF);
-				}
-			case "Status" : {
-				return new TokenValueString (Status);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new TestItem(), TestEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "AccountID", new Property (typeof(TokenValueString), false)} ,
-			{ "UserProfileUDF", new Property (typeof(TokenValueString), false)} ,
-			{ "Status", new Property (typeof(TokenValueString), false)} 
+			{ "AccountID", new PropertyString ("AccountID", 
+					(IBinding data, string? value) => {(data as TestItem).AccountID = value;}, (IBinding data) => (data as TestItem).AccountID )},
+			{ "UserProfileUDF", new PropertyString ("UserProfileUDF", 
+					(IBinding data, string? value) => {(data as TestItem).UserProfileUDF = value;}, (IBinding data) => (data as TestItem).UserProfileUDF )},
+			{ "Status", new PropertyString ("Status", 
+					(IBinding data, string? value) => {(data as TestItem).Status = value;}, (IBinding data) => (data as TestItem).Status )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -369,131 +300,65 @@ public partial class MessageTest : Goedel.Mesh.Message {
         /// <summary>
         /// </summary>
 
-	public virtual string						UniqueId  {get; set;}
+	public virtual string?						UniqueId  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						VersionId  {get; set;}
+	public virtual string?						VersionId  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Seed  {get; set;}
+	public virtual string?						Seed  {get; set;}
+
         /// <summary>
         /// </summary>
 
 	public virtual int?						Serial  {get; set;}
+
         /// <summary>
         /// </summary>
 
 	public virtual int?						Version  {get; set;}
+
         /// <summary>
         ///If specified, the entry was generated with random length setting.
         /// </summary>
 
 	public virtual int?						Length  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual byte[]						Data  {get; set;}
+	public virtual byte[]?						Data  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "UniqueId" : {
-				if (value is TokenValueString vvalue) {
-					UniqueId = vvalue.Value;
-					}
-				break;
-				}
-			case "VersionId" : {
-				if (value is TokenValueString vvalue) {
-					VersionId = vvalue.Value;
-					}
-				break;
-				}
-			case "Seed" : {
-				if (value is TokenValueString vvalue) {
-					Seed = vvalue.Value;
-					}
-				break;
-				}
-			case "Serial" : {
-				if (value is TokenValueInteger32 vvalue) {
-					Serial = vvalue.Value;
-					}
-				break;
-				}
-			case "Version" : {
-				if (value is TokenValueInteger32 vvalue) {
-					Version = vvalue.Value;
-					}
-				break;
-				}
-			case "Length" : {
-				if (value is TokenValueInteger32 vvalue) {
-					Length = vvalue.Value;
-					}
-				break;
-				}
-			case "Data" : {
-				if (value is TokenValueBinary vvalue) {
-					Data = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "UniqueId" : {
-				return new TokenValueString (UniqueId);
-				}
-			case "VersionId" : {
-				return new TokenValueString (VersionId);
-				}
-			case "Seed" : {
-				return new TokenValueString (Seed);
-				}
-			case "Serial" : {
-				return new TokenValueInteger32 (Serial);
-				}
-			case "Version" : {
-				return new TokenValueInteger32 (Version);
-				}
-			case "Length" : {
-				return new TokenValueInteger32 (Length);
-				}
-			case "Data" : {
-				return new TokenValueBinary (Data);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new MessageTest(), Goedel.Mesh.Message._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "UniqueId", new Property (typeof(TokenValueString), false)} ,
-			{ "VersionId", new Property (typeof(TokenValueString), false)} ,
-			{ "Seed", new Property (typeof(TokenValueString), false)} ,
-			{ "Serial", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "Version", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "Length", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "Data", new Property (typeof(TokenValueBinary), false)} 
+			{ "UniqueId", new PropertyString ("UniqueId", 
+					(IBinding data, string? value) => {(data as MessageTest).UniqueId = value;}, (IBinding data) => (data as MessageTest).UniqueId )},
+			{ "VersionId", new PropertyString ("VersionId", 
+					(IBinding data, string? value) => {(data as MessageTest).VersionId = value;}, (IBinding data) => (data as MessageTest).VersionId )},
+			{ "Seed", new PropertyString ("Seed", 
+					(IBinding data, string? value) => {(data as MessageTest).Seed = value;}, (IBinding data) => (data as MessageTest).Seed )},
+			{ "Serial", new PropertyInteger32 ("Serial", 
+					(IBinding data, int? value) => {(data as MessageTest).Serial = value;}, (IBinding data) => (data as MessageTest).Serial )},
+			{ "Version", new PropertyInteger32 ("Version", 
+					(IBinding data, int? value) => {(data as MessageTest).Version = value;}, (IBinding data) => (data as MessageTest).Version )},
+			{ "Length", new PropertyInteger32 ("Length", 
+					(IBinding data, int? value) => {(data as MessageTest).Length = value;}, (IBinding data) => (data as MessageTest).Length )},
+			{ "Data", new PropertyBinary ("Data", 
+					(IBinding data, byte[]? value) => {(data as MessageTest).Data = value;}, (IBinding data) => (data as MessageTest).Data )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -561,131 +426,65 @@ public partial class CatalogEntryTest : Goedel.Mesh.CatalogedEntry {
         /// <summary>
         /// </summary>
 
-	public virtual string						UniqueId  {get; set;}
+	public virtual string?						UniqueId  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						VersionId  {get; set;}
+	public virtual string?						VersionId  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Seed  {get; set;}
+	public virtual string?						Seed  {get; set;}
+
         /// <summary>
         /// </summary>
 
 	public virtual int?						Serial  {get; set;}
+
         /// <summary>
         /// </summary>
 
 	public virtual int?						Version  {get; set;}
+
         /// <summary>
         ///If specified, the 
         /// </summary>
 
 	public virtual int?						Length  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual byte[]						Data  {get; set;}
+	public virtual byte[]?						Data  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "UniqueId" : {
-				if (value is TokenValueString vvalue) {
-					UniqueId = vvalue.Value;
-					}
-				break;
-				}
-			case "VersionId" : {
-				if (value is TokenValueString vvalue) {
-					VersionId = vvalue.Value;
-					}
-				break;
-				}
-			case "Seed" : {
-				if (value is TokenValueString vvalue) {
-					Seed = vvalue.Value;
-					}
-				break;
-				}
-			case "Serial" : {
-				if (value is TokenValueInteger32 vvalue) {
-					Serial = vvalue.Value;
-					}
-				break;
-				}
-			case "Version" : {
-				if (value is TokenValueInteger32 vvalue) {
-					Version = vvalue.Value;
-					}
-				break;
-				}
-			case "Length" : {
-				if (value is TokenValueInteger32 vvalue) {
-					Length = vvalue.Value;
-					}
-				break;
-				}
-			case "Data" : {
-				if (value is TokenValueBinary vvalue) {
-					Data = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "UniqueId" : {
-				return new TokenValueString (UniqueId);
-				}
-			case "VersionId" : {
-				return new TokenValueString (VersionId);
-				}
-			case "Seed" : {
-				return new TokenValueString (Seed);
-				}
-			case "Serial" : {
-				return new TokenValueInteger32 (Serial);
-				}
-			case "Version" : {
-				return new TokenValueInteger32 (Version);
-				}
-			case "Length" : {
-				return new TokenValueInteger32 (Length);
-				}
-			case "Data" : {
-				return new TokenValueBinary (Data);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogEntryTest(), Goedel.Mesh.CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "UniqueId", new Property (typeof(TokenValueString), false)} ,
-			{ "VersionId", new Property (typeof(TokenValueString), false)} ,
-			{ "Seed", new Property (typeof(TokenValueString), false)} ,
-			{ "Serial", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "Version", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "Length", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "Data", new Property (typeof(TokenValueBinary), false)} 
+			{ "UniqueId", new PropertyString ("UniqueId", 
+					(IBinding data, string? value) => {(data as CatalogEntryTest).UniqueId = value;}, (IBinding data) => (data as CatalogEntryTest).UniqueId )},
+			{ "VersionId", new PropertyString ("VersionId", 
+					(IBinding data, string? value) => {(data as CatalogEntryTest).VersionId = value;}, (IBinding data) => (data as CatalogEntryTest).VersionId )},
+			{ "Seed", new PropertyString ("Seed", 
+					(IBinding data, string? value) => {(data as CatalogEntryTest).Seed = value;}, (IBinding data) => (data as CatalogEntryTest).Seed )},
+			{ "Serial", new PropertyInteger32 ("Serial", 
+					(IBinding data, int? value) => {(data as CatalogEntryTest).Serial = value;}, (IBinding data) => (data as CatalogEntryTest).Serial )},
+			{ "Version", new PropertyInteger32 ("Version", 
+					(IBinding data, int? value) => {(data as CatalogEntryTest).Version = value;}, (IBinding data) => (data as CatalogEntryTest).Version )},
+			{ "Length", new PropertyInteger32 ("Length", 
+					(IBinding data, int? value) => {(data as CatalogEntryTest).Length = value;}, (IBinding data) => (data as CatalogEntryTest).Length )},
+			{ "Data", new PropertyBinary ("Data", 
+					(IBinding data, byte[]? value) => {(data as CatalogEntryTest).Data = value;}, (IBinding data) => (data as CatalogEntryTest).Data )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

@@ -198,11 +198,11 @@
              Placeholder class to allow insertion of application specific properties.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Host.Result.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.Host.Result._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.Host.Result.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.Host.Result._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.Host.Result._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -279,11 +279,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Host.ResultAbout.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.Host.ResultAbout._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.Host.ResultAbout.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.Host.ResultAbout._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.Host.ResultAbout._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -331,11 +331,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Host.ResultStartService.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Shell.Host.ResultStartService._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Shell.Host.ResultStartService.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Shell.Host.ResultStartService._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.Host.ResultStartService._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 

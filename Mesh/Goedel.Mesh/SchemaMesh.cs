@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 21-Jun-23 1:39:57 AM
+//  This file was automatically generated at 21-Jun-23 7:08:49 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1015
+//  Generator:  protogen version 3.0.0.1113
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -212,155 +212,81 @@ public partial class KeyData : MeshItem {
         ///UDF fingerprint of the public key parameters
         /// </summary>
 
-	public virtual string						Udf  {get; set;}
+	public virtual string?						Udf  {get; set;}
+
         /// <summary>
         ///List of X.509 Certificates
         /// </summary>
 
-	public virtual byte[]						X509Certificate  {get; set;}
+	public virtual byte[]?						X509Certificate  {get; set;}
+
         /// <summary>
         ///X.509 Certificate chain.
         /// </summary>
 
-	public virtual List<byte[]>				X509Chain  {get; set;}
+	public virtual List<byte[]>?					X509Chain  {get; set;}
         /// <summary>
         ///X.509 Certificate Signing Request.
         /// </summary>
 
-	public virtual byte[]						X509CSR  {get; set;}
+	public virtual byte[]?						X509CSR  {get; set;}
+
         /// <summary>
         ///If present specifies a time instant that use of the private key
         ///is not valid before.
         /// </summary>
 
 	public virtual DateTime?						NotBefore  {get; set;}
+
         /// <summary>
         ///If present specifies a time instant that use of the private key
         ///is not valid on or after.
         /// </summary>
 
 	public virtual DateTime?						NotOnOrAfter  {get; set;}
+
         /// <summary>
         ///The public key parameters as defined in the JOSE specification.
         /// </summary>
 
-	public virtual Key						PublicParameters  {get; set;}
+	public virtual Key?						PublicParameters  {get; set;}
+
         /// <summary>
         ///The private key parameters as defined in the JOSE specification.
         /// </summary>
 
-	public virtual Key						PrivateParameters  {get; set;}
+	public virtual Key?						PrivateParameters  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Udf" : {
-				if (value is TokenValueString vvalue) {
-					Udf = vvalue.Value;
-					}
-				break;
-				}
-			case "X509Certificate" : {
-				if (value is TokenValueBinary vvalue) {
-					X509Certificate = vvalue.Value;
-					}
-				break;
-				}
-			case "X509Chain" : {
-				if (value is TokenValueListBinary vvalue) {
-					X509Chain = vvalue.Value;
-					}
-				break;
-				}
-			case "X509CSR" : {
-				if (value is TokenValueBinary vvalue) {
-					X509CSR = vvalue.Value;
-					}
-				break;
-				}
-			case "NotBefore" : {
-				if (value is TokenValueDateTime vvalue) {
-					NotBefore = vvalue.Value;
-					}
-				break;
-				}
-			case "NotOnOrAfter" : {
-				if (value is TokenValueDateTime vvalue) {
-					NotOnOrAfter = vvalue.Value;
-					}
-				break;
-				}
-			case "PublicParameters" : {
-				if (value is TokenValueStructObject vvalue) {
-					PublicParameters = vvalue.Value as Key;
-					}
-				break;
-				}
-			case "PrivateParameters" : {
-				if (value is TokenValueStructObject vvalue) {
-					PrivateParameters = vvalue.Value as Key;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Udf" : {
-				return new TokenValueString (Udf);
-				}
-			case "X509Certificate" : {
-				return new TokenValueBinary (X509Certificate);
-				}
-			case "X509Chain" : {
-				return new TokenValueListBinary (X509Chain);
-				}
-			case "X509CSR" : {
-				return new TokenValueBinary (X509CSR);
-				}
-			case "NotBefore" : {
-				return new TokenValueDateTime (NotBefore);
-				}
-			case "NotOnOrAfter" : {
-				return new TokenValueDateTime (NotOnOrAfter);
-				}
-			case "PublicParameters" : {
-				return new TokenValueStruct<Key> (PublicParameters);
-				}
-			case "PrivateParameters" : {
-				return new TokenValueStruct<Key> (PrivateParameters);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new KeyData(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Udf", new Property (typeof(TokenValueString), false)} ,
-			{ "X509Certificate", new Property (typeof(TokenValueBinary), false)} ,
-			{ "X509Chain", new Property (typeof(TokenValueListBinary), true)} ,
-			{ "X509CSR", new Property (typeof(TokenValueBinary), false)} ,
-			{ "NotBefore", new Property (typeof(TokenValueDateTime), false)} ,
-			{ "NotOnOrAfter", new Property (typeof(TokenValueDateTime), false)} ,
-			{ "PublicParameters", new Property ( typeof(TokenValueStruct), false,
-					null, null, true)} ,
-			{ "PrivateParameters", new Property ( typeof(TokenValueStruct), false,
-					null, null, true)} 
+			{ "Udf", new PropertyString ("Udf", 
+					(IBinding data, string? value) => {(data as KeyData).Udf = value;}, (IBinding data) => (data as KeyData).Udf )},
+			{ "X509Certificate", new PropertyBinary ("X509Certificate", 
+					(IBinding data, byte[]? value) => {(data as KeyData).X509Certificate = value;}, (IBinding data) => (data as KeyData).X509Certificate )},
+			{ "X509Chain", new PropertyListBinary ("X509Chain", 
+					(IBinding data, List<byte[]>? value) => {(data as KeyData).X509Chain = value;}, (IBinding data) => (data as KeyData).X509Chain )},
+			{ "X509CSR", new PropertyBinary ("X509CSR", 
+					(IBinding data, byte[]? value) => {(data as KeyData).X509CSR = value;}, (IBinding data) => (data as KeyData).X509CSR )},
+			{ "NotBefore", new PropertyDateTime ("NotBefore", 
+					(IBinding data, DateTime? value) => {(data as KeyData).NotBefore = value;}, (IBinding data) => (data as KeyData).NotBefore )},
+			{ "NotOnOrAfter", new PropertyDateTime ("NotOnOrAfter", 
+					(IBinding data, DateTime? value) => {(data as KeyData).NotOnOrAfter = value;}, (IBinding data) => (data as KeyData).NotOnOrAfter )},
+			{ "PublicParameters", new PropertyStruct ("PublicParameters", 
+					(IBinding data, object? value) => {(data as KeyData).PublicParameters = value as Key;}, (IBinding data) => (data as KeyData).PublicParameters,
+					true)} ,
+			{ "PrivateParameters", new PropertyStruct ("PrivateParameters", 
+					(IBinding data, object? value) => {(data as KeyData).PrivateParameters = value as Key;}, (IBinding data) => (data as KeyData).PrivateParameters,
+					true)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -425,95 +351,50 @@ public partial class KeyShare : Key {
         ///The public key parameters of the primary key.
         /// </summary>
 
-	public virtual Key						PublicPrimary  {get; set;}
+	public virtual Key?						PublicPrimary  {get; set;}
+
         /// <summary>
         ///The private key parameters of the share as defined in the JOSE specification.		
         /// </summary>
 
-	public virtual Key						Share  {get; set;}
+	public virtual Key?						Share  {get; set;}
+
         /// <summary>
         ///The identifier used to claim the capability from the service.[Only present for
         ///a partial key.]
         /// </summary>
 
-	public virtual string						ServiceId  {get; set;}
+	public virtual string?						ServiceId  {get; set;}
+
         /// <summary>
         ///The service account that supports a serviced capability. [Only present for
         ///a partial key.]	
         /// </summary>
 
-	public virtual string						ServiceAddress  {get; set;}
+	public virtual string?						ServiceAddress  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "PublicPrimary" : {
-				if (value is TokenValueStructObject vvalue) {
-					PublicPrimary = vvalue.Value as Key;
-					}
-				break;
-				}
-			case "Share" : {
-				if (value is TokenValueStructObject vvalue) {
-					Share = vvalue.Value as Key;
-					}
-				break;
-				}
-			case "ServiceId" : {
-				if (value is TokenValueString vvalue) {
-					ServiceId = vvalue.Value;
-					}
-				break;
-				}
-			case "ServiceAddress" : {
-				if (value is TokenValueString vvalue) {
-					ServiceAddress = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "PublicPrimary" : {
-				return new TokenValueStruct<Key> (PublicPrimary);
-				}
-			case "Share" : {
-				return new TokenValueStruct<Key> (Share);
-				}
-			case "ServiceId" : {
-				return new TokenValueString (ServiceId);
-				}
-			case "ServiceAddress" : {
-				return new TokenValueString (ServiceAddress);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new KeyShare(), Key._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "PublicPrimary", new Property ( typeof(TokenValueStruct), false,
-					null, null, true)} ,
-			{ "Share", new Property ( typeof(TokenValueStruct), false,
-					null, null, true)} ,
-			{ "ServiceId", new Property (typeof(TokenValueString), false)} ,
-			{ "ServiceAddress", new Property (typeof(TokenValueString), false)} 
+			{ "PublicPrimary", new PropertyStruct ("PublicPrimary", 
+					(IBinding data, object? value) => {(data as KeyShare).PublicPrimary = value as Key;}, (IBinding data) => (data as KeyShare).PublicPrimary,
+					true)} ,
+			{ "Share", new PropertyStruct ("Share", 
+					(IBinding data, object? value) => {(data as KeyShare).Share = value as Key;}, (IBinding data) => (data as KeyShare).Share,
+					true)} ,
+			{ "ServiceId", new PropertyString ("ServiceId", 
+					(IBinding data, string? value) => {(data as KeyShare).ServiceId = value;}, (IBinding data) => (data as KeyShare).ServiceId )},
+			{ "ServiceAddress", new PropertyString ("ServiceAddress", 
+					(IBinding data, string? value) => {(data as KeyShare).ServiceAddress = value;}, (IBinding data) => (data as KeyShare).ServiceAddress )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -579,78 +460,40 @@ public partial class CompositePrivate : Key {
         ///UDF fingerprint of the bound device key (if used).
         /// </summary>
 
-	public virtual string						DeviceKeyUdf  {get; set;}
+	public virtual string?						DeviceKeyUdf  {get; set;}
+
         /// <summary>
         ///Private parameters of additive key
         /// </summary>
 
-	public virtual Key						PrivateSalt  {get; set;}
+	public virtual Key?						PrivateSalt  {get; set;}
+
         /// <summary>
         ///Private parameters of serviced share
         /// </summary>
 
-	public virtual Key						ServiceShare  {get; set;}
+	public virtual Key?						ServiceShare  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "DeviceKeyUdf" : {
-				if (value is TokenValueString vvalue) {
-					DeviceKeyUdf = vvalue.Value;
-					}
-				break;
-				}
-			case "PrivateSalt" : {
-				if (value is TokenValueStructObject vvalue) {
-					PrivateSalt = vvalue.Value as Key;
-					}
-				break;
-				}
-			case "ServiceShare" : {
-				if (value is TokenValueStructObject vvalue) {
-					ServiceShare = vvalue.Value as Key;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "DeviceKeyUdf" : {
-				return new TokenValueString (DeviceKeyUdf);
-				}
-			case "PrivateSalt" : {
-				return new TokenValueStruct<Key> (PrivateSalt);
-				}
-			case "ServiceShare" : {
-				return new TokenValueStruct<Key> (ServiceShare);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CompositePrivate(), Key._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "DeviceKeyUdf", new Property (typeof(TokenValueString), false)} ,
-			{ "PrivateSalt", new Property ( typeof(TokenValueStruct), false,
-					null, null, true)} ,
-			{ "ServiceShare", new Property ( typeof(TokenValueStruct), false,
-					null, null, true)} 
+			{ "DeviceKeyUdf", new PropertyString ("DeviceKeyUdf", 
+					(IBinding data, string? value) => {(data as CompositePrivate).DeviceKeyUdf = value;}, (IBinding data) => (data as CompositePrivate).DeviceKeyUdf )},
+			{ "PrivateSalt", new PropertyStruct ("PrivateSalt", 
+					(IBinding data, object? value) => {(data as CompositePrivate).PrivateSalt = value as Key;}, (IBinding data) => (data as CompositePrivate).PrivateSalt,
+					true)} ,
+			{ "ServiceShare", new PropertyStruct ("ServiceShare", 
+					(IBinding data, object? value) => {(data as CompositePrivate).ServiceShare = value as Key;}, (IBinding data) => (data as CompositePrivate).ServiceShare,
+					true)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -720,94 +563,48 @@ abstract public partial class Assertion : MeshItem {
         ///attacks and other forms of abuse.
         /// </summary>
 
-	public virtual List<string>				Names  {get; set;}
+	public virtual List<string>?					Names  {get; set;}
         /// <summary>
         ///The time instant the profile was last modified.
         /// </summary>
 
 	public virtual DateTime?						Updated  {get; set;}
+
         /// <summary>
         ///A Uniform Notary Token providing evidence that a signature
         ///was performed after the notary token was created.
         /// </summary>
 
-	public virtual string						NotaryToken  {get; set;}
+	public virtual string?						NotaryToken  {get; set;}
+
         /// <summary>
         ///Conditional clause(s) that MAY be verified to evaluate the validity of the
         ///assertion. At present no condition classes are specified.
         /// </summary>
 
-	public virtual Condition						Conditions  {get; set;}
+	public virtual Condition?						Conditions  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Names" : {
-				if (value is TokenValueListString vvalue) {
-					Names = vvalue.Value;
-					}
-				break;
-				}
-			case "Updated" : {
-				if (value is TokenValueDateTime vvalue) {
-					Updated = vvalue.Value;
-					}
-				break;
-				}
-			case "NotaryToken" : {
-				if (value is TokenValueString vvalue) {
-					NotaryToken = vvalue.Value;
-					}
-				break;
-				}
-			case "Conditions" : {
-				if (value is TokenValueStructObject vvalue) {
-					Conditions = vvalue.Value as Condition;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Names" : {
-				return new TokenValueListString (Names);
-				}
-			case "Updated" : {
-				return new TokenValueDateTime (Updated);
-				}
-			case "NotaryToken" : {
-				return new TokenValueString (NotaryToken);
-				}
-			case "Conditions" : {
-				return new TokenValueStruct<Condition> (Conditions);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,null, null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Names", new Property (typeof(TokenValueListString), true)} ,
-			{ "Updated", new Property (typeof(TokenValueDateTime), false)} ,
-			{ "NotaryToken", new Property (typeof(TokenValueString), false)} ,
-			{ "Conditions", new Property ( typeof(TokenValueStruct), false,
-					null, null, true)} 
+			{ "Names", new PropertyListString ("Names", 
+					(IBinding data, List<string>? value) => {(data as Assertion).Names = value;}, (IBinding data) => (data as Assertion).Names )},
+			{ "Updated", new PropertyDateTime ("Updated", 
+					(IBinding data, DateTime? value) => {(data as Assertion).Updated = value;}, (IBinding data) => (data as Assertion).Updated )},
+			{ "NotaryToken", new PropertyString ("NotaryToken", 
+					(IBinding data, string? value) => {(data as Assertion).NotaryToken = value;}, (IBinding data) => (data as Assertion).NotaryToken )},
+			{ "Conditions", new PropertyStruct ("Conditions", 
+					(IBinding data, object? value) => {(data as Assertion).Conditions = value as Condition;}, (IBinding data) => (data as Assertion).Conditions,
+					true)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -869,29 +666,12 @@ abstract public partial class Assertion : MeshItem {
 abstract public partial class Condition : MeshItem {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,null, null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -960,63 +740,31 @@ public partial class Activation : Assertion {
         ///Secret seed used to derive keys that are not explicitly specified.
         /// </summary>
 
-	public virtual string						ActivationKey  {get; set;}
+	public virtual string?						ActivationKey  {get; set;}
+
         /// <summary>
         ///Activation of named account resource activations. These are separate from
         ///Application activations which are 
         /// </summary>
 
-	public virtual List<ActivationEntry>				Entries  {get; set;}
+	public virtual List<ActivationEntry>?					Entries  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "ActivationKey" : {
-				if (value is TokenValueString vvalue) {
-					ActivationKey = vvalue.Value;
-					}
-				break;
-				}
-			case "Entries" : {
-				if (value is TokenValueListStructObject vvalue) {
-					Entries = vvalue.Value as List<ActivationEntry>;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "ActivationKey" : {
-				return new TokenValueString (ActivationKey);
-				}
-			case "Entries" : {
-				return new TokenValueListStruct<ActivationEntry> (Entries);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new Activation(), Assertion._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "ActivationKey", new Property (typeof(TokenValueString), false)} ,
-			{ "Entries", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<ActivationEntry>(), ()=>new ActivationEntry(), false)} 
+			{ "ActivationKey", new PropertyString ("ActivationKey", 
+					(IBinding data, string? value) => {(data as Activation).ActivationKey = value;}, (IBinding data) => (data as Activation).ActivationKey )},
+			{ "Entries", new PropertyListStruct ("Entries", 
+					(IBinding data, object? value) => {(data as Activation).Entries = value as List<ActivationEntry>;}, (IBinding data) => (data as Activation).Entries,
+					false, ()=>new  List<ActivationEntry>(), ()=>new ActivationEntry())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1082,94 +830,49 @@ public partial class ActivationEntry : MeshItem {
         ///Name of the activated resource
         /// </summary>
 
-	public virtual string						Resource  {get; set;}
+	public virtual string?						Resource  {get; set;}
+
         /// <summary>
         ///The activation key or key share
         /// </summary>
 
-	public virtual KeyData						Key  {get; set;}
+	public virtual KeyData?						Key  {get; set;}
+
         /// <summary>
         ///The identifier used to claim the capability from the service.[Only present for
         ///a partial capability.]
         /// </summary>
 
-	public virtual string						ServiceId  {get; set;}
+	public virtual string?						ServiceId  {get; set;}
+
         /// <summary>
         ///The service account that supports a serviced capability. [Only present for
         ///a partial capability.]
         /// </summary>
 
-	public virtual string						ServiceAddress  {get; set;}
+	public virtual string?						ServiceAddress  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Resource" : {
-				if (value is TokenValueString vvalue) {
-					Resource = vvalue.Value;
-					}
-				break;
-				}
-			case "Key" : {
-				if (value is TokenValueStructObject vvalue) {
-					Key = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "ServiceId" : {
-				if (value is TokenValueString vvalue) {
-					ServiceId = vvalue.Value;
-					}
-				break;
-				}
-			case "ServiceAddress" : {
-				if (value is TokenValueString vvalue) {
-					ServiceAddress = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Resource" : {
-				return new TokenValueString (Resource);
-				}
-			case "Key" : {
-				return new TokenValueStruct<KeyData> (Key);
-				}
-			case "ServiceId" : {
-				return new TokenValueString (ServiceId);
-				}
-			case "ServiceAddress" : {
-				return new TokenValueString (ServiceAddress);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ActivationEntry(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Resource", new Property (typeof(TokenValueString), false)} ,
-			{ "Key", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "ServiceId", new Property (typeof(TokenValueString), false)} ,
-			{ "ServiceAddress", new Property (typeof(TokenValueString), false)} 
+			{ "Resource", new PropertyString ("Resource", 
+					(IBinding data, string? value) => {(data as ActivationEntry).Resource = value;}, (IBinding data) => (data as ActivationEntry).Resource )},
+			{ "Key", new PropertyStruct ("Key", 
+					(IBinding data, object? value) => {(data as ActivationEntry).Key = value as KeyData;}, (IBinding data) => (data as ActivationEntry).Key,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "ServiceId", new PropertyString ("ServiceId", 
+					(IBinding data, string? value) => {(data as ActivationEntry).ServiceId = value;}, (IBinding data) => (data as ActivationEntry).ServiceId )},
+			{ "ServiceAddress", new PropertyString ("ServiceAddress", 
+					(IBinding data, string? value) => {(data as ActivationEntry).ServiceAddress = value;}, (IBinding data) => (data as ActivationEntry).ServiceAddress )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1236,7 +939,8 @@ abstract public partial class Profile : Assertion {
         ///Description of the profile
         /// </summary>
 
-	public virtual string						Description  {get; set;}
+	public virtual string?						Description  {get; set;}
+
         /// <summary>
         ///The permanent signature key used to sign the profile itself. The UDF of
         ///the key is used as the permanent object identifier of the profile. Thus,
@@ -1244,57 +948,25 @@ abstract public partial class Profile : Assertion {
         ///any circumstance.
         /// </summary>
 
-	public virtual KeyData						ProfileSignature  {get; set;}
+	public virtual KeyData?						ProfileSignature  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Description" : {
-				if (value is TokenValueString vvalue) {
-					Description = vvalue.Value;
-					}
-				break;
-				}
-			case "ProfileSignature" : {
-				if (value is TokenValueStructObject vvalue) {
-					ProfileSignature = vvalue.Value as KeyData;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Description" : {
-				return new TokenValueString (Description);
-				}
-			case "ProfileSignature" : {
-				return new TokenValueStruct<KeyData> (ProfileSignature);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,null, Assertion._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Description", new Property (typeof(TokenValueString), false)} ,
-			{ "ProfileSignature", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} 
+			{ "Description", new PropertyString ("Description", 
+					(IBinding data, string? value) => {(data as Profile).Description = value;}, (IBinding data) => (data as Profile).Description )},
+			{ "ProfileSignature", new PropertyStruct ("ProfileSignature", 
+					(IBinding data, object? value) => {(data as Profile).ProfileSignature = value as KeyData;}, (IBinding data) => (data as Profile).ProfileSignature,
+					false, ()=>new  KeyData(), ()=>new KeyData())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1361,81 +1033,43 @@ public partial class ProfileDevice : Profile {
         ///during connection to an account.
         /// </summary>
 
-	public virtual KeyData						Encryption  {get; set;}
+	public virtual KeyData?						Encryption  {get; set;}
+
         /// <summary>
         ///Base key contribution for signature keys. 
         /// </summary>
 
-	public virtual KeyData						Signature  {get; set;}
+	public virtual KeyData?						Signature  {get; set;}
+
         /// <summary>
         ///Base key contribution for authentication keys. 
         ///Also used to authenticate the device
         ///during connection to an account.
         /// </summary>
 
-	public virtual KeyData						Authentication  {get; set;}
+	public virtual KeyData?						Authentication  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Encryption" : {
-				if (value is TokenValueStructObject vvalue) {
-					Encryption = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "Signature" : {
-				if (value is TokenValueStructObject vvalue) {
-					Signature = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "Authentication" : {
-				if (value is TokenValueStructObject vvalue) {
-					Authentication = vvalue.Value as KeyData;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Encryption" : {
-				return new TokenValueStruct<KeyData> (Encryption);
-				}
-			case "Signature" : {
-				return new TokenValueStruct<KeyData> (Signature);
-				}
-			case "Authentication" : {
-				return new TokenValueStruct<KeyData> (Authentication);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ProfileDevice(), Profile._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Encryption", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "Signature", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "Authentication", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} 
+			{ "Encryption", new PropertyStruct ("Encryption", 
+					(IBinding data, object? value) => {(data as ProfileDevice).Encryption = value as KeyData;}, (IBinding data) => (data as ProfileDevice).Encryption,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "Signature", new PropertyStruct ("Signature", 
+					(IBinding data, object? value) => {(data as ProfileDevice).Signature = value as KeyData;}, (IBinding data) => (data as ProfileDevice).Signature,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "Authentication", new PropertyStruct ("Authentication", 
+					(IBinding data, object? value) => {(data as ProfileDevice).Authentication = value as KeyData;}, (IBinding data) => (data as ProfileDevice).Authentication,
+					false, ()=>new  KeyData(), ()=>new KeyData())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1505,128 +1139,69 @@ public partial class ProfileAccount : Profile {
         ///(e.g. alice@example.com) or a Mesh Name (@alice).
         /// </summary>
 
-	public virtual string						AccountAddress  {get; set;}
+	public virtual string?						AccountAddress  {get; set;}
+
         /// <summary>
         ///The fingerprint of the service profile to which the account is
         ///currently bound.
         /// </summary>
 
-	public virtual string						ServiceUdf  {get; set;}
+	public virtual string?						ServiceUdf  {get; set;}
+
         /// <summary>
         ///Escrow key associated with the account.
         /// </summary>
 
-	public virtual KeyData						EscrowEncryption  {get; set;}
+	public virtual KeyData?						EscrowEncryption  {get; set;}
+
         /// <summary>
         ///Key used to sign connection assertions to the account.
         /// </summary>
 
-	public virtual KeyData						AdministratorSignature  {get; set;}
+	public virtual KeyData?						AdministratorSignature  {get; set;}
+
         /// <summary>
         ///Key currently used to encrypt data under this profile
         /// </summary>
 
-	public virtual KeyData						CommonEncryption  {get; set;}
+	public virtual KeyData?						CommonEncryption  {get; set;}
+
         /// <summary>
         ///Key used to authenticate requests made under this user account.
         ///This key SHOULD NOT be provisioned to any device except for the
         ///purpose of enabling account recovery.
         /// </summary>
 
-	public virtual KeyData						CommonAuthentication  {get; set;}
+	public virtual KeyData?						CommonAuthentication  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "AccountAddress" : {
-				if (value is TokenValueString vvalue) {
-					AccountAddress = vvalue.Value;
-					}
-				break;
-				}
-			case "ServiceUdf" : {
-				if (value is TokenValueString vvalue) {
-					ServiceUdf = vvalue.Value;
-					}
-				break;
-				}
-			case "EscrowEncryption" : {
-				if (value is TokenValueStructObject vvalue) {
-					EscrowEncryption = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "AdministratorSignature" : {
-				if (value is TokenValueStructObject vvalue) {
-					AdministratorSignature = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "CommonEncryption" : {
-				if (value is TokenValueStructObject vvalue) {
-					CommonEncryption = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "CommonAuthentication" : {
-				if (value is TokenValueStructObject vvalue) {
-					CommonAuthentication = vvalue.Value as KeyData;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "AccountAddress" : {
-				return new TokenValueString (AccountAddress);
-				}
-			case "ServiceUdf" : {
-				return new TokenValueString (ServiceUdf);
-				}
-			case "EscrowEncryption" : {
-				return new TokenValueStruct<KeyData> (EscrowEncryption);
-				}
-			case "AdministratorSignature" : {
-				return new TokenValueStruct<KeyData> (AdministratorSignature);
-				}
-			case "CommonEncryption" : {
-				return new TokenValueStruct<KeyData> (CommonEncryption);
-				}
-			case "CommonAuthentication" : {
-				return new TokenValueStruct<KeyData> (CommonAuthentication);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ProfileAccount(), Profile._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "AccountAddress", new Property (typeof(TokenValueString), false)} ,
-			{ "ServiceUdf", new Property (typeof(TokenValueString), false)} ,
-			{ "EscrowEncryption", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "AdministratorSignature", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "CommonEncryption", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "CommonAuthentication", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} 
+			{ "AccountAddress", new PropertyString ("AccountAddress", 
+					(IBinding data, string? value) => {(data as ProfileAccount).AccountAddress = value;}, (IBinding data) => (data as ProfileAccount).AccountAddress )},
+			{ "ServiceUdf", new PropertyString ("ServiceUdf", 
+					(IBinding data, string? value) => {(data as ProfileAccount).ServiceUdf = value;}, (IBinding data) => (data as ProfileAccount).ServiceUdf )},
+			{ "EscrowEncryption", new PropertyStruct ("EscrowEncryption", 
+					(IBinding data, object? value) => {(data as ProfileAccount).EscrowEncryption = value as KeyData;}, (IBinding data) => (data as ProfileAccount).EscrowEncryption,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "AdministratorSignature", new PropertyStruct ("AdministratorSignature", 
+					(IBinding data, object? value) => {(data as ProfileAccount).AdministratorSignature = value as KeyData;}, (IBinding data) => (data as ProfileAccount).AdministratorSignature,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "CommonEncryption", new PropertyStruct ("CommonEncryption", 
+					(IBinding data, object? value) => {(data as ProfileAccount).CommonEncryption = value as KeyData;}, (IBinding data) => (data as ProfileAccount).CommonEncryption,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "CommonAuthentication", new PropertyStruct ("CommonAuthentication", 
+					(IBinding data, object? value) => {(data as ProfileAccount).CommonAuthentication = value as KeyData;}, (IBinding data) => (data as ProfileAccount).CommonAuthentication,
+					false, ()=>new  KeyData(), ()=>new KeyData())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1694,47 +1269,23 @@ public partial class ProfileUser : ProfileAccount {
         ///Key used to sign data under the account.
         /// </summary>
 
-	public virtual KeyData						CommonSignature  {get; set;}
+	public virtual KeyData?						CommonSignature  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "CommonSignature" : {
-				if (value is TokenValueStructObject vvalue) {
-					CommonSignature = vvalue.Value as KeyData;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "CommonSignature" : {
-				return new TokenValueStruct<KeyData> (CommonSignature);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ProfileUser(), ProfileAccount._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "CommonSignature", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} 
+			{ "CommonSignature", new PropertyStruct ("CommonSignature", 
+					(IBinding data, object? value) => {(data as ProfileUser).CommonSignature = value as KeyData;}, (IBinding data) => (data as ProfileUser).CommonSignature,
+					false, ()=>new  KeyData(), ()=>new KeyData())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1805,46 +1356,22 @@ public partial class ProfileGroup : ProfileAccount {
         ///encrypted under the group key cannot be decrypted.
         /// </summary>
 
-	public virtual byte[]						Cover  {get; set;}
+	public virtual byte[]?						Cover  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Cover" : {
-				if (value is TokenValueBinary vvalue) {
-					Cover = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Cover" : {
-				return new TokenValueBinary (Cover);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ProfileGroup(), ProfileAccount._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Cover", new Property (typeof(TokenValueBinary), false)} 
+			{ "Cover", new PropertyBinary ("Cover", 
+					(IBinding data, byte[]? value) => {(data as ProfileGroup).Cover = value;}, (IBinding data) => (data as ProfileGroup).Cover )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1912,79 +1439,41 @@ public partial class ProfileService : Profile {
         ///Key used to authenticate service connections.
         /// </summary>
 
-	public virtual KeyData						ServiceAuthentication  {get; set;}
+	public virtual KeyData?						ServiceAuthentication  {get; set;}
+
         /// <summary>
         ///Key used to encrypt data under this profile
         /// </summary>
 
-	public virtual KeyData						ServiceEncryption  {get; set;}
+	public virtual KeyData?						ServiceEncryption  {get; set;}
+
         /// <summary>
         ///Key used to sign data under the account.
         /// </summary>
 
-	public virtual KeyData						ServiceSignature  {get; set;}
+	public virtual KeyData?						ServiceSignature  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "ServiceAuthentication" : {
-				if (value is TokenValueStructObject vvalue) {
-					ServiceAuthentication = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "ServiceEncryption" : {
-				if (value is TokenValueStructObject vvalue) {
-					ServiceEncryption = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "ServiceSignature" : {
-				if (value is TokenValueStructObject vvalue) {
-					ServiceSignature = vvalue.Value as KeyData;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "ServiceAuthentication" : {
-				return new TokenValueStruct<KeyData> (ServiceAuthentication);
-				}
-			case "ServiceEncryption" : {
-				return new TokenValueStruct<KeyData> (ServiceEncryption);
-				}
-			case "ServiceSignature" : {
-				return new TokenValueStruct<KeyData> (ServiceSignature);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ProfileService(), Profile._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "ServiceAuthentication", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "ServiceEncryption", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "ServiceSignature", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} 
+			{ "ServiceAuthentication", new PropertyStruct ("ServiceAuthentication", 
+					(IBinding data, object? value) => {(data as ProfileService).ServiceAuthentication = value as KeyData;}, (IBinding data) => (data as ProfileService).ServiceAuthentication,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "ServiceEncryption", new PropertyStruct ("ServiceEncryption", 
+					(IBinding data, object? value) => {(data as ProfileService).ServiceEncryption = value as KeyData;}, (IBinding data) => (data as ProfileService).ServiceEncryption,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "ServiceSignature", new PropertyStruct ("ServiceSignature", 
+					(IBinding data, object? value) => {(data as ProfileService).ServiceSignature = value as KeyData;}, (IBinding data) => (data as ProfileService).ServiceSignature,
+					false, ()=>new  KeyData(), ()=>new KeyData())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -2050,29 +1539,12 @@ public partial class ProfileService : Profile {
 public partial class ProfileMeshService : ProfileService {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ProfileMeshService(), ProfileService._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -2142,29 +1614,12 @@ public partial class ProfileMeshService : ProfileService {
 public partial class ProfileHost : ProfileDevice {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ProfileHost(), ProfileDevice._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -2234,77 +1689,39 @@ public partial class Connection : Assertion {
         ///UDF of the connection target.
         /// </summary>
 
-	public virtual string						Subject  {get; set;}
+	public virtual string?						Subject  {get; set;}
+
         /// <summary>
         ///UDF of the connection source.
         /// </summary>
 
-	public virtual string						Authority  {get; set;}
+	public virtual string?						Authority  {get; set;}
+
         /// <summary>
         ///The authentication key for use of the device under the profile
         /// </summary>
 
-	public virtual KeyData						Authentication  {get; set;}
+	public virtual KeyData?						Authentication  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Subject" : {
-				if (value is TokenValueString vvalue) {
-					Subject = vvalue.Value;
-					}
-				break;
-				}
-			case "Authority" : {
-				if (value is TokenValueString vvalue) {
-					Authority = vvalue.Value;
-					}
-				break;
-				}
-			case "Authentication" : {
-				if (value is TokenValueStructObject vvalue) {
-					Authentication = vvalue.Value as KeyData;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Subject" : {
-				return new TokenValueString (Subject);
-				}
-			case "Authority" : {
-				return new TokenValueString (Authority);
-				}
-			case "Authentication" : {
-				return new TokenValueStruct<KeyData> (Authentication);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new Connection(), Assertion._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Subject", new Property (typeof(TokenValueString), false)} ,
-			{ "Authority", new Property (typeof(TokenValueString), false)} ,
-			{ "Authentication", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} 
+			{ "Subject", new PropertyString ("Subject", 
+					(IBinding data, string? value) => {(data as Connection).Subject = value;}, (IBinding data) => (data as Connection).Subject )},
+			{ "Authority", new PropertyString ("Authority", 
+					(IBinding data, string? value) => {(data as Connection).Authority = value;}, (IBinding data) => (data as Connection).Authority )},
+			{ "Authentication", new PropertyStruct ("Authentication", 
+					(IBinding data, object? value) => {(data as Connection).Authentication = value as KeyData;}, (IBinding data) => (data as Connection).Authentication,
+					false, ()=>new  KeyData(), ()=>new KeyData())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -2370,155 +1787,81 @@ public partial class CallsignBinding : Assertion {
         ///The canonical form of the callsign.
         /// </summary>
 
-	public virtual string						Canonical  {get; set;}
+	public virtual string?						Canonical  {get; set;}
+
         /// <summary>
         ///The display form of the callsign. This MAY include characters such as whitespace,
         ///trademark signifiers, etc. that are omitted of trranslated in the canonical form.
         /// </summary>
 
-	public virtual string						Display  {get; set;}
+	public virtual string?						Display  {get; set;}
+
         /// <summary>
         ///Specifies the page to which the Description"CharacterPageLatin"
         /// </summary>
 
-	public virtual string						CharacterPage  {get; set;}
+	public virtual string?						CharacterPage  {get; set;}
+
         /// <summary>
         ///The profile to which the name is bound.
         /// </summary>
 
-	public virtual string						ProfileUdf  {get; set;}
+	public virtual string?						ProfileUdf  {get; set;}
+
         /// <summary>
         ///The profile to which the name has been transfered.
         /// </summary>
 
-	public virtual string						TransferUdf  {get; set;}
+	public virtual string?						TransferUdf  {get; set;}
+
         /// <summary>
         ///List of named services. If multiple service providers are specified for a given 
         ///service, these are listed in order of priority, most preferred first.
         /// </summary>
 
-	public virtual List<NamedService>				Services  {get; set;}
+	public virtual List<NamedService>?					Services  {get; set;}
         /// <summary>
         ///The Mesh service address. 
         /// </summary>
 
-	public virtual string						ServiceAddress  {get; set;}
+	public virtual string?						ServiceAddress  {get; set;}
+
         /// <summary>
         ///Key currently used to encrypt data under this profile
         /// </summary>
 
-	public virtual KeyData						CommonEncryption  {get; set;}
+	public virtual KeyData?						CommonEncryption  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Canonical" : {
-				if (value is TokenValueString vvalue) {
-					Canonical = vvalue.Value;
-					}
-				break;
-				}
-			case "Display" : {
-				if (value is TokenValueString vvalue) {
-					Display = vvalue.Value;
-					}
-				break;
-				}
-			case "CharacterPage" : {
-				if (value is TokenValueString vvalue) {
-					CharacterPage = vvalue.Value;
-					}
-				break;
-				}
-			case "ProfileUdf" : {
-				if (value is TokenValueString vvalue) {
-					ProfileUdf = vvalue.Value;
-					}
-				break;
-				}
-			case "TransferUdf" : {
-				if (value is TokenValueString vvalue) {
-					TransferUdf = vvalue.Value;
-					}
-				break;
-				}
-			case "Services" : {
-				if (value is TokenValueListStructObject vvalue) {
-					Services = vvalue.Value as List<NamedService>;
-					}
-				break;
-				}
-			case "ServiceAddress" : {
-				if (value is TokenValueString vvalue) {
-					ServiceAddress = vvalue.Value;
-					}
-				break;
-				}
-			case "CommonEncryption" : {
-				if (value is TokenValueStructObject vvalue) {
-					CommonEncryption = vvalue.Value as KeyData;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Canonical" : {
-				return new TokenValueString (Canonical);
-				}
-			case "Display" : {
-				return new TokenValueString (Display);
-				}
-			case "CharacterPage" : {
-				return new TokenValueString (CharacterPage);
-				}
-			case "ProfileUdf" : {
-				return new TokenValueString (ProfileUdf);
-				}
-			case "TransferUdf" : {
-				return new TokenValueString (TransferUdf);
-				}
-			case "Services" : {
-				return new TokenValueListStruct<NamedService> (Services);
-				}
-			case "ServiceAddress" : {
-				return new TokenValueString (ServiceAddress);
-				}
-			case "CommonEncryption" : {
-				return new TokenValueStruct<KeyData> (CommonEncryption);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CallsignBinding(), Assertion._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Canonical", new Property (typeof(TokenValueString), false)} ,
-			{ "Display", new Property (typeof(TokenValueString), false)} ,
-			{ "CharacterPage", new Property (typeof(TokenValueString), false)} ,
-			{ "ProfileUdf", new Property (typeof(TokenValueString), false)} ,
-			{ "TransferUdf", new Property (typeof(TokenValueString), false)} ,
-			{ "Services", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<NamedService>(), ()=>new NamedService(), false)} ,
-			{ "ServiceAddress", new Property (typeof(TokenValueString), false)} ,
-			{ "CommonEncryption", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} 
+			{ "Canonical", new PropertyString ("Canonical", 
+					(IBinding data, string? value) => {(data as CallsignBinding).Canonical = value;}, (IBinding data) => (data as CallsignBinding).Canonical )},
+			{ "Display", new PropertyString ("Display", 
+					(IBinding data, string? value) => {(data as CallsignBinding).Display = value;}, (IBinding data) => (data as CallsignBinding).Display )},
+			{ "CharacterPage", new PropertyString ("CharacterPage", 
+					(IBinding data, string? value) => {(data as CallsignBinding).CharacterPage = value;}, (IBinding data) => (data as CallsignBinding).CharacterPage )},
+			{ "ProfileUdf", new PropertyString ("ProfileUdf", 
+					(IBinding data, string? value) => {(data as CallsignBinding).ProfileUdf = value;}, (IBinding data) => (data as CallsignBinding).ProfileUdf )},
+			{ "TransferUdf", new PropertyString ("TransferUdf", 
+					(IBinding data, string? value) => {(data as CallsignBinding).TransferUdf = value;}, (IBinding data) => (data as CallsignBinding).TransferUdf )},
+			{ "Services", new PropertyListStruct ("Services", 
+					(IBinding data, object? value) => {(data as CallsignBinding).Services = value as List<NamedService>;}, (IBinding data) => (data as CallsignBinding).Services,
+					false, ()=>new  List<NamedService>(), ()=>new NamedService())} ,
+			{ "ServiceAddress", new PropertyString ("ServiceAddress", 
+					(IBinding data, string? value) => {(data as CallsignBinding).ServiceAddress = value;}, (IBinding data) => (data as CallsignBinding).ServiceAddress )},
+			{ "CommonEncryption", new PropertyStruct ("CommonEncryption", 
+					(IBinding data, object? value) => {(data as CallsignBinding).CommonEncryption = value as KeyData;}, (IBinding data) => (data as CallsignBinding).CommonEncryption,
+					false, ()=>new  KeyData(), ()=>new KeyData())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -2586,152 +1929,77 @@ public partial class Accreditation : Assertion {
         ///The callsign to which the accreditation applies
         /// </summary>
 
-	public virtual string						Callsign  {get; set;}
+	public virtual string?						Callsign  {get; set;}
+
         /// <summary>
         ///The profile to which the accreditation applies.
         /// </summary>
 
-	public virtual string						ProfileUdf  {get; set;}
+	public virtual string?						ProfileUdf  {get; set;}
+
         /// <summary>
         ///The validated names of the subject
         /// </summary>
 
-	public virtual List<string>				SubjectNames  {get; set;}
+	public virtual List<string>?					SubjectNames  {get; set;}
         /// <summary>
         ///Mesh strong URIs from which a validated logo belonging to the 
         ///subject MAY be retreived and validated.
         /// </summary>
 
-	public virtual List<string>				SubjectLogos  {get; set;}
+	public virtual List<string>?					SubjectLogos  {get; set;}
         /// <summary>
         ///The time the assertion was issued.
         /// </summary>
 
 	public virtual DateTime?						Issued  {get; set;}
+
         /// <summary>
         ///The time the assertion is due to expire
         /// </summary>
 
 	public virtual DateTime?						Expires  {get; set;}
+
         /// <summary>
         ///The issuing policy under which the validation was performed.
         /// </summary>
 
-	public virtual string						Policy  {get; set;}
+	public virtual string?						Policy  {get; set;}
+
         /// <summary>
         ///The issuing practices under which the validation was performed.
         /// </summary>
 
-	public virtual string						Practice  {get; set;}
+	public virtual string?						Practice  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Callsign" : {
-				if (value is TokenValueString vvalue) {
-					Callsign = vvalue.Value;
-					}
-				break;
-				}
-			case "ProfileUdf" : {
-				if (value is TokenValueString vvalue) {
-					ProfileUdf = vvalue.Value;
-					}
-				break;
-				}
-			case "SubjectNames" : {
-				if (value is TokenValueListString vvalue) {
-					SubjectNames = vvalue.Value;
-					}
-				break;
-				}
-			case "SubjectLogos" : {
-				if (value is TokenValueListString vvalue) {
-					SubjectLogos = vvalue.Value;
-					}
-				break;
-				}
-			case "Issued" : {
-				if (value is TokenValueDateTime vvalue) {
-					Issued = vvalue.Value;
-					}
-				break;
-				}
-			case "Expires" : {
-				if (value is TokenValueDateTime vvalue) {
-					Expires = vvalue.Value;
-					}
-				break;
-				}
-			case "Policy" : {
-				if (value is TokenValueString vvalue) {
-					Policy = vvalue.Value;
-					}
-				break;
-				}
-			case "Practice" : {
-				if (value is TokenValueString vvalue) {
-					Practice = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Callsign" : {
-				return new TokenValueString (Callsign);
-				}
-			case "ProfileUdf" : {
-				return new TokenValueString (ProfileUdf);
-				}
-			case "SubjectNames" : {
-				return new TokenValueListString (SubjectNames);
-				}
-			case "SubjectLogos" : {
-				return new TokenValueListString (SubjectLogos);
-				}
-			case "Issued" : {
-				return new TokenValueDateTime (Issued);
-				}
-			case "Expires" : {
-				return new TokenValueDateTime (Expires);
-				}
-			case "Policy" : {
-				return new TokenValueString (Policy);
-				}
-			case "Practice" : {
-				return new TokenValueString (Practice);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new Accreditation(), Assertion._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Callsign", new Property (typeof(TokenValueString), false)} ,
-			{ "ProfileUdf", new Property (typeof(TokenValueString), false)} ,
-			{ "SubjectNames", new Property (typeof(TokenValueListString), true)} ,
-			{ "SubjectLogos", new Property (typeof(TokenValueListString), true)} ,
-			{ "Issued", new Property (typeof(TokenValueDateTime), false)} ,
-			{ "Expires", new Property (typeof(TokenValueDateTime), false)} ,
-			{ "Policy", new Property (typeof(TokenValueString), false)} ,
-			{ "Practice", new Property (typeof(TokenValueString), false)} 
+			{ "Callsign", new PropertyString ("Callsign", 
+					(IBinding data, string? value) => {(data as Accreditation).Callsign = value;}, (IBinding data) => (data as Accreditation).Callsign )},
+			{ "ProfileUdf", new PropertyString ("ProfileUdf", 
+					(IBinding data, string? value) => {(data as Accreditation).ProfileUdf = value;}, (IBinding data) => (data as Accreditation).ProfileUdf )},
+			{ "SubjectNames", new PropertyListString ("SubjectNames", 
+					(IBinding data, List<string>? value) => {(data as Accreditation).SubjectNames = value;}, (IBinding data) => (data as Accreditation).SubjectNames )},
+			{ "SubjectLogos", new PropertyListString ("SubjectLogos", 
+					(IBinding data, List<string>? value) => {(data as Accreditation).SubjectLogos = value;}, (IBinding data) => (data as Accreditation).SubjectLogos )},
+			{ "Issued", new PropertyDateTime ("Issued", 
+					(IBinding data, DateTime? value) => {(data as Accreditation).Issued = value;}, (IBinding data) => (data as Accreditation).Issued )},
+			{ "Expires", new PropertyDateTime ("Expires", 
+					(IBinding data, DateTime? value) => {(data as Accreditation).Expires = value;}, (IBinding data) => (data as Accreditation).Expires )},
+			{ "Policy", new PropertyString ("Policy", 
+					(IBinding data, string? value) => {(data as Accreditation).Policy = value;}, (IBinding data) => (data as Accreditation).Policy )},
+			{ "Practice", new PropertyString ("Practice", 
+					(IBinding data, string? value) => {(data as Accreditation).Practice = value;}, (IBinding data) => (data as Accreditation).Practice )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -2800,46 +2068,22 @@ public partial class ConnectionStripped : Connection {
         ///To be removed
         /// </summary>
 
-	public virtual string						Account  {get; set;}
+	public virtual string?						Account  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Account" : {
-				if (value is TokenValueString vvalue) {
-					Account = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Account" : {
-				return new TokenValueString (Account);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ConnectionStripped(), Connection._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Account", new Property (typeof(TokenValueString), false)} 
+			{ "Account", new PropertyString ("Account", 
+					(IBinding data, string? value) => {(data as ConnectionStripped).Account = value;}, (IBinding data) => (data as ConnectionStripped).Account )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -2907,46 +2151,22 @@ public partial class ConnectionService : Connection {
         ///The account address
         /// </summary>
 
-	public virtual string						ProfileUdf  {get; set;}
+	public virtual string?						ProfileUdf  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "ProfileUdf" : {
-				if (value is TokenValueString vvalue) {
-					ProfileUdf = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "ProfileUdf" : {
-				return new TokenValueString (ProfileUdf);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ConnectionService(), Connection._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "ProfileUdf", new Property (typeof(TokenValueString), false)} 
+			{ "ProfileUdf", new PropertyString ("ProfileUdf", 
+					(IBinding data, string? value) => {(data as ConnectionService).ProfileUdf = value;}, (IBinding data) => (data as ConnectionService).ProfileUdf )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3013,78 +2233,39 @@ public partial class ConnectionDevice : ConnectionService {
         /// <summary>
         /// </summary>
 
-	public virtual List<string>				Roles  {get; set;}
+	public virtual List<string>?					Roles  {get; set;}
         /// <summary>
         ///The signature key for use of the device under the profile
         /// </summary>
 
-	public virtual KeyData						Signature  {get; set;}
+	public virtual KeyData?						Signature  {get; set;}
+
         /// <summary>
         ///The encryption key for use of the device under the profile
         /// </summary>
 
-	public virtual KeyData						Encryption  {get; set;}
+	public virtual KeyData?						Encryption  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Roles" : {
-				if (value is TokenValueListString vvalue) {
-					Roles = vvalue.Value;
-					}
-				break;
-				}
-			case "Signature" : {
-				if (value is TokenValueStructObject vvalue) {
-					Signature = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "Encryption" : {
-				if (value is TokenValueStructObject vvalue) {
-					Encryption = vvalue.Value as KeyData;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Roles" : {
-				return new TokenValueListString (Roles);
-				}
-			case "Signature" : {
-				return new TokenValueStruct<KeyData> (Signature);
-				}
-			case "Encryption" : {
-				return new TokenValueStruct<KeyData> (Encryption);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ConnectionDevice(), ConnectionService._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Roles", new Property (typeof(TokenValueListString), true)} ,
-			{ "Signature", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "Encryption", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} 
+			{ "Roles", new PropertyListString ("Roles", 
+					(IBinding data, List<string>? value) => {(data as ConnectionDevice).Roles = value;}, (IBinding data) => (data as ConnectionDevice).Roles )},
+			{ "Signature", new PropertyStruct ("Signature", 
+					(IBinding data, object? value) => {(data as ConnectionDevice).Signature = value as KeyData;}, (IBinding data) => (data as ConnectionDevice).Signature,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "Encryption", new PropertyStruct ("Encryption", 
+					(IBinding data, object? value) => {(data as ConnectionDevice).Encryption = value as KeyData;}, (IBinding data) => (data as ConnectionDevice).Encryption,
+					false, ()=>new  KeyData(), ()=>new KeyData())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3150,29 +2331,12 @@ public partial class ConnectionDevice : ConnectionService {
 public partial class ConnectionApplication : Connection {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ConnectionApplication(), Connection._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -3242,29 +2406,12 @@ public partial class ConnectionApplication : Connection {
 public partial class ConnectionGroup : Connection {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ConnectionGroup(), Connection._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -3334,93 +2481,47 @@ public partial class AccountHostAssignment : Assertion {
         ///The account being bound
         /// </summary>
 
-	public virtual string						AccountAddess  {get; set;}
+	public virtual string?						AccountAddess  {get; set;}
+
         /// <summary>
         ///Host address in Callsign, DNS or IP format in order of preference.
         /// </summary>
 
-	public virtual List<string>				HostAddresses  {get; set;}
+	public virtual List<string>?					HostAddresses  {get; set;}
         /// <summary>
         ///Encryption key to be used to encrypt data for the service to use.
         /// </summary>
 
-	public virtual KeyData						AccessEncrypt  {get; set;}
+	public virtual KeyData?						AccessEncrypt  {get; set;}
+
         /// <summary>
         ///Profile of the callsign registry used by the service.
         /// </summary>
 
-	public virtual ProfileAccount						CallsignServiceProfile  {get; set;}
+	public virtual ProfileAccount?						CallsignServiceProfile  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "AccountAddess" : {
-				if (value is TokenValueString vvalue) {
-					AccountAddess = vvalue.Value;
-					}
-				break;
-				}
-			case "HostAddresses" : {
-				if (value is TokenValueListString vvalue) {
-					HostAddresses = vvalue.Value;
-					}
-				break;
-				}
-			case "AccessEncrypt" : {
-				if (value is TokenValueStructObject vvalue) {
-					AccessEncrypt = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "CallsignServiceProfile" : {
-				if (value is TokenValueStructObject vvalue) {
-					CallsignServiceProfile = vvalue.Value as ProfileAccount;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "AccountAddess" : {
-				return new TokenValueString (AccountAddess);
-				}
-			case "HostAddresses" : {
-				return new TokenValueListString (HostAddresses);
-				}
-			case "AccessEncrypt" : {
-				return new TokenValueStruct<KeyData> (AccessEncrypt);
-				}
-			case "CallsignServiceProfile" : {
-				return new TokenValueStruct<ProfileAccount> (CallsignServiceProfile);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new AccountHostAssignment(), Assertion._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "AccountAddess", new Property (typeof(TokenValueString), false)} ,
-			{ "HostAddresses", new Property (typeof(TokenValueListString), true)} ,
-			{ "AccessEncrypt", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "CallsignServiceProfile", new Property ( typeof(TokenValueStruct), false,
-					()=>new ProfileAccount(), ()=>new ProfileAccount(), false)} 
+			{ "AccountAddess", new PropertyString ("AccountAddess", 
+					(IBinding data, string? value) => {(data as AccountHostAssignment).AccountAddess = value;}, (IBinding data) => (data as AccountHostAssignment).AccountAddess )},
+			{ "HostAddresses", new PropertyListString ("HostAddresses", 
+					(IBinding data, List<string>? value) => {(data as AccountHostAssignment).HostAddresses = value;}, (IBinding data) => (data as AccountHostAssignment).HostAddresses )},
+			{ "AccessEncrypt", new PropertyStruct ("AccessEncrypt", 
+					(IBinding data, object? value) => {(data as AccountHostAssignment).AccessEncrypt = value as KeyData;}, (IBinding data) => (data as AccountHostAssignment).AccessEncrypt,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "CallsignServiceProfile", new PropertyStruct ("CallsignServiceProfile", 
+					(IBinding data, object? value) => {(data as AccountHostAssignment).CallsignServiceProfile = value as ProfileAccount;}, (IBinding data) => (data as AccountHostAssignment).CallsignServiceProfile,
+					false, ()=>new  ProfileAccount(), ()=>new ProfileAccount())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3484,29 +2585,12 @@ public partial class AccountHostAssignment : Assertion {
 public partial class ConnectionHost : Connection {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ConnectionHost(), Connection._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -3579,46 +2663,22 @@ public partial class ActivationAccount : Activation {
         ///The UDF of the account
         /// </summary>
 
-	public virtual string						AccountUdf  {get; set;}
+	public virtual string?						AccountUdf  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "AccountUdf" : {
-				if (value is TokenValueString vvalue) {
-					AccountUdf = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "AccountUdf" : {
-				return new TokenValueString (AccountUdf);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ActivationAccount(), Activation._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "AccountUdf", new Property (typeof(TokenValueString), false)} 
+			{ "AccountUdf", new PropertyString ("AccountUdf", 
+					(IBinding data, string? value) => {(data as ActivationAccount).AccountUdf = value;}, (IBinding data) => (data as ActivationAccount).AccountUdf )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3685,29 +2745,12 @@ public partial class ActivationAccount : Activation {
 public partial class ActivationHost : ActivationAccount {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ActivationHost(), ActivationAccount._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -3778,112 +2821,60 @@ public partial class ActivationCommon : Activation {
         ///to the profile.
         /// </summary>
 
-	public virtual KeyData						ProfileSignature  {get; set;}
+	public virtual KeyData?						ProfileSignature  {get; set;}
+
         /// <summary>
         ///Grant access to Profile administration key used to make changes to
         ///administrator catalogs.
         /// </summary>
 
-	public virtual KeyData						AdministratorSignature  {get; set;}
+	public virtual KeyData?						AdministratorSignature  {get; set;}
+
         /// <summary>
         ///Grant access to ProfileUser account encryption key
         /// </summary>
 
-	public virtual KeyData						Encryption  {get; set;}
+	public virtual KeyData?						Encryption  {get; set;}
+
         /// <summary>
         ///Grant access to ProfileUser account authentication key
         /// </summary>
 
-	public virtual KeyData						Authentication  {get; set;}
+	public virtual KeyData?						Authentication  {get; set;}
+
         /// <summary>
         ///Grant access to ProfileUser account signature key
         /// </summary>
 
-	public virtual KeyData						Signature  {get; set;}
+	public virtual KeyData?						Signature  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "ProfileSignature" : {
-				if (value is TokenValueStructObject vvalue) {
-					ProfileSignature = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "AdministratorSignature" : {
-				if (value is TokenValueStructObject vvalue) {
-					AdministratorSignature = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "Encryption" : {
-				if (value is TokenValueStructObject vvalue) {
-					Encryption = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "Authentication" : {
-				if (value is TokenValueStructObject vvalue) {
-					Authentication = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "Signature" : {
-				if (value is TokenValueStructObject vvalue) {
-					Signature = vvalue.Value as KeyData;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "ProfileSignature" : {
-				return new TokenValueStruct<KeyData> (ProfileSignature);
-				}
-			case "AdministratorSignature" : {
-				return new TokenValueStruct<KeyData> (AdministratorSignature);
-				}
-			case "Encryption" : {
-				return new TokenValueStruct<KeyData> (Encryption);
-				}
-			case "Authentication" : {
-				return new TokenValueStruct<KeyData> (Authentication);
-				}
-			case "Signature" : {
-				return new TokenValueStruct<KeyData> (Signature);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ActivationCommon(), Activation._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "ProfileSignature", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "AdministratorSignature", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "Encryption", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "Authentication", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "Signature", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} 
+			{ "ProfileSignature", new PropertyStruct ("ProfileSignature", 
+					(IBinding data, object? value) => {(data as ActivationCommon).ProfileSignature = value as KeyData;}, (IBinding data) => (data as ActivationCommon).ProfileSignature,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "AdministratorSignature", new PropertyStruct ("AdministratorSignature", 
+					(IBinding data, object? value) => {(data as ActivationCommon).AdministratorSignature = value as KeyData;}, (IBinding data) => (data as ActivationCommon).AdministratorSignature,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "Encryption", new PropertyStruct ("Encryption", 
+					(IBinding data, object? value) => {(data as ActivationCommon).Encryption = value as KeyData;}, (IBinding data) => (data as ActivationCommon).Encryption,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "Authentication", new PropertyStruct ("Authentication", 
+					(IBinding data, object? value) => {(data as ActivationCommon).Authentication = value as KeyData;}, (IBinding data) => (data as ActivationCommon).Authentication,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "Signature", new PropertyStruct ("Signature", 
+					(IBinding data, object? value) => {(data as ActivationCommon).Signature = value as KeyData;}, (IBinding data) => (data as ActivationCommon).Signature,
+					false, ()=>new  KeyData(), ()=>new KeyData())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3947,29 +2938,12 @@ public partial class ActivationCommon : Activation {
 public partial class ActivationApplication : Activation {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ActivationApplication(), Activation._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -4039,47 +3013,23 @@ public partial class ActivationApplicationSsh : ActivationApplication {
         ///The SSH client key.
         /// </summary>
 
-	public virtual KeyData						ClientKey  {get; set;}
+	public virtual KeyData?						ClientKey  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "ClientKey" : {
-				if (value is TokenValueStructObject vvalue) {
-					ClientKey = vvalue.Value as KeyData;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "ClientKey" : {
-				return new TokenValueStruct<KeyData> (ClientKey);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ActivationApplicationSsh(), ActivationApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "ClientKey", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} 
+			{ "ClientKey", new PropertyStruct ("ClientKey", 
+					(IBinding data, object? value) => {(data as ActivationApplicationSsh).ClientKey = value as KeyData;}, (IBinding data) => (data as ActivationApplicationSsh).ClientKey,
+					false, ()=>new  KeyData(), ()=>new KeyData())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4145,95 +3095,50 @@ public partial class ActivationApplicationMail : ActivationApplication {
         ///The S/Mime signature key
         /// </summary>
 
-	public virtual KeyData						SmimeSign  {get; set;}
+	public virtual KeyData?						SmimeSign  {get; set;}
+
         /// <summary>
         ///The S/Mime encryption key
         /// </summary>
 
-	public virtual KeyData						SmimeEncrypt  {get; set;}
+	public virtual KeyData?						SmimeEncrypt  {get; set;}
+
         /// <summary>
         ///The OpenPGP signature key
         /// </summary>
 
-	public virtual KeyData						OpenpgpSign  {get; set;}
+	public virtual KeyData?						OpenpgpSign  {get; set;}
+
         /// <summary>
         ///The OpenPGP encryption key
         /// </summary>
 
-	public virtual KeyData						OpenpgpEncrypt  {get; set;}
+	public virtual KeyData?						OpenpgpEncrypt  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "SmimeSign" : {
-				if (value is TokenValueStructObject vvalue) {
-					SmimeSign = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "SmimeEncrypt" : {
-				if (value is TokenValueStructObject vvalue) {
-					SmimeEncrypt = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "OpenpgpSign" : {
-				if (value is TokenValueStructObject vvalue) {
-					OpenpgpSign = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "OpenpgpEncrypt" : {
-				if (value is TokenValueStructObject vvalue) {
-					OpenpgpEncrypt = vvalue.Value as KeyData;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "SmimeSign" : {
-				return new TokenValueStruct<KeyData> (SmimeSign);
-				}
-			case "SmimeEncrypt" : {
-				return new TokenValueStruct<KeyData> (SmimeEncrypt);
-				}
-			case "OpenpgpSign" : {
-				return new TokenValueStruct<KeyData> (OpenpgpSign);
-				}
-			case "OpenpgpEncrypt" : {
-				return new TokenValueStruct<KeyData> (OpenpgpEncrypt);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ActivationApplicationMail(), ActivationApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "SmimeSign", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "SmimeEncrypt", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "OpenpgpSign", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "OpenpgpEncrypt", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} 
+			{ "SmimeSign", new PropertyStruct ("SmimeSign", 
+					(IBinding data, object? value) => {(data as ActivationApplicationMail).SmimeSign = value as KeyData;}, (IBinding data) => (data as ActivationApplicationMail).SmimeSign,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "SmimeEncrypt", new PropertyStruct ("SmimeEncrypt", 
+					(IBinding data, object? value) => {(data as ActivationApplicationMail).SmimeEncrypt = value as KeyData;}, (IBinding data) => (data as ActivationApplicationMail).SmimeEncrypt,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "OpenpgpSign", new PropertyStruct ("OpenpgpSign", 
+					(IBinding data, object? value) => {(data as ActivationApplicationMail).OpenpgpSign = value as KeyData;}, (IBinding data) => (data as ActivationApplicationMail).OpenpgpSign,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "OpenpgpEncrypt", new PropertyStruct ("OpenpgpEncrypt", 
+					(IBinding data, object? value) => {(data as ActivationApplicationMail).OpenpgpEncrypt = value as KeyData;}, (IBinding data) => (data as ActivationApplicationMail).OpenpgpEncrypt,
+					false, ()=>new  KeyData(), ()=>new KeyData())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4300,97 +3205,52 @@ public partial class ActivationApplicationGroup : ActivationApplication {
         ///for new members.
         /// </summary>
 
-	public virtual KeyData						AccountEncryption  {get; set;}
+	public virtual KeyData?						AccountEncryption  {get; set;}
+
         /// <summary>
         ///Key or capability allowing account updates, connection assertions
         ///etc to be signed.
         /// </summary>
 
-	public virtual KeyData						AdministratorSignature  {get; set;}
+	public virtual KeyData?						AdministratorSignature  {get; set;}
+
         /// <summary>
         ///Key or capability allowing administration of the group.
         /// </summary>
 
-	public virtual KeyData						AccountAuthentication  {get; set;}
+	public virtual KeyData?						AccountAuthentication  {get; set;}
+
         /// <summary>
         ///Signed connection service delegation allowing the device to
         ///access the account.
         /// </summary>
 
-	public virtual Enveloped<ConnectionService>						EnvelopedConnectionService  {get; set;}
+	public virtual Enveloped<ConnectionService>?						EnvelopedConnectionService  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "AccountEncryption" : {
-				if (value is TokenValueStructObject vvalue) {
-					AccountEncryption = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "AdministratorSignature" : {
-				if (value is TokenValueStructObject vvalue) {
-					AdministratorSignature = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "AccountAuthentication" : {
-				if (value is TokenValueStructObject vvalue) {
-					AccountAuthentication = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "EnvelopedConnectionService" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedConnectionService = vvalue.Value as Enveloped<ConnectionService>;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "AccountEncryption" : {
-				return new TokenValueStruct<KeyData> (AccountEncryption);
-				}
-			case "AdministratorSignature" : {
-				return new TokenValueStruct<KeyData> (AdministratorSignature);
-				}
-			case "AccountAuthentication" : {
-				return new TokenValueStruct<KeyData> (AccountAuthentication);
-				}
-			case "EnvelopedConnectionService" : {
-				return new TokenValueStruct<Enveloped<ConnectionService>> (EnvelopedConnectionService);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ActivationApplicationGroup(), ActivationApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "AccountEncryption", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "AdministratorSignature", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "AccountAuthentication", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "EnvelopedConnectionService", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>(), false)} 
+			{ "AccountEncryption", new PropertyStruct ("AccountEncryption", 
+					(IBinding data, object? value) => {(data as ActivationApplicationGroup).AccountEncryption = value as KeyData;}, (IBinding data) => (data as ActivationApplicationGroup).AccountEncryption,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "AdministratorSignature", new PropertyStruct ("AdministratorSignature", 
+					(IBinding data, object? value) => {(data as ActivationApplicationGroup).AdministratorSignature = value as KeyData;}, (IBinding data) => (data as ActivationApplicationGroup).AdministratorSignature,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "AccountAuthentication", new PropertyStruct ("AccountAuthentication", 
+					(IBinding data, object? value) => {(data as ActivationApplicationGroup).AccountAuthentication = value as KeyData;}, (IBinding data) => (data as ActivationApplicationGroup).AccountAuthentication,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", 
+					(IBinding data, object? value) => {(data as ActivationApplicationGroup).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as ActivationApplicationGroup).EnvelopedConnectionService,
+					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4455,46 +3315,22 @@ abstract public partial class ApplicationEntry : MeshItem {
         /// <summary>
         /// </summary>
 
-	public virtual string						Identifier  {get; set;}
+	public virtual string?						Identifier  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Identifier" : {
-				if (value is TokenValueString vvalue) {
-					Identifier = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Identifier" : {
-				return new TokenValueString (Identifier);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,null, null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Identifier", new Property (typeof(TokenValueString), false)} 
+			{ "Identifier", new PropertyString ("Identifier", 
+					(IBinding data, string? value) => {(data as ApplicationEntry).Identifier = value;}, (IBinding data) => (data as ApplicationEntry).Identifier )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4555,47 +3391,23 @@ public partial class ApplicationEntrySsh : ApplicationEntry {
         /// <summary>
         /// </summary>
 
-	public virtual Enveloped<ActivationApplicationSsh>						EnvelopedActivation  {get; set;}
+	public virtual Enveloped<ActivationApplicationSsh>?						EnvelopedActivation  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "EnvelopedActivation" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedActivation = vvalue.Value as Enveloped<ActivationApplicationSsh>;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "EnvelopedActivation" : {
-				return new TokenValueStruct<Enveloped<ActivationApplicationSsh>> (EnvelopedActivation);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ApplicationEntrySsh(), ApplicationEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "EnvelopedActivation", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ActivationApplicationSsh>(), ()=>new Enveloped<ActivationApplicationSsh>(), false)} 
+			{ "EnvelopedActivation", new PropertyStruct ("EnvelopedActivation", 
+					(IBinding data, object? value) => {(data as ApplicationEntrySsh).EnvelopedActivation = value as Enveloped<ActivationApplicationSsh>;}, (IBinding data) => (data as ApplicationEntrySsh).EnvelopedActivation,
+					false, ()=>new  Enveloped<ActivationApplicationSsh>(), ()=>new Enveloped<ActivationApplicationSsh>())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4660,47 +3472,23 @@ public partial class ApplicationEntryGroup : ApplicationEntry {
         /// <summary>
         /// </summary>
 
-	public virtual Enveloped<ActivationApplicationGroup>						EnvelopedActivation  {get; set;}
+	public virtual Enveloped<ActivationApplicationGroup>?						EnvelopedActivation  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "EnvelopedActivation" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedActivation = vvalue.Value as Enveloped<ActivationApplicationGroup>;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "EnvelopedActivation" : {
-				return new TokenValueStruct<Enveloped<ActivationApplicationGroup>> (EnvelopedActivation);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ApplicationEntryGroup(), ApplicationEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "EnvelopedActivation", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ActivationApplicationGroup>(), ()=>new Enveloped<ActivationApplicationGroup>(), false)} 
+			{ "EnvelopedActivation", new PropertyStruct ("EnvelopedActivation", 
+					(IBinding data, object? value) => {(data as ApplicationEntryGroup).EnvelopedActivation = value as Enveloped<ActivationApplicationGroup>;}, (IBinding data) => (data as ApplicationEntryGroup).EnvelopedActivation,
+					false, ()=>new  Enveloped<ActivationApplicationGroup>(), ()=>new Enveloped<ActivationApplicationGroup>())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4765,47 +3553,23 @@ public partial class ApplicationEntryMail : ApplicationEntry {
         /// <summary>
         /// </summary>
 
-	public virtual Enveloped<ActivationApplicationMail>						EnvelopedActivation  {get; set;}
+	public virtual Enveloped<ActivationApplicationMail>?						EnvelopedActivation  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "EnvelopedActivation" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedActivation = vvalue.Value as Enveloped<ActivationApplicationMail>;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "EnvelopedActivation" : {
-				return new TokenValueStruct<Enveloped<ActivationApplicationMail>> (EnvelopedActivation);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ApplicationEntryMail(), ApplicationEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "EnvelopedActivation", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ActivationApplicationMail>(), ()=>new Enveloped<ActivationApplicationMail>(), false)} 
+			{ "EnvelopedActivation", new PropertyStruct ("EnvelopedActivation", 
+					(IBinding data, object? value) => {(data as ApplicationEntryMail).EnvelopedActivation = value as Enveloped<ActivationApplicationMail>;}, (IBinding data) => (data as ApplicationEntryMail).EnvelopedActivation,
+					false, ()=>new  Enveloped<ActivationApplicationMail>(), ()=>new Enveloped<ActivationApplicationMail>())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4873,157 +3637,78 @@ abstract public partial class Contact : Assertion {
         ///The globally unique contact identifier.
         /// </summary>
 
-	public virtual string						Id  {get; set;}
+	public virtual string?						Id  {get; set;}
+
         /// <summary>
         ///The local name.
         /// </summary>
 
-	public virtual string						Local  {get; set;}
+	public virtual string?						Local  {get; set;}
+
         /// <summary>
         ///Mesh fingerprints associated with the contact.
         /// </summary>
 
-	public virtual List<Anchor>				Anchors  {get; set;}
+	public virtual List<Anchor>?					Anchors  {get; set;}
         /// <summary>
         ///Network address entries
         /// </summary>
 
-	public virtual List<NetworkAddress>				NetworkAddresses  {get; set;}
+	public virtual List<NetworkAddress>?					NetworkAddresses  {get; set;}
         /// <summary>
         ///The physical locations the contact is associated with.
         /// </summary>
 
-	public virtual List<Location>				Locations  {get; set;}
+	public virtual List<Location>?					Locations  {get; set;}
         /// <summary>
         ///The roles of the contact
         /// </summary>
 
-	public virtual List<Role>				Roles  {get; set;}
+	public virtual List<Role>?					Roles  {get; set;}
         /// <summary>
         ///The Web sites and other online presences of the contact
         /// </summary>
 
-	public virtual List<Bookmark>				Bookmark  {get; set;}
+	public virtual List<Bookmark>?					Bookmark  {get; set;}
         /// <summary>
         ///Source(s) from which this contact was constructed.
         /// </summary>
 
-	public virtual List<TaggedSource>				Sources  {get; set;}
+	public virtual List<TaggedSource>?					Sources  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Id" : {
-				if (value is TokenValueString vvalue) {
-					Id = vvalue.Value;
-					}
-				break;
-				}
-			case "Local" : {
-				if (value is TokenValueString vvalue) {
-					Local = vvalue.Value;
-					}
-				break;
-				}
-			case "Anchors" : {
-				if (value is TokenValueListStructObject vvalue) {
-					Anchors = vvalue.Value as List<Anchor>;
-					}
-				break;
-				}
-			case "NetworkAddresses" : {
-				if (value is TokenValueListStructObject vvalue) {
-					NetworkAddresses = vvalue.Value as List<NetworkAddress>;
-					}
-				break;
-				}
-			case "Locations" : {
-				if (value is TokenValueListStructObject vvalue) {
-					Locations = vvalue.Value as List<Location>;
-					}
-				break;
-				}
-			case "Roles" : {
-				if (value is TokenValueListStructObject vvalue) {
-					Roles = vvalue.Value as List<Role>;
-					}
-				break;
-				}
-			case "Bookmark" : {
-				if (value is TokenValueListStructObject vvalue) {
-					Bookmark = vvalue.Value as List<Bookmark>;
-					}
-				break;
-				}
-			case "Sources" : {
-				if (value is TokenValueListStructObject vvalue) {
-					Sources = vvalue.Value as List<TaggedSource>;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Id" : {
-				return new TokenValueString (Id);
-				}
-			case "Local" : {
-				return new TokenValueString (Local);
-				}
-			case "Anchors" : {
-				return new TokenValueListStruct<Anchor> (Anchors);
-				}
-			case "NetworkAddresses" : {
-				return new TokenValueListStruct<NetworkAddress> (NetworkAddresses);
-				}
-			case "Locations" : {
-				return new TokenValueListStruct<Location> (Locations);
-				}
-			case "Roles" : {
-				return new TokenValueListStruct<Role> (Roles);
-				}
-			case "Bookmark" : {
-				return new TokenValueListStruct<Bookmark> (Bookmark);
-				}
-			case "Sources" : {
-				return new TokenValueListStruct<TaggedSource> (Sources);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,null, Assertion._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Id", new Property (typeof(TokenValueString), false)} ,
-			{ "Local", new Property (typeof(TokenValueString), false)} ,
-			{ "Anchors", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<Anchor>(), ()=>new Anchor(), false)} ,
-			{ "NetworkAddresses", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<NetworkAddress>(), ()=>new NetworkAddress(), false)} ,
-			{ "Locations", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<Location>(), ()=>new Location(), false)} ,
-			{ "Roles", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<Role>(), ()=>new Role(), false)} ,
-			{ "Bookmark", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<Bookmark>(), ()=>new Bookmark(), false)} ,
-			{ "Sources", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<TaggedSource>(), ()=>new TaggedSource(), false)} 
+			{ "Id", new PropertyString ("Id", 
+					(IBinding data, string? value) => {(data as Contact).Id = value;}, (IBinding data) => (data as Contact).Id )},
+			{ "Local", new PropertyString ("Local", 
+					(IBinding data, string? value) => {(data as Contact).Local = value;}, (IBinding data) => (data as Contact).Local )},
+			{ "Anchors", new PropertyListStruct ("Anchors", 
+					(IBinding data, object? value) => {(data as Contact).Anchors = value as List<Anchor>;}, (IBinding data) => (data as Contact).Anchors,
+					false, ()=>new  List<Anchor>(), ()=>new Anchor())} ,
+			{ "NetworkAddresses", new PropertyListStruct ("NetworkAddresses", 
+					(IBinding data, object? value) => {(data as Contact).NetworkAddresses = value as List<NetworkAddress>;}, (IBinding data) => (data as Contact).NetworkAddresses,
+					false, ()=>new  List<NetworkAddress>(), ()=>new NetworkAddress())} ,
+			{ "Locations", new PropertyListStruct ("Locations", 
+					(IBinding data, object? value) => {(data as Contact).Locations = value as List<Location>;}, (IBinding data) => (data as Contact).Locations,
+					false, ()=>new  List<Location>(), ()=>new Location())} ,
+			{ "Roles", new PropertyListStruct ("Roles", 
+					(IBinding data, object? value) => {(data as Contact).Roles = value as List<Role>;}, (IBinding data) => (data as Contact).Roles,
+					false, ()=>new  List<Role>(), ()=>new Role())} ,
+			{ "Bookmark", new PropertyListStruct ("Bookmark", 
+					(IBinding data, object? value) => {(data as Contact).Bookmark = value as List<Bookmark>;}, (IBinding data) => (data as Contact).Bookmark,
+					false, ()=>new  List<Bookmark>(), ()=>new Bookmark())} ,
+			{ "Sources", new PropertyListStruct ("Sources", 
+					(IBinding data, object? value) => {(data as Contact).Sources = value as List<TaggedSource>;}, (IBinding data) => (data as Contact).Sources,
+					false, ()=>new  List<TaggedSource>(), ()=>new TaggedSource())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -5088,61 +3773,30 @@ public partial class Anchor : MeshItem {
         ///The trust anchor.
         /// </summary>
 
-	public virtual string						Udf  {get; set;}
+	public virtual string?						Udf  {get; set;}
+
         /// <summary>
         ///The means of validation.
         /// </summary>
 
-	public virtual string						Validation  {get; set;}
+	public virtual string?						Validation  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Udf" : {
-				if (value is TokenValueString vvalue) {
-					Udf = vvalue.Value;
-					}
-				break;
-				}
-			case "Validation" : {
-				if (value is TokenValueString vvalue) {
-					Validation = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Udf" : {
-				return new TokenValueString (Udf);
-				}
-			case "Validation" : {
-				return new TokenValueString (Validation);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new Anchor(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Udf", new Property (typeof(TokenValueString), false)} ,
-			{ "Validation", new Property (typeof(TokenValueString), false)} 
+			{ "Udf", new PropertyString ("Udf", 
+					(IBinding data, string? value) => {(data as Anchor).Udf = value;}, (IBinding data) => (data as Anchor).Udf )},
+			{ "Validation", new PropertyString ("Validation", 
+					(IBinding data, string? value) => {(data as Anchor).Validation = value;}, (IBinding data) => (data as Anchor).Validation )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -5209,93 +3863,48 @@ public partial class TaggedSource : MeshItem {
         ///Short name for the contact information.
         /// </summary>
 
-	public virtual string						LocalName  {get; set;}
+	public virtual string?						LocalName  {get; set;}
+
         /// <summary>
         ///The means of validation.		
         /// </summary>
 
-	public virtual string						Validation  {get; set;}
+	public virtual string?						Validation  {get; set;}
+
         /// <summary>
         ///The contact data in binary form.
         /// </summary>
 
-	public virtual byte[]						BinarySource  {get; set;}
+	public virtual byte[]?						BinarySource  {get; set;}
+
         /// <summary>
         ///The contact data in enveloped form. If present, the BinarySource property
         ///is ignored.
         /// </summary>
 
-	public virtual Enveloped<Contact>						EnvelopedSource  {get; set;}
+	public virtual Enveloped<Contact>?						EnvelopedSource  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "LocalName" : {
-				if (value is TokenValueString vvalue) {
-					LocalName = vvalue.Value;
-					}
-				break;
-				}
-			case "Validation" : {
-				if (value is TokenValueString vvalue) {
-					Validation = vvalue.Value;
-					}
-				break;
-				}
-			case "BinarySource" : {
-				if (value is TokenValueBinary vvalue) {
-					BinarySource = vvalue.Value;
-					}
-				break;
-				}
-			case "EnvelopedSource" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedSource = vvalue.Value as Enveloped<Contact>;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "LocalName" : {
-				return new TokenValueString (LocalName);
-				}
-			case "Validation" : {
-				return new TokenValueString (Validation);
-				}
-			case "BinarySource" : {
-				return new TokenValueBinary (BinarySource);
-				}
-			case "EnvelopedSource" : {
-				return new TokenValueStruct<Enveloped<Contact>> (EnvelopedSource);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new TaggedSource(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "LocalName", new Property (typeof(TokenValueString), false)} ,
-			{ "Validation", new Property (typeof(TokenValueString), false)} ,
-			{ "BinarySource", new Property (typeof(TokenValueBinary), false)} ,
-			{ "EnvelopedSource", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<Contact>(), ()=>new Enveloped<Contact>(), false)} 
+			{ "LocalName", new PropertyString ("LocalName", 
+					(IBinding data, string? value) => {(data as TaggedSource).LocalName = value;}, (IBinding data) => (data as TaggedSource).LocalName )},
+			{ "Validation", new PropertyString ("Validation", 
+					(IBinding data, string? value) => {(data as TaggedSource).Validation = value;}, (IBinding data) => (data as TaggedSource).Validation )},
+			{ "BinarySource", new PropertyBinary ("BinarySource", 
+					(IBinding data, byte[]? value) => {(data as TaggedSource).BinarySource = value;}, (IBinding data) => (data as TaggedSource).BinarySource )},
+			{ "EnvelopedSource", new PropertyStruct ("EnvelopedSource", 
+					(IBinding data, object? value) => {(data as TaggedSource).EnvelopedSource = value as Enveloped<Contact>;}, (IBinding data) => (data as TaggedSource).EnvelopedSource,
+					false, ()=>new  Enveloped<Contact>(), ()=>new Enveloped<Contact>())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -5360,29 +3969,12 @@ public partial class TaggedSource : MeshItem {
 public partial class ContactGroup : Contact {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ContactGroup(), Contact._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -5454,47 +4046,22 @@ public partial class ContactPerson : Contact {
         ///List of person names in order of preference
         /// </summary>
 
-	public virtual List<PersonName>				CommonNames  {get; set;}
+	public virtual List<PersonName>?					CommonNames  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "CommonNames" : {
-				if (value is TokenValueListStructObject vvalue) {
-					CommonNames = vvalue.Value as List<PersonName>;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "CommonNames" : {
-				return new TokenValueListStruct<PersonName> (CommonNames);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ContactPerson(), Contact._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "CommonNames", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<PersonName>(), ()=>new PersonName(), false)} 
+			{ "CommonNames", new PropertyListStruct ("CommonNames", 
+					(IBinding data, object? value) => {(data as ContactPerson).CommonNames = value as List<PersonName>;}, (IBinding data) => (data as ContactPerson).CommonNames,
+					false, ()=>new  List<PersonName>(), ()=>new PersonName())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -5562,47 +4129,22 @@ public partial class ContactOrganization : Contact {
         ///List of person names in order of preference
         /// </summary>
 
-	public virtual List<OrganizationName>				CommonNames  {get; set;}
+	public virtual List<OrganizationName>?					CommonNames  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "CommonNames" : {
-				if (value is TokenValueListStructObject vvalue) {
-					CommonNames = vvalue.Value as List<OrganizationName>;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "CommonNames" : {
-				return new TokenValueListStruct<OrganizationName> (CommonNames);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ContactOrganization(), Contact._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "CommonNames", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<OrganizationName>(), ()=>new OrganizationName(), false)} 
+			{ "CommonNames", new PropertyListStruct ("CommonNames", 
+					(IBinding data, object? value) => {(data as ContactOrganization).CommonNames = value as List<OrganizationName>;}, (IBinding data) => (data as ContactOrganization).CommonNames,
+					false, ()=>new  List<OrganizationName>(), ()=>new OrganizationName())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -5671,76 +4213,38 @@ public partial class OrganizationName : MeshItem {
         /// </summary>
 
 	public virtual bool?						Inactive  {get; set;}
+
         /// <summary>
         ///The registered name.
         /// </summary>
 
-	public virtual string						RegisteredName  {get; set;}
+	public virtual string?						RegisteredName  {get; set;}
+
         /// <summary>
         ///Names that the organization uses including trading names
         ///and doing business as names.
         /// </summary>
 
-	public virtual string						DBA  {get; set;}
+	public virtual string?						DBA  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Inactive" : {
-				if (value is TokenValueBoolean vvalue) {
-					Inactive = vvalue.Value;
-					}
-				break;
-				}
-			case "RegisteredName" : {
-				if (value is TokenValueString vvalue) {
-					RegisteredName = vvalue.Value;
-					}
-				break;
-				}
-			case "DBA" : {
-				if (value is TokenValueString vvalue) {
-					DBA = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Inactive" : {
-				return new TokenValueBoolean (Inactive);
-				}
-			case "RegisteredName" : {
-				return new TokenValueString (RegisteredName);
-				}
-			case "DBA" : {
-				return new TokenValueString (DBA);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new OrganizationName(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Inactive", new Property (typeof(TokenValueBoolean), false)} ,
-			{ "RegisteredName", new Property (typeof(TokenValueString), false)} ,
-			{ "DBA", new Property (typeof(TokenValueString), false)} 
+			{ "Inactive", new PropertyBoolean ("Inactive", 
+					(IBinding data, bool? value) => {(data as OrganizationName).Inactive = value;}, (IBinding data) => (data as OrganizationName).Inactive )},
+			{ "RegisteredName", new PropertyString ("RegisteredName", 
+					(IBinding data, string? value) => {(data as OrganizationName).RegisteredName = value;}, (IBinding data) => (data as OrganizationName).RegisteredName )},
+			{ "DBA", new PropertyString ("DBA", 
+					(IBinding data, string? value) => {(data as OrganizationName).DBA = value;}, (IBinding data) => (data as OrganizationName).DBA )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -5808,150 +4312,76 @@ public partial class PersonName : MeshItem {
         /// </summary>
 
 	public virtual bool?						Inactive  {get; set;}
+
         /// <summary>
         ///The preferred presentation of the full name.
         /// </summary>
 
-	public virtual string						FullName  {get; set;}
+	public virtual string?						FullName  {get; set;}
+
         /// <summary>
         ///Honorific or title, E.g. Sir, Lord, Dr., Mr.
         /// </summary>
 
-	public virtual string						Prefix  {get; set;}
+	public virtual string?						Prefix  {get; set;}
+
         /// <summary>
         ///First name.
         /// </summary>
 
-	public virtual string						First  {get; set;}
+	public virtual string?						First  {get; set;}
+
         /// <summary>
         ///Middle names or initials.
         /// </summary>
 
-	public virtual List<string>				Middle  {get; set;}
+	public virtual List<string>?					Middle  {get; set;}
         /// <summary>
         ///Last name.
         /// </summary>
 
-	public virtual string						Last  {get; set;}
+	public virtual string?						Last  {get; set;}
+
         /// <summary>
         ///Nominal suffix, e.g. Jr., III, etc.
         /// </summary>
 
-	public virtual string						Suffix  {get; set;}
+	public virtual string?						Suffix  {get; set;}
+
         /// <summary>
         ///Post nominal letters (if used).
         /// </summary>
 
-	public virtual string						PostNominal  {get; set;}
+	public virtual string?						PostNominal  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Inactive" : {
-				if (value is TokenValueBoolean vvalue) {
-					Inactive = vvalue.Value;
-					}
-				break;
-				}
-			case "FullName" : {
-				if (value is TokenValueString vvalue) {
-					FullName = vvalue.Value;
-					}
-				break;
-				}
-			case "Prefix" : {
-				if (value is TokenValueString vvalue) {
-					Prefix = vvalue.Value;
-					}
-				break;
-				}
-			case "First" : {
-				if (value is TokenValueString vvalue) {
-					First = vvalue.Value;
-					}
-				break;
-				}
-			case "Middle" : {
-				if (value is TokenValueListString vvalue) {
-					Middle = vvalue.Value;
-					}
-				break;
-				}
-			case "Last" : {
-				if (value is TokenValueString vvalue) {
-					Last = vvalue.Value;
-					}
-				break;
-				}
-			case "Suffix" : {
-				if (value is TokenValueString vvalue) {
-					Suffix = vvalue.Value;
-					}
-				break;
-				}
-			case "PostNominal" : {
-				if (value is TokenValueString vvalue) {
-					PostNominal = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Inactive" : {
-				return new TokenValueBoolean (Inactive);
-				}
-			case "FullName" : {
-				return new TokenValueString (FullName);
-				}
-			case "Prefix" : {
-				return new TokenValueString (Prefix);
-				}
-			case "First" : {
-				return new TokenValueString (First);
-				}
-			case "Middle" : {
-				return new TokenValueListString (Middle);
-				}
-			case "Last" : {
-				return new TokenValueString (Last);
-				}
-			case "Suffix" : {
-				return new TokenValueString (Suffix);
-				}
-			case "PostNominal" : {
-				return new TokenValueString (PostNominal);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new PersonName(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Inactive", new Property (typeof(TokenValueBoolean), false)} ,
-			{ "FullName", new Property (typeof(TokenValueString), false)} ,
-			{ "Prefix", new Property (typeof(TokenValueString), false)} ,
-			{ "First", new Property (typeof(TokenValueString), false)} ,
-			{ "Middle", new Property (typeof(TokenValueListString), true)} ,
-			{ "Last", new Property (typeof(TokenValueString), false)} ,
-			{ "Suffix", new Property (typeof(TokenValueString), false)} ,
-			{ "PostNominal", new Property (typeof(TokenValueString), false)} 
+			{ "Inactive", new PropertyBoolean ("Inactive", 
+					(IBinding data, bool? value) => {(data as PersonName).Inactive = value;}, (IBinding data) => (data as PersonName).Inactive )},
+			{ "FullName", new PropertyString ("FullName", 
+					(IBinding data, string? value) => {(data as PersonName).FullName = value;}, (IBinding data) => (data as PersonName).FullName )},
+			{ "Prefix", new PropertyString ("Prefix", 
+					(IBinding data, string? value) => {(data as PersonName).Prefix = value;}, (IBinding data) => (data as PersonName).Prefix )},
+			{ "First", new PropertyString ("First", 
+					(IBinding data, string? value) => {(data as PersonName).First = value;}, (IBinding data) => (data as PersonName).First )},
+			{ "Middle", new PropertyListString ("Middle", 
+					(IBinding data, List<string>? value) => {(data as PersonName).Middle = value;}, (IBinding data) => (data as PersonName).Middle )},
+			{ "Last", new PropertyString ("Last", 
+					(IBinding data, string? value) => {(data as PersonName).Last = value;}, (IBinding data) => (data as PersonName).Last )},
+			{ "Suffix", new PropertyString ("Suffix", 
+					(IBinding data, string? value) => {(data as PersonName).Suffix = value;}, (IBinding data) => (data as PersonName).Suffix )},
+			{ "PostNominal", new PropertyString ("PostNominal", 
+					(IBinding data, string? value) => {(data as PersonName).PostNominal = value;}, (IBinding data) => (data as PersonName).PostNominal )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -6020,123 +4450,62 @@ public partial class NetworkAddress : MeshItem {
         /// </summary>
 
 	public virtual bool?						Inactive  {get; set;}
+
         /// <summary>
         ///The network address, e.g. alice@example.com
         /// </summary>
 
-	public virtual string						Address  {get; set;}
+	public virtual string?						Address  {get; set;}
+
         /// <summary>
         ///The capabilities bound to this address.
         /// </summary>
 
-	public virtual List<string>				NetworkCapability  {get; set;}
+	public virtual List<string>?					NetworkCapability  {get; set;}
         /// <summary>
         ///The account profile
         /// </summary>
 
-	public virtual Enveloped<ProfileAccount>						EnvelopedProfileAccount  {get; set;}
+	public virtual Enveloped<ProfileAccount>?						EnvelopedProfileAccount  {get; set;}
+
         /// <summary>
         ///Public keys associated with the network address
         /// </summary>
 
-	public virtual List<NetworkProtocol>				Protocols  {get; set;}
+	public virtual List<NetworkProtocol>?					Protocols  {get; set;}
         /// <summary>
         ///Cryptographic capabilities that may be claimed from this address
         /// </summary>
 
-	public virtual List<CryptographicCapability>				Capabilities  {get; set;}
+	public virtual List<CryptographicCapability>?					Capabilities  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Inactive" : {
-				if (value is TokenValueBoolean vvalue) {
-					Inactive = vvalue.Value;
-					}
-				break;
-				}
-			case "Address" : {
-				if (value is TokenValueString vvalue) {
-					Address = vvalue.Value;
-					}
-				break;
-				}
-			case "NetworkCapability" : {
-				if (value is TokenValueListString vvalue) {
-					NetworkCapability = vvalue.Value;
-					}
-				break;
-				}
-			case "EnvelopedProfileAccount" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedProfileAccount = vvalue.Value as Enveloped<ProfileAccount>;
-					}
-				break;
-				}
-			case "Protocols" : {
-				if (value is TokenValueListStructObject vvalue) {
-					Protocols = vvalue.Value as List<NetworkProtocol>;
-					}
-				break;
-				}
-			case "Capabilities" : {
-				if (value is TokenValueListStructObject vvalue) {
-					Capabilities = vvalue.Value as List<CryptographicCapability>;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Inactive" : {
-				return new TokenValueBoolean (Inactive);
-				}
-			case "Address" : {
-				return new TokenValueString (Address);
-				}
-			case "NetworkCapability" : {
-				return new TokenValueListString (NetworkCapability);
-				}
-			case "EnvelopedProfileAccount" : {
-				return new TokenValueStruct<Enveloped<ProfileAccount>> (EnvelopedProfileAccount);
-				}
-			case "Protocols" : {
-				return new TokenValueListStruct<NetworkProtocol> (Protocols);
-				}
-			case "Capabilities" : {
-				return new TokenValueListStruct<CryptographicCapability> (Capabilities);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new NetworkAddress(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Inactive", new Property (typeof(TokenValueBoolean), false)} ,
-			{ "Address", new Property (typeof(TokenValueString), false)} ,
-			{ "NetworkCapability", new Property (typeof(TokenValueListString), true)} ,
-			{ "EnvelopedProfileAccount", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>(), false)} ,
-			{ "Protocols", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<NetworkProtocol>(), ()=>new NetworkProtocol(), false)} ,
-			{ "Capabilities", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<CryptographicCapability>(), null, true)} 
+			{ "Inactive", new PropertyBoolean ("Inactive", 
+					(IBinding data, bool? value) => {(data as NetworkAddress).Inactive = value;}, (IBinding data) => (data as NetworkAddress).Inactive )},
+			{ "Address", new PropertyString ("Address", 
+					(IBinding data, string? value) => {(data as NetworkAddress).Address = value;}, (IBinding data) => (data as NetworkAddress).Address )},
+			{ "NetworkCapability", new PropertyListString ("NetworkCapability", 
+					(IBinding data, List<string>? value) => {(data as NetworkAddress).NetworkCapability = value;}, (IBinding data) => (data as NetworkAddress).NetworkCapability )},
+			{ "EnvelopedProfileAccount", new PropertyStruct ("EnvelopedProfileAccount", 
+					(IBinding data, object? value) => {(data as NetworkAddress).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as NetworkAddress).EnvelopedProfileAccount,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())} ,
+			{ "Protocols", new PropertyListStruct ("Protocols", 
+					(IBinding data, object? value) => {(data as NetworkAddress).Protocols = value as List<NetworkProtocol>;}, (IBinding data) => (data as NetworkAddress).Protocols,
+					false, ()=>new  List<NetworkProtocol>(), ()=>new NetworkProtocol())} ,
+			{ "Capabilities", new PropertyListStruct ("Capabilities", 
+					(IBinding data, object? value) => {(data as NetworkAddress).Capabilities = value as List<CryptographicCapability>;}, (IBinding data) => (data as NetworkAddress).Capabilities,
+					true, ()=>new List<CryptographicCapability>()
+)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -6202,62 +4571,31 @@ public partial class NetworkProtocol : MeshItem {
         ///the contact may be reached using the specified Address. 
         /// </summary>
 
-	public virtual string						Protocol  {get; set;}
+	public virtual string?						Protocol  {get; set;}
+
         /// <summary>
         ///Cryptographic keys representing capabilities.
         /// </summary>
 
-	public virtual List<CryptographicCapability>				Capabilities  {get; set;}
+	public virtual List<CryptographicCapability>?					Capabilities  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Protocol" : {
-				if (value is TokenValueString vvalue) {
-					Protocol = vvalue.Value;
-					}
-				break;
-				}
-			case "Capabilities" : {
-				if (value is TokenValueListStructObject vvalue) {
-					Capabilities = vvalue.Value as List<CryptographicCapability>;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Protocol" : {
-				return new TokenValueString (Protocol);
-				}
-			case "Capabilities" : {
-				return new TokenValueListStruct<CryptographicCapability> (Capabilities);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new NetworkProtocol(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Protocol", new Property (typeof(TokenValueString), false)} ,
-			{ "Capabilities", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<CryptographicCapability>(), null, true)} 
+			{ "Protocol", new PropertyString ("Protocol", 
+					(IBinding data, string? value) => {(data as NetworkProtocol).Protocol = value;}, (IBinding data) => (data as NetworkProtocol).Protocol )},
+			{ "Capabilities", new PropertyListStruct ("Capabilities", 
+					(IBinding data, object? value) => {(data as NetworkProtocol).Capabilities = value as List<CryptographicCapability>;}, (IBinding data) => (data as NetworkProtocol).Capabilities,
+					true, ()=>new List<CryptographicCapability>()
+)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -6322,77 +4660,37 @@ public partial class Role : MeshItem {
         ///The organization at which the role is held
         /// </summary>
 
-	public virtual string						OrganizationName  {get; set;}
+	public virtual string?						OrganizationName  {get; set;}
+
         /// <summary>
         ///The titles held with respect to that organization.
         /// </summary>
 
-	public virtual List<string>				Titles  {get; set;}
+	public virtual List<string>?					Titles  {get; set;}
         /// <summary>
         ///Postal or physical addresses associated with the role.
         /// </summary>
 
-	public virtual List<Location>				Locations  {get; set;}
+	public virtual List<Location>?					Locations  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "OrganizationName" : {
-				if (value is TokenValueString vvalue) {
-					OrganizationName = vvalue.Value;
-					}
-				break;
-				}
-			case "Titles" : {
-				if (value is TokenValueListString vvalue) {
-					Titles = vvalue.Value;
-					}
-				break;
-				}
-			case "Locations" : {
-				if (value is TokenValueListStructObject vvalue) {
-					Locations = vvalue.Value as List<Location>;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "OrganizationName" : {
-				return new TokenValueString (OrganizationName);
-				}
-			case "Titles" : {
-				return new TokenValueListString (Titles);
-				}
-			case "Locations" : {
-				return new TokenValueListStruct<Location> (Locations);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new Role(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "OrganizationName", new Property (typeof(TokenValueString), false)} ,
-			{ "Titles", new Property (typeof(TokenValueListString), true)} ,
-			{ "Locations", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<Location>(), ()=>new Location(), false)} 
+			{ "OrganizationName", new PropertyString ("OrganizationName", 
+					(IBinding data, string? value) => {(data as Role).OrganizationName = value;}, (IBinding data) => (data as Role).OrganizationName )},
+			{ "Titles", new PropertyListString ("Titles", 
+					(IBinding data, List<string>? value) => {(data as Role).Titles = value;}, (IBinding data) => (data as Role).Titles )},
+			{ "Locations", new PropertyListStruct ("Locations", 
+					(IBinding data, object? value) => {(data as Role).Locations = value as List<Location>;}, (IBinding data) => (data as Role).Locations,
+					false, ()=>new  List<Location>(), ()=>new Location())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -6456,130 +4754,64 @@ public partial class Location : MeshItem {
         /// <summary>
         /// </summary>
 
-	public virtual string						Appartment  {get; set;}
+	public virtual string?						Appartment  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Street  {get; set;}
+	public virtual string?						Street  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						District  {get; set;}
+	public virtual string?						District  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Locality  {get; set;}
+	public virtual string?						Locality  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						County  {get; set;}
+	public virtual string?						County  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Postcode  {get; set;}
+	public virtual string?						Postcode  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Country  {get; set;}
+	public virtual string?						Country  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Appartment" : {
-				if (value is TokenValueString vvalue) {
-					Appartment = vvalue.Value;
-					}
-				break;
-				}
-			case "Street" : {
-				if (value is TokenValueString vvalue) {
-					Street = vvalue.Value;
-					}
-				break;
-				}
-			case "District" : {
-				if (value is TokenValueString vvalue) {
-					District = vvalue.Value;
-					}
-				break;
-				}
-			case "Locality" : {
-				if (value is TokenValueString vvalue) {
-					Locality = vvalue.Value;
-					}
-				break;
-				}
-			case "County" : {
-				if (value is TokenValueString vvalue) {
-					County = vvalue.Value;
-					}
-				break;
-				}
-			case "Postcode" : {
-				if (value is TokenValueString vvalue) {
-					Postcode = vvalue.Value;
-					}
-				break;
-				}
-			case "Country" : {
-				if (value is TokenValueString vvalue) {
-					Country = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Appartment" : {
-				return new TokenValueString (Appartment);
-				}
-			case "Street" : {
-				return new TokenValueString (Street);
-				}
-			case "District" : {
-				return new TokenValueString (District);
-				}
-			case "Locality" : {
-				return new TokenValueString (Locality);
-				}
-			case "County" : {
-				return new TokenValueString (County);
-				}
-			case "Postcode" : {
-				return new TokenValueString (Postcode);
-				}
-			case "Country" : {
-				return new TokenValueString (Country);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new Location(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Appartment", new Property (typeof(TokenValueString), false)} ,
-			{ "Street", new Property (typeof(TokenValueString), false)} ,
-			{ "District", new Property (typeof(TokenValueString), false)} ,
-			{ "Locality", new Property (typeof(TokenValueString), false)} ,
-			{ "County", new Property (typeof(TokenValueString), false)} ,
-			{ "Postcode", new Property (typeof(TokenValueString), false)} ,
-			{ "Country", new Property (typeof(TokenValueString), false)} 
+			{ "Appartment", new PropertyString ("Appartment", 
+					(IBinding data, string? value) => {(data as Location).Appartment = value;}, (IBinding data) => (data as Location).Appartment )},
+			{ "Street", new PropertyString ("Street", 
+					(IBinding data, string? value) => {(data as Location).Street = value;}, (IBinding data) => (data as Location).Street )},
+			{ "District", new PropertyString ("District", 
+					(IBinding data, string? value) => {(data as Location).District = value;}, (IBinding data) => (data as Location).District )},
+			{ "Locality", new PropertyString ("Locality", 
+					(IBinding data, string? value) => {(data as Location).Locality = value;}, (IBinding data) => (data as Location).Locality )},
+			{ "County", new PropertyString ("County", 
+					(IBinding data, string? value) => {(data as Location).County = value;}, (IBinding data) => (data as Location).County )},
+			{ "Postcode", new PropertyString ("Postcode", 
+					(IBinding data, string? value) => {(data as Location).Postcode = value;}, (IBinding data) => (data as Location).Postcode )},
+			{ "Country", new PropertyString ("Country", 
+					(IBinding data, string? value) => {(data as Location).Country = value;}, (IBinding data) => (data as Location).Country )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -6643,74 +4875,35 @@ public partial class Bookmark : MeshItem {
         /// <summary>
         /// </summary>
 
-	public virtual string						Uri  {get; set;}
+	public virtual string?						Uri  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Title  {get; set;}
+	public virtual string?						Title  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual List<string>				Role  {get; set;}
+	public virtual List<string>?					Role  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Uri" : {
-				if (value is TokenValueString vvalue) {
-					Uri = vvalue.Value;
-					}
-				break;
-				}
-			case "Title" : {
-				if (value is TokenValueString vvalue) {
-					Title = vvalue.Value;
-					}
-				break;
-				}
-			case "Role" : {
-				if (value is TokenValueListString vvalue) {
-					Role = vvalue.Value;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Uri" : {
-				return new TokenValueString (Uri);
-				}
-			case "Title" : {
-				return new TokenValueString (Title);
-				}
-			case "Role" : {
-				return new TokenValueListString (Role);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new Bookmark(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Uri", new Property (typeof(TokenValueString), false)} ,
-			{ "Title", new Property (typeof(TokenValueString), false)} ,
-			{ "Role", new Property (typeof(TokenValueListString), true)} 
+			{ "Uri", new PropertyString ("Uri", 
+					(IBinding data, string? value) => {(data as Bookmark).Uri = value;}, (IBinding data) => (data as Bookmark).Uri )},
+			{ "Title", new PropertyString ("Title", 
+					(IBinding data, string? value) => {(data as Bookmark).Title = value;}, (IBinding data) => (data as Bookmark).Title )},
+			{ "Role", new PropertyListString ("Role", 
+					(IBinding data, List<string>? value) => {(data as Bookmark).Role = value;}, (IBinding data) => (data as Bookmark).Role )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -6775,76 +4968,38 @@ public partial class Reference : MeshItem {
         ///The received message to which this is a response
         /// </summary>
 
-	public virtual string						MessageId  {get; set;}
+	public virtual string?						MessageId  {get; set;}
+
         /// <summary>
         ///Message that was generated in response to the original (optional).
         /// </summary>
 
-	public virtual string						ResponseId  {get; set;}
+	public virtual string?						ResponseId  {get; set;}
+
         /// <summary>
         ///The relationship type. This can be Read, Unread, Accept, Reject.
         /// </summary>
 
-	public virtual string						Relationship  {get; set;}
+	public virtual string?						Relationship  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "MessageId" : {
-				if (value is TokenValueString vvalue) {
-					MessageId = vvalue.Value;
-					}
-				break;
-				}
-			case "ResponseId" : {
-				if (value is TokenValueString vvalue) {
-					ResponseId = vvalue.Value;
-					}
-				break;
-				}
-			case "Relationship" : {
-				if (value is TokenValueString vvalue) {
-					Relationship = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "MessageId" : {
-				return new TokenValueString (MessageId);
-				}
-			case "ResponseId" : {
-				return new TokenValueString (ResponseId);
-				}
-			case "Relationship" : {
-				return new TokenValueString (Relationship);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new Reference(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "MessageId", new Property (typeof(TokenValueString), false)} ,
-			{ "ResponseId", new Property (typeof(TokenValueString), false)} ,
-			{ "Relationship", new Property (typeof(TokenValueString), false)} 
+			{ "MessageId", new PropertyString ("MessageId", 
+					(IBinding data, string? value) => {(data as Reference).MessageId = value;}, (IBinding data) => (data as Reference).MessageId )},
+			{ "ResponseId", new PropertyString ("ResponseId", 
+					(IBinding data, string? value) => {(data as Reference).ResponseId = value;}, (IBinding data) => (data as Reference).ResponseId )},
+			{ "Relationship", new PropertyString ("Relationship", 
+					(IBinding data, string? value) => {(data as Reference).Relationship = value;}, (IBinding data) => (data as Reference).Relationship )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -6909,214 +5064,104 @@ public partial class Engagement : MeshItem {
         ///Unique key.
         /// </summary>
 
-	public virtual string						Key  {get; set;}
+	public virtual string?						Key  {get; set;}
+
         /// <summary>
         /// </summary>
 
 	public virtual DateTime?						Start  {get; set;}
+
         /// <summary>
         /// </summary>
 
 	public virtual DateTime?						Finish  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						StartTravel  {get; set;}
+	public virtual string?						StartTravel  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						FinishTravel  {get; set;}
+	public virtual string?						FinishTravel  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						TimeZone  {get; set;}
+	public virtual string?						TimeZone  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Title  {get; set;}
+	public virtual string?						Title  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Description  {get; set;}
+	public virtual string?						Description  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Location  {get; set;}
+	public virtual string?						Location  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual List<string>				Trigger  {get; set;}
+	public virtual List<string>?					Trigger  {get; set;}
         /// <summary>
         /// </summary>
 
-	public virtual List<string>				Conference  {get; set;}
+	public virtual List<string>?					Conference  {get; set;}
         /// <summary>
         /// </summary>
 
-	public virtual string						Repeat  {get; set;}
+	public virtual string?						Repeat  {get; set;}
+
         /// <summary>
         /// </summary>
 
 	public virtual bool?						Busy  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Key" : {
-				if (value is TokenValueString vvalue) {
-					Key = vvalue.Value;
-					}
-				break;
-				}
-			case "Start" : {
-				if (value is TokenValueDateTime vvalue) {
-					Start = vvalue.Value;
-					}
-				break;
-				}
-			case "Finish" : {
-				if (value is TokenValueDateTime vvalue) {
-					Finish = vvalue.Value;
-					}
-				break;
-				}
-			case "StartTravel" : {
-				if (value is TokenValueString vvalue) {
-					StartTravel = vvalue.Value;
-					}
-				break;
-				}
-			case "FinishTravel" : {
-				if (value is TokenValueString vvalue) {
-					FinishTravel = vvalue.Value;
-					}
-				break;
-				}
-			case "TimeZone" : {
-				if (value is TokenValueString vvalue) {
-					TimeZone = vvalue.Value;
-					}
-				break;
-				}
-			case "Title" : {
-				if (value is TokenValueString vvalue) {
-					Title = vvalue.Value;
-					}
-				break;
-				}
-			case "Description" : {
-				if (value is TokenValueString vvalue) {
-					Description = vvalue.Value;
-					}
-				break;
-				}
-			case "Location" : {
-				if (value is TokenValueString vvalue) {
-					Location = vvalue.Value;
-					}
-				break;
-				}
-			case "Trigger" : {
-				if (value is TokenValueListString vvalue) {
-					Trigger = vvalue.Value;
-					}
-				break;
-				}
-			case "Conference" : {
-				if (value is TokenValueListString vvalue) {
-					Conference = vvalue.Value;
-					}
-				break;
-				}
-			case "Repeat" : {
-				if (value is TokenValueString vvalue) {
-					Repeat = vvalue.Value;
-					}
-				break;
-				}
-			case "Busy" : {
-				if (value is TokenValueBoolean vvalue) {
-					Busy = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Key" : {
-				return new TokenValueString (Key);
-				}
-			case "Start" : {
-				return new TokenValueDateTime (Start);
-				}
-			case "Finish" : {
-				return new TokenValueDateTime (Finish);
-				}
-			case "StartTravel" : {
-				return new TokenValueString (StartTravel);
-				}
-			case "FinishTravel" : {
-				return new TokenValueString (FinishTravel);
-				}
-			case "TimeZone" : {
-				return new TokenValueString (TimeZone);
-				}
-			case "Title" : {
-				return new TokenValueString (Title);
-				}
-			case "Description" : {
-				return new TokenValueString (Description);
-				}
-			case "Location" : {
-				return new TokenValueString (Location);
-				}
-			case "Trigger" : {
-				return new TokenValueListString (Trigger);
-				}
-			case "Conference" : {
-				return new TokenValueListString (Conference);
-				}
-			case "Repeat" : {
-				return new TokenValueString (Repeat);
-				}
-			case "Busy" : {
-				return new TokenValueBoolean (Busy);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new Engagement(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Key", new Property (typeof(TokenValueString), false)} ,
-			{ "Start", new Property (typeof(TokenValueDateTime), false)} ,
-			{ "Finish", new Property (typeof(TokenValueDateTime), false)} ,
-			{ "StartTravel", new Property (typeof(TokenValueString), false)} ,
-			{ "FinishTravel", new Property (typeof(TokenValueString), false)} ,
-			{ "TimeZone", new Property (typeof(TokenValueString), false)} ,
-			{ "Title", new Property (typeof(TokenValueString), false)} ,
-			{ "Description", new Property (typeof(TokenValueString), false)} ,
-			{ "Location", new Property (typeof(TokenValueString), false)} ,
-			{ "Trigger", new Property (typeof(TokenValueListString), true)} ,
-			{ "Conference", new Property (typeof(TokenValueListString), true)} ,
-			{ "Repeat", new Property (typeof(TokenValueString), false)} ,
-			{ "Busy", new Property (typeof(TokenValueBoolean), false)} 
+			{ "Key", new PropertyString ("Key", 
+					(IBinding data, string? value) => {(data as Engagement).Key = value;}, (IBinding data) => (data as Engagement).Key )},
+			{ "Start", new PropertyDateTime ("Start", 
+					(IBinding data, DateTime? value) => {(data as Engagement).Start = value;}, (IBinding data) => (data as Engagement).Start )},
+			{ "Finish", new PropertyDateTime ("Finish", 
+					(IBinding data, DateTime? value) => {(data as Engagement).Finish = value;}, (IBinding data) => (data as Engagement).Finish )},
+			{ "StartTravel", new PropertyString ("StartTravel", 
+					(IBinding data, string? value) => {(data as Engagement).StartTravel = value;}, (IBinding data) => (data as Engagement).StartTravel )},
+			{ "FinishTravel", new PropertyString ("FinishTravel", 
+					(IBinding data, string? value) => {(data as Engagement).FinishTravel = value;}, (IBinding data) => (data as Engagement).FinishTravel )},
+			{ "TimeZone", new PropertyString ("TimeZone", 
+					(IBinding data, string? value) => {(data as Engagement).TimeZone = value;}, (IBinding data) => (data as Engagement).TimeZone )},
+			{ "Title", new PropertyString ("Title", 
+					(IBinding data, string? value) => {(data as Engagement).Title = value;}, (IBinding data) => (data as Engagement).Title )},
+			{ "Description", new PropertyString ("Description", 
+					(IBinding data, string? value) => {(data as Engagement).Description = value;}, (IBinding data) => (data as Engagement).Description )},
+			{ "Location", new PropertyString ("Location", 
+					(IBinding data, string? value) => {(data as Engagement).Location = value;}, (IBinding data) => (data as Engagement).Location )},
+			{ "Trigger", new PropertyListString ("Trigger", 
+					(IBinding data, List<string>? value) => {(data as Engagement).Trigger = value;}, (IBinding data) => (data as Engagement).Trigger )},
+			{ "Conference", new PropertyListString ("Conference", 
+					(IBinding data, List<string>? value) => {(data as Engagement).Conference = value;}, (IBinding data) => (data as Engagement).Conference )},
+			{ "Repeat", new PropertyString ("Repeat", 
+					(IBinding data, string? value) => {(data as Engagement).Repeat = value;}, (IBinding data) => (data as Engagement).Repeat )},
+			{ "Busy", new PropertyBoolean ("Busy", 
+					(IBinding data, bool? value) => {(data as Engagement).Busy = value;}, (IBinding data) => (data as Engagement).Busy )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -7183,76 +5228,37 @@ abstract public partial class CatalogedEntry : MeshItem {
         ///The set of labels describing the entry
         /// </summary>
 
-	public virtual List<string>				Labels  {get; set;}
+	public virtual List<string>?					Labels  {get; set;}
         /// <summary>
         ///User specified identifier.
         /// </summary>
 
-	public virtual string						LocalName  {get; set;}
+	public virtual string?						LocalName  {get; set;}
+
         /// <summary>
         ///Globaly unique identifier
         /// </summary>
 
-	public virtual string						Uid  {get; set;}
+	public virtual string?						Uid  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Labels" : {
-				if (value is TokenValueListString vvalue) {
-					Labels = vvalue.Value;
-					}
-				break;
-				}
-			case "LocalName" : {
-				if (value is TokenValueString vvalue) {
-					LocalName = vvalue.Value;
-					}
-				break;
-				}
-			case "Uid" : {
-				if (value is TokenValueString vvalue) {
-					Uid = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Labels" : {
-				return new TokenValueListString (Labels);
-				}
-			case "LocalName" : {
-				return new TokenValueString (LocalName);
-				}
-			case "Uid" : {
-				return new TokenValueString (Uid);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,null, null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Labels", new Property (typeof(TokenValueListString), true)} ,
-			{ "LocalName", new Property (typeof(TokenValueString), false)} ,
-			{ "Uid", new Property (typeof(TokenValueString), false)} 
+			{ "Labels", new PropertyListString ("Labels", 
+					(IBinding data, List<string>? value) => {(data as CatalogedEntry).Labels = value;}, (IBinding data) => (data as CatalogedEntry).Labels )},
+			{ "LocalName", new PropertyString ("LocalName", 
+					(IBinding data, string? value) => {(data as CatalogedEntry).LocalName = value;}, (IBinding data) => (data as CatalogedEntry).LocalName )},
+			{ "Uid", new PropertyString ("Uid", 
+					(IBinding data, string? value) => {(data as CatalogedEntry).Uid = value;}, (IBinding data) => (data as CatalogedEntry).Uid )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -7317,203 +5323,109 @@ public partial class CatalogedDevice : CatalogedEntry {
         /// </summary>
 
 	public virtual DateTime?						Updated  {get; set;}
+
         /// <summary>
         ///UDF of the signature key of the device in the Mesh
         /// </summary>
 
-	public virtual string						Udf  {get; set;}
+	public virtual string?						Udf  {get; set;}
+
         /// <summary>
         ///UDF of the offline signature key of the device
         /// </summary>
 
-	public virtual string						DeviceUdf  {get; set;}
+	public virtual string?						DeviceUdf  {get; set;}
+
         /// <summary>
         ///UDF of the account online signature key
         /// </summary>
 
-	public virtual string						SignatureUdf  {get; set;}
+	public virtual string?						SignatureUdf  {get; set;}
+
         /// <summary>
         ///The Mesh profile. Why is this still here? This is not 
         ///specific to the device.
         /// </summary>
 
-	public virtual Enveloped<ProfileAccount>						EnvelopedProfileUser  {get; set;}
+	public virtual Enveloped<ProfileAccount>?						EnvelopedProfileUser  {get; set;}
+
         /// <summary>
         ///The device profile
         /// </summary>
 
-	public virtual Enveloped<ProfileDevice>						EnvelopedProfileDevice  {get; set;}
+	public virtual Enveloped<ProfileDevice>?						EnvelopedProfileDevice  {get; set;}
+
         /// <summary>
         ///Slim version of ConnectionDevice used by the presentation layer
         /// </summary>
 
-	public virtual Enveloped<ConnectionService>						EnvelopedConnectionService  {get; set;}
+	public virtual Enveloped<ConnectionService>?						EnvelopedConnectionService  {get; set;}
+
         /// <summary>
         ///The public assertion demonstrating connection of the Device to the Mesh
         /// </summary>
 
-	public virtual Enveloped<ConnectionDevice>						EnvelopedConnectionDevice  {get; set;}
+	public virtual Enveloped<ConnectionDevice>?						EnvelopedConnectionDevice  {get; set;}
+
         /// <summary>
         ///The activation of the device within the Mesh account
         /// </summary>
 
-	public virtual Enveloped<ActivationAccount>						EnvelopedActivationAccount  {get; set;}
+	public virtual Enveloped<ActivationAccount>?						EnvelopedActivationAccount  {get; set;}
+
         /// <summary>
         ///The activation of the device within the Mesh account
         /// </summary>
 
-	public virtual Enveloped<ActivationCommon>						EnvelopedActivationCommon  {get; set;}
+	public virtual Enveloped<ActivationCommon>?						EnvelopedActivationCommon  {get; set;}
+
         /// <summary>
         ///Application activations granted to the device.
         /// </summary>
 
-	public virtual List<ApplicationEntry>				ApplicationEntries  {get; set;}
+	public virtual List<ApplicationEntry>?					ApplicationEntries  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Updated" : {
-				if (value is TokenValueDateTime vvalue) {
-					Updated = vvalue.Value;
-					}
-				break;
-				}
-			case "Udf" : {
-				if (value is TokenValueString vvalue) {
-					Udf = vvalue.Value;
-					}
-				break;
-				}
-			case "DeviceUdf" : {
-				if (value is TokenValueString vvalue) {
-					DeviceUdf = vvalue.Value;
-					}
-				break;
-				}
-			case "SignatureUdf" : {
-				if (value is TokenValueString vvalue) {
-					SignatureUdf = vvalue.Value;
-					}
-				break;
-				}
-			case "EnvelopedProfileUser" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedProfileUser = vvalue.Value as Enveloped<ProfileAccount>;
-					}
-				break;
-				}
-			case "EnvelopedProfileDevice" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedProfileDevice = vvalue.Value as Enveloped<ProfileDevice>;
-					}
-				break;
-				}
-			case "EnvelopedConnectionService" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedConnectionService = vvalue.Value as Enveloped<ConnectionService>;
-					}
-				break;
-				}
-			case "EnvelopedConnectionDevice" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedConnectionDevice = vvalue.Value as Enveloped<ConnectionDevice>;
-					}
-				break;
-				}
-			case "EnvelopedActivationAccount" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedActivationAccount = vvalue.Value as Enveloped<ActivationAccount>;
-					}
-				break;
-				}
-			case "EnvelopedActivationCommon" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedActivationCommon = vvalue.Value as Enveloped<ActivationCommon>;
-					}
-				break;
-				}
-			case "ApplicationEntries" : {
-				if (value is TokenValueListStructObject vvalue) {
-					ApplicationEntries = vvalue.Value as List<ApplicationEntry>;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Updated" : {
-				return new TokenValueDateTime (Updated);
-				}
-			case "Udf" : {
-				return new TokenValueString (Udf);
-				}
-			case "DeviceUdf" : {
-				return new TokenValueString (DeviceUdf);
-				}
-			case "SignatureUdf" : {
-				return new TokenValueString (SignatureUdf);
-				}
-			case "EnvelopedProfileUser" : {
-				return new TokenValueStruct<Enveloped<ProfileAccount>> (EnvelopedProfileUser);
-				}
-			case "EnvelopedProfileDevice" : {
-				return new TokenValueStruct<Enveloped<ProfileDevice>> (EnvelopedProfileDevice);
-				}
-			case "EnvelopedConnectionService" : {
-				return new TokenValueStruct<Enveloped<ConnectionService>> (EnvelopedConnectionService);
-				}
-			case "EnvelopedConnectionDevice" : {
-				return new TokenValueStruct<Enveloped<ConnectionDevice>> (EnvelopedConnectionDevice);
-				}
-			case "EnvelopedActivationAccount" : {
-				return new TokenValueStruct<Enveloped<ActivationAccount>> (EnvelopedActivationAccount);
-				}
-			case "EnvelopedActivationCommon" : {
-				return new TokenValueStruct<Enveloped<ActivationCommon>> (EnvelopedActivationCommon);
-				}
-			case "ApplicationEntries" : {
-				return new TokenValueListStruct<ApplicationEntry> (ApplicationEntries);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedDevice(), CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Updated", new Property (typeof(TokenValueDateTime), false)} ,
-			{ "Udf", new Property (typeof(TokenValueString), false)} ,
-			{ "DeviceUdf", new Property (typeof(TokenValueString), false)} ,
-			{ "SignatureUdf", new Property (typeof(TokenValueString), false)} ,
-			{ "EnvelopedProfileUser", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>(), false)} ,
-			{ "EnvelopedProfileDevice", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>(), false)} ,
-			{ "EnvelopedConnectionService", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>(), false)} ,
-			{ "EnvelopedConnectionDevice", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ConnectionDevice>(), ()=>new Enveloped<ConnectionDevice>(), false)} ,
-			{ "EnvelopedActivationAccount", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ActivationAccount>(), ()=>new Enveloped<ActivationAccount>(), false)} ,
-			{ "EnvelopedActivationCommon", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>(), false)} ,
-			{ "ApplicationEntries", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<ApplicationEntry>(), null, true)} 
+			{ "Updated", new PropertyDateTime ("Updated", 
+					(IBinding data, DateTime? value) => {(data as CatalogedDevice).Updated = value;}, (IBinding data) => (data as CatalogedDevice).Updated )},
+			{ "Udf", new PropertyString ("Udf", 
+					(IBinding data, string? value) => {(data as CatalogedDevice).Udf = value;}, (IBinding data) => (data as CatalogedDevice).Udf )},
+			{ "DeviceUdf", new PropertyString ("DeviceUdf", 
+					(IBinding data, string? value) => {(data as CatalogedDevice).DeviceUdf = value;}, (IBinding data) => (data as CatalogedDevice).DeviceUdf )},
+			{ "SignatureUdf", new PropertyString ("SignatureUdf", 
+					(IBinding data, string? value) => {(data as CatalogedDevice).SignatureUdf = value;}, (IBinding data) => (data as CatalogedDevice).SignatureUdf )},
+			{ "EnvelopedProfileUser", new PropertyStruct ("EnvelopedProfileUser", 
+					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedProfileUser = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as CatalogedDevice).EnvelopedProfileUser,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())} ,
+			{ "EnvelopedProfileDevice", new PropertyStruct ("EnvelopedProfileDevice", 
+					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;}, (IBinding data) => (data as CatalogedDevice).EnvelopedProfileDevice,
+					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())} ,
+			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", 
+					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as CatalogedDevice).EnvelopedConnectionService,
+					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())} ,
+			{ "EnvelopedConnectionDevice", new PropertyStruct ("EnvelopedConnectionDevice", 
+					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedConnectionDevice = value as Enveloped<ConnectionDevice>;}, (IBinding data) => (data as CatalogedDevice).EnvelopedConnectionDevice,
+					false, ()=>new  Enveloped<ConnectionDevice>(), ()=>new Enveloped<ConnectionDevice>())} ,
+			{ "EnvelopedActivationAccount", new PropertyStruct ("EnvelopedActivationAccount", 
+					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedActivationAccount = value as Enveloped<ActivationAccount>;}, (IBinding data) => (data as CatalogedDevice).EnvelopedActivationAccount,
+					false, ()=>new  Enveloped<ActivationAccount>(), ()=>new Enveloped<ActivationAccount>())} ,
+			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", 
+					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, (IBinding data) => (data as CatalogedDevice).EnvelopedActivationCommon,
+					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())} ,
+			{ "ApplicationEntries", new PropertyListStruct ("ApplicationEntries", 
+					(IBinding data, object? value) => {(data as CatalogedDevice).ApplicationEntries = value as List<ApplicationEntry>;}, (IBinding data) => (data as CatalogedDevice).ApplicationEntries,
+					true, ()=>new List<ApplicationEntry>()
+)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -7579,29 +5491,12 @@ public partial class CatalogedDevice : CatalogedEntry {
 public partial class CatalogedSignature : CatalogedEntry {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedSignature(), CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -7673,18 +5568,21 @@ public partial class CatalogedPublication : CatalogedEntry {
         ///Unique identifier code
         /// </summary>
 
-	public virtual string						Id  {get; set;}
+	public virtual string?						Id  {get; set;}
+
         /// <summary>
         ///The witness key value to use to request access to the record.	
         /// </summary>
 
-	public virtual string						Authenticator  {get; set;}
+	public virtual string?						Authenticator  {get; set;}
+
         /// <summary>
         ///Dare Envelope containing the entry data. The data type is specified
         ///by the envelope metadata.
         /// </summary>
 
-	public virtual DareEnvelope						EnvelopedData  {get; set;}
+	public virtual DareEnvelope?						EnvelopedData  {get; set;}
+
         /// <summary>
         ///Epiration time (inclusive)
         /// </summary>
@@ -7692,74 +5590,26 @@ public partial class CatalogedPublication : CatalogedEntry {
 	public virtual DateTime?						NotOnOrAfter  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Id" : {
-				if (value is TokenValueString vvalue) {
-					Id = vvalue.Value;
-					}
-				break;
-				}
-			case "Authenticator" : {
-				if (value is TokenValueString vvalue) {
-					Authenticator = vvalue.Value;
-					}
-				break;
-				}
-			case "EnvelopedData" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedData = vvalue.Value as DareEnvelope;
-					}
-				break;
-				}
-			case "NotOnOrAfter" : {
-				if (value is TokenValueDateTime vvalue) {
-					NotOnOrAfter = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Id" : {
-				return new TokenValueString (Id);
-				}
-			case "Authenticator" : {
-				return new TokenValueString (Authenticator);
-				}
-			case "EnvelopedData" : {
-				return new TokenValueStruct<DareEnvelope> (EnvelopedData);
-				}
-			case "NotOnOrAfter" : {
-				return new TokenValueDateTime (NotOnOrAfter);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedPublication(), CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Id", new Property (typeof(TokenValueString), false)} ,
-			{ "Authenticator", new Property (typeof(TokenValueString), false)} ,
-			{ "EnvelopedData", new Property ( typeof(TokenValueStruct), false,
-					()=>new DareEnvelope(), ()=>new DareEnvelope(), false)} ,
-			{ "NotOnOrAfter", new Property (typeof(TokenValueDateTime), false)} 
+			{ "Id", new PropertyString ("Id", 
+					(IBinding data, string? value) => {(data as CatalogedPublication).Id = value;}, (IBinding data) => (data as CatalogedPublication).Id )},
+			{ "Authenticator", new PropertyString ("Authenticator", 
+					(IBinding data, string? value) => {(data as CatalogedPublication).Authenticator = value;}, (IBinding data) => (data as CatalogedPublication).Authenticator )},
+			{ "EnvelopedData", new PropertyStruct ("EnvelopedData", 
+					(IBinding data, object? value) => {(data as CatalogedPublication).EnvelopedData = value as DareEnvelope;}, (IBinding data) => (data as CatalogedPublication).EnvelopedData,
+					false, ()=>new  DareEnvelope(), ()=>new DareEnvelope())} ,
+			{ "NotOnOrAfter", new PropertyDateTime ("NotOnOrAfter", 
+					(IBinding data, DateTime? value) => {(data as CatalogedPublication).NotOnOrAfter = value;}, (IBinding data) => (data as CatalogedPublication).NotOnOrAfter )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -7824,120 +5674,59 @@ public partial class CatalogedCredential : CatalogedEntry {
         /// <summary>
         /// </summary>
 
-	public virtual string						Protocol  {get; set;}
+	public virtual string?						Protocol  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Service  {get; set;}
+	public virtual string?						Service  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Username  {get; set;}
+	public virtual string?						Username  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Password  {get; set;}
+	public virtual string?						Password  {get; set;}
+
         /// <summary>
         ///Specifies the client identification key
         /// </summary>
 
-	public virtual List<KeyData>				ClientAuthentication  {get; set;}
+	public virtual List<KeyData>?					ClientAuthentication  {get; set;}
         /// <summary>
         ///Means of authenticating the host key
         /// </summary>
 
-	public virtual List<KeyData>				HostAuthentication  {get; set;}
+	public virtual List<KeyData>?					HostAuthentication  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Protocol" : {
-				if (value is TokenValueString vvalue) {
-					Protocol = vvalue.Value;
-					}
-				break;
-				}
-			case "Service" : {
-				if (value is TokenValueString vvalue) {
-					Service = vvalue.Value;
-					}
-				break;
-				}
-			case "Username" : {
-				if (value is TokenValueString vvalue) {
-					Username = vvalue.Value;
-					}
-				break;
-				}
-			case "Password" : {
-				if (value is TokenValueString vvalue) {
-					Password = vvalue.Value;
-					}
-				break;
-				}
-			case "ClientAuthentication" : {
-				if (value is TokenValueListStructObject vvalue) {
-					ClientAuthentication = vvalue.Value as List<KeyData>;
-					}
-				break;
-				}
-			case "HostAuthentication" : {
-				if (value is TokenValueListStructObject vvalue) {
-					HostAuthentication = vvalue.Value as List<KeyData>;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Protocol" : {
-				return new TokenValueString (Protocol);
-				}
-			case "Service" : {
-				return new TokenValueString (Service);
-				}
-			case "Username" : {
-				return new TokenValueString (Username);
-				}
-			case "Password" : {
-				return new TokenValueString (Password);
-				}
-			case "ClientAuthentication" : {
-				return new TokenValueListStruct<KeyData> (ClientAuthentication);
-				}
-			case "HostAuthentication" : {
-				return new TokenValueListStruct<KeyData> (HostAuthentication);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedCredential(), CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Protocol", new Property (typeof(TokenValueString), false)} ,
-			{ "Service", new Property (typeof(TokenValueString), false)} ,
-			{ "Username", new Property (typeof(TokenValueString), false)} ,
-			{ "Password", new Property (typeof(TokenValueString), false)} ,
-			{ "ClientAuthentication", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<KeyData>(), ()=>new KeyData(), false)} ,
-			{ "HostAuthentication", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<KeyData>(), ()=>new KeyData(), false)} 
+			{ "Protocol", new PropertyString ("Protocol", 
+					(IBinding data, string? value) => {(data as CatalogedCredential).Protocol = value;}, (IBinding data) => (data as CatalogedCredential).Protocol )},
+			{ "Service", new PropertyString ("Service", 
+					(IBinding data, string? value) => {(data as CatalogedCredential).Service = value;}, (IBinding data) => (data as CatalogedCredential).Service )},
+			{ "Username", new PropertyString ("Username", 
+					(IBinding data, string? value) => {(data as CatalogedCredential).Username = value;}, (IBinding data) => (data as CatalogedCredential).Username )},
+			{ "Password", new PropertyString ("Password", 
+					(IBinding data, string? value) => {(data as CatalogedCredential).Password = value;}, (IBinding data) => (data as CatalogedCredential).Password )},
+			{ "ClientAuthentication", new PropertyListStruct ("ClientAuthentication", 
+					(IBinding data, object? value) => {(data as CatalogedCredential).ClientAuthentication = value as List<KeyData>;}, (IBinding data) => (data as CatalogedCredential).ClientAuthentication,
+					false, ()=>new  List<KeyData>(), ()=>new KeyData())} ,
+			{ "HostAuthentication", new PropertyListStruct ("HostAuthentication", 
+					(IBinding data, object? value) => {(data as CatalogedCredential).HostAuthentication = value as List<KeyData>;}, (IBinding data) => (data as CatalogedCredential).HostAuthentication,
+					false, ()=>new  List<KeyData>(), ()=>new KeyData())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -8003,47 +5792,23 @@ public partial class CatalogedApplicationSsh : CatalogedApplication {
         ///The S/Mime encryption key
         /// </summary>
 
-	public virtual KeyData						ClientKey  {get; set;}
+	public virtual KeyData?						ClientKey  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "ClientKey" : {
-				if (value is TokenValueStructObject vvalue) {
-					ClientKey = vvalue.Value as KeyData;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "ClientKey" : {
-				return new TokenValueStruct<KeyData> (ClientKey);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedApplicationSsh(), CatalogedApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "ClientKey", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} 
+			{ "ClientKey", new PropertyStruct ("ClientKey", 
+					(IBinding data, object? value) => {(data as CatalogedApplicationSsh).ClientKey = value as KeyData;}, (IBinding data) => (data as CatalogedApplicationSsh).ClientKey,
+					false, ()=>new  KeyData(), ()=>new KeyData())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -8108,88 +5873,43 @@ public partial class CatalogedNetwork : CatalogedEntry {
         /// <summary>
         /// </summary>
 
-	public virtual string						Protocol  {get; set;}
+	public virtual string?						Protocol  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Service  {get; set;}
+	public virtual string?						Service  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Username  {get; set;}
+	public virtual string?						Username  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Password  {get; set;}
+	public virtual string?						Password  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Protocol" : {
-				if (value is TokenValueString vvalue) {
-					Protocol = vvalue.Value;
-					}
-				break;
-				}
-			case "Service" : {
-				if (value is TokenValueString vvalue) {
-					Service = vvalue.Value;
-					}
-				break;
-				}
-			case "Username" : {
-				if (value is TokenValueString vvalue) {
-					Username = vvalue.Value;
-					}
-				break;
-				}
-			case "Password" : {
-				if (value is TokenValueString vvalue) {
-					Password = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Protocol" : {
-				return new TokenValueString (Protocol);
-				}
-			case "Service" : {
-				return new TokenValueString (Service);
-				}
-			case "Username" : {
-				return new TokenValueString (Username);
-				}
-			case "Password" : {
-				return new TokenValueString (Password);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedNetwork(), CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Protocol", new Property (typeof(TokenValueString), false)} ,
-			{ "Service", new Property (typeof(TokenValueString), false)} ,
-			{ "Username", new Property (typeof(TokenValueString), false)} ,
-			{ "Password", new Property (typeof(TokenValueString), false)} 
+			{ "Protocol", new PropertyString ("Protocol", 
+					(IBinding data, string? value) => {(data as CatalogedNetwork).Protocol = value;}, (IBinding data) => (data as CatalogedNetwork).Protocol )},
+			{ "Service", new PropertyString ("Service", 
+					(IBinding data, string? value) => {(data as CatalogedNetwork).Service = value;}, (IBinding data) => (data as CatalogedNetwork).Service )},
+			{ "Username", new PropertyString ("Username", 
+					(IBinding data, string? value) => {(data as CatalogedNetwork).Username = value;}, (IBinding data) => (data as CatalogedNetwork).Username )},
+			{ "Password", new PropertyString ("Password", 
+					(IBinding data, string? value) => {(data as CatalogedNetwork).Password = value;}, (IBinding data) => (data as CatalogedNetwork).Password )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -8255,77 +5975,39 @@ public partial class CatalogedContact : CatalogedEntry {
         ///Unique key. 
         /// </summary>
 
-	public virtual string						Key  {get; set;}
+	public virtual string?						Key  {get; set;}
+
         /// <summary>
         ///If true, this catalog entry is for the user who created the catalog.
         /// </summary>
 
 	public virtual bool?						Self  {get; set;}
+
         /// <summary>
         ///The contact information as edited by the catalog owner.
         /// </summary>
 
-	public virtual Contact						Contact  {get; set;}
+	public virtual Contact?						Contact  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Key" : {
-				if (value is TokenValueString vvalue) {
-					Key = vvalue.Value;
-					}
-				break;
-				}
-			case "Self" : {
-				if (value is TokenValueBoolean vvalue) {
-					Self = vvalue.Value;
-					}
-				break;
-				}
-			case "Contact" : {
-				if (value is TokenValueStructObject vvalue) {
-					Contact = vvalue.Value as Contact;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Key" : {
-				return new TokenValueString (Key);
-				}
-			case "Self" : {
-				return new TokenValueBoolean (Self);
-				}
-			case "Contact" : {
-				return new TokenValueStruct<Contact> (Contact);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedContact(), CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Key", new Property (typeof(TokenValueString), false)} ,
-			{ "Self", new Property (typeof(TokenValueBoolean), false)} ,
-			{ "Contact", new Property ( typeof(TokenValueStruct), false,
-					null, null, true)} 
+			{ "Key", new PropertyString ("Key", 
+					(IBinding data, string? value) => {(data as CatalogedContact).Key = value;}, (IBinding data) => (data as CatalogedContact).Key )},
+			{ "Self", new PropertyBoolean ("Self", 
+					(IBinding data, bool? value) => {(data as CatalogedContact).Self = value;}, (IBinding data) => (data as CatalogedContact).Self )},
+			{ "Contact", new PropertyStruct ("Contact", 
+					(IBinding data, object? value) => {(data as CatalogedContact).Contact = value as Contact;}, (IBinding data) => (data as CatalogedContact).Contact,
+					true)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -8393,47 +6075,23 @@ public partial class CatalogedAccess : CatalogedEntry {
         ///The cataloged capability.
         /// </summary>
 
-	public virtual Capability						Capability  {get; set;}
+	public virtual Capability?						Capability  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Capability" : {
-				if (value is TokenValueStructObject vvalue) {
-					Capability = vvalue.Value as Capability;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Capability" : {
-				return new TokenValueStruct<Capability> (Capability);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedAccess(), CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Capability", new Property ( typeof(TokenValueStruct), false,
-					null, null, true)} 
+			{ "Capability", new PropertyStruct ("Capability", 
+					(IBinding data, object? value) => {(data as CatalogedAccess).Capability = value as Capability;}, (IBinding data) => (data as CatalogedAccess).Capability,
+					true)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -8502,120 +6160,61 @@ abstract public partial class Capability : MeshItem {
         ///key being authorized for access.
         /// </summary>
 
-	public virtual string						Id  {get; set;}
+	public virtual string?						Id  {get; set;}
+
         /// <summary>
         /// </summary>
 
 	public virtual bool?						Active  {get; set;}
+
         /// <summary>
         /// </summary>
 
 	public virtual int?						Issued  {get; set;}
+
         /// <summary>
         ///The authentication mode: Device, Account, PIN
         /// </summary>
 
-	public virtual string						Mode  {get; set;}
+	public virtual string?						Mode  {get; set;}
+
         /// <summary>
         ///Identifies the authentication credential. For a device, this is the authentication key identifier, 
         ///for an account, the profile identifier, for a PIN, the locator value of the PIN.
         /// </summary>
 
-	public virtual string						Udf  {get; set;}
+	public virtual string?						Udf  {get; set;}
+
         /// <summary>
         ///The verification value used to perform proof of knowledge of the secret.
         /// </summary>
 
-	public virtual string						Witness  {get; set;}
+	public virtual string?						Witness  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Id" : {
-				if (value is TokenValueString vvalue) {
-					Id = vvalue.Value;
-					}
-				break;
-				}
-			case "Active" : {
-				if (value is TokenValueBoolean vvalue) {
-					Active = vvalue.Value;
-					}
-				break;
-				}
-			case "Issued" : {
-				if (value is TokenValueInteger32 vvalue) {
-					Issued = vvalue.Value;
-					}
-				break;
-				}
-			case "Mode" : {
-				if (value is TokenValueString vvalue) {
-					Mode = vvalue.Value;
-					}
-				break;
-				}
-			case "Udf" : {
-				if (value is TokenValueString vvalue) {
-					Udf = vvalue.Value;
-					}
-				break;
-				}
-			case "Witness" : {
-				if (value is TokenValueString vvalue) {
-					Witness = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Id" : {
-				return new TokenValueString (Id);
-				}
-			case "Active" : {
-				return new TokenValueBoolean (Active);
-				}
-			case "Issued" : {
-				return new TokenValueInteger32 (Issued);
-				}
-			case "Mode" : {
-				return new TokenValueString (Mode);
-				}
-			case "Udf" : {
-				return new TokenValueString (Udf);
-				}
-			case "Witness" : {
-				return new TokenValueString (Witness);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,null, null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Id", new Property (typeof(TokenValueString), false)} ,
-			{ "Active", new Property (typeof(TokenValueBoolean), false)} ,
-			{ "Issued", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "Mode", new Property (typeof(TokenValueString), false)} ,
-			{ "Udf", new Property (typeof(TokenValueString), false)} ,
-			{ "Witness", new Property (typeof(TokenValueString), false)} 
+			{ "Id", new PropertyString ("Id", 
+					(IBinding data, string? value) => {(data as Capability).Id = value;}, (IBinding data) => (data as Capability).Id )},
+			{ "Active", new PropertyBoolean ("Active", 
+					(IBinding data, bool? value) => {(data as Capability).Active = value;}, (IBinding data) => (data as Capability).Active )},
+			{ "Issued", new PropertyInteger32 ("Issued", 
+					(IBinding data, int? value) => {(data as Capability).Issued = value;}, (IBinding data) => (data as Capability).Issued )},
+			{ "Mode", new PropertyString ("Mode", 
+					(IBinding data, string? value) => {(data as Capability).Mode = value;}, (IBinding data) => (data as Capability).Mode )},
+			{ "Udf", new PropertyString ("Udf", 
+					(IBinding data, string? value) => {(data as Capability).Udf = value;}, (IBinding data) => (data as Capability).Udf )},
+			{ "Witness", new PropertyString ("Witness", 
+					(IBinding data, string? value) => {(data as Capability).Witness = value;}, (IBinding data) => (data as Capability).Witness )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -8675,29 +6274,12 @@ abstract public partial class Capability : MeshItem {
 public partial class NullCapability : Capability {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new NullCapability(), Capability._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -8767,77 +6349,38 @@ public partial class AccessCapability : Capability {
         ///Access rights associated with the key
         /// </summary>
 
-	public virtual List<string>				Rights  {get; set;}
+	public virtual List<string>?					Rights  {get; set;}
         /// <summary>
         ///
         /// </summary>
 
-	public virtual Enveloped<CatalogedDevice>						EnvelopedCatalogedDevice  {get; set;}
+	public virtual Enveloped<CatalogedDevice>?						EnvelopedCatalogedDevice  {get; set;}
+
         /// <summary>
         ///Digest value used to signal updates to envelope		
         /// </summary>
 
-	public virtual string						CatalogedDeviceDigest  {get; set;}
+	public virtual string?						CatalogedDeviceDigest  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Rights" : {
-				if (value is TokenValueListString vvalue) {
-					Rights = vvalue.Value;
-					}
-				break;
-				}
-			case "EnvelopedCatalogedDevice" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedCatalogedDevice = vvalue.Value as Enveloped<CatalogedDevice>;
-					}
-				break;
-				}
-			case "CatalogedDeviceDigest" : {
-				if (value is TokenValueString vvalue) {
-					CatalogedDeviceDigest = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Rights" : {
-				return new TokenValueListString (Rights);
-				}
-			case "EnvelopedCatalogedDevice" : {
-				return new TokenValueStruct<Enveloped<CatalogedDevice>> (EnvelopedCatalogedDevice);
-				}
-			case "CatalogedDeviceDigest" : {
-				return new TokenValueString (CatalogedDeviceDigest);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new AccessCapability(), Capability._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Rights", new Property (typeof(TokenValueListString), true)} ,
-			{ "EnvelopedCatalogedDevice", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<CatalogedDevice>(), ()=>new Enveloped<CatalogedDevice>(), false)} ,
-			{ "CatalogedDeviceDigest", new Property (typeof(TokenValueString), false)} 
+			{ "Rights", new PropertyListString ("Rights", 
+					(IBinding data, List<string>? value) => {(data as AccessCapability).Rights = value;}, (IBinding data) => (data as AccessCapability).Rights )},
+			{ "EnvelopedCatalogedDevice", new PropertyStruct ("EnvelopedCatalogedDevice", 
+					(IBinding data, object? value) => {(data as AccessCapability).EnvelopedCatalogedDevice = value as Enveloped<CatalogedDevice>;}, (IBinding data) => (data as AccessCapability).EnvelopedCatalogedDevice,
+					false, ()=>new  Enveloped<CatalogedDevice>(), ()=>new Enveloped<CatalogedDevice>())} ,
+			{ "CatalogedDeviceDigest", new PropertyString ("CatalogedDeviceDigest", 
+					(IBinding data, string? value) => {(data as AccessCapability).CatalogedDeviceDigest = value;}, (IBinding data) => (data as AccessCapability).CatalogedDeviceDigest )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -8905,78 +6448,40 @@ public partial class PublicationCapability : Capability {
         ///Selector allowing a specific document to be requested.
         /// </summary>
 
-	public virtual string						Identifier  {get; set;}
+	public virtual string?						Identifier  {get; set;}
+
         /// <summary>
         ///Document digest, this allows a status/claim request to 
         ///request an update to be returned only if the document
         ///has changed.
         /// </summary>
 
-	public virtual string						Digest  {get; set;}
+	public virtual string?						Digest  {get; set;}
+
         /// <summary>
         ///The published document.
         /// </summary>
 
-	public virtual byte[]						Data  {get; set;}
+	public virtual byte[]?						Data  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Identifier" : {
-				if (value is TokenValueString vvalue) {
-					Identifier = vvalue.Value;
-					}
-				break;
-				}
-			case "Digest" : {
-				if (value is TokenValueString vvalue) {
-					Digest = vvalue.Value;
-					}
-				break;
-				}
-			case "Data" : {
-				if (value is TokenValueBinary vvalue) {
-					Data = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Identifier" : {
-				return new TokenValueString (Identifier);
-				}
-			case "Digest" : {
-				return new TokenValueString (Digest);
-				}
-			case "Data" : {
-				return new TokenValueBinary (Data);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new PublicationCapability(), Capability._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Identifier", new Property (typeof(TokenValueString), false)} ,
-			{ "Digest", new Property (typeof(TokenValueString), false)} ,
-			{ "Data", new Property (typeof(TokenValueBinary), false)} 
+			{ "Identifier", new PropertyString ("Identifier", 
+					(IBinding data, string? value) => {(data as PublicationCapability).Identifier = value;}, (IBinding data) => (data as PublicationCapability).Identifier )},
+			{ "Digest", new PropertyString ("Digest", 
+					(IBinding data, string? value) => {(data as PublicationCapability).Digest = value;}, (IBinding data) => (data as PublicationCapability).Digest )},
+			{ "Data", new PropertyBinary ("Data", 
+					(IBinding data, byte[]? value) => {(data as PublicationCapability).Data = value;}, (IBinding data) => (data as PublicationCapability).Data )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -9042,91 +6547,46 @@ abstract public partial class CryptographicCapability : Capability {
         ///The key that enables the capability
         /// </summary>
 
-	public virtual KeyData						KeyData  {get; set;}
+	public virtual KeyData?						KeyData  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						GranteeAccount  {get; set;}
+	public virtual string?						GranteeAccount  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						GranteeUdf  {get; set;}
+	public virtual string?						GranteeUdf  {get; set;}
+
         /// <summary>
         ///One or more enveloped key shares.
         /// </summary>
 
-	public virtual Enveloped<KeyData>						EnvelopedKeyShare  {get; set;}
+	public virtual Enveloped<KeyData>?						EnvelopedKeyShare  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "KeyData" : {
-				if (value is TokenValueStructObject vvalue) {
-					KeyData = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "GranteeAccount" : {
-				if (value is TokenValueString vvalue) {
-					GranteeAccount = vvalue.Value;
-					}
-				break;
-				}
-			case "GranteeUdf" : {
-				if (value is TokenValueString vvalue) {
-					GranteeUdf = vvalue.Value;
-					}
-				break;
-				}
-			case "EnvelopedKeyShare" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedKeyShare = vvalue.Value as Enveloped<KeyData>;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "KeyData" : {
-				return new TokenValueStruct<KeyData> (KeyData);
-				}
-			case "GranteeAccount" : {
-				return new TokenValueString (GranteeAccount);
-				}
-			case "GranteeUdf" : {
-				return new TokenValueString (GranteeUdf);
-				}
-			case "EnvelopedKeyShare" : {
-				return new TokenValueStruct<Enveloped<KeyData>> (EnvelopedKeyShare);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,null, Capability._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "KeyData", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "GranteeAccount", new Property (typeof(TokenValueString), false)} ,
-			{ "GranteeUdf", new Property (typeof(TokenValueString), false)} ,
-			{ "EnvelopedKeyShare", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<KeyData>(), ()=>new Enveloped<KeyData>(), false)} 
+			{ "KeyData", new PropertyStruct ("KeyData", 
+					(IBinding data, object? value) => {(data as CryptographicCapability).KeyData = value as KeyData;}, (IBinding data) => (data as CryptographicCapability).KeyData,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "GranteeAccount", new PropertyString ("GranteeAccount", 
+					(IBinding data, string? value) => {(data as CryptographicCapability).GranteeAccount = value;}, (IBinding data) => (data as CryptographicCapability).GranteeAccount )},
+			{ "GranteeUdf", new PropertyString ("GranteeUdf", 
+					(IBinding data, string? value) => {(data as CryptographicCapability).GranteeUdf = value;}, (IBinding data) => (data as CryptographicCapability).GranteeUdf )},
+			{ "EnvelopedKeyShare", new PropertyStruct ("EnvelopedKeyShare", 
+					(IBinding data, object? value) => {(data as CryptographicCapability).EnvelopedKeyShare = value as Enveloped<KeyData>;}, (IBinding data) => (data as CryptographicCapability).EnvelopedKeyShare,
+					false, ()=>new  Enveloped<KeyData>(), ()=>new Enveloped<KeyData>())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -9189,29 +6649,12 @@ abstract public partial class CryptographicCapability : Capability {
 public partial class CapabilityDecrypt : CryptographicCapability {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CapabilityDecrypt(), CryptographicCapability._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -9281,29 +6724,12 @@ public partial class CapabilityDecrypt : CryptographicCapability {
 public partial class CapabilityDecryptPartial : CapabilityDecrypt {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CapabilityDecryptPartial(), CapabilityDecrypt._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -9376,46 +6802,22 @@ public partial class CapabilityDecryptServiced : CapabilityDecrypt {
         ///authorized. [Only present for a serviced capability]
         /// </summary>
 
-	public virtual string						AuthenticationId  {get; set;}
+	public virtual string?						AuthenticationId  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "AuthenticationId" : {
-				if (value is TokenValueString vvalue) {
-					AuthenticationId = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "AuthenticationId" : {
-				return new TokenValueString (AuthenticationId);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CapabilityDecryptServiced(), CapabilityDecrypt._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "AuthenticationId", new Property (typeof(TokenValueString), false)} 
+			{ "AuthenticationId", new PropertyString ("AuthenticationId", 
+					(IBinding data, string? value) => {(data as CapabilityDecryptServiced).AuthenticationId = value;}, (IBinding data) => (data as CapabilityDecryptServiced).AuthenticationId )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -9481,29 +6883,12 @@ public partial class CapabilityDecryptServiced : CapabilityDecrypt {
 public partial class CapabilitySign : CryptographicCapability {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CapabilitySign(), CryptographicCapability._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -9573,29 +6958,12 @@ public partial class CapabilitySign : CryptographicCapability {
 public partial class CapabilityKeyGenerate : CryptographicCapability {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CapabilityKeyGenerate(), CryptographicCapability._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -9667,29 +7035,12 @@ public partial class CapabilityKeyGenerate : CryptographicCapability {
 public partial class CapabilityFairExchange : CryptographicCapability {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CapabilityFairExchange(), CryptographicCapability._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -9759,78 +7110,39 @@ public partial class NamedService : MeshItem {
         ///The IANA service name (e.g. dns)
         /// </summary>
 
-	public virtual string						Prefix  {get; set;}
+	public virtual string?						Prefix  {get; set;}
+
         /// <summary>
         ///Optional name mapping, (e.g. alice@example.com -> alice.mesh)
         /// </summary>
 
-	public virtual string						Mapping  {get; set;}
+	public virtual string?						Mapping  {get; set;}
+
         /// <summary>
         ///The service endpoints. This MAY be specified as a callsign (@alice),
         ///a DNS address (example.com), an IP address (10.0.0.1) or a fully
         ///qualified URI.
         /// </summary>
 
-	public virtual List<string>				Endpoints  {get; set;}
+	public virtual List<string>?					Endpoints  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Prefix" : {
-				if (value is TokenValueString vvalue) {
-					Prefix = vvalue.Value;
-					}
-				break;
-				}
-			case "Mapping" : {
-				if (value is TokenValueString vvalue) {
-					Mapping = vvalue.Value;
-					}
-				break;
-				}
-			case "Endpoints" : {
-				if (value is TokenValueListString vvalue) {
-					Endpoints = vvalue.Value;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Prefix" : {
-				return new TokenValueString (Prefix);
-				}
-			case "Mapping" : {
-				return new TokenValueString (Mapping);
-				}
-			case "Endpoints" : {
-				return new TokenValueListString (Endpoints);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new NamedService(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Prefix", new Property (typeof(TokenValueString), false)} ,
-			{ "Mapping", new Property (typeof(TokenValueString), false)} ,
-			{ "Endpoints", new Property (typeof(TokenValueListString), true)} 
+			{ "Prefix", new PropertyString ("Prefix", 
+					(IBinding data, string? value) => {(data as NamedService).Prefix = value;}, (IBinding data) => (data as NamedService).Prefix )},
+			{ "Mapping", new PropertyString ("Mapping", 
+					(IBinding data, string? value) => {(data as NamedService).Mapping = value;}, (IBinding data) => (data as NamedService).Mapping )},
+			{ "Endpoints", new PropertyListString ("Endpoints", 
+					(IBinding data, List<string>? value) => {(data as NamedService).Endpoints = value;}, (IBinding data) => (data as NamedService).Endpoints )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -9895,61 +7207,30 @@ public partial class ServiceAccessToken : NamedService {
         ///Session initiation token
         /// </summary>
 
-	public virtual byte[]						Token  {get; set;}
+	public virtual byte[]?						Token  {get; set;}
+
         /// <summary>
         ///Session shared secret
         /// </summary>
 
-	public virtual byte[]						SharedSecret  {get; set;}
+	public virtual byte[]?						SharedSecret  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Token" : {
-				if (value is TokenValueBinary vvalue) {
-					Token = vvalue.Value;
-					}
-				break;
-				}
-			case "SharedSecret" : {
-				if (value is TokenValueBinary vvalue) {
-					SharedSecret = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Token" : {
-				return new TokenValueBinary (Token);
-				}
-			case "SharedSecret" : {
-				return new TokenValueBinary (SharedSecret);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ServiceAccessToken(), NamedService._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Token", new Property (typeof(TokenValueBinary), false)} ,
-			{ "SharedSecret", new Property (typeof(TokenValueBinary), false)} 
+			{ "Token", new PropertyBinary ("Token", 
+					(IBinding data, byte[]? value) => {(data as ServiceAccessToken).Token = value;}, (IBinding data) => (data as ServiceAccessToken).Token )},
+			{ "SharedSecret", new PropertyBinary ("SharedSecret", 
+					(IBinding data, byte[]? value) => {(data as ServiceAccessToken).SharedSecret = value;}, (IBinding data) => (data as ServiceAccessToken).SharedSecret )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -10014,75 +7295,36 @@ public partial class CatalogedBookmark : CatalogedEntry {
         /// <summary>
         /// </summary>
 
-	public virtual string						Uri  {get; set;}
+	public virtual string?						Uri  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Title  {get; set;}
+	public virtual string?						Title  {get; set;}
+
         /// <summary>
         ///User comments on bookmark entry
         /// </summary>
 
-	public virtual List<string>				Comments  {get; set;}
+	public virtual List<string>?					Comments  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Uri" : {
-				if (value is TokenValueString vvalue) {
-					Uri = vvalue.Value;
-					}
-				break;
-				}
-			case "Title" : {
-				if (value is TokenValueString vvalue) {
-					Title = vvalue.Value;
-					}
-				break;
-				}
-			case "Comments" : {
-				if (value is TokenValueListString vvalue) {
-					Comments = vvalue.Value;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Uri" : {
-				return new TokenValueString (Uri);
-				}
-			case "Title" : {
-				return new TokenValueString (Title);
-				}
-			case "Comments" : {
-				return new TokenValueListString (Comments);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedBookmark(), CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Uri", new Property (typeof(TokenValueString), false)} ,
-			{ "Title", new Property (typeof(TokenValueString), false)} ,
-			{ "Comments", new Property (typeof(TokenValueListString), true)} 
+			{ "Uri", new PropertyString ("Uri", 
+					(IBinding data, string? value) => {(data as CatalogedBookmark).Uri = value;}, (IBinding data) => (data as CatalogedBookmark).Uri )},
+			{ "Title", new PropertyString ("Title", 
+					(IBinding data, string? value) => {(data as CatalogedBookmark).Title = value;}, (IBinding data) => (data as CatalogedBookmark).Title )},
+			{ "Comments", new PropertyListString ("Comments", 
+					(IBinding data, List<string>? value) => {(data as CatalogedBookmark).Comments = value;}, (IBinding data) => (data as CatalogedBookmark).Comments )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -10147,76 +7389,38 @@ public partial class CatalogedTask : CatalogedEntry {
         /// <summary>
         /// </summary>
 
-	public virtual Enveloped<Engagement>						EnvelopedTask  {get; set;}
+	public virtual Enveloped<Engagement>?						EnvelopedTask  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Title  {get; set;}
+	public virtual string?						Title  {get; set;}
+
         /// <summary>
         ///Unique key.
         /// </summary>
 
-	public virtual string						Key  {get; set;}
+	public virtual string?						Key  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "EnvelopedTask" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedTask = vvalue.Value as Enveloped<Engagement>;
-					}
-				break;
-				}
-			case "Title" : {
-				if (value is TokenValueString vvalue) {
-					Title = vvalue.Value;
-					}
-				break;
-				}
-			case "Key" : {
-				if (value is TokenValueString vvalue) {
-					Key = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "EnvelopedTask" : {
-				return new TokenValueStruct<Enveloped<Engagement>> (EnvelopedTask);
-				}
-			case "Title" : {
-				return new TokenValueString (Title);
-				}
-			case "Key" : {
-				return new TokenValueString (Key);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedTask(), CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "EnvelopedTask", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<Engagement>(), ()=>new Enveloped<Engagement>(), false)} ,
-			{ "Title", new Property (typeof(TokenValueString), false)} ,
-			{ "Key", new Property (typeof(TokenValueString), false)} 
+			{ "EnvelopedTask", new PropertyStruct ("EnvelopedTask", 
+					(IBinding data, object? value) => {(data as CatalogedTask).EnvelopedTask = value as Enveloped<Engagement>;}, (IBinding data) => (data as CatalogedTask).EnvelopedTask,
+					false, ()=>new  Enveloped<Engagement>(), ()=>new Enveloped<Engagement>())} ,
+			{ "Title", new PropertyString ("Title", 
+					(IBinding data, string? value) => {(data as CatalogedTask).Title = value;}, (IBinding data) => (data as CatalogedTask).Title )},
+			{ "Key", new PropertyString ("Key", 
+					(IBinding data, string? value) => {(data as CatalogedTask).Key = value;}, (IBinding data) => (data as CatalogedTask).Key )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -10282,119 +7486,56 @@ abstract public partial class CatalogedApplication : CatalogedEntry {
         /// </summary>
 
 	public virtual int?						Default  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Key  {get; set;}
+	public virtual string?						Key  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual List<string>				Grant  {get; set;}
+	public virtual List<string>?					Grant  {get; set;}
         /// <summary>
         /// </summary>
 
-	public virtual List<string>				Deny  {get; set;}
+	public virtual List<string>?					Deny  {get; set;}
         /// <summary>
         ///Enveloped keys for use with Application
         /// </summary>
 
-	public virtual List<DareEnvelope>				EnvelopedCapabilities  {get; set;}
+	public virtual List<DareEnvelope>?					EnvelopedCapabilities  {get; set;}
         /// <summary>
         ///Escrow entries for the application.
         /// </summary>
 
-	public virtual List<Enveloped<KeyData>>				EnvelopedEscrow  {get; set;}
+	public virtual List<Enveloped<KeyData>>?					EnvelopedEscrow  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Default" : {
-				if (value is TokenValueInteger32 vvalue) {
-					Default = vvalue.Value;
-					}
-				break;
-				}
-			case "Key" : {
-				if (value is TokenValueString vvalue) {
-					Key = vvalue.Value;
-					}
-				break;
-				}
-			case "Grant" : {
-				if (value is TokenValueListString vvalue) {
-					Grant = vvalue.Value;
-					}
-				break;
-				}
-			case "Deny" : {
-				if (value is TokenValueListString vvalue) {
-					Deny = vvalue.Value;
-					}
-				break;
-				}
-			case "EnvelopedCapabilities" : {
-				if (value is TokenValueListStructObject vvalue) {
-					EnvelopedCapabilities = vvalue.Value as List<DareEnvelope>;
-					}
-				break;
-				}
-			case "EnvelopedEscrow" : {
-				if (value is TokenValueListStructObject vvalue) {
-					EnvelopedEscrow = vvalue.Value as List<Enveloped<KeyData>>;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Default" : {
-				return new TokenValueInteger32 (Default);
-				}
-			case "Key" : {
-				return new TokenValueString (Key);
-				}
-			case "Grant" : {
-				return new TokenValueListString (Grant);
-				}
-			case "Deny" : {
-				return new TokenValueListString (Deny);
-				}
-			case "EnvelopedCapabilities" : {
-				return new TokenValueListStruct<DareEnvelope> (EnvelopedCapabilities);
-				}
-			case "EnvelopedEscrow" : {
-				return new TokenValueListStruct<Enveloped<KeyData>> (EnvelopedEscrow);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,null, CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Default", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "Key", new Property (typeof(TokenValueString), false)} ,
-			{ "Grant", new Property (typeof(TokenValueListString), true)} ,
-			{ "Deny", new Property (typeof(TokenValueListString), true)} ,
-			{ "EnvelopedCapabilities", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<DareEnvelope>(), ()=>new DareEnvelope(), false)} ,
-			{ "EnvelopedEscrow", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<Enveloped<KeyData>>(), ()=>new Enveloped<KeyData>(), false)} 
+			{ "Default", new PropertyInteger32 ("Default", 
+					(IBinding data, int? value) => {(data as CatalogedApplication).Default = value;}, (IBinding data) => (data as CatalogedApplication).Default )},
+			{ "Key", new PropertyString ("Key", 
+					(IBinding data, string? value) => {(data as CatalogedApplication).Key = value;}, (IBinding data) => (data as CatalogedApplication).Key )},
+			{ "Grant", new PropertyListString ("Grant", 
+					(IBinding data, List<string>? value) => {(data as CatalogedApplication).Grant = value;}, (IBinding data) => (data as CatalogedApplication).Grant )},
+			{ "Deny", new PropertyListString ("Deny", 
+					(IBinding data, List<string>? value) => {(data as CatalogedApplication).Deny = value;}, (IBinding data) => (data as CatalogedApplication).Deny )},
+			{ "EnvelopedCapabilities", new PropertyListStruct ("EnvelopedCapabilities", 
+					(IBinding data, object? value) => {(data as CatalogedApplication).EnvelopedCapabilities = value as List<DareEnvelope>;}, (IBinding data) => (data as CatalogedApplication).EnvelopedCapabilities,
+					false, ()=>new  List<DareEnvelope>(), ()=>new DareEnvelope())} ,
+			{ "EnvelopedEscrow", new PropertyListStruct ("EnvelopedEscrow", 
+					(IBinding data, object? value) => {(data as CatalogedApplication).EnvelopedEscrow = value as List<Enveloped<KeyData>>;}, (IBinding data) => (data as CatalogedApplication).EnvelopedEscrow,
+					false, ()=>new  List<Enveloped<KeyData>>(), ()=>new Enveloped<KeyData>())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -10456,74 +7597,36 @@ public partial class CatalogedMember : CatalogedEntry {
         /// <summary>
         /// </summary>
 
-	public virtual string						ContactAddress  {get; set;}
+	public virtual string?						ContactAddress  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						MemberCapabilityId  {get; set;}
+	public virtual string?						MemberCapabilityId  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						ServiceCapabilityId  {get; set;}
+	public virtual string?						ServiceCapabilityId  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "ContactAddress" : {
-				if (value is TokenValueString vvalue) {
-					ContactAddress = vvalue.Value;
-					}
-				break;
-				}
-			case "MemberCapabilityId" : {
-				if (value is TokenValueString vvalue) {
-					MemberCapabilityId = vvalue.Value;
-					}
-				break;
-				}
-			case "ServiceCapabilityId" : {
-				if (value is TokenValueString vvalue) {
-					ServiceCapabilityId = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "ContactAddress" : {
-				return new TokenValueString (ContactAddress);
-				}
-			case "MemberCapabilityId" : {
-				return new TokenValueString (MemberCapabilityId);
-				}
-			case "ServiceCapabilityId" : {
-				return new TokenValueString (ServiceCapabilityId);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedMember(), CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "ContactAddress", new Property (typeof(TokenValueString), false)} ,
-			{ "MemberCapabilityId", new Property (typeof(TokenValueString), false)} ,
-			{ "ServiceCapabilityId", new Property (typeof(TokenValueString), false)} 
+			{ "ContactAddress", new PropertyString ("ContactAddress", 
+					(IBinding data, string? value) => {(data as CatalogedMember).ContactAddress = value;}, (IBinding data) => (data as CatalogedMember).ContactAddress )},
+			{ "MemberCapabilityId", new PropertyString ("MemberCapabilityId", 
+					(IBinding data, string? value) => {(data as CatalogedMember).MemberCapabilityId = value;}, (IBinding data) => (data as CatalogedMember).MemberCapabilityId )},
+			{ "ServiceCapabilityId", new PropertyString ("ServiceCapabilityId", 
+					(IBinding data, string? value) => {(data as CatalogedMember).ServiceCapabilityId = value;}, (IBinding data) => (data as CatalogedMember).ServiceCapabilityId )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -10589,79 +7692,41 @@ public partial class CatalogedGroup : CatalogedApplication {
         ///The connection allowing control of the group.
         /// </summary>
 
-	public virtual Enveloped<ConnectionStripped>						EnvelopedConnectionAddress  {get; set;}
+	public virtual Enveloped<ConnectionStripped>?						EnvelopedConnectionAddress  {get; set;}
+
         /// <summary>
         ///The Mesh profile
         /// </summary>
 
-	public virtual Enveloped<ProfileAccount>						EnvelopedProfileGroup  {get; set;}
+	public virtual Enveloped<ProfileAccount>?						EnvelopedProfileGroup  {get; set;}
+
         /// <summary>
         ///The activation of the device within the Mesh account
         /// </summary>
 
-	public virtual Enveloped<ActivationCommon>						EnvelopedActivationCommon  {get; set;}
+	public virtual Enveloped<ActivationCommon>?						EnvelopedActivationCommon  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "EnvelopedConnectionAddress" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedConnectionAddress = vvalue.Value as Enveloped<ConnectionStripped>;
-					}
-				break;
-				}
-			case "EnvelopedProfileGroup" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedProfileGroup = vvalue.Value as Enveloped<ProfileAccount>;
-					}
-				break;
-				}
-			case "EnvelopedActivationCommon" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedActivationCommon = vvalue.Value as Enveloped<ActivationCommon>;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "EnvelopedConnectionAddress" : {
-				return new TokenValueStruct<Enveloped<ConnectionStripped>> (EnvelopedConnectionAddress);
-				}
-			case "EnvelopedProfileGroup" : {
-				return new TokenValueStruct<Enveloped<ProfileAccount>> (EnvelopedProfileGroup);
-				}
-			case "EnvelopedActivationCommon" : {
-				return new TokenValueStruct<Enveloped<ActivationCommon>> (EnvelopedActivationCommon);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedGroup(), CatalogedApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "EnvelopedConnectionAddress", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>(), false)} ,
-			{ "EnvelopedProfileGroup", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>(), false)} ,
-			{ "EnvelopedActivationCommon", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>(), false)} 
+			{ "EnvelopedConnectionAddress", new PropertyStruct ("EnvelopedConnectionAddress", 
+					(IBinding data, object? value) => {(data as CatalogedGroup).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, (IBinding data) => (data as CatalogedGroup).EnvelopedConnectionAddress,
+					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>())} ,
+			{ "EnvelopedProfileGroup", new PropertyStruct ("EnvelopedProfileGroup", 
+					(IBinding data, object? value) => {(data as CatalogedGroup).EnvelopedProfileGroup = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as CatalogedGroup).EnvelopedProfileGroup,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())} ,
+			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", 
+					(IBinding data, object? value) => {(data as CatalogedGroup).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, (IBinding data) => (data as CatalogedGroup).EnvelopedActivationCommon,
+					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -10726,138 +7791,72 @@ public partial class CatalogedApplicationMail : CatalogedApplication {
         /// <summary>
         /// </summary>
 
-	public virtual string						AccountAddress  {get; set;}
+	public virtual string?						AccountAddress  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						InboundConnect  {get; set;}
+	public virtual string?						InboundConnect  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						OutboundConnect  {get; set;}
+	public virtual string?						OutboundConnect  {get; set;}
+
         /// <summary>
         ///The S/Mime signature key
         /// </summary>
 
-	public virtual KeyData						SmimeSign  {get; set;}
+	public virtual KeyData?						SmimeSign  {get; set;}
+
         /// <summary>
         ///The S/Mime encryption key
         /// </summary>
 
-	public virtual KeyData						SmimeEncrypt  {get; set;}
+	public virtual KeyData?						SmimeEncrypt  {get; set;}
+
         /// <summary>
         ///The OpenPGP signature key
         /// </summary>
 
-	public virtual KeyData						OpenpgpSign  {get; set;}
+	public virtual KeyData?						OpenpgpSign  {get; set;}
+
         /// <summary>
         ///The OpenPGP encryption key
         /// </summary>
 
-	public virtual KeyData						OpenpgpEncrypt  {get; set;}
+	public virtual KeyData?						OpenpgpEncrypt  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "AccountAddress" : {
-				if (value is TokenValueString vvalue) {
-					AccountAddress = vvalue.Value;
-					}
-				break;
-				}
-			case "InboundConnect" : {
-				if (value is TokenValueString vvalue) {
-					InboundConnect = vvalue.Value;
-					}
-				break;
-				}
-			case "OutboundConnect" : {
-				if (value is TokenValueString vvalue) {
-					OutboundConnect = vvalue.Value;
-					}
-				break;
-				}
-			case "SmimeSign" : {
-				if (value is TokenValueStructObject vvalue) {
-					SmimeSign = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "SmimeEncrypt" : {
-				if (value is TokenValueStructObject vvalue) {
-					SmimeEncrypt = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "OpenpgpSign" : {
-				if (value is TokenValueStructObject vvalue) {
-					OpenpgpSign = vvalue.Value as KeyData;
-					}
-				break;
-				}
-			case "OpenpgpEncrypt" : {
-				if (value is TokenValueStructObject vvalue) {
-					OpenpgpEncrypt = vvalue.Value as KeyData;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "AccountAddress" : {
-				return new TokenValueString (AccountAddress);
-				}
-			case "InboundConnect" : {
-				return new TokenValueString (InboundConnect);
-				}
-			case "OutboundConnect" : {
-				return new TokenValueString (OutboundConnect);
-				}
-			case "SmimeSign" : {
-				return new TokenValueStruct<KeyData> (SmimeSign);
-				}
-			case "SmimeEncrypt" : {
-				return new TokenValueStruct<KeyData> (SmimeEncrypt);
-				}
-			case "OpenpgpSign" : {
-				return new TokenValueStruct<KeyData> (OpenpgpSign);
-				}
-			case "OpenpgpEncrypt" : {
-				return new TokenValueStruct<KeyData> (OpenpgpEncrypt);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedApplicationMail(), CatalogedApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "AccountAddress", new Property (typeof(TokenValueString), false)} ,
-			{ "InboundConnect", new Property (typeof(TokenValueString), false)} ,
-			{ "OutboundConnect", new Property (typeof(TokenValueString), false)} ,
-			{ "SmimeSign", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "SmimeEncrypt", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "OpenpgpSign", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} ,
-			{ "OpenpgpEncrypt", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} 
+			{ "AccountAddress", new PropertyString ("AccountAddress", 
+					(IBinding data, string? value) => {(data as CatalogedApplicationMail).AccountAddress = value;}, (IBinding data) => (data as CatalogedApplicationMail).AccountAddress )},
+			{ "InboundConnect", new PropertyString ("InboundConnect", 
+					(IBinding data, string? value) => {(data as CatalogedApplicationMail).InboundConnect = value;}, (IBinding data) => (data as CatalogedApplicationMail).InboundConnect )},
+			{ "OutboundConnect", new PropertyString ("OutboundConnect", 
+					(IBinding data, string? value) => {(data as CatalogedApplicationMail).OutboundConnect = value;}, (IBinding data) => (data as CatalogedApplicationMail).OutboundConnect )},
+			{ "SmimeSign", new PropertyStruct ("SmimeSign", 
+					(IBinding data, object? value) => {(data as CatalogedApplicationMail).SmimeSign = value as KeyData;}, (IBinding data) => (data as CatalogedApplicationMail).SmimeSign,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "SmimeEncrypt", new PropertyStruct ("SmimeEncrypt", 
+					(IBinding data, object? value) => {(data as CatalogedApplicationMail).SmimeEncrypt = value as KeyData;}, (IBinding data) => (data as CatalogedApplicationMail).SmimeEncrypt,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "OpenpgpSign", new PropertyStruct ("OpenpgpSign", 
+					(IBinding data, object? value) => {(data as CatalogedApplicationMail).OpenpgpSign = value as KeyData;}, (IBinding data) => (data as CatalogedApplicationMail).OpenpgpSign,
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "OpenpgpEncrypt", new PropertyStruct ("OpenpgpEncrypt", 
+					(IBinding data, object? value) => {(data as CatalogedApplicationMail).OpenpgpEncrypt = value as KeyData;}, (IBinding data) => (data as CatalogedApplicationMail).OpenpgpEncrypt,
+					false, ()=>new  KeyData(), ()=>new KeyData())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -10921,29 +7920,12 @@ public partial class CatalogedApplicationMail : CatalogedApplication {
 public partial class CatalogedApplicationNetwork : CatalogedApplication {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedApplicationNetwork(), CatalogedApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -11011,29 +7993,12 @@ public partial class CatalogedApplicationNetwork : CatalogedApplication {
 public partial class MessageInvoice : Message {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new MessageInvoice(), Message._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -11101,29 +8066,12 @@ public partial class MessageInvoice : Message {
 public partial class CatalogedReceipt : CatalogedEntry {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedReceipt(), CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -11191,29 +8139,12 @@ public partial class CatalogedReceipt : CatalogedEntry {
 public partial class CatalogedTicket : CatalogedEntry {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedTicket(), CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -11283,7 +8214,8 @@ public partial class DevicePreconfigurationPublic : MeshItem {
         ///The device profile
         /// </summary>
 
-	public virtual Enveloped<ProfileDevice>						EnvelopedProfileDevice  {get; set;}
+	public virtual Enveloped<ProfileDevice>?						EnvelopedProfileDevice  {get; set;}
+
         /// <summary>
         ///A list of URIs specifying hailing transports that may be used to
         ///initiate a connection to the device. This allows a device to 
@@ -11291,57 +8223,24 @@ public partial class DevicePreconfigurationPublic : MeshItem {
         ///private SSID, or by Bluetooth, IR etc. etc.
         /// </summary>
 
-	public virtual List<string>				Hailing  {get; set;}
+	public virtual List<string>?					Hailing  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "EnvelopedProfileDevice" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedProfileDevice = vvalue.Value as Enveloped<ProfileDevice>;
-					}
-				break;
-				}
-			case "Hailing" : {
-				if (value is TokenValueListString vvalue) {
-					Hailing = vvalue.Value;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "EnvelopedProfileDevice" : {
-				return new TokenValueStruct<Enveloped<ProfileDevice>> (EnvelopedProfileDevice);
-				}
-			case "Hailing" : {
-				return new TokenValueListString (Hailing);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new DevicePreconfigurationPublic(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "EnvelopedProfileDevice", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>(), false)} ,
-			{ "Hailing", new Property (typeof(TokenValueListString), true)} 
+			{ "EnvelopedProfileDevice", new PropertyStruct ("EnvelopedProfileDevice", 
+					(IBinding data, object? value) => {(data as DevicePreconfigurationPublic).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;}, (IBinding data) => (data as DevicePreconfigurationPublic).EnvelopedProfileDevice,
+					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())} ,
+			{ "Hailing", new PropertyListString ("Hailing", 
+					(IBinding data, List<string>? value) => {(data as DevicePreconfigurationPublic).Hailing = value;}, (IBinding data) => (data as DevicePreconfigurationPublic).Hailing )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -11408,95 +8307,50 @@ public partial class DevicePreconfigurationPrivate : DevicePreconfigurationPubli
         ///The device connection
         /// </summary>
 
-	public virtual Enveloped<ConnectionDevice>						EnvelopedConnectionDevice  {get; set;}
+	public virtual Enveloped<ConnectionDevice>?						EnvelopedConnectionDevice  {get; set;}
+
         /// <summary>
         ///The device connection
         /// </summary>
 
-	public virtual Enveloped<ConnectionService>						EnvelopedConnectionService  {get; set;}
+	public virtual Enveloped<ConnectionService>?						EnvelopedConnectionService  {get; set;}
+
         /// <summary>
         ///The device private key
         /// </summary>
 
-	public virtual Key						PrivateKey  {get; set;}
+	public virtual Key?						PrivateKey  {get; set;}
+
         /// <summary>
         ///The connection URI. This would normally be printed on the device as a 
         ///QR code.
         /// </summary>
 
-	public virtual string						ConnectUri  {get; set;}
+	public virtual string?						ConnectUri  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "EnvelopedConnectionDevice" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedConnectionDevice = vvalue.Value as Enveloped<ConnectionDevice>;
-					}
-				break;
-				}
-			case "EnvelopedConnectionService" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedConnectionService = vvalue.Value as Enveloped<ConnectionService>;
-					}
-				break;
-				}
-			case "PrivateKey" : {
-				if (value is TokenValueStructObject vvalue) {
-					PrivateKey = vvalue.Value as Key;
-					}
-				break;
-				}
-			case "ConnectUri" : {
-				if (value is TokenValueString vvalue) {
-					ConnectUri = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "EnvelopedConnectionDevice" : {
-				return new TokenValueStruct<Enveloped<ConnectionDevice>> (EnvelopedConnectionDevice);
-				}
-			case "EnvelopedConnectionService" : {
-				return new TokenValueStruct<Enveloped<ConnectionService>> (EnvelopedConnectionService);
-				}
-			case "PrivateKey" : {
-				return new TokenValueStruct<Key> (PrivateKey);
-				}
-			case "ConnectUri" : {
-				return new TokenValueString (ConnectUri);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new DevicePreconfigurationPrivate(), DevicePreconfigurationPublic._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "EnvelopedConnectionDevice", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ConnectionDevice>(), ()=>new Enveloped<ConnectionDevice>(), false)} ,
-			{ "EnvelopedConnectionService", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>(), false)} ,
-			{ "PrivateKey", new Property ( typeof(TokenValueStruct), false,
-					null, null, true)} ,
-			{ "ConnectUri", new Property (typeof(TokenValueString), false)} 
+			{ "EnvelopedConnectionDevice", new PropertyStruct ("EnvelopedConnectionDevice", 
+					(IBinding data, object? value) => {(data as DevicePreconfigurationPrivate).EnvelopedConnectionDevice = value as Enveloped<ConnectionDevice>;}, (IBinding data) => (data as DevicePreconfigurationPrivate).EnvelopedConnectionDevice,
+					false, ()=>new  Enveloped<ConnectionDevice>(), ()=>new Enveloped<ConnectionDevice>())} ,
+			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", 
+					(IBinding data, object? value) => {(data as DevicePreconfigurationPrivate).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as DevicePreconfigurationPrivate).EnvelopedConnectionService,
+					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())} ,
+			{ "PrivateKey", new PropertyStruct ("PrivateKey", 
+					(IBinding data, object? value) => {(data as DevicePreconfigurationPrivate).PrivateKey = value as Key;}, (IBinding data) => (data as DevicePreconfigurationPrivate).PrivateKey,
+					true)} ,
+			{ "ConnectUri", new PropertyString ("ConnectUri", 
+					(IBinding data, string? value) => {(data as DevicePreconfigurationPrivate).ConnectUri = value;}, (IBinding data) => (data as DevicePreconfigurationPrivate).ConnectUri )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -11564,74 +8418,36 @@ public partial class Message : MeshItem {
         ///value. 
         /// </summary>
 
-	public virtual string						MessageId  {get; set;}
+	public virtual string?						MessageId  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Sender  {get; set;}
+	public virtual string?						Sender  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Recipient  {get; set;}
+	public virtual string?						Recipient  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "MessageId" : {
-				if (value is TokenValueString vvalue) {
-					MessageId = vvalue.Value;
-					}
-				break;
-				}
-			case "Sender" : {
-				if (value is TokenValueString vvalue) {
-					Sender = vvalue.Value;
-					}
-				break;
-				}
-			case "Recipient" : {
-				if (value is TokenValueString vvalue) {
-					Recipient = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "MessageId" : {
-				return new TokenValueString (MessageId);
-				}
-			case "Sender" : {
-				return new TokenValueString (Sender);
-				}
-			case "Recipient" : {
-				return new TokenValueString (Recipient);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new Message(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "MessageId", new Property (typeof(TokenValueString), false)} ,
-			{ "Sender", new Property (typeof(TokenValueString), false)} ,
-			{ "Recipient", new Property (typeof(TokenValueString), false)} 
+			{ "MessageId", new PropertyString ("MessageId", 
+					(IBinding data, string? value) => {(data as Message).MessageId = value;}, (IBinding data) => (data as Message).MessageId )},
+			{ "Sender", new PropertyString ("Sender", 
+					(IBinding data, string? value) => {(data as Message).Sender = value;}, (IBinding data) => (data as Message).Sender )},
+			{ "Recipient", new PropertyString ("Recipient", 
+					(IBinding data, string? value) => {(data as Message).Recipient = value;}, (IBinding data) => (data as Message).Recipient )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -11695,46 +8511,22 @@ public partial class MessageError : Message {
         /// <summary>
         /// </summary>
 
-	public virtual string						ErrorCode  {get; set;}
+	public virtual string?						ErrorCode  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "ErrorCode" : {
-				if (value is TokenValueString vvalue) {
-					ErrorCode = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "ErrorCode" : {
-				return new TokenValueString (ErrorCode);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new MessageError(), Message._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "ErrorCode", new Property (typeof(TokenValueString), false)} 
+			{ "ErrorCode", new PropertyString ("ErrorCode", 
+					(IBinding data, string? value) => {(data as MessageError).ErrorCode = value;}, (IBinding data) => (data as MessageError).ErrorCode )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -11799,47 +8591,22 @@ public partial class MessageComplete : Message {
         /// <summary>
         /// </summary>
 
-	public virtual List<Reference>				References  {get; set;}
+	public virtual List<Reference>?					References  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "References" : {
-				if (value is TokenValueListStructObject vvalue) {
-					References = vvalue.Value as List<Reference>;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "References" : {
-				return new TokenValueListStruct<Reference> (References);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new MessageComplete(), Message._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "References", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<Reference>(), ()=>new Reference(), false)} 
+			{ "References", new PropertyListStruct ("References", 
+					(IBinding data, object? value) => {(data as MessageComplete).References = value as List<Reference>;}, (IBinding data) => (data as MessageComplete).References,
+					false, ()=>new  List<Reference>(), ()=>new Reference())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -11905,92 +8672,47 @@ public partial class MessageValidated : Message {
         ///Enveloped data that is authenticated by means of the PIN
         /// </summary>
 
-	public virtual DareEnvelope						AuthenticatedData  {get; set;}
+	public virtual DareEnvelope?						AuthenticatedData  {get; set;}
+
         /// <summary>
         ///Nonce provided by the client to validate the PIN
         /// </summary>
 
-	public virtual byte[]						ClientNonce  {get; set;}
+	public virtual byte[]?						ClientNonce  {get; set;}
+
         /// <summary>
         ///Pin identifier value calculated from the PIN code, action and account address.
         /// </summary>
 
-	public virtual string						PinId  {get; set;}
+	public virtual string?						PinId  {get; set;}
+
         /// <summary>
         ///Witness value calculated as KDF (Device.Udf + AccountAddress, ClientNonce)
         /// </summary>
 
-	public virtual byte[]						PinWitness  {get; set;}
+	public virtual byte[]?						PinWitness  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "AuthenticatedData" : {
-				if (value is TokenValueStructObject vvalue) {
-					AuthenticatedData = vvalue.Value as DareEnvelope;
-					}
-				break;
-				}
-			case "ClientNonce" : {
-				if (value is TokenValueBinary vvalue) {
-					ClientNonce = vvalue.Value;
-					}
-				break;
-				}
-			case "PinId" : {
-				if (value is TokenValueString vvalue) {
-					PinId = vvalue.Value;
-					}
-				break;
-				}
-			case "PinWitness" : {
-				if (value is TokenValueBinary vvalue) {
-					PinWitness = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "AuthenticatedData" : {
-				return new TokenValueStruct<DareEnvelope> (AuthenticatedData);
-				}
-			case "ClientNonce" : {
-				return new TokenValueBinary (ClientNonce);
-				}
-			case "PinId" : {
-				return new TokenValueString (PinId);
-				}
-			case "PinWitness" : {
-				return new TokenValueBinary (PinWitness);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new MessageValidated(), Message._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "AuthenticatedData", new Property ( typeof(TokenValueStruct), false,
-					()=>new DareEnvelope(), ()=>new DareEnvelope(), false)} ,
-			{ "ClientNonce", new Property (typeof(TokenValueBinary), false)} ,
-			{ "PinId", new Property (typeof(TokenValueString), false)} ,
-			{ "PinWitness", new Property (typeof(TokenValueBinary), false)} 
+			{ "AuthenticatedData", new PropertyStruct ("AuthenticatedData", 
+					(IBinding data, object? value) => {(data as MessageValidated).AuthenticatedData = value as DareEnvelope;}, (IBinding data) => (data as MessageValidated).AuthenticatedData,
+					false, ()=>new  DareEnvelope(), ()=>new DareEnvelope())} ,
+			{ "ClientNonce", new PropertyBinary ("ClientNonce", 
+					(IBinding data, byte[]? value) => {(data as MessageValidated).ClientNonce = value;}, (IBinding data) => (data as MessageValidated).ClientNonce )},
+			{ "PinId", new PropertyString ("PinId", 
+					(IBinding data, string? value) => {(data as MessageValidated).PinId = value;}, (IBinding data) => (data as MessageValidated).PinId )},
+			{ "PinWitness", new PropertyBinary ("PinWitness", 
+					(IBinding data, byte[]? value) => {(data as MessageValidated).PinWitness = value;}, (IBinding data) => (data as MessageValidated).PinWitness )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -12055,121 +8777,61 @@ public partial class MessagePin : Message {
         /// <summary>
         /// </summary>
 
-	public virtual string						Account  {get; set;}
+	public virtual string?						Account  {get; set;}
+
         /// <summary>
         /// </summary>
 
 	public virtual DateTime?						Expires  {get; set;}
+
         /// <summary>
         ///If true, authentication against the PIN code is sufficient to complete
         ///the associated action without further authorization.
         /// </summary>
 
 	public virtual bool?						Automatic  {get; set;}
+
         /// <summary>
         ///PIN code bound to the specified action.
         /// </summary>
 
-	public virtual string						SaltedPin  {get; set;}
+	public virtual string?						SaltedPin  {get; set;}
+
         /// <summary>
         ///The action to which this PIN code is bound.
         /// </summary>
 
-	public virtual string						Action  {get; set;}
+	public virtual string?						Action  {get; set;}
+
         /// <summary>
         ///The set of rights bound to the PIN grant.
         /// </summary>
 
-	public virtual List<string>				Roles  {get; set;}
+	public virtual List<string>?					Roles  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Account" : {
-				if (value is TokenValueString vvalue) {
-					Account = vvalue.Value;
-					}
-				break;
-				}
-			case "Expires" : {
-				if (value is TokenValueDateTime vvalue) {
-					Expires = vvalue.Value;
-					}
-				break;
-				}
-			case "Automatic" : {
-				if (value is TokenValueBoolean vvalue) {
-					Automatic = vvalue.Value;
-					}
-				break;
-				}
-			case "SaltedPin" : {
-				if (value is TokenValueString vvalue) {
-					SaltedPin = vvalue.Value;
-					}
-				break;
-				}
-			case "Action" : {
-				if (value is TokenValueString vvalue) {
-					Action = vvalue.Value;
-					}
-				break;
-				}
-			case "Roles" : {
-				if (value is TokenValueListString vvalue) {
-					Roles = vvalue.Value;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Account" : {
-				return new TokenValueString (Account);
-				}
-			case "Expires" : {
-				return new TokenValueDateTime (Expires);
-				}
-			case "Automatic" : {
-				return new TokenValueBoolean (Automatic);
-				}
-			case "SaltedPin" : {
-				return new TokenValueString (SaltedPin);
-				}
-			case "Action" : {
-				return new TokenValueString (Action);
-				}
-			case "Roles" : {
-				return new TokenValueListString (Roles);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new MessagePin(), Message._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Account", new Property (typeof(TokenValueString), false)} ,
-			{ "Expires", new Property (typeof(TokenValueDateTime), false)} ,
-			{ "Automatic", new Property (typeof(TokenValueBoolean), false)} ,
-			{ "SaltedPin", new Property (typeof(TokenValueString), false)} ,
-			{ "Action", new Property (typeof(TokenValueString), false)} ,
-			{ "Roles", new Property (typeof(TokenValueListString), true)} 
+			{ "Account", new PropertyString ("Account", 
+					(IBinding data, string? value) => {(data as MessagePin).Account = value;}, (IBinding data) => (data as MessagePin).Account )},
+			{ "Expires", new PropertyDateTime ("Expires", 
+					(IBinding data, DateTime? value) => {(data as MessagePin).Expires = value;}, (IBinding data) => (data as MessagePin).Expires )},
+			{ "Automatic", new PropertyBoolean ("Automatic", 
+					(IBinding data, bool? value) => {(data as MessagePin).Automatic = value;}, (IBinding data) => (data as MessagePin).Automatic )},
+			{ "SaltedPin", new PropertyString ("SaltedPin", 
+					(IBinding data, string? value) => {(data as MessagePin).SaltedPin = value;}, (IBinding data) => (data as MessagePin).SaltedPin )},
+			{ "Action", new PropertyString ("Action", 
+					(IBinding data, string? value) => {(data as MessagePin).Action = value;}, (IBinding data) => (data as MessagePin).Action )},
+			{ "Roles", new PropertyListString ("Roles", 
+					(IBinding data, List<string>? value) => {(data as MessagePin).Roles = value;}, (IBinding data) => (data as MessagePin).Roles )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -12237,46 +8899,22 @@ public partial class RequestConnection : MessageValidated {
         ///
         /// </summary>
 
-	public virtual string						AccountAddress  {get; set;}
+	public virtual string?						AccountAddress  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "AccountAddress" : {
-				if (value is TokenValueString vvalue) {
-					AccountAddress = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "AccountAddress" : {
-				return new TokenValueString (AccountAddress);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new RequestConnection(), MessageValidated._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "AccountAddress", new Property (typeof(TokenValueString), false)} 
+			{ "AccountAddress", new PropertyString ("AccountAddress", 
+					(IBinding data, string? value) => {(data as RequestConnection).AccountAddress = value;}, (IBinding data) => (data as RequestConnection).AccountAddress )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -12345,77 +8983,39 @@ public partial class AcknowledgeConnection : Message {
         ///The client connection request.
         /// </summary>
 
-	public virtual Enveloped<RequestConnection>						EnvelopedRequestConnection  {get; set;}
+	public virtual Enveloped<RequestConnection>?						EnvelopedRequestConnection  {get; set;}
+
         /// <summary>
         ///
         /// </summary>
 
-	public virtual byte[]						ServerNonce  {get; set;}
+	public virtual byte[]?						ServerNonce  {get; set;}
+
         /// <summary>
         ///
         /// </summary>
 
-	public virtual string						Witness  {get; set;}
+	public virtual string?						Witness  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "EnvelopedRequestConnection" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedRequestConnection = vvalue.Value as Enveloped<RequestConnection>;
-					}
-				break;
-				}
-			case "ServerNonce" : {
-				if (value is TokenValueBinary vvalue) {
-					ServerNonce = vvalue.Value;
-					}
-				break;
-				}
-			case "Witness" : {
-				if (value is TokenValueString vvalue) {
-					Witness = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "EnvelopedRequestConnection" : {
-				return new TokenValueStruct<Enveloped<RequestConnection>> (EnvelopedRequestConnection);
-				}
-			case "ServerNonce" : {
-				return new TokenValueBinary (ServerNonce);
-				}
-			case "Witness" : {
-				return new TokenValueString (Witness);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new AcknowledgeConnection(), Message._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "EnvelopedRequestConnection", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<RequestConnection>(), ()=>new Enveloped<RequestConnection>(), false)} ,
-			{ "ServerNonce", new Property (typeof(TokenValueBinary), false)} ,
-			{ "Witness", new Property (typeof(TokenValueString), false)} 
+			{ "EnvelopedRequestConnection", new PropertyStruct ("EnvelopedRequestConnection", 
+					(IBinding data, object? value) => {(data as AcknowledgeConnection).EnvelopedRequestConnection = value as Enveloped<RequestConnection>;}, (IBinding data) => (data as AcknowledgeConnection).EnvelopedRequestConnection,
+					false, ()=>new  Enveloped<RequestConnection>(), ()=>new Enveloped<RequestConnection>())} ,
+			{ "ServerNonce", new PropertyBinary ("ServerNonce", 
+					(IBinding data, byte[]? value) => {(data as AcknowledgeConnection).ServerNonce = value;}, (IBinding data) => (data as AcknowledgeConnection).ServerNonce )},
+			{ "Witness", new PropertyString ("Witness", 
+					(IBinding data, string? value) => {(data as AcknowledgeConnection).Witness = value;}, (IBinding data) => (data as AcknowledgeConnection).Witness )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -12484,63 +9084,32 @@ public partial class RespondConnection : Message {
         ///The response to the request. One of "Accept", "Reject" or "Pending".
         /// </summary>
 
-	public virtual string						Result  {get; set;}
+	public virtual string?						Result  {get; set;}
+
         /// <summary>
         ///The device information. MUST be present if the value of Result is
         ///"Accept". MUST be absent or null otherwise.
         /// </summary>
 
-	public virtual CatalogedDevice						CatalogedDevice  {get; set;}
+	public virtual CatalogedDevice?						CatalogedDevice  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Result" : {
-				if (value is TokenValueString vvalue) {
-					Result = vvalue.Value;
-					}
-				break;
-				}
-			case "CatalogedDevice" : {
-				if (value is TokenValueStructObject vvalue) {
-					CatalogedDevice = vvalue.Value as CatalogedDevice;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Result" : {
-				return new TokenValueString (Result);
-				}
-			case "CatalogedDevice" : {
-				return new TokenValueStruct<CatalogedDevice> (CatalogedDevice);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new RespondConnection(), Message._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Result", new Property (typeof(TokenValueString), false)} ,
-			{ "CatalogedDevice", new Property ( typeof(TokenValueStruct), false,
-					()=>new CatalogedDevice(), ()=>new CatalogedDevice(), false)} 
+			{ "Result", new PropertyString ("Result", 
+					(IBinding data, string? value) => {(data as RespondConnection).Result = value;}, (IBinding data) => (data as RespondConnection).Result )},
+			{ "CatalogedDevice", new PropertyStruct ("CatalogedDevice", 
+					(IBinding data, object? value) => {(data as RespondConnection).CatalogedDevice = value as CatalogedDevice;}, (IBinding data) => (data as RespondConnection).CatalogedDevice,
+					false, ()=>new  CatalogedDevice(), ()=>new CatalogedDevice())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -12608,76 +9177,38 @@ public partial class MessageContact : MessageValidated {
         /// </summary>
 
 	public virtual bool?						Reply  {get; set;}
+
         /// <summary>
         ///Optional explanation of the reason for the request.
         /// </summary>
 
-	public virtual string						Subject  {get; set;}
+	public virtual string?						Subject  {get; set;}
+
         /// <summary>
         ///One time authentication code supplied to a recipient to allow authentication
         ///of the response.
         /// </summary>
 
-	public virtual string						PIN  {get; set;}
+	public virtual string?						PIN  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Reply" : {
-				if (value is TokenValueBoolean vvalue) {
-					Reply = vvalue.Value;
-					}
-				break;
-				}
-			case "Subject" : {
-				if (value is TokenValueString vvalue) {
-					Subject = vvalue.Value;
-					}
-				break;
-				}
-			case "PIN" : {
-				if (value is TokenValueString vvalue) {
-					PIN = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Reply" : {
-				return new TokenValueBoolean (Reply);
-				}
-			case "Subject" : {
-				return new TokenValueString (Subject);
-				}
-			case "PIN" : {
-				return new TokenValueString (PIN);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new MessageContact(), MessageValidated._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Reply", new Property (typeof(TokenValueBoolean), false)} ,
-			{ "Subject", new Property (typeof(TokenValueString), false)} ,
-			{ "PIN", new Property (typeof(TokenValueString), false)} 
+			{ "Reply", new PropertyBoolean ("Reply", 
+					(IBinding data, bool? value) => {(data as MessageContact).Reply = value;}, (IBinding data) => (data as MessageContact).Reply )},
+			{ "Subject", new PropertyString ("Subject", 
+					(IBinding data, string? value) => {(data as MessageContact).Subject = value;}, (IBinding data) => (data as MessageContact).Subject )},
+			{ "PIN", new PropertyString ("PIN", 
+					(IBinding data, string? value) => {(data as MessageContact).PIN = value;}, (IBinding data) => (data as MessageContact).PIN )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -12742,62 +9273,31 @@ public partial class GroupInvitation : Message {
         /// <summary>
         /// </summary>
 
-	public virtual string						Text  {get; set;}
+	public virtual string?						Text  {get; set;}
+
         /// <summary>
         ///The contact data.
         /// </summary>
 
-	public virtual Contact						Contact  {get; set;}
+	public virtual Contact?						Contact  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Text" : {
-				if (value is TokenValueString vvalue) {
-					Text = vvalue.Value;
-					}
-				break;
-				}
-			case "Contact" : {
-				if (value is TokenValueStructObject vvalue) {
-					Contact = vvalue.Value as Contact;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Text" : {
-				return new TokenValueString (Text);
-				}
-			case "Contact" : {
-				return new TokenValueStruct<Contact> (Contact);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new GroupInvitation(), Message._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Text", new Property (typeof(TokenValueString), false)} ,
-			{ "Contact", new Property ( typeof(TokenValueStruct), false,
-					null, null, true)} 
+			{ "Text", new PropertyString ("Text", 
+					(IBinding data, string? value) => {(data as GroupInvitation).Text = value;}, (IBinding data) => (data as GroupInvitation).Text )},
+			{ "Contact", new PropertyStruct ("Contact", 
+					(IBinding data, object? value) => {(data as GroupInvitation).Contact = value as Contact;}, (IBinding data) => (data as GroupInvitation).Contact,
+					true)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -12862,46 +9362,22 @@ public partial class RequestConfirmation : Message {
         /// <summary>
         /// </summary>
 
-	public virtual string						Text  {get; set;}
+	public virtual string?						Text  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Text" : {
-				if (value is TokenValueString vvalue) {
-					Text = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Text" : {
-				return new TokenValueString (Text);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new RequestConfirmation(), Message._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Text", new Property (typeof(TokenValueString), false)} 
+			{ "Text", new PropertyString ("Text", 
+					(IBinding data, string? value) => {(data as RequestConfirmation).Text = value;}, (IBinding data) => (data as RequestConfirmation).Text )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -12966,61 +9442,30 @@ public partial class ResponseConfirmation : Message {
         /// <summary>
         /// </summary>
 
-	public virtual Enveloped<RequestConfirmation>						Request  {get; set;}
+	public virtual Enveloped<RequestConfirmation>?						Request  {get; set;}
+
         /// <summary>
         /// </summary>
 
 	public virtual bool?						Accept  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Request" : {
-				if (value is TokenValueStructObject vvalue) {
-					Request = vvalue.Value as Enveloped<RequestConfirmation>;
-					}
-				break;
-				}
-			case "Accept" : {
-				if (value is TokenValueBoolean vvalue) {
-					Accept = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Request" : {
-				return new TokenValueStruct<Enveloped<RequestConfirmation>> (Request);
-				}
-			case "Accept" : {
-				return new TokenValueBoolean (Accept);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ResponseConfirmation(), Message._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Request", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<RequestConfirmation>(), ()=>new Enveloped<RequestConfirmation>(), false)} ,
-			{ "Accept", new Property (typeof(TokenValueBoolean), false)} 
+			{ "Request", new PropertyStruct ("Request", 
+					(IBinding data, object? value) => {(data as ResponseConfirmation).Request = value as Enveloped<RequestConfirmation>;}, (IBinding data) => (data as ResponseConfirmation).Request,
+					false, ()=>new  Enveloped<RequestConfirmation>(), ()=>new Enveloped<RequestConfirmation>())} ,
+			{ "Accept", new PropertyBoolean ("Accept", 
+					(IBinding data, bool? value) => {(data as ResponseConfirmation).Accept = value;}, (IBinding data) => (data as ResponseConfirmation).Accept )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -13084,29 +9529,12 @@ public partial class ResponseConfirmation : Message {
 public partial class RequestTask : Message {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new RequestTask(), Message._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -13175,88 +9603,43 @@ public partial class MessageClaim : Message {
         /// <summary>
         /// </summary>
 
-	public virtual string						PublicationId  {get; set;}
+	public virtual string?						PublicationId  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						ServiceAuthenticate  {get; set;}
+	public virtual string?						ServiceAuthenticate  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						DeviceAuthenticate  {get; set;}
+	public virtual string?						DeviceAuthenticate  {get; set;}
+
         /// <summary>
         /// </summary>
 
 	public virtual DateTime?						Expires  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "PublicationId" : {
-				if (value is TokenValueString vvalue) {
-					PublicationId = vvalue.Value;
-					}
-				break;
-				}
-			case "ServiceAuthenticate" : {
-				if (value is TokenValueString vvalue) {
-					ServiceAuthenticate = vvalue.Value;
-					}
-				break;
-				}
-			case "DeviceAuthenticate" : {
-				if (value is TokenValueString vvalue) {
-					DeviceAuthenticate = vvalue.Value;
-					}
-				break;
-				}
-			case "Expires" : {
-				if (value is TokenValueDateTime vvalue) {
-					Expires = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "PublicationId" : {
-				return new TokenValueString (PublicationId);
-				}
-			case "ServiceAuthenticate" : {
-				return new TokenValueString (ServiceAuthenticate);
-				}
-			case "DeviceAuthenticate" : {
-				return new TokenValueString (DeviceAuthenticate);
-				}
-			case "Expires" : {
-				return new TokenValueDateTime (Expires);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new MessageClaim(), Message._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "PublicationId", new Property (typeof(TokenValueString), false)} ,
-			{ "ServiceAuthenticate", new Property (typeof(TokenValueString), false)} ,
-			{ "DeviceAuthenticate", new Property (typeof(TokenValueString), false)} ,
-			{ "Expires", new Property (typeof(TokenValueDateTime), false)} 
+			{ "PublicationId", new PropertyString ("PublicationId", 
+					(IBinding data, string? value) => {(data as MessageClaim).PublicationId = value;}, (IBinding data) => (data as MessageClaim).PublicationId )},
+			{ "ServiceAuthenticate", new PropertyString ("ServiceAuthenticate", 
+					(IBinding data, string? value) => {(data as MessageClaim).ServiceAuthenticate = value;}, (IBinding data) => (data as MessageClaim).ServiceAuthenticate )},
+			{ "DeviceAuthenticate", new PropertyString ("DeviceAuthenticate", 
+					(IBinding data, string? value) => {(data as MessageClaim).DeviceAuthenticate = value;}, (IBinding data) => (data as MessageClaim).DeviceAuthenticate )},
+			{ "Expires", new PropertyDateTime ("Expires", 
+					(IBinding data, DateTime? value) => {(data as MessageClaim).Expires = value;}, (IBinding data) => (data as MessageClaim).Expires )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -13324,60 +9707,29 @@ public partial class ProcessResult : Message {
         /// </summary>
 
 	public virtual bool?						Success  {get; set;}
+
         /// <summary>
         ///The error report code.
         /// </summary>
 
-	public virtual string						ErrorReport  {get; set;}
+	public virtual string?						ErrorReport  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Success" : {
-				if (value is TokenValueBoolean vvalue) {
-					Success = vvalue.Value;
-					}
-				break;
-				}
-			case "ErrorReport" : {
-				if (value is TokenValueString vvalue) {
-					ErrorReport = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Success" : {
-				return new TokenValueBoolean (Success);
-				}
-			case "ErrorReport" : {
-				return new TokenValueString (ErrorReport);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ProcessResult(), Message._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Success", new Property (typeof(TokenValueBoolean), false)} ,
-			{ "ErrorReport", new Property (typeof(TokenValueString), false)} 
+			{ "Success", new PropertyBoolean ("Success", 
+					(IBinding data, bool? value) => {(data as ProcessResult).Success = value;}, (IBinding data) => (data as ProcessResult).Success )},
+			{ "ErrorReport", new PropertyString ("ErrorReport", 
+					(IBinding data, string? value) => {(data as ProcessResult).ErrorReport = value;}, (IBinding data) => (data as ProcessResult).ErrorReport )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -13443,29 +9795,12 @@ public partial class ProcessResult : Message {
 public partial class ProcessResultNotSupported : ProcessResult {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ProcessResultNotSupported(), ProcessResult._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -13533,29 +9868,12 @@ public partial class ProcessResultNotSupported : ProcessResult {
 public partial class ProcessResultNotFound : ProcessResult {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ProcessResultNotFound(), ProcessResult._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {

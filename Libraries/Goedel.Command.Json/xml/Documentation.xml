@@ -49,11 +49,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Command.Json.ShellResult.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Command.Json.ShellResult._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Command.Json.ShellResult.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Command.Json.ShellResult._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Command.Json.ShellResult._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 

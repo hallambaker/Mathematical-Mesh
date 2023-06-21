@@ -80,11 +80,11 @@
             discover the host and encrypt data to it.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedMachine.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Client.CatalogedMachine._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedMachine.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Client.CatalogedMachine._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Client.CatalogedMachine._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -134,11 +134,11 @@
         <member name="P:Goedel.Mesh.Client.CatalogedStandard.ProfileDevice">
             <summary>The device profile (from <see cref="T:Goedel.Mesh.CatalogedDevice"/>)</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedStandard.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Client.CatalogedStandard._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedStandard.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Client.CatalogedStandard._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Client.CatalogedStandard._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -217,11 +217,11 @@
             The account at which the request is pending.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedPending.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Client.CatalogedPending._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedPending.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Client.CatalogedPending._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Client.CatalogedPending._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -310,11 +310,11 @@
             Authenticator key used to authenticate claim to the device.	
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedPreconfigured.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedPreconfigured.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Client.CatalogedPreconfigured._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Client.CatalogedPreconfigured._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -2953,11 +2953,11 @@
             Specifies the type of service 
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedService.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Client.CatalogedService._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedService.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Client.CatalogedService._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Client.CatalogedService._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 

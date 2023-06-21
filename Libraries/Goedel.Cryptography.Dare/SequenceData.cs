@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 21-Jun-23 1:39:51 AM
+//  This file was automatically generated at 21-Jun-23 7:08:46 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1015
+//  Generator:  protogen version 3.0.0.1113
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -115,19 +115,22 @@ public partial class SequenceInfo : SequenceData {
         ///This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
         /// </summary>
 
-	public virtual string						DataEncoding  {get; set;}
+	public virtual string?						DataEncoding  {get; set;}
+
         /// <summary>
         ///Specifies the container type for the following records.
         ///This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
         /// </summary>
 
-	public virtual string						ContainerType  {get; set;}
+	public virtual string?						ContainerType  {get; set;}
+
         /// <summary>
         ///The record index within the file. This MUST be unique and 
         ///satisfy any additional requirements determined by the ContainerType.
         /// </summary>
 
 	public virtual long?						Index  {get; set;}
+
         /// <summary>
         ///If true, the current frame is a meta frame and does not contain a payload.
         ///Note: Meta frames MAY be present in any container. Applications MUST
@@ -136,23 +139,27 @@ public partial class SequenceInfo : SequenceData {
         /// </summary>
 
 	public virtual bool?						IsMeta  {get; set;}
+
         /// <summary>
         ///If set true in a persistent container, specifies that this record contains
         ///the default object for the container.
         /// </summary>
 
 	public virtual bool?						Default  {get; set;}
+
         /// <summary>
         ///Position of the frame containing the apex of the preceding sub-tree.
         /// </summary>
 
 	public virtual long?						TreePosition  {get; set;}
+
         /// <summary>
         ///Specifies the position in the file at which the last index entry is
         ///to be found
         /// </summary>
 
 	public virtual long?						IndexPosition  {get; set;}
+
         /// <summary>
         ///Specifies the position in the file at which the key exchange data is
         ///to be found
@@ -161,113 +168,33 @@ public partial class SequenceInfo : SequenceData {
 	public virtual long?						ExchangePosition  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "DataEncoding" : {
-				if (value is TokenValueString vvalue) {
-					DataEncoding = vvalue.Value;
-					}
-				break;
-				}
-			case "ContainerType" : {
-				if (value is TokenValueString vvalue) {
-					ContainerType = vvalue.Value;
-					}
-				break;
-				}
-			case "Index" : {
-				if (value is TokenValueInteger64 vvalue) {
-					Index = vvalue.Value;
-					}
-				break;
-				}
-			case "IsMeta" : {
-				if (value is TokenValueBoolean vvalue) {
-					IsMeta = vvalue.Value;
-					}
-				break;
-				}
-			case "Default" : {
-				if (value is TokenValueBoolean vvalue) {
-					Default = vvalue.Value;
-					}
-				break;
-				}
-			case "TreePosition" : {
-				if (value is TokenValueInteger64 vvalue) {
-					TreePosition = vvalue.Value;
-					}
-				break;
-				}
-			case "IndexPosition" : {
-				if (value is TokenValueInteger64 vvalue) {
-					IndexPosition = vvalue.Value;
-					}
-				break;
-				}
-			case "ExchangePosition" : {
-				if (value is TokenValueInteger64 vvalue) {
-					ExchangePosition = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "DataEncoding" : {
-				return new TokenValueString (DataEncoding);
-				}
-			case "ContainerType" : {
-				return new TokenValueString (ContainerType);
-				}
-			case "Index" : {
-				return new TokenValueInteger64 (Index);
-				}
-			case "IsMeta" : {
-				return new TokenValueBoolean (IsMeta);
-				}
-			case "Default" : {
-				return new TokenValueBoolean (Default);
-				}
-			case "TreePosition" : {
-				return new TokenValueInteger64 (TreePosition);
-				}
-			case "IndexPosition" : {
-				return new TokenValueInteger64 (IndexPosition);
-				}
-			case "ExchangePosition" : {
-				return new TokenValueInteger64 (ExchangePosition);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new SequenceInfo(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "DataEncoding", new Property (typeof(TokenValueString), false)} ,
-			{ "ContainerType", new Property (typeof(TokenValueString), false)} ,
-			{ "Index", new Property (typeof(TokenValueInteger64), false)} ,
-			{ "IsMeta", new Property (typeof(TokenValueBoolean), false)} ,
-			{ "Default", new Property (typeof(TokenValueBoolean), false)} ,
-			{ "TreePosition", new Property (typeof(TokenValueInteger64), false)} ,
-			{ "IndexPosition", new Property (typeof(TokenValueInteger64), false)} ,
-			{ "ExchangePosition", new Property (typeof(TokenValueInteger64), false)} 
+			{ "DataEncoding", new PropertyString ("DataEncoding", 
+					(IBinding data, string? value) => {(data as SequenceInfo).DataEncoding = value;}, (IBinding data) => (data as SequenceInfo).DataEncoding )},
+			{ "ContainerType", new PropertyString ("ContainerType", 
+					(IBinding data, string? value) => {(data as SequenceInfo).ContainerType = value;}, (IBinding data) => (data as SequenceInfo).ContainerType )},
+			{ "Index", new PropertyInteger64 ("Index", 
+					(IBinding data, long? value) => {(data as SequenceInfo).Index = value;}, (IBinding data) => (data as SequenceInfo).Index )},
+			{ "IsMeta", new PropertyBoolean ("IsMeta", 
+					(IBinding data, bool? value) => {(data as SequenceInfo).IsMeta = value;}, (IBinding data) => (data as SequenceInfo).IsMeta )},
+			{ "Default", new PropertyBoolean ("Default", 
+					(IBinding data, bool? value) => {(data as SequenceInfo).Default = value;}, (IBinding data) => (data as SequenceInfo).Default )},
+			{ "TreePosition", new PropertyInteger64 ("TreePosition", 
+					(IBinding data, long? value) => {(data as SequenceInfo).TreePosition = value;}, (IBinding data) => (data as SequenceInfo).TreePosition )},
+			{ "IndexPosition", new PropertyInteger64 ("IndexPosition", 
+					(IBinding data, long? value) => {(data as SequenceInfo).IndexPosition = value;}, (IBinding data) => (data as SequenceInfo).IndexPosition )},
+			{ "ExchangePosition", new PropertyInteger64 ("ExchangePosition", 
+					(IBinding data, long? value) => {(data as SequenceInfo).ExchangePosition = value;}, (IBinding data) => (data as SequenceInfo).ExchangePosition )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -338,61 +265,29 @@ public partial class SequenceIndex : SequenceData {
         /// </summary>
 
 	public virtual bool?						Full  {get; set;}
+
         /// <summary>
         ///List of container position entries
         /// </summary>
 
-	public virtual List<IndexPosition>				Positions  {get; set;}
+	public virtual List<IndexPosition>?					Positions  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Full" : {
-				if (value is TokenValueBoolean vvalue) {
-					Full = vvalue.Value;
-					}
-				break;
-				}
-			case "Positions" : {
-				if (value is TokenValueListStructObject vvalue) {
-					Positions = vvalue.Value as List<IndexPosition>;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Full" : {
-				return new TokenValueBoolean (Full);
-				}
-			case "Positions" : {
-				return new TokenValueListStruct<IndexPosition> (Positions);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new SequenceIndex(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Full", new Property (typeof(TokenValueBoolean), false)} ,
-			{ "Positions", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<IndexPosition>(), ()=>new IndexPosition(), false)} 
+			{ "Full", new PropertyBoolean ("Full", 
+					(IBinding data, bool? value) => {(data as SequenceIndex).Full = value;}, (IBinding data) => (data as SequenceIndex).Full )},
+			{ "Positions", new PropertyListStruct ("Positions", 
+					(IBinding data, object? value) => {(data as SequenceIndex).Positions = value as List<IndexPosition>;}, (IBinding data) => (data as SequenceIndex).Positions,
+					false, ()=>new  List<IndexPosition>(), ()=>new IndexPosition())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -460,75 +355,37 @@ public partial class IndexPosition : SequenceData {
         /// </summary>
 
 	public virtual long?						Index  {get; set;}
+
         /// <summary>
         ///The record position within the file relative to the index base.
         /// </summary>
 
 	public virtual long?						Position  {get; set;}
+
         /// <summary>
         ///Unique object identifier
         /// </summary>
 
-	public virtual string						UniqueId  {get; set;}
+	public virtual string?						UniqueId  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Index" : {
-				if (value is TokenValueInteger64 vvalue) {
-					Index = vvalue.Value;
-					}
-				break;
-				}
-			case "Position" : {
-				if (value is TokenValueInteger64 vvalue) {
-					Position = vvalue.Value;
-					}
-				break;
-				}
-			case "UniqueId" : {
-				if (value is TokenValueString vvalue) {
-					UniqueId = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Index" : {
-				return new TokenValueInteger64 (Index);
-				}
-			case "Position" : {
-				return new TokenValueInteger64 (Position);
-				}
-			case "UniqueId" : {
-				return new TokenValueString (UniqueId);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new IndexPosition(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Index", new Property (typeof(TokenValueInteger64), false)} ,
-			{ "Position", new Property (typeof(TokenValueInteger64), false)} ,
-			{ "UniqueId", new Property (typeof(TokenValueString), false)} 
+			{ "Index", new PropertyInteger64 ("Index", 
+					(IBinding data, long? value) => {(data as IndexPosition).Index = value;}, (IBinding data) => (data as IndexPosition).Index )},
+			{ "Position", new PropertyInteger64 ("Position", 
+					(IBinding data, long? value) => {(data as IndexPosition).Position = value;}, (IBinding data) => (data as IndexPosition).Position )},
+			{ "UniqueId", new PropertyString ("UniqueId", 
+					(IBinding data, string? value) => {(data as IndexPosition).UniqueId = value;}, (IBinding data) => (data as IndexPosition).UniqueId )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -595,61 +452,30 @@ public partial class KeyValue : SequenceData {
         ///The key
         /// </summary>
 
-	public virtual string						Key  {get; set;}
+	public virtual string?						Key  {get; set;}
+
         /// <summary>
         ///The value corresponding to the key
         /// </summary>
 
-	public virtual string						Value  {get; set;}
+	public virtual string?						Value  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Key" : {
-				if (value is TokenValueString vvalue) {
-					Key = vvalue.Value;
-					}
-				break;
-				}
-			case "Value" : {
-				if (value is TokenValueString vvalue) {
-					Value = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Key" : {
-				return new TokenValueString (Key);
-				}
-			case "Value" : {
-				return new TokenValueString (Value);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new KeyValue(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Key", new Property (typeof(TokenValueString), false)} ,
-			{ "Value", new Property (typeof(TokenValueString), false)} 
+			{ "Key", new PropertyString ("Key", 
+					(IBinding data, string? value) => {(data as KeyValue).Key = value;}, (IBinding data) => (data as KeyValue).Key )},
+			{ "Value", new PropertyString ("Value", 
+					(IBinding data, string? value) => {(data as KeyValue).Value = value;}, (IBinding data) => (data as KeyValue).Value )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -714,29 +540,12 @@ public partial class KeyValue : SequenceData {
 public partial class ProofChain : SequenceData {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ProofChain(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {

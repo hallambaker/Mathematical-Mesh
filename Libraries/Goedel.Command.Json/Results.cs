@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 21-Jun-23 1:39:49 AM
+//  This file was automatically generated at 21-Jun-23 7:08:45 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1015
+//  Generator:  protogen version 3.0.0.1113
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -106,59 +106,28 @@ public partial class ShellResult : JsonShellResult {
         /// </summary>
 
 	public virtual bool?						Success  {get; set;}
+
         /// <summary>
         /// </summary>
 
-	public virtual string						Reason  {get; set;}
+	public virtual string?						Reason  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Success" : {
-				if (value is TokenValueBoolean vvalue) {
-					Success = vvalue.Value;
-					}
-				break;
-				}
-			case "Reason" : {
-				if (value is TokenValueString vvalue) {
-					Reason = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Success" : {
-				return new TokenValueBoolean (Success);
-				}
-			case "Reason" : {
-				return new TokenValueString (Reason);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ShellResult(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Success", new Property (typeof(TokenValueBoolean), false)} ,
-			{ "Reason", new Property (typeof(TokenValueString), false)} 
+			{ "Success", new PropertyBoolean ("Success", 
+					(IBinding data, bool? value) => {(data as ShellResult).Success = value;}, (IBinding data) => (data as ShellResult).Success )},
+			{ "Reason", new PropertyString ("Reason", 
+					(IBinding data, string? value) => {(data as ShellResult).Reason = value;}, (IBinding data) => (data as ShellResult).Reason )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

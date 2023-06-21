@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 21-Jun-23 1:40:03 AM
+//  This file was automatically generated at 21-Jun-23 7:08:53 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1015
+//  Generator:  protogen version 3.0.0.1113
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -268,29 +268,12 @@ public partial class ResolverServiceDirect: ResolverServiceClient {
 public partial class ResolverRequest : Goedel.Protocol.Request {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ResolverRequest(), Goedel.Protocol.Request._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -361,29 +344,12 @@ public partial class ResolverRequest : Goedel.Protocol.Request {
 public partial class ResolverResponse : Goedel.Protocol.Response {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ResolverResponse(), Goedel.Protocol.Response._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -455,77 +421,39 @@ public partial class QueryRequest : ResolverRequest {
         ///The callsign being requested in canonical form.
         /// </summary>
 
-	public virtual string						CallSign  {get; set;}
+	public virtual string?						CallSign  {get; set;}
+
         /// <summary>
         ///The registration identifier of a registration in the log.
         /// </summary>
 
-	public virtual string						RegistrationId  {get; set;}
+	public virtual string?						RegistrationId  {get; set;}
+
         /// <summary>
         ///The unique identifier of an append only log whose signed Notarization
         ///entry is requested.
         /// </summary>
 
-	public virtual string						LogId  {get; set;}
+	public virtual string?						LogId  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "CallSign" : {
-				if (value is TokenValueString vvalue) {
-					CallSign = vvalue.Value;
-					}
-				break;
-				}
-			case "RegistrationId" : {
-				if (value is TokenValueString vvalue) {
-					RegistrationId = vvalue.Value;
-					}
-				break;
-				}
-			case "LogId" : {
-				if (value is TokenValueString vvalue) {
-					LogId = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "CallSign" : {
-				return new TokenValueString (CallSign);
-				}
-			case "RegistrationId" : {
-				return new TokenValueString (RegistrationId);
-				}
-			case "LogId" : {
-				return new TokenValueString (LogId);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new QueryRequest(), ResolverRequest._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "CallSign", new Property (typeof(TokenValueString), false)} ,
-			{ "RegistrationId", new Property (typeof(TokenValueString), false)} ,
-			{ "LogId", new Property (typeof(TokenValueString), false)} 
+			{ "CallSign", new PropertyString ("CallSign", 
+					(IBinding data, string? value) => {(data as QueryRequest).CallSign = value;}, (IBinding data) => (data as QueryRequest).CallSign )},
+			{ "RegistrationId", new PropertyString ("RegistrationId", 
+					(IBinding data, string? value) => {(data as QueryRequest).RegistrationId = value;}, (IBinding data) => (data as QueryRequest).RegistrationId )},
+			{ "LogId", new PropertyString ("LogId", 
+					(IBinding data, string? value) => {(data as QueryRequest).LogId = value;}, (IBinding data) => (data as QueryRequest).LogId )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -593,63 +521,32 @@ public partial class QueryResponse : ResolverResponse {
         ///The registration specified in the result (if found).	
         /// </summary>
 
-	public virtual Enveloped<Registration>						Result  {get; set;}
+	public virtual Enveloped<Registration>?						Result  {get; set;}
+
         /// <summary>
         ///The latest notarization entry corresponding to the specified log.
         /// </summary>
 
-	public virtual Enveloped<Notarization>						Notarization  {get; set;}
+	public virtual Enveloped<Notarization>?						Notarization  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Result" : {
-				if (value is TokenValueStructObject vvalue) {
-					Result = vvalue.Value as Enveloped<Registration>;
-					}
-				break;
-				}
-			case "Notarization" : {
-				if (value is TokenValueStructObject vvalue) {
-					Notarization = vvalue.Value as Enveloped<Notarization>;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Result" : {
-				return new TokenValueStruct<Enveloped<Registration>> (Result);
-				}
-			case "Notarization" : {
-				return new TokenValueStruct<Enveloped<Notarization>> (Notarization);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new QueryResponse(), ResolverResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Result", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<Registration>(), ()=>new Enveloped<Registration>(), false)} ,
-			{ "Notarization", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<Notarization>(), ()=>new Enveloped<Notarization>(), false)} 
+			{ "Result", new PropertyStruct ("Result", 
+					(IBinding data, object? value) => {(data as QueryResponse).Result = value as Enveloped<Registration>;}, (IBinding data) => (data as QueryResponse).Result,
+					false, ()=>new  Enveloped<Registration>(), ()=>new Enveloped<Registration>())} ,
+			{ "Notarization", new PropertyStruct ("Notarization", 
+					(IBinding data, object? value) => {(data as QueryResponse).Notarization = value as Enveloped<Notarization>;}, (IBinding data) => (data as QueryResponse).Notarization,
+					false, ()=>new  Enveloped<Notarization>(), ()=>new Enveloped<Notarization>())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -715,29 +612,12 @@ public partial class QueryResponse : ResolverResponse {
 public partial class SyncRequest : ResolverRequest {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new SyncRequest(), ResolverRequest._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -807,29 +687,12 @@ public partial class SyncRequest : ResolverRequest {
 public partial class SyncResponse : ResolverResponse {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new SyncResponse(), ResolverResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {

@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 21-Jun-23 1:40:03 AM
+//  This file was automatically generated at 21-Jun-23 7:08:53 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1015
+//  Generator:  protogen version 3.0.0.1113
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -208,29 +208,12 @@ public partial class CarnetServiceDirect: CarnetServiceClient {
 public partial class ProfileCarnet : ProfileService {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ProfileCarnet(), ProfileService._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -299,94 +282,49 @@ public partial class CatalogedCarnet : CatalogedEntry {
         /// <summary>
         /// </summary>
 
-	public virtual string						Key  {get; set;}
+	public virtual string?						Key  {get; set;}
+
         /// <summary>
         ///The connection allowing control of the registry.
         /// </summary>
 
-	public virtual Enveloped<ConnectionStripped>						EnvelopedConnectionAddress  {get; set;}
+	public virtual Enveloped<ConnectionStripped>?						EnvelopedConnectionAddress  {get; set;}
+
         /// <summary>
         ///The Mesh profile
         /// </summary>
 
-	public virtual Enveloped<ProfileCarnet>						EnvelopedProfileCarnet  {get; set;}
+	public virtual Enveloped<ProfileCarnet>?						EnvelopedProfileCarnet  {get; set;}
+
         /// <summary>
         ///The activation data for the registry.
         /// </summary>
 
-	public virtual Enveloped<ActivationCommon>						EnvelopedActivationCommon  {get; set;}
+	public virtual Enveloped<ActivationCommon>?						EnvelopedActivationCommon  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Key" : {
-				if (value is TokenValueString vvalue) {
-					Key = vvalue.Value;
-					}
-				break;
-				}
-			case "EnvelopedConnectionAddress" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedConnectionAddress = vvalue.Value as Enveloped<ConnectionStripped>;
-					}
-				break;
-				}
-			case "EnvelopedProfileCarnet" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedProfileCarnet = vvalue.Value as Enveloped<ProfileCarnet>;
-					}
-				break;
-				}
-			case "EnvelopedActivationCommon" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedActivationCommon = vvalue.Value as Enveloped<ActivationCommon>;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Key" : {
-				return new TokenValueString (Key);
-				}
-			case "EnvelopedConnectionAddress" : {
-				return new TokenValueStruct<Enveloped<ConnectionStripped>> (EnvelopedConnectionAddress);
-				}
-			case "EnvelopedProfileCarnet" : {
-				return new TokenValueStruct<Enveloped<ProfileCarnet>> (EnvelopedProfileCarnet);
-				}
-			case "EnvelopedActivationCommon" : {
-				return new TokenValueStruct<Enveloped<ActivationCommon>> (EnvelopedActivationCommon);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedCarnet(), CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Key", new Property (typeof(TokenValueString), false)} ,
-			{ "EnvelopedConnectionAddress", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>(), false)} ,
-			{ "EnvelopedProfileCarnet", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ProfileCarnet>(), ()=>new Enveloped<ProfileCarnet>(), false)} ,
-			{ "EnvelopedActivationCommon", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>(), false)} 
+			{ "Key", new PropertyString ("Key", 
+					(IBinding data, string? value) => {(data as CatalogedCarnet).Key = value;}, (IBinding data) => (data as CatalogedCarnet).Key )},
+			{ "EnvelopedConnectionAddress", new PropertyStruct ("EnvelopedConnectionAddress", 
+					(IBinding data, object? value) => {(data as CatalogedCarnet).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, (IBinding data) => (data as CatalogedCarnet).EnvelopedConnectionAddress,
+					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>())} ,
+			{ "EnvelopedProfileCarnet", new PropertyStruct ("EnvelopedProfileCarnet", 
+					(IBinding data, object? value) => {(data as CatalogedCarnet).EnvelopedProfileCarnet = value as Enveloped<ProfileCarnet>;}, (IBinding data) => (data as CatalogedCarnet).EnvelopedProfileCarnet,
+					false, ()=>new  Enveloped<ProfileCarnet>(), ()=>new Enveloped<ProfileCarnet>())} ,
+			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", 
+					(IBinding data, object? value) => {(data as CatalogedCarnet).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, (IBinding data) => (data as CatalogedCarnet).EnvelopedActivationCommon,
+					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -452,29 +390,12 @@ public partial class CatalogedCarnet : CatalogedEntry {
 public partial class CarnetRequest : Goedel.Protocol.Request {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CarnetRequest(), Goedel.Protocol.Request._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -545,29 +466,12 @@ public partial class CarnetRequest : Goedel.Protocol.Request {
 public partial class CarnetResponse : Goedel.Protocol.Response {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CarnetResponse(), Goedel.Protocol.Response._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {

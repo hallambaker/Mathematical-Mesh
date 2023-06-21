@@ -1206,11 +1206,11 @@
             The per-recipient key exchange data.
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareRecipient.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Dare.DareRecipient._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareRecipient.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Dare.DareRecipient._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.DareRecipient._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1983,11 +1983,11 @@
             Field reserved for use in debugging.
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareHeader.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Dare.DareHeader._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareHeader.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Dare.DareHeader._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.DareHeader._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -2095,11 +2095,11 @@
             If present, contains the Binary Merkle Tree digest value.
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareTrailer.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Dare.DareTrailer._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareTrailer.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Dare.DareTrailer._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.DareTrailer._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -2227,11 +2227,11 @@
             Information describing the file entry on disk.
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.ContentMeta.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Dare.ContentMeta._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.ContentMeta.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Dare.ContentMeta._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.ContentMeta._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -2486,11 +2486,11 @@
             If true the policy is immutable and cannot be changed by a subsequent policy override.
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DarePolicy.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Dare.DarePolicy._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DarePolicy.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Dare.DarePolicy._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.DarePolicy._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -2587,11 +2587,11 @@
             The envelope trailer. If present, this contains the signature.
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelopeSequence.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Dare.DareEnvelopeSequence._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelopeSequence.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Dare.DareEnvelopeSequence._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.DareEnvelopeSequence._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -2681,11 +2681,11 @@
             key used to encrypt the envelope.
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareSignature.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Dare.DareSignature._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareSignature.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Dare.DareSignature._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.DareSignature._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -2760,11 +2760,11 @@
             The signed envelopes in order, lowest index first.
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.IntervalSignature.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Dare.IntervalSignature._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.IntervalSignature.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Dare.IntervalSignature._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.IntervalSignature._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -2836,11 +2836,11 @@
             The digests required to complete the verification of the signature.		
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SignedEnvelope.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Dare.SignedEnvelope._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SignedEnvelope.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Dare.SignedEnvelope._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.SignedEnvelope._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -2895,11 +2895,11 @@
             An X.509 public key certificate
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.X509Certificate.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Dare.X509Certificate._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.X509Certificate.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Dare.X509Certificate._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.X509Certificate._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -2972,11 +2972,11 @@
             The file attribues as a bitmapped integer.
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.FileEntry.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Dare.FileEntry._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.FileEntry.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Dare.FileEntry._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.FileEntry._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -3068,11 +3068,11 @@
             Specifies the index number assigned to the entry in the log.
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Witness.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Dare.Witness._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Witness.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Dare.Witness._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.Witness._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -3140,11 +3140,11 @@
             The list of entries from which the proof path is computed.
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Proof.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Dare.Proof._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Proof.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Dare.Proof._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.Proof._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -5664,11 +5664,11 @@
             to be found
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceInfo.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Dare.SequenceInfo._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceInfo.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Dare.SequenceInfo._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.SequenceInfo._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -5734,11 +5734,11 @@
             List of container position entries
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceIndex.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndex._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceIndex.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Dare.SequenceIndex._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.SequenceIndex._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -5805,11 +5805,11 @@
             Unique object identifier
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.IndexPosition.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Dare.IndexPosition._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.IndexPosition.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Dare.IndexPosition._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.IndexPosition._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -5866,11 +5866,11 @@
             The value corresponding to the key
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.KeyValue.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Dare.KeyValue._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.KeyValue.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Dare.KeyValue._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.KeyValue._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -5917,11 +5917,11 @@
              Specifies a signature 
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.ProofChain.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Dare.ProofChain._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.ProofChain.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Dare.ProofChain._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.ProofChain._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 

@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 21-Jun-23 1:40:03 AM
+//  This file was automatically generated at 21-Jun-23 7:08:54 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1015
+//  Generator:  protogen version 3.0.0.1113
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -126,29 +126,12 @@ public abstract partial class CallsignEntry : global::Goedel.Protocol.JsonObject
 public partial class ProfileRegistry : ProfileAccount {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ProfileRegistry(), ProfileAccount._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -220,47 +203,23 @@ public partial class ProfileResolver : ProfileService {
         ///The registry that this resolver resolves.
         /// </summary>
 
-	public virtual Enveloped<ProfileAccount>						EnvelopedProfileRegistry  {get; set;}
+	public virtual Enveloped<ProfileAccount>?						EnvelopedProfileRegistry  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "EnvelopedProfileRegistry" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedProfileRegistry = vvalue.Value as Enveloped<ProfileAccount>;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "EnvelopedProfileRegistry" : {
-				return new TokenValueStruct<Enveloped<ProfileAccount>> (EnvelopedProfileRegistry);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ProfileResolver(), ProfileService._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "EnvelopedProfileRegistry", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>(), false)} 
+			{ "EnvelopedProfileRegistry", new PropertyStruct ("EnvelopedProfileRegistry", 
+					(IBinding data, object? value) => {(data as ProfileResolver).EnvelopedProfileRegistry = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as ProfileResolver).EnvelopedProfileRegistry,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -328,123 +287,64 @@ public partial class Registration : CallsignEntry {
         ///Unique registration identifier
         /// </summary>
 
-	public virtual string						Id  {get; set;}
+	public virtual string?						Id  {get; set;}
+
         /// <summary>
         ///The signed callsign binding
         /// </summary>
 
-	public virtual Enveloped<CallsignBinding>						Entry  {get; set;}
+	public virtual Enveloped<CallsignBinding>?						Entry  {get; set;}
+
         /// <summary>
         ///The UTC time instant that the claim was submitted.
         /// </summary>
 
 	public virtual DateTime?						Submitted  {get; set;}
+
         /// <summary>
         ///Callsign of the registrar that made the registration request
         /// </summary>
 
-	public virtual string						Registrar  {get; set;}
+	public virtual string?						Registrar  {get; set;}
+
         /// <summary>
         ///If present, specifies a previous registration with the same identifier.
         /// </summary>
 
-	public virtual string						PriorId  {get; set;}
+	public virtual string?						PriorId  {get; set;}
+
         /// <summary>
         ///Reason for creating a registration:
         ///Initial/ Update/ Voluntary/ Administrative/ Revoke
         /// </summary>
 
-	public virtual string						Reason  {get; set;}
+	public virtual string?						Reason  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Id" : {
-				if (value is TokenValueString vvalue) {
-					Id = vvalue.Value;
-					}
-				break;
-				}
-			case "Entry" : {
-				if (value is TokenValueStructObject vvalue) {
-					Entry = vvalue.Value as Enveloped<CallsignBinding>;
-					}
-				break;
-				}
-			case "Submitted" : {
-				if (value is TokenValueDateTime vvalue) {
-					Submitted = vvalue.Value;
-					}
-				break;
-				}
-			case "Registrar" : {
-				if (value is TokenValueString vvalue) {
-					Registrar = vvalue.Value;
-					}
-				break;
-				}
-			case "PriorId" : {
-				if (value is TokenValueString vvalue) {
-					PriorId = vvalue.Value;
-					}
-				break;
-				}
-			case "Reason" : {
-				if (value is TokenValueString vvalue) {
-					Reason = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Id" : {
-				return new TokenValueString (Id);
-				}
-			case "Entry" : {
-				return new TokenValueStruct<Enveloped<CallsignBinding>> (Entry);
-				}
-			case "Submitted" : {
-				return new TokenValueDateTime (Submitted);
-				}
-			case "Registrar" : {
-				return new TokenValueString (Registrar);
-				}
-			case "PriorId" : {
-				return new TokenValueString (PriorId);
-				}
-			case "Reason" : {
-				return new TokenValueString (Reason);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new Registration(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Id", new Property (typeof(TokenValueString), false)} ,
-			{ "Entry", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<CallsignBinding>(), ()=>new Enveloped<CallsignBinding>(), false)} ,
-			{ "Submitted", new Property (typeof(TokenValueDateTime), false)} ,
-			{ "Registrar", new Property (typeof(TokenValueString), false)} ,
-			{ "PriorId", new Property (typeof(TokenValueString), false)} ,
-			{ "Reason", new Property (typeof(TokenValueString), false)} 
+			{ "Id", new PropertyString ("Id", 
+					(IBinding data, string? value) => {(data as Registration).Id = value;}, (IBinding data) => (data as Registration).Id )},
+			{ "Entry", new PropertyStruct ("Entry", 
+					(IBinding data, object? value) => {(data as Registration).Entry = value as Enveloped<CallsignBinding>;}, (IBinding data) => (data as Registration).Entry,
+					false, ()=>new  Enveloped<CallsignBinding>(), ()=>new Enveloped<CallsignBinding>())} ,
+			{ "Submitted", new PropertyDateTime ("Submitted", 
+					(IBinding data, DateTime? value) => {(data as Registration).Submitted = value;}, (IBinding data) => (data as Registration).Submitted )},
+			{ "Registrar", new PropertyString ("Registrar", 
+					(IBinding data, string? value) => {(data as Registration).Registrar = value;}, (IBinding data) => (data as Registration).Registrar )},
+			{ "PriorId", new PropertyString ("PriorId", 
+					(IBinding data, string? value) => {(data as Registration).PriorId = value;}, (IBinding data) => (data as Registration).PriorId )},
+			{ "Reason", new PropertyString ("Reason", 
+					(IBinding data, string? value) => {(data as Registration).Reason = value;}, (IBinding data) => (data as Registration).Reason )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -509,77 +409,39 @@ public partial class CatalogedRegistration : CatalogedEntry {
         ///The canonical form of the callsign.
         /// </summary>
 
-	public virtual string						Canonical  {get; set;}
+	public virtual string?						Canonical  {get; set;}
+
         /// <summary>
         ///Unique registration identifier
         /// </summary>
 
-	public virtual string						Id  {get; set;}
+	public virtual string?						Id  {get; set;}
+
         /// <summary>
         ///The registration entry for the item.
         /// </summary>
 
-	public virtual Enveloped<Registration>						EnvelopedRegistration  {get; set;}
+	public virtual Enveloped<Registration>?						EnvelopedRegistration  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Canonical" : {
-				if (value is TokenValueString vvalue) {
-					Canonical = vvalue.Value;
-					}
-				break;
-				}
-			case "Id" : {
-				if (value is TokenValueString vvalue) {
-					Id = vvalue.Value;
-					}
-				break;
-				}
-			case "EnvelopedRegistration" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedRegistration = vvalue.Value as Enveloped<Registration>;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Canonical" : {
-				return new TokenValueString (Canonical);
-				}
-			case "Id" : {
-				return new TokenValueString (Id);
-				}
-			case "EnvelopedRegistration" : {
-				return new TokenValueStruct<Enveloped<Registration>> (EnvelopedRegistration);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedRegistration(), CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Canonical", new Property (typeof(TokenValueString), false)} ,
-			{ "Id", new Property (typeof(TokenValueString), false)} ,
-			{ "EnvelopedRegistration", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<Registration>(), ()=>new Enveloped<Registration>(), false)} 
+			{ "Canonical", new PropertyString ("Canonical", 
+					(IBinding data, string? value) => {(data as CatalogedRegistration).Canonical = value;}, (IBinding data) => (data as CatalogedRegistration).Canonical )},
+			{ "Id", new PropertyString ("Id", 
+					(IBinding data, string? value) => {(data as CatalogedRegistration).Id = value;}, (IBinding data) => (data as CatalogedRegistration).Id )},
+			{ "EnvelopedRegistration", new PropertyStruct ("EnvelopedRegistration", 
+					(IBinding data, object? value) => {(data as CatalogedRegistration).EnvelopedRegistration = value as Enveloped<Registration>;}, (IBinding data) => (data as CatalogedRegistration).EnvelopedRegistration,
+					false, ()=>new  Enveloped<Registration>(), ()=>new Enveloped<Registration>())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -645,77 +507,38 @@ public partial class Page : CallsignEntry {
         ///Character page identifier
         /// </summary>
 
-	public virtual string						Id  {get; set;}
+	public virtual string?						Id  {get; set;}
+
         /// <summary>
         ///Additional allowed pages.
         /// </summary>
 
-	public virtual List<string>				Allow  {get; set;}
+	public virtual List<string>?					Allow  {get; set;}
         /// <summary>
         ///Characters permitted within this code page.
         /// </summary>
 
-	public virtual List<CharacterSpan>				CharacterSpans  {get; set;}
+	public virtual List<CharacterSpan>?					CharacterSpans  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Id" : {
-				if (value is TokenValueString vvalue) {
-					Id = vvalue.Value;
-					}
-				break;
-				}
-			case "Allow" : {
-				if (value is TokenValueListString vvalue) {
-					Allow = vvalue.Value;
-					}
-				break;
-				}
-			case "CharacterSpans" : {
-				if (value is TokenValueListStructObject vvalue) {
-					CharacterSpans = vvalue.Value as List<CharacterSpan>;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Id" : {
-				return new TokenValueString (Id);
-				}
-			case "Allow" : {
-				return new TokenValueListString (Allow);
-				}
-			case "CharacterSpans" : {
-				return new TokenValueListStruct<CharacterSpan> (CharacterSpans);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new Page(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Id", new Property (typeof(TokenValueString), false)} ,
-			{ "Allow", new Property (typeof(TokenValueListString), true)} ,
-			{ "CharacterSpans", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<CharacterSpan>(), null, true)} 
+			{ "Id", new PropertyString ("Id", 
+					(IBinding data, string? value) => {(data as Page).Id = value;}, (IBinding data) => (data as Page).Id )},
+			{ "Allow", new PropertyListString ("Allow", 
+					(IBinding data, List<string>? value) => {(data as Page).Allow = value;}, (IBinding data) => (data as Page).Allow )},
+			{ "CharacterSpans", new PropertyListStruct ("CharacterSpans", 
+					(IBinding data, object? value) => {(data as Page).CharacterSpans = value as List<CharacterSpan>;}, (IBinding data) => (data as Page).CharacterSpans,
+					true, ()=>new List<CharacterSpan>()
+)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -781,6 +604,7 @@ public partial class CharacterSpan : CallsignEntry {
         /// </summary>
 
 	public virtual int?						First  {get; set;}
+
         /// <summary>
         ///The last character in the range (inclusive), if ommitted or
         ///equal to zero, this is the same as Last.
@@ -789,53 +613,21 @@ public partial class CharacterSpan : CallsignEntry {
 	public virtual int?						Last  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "First" : {
-				if (value is TokenValueInteger32 vvalue) {
-					First = vvalue.Value;
-					}
-				break;
-				}
-			case "Last" : {
-				if (value is TokenValueInteger32 vvalue) {
-					Last = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "First" : {
-				return new TokenValueInteger32 (First);
-				}
-			case "Last" : {
-				return new TokenValueInteger32 (Last);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CharacterSpan(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "First", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "Last", new Property (typeof(TokenValueInteger32), false)} 
+			{ "First", new PropertyInteger32 ("First", 
+					(IBinding data, int? value) => {(data as CharacterSpan).First = value;}, (IBinding data) => (data as CharacterSpan).First )},
+			{ "Last", new PropertyInteger32 ("Last", 
+					(IBinding data, int? value) => {(data as CharacterSpan).Last = value;}, (IBinding data) => (data as CharacterSpan).Last )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -900,29 +692,12 @@ public partial class CharacterSpan : CallsignEntry {
 public partial class Canonical : CharacterSpan {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new Canonical(), CharacterSpan._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -998,43 +773,19 @@ public partial class MapChar : CharacterSpan {
 	public virtual int?						Target  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Target" : {
-				if (value is TokenValueInteger32 vvalue) {
-					Target = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Target" : {
-				return new TokenValueInteger32 (Target);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new MapChar(), CharacterSpan._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Target", new Property (typeof(TokenValueInteger32), false)} 
+			{ "Target", new PropertyInteger32 ("Target", 
+					(IBinding data, int? value) => {(data as MapChar).Target = value;}, (IBinding data) => (data as MapChar).Target )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1104,46 +855,22 @@ public partial class MapString : CharacterSpan {
         ///If count is greater than 1, all the characters map to the same string.
         /// </summary>
 
-	public virtual string						Target  {get; set;}
+	public virtual string?						Target  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Target" : {
-				if (value is TokenValueString vvalue) {
-					Target = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Target" : {
-				return new TokenValueString (Target);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new MapString(), CharacterSpan._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Target", new Property (typeof(TokenValueString), false)} 
+			{ "Target", new PropertyString ("Target", 
+					(IBinding data, string? value) => {(data as MapString).Target = value;}, (IBinding data) => (data as MapString).Target )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1209,64 +936,32 @@ public partial class Notarization : CallsignEntry {
         ///Enveloped witness value of a specific append only log.
         /// </summary>
 
-	public virtual List<Enveloped<Witness>>				Entries  {get; set;}
+	public virtual List<Enveloped<Witness>>?					Entries  {get; set;}
         /// <summary>
         ///Proof path validating the previous notary token that was entered in the
         ///log.
         /// </summary>
 
-	public virtual Proof						Proof  {get; set;}
+	public virtual Proof?						Proof  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Entries" : {
-				if (value is TokenValueListStructObject vvalue) {
-					Entries = vvalue.Value as List<Enveloped<Witness>>;
-					}
-				break;
-				}
-			case "Proof" : {
-				if (value is TokenValueStructObject vvalue) {
-					Proof = vvalue.Value as Proof;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Entries" : {
-				return new TokenValueListStruct<Enveloped<Witness>> (Entries);
-				}
-			case "Proof" : {
-				return new TokenValueStruct<Proof> (Proof);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new Notarization(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Entries", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<Enveloped<Witness>>(), ()=>new Enveloped<Witness>(), false)} ,
-			{ "Proof", new Property ( typeof(TokenValueStruct), false,
-					()=>new Proof(), ()=>new Proof(), false)} 
+			{ "Entries", new PropertyListStruct ("Entries", 
+					(IBinding data, object? value) => {(data as Notarization).Entries = value as List<Enveloped<Witness>>;}, (IBinding data) => (data as Notarization).Entries,
+					false, ()=>new  List<Enveloped<Witness>>(), ()=>new Enveloped<Witness>())} ,
+			{ "Proof", new PropertyStruct ("Proof", 
+					(IBinding data, object? value) => {(data as Notarization).Proof = value as Proof;}, (IBinding data) => (data as Notarization).Proof,
+					false, ()=>new  Proof(), ()=>new Proof())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1333,61 +1028,28 @@ public partial class Challenge : Assertion {
         ///The callsigns subject to challenge
         /// </summary>
 
-	public virtual List<string>				Subjects  {get; set;}
+	public virtual List<string>?					Subjects  {get; set;}
         /// <summary>
         ///The basis for the challenge
         /// </summary>
 
-	public virtual List<string>				Basis  {get; set;}
+	public virtual List<string>?					Basis  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Subjects" : {
-				if (value is TokenValueListString vvalue) {
-					Subjects = vvalue.Value;
-					}
-				break;
-				}
-			case "Basis" : {
-				if (value is TokenValueListString vvalue) {
-					Basis = vvalue.Value;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Subjects" : {
-				return new TokenValueListString (Subjects);
-				}
-			case "Basis" : {
-				return new TokenValueListString (Basis);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new Challenge(), Assertion._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Subjects", new Property (typeof(TokenValueListString), true)} ,
-			{ "Basis", new Property (typeof(TokenValueListString), true)} 
+			{ "Subjects", new PropertyListString ("Subjects", 
+					(IBinding data, List<string>? value) => {(data as Challenge).Subjects = value;}, (IBinding data) => (data as Challenge).Subjects )},
+			{ "Basis", new PropertyListString ("Basis", 
+					(IBinding data, List<string>? value) => {(data as Challenge).Basis = value;}, (IBinding data) => (data as Challenge).Basis )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1455,64 +1117,32 @@ public partial class CallsignRegistrationRequest : MessageValidated {
         ///The enveloped binnding of the callsign to the profile.
         /// </summary>
 
-	public virtual Enveloped<CallsignBinding>						EnvelopedCallsignBinding  {get; set;}
+	public virtual Enveloped<CallsignBinding>?						EnvelopedCallsignBinding  {get; set;}
+
         /// <summary>
         ///One or more profiles under which the EnvelopedCallsignBinding is 
         ///validlty signed.
         /// </summary>
 
-	public virtual List<Enveloped<Profile>>				Profiles  {get; set;}
+	public virtual List<Enveloped<Profile>>?					Profiles  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "EnvelopedCallsignBinding" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedCallsignBinding = vvalue.Value as Enveloped<CallsignBinding>;
-					}
-				break;
-				}
-			case "Profiles" : {
-				if (value is TokenValueListStructObject vvalue) {
-					Profiles = vvalue.Value as List<Enveloped<Profile>>;
-					}
-				break;
-				}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "EnvelopedCallsignBinding" : {
-				return new TokenValueStruct<Enveloped<CallsignBinding>> (EnvelopedCallsignBinding);
-				}
-			case "Profiles" : {
-				return new TokenValueListStruct<Enveloped<Profile>> (Profiles);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CallsignRegistrationRequest(), MessageValidated._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "EnvelopedCallsignBinding", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<CallsignBinding>(), ()=>new Enveloped<CallsignBinding>(), false)} ,
-			{ "Profiles", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<Enveloped<Profile>>(), ()=>new Enveloped<Profile>(), false)} 
+			{ "EnvelopedCallsignBinding", new PropertyStruct ("EnvelopedCallsignBinding", 
+					(IBinding data, object? value) => {(data as CallsignRegistrationRequest).EnvelopedCallsignBinding = value as Enveloped<CallsignBinding>;}, (IBinding data) => (data as CallsignRegistrationRequest).EnvelopedCallsignBinding,
+					false, ()=>new  Enveloped<CallsignBinding>(), ()=>new Enveloped<CallsignBinding>())} ,
+			{ "Profiles", new PropertyListStruct ("Profiles", 
+					(IBinding data, object? value) => {(data as CallsignRegistrationRequest).Profiles = value as List<Enveloped<Profile>>;}, (IBinding data) => (data as CallsignRegistrationRequest).Profiles,
+					false, ()=>new  List<Enveloped<Profile>>(), ()=>new Enveloped<Profile>())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1579,92 +1209,47 @@ public partial class CallsignRegistrationResponse : Message {
         /// </summary>
 
 	public virtual bool?						Registered  {get; set;}
+
         /// <summary>
         ///The resulting catalog entry if accepted or the prior registration otherwise.
         /// </summary>
 
-	public virtual CatalogedRegistration						CatalogedRegistration  {get; set;}
+	public virtual CatalogedRegistration?						CatalogedRegistration  {get; set;}
+
         /// <summary>
         ///Reason for refusing the registration (if refused)
         /// </summary>
 
-	public virtual string						Reason  {get; set;}
+	public virtual string?						Reason  {get; set;}
+
         /// <summary>
         ///The value specified as the Canonical field in the callsign request if present,
         ///otherwise the value specified in the Display field, otherwise null.
         /// </summary>
 
-	public virtual string						Callsign  {get; set;}
+	public virtual string?						Callsign  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Registered" : {
-				if (value is TokenValueBoolean vvalue) {
-					Registered = vvalue.Value;
-					}
-				break;
-				}
-			case "CatalogedRegistration" : {
-				if (value is TokenValueStructObject vvalue) {
-					CatalogedRegistration = vvalue.Value as CatalogedRegistration;
-					}
-				break;
-				}
-			case "Reason" : {
-				if (value is TokenValueString vvalue) {
-					Reason = vvalue.Value;
-					}
-				break;
-				}
-			case "Callsign" : {
-				if (value is TokenValueString vvalue) {
-					Callsign = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Registered" : {
-				return new TokenValueBoolean (Registered);
-				}
-			case "CatalogedRegistration" : {
-				return new TokenValueStruct<CatalogedRegistration> (CatalogedRegistration);
-				}
-			case "Reason" : {
-				return new TokenValueString (Reason);
-				}
-			case "Callsign" : {
-				return new TokenValueString (Callsign);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CallsignRegistrationResponse(), Message._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Registered", new Property (typeof(TokenValueBoolean), false)} ,
-			{ "CatalogedRegistration", new Property ( typeof(TokenValueStruct), false,
-					()=>new CatalogedRegistration(), ()=>new CatalogedRegistration(), false)} ,
-			{ "Reason", new Property (typeof(TokenValueString), false)} ,
-			{ "Callsign", new Property (typeof(TokenValueString), false)} 
+			{ "Registered", new PropertyBoolean ("Registered", 
+					(IBinding data, bool? value) => {(data as CallsignRegistrationResponse).Registered = value;}, (IBinding data) => (data as CallsignRegistrationResponse).Registered )},
+			{ "CatalogedRegistration", new PropertyStruct ("CatalogedRegistration", 
+					(IBinding data, object? value) => {(data as CallsignRegistrationResponse).CatalogedRegistration = value as CatalogedRegistration;}, (IBinding data) => (data as CallsignRegistrationResponse).CatalogedRegistration,
+					false, ()=>new  CatalogedRegistration(), ()=>new CatalogedRegistration())} ,
+			{ "Reason", new PropertyString ("Reason", 
+					(IBinding data, string? value) => {(data as CallsignRegistrationResponse).Reason = value;}, (IBinding data) => (data as CallsignRegistrationResponse).Reason )},
+			{ "Callsign", new PropertyString ("Callsign", 
+					(IBinding data, string? value) => {(data as CallsignRegistrationResponse).Callsign = value;}, (IBinding data) => (data as CallsignRegistrationResponse).Callsign )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1729,47 +1314,23 @@ public partial class ProcessResultCallsignRegistration : ProcessResult {
         /// <summary>
         /// </summary>
 
-	public virtual CallsignRegistrationResponse						CallsignRegistrationResponse  {get; set;}
+	public virtual CallsignRegistrationResponse?						CallsignRegistrationResponse  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "CallsignRegistrationResponse" : {
-				if (value is TokenValueStructObject vvalue) {
-					CallsignRegistrationResponse = vvalue.Value as CallsignRegistrationResponse;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "CallsignRegistrationResponse" : {
-				return new TokenValueStruct<CallsignRegistrationResponse> (CallsignRegistrationResponse);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ProcessResultCallsignRegistration(), ProcessResult._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "CallsignRegistrationResponse", new Property ( typeof(TokenValueStruct), false,
-					()=>new CallsignRegistrationResponse(), ()=>new CallsignRegistrationResponse(), false)} 
+			{ "CallsignRegistrationResponse", new PropertyStruct ("CallsignRegistrationResponse", 
+					(IBinding data, object? value) => {(data as ProcessResultCallsignRegistration).CallsignRegistrationResponse = value as CallsignRegistrationResponse;}, (IBinding data) => (data as ProcessResultCallsignRegistration).CallsignRegistrationResponse,
+					false, ()=>new  CallsignRegistrationResponse(), ()=>new CallsignRegistrationResponse())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1837,108 +1398,56 @@ public partial class CatalogedApplicationCallsign : CatalogedApplication {
         ///The registered callsign in canonical form.		
         /// </summary>
 
-	public virtual string						CallSign  {get; set;}
+	public virtual string?						CallSign  {get; set;}
+
         /// <summary>
         ///The MessageId of the request message
         /// </summary>
 
-	public virtual string						RequestId  {get; set;}
+	public virtual string?						RequestId  {get; set;}
+
         /// <summary>
         ///The callsign binding  
         /// </summary>
 
-	public virtual Enveloped<CallsignBinding>						EnvelopedCallsignBinding  {get; set;}
+	public virtual Enveloped<CallsignBinding>?						EnvelopedCallsignBinding  {get; set;}
+
         /// <summary>
         ///The resulting catalog entry if accepted or the prior registration otherwise.
         /// </summary>
 
-	public virtual CatalogedRegistration						CatalogedRegistration  {get; set;}
+	public virtual CatalogedRegistration?						CatalogedRegistration  {get; set;}
+
         /// <summary>
         ///Reason for refusing the registration (if refused)
         /// </summary>
 
-	public virtual string						Reason  {get; set;}
+	public virtual string?						Reason  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "CallSign" : {
-				if (value is TokenValueString vvalue) {
-					CallSign = vvalue.Value;
-					}
-				break;
-				}
-			case "RequestId" : {
-				if (value is TokenValueString vvalue) {
-					RequestId = vvalue.Value;
-					}
-				break;
-				}
-			case "EnvelopedCallsignBinding" : {
-				if (value is TokenValueStructObject vvalue) {
-					EnvelopedCallsignBinding = vvalue.Value as Enveloped<CallsignBinding>;
-					}
-				break;
-				}
-			case "CatalogedRegistration" : {
-				if (value is TokenValueStructObject vvalue) {
-					CatalogedRegistration = vvalue.Value as CatalogedRegistration;
-					}
-				break;
-				}
-			case "Reason" : {
-				if (value is TokenValueString vvalue) {
-					Reason = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "CallSign" : {
-				return new TokenValueString (CallSign);
-				}
-			case "RequestId" : {
-				return new TokenValueString (RequestId);
-				}
-			case "EnvelopedCallsignBinding" : {
-				return new TokenValueStruct<Enveloped<CallsignBinding>> (EnvelopedCallsignBinding);
-				}
-			case "CatalogedRegistration" : {
-				return new TokenValueStruct<CatalogedRegistration> (CatalogedRegistration);
-				}
-			case "Reason" : {
-				return new TokenValueString (Reason);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedApplicationCallsign(), CatalogedApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "CallSign", new Property (typeof(TokenValueString), false)} ,
-			{ "RequestId", new Property (typeof(TokenValueString), false)} ,
-			{ "EnvelopedCallsignBinding", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<CallsignBinding>(), ()=>new Enveloped<CallsignBinding>(), false)} ,
-			{ "CatalogedRegistration", new Property ( typeof(TokenValueStruct), false,
-					()=>new CatalogedRegistration(), ()=>new CatalogedRegistration(), false)} ,
-			{ "Reason", new Property (typeof(TokenValueString), false)} 
+			{ "CallSign", new PropertyString ("CallSign", 
+					(IBinding data, string? value) => {(data as CatalogedApplicationCallsign).CallSign = value;}, (IBinding data) => (data as CatalogedApplicationCallsign).CallSign )},
+			{ "RequestId", new PropertyString ("RequestId", 
+					(IBinding data, string? value) => {(data as CatalogedApplicationCallsign).RequestId = value;}, (IBinding data) => (data as CatalogedApplicationCallsign).RequestId )},
+			{ "EnvelopedCallsignBinding", new PropertyStruct ("EnvelopedCallsignBinding", 
+					(IBinding data, object? value) => {(data as CatalogedApplicationCallsign).EnvelopedCallsignBinding = value as Enveloped<CallsignBinding>;}, (IBinding data) => (data as CatalogedApplicationCallsign).EnvelopedCallsignBinding,
+					false, ()=>new  Enveloped<CallsignBinding>(), ()=>new Enveloped<CallsignBinding>())} ,
+			{ "CatalogedRegistration", new PropertyStruct ("CatalogedRegistration", 
+					(IBinding data, object? value) => {(data as CatalogedApplicationCallsign).CatalogedRegistration = value as CatalogedRegistration;}, (IBinding data) => (data as CatalogedApplicationCallsign).CatalogedRegistration,
+					false, ()=>new  CatalogedRegistration(), ()=>new CatalogedRegistration())} ,
+			{ "Reason", new PropertyString ("Reason", 
+					(IBinding data, string? value) => {(data as CatalogedApplicationCallsign).Reason = value;}, (IBinding data) => (data as CatalogedApplicationCallsign).Reason )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -2004,47 +1513,23 @@ public partial class ProcessResultCallsign : ProcessResult {
         ///The cataloged application
         /// </summary>
 
-	public virtual CatalogedApplicationCallsign						CatalogedApplicationCallsign  {get; set;}
+	public virtual CatalogedApplicationCallsign?						CatalogedApplicationCallsign  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "CatalogedApplicationCallsign" : {
-				if (value is TokenValueStructObject vvalue) {
-					CatalogedApplicationCallsign = vvalue.Value as CatalogedApplicationCallsign;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "CatalogedApplicationCallsign" : {
-				return new TokenValueStruct<CatalogedApplicationCallsign> (CatalogedApplicationCallsign);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ProcessResultCallsign(), ProcessResult._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "CatalogedApplicationCallsign", new Property ( typeof(TokenValueStruct), false,
-					()=>new CatalogedApplicationCallsign(), ()=>new CatalogedApplicationCallsign(), false)} 
+			{ "CatalogedApplicationCallsign", new PropertyStruct ("CatalogedApplicationCallsign", 
+					(IBinding data, object? value) => {(data as ProcessResultCallsign).CatalogedApplicationCallsign = value as CatalogedApplicationCallsign;}, (IBinding data) => (data as ProcessResultCallsign).CatalogedApplicationCallsign,
+					false, ()=>new  CatalogedApplicationCallsign(), ()=>new CatalogedApplicationCallsign())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

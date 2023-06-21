@@ -153,9 +153,9 @@ public partial class GoedelProtocol {
         FieldDateTime = System.DateTime.Now,
         FieldString = "This is a test",
         FieldBinary = new byte[] { 0, 1, 2, 3, 4 },
-        ArrayBoolean = new List<bool?> { true, false, true, false },
-        ArrayInteger = new List<int?> { 0, 2, 4, 8 },
-        ArrayDateTime = new List<System.DateTime?> { System.DateTime.Now },
+        ArrayBoolean = new List<bool> { true, false, true, false },
+        ArrayInteger = new List<int> { 0, 2, 4, 8 },
+        ArrayDateTime = new List<System.DateTime> { System.DateTime.Now },
         ArrayString = new List<string> { "Alice", "Bob", "Carol", },
         ArrayBinary = new List<byte[]> { "One".ToBytes(), "Two".ToBytes() }
         };
@@ -182,7 +182,7 @@ public partial class GoedelProtocol {
         FieldDateTime = System.DateTime.Now,
         FieldString = "This is a test",
         FieldBinary = new byte[] { 0, 1, 2, 3, 4 },
-        ArrayBoolean = new List<bool?> { true, false, true, false }
+        ArrayBoolean = new List<bool> { true, false, true, false }
         };
 
 
@@ -192,9 +192,9 @@ public partial class GoedelProtocol {
         FieldDateTime = System.DateTime.Now,
         FieldString = "This is a test",
         FieldBinary = new byte[] { 0, 1, 2, 3, 4 },
-        ArrayBoolean = new List<bool?> { true, false, true, false },
-        ArrayInteger = new List<int?> { 0, 2, 4, 8 },
-        ArrayDateTime = new List<System.DateTime?> { System.DateTime.Now },
+        ArrayBoolean = new List<bool> { true, false, true, false },
+        ArrayInteger = new List<int> { 0, 2, 4, 8 },
+        ArrayDateTime = new List<System.DateTime> { System.DateTime.Now },
         ArrayString = new List<string> { "Alice", "Bob", "Carol", },
         ArrayBinary = new List<byte[]> { "One".ToBytes(), "Two".ToBytes() },
         FieldMultiInstance = Struct1,

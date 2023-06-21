@@ -83,7 +83,7 @@ public readonly record struct JsonMethodDescription(
 /// <summary>
 /// Base class for JSON Objects.
 /// </summary>
-public abstract partial class JsonObject {
+public abstract partial class JsonObject : IBinding {
 
     /// <summary>
     /// Primary key to use for the object.
@@ -173,7 +173,7 @@ public abstract partial class JsonObject {
         }
 
 
-    public virtual Binding Binding => _binding;
+    public virtual Binding _Binding => _binding;
     protected static Binding _binding = null;
 
 
@@ -347,24 +347,32 @@ public abstract partial class JsonObject {
             var tag = entry.Key;
             var property = entry.Value;
 
-            var value = Getter(tag);
+
+
+            //property.Serialize(this, writer);
+
+
+
+            //var value = Getter(tag);
 
             //Console.WriteLine($"Tag {tag} = {values.IsEmpty}");
 
 
-            if (!value.IsEmpty) {
+            if (!property.IsNull(this)) {
                 writer.WriteObjectSeparator(ref first);
                 writer.WriteToken(tag, 1);
-                if (value is TokenValueStruct x) {
-                    x.Serialize(writer, property.Tagged);
-                    }
-                else if(value is TokenValueListStruct lx) {
-                    lx.Serialize(writer, property.Tagged);
-                    }
-                else {
-                    value.Serialize(writer);
-                    }
+                property.Serialize(this, writer);
+                //if (value is TokenValueStruct x) {
+                //    x.Serialize(writer, property.Tagged);
+                //    }
+                //else if(value is TokenValueListStruct lx) {
+                //    lx.Serialize(writer, property.Tagged);
+                //    }
+                //else {
+                //    value.Serialize(writer);
+                //    }
                 }
+
             }
 
         //Serialize(writer, true, ref first);
@@ -438,7 +446,7 @@ public abstract partial class JsonObject {
                 going = false;
                 }
             else {
-                DeserializeToken2(jsonReader, Token);
+                DeserializeToken3(jsonReader, Token);
                 
                 going = jsonReader.NextObject();
                 }
@@ -446,36 +454,59 @@ public abstract partial class JsonObject {
         PostDecode();
         }
 
+
     /// <summary>
     /// Deserialize the input stream to populate this object having recieved the specified tag.
     /// </summary>
     /// <param name="jsonReader">Input data</param>
     /// <param name="tag">Input tag</param>
-    public void DeserializeToken2(JsonReader jsonReader, string tag) {
+    public void DeserializeToken3(JsonReader jsonReader, string tag) {
 
         if (_AllProperties.TryGetValue(tag, out var property)) {
-            if (property.Multiple) {
-                if (property.TokenType == typeof(TokenValueListBoolean)) {
+            switch (property) {
+                // Boolean
+                case PropertyBoolean propertyTyped: {
+                    var value = jsonReader.ReadBoolean();
+                    propertyTyped.Set(this, value);
+                    break;
+                    }
+                case PropertyListBoolean propertyTyped: {
                     bool going = jsonReader.StartArray();
-                    var array = new List<bool?>();
+                    var array = new List<bool>();
                     while (going) {
                         var value = jsonReader.ReadBoolean();
                         array.Add(value);
                         going = jsonReader.NextArray();
                         }
-                    Setter(tag, new TokenValueListBoolean(array));
+                    propertyTyped.Set(this, array);
+                    break;
                     }
-                else if (property.TokenType == typeof(TokenValueListString)) {
+
+                // String
+                case PropertyString propertyTyped: {
+                    var value = jsonReader.ReadString();
+                    propertyTyped.Set(this, value);
+                    break;
+                    }
+                case PropertyListString propertyTyped: {
                     bool going = jsonReader.StartArray();
-                    var array = new List<string?>();
+                    var array = new List<string>();
                     while (going) {
                         var value = jsonReader.ReadString();
                         array.Add(value);
                         going = jsonReader.NextArray();
                         }
-                    Setter(tag, new TokenValueListString(array));
+                    propertyTyped.Set(this, array);
+                    break;
                     }
-                else if (property.TokenType == typeof(TokenValueListBinary)) {
+
+                // Binary
+                case PropertyBinary propertyTyped: {
+                    var value = jsonReader.ReadBinary();
+                    propertyTyped.Set(this, value);
+                    break;
+                    }
+                case PropertyListBinary propertyTyped: {
                     bool going = jsonReader.StartArray();
                     var array = new List<byte[]>();
                     while (going) {
@@ -483,60 +514,118 @@ public abstract partial class JsonObject {
                         array.Add(value);
                         going = jsonReader.NextArray();
                         }
-                    Setter(tag, new TokenValueListBinary(array));
+                    propertyTyped.Set(this, array);
+                    break;
                     }
-                else if (property.TokenType == typeof(TokenValueListDateTime)) {
+
+                // DateTime
+                case PropertyDateTime propertyTyped: {
+                    var value = jsonReader.ReadDateTime();
+                    propertyTyped.Set(this, value);
+                    break;
+                    }
+                case PropertyListDateTime propertyTyped: {
                     bool going = jsonReader.StartArray();
-                    var array = new List<System.DateTime?>();
+                    var array = new List<System.DateTime>();
                     while (going) {
                         var value = jsonReader.ReadDateTime();
                         array.Add(value);
                         going = jsonReader.NextArray();
                         }
-                    Setter(tag, new TokenValueListDateTime(array));
+                    propertyTyped.Set(this, array);
+                    break;
                     }
-                else if (property.TokenType == typeof(TokenValueListInteger32)) {
+
+                // Integer32
+                case PropertyInteger32 propertyTyped: {
+                    var value = jsonReader.ReadInteger32();
+                    propertyTyped.Set(this, value);
+                    break;
+                    }
+                case PropertyListInteger32 propertyTyped: {
                     bool going = jsonReader.StartArray();
-                    var array = new List<int?>();
+                    var array = new List<int>();
                     while (going) {
                         var value = jsonReader.ReadInteger32();
                         array.Add(value);
                         going = jsonReader.NextArray();
                         }
-                    Setter(tag, new TokenValueListInteger32(array));
+                    propertyTyped.Set(this, array);
+                    break;
                     }
-                else if (property.TokenType == typeof(TokenValueListInteger64)) {
+
+                // Integer64
+                case PropertyInteger64 propertyTyped: {
+                    var value = jsonReader.ReadInteger64();
+                    propertyTyped.Set(this, value);
+                    break;
+                    }
+                case PropertyListInteger64 propertyTyped: {
                     bool going = jsonReader.StartArray();
-                    var array = new List<long?>();
+                    var array = new List<long>();
                     while (going) {
                         var value = jsonReader.ReadInteger64();
                         array.Add(value);
                         going = jsonReader.NextArray();
                         }
-                    Setter(tag, new TokenValueListInteger64(array));
+                    propertyTyped.Set(this, array);
+                    break;
                     }
-                else if (property.TokenType == typeof(TokenValueListReal32)) {
+
+                // Real32
+                case PropertyReal32 propertyTyped: {
+                    var value = jsonReader.ReadFloat32();
+                    propertyTyped.Set(this, value);
+                    break;
+                    }
+                case PropertyListReal32 propertyTyped: {
                     bool going = jsonReader.StartArray();
-                    var array = new List<float?>();
+                    var array = new List<float>();
                     while (going) {
                         var value = jsonReader.ReadFloat32();
                         array.Add(value);
                         going = jsonReader.NextArray();
                         }
-                    Setter(tag, new TokenValueListReal32(array));
+                    propertyTyped.Set(this, array);
+                    break;
                     }
-                else if (property.TokenType == typeof(TokenValueListReal64)) {
+
+                // Real64
+                case PropertyReal64 propertyTyped: {
+                    var value = jsonReader.ReadFloat64();
+                    propertyTyped.Set(this, value);
+                    break;
+                    }
+                case PropertyListReal64 propertyTyped: {
                     bool going = jsonReader.StartArray();
-                    var array = new List<double?>();
+                    var array = new List<double>();
                     while (going) {
                         var value = jsonReader.ReadFloat64();
                         array.Add(value);
                         going = jsonReader.NextArray();
                         }
-                    Setter(tag, new TokenValueListReal64(array));
+                    propertyTyped.Set(this, array);
+                    break;
                     }
-                else if (property.TokenType == typeof(TokenValueListStruct)) {
-                    var array = property.Factory() as System.Collections.IList;
+
+                // Struct
+                case PropertyStruct propertyTyped: {
+                    if (property.Tagged) {
+                        var value = jsonReader.ReadTaggedObject(TagDictionary);
+                        propertyTyped.Set(this, value);
+                        }
+                    else {
+                        var value = propertyTyped.Factory() as JsonObject;
+                        value.Deserialize(jsonReader);
+                        propertyTyped.Set(this, value);
+                        }
+                    //var value = propertyTyped.Factory() as JsonObject;
+                    //value.Deserialize(jsonReader);
+                    //propertyTyped.Set(this, value);
+                    break;
+                    }
+                case PropertyListStruct propertyTyped: {
+                    var array = propertyTyped.Factory() as System.Collections.IList;
                     bool going = jsonReader.StartArray();
                     while (going) {
                         if (property.Tagged) {
@@ -544,58 +633,15 @@ public abstract partial class JsonObject {
                             array.Add(value);
                             }
                         else {
-                            var value = property.IFactory() as JsonObject;
+
+                            var value = propertyTyped.IFactory() as JsonObject;
                             value.Deserialize(jsonReader);
                             array.Add(value);
                             }
                         going = jsonReader.NextArray();
                         }
-                    Setter(tag, new TokenValueListStructObject(array));
-                    }
-                }
-            else {
-                if (property.TokenType == typeof(TokenValueBoolean)) {
-                    var value = jsonReader.ReadBoolean();
-                    Setter(tag, new TokenValueBoolean(value));
-                    }
-                else if (property.TokenType == typeof(TokenValueString)) {
-                    var value = jsonReader.ReadString();
-                    Setter(tag, new TokenValueString(value));
-                    }
-                else if (property.TokenType == typeof(TokenValueBinary)) {
-                    var value = jsonReader.ReadBinary();
-                    Setter(tag, new TokenValueBinary(value));
-                    }
-                else if (property.TokenType == typeof(TokenValueDateTime)) {
-                    var value = jsonReader.ReadDateTime();
-                    Setter(tag, new TokenValueDateTime(value));
-                    }
-                else if (property.TokenType == typeof(TokenValueInteger32)) {
-                    var value = jsonReader.ReadInteger32();
-                    Setter(tag, new TokenValueInteger32(value));
-                    }
-                else if (property.TokenType == typeof(TokenValueInteger64)) {
-                    var value = jsonReader.ReadInteger64();
-                    Setter(tag, new TokenValueInteger64(value));
-                    }
-                else if (property.TokenType == typeof(TokenValueReal32)) {
-                    var value = jsonReader.ReadFloat32();
-                    Setter(tag, new TokenValueReal32(value));
-                    }
-                else if (property.TokenType == typeof(TokenValueReal64)) {
-                    var value = jsonReader.ReadFloat64();
-                    Setter(tag, new TokenValueReal64(value));
-                    }
-                else if (property.TokenType == typeof(TokenValueStruct)) {
-                    if (property.Tagged) {
-                        var value = jsonReader.ReadTaggedObject(TagDictionary);
-                        Setter(tag, new TokenValueStructObject(value));
-                        }
-                    else {
-                        var value = property.Factory() as JsonObject;
-                        value.Deserialize(jsonReader);
-                        Setter(tag, new TokenValueStructObject(value));
-                        }
+                    propertyTyped.Set(this, array);
+                    break;
                     }
                 }
             }
@@ -604,6 +650,171 @@ public abstract partial class JsonObject {
             }
 
         }
+
+
+
+
+    ///// <summary>
+    ///// Deserialize the input stream to populate this object having recieved the specified tag.
+    ///// </summary>
+    ///// <param name="jsonReader">Input data</param>
+    ///// <param name="tag">Input tag</param>
+    //public void DeserializeToken2(JsonReader jsonReader, string tag) {
+
+    //    if (_AllProperties.TryGetValue(tag, out var property)) {
+    //        if (property.Multiple) {
+    //            if (property.TokenType == typeof(TokenValueListBoolean)) {
+    //                bool going = jsonReader.StartArray();
+    //                var array = new List<bool?>();
+    //                while (going) {
+    //                    var value = jsonReader.ReadBoolean();
+    //                    array.Add(value);
+    //                    going = jsonReader.NextArray();
+    //                    }
+
+
+
+    //                Setter(tag, new TokenValueListBoolean(array));
+    //                }
+    //            else if (property.TokenType == typeof(TokenValueListString)) {
+    //                bool going = jsonReader.StartArray();
+    //                var array = new List<string?>();
+    //                while (going) {
+    //                    var value = jsonReader.ReadString();
+    //                    array.Add(value);
+    //                    going = jsonReader.NextArray();
+    //                    }
+    //                Setter(tag, new TokenValueListString(array));
+    //                }
+    //            else if (property.TokenType == typeof(TokenValueListBinary)) {
+    //                bool going = jsonReader.StartArray();
+    //                var array = new List<byte[]>();
+    //                while (going) {
+    //                    var value = jsonReader.ReadBinary();
+    //                    array.Add(value);
+    //                    going = jsonReader.NextArray();
+    //                    }
+    //                Setter(tag, new TokenValueListBinary(array));
+    //                }
+    //            else if (property.TokenType == typeof(TokenValueListDateTime)) {
+    //                bool going = jsonReader.StartArray();
+    //                var array = new List<System.DateTime?>();
+    //                while (going) {
+    //                    var value = jsonReader.ReadDateTime();
+    //                    array.Add(value);
+    //                    going = jsonReader.NextArray();
+    //                    }
+    //                Setter(tag, new TokenValueListDateTime(array));
+    //                }
+    //            else if (property.TokenType == typeof(TokenValueListInteger32)) {
+    //                bool going = jsonReader.StartArray();
+    //                var array = new List<int?>();
+    //                while (going) {
+    //                    var value = jsonReader.ReadInteger32();
+    //                    array.Add(value);
+    //                    going = jsonReader.NextArray();
+    //                    }
+    //                Setter(tag, new TokenValueListInteger32(array));
+    //                }
+    //            else if (property.TokenType == typeof(TokenValueListInteger64)) {
+    //                bool going = jsonReader.StartArray();
+    //                var array = new List<long?>();
+    //                while (going) {
+    //                    var value = jsonReader.ReadInteger64();
+    //                    array.Add(value);
+    //                    going = jsonReader.NextArray();
+    //                    }
+    //                Setter(tag, new TokenValueListInteger64(array));
+    //                }
+    //            else if (property.TokenType == typeof(TokenValueListReal32)) {
+    //                bool going = jsonReader.StartArray();
+    //                var array = new List<float?>();
+    //                while (going) {
+    //                    var value = jsonReader.ReadFloat32();
+    //                    array.Add(value);
+    //                    going = jsonReader.NextArray();
+    //                    }
+    //                Setter(tag, new TokenValueListReal32(array));
+    //                }
+    //            else if (property.TokenType == typeof(TokenValueListReal64)) {
+    //                bool going = jsonReader.StartArray();
+    //                var array = new List<double?>();
+    //                while (going) {
+    //                    var value = jsonReader.ReadFloat64();
+    //                    array.Add(value);
+    //                    going = jsonReader.NextArray();
+    //                    }
+    //                Setter(tag, new TokenValueListReal64(array));
+    //                }
+    //            else if (property.TokenType == typeof(TokenValueListStruct)) {
+    //                var array = property.Factory() as System.Collections.IList;
+    //                bool going = jsonReader.StartArray();
+    //                while (going) {
+    //                    if (property.Tagged) {
+    //                        var value = jsonReader.ReadTaggedObject(TagDictionary);
+    //                        array.Add(value);
+    //                        }
+    //                    else {
+    //                        var value = property.IFactory() as JsonObject;
+    //                        value.Deserialize(jsonReader);
+    //                        array.Add(value);
+    //                        }
+    //                    going = jsonReader.NextArray();
+    //                    }
+    //                Setter(tag, new TokenValueListStructObject(array));
+    //                }
+    //            }
+    //        else {
+    //            if (property.TokenType == typeof(TokenValueBoolean)) {
+    //                var value = jsonReader.ReadBoolean();
+    //                Setter(tag, new TokenValueBoolean(value));
+    //                }
+    //            else if (property.TokenType == typeof(TokenValueString)) {
+    //                var value = jsonReader.ReadString();
+    //                Setter(tag, new TokenValueString(value));
+    //                }
+    //            else if (property.TokenType == typeof(TokenValueBinary)) {
+    //                var value = jsonReader.ReadBinary();
+    //                Setter(tag, new TokenValueBinary(value));
+    //                }
+    //            else if (property.TokenType == typeof(TokenValueDateTime)) {
+    //                var value = jsonReader.ReadDateTime();
+    //                Setter(tag, new TokenValueDateTime(value));
+    //                }
+    //            else if (property.TokenType == typeof(TokenValueInteger32)) {
+    //                var value = jsonReader.ReadInteger32();
+    //                Setter(tag, new TokenValueInteger32(value));
+    //                }
+    //            else if (property.TokenType == typeof(TokenValueInteger64)) {
+    //                var value = jsonReader.ReadInteger64();
+    //                Setter(tag, new TokenValueInteger64(value));
+    //                }
+    //            else if (property.TokenType == typeof(TokenValueReal32)) {
+    //                var value = jsonReader.ReadFloat32();
+    //                Setter(tag, new TokenValueReal32(value));
+    //                }
+    //            else if (property.TokenType == typeof(TokenValueReal64)) {
+    //                var value = jsonReader.ReadFloat64();
+    //                Setter(tag, new TokenValueReal64(value));
+    //                }
+    //            else if (property.TokenType == typeof(TokenValueStruct)) {
+    //                if (property.Tagged) {
+    //                    var value = jsonReader.ReadTaggedObject(TagDictionary);
+    //                    Setter(tag, new TokenValueStructObject(value));
+    //                    }
+    //                else {
+    //                    var value = property.Factory() as JsonObject;
+    //                    value.Deserialize(jsonReader);
+    //                    Setter(tag, new TokenValueStructObject(value));
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    else {
+    //        throw new UnknownTag(); // NYI: should modify this to allow arbitrary values
+    //        }
+
+    //    }
 
 
     /// <summary>

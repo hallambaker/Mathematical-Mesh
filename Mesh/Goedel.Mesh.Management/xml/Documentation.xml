@@ -165,11 +165,11 @@
              Base class for all request messages.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Management.WsmpRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Management.WsmpRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Management.WsmpRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Management.WsmpRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Management.WsmpRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -217,11 +217,11 @@
              status code and status description fields.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Management.WsmpResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Management.WsmpResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Management.WsmpResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Management.WsmpResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Management.WsmpResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -266,11 +266,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Management.ServiceConfigRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Management.ServiceConfigRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Management.ServiceConfigRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Management.ServiceConfigRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Management.ServiceConfigRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -315,11 +315,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Management.ServiceConfigResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Management.ServiceConfigResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Management.ServiceConfigResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Management.ServiceConfigResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Management.ServiceConfigResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -364,11 +364,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Management.ServiceStatusRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Management.ServiceStatusRequest._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Management.ServiceStatusRequest.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Management.ServiceStatusRequest._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Management.ServiceStatusRequest._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -433,11 +433,11 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Management.ServiceStatusResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Mesh.Management.ServiceStatusResponse._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Management.ServiceStatusResponse.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Mesh.Management.ServiceStatusResponse._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Management.ServiceStatusResponse._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 

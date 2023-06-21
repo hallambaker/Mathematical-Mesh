@@ -64,6 +64,13 @@ partial class Program {
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
         Trace.WriteLine($"Trace enabled");
+        GoedelProtocol.Test().TestStruct();
+
+
+
+
+
+
         TestService.Test().MeshDeviceDirectKey();
         TestService.Test().MeshDeviceThresholdKey();
 

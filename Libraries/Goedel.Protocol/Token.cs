@@ -21,17 +21,21 @@
 #endregion
 
 
+using System.Collections;
+
 namespace Goedel.Protocol;
 
 
 
 public interface IBinding {
 
-    Binding Binding { get; }
+    Binding _Binding { get; }
     }
 
 public record Binding(
             Dictionary<string, Property> Properties,
+            string Tag,
+            Func<object> Factory,
             Binding Parent = null
             ) {
     }
@@ -46,133 +50,505 @@ public record Binding(
 /// <param name="Factory">Factory generating an instance of the node (if required).</param>
 /// <param name="IFactory">Factory generating an instance of a list member (if required).</param>
 /// <param name="Tagged">If true, structures are to be represented as a tagged structure.</param>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
 ///// <param name="tagDictionary">Tag dictionary to be used to deserialize the property.</param>
-public record Property(
+public abstract record Property(
 
             Type TokenType,
             bool Multiple,
-            Func<object> Factory=null,
-            Func<object> IFactory=null,
+            //Func<object> Factory=null,
+            //Func<object> IFactory=null,
             bool Tagged=false,
             //Dictionary<string, JsonFactoryDelegate> tagDictionary=null,
             string Tag = null) {
-     }
 
 
+    /// <summary>
+    /// Serialize a token to the writer <paramref name="writer"/>.
+    /// </summary>
+    /// <param name="writer">The writer to emit the structured data to.</param>
+    /// 
+    /// 
+    public virtual void Serialize(IBinding data, Writer writer) {
+        }
+
+    /// <summary>
+    /// Return true if and only if the property in <paramref name="data"/> is null.
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    public abstract bool IsNull(IBinding data);
+    }
+
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
 public record PropertyBoolean(
             string Tag,
             Action<IBinding, bool?> Set,
             Func<IBinding, bool?> Get) : Property(typeof(TokenValueBoolean), false, Tag:Tag) {
+
+
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+        var value = Get(data);
+        if (value != null) {
+            writer.WriteBoolean(value);
+            }
+        }
+
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => Get(data) == null;
     }
 
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
 public record PropertyListBoolean(
             string Tag,
-            Action<IBinding, List<bool?>> Set,
-            Func<IBinding, List<bool?>> Get) : Property(typeof(TokenValueListBoolean), true, Tag: Tag) {
+            Action<IBinding, List<bool>?> Set,
+            Func<IBinding, List<bool>?> Get) : Property(typeof(TokenValueListBoolean), true, Tag: Tag) {
+
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+        var value = Get(data);
+        if (value != null) {
+            var first = true;
+
+            writer.WriteArrayStart();
+            foreach (var entry in value) {
+                writer.WriteArraySeparator(ref first);
+                writer.WriteBoolean(entry);
+                }
+            writer.WriteArrayEnd();
+            }
+        }
+
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => Get(data) == null;
     }
 
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
 public record PropertyString (
             string Tag,
             Action<IBinding, string?> Set,
             Func<IBinding, string?> Get):  Property(typeof(TokenValueString), false, Tag: Tag) {
+
+
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+        var value = Get(data);
+        if (value != null) {
+            writer.WriteString(value);
+            }
+        }
+
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => Get(data) == null;
     }
 
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
 public record PropertyListString(
             string Tag,
             Action<IBinding, List<string>?> Set,
             Func<IBinding, List<string>?> Get) : Property(typeof(TokenValueListString), true, Tag: Tag) {
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+        var value = Get(data);
+        if (value != null) {
+            var first = true;
+
+            writer.WriteArrayStart();
+            foreach (var entry in value) {
+                writer.WriteArraySeparator(ref first);
+                writer.WriteString(entry);
+                }
+            writer.WriteArrayEnd();
+            }
+        }
+
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => Get(data) == null;
     }
 
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
 public record PropertyBinary(
             string Tag,
             Action<IBinding, byte[]?> Set,
             Func<IBinding, byte[]?> Get) : Property(typeof(TokenValueBinary), false, Tag: Tag) {
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+        var value = Get(data);
+        if (value != null) {
+            writer.WriteBinary(value);
+            }
+        }
+
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => Get(data) == null;
     }
 
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
 public record PropertyListBinary(
             string Tag,
-            Action<IBinding, List<byte[]?>> Set,
-            Func<IBinding, List<byte[]?>> Get) : Property(typeof(TokenValueListBinary), true, Tag: Tag) {
+            Action<IBinding, List<byte[]>?> Set,
+            Func<IBinding, List<byte[]>?> Get) : Property(typeof(TokenValueListBinary), true, Tag: Tag) {
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+        var value = Get(data);
+        if (value != null) {
+            var first = true;
+
+            writer.WriteArrayStart();
+            foreach (var entry in value) {
+                writer.WriteArraySeparator(ref first);
+                writer.WriteBinary(entry);
+                }
+            writer.WriteArrayEnd();
+            }
+        }
+
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => Get(data) == null;
     }
 
-
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
 public record PropertyDateTime(
             string Tag,
             Action<IBinding, DateTime?> Set,
             Func<IBinding, DateTime?> Get) : Property(typeof(TokenValueDateTime), false, Tag: Tag) {
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+        var value = Get(data);
+        if (value != null) {
+            writer.WriteDateTime(value);
+            }
+        }
+
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => Get(data) == null;
     }
 
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
 public record PropertyListDateTime(
             string Tag,
-            Action<IBinding, List<DateTime?>> Set,
-            Func<IBinding, List<DateTime?>> Get) : Property(typeof(TokenValueListDateTime), true, Tag: Tag) {
+            Action<IBinding, List<DateTime>?> Set,
+            Func<IBinding, List<DateTime>?> Get) : Property(typeof(TokenValueListDateTime), true, Tag: Tag) {
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+        var value = Get(data);
+        if (value != null) {
+            var first = true;
+
+            writer.WriteArrayStart();
+            foreach (var entry in value) {
+                writer.WriteArraySeparator(ref first);
+                writer.WriteDateTime(entry);
+                }
+            writer.WriteArrayEnd();
+            }
+        }
+
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => Get(data) == null;
     }
 
-
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
 public record PropertyInteger32(
             string Tag,
             Action<IBinding, int?> Set,
             Func<IBinding, int?> Get) : Property(typeof(TokenValueInteger32), false, Tag: Tag) {
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+        var value = Get(data);
+        if (value != null) {
+            writer.WriteInteger32(value);
+            }
+        }
+
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => Get(data) == null;
     }
 
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
 public record PropertyListInteger32(
             string Tag,
-            Action<IBinding, List<int?>> Set,
-            Func<IBinding, List<int?>> Get) : Property(typeof(TokenValueListInteger32), true, Tag: Tag) {
+            Action<IBinding, List<int>?> Set,
+            Func<IBinding, List<int>?> Get) : Property(typeof(TokenValueListInteger32), true, Tag: Tag) {
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+        var value = Get(data);
+        if (value != null) {
+            var first = true;
+
+            writer.WriteArrayStart();
+            foreach (var entry in value) {
+                writer.WriteArraySeparator(ref first);
+                writer.WriteInteger32(entry);
+                }
+            writer.WriteArrayEnd();
+            }
+        }
+
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => Get(data) == null;
     }
 
-
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
 public record PropertyInteger64(
             string Tag,
             Action<IBinding, long?> Set,
             Func<IBinding, long?> Get) : Property(typeof(TokenValueInteger64), false, Tag: Tag) {
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+        var value = Get(data);
+        if (value != null) {
+            writer.WriteInteger64(value);
+            }
+        }
+
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => Get(data) == null;
     }
 
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
 public record PropertyListInteger64(
             string Tag,
-            Action<IBinding, List<long?>> Set,
-            Func<IBinding, List<long?>> Get) : Property(typeof(TokenValueListInteger64), true, Tag: Tag) {
+            Action<IBinding, List<long>?> Set,
+            Func<IBinding, List<long>?> Get) : Property(typeof(TokenValueListInteger64), true, Tag: Tag) {
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+        var value = Get(data);
+        if (value != null) {
+            var first = true;
+
+            writer.WriteArrayStart();
+            foreach (var entry in value) {
+                writer.WriteArraySeparator(ref first);
+                writer.WriteInteger64(entry);
+                }
+            writer.WriteArrayEnd();
+            }
+        }
+
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => Get(data) == null;
     }
 
-
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
 public record PropertyReal32(
             string Tag,
             Action<IBinding, float?> Set,
             Func<IBinding, float?> Get) : Property(typeof(TokenValueReal32), false, Tag: Tag) {
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+        var value = Get(data);
+        if (value != null) {
+            writer.WriteFloat32(value);
+            }
+        }
+
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => Get(data) == null;
     }
 
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
 public record PropertyListReal32(
             string Tag,
-            Action<IBinding, List<float?>> Set,
-            Func<IBinding, List<float?>>? Get) : Property(typeof(TokenValueListReal32), true, Tag: Tag) {
+            Action<IBinding, List<float>?> Set,
+            Func<IBinding, List<float>?>? Get) : Property(typeof(TokenValueListReal32), true, Tag: Tag) {
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+        var value = Get(data);
+        if (value != null) {
+            var first = true;
+
+            writer.WriteArrayStart();
+            foreach (var entry in value) {
+                writer.WriteArraySeparator(ref first);
+                writer.WriteFloat32(entry);
+                }
+            writer.WriteArrayEnd();
+            }
+        }
+
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => Get(data) == null;
     }
+
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
 public record PropertyReal64(
             string Tag,
             Action<IBinding, double?> Set,
-            Func<IBinding, double> Get) : Property(typeof(TokenValueReal64), false, Tag: Tag) {
+            Func<IBinding, double?> Get) : Property(typeof(TokenValueReal64), false, Tag: Tag) {
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+        var value = Get(data);
+        if (value != null) {
+            writer.WriteFloat64(value);
+            }
+        }
+
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => Get(data) == null;
     }
 
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
 public record PropertyListReal64(
             string Tag,
-            Action<IBinding, List<double?>> Set,
-            Func<IBinding, List<double?>> Get) : Property(typeof(TokenValueListReal64), true, Tag: Tag) {
-    }
-public record PropertyStruct<T>(
-            string Tag,
-            Action<IBinding, T?> Set,
-            Func<IBinding, T?> Get,
-            bool Tagged = false,
-            Func<object> Factory = null,
-            Func<object> IFactory = null) : Property(typeof(TokenValueStruct), false, Tag: Tag) {
+            Action<IBinding, List<double>?> Set,
+            Func<IBinding, List<double>?> Get) : Property(typeof(TokenValueListReal64), true, Tag: Tag) {
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+        var value = Get(data);
+        if (value != null) {
+            var first = true;
+
+            writer.WriteArrayStart();
+            foreach (var entry in value) {
+                writer.WriteArraySeparator(ref first);
+                writer.WriteFloat64(entry);
+                }
+            writer.WriteArrayEnd();
+            }
+        }
+
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => Get(data) == null;
     }
 
-public record PropertyListStruct<T>(
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
+public record PropertyStruct(
             string Tag,
-            Action<IBinding, List<T>?> Set,
-            Func<IBinding, List<T>?> Get,
+            Action<IBinding, object?> Set,
+            Func<IBinding, object?> Get,
             bool Tagged = false,
             Func<object> Factory = null,
-            Func<object> IFactory = null) : Property(typeof(TokenValueListStruct), true, Factory, IFactory, Tag: Tag) {
+            Func<object> IFactory = null) : Property(typeof(TokenValueStruct), false, Tagged, Tag: Tag) {
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+        var value = Get(data) as JsonObject;
+        if (value != null) {
+            value.Serialize(writer, Tagged);
+            }
+        }
+
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => Get(data) == null;
+    }
+
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
+public record PropertyListStruct(
+            string Tag,
+            Action<IBinding, object?> Set,
+            Func<IBinding, object?> Get,
+            bool Tagged = false,
+            Func<object> Factory = null,
+            Func<object> IFactory = null) : Property(typeof(TokenValueListStruct), true, Tagged, Tag: Tag) {
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+        var value = Get(data) as IEnumerable;
+        if (value != null) {
+            var first = true;
+
+            writer.WriteArrayStart();
+            foreach (var entry in value) {
+                var typed = entry as JsonObject;
+                writer.WriteArraySeparator(ref first);
+                typed.Serialize(writer, Tagged);
+                }
+            writer.WriteArrayEnd();
+            }
+        }
+
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => Get(data) == null;
     }
 
 

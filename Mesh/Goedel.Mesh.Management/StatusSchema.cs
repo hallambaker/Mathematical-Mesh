@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 21-Jun-23 1:40:16 AM
+//  This file was automatically generated at 21-Jun-23 7:09:02 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1015
+//  Generator:  protogen version 3.0.0.1113
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -268,29 +268,12 @@ public partial class ServiceManagementServiceDirect: ServiceManagementServiceCli
 public partial class WsmpRequest : Goedel.Protocol.Request {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new WsmpRequest(), Goedel.Protocol.Request._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -361,29 +344,12 @@ public partial class WsmpRequest : Goedel.Protocol.Request {
 public partial class WsmpResponse : Goedel.Protocol.Response {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new WsmpResponse(), Goedel.Protocol.Response._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -451,29 +417,12 @@ public partial class WsmpResponse : Goedel.Protocol.Response {
 public partial class ServiceConfigRequest : WsmpRequest {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ServiceConfigRequest(), WsmpRequest._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -541,29 +490,12 @@ public partial class ServiceConfigRequest : WsmpRequest {
 public partial class ServiceConfigResponse : WsmpResponse {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ServiceConfigResponse(), WsmpResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -631,29 +563,12 @@ public partial class ServiceConfigResponse : WsmpResponse {
 public partial class ServiceStatusRequest : WsmpRequest {
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ServiceStatusRequest(), WsmpRequest._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -723,101 +638,49 @@ public partial class ServiceStatusResponse : WsmpResponse {
         /// </summary>
 
 	public virtual DateTime?						Start  {get; set;}
+
         /// <summary>
         /// </summary>
 
 	public virtual DateTime?						End  {get; set;}
+
         /// <summary>
         /// </summary>
 
 	public virtual int?						Started  {get; set;}
+
         /// <summary>
         /// </summary>
 
 	public virtual int?						Completed  {get; set;}
+
         /// <summary>
         /// </summary>
 
 	public virtual int?						Pending  {get; set;}
 
 
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Start" : {
-				if (value is TokenValueDateTime vvalue) {
-					Start = vvalue.Value;
-					}
-				break;
-				}
-			case "End" : {
-				if (value is TokenValueDateTime vvalue) {
-					End = vvalue.Value;
-					}
-				break;
-				}
-			case "Started" : {
-				if (value is TokenValueInteger32 vvalue) {
-					Started = vvalue.Value;
-					}
-				break;
-				}
-			case "Completed" : {
-				if (value is TokenValueInteger32 vvalue) {
-					Completed = vvalue.Value;
-					}
-				break;
-				}
-			case "Pending" : {
-				if (value is TokenValueInteger32 vvalue) {
-					Pending = vvalue.Value;
-					}
-				break;
-				}
 
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Start" : {
-				return new TokenValueDateTime (Start);
-				}
-			case "End" : {
-				return new TokenValueDateTime (End);
-				}
-			case "Started" : {
-				return new TokenValueInteger32 (Started);
-				}
-			case "Completed" : {
-				return new TokenValueInteger32 (Completed);
-				}
-			case "Pending" : {
-				return new TokenValueInteger32 (Pending);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ServiceStatusResponse(), WsmpResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Start", new Property (typeof(TokenValueDateTime), false)} ,
-			{ "End", new Property (typeof(TokenValueDateTime), false)} ,
-			{ "Started", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "Completed", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "Pending", new Property (typeof(TokenValueInteger32), false)} 
+			{ "Start", new PropertyDateTime ("Start", 
+					(IBinding data, DateTime? value) => {(data as ServiceStatusResponse).Start = value;}, (IBinding data) => (data as ServiceStatusResponse).Start )},
+			{ "End", new PropertyDateTime ("End", 
+					(IBinding data, DateTime? value) => {(data as ServiceStatusResponse).End = value;}, (IBinding data) => (data as ServiceStatusResponse).End )},
+			{ "Started", new PropertyInteger32 ("Started", 
+					(IBinding data, int? value) => {(data as ServiceStatusResponse).Started = value;}, (IBinding data) => (data as ServiceStatusResponse).Started )},
+			{ "Completed", new PropertyInteger32 ("Completed", 
+					(IBinding data, int? value) => {(data as ServiceStatusResponse).Completed = value;}, (IBinding data) => (data as ServiceStatusResponse).Completed )},
+			{ "Pending", new PropertyInteger32 ("Pending", 
+					(IBinding data, int? value) => {(data as ServiceStatusResponse).Pending = value;}, (IBinding data) => (data as ServiceStatusResponse).Pending )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

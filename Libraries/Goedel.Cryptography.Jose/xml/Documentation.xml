@@ -119,11 +119,11 @@
             The public key
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.PublicKeyDH.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyDH._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Jose.PublicKeyDH.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Jose.PublicKeyDH._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.PublicKeyDH._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -208,11 +208,11 @@
             The private key.
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.PrivateKeyDH.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyDH._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Jose.PrivateKeyDH.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Jose.PrivateKeyDH._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.PrivateKeyDH._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -308,11 +308,11 @@
             The public key
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.PublicKeyECDH.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyECDH._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Jose.PublicKeyECDH.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Jose.PublicKeyECDH._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.PublicKeyECDH._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -401,11 +401,11 @@
             The private key
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.PrivateKeyECDH.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyECDH._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Jose.PrivateKeyECDH.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Jose.PrivateKeyECDH._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.PrivateKeyECDH._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -553,11 +553,11 @@
             The digest value
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.Header.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Jose.Header._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Jose.Header.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Jose.Header._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.Header._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -673,11 +673,11 @@
             The signature value
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.JoseWebSignature.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Jose.JoseWebSignature._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Jose.JoseWebSignature.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Jose.JoseWebSignature._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.JoseWebSignature._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -859,11 +859,11 @@
             Authentication tag
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.JoseWebEncryption.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Jose.JoseWebEncryption._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Jose.JoseWebEncryption.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Jose.JoseWebEncryption._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.JoseWebEncryption._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1106,11 +1106,11 @@
             The signature data
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.Signed.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Jose.Signed._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Jose.Signed.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Jose.Signed._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.Signed._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1177,11 +1177,11 @@
             The signature data
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.Encrypted.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Jose.Encrypted._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Jose.Encrypted.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Jose.Encrypted._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.Encrypted._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1272,11 +1272,11 @@
             SHA-2-256 fingerprint of X.509 certificate
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyCore.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Jose.KeyCore._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyCore.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Jose.KeyCore._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.KeyCore._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1343,11 +1343,11 @@
             The signature value
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.Signature.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Jose.Signature._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Jose.Signature.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Jose.Signature._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.Signature._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1404,11 +1404,11 @@
             The key data.
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyContainer.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Jose.KeyContainer._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyContainer.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Jose.KeyContainer._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.KeyContainer._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1501,11 +1501,11 @@
             Symmetric key value.
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.Key.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Jose.Key._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Jose.Key.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Jose.Key._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.Key._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1615,11 +1615,11 @@
             The decryption data for use by this recipient.
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.Recipient.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Jose.Recipient._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Jose.Recipient.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Jose.Recipient._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.Recipient._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1707,11 +1707,11 @@
             The public exponent
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.PublicKeyRSA.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyRSA._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Jose.PublicKeyRSA.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Jose.PublicKeyRSA._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.PublicKeyRSA._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1822,11 +1822,11 @@
             The parameter QInverse
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.PrivateKeyRSA.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyRSA._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Jose.PrivateKeyRSA.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Jose.PrivateKeyRSA._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.PrivateKeyRSA._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -1929,11 +1929,11 @@
             The algorithm used to derrive the encryption key
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.PrivateKeyUDF.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyUDF._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Jose.PrivateKeyUDF.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Jose.PrivateKeyUDF._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.PrivateKeyUDF._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -2028,11 +2028,11 @@
              </summary>
             <summary>Base class for JOSE key agreement result.</summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyAgreement.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Jose.KeyAgreement._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyAgreement.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Jose.KeyAgreement._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.KeyAgreement._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -2099,11 +2099,11 @@
             The result
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyAgreementDH.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Jose.KeyAgreementDH._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyAgreementDH.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Jose.KeyAgreementDH._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.KeyAgreementDH._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
@@ -2179,11 +2179,11 @@
             The result
              </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyAgreementECDH.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
+        <member name="P:Goedel.Cryptography.Jose.KeyAgreementECDH._Binding">
+            <summary>Implement IBinding</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyAgreementECDH.Getter(System.String)">
-            <inheritdoc/>
+        <member name="F:Goedel.Cryptography.Jose.KeyAgreementECDH._binding">
+            <summary>Binding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.KeyAgreementECDH._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
