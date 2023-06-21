@@ -251,55 +251,55 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
 
     #region // Serialization overrides
 
-    ///<inheritdoc/>
-    public override void Setter(
-            string tag, TokenValue value) {
-        switch (tag) {
-            case "Header": {
-                if (value is TokenValueStruct<DareHeader> vvalue) {
-                    Header = vvalue.Value;
-                    }
-                break;
-                }
-            case "Body": {
-                if (value is TokenValueBinary vvalue) {
-                    Body = vvalue.Value;
-                    }
-                break;
-                }
-            case "Trailer": {
-                if (value is TokenValueStruct<DareTrailer> vvalue) {
-                    Trailer = vvalue.Value;
-                    }
-                break;
-                }
+    /////<inheritdoc/>
+    //public override void Setter(
+    //        string tag, TokenValue value) {
+    //    switch (tag) {
+    //        case "Header": {
+    //            if (value is TokenValueStruct<DareHeader> vvalue) {
+    //                Header = vvalue.Value;
+    //                }
+    //            break;
+    //            }
+    //        case "Body": {
+    //            if (value is TokenValueBinary vvalue) {
+    //                Body = vvalue.Value;
+    //                }
+    //            break;
+    //            }
+    //        case "Trailer": {
+    //            if (value is TokenValueStruct<DareTrailer> vvalue) {
+    //                Trailer = vvalue.Value;
+    //                }
+    //            break;
+    //            }
 
 
-            default: {
-                base.Setter(tag, value);
-                break;
-                }
-            }
-        }
+    //        default: {
+    //            base.Setter(tag, value);
+    //            break;
+    //            }
+    //        }
+    //    }
 
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-            case "Header": {
-                return new TokenValueStruct<DareHeader>(Header);
-                }
-            case "Body": {
-                return new TokenValueBinary(Body);
-                }
-            case "Trailer": {
-                return new TokenValueStruct<DareTrailer>(Trailer);
-                }
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
+    /////<inheritdoc/>
+    //public override TokenValue Getter(
+    //        string tag) {
+    //    switch (tag) {
+    //        case "Header": {
+    //            return new TokenValueStruct<DareHeader>(Header);
+    //            }
+    //        case "Body": {
+    //            return new TokenValueBinary(Body);
+    //            }
+    //        case "Trailer": {
+    //            return new TokenValueStruct<DareTrailer>(Trailer);
+    //            }
+    //        default: {
+    //            return base.Getter(tag);
+    //            }
+    //        }
+    //    }
 
     ///<inheritdoc/>
     public override void Serialize(Writer writer,

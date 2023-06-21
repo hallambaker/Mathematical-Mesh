@@ -53,14 +53,11 @@ public record Binding(
 /// <param name="Tag">Tag identifying this property in JSON serialization</param>
 ///// <param name="tagDictionary">Tag dictionary to be used to deserialize the property.</param>
 public abstract record Property(
-
-            Type TokenType,
+            string Tag,
             bool Multiple,
             //Func<object> Factory=null,
             //Func<object> IFactory=null,
-            bool Tagged=false,
-            //Dictionary<string, JsonFactoryDelegate> tagDictionary=null,
-            string Tag = null) {
+            bool Tagged=false) {
 
 
     /// <summary>
@@ -89,7 +86,7 @@ public abstract record Property(
 public record PropertyBoolean(
             string Tag,
             Action<IBinding, bool?> Set,
-            Func<IBinding, bool?> Get) : Property(typeof(TokenValueBoolean), false, Tag:Tag) {
+            Func<IBinding, bool?> Get) : Property(Tag, false) {
 
 
     ///<inheritdoc/>
@@ -113,7 +110,7 @@ public record PropertyBoolean(
 public record PropertyListBoolean(
             string Tag,
             Action<IBinding, List<bool>?> Set,
-            Func<IBinding, List<bool>?> Get) : Property(typeof(TokenValueListBoolean), true, Tag: Tag) {
+            Func<IBinding, List<bool>?> Get) :  Property(Tag, true) {
 
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
@@ -143,7 +140,7 @@ public record PropertyListBoolean(
 public record PropertyString (
             string Tag,
             Action<IBinding, string?> Set,
-            Func<IBinding, string?> Get):  Property(typeof(TokenValueString), false, Tag: Tag) {
+            Func<IBinding, string?> Get): Property(Tag, false) {
 
 
     ///<inheritdoc/>
@@ -167,7 +164,7 @@ public record PropertyString (
 public record PropertyListString(
             string Tag,
             Action<IBinding, List<string>?> Set,
-            Func<IBinding, List<string>?> Get) : Property(typeof(TokenValueListString), true, Tag: Tag) {
+            Func<IBinding, List<string>?> Get) : Property(Tag, true) {
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
         var value = Get(data);
@@ -196,7 +193,7 @@ public record PropertyListString(
 public record PropertyBinary(
             string Tag,
             Action<IBinding, byte[]?> Set,
-            Func<IBinding, byte[]?> Get) : Property(typeof(TokenValueBinary), false, Tag: Tag) {
+            Func<IBinding, byte[]?> Get) : Property(Tag, false) {
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
         var value = Get(data);
@@ -218,7 +215,7 @@ public record PropertyBinary(
 public record PropertyListBinary(
             string Tag,
             Action<IBinding, List<byte[]>?> Set,
-            Func<IBinding, List<byte[]>?> Get) : Property(typeof(TokenValueListBinary), true, Tag: Tag) {
+            Func<IBinding, List<byte[]>?> Get) : Property(Tag, true) {
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
         var value = Get(data);
@@ -247,7 +244,7 @@ public record PropertyListBinary(
 public record PropertyDateTime(
             string Tag,
             Action<IBinding, DateTime?> Set,
-            Func<IBinding, DateTime?> Get) : Property(typeof(TokenValueDateTime), false, Tag: Tag) {
+            Func<IBinding, DateTime?> Get) : Property(Tag, false) {
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
         var value = Get(data);
@@ -269,7 +266,7 @@ public record PropertyDateTime(
 public record PropertyListDateTime(
             string Tag,
             Action<IBinding, List<DateTime>?> Set,
-            Func<IBinding, List<DateTime>?> Get) : Property(typeof(TokenValueListDateTime), true, Tag: Tag) {
+            Func<IBinding, List<DateTime>?> Get) : Property(Tag, true) {
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
         var value = Get(data);
@@ -298,7 +295,7 @@ public record PropertyListDateTime(
 public record PropertyInteger32(
             string Tag,
             Action<IBinding, int?> Set,
-            Func<IBinding, int?> Get) : Property(typeof(TokenValueInteger32), false, Tag: Tag) {
+            Func<IBinding, int?> Get) : Property(Tag, false) {
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
         var value = Get(data);
@@ -320,7 +317,7 @@ public record PropertyInteger32(
 public record PropertyListInteger32(
             string Tag,
             Action<IBinding, List<int>?> Set,
-            Func<IBinding, List<int>?> Get) : Property(typeof(TokenValueListInteger32), true, Tag: Tag) {
+            Func<IBinding, List<int>?> Get) : Property(Tag, true) {
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
         var value = Get(data);
@@ -349,7 +346,7 @@ public record PropertyListInteger32(
 public record PropertyInteger64(
             string Tag,
             Action<IBinding, long?> Set,
-            Func<IBinding, long?> Get) : Property(typeof(TokenValueInteger64), false, Tag: Tag) {
+            Func<IBinding, long?> Get) : Property(Tag, false) {
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
         var value = Get(data);
@@ -371,7 +368,7 @@ public record PropertyInteger64(
 public record PropertyListInteger64(
             string Tag,
             Action<IBinding, List<long>?> Set,
-            Func<IBinding, List<long>?> Get) : Property(typeof(TokenValueListInteger64), true, Tag: Tag) {
+            Func<IBinding, List<long>?> Get) : Property(Tag, true) {
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
         var value = Get(data);
@@ -400,7 +397,7 @@ public record PropertyListInteger64(
 public record PropertyReal32(
             string Tag,
             Action<IBinding, float?> Set,
-            Func<IBinding, float?> Get) : Property(typeof(TokenValueReal32), false, Tag: Tag) {
+            Func<IBinding, float?> Get) : Property(Tag, false) {
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
         var value = Get(data);
@@ -422,7 +419,7 @@ public record PropertyReal32(
 public record PropertyListReal32(
             string Tag,
             Action<IBinding, List<float>?> Set,
-            Func<IBinding, List<float>?>? Get) : Property(typeof(TokenValueListReal32), true, Tag: Tag) {
+            Func<IBinding, List<float>?>? Get) : Property(Tag, true) {
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
         var value = Get(data);
@@ -451,7 +448,7 @@ public record PropertyListReal32(
 public record PropertyReal64(
             string Tag,
             Action<IBinding, double?> Set,
-            Func<IBinding, double?> Get) : Property(typeof(TokenValueReal64), false, Tag: Tag) {
+            Func<IBinding, double?> Get) : Property(Tag, false) {
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
         var value = Get(data);
@@ -473,7 +470,7 @@ public record PropertyReal64(
 public record PropertyListReal64(
             string Tag,
             Action<IBinding, List<double>?> Set,
-            Func<IBinding, List<double>?> Get) : Property(typeof(TokenValueListReal64), true, Tag: Tag) {
+            Func<IBinding, List<double>?> Get) : Property(Tag, true) {
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
         var value = Get(data);
@@ -505,7 +502,7 @@ public record PropertyStruct(
             Func<IBinding, object?> Get,
             bool Tagged = false,
             Func<object> Factory = null,
-            Func<object> IFactory = null) : Property(typeof(TokenValueStruct), false, Tagged, Tag: Tag) {
+            Func<object> IFactory = null) : Property(Tag, false, Tagged) {
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
         var value = Get(data) as JsonObject;
@@ -530,7 +527,7 @@ public record PropertyListStruct(
             Func<IBinding, object?> Get,
             bool Tagged = false,
             Func<object> Factory = null,
-            Func<object> IFactory = null) : Property(typeof(TokenValueListStruct), true, Tagged, Tag: Tag) {
+            Func<object> IFactory = null) : Property(Tag, true, Tagged) {
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
         var value = Get(data) as IEnumerable;
@@ -552,493 +549,6 @@ public record PropertyListStruct(
     }
 
 
-/// <summary>
-/// Base record representing the values at a node in a JSON tree.
-/// </summary>
-public abstract record TokenValue () {
-
-    ///<summary>Static pointer to a single instance of the unknown token.</summary> 
-    public static readonly TokenValue Unknown = new TokenValueUnknown();
-
-    ///<summary></summary> 
-    public abstract bool IsEmpty { get; }
-    
-    ///<summary>The parse token (consider removing)</summary> 
-    public abstract Token Token { get; }
-
-
-    /// <summary>
-    /// Serialize this token to the writer <paramref name="writer"/>.
-    /// </summary>
-    /// <param name="writer">The writer to emit the structured data to.</param>
-    /// 
-    /// 
-    public virtual void Serialize(Writer writer) {
-        }
-
-
-    }
-
-/// <summary>
-/// Record returned to respresent an unknown entry.
-/// </summary>
-public record TokenValueUnknown() : TokenValue {
-
-    ///<inheritdoc/>
-    public override bool IsEmpty => true;
-
-    ///<inheritdoc/>
-    public override Token Token => Token.Invalid;
-    }
-
-/// <summary>
-/// Record representing a boolean values in a JSON tree.
-/// </summary>
-/// <param name="Value">The values.</param>
-public record TokenValueBoolean(bool? Value) : TokenValue {
-    ///<inheritdoc/>
-    public override bool IsEmpty => Value == null;
-
-    ///<inheritdoc/>
-    public override Token Token => Value switch {
-        true => Token.True,
-        false => Token.False,
-        _ => Token.Null
-        };
-
-    ///<inheritdoc/>
-    public override void Serialize(Writer writer) {
-        writer.WriteBoolean(Value);
-        }
-
-
-    }
-
-/// <summary>
-/// Record representing a boolean values in a JSON tree.
-/// </summary>
-/// <param name="Value">The values.</param>
-public record TokenValueString(string? Value) : TokenValue {
-    ///<inheritdoc/>
-    public override bool IsEmpty => Value == null;
-
-    ///<inheritdoc/>
-    public override Token Token => Token.String;
-
-    ///<inheritdoc/>
-    public override void Serialize(Writer writer) {
-        writer.WriteString(Value);
-        }
-
-    }
-
-/// <summary>
-/// Record representing a boolean values in a JSON tree.
-/// </summary>
-/// <param name="Value">The values.</param>
-public record TokenValueBinary(byte[] Value) : TokenValue {
-    ///<inheritdoc/>
-    public override bool IsEmpty => Value == null;
-
-    ///<inheritdoc/>
-    public override Token Token => Token.Binary;
-    ///<inheritdoc/>
-    public override void Serialize(Writer writer) {
-        writer.WriteBinary(Value);
-        }
-    }
-
-/// <summary>
-/// Record representing a boolean values in a JSON tree.
-/// </summary>
-/// <param name="Value">The values.</param>
-public record TokenValueDateTime(System.DateTime? Value) : TokenValue {
-    ///<inheritdoc/>
-    public override bool IsEmpty => Value == null;
-
-    ///<inheritdoc/>
-    public override Token Token => Token.DateTime;
-    ///<inheritdoc/>
-    public override void Serialize(Writer writer) {
-        writer.WriteDateTime(Value);
-        }
-    }
-
-/// <summary>
-/// Record representing a boolean values in a JSON tree.
-/// </summary>
-/// <param name="Value">The values.</param>
-public record TokenValueInteger32(int? Value) : TokenValue {
-    ///<inheritdoc/>
-    public override bool IsEmpty => Value == null;
-
-    ///<inheritdoc/>
-    public override Token Token => Token.Integer;
-    ///<inheritdoc/>
-    public override void Serialize(Writer writer) {
-        writer.WriteInteger32(Value);
-        }
-    }
-
-/// <summary>
-/// Record representing a boolean values in a JSON tree.
-/// </summary>
-/// <param name="Value">The values.</param>
-public record TokenValueInteger64(long? Value) : TokenValue {
-    ///<inheritdoc/>
-    public override bool IsEmpty => Value == null;
-
-    ///<inheritdoc/>
-    public override Token Token => Token.Integer;
-    ///<inheritdoc/>
-    public override void Serialize(Writer writer) {
-        writer.WriteInteger64(Value);
-        }
-    }
-
-/// <summary>
-/// Record representing a boolean values in a JSON tree.
-/// </summary>
-/// <param name="Value">The values.</param>
-public record TokenValueReal32(float? Value) : TokenValue {
-    ///<inheritdoc/>
-    public override bool IsEmpty => Value == null;
-
-    ///<inheritdoc/>
-    public override Token Token => Token.Integer;
-    ///<inheritdoc/>
-    public override void Serialize(Writer writer) {
-        writer.WriteFloat32(Value);
-        }
-    }
-
-/// <summary>
-/// Record representing a boolean values in a JSON tree.
-/// </summary>
-/// <param name="Value">The values.</param>
-public record TokenValueReal64(double? Value) : TokenValue {
-    ///<inheritdoc/>
-    public override bool IsEmpty => Value == null;
-
-    ///<inheritdoc/>
-    public override Token Token => Token.Integer;
-    ///<inheritdoc/>
-    public override void Serialize(Writer writer) {
-        writer.WriteFloat64(Value);
-        }
-    }
-
-/// <summary>
-/// Base record representing a structure values at a node in a JSON tree.
-/// </summary>
-public abstract record TokenValueStruct() : TokenValue {
-    ///<inheritdoc/>
-    public abstract JsonObject JsonObject { get; }
-    ///<inheritdoc/>
-    public override Token Token => Token.StartObject;
-
-    ///<inheritdoc/>
-    public override void Serialize(Writer writer) => Serialize(writer, false);
-
-    ///<inheritdoc/>
-    public void Serialize(Writer writer, bool tagged) {
-        JsonObject.Serialize(writer, tagged);
-        }
-    }
-
-/// <summary>
-/// Record representing a boolean values in a JSON tree.
-/// </summary>
-/// <param name="Value">The values.</param>
-/// <typeparam name="T">The type of the node values</typeparam>
-public record TokenValueStruct<T>(T Value) : TokenValueStruct where T: JsonObject {
-    ///<inheritdoc/>
-    public override JsonObject JsonObject => Value;
-    ///<inheritdoc/>
-    public override bool IsEmpty => Value == null;
-
-
-    }
-
-/// <summary>
-/// Record representing a boolean values in a JSON tree.
-/// </summary>
-/// <param name="Value">The values.</param>
-public record TokenValueStructObject(object Value) : TokenValueStruct {
-    ///<inheritdoc/>
-    public override JsonObject JsonObject => Value as JsonObject;
-    ///<inheritdoc/>
-    public override bool IsEmpty => Value == null;
-
-    }
-
-
-/// <summary>
-/// Record representing a boolean values in a JSON tree.
-/// </summary>
-/// <param name="Value">The values.</param>
-public record TokenValueListBoolean(List<bool?> Value) : TokenValue {
-    ///<inheritdoc/>
-    public override bool IsEmpty => Value == null;
-
-    ///<inheritdoc/>
-    public override Token Token => Value switch {
-        _ => Token.Null
-        };
-
-    ///<inheritdoc/>
-    public override void Serialize(Writer writer) {
-
-        bool first = true;
-
-        writer.WriteArrayStart();
-        foreach (var entry in Value) {
-            writer.WriteArraySeparator(ref first);
-            writer.WriteBoolean(entry);
-            }
-        writer.WriteArrayEnd();
-        }
-
-    }
-
-/// <summary>
-/// Record representing a boolean values in a JSON tree.
-/// </summary>
-/// <param name="Value">The values.</param>
-public record TokenValueListString(List<string> Value) : TokenValue {
-    ///<inheritdoc/>
-    public override bool IsEmpty => Value == null;
-
-    ///<inheritdoc/>
-    public override Token Token => Token.String;
-
-    ///<inheritdoc/>
-    public override void Serialize(Writer writer) {
-
-        bool first = true;
-
-        writer.WriteArrayStart();
-        foreach (var entry in Value) {
-            writer.WriteArraySeparator(ref first);
-            writer.WriteString(entry);
-            }
-        writer.WriteArrayEnd();
-        }
-    }
-
-/// <summary>
-/// Record representing a boolean values in a JSON tree.
-/// </summary>
-/// <param name="Value">The values.</param>
-public record TokenValueListBinary(List<byte[]> Value) : TokenValue {
-    ///<inheritdoc/>
-    public override bool IsEmpty => Value == null;
-
-    ///<inheritdoc/>
-    public override Token Token => Token.Binary;
-
-    ///<inheritdoc/>
-    public override void Serialize(Writer writer) {
-
-        bool first = true;
-
-        writer.WriteArrayStart();
-        foreach (var entry in Value) {
-            writer.WriteArraySeparator(ref first);
-            writer.WriteBinary(entry);
-            }
-        writer.WriteArrayEnd();
-        }
-    }
-
-/// <summary>
-/// Record representing a boolean values in a JSON tree.
-/// </summary>
-/// <param name="Value">The values.</param>
-public record TokenValueListDateTime(List<System.DateTime?> Value) : TokenValue {
-    ///<inheritdoc/>
-    public override bool IsEmpty => Value == null;
-
-    ///<inheritdoc/>
-    public override Token Token => Token.DateTime;
-
-    ///<inheritdoc/>
-    public override void Serialize(Writer writer) {
-
-        bool first = true;
-
-        writer.WriteArrayStart();
-        foreach (var entry in Value) {
-            writer.WriteArraySeparator(ref first);
-            writer.WriteDateTime(entry);
-            }
-        writer.WriteArrayEnd();
-        }
-    }
-
-/// <summary>
-/// Record representing a boolean values in a JSON tree.
-/// </summary>
-/// <param name="Value">The values.</param>
-public record TokenValueListInteger32(List<int?> Value) : TokenValue {
-    ///<inheritdoc/>
-    public override bool IsEmpty => Value == null;
-
-    ///<inheritdoc/>
-    public override Token Token => Token.Integer;
-
-    ///<inheritdoc/>
-    public override void Serialize(Writer writer) {
-
-        bool first = true;
-
-        writer.WriteArrayStart();
-        foreach (var entry in Value) {
-            writer.WriteArraySeparator(ref first);
-            writer.WriteInteger32(entry);
-            }
-        writer.WriteArrayEnd();
-        }
-    }
-
-/// <summary>
-/// Record representing a boolean values in a JSON tree.
-/// </summary>
-/// <param name="Value">The values.</param>
-public record TokenValueListInteger64(List<long?> Value) : TokenValue {
-    ///<inheritdoc/>
-    public override bool IsEmpty => Value == null;
-
-    ///<inheritdoc/>
-    public override Token Token => Token.Integer;
-
-    ///<inheritdoc/>
-    public override void Serialize(Writer writer) {
-
-        bool first = true;
-
-        writer.WriteArrayStart();
-        foreach (var entry in Value) {
-            writer.WriteArraySeparator(ref first);
-            writer.WriteInteger64(entry);
-            }
-        writer.WriteArrayEnd();
-        }
-    }
-
-/// <summary>
-/// Record representing a boolean values in a JSON tree.
-/// </summary>
-/// <param name="Value">The values.</param>
-public record TokenValueListReal32(List<float?> Value) : TokenValue {
-    ///<inheritdoc/>
-    public override bool IsEmpty => Value == null;
-
-    ///<inheritdoc/>
-    public override Token Token => Token.Integer;
-
-    ///<inheritdoc/>
-    public override void Serialize(Writer writer) {
-
-        bool first = true;
-
-        writer.WriteArrayStart();
-        foreach (var entry in Value) {
-            writer.WriteArraySeparator(ref first);
-            writer.WriteFloat32(entry);
-            }
-        writer.WriteArrayEnd();
-        }
-    }
-
-/// <summary>
-/// Record representing a boolean values in a JSON tree.
-/// </summary>
-/// <param name="Value">The values.</param>
-public record TokenValueListReal64(List<double?> Value) : TokenValue {
-    ///<inheritdoc/>
-    public override bool IsEmpty => Value == null;
-
-    ///<inheritdoc/>
-    public override Token Token => Token.Integer;
-
-    ///<inheritdoc/>
-    public override void Serialize(Writer writer) {
-
-        bool first = true;
-
-        writer.WriteArrayStart();
-        foreach (var entry in Value) {
-            writer.WriteArraySeparator(ref first);
-            writer.WriteFloat64(entry);
-            }
-        writer.WriteArrayEnd();
-        }
-    }
-
-/// <summary>
-/// Base record representing the values of a list of structure at a node in a JSON tree.
-/// </summary>
-public abstract record TokenValueListStruct() : TokenValue {
-
-    ///<inheritdoc/>
-    public override Token Token => Token.StartObject;
-
-    /// <summary>
-    /// Serialize the values by calling methods on the writer <paramref name="writer"/>.
-    /// </summary>
-    /// <param name="writer">The writer to serialize the values to.</param>
-    /// <param name="tagged">If true, structured values to be written as a tagged
-    /// structure.</param>
-    public abstract void Serialize(Writer writer, bool tagged);
-    }
-
-/// <summary>
-/// Record representing a boolean values in a JSON tree.
-/// </summary>
-/// <param name="Value">The values.</param>
-public record TokenValueListStructObject(object Value) : TokenValueStruct {
-    ///<inheritdoc/>
-    public override JsonObject JsonObject => Value as JsonObject;
-    ///<inheritdoc/>
-    public override bool IsEmpty => Value == null;
-
-    }
-
-
-
-
-/// <summary>
-/// Record representing a boolean values in a JSON tree.
-/// </summary>
-/// <param name="Value">The values.</param>
-/// <typeparam name="T">The type of the node values</typeparam>
-public record TokenValueListStruct<T>(List<T> Value) : TokenValueListStruct where T : JsonObject {
-    ///<inheritdoc/>
-    public override bool IsEmpty => Value == null;
-
-    ///<summary>Gets or sets the element at the specified index.</summary> 
-    public T this[int index] { get => Value[index]; set => Value[index] = value; }
-
-    ///<summary>Gets the number of elements contained in the List&lt;T>.</summary> 
-    public int Count => Value.Count;
-
-    ///<summary>Returns an enumerator that iterates through the List&lt;T>.</summary> 
-    public List<T>.Enumerator GetEnumerator() => Value.GetEnumerator();
-
-    ///<inheritdoc/>
-    public override void Serialize(Writer writer, bool tagged) {
-        bool first = true;
-
-        writer.WriteArrayStart();
-        foreach (var entry in Value) {
-            var jsonObject = entry as JsonObject;
-            writer.WriteArraySeparator(ref first);
-            jsonObject.Serialize(writer, tagged);
-            }
-        writer.WriteArrayEnd();
-        }
-    }
 
 /// <summary>Tokens to return.</summary>
 public enum Token {

@@ -1388,12 +1388,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Setter(System.String,Goedel.Protocol.TokenValue)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Getter(System.String)">
-            <inheritdoc/>
-        </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Serialize(Goedel.Protocol.Writer,System.Boolean)">
             <inheritdoc/>
         </member>
