@@ -18,6 +18,8 @@ Represents a Mesh Account.
 <dd>The quota assigned to this user in KB
 <dt>Status: String (Optional)
 <dd>The profile status. Valid values are "Pending", "Connected", "Blocked"
+<dt>LocalAddress: String (Optional)
+<dd>Account address in user@domain format
 </dl>
 ###Structure: AccountUser
 

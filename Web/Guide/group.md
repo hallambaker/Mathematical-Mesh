@@ -55,7 +55,7 @@ Recryption groups are created using the `group create` command:
 <div="terminal">
 <cmd>Alice> meshman group create groupw@example.com /web
 <rsp>Account=groupw@example.com
-UDF=MAXE-Z6UJ-A7XI-MIEH-IDQK-L2LH-2DEG
+UDF=MBXT-N7ZN-3U5H-HTTC-4VWF-6WA5-LKGR
 </div>
 ~~~~
 
@@ -93,7 +93,7 @@ Alice adds herself to the group, now she can decrypt:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman group add groupw@example.com alice@example.com
-<rsp>alice@example.com [MD5B-HJIJ-2Q6Z-2O3U-UY4K-PYRQ-O3N6]
+<rsp>alice@example.com [MBC4-37NG-TMFD-MWQO-K7RD-3M4V-FSN2]
 
 <cmd>Alice> meshman account sync /auto
 <cmd>Alice> meshman dare decode groupsecret.dare grouptext_alice.dare
@@ -113,7 +113,7 @@ Alice adds Bob as a member of the group:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman group add groupw@example.com bob@example.com
-<rsp>bob@example.com [MD5B-HJIJ-2Q6Z-2O3U-UY4K-PYRQ-O3N6]
+<rsp>bob@example.com [MBC4-37NG-TMFD-MWQO-K7RD-3M4V-FSN2]
 
 </div>
 ~~~~
@@ -151,7 +151,7 @@ number of documents a user has viewed.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman group get groupw@example.com bob@example.com
-<rsp>bob@example.com [MD5B-HJIJ-2Q6Z-2O3U-UY4K-PYRQ-O3N6]
+<rsp>bob@example.com [MBC4-37NG-TMFD-MWQO-K7RD-3M4V-FSN2]
 
 </div>
 ~~~~
@@ -183,7 +183,7 @@ Users may be removed from a recryption group using the `group delete` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman group delete groupw@example.com bob@example.com
-<rsp>bob@example.com [MD5B-HJIJ-2Q6Z-2O3U-UY4K-PYRQ-O3N6]
+<rsp>bob@example.com [MBC4-37NG-TMFD-MWQO-K7RD-3M4V-FSN2]
 
 </div>
 ~~~~

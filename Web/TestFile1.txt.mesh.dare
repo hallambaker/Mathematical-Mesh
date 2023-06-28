@@ -1,0 +1,24 @@
+[{
+    "enc": "A256CBC",
+    "dig": "S512",
+    "kid": "EBQD-FOYK-W642-52YS-65GB-GUMC-GALL",
+    "Salt": "aTbEfKm-KSclStncxmo0YQ",
+    "recipients": [{
+        "kid": "MDVO-MM7M-T3UD-PCT5-HLPO-U4C2-R377",
+        "epk": {
+          "PublicKeyECDH": {
+            "crv": "X448",
+            "Public": "XfJG8o3UmVfSCdR_zDOfdivM2c9iscqwRcjm0FMTIECjuancv0_O
+  1zjDJnZly9NszrISpKBagLMA"}},
+        "wmk": "2AXB2LuP3Tg2pcQJAjPFZM_D8JaAU6PKH4KK3XwARekyVYYNON5BxA"}]},
+  ˆgï£™=T¨m%.]½ÝÝG,
+  {
+    "signatures": [{
+        "alg": "S512",
+        "kid": "MDRC-FXP6-AGZA-RXWI-DUS5-FWKX-DNK6",
+        "signature": "zYGPm1viCCJmSFsOSxxH0p_UYDwakQj9NBtTvNp2fSSneOkLL
+  8eVgIWTBBsKKBI4Y9Y5OCSapRUAF82iu3qyjXhfOciFOP8nsxw97hrEPnGxS_f
+  ldwCy6Lia4f_Tvg_35NJJYslc-QKxduxlMktZHAYA",
+        "witness": "gq_u9ak-GrhmslE7myIa0Cqx43TqMBOV6zcxj6t0Rlo"}],
+    "PayloadDigest": "ttB5TbYC5yDy2FZSkXBq9fqXuh4E1jJnJwVPwTJjSpOy1
+  giHqaepjl73C6D29fSCHfwb7yEfN5cGrfFSZMFmWw"}]

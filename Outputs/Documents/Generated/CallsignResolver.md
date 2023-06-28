@@ -67,3 +67,32 @@ Return the result of a QueryRequest
 <dt>Notarization: Enveloped<Notarization> (Optional)
 <dd>The latest notarization entry corresponding to the specified log.
 </dl>
+##Transaction: Sync
+
+<dl>
+<dt>Request:  SyncRequest
+<dt>Response:  SyncResponse
+</dl>
+
+
+
+###Message: SyncRequest
+
+<dl>
+<dt>Inherits:  ResolverRequest
+</dl>
+
+
+
+[No fields]
+
+###Message: SyncResponse
+
+<dl>
+<dt>Inherits:  ResolverResponse
+</dl>
+
+
+
+[No fields]
+

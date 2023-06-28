@@ -11,27 +11,27 @@ the account and the list of roles that have been authorized for the device..
       "web"
       ],
     "Signature":{
-      "Udf":"MA56-V5KL-YMCF-GI3D-PI2F-4OWT-73K6",
+      "Udf":"MA72-GAIH-AETH-DMWS-6WMP-TX4P-4DSR",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"297PWEg-l0jLJzknMVhNY9OGAZZNYHc_leI4Nq72_XRQa
-  8LZSajlhJBKOtEjVGyUITQRLj0aYO8A"}}},
+          "Public":"JT9yarZYOkJlcW43IopCv6oS4Ode9JCgzOTys9xRvtDRE
+  Ajywqk70JbSzBucJL9u3egYKCOdUo4A"}}},
     "Encryption":{
-      "Udf":"MA6D-RU2J-LL73-LAW6-7JO6-IFCU-WRNI",
+      "Udf":"MARU-OXNG-MA6F-7LZQ-R75I-2DSO-7RHN",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"D-HnzU7WQrAjSfiQYLRxSiIK-PBqBHXKSR-1oX1CO5Gb6
-  1L31-IV13stjhnXipqeNmuYfpovg0EA"}}},
-    "ProfileUdf":"MDRR-5W72-3RJO-VZB3-VUVQ-IOEC-6UNA",
+          "Public":"sa2gDOJ6fqmAYsT2FM96o01XjIfMF_DsCzSrGAtQp0YA8
+  gsF8_GGYTl3xr1wJcYXkdT0pdUkNEoA"}}},
+    "ProfileUdf":"MB3T-WIPZ-JRCW-QZFM-SCQL-OVVO-AHO2",
     "Authentication":{
-      "Udf":"MBYN-SC4W-IU4X-LIVF-PSC6-6ADO-ZJOF",
+      "Udf":"MBGO-55A4-MBVM-L2G7-4T5B-NILX-AODX",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"e1nZiuxVRE20PCUKSfqC-ee5yRis7TaKZrlwmEI9RpacG
-  f0vc7n3i8l7D_BaryByAUmpFyfKUs0A"}}}}}
+          "Public":"UnCaMwkkjEbs7jHvvKvzlLYCdnOjIIRRSn_xEx-0_OEge
+  LLH2bsK2PqYr7tIsjmJGi84ry7FDB-A"}}}}}
 ~~~~
 
 The ConnectionService assertion is used to authenticate the device to the 
@@ -44,13 +44,13 @@ The corresponding ConnectionService assertion is:
 ~~~~
 {
   "ConnectionService":{
-    "ProfileUdf":"MDRR-5W72-3RJO-VZB3-VUVQ-IOEC-6UNA",
+    "ProfileUdf":"MB3T-WIPZ-JRCW-QZFM-SCQL-OVVO-AHO2",
     "Authentication":{
-      "Udf":"MBYN-SC4W-IU4X-LIVF-PSC6-6ADO-ZJOF",
+      "Udf":"MBGO-55A4-MBVM-L2G7-4T5B-NILX-AODX",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"e1nZiuxVRE20PCUKSfqC-ee5yRis7TaKZrlwmEI9RpacG
-  f0vc7n3i8l7D_BaryByAUmpFyfKUs0A"}}}}}
+          "Public":"UnCaMwkkjEbs7jHvvKvzlLYCdnOjIIRRSn_xEx-0_OEge
+  LLH2bsK2PqYr7tIsjmJGi84ry7FDB-A"}}}}}
 ~~~~
 

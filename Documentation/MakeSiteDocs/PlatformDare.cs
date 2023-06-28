@@ -30,6 +30,7 @@ using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.IO;
 using Goedel.Mesh.Test;
+using Goedel.Test;
 using Goedel.Test.Core;
 using Goedel.Utilities;
 
@@ -103,10 +104,10 @@ public partial class CreateExamples {
     StringWriter consoleWriter;
 
 
-    public void PlatformDare() {
+    public void PlatformDare(TestEnvironmentCommon testEnvironmentCommon = null) {
 
         GoContainer();
-        GenerateKeys();
+        GenerateKeys(testEnvironmentCommon);
         GoDareEnvelope();
         GoDareSequence();
         //GoAdvanced();
@@ -272,9 +273,9 @@ public partial class CreateExamples {
 
         }
 
-    void GenerateKeys() {
+    void GenerateKeys(TestEnvironmentCommon testEnvironmentCommon = null) {
         // Encryption Key Set.
-        var testEnvironmentCommon = new TestEnvironmentCommon();
+        testEnvironmentCommon ??= new TestEnvironmentCommon();
         var machine1 = new MeshMachineTest(testEnvironmentCommon, name: "Machine1");
 
 

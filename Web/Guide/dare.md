@@ -25,11 +25,11 @@ the contents are encrypted under the corresponding encryption key:
 <rsp>File: ciphertext.dare
     Bytes: 16
     Encryption Algorithm: A256CBC
-        Recipient: MC7V-XVMJ-73OL-YWGL-5MIK-ROXQ-GL3Y
+        Recipient: MBUF-P7S2-WFEF-D3ML-OKCC-XYOT-6SLD
     Digest Algorithm: S512
-    Payload Digest: 6EA307959C0C97D67F8464954CCD0E4CCEEC0EC1FF0356565
-B574E9CDC49F6DD4E2FBF825E995B20DD307DDE6AE91153B3074846157F0FC8284068
-4A02F3630E
+    Payload Digest: 0F80F0A764D7A6F4AF97738E39FDD2ACD4F46D3FFEA567FFE
+3DB2EE2A586E4D1F3D4158EEB6451FE39477A58ECADB8FA4FAC7D76FAA29AE811CC16
+0E4F50B4AB
 </div>
 ~~~~
 
@@ -53,7 +53,7 @@ encoded:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman dare encode TestDir1 ^
-    /encrypt=UGRA-AAKA-D7YU-XFC5-5YZ3-NWZC-SE
+    /encrypt=LICV-3VXL-OVCG-FTUC-CDEW-URNJ-5I
 <rsp>ERROR - No encryption key is available
 </div>
 ~~~~
@@ -81,8 +81,8 @@ digest values on a DARE Message without decoding the message body:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman dare verify TestFile1.txt.dare
-<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Te
-stFile1.txt.dare'.
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\Deterministic\Examp
+les-InternetDrafts\Working\TestFile1.txt.dare'.
 </div>
 ~~~~
 
@@ -95,12 +95,12 @@ The command to verify a signed message is identical:
 <rsp>File: TestFile1.txt.mesh.dare
     Bytes: 16
     Encryption Algorithm: A256CBC
-        Recipient: MBEE-HPXM-E7K3-Q3E7-XZMZ-VQAQ-6EIJ
+        Recipient: MDKE-C7ME-2B4W-UICO-VV47-2SMK-JZ2X
     Digest Algorithm: S512
-    Payload Digest: 476DF5E3F3A995AD7FC26C126A5FF08E1CAB39ACAF00AD60D
-EAC318DC3655725AD601A0321525AB609A9ECF95D278F875374C7B966359DE6EFE573
-63D8A02ED9
-        Signer: MCDG-TS7T-UPDD-V667-OXSX-QJ5G-FQRZ
+    Payload Digest: 990DEE2BD5020D3982D8B90B3FC3D6DABD8AD24CDCBA00938
+1E4133675A4E1A89608A88D4F0823D9589BDD8209460B686310B85D236869B56DE8D4
+025FD04A67
+        Signer: MDE2-MKMI-773P-GJ3F-YYAI-UVCK-OMKS
 </div>
 ~~~~
 
@@ -112,7 +112,7 @@ level otherwise.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman dare verify TestFile1.txt.symmetric.dare ^
-    /encrypt=UGRA-AAKA-D7YU-XFC5-5YZ3-NWZC-SE
+    /encrypt=LICV-3VXL-OVCG-FTUC-CDEW-URNJ-5I
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -122,8 +122,8 @@ level otherwise.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman dare verify TestFile1.txt.symmetric.dare
-<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Te
-stFile1.txt.symmetric.dare'.
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\Deterministic\Examp
+les-InternetDrafts\Working\TestFile1.txt.symmetric.dare'.
 </div>
 ~~~~
 
@@ -135,8 +135,8 @@ The `dare decode` command is used to decode and verify DARE Messages:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman dare decode TestFile1.txt.dare
-<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Te
-stFile1.txt.dare'.
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\Deterministic\Examp
+les-InternetDrafts\Working\TestFile1.txt.dare'.
 </div>
 ~~~~
 
@@ -146,7 +146,7 @@ To decode a message encrypted under a symmetric key, we must specify the key:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman dare decode TestFile1.txt.symmetric.dare ^
-    /encrypt=UGRA-AAKA-D7YU-XFC5-5YZ3-NWZC-SE
+    /encrypt=LICV-3VXL-OVCG-FTUC-CDEW-URNJ-5I
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -186,8 +186,7 @@ the transaction to be written to a DARE Sequence Log.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman dare log create EarlLog.dlog /encrypt=alice@example.com
-<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\cr
-eate'.
+<rsp>ERROR - The command System.Object[] is not known.
 <cmd>Alice> meshman dare earl TestFile1.txt /log=EarlLog.dlog
 <rsp>ERROR - An unknown error occurred
 </div>
@@ -218,7 +217,7 @@ sequence that is specialized for use as an event log.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare create Sequence.dcon
+<cmd>Alice> meshman archive create Sequence.dcon
 </div>
 ~~~~
 
@@ -236,7 +235,7 @@ member of the group groupw@example.com;
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare create SequenceEncrypt.dcon ^
+<cmd>Alice> meshman archive create SequenceEncrypt.dcon ^
     /encrypt=groupw@example.com
 </div>
 ~~~~
@@ -252,8 +251,7 @@ specified file(s) as entries and appends an index as the final record:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare archive SequenceArchive.dcon TestDir1
-<rsp>ERROR - Path cannot be null. (Parameter 'path')
+<cmd>Alice> meshman archive create SequenceArchive.dcon TestDir1
 </div>
 ~~~~
 
@@ -262,9 +260,8 @@ An archive may be signed and encrypted:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare archive SequenceArchiveEncrypt.dcon TestDir1 ^
+<cmd>Alice> meshman archive create SequenceArchiveEncrypt.dcon TestDir1 ^
     /encrypt=groupw@example.com /sign=alice@example.com
-<rsp>ERROR - Path cannot be null. (Parameter 'path')
 </div>
 ~~~~
 
@@ -280,9 +277,8 @@ verify the contents of a sequence:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare verify SequenceArchiveEncrypt.dcon
-<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Se
-quenceArchiveEncrypt.dcon'.
+<cmd>Alice> meshman archive verify SequenceArchiveEncrypt.dcon
+<rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
 
@@ -297,7 +293,7 @@ the files are extracted by default:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare extract Sequence.dcon TestOut
+<cmd>Alice> meshman archive extract Sequence.dcon TestOut
 </div>
 ~~~~
 
@@ -306,8 +302,9 @@ Alternatively, the `/file` option may be used to extract a specific file:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare extract Sequence.dcon /file=TestDir1\TestFile4.txt
-<rsp>ERROR - The file was not found.
+<cmd>Alice> meshman archive extract Sequence.dcon ^
+    /file=TestDir1\TestFile4.txt
+<rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
 
@@ -319,9 +316,9 @@ The `dare append` command adds an entry to a sequence:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare append Sequence.dcon TestFile1.txt
-<cmd>Alice> meshman dare append Sequence.dcon TestFile2.txt
-<cmd>Alice> meshman dare append Sequence.dcon TestFile3.txt
+<cmd>Alice> meshman archive append Sequence.dcon TestFile1.txt
+<cmd>Alice> meshman archive append Sequence.dcon TestFile2.txt
+<cmd>Alice> meshman archive append Sequence.dcon TestFile3.txt
 </div>
 ~~~~
 
@@ -334,8 +331,7 @@ marking an entry as deleted:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare delete Sequence.dcon  TestFile2.txt
-<rsp>ERROR - Value cannot be null. (Parameter 'key')
+<cmd>Alice> meshman archive delete Sequence.dcon  TestFile2.txt
 </div>
 ~~~~
 
@@ -352,7 +348,8 @@ sequence:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare index Sequence.dcon
+<cmd>Alice> meshman archive index Sequence.dcon
+<rsp>ERROR - An unknown error occurred
 </div>
 ~~~~
 
@@ -371,9 +368,9 @@ at the end:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare copy Sequence2.dcon
-<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Se
-quence2.dcon'.
+<cmd>Alice> meshman archive copy Sequence2.dcon
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\Deterministic\Examp
+les-InternetDrafts\Working\Sequence2.dcon'.
 </div>
 ~~~~
 
@@ -383,9 +380,8 @@ the copy:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare copy SequenceArchiveEncrypt.dcon /decrypt
-<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Se
-quenceArchiveEncrypt.dcon'.
+<cmd>Alice> meshman archive copy SequenceArchiveEncrypt.dcon /decrypt
+<rsp>ERROR - An unknown error occurred
 </div>
 ~~~~
 
@@ -395,9 +391,9 @@ by specifying the '/purge' option:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare copy Sequence2.dcon /purge
-<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Se
-quence2.dcon'.
+<cmd>Alice> meshman archive copy Sequence2.dcon /purge
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\Deterministic\Examp
+les-InternetDrafts\Working\Sequence2.dcon'.
 </div>
 ~~~~
 

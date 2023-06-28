@@ -1,0 +1,5 @@
+{
+  "CatalogedApplicationMail": {
+    "AccountAddress": "alice@example.net",
+    "InboundConnect": "pop3.example.net",
+    "OutboundConnect": "submit.example.net"}}

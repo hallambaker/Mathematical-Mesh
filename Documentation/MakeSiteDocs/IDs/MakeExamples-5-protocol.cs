@@ -245,11 +245,9 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("The previous status operation has reported that a new envelope has been added to\n{0}", _Indent);
 			_Output.Write ("the credential store. The device requests this data from the service:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  DescribeRequest (Connect.AddPasswordToDevice2BySync?[0].Traces?[1]);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The response contains the requested envelope:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  DescribeResponse (Connect.AddPasswordToDevice2BySync?[0].Traces?[1]);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Future: The current implementation of the download operation is limited by the\n{0}", _Indent);
 			_Output.Write ("capabilities of the HTTP binding of the RUD transport. A future binding allowing \n{0}", _Indent);

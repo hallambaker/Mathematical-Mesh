@@ -7,8 +7,47 @@ account that it has access rights for:
 
 ~~~~
 {
-  "StatusRequest":{
-    "CatalogedDeviceDigest":"MAC5-ZJWC-FFYC-2KIO-YYOE-OO43-OZ"}}
+  "DownloadRequest":{
+    "MaxResults":-1,
+    "DeviceUDF":"MBYI-QYCM-JXEY-OJ5D-4OW2-RPIR-SHUM",
+    "CatalogedDeviceDigest":"MC55-7MYF-ENK3-L6N2-GTXT-WG45-WN",
+    "Select":[{
+        "Store":"Credential",
+        "IndexMin":3},
+      {
+        "Store":"Contact",
+        "IndexMin":3},
+      {
+        "Store":"Task",
+        "IndexMin":1},
+      {
+        "Store":"Bookmark",
+        "IndexMin":1},
+      {
+        "Store":"Network",
+        "IndexMin":1},
+      {
+        "Store":"Application",
+        "IndexMin":1},
+      {
+        "Store":"Device",
+        "IndexMin":3},
+      {
+        "Store":"Access",
+        "IndexMin":3},
+      {
+        "Store":"Publication",
+        "IndexMin":1},
+      {
+        "Store":"Inbound",
+        "IndexMin":3},
+      {
+        "Store":"Outbound",
+        "IndexMin":1},
+      {
+        "Store":"Local",
+        "IndexMin":2}
+      ]}}
 ~~~~
 
 
@@ -21,58 +60,83 @@ Merkle tree apex digest values for each:
 
 ~~~~
 {
-  "StatusResponse":{
-    "ContainerStatus":[{
-        "Container":"MMM_Inbound",
-        "Index":3},
+  "DownloadResponse":{
+    "Updates":[{
+        "Envelopes":[[{
+              "enc":"A256CBC",
+              "dig":"S512",
+              "Salt":"irmN6peoQ3obHMmNW164ow",
+              "recipients":[{
+                  "kid":"MD5W-K3CL-LJ5Q-YVXA-CMFG-5SPX-TUXV",
+                  "epk":{
+                    "PublicKeyECDH":{
+                      "crv":"X448",
+                      "Public":"c1wBMbDx_9Rd82IfuWaPqvf-rDhV5QShZ
+  DZE7gEqT6ciyPARKXVSYKjGiRqiGT2PMyi8UY_tkc2A"}},
+                  "wmk":"jezjPjJU-Djfm_bZitHdInmOPTg1iIQrx7CseX5Z
+  -E6gv9w37BchXg"}
+                ],
+              "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICI6ZnRwLmV4
+  YW1wbGUuY29tIiwKICAiRXZlbnQiOiAiVXBkYXRlIn0",
+              "SequenceInfo":{
+                "Index":3,
+                "TreePosition":1137},
+              "Received":"2023-06-28T17:00:19Z",
+              "PayloadDigest":"hAJqF3IoraQqNHLcHZMsf_c1IcrD_xDOnJ
+  0gN9QBcSoRk8QhcfsKzi9L6J7kGzjhHprDCxyYgCE88DZUYC7CnA",
+              "TreeDigest":"ZdG_UR3YUbPxX1e28NR6S26yAwkmsLKmwSkcH
+  12bWUrEH9A54K_PX9VdKZODQQ5yy0nBtvubUAJefbjgexLeFw"},
+            "UC8cIjRLdmfLxW4pQ7-dAl1nKucTTs29pTSCQM6_v3H0d4jL8lzn
+  tinoJGl6PgkOEiyPYc6a7ioi_RnEpFlH1dtoZ7Ra6VE_Y0co944cx3f05CZdZc9Zz
+  P6k7d4XpShqnJq7rMvTZDMOHsiWr7VnulMz9_mU4g_uAz94qwvACdA",
+            {}
+            ]
+          ],
+        "Store":"Credential"},
       {
-        "Container":"MMM_Outbound",
-        "Index":1,
-        "Digest":"FEHy24Y6cLModDXWH31kVc2a3TdhjXPooKHpLAb2JbsO1YQ
-  nJolmowXAYHhkOGY0kg3jrKNTjds0myf4Dw1sdg"},
+        "Envelopes":[
+          ],
+        "Store":"Contact"},
       {
-        "Container":"MMM_Local",
-        "Index":2},
+        "Envelopes":[
+          ],
+        "Store":"Task"},
       {
-        "Container":"MMM_Access",
-        "Index":3,
-        "Digest":"r5IajJWI1RhTXt1j2_O75SUzphUMofZvSyfO5kLWLh20OGp
-  kLPsCcCEXprd0_QVPMr4PxBO6Mg7cS-WsOlumJw"},
+        "Envelopes":[
+          ],
+        "Store":"Bookmark"},
       {
-        "Container":"MMM_Credential",
-        "Index":4,
-        "Digest":"aNMogtuGtBohOUNSCfPXDNONUz5BQ86TNDOfE_HZ5zi2Bw_
-  FWQik3E1qWyXFi-GuWipin-bJuFPJ2JPu-mIj4w"},
+        "Envelopes":[
+          ],
+        "Store":"Network"},
       {
-        "Container":"MMM_Device",
-        "Index":3,
-        "Digest":"qg4Zf_QebDEnR4kPOfPnQQiNmEhW0G01F8aJR83z5ibKUvK
-  cImrRFGTTRDIN2sRNKJZ6HSoAL0Wr1wzEj9NtVQ"},
+        "Envelopes":[
+          ],
+        "Store":"Application"},
       {
-        "Container":"MMM_Contact",
-        "Index":2,
-        "Digest":"urm7SZRuU2rWHYs-eoxZLg_WI4Hs4ICidDe_RM-GC__aANA
-  P8OKAEx5Bu_SN-P77U1h63JkQpDDeUtOrvn_qLw"},
+        "Envelopes":[
+          ],
+        "Store":"Device"},
       {
-        "Container":"MMM_Application",
-        "Index":1,
-        "Digest":"nljVIfu_F6lHDSSYn8dYdpE_QMBgs2KBSP4sI6E8vTA0E5X
-  4fJZHS8TVzCVIEL7urcVdLxcB0eeoPO82fYhyuQ"},
+        "Envelopes":[
+          ],
+        "Store":"Access"},
       {
-        "Container":"MMM_Publication",
-        "Index":1,
-        "Digest":"XhOEeG1waPc8GRUl1BI_dDoKQnXkaS9Jz16V1Ow5caT9WUL
-  1W2YU-z6_CxDafc7JfSwXfdYDv62sVyYwFq5Ieg"},
+        "Envelopes":[
+          ],
+        "Store":"Publication"},
       {
-        "Container":"MMM_Bookmark",
-        "Index":1,
-        "Digest":"VuysvMaN2_bZXrJuQ-gYpfCHKN-gM7XlRBIkNLY_fB25hu7
-  hzdCWMWxgwHK-3KVNMWFC-I8jYYgZxmIOgfVWyQ"},
+        "Envelopes":[
+          ],
+        "Store":"Inbound"},
       {
-        "Container":"MMM_Task",
-        "Index":1,
-        "Digest":"pbjJC7NvIJQF5ke1bpO65uvTe1zvFpur_XK4ddy61dInDLh
-  ulURJU9cEsScpMrdkxU7rNxN0i-RGRq5RL3ALFA"}
+        "Envelopes":[
+          ],
+        "Store":"Outbound"},
+      {
+        "Envelopes":[
+          ],
+        "Store":"Local"}
       ],
     "Status":201,
     "StatusDescription":"Operation completed successfully"}}

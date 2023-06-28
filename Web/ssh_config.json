@@ -1,0 +1,8 @@
+{
+  "CatalogedApplicationSsh": {
+    "ClientKey": {
+      "Udf": "MB4I-TU3W-4C5Y-CKVE-EBSA-3BTK-BXTF",
+      "PublicParameters": {
+        "PublicKeyECDH": {
+          "crv": "Ed25519",
+          "Public": "hNUbn7jlk9AinmAEagGj3HdCGOyN5D4Nxns3IpZVV3w"}}}}}

@@ -7,8 +7,8 @@ to the connecting device:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account pin /threshold
-<rsp>PIN=AAIT-WXRD-BVB7-3BBT-D6JS-44GE-B4
- (Expires=2022-10-19T12:48:11Z)
+<rsp>PIN=AAKI-IIAD-GQ3H-JUY3-SXZN-PENW-PQ
+ (Expires=2023-06-29T17:00:45Z)
 </div>
 ~~~~
 
@@ -19,9 +19,9 @@ the PIN is specified. This time, only the 'threshold' right is granted.
 ~~~~
 <div="terminal">
 <cmd>Alice3> meshman device request alice@example.com /pin ^
-    AAIT-WXRD-BVB7-3BBT-D6JS-44GE-B4
-<rsp>   Device UDF = MDVU-AOST-TDIH-AXGE-WUJS-I56V-WJP3
-   Witness value = AI7W-YKPK-MR3U-CZW7-GAVQ-24LZ-MSFA
+    AAKI-IIAD-GQ3H-JUY3-SXZN-PENW-PQ
+<rsp>   Device UDF = MBXV-SIBF-4XEW-4EVE-7URW-F6VT-NTX3
+   Witness value = GSJR-OHU5-HHXO-KURY-ST4B-HVBA-7PV5
 </div>
 ~~~~
 
@@ -33,17 +33,21 @@ automatically when the administration device is synchronized:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman message pending
-<rsp>MessageID: AI7W-YKPK-MR3U-CZW7-GAVQ-24LZ-MSFA
+<rsp>MessageID: GSJR-OHU5-HHXO-KURY-ST4B-HVBA-7PV5
         Connection Request::
-        MessageID: AI7W-YKPK-MR3U-CZW7-GAVQ-24LZ-MSFA
+        MessageID: GSJR-OHU5-HHXO-KURY-ST4B-HVBA-7PV5
         To:  From: 
-        Device:  MDVU-AOST-TDIH-AXGE-WUJS-I56V-WJP3
-        Witness: AI7W-YKPK-MR3U-CZW7-GAVQ-24LZ-MSFA
-MessageID: NBGK-6BGU-5C5H-4WUR-OGDF-NZTH-ZLCW
+        Device:  MBXV-SIBF-4XEW-4EVE-7URW-F6VT-NTX3
+        Witness: GSJR-OHU5-HHXO-KURY-ST4B-HVBA-7PV5
+MessageID: NCUD-3ROZ-X7UK-MMRA-CTYI-YHOE-UJCM
+MessageID: NDTU-IIPR-L5SK-L6CZ-JJGF-XA6L-565H
         Confirmation Request::
-        MessageID: NBGK-6BGU-5C5H-4WUR-OGDF-NZTH-ZLCW
+        MessageID: NDTU-IIPR-L5SK-L6CZ-JJGF-XA6L-565H
         To: alice@example.com From: console@example.com
         Text: start
+MessageID: ND4Y-TGCW-2QO3-KIQM-N3AN-DMIO-2CFT
+MessageID: NCVI-FDFU-ZYPN-5274-YBHY-V6WI-FTEJ
+MessageID: NA7V-2XT2-2ZJO-IDUY-GK6W-CTVX-HDDM
 <cmd>Alice> meshman account sync /auto
 </div>
 ~~~~
@@ -54,9 +58,9 @@ Alice can now synchronize her newly connected device to her account:
 ~~~~
 <div="terminal">
 <cmd>Alice3> meshman device complete
-<rsp>   Device UDF = MDVU-AOST-TDIH-AXGE-WUJS-I56V-WJP3
+<rsp>   Device UDF = MBXV-SIBF-4XEW-4EVE-7URW-F6VT-NTX3
    Account = alice@example.com
-   Account UDF = MDRR-5W72-3RJO-VZB3-VUVQ-IOEC-6UNA
+   Account UDF = MB3T-WIPZ-JRCW-QZFM-SCQL-OVVO-AHO2
 <cmd>Alice3> meshman account sync
 </div>
 ~~~~
@@ -68,7 +72,7 @@ information is encoded as a URI and presented to the connecting device as a QR c
 The URI corresponding to the connection PIN is:
 
 ~~~~
-mcu://alice@example.com/AAIT-WXRD-BVB7-3BBT-D6JS-44GE-B4
+mcu://alice@example.com/AAKI-IIAD-GQ3H-JUY3-SXZN-PENW-PQ
 ~~~~
 
 

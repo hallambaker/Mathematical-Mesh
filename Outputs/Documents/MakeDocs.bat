@@ -15,7 +15,7 @@ protogen ../../../Mesh/Goedel.Mesh.Server/MasterCatalog.protocol  /md  MasterCat
 protogen ../../../Everything/Goedel.Mesh.Everything/EverythingFeed.protocol  /md  EverythingFeed.md
 protogen ../../../Callsign/Goedel.Callsign/CallsignLog.protocol  /md  CallsignLog.md
 protogen ../../../Callsign/Goedel.Callsign.Registry/CallsignRegistry.protocol  /md  CallsignRegistry.md
-protogen ../../../Callsign/Goedel.Callsign.Resolver/CallsignResolver.protocol  /md  CallsignResolver.md
+protogen ../../../Callsign/Goedel.Callsign/CallsignResolver.protocol  /md  CallsignResolver.md
 protogen ../../../Carnet/Goedel.Carnet/Carnet.protocol  /md  Carnet.md
 protogen ../../../Libraries/Goedel.Cryptography.Dare/DareSchema.protocol  /md  DareSchema.md
 protogen ../../../Libraries/Goedel.Cryptography.Jose/JoseSchema.protocol  /md  JoseSchema.md

@@ -1,0 +1,11 @@
+{
+  "CatalogedCredential": {
+    "Protocol": "ssh",
+    "Service": "ssh2.example.com",
+    "Username": "alice69",
+    "HostAuthentication": [{
+        "Udf": "MAVS-WY2R-YKIL-5NH2-BFTM-QHRL-RYGC",
+        "PublicParameters": {
+          "PublicKeyECDH": {
+            "crv": "Ed25519",
+            "Public": "6HlYdpItH1280K3CU62BU0o9Z_EFVlAwwEndnfs_U84"}}}]}}

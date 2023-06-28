@@ -156,11 +156,11 @@ values for the outbound store.
 The previous status operation has reported that a new envelope has been added to
 the credential store. The device requests this data from the service:
 
-#%  DescribeRequest (Connect.AddPasswordToDevice2BySync?[0].Traces?[1]);
+#!%  DescribeRequest (Connect.AddPasswordToDevice2BySync?[0].Traces?[1]);
 
 The response contains the requested envelope:
 
-#%  DescribeResponse (Connect.AddPasswordToDevice2BySync?[0].Traces?[1]);
+#!%  DescribeResponse (Connect.AddPasswordToDevice2BySync?[0].Traces?[1]);
 
 Future: The current implementation of the download operation is limited by the
 capabilities of the HTTP binding of the RUD transport. A future binding allowing 

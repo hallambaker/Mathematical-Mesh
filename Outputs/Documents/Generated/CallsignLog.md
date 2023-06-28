@@ -15,16 +15,8 @@ Describes a callsign registry.
 Describes a callsign resolver.
 
 <dl>
-<dt>RegistryAddress: String (Optional)
-<dd>The address of the registry
 <dt>EnvelopedProfileRegistry: Enveloped<ProfileAccount> (Optional)
 <dd>The registry that this resolver resolves.
-<dt>CommonEncryption: KeyData (Optional)
-<dd>Key currently used to encrypt data under this profile
-<dt>CommonAuthentication: KeyData (Optional)
-<dd>Key used to authenticate requests made under this user account.
-This key SHOULD NOT be provisioned to any device except for the
-purpose of enabling account recovery.
 </dl>
 ###Callsign registration and transfer
 
@@ -147,7 +139,10 @@ Connection request message. This message contains the information
 
 <dl>
 <dt>EnvelopedCallsignBinding: Enveloped<CallsignBinding> (Optional)
-<dd>The enveloped binnding of the callsign to the profile.	
+<dd>The enveloped binnding of the callsign to the profile.
+<dt>Profiles: Enveloped<Profile> [0..Many]
+<dd>One or more profiles under which the EnvelopedCallsignBinding is 
+validlty signed.
 </dl>
 ###Structure: CallsignRegistrationResponse
 
@@ -157,10 +152,37 @@ Connection request message. This message contains the information
 <dt>CatalogedRegistration: CatalogedRegistration (Optional)
 <dd>The resulting catalog entry if accepted or the prior registration otherwise.
 <dt>Reason: String (Optional)
-<dd>Reason for refusing the registration.
+<dd>Reason for refusing the registration (if refused)
+<dt>Callsign: String (Optional)
+<dd>The value specified as the Canonical field in the callsign request if present,
+otherwise the value specified in the Display field, otherwise null.
 </dl>
 ###Structure: ProcessResultCallsignRegistration
 
 <dl>
 <dt>CallsignRegistrationResponse: CallsignRegistrationResponse (Optional)
+</dl>
+###Application Entry
+
+###Structure: CatalogedApplicationCallsign
+
+Application entry tracking the status of a callsign binding request
+
+<dl>
+<dt>CallSign: String (Optional)
+<dd>The registered callsign in canonical form.		
+<dt>RequestId: String (Optional)
+<dd>The MessageId of the request message
+<dt>EnvelopedCallsignBinding: Enveloped<CallsignBinding> (Optional)
+<dd>The callsign binding  
+<dt>CatalogedRegistration: CatalogedRegistration (Optional)
+<dd>The resulting catalog entry if accepted or the prior registration otherwise.
+<dt>Reason: String (Optional)
+<dd>Reason for refusing the registration (if refused)
+</dl>
+###Structure: ProcessResultCallsign
+
+<dl>
+<dt>CatalogedApplicationCallsign: CatalogedApplicationCallsign (Optional)
+<dd>The cataloged application
 </dl>

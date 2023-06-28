@@ -49,6 +49,10 @@ A DARE envelope Trailer
 <dd>A list of signatures.
 A envelope trailer MUST NOT contain a signatures field if the header contains 
 a signatures field.
+<dt>ApexSignatures: DareSignature [0..Many]
+<dd>A list of signatures over the apex digest.
+A envelope trailer MUST NOT contain av apex field if the header contains 
+a signatures field.
 <dt>SignedData: Binary (Optional)
 <dd>Contains a DAREHeader object 
 <dt>PayloadDigest: Binary (Optional)
@@ -114,6 +118,11 @@ this one.
 <dd>Date on which the envelope was received.
 <dt>Cover: Binary (Optional)
 <dd>HTML document containing cover text to be presented if the document cannot be decrypted.
+<dt>Bitmask: Binary (Optional)
+<dd>Bitmask used to identify a container within a group for use in update notification
+etc.
+<dt>Debug: String (Optional)
+<dd>Field reserved for use in debugging.
 </dl>
 ###Structure: ContentMeta
 
@@ -178,6 +187,26 @@ to the envelope body allows the body to be processed in streaming mode.
 the signature was authorized by a party with actual knowledge of the encryption 
 key used to encrypt the envelope.
 </dl>
+###Structure: IntervalSignature
+
+A digital signature over one or more envelopes consisting of an apex signature value 
+
+<dl>
+<dt>Index: Integer (Optional)
+<dd>The index number of the frame containing the apex signature.
+<dt>Envelopes: SignedEnvelope (Optional)
+<dd>The signed envelopes in order, lowest index first.
+</dl>
+###Structure: SignedEnvelope
+
+An entry describing one signed envelope within an IntervalSignature
+
+<dl>
+<dt>Index: Integer (Optional)
+<dd>The index number of the envelope.
+<dt>Digest: Binary [0..Many]
+<dd>The digests required to complete the verification of the signature.		
+</dl>
 ###Structure: X509Certificate
 
 <dl>
@@ -204,6 +233,8 @@ Recipient information
 ###Structure: DarePolicy
 
 <dl>
+<dt>Public: Boolean (Optional)
+<dd>When applied to a store, indicates it is world readable.
 <dt>EncryptionAlgorithm: String (Optional)
 <dd>The encryption algorithm to be used to compute the payload.
 <dt>DigestAlgorithm: String (Optional)

@@ -28,6 +28,7 @@ using Goedel.Cryptography.Core;
 using Goedel.IO;
 using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
+using Goedel.Test;
 using Goedel.Utilities;
 
 #pragma warning disable IDE0059
@@ -198,13 +199,16 @@ public partial class CreateExamples {
     string deviceId;
     public void Examples() {
         var output = Console.Out;
-
         outputPath = Directory.GetCurrentDirectory();
-        testEnvironment = new TestEnvironmentCommon();
+
+        var seed = DeterministicSeed.Create("InternetDrafts");
+        testEnvironment = new TestEnvironmentCommon(seed);
+
+
 
         PlatformCrypto();
-
-
+        //Directory.SetCurrentDirectory(outputPath);
+        //Directory.SetCurrentDirectory(outputPath);
         Directory.CreateDirectory(TestDir1);
         TestFile1.WriteFileNew(TestFile1Text.ToString());
         TestFile2.WriteFileNew(TestText2.ToString());
@@ -239,7 +243,7 @@ public partial class CreateExamples {
 
 
         // Dare uses the keys from the contacts catalog.
-        PlatformDare();
+        PlatformDare(testEnvironment);
 
         TestConnectDisconnect("");
         EscrowAndRecover();

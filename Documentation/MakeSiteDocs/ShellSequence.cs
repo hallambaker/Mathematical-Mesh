@@ -58,26 +58,28 @@ public class ShellSequence : ExampleSet {
 
 
     public ShellSequence(CreateExamples createExamples) :
+
+    // These need checking as many have been implemented since originally written
     base(createExamples) {
-        SequenceCreate = Alice1.Example($"dare create {TestSequence}");
-        SequenceCreateEncrypt = Alice1.Example($"dare create {TestSequenceEncrypt} /encrypt={GroupAccount}");
-        SequenceArchive = Alice1.Example($"~dare archive {TestSequenceArchive} {TestDir1}");
-        SequenceArchiveEnhance = Alice1.Example($"~dare archive {TestSequenceArchiveEnhance} {TestDir1}" +
+        SequenceCreate = Alice1.Example($"archive create {TestSequence}");
+        SequenceCreateEncrypt = Alice1.Example($"archive create {TestSequenceEncrypt} /encrypt={GroupAccount}");
+        SequenceArchive = Alice1.Example($"~archive create {TestSequenceArchive} {TestDir1}");
+        SequenceArchiveEnhance = Alice1.Example($"~archive create {TestSequenceArchiveEnhance} {TestDir1}" +
                                                         $" /encrypt={GroupAccount} /sign={AliceAccount}");
-        SequenceArchiveVerify = Alice1.Example($"~dare verify {TestSequenceArchiveEnhance}");
-        SequenceArchiveExtractAll = Alice1.Example($"~dare extract {TestSequence} {TestDir2}");
-        SequenceArchiveExtractFile = Alice1.Example($"~dare extract {TestSequence} /file={TestFile4}");
-        SequenceAppend = Alice1.Example($"~dare append {TestSequence} {TestFile1}",
-                                                        $"~dare append {TestSequence} {TestFile2}",
-                                                        $"~dare append {TestSequence} {TestFile3}");
-        SequenceList = Alice1.Example($"~dare list {TestSequence}");
+        SequenceArchiveVerify = Alice1.Example($"~archive verify {TestSequenceArchiveEnhance}");
+        SequenceArchiveExtractAll = Alice1.Example($"~archive extract {TestSequence} {TestDir2}");
+        SequenceArchiveExtractFile = Alice1.Example($"~archive extract {TestSequence} /file={TestFile4}");
+        SequenceAppend = Alice1.Example($"~archive append {TestSequence} {TestFile1}",
+                                                        $"~archive append {TestSequence} {TestFile2}",
+                                                        $"~archive append {TestSequence} {TestFile3}");
+        SequenceList = Alice1.Example($"~archive list {TestSequence}");
 
 
-        SequenceDelete = Alice1.Example($"~dare delete {TestSequence}  {TestFile2}");
-        SequenceIndex = Alice1.Example($"~dare index {TestSequence}");
-        SequenceArchiveCopy = Alice1.Example($"~dare copy {TestSequence2}");
-        SequenceArchiveCopyDecrypt = Alice1.Example($"~dare copy {TestSequenceArchiveEnhance} /decrypt");
-        SequenceArchiveCopyPurge = Alice1.Example($"~dare copy {TestSequence2} /purge");
+        SequenceDelete = Alice1.Example($"~archive delete {TestSequence}  {TestFile2}");
+        SequenceIndex = Alice1.Example($"~archive index {TestSequence}");
+        SequenceArchiveCopy = Alice1.Example($"~archive copy {TestSequence2}");
+        SequenceArchiveCopyDecrypt = Alice1.Example($"~archive copy {TestSequenceArchiveEnhance} /decrypt");
+        SequenceArchiveCopyPurge = Alice1.Example($"~archive copy {TestSequence2} /purge");
 
         }
     }

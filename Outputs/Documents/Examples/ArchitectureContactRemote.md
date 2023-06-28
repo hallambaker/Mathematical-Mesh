@@ -9,9 +9,9 @@ Bob sends Alice a contact exchange request:
 ~~~~
 <div="terminal">
 <cmd>Bob> meshman contact request alice@example.com
-<rsp>Envelope ID: MA6Z-6YGY-7TJB-CADG-SZN3-Q6IS-6BHF
-Message ID: NDRX-MOGE-HQ5D-FZHD-R42W-2U6V-OTKD
-Response ID: MCN2-CAZY-X3PZ-673C-QCYR-MIQ5-TAHN
+<rsp>Envelope ID: MAE2-VMU3-PDAH-HZX7-CGYV-75XQ-Z4EA
+Message ID: NAQL-6SJP-VLQD-7BNN-EB6L-DLQQ-K2ZE
+Response ID: MDNG-ME2U-6X4T-FEVR-46MH-2RLM-WCOP
 </div>
 ~~~~
 
@@ -22,26 +22,27 @@ Alice checks his Mesh messages and approves Bob's request:
 <div="terminal">
 <cmd>Alice> meshman account sync
 <cmd>Alice> meshman message pending
-<rsp>MessageID: NBDK-G2OV-7H3S-BO6N-NXUZ-3PE6-ZNE4
+<rsp>MessageID: ND2G-PHUE-PLPY-QAPP-UU6P-BAXW-EOBS
         Contact Request::
-        MessageID: NBDK-G2OV-7H3S-BO6N-NXUZ-3PE6-ZNE4
+        MessageID: ND2G-PHUE-PLPY-QAPP-UU6P-BAXW-EOBS
         To: alice@example.com From: mallet@example.com
-        PIN: ACRO-GLXA-VJ3P-4CZ2-KQRO-J3LU-TESA
-MessageID: NDRX-MOGE-HQ5D-FZHD-R42W-2U6V-OTKD
+        PIN: ACGN-LZXP-H2WB-R5UE-VGMF-VGQD-AR5Q
+MessageID: NAQL-6SJP-VLQD-7BNN-EB6L-DLQQ-K2ZE
         Contact Request::
-        MessageID: NDRX-MOGE-HQ5D-FZHD-R42W-2U6V-OTKD
+        MessageID: NAQL-6SJP-VLQD-7BNN-EB6L-DLQQ-K2ZE
         To: alice@example.com From: bob@example.com
-        PIN: ABMH-MBQP-GX34-A7AG-ZEOL-R4XO-VGYQ
-<cmd>Alice> meshman message accept NDRX-MOGE-HQ5D-FZHD-R42W-2U6V-OTKD
+        PIN: AAAZ-RZSW-ZMBI-A6R6-WTPY-INAA-OZLQ
+MessageID: NA7V-2XT2-2ZJO-IDUY-GK6W-CTVX-HDDM
+<cmd>Alice> meshman message accept NAQL-6SJP-VLQD-7BNN-EB6L-DLQQ-K2ZE
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MDRR-5W72-3RJO-VZB3-VUVQ-IOEC-6UNA
-  Person MDRR-5W72-3RJO-VZB3-VUVQ-IOEC-6UNA
-  Anchor MDRR-5W72-3RJO-VZB3-VUVQ-IOEC-6UNA
+<rsp>Entry<CatalogedContact>: MB3T-WIPZ-JRCW-QZFM-SCQL-OVVO-AHO2
+  Person MB3T-WIPZ-JRCW-QZFM-SCQL-OVVO-AHO2
+  Anchor MB3T-WIPZ-JRCW-QZFM-SCQL-OVVO-AHO2
   Address alice@example.com
 
-Entry<CatalogedContact>: NBL7-CLVR-MT2M-EWR5-U2NY-NWEN-IF7S
+Entry<CatalogedContact>: NCIO-3ZRE-NYUC-XRNS-CDLI-HL42-EDBR
   Person 
-  Anchor MDLP-RRZJ-ZASG-GUBZ-PP2K-5YDH-EMGE
+  Anchor MDCR-A2UE-SKQA-3HBF-YFO6-VQ6H-E72X
   Address bob@example.com
 
 </div>
@@ -54,14 +55,14 @@ Bob can now collect Alice's contact:
 <div="terminal">
 <cmd>Bob> meshman account sync /auto
 <cmd>Bob> meshman contact list
-<rsp>Entry<CatalogedContact>: MDLP-RRZJ-ZASG-GUBZ-PP2K-5YDH-EMGE
-  Person MDLP-RRZJ-ZASG-GUBZ-PP2K-5YDH-EMGE
-  Anchor MDLP-RRZJ-ZASG-GUBZ-PP2K-5YDH-EMGE
+<rsp>Entry<CatalogedContact>: MDCR-A2UE-SKQA-3HBF-YFO6-VQ6H-E72X
+  Person MDCR-A2UE-SKQA-3HBF-YFO6-VQ6H-E72X
+  Anchor MDCR-A2UE-SKQA-3HBF-YFO6-VQ6H-E72X
   Address bob@example.com
 
-Entry<CatalogedContact>: NCCQ-N3CB-4ZV2-M2DT-QQ7P-P3EF-65PM
+Entry<CatalogedContact>: ND4G-SEV3-KQ5B-U4F4-YXHC-JUVK-EO73
   Person 
-  Anchor MDRR-5W72-3RJO-VZB3-VUVQ-IOEC-6UNA
+  Anchor MB3T-WIPZ-JRCW-QZFM-SCQL-OVVO-AHO2
   Address alice@example.com
 
 </div>

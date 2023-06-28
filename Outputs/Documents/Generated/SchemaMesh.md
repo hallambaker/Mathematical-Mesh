@@ -224,6 +224,16 @@ Profile of a Mesh Service
 <dt>ServiceSignature: KeyData (Optional)
 <dd>Key used to sign data under the account.
 </dl>
+###Structure: ProfileMeshService
+
+<dl>
+<dt>Inherits:  ProfileService
+</dl>
+
+Profile of a Mesh Service
+
+[No fields]
+
 ###Structure: ProfileHost
 
 <dl>
@@ -266,11 +276,19 @@ the account. They SHOULD NOT be visible to external parties.
 <dt>Display: String (Optional)
 <dd>The display form of the callsign. This MAY include characters such as whitespace,
 trademark signifiers, etc. that are omitted of trranslated in the canonical form.
+<dt>CharacterPage: String (Optional)
+<dd>Specifies the page to which the Description"CharacterPageLatin"
 <dt>ProfileUdf: String (Optional)
 <dd>The profile to which the name is bound.
+<dt>TransferUdf: String (Optional)
+<dd>The profile to which the name has been transfered.
 <dt>Services: NamedService [0..Many]
 <dd>List of named services. If multiple service providers are specified for a given 
 service, these are listed in order of priority, most preferred first.
+<dt>ServiceAddress: String (Optional)
+<dd>The Mesh service address. 
+<dt>CommonEncryption: KeyData (Optional)
+<dd>Key currently used to encrypt data under this profile
 </dl>
 ###Structure: Accreditation
 
@@ -320,8 +338,6 @@ Asserts that a device is connected to an account profile
 <dl>
 <dt>ProfileUdf: String (Optional)
 <dd>The account address
-<dt>Callsign: CatalogedCallsign (Optional)
-<dd>The account callsign
 </dl>
 ###Structure: ConnectionDevice
 
@@ -371,6 +387,8 @@ Describes the connection of a member to a group.
 <dd>Host address in Callsign, DNS or IP format in order of preference.
 <dt>AccessEncrypt: KeyData (Optional)
 <dd>Encryption key to be used to encrypt data for the service to use.
+<dt>CallsignServiceProfile: ProfileAccount (Optional)
+<dd>Profile of the callsign registry used by the service.
 </dl>
 ###Structure: ConnectionHost
 
@@ -481,14 +499,6 @@ etc to be signed.
 <dd>Signed connection service delegation allowing the device to
 access the account.
 </dl>
-###Structure: ActivationApplicationCallsign
-
-<dl>
-<dt>Inherits:  ActivationApplication
-</dl>
-
-[No fields]
-
 ##Application Data
 
 ###Structure: ApplicationEntry
@@ -522,15 +532,6 @@ access the account.
 
 <dl>
 <dt>EnvelopedActivation: Enveloped<ActivationApplicationMail> (Optional)
-</dl>
-###Structure: ApplicationEntryCallsign
-
-<dl>
-<dt>Inherits:  ApplicationEntry
-</dl>
-
-<dl>
-<dt>EnvelopedActivation: Enveloped<ActivationApplicationCallsign> (Optional)
 </dl>
 ##Data Structures
 
@@ -781,6 +782,16 @@ specific to the device.
 <dt>EnvelopedActivationCommon: Enveloped<ActivationCommon> (Optional)
 <dd>The activation of the device within the Mesh account
 </dl>
+###Structure: CatalogedSignature
+
+<dl>
+<dt>Inherits:  CatalogedEntry
+</dl>
+
+Cataloged Signature
+
+[No fields]
+
 ###Structure: CatalogedPublication
 
 <dl>
@@ -997,20 +1008,6 @@ protocol.
 
 [No fields]
 
-###Structure: CatalogedCallsign
-
-<dl>
-<dt>Inherits:  CatalogedApplication
-</dl>
-
-<dl>
-<dt>Canonical: String (Optional)
-<dd>Fast lookup for the canonical form of the callsign.
-<dt>ProfileUdf: String (Optional)
-<dd>Fast lookup for the profile to which the name is bound.		
-<dt>EnvelopedCallsignBinding: Enveloped<CallsignBinding> (Optional)
-<dd>The enveloped binnding of the callsign to the profile.		
-</dl>
 ###Structure: NamedService
 
 <dl>
@@ -1018,10 +1015,22 @@ protocol.
 <dd>The IANA service name (e.g. dns)
 <dt>Mapping: String (Optional)
 <dd>Optional name mapping, (e.g. alice@example.com -> alice.mesh)
-<dt>Endpoint: String [0..Many]
-<dd>The service endpoint. This MAY be specified as a callsign (@alice),
+<dt>Endpoints: String [0..Many]
+<dd>The service endpoints. This MAY be specified as a callsign (@alice),
 a DNS address (example.com), an IP address (10.0.0.1) or a fully
 qualified URI.
+</dl>
+###Structure: ServiceAccessToken
+
+<dl>
+<dt>Inherits:  NamedService
+</dl>
+
+<dl>
+<dt>Token: Binary (Optional)
+<dd>Session initiation token
+<dt>SharedSecret: Binary (Optional)
+<dd>Session shared secret
 </dl>
 ###Structure: CatalogedBookmark
 
@@ -1345,7 +1354,7 @@ of the response.
 </dl>
 ###Structure: ProcessResult
 
-For future use, allows logging of operations and results	
+Report result of message processing.	
 
 <dl>
 <dt>Inherits:  Message
@@ -1356,3 +1365,21 @@ For future use, allows logging of operations and results
 <dt>ErrorReport: String (Optional)
 <dd>The error report code.
 </dl>
+###Structure: ProcessResultNotSupported
+
+The message type is not supported.
+
+<dl>
+<dt>Inherits:  ProcessResult
+</dl>
+
+[No fields]
+
+###Structure: ProcessResultNotFound
+
+<dl>
+<dt>Inherits:  ProcessResult
+</dl>
+
+[No fields]
+

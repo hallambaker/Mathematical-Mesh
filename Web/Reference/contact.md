@@ -10,6 +10,7 @@ contact    Manage contact catalogs connected to an account
     delete   Delete contact entry
     dynamic   Create dynamic contact retrieval URI
     exchange   Request contact from URI presenting own contact
+    export   Export contact entry from file
     fetch   Request contact from URI without presenting own contact
     get   Lookup contact entry
     import   Import contact entry from file
@@ -43,7 +44,7 @@ its unique catalog identifier.
 
 
 ~~~~
-Missing example 9
+Missing example 11
 ~~~~
 
 # contact dynamic
@@ -103,7 +104,7 @@ by means of a dynamic URI.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman contact exchange mcu://carol@example.com/EFQA-DQID-HXWJ-ODDF-Q32H-SCCC-QQXA
+<cmd>Alice> meshman contact exchange mcu://carol@example.com/EFQH-S7D5-WFDK-3TUO-H4RJ-RDFQ-MHAQ
 <rsp></div>
 ~~~~
 
@@ -134,7 +135,7 @@ presented as a URI or QR code without reciprocating the exchange.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman contact fetch mcu://doug@example.com/EFQP-SYGG-2ZKN-QLBU-V4RF-NJFC-KYGA
+<cmd>Alice> meshman contact fetch mcu://doug@example.com/EFQA-NB6U-DGXX-CTWH-UVVB-2F47-5NDA
 <rsp>[CatalogedContact]
 
 </div>
@@ -199,7 +200,7 @@ from a file
 
 
 ~~~~
-Missing example 10
+Missing example 12
 ~~~~
 
 # contact list
@@ -225,29 +226,29 @@ The 'contact list' command lists all data in the contact catalog.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MDRR-5W72-3RJO-VZB3-VUVQ-IOEC-6UNA
-  Person MDRR-5W72-3RJO-VZB3-VUVQ-IOEC-6UNA
-  Anchor MDRR-5W72-3RJO-VZB3-VUVQ-IOEC-6UNA
+<rsp>Entry<CatalogedContact>: MB3T-WIPZ-JRCW-QZFM-SCQL-OVVO-AHO2
+  Person MB3T-WIPZ-JRCW-QZFM-SCQL-OVVO-AHO2
+  Anchor MB3T-WIPZ-JRCW-QZFM-SCQL-OVVO-AHO2
   Address alice@example.com
 
-Entry<CatalogedContact>: NBL7-CLVR-MT2M-EWR5-U2NY-NWEN-IF7S
+Entry<CatalogedContact>: NCIO-3ZRE-NYUC-XRNS-CDLI-HL42-EDBR
   Person 
-  Anchor MDLP-RRZJ-ZASG-GUBZ-PP2K-5YDH-EMGE
+  Anchor MDCR-A2UE-SKQA-3HBF-YFO6-VQ6H-E72X
   Address bob@example.com
 
-Entry<CatalogedContact>: NC3A-QZN6-Z4HW-5PHE-G2GQ-O3KF-GF2G
+Entry<CatalogedContact>: NDNA-G2KO-GNLV-RMLQ-YAOB-ZDHC-SRZU
   Person 
-  Anchor MAXE-Z6UJ-A7XI-MIEH-IDQK-L2LH-2DEG
+  Anchor MBXT-N7ZN-3U5H-HTTC-4VWF-6WA5-LKGR
   Address groupw@example.com
 
-Entry<CatalogedContact>: NAVT-2ACI-ENSO-GNZ4-UFLN-C6E3-CMMN
+Entry<CatalogedContact>: NCZO-YOS4-JWWD-H7YZ-CRN2-XQGP-4QXQ
   Person 
-  Anchor MAXE-Z6UJ-A7XI-MIEH-IDQK-L2LH-2DEG
+  Anchor MBXT-N7ZN-3U5H-HTTC-4VWF-6WA5-LKGR
   Address groupw@example.com
 
-Entry<CatalogedContact>: NAY6-3SLL-LGK5-EBRF-5CJK-D2L3-PCZL
+Entry<CatalogedContact>: NCIP-SDNI-F6PT-CERQ-MRF5-RQVS-KVW4
   Person 
-  Anchor MAEO-D3GK-A6HR-NAEV-4HSM-4HKP-BM2S
+  Anchor MCO6-N3XT-LVAR-CFKY-SWDF-A5QC-6SBU
   Address carol@example.com
 
 </div>

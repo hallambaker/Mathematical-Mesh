@@ -91,7 +91,7 @@ allow a client to limit the number of records returned, the quantity
 of data returned, the earliest and latest data returned, etc.
 
 <dl>
-<dt>Container: String (Optional)
+<dt>Store: String (Optional)
 <dd>The container to be searched.
 <dt>IndexMin: Integer (Optional)
 <dd>Only return objects with an index value that is equal to or
@@ -147,22 +147,30 @@ does not accept in account names. The list of characters
 MAY not be exhaustive but SHOULD include any illegal characters
 in the proposed account name.
 </dl>
-###Structure: ContainerStatus
+###Structure: StoreStatus
 
 <dl>
-<dt>Container: String (Optional)
+<dt>Store: String (Optional)
 <dt>Index: Integer (Optional)
 <dt>Digest: Binary (Optional)
+<dd>In a status response, the apex digest value of the store 
+whose status is reported.
 </dl>
-###Structure: ContainerUpdate
+###Structure: StoreUpdate
 
 <dl>
-<dt>Inherits:  ContainerStatus
+<dt>Inherits:  StoreStatus
 </dl>
 
 <dl>
 <dt>Envelopes: DareEnvelope [0..Many]
 <dd>The entries to be uploaded. 
+<dt>Partial: Boolean (Optional)
+<dd>If false, the store update does not contain the last index entry
+in the store.
+<dt>FinalIndex: Integer (Optional)
+<dd>If the value Partial is true, this value MUST specify the index
+value of the last entry in the store.
 </dl>
 ##Transaction: Hello
 
@@ -360,6 +368,8 @@ discover the host and encrypt data to it.
 <dt>CatalogedDeviceDigest: String (Optional)
 <dt>Catalogs: String [0..Many]
 <dt>Spools: String [0..Many]
+<dt>Services: String [0..Many]
+<dt>DeviceStatus: Boolean (Optional)
 </dl>
 ###Message: StatusResponse
 
@@ -368,15 +378,27 @@ discover the host and encrypt data to it.
 </dl>
 
 <dl>
+<dt>Bitmask: Binary (Optional)
 <dt>EnvelopedProfileAccount: Enveloped<ProfileAccount> (Optional)
 <dd>The account profile providing the root of trust for this account.
 <dt>EnvelopedCatalogedDevice: Enveloped<CatalogedDevice> (Optional)
 <dd>The catalog device entry
 <dt>CatalogedDeviceDigest: String (Optional)
-<dt>ContainerStatus: ContainerStatus [0..Many]
+<dt>StoreStatus: StoreStatus [0..Many]
 <dt>EnvelopedAccountHostAssignment: Enveloped<AccountHostAssignment> (Optional)
 <dd>The enveloped assignment describing how the client should
 discover the host and encrypt data to it.
+<dt>Services: ServiceAccessToken [0..Many]
+<dd>A series of access tokens for the requested services.
+<dt>DeviceStatuses: DeviceStatus [0..Many]
+<dd></dl>
+###Structure: DeviceStatus
+
+<dl>
+<dt>Id: String (Optional)
+<dt>Status: String (Optional)
+<dt>Comment: String (Optional)
+<dt>LastConnected: DateTime (Optional)
 </dl>
 ##Transaction: Download
 
@@ -401,6 +423,10 @@ be returned and MAY request that only specific fields or parts of the
 payload be returned.
 
 <dl>
+<dt>MaxResults: Integer (Optional)
+<dd>The maximum number of results to be returned.
+<dt>DeviceUDF: String (Optional)
+<dt>CatalogedDeviceDigest: String (Optional)
 <dt>Select: ConstraintsSelect [0..Many]
 <dd>Specifies constraints to be applied to a search result. These 
 allow a client to limit the number of records returned, the quantity
@@ -422,8 +448,11 @@ from the client that it is relevant. A service MAY limit the number of
 objects returned. A service MAY limit the scope of each response. 
 
 <dl>
-<dt>Updates: ContainerUpdate [0..Many]
+<dt>Updates: StoreUpdate [0..Many]
 <dd>The updated data
+<dt>CatalogedDeviceDigest: String (Optional)
+<dt>EnvelopedCatalogedDevice: Enveloped<CatalogedDevice> (Optional)
+<dd>The catalog device entry. This is only returned if the 
 </dl>
 ##Transaction: Transact
 
@@ -444,7 +473,7 @@ Upload entries to a container. This request is only valid if it is issued
 by the owner of the account
 
 <dl>
-<dt>Updates: ContainerUpdate [0..Many]
+<dt>Updates: StoreUpdate [0..Many]
 <dd>The data to be updated
 <dt>Accounts: String [0..Many]
 <dd>The account(s) to which the request is directed.
@@ -467,6 +496,7 @@ devices to collect activation messages before they have connected to the mesh.
 Response to an upload request. 
 
 <dl>
+<dt>Bitmask: Binary (Optional)
 <dt>Entries: EntryResponse [0..Many]
 <dd>The responses to the entries.
 <dt>ConstraintsData: ConstraintsData (Optional)
@@ -490,6 +520,26 @@ values for an entry are 'Accept', 'Reject' and 'Conflict'.
 that apply to the redacted entries as a group. Thus the total payloads
 of all the messages must not exceed the specified value.	
 </dl>
+##Transaction: PublicRead
+
+<dl>
+<dt>Request:  PublicRequest
+<dt>Response:  DownloadResponse
+</dl>
+
+Request objects from the specified container with the specified search
+criteria.
+
+###Message: PublicRequest
+
+<dl>
+<dt>Inherits:  DownloadRequest
+</dl>
+
+Request download from a public store (which may be encrypted).
+
+[No fields]
+
 ##Transaction: Post
 
 <dl>

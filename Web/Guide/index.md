@@ -3,6 +3,8 @@
 <dl>
 <dt><a href="account.html">account</a>
 <dd>Account creation and management commands.
+<dt><a href="archive.html">archive</a>
+<dd>DARE archive commands
 <dt><a href="bookmark.html">bookmark</a>
 <dd>Manage bookmark catalogs connected to an account
 <dt><a href="calendar.html">calendar</a>
@@ -25,6 +27,8 @@
 <dd>Content Digest and Message Authentication Code operations on files
 <dt><a href="key.html">key</a>
 <dd>Key operations.
+<dt><a href="log.html">log</a>
+<dd>DARE log commands
 <dt><a href="mail.html">mail</a>
 <dd>Manage mail profiles connected to a personal profile
 <dt><a href="message.html">message</a>

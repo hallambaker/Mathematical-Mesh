@@ -15,19 +15,26 @@ where the data payload has been transformed, (i.e. encrypted).
 The following example shows a simple sequence with first frame and a single data frame:
 
 ~~~~
-f4 91 
-f0 8b 
-f0 00 
-f0 00 
-91 f4 
-f5 01 73 
-f0 42 
-f1 01 2c 
-73 01 f5 
 ~~~~
 
 Since there is no integrity check, there is no need for trailer entries.
 The header values are:
+
+
+Frame 0
+
+~~~~
+{
+  "DareHeader":{
+    "policy":{},
+    "ContentMetaData":"e30",
+    "SequenceInfo":{
+      "DataEncoding":"JSON",
+      "ContainerType":"List",
+      "Index":0}}}
+
+[Empty trailer]
+~~~~
 
 
 Frame 0
@@ -81,6 +88,28 @@ Frame 0
       "Index":0}}}
 
 [Empty trailer]
+~~~~
+
+
+Frame 0
+
+~~~~
+{
+  "DareHeader":{
+    "dig":"S512",
+    "policy":{},
+    "ContentMetaData":"e30",
+    "SequenceInfo":{
+      "DataEncoding":"JSON",
+      "ContainerType":"Chain",
+      "Index":0}}}
+
+{
+  "DareTrailer":{
+    "PayloadDigest":"z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg_SpIdNs6c5H
+  0NE8XYXysP-DGNKHfuwvY7kxvUdBeoGlODJ6-SfaPg",
+    "ChainDigest":"FEHy24Y6cLModDXWH31kVc2a3TdhjXPooKHpLAb2JbsO1Y
+  QnJolmowXAYHhkOGY0kg3jrKNTjds0myf4Dw1sdg"}}
 ~~~~
 
 
@@ -165,6 +194,28 @@ Frame 0
 ~~~~
 
 
+Frame 0
+
+~~~~
+{
+  "DareHeader":{
+    "dig":"S512",
+    "policy":{},
+    "ContentMetaData":"e30",
+    "SequenceInfo":{
+      "DataEncoding":"JSON",
+      "ContainerType":"Merkle",
+      "Index":0}}}
+
+{
+  "DareTrailer":{
+    "PayloadDigest":"z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg_SpIdNs6c5H
+  0NE8XYXysP-DGNKHfuwvY7kxvUdBeoGlODJ6-SfaPg",
+    "TreeDigest":"wvk8X5vTHUlVff7cj3k6fHBqXw52PA_7KK5zRLkheMKnGVF
+  gHY0VL46Fz78rIjCnSNGXmDoBBG5phZRCU1guDA"}}
+~~~~
+
+
 Frame 1
 
 ~~~~
@@ -180,8 +231,8 @@ Frame 1
   "DareTrailer":{
     "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
   DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
-    "TreeDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
-  Vz9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}}
+    "TreeDigest":"vJ6ngNATvZcXSMALi5IUqzl1GBxBnTNVcC87VL_BhMRCbAv
+  KSj8gs0VFgxxLkZ2myrtaDIwhHoswiTiBMLNWug"}}
 ~~~~
 
 
@@ -200,8 +251,8 @@ Frame 2
   "DareTrailer":{
     "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
   DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
-    "TreeDigest":"7fHmkEIsPkN6sDYAOLvpIJn5Dg3PxDDAaq-ll2kh8722kok
-  kFnZQcYtjuVC71aHNXI18q-lPnfRkmwryG-bhqQ"}}
+    "TreeDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
+  Vz9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}}
 ~~~~
 
 
@@ -220,8 +271,8 @@ Frame 3
   "DareTrailer":{
     "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
   DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
-    "TreeDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
-  Vz9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}}
+    "TreeDigest":"7fHmkEIsPkN6sDYAOLvpIJn5Dg3PxDDAaq-ll2kh8722kok
+  kFnZQcYtjuVC71aHNXI18q-lPnfRkmwryG-bhqQ"}}
 ~~~~
 
 
@@ -240,8 +291,8 @@ Frame 4
   "DareTrailer":{
     "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
   DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
-    "TreeDigest":"vJ6ngNATvZcXSMALi5IUqzl1GBxBnTNVcC87VL_BhMRCbAv
-  KSj8gs0VFgxxLkZ2myrtaDIwhHoswiTiBMLNWug"}}
+    "TreeDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
+  Vz9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}}
 ~~~~
 
 
@@ -260,8 +311,8 @@ Frame 5
   "DareTrailer":{
     "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
   DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
-    "TreeDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
-  Vz9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}}
+    "TreeDigest":"vJ6ngNATvZcXSMALi5IUqzl1GBxBnTNVcC87VL_BhMRCbAv
+  KSj8gs0VFgxxLkZ2myrtaDIwhHoswiTiBMLNWug"}}
 ~~~~
 
 
@@ -280,8 +331,8 @@ Frame 6
   "DareTrailer":{
     "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
   DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
-    "TreeDigest":"WgHlz3EHczVPqgtpc39Arv7CFIsCbFVsk8wg0j2qLlEfur9
-  SZ0mdr65Ka-HF0Qx8gg_DAoiJwUrwADDXyxVJOg"}}
+    "TreeDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
+  Vz9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}}
 ~~~~
 
 
@@ -295,7 +346,7 @@ The signing key parameters are:
 ~~~~
 {
   "PrivateKeyECDH":{
-    "Private":"zNBnGilzHnOQ2CpoQGZBNM7Z5FmqvEqQaPl3_hNJIJ4",
+    "Private":"hkYsLO2D7_4vuqZB3MFMV6blEozFJ5KL6CqBtu61Ops",
     "crv":"Ed25519"}}
 ~~~~
 
@@ -319,6 +370,28 @@ Frame 0
 ~~~~
 
 
+Frame 0
+
+~~~~
+{
+  "DareHeader":{
+    "dig":"S512",
+    "policy":{},
+    "ContentMetaData":"e30",
+    "SequenceInfo":{
+      "DataEncoding":"JSON",
+      "ContainerType":"Merkle",
+      "Index":0}}}
+
+{
+  "DareTrailer":{
+    "PayloadDigest":"z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg_SpIdNs6c5H
+  0NE8XYXysP-DGNKHfuwvY7kxvUdBeoGlODJ6-SfaPg",
+    "TreeDigest":"wvk8X5vTHUlVff7cj3k6fHBqXw52PA_7KK5zRLkheMKnGVF
+  gHY0VL46Fz78rIjCnSNGXmDoBBG5phZRCU1guDA"}}
+~~~~
+
+
 Frame 1
 
 ~~~~
@@ -334,8 +407,8 @@ Frame 1
   "DareTrailer":{
     "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
   DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
-    "TreeDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
-  Vz9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}}
+    "TreeDigest":"vJ6ngNATvZcXSMALi5IUqzl1GBxBnTNVcC87VL_BhMRCbAv
+  KSj8gs0VFgxxLkZ2myrtaDIwhHoswiTiBMLNWug"}}
 ~~~~
 
 
@@ -354,8 +427,8 @@ Frame 2
   "DareTrailer":{
     "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
   DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
-    "TreeDigest":"7fHmkEIsPkN6sDYAOLvpIJn5Dg3PxDDAaq-ll2kh8722kok
-  kFnZQcYtjuVC71aHNXI18q-lPnfRkmwryG-bhqQ"}}
+    "TreeDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
+  Vz9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}}
 ~~~~
 
 
@@ -371,16 +444,16 @@ Frame 0
 {
   "DareHeader":{
     "enc":"A256CBC",
-    "kid":"EBQJ-M6BL-NPCW-YVAB-N5P3-SGMU-JWSM",
-    "Salt":"GK35Flr-AkIDXH0F_8eaSw",
+    "kid":"EBQJ-FR5L-ZVQZ-RM6Q-NWX7-GWWF-ILA6",
+    "Salt":"vGDAim2Mp8NzSNukjBII2g",
     "recipients":[{
-        "kid":"MDBD-G2N6-CEIS-LQJ5-NNTO-PAHD-OJKW",
+        "kid":"MDFQ-C642-7ZJ6-WVCA-QHPW-236B-UNCE",
         "epk":{
           "PublicKeyECDH":{
             "crv":"Ed25519",
-            "Public":"OMwPhLRENxSIvI5ntJG_B5iQBr4f2Mg1d4M2TfkNCxg"}},
-        "wmk":"hVFbhlDNBhNE4KIJ6eGvfN57eP1-3RR434H3kNnr7LvI8XHl-b
-  JvTQ"}
+            "Public":"h-o1arAOJY35KHuhrQ8bKsBmNRfJqfJk-4ayofbIGyM"}},
+        "wmk":"WqglEont79XuqIaSmsvPqTfi_sk4Iq2UmVDNGLWh_sdxFyARsP
+  kb7w"}
       ],
     "policy":{
       "enc":"none",
@@ -388,7 +461,43 @@ Frame 0
       "EncryptKeys":[{
           "PublicKeyECDH":{
             "crv":"Ed25519",
-            "Public":"6LaCG5duVocIyW7IAtqJoKiGEdAEwQ0xyJs8v7QhH8I"}}
+            "Public":"i3K71T5Wk65mjz0pnIKxja3WkFlrsnDS8fRz1p7sYrI"}}
+        ],
+      "Sealed":true},
+    "ContentMetaData":"e30",
+    "SequenceInfo":{
+      "DataEncoding":"JSON",
+      "ContainerType":"List",
+      "Index":0}}}
+
+[Empty trailer]
+~~~~
+
+
+Frame 0
+
+~~~~
+{
+  "DareHeader":{
+    "enc":"A256CBC",
+    "kid":"EBQJ-FR5L-ZVQZ-RM6Q-NWX7-GWWF-ILA6",
+    "Salt":"vGDAim2Mp8NzSNukjBII2g",
+    "recipients":[{
+        "kid":"MDFQ-C642-7ZJ6-WVCA-QHPW-236B-UNCE",
+        "epk":{
+          "PublicKeyECDH":{
+            "crv":"Ed25519",
+            "Public":"h-o1arAOJY35KHuhrQ8bKsBmNRfJqfJk-4ayofbIGyM"}},
+        "wmk":"WqglEont79XuqIaSmsvPqTfi_sk4Iq2UmVDNGLWh_sdxFyARsP
+  kb7w"}
+      ],
+    "policy":{
+      "enc":"none",
+      "dig":"none",
+      "EncryptKeys":[{
+          "PublicKeyECDH":{
+            "crv":"Ed25519",
+            "Public":"i3K71T5Wk65mjz0pnIKxja3WkFlrsnDS8fRz1p7sYrI"}}
         ],
       "Sealed":true},
     "ContentMetaData":"e30",
@@ -407,16 +516,16 @@ Frame 1
 {
   "DareHeader":{
     "enc":"A256CBC",
-    "kid":"EBQO-7MFX-H2VS-DZ5P-PHFS-BVVI-7CGD",
-    "Salt":"WMWmVh2-nHezL7LMdj-DUw",
+    "kid":"EBQJ-WIVZ-4VJB-DF5L-2SZB-SGG2-5C2W",
+    "Salt":"H7FynpxwxNgbJOSlb2PWhg",
     "recipients":[{
-        "kid":"MDBD-G2N6-CEIS-LQJ5-NNTO-PAHD-OJKW",
+        "kid":"MDFQ-C642-7ZJ6-WVCA-QHPW-236B-UNCE",
         "epk":{
           "PublicKeyECDH":{
             "crv":"Ed25519",
-            "Public":"vpvcqq0g7LIftivCVRYd2KvznaVmn_4OYg2EKrvoYHI"}},
-        "wmk":"xRsKdXMtqGXBDz3ifux_0Tw3i5HiuZUK7x2jrEKijhDA6PbqcN
-  IJRA"}
+            "Public":"vd4lZ3AmmXc3y1dyx1uztncI9sKm9XHD0JWAjADdYV4"}},
+        "wmk":"1igQ2waotUIIIMfpZ_YcgIQwq0CwETwmXoLaeDvNogGMUu-2GL
+  KMFA"}
       ],
     "ContentMetaData":"e30",
     "SequenceInfo":{
@@ -432,16 +541,16 @@ Frame 2
 {
   "DareHeader":{
     "enc":"A256CBC",
-    "kid":"EBQN-HQYA-I35A-ZLTG-BLAV-3NWG-FLIJ",
-    "Salt":"N9IVoifEEGfA67eHuMYQGg",
+    "kid":"EBQK-DA4B-GOHA-V6TX-6RNC-TT3Q-CDUR",
+    "Salt":"i_eTMhLV4Z6_gpmPHm7bow",
     "recipients":[{
-        "kid":"MDBD-G2N6-CEIS-LQJ5-NNTO-PAHD-OJKW",
+        "kid":"MDFQ-C642-7ZJ6-WVCA-QHPW-236B-UNCE",
         "epk":{
           "PublicKeyECDH":{
             "crv":"Ed25519",
-            "Public":"GXNTgfmDDCGDJtiUEDMPtWBhmXKEMjHSc73f7_OAzu8"}},
-        "wmk":"puogbB8RpS5klIFemyjNOSy0olhKGB_gJZg7uHtHVVpVEj8f3b
-  tebQ"}
+            "Public":"_BFmweHRK3_0sjZEZw6A9izpMt88-1KtG60vwPXkjYk"}},
+        "wmk":"ZiGP-3vKpPW2YbhhMjrK9NJAYGIEwicoykNtIKlJ6q6k2FbTAD
+  ZrkA"}
       ],
     "ContentMetaData":"e30",
     "SequenceInfo":{
@@ -456,19 +565,6 @@ Here are the sequence bytes. Note that the content is now encrypted and has expa
 JSON-B framing (5 bytes).
 
 ~~~~
-f5 02 ef 
-f1 02 d8 
-f0 10 
-f0 00 
-ef 02 f5 
-f5 02 f9 
-f1 01 c3 
-f1 01 30 
-f9 02 f5 
-f5 02 f9 
-f1 01 c3 
-f1 01 30 
-f9 02 f5 
 
 
 ~~~~
@@ -476,6 +572,25 @@ f9 02 f5
 
 The following example shows a sequence in which all the frame payloads are encrypted 
 under separate key agreements specified in the payload frames.
+
+
+Frame 0
+
+~~~~
+{
+  "DareHeader":{
+    "policy":{
+      "enc":"none",
+      "dig":"none",
+      "Sealed":true},
+    "ContentMetaData":"e30",
+    "SequenceInfo":{
+      "DataEncoding":"JSON",
+      "ContainerType":"List",
+      "Index":0}}}
+
+[Empty trailer]
+~~~~
 
 
 Frame 0

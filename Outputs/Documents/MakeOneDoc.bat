@@ -9,7 +9,7 @@ echo Generate schemas etc.
 cd Generated 
 
 
-protogen ../../../Everything/Goedel.Mesh.Everything/EverythingFeed.protocol  /md  EverythingFeed.md
+::protogen ../../../Everything/Goedel.Mesh.Everything/EverythingFeed.protocol  /md  EverythingFeed.md
 
 
 ::constant %Root%/Libraries/Goedel.Cryptography/UDFConstants.constant /md
@@ -38,7 +38,7 @@ copy ..\favicon.png .
 ::rfctool %DocSource%\hallambaker-mesh-5-protocol.docx  /auto /cache=bib.xml
 
 
-rfctool %DocSource%\hallambaker-mesh-10-everything.docx  /auto /cache=bib.xml
-
+:: rfctool %DocSource%\hallambaker-mesh-10-everything.docx  /auto /cache=bib.xml
+rfctool %DocSource%\hallambaker-mesh-developer.docx /auto /cache=bib.xml
 exit /b 0
 

@@ -45,7 +45,7 @@ specifies the name of the user to be added.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman group add groupw@example.com bob@example.com
-<rsp>bob@example.com [MD5B-HJIJ-2Q6Z-2O3U-UY4K-PYRQ-O3N6]
+<rsp>bob@example.com [MBC4-37NG-TMFD-MWQO-K7RD-3M4V-FSN2]
 
 </div>
 ~~~~
@@ -95,7 +95,7 @@ to be used to share a calendar or password catalog etc.
 <div="terminal">
 <cmd>Alice> meshman group create groupw@example.com /web
 <rsp>Account=groupw@example.com
-UDF=MAXE-Z6UJ-A7XI-MIEH-IDQK-L2LH-2DEG
+UDF=MBXT-N7ZN-3U5H-HTTC-4VWF-6WA5-LKGR
 </div>
 ~~~~
 
@@ -132,7 +132,7 @@ To delete the group account itself, the 'account delete' command is required.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman group delete groupw@example.com bob@example.com
-<rsp>bob@example.com [MD5B-HJIJ-2Q6Z-2O3U-UY4K-PYRQ-O3N6]
+<rsp>bob@example.com [MBC4-37NG-TMFD-MWQO-K7RD-3M4V-FSN2]
 
 </div>
 ~~~~
@@ -167,7 +167,7 @@ specifies the name of the user whose information is requested.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman group get groupw@example.com bob@example.com
-<rsp>bob@example.com [MD5B-HJIJ-2Q6Z-2O3U-UY4K-PYRQ-O3N6]
+<rsp>bob@example.com [MBC4-37NG-TMFD-MWQO-K7RD-3M4V-FSN2]
 
 </div>
 ~~~~
