@@ -76,7 +76,7 @@ public class FieldBinding {
     Label[] Labels;
 
     public FieldBinding(MyViewCell cell) {
-        var stack = new VerticalStackLayout();
+        var stack = new HorizontalStackLayout();
         cell.View = stack;
 
         var chooser = cell.Chooser.Chooser;
@@ -103,7 +103,7 @@ public class FieldBinding {
         }
 
 
-    public void Bind(IBindable data) {
+    public void Bind(object data) {
         if (data == null) {
             return;
             }
@@ -180,46 +180,7 @@ public class GuigenFieldChooser : GuigenField {
 
 
         ListView = new ListView {
-            //ItemsSource = people,
             ItemTemplate = new BindableTemplate(this)
-            //new DataTemplate(() => {
-            //     Create views with bindings for displaying each property.
-            //    Label nameLabel = new Label();
-            //    nameLabel.SetBinding(Label.TextProperty, "Name");
-
-            //    Label birthdayLabel = new Label();
-            //    birthdayLabel.SetBinding(Label.TextProperty,
-            //        new Binding("Birthday", BindingMode.OneWay,
-            //            null, null, "Born {0:d}"));
-
-            //    BoxView boxView = new BoxView();
-            //    boxView.SetBinding(BoxView.ColorProperty, "FavoriteColor");
-
-            //    var xx = nameLabel.BindingContext;
-
-            //     Return an assembled ViewCell.
-            //    var x = new MyViewCell(this) {
-            //        View = new StackLayout {
-            //            Padding = new Thickness(0, 5),
-            //            Orientation = StackOrientation.Horizontal,
-            //            Children =
-            //            {
-            //                        boxView,
-            //                        new StackLayout
-            //                        {
-            //                            VerticalOptions = LayoutOptions.Center,
-            //                            Spacing = 0,
-            //                            Children =
-            //                            {
-            //                                nameLabel,
-            //                                birthdayLabel
-            //                            }
-            //                            }
-            //                    }
-            //            }
-            //        };
-            //    return x;
-            //})
             };
 
 
@@ -284,7 +245,7 @@ public class MyViewCell : ViewCell {
         value = Chooser.ListView.ItemsSource as ISelectCollection;
         FieldBinding ??= new FieldBinding(this);
 
-        FieldBinding.Bind(BindingContext as IBindable);
+        FieldBinding.Bind(BindingContext);
         }
 
 

@@ -55,41 +55,41 @@ public record GuiBoundProperty  {
 
 
 public record GuiBoundPropertyString (
-                Func<IBindable, string> Get,
-                Action<IBindable, string> Set,
+                Func<object, string> Get,
+                Action<object, string> Set,
                 string? Label = null) : GuiBoundProperty {
     }
 
 public record GuiBoundPropertyChooser(
-                Func<IBindable, ISelectCollection> Get,
-                Action<IBindable, ISelectCollection> Set,
+                Func<object, ISelectCollection> Get,
+                Action<object, ISelectCollection> Set,
                 string? Label = null) : GuiBoundProperty {
     }
 
 public record GuiBoundPropertyColor(
-                Func<IBindable, IFieldColor> Get,
-                Action<IBindable, IFieldColor> Set,
+                Func<object, IFieldColor> Get,
+                Action<object, IFieldColor> Set,
                 string? Label = null) : GuiBoundProperty {
     }
 
 
 public record GuiBoundPropertySize(
-                Func<IBindable, IFieldSize> Get,
-                Action<IBindable, IFieldSize> Set,
+                Func<object, IFieldSize> Get,
+                Action<object, IFieldSize> Set,
                 string? Label = null) : GuiBoundProperty {
     }
 
 
 public record GuiBoundPropertyDecimal(
-                Func<IBindable, double> Get,
-                Action<IBindable, double> Set,
+                Func<object, double> Get,
+                Action<object, double> Set,
                 string? Label = null) : GuiBoundProperty {
     }
 
 
 public record GuiBoundPropertyIcon(
-                Func<IBindable, IFieldIcon> Get,
-                Action<IBindable, IFieldIcon> Set,
+                Func<object, IFieldIcon> Get,
+                Action<object, IFieldIcon> Set,
                 string? Label = null) : GuiBoundProperty {
     }
 
@@ -157,7 +157,7 @@ public record GuiSection (
 
     public IBindable? Data {
             get => data ?? BindData().CacheValue(out data);
-            set => data = value; } 
+            set => data = value; }
     IBindable? data = null;
 
     public Func<IBindable> BindData { get; set; } = null!;

@@ -52,9 +52,9 @@ public partial class _Accounts : IBindable {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((IBindable data) => (data as _Accounts).ServiceAddress, null), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _Accounts).ProfileUDF, null), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _Accounts).LocalAddress, null)
+            new GuiBoundPropertyString ((object data) => (data as _Accounts).ServiceAddress, null), 
+            new GuiBoundPropertyString ((object data) => (data as _Accounts).ProfileUDF, null), 
+            new GuiBoundPropertyString ((object data) => (data as _Accounts).LocalAddress, null)
             });
 
     }
@@ -71,20 +71,12 @@ public partial class Messages : _Messages {
 public partial class _Messages : IBindable {
 
         ///<summary></summary> 
-        public virtual ISelectCollection UrgentMessage { get; set;} 
-
-        ///<summary></summary> 
-        public virtual ISelectCollection ContactRequests { get; set;} 
-
-        ///<summary></summary> 
-        public virtual ISelectCollection OtherMessage { get; set;} 
+        public virtual ISelectCollection ChooseMessage { get; set;} 
 
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyChooser ((IBindable data) => (data as _Messages).UrgentMessage, (IBindable data,ISelectCollection value) => (data as _Messages).UrgentMessage = value), 
-            new GuiBoundPropertyChooser ((IBindable data) => (data as _Messages).ContactRequests, (IBindable data,ISelectCollection value) => (data as _Messages).ContactRequests = value), 
-            new GuiBoundPropertyChooser ((IBindable data) => (data as _Messages).OtherMessage, (IBindable data,ISelectCollection value) => (data as _Messages).OtherMessage = value)
+            new GuiBoundPropertyChooser ((object data) => (data as _Messages).ChooseMessage, (object data,ISelectCollection value) => (data as _Messages).ChooseMessage = value)
             });
 
     }
@@ -101,20 +93,12 @@ public partial class Contacts : _Contacts {
 public partial class _Contacts : IBindable {
 
         ///<summary></summary> 
-        public virtual ISelectCollection ChooseSelf { get; set;} 
-
-        ///<summary></summary> 
-        public virtual ISelectCollection ContactMessage { get; set;} 
-
-        ///<summary></summary> 
-        public virtual ISelectCollection ChooseOther { get; set;} 
+        public virtual ISelectCollection ChooseContact { get; set;} 
 
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyChooser ((IBindable data) => (data as _Contacts).ChooseSelf, (IBindable data,ISelectCollection value) => (data as _Contacts).ChooseSelf = value), 
-            new GuiBoundPropertyChooser ((IBindable data) => (data as _Contacts).ContactMessage, (IBindable data,ISelectCollection value) => (data as _Contacts).ContactMessage = value), 
-            new GuiBoundPropertyChooser ((IBindable data) => (data as _Contacts).ChooseOther, (IBindable data,ISelectCollection value) => (data as _Contacts).ChooseOther = value)
+            new GuiBoundPropertyChooser ((object data) => (data as _Contacts).ChooseContact, (object data,ISelectCollection value) => (data as _Contacts).ChooseContact = value)
             });
 
     }
@@ -136,7 +120,7 @@ public partial class _Documents : IBindable {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyChooser ((IBindable data) => (data as _Documents).ChooseDocuments, (IBindable data,ISelectCollection value) => (data as _Documents).ChooseDocuments = value)
+            new GuiBoundPropertyChooser ((object data) => (data as _Documents).ChooseDocuments, (object data,ISelectCollection value) => (data as _Documents).ChooseDocuments = value)
             });
 
     }
@@ -158,7 +142,7 @@ public partial class _Groups : IBindable {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyChooser ((IBindable data) => (data as _Groups).ChooseGroup, (IBindable data,ISelectCollection value) => (data as _Groups).ChooseGroup = value)
+            new GuiBoundPropertyChooser ((object data) => (data as _Groups).ChooseGroup, (object data,ISelectCollection value) => (data as _Groups).ChooseGroup = value)
             });
 
     }
@@ -180,7 +164,7 @@ public partial class _Feeds : IBindable {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyChooser ((IBindable data) => (data as _Feeds).ChooseFeed, (IBindable data,ISelectCollection value) => (data as _Feeds).ChooseFeed = value)
+            new GuiBoundPropertyChooser ((object data) => (data as _Feeds).ChooseFeed, (object data,ISelectCollection value) => (data as _Feeds).ChooseFeed = value)
             });
 
     }
@@ -202,7 +186,7 @@ public partial class _Credentials : IBindable {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyChooser ((IBindable data) => (data as _Credentials).ChooseCredential, (IBindable data,ISelectCollection value) => (data as _Credentials).ChooseCredential = value)
+            new GuiBoundPropertyChooser ((object data) => (data as _Credentials).ChooseCredential, (object data,ISelectCollection value) => (data as _Credentials).ChooseCredential = value)
             });
 
     }
@@ -224,7 +208,7 @@ public partial class _Tasks : IBindable {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyChooser ((IBindable data) => (data as _Tasks).ChooseTask, (IBindable data,ISelectCollection value) => (data as _Tasks).ChooseTask = value)
+            new GuiBoundPropertyChooser ((object data) => (data as _Tasks).ChooseTask, (object data,ISelectCollection value) => (data as _Tasks).ChooseTask = value)
             });
 
     }
@@ -246,7 +230,29 @@ public partial class _Calendar : IBindable {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyChooser ((IBindable data) => (data as _Calendar).ChooseAppointment, (IBindable data,ISelectCollection value) => (data as _Calendar).ChooseAppointment = value)
+            new GuiBoundPropertyChooser ((object data) => (data as _Calendar).ChooseAppointment, (object data,ISelectCollection value) => (data as _Calendar).ChooseAppointment = value)
+            });
+
+    }
+
+/// <summary>
+/// Callback parameters for section Bookmark 
+/// </summary>
+public partial class Bookmark : _Bookmark {
+    }
+
+/// <summary>
+/// Callback parameters for section Bookmark 
+/// </summary>
+public partial class _Bookmark : IBindable {
+
+        ///<summary></summary> 
+        public virtual ISelectCollection ChooseBookmark { get; set;} 
+
+
+    public GuiBinding Binding => BaseBinding;
+    public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
+            new GuiBoundPropertyChooser ((object data) => (data as _Bookmark).ChooseBookmark, (object data,ISelectCollection value) => (data as _Bookmark).ChooseBookmark = value)
             });
 
     }
@@ -268,7 +274,7 @@ public partial class _Applications : IBindable {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyChooser ((IBindable data) => (data as _Applications).ChooseApplication, (IBindable data,ISelectCollection value) => (data as _Applications).ChooseApplication = value)
+            new GuiBoundPropertyChooser ((object data) => (data as _Applications).ChooseApplication, (object data,ISelectCollection value) => (data as _Applications).ChooseApplication = value)
             });
 
     }
@@ -290,7 +296,7 @@ public partial class _Devices : IBindable {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyChooser ((IBindable data) => (data as _Devices).ChooseDevice, (IBindable data,ISelectCollection value) => (data as _Devices).ChooseDevice = value)
+            new GuiBoundPropertyChooser ((object data) => (data as _Devices).ChooseDevice, (object data,ISelectCollection value) => (data as _Devices).ChooseDevice = value)
             });
 
     }
@@ -312,7 +318,7 @@ public partial class _Services : IBindable {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyChooser ((IBindable data) => (data as _Services).ChooseService, (IBindable data,ISelectCollection value) => (data as _Services).ChooseService = value)
+            new GuiBoundPropertyChooser ((object data) => (data as _Services).ChooseService, (object data,ISelectCollection value) => (data as _Services).ChooseService = value)
             });
 
     }
@@ -366,11 +372,11 @@ public partial class _Appearance : IBindable {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyColor ((IBindable data) => (data as _Appearance).BackgroundColor, (IBindable data,IFieldColor value) => (data as _Appearance).BackgroundColor = value), 
-            new GuiBoundPropertyColor ((IBindable data) => (data as _Appearance).HighlightColor, (IBindable data,IFieldColor value) => (data as _Appearance).HighlightColor = value), 
-            new GuiBoundPropertyColor ((IBindable data) => (data as _Appearance).TextColor, (IBindable data,IFieldColor value) => (data as _Appearance).TextColor = value), 
-            new GuiBoundPropertySize ((IBindable data) => (data as _Appearance).TextSize, (IBindable data,IFieldSize value) => (data as _Appearance).TextSize = value), 
-            new GuiBoundPropertySize ((IBindable data) => (data as _Appearance).IconSize, (IBindable data,IFieldSize value) => (data as _Appearance).IconSize = value)
+            new GuiBoundPropertyColor ((object data) => (data as _Appearance).BackgroundColor, (object data,IFieldColor value) => (data as _Appearance).BackgroundColor = value), 
+            new GuiBoundPropertyColor ((object data) => (data as _Appearance).HighlightColor, (object data,IFieldColor value) => (data as _Appearance).HighlightColor = value), 
+            new GuiBoundPropertyColor ((object data) => (data as _Appearance).TextColor, (object data,IFieldColor value) => (data as _Appearance).TextColor = value), 
+            new GuiBoundPropertySize ((object data) => (data as _Appearance).TextSize, (object data,IFieldSize value) => (data as _Appearance).TextSize = value), 
+            new GuiBoundPropertySize ((object data) => (data as _Appearance).IconSize, (object data,IFieldSize value) => (data as _Appearance).IconSize = value)
             });
 
     }
@@ -404,11 +410,11 @@ public partial class _AccountUser : IBindable {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((IBindable data) => (data as _AccountUser).Udf, (IBindable data,string value) => (data as _AccountUser).Udf = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _AccountUser).ServiceAddress, (IBindable data,string value) => (data as _AccountUser).ServiceAddress = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _AccountUser).Local, (IBindable data,string value) => (data as _AccountUser).Local = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _AccountUser).Description, (IBindable data,string value) => (data as _AccountUser).Description = value), 
-            new GuiBoundPropertyChooser ((IBindable data) => (data as _AccountUser).UserChooseDevice, (IBindable data,ISelectCollection value) => (data as _AccountUser).UserChooseDevice = value)
+            new GuiBoundPropertyString ((object data) => (data as _AccountUser).Udf, (object data,string value) => (data as _AccountUser).Udf = value), 
+            new GuiBoundPropertyString ((object data) => (data as _AccountUser).ServiceAddress, (object data,string value) => (data as _AccountUser).ServiceAddress = value), 
+            new GuiBoundPropertyString ((object data) => (data as _AccountUser).Local, (object data,string value) => (data as _AccountUser).Local = value), 
+            new GuiBoundPropertyString ((object data) => (data as _AccountUser).Description, (object data,string value) => (data as _AccountUser).Description = value), 
+            new GuiBoundPropertyChooser ((object data) => (data as _AccountUser).UserChooseDevice, (object data,ISelectCollection value) => (data as _AccountUser).UserChooseDevice = value)
             });
 
     }
@@ -451,14 +457,14 @@ public partial class _Contact : IBindable {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((IBindable data) => (data as _Contact).Local, (IBindable data,string value) => (data as _Contact).Local = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _Contact).Full, (IBindable data,string value) => (data as _Contact).Full = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _Contact).First, (IBindable data,string value) => (data as _Contact).First = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _Contact).Last, (IBindable data,string value) => (data as _Contact).Last = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _Contact).Prefix, (IBindable data,string value) => (data as _Contact).Prefix = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _Contact).Suffix, (IBindable data,string value) => (data as _Contact).Suffix = value), 
-            new GuiBoundPropertyChooser ((IBindable data) => (data as _Contact).NetworkAddress, (IBindable data,ISelectCollection value) => (data as _Contact).NetworkAddress = value), 
-            new GuiBoundPropertyChooser ((IBindable data) => (data as _Contact).PhysicalAddress, (IBindable data,ISelectCollection value) => (data as _Contact).PhysicalAddress = value)
+            new GuiBoundPropertyString ((object data) => (data as _Contact).Local, (object data,string value) => (data as _Contact).Local = value), 
+            new GuiBoundPropertyString ((object data) => (data as _Contact).Full, (object data,string value) => (data as _Contact).Full = value), 
+            new GuiBoundPropertyString ((object data) => (data as _Contact).First, (object data,string value) => (data as _Contact).First = value), 
+            new GuiBoundPropertyString ((object data) => (data as _Contact).Last, (object data,string value) => (data as _Contact).Last = value), 
+            new GuiBoundPropertyString ((object data) => (data as _Contact).Prefix, (object data,string value) => (data as _Contact).Prefix = value), 
+            new GuiBoundPropertyString ((object data) => (data as _Contact).Suffix, (object data,string value) => (data as _Contact).Suffix = value), 
+            new GuiBoundPropertyChooser ((object data) => (data as _Contact).NetworkAddress, (object data,ISelectCollection value) => (data as _Contact).NetworkAddress = value), 
+            new GuiBoundPropertyChooser ((object data) => (data as _Contact).PhysicalAddress, (object data,ISelectCollection value) => (data as _Contact).PhysicalAddress = value)
             });
 
     }
@@ -489,10 +495,10 @@ public partial class _ContactNetworkAddress : IBindable {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ((IBindable data) => (data as _ContactNetworkAddress).ProtocolIcon, (IBindable data,IFieldIcon value) => (data as _ContactNetworkAddress).ProtocolIcon = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _ContactNetworkAddress).Protocol, (IBindable data,string value) => (data as _ContactNetworkAddress).Protocol = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _ContactNetworkAddress).Address, (IBindable data,string value) => (data as _ContactNetworkAddress).Address = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _ContactNetworkAddress).Fingerprint, (IBindable data,string value) => (data as _ContactNetworkAddress).Fingerprint = value)
+            new GuiBoundPropertyIcon ((object data) => (data as _ContactNetworkAddress).ProtocolIcon, (object data,IFieldIcon value) => (data as _ContactNetworkAddress).ProtocolIcon = value), 
+            new GuiBoundPropertyString ((object data) => (data as _ContactNetworkAddress).Protocol, (object data,string value) => (data as _ContactNetworkAddress).Protocol = value), 
+            new GuiBoundPropertyString ((object data) => (data as _ContactNetworkAddress).Address, (object data,string value) => (data as _ContactNetworkAddress).Address = value), 
+            new GuiBoundPropertyString ((object data) => (data as _ContactNetworkAddress).Fingerprint, (object data,string value) => (data as _ContactNetworkAddress).Fingerprint = value)
             });
 
     }
@@ -538,15 +544,15 @@ public partial class _ContactPhysicalAddress : IBindable {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((IBindable data) => (data as _ContactPhysicalAddress).Appartment, (IBindable data,string value) => (data as _ContactPhysicalAddress).Appartment = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _ContactPhysicalAddress).Street, (IBindable data,string value) => (data as _ContactPhysicalAddress).Street = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _ContactPhysicalAddress).District, (IBindable data,string value) => (data as _ContactPhysicalAddress).District = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _ContactPhysicalAddress).Locality, (IBindable data,string value) => (data as _ContactPhysicalAddress).Locality = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _ContactPhysicalAddress).County, (IBindable data,string value) => (data as _ContactPhysicalAddress).County = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _ContactPhysicalAddress).Postcode, (IBindable data,string value) => (data as _ContactPhysicalAddress).Postcode = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _ContactPhysicalAddress).Country, (IBindable data,string value) => (data as _ContactPhysicalAddress).Country = value), 
-            new GuiBoundPropertyDecimal ((IBindable data) => (data as _ContactPhysicalAddress).Latitude, (IBindable data,double value) => (data as _ContactPhysicalAddress).Latitude = value), 
-            new GuiBoundPropertyDecimal ((IBindable data) => (data as _ContactPhysicalAddress).Longitude, (IBindable data,double value) => (data as _ContactPhysicalAddress).Longitude = value)
+            new GuiBoundPropertyString ((object data) => (data as _ContactPhysicalAddress).Appartment, (object data,string value) => (data as _ContactPhysicalAddress).Appartment = value), 
+            new GuiBoundPropertyString ((object data) => (data as _ContactPhysicalAddress).Street, (object data,string value) => (data as _ContactPhysicalAddress).Street = value), 
+            new GuiBoundPropertyString ((object data) => (data as _ContactPhysicalAddress).District, (object data,string value) => (data as _ContactPhysicalAddress).District = value), 
+            new GuiBoundPropertyString ((object data) => (data as _ContactPhysicalAddress).Locality, (object data,string value) => (data as _ContactPhysicalAddress).Locality = value), 
+            new GuiBoundPropertyString ((object data) => (data as _ContactPhysicalAddress).County, (object data,string value) => (data as _ContactPhysicalAddress).County = value), 
+            new GuiBoundPropertyString ((object data) => (data as _ContactPhysicalAddress).Postcode, (object data,string value) => (data as _ContactPhysicalAddress).Postcode = value), 
+            new GuiBoundPropertyString ((object data) => (data as _ContactPhysicalAddress).Country, (object data,string value) => (data as _ContactPhysicalAddress).Country = value), 
+            new GuiBoundPropertyDecimal ((object data) => (data as _ContactPhysicalAddress).Latitude, (object data,double value) => (data as _ContactPhysicalAddress).Latitude = value), 
+            new GuiBoundPropertyDecimal ((object data) => (data as _ContactPhysicalAddress).Longitude, (object data,double value) => (data as _ContactPhysicalAddress).Longitude = value)
             });
 
     }
@@ -571,8 +577,8 @@ public partial class _MessageContactRequest : IBindable {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((IBindable data) => (data as _MessageContactRequest).To, (IBindable data,string value) => (data as _MessageContactRequest).To = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _MessageContactRequest).Comment, (IBindable data,string value) => (data as _MessageContactRequest).Comment = value)
+            new GuiBoundPropertyString ((object data) => (data as _MessageContactRequest).To, (object data,string value) => (data as _MessageContactRequest).To = value), 
+            new GuiBoundPropertyString ((object data) => (data as _MessageContactRequest).Comment, (object data,string value) => (data as _MessageContactRequest).Comment = value)
             });
 
     }
@@ -597,8 +603,8 @@ public partial class _MessageConfirmationRequest : IBindable {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((IBindable data) => (data as _MessageConfirmationRequest).To, (IBindable data,string value) => (data as _MessageConfirmationRequest).To = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _MessageConfirmationRequest).Request, (IBindable data,string value) => (data as _MessageConfirmationRequest).Request = value)
+            new GuiBoundPropertyString ((object data) => (data as _MessageConfirmationRequest).To, (object data,string value) => (data as _MessageConfirmationRequest).To = value), 
+            new GuiBoundPropertyString ((object data) => (data as _MessageConfirmationRequest).Request, (object data,string value) => (data as _MessageConfirmationRequest).Request = value)
             });
 
     }
@@ -626,9 +632,9 @@ public partial class _MessageMail : IBindable {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((IBindable data) => (data as _MessageMail).To, (IBindable data,string value) => (data as _MessageMail).To = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _MessageMail).Subject, (IBindable data,string value) => (data as _MessageMail).Subject = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _MessageMail).Body, (IBindable data,string value) => (data as _MessageMail).Body = value)
+            new GuiBoundPropertyString ((object data) => (data as _MessageMail).To, (object data,string value) => (data as _MessageMail).To = value), 
+            new GuiBoundPropertyString ((object data) => (data as _MessageMail).Subject, (object data,string value) => (data as _MessageMail).Subject = value), 
+            new GuiBoundPropertyString ((object data) => (data as _MessageMail).Body, (object data,string value) => (data as _MessageMail).Body = value)
             });
 
     }
@@ -654,7 +660,7 @@ public partial class _TestService : IParameter {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((IBindable data) => (data as _TestService).ServiceAddress, (IBindable data,string value) => (data as _TestService).ServiceAddress = value)
+            new GuiBoundPropertyString ((object data) => (data as _TestService).ServiceAddress, (object data,string value) => (data as _TestService).ServiceAddress = value)
             });
 
     public virtual bool Validate() => true;
@@ -679,7 +685,7 @@ public partial class _AccountSwitch : IParameter {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyChooser ((IBindable data) => (data as _AccountSwitch).ChooseUser, (IBindable data,ISelectCollection value) => (data as _AccountSwitch).ChooseUser = value)
+            new GuiBoundPropertyChooser ((object data) => (data as _AccountSwitch).ChooseUser, (object data,ISelectCollection value) => (data as _AccountSwitch).ChooseUser = value)
             });
 
     public virtual bool Validate() => true;
@@ -710,9 +716,9 @@ public partial class _AccountCreate : IParameter {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((IBindable data) => (data as _AccountCreate).ServiceAddress, (IBindable data,string value) => (data as _AccountCreate).ServiceAddress = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _AccountCreate).LocalName, (IBindable data,string value) => (data as _AccountCreate).LocalName = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _AccountCreate).Coupon, (IBindable data,string value) => (data as _AccountCreate).Coupon = value)
+            new GuiBoundPropertyString ((object data) => (data as _AccountCreate).ServiceAddress, (object data,string value) => (data as _AccountCreate).ServiceAddress = value), 
+            new GuiBoundPropertyString ((object data) => (data as _AccountCreate).LocalName, (object data,string value) => (data as _AccountCreate).LocalName = value), 
+            new GuiBoundPropertyString ((object data) => (data as _AccountCreate).Coupon, (object data,string value) => (data as _AccountCreate).Coupon = value)
             });
 
     public virtual bool Validate() => true;
@@ -740,8 +746,8 @@ public partial class _AccountConnect : IParameter {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((IBindable data) => (data as _AccountConnect).ConnectionString, (IBindable data,string value) => (data as _AccountConnect).ConnectionString = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _AccountConnect).ConnectionPin, (IBindable data,string value) => (data as _AccountConnect).ConnectionPin = value)
+            new GuiBoundPropertyString ((object data) => (data as _AccountConnect).ConnectionString, (object data,string value) => (data as _AccountConnect).ConnectionString = value), 
+            new GuiBoundPropertyString ((object data) => (data as _AccountConnect).ConnectionPin, (object data,string value) => (data as _AccountConnect).ConnectionPin = value)
             });
 
     public virtual bool Validate() => true;
@@ -796,17 +802,17 @@ public partial class _AccountRecover : IParameter {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((IBindable data) => (data as _AccountRecover).ServiceAddress, (IBindable data,string value) => (data as _AccountRecover).ServiceAddress = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _AccountRecover).LocalName, (IBindable data,string value) => (data as _AccountRecover).LocalName = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _AccountRecover).Coupon, (IBindable data,string value) => (data as _AccountRecover).Coupon = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _AccountRecover).Share1, (IBindable data,string value) => (data as _AccountRecover).Share1 = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _AccountRecover).Share2, (IBindable data,string value) => (data as _AccountRecover).Share2 = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _AccountRecover).Share3, (IBindable data,string value) => (data as _AccountRecover).Share3 = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _AccountRecover).Share4, (IBindable data,string value) => (data as _AccountRecover).Share4 = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _AccountRecover).Share5, (IBindable data,string value) => (data as _AccountRecover).Share5 = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _AccountRecover).Share6, (IBindable data,string value) => (data as _AccountRecover).Share6 = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _AccountRecover).Share7, (IBindable data,string value) => (data as _AccountRecover).Share7 = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as _AccountRecover).Share8, (IBindable data,string value) => (data as _AccountRecover).Share8 = value)
+            new GuiBoundPropertyString ((object data) => (data as _AccountRecover).ServiceAddress, (object data,string value) => (data as _AccountRecover).ServiceAddress = value), 
+            new GuiBoundPropertyString ((object data) => (data as _AccountRecover).LocalName, (object data,string value) => (data as _AccountRecover).LocalName = value), 
+            new GuiBoundPropertyString ((object data) => (data as _AccountRecover).Coupon, (object data,string value) => (data as _AccountRecover).Coupon = value), 
+            new GuiBoundPropertyString ((object data) => (data as _AccountRecover).Share1, (object data,string value) => (data as _AccountRecover).Share1 = value), 
+            new GuiBoundPropertyString ((object data) => (data as _AccountRecover).Share2, (object data,string value) => (data as _AccountRecover).Share2 = value), 
+            new GuiBoundPropertyString ((object data) => (data as _AccountRecover).Share3, (object data,string value) => (data as _AccountRecover).Share3 = value), 
+            new GuiBoundPropertyString ((object data) => (data as _AccountRecover).Share4, (object data,string value) => (data as _AccountRecover).Share4 = value), 
+            new GuiBoundPropertyString ((object data) => (data as _AccountRecover).Share5, (object data,string value) => (data as _AccountRecover).Share5 = value), 
+            new GuiBoundPropertyString ((object data) => (data as _AccountRecover).Share6, (object data,string value) => (data as _AccountRecover).Share6 = value), 
+            new GuiBoundPropertyString ((object data) => (data as _AccountRecover).Share7, (object data,string value) => (data as _AccountRecover).Share7 = value), 
+            new GuiBoundPropertyString ((object data) => (data as _AccountRecover).Share8, (object data,string value) => (data as _AccountRecover).Share8 = value)
             });
 
     public virtual bool Validate() => true;
@@ -831,7 +837,7 @@ public partial class _RequestContact : IParameter {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((IBindable data) => (data as _RequestContact).Address, (IBindable data,string value) => (data as _RequestContact).Address = value)
+            new GuiBoundPropertyString ((object data) => (data as _RequestContact).Address, (object data,string value) => (data as _RequestContact).Address = value)
             });
 
     public virtual bool Validate() => true;
@@ -997,6 +1003,7 @@ public class _EverythingMaui : Gui {
 	public override List<GuiImage> Icons => icons;
 	readonly List<GuiImage> icons = new () {  
 		new GuiImage ("applications") , 
+		new GuiImage ("bookmark") , 
 		new GuiImage ("calendar") , 
 		new GuiImage ("chat") , 
 		new GuiImage ("connect") , 
@@ -1033,6 +1040,7 @@ public class _EverythingMaui : Gui {
 	public GuiSection SectionCredentials { get; } = new ("Credentials", "Credentials", "credentials", false);
 	public GuiSection SectionTasks { get; } = new ("Tasks", "Tasks", "tasks", false);
 	public GuiSection SectionCalendar { get; } = new ("Calendar", "Calendar", "calendar", false);
+	public GuiSection SectionBookmark { get; } = new ("Bookmark", "Bookmark", "bookmark", false);
 	public GuiSection SectionApplications { get; } = new ("Applications", "Applications", "applications", false);
 	public GuiSection SectionDevices { get; } = new ("Devices", "Devices", "devices", false);
 	public GuiSection SectionServices { get; } = new ("Services", "Services", "Services", false);
@@ -1085,38 +1093,41 @@ public class _EverythingMaui : Gui {
 			new GuiButton ("CreateChat", ActionCreateChat), 
 			new GuiButton ("StartVoice", ActionStartVoice), 
 			new GuiButton ("StartVideo", ActionStartVideo), 
-			new GuiChooser ("UrgentMessage", "Urgent", "urgent_messages", 0, new () {
-				}) , 
-			new GuiChooser ("ContactRequests", "Contact Requests", "contact_messages", 1, new () {
-				}) , 
-			new GuiChooser ("OtherMessage", "Messages", "inbox_messages", 2, new () {
+			new GuiChooser ("ChooseMessage", "Messages", "inbox_messages", 0, new () { 
+				new GuiView (BindingMessage), 
+	, 
+	, 
+	, 
+	
 				}) 		    
             };
 
 	    SectionContacts.Entries =  new () {  
-			new GuiChooser ("ChooseSelf", "Self", "contact_self", 0, new () {
-				}) , 
-			new GuiChooser ("ContactMessage", "Contact Requests", "contact_message", 1, new () {
-				}) , 
-			new GuiChooser ("ChooseOther", "Contacts", "contact_other", 2, new () {
+			new GuiButton ("RequestContact", ActionRequestContact), 
+			new GuiChooser ("ChooseContact", "Contacts", "contact_other", 0, new () { 
+				new GuiView (BindingCatalogedContact), 
+	, 
+	
 				}) 		    
             };
 
 	    SectionDocuments.Entries =  new () {  
 			new GuiButton ("SendDocument", ActionSendDocument), 
 			new GuiButton ("ShareDocument", ActionShareDocument), 
-			new GuiChooser ("ChooseDocuments", "Documents", "documents", 0, new () {
+			new GuiChooser ("ChooseDocuments", "Documents", "documents", 0, new () { 
+				new GuiView (BindingCatalogedDocument)
 				}) 		    
             };
 
 	    SectionGroups.Entries =  new () {  
 			new GuiChooser ("ChooseGroup", "User", "account_group", 0, new () { 
-				new GuiButton ("AccountCreate", ActionAccountCreate)
+				new GuiView (BindingCatalogedGroup)
 				}) 		    
             };
 
 	    SectionFeeds.Entries =  new () {  
-			new GuiChooser ("ChooseFeed", "Feeds", "feeds", 0, new () {
+			new GuiChooser ("ChooseFeed", "Feeds", "feeds", 0, new () { 
+				new GuiView (BindingCatalogedFeed)
 				}) 		    
             };
 
@@ -1127,28 +1138,37 @@ public class _EverythingMaui : Gui {
             };
 
 	    SectionTasks.Entries =  new () {  
-			new GuiChooser ("ChooseTask", "Tasks", "Tasks", 0, new () {
+			new GuiChooser ("ChooseTask", "Tasks", "Tasks", 0, new () { 
+				new GuiView (BindingCatalogedTask)
 				}) 		    
             };
 
 	    SectionCalendar.Entries =  new () {  
-			new GuiChooser ("ChooseAppointment", "Calendar", "Calendar", 0, new () {
+			new GuiChooser ("ChooseAppointment", "Tasks", "Tasks", 0, new () { 
+				new GuiView (BindingCatalogedTask)
+				}) 		    
+            };
+
+	    SectionBookmark.Entries =  new () {  
+			new GuiChooser ("ChooseBookmark", "Bookmark", "Bookmark", 0, new () { 
+				new GuiView (BindingCatalogedBookmark)
 				}) 		    
             };
 
 	    SectionApplications.Entries =  new () {  
-			new GuiChooser ("ChooseApplication", "Applications", "Applications", 0, new () {
+			new GuiChooser ("ChooseApplication", "Applications", "Applications", 0, new () { 
+				new GuiView (BindingCatalogedApplication)
 				}) 		    
             };
 
 	    SectionDevices.Entries =  new () {  
-			new GuiChooser ("ChooseDevice", "Devices", "Devices", 0, new () {
+			new GuiChooser ("ChooseDevice", "Devices", "Devices", 0, new () { 
+				new GuiView (BindingCatalogedDevice)
 				}) 		    
             };
 
 	    SectionServices.Entries =  new () {  
-			new GuiChooser ("ChooseService", "Services", "account_service.png", 0, new () { 
-				new GuiButton ("AccountCreate", ActionAccountCreate)
+			new GuiChooser ("ChooseService", "Services", "account_service.png", 0, new () {
 				}) 		    
             };
 
@@ -1173,6 +1193,7 @@ public class _EverythingMaui : Gui {
 		    SectionCredentials, 
 		    SectionTasks, 
 		    SectionCalendar, 
+		    SectionBookmark, 
 		    SectionApplications, 
 		    SectionDevices, 
 		    SectionServices, 
@@ -1405,11 +1426,53 @@ public class _EverythingMaui : Gui {
 
     
     /// <summary> </summary>
+    public static GuiBinding BindingMessage = new GuiBinding (new GuiBoundProperty[] {
+            });
+    /// <summary> </summary>
+    public static GuiBinding BindingCatalogedDevice = new GuiBinding (new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as CatalogedDevice).LocalName, (object data,string value) => (data as CatalogedDevice).LocalName = value), 
+            new GuiBoundPropertyString ((object data) => (data as CatalogedDevice).Udf, (object data,string value) => (data as CatalogedDevice).Udf = value), 
+            new GuiBoundPropertyString ((object data) => (data as CatalogedDevice).LocalName, (object data,string value) => (data as CatalogedDevice).LocalName = value), 
+            new GuiBoundPropertyString ((object data) => (data as CatalogedDevice).Description, (object data,string value) => (data as CatalogedDevice).Description = value)
+            });
+    /// <summary> </summary>
+    public static GuiBinding BindingCatalogedDocument = new GuiBinding (new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as CatalogedDocument).Name, (object data,string value) => (data as CatalogedDocument).Name = value), 
+            new GuiBoundPropertyString ((object data) => (data as CatalogedDocument).ContentType, (object data,string value) => (data as CatalogedDocument).ContentType = value), 
+            new GuiBoundPropertyString ((object data) => (data as CatalogedDocument).Description, (object data,string value) => (data as CatalogedDocument).Description = value)
+            });
+    /// <summary> </summary>
+    public static GuiBinding BindingCatalogedGroup = new GuiBinding (new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as CatalogedGroup).LocalName, (object data,string value) => (data as CatalogedGroup).LocalName = value), 
+            new GuiBoundPropertyString ((object data) => (data as CatalogedGroup).ServiceAddress, (object data,string value) => (data as CatalogedGroup).ServiceAddress = value)
+            });
+    /// <summary> </summary>
+    public static GuiBinding BindingCatalogedFeed = new GuiBinding (new GuiBoundProperty[] {
+            });
+    /// <summary> </summary>
     public static GuiBinding BindingCatalogedCredential = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((IBindable data) => (data as CatalogedCredential).Service, (IBindable data,string value) => (data as CatalogedCredential).Service = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as CatalogedCredential).Username, (IBindable data,string value) => (data as CatalogedCredential).Username = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as CatalogedCredential).Password, (IBindable data,string value) => (data as CatalogedCredential).Password = value), 
-            new GuiBoundPropertyString ((IBindable data) => (data as CatalogedCredential).Protocol, (IBindable data,string value) => (data as CatalogedCredential).Protocol = value)
+            new GuiBoundPropertyString ((object data) => (data as CatalogedCredential).LocalName, (object data,string value) => (data as CatalogedCredential).LocalName = value), 
+            new GuiBoundPropertyString ((object data) => (data as CatalogedCredential).Service, (object data,string value) => (data as CatalogedCredential).Service = value), 
+            new GuiBoundPropertyString ((object data) => (data as CatalogedCredential).Username, (object data,string value) => (data as CatalogedCredential).Username = value), 
+            new GuiBoundPropertyString ((object data) => (data as CatalogedCredential).Password, (object data,string value) => (data as CatalogedCredential).Password = value), 
+            new GuiBoundPropertyString ((object data) => (data as CatalogedCredential).Protocol, (object data,string value) => (data as CatalogedCredential).Protocol = value), 
+            new GuiBoundPropertyString ((object data) => (data as CatalogedCredential).Description, (object data,string value) => (data as CatalogedCredential).Description = value)
+            });
+    /// <summary> </summary>
+    public static GuiBinding BindingCatalogedTask = new GuiBinding (new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as CatalogedTask).LocalName, (object data,string value) => (data as CatalogedTask).LocalName = value), 
+            new GuiBoundPropertyString ((object data) => (data as CatalogedTask).Title, (object data,string value) => (data as CatalogedTask).Title = value)
+            });
+    /// <summary> </summary>
+    public static GuiBinding BindingCatalogedBookmark = new GuiBinding (new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as CatalogedBookmark).LocalName, (object data,string value) => (data as CatalogedBookmark).LocalName = value), 
+            new GuiBoundPropertyString ((object data) => (data as CatalogedBookmark).Uri, (object data,string value) => (data as CatalogedBookmark).Uri = value), 
+            new GuiBoundPropertyString ((object data) => (data as CatalogedBookmark).Title, (object data,string value) => (data as CatalogedBookmark).Title = value), 
+            new GuiBoundPropertyString ((object data) => (data as CatalogedBookmark).Description, (object data,string value) => (data as CatalogedBookmark).Description = value)
+            });
+    /// <summary> </summary>
+    public static GuiBinding BindingCatalogedApplication = new GuiBinding (new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as CatalogedApplication).LocalName, (object data,string value) => (data as CatalogedApplication).LocalName = value)
             });
 
 

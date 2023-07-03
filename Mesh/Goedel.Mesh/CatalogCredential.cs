@@ -134,13 +134,13 @@ public class CatalogCredential : Catalog<CatalogedCredential> {
     }
 
 
-public partial class CatalogedCredential : IBindable {
+public partial class CatalogedCredential  {
     #region // Properties
 
     ///<summary>The primary key is protocol:site </summary>
     public override string _PrimaryKey => GetKey(Protocol, Service);
 
-    public GuiBinding Binding => throw new NotImplementedException();
+    //public GuiBinding Binding => throw new NotImplementedException();
 
     #endregion
     #region // Override methods

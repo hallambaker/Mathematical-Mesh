@@ -782,6 +782,9 @@
 		String Uid
 			Description
 				|Globaly unique identifier
+		String Description
+			Description
+				|Description
 
 	Structure CatalogedDevice
 		Inherits CatalogedEntry
@@ -837,6 +840,27 @@
 		Description
 			|Cataloged Signature
 
+	Structure CatalogedDocument
+		Description
+			|A document stored on a service somewhere.
+		Inherits CatalogedEntry
+		String Udf
+			Description
+				|Document fingerprint.
+		String URI
+			Description
+				|Locator to be used to retrieve the data.
+		String ContentType
+			Description
+				|IANA content type of the encoded content.
+		String Encoding
+			Description
+				|Content encoding, typically DARE envelope.
+		DateTime Created
+		DateTime Updated
+		Integer Length
+			Description
+				|Encoded document length in bytes.
 
 	Structure CatalogedPublication
 		Inherits CatalogedEntry

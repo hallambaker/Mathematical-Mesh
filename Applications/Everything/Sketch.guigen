@@ -29,31 +29,35 @@ Section Messages "Messages" "messages"
 	Button StartVoice
 	Button StartVideo
 
-	Chooser UrgentMessage "Urgent" "urgent_messages" Message
-
-	Chooser ContactRequests "Contact Requests" "contact_messages" Message
-
-	Chooser OtherMessage "Messages" "inbox_messages" Message
+	Chooser ChooseMessage "Messages" "inbox_messages" Message
+		View Message
+		Filter ContactRequest		"Contact Request"
+		Filter ConfirmationRequest	"Confirmation Request"
+		Filter DeviceRequest		"Device Request"
+		Filter Inbox "Inbox"
 
 Section Contacts "Contacts" "contacts"
 	Primary
-	Chooser ChooseSelf "Self" "contact_self" Contact
-		
-	Chooser ContactMessage "Contact Requests" "contact_message" Message
-		
-	Chooser ChooseOther "Contacts" "contact_other" Contact
+	Button RequestContact
+	Chooser ChooseContact "Contacts" "contact_other" CatalogedContact
+		View CatalogedContact
+		Filter Self "Self"
+		Filter All "Others"
 
 Section Documents "Documents" "Documents"
 	Button SendDocument "Send document" "document_send"
 	Button ShareDocument "Share document" "document_share"
-	Chooser ChooseDocuments "Documents" "documents" Document
+	Chooser ChooseDocuments "Documents" "documents" CatalogedDocument
+		View CatalogedDocument
 
 Section Groups "Groups" "groups"
-	Chooser ChooseGroup "User" "account_group" AccountGroup
-		Button AccountCreate "Create Mesh Group" "new"
+	//Button GroupCreate "Create Mesh Group" "new"
+	Chooser ChooseGroup "User" "account_group" CatalogedGroup
+		View CatalogedGroup
 
 Section Feeds "Feeds" "feeds"
 	Chooser ChooseFeed "Feeds" "feeds" Feed
+		View CatalogedFeed
 
 Section Credentials "Credentials" "credentials"
 	Chooser ChooseCredential "Credentials" "credentials" CatalogedCredential
@@ -61,19 +65,27 @@ Section Credentials "Credentials" "credentials"
 
 Section Tasks "Tasks" "tasks"
 	Chooser ChooseTask "Tasks" "Tasks" Task
+		View CatalogedTask
 
 Section Calendar "Calendar" "calendar"
-	Chooser ChooseAppointment "Calendar" "Calendar" Appointment
+	Chooser ChooseAppointment "Tasks" "Tasks" Task
+		View CatalogedTask
+
+Section Bookmark "Bookmark" "bookmark"
+	Chooser ChooseBookmark "Bookmark" "Bookmark" CatalogedBookmark
+		View CatalogedBookmark
 
 Section Applications "Applications" "applications"
-	Chooser ChooseApplication "Applications" "Applications" Application
+	Chooser ChooseApplication "Applications" "Applications" CatalogedApplication
+		View CatalogedApplication
 
 Section Devices "Devices" "devices"
 	Chooser ChooseDevice "Devices" "Devices" Device
+		View CatalogedDevice
 
 Section Services "Services" "Services"
 	Chooser ChooseService "Services" "account_service.png" AccountGroup
-		Button AccountCreate "Create Mesh Service" "new"
+
 
 Section Settings "Settings" "settings"
 	Primary
@@ -191,26 +203,68 @@ Dialog MessageMail
 	Text Body "Body"
 
 
+Binding Message
+	Type MessageDefault  "icon"
+	Type MessageConnection "icon"
+	Type MessageContact "icon"
+	Type MessageConfirmation "icon"
+	Type MessageTask "icon"
+	Type MessageError "icon"
+	Type MessageComplete "icon"
+	Type MessageGroup "icon"
+
+
+
+Binding CatalogedDevice
+	Type Default  "icon"
+	Type Admin "icon"
+	Text LocalName "Local"
+	Text Udf "Fingerprint"
+	Text LocalName "Local"
+	Text Description "Description"
+
+Binding CatalogedDocument
+	Text Name "Name"
+	Text ContentType "Type"
+	DateTime DateCreated "Created"
+		
+	DateTime DateModified "Updated"
+		
+	Integer Size "Size"
+		
+	Text Description "Description"
+
+
+Binding CatalogedGroup
+	Text LocalName "Name"
+	Text ServiceAddress "Address"
+
+
+Binding CatalogedFeed
+
 Binding CatalogedCredential
+	Type Default  "icon"
+	Type Self "icon"
+	Text LocalName "Local"
 	Text Service "Site"
 	Text Username "Username""
 	Text Password "Password"
 	Text Protocol "Protocol"
+	Text Description "Description"
 
-//Binding Message
-//Binding Contact
-//Binding Document
-//Binding AccountGroup
-//Binding Feed
-//Binding Task
+Binding CatalogedTask
+	Text LocalName "Name"
+	Text Title "Title"
 
-//Binding Appintment
-//Binding Application
-//Binding Device
-//Binding User
-//Binding NetworkAddress
+Binding CatalogedBookmark
+	Text LocalName "Name"
+	Text Uri "Uri"
+	Text Title "Title"
+	Text Description "Description"
 
-//Binding PhysicalAddress
+Binding CatalogedApplication
+	Text LocalName "Name"
+
 
 
 
