@@ -966,6 +966,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// </summary>
     /// <param name="envelopes">The enveolpes to append</param>
     /// <param name="index">The starting point at which to begin appending.</param>
+    /// <param name="unverified">If true, do not attempt to verify the integrity or authenticity
+    /// of the envelopes being appended.</param>
     public void Append(List<DareEnvelope> envelopes, long index = 0, bool unverified = true) {
 
         for (var i = (int)index; i < envelopes.Count; i++) {

@@ -86,6 +86,7 @@ public class Store : Disposable, IInternSequenceIndexEntry {
     ///<inheritdoc/>
     public virtual SequenceIndexEntryFactoryDelegate SequenceIndexEntryFactory => SpoolIndexEntry.Factory;
 
+    ///<inheritdoc/>
     public virtual IEnumerator Enumerate() => throw new NYI();
 
     int BitmaskSizeBytes => 4;
@@ -200,11 +201,17 @@ public class Store : Disposable, IInternSequenceIndexEntry {
         SequenceIndexEntryFactoryDelegate = SequenceIndexEntry.Factory
         };
 
+    
+    /// <summary>
+    /// Return a selection constraint for the store <paramref name="storeName"/> in the
+    /// directory <paramref name="directory"/>.
+    /// </summary>
+    /// <param name="directory">Directory where the store is located.</param>
+    /// <param name="storeName">The store.</param>
+    /// <returns></returns>
     public static ConstraintsSelect GetConstraintsSelect(
                 string directory,
                 string storeName) {
-
-
 
         if (storeName == SpoolInbound.Label) {
             }

@@ -173,37 +173,11 @@ public abstract partial class JsonObject : IBinding {
         }
 
 
+    ///<inheritdoc/>
     public virtual Binding _Binding => _binding;
+    
+    ///<summary>Binding specification.</summary> 
     protected static Binding _binding = null;
-
-
-
-    ///// <summary>
-    ///// Sets the values of the property <paramref name="tag"/> to the values specified
-    ///// by <paramref name="value"/>.
-    ///// </summary>
-    ///// <param name="tag">The string representation of the tag.</param>
-    ///// <param name="value">The tokenized values.</param>
-    //public virtual void Setter(
-    //        string tag, TokenValue value) => _Unregistered[tag] = value;
-
-
-    ///// <summary>
-    ///// Gets the values of the property <paramref name="tag"/>;
-    ///// </summary>
-    ///// <param name="tag">The string representation of the tag.</param>
-    ///// <returns>The values of the property with tag <paramref name="tag"/>.</returns>
-    //public virtual TokenValue Getter(
-    //            string tag) => _unregistered == null ? TokenValue.Unknown :
-    //                _unregistered.ContainsKey(tag) ? _unregistered[tag] : TokenValue.Unknown;
-
-    ///// <summary>
-    ///// Dictionary of unregistered tags encountered when attempting to deserialize a
-    ///// document.
-    ///// </summary>
-    //public Dictionary<string, TokenValue> _Unregistered => _unregistered ??
-    //    new Dictionary<string, TokenValue>().CacheValue(out _unregistered);
-    //Dictionary<string, TokenValue> _unregistered;
 
 
     ///<summary>Dictionary describing the serializable properties.</summary> 

@@ -109,14 +109,12 @@ public record GuiItem(
 public record GuiDialog : GuiItem , IGuiEntry {
     public IPresentation? Presentation { get; set; } = null;
 
-    public string Id { get; set; }
     public List<IGuiEntry> Entries { get; set; } = null!;
 
     public GuiDialog(
            string id,
             List<IGuiEntry> entries = null!
            ) : base(id){
-        Id = id;
         Entries = entries;
 
         }
@@ -160,7 +158,7 @@ public record GuiSection (
             set => data = value; }
     IBindable? data = null;
 
-    public Func<IBindable> BindData { get; set; } = null!;
+    public Func<IBindable> BindData { get; set; } = () => null! ;
 
     public List<IGuiEntry> Entries { get; set; } = null!;
 

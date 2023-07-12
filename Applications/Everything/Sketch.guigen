@@ -6,7 +6,7 @@ Class Goedel.Everything EverythingMaui
 
 // Sections
 
-Section Accounts "Account" "user"
+Section Account "Account" "user"
 	Button Groups
 	Button Services
 	Button AccountCreate 
@@ -224,7 +224,7 @@ Binding CatalogedDevice
 	Text Description "Description"
 
 Binding CatalogedDocument
-	Text Name "Name"
+	//Text Name "Name"
 	Text ContentType "Type"
 	DateTime DateCreated "Created"
 		
@@ -237,14 +237,16 @@ Binding CatalogedDocument
 
 Binding CatalogedGroup
 	Text LocalName "Name"
-	Text ServiceAddress "Address"
+	//Text ServiceAddress "Address"
 
 
 Binding CatalogedFeed
 
-Binding CatalogedCredential
+Binding CatalogedContact
 	Type Default  "icon"
 	Type Self "icon"
+
+Binding CatalogedCredential
 	Text LocalName "Local"
 	Text Service "Site"
 	Text Username "Username""

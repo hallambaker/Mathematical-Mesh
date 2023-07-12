@@ -52,7 +52,10 @@ public abstract class ServiceConfiguration : IConfigurationEntry {
     public string? HostPath { get; set; } = null;
 
 
-
+    /// <summary>
+    /// Inherit default configuration information from <paramref name="genericHost"/>.
+    /// </summary>
+    /// <param name="genericHost">The default configuration.</param>
     public void InheritDefaults(GenericHostConfiguration genericHost) {
 
 

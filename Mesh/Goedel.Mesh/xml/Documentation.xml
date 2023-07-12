@@ -2146,6 +2146,9 @@
             </summary>
             <returns>The enumerator.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Catalog`1.Enumerate">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Catalog`1.SequenceIndexEntryFactory">
             <inheritdoc/>
         </member>
@@ -3987,6 +3990,11 @@
         <member name="P:Goedel.Mesh.CatalogedEntry.Uid">
              <summary>
             Globaly unique identifier
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedEntry.Description">
+             <summary>
+            Description
              </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedEntry._Binding">
@@ -14798,6 +14806,90 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="T:Goedel.Mesh.CatalogedDocument">
+             <summary>
+            
+             A document stored on a service somewhere.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument.Udf">
+             <summary>
+            Document fingerprint.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument.URI">
+             <summary>
+            Locator to be used to retrieve the data.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument.ContentType">
+             <summary>
+            IANA content type of the encoded content.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument.Encoding">
+             <summary>
+            Content encoding, typically DARE envelope.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument.Created">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument.Updated">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument.Length">
+             <summary>
+            Encoded document length in bytes.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedDocument._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedDocument._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedDocument._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedDocument.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedDocument._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedDocument.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
         <member name="T:Goedel.Mesh.Capability">
             <summary>
             </summary>
@@ -15818,6 +15910,9 @@
         <member name="P:Goedel.Mesh.Store.SequenceIndexEntryFactory">
             <inheritdoc/>
         </member>
+        <member name="M:Goedel.Mesh.Store.Enumerate">
+            <inheritdoc/>
+        </member>
         <member name="M:Goedel.Mesh.Store.Select(System.Int64,System.Boolean,System.Int64,Goedel.Cryptography.Dare.FilterIndexDelegate,System.Boolean)">
             <summary>
             Constructor, returns an enumerator on the sequence, starting
@@ -15870,6 +15965,15 @@
             <param name="directory">Directory of store file on local machine.</param>
             <param name="storeId">Store identifier.</param>
             <returns>The value of the last frame index plus 1.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Store.GetConstraintsSelect(System.String,System.String)">
+            <summary>
+            Return a selection constraint for the store <paramref name="storeName"/> in the
+            directory <paramref name="directory"/>.
+            </summary>
+            <param name="directory">Directory where the store is located.</param>
+            <param name="storeName">The store.</param>
+            <returns></returns>
         </member>
         <member name="M:Goedel.Mesh.Store.Intern(Goedel.Cryptography.Dare.SequenceIndexEntry)">
             <inheritdoc/>

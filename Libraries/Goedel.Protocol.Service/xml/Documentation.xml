@@ -991,6 +991,12 @@
         <member name="P:Goedel.Protocol.Service.ServiceConfiguration.HostPath">
             <summary>Path to the host data.</summary> 
         </member>
+        <member name="M:Goedel.Protocol.Service.ServiceConfiguration.InheritDefaults(Goedel.Protocol.GenericHostConfiguration)">
+            <summary>
+            Inherit default configuration information from <paramref name="genericHost"/>.
+            </summary>
+            <param name="genericHost">The default configuration.</param>
+        </member>
         <member name="T:Goedel.Protocol.Service.PayloadTag">
             <summary>Payload tags</summary>
         </member>

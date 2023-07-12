@@ -26,12 +26,22 @@ using System.Collections;
 namespace Goedel.Protocol;
 
 
-
+/// <summary>
+/// Interface of a bindable object.
+/// </summary>
 public interface IBinding {
 
+    ///<summary>The binding of the object.</summary> 
     Binding _Binding { get; }
     }
 
+/// <summary>
+/// Binding specification.
+/// </summary>
+/// <param name="Properties">Dictionary mapping the property tag to the field specification.</param>
+/// <param name="Tag">JSON tag for this object.</param>
+/// <param name="Factory">Factory returning a new instance of this object.</param>
+/// <param name="Parent">Parent the object inherits from.</param>
 public record Binding(
             Dictionary<string, Property> Properties,
             string Tag,
@@ -45,18 +55,13 @@ public record Binding(
 /// <summary>
 /// Metadate record representing a property.
 /// </summary>
-/// <param name="TokenType">The token type (consider removing).</param>
 /// <param name="Multiple">If true, represents a list of entries.</param>
-/// <param name="Factory">Factory generating an instance of the node (if required).</param>
-/// <param name="IFactory">Factory generating an instance of a list member (if required).</param>
 /// <param name="Tagged">If true, structures are to be represented as a tagged structure.</param>
 /// <param name="Tag">Tag identifying this property in JSON serialization</param>
 ///// <param name="tagDictionary">Tag dictionary to be used to deserialize the property.</param>
 public abstract record Property(
             string Tag,
             bool Multiple,
-            //Func<object> Factory=null,
-            //Func<object> IFactory=null,
             bool Tagged=false) {
 
 
@@ -64,8 +69,7 @@ public abstract record Property(
     /// Serialize a token to the writer <paramref name="writer"/>.
     /// </summary>
     /// <param name="writer">The writer to emit the structured data to.</param>
-    /// 
-    /// 
+    /// <param name="data">The data to serialize.</param>
     public virtual void Serialize(IBinding data, Writer writer) {
         }
 
@@ -496,6 +500,10 @@ public record PropertyListReal64(
 /// <param name="Tag">Tag identifying this property in JSON serialization</param>
 /// <param name="Set">Set the property to the specified value.</param>
 /// <param name="Get">Return the value of the property.</param>
+/// <param name="Factory">Factory returning an instance of the object.</param>
+/// <param name="IFactory">For a collection object, factory returning an instance of an
+/// object in the collection.</param>
+/// <param name="Tagged">If true, the property should be tagged.</param>
 public record PropertyStruct(
             string Tag,
             Action<IBinding, object?> Set,
@@ -521,6 +529,10 @@ public record PropertyStruct(
 /// <param name="Tag">Tag identifying this property in JSON serialization</param>
 /// <param name="Set">Set the property to the specified value.</param>
 /// <param name="Get">Return the value of the property.</param>
+/// <param name="Factory">Factory returning an instance of the object.</param>
+/// <param name="IFactory">For a collection object, factory returning an instance of an
+/// object in the collection.</param>
+/// <param name="Tagged">If true, the property should be tagged.</param>
 public record PropertyListStruct(
             string Tag,
             Action<IBinding, object?> Set,

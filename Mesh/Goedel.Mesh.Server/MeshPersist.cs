@@ -362,7 +362,7 @@ public class MeshPersist : Disposable {
     /// be appropriately authenticated.
     /// </summary>
     /// <param name="session">The session connection data.</param>
-    /// <param name="selections">The selection criteria.</param>
+    /// <param name="request">The selection criteria.</param>
     public DownloadResponse AccountDownload(
                 IJpcSession session,
                 DownloadRequest request) {

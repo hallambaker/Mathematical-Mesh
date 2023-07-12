@@ -100,10 +100,10 @@ public class GuigenMainFlyout : FlyoutPage, IReformat, IMainWindow {
         }
 
     /// <summary>
-    /// Event callback. Display the cached detail window associated with <paramref name="section"/>
+    /// Event callback. Display the  detail window associated with <paramref name="action"/>
     /// if it exists, otherwise create a new detail window.
     /// </summary>
-    /// <param name="section"></param>
+    /// <param name="action">The action window to raise.</param>
     public void SetDetailWindow(GuiAction action) {
         var detail = action.Presentation as GuigenDetailSection;
 

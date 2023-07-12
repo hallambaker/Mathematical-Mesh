@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Mesh.Machine</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Mesh.Machine.NamespaceDoc">
+            <summary>
+            Mesh Callsign registry implementation.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -300,6 +300,9 @@
         <member name="P:Goedel.Mesh.Server.AccountHandleLocked.AccountUser">
             <summary>The account entry in the service catalog.</summary> 
         </member>
+        <member name="P:Goedel.Mesh.Server.AccountHandleLocked.LocalAddress">
+            <summary>The account local name.</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Server.AccountHandleLocked.ProfileAccount">
             <summary>The account profile</summary> 
         </member>
@@ -1604,7 +1607,7 @@
             be appropriately authenticated.
             </summary>
             <param name="session">The session connection data.</param>
-            <param name="selections">The selection criteria.</param>
+            <param name="request">The selection criteria.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.PublicDownload(Goedel.Protocol.IJpcSession,System.String,System.Collections.Generic.List{Goedel.Mesh.ConstraintsSelect})">
             <summary>

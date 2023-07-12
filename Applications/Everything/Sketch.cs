@@ -30,15 +30,15 @@ namespace Goedel.Everything;
 
 
 /// <summary>
-/// Callback parameters for section Accounts 
+/// Callback parameters for section Account 
 /// </summary>
-public partial class Accounts : _Accounts {
+public partial class Account : _Account {
     }
 
 /// <summary>
-/// Callback parameters for section Accounts 
+/// Callback parameters for section Account 
 /// </summary>
-public partial class _Accounts : IBindable {
+public partial class _Account : IBindable {
 
         ///<summary></summary> 
         public virtual string ServiceAddress { get;} 
@@ -52,9 +52,9 @@ public partial class _Accounts : IBindable {
 
     public GuiBinding Binding => BaseBinding;
     public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as _Accounts).ServiceAddress, null), 
-            new GuiBoundPropertyString ((object data) => (data as _Accounts).ProfileUDF, null), 
-            new GuiBoundPropertyString ((object data) => (data as _Accounts).LocalAddress, null)
+            new GuiBoundPropertyString ((object data) => (data as _Account).ServiceAddress, null), 
+            new GuiBoundPropertyString ((object data) => (data as _Account).ProfileUDF, null), 
+            new GuiBoundPropertyString ((object data) => (data as _Account).LocalAddress, null)
             });
 
     }
@@ -1031,7 +1031,7 @@ public class _EverythingMaui : Gui {
 
 
 	// Sections
-	public GuiSection SectionAccounts { get; } = new ("Accounts", "Account", "user", false);
+	public GuiSection SectionAccount { get; } = new ("Account", "Account", "user", false);
 	public GuiSection SectionMessages { get; } = new ("Messages", "Messages", "messages", true);
 	public GuiSection SectionContacts { get; } = new ("Contacts", "Contacts", "contacts", true);
 	public GuiSection SectionDocuments { get; } = new ("Documents", "Documents", "Documents", false);
@@ -1075,7 +1075,7 @@ public class _EverythingMaui : Gui {
     public _EverythingMaui () {
 
 
-	    SectionAccounts.Entries =  new () {  
+	    SectionAccount.Entries =  new () {  
 			new GuiButton ("Groups", SectionGroups), 
 			new GuiButton ("Services", SectionServices), 
 			new GuiButton ("AccountCreate", ActionAccountCreate), 
@@ -1094,20 +1094,14 @@ public class _EverythingMaui : Gui {
 			new GuiButton ("StartVoice", ActionStartVoice), 
 			new GuiButton ("StartVideo", ActionStartVideo), 
 			new GuiChooser ("ChooseMessage", "Messages", "inbox_messages", 0, new () { 
-				new GuiView (BindingMessage), 
-	, 
-	, 
-	, 
-	
+				new GuiView (BindingMessage)
 				}) 		    
             };
 
 	    SectionContacts.Entries =  new () {  
 			new GuiButton ("RequestContact", ActionRequestContact), 
 			new GuiChooser ("ChooseContact", "Contacts", "contact_other", 0, new () { 
-				new GuiView (BindingCatalogedContact), 
-	, 
-	
+				new GuiView (BindingCatalogedContact)
 				}) 		    
             };
 
@@ -1184,7 +1178,7 @@ public class _EverythingMaui : Gui {
 
 
         Sections = new List<GuiSection> () {  
-		    SectionAccounts, 
+		    SectionAccount, 
 		    SectionMessages, 
 		    SectionContacts, 
 		    SectionDocuments, 
@@ -1437,17 +1431,18 @@ public class _EverythingMaui : Gui {
             });
     /// <summary> </summary>
     public static GuiBinding BindingCatalogedDocument = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as CatalogedDocument).Name, (object data,string value) => (data as CatalogedDocument).Name = value), 
             new GuiBoundPropertyString ((object data) => (data as CatalogedDocument).ContentType, (object data,string value) => (data as CatalogedDocument).ContentType = value), 
             new GuiBoundPropertyString ((object data) => (data as CatalogedDocument).Description, (object data,string value) => (data as CatalogedDocument).Description = value)
             });
     /// <summary> </summary>
     public static GuiBinding BindingCatalogedGroup = new GuiBinding (new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as CatalogedGroup).LocalName, (object data,string value) => (data as CatalogedGroup).LocalName = value), 
-            new GuiBoundPropertyString ((object data) => (data as CatalogedGroup).ServiceAddress, (object data,string value) => (data as CatalogedGroup).ServiceAddress = value)
+            new GuiBoundPropertyString ((object data) => (data as CatalogedGroup).LocalName, (object data,string value) => (data as CatalogedGroup).LocalName = value)
             });
     /// <summary> </summary>
     public static GuiBinding BindingCatalogedFeed = new GuiBinding (new GuiBoundProperty[] {
+            });
+    /// <summary> </summary>
+    public static GuiBinding BindingCatalogedContact = new GuiBinding (new GuiBoundProperty[] {
             });
     /// <summary> </summary>
     public static GuiBinding BindingCatalogedCredential = new GuiBinding (new GuiBoundProperty[] { 

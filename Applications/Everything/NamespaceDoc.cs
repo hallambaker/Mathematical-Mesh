@@ -29,7 +29,7 @@ global using Goedel.Guigen.Maui;
 global using Goedel.Mesh;
 global using Goedel.Mesh.Client;
 global using Microsoft.Extensions.Logging;
-
+global using Camera.MAUI;
 
 #if !(_Github_)
 //[assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]

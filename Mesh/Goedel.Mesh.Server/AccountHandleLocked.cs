@@ -78,7 +78,7 @@ public class AccountHandleLocked : Disposable {
     ///<summary>The account entry in the service catalog.</summary> 
     protected AccountUser AccountUser => AccountContext.AccountEntry as AccountUser;
 
-
+    ///<summary>The account local name.</summary> 
     public string LocalAddress => AccountUser.LocalAddress;
 
     ///<summary>The account profile</summary> 

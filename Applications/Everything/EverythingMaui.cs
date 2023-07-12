@@ -29,11 +29,16 @@ public partial class EverythingMaui {
 
 
     public void SetContext(ContextUser contextUser) {
+        if (contextUser == null) {
+            return;
+            }
+
         ContextUser = contextUser;
+
 
         var accounts = new Account(contextUser);
 
-        SectionAccounts.Data = accounts;
+        SectionAccount.Data = accounts;
 
 
         SectionMessages.BindData = () => accounts.Messages;
@@ -107,11 +112,11 @@ public partial class Account {
 
 
 
-    public override string ServiceAddress => ContextUser.ServiceAddress;
+    public override string ServiceAddress => ContextUser?.ServiceAddress;
 
-    public override string ProfileUDF => ContextUser.Profile.UdfString;
+    public override string ProfileUDF => ContextUser?.Profile.UdfString;
 
-    public override string LocalAddress => ContextUser.CatalogedMachine.Local;
+    public override string LocalAddress => ContextUser?.CatalogedMachine.Local;
 
 
     public Account(ContextUser contextUser) {
@@ -127,9 +132,9 @@ public partial class Messages {
 
     public Messages(Account account) {
         Account = account;
-        UrgentMessage = null;
-        ContactRequests = null;
-        OtherMessage = null;
+        //UrgentMessage = null;
+        //ContactRequests = null;
+        //OtherMessage = null;
         }
 
     }
@@ -141,9 +146,9 @@ public partial class Contacts {
 
     public Contacts(Account account) {
         Account = account;
-        ChooseSelf = null;
-        ContactMessage = null;
-        ChooseOther = null;
+        //ChooseSelf = null;
+        //ContactMessage = null;
+        //ChooseOther = null;
         }
 
     }

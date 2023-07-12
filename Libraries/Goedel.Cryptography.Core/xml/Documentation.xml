@@ -25,6 +25,9 @@
         <member name="P:Goedel.Cryptography.Core.KeyCollectionCore.DirectoryKeys">
             <summary>Directory in which to store keys</summary> 
         </member>
+        <member name="F:Goedel.Cryptography.Core.KeyCollectionCore.MeshConfigurationDirectory">
+            <summary>Directory containing the Mesh configuration.</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.Core.KeyCollectionCore.GetServiceDirectory(System.String)">
             <summary>
             Return the service directory for storing Mesh data on the current platform.
@@ -39,6 +42,13 @@
             a key store belonging to a different user to be mounted.
             </summary>
             <param name="directory">If not, null, specifies directory in which the </param>
+        </member>
+        <member name="M:Goedel.Cryptography.Core.KeyCollectionCore.SetPlatformDirect(System.String)">
+            <summary>
+            Set the platform directory to <paramref name="directory"/>. This is intended for 
+            use in testing of for cases where an end user might override the directory.
+            </summary>
+            <param name="directory">The directory value to set.</param>
         </member>
         <member name="M:Goedel.Cryptography.Core.KeyCollectionCore.Persist(System.String,Goedel.Cryptography.PKIX.IPKIXPrivateKey,System.Boolean)">
             <inheritdoc/>

@@ -16,7 +16,7 @@ namespace Goedel.Protocol.GenericHost;
 [UnsupportedOSPlatform("browser")]
 [ProviderAlias("Dare")]
 public sealed class DareLoggerProvider : ILoggerProvider {
-    private readonly IDisposable _onChangeToken;
+    private readonly IDisposable? _onChangeToken;
     private DareLoggerConfiguration _currentConfig;
     private readonly ConcurrentDictionary<string, DareLogger> _loggers =
         new(StringComparer.OrdinalIgnoreCase);
@@ -30,7 +30,7 @@ public sealed class DareLoggerProvider : ILoggerProvider {
     /// </summary>
     /// <param name="config">The console logger configuration.</param>
     public DareLoggerProvider(
-        IOptionsMonitor<DareLoggerConfiguration> config) {
+                IOptionsMonitor<DareLoggerConfiguration> config) {
         _currentConfig = config.CurrentValue;
         _onChangeToken = config.OnChange(updatedConfig => _currentConfig = updatedConfig);
 
@@ -59,7 +59,7 @@ public sealed class DareLoggerProvider : ILoggerProvider {
     ///<inheritdoc/>
     public void Dispose() {
         _loggers.Clear();
-        _onChangeToken.Dispose();
+        _onChangeToken?.Dispose();
         }
     }
 #endregion
@@ -136,7 +136,9 @@ public sealed class DareLogger : ILogger {
 
 
     ///<inheritdoc/>
-    public IDisposable BeginScope<TState>(TState state) => default!;
+    public IDisposable? BeginScope<TState>(TState state) where TState : notnull {
+        return null;
+        }
 
     ///<inheritdoc/> 
     public bool IsEnabled(LogLevel logLevel) => logLevel <= config.LogLevel;

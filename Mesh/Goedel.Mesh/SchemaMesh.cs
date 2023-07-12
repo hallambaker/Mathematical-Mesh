@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 29-Jun-23 3:59:13 PM
+//  This file was automatically generated at 7/12/2023 6:03:26 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -30,7 +30,7 @@
 //  
 //      Copyright : © 2015-2021
 //  
-//  Build Platform: Win32NT 10.0.19042.0
+//  Build Platform: Win32NT 10.0.22621.0
 //  
 //  
 using System;
@@ -130,6 +130,7 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"CatalogedEntry", CatalogedEntry._Factory},
 	    {"CatalogedDevice", CatalogedDevice._Factory},
 	    {"CatalogedSignature", CatalogedSignature._Factory},
+	    {"CatalogedDocument", CatalogedDocument._Factory},
 	    {"CatalogedPublication", CatalogedPublication._Factory},
 	    {"CatalogedCredential", CatalogedCredential._Factory},
 	    {"CatalogedApplicationSsh", CatalogedApplicationSsh._Factory},
@@ -5241,6 +5242,12 @@ abstract public partial class CatalogedEntry : MeshItem {
 
 	public virtual string?						Uid  {get; set;}
 
+        /// <summary>
+        ///Description
+        /// </summary>
+
+	public virtual string?						Description  {get; set;}
+
 
 
     ///<summary>Implement IBinding</summary> 
@@ -5258,7 +5265,9 @@ abstract public partial class CatalogedEntry : MeshItem {
 			{ "LocalName", new PropertyString ("LocalName", 
 					(IBinding data, string? value) => {(data as CatalogedEntry).LocalName = value;}, (IBinding data) => (data as CatalogedEntry).LocalName )},
 			{ "Uid", new PropertyString ("Uid", 
-					(IBinding data, string? value) => {(data as CatalogedEntry).Uid = value;}, (IBinding data) => (data as CatalogedEntry).Uid )}
+					(IBinding data, string? value) => {(data as CatalogedEntry).Uid = value;}, (IBinding data) => (data as CatalogedEntry).Uid )},
+			{ "Description", new PropertyString ("Description", 
+					(IBinding data, string? value) => {(data as CatalogedEntry).Description = value;}, (IBinding data) => (data as CatalogedEntry).Description )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -5551,6 +5560,135 @@ public partial class CatalogedSignature : CatalogedEntry {
 			return Out as CatalogedSignature;
 			}
 		var Result = new CatalogedSignature ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// A document stored on a service somewhere.
+	/// </summary>
+public partial class CatalogedDocument : CatalogedEntry {
+        /// <summary>
+        ///Document fingerprint.
+        /// </summary>
+
+	public virtual string?						Udf  {get; set;}
+
+        /// <summary>
+        ///Locator to be used to retrieve the data.
+        /// </summary>
+
+	public virtual string?						URI  {get; set;}
+
+        /// <summary>
+        ///IANA content type of the encoded content.
+        /// </summary>
+
+	public virtual string?						ContentType  {get; set;}
+
+        /// <summary>
+        ///Content encoding, typically DARE envelope.
+        /// </summary>
+
+	public virtual string?						Encoding  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual DateTime?						Created  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual DateTime?						Updated  {get; set;}
+
+        /// <summary>
+        ///Encoded document length in bytes.
+        /// </summary>
+
+	public virtual int?						Length  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedDocument(), CatalogedEntry._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Udf", new PropertyString ("Udf", 
+					(IBinding data, string? value) => {(data as CatalogedDocument).Udf = value;}, (IBinding data) => (data as CatalogedDocument).Udf )},
+			{ "URI", new PropertyString ("URI", 
+					(IBinding data, string? value) => {(data as CatalogedDocument).URI = value;}, (IBinding data) => (data as CatalogedDocument).URI )},
+			{ "ContentType", new PropertyString ("ContentType", 
+					(IBinding data, string? value) => {(data as CatalogedDocument).ContentType = value;}, (IBinding data) => (data as CatalogedDocument).ContentType )},
+			{ "Encoding", new PropertyString ("Encoding", 
+					(IBinding data, string? value) => {(data as CatalogedDocument).Encoding = value;}, (IBinding data) => (data as CatalogedDocument).Encoding )},
+			{ "Created", new PropertyDateTime ("Created", 
+					(IBinding data, DateTime? value) => {(data as CatalogedDocument).Created = value;}, (IBinding data) => (data as CatalogedDocument).Created )},
+			{ "Updated", new PropertyDateTime ("Updated", 
+					(IBinding data, DateTime? value) => {(data as CatalogedDocument).Updated = value;}, (IBinding data) => (data as CatalogedDocument).Updated )},
+			{ "Length", new PropertyInteger32 ("Length", 
+					(IBinding data, int? value) => {(data as CatalogedDocument).Length = value;}, (IBinding data) => (data as CatalogedDocument).Length )}
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "CatalogedDocument";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new CatalogedDocument();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new CatalogedDocument FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as CatalogedDocument;
+			}
+		var Result = new CatalogedDocument ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

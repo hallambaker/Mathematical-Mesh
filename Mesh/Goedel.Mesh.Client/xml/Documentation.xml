@@ -605,6 +605,7 @@
             <param name="meshClient"></param>
             <param name="constraintsSelects"></param>
             <param name="catalogedDeviceDigest">The payload digest of the Cataloged device</param>
+            <param name="maxResuts">Maximum number of results to return.</param>
             <returns>(partial, count) where partial is true if the </returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.Sync">
@@ -613,6 +614,13 @@
             the service is held at the service, this means only downloading updates at present.
             </summary>
             <returns>The number of items synchronized</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetStatus(System.Collections.Generic.List{System.String})">
+            <summary>
+            Return the status of the specified services.
+            </summary>
+            <param name="services">Services requested.</param>
+            <returns>Status response from the Mesh Service Provider.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetService(System.String)">
             <summary>

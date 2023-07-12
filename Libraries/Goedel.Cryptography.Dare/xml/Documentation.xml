@@ -5330,6 +5330,8 @@
             </summary>
             <param name="envelopes">The enveolpes to append</param>
             <param name="index">The starting point at which to begin appending.</param>
+            <param name="unverified">If true, do not attempt to verify the integrity or authenticity
+            of the envelopes being appended.</param>
         </member>
         <member name="F:Goedel.Cryptography.Dare.Sequence.IncrementalAppendIndex">
             <summary>

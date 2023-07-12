@@ -55,12 +55,20 @@ public class FieldSet {
         }
 
     public void SetFields(IBindable data) {
+        if (data == null) {
+            return;
+            }
+
         foreach (var field in Fields) {
             field.SetField(data);
             }
         }
 
     public void GetFields(IBindable data) {
+        if (data == null) {
+            return;
+            }
+
         foreach (var field in Fields) {
             field.GetField(data);
             }
@@ -170,13 +178,13 @@ public class GuigenFieldChooser : GuigenField {
 
 
     public GuigenFieldChooser(GuiChooser chooser) : base(chooser) {
-        List<Person> people = new List<Person> {
-                new Person("Abigail", new DateTime(1975, 1, 15)),
-                new Person("Bob", new DateTime(1976, 2, 20)),
-                // ...etc.,...
-                new Person("Yvonne", new DateTime(1987, 1, 10)),
-                new Person("Zachary", new DateTime(1988, 2, 5))
-            };
+        //List<Person> people = new List<Person> {
+        //        new Person("Abigail", new DateTime(1975, 1, 15)),
+        //        new Person("Bob", new DateTime(1976, 2, 20)),
+        //        // ...etc.,...
+        //        new Person("Yvonne", new DateTime(1987, 1, 10)),
+        //        new Person("Zachary", new DateTime(1988, 2, 5))
+        //    };
 
 
         ListView = new ListView {
@@ -216,7 +224,7 @@ public class GuigenFieldChooser : GuigenField {
 
 public class MyViewCell : ViewCell {
 
-    bool visible;
+    public bool Visible { get; set; }
     public GuigenFieldChooser Chooser { get; }
     ISelectCollection value;
 
@@ -233,11 +241,11 @@ public class MyViewCell : ViewCell {
 
 
     public void OnAppearing(object? sender, EventArgs e) {
-        visible = true;
+        Visible = true;
         }
 
     public void OnDisappearing(object? sender, EventArgs e) {
-        visible = false;
+        Visible = false;
         }
 
     public void OnBindingChanged(object? sender, EventArgs e) {
@@ -312,18 +320,18 @@ public class BoundObject {
 
 
 
-class Person {
-    public Person(string name, DateTime birthday) {
-        this.Name = name;
-        this.Birthday = birthday;
-        this.FavoriteColor = Color.FromHex("00f00f");
-        }
+//class Person {
+//    public Person(string name, DateTime birthday) {
+//        this.Name = name;
+//        this.Birthday = birthday;
+//        this.FavoriteColor = Color.FromArgb("00f00f");
+//        }
 
-    public string Name { private set; get; }
+//    public string Name { private set; get; }
 
-    public DateTime Birthday { private set; get; }
+//    public DateTime Birthday { private set; get; }
 
-    public Color FavoriteColor { private set; get; }
-    };
+//    public Color FavoriteColor { private set; get; }
+//    };
 
 

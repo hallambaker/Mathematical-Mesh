@@ -517,6 +517,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="meshClient"></param>
     /// <param name="constraintsSelects"></param>
     /// <param name="catalogedDeviceDigest">The payload digest of the Cataloged device</param>
+    /// <param name="maxResuts">Maximum number of results to return.</param>
     /// <returns>(partial, count) where partial is true if the </returns>
     public virtual PartialOperationResult SyncPartial(
                 MeshServiceClient meshClient,
@@ -566,7 +567,11 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     //return Sync(statusRequest).Count;
     //}
 
-
+    /// <summary>
+    /// Return the status of the specified services.
+    /// </summary>
+    /// <param name="services">Services requested.</param>
+    /// <returns>Status response from the Mesh Service Provider.</returns>
     public StatusResponse GetStatus(
                     List<string> services) {
         var statusRequest = new StatusRequest() {

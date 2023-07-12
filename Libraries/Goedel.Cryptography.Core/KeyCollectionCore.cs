@@ -35,18 +35,12 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
     const string WindowsMeshDirectory = @"Mesh";
     const string LinuxMeshDirectory = @"Mesh";
     const string KeysDirectory = @"Keys";
-
-    //const string WindowsMeshKeys = @"Mesh\Keys";
-    //const string WindowsMeshProfiles = @"Mesh\Profiles";
-    //const string WindowsMeshAccounts = @"Mesh\Accounts";
-    //const string LinuxMeshKeys = @".Mesh/Keys";
-    //const string LinuxMeshProfiles = @".Mesh/Profiles";
-    //const string LinuxMeshAccounts = @".Mesh/Accounts";
-
     static string directoryKeys;
 
     ///<summary>Directory in which to store keys</summary> 
     public virtual string DirectoryKeys => directoryKeys;
+
+    ///<summary>Directory containing the Mesh configuration.</summary> 
 
     public static string MeshConfigurationDirectory = null!;
 
@@ -104,6 +98,11 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
             }
         }
 
+    /// <summary>
+    /// Set the platform directory to <paramref name="directory"/>. This is intended for 
+    /// use in testing of for cases where an end user might override the directory.
+    /// </summary>
+    /// <param name="directory">The directory value to set.</param>
     public static void SetPlatformDirect(string directory) {
         directoryKeys = Path.Combine(directory, "Keys");
         }

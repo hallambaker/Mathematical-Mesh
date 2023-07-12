@@ -68,7 +68,7 @@ public record TestArchive : TestDareFile {
 
     public Dictionary<string, TestArchiveEntry> Files { get; set; } = new();
 
-    int tempFile = 0;
+    //int tempFile = 0;
 
 
     public void AddFile(string file, string directory) {
