@@ -513,10 +513,8 @@ public record PropertyStruct(
             Func<object> IFactory = null) : Property(Tag, false, Tagged) {
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
-        var value = Get(data) as JsonObject;
-        if (value != null) {
-            value.Serialize(writer, Tagged);
-            }
+        JsonObject value = Get(data) as JsonObject;
+        value?.Serialize(writer, Tagged);
         }
 
     ///<inheritdoc/>
@@ -542,8 +540,7 @@ public record PropertyListStruct(
             Func<object> IFactory = null) : Property(Tag, true, Tagged) {
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
-        var value = Get(data) as IEnumerable;
-        if (value != null) {
+        if (Get(data) is IEnumerable value) {
             var first = true;
 
             writer.WriteArrayStart();

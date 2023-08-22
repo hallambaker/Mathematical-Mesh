@@ -109,5 +109,10 @@ public class RudStreamService : RudStream, IJpcSession {
     /// </summary>
     /// <param name="jsonObject">The object to send</param>
     public void Respond(JsonObject jsonObject) => throw new NYI();
+
+    ///<inheritdoc/>
+    public Task<JsonObject> AsyncPost(string tag, JsonObject request) {
+        throw new NotImplementedException();
+        }
     #endregion
     }

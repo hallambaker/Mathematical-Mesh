@@ -3,7 +3,7 @@
     "Scratchpad": {
       "commandName": "Project",
       "commandLineArgs": "fred.* % ! |",
-      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Testing\\WorkingDirectory"
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Testing\\WorkingDirectory"
     }
   }
 }

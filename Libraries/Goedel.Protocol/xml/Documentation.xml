@@ -1401,6 +1401,17 @@
             <param name="request">The transaction request.</param>
             <returns>The transaction response</returns>
         </member>
+        <member name="M:Goedel.Protocol.IJpcSession.AsyncPost(System.String,Goedel.Protocol.JsonObject)">
+            <summary>
+            Post the request <paramref name="request"/> asynchronously and create a
+            task waiting for the result. 
+            </summary>
+            <remarks>Throws an exception if the connection type does not support asynchronous
+            return.</remarks>
+            <param name="tag">The transaction identifier.</param>
+            <param name="request">The transaction request.</param>
+            <returns>The transaction response</returns>
+        </member>
         <member name="M:Goedel.Protocol.IJpcSession.Rebind(Goedel.Protocol.ICredential)">
              <summary>
             Bind new credential to the session to create a new one.
@@ -1833,6 +1844,9 @@
         </member>
         <member name="M:Goedel.Protocol.JpcSession.Rebind(Goedel.Protocol.ICredential)">
             <inheritdoc cref="T:Goedel.Protocol.IJpcSession"/>
+        </member>
+        <member name="M:Goedel.Protocol.JpcSession.AsyncPost(System.String,Goedel.Protocol.JsonObject)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Protocol.JpcRemoteSession">
             <summary>

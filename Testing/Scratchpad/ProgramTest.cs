@@ -63,6 +63,9 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
+        ShellTestsAdmin.Test().TestHello();
+
+
         Trace.WriteLine($"Trace enabled");
         GoedelProtocol.Test().TestStruct();
 

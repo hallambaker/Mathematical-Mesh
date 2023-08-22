@@ -202,8 +202,7 @@ public class PresenceServer : PresenceService, IPresence {
         }
 
     int GetPort(UdpClient udpClient) {
-        var endpoint = udpClient?.Client?.LocalEndPoint as IPEndPoint;
-        if (endpoint is null) {
+        if (udpClient?.Client?.LocalEndPoint is not IPEndPoint endpoint) {
             return -1;
             }
         return endpoint.Port;

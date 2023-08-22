@@ -1194,31 +1194,31 @@ public class _EverythingMaui : Gui {
 		    SectionSettings
             };
 
-        ActionTestService.Callback = (x) => (TestService (x as TestService) as IResult);
+        ActionTestService.Callback = (x, mode) => TestService (x as TestService, mode) ;
 	    ActionTestService.Entries = new () { 
 			new GuiText ("ServiceAddress", "Service address", 0)
 		    };
 
-        ActionAccountSwitch.Callback = (x) => (AccountSwitch (x as AccountSwitch) as IResult);
+        ActionAccountSwitch.Callback = (x, mode) => AccountSwitch (x as AccountSwitch, mode) ;
 	    ActionAccountSwitch.Entries = new () { 
 			new GuiChooser ("ChooseUser", "User", "account_user", 0, new () {
 				}) 
 		    };
 
-        ActionAccountCreate.Callback = (x) => (AccountCreate (x as AccountCreate) as IResult);
+        ActionAccountCreate.Callback = (x, mode) => AccountCreate (x as AccountCreate, mode) ;
 	    ActionAccountCreate.Entries = new () { 
 			new GuiText ("ServiceAddress", "Account service address", 0), 
 			new GuiText ("LocalName", "Friendly name (optional)", 1), 
 			new GuiText ("Coupon", "Activation code (if provided)", 2)
 		    };
 
-        ActionAccountConnect.Callback = (x) => (AccountConnect (x as AccountConnect) as IResult);
+        ActionAccountConnect.Callback = (x, mode) => AccountConnect (x as AccountConnect, mode) ;
 	    ActionAccountConnect.Entries = new () { 
 			new GuiText ("ConnectionString", "Account address", 0), 
 			new GuiText ("ConnectionPin", "Activation code (if provided)", 1)
 		    };
 
-        ActionAccountRecover.Callback = (x) => (AccountRecover (x as AccountRecover) as IResult);
+        ActionAccountRecover.Callback = (x, mode) => AccountRecover (x as AccountRecover, mode) ;
 	    ActionAccountRecover.Entries = new () { 
 			new GuiText ("ServiceAddress", "Account service address", 0), 
 			new GuiText ("LocalName", "Friendly name (optional)", 1), 
@@ -1233,32 +1233,32 @@ public class _EverythingMaui : Gui {
 			new GuiText ("Share8", "Recovery share", 10)
 		    };
 
-        ActionRequestContact.Callback = (x) => (RequestContact (x as RequestContact) as IResult);
+        ActionRequestContact.Callback = (x, mode) => RequestContact (x as RequestContact, mode) ;
 	    ActionRequestContact.Entries = new () { 
 			new GuiText ("Address", "Address", 0)
 		    };
 
-        ActionCreateMail.Callback = (x) => (CreateMail (x as CreateMail) as IResult);
+        ActionCreateMail.Callback = (x, mode) => CreateMail (x as CreateMail, mode) ;
 	    ActionCreateMail.Entries = new () {
 		    };
 
-        ActionCreateChat.Callback = (x) => (CreateChat (x as CreateChat) as IResult);
+        ActionCreateChat.Callback = (x, mode) => CreateChat (x as CreateChat, mode) ;
 	    ActionCreateChat.Entries = new () {
 		    };
 
-        ActionStartVoice.Callback = (x) => (StartVoice (x as StartVoice) as IResult);
+        ActionStartVoice.Callback = (x, mode) => StartVoice (x as StartVoice, mode) ;
 	    ActionStartVoice.Entries = new () {
 		    };
 
-        ActionStartVideo.Callback = (x) => (StartVideo (x as StartVideo) as IResult);
+        ActionStartVideo.Callback = (x, mode) => StartVideo (x as StartVideo, mode) ;
 	    ActionStartVideo.Entries = new () {
 		    };
 
-        ActionSendDocument.Callback = (x) => (SendDocument (x as SendDocument) as IResult);
+        ActionSendDocument.Callback = (x, mode) => SendDocument (x as SendDocument, mode) ;
 	    ActionSendDocument.Entries = new () {
 		    };
 
-        ActionShareDocument.Callback = (x) => (ShareDocument (x as ShareDocument) as IResult);
+        ActionShareDocument.Callback = (x, mode) => ShareDocument (x as ShareDocument, mode) ;
 	    ActionShareDocument.Entries = new () {
 		    };
 
@@ -1361,62 +1361,74 @@ public class _EverythingMaui : Gui {
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual IResult TestService (TestService data) => throw new NYI();
+    public virtual Task<IResult> TestService (TestService data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual IResult AccountSwitch (AccountSwitch data) => throw new NYI();
+    public virtual Task<IResult> AccountSwitch (AccountSwitch data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual IResult AccountCreate (AccountCreate data) => throw new NYI();
+    public virtual Task<IResult> AccountCreate (AccountCreate data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual IResult AccountConnect (AccountConnect data) => throw new NYI();
+    public virtual Task<IResult> AccountConnect (AccountConnect data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual IResult AccountRecover (AccountRecover data) => throw new NYI();
+    public virtual Task<IResult> AccountRecover (AccountRecover data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual IResult RequestContact (RequestContact data) => throw new NYI();
+    public virtual Task<IResult> RequestContact (RequestContact data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual IResult CreateMail (CreateMail data) => throw new NYI();
+    public virtual Task<IResult> CreateMail (CreateMail data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual IResult CreateChat (CreateChat data) => throw new NYI();
+    public virtual Task<IResult> CreateChat (CreateChat data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual IResult StartVoice (StartVoice data) => throw new NYI();
+    public virtual Task<IResult> StartVoice (StartVoice data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual IResult StartVideo (StartVideo data) => throw new NYI();
+    public virtual Task<IResult> StartVideo (StartVideo data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual IResult SendDocument (SendDocument data) => throw new NYI();
+    public virtual Task<IResult> SendDocument (SendDocument data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual IResult ShareDocument (ShareDocument data) => throw new NYI();
+    public virtual Task<IResult> ShareDocument (ShareDocument data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
 
     
     /// <summary> </summary>

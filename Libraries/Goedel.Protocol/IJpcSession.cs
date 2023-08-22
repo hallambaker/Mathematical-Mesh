@@ -130,6 +130,8 @@ public interface IJpcSession {
     public string TargetAccount { get; }
 
 
+    //bool IsAsync { get; };
+
 
     /// <summary>
     /// Post the request <paramref name="request"/> 
@@ -139,6 +141,20 @@ public interface IJpcSession {
     /// <param name="request">The transaction request.</param>
     /// <returns>The transaction response</returns>
     JsonObject Post(string tag, JsonObject request);
+
+
+    /// <summary>
+    /// Post the request <paramref name="request"/> asynchronously and create a
+    /// task waiting for the result. 
+    /// </summary>
+    /// <remarks>Throws an exception if the connection type does not support asynchronous
+    /// return.</remarks>
+    /// <param name="tag">The transaction identifier.</param>
+
+    /// <param name="request">The transaction request.</param>
+    /// <returns>The transaction response</returns>
+    Task<JsonObject> AsyncPost(string tag, JsonObject request);
+
 
 
     /// <summary>

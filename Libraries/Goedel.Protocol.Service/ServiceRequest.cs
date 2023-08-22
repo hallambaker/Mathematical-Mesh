@@ -204,9 +204,9 @@ public abstract class ServiceRequest {
                         }
 
 
-                    var responsePacket = sessionResponder.SerializePacketData(
+                    var responsePacket1 = sessionResponder.SerializePacketData(
                         stream.RemoteStreamId, payload: responseBytes, ciphertextExtensions: packetExtensions);
-                    ReturnResponse(responsePacket);
+                    ReturnResponse(responsePacket1);
 
                     break;
                     }
@@ -225,6 +225,13 @@ public abstract class ServiceRequest {
         responsePacket = ResponderMessageType.ResponderChallenge;
         packetClient = Listener.ParseInitiatorHello(Buffer, offset,
             Count - offset);
+
+        foreach (var extension in packetClient.PlaintextExtensions) {
+            Console.WriteLine($"Hello {extension.Tag} length {extension.Value.Length}");
+
+            }
+
+
         return Listener.GetTemporaryResponder(packetClient); ;
         }
 
@@ -372,13 +379,13 @@ public class ServiceRequestHttp : ServiceRequest {
                 }
 
 
-            if (Count == MaxRequest) {
-                }
-
-        (Count < MaxRequest).AssertTrue(NYI.Throw);
+            (Count < MaxRequest).AssertTrue(NYI.Throw);
             ProcessBuffer();
             }
         catch (Exception ex) {
+            Console.WriteLine($" Unhandled error {ex.ToString()}");
+
+
             Service?.Monitor?.Logger.UnhandledException(ex);
             }
 
@@ -389,8 +396,7 @@ public class ServiceRequestHttp : ServiceRequest {
     ///<inheritdoc/>
     protected override void ReturnResponse(byte[] chunk) {
         var response = ListenerContext.Response;
-
-
+        Console.WriteLine($"About to send Reply");
         response.StatusCode = (int)HttpStatusCode.OK;
         response.StatusDescription = "OK";
         response.KeepAlive = true;
@@ -398,7 +404,7 @@ public class ServiceRequestHttp : ServiceRequest {
 
 
         response.Close();
-
+        Console.WriteLine($"Reply complete");
         Service.Monitor.EndDispatch(Slot);
         }
 

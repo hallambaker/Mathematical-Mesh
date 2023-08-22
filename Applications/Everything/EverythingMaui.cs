@@ -3,12 +3,78 @@
 using System.Resources;
 
 namespace Goedel.Everything;
+
+
+
+// ToDo: Suppress display of the Account if there is no account yet.
+
+// ToDo: Test Service
+// ToDo: Create Account - Basic implementation
+// ToDo: Create Account - Account name rejected
+// ToDo: Create account - Server not found
+// ToDo: Create account - Timeout
+
+// ToDo: Select different account
+
+// ToDo: Connect via activation code
+// ToDo: Display dynamic QR code on admin device
+// ToDo: Scan static QR code on IoT device
+
+// ToDo: List Connected Devices
+
+// ToDo: Create default contact
+// ToDo: Select contact
+// ToDo: Remote contact exchange
+// ToDo: QR code contact exchange
+
+// ToDo: Set permissions for contact
+
+// ToDo: Create Email credentials
+// ToDo: Create Developer credentials
+
+// ToDo: Confirmation challenge
+
+
+// ToDo: Bookmarks
+// ToDo: Credentials
+// ToDo: Settings
+// ToDo: Feeds
+
+// ToDo: Documents
+// ToDo: Document upload
+// ToDo: Document download
+
+// ToDo: Document annotation
+
+// ToDo: File Viewer - image
+// ToDo: File Viewer - video
+// ToDo: File Viewer - sequence
+
+// ToDo: Group create
+// ToDo: Group list
+// ToDo: Group add / delete members
+// ToDo: Group accounting
+
+
+// ToDo: Discussions - start
+// ToDo: Discussions - list
+// ToDo: Discussions - add user
+// ToDo: Start voice
+// ToDo: Start video
+
+// ToDo: Server upload document
+// ToDo: Server enroll signature in notary chain
+// ToDo: Server maintain notary chain
+// ToDo: Client create notary attestation chain
+// ToDo: Client verify notary atestation chain.
+
+
 public partial class EverythingMaui {
     ResourceManager ResourceManager;
 
 
     public IMeshMachineClient MeshMachine;
-    public MeshHost MeshHost => MeshMachine.MeshHost;
+    public MeshHost MeshHost => MeshMachine?.MeshHost;
 
 
     public ContextUser ContextUser { get; set; }
@@ -19,8 +85,8 @@ public partial class EverythingMaui {
         ResourceManager = Sketch_resources.ResourceManager;
 
         MeshMachine = new MeshMachineCore();
+        //MeshHost.ConfigureMesh("alice@example.com", "null");
 
-        
 
         SectionSettings.Data = Settings;
         SetContext(MeshHost.GetContext(MeshHost.DefaultAccount) as ContextUser);

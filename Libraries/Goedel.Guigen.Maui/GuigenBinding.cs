@@ -87,9 +87,8 @@ public class GuigenMainFlyout : FlyoutPage, IReformat, IMainWindow {
         section ??= CurrentSection;
 
         CurrentSection = section;
-        var detail = section.Presentation as GuigenDetailSection;
 
-        if (detail is null) {
+        if (section.Presentation is not GuigenDetailSection detail) {
             Detail = new GuigenDetailSection(this, section).Page;
             return;
             }
@@ -105,9 +104,7 @@ public class GuigenMainFlyout : FlyoutPage, IReformat, IMainWindow {
     /// </summary>
     /// <param name="action">The action window to raise.</param>
     public void SetDetailWindow(GuiAction action) {
-        var detail = action.Presentation as GuigenDetailSection;
-
-        if (detail is null) {
+        if (action.Presentation is not GuigenDetailSection detail) {
             Detail = new GuigenDetailAction(this, action).Page;
             return;
             }
@@ -342,8 +339,28 @@ public class GuigenDetailAction : ContentPage, IPresentation {
         FieldSet.GetFields(result);
 
 
+
+        if (Action.Callback != null) {
+
+            var task = Action.Callback(result, ActionMode.Execute);
+
+            // here we need to lock the UI to prevent further actions until it returns, except for the cancel command.
+            //task.Wait();
+
+            task.ContinueWith(EnableActions, null);
+            }
+
         MainWindow.SetDetailWindow();
         }
+
+
+    public void DisableActions() {
+        }
+
+    public Task<IResult> EnableActions(Task<IResult> task, object? fred) {
+        return task;
+        }
+
 
     public void Refresh() {
         }

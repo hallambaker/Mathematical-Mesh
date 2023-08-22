@@ -229,5 +229,10 @@ public abstract class JpcClientInterface {
     public virtual void Rebind(ICredential credential) =>
         JpcSession = JpcSession.Rebind(credential);
 
+
+    public Task<JsonObject> RequestAsync(string tag, JsonObject request) => 
+            JpcSession.AsyncPost(tag, request);
+
+
     }
 

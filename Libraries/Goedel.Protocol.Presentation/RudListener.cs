@@ -92,7 +92,7 @@ public class RudListener : Listener {
                         null);
                     }
             }
-
+        Console.WriteLine("Service connection rejected");
 
         throw new NYI();
         }

@@ -44,6 +44,15 @@ namespace Goedel.XUnit;
 public partial class ShellTests  {
 
 
+    //public void TestHello1() {
+
+    //    var MeshMachine = new MeshMachineCore();
+    //    MeshMachine.MeshHost.ConfigureMesh("alice@example.com", "null");
+
+    //    EndTest();
+
+    //    }
+
 
 
 

@@ -75,6 +75,11 @@ public class RudStreamClient : RudStream, IJpcSession {
         return task.Result;
         }
 
+    public async Task<JsonObject> AsyncPost(string tag, JsonObject request) {
+        return await PostAsync(tag, request);
+        }
+
+
     ///<inheritdoc cref="IJpcSession"/>
     public IJpcSession Rebind(ICredential credential) {
         return MakeStreamClient(Protocol, credential as ICredentialPrivate);

@@ -39,7 +39,7 @@
     },
     "Hello": {
       "commandName": "Project",
-      "commandLineArgs": "account hello /account=alice@example.com ",
+      "commandLineArgs": "account hello alice@example.com ",
       "workingDirectory": "..\\..\\TestResults\\Service"
     },
     "Create": {

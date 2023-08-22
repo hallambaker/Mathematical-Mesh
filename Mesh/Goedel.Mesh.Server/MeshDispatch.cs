@@ -157,7 +157,11 @@ public class PublicMeshService : MeshService {
         //            GenericHostConfiguration.Port, instance, this));
 
         var meshHost = MeshHost.GetCatalogHost(MeshMachine);
-        if (meshHost?.GetStoreEntry(GenericHostConfiguration.HostUdf) is CatalogedService hostServiceDescription) {
+
+        var catalogedService = GenericHostConfiguration.HostUdf != null ?
+            meshHost?.GetStoreEntry(GenericHostConfiguration.HostUdf) : meshHost.DefaultService;
+
+        if (catalogedService is CatalogedService hostServiceDescription) {
             // Decode the service and host profiles.
             ProfileService = hostServiceDescription.EnvelopedProfileService.Decode();
             ProfileHost = hostServiceDescription.EnvelopedProfileHost.Decode();
@@ -173,6 +177,8 @@ public class PublicMeshService : MeshService {
 
         AddEndpoints(hostConfiguration, meshMachine.Instance);
 
+
+  
         }
 
     #endregion
@@ -317,6 +323,11 @@ public class PublicMeshService : MeshService {
 
         // Initialize the persistence store.
         //var meshPersist = new MeshPersist(hostConfiguration.Path, FileStatus.OpenOrCreate);
+
+        //Console.WriteLine($"This is the new version {hostConfiguration.Description}");
+        //Console.WriteLine($"This is the new version {hostConfiguration.MaxCores}");
+        //Console.WriteLine($"This is the new version {hostConfiguration.DeviceUdf}");
+
 
         return new PublicMeshService(
                     meshMachine, hostConfiguration, serviceConfiguration, logService) {

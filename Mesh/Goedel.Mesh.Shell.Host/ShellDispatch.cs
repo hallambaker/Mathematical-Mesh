@@ -193,6 +193,7 @@ public partial class Shell : _Shell {
             })
             .AddListenerHosted()
             .AddMeshService()
+            .AddGenericHost()
             .AddResolverService()
             .AddPresenceService()
             .Build();

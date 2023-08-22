@@ -132,6 +132,10 @@ public abstract class JpcSession : Disposable, IJpcSession {
 
     ///<inheritdoc cref="IJpcSession"/>
     public abstract IJpcSession Rebind(ICredential credential);
+
+
+    ///<inheritdoc/>
+    public virtual Task<JsonObject> AsyncPost(string tag, JsonObject request) => throw new NYI();
     }
 
 

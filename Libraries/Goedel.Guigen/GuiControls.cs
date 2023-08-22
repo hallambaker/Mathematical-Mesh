@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections;
+using System.Threading.Tasks;
 
 namespace Goedel.Guigen;
 
@@ -34,6 +35,26 @@ public interface IParameter : IBindable {
 public interface IResult : IBindable {
 
     }
+
+
+public record NullResult : IResult {
+    public GuiBinding Binding => throw new NotImplementedException();
+
+    public static NullResult Initialized = new NullResult();
+
+    public static NullResult Valid = new NullResult();
+
+    public static NullResult Invalid = new NullResult();
+    }
+
+
+[Flags]
+public enum ActionMode {
+    Initialize = 1,
+    Validate = 2,
+    Execute = 4
+    }
+
 
 public record GuiBinding {
 
@@ -165,14 +186,14 @@ public record GuiSection (
 
     }
 
-
-public delegate IResult ActionCallback(object IBindable);
+public delegate  Task<IResult> ActionCallback(object IBindable, ActionMode mode= ActionMode.Execute);
 public delegate IBindable FactoryCallback();
 public record GuiAction(
             string Id,
             string Prompt,
             string Icon,
-            FactoryCallback Factory
+            FactoryCallback Factory,
+            ActionMode ActionMode = ActionMode.Execute
             ) : GuiPrompt(Id, Prompt), IButtonTarget {
     public IPresentation? Presentation { get; set; } = null;
 

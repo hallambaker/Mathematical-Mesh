@@ -1,0 +1,122 @@
+﻿using Goedel.Cryptography;
+using Goedel.Protocol;
+
+using System.Data;
+using System.Net;
+using System.Runtime.CompilerServices;
+
+using ZXing.QrCode.Internal;
+
+namespace Goedel.Everything;
+public partial class EverythingMaui {
+    HttpClient httpClient = new();
+
+    public record OperationResult : IResult {
+        GuiBinding IBindable.Binding { get; } = null;
+
+
+        public virtual string ServiceUDF { get; init; }
+
+        }
+
+    public record HelloResult : OperationResult, IResult {
+        public MeshHelloResponse Response { get; init; }
+        }
+
+    public record ServiceResult : OperationResult {
+        public MeshHelloResponse HelloResponse { get; init; }
+        }
+
+
+
+    public override async Task<IResult> TestService(TestService data, ActionMode mode = ActionMode.Execute) {
+
+
+        //var meshClient = GetMeshClient(options, options.Account.Value);
+
+        var result1 = await httpClient.GetAsync("https://cnn.com/");
+
+
+        //return Task.FromResult(result as IResult);
+
+        //var profileDevice = ProfileDevice.Generate();
+        //var credential = new MeshCredentialPrivate(profileDevice, null, null, profileDevice.KeyAuthentication as KeyPairAdvanced);
+        //var meshClient = MeshMachine.GetMeshClient(credential, data.ServiceAddress);
+
+
+        //var helloRequest = new HelloRequest();
+        //var task = meshClient.RequestAsync("Hello", helloRequest).W ;
+        //task.Wait();
+        //var response = task.Result as MeshHelloResponse;
+
+        await Task.Delay(10000);
+        
+
+        var result = new HelloResult() {
+            //Response = response
+            };
+
+        return result as IResult;
+        }
+
+    public override async Task<IResult> AccountCreate(AccountCreate data, ActionMode mode= ActionMode.Execute) {
+
+        // This chunk can be pushed into the generated code.
+        switch (mode) {
+            case ActionMode.Initialize: {
+                data.Reset (this);
+                return NullResult.Initialized;
+                }
+            case ActionMode.Validate: {
+                return data.Validate() ? NullResult.Valid :NullResult.Invalid;
+                }
+            }
+
+        var data1 = new byte[] {0,0};
+        var request = new ByteArrayContent(data1);
+
+        var address = "http://mmm.everything.com:15099/.well-known/mmm/";
+
+        //var contextUser = MeshHost.ConfigureMesh(data.ServiceAddress, data.LocalName);
+
+
+        var httpClient = new HttpClient();
+
+
+        await httpClient.GetAsync("https://cnn.com/");
+
+        //await Task.Run(async () => {
+
+        //    });
+        //try {
+
+
+        //    }
+
+        //catch {
+        //    }
+
+        // here we have to tell the user the result
+
+        // Profile fingerprint.
+
+        // Add new profile to the accounts list and make current profile
+
+
+
+        throw new NYI();
+
+        }
+
+
+    }
+
+public partial class AccountCreate {
+
+    // This method can be pushed into the generated code.
+    public void Reset(EverythingMaui context) {
+        ServiceAddress = null;
+        LocalName = null;
+        Coupon = null;
+        }
+    }

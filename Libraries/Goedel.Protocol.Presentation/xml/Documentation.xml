@@ -2126,6 +2126,9 @@
             </summary>
             <param name="jsonObject">The object to send</param>
         </member>
+        <member name="M:Goedel.Protocol.Presentation.RudStreamService.AsyncPost(System.String,Goedel.Protocol.JsonObject)">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Protocol.Presentation.StreamId">
             <summary>
             Structure managing stream ids
