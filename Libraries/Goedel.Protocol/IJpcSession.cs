@@ -153,7 +153,7 @@ public interface IJpcSession {
 
     /// <param name="request">The transaction request.</param>
     /// <returns>The transaction response</returns>
-    Task<JsonObject> AsyncPost(string tag, JsonObject request);
+    Task<JsonObject> PostAsync(string tag, JsonObject request);
 
 
 

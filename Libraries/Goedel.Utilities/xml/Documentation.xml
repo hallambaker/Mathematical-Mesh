@@ -419,6 +419,14 @@
             <param name="base">Unescaped string</param>
             <returns>Escaped string.</returns>
         </member>
+        <member name="M:Goedel.Utilities.Extension.Sync``1(System.Threading.Tasks.Task{``0})">
+            <summary>
+            Wait for the task <paramref name="task"/> to complete and return the result.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="task"></param>
+            <returns></returns>
+        </member>
         <member name="M:Goedel.Utilities.Extension.GetAwaiter(System.Threading.CancellationToken)">
             <summary>
             Allows a cancellation token to be awaited.

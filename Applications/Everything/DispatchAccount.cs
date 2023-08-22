@@ -4,6 +4,7 @@ using Goedel.Protocol;
 using System.Data;
 using System.Net;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 using ZXing.QrCode.Internal;
 
@@ -34,26 +35,33 @@ public partial class EverythingMaui {
 
         //var meshClient = GetMeshClient(options, options.Account.Value);
 
-        var result1 = await httpClient.GetAsync("https://cnn.com/");
+        //var result1 = await httpClient.GetAsync("https://cnn.com/");
 
 
         //return Task.FromResult(result as IResult);
 
-        //var profileDevice = ProfileDevice.Generate();
-        //var credential = new MeshCredentialPrivate(profileDevice, null, null, profileDevice.KeyAuthentication as KeyPairAdvanced);
-        //var meshClient = MeshMachine.GetMeshClient(credential, data.ServiceAddress);
+        var profileDevice = ProfileDevice.Generate();
+        var credential = new MeshCredentialPrivate(profileDevice, null, null, profileDevice.KeyAuthentication as KeyPairAdvanced);
+        var meshClient = MeshMachine.GetMeshClient(credential, data.ServiceAddress);
 
 
-        //var helloRequest = new HelloRequest();
-        //var task = meshClient.RequestAsync("Hello", helloRequest).W ;
+        var helloRequest = new HelloRequest();
+
+
+        //var response = await meshClient.RequestAsync("Hello", helloRequest);
+
+        var response = await meshClient.HelloAsync(helloRequest);
         //task.Wait();
         //var response = task.Result as MeshHelloResponse;
 
+        //var response = meshClient.Hello (helloRequest);f
+
+
         await Task.Delay(10000);
-        
+
 
         var result = new HelloResult() {
-            //Response = response
+            Response = response
             };
 
         return result as IResult;
@@ -72,18 +80,18 @@ public partial class EverythingMaui {
                 }
             }
 
-        var data1 = new byte[] {0,0};
-        var request = new ByteArrayContent(data1);
+        //var data1 = new byte[] {0,0};
+        //var request = new ByteArrayContent(data1);
 
-        var address = "http://mmm.everything.com:15099/.well-known/mmm/";
+        //var address = "http://mmm.everything.com:15099/.well-known/mmm/";
 
-        //var contextUser = MeshHost.ConfigureMesh(data.ServiceAddress, data.LocalName);
-
-
-        var httpClient = new HttpClient();
+        var contextUser = MeshHost.ConfigureMesh(data.ServiceAddress, data.LocalName);
 
 
-        await httpClient.GetAsync("https://cnn.com/");
+        //var httpClient = new HttpClient();
+
+
+        //await httpClient.GetAsync("https://cnn.com/");
 
         //await Task.Run(async () => {
 
@@ -102,9 +110,11 @@ public partial class EverythingMaui {
 
         // Add new profile to the accounts list and make current profile
 
+        var result = new HelloResult() {
+            //Response = response
+            };
 
-
-        throw new NYI();
+        return result as IResult;
 
         }
 

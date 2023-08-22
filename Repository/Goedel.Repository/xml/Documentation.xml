@@ -461,7 +461,14 @@
         </member>
         <member name="M:Goedel.Repository.RepositoryServiceClient.Query(Goedel.Repository.QueryRequest)">
             <summary>
-            Implement the transaction
+            Implement the transaction Query.
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Repository.RepositoryServiceClient.QueryAsync(Goedel.Repository.QueryRequest)">
+            <summary>
+            Implement the transaction Query asynchronously.
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>

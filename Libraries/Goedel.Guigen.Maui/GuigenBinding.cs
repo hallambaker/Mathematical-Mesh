@@ -6,6 +6,45 @@ using static System.Collections.Specialized.BitVector32;
 namespace Goedel.Guigen.Maui;
 
 
+
+public record StyleSheet {
+
+    public Color TextColor;
+    public Color InactiveTextColor;
+    public Color BorderColor;
+    public Color BackgroundColor;
+    public Color HighlightColor = Colors.Purple;
+
+    public static StyleSheet DefaultStyleSheet => TestStyleSheet;
+
+    public static StyleSheet TestStyleSheet { get; } =
+        new StyleSheet() {
+            TextColor = Colors.DarkGreen,
+            InactiveTextColor = Colors.DarkRed,
+            BorderColor = Colors.Black,
+            BackgroundColor = Colors.White,
+            };
+
+
+    public static StyleSheet MonochromeStyleSheet { get; } = 
+            new StyleSheet() {
+                TextColor = Colors.Black,
+                InactiveTextColor = Colors.Grey,
+                BorderColor = Colors.Black,
+                BackgroundColor = Colors.White,
+                };
+
+    public static StyleSheet DarkStyleSheet { get; } =
+        new StyleSheet() {
+            TextColor = Colors.White,
+            InactiveTextColor = Colors.Grey,
+            BorderColor = Colors.White,
+            BackgroundColor = Colors.Black,
+            };
+
+    }
+
+
 /// <summary>
 /// The display modes for the gui.
 /// </summary>
@@ -38,9 +77,20 @@ public interface IReformat{
 public interface IMainWindow {
     GuigenBinding Binding { get; }
 
+    public StyleSheet StyleSheet { get; }
+
     public void SetDetailWindow(GuiSection section = null);
 
     public void SetDetailWindow(GuiAction action);
+
+    /// <summary>
+    /// Method called to style <paramref name="view"/> according to the current stylesheet
+    /// and the activation state.
+    /// </summary>
+    /// <param name="view">The button or other interface element to format.</param>
+    public void FormatView(View view);
+
+
 
     }
 
@@ -61,6 +111,8 @@ public class GuigenBinding(Gui gui, DisplayMode display = DisplayMode.Default) {
     }
 
 public class GuigenMainFlyout : FlyoutPage, IReformat, IMainWindow {
+
+    public StyleSheet StyleSheet => StyleSheet.DefaultStyleSheet;
     public GuigenBinding Binding { get; }
 
 
@@ -114,7 +166,22 @@ public class GuigenMainFlyout : FlyoutPage, IReformat, IMainWindow {
         Detail = detail;
         }
 
+    public void FormatView(View view) {
+        switch (view) {
+            case Button button: {
+                button.BackgroundColor = StyleSheet.BackgroundColor;
+                button.BorderColor = StyleSheet.BorderColor;
+                button.TextColor = button.IsEnabled ? StyleSheet.TextColor : StyleSheet.InactiveTextColor;
+                break;
+                }
+            }
 
+
+        }
+
+    public void DisableView(View view) {
+        throw new NotImplementedException();
+        }
     }
 
 
@@ -271,96 +338,6 @@ public class GuigenDetailSection : ContentPage, IPresentation {
 
 
         }
-
-    public void Refresh() {
-        }
-    }
-
-public class GuigenDetailAction : ContentPage, IPresentation {
-    IMainWindow MainWindow { get; }
-    GuigenBinding Binding => MainWindow.Binding;
-
-    public Page Page => this;
-
-
-    GuiAction Action { get; }
-    Gui Gui => Binding.Gui;
-
-    //List<GuigenField> Fields = new();
-
-    IBindable BoundValue;
-    FieldSet FieldSet { get; }
-
-    public GuigenDetailAction(IMainWindow mainWindow, GuiAction action) {
-        MainWindow = mainWindow;
-        Action = action;
-
-        BoundValue = action.Factory();
-
-        action.Presentation = this;
-
-        Title = action.Prompt;
-
-        var stack = new VerticalStackLayout();
-
-        var label = new Label() {
-            Text = action.Prompt,
-            };
-        stack.Add(label);
-        
-        FieldSet = new FieldSet(action.Entries, stack);
-
-        var view = new HorizontalStackLayout();
-
-        var confirmButton = new Button() {
-            Text = "Accept"
-            };
-        confirmButton.Clicked += OnClickConfirm;
-
-        var cancelButton = new Button() {
-            Text = "Cancel",
-            };
-        cancelButton.Clicked += OnClickCancel;
-
-
-        view.Add(confirmButton);
-        view.Add(cancelButton);
-        stack.Add(view);
-
-        Content = stack;
-        }
-
-    private void OnClickCancel(object sender, EventArgs e) {
-        MainWindow.SetDetailWindow();
-        }
-
-    private void OnClickConfirm(object sender, EventArgs e) {
-        var result = Action.Factory();
-        FieldSet.GetFields(result);
-
-
-
-        if (Action.Callback != null) {
-
-            var task = Action.Callback(result, ActionMode.Execute);
-
-            // here we need to lock the UI to prevent further actions until it returns, except for the cancel command.
-            //task.Wait();
-
-            task.ContinueWith(EnableActions, null);
-            }
-
-        MainWindow.SetDetailWindow();
-        }
-
-
-    public void DisableActions() {
-        }
-
-    public Task<IResult> EnableActions(Task<IResult> task, object? fred) {
-        return task;
-        }
-
 
     public void Refresh() {
         }

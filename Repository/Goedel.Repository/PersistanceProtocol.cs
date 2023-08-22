@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 8/16/2023 2:19:08 PM
+//  This file was automatically generated at 8/22/2023 6:31:48 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1113
+//  Generator:  protogen version 3.0.0.1123
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -198,12 +198,20 @@ public partial class RepositoryServiceClient : Goedel.Protocol.JpcClientInterfac
 	public override string GetDiscovery => Discovery;
 
     /// <summary>
-	/// Implement the transaction
+	/// Implement the transaction Query.
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
     public virtual QueryResponse Query (QueryRequest request) =>
 			JpcSession.Post("Query", request) as QueryResponse;
+
+    /// <summary>
+	/// Implement the transaction Query asynchronously.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public virtual async Task<QueryResponse> QueryAsync (QueryRequest request) =>
+			await JpcSession.PostAsync("Query", request) as QueryResponse;
 
 
 	}

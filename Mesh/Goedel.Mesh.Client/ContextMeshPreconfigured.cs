@@ -65,13 +65,19 @@ public class ContextMeshPreconfigured : ContextAccount {
         }
 
 
+    /// <summary>
+    /// Attempt to connect to a personal Mesh by polling various services. 
+    /// </summary>
+    /// <returns>If successfull returns an ContextAccount instance to allow access
+    /// to the connected account. Otherwise, a null value is returned.</returns>
+    public ContextMeshPending Poll() => PollAsync().Sync();
 
     /// <summary>
     /// Attempt to connect to a personal Mesh by polling various services. 
     /// </summary>
     /// <returns>If successfull returns an ContextAccount instance to allow access
     /// to the connected account. Otherwise, a null value is returned.</returns>
-    public ContextMeshPending Poll() {
+    public async Task<ContextMeshPending> PollAsync() {
 
         // Check that we can connect to the service.
         MeshClient.AssertNotNull(InvalidServiceResponse.Throw);
@@ -81,7 +87,7 @@ public class ContextMeshPreconfigured : ContextAccount {
             PublicationId = CatalogedPreconfigured.PublicationId
             };
 
-        var claimResponse = MeshClient.PollClaim(claimRequest);
+        var claimResponse = await MeshClient.PollClaimAsync(claimRequest);
 
         if (claimResponse?.EnvelopedMessage == null) {
             return null;

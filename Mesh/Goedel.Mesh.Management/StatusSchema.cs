@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 8/16/2023 2:19:10 PM
+//  This file was automatically generated at 8/22/2023 6:31:50 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1113
+//  Generator:  protogen version 3.0.0.1123
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -208,7 +208,7 @@ public partial class ServiceManagementServiceClient : Goedel.Protocol.JpcClientI
 	public override string GetDiscovery => Discovery;
 
     /// <summary>
-	/// Implement the transaction
+	/// Implement the transaction ServiceConfig.
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
@@ -216,12 +216,28 @@ public partial class ServiceManagementServiceClient : Goedel.Protocol.JpcClientI
 			JpcSession.Post("ServiceConfig", request) as ServiceConfigResponse;
 
     /// <summary>
-	/// Implement the transaction
+	/// Implement the transaction ServiceConfig asynchronously.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public virtual async Task<ServiceConfigResponse> ServiceConfigAsync (ServiceConfigRequest request) =>
+			await JpcSession.PostAsync("ServiceConfig", request) as ServiceConfigResponse;
+
+    /// <summary>
+	/// Implement the transaction ServiceStatus.
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
     public virtual ServiceStatusResponse ServiceStatus (ServiceStatusRequest request) =>
 			JpcSession.Post("ServiceStatus", request) as ServiceStatusResponse;
+
+    /// <summary>
+	/// Implement the transaction ServiceStatus asynchronously.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public virtual async Task<ServiceStatusResponse> ServiceStatusAsync (ServiceStatusRequest request) =>
+			await JpcSession.PostAsync("ServiceStatus", request) as ServiceStatusResponse;
 
 
 	}

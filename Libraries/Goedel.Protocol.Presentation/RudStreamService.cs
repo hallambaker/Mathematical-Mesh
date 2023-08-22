@@ -111,7 +111,7 @@ public class RudStreamService : RudStream, IJpcSession {
     public void Respond(JsonObject jsonObject) => throw new NYI();
 
     ///<inheritdoc/>
-    public Task<JsonObject> AsyncPost(string tag, JsonObject request) {
+    public Task<JsonObject> PostAsync(string tag, JsonObject request) {
         throw new NotImplementedException();
         }
     #endregion

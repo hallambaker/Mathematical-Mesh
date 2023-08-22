@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 8/22/2023 10:54:48 AM
+//  This file was automatically generated at 8/22/2023 6:31:48 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1113
+//  Generator:  protogen version 3.0.0.1123
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -208,7 +208,7 @@ public partial class ResolverServiceClient : Goedel.Protocol.JpcClientInterface 
 	public override string GetDiscovery => Discovery;
 
     /// <summary>
-	/// Implement the transaction
+	/// Implement the transaction Query.
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
@@ -216,12 +216,28 @@ public partial class ResolverServiceClient : Goedel.Protocol.JpcClientInterface 
 			JpcSession.Post("Query", request) as QueryResponse;
 
     /// <summary>
-	/// Implement the transaction
+	/// Implement the transaction Query asynchronously.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public virtual async Task<QueryResponse> QueryAsync (QueryRequest request) =>
+			await JpcSession.PostAsync("Query", request) as QueryResponse;
+
+    /// <summary>
+	/// Implement the transaction Sync.
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
     public virtual SyncResponse Sync (SyncRequest request) =>
 			JpcSession.Post("Sync", request) as SyncResponse;
+
+    /// <summary>
+	/// Implement the transaction Sync asynchronously.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public virtual async Task<SyncResponse> SyncAsync (SyncRequest request) =>
+			await JpcSession.PostAsync("Sync", request) as SyncResponse;
 
 
 	}

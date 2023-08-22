@@ -1401,7 +1401,7 @@
             <param name="request">The transaction request.</param>
             <returns>The transaction response</returns>
         </member>
-        <member name="M:Goedel.Protocol.IJpcSession.AsyncPost(System.String,Goedel.Protocol.JsonObject)">
+        <member name="M:Goedel.Protocol.IJpcSession.PostAsync(System.String,Goedel.Protocol.JsonObject)">
             <summary>
             Post the request <paramref name="request"/> asynchronously and create a
             task waiting for the result. 
@@ -1845,7 +1845,7 @@
         <member name="M:Goedel.Protocol.JpcSession.Rebind(Goedel.Protocol.ICredential)">
             <inheritdoc cref="T:Goedel.Protocol.IJpcSession"/>
         </member>
-        <member name="M:Goedel.Protocol.JpcSession.AsyncPost(System.String,Goedel.Protocol.JsonObject)">
+        <member name="M:Goedel.Protocol.JpcSession.PostAsync(System.String,Goedel.Protocol.JsonObject)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Protocol.JpcRemoteSession">

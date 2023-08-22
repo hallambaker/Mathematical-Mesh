@@ -54,7 +54,7 @@ public static class UriClient {
         var request = new ByteArrayContent(data);
 
         //address = address + "/";
-        var response = await HttpClient.PostAsync(address, request);
+        var response = await HttpClient.PostAsync(address, request).ConfigureAwait(true);
         var content = response.Content;
         var bytes = await content.ReadAsByteArrayAsync();
         var discard = bytes.ToUTF8();

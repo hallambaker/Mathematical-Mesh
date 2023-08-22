@@ -290,13 +290,21 @@ public partial class ContextUser : ContextAccount {
     #region // Operations requiring OfflineSignatureKey - GrantAdmin, SetService
 
 
+    /// <summary>
+    /// Set the initial Mesh Service. This MUST be called before devices are added to the 
+    /// personal mesh. This method does not support transfer of the Mesh Service.
+    /// </summary>
+    /// <param name="accountAddress">The account address</param>
+    public void SetService(string accountAddress) => 
+            SetServiceAsync(accountAddress).Wait();
+
 
     /// <summary>
     /// Set the initial Mesh Service. This MUST be called before devices are added to the 
     /// personal mesh. This method does not support transfer of the Mesh Service.
     /// </summary>
     /// <param name="accountAddress">The account address</param>
-    public void SetService(
+    public async Task SetServiceAsync(
             string accountAddress) {
         KeyProfile.AssertNotNull(NotSuperAdministrator.Throw);
 
@@ -304,12 +312,11 @@ public partial class ContextUser : ContextAccount {
         var credentialPrivate = new MeshKeyCredentialPrivate(
                     KeyCommonAuthentication as KeyPairAdvanced, ProfileUser.UdfString);
 
-
         MeshClient = MeshMachine.GetMeshClient(credentialPrivate, accountAddress);
 
         // Query the service capabilities
         var helloRequest = new HelloRequest();
-        var helloResponse = MeshClient.Hello(helloRequest);
+        var helloResponse = await MeshClient.HelloAsync(helloRequest);
         ProfileService = helloResponse.EnvelopedProfileService.Decode();
 
         // Update the profile
@@ -324,7 +331,12 @@ public partial class ContextUser : ContextAccount {
         SetContactSelf(contact);
         }
 
-
+    /// <summary>
+    /// Bind to a service under the account address <paramref name="accountAddress"/>.
+    /// </summary>
+    /// <param name="accountAddress">The account address to bind.</param>
+    public void BindService(string accountAddress) =>
+            BindServiceAsync(accountAddress).Wait();
 
 
 
@@ -332,7 +344,7 @@ public partial class ContextUser : ContextAccount {
     /// Bind to a service under the account address <paramref name="accountAddress"/>.
     /// </summary>
     /// <param name="accountAddress">The account address to bind.</param>
-    public void BindService(string accountAddress) {
+    public async Task BindServiceAsync(string accountAddress) {
 
         var envelopedBindings = MakeBindings(ProfileUser, accountAddress);
 
@@ -345,7 +357,7 @@ public partial class ContextUser : ContextAccount {
             };
 
         // Attempt to register with service in question
-        var response = MeshClient.BindAccount(createRequest);
+        var response = await MeshClient.BindAccountAsync (createRequest);
         response.AssertSuccess(ServerOperationFailed.Throw);
 
         // Create the Access catalog here with policy allowing the service access
@@ -367,14 +379,23 @@ public partial class ContextUser : ContextAccount {
         using var store = MakeStore(CatalogAccess.Label, policy);
 
         LoadStores(); // Load all stores so that these are created on the service.
-        SyncProgressUpload();
+        await SyncProgressUploadAsync();
         }
+
 
     /// <summary>
     /// Create an administrator device entry.
     /// </summary>
     /// <param name="rights">The rights to be granted to the administrator device.</param>
-    public void MakeAdministrator(List<string> rights) {
+    public void MakeAdministrator(List<string> rights) =>
+        MakeAdministratorAsync(rights).Wait();
+
+
+    /// <summary>
+    /// Create an administrator device entry.
+    /// </summary>
+    /// <param name="rights">The rights to be granted to the administrator device.</param>
+    public async Task MakeAdministratorAsync(List<string> rights) {
         var transact = TransactBegin();
 
         CatalogedMachine.CatalogedDevice = ActivationCommon.MakeCatalogedDevice(
@@ -390,7 +411,7 @@ public partial class ContextUser : ContextAccount {
             status.Index = update.Envelopes.Count;
             }
 
-        transact.Transact();
+        await transact.TransactAsync();
         }
 
 

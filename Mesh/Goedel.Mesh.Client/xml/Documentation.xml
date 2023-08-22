@@ -557,6 +557,11 @@
             Delete the associated account from the local machine.
             </summary>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.DeleteAccountAsync">
+            <summary>
+            Delete the associated account from the local machine.
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate)">
             <summary>
             Returns a Mesh service client for <paramref name="credentialPrivate"/>.
@@ -648,6 +653,15 @@
             <param name="registerContext">If true associate register this context with the host.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.SyncProgressUpload(System.Int32)">
+            <summary>
+            Synchronize the device to the store in increments of no more than <paramref name="maxEnvelopes"/>
+            at a time. This should really be changed to something more Async callback friendly. Hours in
+            a day... ??? Its midnight.
+            </summary>
+            <param name="maxEnvelopes">The maximum number of envelopes to return.</param>
+            <returns>If true, the synchronization has completed.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.SyncProgressUploadAsync(System.Int32)">
             <summary>
             Synchronize the device to the store in increments of no more than <paramref name="maxEnvelopes"/>
             at a time. This should really be changed to something more Async callback friendly. Hours in
@@ -772,6 +786,9 @@
         <member name="M:Goedel.Mesh.Client.ContextAccount.RemoteAgreement(System.String,Goedel.Cryptography.KeyPairAdvanced,System.String)">
             <inheritdoc cref="M:Goedel.Cryptography.IKeyLocate.RemoteAgreement(System.String,Goedel.Cryptography.KeyPairAdvanced,System.String)"/>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.RemoteAgreementAsync(System.String,Goedel.Cryptography.KeyPairAdvanced,System.String)">
+            <inheritdoc cref="M:Goedel.Cryptography.IKeyLocate.RemoteAgreement(System.String,Goedel.Cryptography.KeyPairAdvanced,System.String)"/>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.DareEncode(System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Collections.Generic.List{System.String},System.Boolean)">
             <summary>
             Create a new DARE Envelope from the specified parameters.
@@ -860,6 +877,14 @@
             <returns></returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.Transact``1(Goedel.Mesh.Client.Transaction{``0})">
+            <summary>
+            Perform the transaction described by <paramref name="transact"/>. If the
+            remote operation succeeds, apply the changes to the local stores.
+            </summary>
+            <param name="transact">The transaction to perform.</param>
+            <returns>Response from the Mesh service.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.TransactAsync``1(Goedel.Mesh.Client.Transaction{``0})">
             <summary>
             Perform the transaction described by <paramref name="transact"/>. If the
             remote operation succeeds, apply the changes to the local stores.
@@ -1081,6 +1106,13 @@
             <returns>If successfull returns an ContextAccount instance to allow access
             to the connected account. Otherwise, a null value is returned.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextMeshPreconfigured.PollAsync">
+            <summary>
+            Attempt to connect to a personal Mesh by polling various services. 
+            </summary>
+            <returns>If successfull returns an ContextAccount instance to allow access
+            to the connected account. Otherwise, a null value is returned.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextMeshPreconfigured.Complete">
             <summary>
             Attempt to connect to a personal Mesh by polling various services. 
@@ -1264,13 +1296,32 @@
             </summary>
             <param name="accountAddress">The account address</param>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.SetServiceAsync(System.String)">
+            <summary>
+            Set the initial Mesh Service. This MUST be called before devices are added to the 
+            personal mesh. This method does not support transfer of the Mesh Service.
+            </summary>
+            <param name="accountAddress">The account address</param>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.BindService(System.String)">
             <summary>
             Bind to a service under the account address <paramref name="accountAddress"/>.
             </summary>
             <param name="accountAddress">The account address to bind.</param>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.BindServiceAsync(System.String)">
+            <summary>
+            Bind to a service under the account address <paramref name="accountAddress"/>.
+            </summary>
+            <param name="accountAddress">The account address to bind.</param>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.MakeAdministrator(System.Collections.Generic.List{System.String})">
+            <summary>
+            Create an administrator device entry.
+            </summary>
+            <param name="rights">The rights to be granted to the administrator device.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.MakeAdministratorAsync(System.Collections.Generic.List{System.String})">
             <summary>
             Create an administrator device entry.
             </summary>
@@ -1973,6 +2024,12 @@
             <typeparam name="TEntry">The entry type.</typeparam>
         </member>
         <member name="M:Goedel.Mesh.Client.Transaction`1.Transact">
+            <summary>
+            Apply the transaction and return the response.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.Transaction`1.TransactAsync">
             <summary>
             Apply the transaction and return the response.
             </summary>
@@ -3140,6 +3197,20 @@
             <param name="key">The profile to delete</param>
         </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.ConfigureMesh(System.String,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.ProfileDevice,System.Collections.Generic.List{System.String},System.Boolean)">
+             <summary>
+             Create a new Mesh master profile and bind to a Mesh service at <paramref name="accountAddress"/>.
+             </summary>
+            <param name="accountAddress">Account address to bind to.</param>
+             <param name="localName">Local name for easy reference.</param>
+             <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
+             <param name="profileDevice">Specify the device profile. This allows use of a device 
+             profile bound to the machine hardware.</param>
+             <param name="rights">The rights to be granted to the initial connected device.</param>
+             <param name="create">If true, create a new mesh, otherwise attempt recovery from the
+             service.</param>
+             <returns>Context for administering the Mesh</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.MeshHost.ConfigureMeshAsync(System.String,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.ProfileDevice,System.Collections.Generic.List{System.String},System.Boolean)">
              <summary>
              Create a new Mesh master profile and bind to a Mesh service at <paramref name="accountAddress"/>.
              </summary>

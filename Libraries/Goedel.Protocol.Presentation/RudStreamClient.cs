@@ -70,13 +70,13 @@ public class RudStreamClient : RudStream, IJpcSession {
     public JsonObject Post(string tag, JsonObject request) {
 
 
-        var task = PostAsync(tag, request);
+        var task = base.PostAsync(tag, request);
         task.Wait();
         return task.Result;
         }
 
-    public async Task<JsonObject> AsyncPost(string tag, JsonObject request) {
-        return await PostAsync(tag, request);
+    public async Task<JsonObject> PostAsync(string tag, JsonObject request) {
+        return await base.PostAsync(tag, request);
         }
 
 

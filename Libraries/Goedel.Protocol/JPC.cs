@@ -231,7 +231,7 @@ public abstract class JpcClientInterface {
 
 
     public Task<JsonObject> RequestAsync(string tag, JsonObject request) => 
-            JpcSession.AsyncPost(tag, request);
+            JpcSession.PostAsync(tag, request);
 
 
     }

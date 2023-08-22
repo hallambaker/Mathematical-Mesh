@@ -112,6 +112,7 @@ public partial class ContextAccount {
     /// <returns></returns>
     public TransactAccount TransactBegin() => new(this);
 
+
     /// <summary>
     /// Perform the transaction described by <paramref name="transact"/>. If the
     /// remote operation succeeds, apply the changes to the local stores.
@@ -119,6 +120,16 @@ public partial class ContextAccount {
     /// <param name="transact">The transaction to perform.</param>
     /// <returns>Response from the Mesh service.</returns>
     public TransactResponse Transact<TContext>(
+            Transaction<TContext> transact) where TContext : ContextAccount =>
+                TransactAsync(transact).Sync();
+
+    /// <summary>
+    /// Perform the transaction described by <paramref name="transact"/>. If the
+    /// remote operation succeeds, apply the changes to the local stores.
+    /// </summary>
+    /// <param name="transact">The transaction to perform.</param>
+    /// <returns>Response from the Mesh service.</returns>
+    public async Task<TransactResponse> TransactAsync<TContext>(
             Transaction<TContext> transact) where TContext : ContextAccount {
 
         transact.ContextAccount.AssertEqual(this, NYI.Throw);
@@ -143,7 +154,7 @@ public partial class ContextAccount {
 
                 }
 
-            response = MeshClient.Transact(transactRequest);
+            response = await MeshClient.TransactAsync(transactRequest);
             response.Success().AssertTrue(NYI.Throw);
             }
 
@@ -166,8 +177,6 @@ public partial class ContextAccount {
                 spoolLocal.AppendDirect(envelope);
                 }
             }
-
-
 
         return response;
         }
@@ -514,4 +523,12 @@ public abstract class Transaction<TAccount> : Disposable
     /// <returns></returns>
     public TransactResponse Transact() =>
                 ContextAccount.Transact(this);
+
+    /// <summary>
+    /// Apply the transaction and return the response.
+    /// </summary>
+    /// <returns></returns>
+    public async Task<TransactResponse> TransactAsync() =>
+                await ContextAccount.TransactAsync(this);
+
     }

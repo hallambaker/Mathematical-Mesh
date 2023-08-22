@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 8/22/2023 10:54:47 AM
+//  This file was automatically generated at 8/22/2023 6:46:37 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1113
+//  Generator:  protogen version 3.0.0.1129
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -366,108 +366,212 @@ public partial class MeshServiceClient : Goedel.Protocol.JpcClientInterface {
 	public override string GetDiscovery => Discovery;
 
     /// <summary>
-	/// Implement the transaction
+	/// Implement the transaction Hello.
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual MeshHelloResponse Hello (HelloRequest request) =>
-			JpcSession.Post("Hello", request) as MeshHelloResponse;
+    public MeshHelloResponse Hello (HelloRequest request) =>
+			HelloAsync (request).Sync();
 
     /// <summary>
-	/// Implement the transaction
+	/// Implement the transaction Hello asynchronously.
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual BindResponse BindAccount (BindRequest request) =>
-			JpcSession.Post("BindAccount", request) as BindResponse;
+    public virtual async Task<MeshHelloResponse> HelloAsync (HelloRequest request) =>
+			await JpcSession.PostAsync("Hello", request) as MeshHelloResponse;
 
     /// <summary>
-	/// Implement the transaction
+	/// Implement the transaction BindAccount.
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual UnbindResponse UnbindAccount (UnbindRequest request) =>
-			JpcSession.Post("UnbindAccount", request) as UnbindResponse;
+    public BindResponse BindAccount (BindRequest request) =>
+			BindAccountAsync (request).Sync();
 
     /// <summary>
-	/// Implement the transaction
+	/// Implement the transaction BindAccount asynchronously.
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual ConnectResponse Connect (ConnectRequest request) =>
-			JpcSession.Post("Connect", request) as ConnectResponse;
+    public virtual async Task<BindResponse> BindAccountAsync (BindRequest request) =>
+			await JpcSession.PostAsync("BindAccount", request) as BindResponse;
 
     /// <summary>
-	/// Implement the transaction
+	/// Implement the transaction UnbindAccount.
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual CompleteResponse Complete (CompleteRequest request) =>
-			JpcSession.Post("Complete", request) as CompleteResponse;
+    public UnbindResponse UnbindAccount (UnbindRequest request) =>
+			UnbindAccountAsync (request).Sync();
 
     /// <summary>
-	/// Implement the transaction
+	/// Implement the transaction UnbindAccount asynchronously.
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual StatusResponse Status (StatusRequest request) =>
-			JpcSession.Post("Status", request) as StatusResponse;
+    public virtual async Task<UnbindResponse> UnbindAccountAsync (UnbindRequest request) =>
+			await JpcSession.PostAsync("UnbindAccount", request) as UnbindResponse;
 
     /// <summary>
-	/// Implement the transaction
+	/// Implement the transaction Connect.
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual DownloadResponse Download (DownloadRequest request) =>
-			JpcSession.Post("Download", request) as DownloadResponse;
+    public ConnectResponse Connect (ConnectRequest request) =>
+			ConnectAsync (request).Sync();
 
     /// <summary>
-	/// Implement the transaction
+	/// Implement the transaction Connect asynchronously.
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual TransactResponse Transact (TransactRequest request) =>
-			JpcSession.Post("Transact", request) as TransactResponse;
+    public virtual async Task<ConnectResponse> ConnectAsync (ConnectRequest request) =>
+			await JpcSession.PostAsync("Connect", request) as ConnectResponse;
 
     /// <summary>
-	/// Implement the transaction
+	/// Implement the transaction Complete.
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual DownloadResponse PublicRead (PublicRequest request) =>
-			JpcSession.Post("PublicRead", request) as DownloadResponse;
+    public CompleteResponse Complete (CompleteRequest request) =>
+			CompleteAsync (request).Sync();
 
     /// <summary>
-	/// Implement the transaction
+	/// Implement the transaction Complete asynchronously.
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual PostResponse Post (PostRequest request) =>
-			JpcSession.Post("Post", request) as PostResponse;
+    public virtual async Task<CompleteResponse> CompleteAsync (CompleteRequest request) =>
+			await JpcSession.PostAsync("Complete", request) as CompleteResponse;
 
     /// <summary>
-	/// Implement the transaction
+	/// Implement the transaction Status.
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual ClaimResponse Claim (ClaimRequest request) =>
-			JpcSession.Post("Claim", request) as ClaimResponse;
+    public StatusResponse Status (StatusRequest request) =>
+			StatusAsync (request).Sync();
 
     /// <summary>
-	/// Implement the transaction
+	/// Implement the transaction Status asynchronously.
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual PollClaimResponse PollClaim (PollClaimRequest request) =>
-			JpcSession.Post("PollClaim", request) as PollClaimResponse;
+    public virtual async Task<StatusResponse> StatusAsync (StatusRequest request) =>
+			await JpcSession.PostAsync("Status", request) as StatusResponse;
 
     /// <summary>
-	/// Implement the transaction
+	/// Implement the transaction Download.
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual OperateResponse Operate (OperateRequest request) =>
-			JpcSession.Post("Operate", request) as OperateResponse;
+    public DownloadResponse Download (DownloadRequest request) =>
+			DownloadAsync (request).Sync();
+
+    /// <summary>
+	/// Implement the transaction Download asynchronously.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public virtual async Task<DownloadResponse> DownloadAsync (DownloadRequest request) =>
+			await JpcSession.PostAsync("Download", request) as DownloadResponse;
+
+    /// <summary>
+	/// Implement the transaction Transact.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public TransactResponse Transact (TransactRequest request) =>
+			TransactAsync (request).Sync();
+
+    /// <summary>
+	/// Implement the transaction Transact asynchronously.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public virtual async Task<TransactResponse> TransactAsync (TransactRequest request) =>
+			await JpcSession.PostAsync("Transact", request) as TransactResponse;
+
+    /// <summary>
+	/// Implement the transaction PublicRead.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public DownloadResponse PublicRead (PublicRequest request) =>
+			PublicReadAsync (request).Sync();
+
+    /// <summary>
+	/// Implement the transaction PublicRead asynchronously.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public virtual async Task<DownloadResponse> PublicReadAsync (PublicRequest request) =>
+			await JpcSession.PostAsync("PublicRead", request) as DownloadResponse;
+
+    /// <summary>
+	/// Implement the transaction Post.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public PostResponse Post (PostRequest request) =>
+			PostAsync (request).Sync();
+
+    /// <summary>
+	/// Implement the transaction Post asynchronously.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public virtual async Task<PostResponse> PostAsync (PostRequest request) =>
+			await JpcSession.PostAsync("Post", request) as PostResponse;
+
+    /// <summary>
+	/// Implement the transaction Claim.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public ClaimResponse Claim (ClaimRequest request) =>
+			ClaimAsync (request).Sync();
+
+    /// <summary>
+	/// Implement the transaction Claim asynchronously.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public virtual async Task<ClaimResponse> ClaimAsync (ClaimRequest request) =>
+			await JpcSession.PostAsync("Claim", request) as ClaimResponse;
+
+    /// <summary>
+	/// Implement the transaction PollClaim.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public PollClaimResponse PollClaim (PollClaimRequest request) =>
+			PollClaimAsync (request).Sync();
+
+    /// <summary>
+	/// Implement the transaction PollClaim asynchronously.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public virtual async Task<PollClaimResponse> PollClaimAsync (PollClaimRequest request) =>
+			await JpcSession.PostAsync("PollClaim", request) as PollClaimResponse;
+
+    /// <summary>
+	/// Implement the transaction Operate.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public OperateResponse Operate (OperateRequest request) =>
+			OperateAsync (request).Sync();
+
+    /// <summary>
+	/// Implement the transaction Operate asynchronously.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public virtual async Task<OperateResponse> OperateAsync (OperateRequest request) =>
+			await JpcSession.PostAsync("Operate", request) as OperateResponse;
 
 
 	}
@@ -488,8 +592,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override MeshHelloResponse Hello (HelloRequest request) =>
-			Service.Hello (request, JpcSession);
+    public override Task<MeshHelloResponse> HelloAsync (HelloRequest request) =>
+			Task.FromResult(Service.Hello (request, JpcSession));
 
 
     /// <summary>
@@ -497,8 +601,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override BindResponse BindAccount (BindRequest request) =>
-			Service.BindAccount (request, JpcSession);
+    public override Task<BindResponse> BindAccountAsync (BindRequest request) =>
+			Task.FromResult(Service.BindAccount (request, JpcSession));
 
 
     /// <summary>
@@ -506,8 +610,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override UnbindResponse UnbindAccount (UnbindRequest request) =>
-			Service.UnbindAccount (request, JpcSession);
+    public override Task<UnbindResponse> UnbindAccountAsync (UnbindRequest request) =>
+			Task.FromResult(Service.UnbindAccount (request, JpcSession));
 
 
     /// <summary>
@@ -515,8 +619,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override ConnectResponse Connect (ConnectRequest request) =>
-			Service.Connect (request, JpcSession);
+    public override Task<ConnectResponse> ConnectAsync (ConnectRequest request) =>
+			Task.FromResult(Service.Connect (request, JpcSession));
 
 
     /// <summary>
@@ -524,8 +628,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override CompleteResponse Complete (CompleteRequest request) =>
-			Service.Complete (request, JpcSession);
+    public override Task<CompleteResponse> CompleteAsync (CompleteRequest request) =>
+			Task.FromResult(Service.Complete (request, JpcSession));
 
 
     /// <summary>
@@ -533,8 +637,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override StatusResponse Status (StatusRequest request) =>
-			Service.Status (request, JpcSession);
+    public override Task<StatusResponse> StatusAsync (StatusRequest request) =>
+			Task.FromResult(Service.Status (request, JpcSession));
 
 
     /// <summary>
@@ -542,8 +646,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override DownloadResponse Download (DownloadRequest request) =>
-			Service.Download (request, JpcSession);
+    public override Task<DownloadResponse> DownloadAsync (DownloadRequest request) =>
+			Task.FromResult(Service.Download (request, JpcSession));
 
 
     /// <summary>
@@ -551,8 +655,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override TransactResponse Transact (TransactRequest request) =>
-			Service.Transact (request, JpcSession);
+    public override Task<TransactResponse> TransactAsync (TransactRequest request) =>
+			Task.FromResult(Service.Transact (request, JpcSession));
 
 
     /// <summary>
@@ -560,8 +664,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override DownloadResponse PublicRead (PublicRequest request) =>
-			Service.PublicRead (request, JpcSession);
+    public override Task<DownloadResponse> PublicReadAsync (PublicRequest request) =>
+			Task.FromResult(Service.PublicRead (request, JpcSession));
 
 
     /// <summary>
@@ -569,8 +673,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override PostResponse Post (PostRequest request) =>
-			Service.Post (request, JpcSession);
+    public override Task<PostResponse> PostAsync (PostRequest request) =>
+			Task.FromResult(Service.Post (request, JpcSession));
 
 
     /// <summary>
@@ -578,8 +682,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override ClaimResponse Claim (ClaimRequest request) =>
-			Service.Claim (request, JpcSession);
+    public override Task<ClaimResponse> ClaimAsync (ClaimRequest request) =>
+			Task.FromResult(Service.Claim (request, JpcSession));
 
 
     /// <summary>
@@ -587,8 +691,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override PollClaimResponse PollClaim (PollClaimRequest request) =>
-			Service.PollClaim (request, JpcSession);
+    public override Task<PollClaimResponse> PollClaimAsync (PollClaimRequest request) =>
+			Task.FromResult(Service.PollClaim (request, JpcSession));
 
 
     /// <summary>
@@ -596,8 +700,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override OperateResponse Operate (OperateRequest request) =>
-			Service.Operate (request, JpcSession);
+    public override Task<OperateResponse> OperateAsync (OperateRequest request) =>
+			Task.FromResult(Service.Operate (request, JpcSession));
 
 
 		}

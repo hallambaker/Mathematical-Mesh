@@ -376,6 +376,26 @@ public class MeshHost : Disposable {
     #endregion
 
 
+    /// <summary>
+    /// Create a new Mesh master profile and bind to a Mesh service at <paramref name="accountAddress"/>.
+    /// </summary>
+    ///<param name="accountAddress">Account address to bind to.</param>
+    /// <param name="localName">Local name for easy reference.</param>
+    /// <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
+    /// <param name="profileDevice">Specify the device profile. This allows use of a device 
+    /// profile bound to the machine hardware.</param>
+    /// <param name="rights">The rights to be granted to the initial connected device.</param>
+    /// <param name="create">If true, create a new mesh, otherwise attempt recovery from the
+    /// service.</param>
+    /// <returns>Context for administering the Mesh</returns>
+    public virtual  ContextUser ConfigureMesh(
+        string accountAddress,
+        string localName = null,
+        PrivateKeyUDF accountSeed = null,
+        ProfileDevice profileDevice = null,
+        List<string> rights = null,
+        bool create = true) => ConfigureMeshAsync(accountAddress, localName, accountSeed, profileDevice, rights, create).Sync();
+
 
 
 
@@ -391,7 +411,7 @@ public class MeshHost : Disposable {
     /// <param name="create">If true, create a new mesh, otherwise attempt recovery from the
     /// service.</param>
     /// <returns>Context for administering the Mesh</returns>
-    public virtual ContextUser ConfigureMesh(
+    public virtual async Task<ContextUser> ConfigureMeshAsync(
             string accountAddress,
             string localName = null,
             PrivateKeyUDF accountSeed = null,
@@ -401,10 +421,9 @@ public class MeshHost : Disposable {
 
 
         using var contextUser = InitializeAdminContext(accountAddress, localName,
-            ref accountSeed, ref profileDevice, ref rights,
-             out var _);
+            ref accountSeed, ref profileDevice, ref rights, out var _);
 
-        contextUser.SetService(accountAddress);
+        await contextUser.SetServiceAsync(accountAddress);
 
 
         if (create) {
@@ -417,9 +436,6 @@ public class MeshHost : Disposable {
 
         // Return to normal privilege.
         contextUser.MeshClient = null;
-
-        //// Register the mesh description on the local machine.
-        //Register(contextUser.CatalogedMachine, contextUser);
 
         var result = GetContext(contextUser.CatalogedMachine) as ContextUser;
 
@@ -463,13 +479,11 @@ public class MeshHost : Disposable {
         Logger.CreateAccount(profileUser.UdfString, profileUser.AccountAuthenticationKey?.KeyIdentifier);
         Logger.CommonSeed(commonSeed.KeyId);
 
-
         // Check that the profile is valid before using it.
         profileUser.Validate();
 
         // Create the account directory.
         ContextUser.CreateDirectory(this, profileUser, activationCommon, KeyCollection);
-
 
         rights ??= new List<string> {
                 Rights.IdRolesSuper,
@@ -477,16 +491,12 @@ public class MeshHost : Disposable {
                 Rights.IdRolesWeb
                 };
 
-
         var activationAccount = new ActivationAccount(profileDevice, profileUser.UdfString);
 
         // create a Cataloged activationRoot.Device entry for the admin device
         var catalogedDevice = activationCommon.CreateCataloguedDevice(
                 profileUser, profileDevice, activationAccount, activationCommon,
                 activationCommon.AdministratorSignatureKey);
-
-
-
 
         // Create the host catalog entry and apply to the context user.
         var catalogedMachine = new CatalogedStandard() {
@@ -501,7 +511,6 @@ public class MeshHost : Disposable {
             profileDevice.PersistSeed(KeyCollection);
             }
         KeyCollection.Persist(profileUser.UdfString, commonSeed, false);
-
 
         // Return a user context. It is necessary to ovewrite the activation records
         // because the cataloged device entry in catalogedMachine is not yet final. 

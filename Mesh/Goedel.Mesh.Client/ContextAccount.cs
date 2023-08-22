@@ -373,14 +373,21 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     #endregion
     #region // Account operations sync, send message
 
+
     /// <summary>
     /// Delete the associated account from the local machine.
     /// </summary>
-    public void DeleteAccount() {
+    public void DeleteAccount() => DeleteAccountAsync().Wait();
+
+
+    /// <summary>
+    /// Delete the associated account from the local machine.
+    /// </summary>
+    public async Task DeleteAccountAsync() {
         var unbindRequest = new UnbindRequest() {
             Account = ServiceAddress
             };
-        var response = MeshClient.UnbindAccount(unbindRequest);
+        var response = await MeshClient.UnbindAccountAsync(unbindRequest);
         response.AssertSuccess(NYI.Throw);
 
         // close all open stores and clear the dictionary
@@ -709,6 +716,16 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         MeshHost.Register(CatalogedMachine, registerContext ? this : null);
         }
 
+    /// <summary>
+    /// Synchronize the device to the store in increments of no more than <paramref name="maxEnvelopes"/>
+    /// at a time. This should really be changed to something more Async callback friendly. Hours in
+    /// a day... ??? Its midnight.
+    /// </summary>
+    /// <param name="maxEnvelopes">The maximum number of envelopes to return.</param>
+    /// <returns>If true, the synchronization has completed.</returns>
+    public bool SyncProgressUpload(int maxEnvelopes = -1) =>
+        SyncProgressUploadAsync(maxEnvelopes).Sync();
+
 
     /// <summary>
     /// Synchronize the device to the store in increments of no more than <paramref name="maxEnvelopes"/>
@@ -717,7 +734,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// </summary>
     /// <param name="maxEnvelopes">The maximum number of envelopes to return.</param>
     /// <returns>If true, the synchronization has completed.</returns>
-    public bool SyncProgressUpload(int maxEnvelopes = -1) {
+    public async Task<bool> SyncProgressUploadAsync(int maxEnvelopes = -1) {
         bool complete = true;
         var updates = new List<StoreUpdate>();
 
@@ -743,7 +760,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             var uploadRequest = new TransactRequest() {
                 Updates = updates
                 };
-            MeshClient.Transact(uploadRequest);
+            await MeshClient.TransactAsync(uploadRequest);
             }
 
         return complete;
@@ -1085,6 +1102,13 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
     ///<inheritdoc cref="IKeyLocate.RemoteAgreement"/>
     public KeyAgreementResult RemoteAgreement(
+            string serviceAddress,
+            KeyPairAdvanced ephemeral,
+            string shareId) => RemoteAgreementAsync(serviceAddress, ephemeral, shareId).Sync();
+
+
+    ///<inheritdoc cref="IKeyLocate.RemoteAgreement"/>
+    public async Task<KeyAgreementResult> RemoteAgreementAsync(
                 string serviceAddress,
                 KeyPairAdvanced ephemeral,
                 string shareId) {
@@ -1101,7 +1125,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
                     }
             };
         ;
-        var response = MeshClient.Operate(operateRequest);
+        var response = await MeshClient.OperateAsync(operateRequest);
         response.AssertSuccess(CryptographicOperationRefused.Throw);
 
         var result = response.Results[0] as CryptographicResultKeyAgreement;

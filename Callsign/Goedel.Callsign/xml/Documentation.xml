@@ -1579,14 +1579,28 @@
         </member>
         <member name="M:Goedel.Callsign.ResolverServiceClient.Query(Goedel.Callsign.QueryRequest)">
             <summary>
-            Implement the transaction
+            Implement the transaction Query.
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Callsign.ResolverServiceClient.QueryAsync(Goedel.Callsign.QueryRequest)">
+            <summary>
+            Implement the transaction Query asynchronously.
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
         <member name="M:Goedel.Callsign.ResolverServiceClient.Sync(Goedel.Callsign.SyncRequest)">
             <summary>
-            Implement the transaction
+            Implement the transaction Sync.
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Callsign.ResolverServiceClient.SyncAsync(Goedel.Callsign.SyncRequest)">
+            <summary>
+            Implement the transaction Sync asynchronously.
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>

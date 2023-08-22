@@ -123,14 +123,28 @@
         </member>
         <member name="M:Goedel.Mesh.Management.ServiceManagementServiceClient.ServiceConfig(Goedel.Mesh.Management.ServiceConfigRequest)">
             <summary>
-            Implement the transaction
+            Implement the transaction ServiceConfig.
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementServiceClient.ServiceConfigAsync(Goedel.Mesh.Management.ServiceConfigRequest)">
+            <summary>
+            Implement the transaction ServiceConfig asynchronously.
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
         <member name="M:Goedel.Mesh.Management.ServiceManagementServiceClient.ServiceStatus(Goedel.Mesh.Management.ServiceStatusRequest)">
             <summary>
-            Implement the transaction
+            Implement the transaction ServiceStatus.
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementServiceClient.ServiceStatusAsync(Goedel.Mesh.Management.ServiceStatusRequest)">
+            <summary>
+            Implement the transaction ServiceStatus asynchronously.
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>
