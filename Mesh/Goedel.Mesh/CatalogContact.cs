@@ -291,11 +291,13 @@ public class CatalogContact : Catalog<CatalogedContact> {
 public partial class CatalogedContact {
 
     #region // Properties
-    /// <summary>
-    /// The primary key used to catalog the entry. This is the UDF of the authentication key.
-    /// </summary>
-
+    
+    ///<inheritdoc/>
     public override string _PrimaryKey => Key;
+
+    ///<summary>Message sent in exchange. This is only populated in a return from a 
+    ///contact exchange method.</summary> 
+    public Message Message { get; set; } = null;
 
     ///<summary>Typed enveloped data</summary> 
     public Enveloped<CatalogedContact> GetEnvelopedCatalogedContact() =>

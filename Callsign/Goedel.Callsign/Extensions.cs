@@ -125,7 +125,7 @@ public static class Extensions {
     /// <param name="contextAccount">The account context in which to make the request.</param>
     /// <param name="display">The display form of the callsign.</param>
     /// <param name="transferUdf">UDF of party to be given ability to control the callsign binding.</param>
-    public static CallsignRegistrationRequest CallsignRequest(
+    public static async Task<CallsignRegistrationRequest> CallsignRequestAsync(
                 this ContextUser contextAccount,
                 string callsign,
                 string display = null,
@@ -135,8 +135,6 @@ public static class Extensions {
 
         display = CallsignMapping.Strip(display ?? callsign);
         callsign = CallsignMapping.Default.Canonicalize(CallsignMapping.Strip(callsign));
-
-
 
         (CallsignMapping.Default.Canonicalize(display) == callsign).AssertTrue(CanonicalFormInvalid.Throw);
 
@@ -161,8 +159,6 @@ public static class Extensions {
         else {
             callsignBinding.TransferUdf = transfer.UdfString;
             }
-
-
 
         if (bind) {
             var service = profile.AccountAddress.GetService();
@@ -199,7 +195,7 @@ public static class Extensions {
             var applicationCatalog = transact.GetCatalogApplication();
             transact.CatalogUpdate(applicationCatalog, application);
 
-            contextAccount.Transact(transact);
+            await contextAccount.TransactAsync(transact);
             }
 
 
@@ -232,12 +228,12 @@ public static class Extensions {
     /// <param name="contextAccount">The account context.</param>
     /// <param name="callsign">The callsign to query.</param>
     /// <returns></returns>
-    public static CatalogedApplicationCallsign CallsignRequestStatus(
+    public static async Task<CatalogedApplicationCallsign> CallsignRequestStatus(
                 this ContextUser contextAccount,
                 string callsign) {
 
-        contextAccount.Sync();
-        contextAccount.ProcessAutomatics();
+        contextAccount.SynchronizeAsync();
+        await contextAccount.ProcessAutomaticsAsync();
 
         // synchronize the account and process messages
         var canonical = CallsignMapping.Default.Canonicalize(CallsignMapping.Strip(callsign));
@@ -266,7 +262,7 @@ public static class Extensions {
 
         var profile = GetProfile (contact.Contact, recipient);
         // create the transfer request
-        return contextAccount.CallsignRequest(callsign, bind:false, transfer: profile );
+        return contextAccount.CallsignRequestAsync(callsign, bind:false, transfer: profile );
 
         }
 
@@ -316,16 +312,23 @@ public static class Extensions {
         return result;
         }
 
+    public static ProcessResult ProcessMessage(
+            ContextUser contextUser,
+            Message meshMessage, bool accept = true, bool reciprocate = true,
+            List<string> roles = null) => ProcessMessageAsync (contextUser, meshMessage, accept, reciprocate, roles).Sync();
+
+
     /// <summary>
     /// Process CallsignRegistrationResponse messages in context.
     /// </summary>
+    /// <
     /// <param name="contextUser">The user context to process the message.</param>
     /// <param name="meshMessage">The message to process, must be of type CallsignRegistrationResponse.</param>
     /// <param name="accept">Ignored</param>
     /// <param name="reciprocate">Ignored</param>
     /// <param name="roles">Ignored</param>
     /// <returns>The result of processing the message.</returns>
-    public static ProcessResult ProcessMessage(
+    public static async Task<ProcessResult> ProcessMessageAsync(
                 ContextUser contextUser,
                 Message meshMessage, bool accept = true, bool reciprocate = true,
                 List<string> roles = null) {
@@ -383,7 +386,7 @@ public static class Extensions {
         result.Recipient = message.Recipient;
 
         transact.InboundComplete(StateSpoolMessage.Closed, meshMessage);
-        transact.Transact();
+        await transact.TransactAsync();
 
 
         return result;

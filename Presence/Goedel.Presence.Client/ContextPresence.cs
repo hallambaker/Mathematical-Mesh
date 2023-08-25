@@ -344,7 +344,7 @@ public class ContextPresence : Disposable {
             Acknowledge = notify.Serial
             };
         SendData(message, ServiceAccessToken.Token);
-        ContextUser.Sync();
+        ContextUser.SynchronizeAsync();
         ReleaseWait();
         }
 
@@ -585,7 +585,7 @@ public class ContextPresence : Disposable {
 
             //Screen.WriteLine($"Synchronize store {ContextUser.AccountAddress}");
 
-            var count = ContextUser.Sync();
+            var count = ContextUser.SynchronizeAsync();
 
             foreach (var envelope in inbound.Select(1)) {
                 var message = Message.Decode(envelope, ContextUser.KeyCollection);
@@ -604,7 +604,7 @@ public class ContextPresence : Disposable {
         }
 
     long GetInboxCount() {
-        ContextUser.Sync();
+        ContextUser.SynchronizeAsync();
         var inbound = ContextUser.GetSpoolInbound();
         return inbound.FrameCount;
 

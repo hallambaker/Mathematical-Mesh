@@ -35,7 +35,7 @@ public partial class ContextUser {
     /// <param name="merge">Add this data to the existing contact.</param>
     /// <param name="format">The format the input is written in.</param>
     /// <returns></returns>
-    public CatalogedBookmark AddBookmarkFromFile(
+    public async Task<CatalogedBookmark> AddBookmarkFromFileAsync(
                 string fileName,
                 CatalogedEntryFormat format = CatalogedEntryFormat.Unknown,
                 bool merge = true,
@@ -50,7 +50,7 @@ public partial class ContextUser {
 
 
         transaction.CatalogUpdate(catalog, entry);
-        transaction.Transact();
+        await transaction.TransactAsync();
 
         return entry;
 
@@ -66,7 +66,7 @@ public partial class ContextUser {
     /// <param name="merge">Add this data to the existing contact.</param>
     /// <param name="format">The format the input is written in.</param>
     /// <returns></returns>
-    public CatalogedCredential AddCredentialFromFile(
+    public async Task<CatalogedCredential> AddCredentialFromFileAsync(
                 string fileName,
                 CatalogedEntryFormat format = CatalogedEntryFormat.Unknown,
                 bool merge = true,
@@ -80,7 +80,7 @@ public partial class ContextUser {
         var entry = catalog.ReadFromStream(stream, format);
 
         transaction.CatalogUpdate(catalog, entry);
-        transaction.Transact();
+        await transaction.TransactAsync();
 
         return entry;
 
@@ -99,7 +99,7 @@ public partial class ContextUser {
     /// <param name="merge">Add this data to the existing contact.</param>
     /// <param name="format">The format the input is written in.</param>
     /// <returns></returns>
-    public CatalogedContact AddContactFromFile(
+    public async Task<CatalogedContact> AddContactFromFileAsync(
                 string fileName,
                 CatalogedEntryFormat format = CatalogedEntryFormat.Unknown,
                 bool merge = true,
@@ -113,7 +113,7 @@ public partial class ContextUser {
         var entry = catalog.ReadFromStream(stream, format);
 
         transaction.CatalogUpdate(catalog, entry);
-        transaction.Transact();
+        await transaction.TransactAsync();
 
         return entry;
 
@@ -129,7 +129,7 @@ public partial class ContextUser {
     /// <param name="merge">Add this data to the existing contact.</param>
     /// <param name="format">The format the input is written in.</param>
     /// <returns></returns>
-    public CatalogedNetwork AddNetworkFromFile(
+    public async Task<CatalogedNetwork> AddNetworkFromFileAsync(
                 string fileName,
                 CatalogedEntryFormat format = CatalogedEntryFormat.Unknown,
                 bool merge = true,
@@ -146,7 +146,7 @@ public partial class ContextUser {
         entry.LocalName = localName;
 
         transaction.CatalogUpdate(catalog, entry);
-        transaction.Transact();
+        await transaction.TransactAsync();
 
         return entry;
 
@@ -164,7 +164,7 @@ public partial class ContextUser {
     /// <param name="merge">Add this data to the existing contact.</param>
     /// <param name="format">The format the input is written in.</param>
     /// <returns></returns>
-    public CatalogedTask AddTaskFromFile(
+    public async Task<CatalogedTask> AddTaskFromFileAsync(
                 string fileName,
                 CatalogedEntryFormat format = CatalogedEntryFormat.Unknown,
                 bool merge = true,
@@ -178,7 +178,7 @@ public partial class ContextUser {
         var entry = catalog.ReadFromStream(stream, format);
 
         transaction.CatalogUpdate(catalog, entry);
-        transaction.Transact();
+        await transaction.TransactAsync();
 
         return entry;
 
@@ -195,7 +195,7 @@ public partial class ContextUser {
     /// <param name="merge">Add this data to the existing contact.</param>
     /// <param name="format">The format the input is written in.</param>
     /// <returns></returns>
-    public CatalogedApplication AddApplicationFromFile(
+    public async Task<CatalogedApplication> AddApplicationFromFileAsync(
                 string fileName,
                 CatalogedEntryFormat format = CatalogedEntryFormat.Unknown,
                 bool merge = true,
@@ -216,7 +216,7 @@ public partial class ContextUser {
             entry.Key ??= applicationSsh.ClientKey.CryptoKey.KeyIdentifier;
             }
         transaction.CatalogUpdate(catalog, entry);
-        transaction.Transact();
+        await transaction.TransactAsync();
 
         return entry;
 

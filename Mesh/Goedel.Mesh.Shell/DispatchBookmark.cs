@@ -47,7 +47,7 @@ public partial class Shell {
         var transaction = contextUser.TransactBegin();
         var catalog = transaction.GetCatalogBookmark();
         transaction.CatalogUpdate(catalog, entry);
-        transaction.Transact();
+        transaction.TransactAsync().Sync();
 
         return new ResultEntry() {
             Success = true,
@@ -69,7 +69,7 @@ public partial class Shell {
         var result = catalog.Locate(uri);
         result.AssertNotNull(EntryNotFound.Throw, uri);
         transaction.CatalogDelete(catalog, result);
-        transaction.Transact();
+        transaction.TransactAsync().Sync();
 
         return new Result() {
             Success = true
@@ -125,7 +125,7 @@ public partial class Shell {
         var contextUser = GetContextUser(options);
         var file = options.File.Value;
 
-        var entry = contextUser.AddBookmarkFromFile(file);
+        var entry = contextUser.AddBookmarkFromFileAsync(file).Sync();
 
         return new ResultEntry() {
             Success = true,

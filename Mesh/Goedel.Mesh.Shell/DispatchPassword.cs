@@ -45,7 +45,7 @@ public partial class Shell {
         var transaction = contextUser.TransactBegin();
         var catalog = transaction.GetCatalogCredential();
         transaction.CatalogUpdate(catalog, entry);
-        transaction.Transact();
+        transaction.TransactAsync().Sync();
 
         return new ResultEntry() {
             Success = true,
@@ -84,7 +84,7 @@ public partial class Shell {
         var result = catalog.GetCredentialByService(site);
         result.AssertNotNull(EntryNotFound.Throw, site);
         transaction.CatalogDelete(catalog, result);
-        transaction.Transact();
+        transaction.TransactAsync().Sync();
 
         return new Result() {
             Success = true

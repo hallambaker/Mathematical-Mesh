@@ -36,7 +36,7 @@ public partial class Shell {
         var callsign = options.Identifier.Value;
 
         var contextAccount = GetContextUser(options);
-        var message = contextAccount.CallsignRequest(callsign, null);
+        var message = contextAccount.CallsignRequestAsync(callsign, null);
         //contextAccount.Sync();
 
         var result = new ResultCallsign() {
@@ -51,7 +51,7 @@ public partial class Shell {
         var callsign = options.Identifier.Value;
 
         var contextAccount = GetContextUser(options);
-        var message = contextAccount.CallsignRequest(callsign, bind: true, transfer: null);
+        var message = contextAccount.CallsignRequestAsync(callsign, bind: true, transfer: null);
         //contextAccount.Sync();
 
         var result = new ResultCallsign() {

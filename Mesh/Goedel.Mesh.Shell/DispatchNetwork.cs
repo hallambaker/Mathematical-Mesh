@@ -46,7 +46,7 @@ public partial class Shell {
         var transaction = contextUser.TransactBegin();
         var catalog = transaction.GetCatalogNetwork();
         transaction.CatalogUpdate(catalog, entry);
-        transaction.Transact();
+        transaction.TransactAsync().Sync();
 
         return new ResultEntry() {
             Success = true,
@@ -65,7 +65,7 @@ public partial class Shell {
         var file = options.File.Value;
         var id = options.Identifier.Value;
 
-        var entry = contextUser.AddNetworkFromFile(file, localName:id);
+        var entry = contextUser.AddNetworkFromFileAsync(file, localName:id).Sync();
 
         return new ResultEntry() {
             Success = true,
@@ -90,7 +90,7 @@ public partial class Shell {
 
         result.AssertNotNull(EntryNotFound.Throw, identifier);
         transaction.CatalogDelete(catalog, result);
-        transaction.Transact();
+        transaction.TransactAsync().Sync();
 
         return new ResultEntry() {
             Success = true,

@@ -142,13 +142,17 @@ public partial class ContextGroup : ContextAccount {
 
     #endregion
     #region // Class methods
+
+    public CatalogedMember Add(string memberAddress, string text = null) => 
+        AddAsync (memberAddress, text).Sync();
+
     /// <summary>
     /// Add a member to the group.
     /// </summary>
     /// <param name="memberAddress">The member to add.</param>
     /// <param name="text">Constrained text to be included in the invitation.</param>
     /// <returns>The member catalog entry.</returns>
-    public CatalogedMember Add(string memberAddress, string text = null) {
+    public async Task<CatalogedMember> AddAsync(string memberAddress, string text = null) {
 
         var transactInvitation = ContextUser.TransactBegin();
         var transactGroup = TransactBegin();
@@ -206,8 +210,8 @@ public partial class ContextGroup : ContextAccount {
         //Transact(transactGroup);
         //Transact(transactInvitation);
 
-        transactGroup.Transact();
-        transactInvitation.Transact();
+        await transactGroup.TransactAsync();
+        await transactInvitation.TransactAsync();
 
         return catalogedMember;
 
@@ -269,13 +273,20 @@ public partial class ContextGroup : ContextAccount {
         Delete(member);
         }
 
+    /// <summary>
+    /// Delete a member from the group
+    /// </summary>
+    /// <param name="member">The member to delete.</param>
+    /// <returns>The member catalog entry.</returns>
+    public void Delete(CatalogedMember member) =>
+            DeleteAsync(member).Wait();
 
     /// <summary>
     /// Delete a member from the group
     /// </summary>
     /// <param name="member">The member to delete.</param>
     /// <returns>The member catalog entry.</returns>
-    public void Delete(CatalogedMember member) {
+    public async Task DeleteAsync(CatalogedMember member) {
         var transactGroup = TransactBegin();
 
 
@@ -289,7 +300,7 @@ public partial class ContextGroup : ContextAccount {
         transactGroup.CatalogDelete(catalogMember, member);
         transactGroup.CatalogDelete(catalogCapability, capability);
 
-        Transact(transactGroup);
+        await TransactAsync(transactGroup);
         }
 
 

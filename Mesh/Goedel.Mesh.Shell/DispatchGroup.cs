@@ -42,7 +42,7 @@ public partial class Shell {
             }
 
 
-        var contextGroup = contextAccount.CreateGroup(groupID, roles: rights, cover: cover);
+        var contextGroup = contextAccount.CreateGroupAsync(groupID, roles: rights, cover: cover).Sync();
 
         //Screen.WriteLine($"Group Encryption key is {contextGroup.ProfileGroup.AccountEncryptionKey.KeyIdentifier}");
 

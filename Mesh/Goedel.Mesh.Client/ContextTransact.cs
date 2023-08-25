@@ -517,12 +517,12 @@ public abstract class Transaction<TAccount> : Disposable
 
     #endregion
 
-    /// <summary>
-    /// Apply the transaction and return the response.
-    /// </summary>
-    /// <returns></returns>
-    public TransactResponse Transact() =>
-                ContextAccount.Transact(this);
+    ///// <summary>
+    ///// Apply the transaction and return the response.
+    ///// </summary>
+    ///// <returns></returns>
+    //public TransactResponse Transact() =>
+    //            ContextAccount.Transact(this);
 
     /// <summary>
     /// Apply the transaction and return the response.

@@ -430,7 +430,7 @@ public class MeshHost : Disposable {
             contextUser.BindService(accountAddress);
             }
         else {
-            contextUser.Sync();
+            contextUser.SynchronizeAsync();
             }
         contextUser.MakeAdministrator(rights);
 

@@ -73,7 +73,7 @@ public partial class TestService {
             testFile.Decrypt(contextOnboardPending.KeyCollection));
 
         // Admin Device
-        contextAccountAlice.Sync();
+        contextAccountAlice.SynchronizeAsync().Sync();
         var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
         contextAccountAlice.Process(connectRequest, roles: rights);
 
@@ -82,15 +82,15 @@ public partial class TestService {
 
         // test decrypt, sync - onbaording Success
 
-        contextOnboarded.Sync();
+        contextOnboarded.SynchronizeAsync();
 
         var newContext = MeshMachineTest.RefetchContextUser(contextOnboarded);
         testFile.Decrypt(contextOnboarded);
 
-        contextAccountAlice.DeleteDevice(contextOnboarded.CatalogedDevice.DeviceUdf);
+        contextAccountAlice.DeleteDeviceAsync(contextOnboarded.CatalogedDevice.DeviceUdf).Wait();
 
         // test sync, decrypt - FAIL
-        Xunit.Assert.Throws<ServerResponseInvalid>(() => newContext.Sync());
+        Xunit.Assert.Throws<ServerResponseInvalid>(() => newContext.SynchronizeAsync().Sync());
 
         if (role == Rights.IdRolesThreshold) {
             Xunit.Assert.Throws<CryptographicOperationRefused>(() => testFile.Decrypt(newContext.KeyCollection));
@@ -116,7 +116,7 @@ public partial class TestService {
         var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2, AccountAlice);
 
         // Admin Device
-        contextAccountAlice.Sync();
+        contextAccountAlice.SynchronizeAsync();
         var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
         contextAccountAlice.Process(connectRequest, roles: roles);
 
@@ -130,14 +130,14 @@ public partial class TestService {
 
         var transaction1 = contextAccountAlice.TransactBegin();
         transaction1.ApplicationCreate(applicationSSH);
-        var result1 = transaction1.Transact();
+        var result1 = transaction1.TransactAsync().Sync();
         
 
         // Connect a third device
         var contextOnboardPending2 = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3, AccountAlice);
 
         // Admin Device
-        contextAccountAlice.Sync();
+        contextAccountAlice.SynchronizeAsync();
         var connectRequest2 = contextAccountAlice.GetPendingMessageConnectionRequest();
         contextAccountAlice.Process(connectRequest2, roles: roles);
 
@@ -145,7 +145,7 @@ public partial class TestService {
         var contextOnboarded2 = TestCompletionSuccess(contextOnboardPending2);
         ExerciseAccount(contextOnboarded2);
 
-        contextOnboarded.Sync();
+        contextOnboarded.SynchronizeAsync();
         // this is likely failing because the updates are not being correctly 
         // processd on the cataloged devices...
 
@@ -194,7 +194,7 @@ public partial class TestService {
         var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2, AccountAlice);
 
         // Admin Device
-        contextAccountAlice.Sync();
+        contextAccountAlice.SynchronizeAsync();
         var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
         contextAccountAlice.Process(connectRequest, roles: roles);
 
@@ -208,14 +208,14 @@ public partial class TestService {
 
         var transaction1 = contextAccountAlice.TransactBegin();
         transaction1.ApplicationCreate(applicationMail);
-        var result1 = transaction1.Transact();
+        var result1 = transaction1.TransactAsync().Sync();
 
 
         // Connect a third device
         var contextOnboardPending2 = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3, AccountAlice);
 
         // Admin Device
-        contextAccountAlice.Sync();
+        contextAccountAlice.SynchronizeAsync();
         var connectRequest2 = contextAccountAlice.GetPendingMessageConnectionRequest();
         contextAccountAlice.Process(connectRequest2, roles: roles);
 
@@ -223,7 +223,7 @@ public partial class TestService {
         var contextOnboarded2 = TestCompletionSuccess(contextOnboardPending2);
         ExerciseAccount(contextOnboarded2);
 
-        contextOnboarded.Sync();
+        contextOnboarded.SynchronizeAsync();
 
         var application1 = contextAccountAlice.GetApplicationMail(id);
         var applicationEntry1 = contextAccountAlice.GetApplicationEntryMail(id);
@@ -323,7 +323,7 @@ public partial class TestService {
                 AccountAlice);
 
         // Admin Device
-        contextAccountAlice.Sync();
+        contextAccountAlice.SynchronizeAsync();
         var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
         contextAccountAlice.Process(connectRequest, roles: rights);
 

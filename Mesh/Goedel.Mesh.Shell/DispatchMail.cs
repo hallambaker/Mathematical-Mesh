@@ -45,7 +45,7 @@ public partial class Shell {
         applicationMail.OutboundConnect = options.Outbound.Value;
 
         transaction.ApplicationCreate(applicationMail);
-        var resultTransact = transaction.Transact();
+        var resultTransact = transaction.TransactAsync().Sync();
 
         return resultTransact.Success() ?
             new ResultApplication() {
@@ -100,7 +100,7 @@ public partial class Shell {
 
         result.AssertNotNull(EntryNotFound.Throw, identifier);
         transaction.CatalogDelete(catalog, result);
-        transaction.Transact();
+        transaction.TransactAsync().Sync();
 
         return new ResultEntry() {
             Success = true,
@@ -118,7 +118,7 @@ public partial class Shell {
         var file = options.File.Value;
         var id = options.Identifier.Value;
 
-        var entry = contextUser.AddApplicationFromFile(file, localName: id);
+        var entry = contextUser.AddApplicationFromFileAsync(file, localName: id).Sync();
 
         return new ResultEntry() {
             Success = true,

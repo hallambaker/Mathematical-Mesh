@@ -140,13 +140,13 @@ public partial class Shell {
     /// <returns>Mesh result instance</returns>
     public override ShellResult AccountSync(AccountSync options) {
         var contextAccount = GetContextUser(options);
-        var result = contextAccount.Sync();
+        var result = contextAccount.SynchronizeAsync();
 
 
         int ProcessedResults = 0;
 
         if (options.AutoApprove.Value) {
-            var process = contextAccount.ProcessAutomatics();
+            var process = contextAccount.ProcessAutomaticsAsync();
             ProcessedResults = process.Count;
             }
 
@@ -174,7 +174,7 @@ public partial class Shell {
         var expire = TimeSpan.Parse(options.Expire.Value);
         // ToDo: Allow other actions besides device.
 
-        var messageConnectionPIN = contextAccount.GetPIN(MeshConstants.MessagePINActionDevice,
+        var messageConnectionPIN = contextAccount.GetPinAsync(MeshConstants.MessagePINActionDevice,
                     validity: expire.Ticks, roles: rights, bits: bits);
 
         var result = new ResultPIN() {
@@ -195,7 +195,7 @@ public partial class Shell {
         var contextAccount = GetContextUser(options);
         var rights = GetRights(options);
 
-        var catalogedDevice = contextAccount.ConnectStaticUri(options.Uri.Value, rights);
+        var catalogedDevice = contextAccount.ConnectStaticUriAsync(options.Uri.Value, rights).Sync();
 
 
         var result = new ResultAccountConnect() {

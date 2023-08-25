@@ -263,7 +263,7 @@ public class ContextMeshPending : ContextAccount {
 
         // create the account context for the account we asked to connect to and initialize
         Directory.CreateDirectory(contextUser.StoresDirectory);
-        contextUser.Sync();
+        contextUser.SynchronizeAsync();
         return contextUser;
         }
 

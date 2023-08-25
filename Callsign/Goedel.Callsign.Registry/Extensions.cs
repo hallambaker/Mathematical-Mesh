@@ -27,8 +27,7 @@ public static class Extensions {
                         string accountAddress,
                     PrivateKeyUDF accountSeed = null,
                     CallsignMapping callsignMapping = null) =>
-        ContextRegistry.CreateRegistry(
-            contextUser, accountAddress, accountSeed);
+        ContextRegistry.CreateRegistryAsync(contextUser, accountAddress, accountSeed).Sync();
 
     /// <summary>
     /// Return the registry account context for the <paramref name="contextUser"/> context.
@@ -40,7 +39,7 @@ public static class Extensions {
     public static ContextRegistry GetRegistry(
                     this ContextUser contextUser,
                     string key = null) {
-        contextUser.Sync();
+        contextUser.SynchronizeAsync().Sync();
 
         var applicationCatalog = contextUser.GetStore(CatalogApplication.Label) as CatalogApplication;
 

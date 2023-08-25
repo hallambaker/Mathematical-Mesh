@@ -149,7 +149,7 @@ public class ContextRegistry : ContextAccount {
     /// <param name="roles">List of rights to be granted.</param>
     /// <returns></returns>
 
-    public static ContextRegistry CreateRegistry(
+    public static async Task<ContextRegistry> CreateRegistryAsync(
                     ContextUser contextUser,
                     string RegistryName,
                     PrivateKeyUDF accountSeed = null,
@@ -206,7 +206,7 @@ public class ContextRegistry : ContextAccount {
             var catalogedContact = new CatalogedContact(contact);
             transaction.CatalogUpdate(contactCatalog, catalogedContact);
 
-            transaction.Transact();
+            await transaction.TransactAsync();
             }
 
 
@@ -219,7 +219,7 @@ public class ContextRegistry : ContextAccount {
                     }
                 }
 
-            transaction.Transact();
+            await transaction.TransactAsync();
             }
 
         contextUser.ProfileRegistryCallsign = profileRegistry;
@@ -266,7 +266,7 @@ public class ContextRegistry : ContextAccount {
     public List<ProcessResult> Process() {
 
         // synchronize the store
-        Sync();
+        SynchronizeAsync();
 
         var results = new List<ProcessResult>();
         var x = new FilterSequenceIndex();
@@ -278,7 +278,7 @@ public class ContextRegistry : ContextAccount {
             if (spoolEntry.IsOpen) {
                 switch (meshMessage) {
                     case CallsignRegistrationRequest callsignRegistrationRequest: {
-                        Process(spoolEntry, callsignRegistrationRequest);
+                        ProcessAsync(spoolEntry, callsignRegistrationRequest);
                         break;
                         }
 
@@ -296,7 +296,7 @@ public class ContextRegistry : ContextAccount {
     /// <param name="registrationRequest">The request to process.</param>
     /// <param name="spoolEntry">The spool entry containing the request.</param>
     /// <returns>Reports the processing result.</returns>
-    public ProcessResult Process(
+    public async Task<ProcessResult> ProcessAsync(
                 SpoolIndexEntry spoolEntry,
                 CallsignRegistrationRequest registrationRequest) {
 
@@ -346,7 +346,7 @@ public class ContextRegistry : ContextAccount {
             transactRequest.OutboundMessage(registrationRequest.Sender, registrationResponse);
             transactRequest.InboundComplete(StateSpoolMessage.Closed, registrationRequest, registrationResponse);
 
-            var responseTransaction = Transact(transactRequest);
+            var responseTransaction = await TransactAsync(transactRequest);
 
             return result;
             }
@@ -354,6 +354,13 @@ public class ContextRegistry : ContextAccount {
             return RefuseRequest(registrationRequest, binding, ex);
             }
         }
+
+    ///<inheritdoc cref="RefuseRequestAsync"/>
+    public ProcessResult RefuseRequest(
+            CallsignRegistrationRequest registrationRequest,
+            CallsignBinding? binding,
+            Exception exception) => RefuseRequestAsync (registrationRequest, binding, exception).Sync();
+
 
     /// <summary>
     /// Return a message refusing the request <paramref name="registrationRequest"/> for the
@@ -364,7 +371,7 @@ public class ContextRegistry : ContextAccount {
     /// <param name="exception">The exception raised.</param>
     /// <param name="binding">The callsign binding.</param>
     /// <returns>Processing result with <see cref="ProcessResult.Success"/> set false.</returns>
-    public ProcessResult RefuseRequest (
+    public async Task<ProcessResult> RefuseRequestAsync (
                 CallsignRegistrationRequest registrationRequest,
                 CallsignBinding? binding,
                 Exception exception) {
@@ -390,7 +397,7 @@ public class ContextRegistry : ContextAccount {
 
         transactRequest.OutboundMessage(registrationRequest.Sender, registrationResponse);
         transactRequest.InboundComplete(StateSpoolMessage.Closed, registrationRequest, registrationResponse);
-        Transact(transactRequest);
+        await TransactAsync(transactRequest);
 
         return new ProcessResultCallsignRegistration() {
             Success = false,

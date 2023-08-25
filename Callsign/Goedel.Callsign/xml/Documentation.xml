@@ -2559,17 +2559,7 @@
             <param name="contextAccount">The account context.</param>
             <returns>The list of callsign application bindings.</returns>
         </member>
-        <member name="M:Goedel.Callsign.Extensions.ProcessMessage(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.Message,System.Boolean,System.Boolean,System.Collections.Generic.List{System.String})">
-            <summary>
-            Process CallsignRegistrationResponse messages in context.
-            </summary>
-            <param name="contextUser">The user context to process the message.</param>
-            <param name="meshMessage">The message to process, must be of type CallsignRegistrationResponse.</param>
-            <param name="accept">Ignored</param>
-            <param name="reciprocate">Ignored</param>
-            <param name="roles">Ignored</param>
-            <returns>The result of processing the message.</returns>
-        </member>
+        <!-- Badly formed XML comment ignored for member "M:Goedel.Callsign.Extensions.ProcessMessageAsync(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.Message,System.Boolean,System.Boolean,System.Collections.Generic.List{System.String})" -->
         <member name="T:Goedel.Callsign.NamespaceDoc">
             <summary>
             Mesh Callsign registry implementation.

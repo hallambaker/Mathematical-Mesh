@@ -231,7 +231,7 @@ public partial class RegistrationTests {
 
         adminContext.AccountHostAssignment.CallsignServiceProfile = ContextRegistry.Profile as ProfileRegistry;
 
-        var bindRegistry = adminContext.CallsignRequest(CallsignRegistry, bind: true, transfer: null);
+        var bindRegistry = adminContext.CallsignRequestAsync(CallsignRegistry, bind: true, transfer: null);
         ContextRegistry.Process();
 
         CallsignResolver = TestEnvironment.Resolver;

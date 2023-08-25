@@ -328,7 +328,7 @@ public partial class ContextUser : ContextAccount {
 
         // Generate a contact and self-sign
         var contact = CreateContact();
-        SetContactSelf(contact);
+        SetContactSelfAsync(contact);
         }
 
     /// <summary>
@@ -464,12 +464,13 @@ public partial class ContextUser : ContextAccount {
     #region // Contact management
 
 
+
     /// <summary>
     /// Create a contact entry for self using the parameters specified in <paramref name="contact"/>.
     /// </summary>
     /// <param name="contact">The contact parameters.</param>
     /// <param name="localname">Short name to apply to the signed contact info</param>
-    public CatalogedContact SetContactSelf(Contact contact, string localname = null) {
+    public async Task <CatalogedContact> SetContactSelfAsync(Contact contact, string localname = null) {
         KeyCommonSignature.AssertNotNull(NotAdministrator.Throw);
         contact.Envelope(KeyCommonSignature);
 
@@ -491,37 +492,12 @@ public partial class ContextUser : ContextAccount {
         if (!success) {
             cataloged.Contact = contact;
             transact.CatalogUpdate(catalog, cataloged);
-            transact.Transact();
+            await transact.TransactAsync();
             }
 
         return cataloged;
         }
 
-    ///// <summary>
-    ///// Get the default (i.e. minimum contact info). This has a single network 
-    ///// address entry for this mesh and mesh account. 
-    ///// </summary>
-    ///// <returns>The default contact.</returns>
-    //public override Contact CreateContact(
-    //            List<CryptographicCapability> capabilities = null) {
-
-    //    var address = new NetworkAddress(AccountAddress, ProfileUser) {
-    //        Capabilities = capabilities
-    //        };
-
-    //    var anchorAccount = new Anchor() {
-    //        Udf = ProfileUser.Udf,
-    //        Validation = "Self"
-    //        };
-    //    // ContextMesh.ProfileMesh.UDF 
-
-    //    var contact = new ContactPerson() {
-    //        Anchors = new List<Anchor>() { anchorAccount },
-    //        NetworkAddresses = new List<NetworkAddress>() { address }
-    //        };
-
-    //    return contact;
-    //    }
 
     #endregion
 
@@ -614,22 +590,27 @@ public partial class ContextUser : ContextAccount {
     #endregion
     #region // Message Handling - Get/Process pending.
 
+    ///<inheritdoc cref="SendMessageAsync"/>
+    public void SendMessage(string recipientAddress, Message message) =>
+            SendMessageAsync(recipientAddress, message).Wait();
+
+
     /// <summary>
     /// Send the message <paramref name="message"/> to <paramref name="recipientAddress"/>.
     /// </summary>
     /// <param name="recipientAddress">The address to send the message to.</param>
     /// <param name="message">The message to send.</param>
-    public void SendMessage(string recipientAddress, Message message) {
+    public async Task SendMessageAsync(string recipientAddress, Message message) {
         var transact = TransactBegin();
         transact.OutboundMessage(recipientAddress, message);
-        Transact(transact);
+        await TransactAsync (transact);
 
         }
 
 
     ///<inheritdoc/>
-    public override long Sync() {
-        return SyncPartial(catalogedDeviceDigest: CatalogedMachine?.CatalogedDeviceDigest ?? "").Processed;
+    public override async Task<long> SynchronizeAsync() {
+        return (await SyncPartialAsync(catalogedDeviceDigest: CatalogedMachine?.CatalogedDeviceDigest ?? "")).Processed;
         }
 
 
@@ -841,7 +822,7 @@ public partial class ContextUser : ContextAccount {
     /// <param name="cover">Specifies HTML content containing a default cover page.</param>
     /// <returns></returns>
 
-    public ContextGroup CreateGroup(string groupName,
+    public async Task<ContextGroup> CreateGroupAsync(string groupName,
                     PrivateKeyUDF accountSeed = null,
                     List<string> roles = null,
                     byte[]cover=null
@@ -912,7 +893,7 @@ public partial class ContextUser : ContextAccount {
             var catalogedContact = new CatalogedContact(contact);
             transaction.CatalogUpdate(contactCatalog, catalogedContact);
 
-            transaction.Transact();
+            await transaction.TransactAsync();
             }
 
         return contextGroup;
@@ -1013,7 +994,6 @@ public partial class ContextUser : ContextAccount {
         return (devicePreconfigurationPublic, devicePreconfiguration);
         }
 
-
     /// <summary>
     /// Create an EARL for a device, publish the result to the Mesh service and return 
     /// the device profile <paramref name="profileDevice"/>, secret seed value 
@@ -1035,6 +1015,44 @@ public partial class ContextUser : ContextAccount {
     /// <param name="bitsPin">The size of secret to generate in bits/</param>
     /// <returns>Response from the server.</returns>
     public bool CreateDeviceEarl(
+                out PrivateKeyUDF secretSeed,
+                out ProfileDevice profileDevice,
+                out ConnectionService connectionService,
+                out ConnectionDevice connectionDevice,
+                out string pin,
+                out string connectURI,
+
+                CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+                CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
+                CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
+                byte[] secret = null,
+                int bitsPin = 256,
+                int bitsSecret = 256
+                ) => CreateDeviceEarlAsync(
+                    out secretSeed, ouut profileDevice).Sync();
+
+
+    /// <summary>
+    /// Create an EARL for a device, publish the result to the Mesh service and return 
+    /// the device profile <paramref name="profileDevice"/>, secret seed value 
+    /// <paramref name="secretSeed"/>, connection URI 
+    /// <paramref name="connectURI"/> and PIN <paramref name="pin"/>.
+    /// </summary>
+    /// <param name="secretSeed">The computed secret seed value.</param>
+    /// <param name="profileDevice">The computed device profile.</param>
+    /// <param name="connectionService">Slim version of the device connection for 
+    /// authentication to the service.</param>
+    /// <param name="connectionDevice">The computed device connection.</param>
+    /// <param name="pin">The computed PIN code.</param>
+    /// <param name="connectURI">The connection URI to be used for pickup.</param>
+    /// <param name="algorithmEncrypt">The encryption algorithm.</param>
+    /// <param name="algorithmSign">The signature algorithm</param>
+    /// <param name="algorithmAuthenticate">The signature algorithm</param>
+    /// <param name="secret">The master secret.</param>
+    /// <param name="bitsSecret">Work factor of the master secret in bits.</param>
+    /// <param name="bitsPin">The size of secret to generate in bits/</param>
+    /// <returns>Response from the server.</returns>
+    public async Task<bool> CreateDeviceEarlAsync(
                 out PrivateKeyUDF secretSeed,
                 out ProfileDevice profileDevice,
                 out ConnectionService connectionService,
@@ -1094,7 +1112,7 @@ public partial class ContextUser : ContextAccount {
         var transactPublication = TransactBegin();
         var catalogPublication = transactPublication.GetCatalogPublication();
         transactPublication.CatalogUpdate(catalogPublication, catalogedPublication);
-        Transact(transactPublication);
+        await transactPublication.TransactAsync();
 
         return true;
         }
@@ -1106,7 +1124,7 @@ public partial class ContextUser : ContextAccount {
     /// <param name="uri">The connection URI</param>
     /// <param name="rights">The list of rights being requested by the device.</param>
     /// <returns>The </returns>
-    public CatalogedDevice ConnectStaticUri(string uri, List<string> rights = null) {
+    public async Task<CatalogedDevice> ConnectStaticUriAsync(string uri, List<string> rights = null) {
 
         var envelopedProfileDevice = ClaimPublication(uri, out var responseId);
 
@@ -1141,7 +1159,7 @@ public partial class ContextUser : ContextAccount {
 
         //var catalogDevice = transact.GetCatalogDevice();
         //transact.CatalogUpdate(catalogDevice, cataloguedDevice);
-        Transact(transact);
+        await transact.TransactAsync();
 
         //SendMessage(respondConnection);
 
@@ -1154,7 +1172,7 @@ public partial class ContextUser : ContextAccount {
     /// Delete the device <paramref name="id"/> from the device catalog.
     /// </summary>
     /// <param name="id">Identifier of the device to remove.</param>
-    public void DeleteDevice(string id) {
+    public async Task DeleteDeviceAsync(string id) {
         var transact = TransactBegin();
         var catalogDevice = transact.GetCatalogDevice();
 
@@ -1195,7 +1213,7 @@ public partial class ContextUser : ContextAccount {
 
 
         transact.CatalogDelete(catalogDevice, deviceEntry);
-        Transact(transact);
+        await transact.TransactAsync();
         }
 
 
@@ -1245,7 +1263,7 @@ public partial class ContextUser : ContextAccount {
     /// Process automatic actions.
     /// </summary>
     /// <returns>The results of the automatic processing attempted.</returns>
-    public List<ProcessResult> ProcessAutomatics() {
+    public async Task<List<ProcessResult>> ProcessAutomaticsAsync() {
         var results = new List<ProcessResult>();
 
         var spoolInbound = GetSpoolInbound();
@@ -1257,16 +1275,16 @@ public partial class ContextUser : ContextAccount {
                 switch (meshMessage) {
                     case AcknowledgeConnection acknowledgeConnection: {
                             if (acknowledgeConnection.MessageConnectionRequest.PinId != null) {
-                                results.Add(ProcessAutomatic(acknowledgeConnection));
+                                 results.Add(await ProcessAutomaticAsync(acknowledgeConnection));
                                 }
                             break;
                             }
                     case MessageContact replyContact: {
-                            results.Add(ProcessAutomatic(replyContact));
+                            results.Add(await ProcessAutomaticAsync(replyContact));
                             break;
                             }
                     case GroupInvitation groupInvitation: {
-                            results.Add(ProcessAutomatic(groupInvitation));
+                            results.Add(await ProcessAutomaticAsync(groupInvitation));
                             break;
                             }
                     default: {
@@ -1291,7 +1309,7 @@ public partial class ContextUser : ContextAccount {
     /// <param name="accept">Accept the requested action.</param>
     /// <param name="authorize">If true, the action is explicitly authorized.</param>
     /// <returns>The result of requesting the connection.</returns>
-    public ProcessResult ProcessAutomatic(
+    public async Task<ProcessResult> ProcessAutomaticAsync(
                     GroupInvitation request,
                     bool accept = true,
                     bool authorize = false) {
@@ -1309,12 +1327,12 @@ public partial class ContextUser : ContextAccount {
             return new ProcessResultError(request, ProcessingResult.ContactInvalid);
             }
 
-        var transactRequest = TransactBegin();
-        var catalogContact = transactRequest.GetCatalogContact();
+        var transaction = TransactBegin();
+        var catalogContact = transaction.GetCatalogContact();
 
-        transactRequest.CatalogUpdate(catalogContact, request.Contact);
-        transactRequest.InboundComplete(StateSpoolMessage.Closed, request);
-        transactRequest.Transact();
+        transaction.CatalogUpdate(catalogContact, request.Contact);
+        transaction.InboundComplete(StateSpoolMessage.Closed, request);
+        await transaction.TransactAsync();
 
         return new ResultGroupInvitation(request);
         }
@@ -1326,16 +1344,7 @@ public partial class ContextUser : ContextAccount {
     /// </summary>
     /// <param name="request">Connection request to be processed.</param>
     /// <returns>The result of requesting the connection.</returns>
-    public ProcessResult ProcessAutomatic(AcknowledgeConnection request) {
-        //try {
-        //    }
-        //catch {
-        //    return new InsufficientAuthorization(request.MessageConnectionRequest);
-
-        //    }
-
-
-
+    public async Task<ProcessResult> ProcessAutomaticAsync(AcknowledgeConnection request) {
         if (!IsAdministrator || !Privileges.Contains(CatalogDevice.Label)) {
                 return new InsufficientAuthorization(request);
                 }
@@ -1355,12 +1364,7 @@ public partial class ContextUser : ContextAccount {
                 return new ProcessResultError(request, pinStatus, messagePin);
                 }
 
-            return Process(request, true, messagePin);
-        //    }
-        //catch {
-        //    return new InsufficientAuthorization(request.MessageConnectionRequest);
-
-        //    }
+            return await ProcessAsync(request, true, messagePin);
         }
 
     /// <summary>
@@ -1371,21 +1375,21 @@ public partial class ContextUser : ContextAccount {
     /// <param name="rights">The list of rights to be granted to the device.</param>
     /// <param name="messagePin">The PIN value to be used to authenticate the regquest.</param>
     /// <returns>The result of processing.</returns>
-    ProcessResult Process(AcknowledgeConnection request, bool accept = true, MessagePin messagePin = null,
+    async Task<ProcessResult> ProcessAsync(AcknowledgeConnection request, bool accept = true, MessagePin messagePin = null,
            List<string> rights = null) {
 
 
         //Console.WriteLine($"Process connection request {request.MessageId}");
 
         rights ??= messagePin?.Roles;
-        var transactRequest = TransactBegin();
+        var transaction = TransactBegin();
 
         var respondConnection = new RespondConnection() {
             MessageId = request.GetResponseId()
             };
         if (accept) {
             // Connect the device to the Mesh
-            AddDevice(request, rights, transactRequest, respondConnection);
+            AddDevice(request, rights, transaction, respondConnection);
 
             }
         else {
@@ -1396,17 +1400,17 @@ public partial class ContextUser : ContextAccount {
 
         //Console.WriteLine($"Make response message {respondConnection.MessageId}");
 
-        transactRequest.InboundComplete(StateSpoolMessage.Closed, request, respondConnection);
-        transactRequest.LocalMessage(respondConnection, deviceEncrypt);
+        transaction.InboundComplete(StateSpoolMessage.Closed, request, respondConnection);
+        transaction.LocalMessage(respondConnection, deviceEncrypt);
 
         // Mark the pin code as having been used.
         if (messagePin != null) {
-            transactRequest.LocalComplete(StateSpoolMessage.Closed,
+            transaction.LocalComplete(StateSpoolMessage.Closed,
                 messagePin, respondConnection);
             }
 
         // Perform the transaction
-        var responseTransaction = Transact(transactRequest);
+        var responseTransaction = await transaction.TransactAsync();
 
         return new ResultAcknowledgeConnection(request, messagePin, responseTransaction);
         }
@@ -1495,10 +1499,10 @@ public partial class ContextUser : ContextAccount {
 
         switch (meshMessage) {
             case AcknowledgeConnection connection: {
-                    return Process(connection, accept, rights: roles);
+                    return ProcessAsync(connection, accept, rights: roles);
                     }
             case MessageContact requestContact: {
-                    return ContactReply(requestContact, accept);
+                    return ContactReplyAsync(requestContact, accept);
                     }
 
             case RequestConfirmation requestConfirmation: {
@@ -1544,16 +1548,16 @@ public partial class ContextUser : ContextAccount {
     /// in the contact catalog.</param>
     /// <param name="localname">Local name to be used to identify the contact recorded in
     /// the catalog.</param>
-    public ProcessResult ContactReply(
+    public async Task<ProcessResult> ContactReplyAsync(
             MessageContact requestContact,
             bool accept,
             string localname = null) {
 
         // Do nothing if the request is rejected.
         if (!accept) {
-            using var transact = TransactBegin();
-            transact.InboundComplete(StateSpoolMessage.Closed, requestContact);
-            transact.Transact();
+            using var transaction = TransactBegin();
+            transaction.InboundComplete(StateSpoolMessage.Closed, requestContact);
+            await transaction.TransactAsync();
 
             return new ResultMessageContact(requestContact, null);
             }
@@ -1563,17 +1567,17 @@ public partial class ContextUser : ContextAccount {
             var contact = MeshItem.Decode(requestContact.AuthenticatedData) as Contact;
             var cataloged = contact.CatalogedContact();
 
-            using var transact = TransactBegin();
-            var catalog = transact.GetCatalogContact();
+            using var transaction = TransactBegin();
+            var catalog = transaction.GetCatalogContact();
             
-            transact.CatalogUpdate(catalog, cataloged);
-            transact.InboundComplete(StateSpoolMessage.Closed, requestContact);
-            transact.Transact();
+            transaction.CatalogUpdate(catalog, cataloged);
+            transaction.InboundComplete(StateSpoolMessage.Closed, requestContact);
+            await transaction.TransactAsync();
             }
 
         // Get the reply (if required)
         var reply = requestContact.Reply==true ?
-            ContactRequest(requestContact.Sender, requestContact.PIN, localname, false) : null;
+            await ContactRequestAsync(requestContact.Sender, requestContact.PIN, localname, false) : null;
 
         return new ResultMessageContact(requestContact, reply);
         }
@@ -1584,7 +1588,7 @@ public partial class ContextUser : ContextAccount {
     /// <param name="request">Reply to contact request to be processed.</param>
     /// <param name="authorize">If true, the action is explicitly authorized.</param>
     /// <returns>The result of requesting the connection.</returns>
-    public ProcessResult ProcessAutomatic(
+    public async Task<ProcessResult> ProcessAutomaticAsync(
                 MessageContact request,
                 bool authorize = false) {
 
@@ -1612,7 +1616,7 @@ public partial class ContextUser : ContextAccount {
             return new InsufficientAuthorization(request);
             }
 
-        return ContactReply(request, true);
+        return await ContactReplyAsync(request, true);
         }
 
 
@@ -1651,7 +1655,7 @@ public partial class ContextUser : ContextAccount {
     /// <param name="expire">Expiry time for the corresponding PIN</param>
     /// <param name="automatic">If true, presentation of the pin code is sufficient
     /// to authenticate and authorize the action.</param>
-    public string ContactUri(bool automatic, System.DateTime? expire, string localName = null) {
+    public async Task<string> ContactUri(bool automatic, System.DateTime? expire, string localName = null) {
         var envelope = GetSelf(localName);
         var combinedKey = new CryptoKeySymmetricSigner();
 
@@ -1671,11 +1675,11 @@ public partial class ContextUser : ContextAccount {
         var messageConnectionPIN = new MessagePin(
             pin, automatic, expire, ServiceAddress, MeshConstants.MessagePINActionContact);
 
-        using (var transactRequest = TransactBegin()) {
-            transactRequest.LocalMessage(messageConnectionPIN, KeyCommonEncryption);
-            var catalogPublication = transactRequest.GetCatalogPublication();
-            transactRequest.CatalogUpdate(catalogPublication, catalogedPublication);
-            Transact(transactRequest);
+        using (var transaction = TransactBegin()) {
+            transaction.LocalMessage(messageConnectionPIN, KeyCommonEncryption);
+            var catalogPublication = transaction.GetCatalogPublication();
+            transaction.CatalogUpdate(catalogPublication, catalogedPublication);
+            await transaction.TransactAsync();
             }
 
         // return the contact address
@@ -1690,7 +1694,7 @@ public partial class ContextUser : ContextAccount {
     /// <param name="pin">Optional pin value used to authenticate a response.</param>
     /// <param name="localname">Local name for the contact</param>
     /// <param name="reply">if true, request return of the recpients contact info in reply.</param>
-    public MessageContact ContactRequest(string recipient,
+    public async Task<MessageContact> ContactRequestAsync(string recipient,
                     string pin = null,
                     string localname = null,
                     bool reply = true) {
@@ -1726,22 +1730,22 @@ public partial class ContextUser : ContextAccount {
 
             };
 
-        using (var transact = TransactBegin()) {
+        using (var transaction = TransactBegin()) {
 
             // If we are requesting a reply, add a PIN code.
             if (reply) {
-                var messagePin = GetPIN(MeshConstants.MessagePINActionContact, true,
+                var messagePin = await GetPinAsync(MeshConstants.MessagePINActionContact, true,
                     128, register: false);
                 message.PIN = messagePin.Pin;
-                transact.LocalMessage(messagePin, KeyCommonEncryption);
+                transaction.LocalMessage(messagePin, KeyCommonEncryption);
                 }
 
             // If a PIN value was specified in the request, use it to authenticate the response.
             message.Authenticate(pin);
 
             // send it to the service
-            transact.OutboundMessage(recipient, recipientEncryptionKey, message);
-            Transact(transact);
+            transaction.OutboundMessage(recipient, recipientEncryptionKey, message);
+            await transaction.TransactAsync();
             }
 
         return message;
@@ -1761,10 +1765,9 @@ public partial class ContextUser : ContextAccount {
     /// <param name="localname">Local name for the contact to send in exchange</param>
     /// <param name="message">The reciprocation message (if sent), otherwise null.</param>
     /// <returns>The cataloged contact information.</returns>
-    public CatalogedContact ContactExchange(
+    public async Task<CatalogedContact> ContactExchange(
                 string uri,
                 bool reciprocate,
-                out Message message,
                 string localname = null) {
         // Fetch, verify and decrypt the corresponding data.
 
@@ -1775,18 +1778,16 @@ public partial class ContextUser : ContextAccount {
         var contact = MeshItem.Decode(envelope) as Contact;
         var cataloged = contact.CatalogedContact();
 
-        var transact = TransactBegin();
-        var catalog = transact.GetCatalogContact();
-        transact.CatalogUpdate(catalog, cataloged);
-        transact.Transact();
+        var transaction = TransactBegin();
+        var catalog = transaction.GetCatalogContact();
+        transaction.CatalogUpdate(catalog, cataloged);
+        await transaction.TransactAsync();
 
         if (reciprocate) {
             (var targetAccountAddress, var pin) = MeshUri.ParseConnectUri(uri);
-            message = ContactRequest(targetAccountAddress, pin, localname) as Message;
+            cataloged.Message = await ContactRequestAsync(targetAccountAddress, pin, localname) as Message;
             }
-        else {
-            message = null;
-            }
+
 
         return cataloged;
         }
@@ -1815,11 +1816,11 @@ public partial class ContextUser : ContextAccount {
 
 
     /// <summary>
-    /// Make a contact reply.
+    /// Make a confirmation reply.
     /// </summary>
     /// <param name="requestConfirmation">The request received.</param>
     /// <param name="response">If true, accept the confirmation request, otherwise reject.</param>
-    public ProcessResult ConfirmationResponse(RequestConfirmation requestConfirmation, bool response) {
+    public async Task<ProcessResult> ConfirmationResponseAsync(RequestConfirmation requestConfirmation, bool response) {
         // prepare the contact request
 
         var recipientAddress = requestConfirmation.Sender;
@@ -1836,7 +1837,7 @@ public partial class ContextUser : ContextAccount {
 
         var transact = TransactBegin();
         transact.OutboundMessage(recipientAddress, message);
-        Transact(transact);
+        await transact.TransactAsync();
 
         // send it to the service
         return null;

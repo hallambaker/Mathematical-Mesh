@@ -116,7 +116,7 @@ public partial class Shell {
     /// <returns>Mesh result instance</returns>
     public override ShellResult DevicePending(DevicePending options) {
         var contextAccount = GetContextUser(options);
-        contextAccount.Sync();
+        contextAccount.SynchronizeAsync();
 
          var messages = contextAccount.GetOpenMessages(AcknowledgeConnection.__Tag);
 
@@ -210,7 +210,7 @@ public partial class Shell {
         var contextAccount = GetContextUser(options);
         var deviceID = options.DeviceID.Value;
 
-        contextAccount.DeleteDevice(deviceID);
+        contextAccount.DeleteDeviceAsync(deviceID).Wait();
 
         var result = new Result() {
 

@@ -44,7 +44,7 @@ public partial class Shell {
         var transaction = contextAccount.TransactBegin();
         var catalog = transaction.GetCatalogCalendar();
         transaction.CatalogUpdate(catalog, entry);
-        transaction.Transact();
+        transaction.TransactAsync().Sync();
 
         return new ResultEntry() {
             Success = true,
@@ -62,7 +62,7 @@ public partial class Shell {
         var contextUser = GetContextUser(options);
         var file = options.File.Value;
 
-        var entry = contextUser.AddTaskFromFile(file);
+        var entry = contextUser.AddTaskFromFileAsync(file).Sync();
 
         return new ResultEntry() {
             Success = true,
@@ -84,7 +84,7 @@ public partial class Shell {
         var result = catalog.Locate(key);
         result.AssertNotNull(EntryNotFound.Throw, key);
         transaction.CatalogDelete(catalog, result);
-        transaction.Transact();
+        transaction.TransactAsync().Sync();
 
         return new ResultEntry() {
             Success = true,

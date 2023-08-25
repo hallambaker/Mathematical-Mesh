@@ -45,7 +45,7 @@ public partial class Shell {
 
         var applicationSSH = CatalogedApplicationSsh.Create(id, rights);
         transaction.ApplicationCreate(applicationSSH);
-        var resultTransact = transaction.Transact();
+        var resultTransact = transaction.TransactAsync().Sync();
 
         return resultTransact.Success() ?
             new ResultApplication() {
@@ -145,7 +145,7 @@ public partial class Shell {
         var file = options.FileIn.Value;
         var id = options.Identifier.Value;
 
-        var entry = contextUser.AddApplicationFromFile(file, localName: id);
+        var entry = contextUser.AddApplicationFromFileAsync(file, localName: id).Sync();
 
         return new ResultEntry() {
             Success = true,
@@ -171,7 +171,7 @@ public partial class Shell {
 
         result.AssertNotNull(EntryNotFound.Throw, identifier);
         transaction.CatalogDelete<CatalogedApplication>(catalog, result);
-        transaction.Transact();
+        transaction.TransactAsync().Sync();
 
         return new ResultEntry() {
             Success = true,
@@ -195,7 +195,7 @@ public partial class Shell {
         var file = options.FileIn.Value;
         var id = options.Identifier.Value;
 
-        var entry = contextUser.AddCredentialFromFile(file, localName: id);
+        var entry = contextUser.AddCredentialFromFileAsync(file, localName: id).Sync();
 
         return new ResultEntry() {
             Success = true,

@@ -314,6 +314,9 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
     #endregion
     #region // PIN code generation and use
+
+
+
     /// <summary>
     /// Create a PIN value of length <paramref name="bits"/> bits valid for 
     /// <paramref name="validity"/> minutes.
@@ -328,7 +331,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="encryptKey">The encryption key to be used to encrypt the PIN registration.</param>
     /// <param name="roles">The authorized roles.</param>
     /// <returns>A <see cref="MessagePin"/> instance describing the created parameters.</returns>
-    public MessagePin GetPIN(string action, bool automatic = true,
+    public async Task<MessagePin> GetPinAsync(string action, bool automatic = true,
                         int bits = 120, long validity = MeshConstants.DayInTicks,
                         bool register = true, CryptoKey encryptKey = null,
                         List<string> roles = null) {
@@ -345,7 +348,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         if (register) {
             var transactRequest = TransactBegin();
             transactRequest.LocalMessage(messagePin, encryptKey);
-            transactRequest.Transact();
+            await transactRequest.TransactAsync();
             }
         return messagePin;
         }
@@ -430,10 +433,10 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="stores">The stores to be synchronized.</param>
     /// <param name="maxResuts">If </param>
     /// <returns>Response returned by the service</returns>
-    public PartialOperationResult SyncPartial(
+    public async Task<PartialOperationResult> SyncPartialAsync(
             int maxResuts = -1,
             params string[] stores) {
-        return SyncPartial(stores as IEnumerable<string>, maxResuts);
+        return await SyncPartialAsync(stores as IEnumerable<string>, maxResuts);
         }
 
     /// <summary>
@@ -443,7 +446,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="maxResuts">The maximum number of results to return.</param>
     /// <param name="catalogedDeviceDigest">The payload digest of the Cataloged device</param>
     /// <returns>True if the synchronization completed, otherwise false.</returns>
-    public PartialOperationResult SyncPartial(
+    public async Task<PartialOperationResult> SyncPartialAsync(
             IEnumerable< string> stores,
             int maxResuts = -1,
             string catalogedDeviceDigest=null) {
@@ -460,7 +463,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             MaxResults = maxResuts
             };
 
-        return SyncPartial(MeshClient, constraintsSelects, maxResuts, catalogedDeviceDigest);
+        return await SyncPartialAsync(MeshClient, constraintsSelects, maxResuts, catalogedDeviceDigest);
         }
 
     /// <summary>
@@ -472,7 +475,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="catalogedDeviceDigest">The payload digest of the Cataloged device</param>
     /// <param name="full">If true, synchronize all the core stores.</param>
     /// <returns>True if the synchronization completed, otherwise false.</returns>
-    public PartialOperationResult SyncPartial(
+    public async Task<PartialOperationResult> SyncPartialAsync(
             int maxResuts = -1,
             MeshServiceClient? meshClient=null,
             string catalogedDeviceDigest = null,
@@ -497,7 +500,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
                 }
             }
 
-        return SyncPartial(meshClient?? MeshClient, constraintsSelects, maxResuts, catalogedDeviceDigest);
+        return await SyncPartialAsync(meshClient?? MeshClient, constraintsSelects, maxResuts, catalogedDeviceDigest);
         }
 
 
@@ -526,7 +529,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="catalogedDeviceDigest">The payload digest of the Cataloged device</param>
     /// <param name="maxResuts">Maximum number of results to return.</param>
     /// <returns>(partial, count) where partial is true if the </returns>
-    public virtual PartialOperationResult SyncPartial(
+    public virtual async Task<PartialOperationResult> SyncPartialAsync(
                 MeshServiceClient meshClient,
                 List<ConstraintsSelect> constraintsSelects,
                 int maxResuts = -1,
@@ -542,7 +545,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         //return NewMethod(meshClient, downloadRequest);
 
         int count = 0;
-        var download = meshClient.Download(downloadRequest);
+        var download = await meshClient.DownloadAsync(downloadRequest);
         download.AssertSuccess(ServerResponseInvalid.Throw);
 
         var partial = false;
@@ -567,7 +570,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// the service is held at the service, this means only downloading updates at present.
     /// </summary>
     /// <returns>The number of items synchronized</returns>
-    public virtual long Sync() => SyncPartial().Processed;
+    public virtual async Task<long> SynchronizeAsync() => (await SyncPartialAsync()).Processed;
     //{
     //var statusRequest = new StatusRequest() {
     //    };

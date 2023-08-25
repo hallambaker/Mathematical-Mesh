@@ -116,14 +116,14 @@ public partial class TestService {
 
         // first device
         var contextAccountAlice_1_a = machineAdminAlice.MeshHost.ConfigureMesh(AccountAlice, "personal");
-        contextAccountAlice_1_a.SetContactSelf(ContactAlice);
+        contextAccountAlice_1_a.SetContactSelfAsync(ContactAlice);
 
         var profileAlice = contextAccountAlice_1_a.ProfileUser;
 
         using (var transaction1 = contextAccountAlice_1_a.TransactBegin()) {
             var catalogCredential = transaction1.GetCatalogCredential();
             transaction1.CatalogUpdate(catalogCredential, password1);
-            transaction1.Transact();
+            transaction1.TransactAsync().Sync();
 
 
             VerifyStoreEncrypted(catalogCredential, profileAlice.AccountEncryptionKey);
@@ -133,9 +133,9 @@ public partial class TestService {
 
         // second device
         var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
-        var boundPin = contextAccountAlice_1_a.GetPIN(MeshConstants.MessagePINActionDevice);
+        var boundPin = contextAccountAlice_1_a.GetPinAsync(MeshConstants.MessagePINActionDevice);
         var contextAccountAlice_2 = machineAlice2.MeshHost.Connect(AccountAlice, pin: boundPin.Pin);
-        var sync = contextAccountAlice_1_a.Sync();
+        var sync = contextAccountAlice_1_a.SynchronizeAsync();
         var connectRequest = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
         contextAccountAlice_1_a.Process(connectRequest, roles: RightsDirect);
         contextAccountAlice_2.Complete();
@@ -163,7 +163,7 @@ public partial class TestService {
 
 
         // Perform some offline operations on the account catalogs
-        contextAccountAlice_1_a.SetContactSelf(ContactAlice);
+        contextAccountAlice_1_a.SetContactSelfAsync(ContactAlice);
 
         // Check we can read the data from a second context
         var contextAccountAlice_1_b = machineAdminAlice.GetContextAccount();
@@ -180,12 +180,12 @@ public partial class TestService {
         var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
         machineAlice2.CheckHostCatalogExtended(); // initial
 
-        var boundPin = contextAccountAlice_1_a.GetPIN(MeshConstants.MessagePINActionDevice);
+        var boundPin = contextAccountAlice_1_a.GetPinAsync(MeshConstants.MessagePINActionDevice);
         var contextAccountAlice_2 = machineAlice2.MeshHost.Connect(AccountAlice, pin: boundPin.Pin);
         machineAlice2.CheckHostCatalogExtended(); // Connect pending
 
         // Still have to process of course to get the data
-        var sync = contextAccountAlice_1_a.Sync();
+        var sync = contextAccountAlice_1_a.SynchronizeAsync();
 
 
         var connectRequest = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
@@ -200,7 +200,7 @@ public partial class TestService {
         using (var transaction1 = contextAccountAlice_1_a.TransactBegin()) {
             var catalogCredential = transaction1.GetCatalogCredential();
             transaction1.CatalogUpdate(catalogCredential, password1);
-            transaction1.Transact();
+            transaction1.TransactAsync().Sync();
 
 
             catalogCredential.Dump();
@@ -210,7 +210,7 @@ public partial class TestService {
         var machineAlice3 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice3);
         var contextAccount3 = machineAlice3.MeshHost.Connect(AccountAlice);
 
-        sync = contextAccountAlice_1_a.Sync();
+        sync = contextAccountAlice_1_a.SynchronizeAsync();
         var connectRequest3 = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
         contextAccountAlice_1_a.Process(connectRequest3, roles: RightsThreshold);
 
@@ -221,7 +221,7 @@ public partial class TestService {
         using (var transaction1 = contextAccountAlice_1_a.TransactBegin()) {
             var catalogCredential = transaction1.GetCatalogCredential();
             transaction1.CatalogUpdate(catalogCredential, password2);
-            transaction1.Transact();
+            transaction1.TransactAsync().Sync();
             }
 
         // Check message handling - introduce Bob
@@ -229,17 +229,17 @@ public partial class TestService {
 
 
         //var contactCatalogBob = contextAccountBob.GetCatalogContact();
-        contextAccountBob.SetContactSelf(ContactBob);
+        contextAccountBob.SetContactSelfAsync(ContactBob);
 
         // **** Contact testing
-        contextAccountBob.ContactRequest(AccountAlice);
+        contextAccountBob.ContactRequestAsync(AccountAlice);
 
-        sync = contextAccountAlice_1_a.Sync();
+        sync = contextAccountAlice_1_a.SynchronizeAsync();
         var contactRequest = contextAccountAlice_1_a.GetPendingMessageContactRequest();
         contextAccountAlice_1_a.Process(contactRequest);
 
         // GetUnique the response back
-        sync = contextAccountBob.Sync();
+        sync = contextAccountBob.SynchronizeAsync();
         var contactResponseBob = contextAccountBob.GetPendingMessageContactRequest();
 
         contextAccountBob.Process(contactResponseBob);
@@ -250,12 +250,12 @@ public partial class TestService {
         // Ask Alice to add our credential
         contextAccountBob.ConfirmationRequest(AccountAlice, "Dinner tonight");
 
-        sync = contextAccountAlice_1_a.Sync();
+        sync = contextAccountAlice_1_a.SynchronizeAsync();
         var confirmRequest = contextAccountAlice_1_a.GetPendingMessageConfirmationRequest();
         contextAccountAlice_1_a.Process(confirmRequest);
 
         // GetUnique the response back
-        sync = contextAccountBob.Sync();
+        sync = contextAccountBob.SynchronizeAsync();
         var confirmResponseBob = contextAccountBob.GetPendingMessageConfirmationResponse();
         contextAccountAlice_1_a.Process(confirmResponseBob);
         }
@@ -280,7 +280,7 @@ public partial class TestService {
                 AccountAlice);
 
         // Admin Device
-        contextAccountAlice.Sync();
+        contextAccountAlice.SynchronizeAsync();
         var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
         contextAccountAlice.Process(connectRequest, roles: RightsDirect);
 
@@ -300,7 +300,7 @@ public partial class TestService {
             testEnvironmentCommon, DeviceAliceAdmin, AccountAlice, "main");
 
         // Admin Device
-        var boundPin = contextAdmin.GetPIN(MeshConstants.MessagePINActionDevice, roles: RightsDirect);
+        var boundPin = contextAdmin.GetPinAsync(MeshConstants.MessagePINActionDevice, roles: RightsDirect);
         ReportDevices(contextAdmin);
 
         // New Device
@@ -327,7 +327,7 @@ public partial class TestService {
             "main");
 
         // Create the QR Code with PIN
-        var boundPin = contextAdmin.GetPIN(MeshConstants.MessagePINActionDevice, roles: RightsDirect);
+        var boundPin = contextAdmin.GetPinAsync(MeshConstants.MessagePINActionDevice, roles: RightsDirect);
         var connectUri = MeshUri.ConnectUri(contextAdmin.ServiceAddress, boundPin.Pin);
 
         ReportDevices(contextAdmin);
@@ -365,7 +365,7 @@ public partial class TestService {
 
         var contextOnboardPreconfigured = DeviceOnboarding.Install(filename);
 
-        contextAdmin.ConnectStaticUri(connectUri, RightsDirect);
+        contextAdmin.ConnectStaticUriAsync(connectUri, RightsDirect);
 
         // Attempt to 
         var contextOnboardPending = contextOnboardPreconfigured.Poll();
@@ -446,7 +446,7 @@ public partial class TestService {
                 AccountAlice, "device2");
 
         // Admin Device
-        contextAccountAlice.Sync();
+        contextAccountAlice.SynchronizeAsync();
         var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
         contextAccountAlice.Process(connectRequest, roles: RightsDirect);
 
@@ -490,16 +490,16 @@ public partial class TestService {
                 DeviceBobAdmin, AccountBob, "main");
 
 
-        contextAccountBob.ContactRequest(AccountAlice);
+        contextAccountBob.ContactRequestAsync(AccountAlice);
 
         // Alice ---> Bob
-        var sync = contextAccountAlice.Sync();
+        var sync = contextAccountAlice.SynchronizeAsync();
 
         var fromBob = contextAccountAlice.GetPendingMessageContactRequest();
         contextAccountAlice.Process(fromBob);
 
         // Bob
-        var syncBob = contextAccountBob.Sync();
+        var syncBob = contextAccountBob.SynchronizeAsync();
 
         var fromAlice = contextAccountBob.GetPendingMessageContactRequest();
 
@@ -525,25 +525,25 @@ public partial class TestService {
         contextAccountBob.ConfirmationRequest(AccountAlice, "Open the pod bay doors");
 
         // Alice ---> Bob
-        var sync = contextAccountAlice.Sync();
+        var sync = contextAccountAlice.SynchronizeAsync();
         var fromBob = contextAccountAlice.GetPendingMessageConfirmationRequest();
         contextAccountAlice.Process(fromBob);
 
         // Bob
-        var syncBob = contextAccountBob.Sync();
+        var syncBob = contextAccountBob.SynchronizeAsync();
         var fromAlice = contextAccountBob.GetPendingMessageConfirmationResponse();
         contextAccountAlice.Process(fromAlice);
         }
 
 
     public static bool Exchange(ContextUser contextAccountAlice, ContextUser contextAccountBob) {
-        contextAccountBob.ContactRequest(AccountAlice);
-        var sync = contextAccountAlice.Sync();
+        contextAccountBob.ContactRequestAsync(AccountAlice);
+        var sync = contextAccountAlice.SynchronizeAsync();
 
 
         var fromBob = contextAccountAlice.GetPendingMessageContactRequest();
         contextAccountAlice.Process(fromBob);
-        var syncBob = contextAccountBob.Sync();
+        var syncBob = contextAccountBob.SynchronizeAsync();
 
         var fromAlice = contextAccountBob.GetPendingMessageContactRequest();
         contextAccountBob.Process(fromAlice);
@@ -569,7 +569,7 @@ public partial class TestService {
         Exchange(contextAccountAlice, contextAccountBob);
 
         // Generate a recryption group
-        var contextGroup = contextAccountAlice.CreateGroup(AccountGroup, roles: RightsDirect);
+        var contextGroup = contextAccountAlice.CreateGroupAsync(AccountGroup, roles: RightsDirect).Sync();
 
         var groupList = new List<string>() { AccountGroup };
         // Encrypt to the group
@@ -580,8 +580,8 @@ public partial class TestService {
 
         // Create a member entry for Alice
         contextGroup.Add(AccountAlice);
-        contextAccountAlice.Sync();
-        contextAccountAlice.ProcessAutomatics();
+        contextAccountAlice.SynchronizeAsync();
+        contextAccountAlice.ProcessAutomaticsAsync();
 
         // need to sync messages here to accept the group addition.
 
@@ -599,8 +599,8 @@ public partial class TestService {
         decrypt3.IsEqualTo(plaintext).TestTrue();
 
         // this is going to be failing because Bob has to get and process the contact request.
-        contextAccountBob.Sync();
-        contextAccountBob.ProcessAutomatics();
+        contextAccountBob.SynchronizeAsync();
+        contextAccountBob.ProcessAutomaticsAsync();
 
 
         var decrypt4 = contextAccountBob.DareDecode(envelope, verify: true);
@@ -623,8 +623,8 @@ public partial class TestService {
         // Create a member entry fo Bob
         contextGroup.Add(AccountBob);
         // this is going to be failing because Bob has to get and process the contact request.
-        contextAccountBob.Sync();
-        contextAccountBob.ProcessAutomatics();
+        contextAccountBob.SynchronizeAsync();
+        contextAccountBob.ProcessAutomaticsAsync();
 
         var decrypt6 = contextAccountBob.DareDecode(envelope, verify: true);
         decrypt6.IsEqualTo(plaintext).TestTrue();
@@ -656,13 +656,13 @@ public partial class TestService {
     static void ExerciseAccount(ContextUser contextUser) => contextUser.Future();
 
     static List<ProcessResult> ProcessAutomatics(ContextUser contextUser) {
-        contextUser.Sync();
-        return contextUser.ProcessAutomatics();
+        contextUser.SynchronizeAsync();
+        return contextUser.ProcessAutomaticsAsync();
         }
 
     static ContextUser TestCompletionSuccess(ContextMeshPending contextMeshPending) {
         var contextUser = contextMeshPending.Complete();
-        contextUser.Sync(); // Will fail if cannot complete
+        contextUser.SynchronizeAsync(); // Will fail if cannot complete
 
         return contextUser;
         }

@@ -52,7 +52,7 @@ public partial class Shell {
     public override ShellResult ContactStatic(ContactStatic options) {
         var contextUser = GetContextUser(options);
 
-        var uri = contextUser.ContactUri(false, null);
+        var uri = contextUser.ContactUri(false, null).Sync();
 
         var result = new ResultPublish() {
             Success = true,
@@ -70,7 +70,7 @@ public partial class Shell {
         var contextUser = GetContextUser(options);
         var expiry = System.DateTime.Now.AddTicks(MeshConstants.DayInTicks);
 
-        var uri = contextUser.ContactUri(true, expiry);
+        var uri = contextUser.ContactUri(true, expiry).Sync();
 
         var result = new ResultPublish() {
             Success = true,
@@ -88,12 +88,12 @@ public partial class Shell {
         var contextUser = GetContextUser(options);
         var recipient = options.Uri.Value;
 
-        var entry = contextUser.ContactExchange(recipient, true, out var message);
+        var entry = contextUser.ContactExchange(recipient, true).Sync();
 
         return new ResultEntrySent() {
             Success = true,
             CatalogEntry = entry,
-            Message = message
+            Message = entry.Message
             };
         }
 
@@ -106,7 +106,7 @@ public partial class Shell {
         var contextUser = GetContextUser(options);
         var recipient = options.Uri.Value;
 
-        var entry = contextUser.ContactExchange(recipient, false, out _);
+        var entry = contextUser.ContactExchange(recipient, false);
 
         return new ResultEntry() {
             Success = true,
@@ -124,7 +124,7 @@ public partial class Shell {
         var contextUser = GetContextUser(options);
         var file = options.File.Value;
 
-        var entry = contextUser.AddContactFromFile(file);
+        var entry = contextUser.AddContactFromFileAsync(file).Sync();
 
         return new ResultEntry() {
             Success = true,
@@ -185,7 +185,7 @@ public partial class Shell {
         var result = catalog.Get(key);
         result.AssertNotNull(EntryNotFound.Throw, key);
         transaction.CatalogDelete(catalog, result);
-        transaction.Transact();
+        transaction.TransactAsync().Sync();
 
         return new Result() {
             Success = true
