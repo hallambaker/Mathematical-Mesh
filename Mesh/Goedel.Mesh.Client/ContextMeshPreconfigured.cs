@@ -128,10 +128,10 @@ public class ContextMeshPreconfigured : ContextAccount {
     /// </summary>
     /// <returns>If successfull returns an ContextAccountService instance to allow access
     /// to the connected account. Otherwise, a null value is returned.</returns>
-    public ContextUser Complete() {
-        var Pending = Poll();
+    public async Task<ContextUser> CompleteAsync() {
+        var Pending = await PollAsync();
         if (Pending != null) {
-            return Pending.Complete();
+            return await Pending.CompleteAsync();
             }
         return null;
         }

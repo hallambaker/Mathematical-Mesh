@@ -36,7 +36,7 @@ public partial class Shell {
         var callsign = options.Identifier.Value;
 
         var contextAccount = GetContextUser(options);
-        var message = contextAccount.CallsignRequestAsync(callsign, null);
+        var message = contextAccount.CallsignRequestAsync(callsign, null).Sync();
         //contextAccount.Sync();
 
         var result = new ResultCallsign() {
@@ -51,7 +51,7 @@ public partial class Shell {
         var callsign = options.Identifier.Value;
 
         var contextAccount = GetContextUser(options);
-        var message = contextAccount.CallsignRequestAsync(callsign, bind: true, transfer: null);
+        var message = contextAccount.CallsignRequestAsync(callsign, bind: true, transfer: null).Sync();
         //contextAccount.Sync();
 
         var result = new ResultCallsign() {
@@ -67,7 +67,7 @@ public partial class Shell {
         var recipient = options.Recipient.Value;
         var contextAccount = GetContextUser(options);
 
-        var message = contextAccount.CallsignTransfer(callsign, recipient);
+        var message = contextAccount.CallsignTransferAsync(callsign, recipient).Sync();
 
         var result = new ResultCallsign() {
             Success = true,
@@ -82,7 +82,7 @@ public partial class Shell {
         var callsign = options.Identifier.Value;
         var contextAccount = GetContextUser(options);
 
-        var callsignApplication = contextAccount.CallsignRequestStatus(callsign);
+        var callsignApplication = contextAccount.CallsignRequestStatusAsync(callsign).Sync();
 
         var result = new ResultCallsign() {
             Success = true,
@@ -96,7 +96,7 @@ public partial class Shell {
         var callsign = options.Identifier.Value;
         var contextAccount = GetContextUser(options);
 
-        var registration = contextAccount.ResolveCallsign(callsign);
+        var registration = contextAccount.ResolveCallsign(callsign).Sync();
         var result = new ResultCallsignResolution() {
             Success = true,
             CallsignRegistration = registration

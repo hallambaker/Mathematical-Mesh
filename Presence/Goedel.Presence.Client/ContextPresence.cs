@@ -344,7 +344,7 @@ public class ContextPresence : Disposable {
             Acknowledge = notify.Serial
             };
         SendData(message, ServiceAccessToken.Token);
-        ContextUser.SynchronizeAsync();
+        ContextUser.SynchronizeAsync().Sync();
         ReleaseWait();
         }
 
@@ -585,7 +585,7 @@ public class ContextPresence : Disposable {
 
             //Screen.WriteLine($"Synchronize store {ContextUser.AccountAddress}");
 
-            var count = ContextUser.SynchronizeAsync();
+            var count = ContextUser.SynchronizeAsync().Sync();
 
             foreach (var envelope in inbound.Select(1)) {
                 var message = Message.Decode(envelope, ContextUser.KeyCollection);
@@ -604,7 +604,7 @@ public class ContextPresence : Disposable {
         }
 
     long GetInboxCount() {
-        ContextUser.SynchronizeAsync();
+        ContextUser.SynchronizeAsync().Sync();
         var inbound = ContextUser.GetSpoolInbound();
         return inbound.FrameCount;
 
@@ -648,7 +648,7 @@ public class ContextPresence : Disposable {
             Inbound = externalEndpoint
             };
 
-        ContextUser.SendMessage(account, sessionRequest);
+        ContextUser.SendMessageAsync(account, sessionRequest).Sync();
 
         // Wait for response
         var sessionResponse = MessageWait(typeof(SessionResponse), inboxCount) as SessionResponse;
@@ -696,7 +696,7 @@ public class ContextPresence : Disposable {
         };
 
 
-        ContextUser.SendMessage(sessionRequest.Sender, sessionResponse);
+        ContextUser.SendMessageAsync(sessionRequest.Sender, sessionResponse).Sync();
 
         // Build session for request/response and endpoint bindings
         var result = new ContextSession(sessionRequest, sessionResponse) {

@@ -67,7 +67,7 @@ public partial class EverythingMaui {
         return result as IResult;
         }
 
-    public override async Task<IResult> AccountCreate(AccountCreate data, ActionMode mode= ActionMode.Execute) {
+    public override async Task<IResult> AccountCreateAsync(AccountCreate data, ActionMode mode= ActionMode.Execute) {
 
         // This chunk can be pushed into the generated code.
         switch (mode) {
@@ -85,7 +85,7 @@ public partial class EverythingMaui {
 
         //var address = "http://mmm.everything.com:15099/.well-known/mmm/";
 
-        var contextUser = MeshHost.ConfigureMesh(data.ServiceAddress, data.LocalName);
+        var contextUser = await MeshHost.ConfigureMeshAsync(data.ServiceAddress, data.LocalName);
 
 
         //var httpClient = new HttpClient();

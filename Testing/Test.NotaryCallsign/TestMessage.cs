@@ -50,7 +50,7 @@ public partial class RegistrationTests {
 
 
         var resultBind = deviceA.Dispatch($"callsign bind {AliceCallsign}") as ResultPublish;
-        serviceCallsign.Process();
+        serviceCallsign.ProcessAsync().Sync();
 
 
         // Replace this with some command that waits until a completion message is received.
@@ -78,7 +78,7 @@ public partial class RegistrationTests {
         var resultRegister = deviceA.Dispatch($"callsign register {AliceCallsign}") as ResultPublish;
 
         var resultBind = deviceA.Dispatch($"callsign bind {AliceCallsign}") as ResultPublish;
-        serviceCallsign.Process();
+        serviceCallsign.ProcessAsync().Sync();
 
 
         // Replace this with some command that waits until a completion message is received.
@@ -98,15 +98,15 @@ public partial class RegistrationTests {
         CreateAliceCarol(out var deviceA, out var deviceC);
 
         var resultRegister = deviceC.Dispatch($"callsign register {AliceCallsign}") as ResultPublish;
-        serviceCallsign.Process();
+        serviceCallsign.ProcessAsync().Sync();
 
 
         var resultTransfer = deviceC.Dispatch($"callsign transfer {AliceCallsign} {AliceAccount}") as ResultPublish;
-        serviceCallsign.Process();
+        serviceCallsign.ProcessAsync().Sync();
         deviceC.Dispatch($"account sync /auto");
 
         var resultBind = deviceA.Dispatch($"callsign bind {AliceCallsign}") as ResultPublish;
-        serviceCallsign.Process();
+        serviceCallsign.ProcessAsync().Sync();
         deviceA.Dispatch($"account sync /auto");
 
         //CheckCallsign(deviceA);
@@ -183,7 +183,7 @@ public partial class RegistrationTests {
 
 
         var resultRegister = deviceA.Dispatch($"callsign register {AliceCallsign}") as ResultPublish;
-        serviceCallsign.Process();
+        serviceCallsign.ProcessAsync().Sync();
 
         var deviceB = CheckCallsign(deviceA);
 
@@ -214,7 +214,7 @@ public partial class RegistrationTests {
 
 
         var resultRegister = deviceA.Dispatch($"callsign register {AliceCallsign}") as ResultPublish;
-        serviceCallsign.Process();
+        serviceCallsign.ProcessAsync().Sync();
 
         var deviceB = CheckCallsign(deviceA);
 

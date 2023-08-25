@@ -23,6 +23,35 @@
 
 namespace Goedel.Mesh;
 
+/// <summary>
+/// 
+/// </summary>
+/// <paramref name="secretSeed"/>, connection URI 
+/// <paramref name="connectURI"/> and PIN <paramref name="pin"/>.
+/// </summary>
+/// <param name="secretSeed">The computed secret seed value.</param>
+/// <param name="profileDevice">The computed device profile.</param>
+/// <param name="connectionService">Slim version of the device connection for 
+/// authentication to the service.</param>
+/// <param name="connectionDevice">The computed device connection.</param>
+/// <param name="pin">The computed PIN code.</param>
+/// <param name="connectURI">The connection URI to be used for pickup.</param>
+public record DevicePreconfiguration (
+                PrivateKeyUDF SecretSeed,
+                ProfileDevice ProfileDevice,
+                ConnectionService ConnectionService,
+                ConnectionDevice ConnectionDevice,
+                string ConnectKey,
+                string ConnectUri) {
+
+    public DevicePreconfigurationPublic DevicePreconfigurationPublic;
+    public DevicePreconfigurationPrivate DevicePreconfigurationPrivate;
+    public string Filename;
+
+    }
+
+
+
 public partial class DevicePreconfigurationPrivate {
 
     ///<summary>Base constructor for deserialization.</summary>

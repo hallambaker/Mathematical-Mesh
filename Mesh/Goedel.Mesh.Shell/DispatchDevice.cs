@@ -95,7 +95,7 @@ public partial class Shell {
 
         // here need to pull up an account context for the pending connection.
 
-        var contextUser = MeshHost.Complete(accountAddress);
+        var contextUser = MeshHost.CompleteAsync(accountAddress).Sync();
         var result = new ResultConnect() {
             CatalogedMachine = contextUser.CatalogedMachine,
             Profile = contextUser.Profile,
@@ -116,7 +116,7 @@ public partial class Shell {
     /// <returns>Mesh result instance</returns>
     public override ShellResult DevicePending(DevicePending options) {
         var contextAccount = GetContextUser(options);
-        contextAccount.SynchronizeAsync();
+        contextAccount.SynchronizeAsync().Sync();
 
          var messages = contextAccount.GetOpenMessages(AcknowledgeConnection.__Tag);
 
@@ -161,7 +161,7 @@ public partial class Shell {
 
 
         var message = index.Message;
-        var processResult = contextAccount.Process(message, accept, roles: rights);
+        var processResult = contextAccount.ProcessAsync(message, accept, roles: rights).Sync();
 
         // Hack: need to obtain the actual result.
         var result = new ResultProcess() {
@@ -185,18 +185,19 @@ public partial class Shell {
 
         using var contextAccount = GetContextUser(options);
 
-        var (devicePreconfigurationPublic, devicePreconfigurationPrivate) = contextAccount.Preconfigure(
-            out var filename, out var profileDevice, out var connectUri, bits: bits);
+        var devicePreconfiguration = contextAccount.Preconfigure(
+            //out var filename, out var profileDevice, out var connectUri, 
+            bits: bits);
 
 
 
         var result = new ResultPublishDevice() {
-            Uri = connectUri,
-            FileName = filename,
-            DevicePreconfigurationPrivate = devicePreconfigurationPrivate,
-            DevicePreconfigurationPublic = devicePreconfigurationPublic
+            Uri = devicePreconfiguration.ConnectUri,
+            FileName = devicePreconfiguration.Filename,
+            DevicePreconfigurationPrivate = devicePreconfiguration.DevicePreconfigurationPrivate,
+            DevicePreconfigurationPublic = devicePreconfiguration.DevicePreconfigurationPublic
             };
-        "".TaskFunctionality();
+        "Tidy this return up".TaskFunctionality();
         return result;
         }
 

@@ -29,19 +29,16 @@ public class ResolveClient : IResolver {
 
 
     ///<inheritdoc/>
-    public bool TryResolveCallsign(string callsign, out CallsignBinding callsignBinding) {
+    public async Task<CallsignBinding> TryResolveCallsignAsync(string callsign) {
 
 
-        var queryResponse = Client.Query(callsign);
+        var queryResponse = await Client.QueryAsync(callsign);
         if (!queryResponse.Success()) {
-            callsignBinding = null;
-            return false;
+            return null;
             }
 
         var result = queryResponse.Result.Decode();
-        callsignBinding = result.Entry.Decode();
-
-        return true;
+        return result.Entry.Decode();
         }
     }
 
@@ -101,7 +98,7 @@ public partial class ResolverServiceClient {
     /// <param name="logId">Optional log entry identifier (used to query prior registrations)</param>
     /// <returns>The query response</returns>
 
-    public QueryResponse Query(string callSign, string? registrationId = null, string? logId = null) {
+    public async Task<QueryResponse> QueryAsync(string callSign, string? registrationId = null, string? logId = null) {
         callSign = CallsignMapping.Default.CanonicalizeStripped(callSign);
         var queryRequest = new QueryRequest() {
             CallSign = callSign,
@@ -109,7 +106,7 @@ public partial class ResolverServiceClient {
             LogId = logId
             };
 
-        return Query(queryRequest);
+        return await QueryAsync(queryRequest);
         }
 
 

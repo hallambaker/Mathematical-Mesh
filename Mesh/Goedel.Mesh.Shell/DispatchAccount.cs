@@ -83,7 +83,7 @@ public partial class Shell {
         var accountID = options.NewAccountID.Value;
         var localname = options.Localname.Value;
 
-        var contextUser = MeshHost.ConfigureMesh(accountID, localname);
+        var contextUser = MeshHost.ConfigureMeshAsync(accountID, localname).Sync();
         return new ResultCreateAccount() {
             Success = true,
             ProfileAccount = contextUser.ProfileUser,
@@ -106,7 +106,7 @@ public partial class Shell {
         var contextUser = MeshHost.LocateMesh(profileUdf, false);
         contextUser.AssertNotNull(ProfileFingerprintInvalid.Throw);
 
-        contextUser.DeleteAccount();
+        contextUser.DeleteAccountAsync().Wait();
         contextUser.Dispose();
 
         return new ResultDeleteAccount() {
@@ -124,7 +124,7 @@ public partial class Shell {
     /// <returns>Mesh result instance</returns>
     public override ShellResult AccountStatus(AccountStatus options) {
         var contextAccount = GetContextUser(options);
-        var result = contextAccount.Status();
+        var result = contextAccount.StatusAsync().Sync();
 
         return new ResultStatus() {
             Success = true,
@@ -140,13 +140,13 @@ public partial class Shell {
     /// <returns>Mesh result instance</returns>
     public override ShellResult AccountSync(AccountSync options) {
         var contextAccount = GetContextUser(options);
-        var result = contextAccount.SynchronizeAsync();
+        var result = contextAccount.SynchronizeAsync().Sync();
 
 
         int ProcessedResults = 0;
 
         if (options.AutoApprove.Value) {
-            var process = contextAccount.ProcessAutomaticsAsync();
+            var process = contextAccount.ProcessAutomaticsAsync().Sync();
             ProcessedResults = process.Count;
             }
 
@@ -175,7 +175,7 @@ public partial class Shell {
         // ToDo: Allow other actions besides device.
 
         var messageConnectionPIN = contextAccount.GetPinAsync(MeshConstants.MessagePINActionDevice,
-                    validity: expire.Ticks, roles: rights, bits: bits);
+                    validity: expire.Ticks, roles: rights, bits: bits).Sync();
 
         var result = new ResultPIN() {
             MessagePIN = messageConnectionPIN,
@@ -296,8 +296,8 @@ public partial class Shell {
                 };
             }
         else {
-            var contextUser = MeshHost.ConfigureMesh(
-                    accountAddress, localName, accountSeed: accountSeed, create: false);
+            var contextUser = MeshHost.ConfigureMeshAsync(
+                    accountAddress, localName, accountSeed: accountSeed, create: false).Sync();
 
 
 

@@ -308,9 +308,9 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     #endregion
     #region // Calls to layered services
 
-    ///<inheritdoc cref="IResolver.TryResolveCallsign(string, out CallsignBinding)"/>
-    public bool TryResolveCallsign(string callsign, out CallsignBinding callsignBinding) =>
-        CallsignResolver.TryResolveCallsign(callsign, out callsignBinding);
+    ///<inheritdoc cref="IResolver.TryResolveCallsignAsync(string)"/>
+    public async Task<CallsignBinding> TryResolveCallsignAsync(string callsign) =>
+        await CallsignResolver.TryResolveCallsignAsync(callsign);
 
     #endregion
     #region // PIN code generation and use
@@ -380,12 +380,6 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <summary>
     /// Delete the associated account from the local machine.
     /// </summary>
-    public void DeleteAccount() => DeleteAccountAsync().Wait();
-
-
-    /// <summary>
-    /// Delete the associated account from the local machine.
-    /// </summary>
     public async Task DeleteAccountAsync() {
         var unbindRequest = new UnbindRequest() {
             Account = ServiceAddress
@@ -421,10 +415,10 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// Obtain the status of the remote store.
     /// </summary>
     /// <returns></returns>
-    public StatusResponse Status() {
+    public async Task<StatusResponse> StatusAsync() {
         var statusRequest = new StatusRequest() {
             };
-        return MeshClient.Status(statusRequest);
+        return await MeshClient.StatusAsync(statusRequest);
         }
 
     /// <summary>

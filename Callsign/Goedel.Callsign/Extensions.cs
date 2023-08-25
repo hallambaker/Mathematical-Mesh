@@ -55,7 +55,7 @@ public class ContextResolver : IResolver {
         }
 
     ///<inheritdoc/>
-    public bool TryResolveCallsign(string callsign, out CallsignBinding callsignBinding) {
+    public Task<CallsignBinding> TryResolveCallsignAsync(string callsign) {
         throw new NotImplementedException();
         }
 
@@ -73,7 +73,7 @@ public static class Extensions {
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should be used in libraries!
     [ModuleInitializer]
     internal static void Initialize() {
-        ContextUser.ProcessDictionary.Add(typeof(CallsignRegistrationResponse), ProcessMessage);
+        ContextUser.ProcessDictionary.Add(typeof(CallsignRegistrationResponse), ProcessMessageAsync);
         }
 #pragma warning restore CA2255 // The 'ModuleInitializer' attribute should be used in libraries!
 
@@ -106,12 +106,11 @@ public static class Extensions {
     /// <param name="callsign">The callsign to query.</param>
     /// <param name="callsignBinding">The result of attempting to resolve the callsign.</param>
     /// <returns>True if the callsign resolved to a registration, otherwise false.</returns>
-    public static bool TryResolveCallsign(
+    public static async Task<CallsignBinding> TryResolveCallsignAsync(
                 this ContextAccount contextAccount,
-                string callsign, 
-                out CallsignBinding callsignBinding) {
+                string callsign) {
         var resolver = contextAccount.GetResolver();
-        return resolver.TryResolveCallsign(callsign, out callsignBinding);
+        return await resolver.TryResolveCallsignAsync(callsign);
         }
 
 
@@ -210,7 +209,7 @@ public static class Extensions {
     /// <param name="contextAccount">The account context.</param>
     /// <param name="callsign">The callsign to resolve.</param>
     /// <returns>The callsign registration.</returns>
-    public static Registration ResolveCallsign(
+    public static Task<Registration> ResolveCallsign(
                 this ContextAccount contextAccount,
                 string callsign) {
 
@@ -228,11 +227,11 @@ public static class Extensions {
     /// <param name="contextAccount">The account context.</param>
     /// <param name="callsign">The callsign to query.</param>
     /// <returns></returns>
-    public static async Task<CatalogedApplicationCallsign> CallsignRequestStatus(
+    public static async Task<CatalogedApplicationCallsign> CallsignRequestStatusAsync(
                 this ContextUser contextAccount,
                 string callsign) {
 
-        contextAccount.SynchronizeAsync();
+        await contextAccount.SynchronizeAsync();
         await contextAccount.ProcessAutomaticsAsync();
 
         // synchronize the account and process messages
@@ -252,7 +251,7 @@ public static class Extensions {
     /// <param name="recipient">The party to receive the callsign.</param>
     /// <returns>The resulting registration request (if successful), otherwise
     /// throws an exception.</returns>
-    public static CallsignRegistrationRequest CallsignTransfer(
+    public static async Task<CallsignRegistrationRequest> CallsignTransferAsync(
             this ContextUser contextAccount,
             string callsign,
             string recipient) {
@@ -262,7 +261,7 @@ public static class Extensions {
 
         var profile = GetProfile (contact.Contact, recipient);
         // create the transfer request
-        return contextAccount.CallsignRequestAsync(callsign, bind:false, transfer: profile );
+        return await contextAccount.CallsignRequestAsync(callsign, bind:false, transfer: profile );
 
         }
 
@@ -311,12 +310,6 @@ public static class Extensions {
 
         return result;
         }
-
-    public static ProcessResult ProcessMessage(
-            ContextUser contextUser,
-            Message meshMessage, bool accept = true, bool reciprocate = true,
-            List<string> roles = null) => ProcessMessageAsync (contextUser, meshMessage, accept, reciprocate, roles).Sync();
-
 
     /// <summary>
     /// Process CallsignRegistrationResponse messages in context.

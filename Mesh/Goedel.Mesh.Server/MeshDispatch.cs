@@ -236,7 +236,7 @@ public class PublicMeshService : MeshService {
         // bind to the service instance directly
         using var directMachine = new MeshMachineDirect(meshMachine, this);
         using var meshHost = new MeshHost(meshMachine.MeshHost, directMachine);
-        var contextUser = meshHost.ConfigureMesh(admin, "admin");
+        var contextUser = meshHost.ConfigureMeshAsync(admin, "admin").Sync();
         var udf = contextUser.ProfileUser.UdfString;
 
         // Set the log files to encrypt to the newly created admin account.
@@ -264,7 +264,7 @@ public class PublicMeshService : MeshService {
         // bind to the service instance directly
         //using var directMachine = new MeshMachineDirect(meshMachine, this);
         using var meshHost = new MeshHost(meshMachine.MeshHost, meshMachine);
-        var contextUser = meshHost.ConfigureMesh(admin, "admin");
+        var contextUser = meshHost.ConfigureMeshAsync(admin, "admin").Sync();
         var udf = contextUser.ProfileUser.UdfString;
 
         // Set the log files to encrypt to the newly created admin account.

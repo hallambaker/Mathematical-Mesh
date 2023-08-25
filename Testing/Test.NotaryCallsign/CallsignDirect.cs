@@ -65,8 +65,8 @@ public partial class CallsignDirect : UnitTestSet {
 
         // Bind to the callsign @callsign
         TestEnvironmentCommon.MeshService.CallsignServiceProfile = contextRegistry.Profile as ProfileAccount;
-        var bindRegistry = contextAccountRegistry.CallsignRequestAsync(CallsignRegistry, bind: true, transfer: null);
-        contextRegistry.Process();
+        var bindRegistry = contextAccountRegistry.CallsignRequestAsync(CallsignRegistry, bind: true, transfer: null).Sync();
+        contextRegistry.ProcessAsync().Sync();
 
 
         CallsignResolver = TestEnvironmentCommon.Resolver;
@@ -94,12 +94,12 @@ public partial class CallsignDirect : UnitTestSet {
         CheckResolve(CallsignAlice);
 
         // Make the binding request
-        var bindAlice = contextAccountAlice.CallsignRequestAsync(CallsignAlice, bind: true, transfer: null);
+        var bindAlice = contextAccountAlice.CallsignRequestAsync(CallsignAlice, bind: true, transfer: null).Sync();
 
         // Callsign is not assigned until we process it.
         CheckResolve(CallsignAlice);
 
-        contextRegistry.Process();
+        contextRegistry.ProcessAsync().Sync();
 
         CheckResponse(contextAccountAlice, bindAlice);
         CheckResolve(CallsignAlice, contextAccountAlice);
@@ -114,23 +114,23 @@ public partial class CallsignDirect : UnitTestSet {
                     DeviceBobAdmin, AccountBob, "main");
         var profileBob = contextAccountBob.ProfileUser;
 
-        var bindAlice = contextAccountAlice.CallsignRequestAsync(CallsignAlice, bind: true, transfer: null);
-        var bindAliceBob = contextAccountAlice.CallsignRequestAsync(CallsignBob, bind: false, transfer: null);
-        contextRegistry.Process();
+        var bindAlice = contextAccountAlice.CallsignRequestAsync(CallsignAlice, bind: true, transfer: null).Sync();
+        var bindAliceBob = contextAccountAlice.CallsignRequestAsync(CallsignBob, bind: false, transfer: null).Sync();
+        contextRegistry.ProcessAsync().Sync();
 
         CheckResponse(contextAccountAlice, bindAlice);
         CheckResponse(contextAccountAlice, bindAliceBob);
 
         CheckResolve(CallsignBob, contextAccountAlice);
 
-        var transferBob = contextAccountAlice.CallsignRequestAsync(CallsignBob, display: null, bind: false, transfer: profileBob);
-        contextRegistry.Process();
+        var transferBob = contextAccountAlice.CallsignRequestAsync(CallsignBob, display: null, bind: false, transfer: profileBob).Sync();
+        contextRegistry.ProcessAsync().Sync();
 
         CheckResponse(contextAccountAlice, transferBob, bound: false);
         CheckResolve(CallsignBob, contextAccountBob, false);
 
-        var bindBob = contextAccountBob.CallsignRequestAsync(CallsignBob, bind: true, transfer: null);
-        contextRegistry.Process();
+        var bindBob = contextAccountBob.CallsignRequestAsync(CallsignBob, bind: true, transfer: null).Sync();
+        contextRegistry.ProcessAsync().Sync();
 
         CheckResponse(contextAccountBob, bindBob);
 
@@ -146,12 +146,12 @@ public partial class CallsignDirect : UnitTestSet {
                 DeviceMallet, AccountMallet, "main");
         //contextAccountMallet.ProfileRegistryCallsign = contextAccountAlice.ProfileRegistryCallsign;
 
-        var bindAlice = contextAccountAlice.CallsignRequestAsync(CallsignAlice, bind: true, transfer: null);
-        contextRegistry.Process();
+        var bindAlice = contextAccountAlice.CallsignRequestAsync(CallsignAlice, bind: true, transfer: null).Sync();
+        contextRegistry.ProcessAsync().Sync();
 
         //
-        var bindMallet = contextAccountMallet.CallsignRequestAsync(CallsignAlice, bind: true, transfer: null);
-        contextRegistry.Process();
+        var bindMallet = contextAccountMallet.CallsignRequestAsync(CallsignAlice, bind: true, transfer: null).Sync();
+        contextRegistry.ProcessAsync().Sync();
 
 
         CheckResponse(contextAccountAlice, bindAlice);
@@ -169,13 +169,13 @@ public partial class CallsignDirect : UnitTestSet {
         var contextAccountBob = MeshMachineTest.GenerateAccountUser(TestEnvironmentCommon,
                 DeviceBobAdmin, AccountBob, "mainbob");
 
-        var bindAlice = contextAccountAlice.CallsignRequestAsync(CallsignAlice, bind: true, transfer: null);
-        contextRegistry.Process();
+        var bindAlice = contextAccountAlice.CallsignRequestAsync(CallsignAlice, bind: true, transfer: null).Sync();
+        contextRegistry.ProcessAsync().Sync();
         CheckResponse(contextAccountAlice, bindAlice);
 
 
         CallsignResolver.SyncToRegistry();
-        var bobRequest = contextAccountBob.ContactRequestAsync(CallsignAlice);
+        var bobRequest = contextAccountBob.ContactRequestAsync(CallsignAlice).Sync();
 
         }
 
@@ -195,8 +195,8 @@ public partial class CallsignDirect : UnitTestSet {
         Initialize(out var contextAccountAlice, out var contextRegistry);
 
         foreach (var callsign in tests) {
-            var bindAlice = contextAccountAlice.CallsignRequestAsync(callsign, bind: true, transfer: null);
-            contextRegistry.Process();
+            var bindAlice = contextAccountAlice.CallsignRequestAsync(callsign, bind: true, transfer: null).Sync();
+            contextRegistry.ProcessAsync().Sync();
 
             CheckResponse(contextAccountAlice, bindAlice);
             }
@@ -216,8 +216,8 @@ public partial class CallsignDirect : UnitTestSet {
         Initialize(out var contextAccountAlice, out var contextRegistry);
 
         foreach (var callsign in tests) {
-            var bindAlice = contextAccountAlice.CallsignRequestAsync(callsign, bind: true, transfer: null);
-            contextRegistry.Process();
+            var bindAlice = contextAccountAlice.CallsignRequestAsync(callsign, bind: true, transfer: null).Sync();
+            contextRegistry.ProcessAsync().Sync();
 
             CheckResponse(contextAccountAlice, bindAlice, false);
             }
@@ -233,7 +233,7 @@ public partial class CallsignDirect : UnitTestSet {
                     CallsignRegistrationRequest request,
                     bool success = true,
                     bool bound = true) {
-        account.SynchronizeAsync();
+        account.SynchronizeAsync().Sync();
         // check result.
 
         if (!account.TryGetMessageResponse(request, out var index)) {
@@ -267,7 +267,7 @@ public partial class CallsignDirect : UnitTestSet {
                 bool bound = true) {
 
         CallsignResolver.SyncToRegistry();
-        var queryResponse = ResolverServiceClient.Query(callsign);
+        var queryResponse = ResolverServiceClient.QueryAsync(callsign).Sync();
 
         if (account == null) {
             queryResponse.Success().TestFalse();

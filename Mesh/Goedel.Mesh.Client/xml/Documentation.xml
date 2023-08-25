@@ -526,10 +526,10 @@
             <param name="catalogedMachine">Description of the device profile.</param>
             <param name="meshHost">The Mesh host to add the admin context to.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.TryResolveCallsign(System.String,Goedel.Mesh.CallsignBinding@)">
-            <inheritdoc cref="M:Goedel.Mesh.IResolver.TryResolveCallsign(System.String,Goedel.Mesh.CallsignBinding@)"/>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.TryResolveCallsignAsync(System.String)">
+            <inheritdoc cref="M:Goedel.Mesh.IResolver.TryResolveCallsignAsync(System.String)"/>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetPIN(System.String,System.Boolean,System.Int32,System.Int64,System.Boolean,Goedel.Cryptography.CryptoKey,System.Collections.Generic.List{System.String})">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetPinAsync(System.String,System.Boolean,System.Int32,System.Int64,System.Boolean,Goedel.Cryptography.CryptoKey,System.Collections.Generic.List{System.String})">
             <summary>
             Create a PIN value of length <paramref name="bits"/> bits valid for 
             <paramref name="validity"/> minutes.
@@ -552,11 +552,6 @@
             <param name="PinUDF">The identifier of the PIN</param>
             <returns>The message (if found), otherwise null.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.DeleteAccount">
-            <summary>
-            Delete the associated account from the local machine.
-            </summary>
-        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.DeleteAccountAsync">
             <summary>
             Delete the associated account from the local machine.
@@ -568,13 +563,13 @@
             </summary>
             <returns>The Mesh service client</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.Status">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.StatusAsync">
             <summary>
             Obtain the status of the remote store.
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.SyncPartial(System.Int32,System.String[])">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.SyncPartialAsync(System.Int32,System.String[])">
             <summary>
             Synchronize the stores <paramref name="stores"/> to this device to the service copies. 
             </summary>
@@ -582,7 +577,7 @@
             <param name="maxResuts">If </param>
             <returns>Response returned by the service</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.SyncPartial(System.Collections.Generic.IEnumerable{System.String},System.Int32,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.SyncPartialAsync(System.Collections.Generic.IEnumerable{System.String},System.Int32,System.String)">
             <summary>
             Synchronize the stores <paramref name="stores"/> to this device to the service copies. 
             </summary>
@@ -591,7 +586,7 @@
             <param name="catalogedDeviceDigest">The payload digest of the Cataloged device</param>
             <returns>True if the synchronization completed, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.SyncPartial(System.Int32,Goedel.Mesh.MeshServiceClient,System.String,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.SyncPartialAsync(System.Int32,Goedel.Mesh.MeshServiceClient,System.String,System.Boolean)">
             <summary>
             Synchronize the core stores specified in <see cref="F:Goedel.Mesh.Client.ContextAccount.DictionaryStores"/> to this device to the 
             service copies. 
@@ -602,7 +597,7 @@
             <param name="full">If true, synchronize all the core stores.</param>
             <returns>True if the synchronization completed, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.SyncPartial(Goedel.Mesh.MeshServiceClient,System.Collections.Generic.List{Goedel.Mesh.ConstraintsSelect},System.Int32,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.SyncPartialAsync(Goedel.Mesh.MeshServiceClient,System.Collections.Generic.List{Goedel.Mesh.ConstraintsSelect},System.Int32,System.String)">
             <summary>
             Compile a download request for the constraint set <paramref name="constraintsSelects"/>
             and synchronize the local copies of the stores.
@@ -613,7 +608,7 @@
             <param name="maxResuts">Maximum number of results to return.</param>
             <returns>(partial, count) where partial is true if the </returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.Sync">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.SynchronizeAsync">
             <summary>
             Synchronize this device to the catalogs at the service. Since the authoritative copy of
             the service is held at the service, this means only downloading updates at present.
@@ -952,7 +947,7 @@
             <param name="client">The client to connect to the service with.</param>
             <returns>The group context.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextGroup.Add(System.String,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextGroup.AddAsync(System.String,System.String)">
             <summary>
             Add a member to the group.
             </summary>
@@ -982,6 +977,13 @@
             <returns>The member catalog entry.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.Delete(Goedel.Mesh.CatalogedMember)">
+            <summary>
+            Delete a member from the group
+            </summary>
+            <param name="member">The member to delete.</param>
+            <returns>The member catalog entry.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextGroup.DeleteAsync(Goedel.Mesh.CatalogedMember)">
             <summary>
             Delete a member from the group
             </summary>
@@ -1065,7 +1067,7 @@
             <returns>The <see cref="T:Goedel.Mesh.Client.ContextMeshPending"/> record describing the state of the 
             pending connection.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextMeshPending.Complete">
+        <member name="M:Goedel.Mesh.Client.ContextMeshPending.CompleteAsync">
             <summary>
             Complete the pending connection request.
             </summary>
@@ -1113,7 +1115,7 @@
             <returns>If successfull returns an ContextAccount instance to allow access
             to the connected account. Otherwise, a null value is returned.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextMeshPreconfigured.Complete">
+        <member name="M:Goedel.Mesh.Client.ContextMeshPreconfigured.CompleteAsync">
             <summary>
             Attempt to connect to a personal Mesh by polling various services. 
             </summary>
@@ -1289,25 +1291,12 @@
             <exception cref="T:Goedel.Mesh.NoMeshSecret">Is thrown if the private key cannot be found.</exception>
             <returns>The encrypted escrow entry and the key shares.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.SetService(System.String)">
-            <summary>
-            Set the initial Mesh Service. This MUST be called before devices are added to the 
-            personal mesh. This method does not support transfer of the Mesh Service.
-            </summary>
-            <param name="accountAddress">The account address</param>
-        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.SetServiceAsync(System.String)">
             <summary>
             Set the initial Mesh Service. This MUST be called before devices are added to the 
             personal mesh. This method does not support transfer of the Mesh Service.
             </summary>
             <param name="accountAddress">The account address</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.BindService(System.String)">
-            <summary>
-            Bind to a service under the account address <paramref name="accountAddress"/>.
-            </summary>
-            <param name="accountAddress">The account address to bind.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.BindServiceAsync(System.String)">
             <summary>
@@ -1336,7 +1325,7 @@
             <param name="activationAccount">The account activation</param>
             <param name="keyLocate">the key locator.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.SetContactSelf(Goedel.Mesh.Contact,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.SetContactSelfAsync(Goedel.Mesh.Contact,System.String)">
             <summary>
             Create a contact entry for self using the parameters specified in <paramref name="contact"/>.
             </summary>
@@ -1372,14 +1361,14 @@
             <param name="cryptoKey">The found key </param>
             <returns>The key pair if found.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.SendMessage(System.String,Goedel.Mesh.Message)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.SendMessageAsync(System.String,Goedel.Mesh.Message)">
             <summary>
             Send the message <paramref name="message"/> to <paramref name="recipientAddress"/>.
             </summary>
             <param name="recipientAddress">The address to send the message to.</param>
             <param name="message">The message to send.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.Sync">
+        <member name="M:Goedel.Mesh.Client.ContextUser.SynchronizeAsync">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetPendingMessageConnectionRequest">
@@ -1460,7 +1449,7 @@
             <param name="read">If true, the message has already been read.</param>
             <returns>The message value (if unread).</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.CreateGroup(System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.List{System.String},System.Byte[])">
+        <member name="M:Goedel.Mesh.Client.ContextUser.CreateGroupAsync(System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.List{System.String},System.Byte[])">
             <summary>
             Create a threshold encryption group.
             </summary>
@@ -1486,9 +1475,9 @@
             <param name="groupAddress">The group to return the management context for.</param>
             <returns>The created management context.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.Preconfigure(System.String@,Goedel.Mesh.ProfileDevice@,System.String@,System.String,System.Int32)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.Preconfigure(System.String,System.Int32)">
             <summary>
-            Convenience wrapper for <see cref="M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarl(Goedel.Cryptography.Jose.PrivateKeyUDF@,Goedel.Mesh.ProfileDevice@,Goedel.Mesh.ConnectionService@,Goedel.Mesh.ConnectionDevice@,System.String@,System.String@,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32,System.Int32)"/>. Generates a device profile
+            Convenience wrapper for <see cref="!:CreateDeviceEarl"/>. Generates a device profile
             and writes the <see cref="T:Goedel.Mesh.DevicePreconfigurationPrivate"/> data to a file in the directory
             specified by <paramref name="path"/>.
             </summary>
@@ -1499,29 +1488,8 @@
             <param name="bits">Work factor of the connection secret in bits.</param>
             <returns>The public and private configuration instances.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarl(Goedel.Cryptography.Jose.PrivateKeyUDF@,Goedel.Mesh.ProfileDevice@,Goedel.Mesh.ConnectionService@,Goedel.Mesh.ConnectionDevice@,System.String@,System.String@,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32,System.Int32)">
-            <summary>
-            Create an EARL for a device, publish the result to the Mesh service and return 
-            the device profile <paramref name="profileDevice"/>, secret seed value 
-            <paramref name="secretSeed"/>, connection URI 
-            <paramref name="connectURI"/> and PIN <paramref name="pin"/>.
-            </summary>
-            <param name="secretSeed">The computed secret seed value.</param>
-            <param name="profileDevice">The computed device profile.</param>
-            <param name="connectionService">Slim version of the device connection for 
-            authentication to the service.</param>
-            <param name="connectionDevice">The computed device connection.</param>
-            <param name="pin">The computed PIN code.</param>
-            <param name="connectURI">The connection URI to be used for pickup.</param>
-            <param name="algorithmEncrypt">The encryption algorithm.</param>
-            <param name="algorithmSign">The signature algorithm</param>
-            <param name="algorithmAuthenticate">The signature algorithm</param>
-            <param name="secret">The master secret.</param>
-            <param name="bitsSecret">Work factor of the master secret in bits.</param>
-            <param name="bitsPin">The size of secret to generate in bits/</param>
-            <returns>Response from the server.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.ConnectStaticUri(System.String,System.Collections.Generic.List{System.String})">
+        <!-- Badly formed XML comment ignored for member "M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarlAsync(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32,System.Int32)" -->
+        <member name="M:Goedel.Mesh.Client.ContextUser.ConnectStaticUriAsync(System.String,System.Collections.Generic.List{System.String})">
             <summary>
             Attempt device connection by means of the static URI <paramref name="uri"/>.
             </summary>
@@ -1529,7 +1497,7 @@
             <param name="rights">The list of rights being requested by the device.</param>
             <returns>The </returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.DeleteDevice(System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.DeleteDeviceAsync(System.String)">
             <summary>
             Delete the device <paramref name="id"/> from the device catalog.
             </summary>
@@ -1543,13 +1511,13 @@
             <param name="responseId">The response from the service.</param>
             <returns>The recovered envelope.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.ProcessAutomatics">
+        <member name="M:Goedel.Mesh.Client.ContextUser.ProcessAutomaticsAsync">
             <summary>
             Process automatic actions.
             </summary>
             <returns>The results of the automatic processing attempted.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.ProcessAutomatic(Goedel.Mesh.GroupInvitation,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.ProcessAutomaticAsync(Goedel.Mesh.GroupInvitation,System.Boolean,System.Boolean)">
             <summary>
             Perform automatic processing of the message <paramref name="request"/>.
             </summary>
@@ -1558,14 +1526,14 @@
             <param name="authorize">If true, the action is explicitly authorized.</param>
             <returns>The result of requesting the connection.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.ProcessAutomatic(Goedel.Mesh.AcknowledgeConnection)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.ProcessAutomaticAsync(Goedel.Mesh.AcknowledgeConnection)">
             <summary>
             Perform automatic processing of the message <paramref name="request"/>.
             </summary>
             <param name="request">Connection request to be processed.</param>
             <returns>The result of requesting the connection.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.Process(Goedel.Mesh.AcknowledgeConnection,System.Boolean,Goedel.Mesh.MessagePin,System.Collections.Generic.List{System.String})">
+        <member name="M:Goedel.Mesh.Client.ContextUser.ProcessAsync(Goedel.Mesh.AcknowledgeConnection,System.Boolean,Goedel.Mesh.MessagePin,System.Collections.Generic.List{System.String})">
             <summary>
             Accept or reject a connection request.
             </summary>
@@ -1585,7 +1553,7 @@
             <param name="catalogedDevice">The device entry.</param>
             <returns>The list of application entries.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.Process(System.String,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.ProcessAsync(System.String,System.Boolean,System.Boolean)">
             <summary>
             Generalized processing loop for messages
             </summary>
@@ -1595,7 +1563,7 @@
             contact information in response to an initial contact request.</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.Process(Goedel.Mesh.Message,System.Boolean,System.Boolean,System.Collections.Generic.List{System.String})">
+        <member name="M:Goedel.Mesh.Client.ContextUser.ProcessAsync(Goedel.Mesh.Message,System.Boolean,System.Boolean,System.Collections.Generic.List{System.String})">
             <summary>
             Generalized processing loop for messages
             </summary>
@@ -1606,7 +1574,7 @@
             <param name="roles">The list of rights to be granted to the device.</param>
             <returns>The result of processing.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.ContactReply(Goedel.Mesh.MessageContact,System.Boolean,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.ContactReplyAsync(Goedel.Mesh.MessageContact,System.Boolean,System.String)">
             <summary>
             Make a contact reply.
             </summary>
@@ -1616,7 +1584,7 @@
             <param name="localname">Local name to be used to identify the contact recorded in
             the catalog.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.ProcessAutomatic(Goedel.Mesh.MessageContact,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.ProcessAutomaticAsync(Goedel.Mesh.MessageContact,System.Boolean)">
             <summary>
             Perform automatic processing of the message <paramref name="request"/>.
             </summary>
@@ -1641,7 +1609,7 @@
             <param name="automatic">If true, presentation of the pin code is sufficient
             to authenticate and authorize the action.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.ContactRequest(System.String,System.String,System.String,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.ContactRequestAsync(System.String,System.String,System.String,System.Boolean)">
             <summary>
             Construct a contact request.
             </summary>
@@ -1650,7 +1618,7 @@
             <param name="localname">Local name for the contact</param>
             <param name="reply">if true, request return of the recpients contact info in reply.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.ContactExchange(System.String,System.Boolean,Goedel.Mesh.Message@,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.ContactExchange(System.String,System.Boolean,System.String)">
             <summary>
             Fetch contact data referenced by the URI <paramref name="uri"/>. If <paramref name="reciprocate"/>
             is true, send own contact data.
@@ -1661,16 +1629,16 @@
             <param name="message">The reciprocation message (if sent), otherwise null.</param>
             <returns>The cataloged contact information.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.ConfirmationRequest(System.String,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.ConfirmationRequestAsync(System.String,System.String)">
             <summary>
             Construct a confirmation request.
             </summary>
             <param name="recipientAddress">The contact to request.</param>
             <param name="messageText">The message text to send.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.ConfirmationResponse(Goedel.Mesh.RequestConfirmation,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.ConfirmationResponseAsync(Goedel.Mesh.RequestConfirmation,System.Boolean)">
             <summary>
-            Make a contact reply.
+            Make a confirmation reply.
             </summary>
             <param name="requestConfirmation">The request received.</param>
             <param name="response">If true, accept the confirmation request, otherwise reject.</param>
@@ -1794,7 +1762,7 @@
             <param name="applicationId">The name of the specific Mail application entry.</param>
             <returns>The application iff found, otherwise null.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.AddBookmarkFromFile(System.String,Goedel.Mesh.CatalogedEntryFormat,System.Boolean,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.AddBookmarkFromFileAsync(System.String,Goedel.Mesh.CatalogedEntryFormat,System.Boolean,System.String)">
             <summary>
             Add the bookmark data specified in the file <paramref name="fileName"/>. If
             <paramref name="merge"/> is true, merge this contact information.
@@ -1806,7 +1774,7 @@
             <param name="format">The format the input is written in.</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.AddCredentialFromFile(System.String,Goedel.Mesh.CatalogedEntryFormat,System.Boolean,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.AddCredentialFromFileAsync(System.String,Goedel.Mesh.CatalogedEntryFormat,System.Boolean,System.String)">
             <summary>
             Add the contact data specified in the file <paramref name="fileName"/>. If
             <paramref name="merge"/> is true, merge this contact information.
@@ -1818,7 +1786,7 @@
             <param name="format">The format the input is written in.</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.AddContactFromFile(System.String,Goedel.Mesh.CatalogedEntryFormat,System.Boolean,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.AddContactFromFileAsync(System.String,Goedel.Mesh.CatalogedEntryFormat,System.Boolean,System.String)">
             <summary>
             Add the contact data specified in the file <paramref name="fileName"/>. If
             <paramref name="merge"/> is true, merge this contact information.
@@ -1830,7 +1798,7 @@
             <param name="format">The format the input is written in.</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.AddNetworkFromFile(System.String,Goedel.Mesh.CatalogedEntryFormat,System.Boolean,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.AddNetworkFromFileAsync(System.String,Goedel.Mesh.CatalogedEntryFormat,System.Boolean,System.String)">
             <summary>
             Add the contact data specified in the file <paramref name="fileName"/>. If
             <paramref name="merge"/> is true, merge this contact information.
@@ -1842,7 +1810,7 @@
             <param name="format">The format the input is written in.</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.AddTaskFromFile(System.String,Goedel.Mesh.CatalogedEntryFormat,System.Boolean,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.AddTaskFromFileAsync(System.String,Goedel.Mesh.CatalogedEntryFormat,System.Boolean,System.String)">
             <summary>
             Add the contact data specified in the file <paramref name="fileName"/>. If
             <paramref name="merge"/> is true, merge this contact information.
@@ -1854,7 +1822,7 @@
             <param name="format">The format the input is written in.</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.AddApplicationFromFile(System.String,Goedel.Mesh.CatalogedEntryFormat,System.Boolean,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.AddApplicationFromFileAsync(System.String,Goedel.Mesh.CatalogedEntryFormat,System.Boolean,System.String)">
             <summary>
             Add the contact data specified in the file <paramref name="fileName"/>. If
             <paramref name="merge"/> is true, merge this contact information.
@@ -2022,12 +1990,6 @@
             <param name="catalog">The catalog to be updated</param>
             <param name="catalogedEntry">The entry to add as an update.</param>
             <typeparam name="TEntry">The entry type.</typeparam>
-        </member>
-        <member name="M:Goedel.Mesh.Client.Transaction`1.Transact">
-            <summary>
-            Apply the transaction and return the response.
-            </summary>
-            <returns></returns>
         </member>
         <member name="M:Goedel.Mesh.Client.Transaction`1.TransactAsync">
             <summary>
@@ -3196,20 +3158,6 @@
             </summary>
             <param name="key">The profile to delete</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.MeshHost.ConfigureMesh(System.String,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.ProfileDevice,System.Collections.Generic.List{System.String},System.Boolean)">
-             <summary>
-             Create a new Mesh master profile and bind to a Mesh service at <paramref name="accountAddress"/>.
-             </summary>
-            <param name="accountAddress">Account address to bind to.</param>
-             <param name="localName">Local name for easy reference.</param>
-             <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
-             <param name="profileDevice">Specify the device profile. This allows use of a device 
-             profile bound to the machine hardware.</param>
-             <param name="rights">The rights to be granted to the initial connected device.</param>
-             <param name="create">If true, create a new mesh, otherwise attempt recovery from the
-             service.</param>
-             <returns>Context for administering the Mesh</returns>
-        </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.ConfigureMeshAsync(System.String,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.ProfileDevice,System.Collections.Generic.List{System.String},System.Boolean)">
              <summary>
              Create a new Mesh master profile and bind to a Mesh service at <paramref name="accountAddress"/>.
@@ -3232,7 +3180,7 @@
             <param name="admin">Enable administration privileges (if available).</param>
             <returns>Context for administering the Mesh</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.MeshHost.Complete(System.String)">
+        <member name="M:Goedel.Mesh.Client.MeshHost.CompleteAsync(System.String)">
             <summary>
             Attempt to complete the connection to a Mesh profile. If successful. update the local host persistence store
             and return a context for the newly acquired connection. Otherwise return null.

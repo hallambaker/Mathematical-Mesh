@@ -106,7 +106,7 @@ public partial class Shell {
         var contextUser = GetContextUser(options);
         var recipient = options.Uri.Value;
 
-        var entry = contextUser.ContactExchange(recipient, false);
+        var entry = contextUser.ContactExchange(recipient, false).Sync();
 
         return new ResultEntry() {
             Success = true,

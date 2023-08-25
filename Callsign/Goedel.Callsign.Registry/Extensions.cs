@@ -36,10 +36,10 @@ public static class Extensions {
     /// <param name="contextUser"></param>
     /// <param name="key">Key used to disambiguate multiple registries (why would you need that???).</param>
     /// <returns>The registry context.</returns>
-    public static ContextRegistry GetRegistry(
+    public static async Task<ContextRegistry> GetRegistryAsync(
                     this ContextUser contextUser,
                     string key = null) {
-        contextUser.SynchronizeAsync().Sync();
+        await contextUser.SynchronizeAsync();
 
         var applicationCatalog = contextUser.GetStore(CatalogApplication.Label) as CatalogApplication;
 

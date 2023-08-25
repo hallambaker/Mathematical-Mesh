@@ -34,7 +34,7 @@ public partial class Shell {
         var contextAccount = GetContextUser(options);
         var recipient = options.Recipient.Value;
 
-        var message = contextAccount.ContactRequestAsync(recipient);
+        var message = contextAccount.ContactRequestAsync(recipient).Sync();
 
         var result = new ResultSent() {
             Success = true,
@@ -54,7 +54,7 @@ public partial class Shell {
         var text = options.Text.Value;
 
 
-        var message = contextAccount.ConfirmationRequest(recipient, text);
+        var message = contextAccount.ConfirmationRequestAsync(recipient, text).Sync();
 
         var result = new ResultSent() {
             Success = true,
@@ -77,7 +77,7 @@ public partial class Shell {
         // The 
 
 
-        contextAccount.SynchronizeAsync();
+        contextAccount.SynchronizeAsync().Sync();
         var messages = contextAccount.GetOpenMessages();
 
         var result = new ResultPending() {
@@ -129,7 +129,7 @@ public partial class Shell {
 
     ShellResult Process(IAccountOptions options, string requestid, bool accept) {
         var contextAccount = GetContextUser(options);
-        var processResult = contextAccount.Process(requestid, accept);
+        var processResult = contextAccount.ProcessAsync(requestid, accept);
 
 
         var result = new ResultSent() {

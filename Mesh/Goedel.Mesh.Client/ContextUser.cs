@@ -38,7 +38,7 @@ namespace Goedel.Mesh.Client;
 /// <param name="roles">Roles to be assigned to devices/applications create
 /// in response to the message.</param>
 /// <returns>The result of processing the message.</returns>
-public delegate ProcessResult ProcessMessageDelegate (
+public delegate Task<ProcessResult> ProcessMessageDelegate (
                 ContextUser contextUser,
                 Message meshMessage, bool accept = true, bool reciprocate = true,
                 List<string> roles = null);
@@ -295,15 +295,6 @@ public partial class ContextUser : ContextAccount {
     /// personal mesh. This method does not support transfer of the Mesh Service.
     /// </summary>
     /// <param name="accountAddress">The account address</param>
-    public void SetService(string accountAddress) => 
-            SetServiceAsync(accountAddress).Wait();
-
-
-    /// <summary>
-    /// Set the initial Mesh Service. This MUST be called before devices are added to the 
-    /// personal mesh. This method does not support transfer of the Mesh Service.
-    /// </summary>
-    /// <param name="accountAddress">The account address</param>
     public async Task SetServiceAsync(
             string accountAddress) {
         KeyProfile.AssertNotNull(NotSuperAdministrator.Throw);
@@ -330,14 +321,6 @@ public partial class ContextUser : ContextAccount {
         var contact = CreateContact();
         SetContactSelfAsync(contact);
         }
-
-    /// <summary>
-    /// Bind to a service under the account address <paramref name="accountAddress"/>.
-    /// </summary>
-    /// <param name="accountAddress">The account address to bind.</param>
-    public void BindService(string accountAddress) =>
-            BindServiceAsync(accountAddress).Wait();
-
 
 
     /// <summary>
@@ -589,11 +572,6 @@ public partial class ContextUser : ContextAccount {
 
     #endregion
     #region // Message Handling - Get/Process pending.
-
-    ///<inheritdoc cref="SendMessageAsync"/>
-    public void SendMessage(string recipientAddress, Message message) =>
-            SendMessageAsync(recipientAddress, message).Wait();
-
 
     /// <summary>
     /// Send the message <paramref name="message"/> to <paramref name="recipientAddress"/>.
@@ -959,54 +937,43 @@ public partial class ContextUser : ContextAccount {
     /// <param name="path">Path to write the configuration file to.</param>
     /// <param name="bits">Work factor of the connection secret in bits.</param>
     /// <returns>The public and private configuration instances.</returns>
-    public (DevicePreconfigurationPublic, DevicePreconfigurationPrivate) Preconfigure(
-                out string filename,
-                out ProfileDevice profileDevice,
-                out string connectUri,
+    public DevicePreconfiguration Preconfigure(
+                //out string filename,
+                //out ProfileDevice profileDevice,
+                //out string connectUri,
                 string path = "",
                 int bits = 120) {
 
-        CreateDeviceEarl(
-                out var secretSeed,
-                out profileDevice,
-                out var connectionService,
-                out var connectionDevice,
+        var preconfiguration = CreateDeviceEarlAsync(bitsPin: bits).Sync();
 
-                out var connectKey,
-                out connectUri,
-                bitsPin: bits);
+        var filename = Path.Combine(path, preconfiguration.ConnectKey + ".medk");
 
-        filename = Path.Combine(path, connectKey + ".medk");
-
-        var devicePreconfiguration = new DevicePreconfigurationPrivate() {
-            PrivateKey = secretSeed,
-            ConnectUri = connectUri,
-            EnvelopedProfileDevice = profileDevice.GetEnvelopedProfileDevice(),
-            EnvelopedConnectionDevice = connectionDevice.GetEnvelopedConnectionDevice(),
-            EnvelopedConnectionService = connectionService.GetEnvelopedConnectionService()
+        var devicePreconfigurationPrivate = new DevicePreconfigurationPrivate() {
+            PrivateKey = preconfiguration.SecretSeed,
+            ConnectUri = preconfiguration.ConnectUri,
+            EnvelopedProfileDevice = preconfiguration.ProfileDevice.GetEnvelopedProfileDevice(),
+            EnvelopedConnectionDevice = preconfiguration.ConnectionDevice.GetEnvelopedConnectionDevice(),
+            EnvelopedConnectionService = preconfiguration.ConnectionService.GetEnvelopedConnectionService()
             };
-        devicePreconfiguration.ToFile(filename, tagged: true);
+        devicePreconfigurationPrivate.ToFile(filename, tagged: true);
 
         var devicePreconfigurationPublic = new DevicePreconfigurationPublic() {
-            EnvelopedProfileDevice = profileDevice.GetEnvelopedProfileDevice()
+            EnvelopedProfileDevice = preconfiguration.ProfileDevice.GetEnvelopedProfileDevice()
             };
 
-        return (devicePreconfigurationPublic, devicePreconfiguration);
+
+        preconfiguration.DevicePreconfigurationPublic = devicePreconfigurationPublic;
+        preconfiguration.DevicePreconfigurationPrivate = devicePreconfigurationPrivate;
+        preconfiguration.Filename = filename;
+
+        return preconfiguration;
         }
 
+
     /// <summary>
     /// Create an EARL for a device, publish the result to the Mesh service and return 
     /// the device profile <paramref name="profileDevice"/>, secret seed value 
-    /// <paramref name="secretSeed"/>, connection URI 
-    /// <paramref name="connectURI"/> and PIN <paramref name="pin"/>.
-    /// </summary>
-    /// <param name="secretSeed">The computed secret seed value.</param>
-    /// <param name="profileDevice">The computed device profile.</param>
-    /// <param name="connectionService">Slim version of the device connection for 
-    /// authentication to the service.</param>
-    /// <param name="connectionDevice">The computed device connection.</param>
-    /// <param name="pin">The computed PIN code.</param>
-    /// <param name="connectURI">The connection URI to be used for pickup.</param>
+
     /// <param name="algorithmEncrypt">The encryption algorithm.</param>
     /// <param name="algorithmSign">The signature algorithm</param>
     /// <param name="algorithmAuthenticate">The signature algorithm</param>
@@ -1014,52 +981,7 @@ public partial class ContextUser : ContextAccount {
     /// <param name="bitsSecret">Work factor of the master secret in bits.</param>
     /// <param name="bitsPin">The size of secret to generate in bits/</param>
     /// <returns>Response from the server.</returns>
-    public bool CreateDeviceEarl(
-                out PrivateKeyUDF secretSeed,
-                out ProfileDevice profileDevice,
-                out ConnectionService connectionService,
-                out ConnectionDevice connectionDevice,
-                out string pin,
-                out string connectURI,
-
-                CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-                CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
-                CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
-                byte[] secret = null,
-                int bitsPin = 256,
-                int bitsSecret = 256
-                ) => CreateDeviceEarlAsync(
-                    out secretSeed, ouut profileDevice).Sync();
-
-
-    /// <summary>
-    /// Create an EARL for a device, publish the result to the Mesh service and return 
-    /// the device profile <paramref name="profileDevice"/>, secret seed value 
-    /// <paramref name="secretSeed"/>, connection URI 
-    /// <paramref name="connectURI"/> and PIN <paramref name="pin"/>.
-    /// </summary>
-    /// <param name="secretSeed">The computed secret seed value.</param>
-    /// <param name="profileDevice">The computed device profile.</param>
-    /// <param name="connectionService">Slim version of the device connection for 
-    /// authentication to the service.</param>
-    /// <param name="connectionDevice">The computed device connection.</param>
-    /// <param name="pin">The computed PIN code.</param>
-    /// <param name="connectURI">The connection URI to be used for pickup.</param>
-    /// <param name="algorithmEncrypt">The encryption algorithm.</param>
-    /// <param name="algorithmSign">The signature algorithm</param>
-    /// <param name="algorithmAuthenticate">The signature algorithm</param>
-    /// <param name="secret">The master secret.</param>
-    /// <param name="bitsSecret">Work factor of the master secret in bits.</param>
-    /// <param name="bitsPin">The size of secret to generate in bits/</param>
-    /// <returns>Response from the server.</returns>
-    public async Task<bool> CreateDeviceEarlAsync(
-                out PrivateKeyUDF secretSeed,
-                out ProfileDevice profileDevice,
-                out ConnectionService connectionService,
-                out ConnectionDevice connectionDevice,
-                out string pin,
-                out string connectURI,
-
+    public async Task<DevicePreconfiguration> CreateDeviceEarlAsync(
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
@@ -1072,27 +994,27 @@ public partial class ContextUser : ContextAccount {
         // mmm://q@example.org/NQED-5C35-WSBQ-OBHW-ENBI-XOZF
 
 
-        secretSeed = new PrivateKeyUDF(
+        var secretSeed = new PrivateKeyUDF(
             udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileDevice, secret: secret, algorithmEncrypt: algorithmEncrypt,
             algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate, bits: bitsSecret);
 
 
-        pin = MeshUri.GetConnectPin(secretSeed, ServiceAddress, length: bitsPin);
+        var pin = MeshUri.GetConnectPin(secretSeed, ServiceAddress, length: bitsPin);
 
         var key = new CryptoKeySymmetric(pin);
 
-        connectURI = MeshUri.ConnectUri(ServiceAddress, pin);
+        var connectURI = MeshUri.ConnectUri(ServiceAddress, pin);
 
         // Create a device profile 
-        profileDevice = new ProfileDevice(secretSeed);
+        var profileDevice = new ProfileDevice(secretSeed);
 
         // Create and sign the connection
-        connectionService = new ConnectionService() {
+        var connectionService = new ConnectionService() {
             Authentication = profileDevice.Encryption
             };
         connectionService.Envelope(KeyAdministratorSign);
 
-        connectionDevice = new ConnectionDevice() {
+        var connectionDevice = new ConnectionDevice() {
             Signature = profileDevice.Signature,
             Encryption = profileDevice.Encryption,
             Authentication = profileDevice.Encryption
@@ -1114,7 +1036,8 @@ public partial class ContextUser : ContextAccount {
         transactPublication.CatalogUpdate(catalogPublication, catalogedPublication);
         await transactPublication.TransactAsync();
 
-        return true;
+        return new DevicePreconfiguration (
+            secretSeed, profileDevice, connectionService, connectionDevice, pin, connectURI);
         }
 
 
@@ -1475,11 +1398,11 @@ public partial class ContextUser : ContextAccount {
     /// <param name="reciprocate">If true, reciprocate the response: e.g. return user's own
     /// contact information in response to an initial contact request.</param>
     /// <returns></returns>
-    public ProcessResult Process(string messageId, bool accept = true, bool reciprocate = true) {
+    public async Task<ProcessResult> ProcessAsync(string messageId, bool accept = true, bool reciprocate = true) {
         TryGetMessageByMessageId(messageId, out var index).AssertTrue(MessageIdNotFound.Throw);
         index.IsOpen.AssertTrue(NYI.Throw); // make a better response for already done.
 
-        return Process(index.Message, accept, reciprocate);
+        return await ProcessAsync(index.Message, accept, reciprocate);
 
         }
 
@@ -1492,21 +1415,21 @@ public partial class ContextUser : ContextAccount {
     /// contact information in response to an initial contact request.</param>
     /// <param name="roles">The list of rights to be granted to the device.</param>
     /// <returns>The result of processing.</returns>
-    public ProcessResult Process(Message meshMessage, bool accept = true, bool reciprocate = true,
+    public async Task<ProcessResult> ProcessAsync(Message meshMessage, bool accept = true, bool reciprocate = true,
                 List<string> roles = null) {
         "Merge this processing loop with the other processing loop".TaskFunctionality();
         reciprocate.Future();
 
         switch (meshMessage) {
             case AcknowledgeConnection connection: {
-                    return ProcessAsync(connection, accept, rights: roles);
+                    return await ProcessAsync(connection, accept, rights: roles);
                     }
             case MessageContact requestContact: {
-                    return ContactReplyAsync(requestContact, accept);
+                    return await ContactReplyAsync(requestContact, accept);
                     }
 
             case RequestConfirmation requestConfirmation: {
-                    return ConfirmationResponse(requestConfirmation, accept);
+                    return await ConfirmationResponseAsync(requestConfirmation, accept);
                     }
             case ResponseConfirmation responseConfirmation: {
                     responseConfirmation.Future();
@@ -1523,7 +1446,7 @@ public partial class ContextUser : ContextAccount {
 
             default: {
                 if (ProcessDictionary.TryGetValue(meshMessage.GetType(), out var messageDelegate)) {
-                    return messageDelegate(this, meshMessage, accept, reciprocate, roles);
+                    return await messageDelegate(this, meshMessage, accept, reciprocate, roles);
                     }
                 return new ProcessResultNotSupported() {
                     MessageId = meshMessage.MessageId,
@@ -1707,7 +1630,8 @@ public partial class ContextUser : ContextAccount {
         var addressType = recipient.SplitAccountAddress(out var service, out var account);
         switch (addressType) {
             case AddressType.Callsign: {
-                TryResolveCallsign(account, out var binding).AssertTrue(NYI.Throw);
+                var binding = await TryResolveCallsignAsync(account);
+                binding.AssertNotNull(NYI.Throw);
                 recipient = binding.GetMeshAccount();
                 recipientEncryptionKey = binding.GetEncryptionKey();
                 break;
@@ -1799,7 +1723,7 @@ public partial class ContextUser : ContextAccount {
     /// </summary>
     /// <param name="recipientAddress">The contact to request.</param>
     /// <param name="messageText">The message text to send.</param>
-    public RequestConfirmation ConfirmationRequest(string recipientAddress, string messageText) {
+    public async Task<RequestConfirmation> ConfirmationRequestAsync(string recipientAddress, string messageText) {
         // prepare the contact request
 
         var message = new RequestConfirmation() {
@@ -1807,7 +1731,7 @@ public partial class ContextUser : ContextAccount {
             Text = messageText
             };
 
-        SendMessage(recipientAddress, message);
+        await SendMessageAsync(recipientAddress, message);
 
 
         // send it to the service

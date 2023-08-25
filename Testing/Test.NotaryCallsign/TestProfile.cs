@@ -209,7 +209,7 @@ public partial class RegistrationTests {
 
         // Create admin context
         var adminContext = TestEnvironment.HostMachineMesh.MeshHost.GetContextMesh(AccountServiceAdmin) as ContextUser;
-        ContextRegistry = adminContext.GetRegistry();
+        ContextRegistry = adminContext.GetRegistryAsync().Sync();
 
 
         //var contextAccountQ = MeshMachineTest.GenerateAccountUser(TestEnvironment,
@@ -231,8 +231,8 @@ public partial class RegistrationTests {
 
         adminContext.AccountHostAssignment.CallsignServiceProfile = ContextRegistry.Profile as ProfileRegistry;
 
-        var bindRegistry = adminContext.CallsignRequestAsync(CallsignRegistry, bind: true, transfer: null);
-        ContextRegistry.Process();
+        var bindRegistry = adminContext.CallsignRequestAsync(CallsignRegistry, bind: true, transfer: null).Sync();
+        ContextRegistry.ProcessAsync().Sync();
 
         CallsignResolver = TestEnvironment.Resolver;
         ResolverServiceClient = CallsignResolver.GetClient();

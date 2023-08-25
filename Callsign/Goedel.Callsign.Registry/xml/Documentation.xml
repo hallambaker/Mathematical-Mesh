@@ -394,7 +394,7 @@
             <param name="activationApplicationRegistry">The application activation data.</param>
             <param name="activationAccount">The account activation.</param>
         </member>
-        <member name="M:Goedel.Callsign.Registry.ContextRegistry.CreateRegistry(Goedel.Mesh.Client.ContextUser,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.List{System.String})">
+        <member name="M:Goedel.Callsign.Registry.ContextRegistry.CreateRegistryAsync(Goedel.Mesh.Client.ContextUser,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.List{System.String})">
             <summary>
             Create the callsign Registry.
             </summary>
@@ -414,12 +414,12 @@
             <param name="client">The client to connect to the service with.</param>
             <returns>The Registry context.</returns>
         </member>
-        <member name="M:Goedel.Callsign.Registry.ContextRegistry.Process">
+        <member name="M:Goedel.Callsign.Registry.ContextRegistry.ProcessAsync">
             <summary>
             Process the list of pending messages in order of receipt. 
             </summary>
         </member>
-        <member name="M:Goedel.Callsign.Registry.ContextRegistry.Process(Goedel.Mesh.SpoolIndexEntry,Goedel.Callsign.CallsignRegistrationRequest)">
+        <member name="M:Goedel.Callsign.Registry.ContextRegistry.ProcessAsync(Goedel.Mesh.SpoolIndexEntry,Goedel.Callsign.CallsignRegistrationRequest)">
             <summary>
             Process the callsign registration request <paramref name="registrationRequest"/>.
             </summary>
@@ -428,6 +428,9 @@
             <returns>Reports the processing result.</returns>
         </member>
         <member name="M:Goedel.Callsign.Registry.ContextRegistry.RefuseRequest(Goedel.Callsign.CallsignRegistrationRequest,Goedel.Mesh.CallsignBinding,System.Exception)">
+            <inheritdoc cref="M:Goedel.Callsign.Registry.ContextRegistry.RefuseRequestAsync(Goedel.Callsign.CallsignRegistrationRequest,Goedel.Mesh.CallsignBinding,System.Exception)"/>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ContextRegistry.RefuseRequestAsync(Goedel.Callsign.CallsignRegistrationRequest,Goedel.Mesh.CallsignBinding,System.Exception)">
             <summary>
             Return a message refusing the request <paramref name="registrationRequest"/> for the
             reason corresponding to <paramref name="exception"/>. The request is returned
@@ -522,7 +525,7 @@
             <param name="callsignMapping">Optional callsign mapping specifier.</param>
             <returns>The registry account context.</returns>
         </member>
-        <member name="M:Goedel.Callsign.Registry.Extensions.GetRegistry(Goedel.Mesh.Client.ContextUser,System.String)">
+        <member name="M:Goedel.Callsign.Registry.Extensions.GetRegistryAsync(Goedel.Mesh.Client.ContextUser,System.String)">
             <summary>
             Return the registry account context for the <paramref name="contextUser"/> context.
             

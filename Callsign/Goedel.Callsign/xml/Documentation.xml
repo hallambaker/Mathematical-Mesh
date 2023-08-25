@@ -1605,7 +1605,7 @@
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Callsign.ResolverServiceClient.Query(System.String,System.String,System.String)">
+        <member name="M:Goedel.Callsign.ResolverServiceClient.QueryAsync(System.String,System.String,System.String)">
             <summary>
             Perform a query attempting to resolve the callsign <paramref name="callSign"/>,
             </summary>
@@ -1999,7 +1999,7 @@
             </summary>
             <param name="client">The client to use.</param>
         </member>
-        <member name="M:Goedel.Callsign.ResolveClient.TryResolveCallsign(System.String,Goedel.Mesh.CallsignBinding@)">
+        <member name="M:Goedel.Callsign.ResolveClient.TryResolveCallsignAsync(System.String)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Callsign.CatalogRegistration">
@@ -2475,7 +2475,7 @@
             </summary>
             <param name="contextAccount">The account context using the resolver.</param>
         </member>
-        <member name="M:Goedel.Callsign.ContextResolver.TryResolveCallsign(System.String,Goedel.Mesh.CallsignBinding@)">
+        <member name="M:Goedel.Callsign.ContextResolver.TryResolveCallsignAsync(System.String)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Callsign.Extensions">
@@ -2491,7 +2491,7 @@
             <returns>The resolver.</returns>
             <exception cref="T:System.ArgumentNullException"></exception>
         </member>
-        <member name="M:Goedel.Callsign.Extensions.TryResolveCallsign(Goedel.Mesh.Client.ContextAccount,System.String,Goedel.Mesh.CallsignBinding@)">
+        <member name="M:Goedel.Callsign.Extensions.TryResolveCallsignAsync(Goedel.Mesh.Client.ContextAccount,System.String)">
             <summary>
             Attempt resolution of the callsign <paramref name="callsign"/> from the account context
             <paramref name="contextAccount"/>. If successful, the value true is returned and 
@@ -2503,7 +2503,7 @@
             <param name="callsignBinding">The result of attempting to resolve the callsign.</param>
             <returns>True if the callsign resolved to a registration, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Callsign.Extensions.CallsignRequest(Goedel.Mesh.Client.ContextUser,System.String,System.String,System.Boolean,Goedel.Mesh.ProfileAccount,System.String)">
+        <member name="M:Goedel.Callsign.Extensions.CallsignRequestAsync(Goedel.Mesh.Client.ContextUser,System.String,System.String,System.Boolean,Goedel.Mesh.ProfileAccount,System.String)">
             <summary>
             Make a callsign registration, binding or transfer request
             </summary>
@@ -2523,7 +2523,7 @@
             <param name="callsign">The callsign to resolve.</param>
             <returns>The callsign registration.</returns>
         </member>
-        <member name="M:Goedel.Callsign.Extensions.CallsignRequestStatus(Goedel.Mesh.Client.ContextUser,System.String)">
+        <member name="M:Goedel.Callsign.Extensions.CallsignRequestStatusAsync(Goedel.Mesh.Client.ContextUser,System.String)">
             <summary>
             Return the status of the callsign registration <paramref name="callsign"/> within the 
             account context <paramref name="contextAccount"/>.
@@ -2532,7 +2532,7 @@
             <param name="callsign">The callsign to query.</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Callsign.Extensions.CallsignTransfer(Goedel.Mesh.Client.ContextUser,System.String,System.String)">
+        <member name="M:Goedel.Callsign.Extensions.CallsignTransferAsync(Goedel.Mesh.Client.ContextUser,System.String,System.String)">
             <summary>
             Transfer the callsign <paramref name="callsign"/> to <paramref name="recipient"/>.
             </summary>

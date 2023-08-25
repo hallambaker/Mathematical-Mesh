@@ -376,28 +376,6 @@ public class MeshHost : Disposable {
     #endregion
 
 
-    /// <summary>
-    /// Create a new Mesh master profile and bind to a Mesh service at <paramref name="accountAddress"/>.
-    /// </summary>
-    ///<param name="accountAddress">Account address to bind to.</param>
-    /// <param name="localName">Local name for easy reference.</param>
-    /// <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
-    /// <param name="profileDevice">Specify the device profile. This allows use of a device 
-    /// profile bound to the machine hardware.</param>
-    /// <param name="rights">The rights to be granted to the initial connected device.</param>
-    /// <param name="create">If true, create a new mesh, otherwise attempt recovery from the
-    /// service.</param>
-    /// <returns>Context for administering the Mesh</returns>
-    public virtual  ContextUser ConfigureMesh(
-        string accountAddress,
-        string localName = null,
-        PrivateKeyUDF accountSeed = null,
-        ProfileDevice profileDevice = null,
-        List<string> rights = null,
-        bool create = true) => ConfigureMeshAsync(accountAddress, localName, accountSeed, profileDevice, rights, create).Sync();
-
-
-
 
     /// <summary>
     /// Create a new Mesh master profile and bind to a Mesh service at <paramref name="accountAddress"/>.
@@ -427,10 +405,10 @@ public class MeshHost : Disposable {
 
 
         if (create) {
-            contextUser.BindService(accountAddress);
+            await contextUser.BindServiceAsync(accountAddress);
             }
         else {
-            contextUser.SynchronizeAsync();
+            await contextUser.SynchronizeAsync();
             }
         contextUser.MakeAdministrator(rights);
 
@@ -546,7 +524,7 @@ public class MeshHost : Disposable {
     /// </summary>
     /// <param name="localName"></param>
     /// <returns>Context for the newly bound account.</returns>
-    public ContextUser Complete(
+    public async Task<ContextUser> CompleteAsync(
             string localName = null) {
 
         var machine = GetForCompletion(localName);
@@ -554,11 +532,11 @@ public class MeshHost : Disposable {
         switch (machine) {
             case CatalogedPending catalogedPending: {
                     var contextPending = LocateMesh(catalogedPending.Id) as ContextMeshPending;
-                    return contextPending.Complete();
+                    return await contextPending.CompleteAsync();
                     }
             case CatalogedPreconfigured catalogedPreconfigured: {
                     var contextPreconfigured = new ContextMeshPreconfigured(this, catalogedPreconfigured);
-                    return contextPreconfigured.Complete();
+                    return await contextPreconfigured.CompleteAsync();
                     }
             }
         return null;
@@ -679,7 +657,7 @@ public class MeshHost : Disposable {
         algorithmAuthenticate.Future();
 
 
-        var contextMeshAdmin = ConfigureMesh(localName);
+        var contextMeshAdmin = ConfigureMeshAsync(localName).Sync();
 
         return contextMeshAdmin;
 

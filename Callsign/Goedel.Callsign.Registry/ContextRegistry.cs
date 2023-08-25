@@ -263,10 +263,10 @@ public class ContextRegistry : ContextAccount {
     /// <summary>
     /// Process the list of pending messages in order of receipt. 
     /// </summary>
-    public List<ProcessResult> Process() {
+    public async Task<List<ProcessResult>> ProcessAsync() {
 
         // synchronize the store
-        SynchronizeAsync();
+        await SynchronizeAsync();
 
         var results = new List<ProcessResult>();
         var x = new FilterSequenceIndex();
@@ -278,7 +278,8 @@ public class ContextRegistry : ContextAccount {
             if (spoolEntry.IsOpen) {
                 switch (meshMessage) {
                     case CallsignRegistrationRequest callsignRegistrationRequest: {
-                        ProcessAsync(spoolEntry, callsignRegistrationRequest);
+                        var result = await ProcessAsync(spoolEntry, callsignRegistrationRequest);
+                        results.Add(result);
                         break;
                         }
 

@@ -16,6 +16,14 @@ namespace Goedel.Utilities;
 
 public static partial class Extension {
 
+    /// <summary>
+    /// Wait for the task <paramref name="task"/> to complete and return the result.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="task"></param>
+    /// <returns></returns>
+    public static void Sync(this Task task) => task.Wait();
+
 
     /// <summary>
     /// Wait for the task <paramref name="task"/> to complete and return the result.

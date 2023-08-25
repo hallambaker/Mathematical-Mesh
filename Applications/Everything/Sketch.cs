@@ -1205,7 +1205,7 @@ public class _EverythingMaui : Gui {
 				}) 
 		    };
 
-        ActionAccountCreate.Callback = (x, mode) => AccountCreate (x as AccountCreate, mode) ;
+        ActionAccountCreate.Callback = (x, mode) => AccountCreateAsync (x as AccountCreate, mode) ;
 	    ActionAccountCreate.Entries = new () { 
 			new GuiText ("ServiceAddress", "Account service address", 0), 
 			new GuiText ("LocalName", "Friendly name (optional)", 1), 
@@ -1373,7 +1373,7 @@ public class _EverythingMaui : Gui {
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> AccountCreate (AccountCreate data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> AccountCreateAsync (AccountCreate data, ActionMode mode = ActionMode.Execute) 
                 => throw new NYI();
 
     /// <summary>

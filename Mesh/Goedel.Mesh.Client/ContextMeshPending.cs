@@ -209,7 +209,7 @@ public class ContextMeshPending : ContextAccount {
     /// </summary>
     /// <returns>If successfull returns an ContextAccountService instance to allow access
     /// to the connected account. Otherwise, a null value is returned.</returns>
-    public ContextUser Complete() {
+    public async Task<ContextUser> CompleteAsync() {
 
         var completeRequest = new CompleteRequest() {
             ResponseID = CatalogedPending.GetResponseID(),
@@ -263,7 +263,7 @@ public class ContextMeshPending : ContextAccount {
 
         // create the account context for the account we asked to connect to and initialize
         Directory.CreateDirectory(contextUser.StoresDirectory);
-        contextUser.SynchronizeAsync();
+        await contextUser.SynchronizeAsync();
         return contextUser;
         }
 

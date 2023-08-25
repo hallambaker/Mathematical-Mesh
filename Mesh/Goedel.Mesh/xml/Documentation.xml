@@ -3032,9 +3032,11 @@
             </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedContact._PrimaryKey">
-            <summary>
-            The primary key used to catalog the entry. This is the UDF of the authentication key.
-            </summary>
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedContact.Message">
+            <summary>Message sent in exchange. This is only populated in a return from a 
+            contact exchange method.</summary> 
         </member>
         <member name="M:Goedel.Mesh.CatalogedContact.GetEnvelopedCatalogedContact">
             <summary>Typed enveloped data</summary> 
@@ -5494,6 +5496,14 @@
             <summary>
             </summary>
         </member>
+        <!-- Badly formed XML comment ignored for member "T:Goedel.Mesh.DevicePreconfiguration" -->
+        <!-- Badly formed XML comment ignored for member "M:Goedel.Mesh.DevicePreconfiguration.#ctor(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ConnectionService,Goedel.Mesh.ConnectionDevice,System.String,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "P:Goedel.Mesh.DevicePreconfiguration.SecretSeed" -->
+        <!-- Badly formed XML comment ignored for member "P:Goedel.Mesh.DevicePreconfiguration.ProfileDevice" -->
+        <!-- Badly formed XML comment ignored for member "P:Goedel.Mesh.DevicePreconfiguration.ConnectionService" -->
+        <!-- Badly formed XML comment ignored for member "P:Goedel.Mesh.DevicePreconfiguration.ConnectionDevice" -->
+        <!-- Badly formed XML comment ignored for member "P:Goedel.Mesh.DevicePreconfiguration.ConnectKey" -->
+        <!-- Badly formed XML comment ignored for member "P:Goedel.Mesh.DevicePreconfiguration.ConnectUri" -->
         <member name="T:Goedel.Mesh.DevicePreconfigurationPrivate">
              <summary>
             
@@ -6756,7 +6766,7 @@
             Callsign resolution interface.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.IResolver.TryResolveCallsign(System.String,Goedel.Mesh.CallsignBinding@)">
+        <member name="M:Goedel.Mesh.IResolver.TryResolveCallsignAsync(System.String)">
             <summary>
             Resolve the callsign <paramref name="callsign"/> and return the associated binding
             if found.
