@@ -1713,6 +1713,9 @@
         <member name="M:Goedel.Protocol.JpcClientInterface.Rebind(Goedel.Protocol.ICredential)">
             <inheritdoc cref="T:Goedel.Protocol.IJpcSession"/>
         </member>
+        <member name="M:Goedel.Protocol.JpcClientInterface.RequestAsync(System.String,Goedel.Protocol.JsonObject)">
+            <inheritdoc cref="T:Goedel.Protocol.IJpcSession"/>
+        </member>
         <member name="T:Goedel.Protocol.JpcTicket">
             <summary>
             Jpc Ticket record

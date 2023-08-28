@@ -319,7 +319,7 @@ public partial class ContextUser : ContextAccount {
 
         // Generate a contact and self-sign
         var contact = CreateContact();
-        SetContactSelfAsync(contact);
+        await SetContactSelfAsync(contact);
         }
 
 
@@ -927,20 +927,14 @@ public partial class ContextUser : ContextAccount {
 
 
     /// <summary>
-    /// Convenience wrapper for <see cref="CreateDeviceEarl"/>. Generates a device profile
+    /// Convenience wrapper for <see cref="CreateDeviceEarlAsync"/>. Generates a device profile
     /// and writes the <see cref="DevicePreconfigurationPrivate"/> data to a file in the directory
     /// specified by <paramref name="path"/>.
     /// </summary>
-    /// <param name="filename">File the private configuration was to.</param>
-    /// <param name="profileDevice">A pregenerated device profile.</param>
-    /// <param name="connectUri">The connection URI from which the configuration is to be claimed.</param>
     /// <param name="path">Path to write the configuration file to.</param>
     /// <param name="bits">Work factor of the connection secret in bits.</param>
     /// <returns>The public and private configuration instances.</returns>
     public DevicePreconfiguration Preconfigure(
-                //out string filename,
-                //out ProfileDevice profileDevice,
-                //out string connectUri,
                 string path = "",
                 int bits = 120) {
 
@@ -972,8 +966,8 @@ public partial class ContextUser : ContextAccount {
 
     /// <summary>
     /// Create an EARL for a device, publish the result to the Mesh service and return 
-    /// the device profile <paramref name="profileDevice"/>, secret seed value 
-
+    /// the device preconfiguration parameters. 
+    /// </summary>
     /// <param name="algorithmEncrypt">The encryption algorithm.</param>
     /// <param name="algorithmSign">The signature algorithm</param>
     /// <param name="algorithmAuthenticate">The signature algorithm</param>
@@ -1687,8 +1681,7 @@ public partial class ContextUser : ContextAccount {
     /// <param name="uri">The URI to resolve.</param>
     /// <param name="reciprocate">If true send own contact data.</param>
     /// <param name="localname">Local name for the contact to send in exchange</param>
-    /// <param name="message">The reciprocation message (if sent), otherwise null.</param>
-    /// <returns>The cataloged contact information.</returns>
+    /// <returns>The cataloged contact information including the response message (if sent).</returns>
     public async Task<CatalogedContact> ContactExchange(
                 string uri,
                 bool reciprocate,

@@ -47,7 +47,7 @@ public class ContextSession {
     /// the first. Otherwise wait asynchronously for arival of a message.
     /// </summary>
     /// <returns>The message content (synchronously)</returns>
-    public async Task<MessageContent> GetMessage () => throw new NYI();
+    public  Task<MessageContent> GetMessage () => throw new NYI();
 
     /// <summary>
     /// Return a task waiting on confirmation of receipt of the message 
@@ -55,6 +55,6 @@ public class ContextSession {
     /// </summary>
     /// <param name="messageId">The message to await receipt of.</param>
     /// <returns>The message receipt (asynchronously).</returns>
-    public async Task<MessageId> Synchronize(MessageId messageId) => throw new NYI();
+    public  Task<MessageId> Synchronize(MessageId messageId) => throw new NYI();
 
     }

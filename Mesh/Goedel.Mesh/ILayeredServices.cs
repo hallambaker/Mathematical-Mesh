@@ -33,9 +33,8 @@ public interface IResolver {
     /// if found.
     /// </summary>
     /// <param name="callsign">The callsign binding if found, otherwise null.</param>
-    /// <param name="callsignBinding">The callsign binding (if found).</param>
-    /// <returns>True if the callsign could be resolved, otherwise false.</returns>
-    Task<CallsignBinding> TryResolveCallsignAsync(string callsign);
+    /// <returns>The callsign binding..</returns>
+    Task<CallsignBinding> ResolveCallsignAsync(string callsign);
 
     }
 

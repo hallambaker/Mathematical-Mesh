@@ -5496,14 +5496,58 @@
             <summary>
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "T:Goedel.Mesh.DevicePreconfiguration" -->
-        <!-- Badly formed XML comment ignored for member "M:Goedel.Mesh.DevicePreconfiguration.#ctor(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ConnectionService,Goedel.Mesh.ConnectionDevice,System.String,System.String)" -->
-        <!-- Badly formed XML comment ignored for member "P:Goedel.Mesh.DevicePreconfiguration.SecretSeed" -->
-        <!-- Badly formed XML comment ignored for member "P:Goedel.Mesh.DevicePreconfiguration.ProfileDevice" -->
-        <!-- Badly formed XML comment ignored for member "P:Goedel.Mesh.DevicePreconfiguration.ConnectionService" -->
-        <!-- Badly formed XML comment ignored for member "P:Goedel.Mesh.DevicePreconfiguration.ConnectionDevice" -->
-        <!-- Badly formed XML comment ignored for member "P:Goedel.Mesh.DevicePreconfiguration.ConnectKey" -->
-        <!-- Badly formed XML comment ignored for member "P:Goedel.Mesh.DevicePreconfiguration.ConnectUri" -->
+        <member name="T:Goedel.Mesh.DevicePreconfiguration">
+            <summary>
+            
+            </summary>
+            <param name="SecretSeed">The computed secret seed value.</param>
+            <param name="ProfileDevice">The computed device profile.</param>
+            <param name="ConnectionService">Slim version of the device connection for 
+            authentication to the service.</param>
+            <param name="ConnectionDevice">The computed device connection.</param>
+            <param name="ConnectKey">The computed PIN code.</param>
+            <param name="ConnectUri">The connection URI to be used for pickup.</param>
+        </member>
+        <member name="M:Goedel.Mesh.DevicePreconfiguration.#ctor(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ConnectionService,Goedel.Mesh.ConnectionDevice,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="SecretSeed">The computed secret seed value.</param>
+            <param name="ProfileDevice">The computed device profile.</param>
+            <param name="ConnectionService">Slim version of the device connection for 
+            authentication to the service.</param>
+            <param name="ConnectionDevice">The computed device connection.</param>
+            <param name="ConnectKey">The computed PIN code.</param>
+            <param name="ConnectUri">The connection URI to be used for pickup.</param>
+        </member>
+        <member name="P:Goedel.Mesh.DevicePreconfiguration.SecretSeed">
+            <summary>The computed secret seed value.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.DevicePreconfiguration.ProfileDevice">
+            <summary>The computed device profile.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.DevicePreconfiguration.ConnectionService">
+            <summary>Slim version of the device connection for 
+            authentication to the service.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.DevicePreconfiguration.ConnectionDevice">
+            <summary>The computed device connection.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.DevicePreconfiguration.ConnectKey">
+            <summary>The computed PIN code.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.DevicePreconfiguration.ConnectUri">
+            <summary>The connection URI to be used for pickup.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.DevicePreconfiguration.DevicePreconfigurationPublic">
+            <summary>The public configuration file (for e.g. Web publication.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.DevicePreconfiguration.DevicePreconfigurationPrivate">
+            <summary>The private configuration file (for upload to the device).</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.DevicePreconfiguration.Filename">
+            <summary>Filename the preconfiguration was written to.</summary> 
+        </member>
         <member name="T:Goedel.Mesh.DevicePreconfigurationPrivate">
              <summary>
             
@@ -6766,14 +6810,13 @@
             Callsign resolution interface.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.IResolver.TryResolveCallsignAsync(System.String)">
+        <member name="M:Goedel.Mesh.IResolver.ResolveCallsignAsync(System.String)">
             <summary>
             Resolve the callsign <paramref name="callsign"/> and return the associated binding
             if found.
             </summary>
             <param name="callsign">The callsign binding if found, otherwise null.</param>
-            <param name="callsignBinding">The callsign binding (if found).</param>
-            <returns>True if the callsign could be resolved, otherwise false.</returns>
+            <returns>The callsign binding..</returns>
         </member>
         <member name="T:Goedel.Mesh.ICarnet">
             <summary>

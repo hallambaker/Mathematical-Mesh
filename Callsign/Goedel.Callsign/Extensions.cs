@@ -55,7 +55,7 @@ public class ContextResolver : IResolver {
         }
 
     ///<inheritdoc/>
-    public Task<CallsignBinding> TryResolveCallsignAsync(string callsign) {
+    public Task<CallsignBinding> ResolveCallsignAsync(string callsign) {
         throw new NotImplementedException();
         }
 
@@ -98,19 +98,16 @@ public static class Extensions {
 
     /// <summary>
     /// Attempt resolution of the callsign <paramref name="callsign"/> from the account context
-    /// <paramref name="contextAccount"/>. If successful, the value true is returned and 
-    /// the binding returned in <paramref name="callsignBinding"/>. Otherwise the value
-    /// false is returned and null.
+    /// <paramref name="contextAccount"/>. If successful, the binding is returned, otherwise null.
     /// </summary>
     /// <param name="contextAccount">Account context.</param>
     /// <param name="callsign">The callsign to query.</param>
-    /// <param name="callsignBinding">The result of attempting to resolve the callsign.</param>
     /// <returns>True if the callsign resolved to a registration, otherwise false.</returns>
     public static async Task<CallsignBinding> TryResolveCallsignAsync(
                 this ContextAccount contextAccount,
                 string callsign) {
         var resolver = contextAccount.GetResolver();
-        return await resolver.TryResolveCallsignAsync(callsign);
+        return await resolver.ResolveCallsignAsync(callsign);
         }
 
 
@@ -314,7 +311,6 @@ public static class Extensions {
     /// <summary>
     /// Process CallsignRegistrationResponse messages in context.
     /// </summary>
-    /// <
     /// <param name="contextUser">The user context to process the message.</param>
     /// <param name="meshMessage">The message to process, must be of type CallsignRegistrationResponse.</param>
     /// <param name="accept">Ignored</param>

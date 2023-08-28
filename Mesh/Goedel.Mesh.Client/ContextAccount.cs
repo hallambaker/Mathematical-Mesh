@@ -308,9 +308,9 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     #endregion
     #region // Calls to layered services
 
-    ///<inheritdoc cref="IResolver.TryResolveCallsignAsync(string)"/>
+    ///<inheritdoc cref="IResolver.ResolveCallsignAsync(string)"/>
     public async Task<CallsignBinding> TryResolveCallsignAsync(string callsign) =>
-        await CallsignResolver.TryResolveCallsignAsync(callsign);
+        await CallsignResolver.ResolveCallsignAsync(callsign);
 
     #endregion
     #region // PIN code generation and use

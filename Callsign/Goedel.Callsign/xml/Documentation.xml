@@ -1999,7 +1999,7 @@
             </summary>
             <param name="client">The client to use.</param>
         </member>
-        <member name="M:Goedel.Callsign.ResolveClient.TryResolveCallsignAsync(System.String)">
+        <member name="M:Goedel.Callsign.ResolveClient.ResolveCallsignAsync(System.String)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Callsign.CatalogRegistration">
@@ -2475,7 +2475,7 @@
             </summary>
             <param name="contextAccount">The account context using the resolver.</param>
         </member>
-        <member name="M:Goedel.Callsign.ContextResolver.TryResolveCallsignAsync(System.String)">
+        <member name="M:Goedel.Callsign.ContextResolver.ResolveCallsignAsync(System.String)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Callsign.Extensions">
@@ -2494,13 +2494,10 @@
         <member name="M:Goedel.Callsign.Extensions.TryResolveCallsignAsync(Goedel.Mesh.Client.ContextAccount,System.String)">
             <summary>
             Attempt resolution of the callsign <paramref name="callsign"/> from the account context
-            <paramref name="contextAccount"/>. If successful, the value true is returned and 
-            the binding returned in <paramref name="callsignBinding"/>. Otherwise the value
-            false is returned and null.
+            <paramref name="contextAccount"/>. If successful, the binding is returned, otherwise null.
             </summary>
             <param name="contextAccount">Account context.</param>
             <param name="callsign">The callsign to query.</param>
-            <param name="callsignBinding">The result of attempting to resolve the callsign.</param>
             <returns>True if the callsign resolved to a registration, otherwise false.</returns>
         </member>
         <member name="M:Goedel.Callsign.Extensions.CallsignRequestAsync(Goedel.Mesh.Client.ContextUser,System.String,System.String,System.Boolean,Goedel.Mesh.ProfileAccount,System.String)">
@@ -2559,7 +2556,17 @@
             <param name="contextAccount">The account context.</param>
             <returns>The list of callsign application bindings.</returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Goedel.Callsign.Extensions.ProcessMessageAsync(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.Message,System.Boolean,System.Boolean,System.Collections.Generic.List{System.String})" -->
+        <member name="M:Goedel.Callsign.Extensions.ProcessMessageAsync(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.Message,System.Boolean,System.Boolean,System.Collections.Generic.List{System.String})">
+            <summary>
+            Process CallsignRegistrationResponse messages in context.
+            </summary>
+            <param name="contextUser">The user context to process the message.</param>
+            <param name="meshMessage">The message to process, must be of type CallsignRegistrationResponse.</param>
+            <param name="accept">Ignored</param>
+            <param name="reciprocate">Ignored</param>
+            <param name="roles">Ignored</param>
+            <returns>The result of processing the message.</returns>
+        </member>
         <member name="T:Goedel.Callsign.NamespaceDoc">
             <summary>
             Mesh Callsign registry implementation.

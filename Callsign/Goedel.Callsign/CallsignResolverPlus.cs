@@ -29,7 +29,7 @@ public class ResolveClient : IResolver {
 
 
     ///<inheritdoc/>
-    public async Task<CallsignBinding> TryResolveCallsignAsync(string callsign) {
+    public async Task<CallsignBinding> ResolveCallsignAsync(string callsign) {
 
 
         var queryResponse = await Client.QueryAsync(callsign);

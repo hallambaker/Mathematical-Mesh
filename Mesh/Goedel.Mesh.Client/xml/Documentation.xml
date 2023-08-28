@@ -527,7 +527,7 @@
             <param name="meshHost">The Mesh host to add the admin context to.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.TryResolveCallsignAsync(System.String)">
-            <inheritdoc cref="M:Goedel.Mesh.IResolver.TryResolveCallsignAsync(System.String)"/>
+            <inheritdoc cref="M:Goedel.Mesh.IResolver.ResolveCallsignAsync(System.String)"/>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetPinAsync(System.String,System.Boolean,System.Int32,System.Int64,System.Boolean,Goedel.Cryptography.CryptoKey,System.Collections.Generic.List{System.String})">
             <summary>
@@ -946,6 +946,14 @@
             <param name="activationAccount">The account activation.</param>
             <param name="client">The client to connect to the service with.</param>
             <returns>The group context.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextGroup.Add(System.String,System.String)">
+            <summary>
+            Add the member <paramref name="memberAddress"/> to the group.
+            </summary>
+            <param name="memberAddress">The member to add.</param>
+            <param name="text">Invitation text.</param>
+            <returns>The catalog entry for the member created.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.AddAsync(System.String,System.String)">
             <summary>
@@ -1470,18 +1478,27 @@
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.Preconfigure(System.String,System.Int32)">
             <summary>
-            Convenience wrapper for <see cref="!:CreateDeviceEarl"/>. Generates a device profile
+            Convenience wrapper for <see cref="M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarlAsync(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32,System.Int32)"/>. Generates a device profile
             and writes the <see cref="T:Goedel.Mesh.DevicePreconfigurationPrivate"/> data to a file in the directory
             specified by <paramref name="path"/>.
             </summary>
-            <param name="filename">File the private configuration was to.</param>
-            <param name="profileDevice">A pregenerated device profile.</param>
-            <param name="connectUri">The connection URI from which the configuration is to be claimed.</param>
             <param name="path">Path to write the configuration file to.</param>
             <param name="bits">Work factor of the connection secret in bits.</param>
             <returns>The public and private configuration instances.</returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarlAsync(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32,System.Int32)" -->
+        <member name="M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarlAsync(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Create an EARL for a device, publish the result to the Mesh service and return 
+            the device preconfiguration parameters. 
+            </summary>
+            <param name="algorithmEncrypt">The encryption algorithm.</param>
+            <param name="algorithmSign">The signature algorithm</param>
+            <param name="algorithmAuthenticate">The signature algorithm</param>
+            <param name="secret">The master secret.</param>
+            <param name="bitsSecret">Work factor of the master secret in bits.</param>
+            <param name="bitsPin">The size of secret to generate in bits/</param>
+            <returns>Response from the server.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.ConnectStaticUriAsync(System.String,System.Collections.Generic.List{System.String})">
             <summary>
             Attempt device connection by means of the static URI <paramref name="uri"/>.
@@ -1619,8 +1636,7 @@
             <param name="uri">The URI to resolve.</param>
             <param name="reciprocate">If true send own contact data.</param>
             <param name="localname">Local name for the contact to send in exchange</param>
-            <param name="message">The reciprocation message (if sent), otherwise null.</param>
-            <returns>The cataloged contact information.</returns>
+            <returns>The cataloged contact information including the response message (if sent).</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.ConfirmationRequestAsync(System.String,System.String)">
             <summary>

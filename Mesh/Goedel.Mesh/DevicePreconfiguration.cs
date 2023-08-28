@@ -26,16 +26,13 @@ namespace Goedel.Mesh;
 /// <summary>
 /// 
 /// </summary>
-/// <paramref name="secretSeed"/>, connection URI 
-/// <paramref name="connectURI"/> and PIN <paramref name="pin"/>.
-/// </summary>
-/// <param name="secretSeed">The computed secret seed value.</param>
-/// <param name="profileDevice">The computed device profile.</param>
-/// <param name="connectionService">Slim version of the device connection for 
+/// <param name="SecretSeed">The computed secret seed value.</param>
+/// <param name="ProfileDevice">The computed device profile.</param>
+/// <param name="ConnectionService">Slim version of the device connection for 
 /// authentication to the service.</param>
-/// <param name="connectionDevice">The computed device connection.</param>
-/// <param name="pin">The computed PIN code.</param>
-/// <param name="connectURI">The connection URI to be used for pickup.</param>
+/// <param name="ConnectionDevice">The computed device connection.</param>
+/// <param name="ConnectKey">The computed PIN code.</param>
+/// <param name="ConnectUri">The connection URI to be used for pickup.</param>
 public record DevicePreconfiguration (
                 PrivateKeyUDF SecretSeed,
                 ProfileDevice ProfileDevice,
@@ -44,8 +41,13 @@ public record DevicePreconfiguration (
                 string ConnectKey,
                 string ConnectUri) {
 
+    ///<summary>The public configuration file (for e.g. Web publication.</summary> 
     public DevicePreconfigurationPublic DevicePreconfigurationPublic;
+
+    ///<summary>The private configuration file (for upload to the device).</summary> 
     public DevicePreconfigurationPrivate DevicePreconfigurationPrivate;
+
+    ///<summary>Filename the preconfiguration was written to.</summary> 
     public string Filename;
 
     }

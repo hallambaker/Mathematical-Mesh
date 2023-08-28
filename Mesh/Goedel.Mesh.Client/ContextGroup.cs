@@ -143,6 +143,12 @@ public partial class ContextGroup : ContextAccount {
     #endregion
     #region // Class methods
 
+    /// <summary>
+    /// Add the member <paramref name="memberAddress"/> to the group.
+    /// </summary>
+    /// <param name="memberAddress">The member to add.</param>
+    /// <param name="text">Invitation text.</param>
+    /// <returns>The catalog entry for the member created.</returns>
     public CatalogedMember Add(string memberAddress, string text = null) => 
         AddAsync (memberAddress, text).Sync();
 

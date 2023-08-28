@@ -230,6 +230,7 @@ public abstract class JpcClientInterface {
         JpcSession = JpcSession.Rebind(credential);
 
 
+    ///<inheritdoc cref="IJpcSession"/>
     public Task<JsonObject> RequestAsync(string tag, JsonObject request) => 
             JpcSession.PostAsync(tag, request);
 
