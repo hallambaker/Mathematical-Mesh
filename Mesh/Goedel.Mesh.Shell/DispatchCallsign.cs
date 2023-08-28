@@ -96,7 +96,7 @@ public partial class Shell {
         var callsign = options.Identifier.Value;
         var contextAccount = GetContextUser(options);
 
-        var registration = contextAccount.ResolveCallsign(callsign).Sync();
+        var registration = contextAccount.ResolveCallsignAsync(callsign).Sync();
         var result = new ResultCallsignResolution() {
             Success = true,
             CallsignRegistration = registration

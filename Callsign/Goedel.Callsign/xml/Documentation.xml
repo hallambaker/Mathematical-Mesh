@@ -1624,14 +1624,14 @@
             Interface object to dispatch requests to.
             </summary>	
         </member>
-        <member name="M:Goedel.Callsign.ResolverServiceDirect.Query(Goedel.Callsign.QueryRequest)">
+        <member name="M:Goedel.Callsign.ResolverServiceDirect.QueryAsync(Goedel.Callsign.QueryRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Callsign.ResolverServiceDirect.Sync(Goedel.Callsign.SyncRequest)">
+        <member name="M:Goedel.Callsign.ResolverServiceDirect.SyncAsync(Goedel.Callsign.SyncRequest)">
             <summary>
             Implement the transaction
             </summary>		
@@ -2514,7 +2514,7 @@
             <param name="display">The display form of the callsign.</param>
             <param name="transferUdf">UDF of party to be given ability to control the callsign binding.</param>
         </member>
-        <member name="M:Goedel.Callsign.Extensions.ResolveCallsign(Goedel.Mesh.Client.ContextAccount,System.String)">
+        <member name="M:Goedel.Callsign.Extensions.ResolveCallsignAsync(Goedel.Mesh.Client.ContextAccount,System.String)">
             <summary>
             Resolve the callsign <paramref name="callsign"/> using the account context
             <paramref name="contextAccount"/>.

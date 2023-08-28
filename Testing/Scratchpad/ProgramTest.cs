@@ -71,8 +71,9 @@ partial class Program {
 
 
 
-        ShellTestsAdmin.Test().TestMessageContactBusinessCardExchange();
-        ShellTestsAdmin.Test().TestMessageContactRemote();
+        CallsignDirect.Test().RegisterAlice();
+
+        RegistrationTests.Test().CallsignBind();
 
 
 

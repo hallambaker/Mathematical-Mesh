@@ -10017,91 +10017,91 @@
             Interface object to dispatch requests to.
             </summary>	
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceDirect.Hello(Goedel.Protocol.HelloRequest)">
+        <member name="M:Goedel.Mesh.MeshServiceDirect.HelloAsync(Goedel.Protocol.HelloRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceDirect.BindAccount(Goedel.Mesh.BindRequest)">
+        <member name="M:Goedel.Mesh.MeshServiceDirect.BindAccountAsync(Goedel.Mesh.BindRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceDirect.UnbindAccount(Goedel.Mesh.UnbindRequest)">
+        <member name="M:Goedel.Mesh.MeshServiceDirect.UnbindAccountAsync(Goedel.Mesh.UnbindRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceDirect.Connect(Goedel.Mesh.ConnectRequest)">
+        <member name="M:Goedel.Mesh.MeshServiceDirect.ConnectAsync(Goedel.Mesh.ConnectRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceDirect.Complete(Goedel.Mesh.CompleteRequest)">
+        <member name="M:Goedel.Mesh.MeshServiceDirect.CompleteAsync(Goedel.Mesh.CompleteRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceDirect.Status(Goedel.Mesh.StatusRequest)">
+        <member name="M:Goedel.Mesh.MeshServiceDirect.StatusAsync(Goedel.Mesh.StatusRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceDirect.Download(Goedel.Mesh.DownloadRequest)">
+        <member name="M:Goedel.Mesh.MeshServiceDirect.DownloadAsync(Goedel.Mesh.DownloadRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceDirect.Transact(Goedel.Mesh.TransactRequest)">
+        <member name="M:Goedel.Mesh.MeshServiceDirect.TransactAsync(Goedel.Mesh.TransactRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceDirect.PublicRead(Goedel.Mesh.PublicRequest)">
+        <member name="M:Goedel.Mesh.MeshServiceDirect.PublicReadAsync(Goedel.Mesh.PublicRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceDirect.Post(Goedel.Mesh.PostRequest)">
+        <member name="M:Goedel.Mesh.MeshServiceDirect.PostAsync(Goedel.Mesh.PostRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceDirect.Claim(Goedel.Mesh.ClaimRequest)">
+        <member name="M:Goedel.Mesh.MeshServiceDirect.ClaimAsync(Goedel.Mesh.ClaimRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceDirect.PollClaim(Goedel.Mesh.PollClaimRequest)">
+        <member name="M:Goedel.Mesh.MeshServiceDirect.PollClaimAsync(Goedel.Mesh.PollClaimRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceDirect.Operate(Goedel.Mesh.OperateRequest)">
+        <member name="M:Goedel.Mesh.MeshServiceDirect.OperateAsync(Goedel.Mesh.OperateRequest)">
             <summary>
             Implement the transaction
             </summary>		

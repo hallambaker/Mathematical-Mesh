@@ -53,6 +53,7 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
     /// <returns>The direct service client instance.</returns>    
     public ResolverServiceClient GetClient() =>
             new ResolverServiceDirect() {
+                JpcSession = new JpcSessionDirect(this, null),
                 Service = this
                 };
 

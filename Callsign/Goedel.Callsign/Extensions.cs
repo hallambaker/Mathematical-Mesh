@@ -209,7 +209,7 @@ public static class Extensions {
     /// <param name="contextAccount">The account context.</param>
     /// <param name="callsign">The callsign to resolve.</param>
     /// <returns>The callsign registration.</returns>
-    public static Task<Registration> ResolveCallsign(
+    public static Task<Registration> ResolveCallsignAsync(
                 this ContextAccount contextAccount,
                 string callsign) {
 

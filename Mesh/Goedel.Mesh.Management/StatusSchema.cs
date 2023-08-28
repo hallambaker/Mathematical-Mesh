@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 8/28/2023 1:43:12 PM
+//  This file was automatically generated at 8/28/2023 4:56:57 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1123
+//  Generator:  protogen version 3.0.0.1131
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -212,8 +212,8 @@ public partial class ServiceManagementServiceClient : Goedel.Protocol.JpcClientI
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual ServiceConfigResponse ServiceConfig (ServiceConfigRequest request) =>
-			JpcSession.Post("ServiceConfig", request) as ServiceConfigResponse;
+    public ServiceConfigResponse ServiceConfig (ServiceConfigRequest request) =>
+			ServiceConfigAsync (request).Sync();
 
     /// <summary>
 	/// Implement the transaction ServiceConfig asynchronously.
@@ -228,8 +228,8 @@ public partial class ServiceManagementServiceClient : Goedel.Protocol.JpcClientI
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual ServiceStatusResponse ServiceStatus (ServiceStatusRequest request) =>
-			JpcSession.Post("ServiceStatus", request) as ServiceStatusResponse;
+    public ServiceStatusResponse ServiceStatus (ServiceStatusRequest request) =>
+			ServiceStatusAsync (request).Sync();
 
     /// <summary>
 	/// Implement the transaction ServiceStatus asynchronously.
@@ -258,8 +258,8 @@ public partial class ServiceManagementServiceDirect: ServiceManagementServiceCli
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override ServiceConfigResponse ServiceConfig (ServiceConfigRequest request) =>
-			Service.ServiceConfig (request, JpcSession);
+    public override Task<ServiceConfigResponse> ServiceConfigAsync (ServiceConfigRequest request) =>
+			Task.FromResult(Service.ServiceConfig (request, JpcSession));
 
 
     /// <summary>
@@ -267,8 +267,8 @@ public partial class ServiceManagementServiceDirect: ServiceManagementServiceCli
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override ServiceStatusResponse ServiceStatus (ServiceStatusRequest request) =>
-			Service.ServiceStatus (request, JpcSession);
+    public override Task<ServiceStatusResponse> ServiceStatusAsync (ServiceStatusRequest request) =>
+			Task.FromResult(Service.ServiceStatus (request, JpcSession));
 
 
 		}

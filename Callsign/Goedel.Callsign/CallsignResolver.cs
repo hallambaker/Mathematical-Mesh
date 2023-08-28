@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 8/28/2023 1:43:09 PM
+//  This file was automatically generated at 8/28/2023 4:56:54 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1123
+//  Generator:  protogen version 3.0.0.1131
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -212,8 +212,8 @@ public partial class ResolverServiceClient : Goedel.Protocol.JpcClientInterface 
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual QueryResponse Query (QueryRequest request) =>
-			JpcSession.Post("Query", request) as QueryResponse;
+    public QueryResponse Query (QueryRequest request) =>
+			QueryAsync (request).Sync();
 
     /// <summary>
 	/// Implement the transaction Query asynchronously.
@@ -228,8 +228,8 @@ public partial class ResolverServiceClient : Goedel.Protocol.JpcClientInterface 
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual SyncResponse Sync (SyncRequest request) =>
-			JpcSession.Post("Sync", request) as SyncResponse;
+    public SyncResponse Sync (SyncRequest request) =>
+			SyncAsync (request).Sync();
 
     /// <summary>
 	/// Implement the transaction Sync asynchronously.
@@ -258,8 +258,8 @@ public partial class ResolverServiceDirect: ResolverServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override QueryResponse Query (QueryRequest request) =>
-			Service.Query (request, JpcSession);
+    public override Task<QueryResponse> QueryAsync (QueryRequest request) =>
+			Task.FromResult(Service.Query (request, JpcSession));
 
 
     /// <summary>
@@ -267,8 +267,8 @@ public partial class ResolverServiceDirect: ResolverServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override SyncResponse Sync (SyncRequest request) =>
-			Service.Sync (request, JpcSession);
+    public override Task<SyncResponse> SyncAsync (SyncRequest request) =>
+			Task.FromResult(Service.Sync (request, JpcSession));
 
 
 		}

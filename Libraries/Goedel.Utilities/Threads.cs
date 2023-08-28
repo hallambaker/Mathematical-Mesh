@@ -51,6 +51,16 @@ public static partial class Extension {
         }
 
 
+    /// <summary>
+    /// Wrap the synchronous task result <paramref name="result"/> with a Task result
+    /// wrapper.
+    /// </summary>
+    /// <typeparam name="T">The result type.</typeparam>
+    /// <param name="result">The result.</param>
+    /// <returns>The result.</returns>
+    public static Task<T> Async<T>(this T result) => Task.FromResult(result);
+
+
 
     /// <summary>
     /// Allows a cancellation token to be awaited.

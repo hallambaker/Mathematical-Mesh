@@ -129,7 +129,7 @@ public partial class Shell {
 
     ShellResult Process(IAccountOptions options, string requestid, bool accept) {
         var contextAccount = GetContextUser(options);
-        var processResult = contextAccount.ProcessAsync(requestid, accept);
+        var processResult = contextAccount.ProcessAsync(requestid, accept).Sync();
 
 
         var result = new ResultSent() {

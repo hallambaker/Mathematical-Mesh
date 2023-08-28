@@ -435,6 +435,15 @@
             <param name="task"></param>
             <returns></returns>
         </member>
+        <member name="M:Goedel.Utilities.Extension.Async``1(``0)">
+            <summary>
+            Wrap the synchronous task result <paramref name="result"/> with a Task result
+            wrapper.
+            </summary>
+            <typeparam name="T">The result type.</typeparam>
+            <param name="result">The result.</param>
+            <returns>The result.</returns>
+        </member>
         <member name="M:Goedel.Utilities.Extension.GetAwaiter(System.Threading.CancellationToken)">
             <summary>
             Allows a cancellation token to be awaited.

@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 8/28/2023 1:43:08 PM
+//  This file was automatically generated at 8/28/2023 4:56:53 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1123
+//  Generator:  protogen version 3.0.0.1131
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -370,8 +370,8 @@ public partial class MeshServiceClient : Goedel.Protocol.JpcClientInterface {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual MeshHelloResponse Hello (HelloRequest request) =>
-			JpcSession.Post("Hello", request) as MeshHelloResponse;
+    public MeshHelloResponse Hello (HelloRequest request) =>
+			HelloAsync (request).Sync();
 
     /// <summary>
 	/// Implement the transaction Hello asynchronously.
@@ -386,8 +386,8 @@ public partial class MeshServiceClient : Goedel.Protocol.JpcClientInterface {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual BindResponse BindAccount (BindRequest request) =>
-			JpcSession.Post("BindAccount", request) as BindResponse;
+    public BindResponse BindAccount (BindRequest request) =>
+			BindAccountAsync (request).Sync();
 
     /// <summary>
 	/// Implement the transaction BindAccount asynchronously.
@@ -402,8 +402,8 @@ public partial class MeshServiceClient : Goedel.Protocol.JpcClientInterface {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual UnbindResponse UnbindAccount (UnbindRequest request) =>
-			JpcSession.Post("UnbindAccount", request) as UnbindResponse;
+    public UnbindResponse UnbindAccount (UnbindRequest request) =>
+			UnbindAccountAsync (request).Sync();
 
     /// <summary>
 	/// Implement the transaction UnbindAccount asynchronously.
@@ -418,8 +418,8 @@ public partial class MeshServiceClient : Goedel.Protocol.JpcClientInterface {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual ConnectResponse Connect (ConnectRequest request) =>
-			JpcSession.Post("Connect", request) as ConnectResponse;
+    public ConnectResponse Connect (ConnectRequest request) =>
+			ConnectAsync (request).Sync();
 
     /// <summary>
 	/// Implement the transaction Connect asynchronously.
@@ -434,8 +434,8 @@ public partial class MeshServiceClient : Goedel.Protocol.JpcClientInterface {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual CompleteResponse Complete (CompleteRequest request) =>
-			JpcSession.Post("Complete", request) as CompleteResponse;
+    public CompleteResponse Complete (CompleteRequest request) =>
+			CompleteAsync (request).Sync();
 
     /// <summary>
 	/// Implement the transaction Complete asynchronously.
@@ -450,8 +450,8 @@ public partial class MeshServiceClient : Goedel.Protocol.JpcClientInterface {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual StatusResponse Status (StatusRequest request) =>
-			JpcSession.Post("Status", request) as StatusResponse;
+    public StatusResponse Status (StatusRequest request) =>
+			StatusAsync (request).Sync();
 
     /// <summary>
 	/// Implement the transaction Status asynchronously.
@@ -466,8 +466,8 @@ public partial class MeshServiceClient : Goedel.Protocol.JpcClientInterface {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual DownloadResponse Download (DownloadRequest request) =>
-			JpcSession.Post("Download", request) as DownloadResponse;
+    public DownloadResponse Download (DownloadRequest request) =>
+			DownloadAsync (request).Sync();
 
     /// <summary>
 	/// Implement the transaction Download asynchronously.
@@ -482,8 +482,8 @@ public partial class MeshServiceClient : Goedel.Protocol.JpcClientInterface {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual TransactResponse Transact (TransactRequest request) =>
-			JpcSession.Post("Transact", request) as TransactResponse;
+    public TransactResponse Transact (TransactRequest request) =>
+			TransactAsync (request).Sync();
 
     /// <summary>
 	/// Implement the transaction Transact asynchronously.
@@ -498,8 +498,8 @@ public partial class MeshServiceClient : Goedel.Protocol.JpcClientInterface {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual DownloadResponse PublicRead (PublicRequest request) =>
-			JpcSession.Post("PublicRead", request) as DownloadResponse;
+    public DownloadResponse PublicRead (PublicRequest request) =>
+			PublicReadAsync (request).Sync();
 
     /// <summary>
 	/// Implement the transaction PublicRead asynchronously.
@@ -514,8 +514,8 @@ public partial class MeshServiceClient : Goedel.Protocol.JpcClientInterface {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual PostResponse Post (PostRequest request) =>
-			JpcSession.Post("Post", request) as PostResponse;
+    public PostResponse Post (PostRequest request) =>
+			PostAsync (request).Sync();
 
     /// <summary>
 	/// Implement the transaction Post asynchronously.
@@ -530,8 +530,8 @@ public partial class MeshServiceClient : Goedel.Protocol.JpcClientInterface {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual ClaimResponse Claim (ClaimRequest request) =>
-			JpcSession.Post("Claim", request) as ClaimResponse;
+    public ClaimResponse Claim (ClaimRequest request) =>
+			ClaimAsync (request).Sync();
 
     /// <summary>
 	/// Implement the transaction Claim asynchronously.
@@ -546,8 +546,8 @@ public partial class MeshServiceClient : Goedel.Protocol.JpcClientInterface {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual PollClaimResponse PollClaim (PollClaimRequest request) =>
-			JpcSession.Post("PollClaim", request) as PollClaimResponse;
+    public PollClaimResponse PollClaim (PollClaimRequest request) =>
+			PollClaimAsync (request).Sync();
 
     /// <summary>
 	/// Implement the transaction PollClaim asynchronously.
@@ -562,8 +562,8 @@ public partial class MeshServiceClient : Goedel.Protocol.JpcClientInterface {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual OperateResponse Operate (OperateRequest request) =>
-			JpcSession.Post("Operate", request) as OperateResponse;
+    public OperateResponse Operate (OperateRequest request) =>
+			OperateAsync (request).Sync();
 
     /// <summary>
 	/// Implement the transaction Operate asynchronously.
@@ -592,8 +592,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override MeshHelloResponse Hello (HelloRequest request) =>
-			Service.Hello (request, JpcSession);
+    public override Task<MeshHelloResponse> HelloAsync (HelloRequest request) =>
+			Task.FromResult(Service.Hello (request, JpcSession));
 
 
     /// <summary>
@@ -601,8 +601,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override BindResponse BindAccount (BindRequest request) =>
-			Service.BindAccount (request, JpcSession);
+    public override Task<BindResponse> BindAccountAsync (BindRequest request) =>
+			Task.FromResult(Service.BindAccount (request, JpcSession));
 
 
     /// <summary>
@@ -610,8 +610,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override UnbindResponse UnbindAccount (UnbindRequest request) =>
-			Service.UnbindAccount (request, JpcSession);
+    public override Task<UnbindResponse> UnbindAccountAsync (UnbindRequest request) =>
+			Task.FromResult(Service.UnbindAccount (request, JpcSession));
 
 
     /// <summary>
@@ -619,8 +619,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override ConnectResponse Connect (ConnectRequest request) =>
-			Service.Connect (request, JpcSession);
+    public override Task<ConnectResponse> ConnectAsync (ConnectRequest request) =>
+			Task.FromResult(Service.Connect (request, JpcSession));
 
 
     /// <summary>
@@ -628,8 +628,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override CompleteResponse Complete (CompleteRequest request) =>
-			Service.Complete (request, JpcSession);
+    public override Task<CompleteResponse> CompleteAsync (CompleteRequest request) =>
+			Task.FromResult(Service.Complete (request, JpcSession));
 
 
     /// <summary>
@@ -637,8 +637,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override StatusResponse Status (StatusRequest request) =>
-			Service.Status (request, JpcSession);
+    public override Task<StatusResponse> StatusAsync (StatusRequest request) =>
+			Task.FromResult(Service.Status (request, JpcSession));
 
 
     /// <summary>
@@ -646,8 +646,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override DownloadResponse Download (DownloadRequest request) =>
-			Service.Download (request, JpcSession);
+    public override Task<DownloadResponse> DownloadAsync (DownloadRequest request) =>
+			Task.FromResult(Service.Download (request, JpcSession));
 
 
     /// <summary>
@@ -655,8 +655,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override TransactResponse Transact (TransactRequest request) =>
-			Service.Transact (request, JpcSession);
+    public override Task<TransactResponse> TransactAsync (TransactRequest request) =>
+			Task.FromResult(Service.Transact (request, JpcSession));
 
 
     /// <summary>
@@ -664,8 +664,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override DownloadResponse PublicRead (PublicRequest request) =>
-			Service.PublicRead (request, JpcSession);
+    public override Task<DownloadResponse> PublicReadAsync (PublicRequest request) =>
+			Task.FromResult(Service.PublicRead (request, JpcSession));
 
 
     /// <summary>
@@ -673,8 +673,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override PostResponse Post (PostRequest request) =>
-			Service.Post (request, JpcSession);
+    public override Task<PostResponse> PostAsync (PostRequest request) =>
+			Task.FromResult(Service.Post (request, JpcSession));
 
 
     /// <summary>
@@ -682,8 +682,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override ClaimResponse Claim (ClaimRequest request) =>
-			Service.Claim (request, JpcSession);
+    public override Task<ClaimResponse> ClaimAsync (ClaimRequest request) =>
+			Task.FromResult(Service.Claim (request, JpcSession));
 
 
     /// <summary>
@@ -691,8 +691,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override PollClaimResponse PollClaim (PollClaimRequest request) =>
-			Service.PollClaim (request, JpcSession);
+    public override Task<PollClaimResponse> PollClaimAsync (PollClaimRequest request) =>
+			Task.FromResult(Service.PollClaim (request, JpcSession));
 
 
     /// <summary>
@@ -700,8 +700,8 @@ public partial class MeshServiceDirect: MeshServiceClient {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override OperateResponse Operate (OperateRequest request) =>
-			Service.Operate (request, JpcSession);
+    public override Task<OperateResponse> OperateAsync (OperateRequest request) =>
+			Task.FromResult(Service.Operate (request, JpcSession));
 
 
 		}

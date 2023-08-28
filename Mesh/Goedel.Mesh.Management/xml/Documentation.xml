@@ -159,14 +159,14 @@
             Interface object to dispatch requests to.
             </summary>	
         </member>
-        <member name="M:Goedel.Mesh.Management.ServiceManagementServiceDirect.ServiceConfig(Goedel.Mesh.Management.ServiceConfigRequest)">
+        <member name="M:Goedel.Mesh.Management.ServiceManagementServiceDirect.ServiceConfigAsync(Goedel.Mesh.Management.ServiceConfigRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.Management.ServiceManagementServiceDirect.ServiceStatus(Goedel.Mesh.Management.ServiceStatusRequest)">
+        <member name="M:Goedel.Mesh.Management.ServiceManagementServiceDirect.ServiceStatusAsync(Goedel.Mesh.Management.ServiceStatusRequest)">
             <summary>
             Implement the transaction
             </summary>		
