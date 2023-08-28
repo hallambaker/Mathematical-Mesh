@@ -260,26 +260,17 @@ public partial class ContextGroup : ContextAccount {
 
         }
 
-    // ToDo: Delete Add member from group
 
     /// <summary>
     /// Delete a member from the group
     /// </summary>
     /// <param name="memberAddress">The member to delete.</param>
     /// <returns>The member catalog entry.</returns>
-    public void Delete(string memberAddress) {
+    public async Task DeleteAsync(string memberAddress) {
         var member = Locate(memberAddress);
         member.AssertNotNull(EntryNotFound.Throw, memberAddress);
-        Delete(member);
+        await DeleteAsync(member);
         }
-
-    /// <summary>
-    /// Delete a member from the group
-    /// </summary>
-    /// <param name="member">The member to delete.</param>
-    /// <returns>The member catalog entry.</returns>
-    public void Delete(CatalogedMember member) =>
-            DeleteAsync(member).Wait();
 
     /// <summary>
     /// Delete a member from the group

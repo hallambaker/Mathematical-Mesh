@@ -135,9 +135,12 @@ public abstract class JpcSession : Disposable, IJpcSession {
 
 
     ///<inheritdoc/>
-    public virtual Task<JsonObject> PostAsync(string tag, JsonObject request) => throw new NYI();
-    }
+    public virtual Task<JsonObject> PostAsync(string tag, JsonObject request) {
+        var result = Post(tag, request);
+        return Task.FromResult(result);
 
+        }
+    }
 
 
 

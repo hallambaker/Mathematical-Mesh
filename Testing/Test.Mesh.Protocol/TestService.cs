@@ -610,7 +610,7 @@ public partial class TestService {
         decrypt4.IsEqualTo(plaintext).TestTrue();
 
         // Create a member entry fo Bob
-        contextGroup.Delete(AccountBob);
+        contextGroup.DeleteAsync(AccountBob).Sync();
 
         var decrypt5 = contextAccountAlice.DareDecode(envelope, verify: true);
         decrypt5.IsEqualTo(plaintext).TestTrue();

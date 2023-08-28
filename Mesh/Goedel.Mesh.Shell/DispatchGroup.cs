@@ -104,7 +104,7 @@ public partial class Shell {
         var contextGroup = contextAccount.GetContextGroup(groupID);
         var member = contextGroup.Locate(memberID);
         member.AssertNotNull(EntryNotFound.Throw, memberID);
-        contextGroup.Delete(member);
+        contextGroup.DeleteAsync(member).Sync();
 
         var result = new ResultEntry() {
             Success = member != null,

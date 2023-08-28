@@ -32,7 +32,21 @@ public static partial class Extension {
     /// <param name="task"></param>
     /// <returns></returns>
     public static T Sync<T>(this Task<T> task) {
-        task.Wait();
+
+        try {
+            task.Wait();
+            }
+        catch {
+            }
+
+        if (task.Exception != null) {
+            if (task.Exception is System.AggregateException aggregateException) {
+                throw aggregateException.InnerException;
+                }
+            throw task.Exception;
+            }
+
+
         return task.Result;
         }
 

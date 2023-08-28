@@ -63,7 +63,20 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
-        ShellTestsAdmin.Test().TestHello();
+
+
+        //TestService.Test().MeshCatalogGroup();
+        //TestService.Test().MeshDeviceDirectKey();
+
+
+
+
+        ShellTestsAdmin.Test().TestMessageContactBusinessCardExchange();
+        ShellTestsAdmin.Test().TestMessageContactRemote();
+
+
+
+
 
 
         Trace.WriteLine($"Trace enabled");
