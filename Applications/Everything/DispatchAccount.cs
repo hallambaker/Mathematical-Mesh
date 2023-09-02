@@ -1,7 +1,7 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Protocol;
 
-using System.Data;
+using Goedel.Discovery;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -9,24 +9,27 @@ using System.Threading.Tasks;
 using ZXing.QrCode.Internal;
 
 namespace Goedel.Everything;
+
+public partial class TestService {
+
+    public override bool Validate() {
+        if (ServiceAddress == null || !ServiceAddress.TryParseServiceAddress()) {
+            return false; 
+            }
+
+
+        return true;
+        }
+
+    }
+
 public partial class EverythingMaui {
+
+
+
     HttpClient httpClient = new();
 
-    public record OperationResult : IResult {
-        GuiBinding IBindable.Binding { get; } = null;
 
-
-        public virtual string ServiceUDF { get; init; }
-
-        }
-
-    public record HelloResult : OperationResult, IResult {
-        public MeshHelloResponse Response { get; init; }
-        }
-
-    public record ServiceResult : OperationResult {
-        public MeshHelloResponse HelloResponse { get; init; }
-        }
 
 
 
@@ -50,24 +53,30 @@ public partial class EverythingMaui {
 
         //var response = await meshClient.RequestAsync("Hello", helloRequest);
 
-        var response = await meshClient.HelloAsync(helloRequest);
-        //task.Wait();
-        //var response = task.Result as MeshHelloResponse;
+        try {
 
-        //var response = meshClient.Hello (helloRequest);f
+            var response = await meshClient.HelloAsync(helloRequest);
+            response.Success().AssertTrue(NYI.Throw);
+            response.EnvelopedProfileService.AssertNotNull(NYI.Throw);
 
+            var profileService = response.EnvelopedProfileService.Decode();
 
-        await Task.Delay(10000);
+            //task.Wait();
+            var result = new ReportHost() {
+                ServiceUdf = profileService.UdfString
+                };
 
+            return result;
 
-        var result = new HelloResult() {
-            Response = response
-            };
+            }
+        catch (Exception ex) {
 
-        return result as IResult;
+            return new NullResult("Host lookup failed");
+            }
+
         }
 
-    public override async Task<IResult> AccountCreateAsync(AccountCreate data, ActionMode mode= ActionMode.Execute) {
+    public override async Task<IResult> AccountCreate(AccountCreate data, ActionMode mode= ActionMode.Execute) {
 
         // This chunk can be pushed into the generated code.
         switch (mode) {
@@ -110,11 +119,11 @@ public partial class EverythingMaui {
 
         // Add new profile to the accounts list and make current profile
 
-        var result = new HelloResult() {
-            //Response = response
+        var result = new ReportAccount() {
+
             };
 
-        return result as IResult;
+        return result;
 
         }
 

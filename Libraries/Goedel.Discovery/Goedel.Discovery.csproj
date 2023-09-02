@@ -10,11 +10,17 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+    <ProjectReference Include="..\Goedel.FSR\Goedel.FSR.csproj" />
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Exceptions.cs">
       <DependentUpon>Exceptions.exceptional</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="ServiceAddressSplit.cs">
+      <DependentUpon>ServiceAddressSplit.fsm</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -24,6 +30,10 @@
     <None Update="Exceptions.exceptional">
       <LastGenOutput>Exceptions.cs</LastGenOutput>
       <Generator>exceptional</Generator>
+    </None>
+    <None Update="ServiceAddressSplit.fsm">
+      <LastGenOutput>ServiceAddressSplit.cs</LastGenOutput>
+      <Generator>fsrcs</Generator>
     </None>
   </ItemGroup>
 

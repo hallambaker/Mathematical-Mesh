@@ -63,7 +63,7 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
-
+        ServiceDiscovery.Test().TestServiceAddressParse();
 
         //TestService.Test().MeshCatalogGroup();
         //TestService.Test().MeshDeviceDirectKey();

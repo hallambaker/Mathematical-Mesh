@@ -6818,6 +6818,22 @@
             <param name="callsign">The callsign binding if found, otherwise null.</param>
             <returns>The callsign binding..</returns>
         </member>
+        <member name="T:Goedel.Mesh.IDiscover">
+            <summary>
+            Discovery resolution interface.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.IDiscover.ResolveServiceAsync(System.String,System.String,System.Nullable{System.Int32},Goedel.Discovery.DNSFallback)">
+            <summary>
+            Perform Asynchronous query for Service discovery and description records
+            using the platform default DNSClient.
+            </summary>
+            <param name="address">The address to query</param>
+            <param name="service">The IANA service name</param>
+            <param name="port">The default DNS port number</param>
+            <param name="fallback">The fallback mode to use if SRV lookup fails</param> 
+            <returns>Description of the discovered services.</returns>
+        </member>
         <member name="T:Goedel.Mesh.ICarnet">
             <summary>
             Carnet payment interface.
@@ -15354,6 +15370,59 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Mesh.ServiceAccessToken.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.CatalogedFeed">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedFeed.Protocol">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedFeed._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedFeed._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedFeed._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedFeed._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedFeed._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedFeed._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedFeed._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedFeed._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedFeed.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedFeed._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedFeed.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>

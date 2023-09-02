@@ -17,7 +17,18 @@
 
 MSBuildThisFileDirectory = 
 
-LinkFiles = 
+LinkFiles = \
+    Goedel.Cryptography.Core.dll\
+    Goedel.Cryptography.Jose.dll\
+    Goedel.Cryptography.dll\
+    Goedel.Guigen.Maui.dll\
+    Goedel.Guigen.dll\
+    Goedel.Protocol.dll\
+    Goedel.Registry.dll\
+    Goedel.Utilities.dll\
+    Goedel.Mesh.Client.dll\
+    Goedel.Mesh.Core.dll\
+    Goedel.Mesh.dll
 
 ToolTargets = 
 

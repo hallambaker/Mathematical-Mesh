@@ -26,6 +26,7 @@ LinkFiles = \
     Microsoft.Extensions.Configuration.EnvironmentVariables.dll\
     Microsoft.Extensions.Configuration.FileExtensions.dll\
     Microsoft.Extensions.Configuration.Json.dll\
+    Microsoft.Extensions.Configuration.UserSecrets.dll\
     Microsoft.Extensions.DependencyInjection.dll\
     Microsoft.Extensions.DependencyInjection.Abstractions.dll\
     Microsoft.Extensions.FileProviders.Abstractions.dll\
@@ -50,6 +51,7 @@ LinkFiles = \
     System.Runtime.InteropServices.RuntimeInformation.dll\
     System.Security.Cryptography.Algorithms.dll\
     System.Security.Cryptography.Primitives.dll\
+    System.Text.Encodings.Web.dll\
     System.Text.Json.dll\
     System.Threading.Tasks.Extensions.dll\
     System.ValueTuple.dll

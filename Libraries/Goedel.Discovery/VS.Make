@@ -19,12 +19,17 @@ MSBuildThisFileDirectory =
 
 LinkFiles = \
     Goedel.Cryptography.dll\
+    Goedel.FSR.dll\
     Goedel.Utilities.dll
 
 ToolTargets = \
-	Exceptions.cs
+	Exceptions.cs\
+	ServiceAddressSplit.cs
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
+
+ServiceAddressSplit.cs : ServiceAddressSplit.fsm 
+	fsrgen ServiceAddressSplit.fsm  /cs  ServiceAddressSplit.cs
 
 
 

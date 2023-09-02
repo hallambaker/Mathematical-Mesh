@@ -7,15 +7,15 @@ Class Goedel.Everything EverythingMaui
 // Sections
 
 Section Account "Account" "user"
-	Button Groups
-	Button Services
+	Condition Always
 	Button AccountCreate 
+	Button TestService 
 	Button AccountConnect 
 	Button AccountRecover 
-	Button TestService 
+
 	Text ServiceAddress "Service Address"
 		Readonly
-	Text ProfileUDF "Profile fingerprint"
+	Text ProfileUdf "Profile fingerprint"
 		Readonly
 	Text LocalAddress "Local Address"
 		Readonly
@@ -88,6 +88,7 @@ Section Services "Services" "Services"
 
 
 Section Settings "Settings" "settings"
+	Condition Always
 	Primary
 	Dialog Appearance
 		Color BackgroundColor  "Background Color"
@@ -97,29 +98,51 @@ Section Settings "Settings" "settings"
 		Size IconSize "Icon Size"
 
 
+// Action results
 
+Result ReportHost
+	Text ServiceCallsign	"Callsign"
+	Text ServiceDns			"DNS"
+	Text ServiceUdf			"Service fingerprint"
+	Text HostUdf			"Host fingerprint"
 
+Result ReportAccount
+	Text ServiceCallsign	"Callsign"
+	Text ServiceAddress		"DNS"
+	Text ProfileUdf			"Service fingerprint"
+	Text ServiceUdf			"Service fingerprint"
+
+Result ReportPending
+	Text ServiceCallsign	"Callsign"
+	Text ServiceAddress		"DNS"
+	Text ServiceUdf			"Service fingerprint"
+	Text Message			"Message"
 
 // Actions
 
+// Account Actions
 Action TestService "Test Service" "test_service"
+	Return ReportHost
 	Text ServiceAddress "Service address"
 
-Action AccountSwitch "Change Account" "test_service"
-	Chooser ChooseUser "User" "account_user" AccountUser
-
 Action AccountCreate "Create Mesh Account" "new"
+	Return ReportAccount
 	Text ServiceAddress "Account service address"
 	Text LocalName "Friendly name (optional)"
 	Text Coupon "Activation code (if provided)"
-	
+
+Action AccountSwitch "Change Account" "test_service"
+	Return ReportAccount
+	Chooser ChooseUser "User" "account_user" AccountUser
 
 Action AccountConnect  "Connect To Existing Account" "connect"
+	Return ReportPending
 	Text ConnectionString "Account address"
 	Text ConnectionPin "Activation code (if provided)"
-	
+		
 
 Action AccountRecover "Recover Mesh Account" "recover"
+	Return ReportAccount
 	Text ServiceAddress "Account service address"
 	Text LocalName "Friendly name (optional)"
 	Text Coupon "Activation code (if provided)"
@@ -134,7 +157,7 @@ Action AccountRecover "Recover Mesh Account" "recover"
 	Text Share8 "Recovery share"
 
 
-
+// Contact Actions
 Action RequestContact "Contact Request" "contact"
 	Text Address "Address"
 

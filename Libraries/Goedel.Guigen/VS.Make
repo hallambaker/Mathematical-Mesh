@@ -18,16 +18,9 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Utilities.dll\
-    Goedel.Cryptography.Jose.dll\
-    Goedel.Cryptography.dll\
-    Goedel.Protocol.dll
+    Goedel.Utilities.dll
 
-ToolTargets = \
-	Exceptions.cs
-Exceptions.cs : Exceptions.Exceptional 
-	exceptional Exceptions.Exceptional  /cs  Exceptions.cs
-
+ToolTargets = 
 
 
 prebuildRecurse : 
@@ -43,5 +36,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Cryptography.Ios.dll
+	powershell publishtarget Goedel.Guigen.dll
 

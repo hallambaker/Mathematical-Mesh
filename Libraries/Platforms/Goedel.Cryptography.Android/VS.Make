@@ -43,5 +43,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Cryptography.Linux.dll
+	powershell publishtarget Goedel.Cryptography.Android.dll
 

@@ -1,0 +1,76 @@
+﻿FSR Goedel.Discovery ServiceAddressSplitLex
+
+	Charset Digit		"0" "9"
+	Charset Hex			"a" "f"
+	Charset HEX			"A" "F"
+
+
+	Token Numeric				"01234"
+	Token Hexadecimal			"01234ABCD"
+	Token Label					"alice1"
+	Token Mesh					"mm--"
+	Token At					"@"
+	Token Dot					"."
+	Token Colon					":"
+	Token Left					"["
+	Token Right					"]"
+
+	Token NYI					"Fail"
+	
+	// Start
+	State ItemStart Start Empty
+		On "@" GoTo GotAt
+		On "." GoTo GotDot
+		On ":" GoTo GotColon
+		On "[" GoTo GotLeft
+		On "]" GoTo GotRight
+		Digit GoTo ReadNumeric
+		Hex GoTo ReadHex
+		HEX GoTo ReadHex
+		Any GoTo ReadLabel
+
+	State ReadNumeric	AddToken Numeric
+		On "@" Return Numeric
+		On "." Return Numeric
+		On ":" Return Numeric
+		On "[" Return Numeric
+		On "]" Return Numeric
+		Digit GoTo ReadNumeric
+		Hex GoTo ReadHex
+		HEX GoTo ReadHex
+		Any GoTo ReadLabel
+
+	State ReadHex	AddToken Hexadecimal
+		On "@" Return Hexadecimal
+		On "." Return Hexadecimal
+		On ":" Return Hexadecimal
+		On "[" Return Hexadecimal
+		On "]" Return Hexadecimal
+		Hex GoTo ReadHex
+		HEX GoTo ReadHex
+		Any GoTo ReadLabel
+
+	State ReadLabel		AddToken Label
+		On "@" Return Label
+		On "." Return Label
+		On ":" Return Label
+		On "[" Return Label
+		On "]" Return Label
+		Digit GoTo ReadNumeric
+		Any GoTo ReadLabel
+
+	// Unneeded?
+	State GotAt			Terminal At
+		Any Return At
+
+	State GotDot		Terminal Dot
+		Any Return Dot
+
+	State GotColon		Terminal Colon
+		Any Return Colon
+
+	State GotLeft		Terminal Left
+		Any Return Left
+
+	State GotRight		Terminal Right
+		Any Return Right

@@ -163,12 +163,9 @@ public class RudStream {
 
         // only set the URI if we are creating an initiator stream.
         if (RudConnection is ConnectionInitiator initiator) {
-
-            var serviceDescription = DnsClient.ResolveService(initiator.Domain, protocol, port:15099);
+            "This needs conversion to Async throughout".TaskFunctionality(true);
+            var serviceDescription = DnsClient.ResolveServiceAsync(initiator.Domain, protocol, port:15099).Sync();
             Uri = serviceDescription.GetUri(initiator.Instance);
-            //Uri = HttpEndpoint.GetUri(initiator.Domain, 15099, protocol, initiator.Instance);
-
-            //Screen.WriteLine($"Client URI = {Uri}");
             }
         //AccountAddress = throw new NYI();
         CredentialSelf = credentialSelf;

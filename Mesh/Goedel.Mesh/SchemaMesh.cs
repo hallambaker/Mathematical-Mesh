@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 8/28/2023 5:25:09 PM
+//  This file was automatically generated at 9/1/2023 7:00:54 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -155,6 +155,7 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"CatalogedApplication", CatalogedApplication._Factory},
 	    {"CatalogedMember", CatalogedMember._Factory},
 	    {"CatalogedGroup", CatalogedGroup._Factory},
+	    {"CatalogedFeed", CatalogedFeed._Factory},
 	    {"CatalogedApplicationMail", CatalogedApplicationMail._Factory},
 	    {"CatalogedApplicationNetwork", CatalogedApplicationNetwork._Factory},
 	    {"MessageInvoice", MessageInvoice._Factory},
@@ -7915,6 +7916,86 @@ public partial class CatalogedGroup : CatalogedApplication {
 			return Out as CatalogedGroup;
 			}
 		var Result = new CatalogedGroup ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class CatalogedFeed : CatalogedBookmark {
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						Protocol  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedFeed(), CatalogedBookmark._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Protocol", new PropertyString ("Protocol", 
+					(IBinding data, string? value) => {(data as CatalogedFeed).Protocol = value;}, (IBinding data) => (data as CatalogedFeed).Protocol )}
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, CatalogedBookmark._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "CatalogedFeed";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new CatalogedFeed();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new CatalogedFeed FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as CatalogedFeed;
+			}
+		var Result = new CatalogedFeed ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

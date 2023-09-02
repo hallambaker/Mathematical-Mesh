@@ -1152,10 +1152,9 @@
 			Description
 				|The activation of the device within the Mesh account
 
-
-
-
-
+	Structure CatalogedFeed
+		Inherits CatalogedBookmark
+		String Protocol
 
 
 	Structure CatalogedApplicationMail

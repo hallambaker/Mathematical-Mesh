@@ -31,7 +31,8 @@ LinkFiles = \
     Test.Mesh.Presence.dll\
     Test.Mesh.Protocol.dll\
     Test.Mesh.Store.dll\
-    Test.NotaryCallsign.dll
+    Test.NotaryCallsign.dll\
+    Test.Protocol.dll
 
 ToolTargets = 
 

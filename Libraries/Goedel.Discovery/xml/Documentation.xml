@@ -406,16 +406,6 @@
             </summary>
             <returns>The DNS Client Context</returns>
         </member>
-        <member name="M:Goedel.Discovery.DnsClient.ResolveService(System.String,System.String,System.Nullable{System.Int32},Goedel.Discovery.DNSFallback)">
-            <summary>
-            Resolve a DNS name to an address and service characteristics.
-            </summary>
-            <param name="address">The address to use</param>
-            <param name="service">The DNS service prefix</param>
-            <param name="port">The default DNS port number</param>
-            <param name="fallback">The fallback mode to use if SRV lookup fails</param>
-            <returns>IP Destination describing the resolution results</returns>
-        </member>
         <member name="M:Goedel.Discovery.DnsClient.ResolveServiceAsync(System.String,System.String,System.Nullable{System.Int32},Goedel.Discovery.DNSFallback)">
             <summary>
             Perform Asynchronous query for Service discovery and description records
@@ -3641,6 +3631,11 @@
             <param name="logger">The logger to write the output to.</param>
             <param name="_exception">Exception (if thrown)</param>
         </member>
+        <member name="T:Goedel.Discovery.Extensions">
+            <summary>
+            Extensions class. Provides static convenience extensions.
+            </summary>
+        </member>
         <member name="T:Goedel.Discovery.NamespaceDoc">
             <summary>
             Provides a hook 
@@ -3867,6 +3862,193 @@
         <member name="M:Goedel.Discovery.Parse.Hex16">
             <summary>Get Hex data with 8 bit length value</summary>
             <returns>The value returned</returns>
+        </member>
+        <member name="T:Goedel.Discovery.ServiceAddressType">
+            <summary>
+            Recognized service address types
+            </summary>
+        </member>
+        <member name="P:Goedel.Discovery.ServiceAddress.Service">
+            <summary> The service address </summary>
+        </member>
+        <member name="P:Goedel.Discovery.ServiceAddress.Version">
+            <summary>The callsign version, is only valid for callsigns</summary> 
+        </member>
+        <member name="P:Goedel.Discovery.ServiceAddress.Account">
+            <summary>The account portion.</summary> 
+        </member>
+        <member name="P:Goedel.Discovery.ServiceAddress.Port">
+            <summary></summary> 
+        </member>
+        <member name="M:Goedel.Discovery.ServiceAddress.TryParse(System.String,Goedel.Discovery.ServiceAddress@)">
+            <summary>
+            Convenience wrapper, attempts to parse <paramref name="identifier"/>. If the identifier is 
+            a valid service address, returns true, otherwise false. The value 
+            </summary>
+            <param name="identifier"></param>
+            <param name="serviceAddress"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Discovery.ServiceAddressSplitLex">
+            <summary>
+            FSM parser to break down 
+            </summary>
+        </member>
+        <member name="M:Goedel.Discovery.ServiceAddressSplitLex.#ctor(Goedel.FSR.LexReader)">
+            <summary>
+            Create and initialize a lexical analyzer.
+            </summary>
+            <param name="Reader">The input source.</param>
+        </member>
+        <member name="M:Goedel.Discovery.ServiceAddressSplitLex.#ctor(System.IO.Stream)">
+            <summary>
+            Create and initialize a lexical analyzer.
+            </summary>
+            <param name="Stream">The input source.</param>
+        </member>
+        <member name="M:Goedel.Discovery.ServiceAddressSplitLex.#ctor(System.IO.TextReader)">
+            <summary>
+            Create and initialize a lexical analyzer.
+            </summary>
+            <param name="TextReader">The input source.</param>
+        </member>
+        <member name="P:Goedel.Discovery.ServiceAddressSplitLex.CharacterMappings">
+            <summary>
+            Maps characters to character sets
+            </summary>
+        </member>
+        <member name="P:Goedel.Discovery.ServiceAddressSplitLex.CompressedTransitions">
+            <summary>
+            State transitions in response to character set
+            </summary>
+        </member>
+        <member name="M:Goedel.Discovery.ServiceAddressSplitLex.GetToken(Goedel.Discovery.ServiceAddressSplitLex.State)">
+            <summary>
+            Get the next token from the stream
+            </summary>
+            <param name="StartState">The initial starting state</param>
+            <returns>The token detected or -1 if an error occurred</returns>
+        </member>
+        <member name="M:Goedel.Discovery.ServiceAddressSplitLex.GetToken">
+            <summary>
+            Get the next token from the stream
+            </summary>
+            <returns>The token detected or -1 if an error occurred</returns>
+        </member>
+        <member name="T:Goedel.Discovery.ServiceAddressSplitLex.State">
+            <summary>State types</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.State.ItemStart">
+            <summary>ItemStart</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.State.ReadNumeric">
+            <summary>ReadNumeric</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.State.ReadHex">
+            <summary>ReadHex</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.State.ReadLabel">
+            <summary>ReadLabel</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.State.GotAt">
+            <summary>GotAt</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.State.GotDot">
+            <summary>GotDot</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.State.GotColon">
+            <summary>GotColon</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.State.GotLeft">
+            <summary>GotLeft</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.State.GotRight">
+            <summary>GotRight</summary>
+        </member>
+        <member name="T:Goedel.Discovery.ServiceAddressSplitLex.Token">
+            <summary>Token Types</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.Token.INVALID">
+            <summary>Could not find a valid token.</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.Token.Numeric">
+            <summary>Numeric</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.Token.Hexadecimal">
+            <summary>Hexadecimal</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.Token.Label">
+            <summary>Label</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.Token.Mesh">
+            <summary>Mesh</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.Token.At">
+            <summary>At</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.Token.Dot">
+            <summary>Dot</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.Token.Colon">
+            <summary>Colon</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.Token.Left">
+            <summary>Left</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.Token.Right">
+            <summary>Right</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.Token.NYI">
+            <summary>NYI</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.Token.Empty">
+            <summary>Empty</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.Character_Mapping">
+            <summary>Mapping of characters to character groups</summary>
+        </member>
+        <member name="M:Goedel.Discovery.ServiceAddressSplitLex.Init">
+            <summary>Generated initialization method, is called automatically 
+            the FSR to reset </summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.buildActive">
+            <summary>The builer we build to.</summary>
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.buildAccount">
+            <summary>The accumulated account</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.buildService">
+            <summary>The accumulated account</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.numeric">
+            <summary>Numeric result</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.last">
+            <summary>Last segment completed, not yet determined .</summary> 
+        </member>
+        <member name="M:Goedel.Discovery.ServiceAddressSplitLex.#ctor">
+            <summary>
+            Construct a parser to read from a string to be specified in GetToken (data)
+            </summary>
+        </member>
+        <member name="M:Goedel.Discovery.ServiceAddressSplitLex.TryParse(System.String,Goedel.Discovery.ServiceAddress@)">
+            <summary>
+            Parse the string <paramref name="text"/> and return the result.
+            </summary>
+            <param name="text">The service address in text form.</param>
+            <returns>The parse result.</returns>
+        </member>
+        <member name="M:Goedel.Discovery.ServiceAddressSplitLex.TryIPv4(System.Collections.Generic.List{Goedel.Discovery.ServiceAddressSplitLex.LexOutput},Goedel.Discovery.ServiceAddress@)">
+            <summary>
+            Attempt to interpret <paramref name="tokens"/> as an IPv4 address or address with 
+            port specification.
+            </summary>
+            <param name="tokens"></param>
+            <param name="serviceAddress"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Discovery.ServiceAddressSplitLex.Reset">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Discovery.ServiceDescription">
             <summary>

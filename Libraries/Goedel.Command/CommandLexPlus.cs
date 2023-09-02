@@ -31,7 +31,10 @@ namespace Goedel.Command;
 /// Lexical analyzer for command line parsing.
 /// </summary>
 public partial class CommandLex {
+
     readonly LexStringReader LexStringReader;
+    readonly StringBuilder BuildValue = new();
+    readonly StringBuilder BuildFlag = new();
 
     /// <summary>
     /// Construct a parser to read from a string to be specified in GetToken (data)
@@ -69,8 +72,7 @@ public partial class CommandLex {
     /// </summary>
     public bool Not { get; set; }
 
-    readonly StringBuilder BuildValue = new();
-    readonly StringBuilder BuildFlag = new();
+
 
     /// <summary>
     /// Reset the value buffers to start a new parse.

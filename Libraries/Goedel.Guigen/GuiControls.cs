@@ -31,21 +31,50 @@ public interface IParameter : IBindable {
 
     }
 
+public enum ReturnResult {
+    Completed,
+    Initialized,
+    Valid,
+    Invalid,
+    Error
+    }
 
 public interface IResult : IBindable {
+
+    ReturnResult ReturnResult { get; }
 
     }
 
 
 public record NullResult : IResult {
+
+    public ReturnResult ReturnResult { get; init; }
+
+    public string Error { get; }
+
+    public NullResult(string error="") {
+        Error = error;
+        }
+
     public GuiBinding Binding => throw new NotImplementedException();
 
-    public static NullResult Initialized = new NullResult();
+    public static NullResult Initialized = new NullResult() {
+        ReturnResult = ReturnResult.Initialized
+        };
 
-    public static NullResult Valid = new NullResult();
+    public static NullResult Valid = new NullResult() {
+        ReturnResult = ReturnResult.Valid
+        };
 
-    public static NullResult Invalid = new NullResult();
+    public static NullResult Invalid = new NullResult() {
+        ReturnResult = ReturnResult.Invalid
+        };
+
+
     }
+
+
+
 
 
 [Flags]
@@ -58,12 +87,30 @@ public enum ActionMode {
 
 public record GuiBinding {
 
+    public Func<object, bool> IsType { get; }
+
     public GuiBoundProperty[] BoundProperties { get; }
 
 
 
-    public GuiBinding(GuiBoundProperty[] boundProperties) {
+    public GuiBinding(
+                Func<object, bool> isType,
+                GuiBoundProperty[] boundProperties
+                ) {
         BoundProperties = boundProperties;
+        IsType = isType;
+        }
+
+    }
+
+
+public record GuiResult {
+
+    public List<IGuiEntry> Entries { get; set; } = null!;
+
+
+
+    public GuiResult() {
         }
 
     }
@@ -166,11 +213,16 @@ public record GuiPrompt(
 
 
 public record GuiSection (
+
             string Id,
             string Prompt,
             string Icon,
             bool Primary
             ) : GuiPrompt(Id, Prompt), IButtonTarget {
+
+    public Func<bool> Active { get; set; } = () => false;
+
+    public Gui Gui { get; set; } = null!;
     public IPresentation? Presentation { get; set; } = null;
 
 

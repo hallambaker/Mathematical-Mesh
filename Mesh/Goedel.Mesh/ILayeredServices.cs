@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Discovery;
+
 namespace Goedel.Mesh;
 
 /// <summary>
@@ -35,6 +37,27 @@ public interface IResolver {
     /// <param name="callsign">The callsign binding if found, otherwise null.</param>
     /// <returns>The callsign binding..</returns>
     Task<CallsignBinding> ResolveCallsignAsync(string callsign);
+
+    }
+
+/// <summary>
+/// Discovery resolution interface.
+/// </summary>
+public interface IDiscover {
+
+    /// <summary>
+    /// Perform Asynchronous query for Service discovery and description records
+    /// using the platform default DNSClient.
+    /// </summary>
+    /// <param name="address">The address to query</param>
+    /// <param name="service">The IANA service name</param>
+    /// <param name="port">The default DNS port number</param>
+    /// <param name="fallback">The fallback mode to use if SRV lookup fails</param> 
+    /// <returns>Description of the discovered services.</returns>
+    Task<ServiceDescription> ResolveServiceAsync(
+                    string address,
+                    string service = null,
+                    int? port = null, DNSFallback fallback = DNSFallback.Prefix);
 
     }
 

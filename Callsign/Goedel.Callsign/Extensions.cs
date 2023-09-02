@@ -1,6 +1,7 @@
 ﻿using Goedel.Cryptography.Dare;
 using Goedel.Mesh;
 using Goedel.Protocol;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,12 +63,10 @@ public class ContextResolver : IResolver {
     }
 
 
-
 /// <summary>
 /// Extensions class. Provides static convenience extensions.
 /// </summary>
 public static class Extensions {
-
 
 
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should be used in libraries!
@@ -77,13 +76,18 @@ public static class Extensions {
         }
 #pragma warning restore CA2255 // The 'ModuleInitializer' attribute should be used in libraries!
 
-    /// <summary>
-    /// Return the callsign resolver for the account context <paramref name="contextAccount"/>.
-    /// </summary>
-    /// <param name="contextAccount">Account context.</param>
-    /// <returns>The resolver.</returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static IResolver GetResolver(
+
+
+
+
+
+/// <summary>
+/// Return the callsign resolver for the account context <paramref name="contextAccount"/>.
+/// </summary>
+/// <param name="contextAccount">Account context.</param>
+/// <returns>The resolver.</returns>
+/// <exception cref="ArgumentNullException"></exception>
+public static IResolver GetResolver(
                 this ContextAccount contextAccount) {
         if (contextAccount == null) {
             throw new ArgumentNullException(paramName: nameof(contextAccount));

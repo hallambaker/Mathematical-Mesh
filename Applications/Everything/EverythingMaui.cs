@@ -73,6 +73,10 @@ public partial class EverythingMaui {
     ResourceManager ResourceManager;
 
 
+    public override bool StateDefault => ContextUser!= null;
+
+
+
     public IMeshMachineClient MeshMachine;
     public MeshHost MeshHost => MeshMachine?.MeshHost;
 
@@ -180,7 +184,7 @@ public partial class Account {
 
     public override string ServiceAddress => ContextUser?.ServiceAddress;
 
-    public override string ProfileUDF => ContextUser?.Profile.UdfString;
+    public override string ProfileUdf => ContextUser?.Profile.UdfString;
 
     public override string LocalAddress => ContextUser?.CatalogedMachine.Local;
 
