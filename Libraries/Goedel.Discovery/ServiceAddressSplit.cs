@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 9/1/2023 7:00:52 PM
+//  This file was automatically generated at 9/6/2023 1:26:53 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -31,6 +31,8 @@ public partial class ServiceAddressSplitLex {
     public virtual void Start (int c) {
 		}
     public virtual void AddToken (int c) {
+		}
+    public virtual void IsAt (int c) {
 		}
     public virtual void Terminal (int c) {
 		}
@@ -149,7 +151,7 @@ public partial class ServiceAddressSplitLex : global::Goedel.FSR.Lexer {
 		{3 , 5 , 1 , 6 , 4 , 2 , 7 , 8 },
 		{3 , -1 , 1 , -1 , -1 , 2 , -1 , -1 },
 		{3 , -1 , 3 , -1 , -1 , 2 , -1 , -1 },
-		{3 , -1 , 1 , -1 , -1 , 3 , -1 , -1 },
+		{3 , -1 , 3 , -1 , -1 , 3 , -1 , -1 },
 		{-1 , -1 , -1 , -1 , -1 , -1 , -1 , -1 },
 		{-1 , -1 , -1 , -1 , -1 , -1 , -1 , -1 },
 		{-1 , -1 , -1 , -1 , -1 , -1 , -1 , -1 },
@@ -178,7 +180,7 @@ public partial class ServiceAddressSplitLex : global::Goedel.FSR.Lexer {
 			AddToken,
 			AddToken,
 			AddToken,
-			Terminal,
+			IsAt,
 			Terminal,
 			Terminal,
 			Terminal,

@@ -146,18 +146,23 @@ public class LexReader : Disposable {
 /// </summary>
 public class LexStringReader : LexReader {
 
+
+    string data;
+    public int Count { get; set; }
+
+
+
     /// <summary>
     /// Set the data value and reset the read index.
     /// </summary>
     public string String {
         set {
             data = value;
-            count = 0;
+            Count = 0;
             }
         }
 
-    string data;
-    int count;
+
 
 
     /// <summary>
@@ -178,9 +183,9 @@ public class LexStringReader : LexReader {
     /// </summary>
     /// <returns>true if the action succeeded, false otherwise.</returns>
     public override bool Get() {
-        if (count < data.Length) {
-            LastInt = data[count];
-            count++;
+        if (Count < data.Length) {
+            LastInt = data[Count];
+            Count++;
             return true;
             }
         else {
@@ -194,8 +199,8 @@ public class LexStringReader : LexReader {
     /// unget without calling get() have no effect.
     /// </summary>
     public override void UnGet() {
-        if (count > 0) {
-            count--;
+        if (Count > 0) {
+            Count--;
             }
         }
     }

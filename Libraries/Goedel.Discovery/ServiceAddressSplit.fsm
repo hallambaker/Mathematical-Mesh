@@ -56,11 +56,11 @@
 		On ":" Return Label
 		On "[" Return Label
 		On "]" Return Label
-		Digit GoTo ReadNumeric
+		Digit GoTo ReadLabel
 		Any GoTo ReadLabel
 
 	// Unneeded?
-	State GotAt			Terminal At
+	State GotAt			IsAt At
 		Any Return At
 
 	State GotDot		Terminal Dot

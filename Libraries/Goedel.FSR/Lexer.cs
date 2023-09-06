@@ -92,6 +92,8 @@ public abstract class Lexer : Disposable {
     /// </summary>
     protected LexReader Reader { get; set; } = null;
 
+    public int Position { get; set; }
+
 
     /// <summary>Maps characters to character groups.</summary>
     public abstract byte[] CharacterMappings { get; }

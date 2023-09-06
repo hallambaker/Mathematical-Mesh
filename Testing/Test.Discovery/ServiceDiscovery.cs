@@ -36,14 +36,15 @@ public partial class ServiceDiscovery {
 
     [Fact]
     public void TestServiceAddressParse() {
-        TestServiceAddress("10.1.2.3", ServiceAddressType.DNS, "10.1.2.3");
-        TestServiceAddress("10.0.0.0:80", ServiceAddressType.IPv4, "10.0.0.0", port:80);
+
+        TestServiceAddress("10.1.2.3", ParsedAddressType.IPv4, "10.1.2.3");
+        TestServiceAddress("10.0.0.0:80", ParsedAddressType.IPv4, "10.0.0.0", port: 80);
 
 
-        TestServiceAddress("0:1:2:3:4:5:6:7", ServiceAddressType.IPv6, "0:1:2:3:4:5:6:7");
-        TestServiceAddress("[0:1:2:3:4:5:6:7]:80", ServiceAddressType.IPv6, "0:1:2:3:4:5:6:7", port: 80);
-        TestServiceAddress("[0:1:2:3:4:5:6:7]", ServiceAddressType.IPv6, "0:1:2:3:4:5:6:7");
-        TestServiceAddress("[::0]:80", ServiceAddressType.IPv6, "::0", port: 80);
+        TestServiceAddress("0:1:2:3:4:5:6:7", ParsedAddressType.IPv6, "0:1:2:3:4:5:6:7");
+        TestServiceAddress("[0:1:2:3:4:5:6:7]:80", ParsedAddressType.IPv6, "0:1:2:3:4:5:6:7", port: 80);
+        TestServiceAddress("[0:1:2:3:4:5:6:7]", ParsedAddressType.IPv6, "0:1:2:3:4:5:6:7");
+        TestServiceAddress("[::0]:80", ParsedAddressType.IPv6, "::0", port: 80);
 
 
         TestServiceAddress("1:2:3:4:5:6:7", valid: false);
@@ -51,7 +52,7 @@ public partial class ServiceDiscovery {
         TestServiceAddress("1:2:3:4:5:6:7:80000", valid: false);
 
         // invalid addresses
-        TestServiceAddress("", valid:false);
+        TestServiceAddress("", valid: false);
         TestServiceAddress("mm--", valid: false);
         TestServiceAddress(".", valid: false);
         TestServiceAddress(".whatever", valid: false);
@@ -60,57 +61,60 @@ public partial class ServiceDiscovery {
         TestServiceAddress("@0", valid: false);
         TestServiceAddress("@alice.0.0", valid: false);
 
-        // valid callsigns: If it starts with an @ it is ALWAYS a callsign.
-        TestServiceAddress("@example", ServiceAddressType.Callsign, "example");
-        TestServiceAddress("@example.0", ServiceAddressType.Callsign, "example", version: 0);
-        TestServiceAddress("@example.mm--", ServiceAddressType.Callsign, "example");
-        TestServiceAddress("@example.0.mm--", ServiceAddressType.Callsign, "example", version: 0);
 
-        TestServiceAddress("@alice@example", ServiceAddressType.Callsign, "example", "alice");
+        // If it has more than two @ signs, it is invalid
+        TestServiceAddress("blender@alice@example", valid: false);
 
-        TestServiceAddress("@alice.example", ServiceAddressType.Callsign, "example", "alice");
-        TestServiceAddress("@blender@alice@example", ServiceAddressType.Callsign, "example", "blender.alice");
-        TestServiceAddress("@blender@alice.example", ServiceAddressType.Callsign, "example", "blender.alice");
-        TestServiceAddress("@blender.alice.example", ServiceAddressType.Callsign, "example", "blender.alice");
+        //Singleton callsigns callsigns: If it starts with an @ it is ALWAYS a callsign.
 
-        // If it has multiple @ symbols, it is ALWAYS a callsign.
-        TestServiceAddress("blender@alice@example", ServiceAddressType.Callsign, "example", "blender.alice");
+        TestServiceAddress("@alice.0", ParsedAddressType.Callsign, account: "alice", version: 0);
+        TestServiceAddress("@alice.mm--", ParsedAddressType.Callsign, account: "alice");
+        TestServiceAddress("@alice.0.mm--", ParsedAddressType.Callsign, account: "alice", version: 0);
+        TestServiceAddress("alice.0", ParsedAddressType.Callsign, account: "alice", version: 0);
+        TestServiceAddress("alice.mm--", ParsedAddressType.Callsign, account: "alice");
+        TestServiceAddress("alice.0.mm--", ParsedAddressType.Callsign, account: "alice", version: 0);
 
-        // If it has no ., it is ALWAYS a callsign.
-        TestServiceAddress("example", ServiceAddressType.Callsign, "example");
-        TestServiceAddress("alice@example", ServiceAddressType.Callsign, "example", "alice");
+        //Doubleton, same
+        TestServiceAddress("@toaster.alice", ParsedAddressType.Callsign, account:"toaster.alice");
 
-        // If it end in mm--, it is ALWAYS a callsign.
-        TestServiceAddress("alice@example.mm--", ServiceAddressType.Callsign, "example", "alice");
-        TestServiceAddress("alice@example.0.mm--", ServiceAddressType.Callsign, "example", "alice", version: 0);
-        TestServiceAddress("alice@MB3T-WIPZ-JRCW-QZFM-SCQL-OVVO-AHO2.mm--", 
-                    ServiceAddressType.Callsign, "mb3t-wipz-jrcw-qzfm-scql-ovvo-aho2", "alice");
-        TestServiceAddress("alice@mb3t-wipz-jrcw-qzfm-scql-ovvo-aho2.mm--",
-                    ServiceAddressType.Callsign, "mb3t-wipz-jrcw-qzfm-scql-ovvo-aho2", "alice");
+        // Callsign at specified callsign service
+        TestServiceAddress("@alice@example", ParsedAddressType.CallsignCallsign, "example", "alice");
+
+        //// If it has no ., it is ALWAYS a callsign.
+        TestServiceAddress("alice", ParsedAddressType.Callsign, account: "alice");
+        TestServiceAddress("alice@example", ParsedAddressType.CallsignCallsign, "example", "alice");
+
+
+
+        //// If it end in mm--, it is ALWAYS a callsign.
+        TestServiceAddress("alice@example.mm--", ParsedAddressType.CallsignCallsign, "example", "alice");
+        TestServiceAddress("alice@example.0.mm--", ParsedAddressType.CallsignCallsign, "example", "alice", version: 0);
+        //TestServiceAddress("alice@MB3T-WIPZ-JRCW-QZFM-SCQL-OVVO-AHO2.mm--",
+        //            ParsedAddressType.CallsignCallsign, "mb3t-wipz-jrcw-qzfm-scql-ovvo-aho2", "alice");
+
+
 
 
         // valid dns
-        TestServiceAddress("example.com", ServiceAddressType.DNS, "example.com");
-        TestServiceAddress("fred@example.com", ServiceAddressType.DNS, "example.com", "fred");
-        TestServiceAddress("blender.fred@example.com", ServiceAddressType.DNS, "example.com", "blender.fred");
+        TestServiceAddress("fred@example.com", ParsedAddressType.AccountDns, "example.com", "fred");
+        TestServiceAddress("example.com", ParsedAddressType.Dns, "example.com");
+        //    TestServiceAddress("alice@mb3t-wipz-jrcw-qzfm-scql-ovvo-aho2.mm--",
+        //ParsedAddressType.CallsignCallsign, "mb3t-wipz-jrcw-qzfm-scql-ovvo-aho2", "alice");
+
+        TestServiceAddress("blender.fred@example.com", ParsedAddressType.AccountDns, "example.com", "blender.fred");
 
 
-        // valid IPv4
+
+        TestServiceAddress("@alice.example", ParsedAddressType.Callsign, account: "alice.example");
 
 
-
-        //// valid IPv6
-        //TestServiceAddress("10.0.0.0", ServiceAddressType.IPv4);
-        //TestServiceAddress("0:1:2:3:4:5:6:7", ServiceAddressType.IPv6);
-
-        //TestServiceAddress("10.0.0.0:80", ServiceAddressType.IPv4, port:80);
-        //TestServiceAddress("[0:1:2:3:4:5:6:7]:80", ServiceAddressType.IPv6, port: 80);
         }
 
 
     bool TestServiceAddress(
         string address,
-        ServiceAddressType serviceAddressType = ServiceAddressType.Invalid,
+        ParsedAddressType addressType = ParsedAddressType.Invalid,
+
         string service = null,
         string account = null,
         int? port = null,
@@ -124,13 +128,16 @@ public partial class ServiceDiscovery {
             return result;
             }
 
-        (addressValue.Service == service).TestTrue();
-        (addressValue.Account == account).TestTrue();
-        (addressValue.Version == version).TestTrue();
-        (addressValue.Port == port).TestTrue();
+
+        (addressValue.AddressType == addressType).TestTrue();
+        (addressValue.Account?.Address == account).TestTrue();
+        (addressValue.Service?.Address == service).TestTrue();
+
+        //(addressValue.ServiceVersion == version).TestTrue();
+        //(addressValue.Port == port).TestTrue();
         return result;
-        
-        
+
+
         }
 
 

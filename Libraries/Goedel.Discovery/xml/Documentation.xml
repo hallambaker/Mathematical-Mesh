@@ -3863,16 +3863,28 @@
             <summary>Get Hex data with 8 bit length value</summary>
             <returns>The value returned</returns>
         </member>
-        <member name="T:Goedel.Discovery.ServiceAddressType">
+        <member name="T:Goedel.Discovery.ParsedAddressType">
             <summary>
             Recognized service address types
             </summary>
         </member>
-        <member name="P:Goedel.Discovery.ServiceAddress.Service">
+        <member name="P:Goedel.Discovery.ParsedAddress.Address">
             <summary> The service address </summary>
         </member>
-        <member name="P:Goedel.Discovery.ServiceAddress.Version">
+        <member name="P:Goedel.Discovery.ParsedAddress.Version">
             <summary>The callsign version, is only valid for callsigns</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.ParsedAddress.Invalid">
+            <summary>Convenience value for invalid address.</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.ServiceAddress.MeshTopLevelDirectory">
+            <summary>Toplevel pseudo directory for Mesh callsigns</summary> 
+        </member>
+        <member name="P:Goedel.Discovery.ServiceAddress.AddressType">
+            <summary>The composite address type.</summary> 
+        </member>
+        <member name="P:Goedel.Discovery.ServiceAddress.Service">
+            <summary> The service address </summary>
         </member>
         <member name="P:Goedel.Discovery.ServiceAddress.Account">
             <summary>The account portion.</summary> 
@@ -4014,19 +4026,7 @@
         <member name="F:Goedel.Discovery.ServiceAddressSplitLex.buildActive">
             <summary>The builer we build to.</summary>
         </member>
-        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.buildAccount">
-            <summary>The accumulated account</summary> 
-        </member>
-        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.buildService">
-            <summary>The accumulated account</summary> 
-        </member>
-        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.numeric">
-            <summary>Numeric result</summary> 
-        </member>
-        <member name="F:Goedel.Discovery.ServiceAddressSplitLex.last">
-            <summary>Last segment completed, not yet determined .</summary> 
-        </member>
-        <member name="M:Goedel.Discovery.ServiceAddressSplitLex.#ctor">
+        <member name="M:Goedel.Discovery.ServiceAddressSplitLex.#ctor(Goedel.FSR.LexStringReader)">
             <summary>
             Construct a parser to read from a string to be specified in GetToken (data)
             </summary>

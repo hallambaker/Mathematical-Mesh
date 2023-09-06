@@ -24,6 +24,8 @@ using Goedel.FSR;
 
 using Microsoft.Extensions.Primitives;
 
+using System;
+using System.Diagnostics.Metrics;
 using System.Runtime.CompilerServices;
 
 namespace Goedel.Discovery;
@@ -33,53 +35,26 @@ namespace Goedel.Discovery;
 /// </summary>
 public partial class ServiceAddressSplitLex {
 
-
-    ServiceAddressType serviceAddressType = ServiceAddressType.Invalid;
-
-
     ///<summary>The builer we build to.</summary>
     readonly StringBuilder buildActive = new();
 
-    ///<summary>The accumulated account</summary> 
-    readonly StringBuilder buildAccount = new();
+    int accountSeparatorPosition = 0;
+    int countSeparators = 0;
 
-
-    ///<summary>The accumulated account</summary> 
-    readonly StringBuilder buildService = new();
-
-
-
-    bool isNumeric;
-
-    ///<summary>Numeric result</summary> 
-    string numeric;
-
-    ///<summary>Last segment completed, not yet determined .</summary> 
-    string last;
-
+    LexStringReader StringReader => Reader as LexStringReader;
+    int Position => StringReader.Count - 1;
 
     record LexOutput(Token Token, string Value) {
+
         }
 
     /// <summary>
     /// Construct a parser to read from a string to be specified in GetToken (data)
     /// </summary>
-    public ServiceAddressSplitLex() {
+    public ServiceAddressSplitLex(LexStringReader reader) {
+        Reader = reader;
 
         }
-
-    /*
-     * Valid addresses
-     * 
-     * IPv4     Numeric Dot Numeric Dot Numeric Dot Numeric
-     *          Numeric Dot Numeric Dot Numeric Dot Numeric Colon Numeric
-     *          
-     * Ipv6     HexNumeric Colon HexNumeric Colon HexNumeric Colon .. HexNumeric
-     *          HexNumeric Colon HexNumeric Colon Colon HexNumeric Colon .. HexNumeric
-     *          [Need to start from the last and work back]
-     * 
-     */
-
 
     /// <summary>
     /// Parse the string <paramref name="text"/> and return the result.
@@ -97,20 +72,21 @@ public partial class ServiceAddressSplitLex {
 
         //Lexer.Trace = true;
 
-        var lexer = new ServiceAddressSplitLex(new LexReader(new StringReader(text)));
+        var reader = new LexStringReader(text);
+
+        var lexer = new ServiceAddressSplitLex(reader);
+        //Lexer.Trace = true;
         for (var token = lexer.GetToken(); token != Token.Empty; token = lexer.GetToken()) {
-            var lexOutput = new LexOutput (token, lexer.buildActive.ToString());
+            var lexOutput = new LexOutput(token, lexer.buildActive.ToString());
             tokenList.Add(lexOutput);
 
             //Console.WriteLine($"{lexOutput.Token} = {lexOutput.Value}");
             }
-        if (tokenList.Count <1) {
-            return false; 
+        if (tokenList.Count < 1) {
+            return false;
             }
 
-        if (TryCallSignOrDns(tokenList, ref serviceAddress)) {
-            return true;
-            }
+
 
         if (TryIPv4(tokenList, ref serviceAddress)) {
             return true;
@@ -120,120 +96,192 @@ public partial class ServiceAddressSplitLex {
             return true;
             }
 
-
+        if (TryCallSignOrDns(tokenList, ref serviceAddress)) {
+            return true;
+            }
 
         serviceAddress = null;
         return serviceAddress != null;
         }
 
     static bool TryCallSignOrDns(List<LexOutput> tokens, ref ServiceAddress? serviceAddress) {
-        var count = tokens.Count;
-        var iscallsign = false;
-        var isDNS = false;
-        int? version = null;
+        serviceAddress = null;
 
-        // Check for trailing mm--
-        if (tokens[count - 1].Token == Token.Label) {
-            if (tokens[count - 1].Value == ServiceAddress.MeshTopLevelDirectory) {
-                if (count < 3) {
-                    return false;
+        // scan through to detect @ separators
+        int i = 0;
+        int accountStart = -1;
+        int accountCount = 0;
+        int serviceStart = 0;
+        int serviceCount = 0;
+        bool forceCallsign = false;
+        ParsedAddressType addressType = ParsedAddressType.Empty;
+
+
+        foreach (var token in tokens) {
+            if (token.Token == Token.At) {
+                if (i == 0) {
+                    serviceStart = 1;
+                    forceCallsign = true;
+                    addressType = ParsedAddressType.Callsign;
                     }
-                if (tokens[count - 2].Token != Token.Dot) {
-                    return false;
+                else {
+                    if (accountStart > -1) {
+                        // can't have account path @alice@bob@carol or alice@bob@carol.
+                        return false;
+                        }
+                    accountStart = serviceStart;
+                    accountCount = serviceCount;
+                    serviceCount = 0;
+                    serviceStart = i + 1;
+                    }
+                }
+            else {
+                serviceCount++;
+                }
+
+            i++;
+            }
+
+
+
+        var service = ParseAddress(tokens, serviceStart, serviceCount, forceCallsign, addressType); ;
+        if (service.AddressType == ParsedAddressType.Invalid) {
+            return false;
+            }
+
+        if (accountStart >= 0) {
+            var account = ParseAddress(tokens, accountStart, accountCount, forceCallsign, serviceType: service.AddressType);
+            if (account.AddressType == ParsedAddressType.Invalid) {
+                return false;
+                }
+
+            serviceAddress = new ServiceAddress(account, service);
+            }
+        else {
+            serviceAddress = new ServiceAddress(service);
+            }
+
+
+
+        return true;
+
+        }
+
+
+    static ParsedAddress? ParseAddress(List<LexOutput> tokens, int start, int count,
+                    bool force, ParsedAddressType serviceType = ParsedAddressType.Empty) {
+        int? version = null;
+        //ParsedAddressType addressType = (force | serviceType == ParsedAddressType.Callsign) ? 
+        //    ParsedAddressType.Callsign : ParsedAddressType.Empty;
+
+        ParsedAddressType addressType = ParsedAddressType.Empty;
+
+        if (start < 0) {
+            return ParsedAddress.Invalid;
+            }
+
+        var end = start + count-1;
+        if (tokens[end].Token == Token.Label) {
+            if (tokens[end].Value == ServiceAddress.MeshTopLevelDirectory) {
+                if (count < 3) {
+                    return ParsedAddress.Invalid;
+                    }
+                if (tokens[end - 1].Token != Token.Dot) {
+                    return ParsedAddress.Invalid;
                     }
                 count -= 2;
-                iscallsign = true;
+
+                addressType = ParsedAddressType.Callsign;
                 }
             }
 
+        end = start + count - 1;
         // Check for trailing numeric version,  
-
-
-        if (tokens[count - 1].Token == Token.Numeric) {
+        if (tokens[end].Token == Token.Numeric) {
 
             if (count < 3) {
-                return false;
+                return ParsedAddress.Invalid;
                 }
-            if (tokens[count - 2].Token != Token.Dot) {
-                return false;
+            if (tokens[end - 1].Token != Token.Dot) {
+                return ParsedAddress.Invalid;
                 }
-            if (!int.TryParse(tokens[count - 1].Value, out var pversion)) {
-                return false;
+            if (!int.TryParse(tokens[end].Value, out var pversion)) {
+                return ParsedAddress.Invalid;
                 }
             version = pversion;
-            count -= 2;
-            iscallsign = true;
+            count -= 2; 
+
+            addressType = ParsedAddressType.Callsign;
             }
 
-
-
-        // If it starts with @, it is always a callsign.
-        var i = 0;
-        if (tokens[0].Token == Token.At) {
-            i = 1;
-            iscallsign = true;
-            }
-
+        end = start + count - 1;
         var state = 0;
-        for (; i < count; i++) {
+        var builder = new StringBuilder();
+        for (var i=start; i <= end; i++) {
             var token = tokens[i].Token;
-
+            var value = tokens[i].Value;
             switch (state) {
                 case 0: {
                     if (token == Token.Label) {
-                        state = 1; break;
+                        builder.Append(value);
+                        state = 1; 
+                        break;
                         }
-                    return false;
+                    return ParsedAddress.Invalid;
                     }
 
                 case 1: {
                     if (token == Token.Dot) {
-                        state = 0; break;
+                        builder.Append('.');
+                        state = 0;
+                        addressType = ParsedAddressType.Dns;
+                        break;
                         }
-                    if (token == Token.At) {
-                        state = 2; break;
-                        }
-                    return false;
+                    return ParsedAddress.Invalid;
                     }
-
-                case 2: {
-                    if (token == Token.Label) {
-                        state = 3; break;
-                        }
-                    return false;
-                    }
-
-                case 3: {
-                    if (token == Token.Dot) {
-                        state = 2; break;
-                        }
-                    return false;
-                    }
-                }
+                } 
             }
-
-        string service = null;
-        string account = null;
-        if (state == 1) { // service only
-            
-            }
-        else if (state == 3) { // account@service
-            
-            }
-        else {
-            return false;
+        if (state != 1) {
+            return ParsedAddress.Invalid;
             }
 
 
-        iscallsign |= !isDNS;
-        serviceAddress = new ServiceAddress() {
-            ServiceAddressType = iscallsign ? ServiceAddressType.Callsign : ServiceAddressType.DNS,
-            Service = service,
-            Account = account,
+        if (serviceType == ParsedAddressType.Callsign) {
+            addressType = ParsedAddressType.Callsign;
+            }
+        else if (addressType == ParsedAddressType.Empty) {
+            addressType = serviceType == ParsedAddressType.Dns ?
+                 ParsedAddressType.Dns : ParsedAddressType.Callsign;
+            }
+
+
+            //switch (serviceType) {
+            //case ParsedAddressType.Callsign: {
+            //    addressType = ParsedAddressType.Callsign;
+            //    break;
+            //    }
+            //case ParsedAddressType.Dns: {
+            //    if (addressType == ParsedAddressType.Empty) {
+            //        // alice@example.com is a DNS Account
+            //        addressType = ParsedAddressType.Dns;
+            //        }
+            //    break;
+            //    }
+            //default: {
+            //    if (addressType == ParsedAddressType.Empty) {
+            //        // example.com is a DNS Service
+            //        addressType = ParsedAddressType.Callsign;
+            //        }
+            //    break;
+            //    }
+            //}
+
+
+        return new ParsedAddress() {
+            AddressType = addressType,
+            Address = builder.ToString(),
             Version = version
             };
-
-        return true;
         }
 
 
@@ -257,11 +305,14 @@ public partial class ServiceAddressSplitLex {
             return false;
             }
 
+        var service = new ParsedAddress() {
+            AddressType = ParsedAddressType.IPv4,
+            Address = $"{tokens[0].Value}.{tokens[2].Value}.{tokens[4].Value}.{tokens[6].Value}"
+            };
+
         if (tokens.Count == 7) {
             // No port value, return the verified address
-            serviceAddress = new ServiceAddress() {
-                Service = $"{tokens[0].Value}.{tokens[2].Value}.{tokens[4].Value}.{tokens[6].Value}"
-                };
+            serviceAddress = new ServiceAddress(service);
             return true;
             }
 
@@ -269,14 +320,13 @@ public partial class ServiceAddressSplitLex {
             return false;
             }
 
-
         if (!int.TryParse(tokens[8].Value, out var port)) {
             return false;
             }
-        serviceAddress = new ServiceAddress() {
-            Service = $"{tokens[0].Value}.{tokens[2].Value}.{tokens[4].Value}.{tokens[6].Value}",
-            Port = port
+        serviceAddress = new ServiceAddress(service) { 
+            Port = port 
             };
+
 
         return true;
         }
@@ -369,8 +419,12 @@ public partial class ServiceAddressSplitLex {
             return false;
             }
 
-        serviceAddress = new ServiceAddress() {
-            Service = builder.ToString(),
+        var service = new ParsedAddress() {
+            AddressType = ParsedAddressType.IPv6,
+            Address = builder.ToString(),
+            };
+
+        serviceAddress = new ServiceAddress(service) {
             Port = port
             };
         return true;
@@ -423,148 +477,7 @@ public partial class ServiceAddressSplitLex {
     ///<inheritdoc/>
     public override void Reset() {
         buildActive.Clear();
-        buildAccount.Clear();
-        buildService.Clear();
-        isNumeric = false;
-        numeric = null;
-        last = null;
         }
-
-
-    //(string, string) GetService() {
-    //    if (buildAccount.Length == 0) {
-    //        if (last != null) {
-    //            buildActive.Append('.');
-    //            buildActive.Append(last);
-    //            }
-    //        return (buildActive.ToString(), null);
-    //        }
-
-    //    if (buildAccount.ToString() == "mm--") {
-    //        return (last, buildActive.ToString());
-    //        }
-
-    //    buildActive.Append('.');
-    //    buildActive.Append(last);
-    //    return (buildAccount.ToString(), buildActive.ToString());
-    //    }
-
-    //ServiceAddress Complete() {
-    //    var token = Tokens[StateInt];
-
-    //    var active = buildActive.ToString();
-
-
-    //    if (active == ServiceAddress.MeshTopLevelDirectory) {     // If it ends in mm-- it is ALWAYS a callsign
-    //        active = null;
-    //        token = Token.Callsign;
-    //        }
-    //    else if (isNumeric) {       // If it ends in a number, it is ALWAYS a callsign.
-    //        if (numeric != null) { // @alice.0.0 is invalid
-    //            return null;
-    //            }
-    //        numeric = active;
-    //        active = null;
-    //        token = Token.Callsign;
-    //        }
-
-    //    if (last != null) {
-    //        buildService.Append(".");
-    //        buildService.Append(last);
-    //        }
-    //    if (active != null) {
-    //        buildService.Append(".");
-    //        buildService.Append(active);
-    //        }
-    //    var service = buildService.ToString();
-
-    //    var account = buildAccount.Length == 0 ? null : buildAccount.ToString();
-
-    //    int? version = null;
-    //    if (numeric != null && int.TryParse(numeric.ToString(), out var versionParsed)) {
-    //        version = versionParsed;
-    //        }
-
-
-    //    switch (token) {
-    //        case Token.Callsign: {
-    //            return new ServiceAddress() {
-    //                ServiceAddressType = ServiceAddressType.Callsign,
-    //                Service = service,
-    //                Account = account,
-    //                Version = version
-    //                };
-    //            }
-    //        case Token.DnsMultiple: {
-    //            return new ServiceAddress() {
-    //                ServiceAddressType = ServiceAddressType.DNS,
-    //                Service = service,
-    //                Account = account
-    //                };
-    //            }
-    //        case Token.IPv4: {
-    //            return new ServiceAddress() {
-    //                ServiceAddressType = ServiceAddressType.IPv4,
-    //                Service = service,
-    //                };
-    //            }
-    //        case Token.IPv6: {
-    //            return new ServiceAddress() {
-    //                ServiceAddressType = ServiceAddressType.IPv6,
-    //                Service = service,
-    //                };
-    //            }
-    //        //case Token.SingleCallsign:
-    //        //case Token.SingleLabel: {
-    //        //    return new ServiceAddress() {
-    //        //        ServiceAddressType = ServiceAddressType.Callsign,
-    //        //        Service = buildActive.ToString()
-    //        //        };
-    //        //    }
-    //        //case Token.DnsMultiple: {
-    //        //    return new ServiceAddress() {
-    //        //        ServiceAddressType = ServiceAddressType.DNS,
-    //        //        Service = buildActive.ToString()
-    //        //        };
-    //        //    }
-
-    //        //case Token.CallsignVersion: {
-    //        //    var validVersion = int.TryParse(buildNumeric.ToString(), out var version);
-    //        //    var (service, account) = GetService();
-    //        //    return new ServiceAddress() {
-    //        //        ServiceAddressType = ServiceAddressType.DNS,
-    //        //        Service = service,
-    //        //        Account = account,
-    //        //        Version = validVersion ? version : null
-    //        //        };
-    //        //    }
-
-    //        //case Token.CallsignVersionCheck: {
-
-    //        //    if (buildAccount.ToString().ToLower() != "mm--") {
-    //        //        return null;
-    //        //        }
-
-    //        //    var validVersion = int.TryParse(buildNumeric.ToString(), out var version);
-    //        //    var account = buildActive.ToString();
-    //        //    var service = last;
-
-    //        //    return new ServiceAddress() {
-    //        //        ServiceAddressType = ServiceAddressType.DNS,
-    //        //        Service = service,
-    //        //        Account = account,
-    //        //        Version = validVersion ? version : null
-    //        //        };
-    //        //    }
-
-    //        default: {
-    //            return null;
-    //            }
-
-
-    //        }
-    //    }
-
 
 
 
@@ -574,7 +487,11 @@ public partial class ServiceAddressSplitLex {
         }
 
 
-    void Skip(int c) {
+    void IsAt(int c) {
+        if (Position > 0) {
+            countSeparators++;
+            accountSeparatorPosition = Position;
+            }
         }
 
 
