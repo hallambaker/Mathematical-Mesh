@@ -127,6 +127,8 @@ public class RudStream {
     ///<summary>The account address</summary> 
     public string AccountAddress { get; }
 
+    ///<summary>If false, stream requires asynchronous initialization (e.g. DNS/Callsign resolution) 
+    ///before use. The stream MAY be set to uininitialized after certain types of failure.</summary> 
     public bool Initialized { get; protected set; }=true;
 
     #endregion
@@ -150,7 +152,6 @@ public class RudStream {
                 RudConnection rudConnection = null,
             string accountAddress = null) {
 
-        //(credentialSelf?.AuthenticationPublic.PublicOnly != true).AssertTrue(NYI.Throw);
         accountAddress.Future();
 
         RdpStreamParent = parent;
@@ -158,15 +159,13 @@ public class RudStream {
             parent.AddChild(this);
             }
         RudConnection = rudConnection ?? parent?.RudConnection;
+        RudConnection.AssertNotNull(NYI.Throw);
 
         Protocol = protocol;
 
         // only set the URI if we are creating an initiator stream.
         if (RudConnection is ConnectionInitiator initiator) {
             Initialized = false;
-            //"This needs conversion to Async throughout".TaskFunctionality(true);
-            //var serviceDescription = DnsClient.ResolveServiceAsync(initiator.Domain, protocol, port:15099).Sync();
-            //Uri = serviceDescription.GetUri(initiator.Instance);
             }
         //AccountAddress = throw new NYI();
         CredentialSelf = credentialSelf;
@@ -176,19 +175,6 @@ public class RudStream {
         //VerifiedAccount = new VerifiedAccount(credentialOther, AccountAddress);
 
         }
-
-
-
-    public static async Task<RudStream> GetInitiator(
-                string protocol,
-                ICredentialPrivate credentialSelf,
-                string accountAddress) {
-
-
-        throw new NotImplementedException();
-
-        }
-
 
 
     #endregion

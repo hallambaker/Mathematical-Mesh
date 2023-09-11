@@ -31,6 +31,7 @@ global using Goedel.Mesh.Client;
 global using Microsoft.Extensions.Logging;
 global using Camera.MAUI;
 
+global using Goedel.Discovery;
 #if !(_Github_)
 //[assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif

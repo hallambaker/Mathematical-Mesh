@@ -72,7 +72,12 @@ public class GuigenDetailAction : ContentPage, IPresentation {
 
     private void OnClickConfirm(object sender, EventArgs e) {
         var result = Action.Factory();
+        result.Initialize();
+
         FieldSet.GetFields(result);
+
+        var verify = result.Validate();
+
 
 
 

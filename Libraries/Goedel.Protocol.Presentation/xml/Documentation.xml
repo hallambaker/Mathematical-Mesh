@@ -1882,6 +1882,10 @@
         <member name="P:Goedel.Protocol.Presentation.RudStream.AccountAddress">
             <summary>The account address</summary> 
         </member>
+        <member name="P:Goedel.Protocol.Presentation.RudStream.Initialized">
+            <summary>If false, stream requires asynchronous initialization (e.g. DNS/Callsign resolution) 
+            before use. The stream MAY be set to uininitialized after certain types of failure.</summary> 
+        </member>
         <member name="M:Goedel.Protocol.Presentation.RudStream.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.ICredentialPublic,Goedel.Protocol.Presentation.RudConnection,System.String)">
             <summary>
             Initialize a new stream instance as a child of <paramref name="parent"/> to support
@@ -2002,6 +2006,9 @@
             <param name="tag"></param>
             <param name="request"></param>
             <returns></returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RudStreamClient.PostAsync(System.String,Goedel.Protocol.JsonObject)">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Protocol.Presentation.RudStreamClient.Rebind(Goedel.Protocol.ICredential)">
             <inheritdoc cref="T:Goedel.Protocol.IJpcSession"/>

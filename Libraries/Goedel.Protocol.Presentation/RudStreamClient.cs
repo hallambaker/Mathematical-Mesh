@@ -32,7 +32,6 @@ public class RudStreamClient : RudStream, IJpcSession {
     ///<inheritdoc/>
     public virtual string TargetAccount => throw new NYI();
 
-    string Protocol { get; }
 
     #endregion
     #region // Constructors
@@ -54,8 +53,6 @@ public class RudStreamClient : RudStream, IJpcSession {
             ICredentialPublic credentialOther = null,
             RudConnection rudConnection = null) : base(
                 parent, protocol, credentialSelf, credentialOther, rudConnection) {
-        Protocol = protocol;
-
         }
 
     #endregion
@@ -84,7 +81,7 @@ public class RudStreamClient : RudStream, IJpcSession {
         return task.Result;
         }
 
-
+    ///<inheritdoc/>
     public override async Task<JsonObject> PostAsync(string tag, JsonObject request) {
         if (!Initialized) {
             await Initialize();
@@ -93,12 +90,6 @@ public class RudStreamClient : RudStream, IJpcSession {
 
         return await base.PostAsync(tag, request);
         }
-
-
-    //public async Task<JsonObject> PostAsync(string tag, JsonObject request) {
-    //    return await base.PostAsync(tag, request);
-    //    }
-
 
     ///<inheritdoc cref="IJpcSession"/>
     public IJpcSession Rebind(ICredential credential) {

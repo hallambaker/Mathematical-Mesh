@@ -27,8 +27,8 @@ public interface IParameter : IBindable {
 
 
 
-    public bool Validate();
-
+    public IResult Validate();
+    public IResult Initialize();
     }
 
 public enum ReturnResult {
@@ -57,6 +57,8 @@ public record NullResult : IResult {
         }
 
     public GuiBinding Binding => throw new NotImplementedException();
+
+    ///<summary></summary> 
 
     public static NullResult Initialized = new NullResult() {
         ReturnResult = ReturnResult.Initialized
@@ -104,20 +106,13 @@ public record GuiBinding {
     }
 
 
-public record GuiResult {
-
-    public List<IGuiEntry> Entries { get; set; } = null!;
 
 
 
-    public GuiResult() {
-        }
 
-    }
+public record GuiBoundProperty (
+        string? Label = null){
 
-public record GuiBoundProperty  {
-    ///<summary>Error to be filled if Validate is called and finds an error</summary> 
-    public string? Error { get; set; } = null;
 
     }
 
@@ -125,40 +120,40 @@ public record GuiBoundProperty  {
 public record GuiBoundPropertyString (
                 Func<object, string> Get,
                 Action<object, string> Set,
-                string? Label = null) : GuiBoundProperty {
+                string? Label = null) : GuiBoundProperty (Label) {
     }
 
 public record GuiBoundPropertyChooser(
                 Func<object, ISelectCollection> Get,
                 Action<object, ISelectCollection> Set,
-                string? Label = null) : GuiBoundProperty {
+                string? Label = null) : GuiBoundProperty(Label) {
     }
 
 public record GuiBoundPropertyColor(
                 Func<object, IFieldColor> Get,
                 Action<object, IFieldColor> Set,
-                string? Label = null) : GuiBoundProperty {
+                string? Label = null) : GuiBoundProperty(Label) {
     }
 
 
 public record GuiBoundPropertySize(
                 Func<object, IFieldSize> Get,
                 Action<object, IFieldSize> Set,
-                string? Label = null) : GuiBoundProperty {
+                string? Label = null) : GuiBoundProperty(Label) {
     }
 
 
 public record GuiBoundPropertyDecimal(
                 Func<object, double> Get,
                 Action<object, double> Set,
-                string? Label = null) : GuiBoundProperty {
+                string? Label = null) : GuiBoundProperty(Label) {
     }
 
 
 public record GuiBoundPropertyIcon(
                 Func<object, IFieldIcon> Get,
                 Action<object, IFieldIcon> Set,
-                string? Label = null) : GuiBoundProperty {
+                string? Label = null) : GuiBoundProperty(Label) {
     }
 
 
@@ -239,7 +234,7 @@ public record GuiSection (
     }
 
 public delegate  Task<IResult> ActionCallback(object IBindable, ActionMode mode= ActionMode.Execute);
-public delegate IBindable FactoryCallback();
+public delegate IParameter FactoryCallback();
 public record GuiAction(
             string Id,
             string Prompt,

@@ -124,6 +124,10 @@ Result ReportPending
 Action TestService "Test Service" "test_service"
 	Return ReportHost
 	Text ServiceAddress "Service address"
+		Error ServiceAddressNotEmpty "Service address cannot be blank"
+			|ServiceAddress == null
+		Error ServiceAddressNotValid "Not a valid service address"
+			|!ServiceAddress.TryParseServiceAddress()
 
 Action AccountCreate "Create Mesh Account" "new"
 	Return ReportAccount

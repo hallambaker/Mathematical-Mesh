@@ -1,8 +1,8 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Protocol;
 
-using Goedel.Discovery;
-using System.Net;
+
+using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
@@ -11,14 +11,21 @@ using ZXing.QrCode.Internal;
 namespace Goedel.Everything;
 
 public partial class TestService {
+    ResourceManager ResourceManager;
 
-    public override bool Validate() {
-        if (ServiceAddress == null || !ServiceAddress.TryParseServiceAddress()) {
-            return false; 
+    public override IResult Validate() {
+
+        if (ServiceAddress == null) {
+            return new GuiResultInvalid(this,
+                    nameof(ServiceAddress), "Address must not be empty.");
             }
 
+        if (!ServiceAddress.TryParseServiceAddress()) {
+            return new GuiResultInvalid(this,
+                    nameof(ServiceAddress), "Not a valid service address");
+            }
 
-        return true;
+        return NullResult.Valid;
         }
 
     }
@@ -78,16 +85,16 @@ public partial class EverythingMaui {
 
     public override async Task<IResult> AccountCreate(AccountCreate data, ActionMode mode= ActionMode.Execute) {
 
-        // This chunk can be pushed into the generated code.
-        switch (mode) {
-            case ActionMode.Initialize: {
-                data.Reset (this);
-                return NullResult.Initialized;
-                }
-            case ActionMode.Validate: {
-                return data.Validate() ? NullResult.Valid :NullResult.Invalid;
-                }
-            }
+        //// This chunk can be pushed into the generated code.
+        //switch (mode) {
+        //    case ActionMode.Initialize: {
+        //        data.Reset (this);
+        //        return NullResult.Initialized;
+        //        }
+        //    case ActionMode.Validate: {
+        //        return data.Validate() ? NullResult.Valid :NullResult.Invalid;
+        //        }
+        //    }
 
         //var data1 = new byte[] {0,0};
         //var request = new ByteArrayContent(data1);
