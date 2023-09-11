@@ -373,7 +373,7 @@ public partial class ServiceAddressSplitLex {
             var token = tokens[i + start];
             var isColon = token.Token == Token.Colon;
 
-            Console.WriteLine($"{state} : {token.Token} = {token.Value}");
+            //Console.WriteLine($"{state} : {token.Token} = {token.Value}");
 
             if ((token.Token == Token.Numeric) | (token.Token == Token.Hexadecimal)) {
                 if (NotIPv6Segment(token)) {

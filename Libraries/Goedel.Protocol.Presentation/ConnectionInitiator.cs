@@ -124,7 +124,7 @@ public partial class ConnectionInitiator : RudConnection {
 
         client.JpcSession = new RudStreamClient(null, client.GetWellKnown,
             credential ?? CredentialSelf, rudConnection: this);
-
+        "Stash the initiator here".TaskFunctionality();
 
         //RudStreamInitial.MakeStreamClient(client.GetWellKnown, credential);
 
@@ -133,4 +133,10 @@ public partial class ConnectionInitiator : RudConnection {
 
     #endregion
 
+
+
+
+
     }
+
+

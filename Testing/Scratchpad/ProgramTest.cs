@@ -63,6 +63,12 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
+
+
+        ShellTestsAdmin.Test().TestHello();
+
+
+
         ServiceDiscovery.Test().TestServiceAddressParse();
 
         //TestService.Test().MeshCatalogGroup();

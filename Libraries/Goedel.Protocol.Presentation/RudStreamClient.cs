@@ -32,7 +32,7 @@ public class RudStreamClient : RudStream, IJpcSession {
     ///<inheritdoc/>
     public virtual string TargetAccount => throw new NYI();
 
-
+    string Protocol { get; }
 
     #endregion
     #region // Constructors
@@ -53,12 +53,23 @@ public class RudStreamClient : RudStream, IJpcSession {
              ICredentialPrivate credentialSelf = null,
             ICredentialPublic credentialOther = null,
             RudConnection rudConnection = null) : base(
-                parent, protocol, credentialSelf, credentialOther, rudConnection) { }
+                parent, protocol, credentialSelf, credentialOther, rudConnection) {
+        Protocol = protocol;
+
+        }
 
     #endregion
     #region // Methods
 
+    async Task<bool> Initialize() {
+        if (RudConnection is ConnectionInitiator initiator) {
+            var serviceDescription = await DnsClient.ResolveServiceAsync(initiator.Domain, Protocol, port: 15099);
+            Uri = serviceDescription.GetUri(initiator.Instance);
+            }
+        Initialized = true;
 
+        return true;
+        }
 
     /// <summary>
     /// Post the transaction <paramref name="tag"/> with data <paramref name="request"/>
@@ -72,6 +83,17 @@ public class RudStreamClient : RudStream, IJpcSession {
         task.Wait();
         return task.Result;
         }
+
+
+    public override async Task<JsonObject> PostAsync(string tag, JsonObject request) {
+        if (!Initialized) {
+            await Initialize();
+            }
+
+
+        return await base.PostAsync(tag, request);
+        }
+
 
     //public async Task<JsonObject> PostAsync(string tag, JsonObject request) {
     //    return await base.PostAsync(tag, request);
