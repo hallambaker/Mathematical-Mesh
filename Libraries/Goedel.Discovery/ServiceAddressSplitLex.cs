@@ -42,7 +42,6 @@ public partial class ServiceAddressSplitLex {
     int countSeparators = 0;
 
     LexStringReader StringReader => Reader as LexStringReader;
-    int Position => StringReader.Count - 1;
 
     record LexOutput(Token Token, string Value) {
 
@@ -60,6 +59,7 @@ public partial class ServiceAddressSplitLex {
     /// Parse the string <paramref name="text"/> and return the result.
     /// </summary>
     /// <param name="text">The service address in text form.</param>
+    /// <param name="serviceAddress">The parsed service address.</param>
     /// <returns>The parse result.</returns>
     public static bool TryParse(string text, out ServiceAddress? serviceAddress) {
         serviceAddress = null;
@@ -488,10 +488,10 @@ public partial class ServiceAddressSplitLex {
 
 
     void IsAt(int c) {
-        if (Position > 0) {
-            countSeparators++;
-            accountSeparatorPosition = Position;
-            }
+        //if (Position > 0) {
+        //    countSeparators++;
+        //    accountSeparatorPosition = Position;
+        //    }
         }
 
 

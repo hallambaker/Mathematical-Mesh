@@ -22,11 +22,24 @@ namespace Goedel.Discovery;
 public static class Extensions {
 
 
-
+    /// <summary>
+    /// Attempt to parse <paramref name="identifier"/> returning
+    /// <code>true</code> if it is a valid service address and <code>false</code> otherwise.
+    /// </summary>
+    /// <param name="identifier">The address to parse.</param>
+    /// <returns><code>true</code> if <paramref name="identifier"/> is a valid service address 
+    /// and <code>false</code> otherwise.</returns>
     public static bool TryParseServiceAddress(
             this string identifier) => ServiceAddress.TryParse(identifier, out _);
 
-
+    /// <summary>
+    /// Attempt to parse <paramref name="identifier"/> returning
+    /// <code>true</code> if it is a valid service address and <code>false</code> otherwise.
+    /// </summary>
+    /// <param name="serviceAddress">The parsed value.</param>
+    /// <param name="identifier">The address to parse.</param>
+    /// <returns><code>true</code> if <paramref name="identifier"/> is a valid service address 
+    /// and <code>false</code> otherwise.</returns>
     public static bool TryParseServiceAddress(
                     this string identifier,
                     out ServiceAddress serviceAddress) => ServiceAddress.TryParse(identifier, out serviceAddress);

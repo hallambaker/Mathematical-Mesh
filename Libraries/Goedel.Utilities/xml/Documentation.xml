@@ -2485,6 +2485,45 @@
         <member name="P:Goedel.Utilities.PartialOperationResult.Estimated">
             <summary>If true, the number of remaining items is an estimate.</summary>
         </member>
+        <member name="T:Goedel.Utilities.ResourceId">
+            <summary>
+            Provide a means of strongly typing a resource identifier.
+            </summary>
+            <param name="Id">The resource identifier.</param>
+        </member>
+        <member name="M:Goedel.Utilities.ResourceId.#ctor(System.String)">
+            <summary>
+            Provide a means of strongly typing a resource identifier.
+            </summary>
+            <param name="Id">The resource identifier.</param>
+        </member>
+        <member name="P:Goedel.Utilities.ResourceId.Id">
+            <summary>The resource identifier.</summary>
+        </member>
+        <member name="M:Goedel.Utilities.ResourceResolver.SetResourceManager(System.Resources.ResourceManager,System.Globalization.CultureInfo)">
+            <summary>
+            Set the resource manager and culture.
+            </summary>
+            <param name="resourceManager"></param>
+            <param name="cultureInfo"></param>
+        </member>
+        <member name="M:Goedel.Utilities.ResourceResolver.GetString(System.String)">
+            <summary>
+            Returns the value of the specified string resource.
+            </summary>
+            <param name="Id">The name of the resource to retrieve.</param>
+            <returns>The value of the resource localized for the caller's current UI culture, 
+            or null if name cannot be found in a resource set.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.ResourceResolver.GetString(Goedel.Utilities.ResourceId)">
+            <summary>
+            Strongly typed means of resolving the resource identifier <paramref name="Id"/> to
+            the corresponding resource.
+            </summary>
+            <param name="Id">The name of the resource to retrieve.</param>
+            <returns>The value of the resource localized for the caller's current UI culture, 
+            or null if name cannot be found in a resource set.</returns>
+        </member>
         <member name="T:Goedel.Utilities.AddressType">
             <summary>
             Account addresses used in the Mesh.

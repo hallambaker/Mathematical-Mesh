@@ -20,7 +20,10 @@ public class GuigenDetailAction : ContentPage, IPresentation {
     //List<GuigenField> Fields = new();
 
     IBindable BoundValue;
-    FieldSet FieldSet { get; }
+    GuigenFieldSet FieldSet { get; }
+
+    IParameter Result { get; set; }
+
 
     public GuigenDetailAction(IMainWindow mainWindow, GuiAction action) {
 
@@ -40,7 +43,7 @@ public class GuigenDetailAction : ContentPage, IPresentation {
             };
         stack.Add(label);
 
-        FieldSet = new FieldSet(action.Entries, stack);
+        FieldSet = new GuigenFieldSet(MainWindow, action.Entries, stack);
 
         var view = new HorizontalStackLayout();
 
@@ -57,6 +60,8 @@ public class GuigenDetailAction : ContentPage, IPresentation {
         ActionViews.Add(ConfirmButton);
         ActionViews.Add(CancelButton);
 
+        Result = Action.Factory();
+
         EnableActions();
 
         view.Add(ConfirmButton);
@@ -66,33 +71,40 @@ public class GuigenDetailAction : ContentPage, IPresentation {
         Content = stack;
         }
 
+    private void OnActivate() {
+        Result.Initialize();
+        }
+
+
     private void OnClickCancel(object sender, EventArgs e) {
         MainWindow.SetDetailWindow();
         }
 
     private void OnClickConfirm(object sender, EventArgs e) {
         var result = Action.Factory();
-        result.Initialize();
+
 
         FieldSet.GetFields(result);
 
         var verify = result.Validate();
 
+        switch (verify) {
+            case ValidResult: {
+                if (Action.Callback != null) {
+                    DisableActions();
 
+                    var task = Action.Callback(result, ActionMode.Execute);
 
-
-        if (Action.Callback != null) {
-            DisableActions();
-
-            var task = Action.Callback(result, ActionMode.Execute);
-
-            // here we need to lock the UI to prevent further actions until it returns, except for the cancel command.
-            //task.Wait();
-
-            task.ContinueWith(Continue, null);
+                    task.ContinueWith(Continue, null);
+                    }
+                break;
+                }
+            case GuiResultInvalid invalid: {
+                // here we report back the failures.
+                FieldSet.Feedback(invalid);
+                break;
+                }
             }
-
-
         }
 
     public Task<IResult> Continue(Task<IResult> task, object? fred) {
@@ -108,7 +120,7 @@ public class GuigenDetailAction : ContentPage, IPresentation {
         foreach (var action in ActionViews) {
             if (action != null) {
                 action.IsEnabled = false;
-                MainWindow.FormatView(action);
+                MainWindow.FormatAction(action);
                 }
             }
         }
@@ -117,7 +129,7 @@ public class GuigenDetailAction : ContentPage, IPresentation {
         foreach (var action in ActionViews) {
             if (action != null) {
                 action.IsEnabled = true;
-                MainWindow.FormatView(action);
+                MainWindow.FormatAction(action);
                 }
             }
         }

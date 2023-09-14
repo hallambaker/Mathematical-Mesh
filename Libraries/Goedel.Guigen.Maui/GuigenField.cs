@@ -22,36 +22,54 @@ public abstract class GuigenField{
 
     public abstract void GetField(IBindable data);
 
+
+    public virtual void ClearFeedback() {
+        }
+
+    public virtual void SetFeedback(IndexedMessage message) {
+        }
     }
 
-public class FieldSet {
+
+public class GuigenFieldSet : IWidget {
+
+    public IMainWindow MainWindow { get; }
     public Layout View { get; private set; }
 
 
     public List<GuigenField> Fields { get; } = new();
 
+    int[] FieldMap;
 
-    public FieldSet(IEnumerable<IGuiEntry> fields, Layout stack) {
+
+    public GuigenFieldSet(IMainWindow mainWindow, List<IGuiEntry> fields, Layout stack) {
+        MainWindow = mainWindow;
         stack ??= new VerticalStackLayout();
         View = stack;
 
+        FieldMap = new int[fields.Count];
+        int i = 0;
         foreach (var entry in fields) {
             switch (entry) {
                 case GuiText text: {
-                    var field = new GuigenFieldString(text);
+                    var field = new GuigenFieldString(MainWindow, text, stack);
                     Fields.Add(field);
-                    stack.Add(field.View);
+                    FieldMap[i++] = field.Index;
                     break;
                     }
                 case GuiChooser chooser: {
                     var field = new GuigenFieldChooser(chooser);
                     Fields.Add(field);
                     stack.Add(field.ListView);
+                    FieldMap[i++] = field.Index;
+                    break;
+                    }
+                default : {
+                    FieldMap[i++] = -1;
                     break;
                     }
                 }
             }
-
         }
 
     public void SetFields(IBindable data) {
@@ -75,79 +93,56 @@ public class FieldSet {
         }
 
 
-    }
+    public void Feedback(GuiResultInvalid feedback) {
+        foreach (var field in Fields) {
+            field.ClearFeedback();
+            }
 
-
-public class FieldBinding {
-
-    GuiBinding Binding;
-    Label[] Labels;
-
-    public FieldBinding(MyViewCell cell) {
-        var stack = new HorizontalStackLayout();
-        cell.View = stack;
-
-        var chooser = cell.Chooser.Chooser;
-        foreach (var entry in chooser.Entries) {
-            switch (entry) {
-                case GuiView view: {
-                    Binding ??= view.Binding;
-
-                    break;
-                    }
-
-
+        foreach (var message in feedback.Messages) {
+            var index = FieldMap[message.Index];
+            if (index != -1) {
+                Fields[index].SetFeedback(message);
                 }
-
-            }
-
-        int i = 0;
-        Labels = new Label[Binding.BoundProperties.Length];
-        foreach (var property in Binding.BoundProperties) {
-            var label = new Label();
-            Labels[i++] = label;
-            stack.Add(label);
             }
         }
-
-
-    public void Bind(object data) {
-        if (data == null) {
-            return;
-            }
-
-        for (var i=0; i< Binding.BoundProperties.Length; i++) {
-            var field = Binding.BoundProperties[i] as GuiBoundPropertyString;
-            var value = field.Get(data);
-
-            Labels[i].Text = value;
-            }
-
-        }
-
 
     }
 
 
-public class GuigenFieldString : GuigenField {
-
+public class GuigenFieldString : GuigenField, IWidget {
+    public IMainWindow MainWindow { get; }
     public IView View { get; private set; }
 
     public Entry ValueField;
+    Label FieldLabel;
+    Label Feedback = new() {
+        IsVisible = false
+        };
 
-    public GuigenFieldString(GuiText text) : base (text){
+    public GuigenFieldString(IMainWindow mainWindow, GuiText text, Layout stack) : base(text) {
+        MainWindow = mainWindow;
+
         var view = new HorizontalStackLayout();
-        var fieldLabel = new Label() {
+        FieldLabel = new Label() {
             Text = text.Prompt
             };
         ValueField = new Entry() {
             };
 
-
-        view.Add(fieldLabel);
+        view.Add(FieldLabel);
         view.Add(ValueField);
         View = view;
+
+        MainWindow.FormatFieldLabel(FieldLabel);
+        MainWindow.FormatFieldEntry(ValueField);
+        MainWindow.FormatFeedback(Feedback);
+
+        stack.Add(View);
+        stack.Add(Feedback);
         }
+
+
+
     public override void SetField(IBindable data) {
         var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyString;
         ValueField.Text = binding.Get(data);
@@ -160,6 +155,14 @@ public class GuigenFieldString : GuigenField {
         }
 
 
+    public override void ClearFeedback() {
+        Feedback.IsVisible =false;
+        }
+
+    public override void SetFeedback(IndexedMessage message) {
+        Feedback.IsVisible = true;
+        Feedback.Text = message.Text;
+        }
 
     }
 
@@ -211,7 +214,7 @@ public class GuigenFieldChooser : GuigenField {
 
 
 
-   
+
 
 
     static object GetCell() {
@@ -219,6 +222,54 @@ public class GuigenFieldChooser : GuigenField {
 
         throw new NotImplementedException();
         }
+    }
+
+
+
+public class FieldBinding {
+
+    GuiBinding Binding;
+    Label[] Labels;
+
+    public FieldBinding(MyViewCell cell) {
+        var stack = new HorizontalStackLayout();
+        cell.View = stack;
+
+        var chooser = cell.Chooser.Chooser;
+        foreach (var entry in chooser.Entries) {
+            switch (entry) {
+                case GuiView view: {
+                    Binding ??= view.Binding;
+
+                    break;
+                    }
+                }
+            }
+
+        int i = 0;
+        Labels = new Label[Binding.BoundProperties.Length];
+        foreach (var property in Binding.BoundProperties) {
+            var label = new Label();
+            Labels[i++] = label;
+            stack.Add(label);
+            }
+        }
+
+    public void Bind(object data) {
+        if (data == null) {
+            return;
+            }
+
+        for (var i=0; i< Binding.BoundProperties.Length; i++) {
+            var field = Binding.BoundProperties[i] as GuiBoundPropertyString;
+            var value = field.Get(data);
+
+            Labels[i].Text = value;
+            }
+
+        }
+
+
     }
 
 

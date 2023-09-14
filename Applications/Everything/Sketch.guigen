@@ -118,16 +118,41 @@ Result ReportPending
 	Text ServiceUdf			"Service fingerprint"
 	Text Message			"Message"
 
+
+// Exceptions
+
+Exception HttpRequestException		"The Mesh service did not respond"
+	Value System.Net.Http.HttpRequestException
+
+Exception ServiceNotFound			"The service {0} could not be found"
+Exception HostNotFound				"No host could not be reached for service {0}"
+Exception InvalidHostCredential		"The host presented an invalid credential"
+Exception CredentialRefused			"The host refused service on account of an invalid credential"
+Exception DeviceRefused				"This device is no longer authorized to access this account"
+Exception FileWriteError			"Could not write file {0}"
+Exception FileReadError				"Could not read file {0}"
+Exception AccountProfileInvalid		"Account profile file is invalid"
+Exception DeviceProfileInvalid		"Device profile file is invalid"
+Exception ActivationKeyNotFound		"The activation key for the profile {0} could not be found"
+Exception NotAuthorizedCatalog		"This device is not authorized to access the {0} catalog"
+Exception NotAuthorizedAdministration	"This device is not authorized to perform administrative requests"
+Exception NotAuthorizedFCatalog		"This device is not authorized to access the {0} catalog"
+Exception CounterpartyApproval		"Request requires counterparty confirmation"
+
+Exception SystemExeption			"Application failure"
+	Default
+
 // Actions
 
 // Account Actions
 Action TestService "Test Service" "test_service"
 	Return ReportHost
+	Text Dummy "Ignore"
 	Text ServiceAddress "Service address"
-		Error ServiceAddressNotEmpty "Service address cannot be blank"
-			|ServiceAddress == null
 		Error ServiceAddressNotValid "Not a valid service address"
 			|!ServiceAddress.TryParseServiceAddress()
+		Error ServiceAddressNotEmpty "Service address cannot be blank"
+			|ServiceAddress == null || ServiceAddress?.Length == 0
 
 Action AccountCreate "Create Mesh Account" "new"
 	Return ReportAccount

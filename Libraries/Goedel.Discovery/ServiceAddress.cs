@@ -29,20 +29,33 @@ namespace Goedel.Discovery;
 /// Recognized service address types
 /// </summary>
 public enum ParsedAddressType {
+    ///<summary>Address is not a valid address.</summary> 
     Invalid,
+    ///<summary>Address is empty.</summary> 
     Empty,
+    ///<summary>IPv4 service address</summary> 
     IPv4,
+    ///<summary>IPv6 Service address</summary> 
     IPv6,
+    ///<summary>Dns service address only.</summary> 
     Dns,
+    ///<summary>Callsign account without service specifier.</summary> 
     Callsign,
 
-    CallsignCallsign
-        ,
+    ///<summary>Callsign account with callsign service specifier.</summary> 
+    CallsignCallsign,
+    ///<summary>Callsign account with DNS service specifier.</summary> 
     CallSignDns,
+    ///<summary>RFC822 style account and DNS address.</summary> 
     AccountDns
     }
 
+/// <summary>
+/// A parsed address specifier. May be an account address or a service address.
+/// </summary>
 public record ParsedAddress {
+
+    ///<summary>The address type.</summary> 
     public ParsedAddressType AddressType { get; init; }
 
     /// <summary> The service address </summary>
@@ -57,7 +70,10 @@ public record ParsedAddress {
         };
     }
 
-
+/// <summary>
+/// A parsed account/service address specifier. A callsign account address is 
+/// bound to its current service address through the registry registration.
+/// </summary>
 public record ServiceAddress {
 
     ///<summary>Toplevel pseudo directory for Mesh callsigns</summary> 
@@ -76,39 +92,28 @@ public record ServiceAddress {
     ///<summary></summary> 
     public int? Port { get; init; }
 
-    //ParsedAddressType GetAddressType() {
-    //    if (Service == null) {
-    //        return Account.AddressType;
-    //        }
-    //    if (Account == null) {
-    //        return Service.AddressType;
-    //        }
-    //    if (Account.AddressType == ParsedAddressType.Callsign &
-    //            Service.AddressType == ParsedAddressType.Callsign) {
-    //        return ParsedAddressType.CallsignCallSign;
-    //        }
-    //    if (Account.AddressType == ParsedAddressType.Callsign &
-    //            Service.AddressType == ParsedAddressType.DNS) {
-    //        return ParsedAddressType.CallSignDns;
-    //        }
-    //    if (Account.AddressType == ParsedAddressType.DNS &
-    //            Service.AddressType == ParsedAddressType.DNS) {
-    //        return ParsedAddressType.AccountDns;
-    //        }
-    //    return ParsedAddressType.Invalid;
-    //    }
-
-    public ServiceAddress(ParsedAddress service) {
-        if (service.AddressType == ParsedAddressType.Callsign) {
-            Account = service;
-            AddressType = service.AddressType;
+    /// <summary>
+    /// Constructor returning an instance with only one address specifier
+    /// <paramref name="address"/>.
+    /// </summary>
+    /// <param name="address">The address specifier.</param>
+    public ServiceAddress(ParsedAddress address) {
+        if (address.AddressType == ParsedAddressType.Callsign) {
+            Account = address;
+            AddressType = address.AddressType;
             }
         else {
-            Service = service;
-            AddressType = service.AddressType;
+            Service = address;
+            AddressType = address.AddressType;
             }
         }
 
+    /// <summary>
+    /// Constructor returning an instance with an <paramref name="account"/>
+    /// address specifier and a <paramref name="service"/> address specifier..
+    /// </summary>
+    /// <param name="account">The account specifier.</param>
+    /// <param name="service">The service specifier.</param>
     public ServiceAddress(ParsedAddress account, ParsedAddress service) {
 
         if (service.AddressType == ParsedAddressType.Callsign) {

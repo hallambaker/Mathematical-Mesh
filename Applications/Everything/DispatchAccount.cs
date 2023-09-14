@@ -11,22 +11,27 @@ using ZXing.QrCode.Internal;
 namespace Goedel.Everything;
 
 public partial class TestService {
-    ResourceManager ResourceManager;
+    //ResourceManager ResourceManager;
 
-    public override IResult Validate() {
+    //public override IResult Validate() {
+    //    GuiResultInvalid result = null;
 
-        if (ServiceAddress == null) {
-            return new GuiResultInvalid(this,
-                    nameof(ServiceAddress), "Address must not be empty.");
-            }
+    //    // error on ServiceAddress
+    //    if (ServiceAddress == null
+    //        ) {
+    //        result ??= new GuiResultInvalid(this);
+    //        result.SetError(1, "Service address cannot be blank", "ServiceAddressNotEmpty");
+    //        }
 
-        if (!ServiceAddress.TryParseServiceAddress()) {
-            return new GuiResultInvalid(this,
-                    nameof(ServiceAddress), "Not a valid service address");
-            }
+    //    // error on ServiceAddress
+    //    if (!ServiceAddress.TryParseServiceAddress()
+    //        ) {
+    //        result ??= new GuiResultInvalid(this);
+    //        result.SetError(1, "Not a valid service address", "ServiceAddressNotValid");
+    //        }
 
-        return NullResult.Valid;
-        }
+    //    return (result as IResult) ?? NullResult.Valid;
+    //    }
 
     }
 
@@ -49,18 +54,15 @@ public partial class EverythingMaui {
 
 
         //return Task.FromResult(result as IResult);
-
-        var profileDevice = ProfileDevice.Generate();
-        var credential = new MeshCredentialPrivate(profileDevice, null, null, profileDevice.KeyAuthentication as KeyPairAdvanced);
-        var meshClient = MeshMachine.GetMeshClient(credential, data.ServiceAddress);
-
-
-        var helloRequest = new HelloRequest();
-
-
-        //var response = await meshClient.RequestAsync("Hello", helloRequest);
-
         try {
+            var profileDevice = ProfileDevice.Generate();
+            var credential = new MeshCredentialPrivate(profileDevice, null, null, profileDevice.KeyAuthentication as KeyPairAdvanced);
+            var meshClient = MeshMachine.GetMeshClient(credential, data.ServiceAddress);
+
+
+            var helloRequest = new HelloRequest();
+
+
 
             var response = await meshClient.HelloAsync(helloRequest);
             response.Success().AssertTrue(NYI.Throw);
@@ -78,7 +80,7 @@ public partial class EverythingMaui {
             }
         catch (Exception ex) {
 
-            return new NullResult("Host lookup failed");
+            return new ErrorResult(ex);
             }
 
         }

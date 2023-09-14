@@ -48,12 +48,12 @@ public interface IResult : IBindable {
 
 public record NullResult : IResult {
 
-    public ReturnResult ReturnResult { get; init; }
+    public virtual ReturnResult ReturnResult { get; init; }
 
-    public string Error { get; }
+    //public virtual string Error { get; }
 
     public NullResult(string error="") {
-        Error = error;
+        //Error = error;
         }
 
     public GuiBinding Binding => throw new NotImplementedException();
@@ -64,20 +64,34 @@ public record NullResult : IResult {
         ReturnResult = ReturnResult.Initialized
         };
 
-    public static NullResult Valid = new NullResult() {
-        ReturnResult = ReturnResult.Valid
-        };
+    public static NullResult Valid = new ValidResult();
 
-    public static NullResult Invalid = new NullResult() {
-        ReturnResult = ReturnResult.Invalid
-        };
+    //public static NullResult Invalid = new InvalidResult();
 
 
     }
+public record ValidResult : NullResult {
+    public override ReturnResult ReturnResult { get; init; } = ReturnResult.Valid;
+    }
 
 
+public record ErrorResult : NullResult {
 
+    public  string? Error { get; }
+    Exception? Exception { get; }
+    ResourceId? ResourceId { get; }
+    public ErrorResult(string error ) {
+        Error = error;
+        }
 
+    public ErrorResult(Exception exception) {
+        Exception = exception;
+        }
+    public ErrorResult(ResourceId resourceId) {
+        ResourceId = resourceId;
+        }
+
+    }
 
 [Flags]
 public enum ActionMode {

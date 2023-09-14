@@ -1,4 +1,6 @@
-﻿using System.Reflection.Metadata;
+﻿using Goedel.Utilities;
+
+using System.Reflection.Metadata;
 
 namespace Goedel.Guigen;
 
@@ -14,13 +16,21 @@ public record GuiResult {
     }
 
 
+public record IndexedMessage (
+        int Index,
+        string Text){
+    }
+
 public record GuiResultInvalid : IResult {
     public ReturnResult ReturnResult => ReturnResult.Invalid;
 
     public GuiBinding Binding => Parameter.Binding;
 
-    public bool[] Invalid { get; }
-    public string[] Report { get; }
+    //public bool[] Invalid { get; }
+    //public string[] Feedback { get; }
+
+
+    public List<IndexedMessage> Messages { get; } = new();
 
     IParameter Parameter { get; }
 
@@ -34,8 +44,8 @@ public record GuiResultInvalid : IResult {
     public GuiResultInvalid(IParameter parameter, params string[] parameters) {
         Parameter = parameter;
 
-        Invalid = new bool[Binding.BoundProperties.Length];
-        Report = new string[Binding.BoundProperties.Length];
+        //Invalid = new bool[Binding.BoundProperties.Length];
+        //Feedback = new string[Binding.BoundProperties.Length];
 
         for (var i = 0; i+1 < parameters.Length; i += 2) {
             var field = parameters[i];
@@ -56,24 +66,30 @@ public record GuiResultInvalid : IResult {
     public void SetError(
                 string field,
                 string error,
-                string id=null) {
+                string? id=null) {
 
-        for (var i= 0; i < Binding.BoundProperties.Length; i++) {
-            var binding = Binding.BoundProperties[i];
-            if (binding.Label == field) {
-                SetError(i, error);
-                return;
-                }
-            }
+        //for (var i= 0; i < Binding.BoundProperties.Length; i++) {
+        //    var binding = Binding.BoundProperties[i];
+        //    if (binding.Label == field) {
+        //        SetError(i, error);
+        //        return;
+        //        }
+        //    }
 
 
         }
 
     public void SetError(
                 int index, 
-                string error) {
-        Invalid[index] = true;
-        Report [index] = error;
+                string message,
+                string? id = null) {
+
+        id.Future(); // ToDo: Make use of resource strings.
+
+        var idMessage = ResourceResolver.GetString(id);
+
+
+        Messages.Add(new IndexedMessage(index, idMessage ?? message));
         }
 
 

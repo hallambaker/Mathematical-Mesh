@@ -45,6 +45,22 @@
             Program class
             </summary>
         </member>
+        <member name="T:Everything.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Everything.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Everything.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
         <member name="T:Everything.Resources.Sketch_resources">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
@@ -59,6 +75,11 @@
             <summary>
               Overrides the current thread's CurrentUICulture property for all
               resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Account">
+            <summary>
+              Looks up a localized string similar to Account.
             </summary>
         </member>
         <member name="P:Everything.Resources.Sketch_resources.AccountConnect">
@@ -76,9 +97,9 @@
               Looks up a localized string similar to Recover Mesh Account.
             </summary>
         </member>
-        <member name="P:Everything.Resources.Sketch_resources.Accounts">
+        <member name="P:Everything.Resources.Sketch_resources.AccountSwitch">
             <summary>
-              Looks up a localized string similar to Accounts.
+              Looks up a localized string similar to Change Account.
             </summary>
         </member>
         <member name="P:Everything.Resources.Sketch_resources.Address">
@@ -106,6 +127,11 @@
               Looks up a localized string similar to Body.
             </summary>
         </member>
+        <member name="P:Everything.Resources.Sketch_resources.Bookmark">
+            <summary>
+              Looks up a localized string similar to Bookmark.
+            </summary>
+        </member>
         <member name="P:Everything.Resources.Sketch_resources.Calendar">
             <summary>
               Looks up a localized string similar to Calendar.
@@ -118,7 +144,17 @@
         </member>
         <member name="P:Everything.Resources.Sketch_resources.ChooseAppointment">
             <summary>
-              Looks up a localized string similar to Calendar.
+              Looks up a localized string similar to Tasks.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ChooseBookmark">
+            <summary>
+              Looks up a localized string similar to Bookmark.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ChooseContact">
+            <summary>
+              Looks up a localized string similar to Contacts.
             </summary>
         </member>
         <member name="P:Everything.Resources.Sketch_resources.ChooseCredential">
@@ -146,14 +182,9 @@
               Looks up a localized string similar to User.
             </summary>
         </member>
-        <member name="P:Everything.Resources.Sketch_resources.ChooseOther">
+        <member name="P:Everything.Resources.Sketch_resources.ChooseMessage">
             <summary>
-              Looks up a localized string similar to Contacts.
-            </summary>
-        </member>
-        <member name="P:Everything.Resources.Sketch_resources.ChooseSelf">
-            <summary>
-              Looks up a localized string similar to Self.
+              Looks up a localized string similar to Messages.
             </summary>
         </member>
         <member name="P:Everything.Resources.Sketch_resources.ChooseService">
@@ -186,19 +217,14 @@
               Looks up a localized string similar to Account address.
             </summary>
         </member>
-        <member name="P:Everything.Resources.Sketch_resources.ContactMessage">
-            <summary>
-              Looks up a localized string similar to Contact Requests.
-            </summary>
-        </member>
-        <member name="P:Everything.Resources.Sketch_resources.ContactRequests">
-            <summary>
-              Looks up a localized string similar to Contact Requests.
-            </summary>
-        </member>
         <member name="P:Everything.Resources.Sketch_resources.Contacts">
             <summary>
               Looks up a localized string similar to Contacts.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ContentType">
+            <summary>
+              Looks up a localized string similar to Type.
             </summary>
         </member>
         <member name="P:Everything.Resources.Sketch_resources.Country">
@@ -281,6 +307,11 @@
               Looks up a localized string similar to Highlight Color.
             </summary>
         </member>
+        <member name="P:Everything.Resources.Sketch_resources.HostUdf">
+            <summary>
+              Looks up a localized string similar to Host fingerprint.
+            </summary>
+        </member>
         <member name="P:Everything.Resources.Sketch_resources.IconSize">
             <summary>
               Looks up a localized string similar to Icon Size.
@@ -301,6 +332,11 @@
               Looks up a localized string similar to Friendly name.
             </summary>
         </member>
+        <member name="P:Everything.Resources.Sketch_resources.LocalAddress">
+            <summary>
+              Looks up a localized string similar to Local Address.
+            </summary>
+        </member>
         <member name="P:Everything.Resources.Sketch_resources.Locality">
             <summary>
               Looks up a localized string similar to Locality.
@@ -316,6 +352,11 @@
               Looks up a localized string similar to Longitude.
             </summary>
         </member>
+        <member name="P:Everything.Resources.Sketch_resources.Message">
+            <summary>
+              Looks up a localized string similar to Message.
+            </summary>
+        </member>
         <member name="P:Everything.Resources.Sketch_resources.Messages">
             <summary>
               Looks up a localized string similar to Messages.
@@ -326,9 +367,9 @@
               Looks up a localized string similar to Network Addresses.
             </summary>
         </member>
-        <member name="P:Everything.Resources.Sketch_resources.OtherMessage">
+        <member name="P:Everything.Resources.Sketch_resources.Password">
             <summary>
-              Looks up a localized string similar to Messages.
+              Looks up a localized string similar to Password.
             </summary>
         </member>
         <member name="P:Everything.Resources.Sketch_resources.PhysicalAddress">
@@ -344,6 +385,11 @@
         <member name="P:Everything.Resources.Sketch_resources.Prefix">
             <summary>
               Looks up a localized string similar to Prefix.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ProfileUdf">
+            <summary>
+              Looks up a localized string similar to Profile fingerprint.
             </summary>
         </member>
         <member name="P:Everything.Resources.Sketch_resources.Protocol">
@@ -363,7 +409,7 @@
         </member>
         <member name="P:Everything.Resources.Sketch_resources.RequestContact">
             <summary>
-              Looks up a localized string similar to New Contact.
+              Looks up a localized string similar to Contact Request.
             </summary>
         </member>
         <member name="P:Everything.Resources.Sketch_resources.SendDocument">
@@ -371,14 +417,44 @@
               Looks up a localized string similar to Send document.
             </summary>
         </member>
+        <member name="P:Everything.Resources.Sketch_resources.Service">
+            <summary>
+              Looks up a localized string similar to Site.
+            </summary>
+        </member>
         <member name="P:Everything.Resources.Sketch_resources.ServiceAddress">
             <summary>
-              Looks up a localized string similar to Service address.
+              Looks up a localized string similar to Service Address.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ServiceAddressNotEmpty">
+            <summary>
+              Looks up a localized string similar to Service address cannot be blank.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ServiceAddressNotValid">
+            <summary>
+              Looks up a localized string similar to Not a valid service address.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ServiceCallsign">
+            <summary>
+              Looks up a localized string similar to Callsign.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ServiceDns">
+            <summary>
+              Looks up a localized string similar to DNS.
             </summary>
         </member>
         <member name="P:Everything.Resources.Sketch_resources.Services">
             <summary>
               Looks up a localized string similar to Services.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.ServiceUdf">
+            <summary>
+              Looks up a localized string similar to Service fingerprint.
             </summary>
         </member>
         <member name="P:Everything.Resources.Sketch_resources.Settings">
@@ -476,6 +552,11 @@
               Looks up a localized string similar to Text Size.
             </summary>
         </member>
+        <member name="P:Everything.Resources.Sketch_resources.Title">
+            <summary>
+              Looks up a localized string similar to Title.
+            </summary>
+        </member>
         <member name="P:Everything.Resources.Sketch_resources.To">
             <summary>
               Looks up a localized string similar to To.
@@ -486,14 +567,19 @@
               Looks up a localized string similar to Fingerprint.
             </summary>
         </member>
-        <member name="P:Everything.Resources.Sketch_resources.UrgentMessage">
+        <member name="P:Everything.Resources.Sketch_resources.Uri">
             <summary>
-              Looks up a localized string similar to Urgent.
+              Looks up a localized string similar to Uri.
             </summary>
         </member>
         <member name="P:Everything.Resources.Sketch_resources.UserChooseDevice">
             <summary>
               Looks up a localized string similar to Devices.
+            </summary>
+        </member>
+        <member name="P:Everything.Resources.Sketch_resources.Username">
+            <summary>
+              Looks up a localized string similar to Username.
             </summary>
         </member>
         <member name="T:Everything.Everything_XamlTypeInfo.XamlMetaDataProvider">
@@ -516,22 +602,823 @@
             GetXmlnsDefinitions()
             </summary>
         </member>
+        <member name="T:Goedel.Everything.TestService">
+            <summary>
+            Callback parameters for action TestService 
+            </summary>
+        </member>
         <member name="T:Goedel.Everything.EverythingMaui">
             <summary>
             Defines the graphical user interface.
             </summary>
         </member>
-        <member name="P:Goedel.Everything.EverythingMaui.Icons">
+        <member name="T:Goedel.Everything.AccountCreate">
+            <summary>
+            Callback parameters for action AccountCreate 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything.Account">
+            <summary>
+            Callback parameters for section Account 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything.Messages">
+            <summary>
+            Callback parameters for section Messages 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything.Contacts">
+            <summary>
+            Callback parameters for section Contacts 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything.Documents">
+            <summary>
+            Callback parameters for section Documents 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything.Groups">
+            <summary>
+            Callback parameters for section Groups 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything.Feeds">
+            <summary>
+            Callback parameters for section Feeds 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything.Credentials">
+            <summary>
+            Callback parameters for section Credentials 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything.Tasks">
+            <summary>
+            Callback parameters for section Tasks 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything.Calendar">
+            <summary>
+            Callback parameters for section Calendar 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything.Applications">
+            <summary>
+            Callback parameters for section Applications 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything.Devices">
+            <summary>
+            Callback parameters for section Devices 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything.Services">
+            <summary>
+            Callback parameters for section Services 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything.Settings">
+            <summary>
+            Callback parameters for section Settings 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._Account">
+            <summary>
+            Callback parameters for section Account 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._Account.ServiceAddress">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._Account.ProfileUdf">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._Account.LocalAddress">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything._Messages">
+            <summary>
+            Callback parameters for section Messages 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._Messages.ChooseMessage">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything._Contacts">
+            <summary>
+            Callback parameters for section Contacts 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._Contacts.ChooseContact">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything._Documents">
+            <summary>
+            Callback parameters for section Documents 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._Documents.ChooseDocuments">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything._Groups">
+            <summary>
+            Callback parameters for section Groups 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._Groups.ChooseGroup">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything._Feeds">
+            <summary>
+            Callback parameters for section Feeds 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._Feeds.ChooseFeed">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything._Credentials">
+            <summary>
+            Callback parameters for section Credentials 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._Credentials.ChooseCredential">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything._Tasks">
+            <summary>
+            Callback parameters for section Tasks 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._Tasks.ChooseTask">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything._Calendar">
+            <summary>
+            Callback parameters for section Calendar 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._Calendar.ChooseAppointment">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything.Bookmark">
+            <summary>
+            Callback parameters for section Bookmark 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._Bookmark">
+            <summary>
+            Callback parameters for section Bookmark 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._Bookmark.ChooseBookmark">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything._Applications">
+            <summary>
+            Callback parameters for section Applications 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._Applications.ChooseApplication">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything._Devices">
+            <summary>
+            Callback parameters for section Devices 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._Devices.ChooseDevice">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything._Services">
+            <summary>
+            Callback parameters for section Services 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._Services.ChooseService">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything._Settings">
+            <summary>
+            Callback parameters for section Settings 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything.Appearance">
+            <summary>
+            Callback parameters for dialog Appearance 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._Appearance">
+            <summary>
+            Callback parameters for section Appearance 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._Appearance.BackgroundColor">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._Appearance.HighlightColor">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._Appearance.TextColor">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._Appearance.TextSize">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._Appearance.IconSize">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything.AccountUser">
+            <summary>
+            Callback parameters for dialog AccountUser 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._AccountUser">
+            <summary>
+            Callback parameters for section AccountUser 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._AccountUser.Udf">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._AccountUser.ServiceAddress">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._AccountUser.Local">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._AccountUser.Description">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._AccountUser.UserChooseDevice">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything.Contact">
+            <summary>
+            Callback parameters for dialog Contact 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._Contact">
+            <summary>
+            Callback parameters for section Contact 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._Contact.Local">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._Contact.Full">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._Contact.First">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._Contact.Last">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._Contact.Prefix">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._Contact.Suffix">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._Contact.NetworkAddress">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._Contact.PhysicalAddress">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything.ContactNetworkAddress">
+            <summary>
+            Callback parameters for dialog ContactNetworkAddress 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._ContactNetworkAddress">
+            <summary>
+            Callback parameters for section ContactNetworkAddress 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._ContactNetworkAddress.ProtocolIcon">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ContactNetworkAddress.Protocol">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ContactNetworkAddress.Address">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ContactNetworkAddress.Fingerprint">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything.ContactPhysicalAddress">
+            <summary>
+            Callback parameters for dialog ContactPhysicalAddress 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._ContactPhysicalAddress">
+            <summary>
+            Callback parameters for section ContactPhysicalAddress 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._ContactPhysicalAddress.Appartment">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ContactPhysicalAddress.Street">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ContactPhysicalAddress.District">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ContactPhysicalAddress.Locality">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ContactPhysicalAddress.County">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ContactPhysicalAddress.Postcode">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ContactPhysicalAddress.Country">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ContactPhysicalAddress.Latitude">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ContactPhysicalAddress.Longitude">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything.MessageContactRequest">
+            <summary>
+            Callback parameters for dialog MessageContactRequest 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._MessageContactRequest">
+            <summary>
+            Callback parameters for section MessageContactRequest 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._MessageContactRequest.To">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._MessageContactRequest.Comment">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything.MessageConfirmationRequest">
+            <summary>
+            Callback parameters for dialog MessageConfirmationRequest 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._MessageConfirmationRequest">
+            <summary>
+            Callback parameters for section MessageConfirmationRequest 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._MessageConfirmationRequest.To">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._MessageConfirmationRequest.Request">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything.MessageMail">
+            <summary>
+            Callback parameters for dialog MessageMail 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._MessageMail">
+            <summary>
+            Callback parameters for section MessageMail 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._MessageMail.To">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._MessageMail.Subject">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._MessageMail.Body">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything._TestService">
+            <summary>
+            Callback parameters for action TestService 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._TestService.Dummy">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._TestService.ServiceAddress">
+            <summary></summary> 
+        </member>
+        <member name="M:Goedel.Everything._TestService.Validate">
+            <summary>Validation</summary> 
+        </member>
+        <member name="M:Goedel.Everything._TestService.Initialize">
+            <summary>Initialization.</summary> 
+        </member>
+        <member name="T:Goedel.Everything._AccountCreate">
+            <summary>
+            Callback parameters for action AccountCreate 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._AccountCreate.ServiceAddress">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._AccountCreate.LocalName">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._AccountCreate.Coupon">
+            <summary></summary> 
+        </member>
+        <member name="M:Goedel.Everything._AccountCreate.Validate">
+            <summary>Validation</summary> 
+        </member>
+        <member name="M:Goedel.Everything._AccountCreate.Initialize">
+            <summary>Initialization.</summary> 
+        </member>
+        <member name="T:Goedel.Everything.AccountSwitch">
+            <summary>
+            Callback parameters for action AccountSwitch 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._AccountSwitch">
+            <summary>
+            Callback parameters for action AccountSwitch 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._AccountSwitch.ChooseUser">
+            <summary></summary> 
+        </member>
+        <member name="M:Goedel.Everything._AccountSwitch.Validate">
+            <summary>Validation</summary> 
+        </member>
+        <member name="M:Goedel.Everything._AccountSwitch.Initialize">
+            <summary>Initialization.</summary> 
+        </member>
+        <member name="T:Goedel.Everything.AccountConnect">
+            <summary>
+            Callback parameters for action AccountConnect 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._AccountConnect">
+            <summary>
+            Callback parameters for action AccountConnect 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._AccountConnect.ConnectionString">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._AccountConnect.ConnectionPin">
+            <summary></summary> 
+        </member>
+        <member name="M:Goedel.Everything._AccountConnect.Validate">
+            <summary>Validation</summary> 
+        </member>
+        <member name="M:Goedel.Everything._AccountConnect.Initialize">
+            <summary>Initialization.</summary> 
+        </member>
+        <member name="T:Goedel.Everything.AccountRecover">
+            <summary>
+            Callback parameters for action AccountRecover 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._AccountRecover">
+            <summary>
+            Callback parameters for action AccountRecover 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._AccountRecover.ServiceAddress">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._AccountRecover.LocalName">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._AccountRecover.Coupon">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._AccountRecover.Share1">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._AccountRecover.Share2">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._AccountRecover.Share3">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._AccountRecover.Share4">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._AccountRecover.Share5">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._AccountRecover.Share6">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._AccountRecover.Share7">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._AccountRecover.Share8">
+            <summary></summary> 
+        </member>
+        <member name="M:Goedel.Everything._AccountRecover.Validate">
+            <summary>Validation</summary> 
+        </member>
+        <member name="M:Goedel.Everything._AccountRecover.Initialize">
+            <summary>Initialization.</summary> 
+        </member>
+        <member name="T:Goedel.Everything.RequestContact">
+            <summary>
+            Callback parameters for action RequestContact 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._RequestContact">
+            <summary>
+            Callback parameters for action RequestContact 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._RequestContact.Address">
+            <summary></summary> 
+        </member>
+        <member name="M:Goedel.Everything._RequestContact.Validate">
+            <summary>Validation</summary> 
+        </member>
+        <member name="M:Goedel.Everything._RequestContact.Initialize">
+            <summary>Initialization.</summary> 
+        </member>
+        <member name="T:Goedel.Everything.CreateMail">
+            <summary>
+            Callback parameters for action CreateMail 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._CreateMail">
+            <summary>
+            Callback parameters for action CreateMail 
+            </summary>
+        </member>
+        <member name="M:Goedel.Everything._CreateMail.Validate">
+            <summary>Validation</summary> 
+        </member>
+        <member name="M:Goedel.Everything._CreateMail.Initialize">
+            <summary>Initialization.</summary> 
+        </member>
+        <member name="T:Goedel.Everything.CreateChat">
+            <summary>
+            Callback parameters for action CreateChat 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._CreateChat">
+            <summary>
+            Callback parameters for action CreateChat 
+            </summary>
+        </member>
+        <member name="M:Goedel.Everything._CreateChat.Validate">
+            <summary>Validation</summary> 
+        </member>
+        <member name="M:Goedel.Everything._CreateChat.Initialize">
+            <summary>Initialization.</summary> 
+        </member>
+        <member name="T:Goedel.Everything.StartVoice">
+            <summary>
+            Callback parameters for action StartVoice 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._StartVoice">
+            <summary>
+            Callback parameters for action StartVoice 
+            </summary>
+        </member>
+        <member name="M:Goedel.Everything._StartVoice.Validate">
+            <summary>Validation</summary> 
+        </member>
+        <member name="M:Goedel.Everything._StartVoice.Initialize">
+            <summary>Initialization.</summary> 
+        </member>
+        <member name="T:Goedel.Everything.StartVideo">
+            <summary>
+            Callback parameters for action StartVideo 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._StartVideo">
+            <summary>
+            Callback parameters for action StartVideo 
+            </summary>
+        </member>
+        <member name="M:Goedel.Everything._StartVideo.Validate">
+            <summary>Validation</summary> 
+        </member>
+        <member name="M:Goedel.Everything._StartVideo.Initialize">
+            <summary>Initialization.</summary> 
+        </member>
+        <member name="T:Goedel.Everything.SendDocument">
+            <summary>
+            Callback parameters for action SendDocument 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._SendDocument">
+            <summary>
+            Callback parameters for action SendDocument 
+            </summary>
+        </member>
+        <member name="M:Goedel.Everything._SendDocument.Validate">
+            <summary>Validation</summary> 
+        </member>
+        <member name="M:Goedel.Everything._SendDocument.Initialize">
+            <summary>Initialization.</summary> 
+        </member>
+        <member name="T:Goedel.Everything.ShareDocument">
+            <summary>
+            Callback parameters for action ShareDocument 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._ShareDocument">
+            <summary>
+            Callback parameters for action ShareDocument 
+            </summary>
+        </member>
+        <member name="M:Goedel.Everything._ShareDocument.Validate">
+            <summary>Validation</summary> 
+        </member>
+        <member name="M:Goedel.Everything._ShareDocument.Initialize">
+            <summary>Initialization.</summary> 
+        </member>
+        <member name="T:Goedel.Everything.ReportHost">
+            <summary>
+            Return parameters for result ReportHost 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._ReportHost">
+            <summary>
+            Callback parameters for result ReportHost 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._ReportHost.ServiceCallsign">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ReportHost.ServiceDns">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ReportHost.ServiceUdf">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ReportHost.HostUdf">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything.ReportAccount">
+            <summary>
+            Return parameters for result ReportAccount 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._ReportAccount">
+            <summary>
+            Callback parameters for result ReportAccount 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._ReportAccount.ServiceCallsign">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ReportAccount.ServiceAddress">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ReportAccount.ProfileUdf">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ReportAccount.ServiceUdf">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything.ReportPending">
+            <summary>
+            Return parameters for result ReportPending 
+            </summary>
+        </member>
+        <member name="T:Goedel.Everything._ReportPending">
+            <summary>
+            Callback parameters for result ReportPending 
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._ReportPending.ServiceCallsign">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ReportPending.ServiceAddress">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ReportPending.ServiceUdf">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ReportPending.Message">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Everything._EverythingMaui">
+            <summary>
+            Defines the graphical user interface.
+            </summary>
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.StateDefault">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.StateAlways">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.Dialogs">
+            <inheritdoc/> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.Sections">
+            <inheritdoc/> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.Actions">
+            <inheritdoc/> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.Results">
+            <inheritdoc/> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.Icons">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Everything.EverythingMaui.Sections">
-            <inheritdoc/>
+        <member name="M:Goedel.Everything._EverythingMaui.TestService(Goedel.Everything.TestService,Goedel.Guigen.ActionMode)">
+            <summary>
+            GUI action
+            </summary>
         </member>
-        <member name="P:Goedel.Everything.EverythingMaui.Actions">
-            <inheritdoc/>
+        <member name="M:Goedel.Everything._EverythingMaui.AccountCreate(Goedel.Everything.AccountCreate,Goedel.Guigen.ActionMode)">
+            <summary>
+            GUI action
+            </summary>
         </member>
-        <member name="P:Goedel.Everything.EverythingMaui.Dialogs">
-            <inheritdoc/>
+        <member name="M:Goedel.Everything._EverythingMaui.AccountSwitch(Goedel.Everything.AccountSwitch,Goedel.Guigen.ActionMode)">
+            <summary>
+            GUI action
+            </summary>
+        </member>
+        <member name="M:Goedel.Everything._EverythingMaui.AccountConnect(Goedel.Everything.AccountConnect,Goedel.Guigen.ActionMode)">
+            <summary>
+            GUI action
+            </summary>
+        </member>
+        <member name="M:Goedel.Everything._EverythingMaui.AccountRecover(Goedel.Everything.AccountRecover,Goedel.Guigen.ActionMode)">
+            <summary>
+            GUI action
+            </summary>
+        </member>
+        <member name="M:Goedel.Everything._EverythingMaui.RequestContact(Goedel.Everything.RequestContact,Goedel.Guigen.ActionMode)">
+            <summary>
+            GUI action
+            </summary>
+        </member>
+        <member name="M:Goedel.Everything._EverythingMaui.CreateMail(Goedel.Everything.CreateMail,Goedel.Guigen.ActionMode)">
+            <summary>
+            GUI action
+            </summary>
+        </member>
+        <member name="M:Goedel.Everything._EverythingMaui.CreateChat(Goedel.Everything.CreateChat,Goedel.Guigen.ActionMode)">
+            <summary>
+            GUI action
+            </summary>
+        </member>
+        <member name="M:Goedel.Everything._EverythingMaui.StartVoice(Goedel.Everything.StartVoice,Goedel.Guigen.ActionMode)">
+            <summary>
+            GUI action
+            </summary>
+        </member>
+        <member name="M:Goedel.Everything._EverythingMaui.StartVideo(Goedel.Everything.StartVideo,Goedel.Guigen.ActionMode)">
+            <summary>
+            GUI action
+            </summary>
+        </member>
+        <member name="M:Goedel.Everything._EverythingMaui.SendDocument(Goedel.Everything.SendDocument,Goedel.Guigen.ActionMode)">
+            <summary>
+            GUI action
+            </summary>
+        </member>
+        <member name="M:Goedel.Everything._EverythingMaui.ShareDocument(Goedel.Everything.ShareDocument,Goedel.Guigen.ActionMode)">
+            <summary>
+            GUI action
+            </summary>
+        </member>
+        <member name="F:Goedel.Everything._EverythingMaui.BindingMessage">
+            <summary> </summary>
+        </member>
+        <member name="F:Goedel.Everything._EverythingMaui.BindingCatalogedDevice">
+            <summary> </summary>
+        </member>
+        <member name="F:Goedel.Everything._EverythingMaui.BindingCatalogedDocument">
+            <summary> </summary>
+        </member>
+        <member name="F:Goedel.Everything._EverythingMaui.BindingCatalogedGroup">
+            <summary> </summary>
+        </member>
+        <member name="F:Goedel.Everything._EverythingMaui.BindingCatalogedFeed">
+            <summary> </summary>
+        </member>
+        <member name="F:Goedel.Everything._EverythingMaui.BindingCatalogedContact">
+            <summary> </summary>
+        </member>
+        <member name="F:Goedel.Everything._EverythingMaui.BindingCatalogedCredential">
+            <summary> </summary>
+        </member>
+        <member name="F:Goedel.Everything._EverythingMaui.BindingCatalogedTask">
+            <summary> </summary>
+        </member>
+        <member name="F:Goedel.Everything._EverythingMaui.BindingCatalogedBookmark">
+            <summary> </summary>
+        </member>
+        <member name="F:Goedel.Everything._EverythingMaui.BindingCatalogedApplication">
+            <summary> </summary>
         </member>
     </members>
 </doc>

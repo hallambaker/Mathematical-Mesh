@@ -148,6 +148,8 @@ public class LexStringReader : LexReader {
 
 
     string data;
+
+    ///<summary>Count of characters read.</summary> 
     public int Count { get; set; }
 
 
