@@ -38,9 +38,6 @@ public partial class ServiceAddressSplitLex {
     ///<summary>The builer we build to.</summary>
     readonly StringBuilder buildActive = new();
 
-    int accountSeparatorPosition = 0;
-    int countSeparators = 0;
-
     LexStringReader StringReader => Reader as LexStringReader;
 
     record LexOutput(Token Token, string Value) {

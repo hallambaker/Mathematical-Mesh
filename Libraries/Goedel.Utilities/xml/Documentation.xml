@@ -2500,6 +2500,17 @@
         <member name="P:Goedel.Utilities.ResourceId.Id">
             <summary>The resource identifier.</summary>
         </member>
+        <member name="T:Goedel.Utilities.ResourceResolver">
+            <summary>
+            Resource resolution utilities.
+            </summary>
+        </member>
+        <member name="P:Goedel.Utilities.ResourceResolver.ResourceManager">
+            <summary>The project wide resource manager.</summary> 
+        </member>
+        <member name="P:Goedel.Utilities.ResourceResolver.CultureInfo">
+            <summary>The current culture.</summary> 
+        </member>
         <member name="M:Goedel.Utilities.ResourceResolver.SetResourceManager(System.Resources.ResourceManager,System.Globalization.CultureInfo)">
             <summary>
             Set the resource manager and culture.

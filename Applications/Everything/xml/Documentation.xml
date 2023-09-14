@@ -696,6 +696,12 @@
         <member name="P:Goedel.Everything._Account.LocalAddress">
             <summary></summary> 
         </member>
+        <member name="P:Goedel.Everything._Account.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._Account.BaseBinding">
+            <summary>The binding for the data type.</summary> 
+        </member>
         <member name="T:Goedel.Everything._Messages">
             <summary>
             Callback parameters for section Messages 
@@ -703,6 +709,12 @@
         </member>
         <member name="P:Goedel.Everything._Messages.ChooseMessage">
             <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._Messages.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._Messages.BaseBinding">
+            <summary>The binding for the data type.</summary> 
         </member>
         <member name="T:Goedel.Everything._Contacts">
             <summary>
@@ -712,6 +724,12 @@
         <member name="P:Goedel.Everything._Contacts.ChooseContact">
             <summary></summary> 
         </member>
+        <member name="P:Goedel.Everything._Contacts.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._Contacts.BaseBinding">
+            <summary>The binding for the data type.</summary> 
+        </member>
         <member name="T:Goedel.Everything._Documents">
             <summary>
             Callback parameters for section Documents 
@@ -719,6 +737,12 @@
         </member>
         <member name="P:Goedel.Everything._Documents.ChooseDocuments">
             <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._Documents.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._Documents.BaseBinding">
+            <summary>The binding for the data type.</summary> 
         </member>
         <member name="T:Goedel.Everything._Groups">
             <summary>
@@ -728,6 +752,12 @@
         <member name="P:Goedel.Everything._Groups.ChooseGroup">
             <summary></summary> 
         </member>
+        <member name="P:Goedel.Everything._Groups.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._Groups.BaseBinding">
+            <summary>The binding for the data type.</summary> 
+        </member>
         <member name="T:Goedel.Everything._Feeds">
             <summary>
             Callback parameters for section Feeds 
@@ -735,6 +765,12 @@
         </member>
         <member name="P:Goedel.Everything._Feeds.ChooseFeed">
             <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._Feeds.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._Feeds.BaseBinding">
+            <summary>The binding for the data type.</summary> 
         </member>
         <member name="T:Goedel.Everything._Credentials">
             <summary>
@@ -744,6 +780,12 @@
         <member name="P:Goedel.Everything._Credentials.ChooseCredential">
             <summary></summary> 
         </member>
+        <member name="P:Goedel.Everything._Credentials.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._Credentials.BaseBinding">
+            <summary>The binding for the data type.</summary> 
+        </member>
         <member name="T:Goedel.Everything._Tasks">
             <summary>
             Callback parameters for section Tasks 
@@ -752,6 +794,12 @@
         <member name="P:Goedel.Everything._Tasks.ChooseTask">
             <summary></summary> 
         </member>
+        <member name="P:Goedel.Everything._Tasks.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._Tasks.BaseBinding">
+            <summary>The binding for the data type.</summary> 
+        </member>
         <member name="T:Goedel.Everything._Calendar">
             <summary>
             Callback parameters for section Calendar 
@@ -759,6 +807,12 @@
         </member>
         <member name="P:Goedel.Everything._Calendar.ChooseAppointment">
             <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._Calendar.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._Calendar.BaseBinding">
+            <summary>The binding for the data type.</summary> 
         </member>
         <member name="T:Goedel.Everything.Bookmark">
             <summary>
@@ -773,6 +827,12 @@
         <member name="P:Goedel.Everything._Bookmark.ChooseBookmark">
             <summary></summary> 
         </member>
+        <member name="P:Goedel.Everything._Bookmark.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._Bookmark.BaseBinding">
+            <summary>The binding for the data type.</summary> 
+        </member>
         <member name="T:Goedel.Everything._Applications">
             <summary>
             Callback parameters for section Applications 
@@ -780,6 +840,12 @@
         </member>
         <member name="P:Goedel.Everything._Applications.ChooseApplication">
             <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._Applications.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._Applications.BaseBinding">
+            <summary>The binding for the data type.</summary> 
         </member>
         <member name="T:Goedel.Everything._Devices">
             <summary>
@@ -789,6 +855,12 @@
         <member name="P:Goedel.Everything._Devices.ChooseDevice">
             <summary></summary> 
         </member>
+        <member name="P:Goedel.Everything._Devices.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._Devices.BaseBinding">
+            <summary>The binding for the data type.</summary> 
+        </member>
         <member name="T:Goedel.Everything._Services">
             <summary>
             Callback parameters for section Services 
@@ -797,10 +869,22 @@
         <member name="P:Goedel.Everything._Services.ChooseService">
             <summary></summary> 
         </member>
+        <member name="P:Goedel.Everything._Services.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._Services.BaseBinding">
+            <summary>The binding for the data type.</summary> 
+        </member>
         <member name="T:Goedel.Everything._Settings">
             <summary>
             Callback parameters for section Settings 
             </summary>
+        </member>
+        <member name="P:Goedel.Everything._Settings.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._Settings.BaseBinding">
+            <summary>The binding for the data type.</summary> 
         </member>
         <member name="T:Goedel.Everything.Appearance">
             <summary>
@@ -827,6 +911,12 @@
         <member name="P:Goedel.Everything._Appearance.IconSize">
             <summary></summary> 
         </member>
+        <member name="P:Goedel.Everything._Appearance.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._Appearance.BaseBinding">
+            <summary>The binding for the data type.</summary> 
+        </member>
         <member name="T:Goedel.Everything.AccountUser">
             <summary>
             Callback parameters for dialog AccountUser 
@@ -851,6 +941,12 @@
         </member>
         <member name="P:Goedel.Everything._AccountUser.UserChooseDevice">
             <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._AccountUser.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._AccountUser.BaseBinding">
+            <summary>The binding for the data type.</summary> 
         </member>
         <member name="T:Goedel.Everything.Contact">
             <summary>
@@ -886,6 +982,12 @@
         <member name="P:Goedel.Everything._Contact.PhysicalAddress">
             <summary></summary> 
         </member>
+        <member name="P:Goedel.Everything._Contact.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._Contact.BaseBinding">
+            <summary>The binding for the data type.</summary> 
+        </member>
         <member name="T:Goedel.Everything.ContactNetworkAddress">
             <summary>
             Callback parameters for dialog ContactNetworkAddress 
@@ -907,6 +1009,12 @@
         </member>
         <member name="P:Goedel.Everything._ContactNetworkAddress.Fingerprint">
             <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ContactNetworkAddress.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._ContactNetworkAddress.BaseBinding">
+            <summary>The binding for the data type.</summary> 
         </member>
         <member name="T:Goedel.Everything.ContactPhysicalAddress">
             <summary>
@@ -945,6 +1053,12 @@
         <member name="P:Goedel.Everything._ContactPhysicalAddress.Longitude">
             <summary></summary> 
         </member>
+        <member name="P:Goedel.Everything._ContactPhysicalAddress.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._ContactPhysicalAddress.BaseBinding">
+            <summary>The binding for the data type.</summary> 
+        </member>
         <member name="T:Goedel.Everything.MessageContactRequest">
             <summary>
             Callback parameters for dialog MessageContactRequest 
@@ -961,6 +1075,12 @@
         <member name="P:Goedel.Everything._MessageContactRequest.Comment">
             <summary></summary> 
         </member>
+        <member name="P:Goedel.Everything._MessageContactRequest.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._MessageContactRequest.BaseBinding">
+            <summary>The binding for the data type.</summary> 
+        </member>
         <member name="T:Goedel.Everything.MessageConfirmationRequest">
             <summary>
             Callback parameters for dialog MessageConfirmationRequest 
@@ -976,6 +1096,12 @@
         </member>
         <member name="P:Goedel.Everything._MessageConfirmationRequest.Request">
             <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._MessageConfirmationRequest.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._MessageConfirmationRequest.BaseBinding">
+            <summary>The binding for the data type.</summary> 
         </member>
         <member name="T:Goedel.Everything.MessageMail">
             <summary>
@@ -996,6 +1122,12 @@
         <member name="P:Goedel.Everything._MessageMail.Body">
             <summary></summary> 
         </member>
+        <member name="P:Goedel.Everything._MessageMail.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._MessageMail.BaseBinding">
+            <summary>The binding for the data type.</summary> 
+        </member>
         <member name="T:Goedel.Everything._TestService">
             <summary>
             Callback parameters for action TestService 
@@ -1006,6 +1138,12 @@
         </member>
         <member name="P:Goedel.Everything._TestService.ServiceAddress">
             <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._TestService.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._TestService.BaseBinding">
+            <summary>The binding for the data type.</summary> 
         </member>
         <member name="M:Goedel.Everything._TestService.Validate">
             <summary>Validation</summary> 
@@ -1027,6 +1165,12 @@
         <member name="P:Goedel.Everything._AccountCreate.Coupon">
             <summary></summary> 
         </member>
+        <member name="P:Goedel.Everything._AccountCreate.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._AccountCreate.BaseBinding">
+            <summary>The binding for the data type.</summary> 
+        </member>
         <member name="M:Goedel.Everything._AccountCreate.Validate">
             <summary>Validation</summary> 
         </member>
@@ -1045,6 +1189,12 @@
         </member>
         <member name="P:Goedel.Everything._AccountSwitch.ChooseUser">
             <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._AccountSwitch.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._AccountSwitch.BaseBinding">
+            <summary>The binding for the data type.</summary> 
         </member>
         <member name="M:Goedel.Everything._AccountSwitch.Validate">
             <summary>Validation</summary> 
@@ -1067,6 +1217,12 @@
         </member>
         <member name="P:Goedel.Everything._AccountConnect.ConnectionPin">
             <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._AccountConnect.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._AccountConnect.BaseBinding">
+            <summary>The binding for the data type.</summary> 
         </member>
         <member name="M:Goedel.Everything._AccountConnect.Validate">
             <summary>Validation</summary> 
@@ -1117,6 +1273,12 @@
         <member name="P:Goedel.Everything._AccountRecover.Share8">
             <summary></summary> 
         </member>
+        <member name="P:Goedel.Everything._AccountRecover.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._AccountRecover.BaseBinding">
+            <summary>The binding for the data type.</summary> 
+        </member>
         <member name="M:Goedel.Everything._AccountRecover.Validate">
             <summary>Validation</summary> 
         </member>
@@ -1136,6 +1298,12 @@
         <member name="P:Goedel.Everything._RequestContact.Address">
             <summary></summary> 
         </member>
+        <member name="P:Goedel.Everything._RequestContact.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._RequestContact.BaseBinding">
+            <summary>The binding for the data type.</summary> 
+        </member>
         <member name="M:Goedel.Everything._RequestContact.Validate">
             <summary>Validation</summary> 
         </member>
@@ -1151,6 +1319,12 @@
             <summary>
             Callback parameters for action CreateMail 
             </summary>
+        </member>
+        <member name="P:Goedel.Everything._CreateMail.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._CreateMail.BaseBinding">
+            <summary>The binding for the data type.</summary> 
         </member>
         <member name="M:Goedel.Everything._CreateMail.Validate">
             <summary>Validation</summary> 
@@ -1168,6 +1342,12 @@
             Callback parameters for action CreateChat 
             </summary>
         </member>
+        <member name="P:Goedel.Everything._CreateChat.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._CreateChat.BaseBinding">
+            <summary>The binding for the data type.</summary> 
+        </member>
         <member name="M:Goedel.Everything._CreateChat.Validate">
             <summary>Validation</summary> 
         </member>
@@ -1183,6 +1363,12 @@
             <summary>
             Callback parameters for action StartVoice 
             </summary>
+        </member>
+        <member name="P:Goedel.Everything._StartVoice.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._StartVoice.BaseBinding">
+            <summary>The binding for the data type.</summary> 
         </member>
         <member name="M:Goedel.Everything._StartVoice.Validate">
             <summary>Validation</summary> 
@@ -1200,6 +1386,12 @@
             Callback parameters for action StartVideo 
             </summary>
         </member>
+        <member name="P:Goedel.Everything._StartVideo.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._StartVideo.BaseBinding">
+            <summary>The binding for the data type.</summary> 
+        </member>
         <member name="M:Goedel.Everything._StartVideo.Validate">
             <summary>Validation</summary> 
         </member>
@@ -1215,6 +1407,12 @@
             <summary>
             Callback parameters for action SendDocument 
             </summary>
+        </member>
+        <member name="P:Goedel.Everything._SendDocument.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._SendDocument.BaseBinding">
+            <summary>The binding for the data type.</summary> 
         </member>
         <member name="M:Goedel.Everything._SendDocument.Validate">
             <summary>Validation</summary> 
@@ -1232,6 +1430,12 @@
             Callback parameters for action ShareDocument 
             </summary>
         </member>
+        <member name="P:Goedel.Everything._ShareDocument.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._ShareDocument.BaseBinding">
+            <summary>The binding for the data type.</summary> 
+        </member>
         <member name="M:Goedel.Everything._ShareDocument.Validate">
             <summary>Validation</summary> 
         </member>
@@ -1248,6 +1452,9 @@
             Callback parameters for result ReportHost 
             </summary>
         </member>
+        <member name="P:Goedel.Everything._ReportHost.ReturnResult">
+            <summary></summary> 
+        </member>
         <member name="P:Goedel.Everything._ReportHost.ServiceCallsign">
             <summary></summary> 
         </member>
@@ -1259,6 +1466,12 @@
         </member>
         <member name="P:Goedel.Everything._ReportHost.HostUdf">
             <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ReportHost.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._ReportHost.BaseBinding">
+            <summary>The binding for the data type.</summary> 
         </member>
         <member name="T:Goedel.Everything.ReportAccount">
             <summary>
@@ -1282,6 +1495,12 @@
         <member name="P:Goedel.Everything._ReportAccount.ServiceUdf">
             <summary></summary> 
         </member>
+        <member name="P:Goedel.Everything._ReportAccount.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._ReportAccount.BaseBinding">
+            <summary>The binding for the data type.</summary> 
+        </member>
         <member name="T:Goedel.Everything.ReportPending">
             <summary>
             Return parameters for result ReportPending 
@@ -1303,6 +1522,12 @@
         </member>
         <member name="P:Goedel.Everything._ReportPending.Message">
             <summary></summary> 
+        </member>
+        <member name="P:Goedel.Everything._ReportPending.Binding">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Everything._ReportPending.BaseBinding">
+            <summary>The binding for the data type.</summary> 
         </member>
         <member name="T:Goedel.Everything._EverythingMaui">
             <summary>
@@ -1329,6 +1554,122 @@
         </member>
         <member name="P:Goedel.Everything._EverythingMaui.Icons">
             <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.SectionAccount">
+            <summary>Section SectionAccount.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.SectionMessages">
+            <summary>Section SectionMessages.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.SectionContacts">
+            <summary>Section SectionContacts.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.SectionDocuments">
+            <summary>Section SectionDocuments.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.SectionGroups">
+            <summary>Section SectionGroups.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.SectionFeeds">
+            <summary>Section SectionFeeds.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.SectionCredentials">
+            <summary>Section SectionCredentials.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.SectionTasks">
+            <summary>Section SectionTasks.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.SectionCalendar">
+            <summary>Section SectionCalendar.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.SectionBookmark">
+            <summary>Section SectionBookmark.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.SectionApplications">
+            <summary>Section SectionApplications.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.SectionDevices">
+            <summary>Section SectionDevices.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.SectionServices">
+            <summary>Section SectionServices.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.SectionSettings">
+            <summary>Section SectionSettings.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.ActionTestService">
+            <summary>Action ActionTestService.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.ActionAccountCreate">
+            <summary>Action ActionAccountCreate.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.ActionAccountSwitch">
+            <summary>Action ActionAccountSwitch.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.ActionAccountConnect">
+            <summary>Action ActionAccountConnect.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.ActionAccountRecover">
+            <summary>Action ActionAccountRecover.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.ActionRequestContact">
+            <summary>Action ActionRequestContact.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.ActionCreateMail">
+            <summary>Action ActionCreateMail.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.ActionCreateChat">
+            <summary>Action ActionCreateChat.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.ActionStartVoice">
+            <summary>Action ActionStartVoice.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.ActionStartVideo">
+            <summary>Action ActionStartVideo.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.ActionSendDocument">
+            <summary>Action ActionSendDocument.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.ActionShareDocument">
+            <summary>Action ActionShareDocument.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.DialogAppearance">
+            <summary>Dialog DialogAppearance.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.DialogAccountUser">
+            <summary>Dialog DialogAccountUser.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.DialogContact">
+            <summary>Dialog DialogContact.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.DialogContactNetworkAddress">
+            <summary>Dialog DialogContactNetworkAddress.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.DialogContactPhysicalAddress">
+            <summary>Dialog DialogContactPhysicalAddress.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.DialogMessageContactRequest">
+            <summary>Dialog DialogMessageContactRequest.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.DialogMessageConfirmationRequest">
+            <summary>Dialog DialogMessageConfirmationRequest.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.DialogMessageMail">
+            <summary>Dialog DialogMessageMail.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.ResultReportHost">
+            <summary>Result ResultReportHost.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.ResultReportAccount">
+            <summary>Result ResultReportAccount.</summary> 
+        </member>
+        <member name="P:Goedel.Everything._EverythingMaui.ResultReportPending">
+            <summary>Result ResultReportPending.</summary> 
+        </member>
+        <member name="M:Goedel.Everything._EverythingMaui.#ctor">
+            <summary>
+            Default constructor returning an instance.
+            </summary>
         </member>
         <member name="M:Goedel.Everything._EverythingMaui.TestService(Goedel.Everything.TestService,Goedel.Guigen.ActionMode)">
             <summary>

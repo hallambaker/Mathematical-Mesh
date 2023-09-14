@@ -3636,6 +3636,25 @@
             Extensions class. Provides static convenience extensions.
             </summary>
         </member>
+        <member name="M:Goedel.Discovery.Extensions.TryParseServiceAddress(System.String)">
+            <summary>
+            Attempt to parse <paramref name="identifier"/> returning
+            <code>true</code> if it is a valid service address and <code>false</code> otherwise.
+            </summary>
+            <param name="identifier">The address to parse.</param>
+            <returns><code>true</code> if <paramref name="identifier"/> is a valid service address 
+            and <code>false</code> otherwise.</returns>
+        </member>
+        <member name="M:Goedel.Discovery.Extensions.TryParseServiceAddress(System.String,Goedel.Discovery.ServiceAddress@)">
+            <summary>
+            Attempt to parse <paramref name="identifier"/> returning
+            <code>true</code> if it is a valid service address and <code>false</code> otherwise.
+            </summary>
+            <param name="serviceAddress">The parsed value.</param>
+            <param name="identifier">The address to parse.</param>
+            <returns><code>true</code> if <paramref name="identifier"/> is a valid service address 
+            and <code>false</code> otherwise.</returns>
+        </member>
         <member name="T:Goedel.Discovery.NamespaceDoc">
             <summary>
             Provides a hook 
@@ -3868,6 +3887,41 @@
             Recognized service address types
             </summary>
         </member>
+        <member name="F:Goedel.Discovery.ParsedAddressType.Invalid">
+            <summary>Address is not a valid address.</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.ParsedAddressType.Empty">
+            <summary>Address is empty.</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.ParsedAddressType.IPv4">
+            <summary>IPv4 service address</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.ParsedAddressType.IPv6">
+            <summary>IPv6 Service address</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.ParsedAddressType.Dns">
+            <summary>Dns service address only.</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.ParsedAddressType.Callsign">
+            <summary>Callsign account without service specifier.</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.ParsedAddressType.CallsignCallsign">
+            <summary>Callsign account with callsign service specifier.</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.ParsedAddressType.CallSignDns">
+            <summary>Callsign account with DNS service specifier.</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.ParsedAddressType.AccountDns">
+            <summary>RFC822 style account and DNS address.</summary> 
+        </member>
+        <member name="T:Goedel.Discovery.ParsedAddress">
+            <summary>
+            A parsed address specifier. May be an account address or a service address.
+            </summary>
+        </member>
+        <member name="P:Goedel.Discovery.ParsedAddress.AddressType">
+            <summary>The address type.</summary> 
+        </member>
         <member name="P:Goedel.Discovery.ParsedAddress.Address">
             <summary> The service address </summary>
         </member>
@@ -3876,6 +3930,12 @@
         </member>
         <member name="F:Goedel.Discovery.ParsedAddress.Invalid">
             <summary>Convenience value for invalid address.</summary> 
+        </member>
+        <member name="T:Goedel.Discovery.ServiceAddress">
+            <summary>
+            A parsed account/service address specifier. A callsign account address is 
+            bound to its current service address through the registry registration.
+            </summary>
         </member>
         <member name="F:Goedel.Discovery.ServiceAddress.MeshTopLevelDirectory">
             <summary>Toplevel pseudo directory for Mesh callsigns</summary> 
@@ -3891,6 +3951,21 @@
         </member>
         <member name="P:Goedel.Discovery.ServiceAddress.Port">
             <summary></summary> 
+        </member>
+        <member name="M:Goedel.Discovery.ServiceAddress.#ctor(Goedel.Discovery.ParsedAddress)">
+            <summary>
+            Constructor returning an instance with only one address specifier
+            <paramref name="address"/>.
+            </summary>
+            <param name="address">The address specifier.</param>
+        </member>
+        <member name="M:Goedel.Discovery.ServiceAddress.#ctor(Goedel.Discovery.ParsedAddress,Goedel.Discovery.ParsedAddress)">
+            <summary>
+            Constructor returning an instance with an <paramref name="account"/>
+            address specifier and a <paramref name="service"/> address specifier..
+            </summary>
+            <param name="account">The account specifier.</param>
+            <param name="service">The service specifier.</param>
         </member>
         <member name="M:Goedel.Discovery.ServiceAddress.TryParse(System.String,Goedel.Discovery.ServiceAddress@)">
             <summary>
@@ -4036,6 +4111,7 @@
             Parse the string <paramref name="text"/> and return the result.
             </summary>
             <param name="text">The service address in text form.</param>
+            <param name="serviceAddress">The parsed service address.</param>
             <returns>The parse result.</returns>
         </member>
         <member name="M:Goedel.Discovery.ServiceAddressSplitLex.TryIPv4(System.Collections.Generic.List{Goedel.Discovery.ServiceAddressSplitLex.LexOutput},Goedel.Discovery.ServiceAddress@)">

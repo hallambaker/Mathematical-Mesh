@@ -155,9 +155,8 @@ public class RudStream {
         accountAddress.Future();
 
         RdpStreamParent = parent;
-        if (parent != null) {
-            parent.AddChild(this);
-            }
+        parent?.AddChild(this);
+        
         RudConnection = rudConnection ?? parent?.RudConnection;
         RudConnection.AssertNotNull(NYI.Throw);
 

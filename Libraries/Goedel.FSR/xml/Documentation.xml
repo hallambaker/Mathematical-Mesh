@@ -248,6 +248,9 @@
             Lexical reader reading from string input.
             </summary>
         </member>
+        <member name="P:Goedel.FSR.LexStringReader.Count">
+            <summary>Count of characters read.</summary> 
+        </member>
         <member name="P:Goedel.FSR.LexStringReader.String">
             <summary>
             Set the data value and reset the read index.

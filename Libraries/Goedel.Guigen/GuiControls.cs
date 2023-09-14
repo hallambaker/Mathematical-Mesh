@@ -60,11 +60,11 @@ public record NullResult : IResult {
 
     ///<summary></summary> 
 
-    public static NullResult Initialized = new NullResult() {
+    public static NullResult Initialized { get; }  = new() {
         ReturnResult = ReturnResult.Initialized
         };
 
-    public static NullResult Valid = new ValidResult();
+    public static NullResult Valid { get; } = new ValidResult();
 
     //public static NullResult Invalid = new InvalidResult();
 

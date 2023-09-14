@@ -99,14 +99,14 @@ public static partial class Extension {
             }
 
         ///<inheritdoc/>
-        public bool IsCompleted => CancellationToken.IsCancellationRequested;
+        public readonly bool IsCompleted => CancellationToken.IsCancellationRequested;
 
         ///<inheritdoc/>
-        public void OnCompleted(Action continuation) =>
+        public readonly void OnCompleted(Action continuation) =>
             CancellationToken.Register(continuation);
 
         ///<inheritdoc/>
-        public void UnsafeOnCompleted(Action continuation) =>
+        public readonly void UnsafeOnCompleted(Action continuation) =>
             CancellationToken.Register(continuation);
         }
 

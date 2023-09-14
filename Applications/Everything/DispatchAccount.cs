@@ -44,7 +44,7 @@ public partial class EverythingMaui {
 
 
 
-
+    ///<inheritdoc/>
     public override async Task<IResult> TestService(TestService data, ActionMode mode = ActionMode.Execute) {
 
 
@@ -85,6 +85,7 @@ public partial class EverythingMaui {
 
         }
 
+    ///<inheritdoc/>
     public override async Task<IResult> AccountCreate(AccountCreate data, ActionMode mode= ActionMode.Execute) {
 
         //// This chunk can be pushed into the generated code.
@@ -142,6 +143,9 @@ public partial class EverythingMaui {
 public partial class AccountCreate {
 
     // This method can be pushed into the generated code.
+
+
+
     public void Reset(EverythingMaui context) {
         ServiceAddress = null;
         LocalName = null;

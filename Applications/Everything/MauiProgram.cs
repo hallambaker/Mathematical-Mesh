@@ -5,11 +5,20 @@ using Everything.Resources;
 using System.Globalization;
 
 namespace Everything;
+
+
+/// <summary>
+/// The main Maui application.
+/// </summary>
 public static class MauiProgram {
 
 
     // ToDo: Work out how to get style sheet used
 
+    /// <summary>
+    /// Create an initialize a new <see cref="MauiApp"/> instance.
+    /// </summary>
+    /// <returns></returns>
     public static MauiApp CreateMauiApp() {
         ThreadPool.SetMinThreads (100, 100);
 

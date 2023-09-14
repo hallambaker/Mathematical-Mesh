@@ -65,7 +65,7 @@ public record ParsedAddress {
     public int? Version { get; init; } = 0;
 
     ///<summary>Convenience value for invalid address.</summary> 
-    public static ParsedAddress Invalid = new ParsedAddress() {
+    public static ParsedAddress Invalid { get; } = new () {
         AddressType = ParsedAddressType.Invalid,
         };
     }

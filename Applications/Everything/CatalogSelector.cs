@@ -2,13 +2,15 @@
 
 namespace Goedel.Everything;
 
+
+
 public class CatalogSelector : ISelectCollection {
 
     public Store Store;
 
 
 
-    public List<string> Test => new List<string>() { "apple", "bob" };
+    public List<string> Test => new() { "apple", "bob" };
 
     public GuiBinding Binding { get; set; }
 
