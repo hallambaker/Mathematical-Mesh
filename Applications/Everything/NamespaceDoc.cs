@@ -32,7 +32,7 @@ global using Microsoft.Extensions.Logging;
 global using Camera.MAUI;
 
 global using System.Resources;
-
+global using System.Net.Http;
 
 global using Goedel.Discovery;
 #if !(_Github_)

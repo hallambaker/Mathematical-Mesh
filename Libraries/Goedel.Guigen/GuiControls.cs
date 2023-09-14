@@ -46,6 +46,17 @@ public interface IResult : IBindable {
     }
 
 
+public interface IFail : IResult { 
+    
+    public string Message { get; }
+
+
+    public ResourceId ResourceId { get; }
+    
+    }
+
+
+
 public record NullResult : IResult {
 
     public virtual ReturnResult ReturnResult { get; init; }

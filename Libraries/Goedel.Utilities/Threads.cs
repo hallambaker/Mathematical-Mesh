@@ -90,7 +90,7 @@ public static partial class Extension {
         internal CancellationToken CancellationToken;
 
         ///<inheritdoc/>
-        public object GetResult() {
+        public readonly object GetResult() {
             // this is called by compiler generated methods when the
             // task has completed. Instead of returning a result, we 
             // just throw an exception.

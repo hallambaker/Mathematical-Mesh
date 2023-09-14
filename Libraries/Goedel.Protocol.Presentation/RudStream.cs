@@ -163,7 +163,7 @@ public class RudStream {
         Protocol = protocol;
 
         // only set the URI if we are creating an initiator stream.
-        if (RudConnection is ConnectionInitiator initiator) {
+        if (RudConnection is ConnectionInitiator) {
             Initialized = false;
             }
         //AccountAddress = throw new NYI();
@@ -206,19 +206,11 @@ public class RudStream {
         string tag,
         JsonObject request) {
 
-         var span = PrePost(tag, request);
-
-        var spantxt = span.ToUTF8();
-        /*
-         * { "Hello": {}}
-         */
-        //Screen.WriteLine($"Client {Protocol} - Post data to {RemoteStreamId?.ToStringBase16()}");
+        var span = PrePost(tag, request);
         var packet = await PostWeb(span);
 
-        //Screen.WriteLine($"Client {Protocol} - Posted data to {RemoteStreamId?.ToStringBase16()}");
         if (packet is PacketResponderChallenge &&
                     (packet.Payload == null | packet?.Payload.Length == 0)) {
-            // if we got a challenge and no payload, represent the request here.
             packet = await PostWeb(span);
             }
 

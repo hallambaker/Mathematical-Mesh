@@ -1270,7 +1270,7 @@ public partial record ReportHost : _ReportHost {
 public partial record _ReportHost : IResult {
 
     ///<summary>The return result.</summary> 
-    public virtual ReturnResult ReturnResult { get; init; }
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Completed;
 
     ///<summary></summary> 
     public virtual string ServiceCallsign { get; set;} 
@@ -1315,7 +1315,7 @@ public partial record ReportAccount : _ReportAccount {
 public partial record _ReportAccount : IResult {
 
     ///<summary>The return result.</summary> 
-    public virtual ReturnResult ReturnResult { get; init; }
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Completed;
 
     ///<summary></summary> 
     public virtual string ServiceCallsign { get; set;} 
@@ -1360,7 +1360,7 @@ public partial record ReportPending : _ReportPending {
 public partial record _ReportPending : IResult {
 
     ///<summary>The return result.</summary> 
-    public virtual ReturnResult ReturnResult { get; init; }
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Completed;
 
     ///<summary></summary> 
     public virtual string ServiceCallsign { get; set;} 
@@ -1390,6 +1390,556 @@ public partial record _ReportPending : IResult {
             });
 
     }
+
+
+
+#endregion
+#region // Failure Results
+
+
+/// <summary>
+/// Return parameters for failure result HttpRequestFail 
+/// </summary>
+public partial record HttpRequestFail : _HttpRequestFail {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result HttpRequestFail 
+/// </summary>
+public partial record _HttpRequestFail : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "The Mesh service did not respond";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("result.Id.Label");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        null, Array.Empty<GuiBoundProperty>());
+
+    }
+
+
+
+
+/// <summary>
+/// Return parameters for failure result ServiceNotFound 
+/// </summary>
+public partial record ServiceNotFound : _ServiceNotFound {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result ServiceNotFound 
+/// </summary>
+public partial record _ServiceNotFound : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "The service {0} could not be found";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("result.Id.Label");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        null, Array.Empty<GuiBoundProperty>());
+
+    }
+
+
+
+
+/// <summary>
+/// Return parameters for failure result HostNotFound 
+/// </summary>
+public partial record HostNotFound : _HostNotFound {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result HostNotFound 
+/// </summary>
+public partial record _HostNotFound : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "No host could not be reached for service {0}";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("result.Id.Label");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        null, Array.Empty<GuiBoundProperty>());
+
+    }
+
+
+
+
+/// <summary>
+/// Return parameters for failure result InvalidHostCredential 
+/// </summary>
+public partial record InvalidHostCredential : _InvalidHostCredential {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result InvalidHostCredential 
+/// </summary>
+public partial record _InvalidHostCredential : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "The host presented an invalid credential";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("result.Id.Label");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        null, Array.Empty<GuiBoundProperty>());
+
+    }
+
+
+
+
+/// <summary>
+/// Return parameters for failure result CredentialRefused 
+/// </summary>
+public partial record CredentialRefused : _CredentialRefused {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result CredentialRefused 
+/// </summary>
+public partial record _CredentialRefused : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "The host refused service on account of an invalid credential";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("result.Id.Label");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        null, Array.Empty<GuiBoundProperty>());
+
+    }
+
+
+
+
+/// <summary>
+/// Return parameters for failure result DeviceRefused 
+/// </summary>
+public partial record DeviceRefused : _DeviceRefused {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result DeviceRefused 
+/// </summary>
+public partial record _DeviceRefused : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "This device is no longer authorized to access this account";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("result.Id.Label");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        null, Array.Empty<GuiBoundProperty>());
+
+    }
+
+
+
+
+/// <summary>
+/// Return parameters for failure result FileWriteError 
+/// </summary>
+public partial record FileWriteError : _FileWriteError {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result FileWriteError 
+/// </summary>
+public partial record _FileWriteError : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "Could not write file {0}";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("result.Id.Label");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        null, Array.Empty<GuiBoundProperty>());
+
+    }
+
+
+
+
+/// <summary>
+/// Return parameters for failure result FileReadError 
+/// </summary>
+public partial record FileReadError : _FileReadError {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result FileReadError 
+/// </summary>
+public partial record _FileReadError : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "Could not read file {0}";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("result.Id.Label");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        null, Array.Empty<GuiBoundProperty>());
+
+    }
+
+
+
+
+/// <summary>
+/// Return parameters for failure result AccountProfileInvalid 
+/// </summary>
+public partial record AccountProfileInvalid : _AccountProfileInvalid {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result AccountProfileInvalid 
+/// </summary>
+public partial record _AccountProfileInvalid : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "Account profile file is invalid";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("result.Id.Label");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        null, Array.Empty<GuiBoundProperty>());
+
+    }
+
+
+
+
+/// <summary>
+/// Return parameters for failure result DeviceProfileInvalid 
+/// </summary>
+public partial record DeviceProfileInvalid : _DeviceProfileInvalid {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result DeviceProfileInvalid 
+/// </summary>
+public partial record _DeviceProfileInvalid : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "Device profile file is invalid";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("result.Id.Label");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        null, Array.Empty<GuiBoundProperty>());
+
+    }
+
+
+
+
+/// <summary>
+/// Return parameters for failure result ActivationKeyNotFound 
+/// </summary>
+public partial record ActivationKeyNotFound : _ActivationKeyNotFound {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result ActivationKeyNotFound 
+/// </summary>
+public partial record _ActivationKeyNotFound : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "The activation key for the profile {0} could not be found";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("result.Id.Label");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        null, Array.Empty<GuiBoundProperty>());
+
+    }
+
+
+
+
+/// <summary>
+/// Return parameters for failure result NotAuthorizedCatalog 
+/// </summary>
+public partial record NotAuthorizedCatalog : _NotAuthorizedCatalog {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result NotAuthorizedCatalog 
+/// </summary>
+public partial record _NotAuthorizedCatalog : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "This device is not authorized to access the {0} catalog";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("result.Id.Label");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        null, Array.Empty<GuiBoundProperty>());
+
+    }
+
+
+
+
+/// <summary>
+/// Return parameters for failure result NotAuthorizedAdministration 
+/// </summary>
+public partial record NotAuthorizedAdministration : _NotAuthorizedAdministration {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result NotAuthorizedAdministration 
+/// </summary>
+public partial record _NotAuthorizedAdministration : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "This device is not authorized to perform administrative requests";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("result.Id.Label");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        null, Array.Empty<GuiBoundProperty>());
+
+    }
+
+
+
+
+/// <summary>
+/// Return parameters for failure result NotAuthorizedFCatalog 
+/// </summary>
+public partial record NotAuthorizedFCatalog : _NotAuthorizedFCatalog {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result NotAuthorizedFCatalog 
+/// </summary>
+public partial record _NotAuthorizedFCatalog : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "This device is not authorized to access the {0} catalog";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("result.Id.Label");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        null, Array.Empty<GuiBoundProperty>());
+
+    }
+
+
+
+
+/// <summary>
+/// Return parameters for failure result CounterpartyApproval 
+/// </summary>
+public partial record CounterpartyApproval : _CounterpartyApproval {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result CounterpartyApproval 
+/// </summary>
+public partial record _CounterpartyApproval : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "Request requires counterparty confirmation";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("result.Id.Label");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        null, Array.Empty<GuiBoundProperty>());
+
+    }
+
+
+
+
+/// <summary>
+/// Return parameters for failure result SystemExeption 
+/// </summary>
+public partial record SystemExeption : _SystemExeption {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result SystemExeption 
+/// </summary>
+public partial record _SystemExeption : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "Application failure";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("result.Id.Label");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        null, Array.Empty<GuiBoundProperty>());
+
+    }
+
+
+
 
 
 #endregion
@@ -1544,6 +2094,12 @@ public class _EverythingMaui : Gui {
     ///<summary>Result ResultReportPending.</summary> 
 	public GuiResult ResultReportPending { get; } = new ();
 	
+    ///<summary>Dictionary resolving exception name to factory method.</summary> 
+    public Dictionary<string, Func<IResult>> ExceptionDirectory =
+        new() {
+                { typeof(HttpRequestException).FullName, () => new HttpRequestFail() }
+            };
+
     /// <summary>
     /// Default constructor returning an instance.
     /// </summary>

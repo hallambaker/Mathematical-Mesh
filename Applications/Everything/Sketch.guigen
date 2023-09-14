@@ -121,25 +121,25 @@ Result ReportPending
 
 // Exceptions
 
-Exception HttpRequestException		"The Mesh service did not respond"
-	Value System.Net.Http.HttpRequestException
+Fail HttpRequestFail		"The Mesh service did not respond"
+	Exception HttpRequestException
 
-Exception ServiceNotFound			"The service {0} could not be found"
-Exception HostNotFound				"No host could not be reached for service {0}"
-Exception InvalidHostCredential		"The host presented an invalid credential"
-Exception CredentialRefused			"The host refused service on account of an invalid credential"
-Exception DeviceRefused				"This device is no longer authorized to access this account"
-Exception FileWriteError			"Could not write file {0}"
-Exception FileReadError				"Could not read file {0}"
-Exception AccountProfileInvalid		"Account profile file is invalid"
-Exception DeviceProfileInvalid		"Device profile file is invalid"
-Exception ActivationKeyNotFound		"The activation key for the profile {0} could not be found"
-Exception NotAuthorizedCatalog		"This device is not authorized to access the {0} catalog"
-Exception NotAuthorizedAdministration	"This device is not authorized to perform administrative requests"
-Exception NotAuthorizedFCatalog		"This device is not authorized to access the {0} catalog"
-Exception CounterpartyApproval		"Request requires counterparty confirmation"
+Fail ServiceNotFound				"The service {0} could not be found"
+Fail HostNotFound					"No host could not be reached for service {0}"
+Fail InvalidHostCredential			"The host presented an invalid credential"
+Fail CredentialRefused				"The host refused service on account of an invalid credential"
+Fail DeviceRefused					"This device is no longer authorized to access this account"
+Fail FileWriteError					"Could not write file {0}"
+Fail FileReadError					"Could not read file {0}"
+Fail AccountProfileInvalid			"Account profile file is invalid"
+Fail DeviceProfileInvalid			"Device profile file is invalid"
+Fail ActivationKeyNotFound			"The activation key for the profile {0} could not be found"
+Fail NotAuthorizedCatalog			"This device is not authorized to access the {0} catalog"
+Fail NotAuthorizedAdministration	"This device is not authorized to perform administrative requests"
+Fail NotAuthorizedFCatalog			"This device is not authorized to access the {0} catalog"
+Fail CounterpartyApproval			"Request requires counterparty confirmation"
 
-Exception SystemExeption			"Application failure"
+Fail SystemExeption					"Application failure"
 	Default
 
 // Actions

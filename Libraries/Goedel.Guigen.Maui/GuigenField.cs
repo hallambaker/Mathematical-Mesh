@@ -7,16 +7,11 @@ using System.Collections;
 
 namespace Goedel.Guigen.Maui;
 
-public abstract class GuigenField{
+public abstract class GuigenField(GuiField field) {
     public IBindable Value { get; set; }
 
-    public GuiField Field { get; }
+    public GuiField Field { get; } = field;
     public int Index => Field.Index;
-
-
-    public GuigenField(GuiField field) {
-        Field = field;
-        }
 
     public abstract void SetField(IBindable data);
 
@@ -320,13 +315,8 @@ public class MyViewCell : ViewCell {
 
     }
 
-public class BindableTemplate : DataTemplate {
-    GuigenFieldChooser FieldChooser { get; }
-
-    public BindableTemplate(GuigenFieldChooser fieldChooser) : base ( () => new MyViewCell (fieldChooser)) {
-        FieldChooser = fieldChooser;
-        }
-
+public class BindableTemplate(GuigenFieldChooser fieldChooser) : DataTemplate( () => new MyViewCell (fieldChooser)) {
+    GuigenFieldChooser FieldChooser { get; } = fieldChooser;
     }
 
 
@@ -339,12 +329,9 @@ public class BindableTemplate : DataTemplate {
 /// <summary>
 /// Can't use this because ListView does not support ItemTemplateSelector
 /// </summary>
-public class TemplateSelector : DataTemplateSelector {
-    GuigenFieldChooser FieldChooser { get; }
+public class TemplateSelector(GuigenFieldChooser fieldChooser) : DataTemplateSelector {
+    GuigenFieldChooser FieldChooser { get; } = fieldChooser;
 
-    public TemplateSelector (GuigenFieldChooser fieldChooser) { 
-        FieldChooser = fieldChooser;
-        }
     protected override DataTemplate OnSelectTemplate(object item, BindableObject container) {
         throw new NotImplementedException();
         }
@@ -352,13 +339,9 @@ public class TemplateSelector : DataTemplateSelector {
 
 
 
-public class BoundObject {
+public class BoundObject(string binding) {
 
-    public string Binding { get; set; }
-
-    public BoundObject(string binding) {
-        Binding = binding;
-        }
+    public string Binding { get; set; } = binding;
 
     public object GetCell() {
 
