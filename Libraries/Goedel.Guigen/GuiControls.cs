@@ -57,7 +57,9 @@ public interface IFail : IResult {
 
 
 
-public record NullResult : IResult {
+public abstract record NullResult : IResult {
+
+    public string Message => "";
 
     public virtual ReturnResult ReturnResult { get; init; }
 
@@ -71,16 +73,26 @@ public record NullResult : IResult {
 
     ///<summary></summary> 
 
-    public static NullResult Initialized { get; }  = new() {
-        ReturnResult = ReturnResult.Initialized
-        };
+    public static NullResult Initialized { get; }  = new InitializedResult() { };
 
     public static NullResult Valid { get; } = new ValidResult();
 
-    //public static NullResult Invalid = new InvalidResult();
+    public static NullResult Completed { get; } = new CompletedResult();
 
 
     }
+
+
+public record CompletedResult : NullResult {
+    public override ReturnResult ReturnResult { get; init; } = ReturnResult.Completed
+;
+    }
+
+public record InitializedResult : NullResult {
+    public override ReturnResult ReturnResult { get; init; } = ReturnResult.Initialized
+;
+    }
+
 public record ValidResult : NullResult {
     public override ReturnResult ReturnResult { get; init; } = ReturnResult.Valid;
     }

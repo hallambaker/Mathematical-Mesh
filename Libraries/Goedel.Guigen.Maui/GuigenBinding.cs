@@ -122,6 +122,7 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
 
         CurrentSection = section;
 
+        // Do we have this presentation cached?
         if (section.Presentation is not GuigenDetailSection detail) {
             FlyoutPage.Detail = new GuigenDetailSection(this, section).Page;
             return;
@@ -131,6 +132,17 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
         detail.Refresh();
         FlyoutPage.Detail = detail;
         }
+
+    /// <summary>
+    /// Event callback, MUST be called on the main display thread. Displays the result values
+    /// held in <paramref name="result"/>. Since these vary from call to call, they are not cached.
+    /// </summary>
+    /// <param name="result">The result to present.</param>
+    public void SetResultWindow(IResult result) {
+        FlyoutPage.Detail = new GuigenDetailResult(this, result);
+        }
+
+
 
     /// <summary>
     /// Event callback. Display the  detail window associated with <paramref name="action"/>

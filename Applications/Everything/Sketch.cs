@@ -1292,7 +1292,8 @@ public partial record _ReportHost : IResult {
     public static GuiBinding BaseBinding { get; } = new (
         (object test) => test is ReportHost,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as ReportHost).ServiceCallsign, (object data,string value) => (data as ReportHost).ServiceCallsign = value, "ServiceCallsign"), 
+            new GuiBoundPropertyString ((object data) => (data as ReportHost).ServiceCallsign, 
+                (object data,string value) => (data as ReportHost).ServiceCallsign = value, "ServiceCallsign"), 
             new GuiBoundPropertyString ((object data) => (data as ReportHost).ServiceDns, (object data,string value) => (data as ReportHost).ServiceDns = value, "ServiceDns"), 
             new GuiBoundPropertyString ((object data) => (data as ReportHost).ServiceUdf, (object data,string value) => (data as ReportHost).ServiceUdf = value, "ServiceUdf"), 
             new GuiBoundPropertyString ((object data) => (data as ReportHost).HostUdf, (object data,string value) => (data as ReportHost).HostUdf = value, "HostUdf")
@@ -1414,7 +1415,7 @@ public partial record _HttpRequestFail : IFail {
 
     ///<inheritdoc/>
     public ResourceId ResourceId => resourceId;
-    static readonly ResourceId resourceId = new ("result.Id.Label");
+    static readonly ResourceId resourceId = new ("HttpRequestFail");
 
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
@@ -1448,7 +1449,7 @@ public partial record _ServiceNotFound : IFail {
 
     ///<inheritdoc/>
     public ResourceId ResourceId => resourceId;
-    static readonly ResourceId resourceId = new ("result.Id.Label");
+    static readonly ResourceId resourceId = new ("ServiceNotFound");
 
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
@@ -1482,7 +1483,7 @@ public partial record _HostNotFound : IFail {
 
     ///<inheritdoc/>
     public ResourceId ResourceId => resourceId;
-    static readonly ResourceId resourceId = new ("result.Id.Label");
+    static readonly ResourceId resourceId = new ("HostNotFound");
 
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
@@ -1516,7 +1517,7 @@ public partial record _InvalidHostCredential : IFail {
 
     ///<inheritdoc/>
     public ResourceId ResourceId => resourceId;
-    static readonly ResourceId resourceId = new ("result.Id.Label");
+    static readonly ResourceId resourceId = new ("InvalidHostCredential");
 
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
@@ -1550,7 +1551,7 @@ public partial record _CredentialRefused : IFail {
 
     ///<inheritdoc/>
     public ResourceId ResourceId => resourceId;
-    static readonly ResourceId resourceId = new ("result.Id.Label");
+    static readonly ResourceId resourceId = new ("CredentialRefused");
 
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
@@ -1584,7 +1585,7 @@ public partial record _DeviceRefused : IFail {
 
     ///<inheritdoc/>
     public ResourceId ResourceId => resourceId;
-    static readonly ResourceId resourceId = new ("result.Id.Label");
+    static readonly ResourceId resourceId = new ("DeviceRefused");
 
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
@@ -1618,7 +1619,7 @@ public partial record _FileWriteError : IFail {
 
     ///<inheritdoc/>
     public ResourceId ResourceId => resourceId;
-    static readonly ResourceId resourceId = new ("result.Id.Label");
+    static readonly ResourceId resourceId = new ("FileWriteError");
 
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
@@ -1652,7 +1653,7 @@ public partial record _FileReadError : IFail {
 
     ///<inheritdoc/>
     public ResourceId ResourceId => resourceId;
-    static readonly ResourceId resourceId = new ("result.Id.Label");
+    static readonly ResourceId resourceId = new ("FileReadError");
 
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
@@ -1686,7 +1687,7 @@ public partial record _AccountProfileInvalid : IFail {
 
     ///<inheritdoc/>
     public ResourceId ResourceId => resourceId;
-    static readonly ResourceId resourceId = new ("result.Id.Label");
+    static readonly ResourceId resourceId = new ("AccountProfileInvalid");
 
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
@@ -1720,7 +1721,7 @@ public partial record _DeviceProfileInvalid : IFail {
 
     ///<inheritdoc/>
     public ResourceId ResourceId => resourceId;
-    static readonly ResourceId resourceId = new ("result.Id.Label");
+    static readonly ResourceId resourceId = new ("DeviceProfileInvalid");
 
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
@@ -1754,7 +1755,7 @@ public partial record _ActivationKeyNotFound : IFail {
 
     ///<inheritdoc/>
     public ResourceId ResourceId => resourceId;
-    static readonly ResourceId resourceId = new ("result.Id.Label");
+    static readonly ResourceId resourceId = new ("ActivationKeyNotFound");
 
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
@@ -1788,7 +1789,7 @@ public partial record _NotAuthorizedCatalog : IFail {
 
     ///<inheritdoc/>
     public ResourceId ResourceId => resourceId;
-    static readonly ResourceId resourceId = new ("result.Id.Label");
+    static readonly ResourceId resourceId = new ("NotAuthorizedCatalog");
 
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
@@ -1822,7 +1823,7 @@ public partial record _NotAuthorizedAdministration : IFail {
 
     ///<inheritdoc/>
     public ResourceId ResourceId => resourceId;
-    static readonly ResourceId resourceId = new ("result.Id.Label");
+    static readonly ResourceId resourceId = new ("NotAuthorizedAdministration");
 
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
@@ -1856,7 +1857,7 @@ public partial record _NotAuthorizedFCatalog : IFail {
 
     ///<inheritdoc/>
     public ResourceId ResourceId => resourceId;
-    static readonly ResourceId resourceId = new ("result.Id.Label");
+    static readonly ResourceId resourceId = new ("NotAuthorizedFCatalog");
 
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
@@ -1890,7 +1891,7 @@ public partial record _CounterpartyApproval : IFail {
 
     ///<inheritdoc/>
     public ResourceId ResourceId => resourceId;
-    static readonly ResourceId resourceId = new ("result.Id.Label");
+    static readonly ResourceId resourceId = new ("CounterpartyApproval");
 
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
@@ -1924,7 +1925,7 @@ public partial record _SystemExeption : IFail {
 
     ///<inheritdoc/>
     public ResourceId ResourceId => resourceId;
-    static readonly ResourceId resourceId = new ("result.Id.Label");
+    static readonly ResourceId resourceId = new ("SystemExeption");
 
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;

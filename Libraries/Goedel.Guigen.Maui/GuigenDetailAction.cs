@@ -1,35 +1,42 @@
-﻿namespace Goedel.Guigen.Maui;
+﻿using System;
 
-public class GuigenDetailAction : ContentPage, IPresentation {
+namespace Goedel.Guigen.Maui;
+
+
+public class GuigenDetaiPage : ContentPage, IPresentation {
+    protected IMainWindow MainWindow { get; }
+
+    protected GuigenBinding Binding => MainWindow.Binding;
+    protected Gui Gui => Binding.Gui;
+
+    public Page Page => this;
+
+    public GuigenDetaiPage(IMainWindow mainWindow) {
+        MainWindow = mainWindow;
+        }
+    }
+
+
+/// <summary>
+/// Extension of a ContentPage to allow binding of the action data to the instance.
+/// </summary>
+public class GuigenDetailAction : GuigenDetaiPage {
+    GuiAction Action { get; }
+
+    IBindable BoundValue;
 
     public Button ConfirmButton;
     public Button CancelButton;
 
     public List<View> ActionViews = new();
 
-
-    IMainWindow MainWindow { get; }
-    GuigenBinding Binding => MainWindow.Binding;
-
-    public Page Page => this;
-
-
-    GuiAction Action { get; }
-    Gui Gui => Binding.Gui;
-
-    //List<GuigenField> Fields = new();
-
-    IBindable BoundValue;
     GuigenFieldSet FieldSet { get; }
 
     IParameter Result { get; set; }
 
 
-    public GuigenDetailAction(IMainWindow mainWindow, GuiAction action) {
-
-        MainWindow = mainWindow;
+    public GuigenDetailAction(IMainWindow mainWindow, GuiAction action) : base (mainWindow) {
         Action = action;
-
         BoundValue = action.Factory();
 
         action.Presentation = this;
@@ -94,7 +101,6 @@ public class GuigenDetailAction : ContentPage, IPresentation {
                     DisableActions();
 
                     var task = Action.Callback(result, ActionMode.Execute);
-
                     task.ContinueWith(Continue, null);
                     }
                 break;
@@ -108,10 +114,25 @@ public class GuigenDetailAction : ContentPage, IPresentation {
         }
 
     public Task<IResult> Continue(Task<IResult> task, object? fred) {
-        MainThread.BeginInvokeOnMainThread(() => {
-            EnableActions();
-            MainWindow.SetDetailWindow();
-            });
+
+        // Check here to see if there is a result value!
+        var result = task.Result;
+
+        switch (result) {
+            case CompletedResult: {
+                MainThread.BeginInvokeOnMainThread(() => {
+                    EnableActions();
+                    MainWindow.SetDetailWindow();
+                });
+                break;
+                }
+            default: {
+                MainThread.BeginInvokeOnMainThread(() => {
+                    MainWindow.SetResultWindow(result);
+                });
+                break;
+                }
+        }
         return task;
         }
 
@@ -138,9 +159,3 @@ public class GuigenDetailAction : ContentPage, IPresentation {
     public void Refresh() {
         }
     }
-
-
-
-
-
-
