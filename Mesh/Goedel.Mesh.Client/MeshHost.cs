@@ -410,7 +410,7 @@ public class MeshHost : Disposable {
         else {
             await contextUser.SynchronizeAsync();
             }
-        contextUser.MakeAdministrator(rights);
+        await contextUser.MakeAdministratorAsync(rights);
 
         // Return to normal privilege.
         contextUser.MeshClient = null;

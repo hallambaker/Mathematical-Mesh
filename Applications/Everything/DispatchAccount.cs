@@ -1,4 +1,6 @@
 ﻿using Goedel.Cryptography;
+using Goedel.Mesh;
+using Goedel.Mesh.Client;
 using Goedel.Protocol;
 
 
@@ -7,6 +9,8 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 using ZXing.QrCode.Internal;
+
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Goedel.Everything;
 
@@ -32,6 +36,17 @@ public partial class TestService {
 
     //    return (result as IResult) ?? NullResult.Valid;
     //    }
+
+    }
+
+public partial class ChooseContact {
+
+    public Task<IResult> Add() => throw new NYI();
+    public Task<IResult> Delete() => throw new NYI();
+
+    public void Select () => throw new NYI();
+
+
 
     }
 
@@ -79,93 +94,368 @@ public partial class EverythingMaui {
 
             }
 
-        catch (HttpRequestException ex) {
-            if (ex.InnerException is System.Net.Sockets.SocketException) {
-                return new ServiceNotFound() {
-                    ServiceName = data.ServiceAddress
-                    };
-
-                }
-            else {
-                return new HttpRequestFail();
+        catch (Exception exception) {
+            if (TryProcessException(exception, data, out var result)) {
+                return result;
                 }
 
-            }
-
-        catch (Exception ex) {
-            if (ExceptionDirectory.TryGetValue(ex.GetType().FullName, out var factory)) {
+            if (ExceptionDirectory.TryGetValue(exception.GetType().FullName, out var factory)) {
                 return factory();
                 }
 
-            return new ErrorResult(ex);
+            return new ErrorResult(exception);
             }
 
         }
 
     ///<inheritdoc/>
-    public override async Task<IResult> AccountCreate(AccountCreate data, ActionMode mode= ActionMode.Execute) {
+    public override async Task<IResult> AccountCreate(AccountCreate data, ActionMode mode = ActionMode.Execute) {
 
-        //// This chunk can be pushed into the generated code.
-        //switch (mode) {
-        //    case ActionMode.Initialize: {
-        //        data.Reset (this);
-        //        return NullResult.Initialized;
-        //        }
-        //    case ActionMode.Validate: {
-        //        return data.Validate() ? NullResult.Valid :NullResult.Invalid;
-        //        }
-        //    }
-
-        //var data1 = new byte[] {0,0};
-        //var request = new ByteArrayContent(data1);
-
-        //var address = "http://mmm.everything.com:15099/.well-known/mmm/";
-
-        var contextUser = await MeshHost.ConfigureMeshAsync(data.ServiceAddress, data.LocalName);
-
-
-        //var httpClient = new HttpClient();
-
-
-        //await httpClient.GetAsync("https://cnn.com/");
-
-        //await Task.Run(async () => {
-
-        //    });
-        //try {
-
-
-        //    }
-
-        //catch {
-        //    }
-
-        // here we have to tell the user the result
-
-        // Profile fingerprint.
-
-        // Add new profile to the accounts list and make current profile
-
-        var result = new ReportAccount() {
-
-            };
-
-        return result;
+        try {
+            var contextUser = await MeshHost.ConfigureMeshAsync(data.ServiceAddress, data.LocalName);
+            return new ReportAccount() {
+                };
+            }
+        catch (Exception exception) {
+            if (TryProcessException(exception, data, out var result)) {
+                return result;
+                }
+            return new ErrorResult(exception);
+            }
 
         }
 
+    public override async Task<IResult> AccountConnect(AccountConnect data, ActionMode mode = ActionMode.Execute) {
+        try {
+
+            //var contextAccount = GetContextUser(options);
+            //var rights = GetRights(options);
+
+            //var catalogedDevice = contextAccount.ConnectStaticUriAsync(options.Uri.Value, rights).Sync();
+
+
+            await Task.Delay(0);
+            return new NotYetImplemented() {
+                };
+            }
+        catch (Exception exception) {
+            if (TryProcessException(exception, data, out var result)) {
+                return result;
+                }
+            return new ErrorResult(exception);
+            }
+        }
+
+    public override async Task<IResult> AccountRecover(AccountRecover data, ActionMode mode = ActionMode.Execute) {
+        try {
+            await Task.Delay(0);
+            return new NotYetImplemented() {
+                };
+            }
+        catch (Exception exception) {
+            if (TryProcessException(exception, data, out var result)) {
+                return result;
+                }
+            return new ErrorResult(exception);
+            }
+        }
+
+    public override async Task<IResult> AccountDelete(AccountDelete data, ActionMode mode = ActionMode.Execute) {
+        try {
+
+            await ContextUser.DeleteAccountAsync();
+            ContextUser.Dispose();
+            ContextUser = null;
+
+            /* need to clear the context user here*/
+            return new NotYetImplemented() {
+                };
+            }
+        catch (Exception exception) {
+            if (TryProcessException(exception, data, out var result)) {
+                return result;
+                }
+            return new ErrorResult(exception);
+            }
+        }
+
+    public override async Task<IResult> AccountGenerateRecovery(AccountGenerateRecovery data, ActionMode mode = ActionMode.Execute) {
+        try {
+            //var contextMesh = GetContextUser(options);
+            //var shares = contextMesh.Escrow(3, 2);
+
+            //var textShares = new List<string>();
+            //foreach (var share in shares) {
+            //    textShares.Add(share.UDFKey);
+            //    }
+
+            await Task.Delay(0);
+            return new NotYetImplemented() {
+                };
+            }
+        catch (Exception exception) {
+            if (TryProcessException(exception, data, out var result)) {
+                return result;
+                }
+            return new ErrorResult(exception);
+            }
+        }
+
+    public override async Task<IResult> AccountGetPin(AccountGetPin data, ActionMode mode = ActionMode.Execute) {
+        try {
+            await Task.Delay(0);
+
+            //var messageConnectionPIN = await ContextUser.GetPinAsync(MeshConstants.MessagePINActionDevice,
+            //validity: expire.Ticks, roles: rights, bits: bits).Sync();
+
+            return new NotYetImplemented() {
+                };
+            }
+        catch (Exception exception) {
+            if (TryProcessException(exception, data, out var result)) {
+                return result;
+                }
+            return new ErrorResult(exception);
+            }
+        }
+
+
+    public override async Task<IResult> AccountSwitch(AccountSwitch data, ActionMode mode = ActionMode.Execute) {
+        try {
+            await Task.Delay(0);
+            return new NotYetImplemented() {
+                };
+            }
+        catch (Exception exception) {
+            if (TryProcessException(exception, data, out var result)) {
+                return result;
+                }
+            return new ErrorResult(exception);
+            }
+        }
+
+    public override async Task<IResult> RequestContact(RequestContact data, ActionMode mode = ActionMode.Execute) {
+        try {
+            await Task.Delay(0);
+
+            //var contextAccount = GetContextUser(options);
+            //var recipient = options.Recipient.Value;
+
+            //var message = contextAccount.ContactRequestAsync(recipient).Sync();
+
+            //var result = new ResultSent() {
+            //    Success = true,
+            //    Message = message
+            //    };
+
+            return new NotYetImplemented() {
+                };
+            }
+        catch (Exception exception) {
+            if (TryProcessException(exception, data, out var result)) {
+                return result;
+                }
+            return new ErrorResult(exception);
+            }
+        }
+
+
+    public override async Task<IResult> RequestConfirmation(RequestConfirmation data, ActionMode mode = ActionMode.Execute) {
+        try {
+
+            //var contextAccount = GetContextUser(options);
+            //var recipient = options.Recipient.Value;
+            //var text = options.Text.Value;
+
+
+            //var message = contextAccount.ConfirmationRequestAsync(recipient, text).Sync();
+
+            //var result = new ResultSent() {
+            //    Success = true,
+            //    Message = message
+            //    };
+
+
+            await Task.Delay(0);
+            return new NotYetImplemented() {
+                };
+            }
+        catch (Exception exception) {
+            if (TryProcessException(exception, data, out var result)) {
+                return result;
+                }
+            return new ErrorResult(exception);
+            }
+        }
+
+
+
+
+    public override async Task<IResult> CreateMail(CreateMail data, ActionMode mode = ActionMode.Execute) {
+        try {
+            await Task.Delay(0);
+            return new NotYetImplemented() {
+                };
+            }
+        catch (Exception exception) {
+            if (TryProcessException(exception, data, out var result)) {
+                return result;
+                }
+            return new ErrorResult(exception);
+            }
+        }
+    public override async Task<IResult> CreateChat(CreateChat data, ActionMode mode = ActionMode.Execute) {
+        try {
+            await Task.Delay(0);
+            return new NotYetImplemented() {
+                };
+            }
+        catch (Exception exception) {
+            if (TryProcessException(exception, data, out var result)) {
+                return result;
+                }
+            return new ErrorResult(exception);
+            }
+        }
+    public override async Task<IResult> StartVoice(StartVoice data, ActionMode mode = ActionMode.Execute) {
+        try {
+            await Task.Delay(0);
+            return new NotYetImplemented() {
+                };
+            }
+        catch (Exception exception) {
+            if (TryProcessException(exception, data, out var result)) {
+                return result;
+                }
+            return new ErrorResult(exception);
+            }
+        }
+    public override async Task<IResult> StartVideo(StartVideo data, ActionMode mode = ActionMode.Execute) {
+        try {
+            await Task.Delay(0);
+            return new NotYetImplemented() {
+                };
+            }
+        catch (Exception exception) {
+            if (TryProcessException(exception, data, out var result)) {
+                return result;
+                }
+            return new ErrorResult(exception);
+            }
+        }
+    public override async Task<IResult> SendDocument(SendDocument data, ActionMode mode = ActionMode.Execute) {
+        try {
+            await Task.Delay(0);
+            return new NotYetImplemented() {
+                };
+            }
+        catch (Exception exception) {
+            if (TryProcessException(exception, data, out var result)) {
+                return result;
+                }
+            return new ErrorResult(exception);
+            }
+        }
+    public override async Task<IResult> ShareDocument(ShareDocument data, ActionMode mode = ActionMode.Execute) {
+        try {
+            await Task.Delay(0);
+            return new NotYetImplemented() {
+                };
+            }
+        catch (Exception exception) {
+            if (TryProcessException(exception, data, out var result)) {
+                return result;
+                }
+            return new ErrorResult(exception);
+            }
+        }
+
+    public override async Task<IResult> AddMailAccount(AddMailAccount data, ActionMode mode = ActionMode.Execute) {
+        try {
+            await Task.Delay(0);
+            return new NotYetImplemented() {
+                };
+            }
+        catch (Exception exception) {
+            if (TryProcessException(exception, data, out var result)) {
+                return result;
+                }
+            return new ErrorResult(exception);
+            }
+        }
+    public override async Task<IResult> AddSshAccount(AddSshAccount data, ActionMode mode = ActionMode.Execute) {
+        try {
+            await Task.Delay(0);
+            return new NotYetImplemented() {
+                };
+            }
+        catch (Exception exception) {
+            if (TryProcessException(exception, data, out var result)) {
+                return result;
+                }
+            return new ErrorResult(exception);
+            }
+        }
+    public override async Task<IResult> AddGitAccount(AddGitAccount data, ActionMode mode = ActionMode.Execute) {
+        try {
+            await Task.Delay(0);
+            return new NotYetImplemented() {
+                };
+            }
+        catch (Exception exception) {
+            if (TryProcessException(exception, data, out var result)) {
+                return result;
+                }
+            return new ErrorResult(exception);
+            }
+        }
+    public override async Task<IResult> AddCodeSigningKey(AddCodeSigningKey data, ActionMode mode = ActionMode.Execute) {
+        try {
+            await Task.Delay(0);
+            return new NotYetImplemented() {
+                };
+            }
+        catch (Exception exception) {
+            if (TryProcessException(exception, data, out var result)) {
+                return result;
+                }
+            return new ErrorResult(exception);
+            }
+        }
+
+    public bool TryProcessException(Exception exception, IParameter parameters, out IResult result) {
+
+        switch (exception) {
+            case HttpRequestException httpRequestException: {
+                if (exception.InnerException is System.Net.Sockets.SocketException) {
+                    var data = parameters as IServiceAddress;
+                    result = new ServiceNotFound() {
+                        ServiceName = data.ServiceAddress
+                        };
+                    return true;
+                    }
+                else {
+                    result = new HttpRequestFail();
+                    return true;
+                    }
+
+                }
+            }
+
+        result = null;
+        return false;
+        }
 
     }
 
-public partial class AccountCreate {
+public interface IServiceAddress {
 
-    // This method can be pushed into the generated code.
+    ///<summary></summary> 
+    public string ServiceAddress { get;}
+    }
 
+public partial class TestService : IServiceAddress {
+    }
 
-
-    public void Reset(EverythingMaui context) {
-        ServiceAddress = null;
-        LocalName = null;
-        Coupon = null;
-        }
+public partial class AccountCreate : IServiceAddress {
     }

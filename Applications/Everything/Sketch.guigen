@@ -12,7 +12,7 @@ Section Account "Account" "user"
 	Button TestService 
 	Button AccountConnect 
 	Button AccountRecover 
-
+	Button AccountGenerateRecovery 
 	Text ServiceAddress "Service Address"
 		Readonly
 	Text ProfileUdf "Profile fingerprint"
@@ -24,6 +24,7 @@ Section Account "Account" "user"
 Section Messages "Messages" "messages"
 	Primary
 	Button RequestContact 
+	Button RequestConfirmation
 	Button CreateMail 
 	Button CreateChat
 	Button StartVoice
@@ -76,6 +77,9 @@ Section Bookmark "Bookmark" "bookmark"
 		View CatalogedBookmark
 
 Section Applications "Applications" "applications"
+	Button AddMailAccount	
+	Button AddSshAccount	
+	Button AddCodeSigningKey
 	Chooser ChooseApplication "Applications" "Applications" CatalogedApplication
 		View CatalogedApplication
 
@@ -130,6 +134,16 @@ Result ReportPending "Connection to account {0} is pending."
 	Text ServiceUdf			"Service fingerprint"
 	Text ServiceMessage			"Message"
 
+Result ReportShares "Secret shares"
+	Text Share1 "Recovery share"
+	Text Share2 "Recovery share"
+	Text Share3 "Recovery share"
+	Text Share4 "Recovery share"
+	Text Share5 "Recovery share"
+	Text Share6 "Recovery share"
+	Text Share7 "Recovery share"
+	Text Share8 "Recovery share"
+
 
 // Exceptions
 
@@ -172,6 +186,10 @@ Fail CounterpartyApproval			"Request requires counterparty confirmation"
 Fail SystemExeption					"Application failure"
 	Default
 
+
+Fail NotYetImplemented				"This feature is not yet implemented"
+
+
 // Actions
 
 // Account Actions
@@ -189,15 +207,10 @@ Action AccountCreate "Create Mesh Account" "new"
 	Text LocalName "Friendly name (optional)"
 	Text Coupon "Activation code (if provided)"
 
-Action AccountSwitch "Change Account" "test_service"
-	Return ReportAccount
-	Chooser ChooseUser "User" "account_user" AccountUser
-
 Action AccountConnect  "Connect To Existing Account" "connect"
 	Return ReportPending
 	Text ConnectionString "Account address"
 	Text ConnectionPin "Activation code (if provided)"
-		
 
 Action AccountRecover "Recover Mesh Account" "recover"
 	Return ReportAccount
@@ -214,11 +227,25 @@ Action AccountRecover "Recover Mesh Account" "recover"
 	Text Share7 "Recovery share"
 	Text Share8 "Recovery share"
 
+Action AccountDelete "Delete Account" "test_service"
+	Return ReportAccount
+
+Action AccountSwitch "Change Account" "test_service"
+	Return ReportAccount
+	Chooser ChooseUser "User" "account_user" AccountUser
+
+Action AccountGetPin "Create connection PIN" "recover"
+
+
+Action AccountGenerateRecovery "Create recovery" "share_nodes_solid"
+	Text NumberShares "Total number of shares"
+	Text Quorum "Quorum required for recovery"
 
 // Contact Actions
 Action RequestContact "Contact Request" "contact"
 	Text Address "Address"
-
+Action RequestConfirmation "Confirmation Request" "clipboard_check_solid"
+	Text Address "Address"
 
 Action CreateMail "New Mail" "mail"
 Action CreateChat "New Chat" "chat"
@@ -226,6 +253,11 @@ Action StartVoice "New Voice" "voice"
 Action StartVideo "New Video" "video"
 Action SendDocument "Send document" "document_send"
 Action ShareDocument "Share document" "document_share"
+
+Action AddMailAccount "Add email account" "mail"
+Action AddSshAccount "Create SSH credential" "credentials"
+Action AddGitAccount "Create git credentials" "git"
+Action AddCodeSigningKey "Add Code Signing Key" "signature"
 
 
 Dialog AccountUser

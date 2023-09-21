@@ -25,25 +25,6 @@ namespace Goedel.Mesh.Shell;
 
 public partial class Shell {
 
-    ///// <summary>
-    ///// Dispatch method
-    ///// </summary>
-    ///// <param name="options">The command line options.</param>
-    ///// <returns>Mesh result instance</returns>
-    //public override ShellResult ContactSelf(ContactSelf options) {
-    //    var contextUser = GetContextUser(options);
-    //    var file = options.File.Elements;
-
-    //    "Need to merge in the self contact info and label with a name.".TaskFunctionality(true);
-
-    //    var entry = contextUser.AddFromFile(file, self: true);
-
-    //    return new ResultEntry() {
-    //        Success = true,
-    //        CatalogEntry = entry
-    //        };
-    //    }
-
     /// <summary>
     /// Dispatch method
     /// </summary>

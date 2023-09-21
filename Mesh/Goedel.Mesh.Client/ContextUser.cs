@@ -366,13 +366,6 @@ public partial class ContextUser : ContextAccount {
         }
 
 
-    /// <summary>
-    /// Create an administrator device entry.
-    /// </summary>
-    /// <param name="rights">The rights to be granted to the administrator device.</param>
-    public void MakeAdministrator(List<string> rights) =>
-        MakeAdministratorAsync(rights).Wait();
-
 
     /// <summary>
     /// Create an administrator device entry.
@@ -396,9 +389,6 @@ public partial class ContextUser : ContextAccount {
 
         await transact.TransactAsync();
         }
-
-
-
 
 
 

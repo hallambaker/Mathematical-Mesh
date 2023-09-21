@@ -851,44 +851,6 @@ public partial class _AccountCreate : IParameter {
 
 
 /// <summary>
-/// Callback parameters for action AccountSwitch 
-/// </summary>
-public partial class AccountSwitch : _AccountSwitch {
-    }
-
-
-/// <summary>
-/// Callback parameters for action AccountSwitch 
-/// </summary>
-public partial class _AccountSwitch : IParameter {
-
-    ///<summary></summary> 
-    public virtual ISelectCollection ChooseUser { get; set;} 
-
-    ///<inheritdoc/>
-    public GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
-        (object test) => test is _AccountSwitch,
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyChooser ((object data) => (data as _AccountSwitch).ChooseUser, (object data,ISelectCollection value) => (data as _AccountSwitch).ChooseUser = value, "ChooseUser")
-
-            });
-
-    ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
-        GuiResultInvalid result = null;
-
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
-    }
-
-
-/// <summary>
 /// Callback parameters for action AccountConnect 
 /// </summary>
 public partial class AccountConnect : _AccountConnect {
@@ -1009,6 +971,150 @@ public partial class _AccountRecover : IParameter {
 
 
 /// <summary>
+/// Callback parameters for action AccountDelete 
+/// </summary>
+public partial class AccountDelete : _AccountDelete {
+    }
+
+
+/// <summary>
+/// Callback parameters for action AccountDelete 
+/// </summary>
+public partial class _AccountDelete : IParameter {
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _AccountDelete,
+        Array.Empty<GuiBoundProperty>());
+
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize() => NullResult.Initialized;
+    }
+
+
+/// <summary>
+/// Callback parameters for action AccountSwitch 
+/// </summary>
+public partial class AccountSwitch : _AccountSwitch {
+    }
+
+
+/// <summary>
+/// Callback parameters for action AccountSwitch 
+/// </summary>
+public partial class _AccountSwitch : IParameter {
+
+    ///<summary></summary> 
+    public virtual ISelectCollection ChooseUser { get; set;} 
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _AccountSwitch,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyChooser ((object data) => (data as _AccountSwitch).ChooseUser, (object data,ISelectCollection value) => (data as _AccountSwitch).ChooseUser = value, "ChooseUser")
+
+            });
+
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize() => NullResult.Initialized;
+    }
+
+
+/// <summary>
+/// Callback parameters for action AccountGetPin 
+/// </summary>
+public partial class AccountGetPin : _AccountGetPin {
+    }
+
+
+/// <summary>
+/// Callback parameters for action AccountGetPin 
+/// </summary>
+public partial class _AccountGetPin : IParameter {
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _AccountGetPin,
+        Array.Empty<GuiBoundProperty>());
+
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize() => NullResult.Initialized;
+    }
+
+
+/// <summary>
+/// Callback parameters for action AccountGenerateRecovery 
+/// </summary>
+public partial class AccountGenerateRecovery : _AccountGenerateRecovery {
+    }
+
+
+/// <summary>
+/// Callback parameters for action AccountGenerateRecovery 
+/// </summary>
+public partial class _AccountGenerateRecovery : IParameter {
+
+    ///<summary></summary> 
+    public virtual string NumberShares { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string Quorum { get; set;} 
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _AccountGenerateRecovery,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _AccountGenerateRecovery).NumberShares, (object data,string value) => (data as _AccountGenerateRecovery).NumberShares = value, "NumberShares"), 
+            new GuiBoundPropertyString ((object data) => (data as _AccountGenerateRecovery).Quorum, (object data,string value) => (data as _AccountGenerateRecovery).Quorum = value, "Quorum")
+
+            });
+
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize() => NullResult.Initialized;
+    }
+
+
+/// <summary>
 /// Callback parameters for action RequestContact 
 /// </summary>
 public partial class RequestContact : _RequestContact {
@@ -1031,6 +1137,44 @@ public partial class _RequestContact : IParameter {
         (object test) => test is _RequestContact,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _RequestContact).Address, (object data,string value) => (data as _RequestContact).Address = value, "Address")
+
+            });
+
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize() => NullResult.Initialized;
+    }
+
+
+/// <summary>
+/// Callback parameters for action RequestConfirmation 
+/// </summary>
+public partial class RequestConfirmation : _RequestConfirmation {
+    }
+
+
+/// <summary>
+/// Callback parameters for action RequestConfirmation 
+/// </summary>
+public partial class _RequestConfirmation : IParameter {
+
+    ///<summary></summary> 
+    public virtual string Address { get; set;} 
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _RequestConfirmation,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _RequestConfirmation).Address, (object data,string value) => (data as _RequestConfirmation).Address = value, "Address")
 
             });
 
@@ -1224,6 +1368,134 @@ public partial class _ShareDocument : IParameter {
     ///<summary>The binding for the data type.</summary> 
     public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _ShareDocument,
+        Array.Empty<GuiBoundProperty>());
+
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize() => NullResult.Initialized;
+    }
+
+
+/// <summary>
+/// Callback parameters for action AddMailAccount 
+/// </summary>
+public partial class AddMailAccount : _AddMailAccount {
+    }
+
+
+/// <summary>
+/// Callback parameters for action AddMailAccount 
+/// </summary>
+public partial class _AddMailAccount : IParameter {
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _AddMailAccount,
+        Array.Empty<GuiBoundProperty>());
+
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize() => NullResult.Initialized;
+    }
+
+
+/// <summary>
+/// Callback parameters for action AddSshAccount 
+/// </summary>
+public partial class AddSshAccount : _AddSshAccount {
+    }
+
+
+/// <summary>
+/// Callback parameters for action AddSshAccount 
+/// </summary>
+public partial class _AddSshAccount : IParameter {
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _AddSshAccount,
+        Array.Empty<GuiBoundProperty>());
+
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize() => NullResult.Initialized;
+    }
+
+
+/// <summary>
+/// Callback parameters for action AddGitAccount 
+/// </summary>
+public partial class AddGitAccount : _AddGitAccount {
+    }
+
+
+/// <summary>
+/// Callback parameters for action AddGitAccount 
+/// </summary>
+public partial class _AddGitAccount : IParameter {
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _AddGitAccount,
+        Array.Empty<GuiBoundProperty>());
+
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize() => NullResult.Initialized;
+    }
+
+
+/// <summary>
+/// Callback parameters for action AddCodeSigningKey 
+/// </summary>
+public partial class AddCodeSigningKey : _AddCodeSigningKey {
+    }
+
+
+/// <summary>
+/// Callback parameters for action AddCodeSigningKey 
+/// </summary>
+public partial class _AddCodeSigningKey : IParameter {
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _AddCodeSigningKey,
         Array.Empty<GuiBoundProperty>());
 
     ///<summary>Validation</summary> 
@@ -1492,6 +1764,83 @@ public partial record _ReportPending : IResult {
         ServiceAddress,
         ServiceUdf,
         ServiceMessage};
+    }
+
+
+/// <summary>
+/// Return parameters for result ReportShares 
+/// </summary>
+public partial record ReportShares : _ReportShares {
+    }
+
+
+/// <summary>
+/// Callback parameters for result ReportShares 
+/// </summary>
+public partial record _ReportShares : IResult {
+
+    ///<inheritdoc/>
+    public string Message => "Secret shares";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("ReportShares");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Completed;
+
+    ///<summary></summary> 
+    public virtual string Share1 { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string Share2 { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string Share3 { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string Share4 { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string Share5 { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string Share6 { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string Share7 { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string Share8 { get; set;} 
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is ReportShares,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as ReportShares).Share1, (object data,string value) => (data as ReportShares).Share1 = value, "Share1"), 
+            new GuiBoundPropertyString ((object data) => (data as ReportShares).Share2, (object data,string value) => (data as ReportShares).Share2 = value, "Share2"), 
+            new GuiBoundPropertyString ((object data) => (data as ReportShares).Share3, (object data,string value) => (data as ReportShares).Share3 = value, "Share3"), 
+            new GuiBoundPropertyString ((object data) => (data as ReportShares).Share4, (object data,string value) => (data as ReportShares).Share4 = value, "Share4"), 
+            new GuiBoundPropertyString ((object data) => (data as ReportShares).Share5, (object data,string value) => (data as ReportShares).Share5 = value, "Share5"), 
+            new GuiBoundPropertyString ((object data) => (data as ReportShares).Share6, (object data,string value) => (data as ReportShares).Share6 = value, "Share6"), 
+            new GuiBoundPropertyString ((object data) => (data as ReportShares).Share7, (object data,string value) => (data as ReportShares).Share7 = value, "Share7"), 
+            new GuiBoundPropertyString ((object data) => (data as ReportShares).Share8, (object data,string value) => (data as ReportShares).Share8 = value, "Share8")
+
+            });
+
+    ///<inheritdoc/>
+    public object[] GetValues() => new [] { 
+        Share1,
+        Share2,
+        Share3,
+        Share4,
+        Share5,
+        Share6,
+        Share7,
+        Share8};
     }
 
 
@@ -2167,6 +2516,45 @@ public partial record _SystemExeption : IFail {
 
 
 
+/// <summary>
+/// Return parameters for failure result NotYetImplemented 
+/// </summary>
+public partial record NotYetImplemented : _NotYetImplemented {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result NotYetImplemented 
+/// </summary>
+public partial record _NotYetImplemented : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "This feature is not yet implemented";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("NotYetImplemented");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is NotYetImplemented,
+        Array.Empty<GuiBoundProperty>());
+
+    ///<inheritdoc/>
+    public object[] GetValues() => Array.Empty<object>();
+
+
+    }
+
+
+
+
 
 #endregion
 #region // Gui classes
@@ -2213,6 +2601,7 @@ public class _EverythingMaui : Gui {
 		new GuiImage ("bookmark") , 
 		new GuiImage ("calendar") , 
 		new GuiImage ("chat") , 
+		new GuiImage ("clipboard_check_solid") , 
 		new GuiImage ("connect") , 
 		new GuiImage ("contact") , 
 		new GuiImage ("contacts") , 
@@ -2222,6 +2611,7 @@ public class _EverythingMaui : Gui {
 		new GuiImage ("document_share") , 
 		new GuiImage ("documents") , 
 		new GuiImage ("feeds") , 
+		new GuiImage ("git") , 
 		new GuiImage ("groups") , 
 		new GuiImage ("mail") , 
 		new GuiImage ("messages") , 
@@ -2229,6 +2619,8 @@ public class _EverythingMaui : Gui {
 		new GuiImage ("recover") , 
 		new GuiImage ("services") , 
 		new GuiImage ("settings") , 
+		new GuiImage ("share_nodes_solid") , 
+		new GuiImage ("signature") , 
 		new GuiImage ("tasks") , 
 		new GuiImage ("test_service") , 
 		new GuiImage ("user") , 
@@ -2273,14 +2665,22 @@ public class _EverythingMaui : Gui {
 	public GuiAction ActionTestService { get; } = new ("TestService", "Test Service", "test_service", () => new TestService());
     ///<summary>Action ActionAccountCreate.</summary> 
 	public GuiAction ActionAccountCreate { get; } = new ("AccountCreate", "Create Mesh Account", "new", () => new AccountCreate());
-    ///<summary>Action ActionAccountSwitch.</summary> 
-	public GuiAction ActionAccountSwitch { get; } = new ("AccountSwitch", "Change Account", "test_service", () => new AccountSwitch());
     ///<summary>Action ActionAccountConnect.</summary> 
 	public GuiAction ActionAccountConnect { get; } = new ("AccountConnect", "Connect To Existing Account", "connect", () => new AccountConnect());
     ///<summary>Action ActionAccountRecover.</summary> 
 	public GuiAction ActionAccountRecover { get; } = new ("AccountRecover", "Recover Mesh Account", "recover", () => new AccountRecover());
+    ///<summary>Action ActionAccountDelete.</summary> 
+	public GuiAction ActionAccountDelete { get; } = new ("AccountDelete", "Delete Account", "test_service", () => new AccountDelete());
+    ///<summary>Action ActionAccountSwitch.</summary> 
+	public GuiAction ActionAccountSwitch { get; } = new ("AccountSwitch", "Change Account", "test_service", () => new AccountSwitch());
+    ///<summary>Action ActionAccountGetPin.</summary> 
+	public GuiAction ActionAccountGetPin { get; } = new ("AccountGetPin", "Create connection PIN", "recover", () => new AccountGetPin());
+    ///<summary>Action ActionAccountGenerateRecovery.</summary> 
+	public GuiAction ActionAccountGenerateRecovery { get; } = new ("AccountGenerateRecovery", "Create recovery", "share_nodes_solid", () => new AccountGenerateRecovery());
     ///<summary>Action ActionRequestContact.</summary> 
 	public GuiAction ActionRequestContact { get; } = new ("RequestContact", "Contact Request", "contact", () => new RequestContact());
+    ///<summary>Action ActionRequestConfirmation.</summary> 
+	public GuiAction ActionRequestConfirmation { get; } = new ("RequestConfirmation", "Confirmation Request", "clipboard_check_solid", () => new RequestConfirmation());
     ///<summary>Action ActionCreateMail.</summary> 
 	public GuiAction ActionCreateMail { get; } = new ("CreateMail", "New Mail", "mail", () => new CreateMail());
     ///<summary>Action ActionCreateChat.</summary> 
@@ -2293,6 +2693,14 @@ public class _EverythingMaui : Gui {
 	public GuiAction ActionSendDocument { get; } = new ("SendDocument", "Send document", "document_send", () => new SendDocument());
     ///<summary>Action ActionShareDocument.</summary> 
 	public GuiAction ActionShareDocument { get; } = new ("ShareDocument", "Share document", "document_share", () => new ShareDocument());
+    ///<summary>Action ActionAddMailAccount.</summary> 
+	public GuiAction ActionAddMailAccount { get; } = new ("AddMailAccount", "Add email account", "mail", () => new AddMailAccount());
+    ///<summary>Action ActionAddSshAccount.</summary> 
+	public GuiAction ActionAddSshAccount { get; } = new ("AddSshAccount", "Create SSH credential", "credentials", () => new AddSshAccount());
+    ///<summary>Action ActionAddGitAccount.</summary> 
+	public GuiAction ActionAddGitAccount { get; } = new ("AddGitAccount", "Create git credentials", "git", () => new AddGitAccount());
+    ///<summary>Action ActionAddCodeSigningKey.</summary> 
+	public GuiAction ActionAddCodeSigningKey { get; } = new ("AddCodeSigningKey", "Add Code Signing Key", "signature", () => new AddCodeSigningKey());
 
 	// Dialogs
     ///<summary>Dialog DialogAppearance.</summary> 
@@ -2321,6 +2729,8 @@ public class _EverythingMaui : Gui {
 	public GuiResult ResultReportAccount { get; } = new ();
     ///<summary>Result ResultReportPending.</summary> 
 	public GuiResult ResultReportPending { get; } = new ();
+    ///<summary>Result ResultReportShares.</summary> 
+	public GuiResult ResultReportShares { get; } = new ();
 	
     ///<summary>Dictionary resolving exception name to factory method.</summary> 
     public Dictionary<string, Func<IResult>> ExceptionDirectory =
@@ -2341,6 +2751,7 @@ public class _EverythingMaui : Gui {
 			new GuiButton ("TestService", ActionTestService), 
 			new GuiButton ("AccountConnect", ActionAccountConnect), 
 			new GuiButton ("AccountRecover", ActionAccountRecover), 
+			new GuiButton ("AccountGenerateRecovery", ActionAccountGenerateRecovery), 
 			new GuiText ("ServiceAddress", "Service Address", 0), 
 			new GuiText ("ProfileUdf", "Profile fingerprint", 1), 
 			new GuiText ("LocalAddress", "Local Address", 2)		    
@@ -2350,6 +2761,7 @@ public class _EverythingMaui : Gui {
 	    SectionMessages.Active = () => StateDefault;
 	    SectionMessages.Entries =  new () {  
 			new GuiButton ("RequestContact", ActionRequestContact), 
+			new GuiButton ("RequestConfirmation", ActionRequestConfirmation), 
 			new GuiButton ("CreateMail", ActionCreateMail), 
 			new GuiButton ("CreateChat", ActionCreateChat), 
 			new GuiButton ("StartVoice", ActionStartVoice), 
@@ -2429,6 +2841,9 @@ public class _EverythingMaui : Gui {
 	    SectionApplications.Gui = this;
 	    SectionApplications.Active = () => StateDefault;
 	    SectionApplications.Entries =  new () {  
+			new GuiButton ("AddMailAccount", ActionAddMailAccount), 
+			new GuiButton ("AddSshAccount", ActionAddSshAccount), 
+			new GuiButton ("AddCodeSigningKey", ActionAddCodeSigningKey), 
 			new GuiChooser ("ChooseApplication", "Applications", "Applications", 0, new () { 
 				new GuiView (BindingCatalogedApplication)
 				}) 		    
@@ -2491,12 +2906,6 @@ public class _EverythingMaui : Gui {
 			new GuiText ("Coupon", "Activation code (if provided)", 2)
 		    };
 
-        ActionAccountSwitch.Callback = (x, mode) => AccountSwitch (x as AccountSwitch, mode) ;
-	    ActionAccountSwitch.Entries = new () { 
-			new GuiChooser ("ChooseUser", "User", "account_user", 0, new () {
-				}) 
-		    };
-
         ActionAccountConnect.Callback = (x, mode) => AccountConnect (x as AccountConnect, mode) ;
 	    ActionAccountConnect.Entries = new () { 
 			new GuiText ("ConnectionString", "Account address", 0), 
@@ -2518,8 +2927,33 @@ public class _EverythingMaui : Gui {
 			new GuiText ("Share8", "Recovery share", 10)
 		    };
 
+        ActionAccountDelete.Callback = (x, mode) => AccountDelete (x as AccountDelete, mode) ;
+	    ActionAccountDelete.Entries = new () {
+		    };
+
+        ActionAccountSwitch.Callback = (x, mode) => AccountSwitch (x as AccountSwitch, mode) ;
+	    ActionAccountSwitch.Entries = new () { 
+			new GuiChooser ("ChooseUser", "User", "account_user", 0, new () {
+				}) 
+		    };
+
+        ActionAccountGetPin.Callback = (x, mode) => AccountGetPin (x as AccountGetPin, mode) ;
+	    ActionAccountGetPin.Entries = new () {
+		    };
+
+        ActionAccountGenerateRecovery.Callback = (x, mode) => AccountGenerateRecovery (x as AccountGenerateRecovery, mode) ;
+	    ActionAccountGenerateRecovery.Entries = new () { 
+			new GuiText ("NumberShares", "Total number of shares", 0), 
+			new GuiText ("Quorum", "Quorum required for recovery", 1)
+		    };
+
         ActionRequestContact.Callback = (x, mode) => RequestContact (x as RequestContact, mode) ;
 	    ActionRequestContact.Entries = new () { 
+			new GuiText ("Address", "Address", 0)
+		    };
+
+        ActionRequestConfirmation.Callback = (x, mode) => RequestConfirmation (x as RequestConfirmation, mode) ;
+	    ActionRequestConfirmation.Entries = new () { 
 			new GuiText ("Address", "Address", 0)
 		    };
 
@@ -2547,20 +2981,44 @@ public class _EverythingMaui : Gui {
 	    ActionShareDocument.Entries = new () {
 		    };
 
+        ActionAddMailAccount.Callback = (x, mode) => AddMailAccount (x as AddMailAccount, mode) ;
+	    ActionAddMailAccount.Entries = new () {
+		    };
+
+        ActionAddSshAccount.Callback = (x, mode) => AddSshAccount (x as AddSshAccount, mode) ;
+	    ActionAddSshAccount.Entries = new () {
+		    };
+
+        ActionAddGitAccount.Callback = (x, mode) => AddGitAccount (x as AddGitAccount, mode) ;
+	    ActionAddGitAccount.Entries = new () {
+		    };
+
+        ActionAddCodeSigningKey.Callback = (x, mode) => AddCodeSigningKey (x as AddCodeSigningKey, mode) ;
+	    ActionAddCodeSigningKey.Entries = new () {
+		    };
+
 
         Actions = new List<GuiAction>() {  
 		    ActionTestService, 
 		    ActionAccountCreate, 
-		    ActionAccountSwitch, 
 		    ActionAccountConnect, 
 		    ActionAccountRecover, 
+		    ActionAccountDelete, 
+		    ActionAccountSwitch, 
+		    ActionAccountGetPin, 
+		    ActionAccountGenerateRecovery, 
 		    ActionRequestContact, 
+		    ActionRequestConfirmation, 
 		    ActionCreateMail, 
 		    ActionCreateChat, 
 		    ActionStartVoice, 
 		    ActionStartVideo, 
 		    ActionSendDocument, 
-		    ActionShareDocument
+		    ActionShareDocument, 
+		    ActionAddMailAccount, 
+		    ActionAddSshAccount, 
+		    ActionAddGitAccount, 
+		    ActionAddCodeSigningKey
 		    };
 
 
@@ -2671,13 +3129,25 @@ public class _EverythingMaui : Gui {
 			new GuiText ("ServiceMessage", "Message", 4)			
 		    };
 
+	    ResultReportShares.Entries = new () { 
+			new GuiText ("Share1", "Recovery share", 0), 
+			new GuiText ("Share2", "Recovery share", 1), 
+			new GuiText ("Share3", "Recovery share", 2), 
+			new GuiText ("Share4", "Recovery share", 3), 
+			new GuiText ("Share5", "Recovery share", 4), 
+			new GuiText ("Share6", "Recovery share", 5), 
+			new GuiText ("Share7", "Recovery share", 6), 
+			new GuiText ("Share8", "Recovery share", 7)			
+		    };
+
 
 
         Results = new List<GuiResult>() {  
 		    ResultReportHost, 
 		    ResultReportAccountCreate, 
 		    ResultReportAccount, 
-		    ResultReportPending
+		    ResultReportPending, 
+		    ResultReportShares
 		    };
 
         }
@@ -2697,12 +3167,6 @@ public class _EverythingMaui : Gui {
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> AccountSwitch (AccountSwitch data, ActionMode mode = ActionMode.Execute) 
-                => throw new NYI();
-
-    /// <summary>
-    /// GUI action
-    /// </summary>
     public virtual Task<IResult> AccountConnect (AccountConnect data, ActionMode mode = ActionMode.Execute) 
                 => throw new NYI();
 
@@ -2715,7 +3179,37 @@ public class _EverythingMaui : Gui {
     /// <summary>
     /// GUI action
     /// </summary>
+    public virtual Task<IResult> AccountDelete (AccountDelete data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> AccountSwitch (AccountSwitch data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> AccountGetPin (AccountGetPin data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> AccountGenerateRecovery (AccountGenerateRecovery data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
     public virtual Task<IResult> RequestContact (RequestContact data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> RequestConfirmation (RequestConfirmation data, ActionMode mode = ActionMode.Execute) 
                 => throw new NYI();
 
     /// <summary>
@@ -2752,6 +3246,30 @@ public class _EverythingMaui : Gui {
     /// GUI action
     /// </summary>
     public virtual Task<IResult> ShareDocument (ShareDocument data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> AddMailAccount (AddMailAccount data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> AddSshAccount (AddSshAccount data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> AddGitAccount (AddGitAccount data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> AddCodeSigningKey (AddCodeSigningKey data, ActionMode mode = ActionMode.Execute) 
                 => throw new NYI();
 
     

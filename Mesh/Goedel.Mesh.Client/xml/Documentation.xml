@@ -1305,12 +1305,6 @@
             </summary>
             <param name="accountAddress">The account address to bind.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.MakeAdministrator(System.Collections.Generic.List{System.String})">
-            <summary>
-            Create an administrator device entry.
-            </summary>
-            <param name="rights">The rights to be granted to the administrator device.</param>
-        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.MakeAdministratorAsync(System.Collections.Generic.List{System.String})">
             <summary>
             Create an administrator device entry.

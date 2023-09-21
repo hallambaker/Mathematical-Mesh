@@ -271,24 +271,17 @@ public partial class Shell {
 
         var secret = new SharedSecret(recoverShares);
 
-
         var (algorithm, meshSecret) = secret.ParseKey();
 
         // should switch on algorithm so we can recover different types of profile!!!
         (algorithm == UdfAlgorithmIdentifier.MeshProfileAccount |
             algorithm == UdfAlgorithmIdentifier.MeshProfileService).AssertTrue(InvalidRecoverySecret.Throw);
 
-
         var accountSeed = new PrivateKeyUDF(secret.UDFKey);
-
 
         if (options.Verify.Value) {
             var contextUser = GetContextUser(options);
-
-
             "Here verify that the recovered profile matches the original.".TaskFunctionality();
-
-
             return new ResultCreateAccount() {
                 Success = true,
                 ProfileAccount = contextUser.ProfileUser,
@@ -298,9 +291,6 @@ public partial class Shell {
         else {
             var contextUser = MeshHost.ConfigureMeshAsync(
                     accountAddress, localName, accountSeed: accountSeed, create: false).Sync();
-
-
-
             return new ResultCreateAccount() {
                 Success = true,
                 ProfileAccount = contextUser.ProfileUser,
