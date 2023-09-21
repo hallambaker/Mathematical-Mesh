@@ -41,17 +41,21 @@ public enum ReturnResult {
 
 public interface IResult : IBindable {
 
+    public string Message { get; }
+
+
+    public ResourceId? ResourceId { get; }
+
     ReturnResult ReturnResult { get; }
+
+    public object[] GetValues();
 
     }
 
 
 public interface IFail : IResult { 
     
-    public string Message { get; }
 
-
-    public ResourceId ResourceId { get; }
     
     }
 
@@ -59,14 +63,18 @@ public interface IFail : IResult {
 
 public abstract record NullResult : IResult {
 
+
+    public ResourceId? ResourceId { get; } = null;
+
     public string Message => "";
 
     public virtual ReturnResult ReturnResult { get; init; }
 
     //public virtual string Error { get; }
 
-    public NullResult(string error="") {
+    public NullResult( ResourceId? resourceId=null) {
         //Error = error;
+        ResourceId = resourceId;
         }
 
     public GuiBinding Binding => throw new NotImplementedException();
@@ -79,7 +87,7 @@ public abstract record NullResult : IResult {
 
     public static NullResult Completed { get; } = new CompletedResult();
 
-
+    public object[] GetValues() => Array.Empty<object>();
     }
 
 
@@ -102,7 +110,6 @@ public record ErrorResult : NullResult {
 
     public  string? Error { get; }
     Exception? Exception { get; }
-    ResourceId? ResourceId { get; }
     public ErrorResult(string error ) {
         Error = error;
         }
@@ -110,8 +117,8 @@ public record ErrorResult : NullResult {
     public ErrorResult(Exception exception) {
         Exception = exception;
         }
-    public ErrorResult(ResourceId resourceId) {
-        ResourceId = resourceId;
+    public ErrorResult(ResourceId resourceId) : base(resourceId){
+
         }
 
     }

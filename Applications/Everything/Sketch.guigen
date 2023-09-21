@@ -100,23 +100,35 @@ Section Settings "Settings" "settings"
 
 // Action results
 
-Result ReportHost
+Result ReportHost "Host {0} acknowledged your request."
+	Hidden ServiceAddress
 	Text ServiceCallsign	"Callsign"
 	Text ServiceDns			"DNS"
 	Text ServiceUdf			"Service fingerprint"
 	Text HostUdf			"Host fingerprint"
 
-Result ReportAccount
-	Text ServiceCallsign	"Callsign"
+Result ReportAccountCreate "Created account {0}."
+	Hidden ServiceName
+	Text LocalName			"Local"
 	Text ServiceAddress		"DNS"
-	Text ProfileUdf			"Service fingerprint"
+	Text ProfileUdf			"Profile fingerprint"
 	Text ServiceUdf			"Service fingerprint"
 
-Result ReportPending
+Result ReportAccount "Connection to account {0} is active."
+	Hidden ServiceName
+	Text LocalName			"Local"
+	Text ServiceCallsign	"Callsign"
+	Text ServiceAddress		"DNS"
+	Text ProfileUdf			"Profile fingerprint"
+	Text ServiceUdf			"Service fingerprint"
+
+Result ReportPending "Connection to account {0} is pending."
+	Hidden ServiceName
+	Text LocalName			"Local"
 	Text ServiceCallsign	"Callsign"
 	Text ServiceAddress		"DNS"
 	Text ServiceUdf			"Service fingerprint"
-	Text Message			"Message"
+	Text ServiceMessage			"Message"
 
 
 // Exceptions
@@ -125,16 +137,34 @@ Fail HttpRequestFail		"The Mesh service did not respond"
 	Exception HttpRequestException
 
 Fail ServiceNotFound				"The service {0} could not be found"
+	Hidden ServiceName
+
 Fail HostNotFound					"No host could not be reached for service {0}"
+	Hidden ServiceName
+
+
 Fail InvalidHostCredential			"The host presented an invalid credential"
 Fail CredentialRefused				"The host refused service on account of an invalid credential"
 Fail DeviceRefused					"This device is no longer authorized to access this account"
 Fail FileWriteError					"Could not write file {0}"
+	Hidden Filename
+
+
 Fail FileReadError					"Could not read file {0}"
+	Hidden Filename
+
 Fail AccountProfileInvalid			"Account profile file is invalid"
 Fail DeviceProfileInvalid			"Device profile file is invalid"
 Fail ActivationKeyNotFound			"The activation key for the profile {0} could not be found"
+	Hidden ProfileName
+	Text LocalName			"Local"
+	Text ProfileUdf			"Profile fingerprint"
+
 Fail NotAuthorizedCatalog			"This device is not authorized to access the {0} catalog"
+	Text CatalogName		"Catalog"
+	Text LocalName			"Profile"
+	Text ProfileUdf			"Profile fingerprint"
+
 Fail NotAuthorizedAdministration	"This device is not authorized to perform administrative requests"
 Fail NotAuthorizedFCatalog			"This device is not authorized to access the {0} catalog"
 Fail CounterpartyApproval			"Request requires counterparty confirmation"
@@ -147,7 +177,6 @@ Fail SystemExeption					"Application failure"
 // Account Actions
 Action TestService "Test Service" "test_service"
 	Return ReportHost
-	Text Dummy "Ignore"
 	Text ServiceAddress "Service address"
 		Error ServiceAddressNotValid "Not a valid service address"
 			|!ServiceAddress.TryParseServiceAddress()

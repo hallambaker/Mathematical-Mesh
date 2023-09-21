@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Goedel.Utilities;
+
+using System;
 using System.Security.Cryptography.X509Certificates;
 
 using static System.Collections.Specialized.BitVector32;
@@ -80,6 +82,10 @@ public class GuigenBinding(Gui gui, DisplayMode display = DisplayMode.Default) {
     public Page GetMain() {
         return new GuigenMainFlyout(this).Page;
         }
+
+
+    public string Resolve(ResourceId resourceId) =>
+        resourceId.GetString();
 
 
     }

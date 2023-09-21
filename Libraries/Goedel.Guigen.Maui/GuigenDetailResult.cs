@@ -15,10 +15,27 @@ public class GuigenDetailResult : GuigenDetaiPage {
         var stack = new VerticalStackLayout();
 
         if (result is IFail fail) {
-            var label = new Label() {
-                Text = fail.Message,
+            var view = new HorizontalStackLayout();
+            var image = new Image() {
+                Source = "triangle_exclamation_solid.png",
+                HeightRequest = Binding.IconHeight * 2
                 };
-            stack.Add(label);
+
+            var values = result.GetValues();
+            var format = Binding.Resolve(fail.ResourceId);
+
+            var text = values.Length > 0 ? String.Format(format, values) : format;
+
+            var label = new Label() {
+                Text = text
+                };
+
+
+
+
+            view.Add(image);
+            view.Add(label);
+            stack.Add(view);
             }
         else {
             foreach (var entry in result.Binding.BoundProperties) {
@@ -32,6 +49,9 @@ public class GuigenDetailResult : GuigenDetaiPage {
                         var field = new Label() {
                             Text = text.Get(result)
                             };
+
+                        view.Add(label);
+                        view.Add(field);
                         stack.Add(view);
 
                         break;
@@ -42,7 +62,7 @@ public class GuigenDetailResult : GuigenDetaiPage {
 
         var hview = new HorizontalStackLayout();
         DismissButton = new Button() {
-            Text = "Accept"
+            Text = "OK"
             };
         DismissButton.Clicked += OnClickDismiss;
 

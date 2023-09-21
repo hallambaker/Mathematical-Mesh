@@ -34,6 +34,12 @@ public record GuiResultInvalid : IResult {
 
     IParameter Parameter { get; }
 
+    public string Message => throw new NotImplementedException();
+
+    public ResourceId ResourceId => throw new NotImplementedException();
+
+    public object[] GetValues() => Array.Empty<object>();
+
     /// <summary>
     /// Constructor, returns new instance reporting validity of the specified fields
     /// in <paramref name="parameter"/>. The constructor MAY optionally specify a sequence

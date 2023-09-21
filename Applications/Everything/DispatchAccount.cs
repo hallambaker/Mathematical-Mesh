@@ -78,6 +78,20 @@ public partial class EverythingMaui {
             return result;
 
             }
+
+        catch (HttpRequestException ex) {
+            if (ex.InnerException is System.Net.Sockets.SocketException) {
+                return new ServiceNotFound() {
+                    ServiceName = data.ServiceAddress
+                    };
+
+                }
+            else {
+                return new HttpRequestFail();
+                }
+
+            }
+
         catch (Exception ex) {
             if (ExceptionDirectory.TryGetValue(ex.GetType().FullName, out var factory)) {
                 return factory();

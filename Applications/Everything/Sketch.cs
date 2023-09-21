@@ -442,7 +442,7 @@ public partial class _Appearance : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding { get; }  = new (
+    public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _Appearance,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyColor ((object data) => (data as _Appearance).BackgroundColor, (object data,IFieldColor value) => (data as _Appearance).BackgroundColor = value, "BackgroundColor"), 
@@ -485,7 +485,7 @@ public partial class _AccountUser : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding { get; }  = new (
+    public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AccountUser,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _AccountUser).Udf, (object data,string value) => (data as _AccountUser).Udf = value, "Udf"), 
@@ -537,7 +537,7 @@ public partial class _Contact : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding { get; }  = new (
+    public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _Contact,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _Contact).Local, (object data,string value) => (data as _Contact).Local = value, "Local"), 
@@ -580,7 +580,7 @@ public partial class _ContactNetworkAddress : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding { get; }  = new (
+    public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _ContactNetworkAddress,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyIcon ((object data) => (data as _ContactNetworkAddress).ProtocolIcon, (object data,IFieldIcon value) => (data as _ContactNetworkAddress).ProtocolIcon = value, "ProtocolIcon"), 
@@ -634,7 +634,7 @@ public partial class _ContactPhysicalAddress : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding { get; }  = new (
+    public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _ContactPhysicalAddress,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _ContactPhysicalAddress).Appartment, (object data,string value) => (data as _ContactPhysicalAddress).Appartment = value, "Appartment"), 
@@ -672,7 +672,7 @@ public partial class _MessageContactRequest : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding { get; }  = new (
+    public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _MessageContactRequest,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _MessageContactRequest).To, (object data,string value) => (data as _MessageContactRequest).To = value, "To"), 
@@ -703,7 +703,7 @@ public partial class _MessageConfirmationRequest : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding { get; }  = new (
+    public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _MessageConfirmationRequest,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _MessageConfirmationRequest).To, (object data,string value) => (data as _MessageConfirmationRequest).To = value, "To"), 
@@ -737,7 +737,7 @@ public partial class _MessageMail : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding { get; }  = new (
+    public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _MessageMail,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _MessageMail).To, (object data,string value) => (data as _MessageMail).To = value, "To"), 
@@ -765,11 +765,7 @@ public partial class TestService : _TestService {
 public partial class _TestService : IParameter {
 
     ///<summary></summary> 
-    public virtual string Dummy { get; set;} 
-
-    ///<summary></summary> 
     public virtual string ServiceAddress { get; set;} 
-
 
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
@@ -778,7 +774,6 @@ public partial class _TestService : IParameter {
     public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _TestService,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as _TestService).Dummy, (object data,string value) => (data as _TestService).Dummy = value, "Dummy"), 
             new GuiBoundPropertyString ((object data) => (data as _TestService).ServiceAddress, (object data,string value) => (data as _TestService).ServiceAddress = value, "ServiceAddress")
 
             });
@@ -791,14 +786,14 @@ public partial class _TestService : IParameter {
         if (!ServiceAddress.TryParseServiceAddress()
             ) {
             result ??=new GuiResultInvalid(this);
-            result.SetError (1, "Not a valid service address", "ServiceAddressNotValid");
+            result.SetError (0, "Not a valid service address", "ServiceAddressNotValid");
             }
 
         // error on ServiceAddress
         if (ServiceAddress == null || ServiceAddress?.Length == 0
             ) {
             result ??=new GuiResultInvalid(this);
-            result.SetError (1, "Service address cannot be blank", "ServiceAddressNotEmpty");
+            result.SetError (0, "Service address cannot be blank", "ServiceAddressNotEmpty");
             }
 
         return (result as IResult) ?? NullResult.Valid;
@@ -829,7 +824,6 @@ public partial class _AccountCreate : IParameter {
 
     ///<summary></summary> 
     public virtual string Coupon { get; set;} 
-
 
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
@@ -871,7 +865,6 @@ public partial class _AccountSwitch : IParameter {
     ///<summary></summary> 
     public virtual ISelectCollection ChooseUser { get; set;} 
 
-
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
 
@@ -912,7 +905,6 @@ public partial class _AccountConnect : IParameter {
 
     ///<summary></summary> 
     public virtual string ConnectionPin { get; set;} 
-
 
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
@@ -983,7 +975,6 @@ public partial class _AccountRecover : IParameter {
     ///<summary></summary> 
     public virtual string Share8 { get; set;} 
 
-
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
 
@@ -1032,7 +1023,6 @@ public partial class _RequestContact : IParameter {
     ///<summary></summary> 
     public virtual string Address { get; set;} 
 
-
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
 
@@ -1068,7 +1058,6 @@ public partial class CreateMail : _CreateMail {
 /// </summary>
 public partial class _CreateMail : IParameter {
 
-
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
 
@@ -1100,7 +1089,6 @@ public partial class CreateChat : _CreateChat {
 /// Callback parameters for action CreateChat 
 /// </summary>
 public partial class _CreateChat : IParameter {
-
 
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
@@ -1134,7 +1122,6 @@ public partial class StartVoice : _StartVoice {
 /// </summary>
 public partial class _StartVoice : IParameter {
 
-
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
 
@@ -1166,7 +1153,6 @@ public partial class StartVideo : _StartVideo {
 /// Callback parameters for action StartVideo 
 /// </summary>
 public partial class _StartVideo : IParameter {
-
 
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
@@ -1200,7 +1186,6 @@ public partial class SendDocument : _SendDocument {
 /// </summary>
 public partial class _SendDocument : IParameter {
 
-
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
 
@@ -1232,7 +1217,6 @@ public partial class ShareDocument : _ShareDocument {
 /// Callback parameters for action ShareDocument 
 /// </summary>
 public partial class _ShareDocument : IParameter {
-
 
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
@@ -1269,8 +1253,18 @@ public partial record ReportHost : _ReportHost {
 /// </summary>
 public partial record _ReportHost : IResult {
 
+    ///<inheritdoc/>
+    public string Message => "Host {0} acknowledged your request.";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("ReportHost");
+
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Completed;
+
+    ///<summary></summary> 
+    public virtual string ServiceAddress { get; set;} 
 
     ///<summary></summary> 
     public virtual string ServiceCallsign { get; set;} 
@@ -1284,22 +1278,88 @@ public partial record _ReportHost : IResult {
     ///<summary></summary> 
     public virtual string HostUdf { get; set;} 
 
-
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding { get; } = new (
+    public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is ReportHost,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as ReportHost).ServiceCallsign, 
-                (object data,string value) => (data as ReportHost).ServiceCallsign = value, "ServiceCallsign"), 
+            new GuiBoundPropertyString ((object data) => (data as ReportHost).ServiceCallsign, (object data,string value) => (data as ReportHost).ServiceCallsign = value, "ServiceCallsign"), 
             new GuiBoundPropertyString ((object data) => (data as ReportHost).ServiceDns, (object data,string value) => (data as ReportHost).ServiceDns = value, "ServiceDns"), 
             new GuiBoundPropertyString ((object data) => (data as ReportHost).ServiceUdf, (object data,string value) => (data as ReportHost).ServiceUdf = value, "ServiceUdf"), 
             new GuiBoundPropertyString ((object data) => (data as ReportHost).HostUdf, (object data,string value) => (data as ReportHost).HostUdf = value, "HostUdf")
 
             });
 
+    ///<inheritdoc/>
+    public object[] GetValues() => new [] { 
+        ServiceAddress,
+        ServiceCallsign,
+        ServiceDns,
+        ServiceUdf,
+        HostUdf};
+    }
+
+
+/// <summary>
+/// Return parameters for result ReportAccountCreate 
+/// </summary>
+public partial record ReportAccountCreate : _ReportAccountCreate {
+    }
+
+
+/// <summary>
+/// Callback parameters for result ReportAccountCreate 
+/// </summary>
+public partial record _ReportAccountCreate : IResult {
+
+    ///<inheritdoc/>
+    public string Message => "Created account {0}.";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("ReportAccountCreate");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Completed;
+
+    ///<summary></summary> 
+    public virtual string ServiceName { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string LocalName { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string ServiceAddress { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string ProfileUdf { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string ServiceUdf { get; set;} 
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is ReportAccountCreate,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as ReportAccountCreate).LocalName, (object data,string value) => (data as ReportAccountCreate).LocalName = value, "LocalName"), 
+            new GuiBoundPropertyString ((object data) => (data as ReportAccountCreate).ServiceAddress, (object data,string value) => (data as ReportAccountCreate).ServiceAddress = value, "ServiceAddress"), 
+            new GuiBoundPropertyString ((object data) => (data as ReportAccountCreate).ProfileUdf, (object data,string value) => (data as ReportAccountCreate).ProfileUdf = value, "ProfileUdf"), 
+            new GuiBoundPropertyString ((object data) => (data as ReportAccountCreate).ServiceUdf, (object data,string value) => (data as ReportAccountCreate).ServiceUdf = value, "ServiceUdf")
+
+            });
+
+    ///<inheritdoc/>
+    public object[] GetValues() => new [] { 
+        ServiceName,
+        LocalName,
+        ServiceAddress,
+        ProfileUdf,
+        ServiceUdf};
     }
 
 
@@ -1315,8 +1375,21 @@ public partial record ReportAccount : _ReportAccount {
 /// </summary>
 public partial record _ReportAccount : IResult {
 
+    ///<inheritdoc/>
+    public string Message => "Connection to account {0} is active.";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("ReportAccount");
+
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Completed;
+
+    ///<summary></summary> 
+    public virtual string ServiceName { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string LocalName { get; set;} 
 
     ///<summary></summary> 
     public virtual string ServiceCallsign { get; set;} 
@@ -1330,14 +1403,14 @@ public partial record _ReportAccount : IResult {
     ///<summary></summary> 
     public virtual string ServiceUdf { get; set;} 
 
-
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding { get; } = new (
+    public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is ReportAccount,
         new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as ReportAccount).LocalName, (object data,string value) => (data as ReportAccount).LocalName = value, "LocalName"), 
             new GuiBoundPropertyString ((object data) => (data as ReportAccount).ServiceCallsign, (object data,string value) => (data as ReportAccount).ServiceCallsign = value, "ServiceCallsign"), 
             new GuiBoundPropertyString ((object data) => (data as ReportAccount).ServiceAddress, (object data,string value) => (data as ReportAccount).ServiceAddress = value, "ServiceAddress"), 
             new GuiBoundPropertyString ((object data) => (data as ReportAccount).ProfileUdf, (object data,string value) => (data as ReportAccount).ProfileUdf = value, "ProfileUdf"), 
@@ -1345,6 +1418,14 @@ public partial record _ReportAccount : IResult {
 
             });
 
+    ///<inheritdoc/>
+    public object[] GetValues() => new [] { 
+        ServiceName,
+        LocalName,
+        ServiceCallsign,
+        ServiceAddress,
+        ProfileUdf,
+        ServiceUdf};
     }
 
 
@@ -1360,8 +1441,21 @@ public partial record ReportPending : _ReportPending {
 /// </summary>
 public partial record _ReportPending : IResult {
 
+    ///<inheritdoc/>
+    public string Message => "Connection to account {0} is pending.";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("ReportPending");
+
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Completed;
+
+    ///<summary></summary> 
+    public virtual string ServiceName { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string LocalName { get; set;} 
 
     ///<summary></summary> 
     public virtual string ServiceCallsign { get; set;} 
@@ -1373,23 +1467,31 @@ public partial record _ReportPending : IResult {
     public virtual string ServiceUdf { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Message { get; set;} 
-
+    public virtual string ServiceMessage { get; set;} 
 
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding { get; } = new (
+    public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is ReportPending,
         new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as ReportPending).LocalName, (object data,string value) => (data as ReportPending).LocalName = value, "LocalName"), 
             new GuiBoundPropertyString ((object data) => (data as ReportPending).ServiceCallsign, (object data,string value) => (data as ReportPending).ServiceCallsign = value, "ServiceCallsign"), 
             new GuiBoundPropertyString ((object data) => (data as ReportPending).ServiceAddress, (object data,string value) => (data as ReportPending).ServiceAddress = value, "ServiceAddress"), 
             new GuiBoundPropertyString ((object data) => (data as ReportPending).ServiceUdf, (object data,string value) => (data as ReportPending).ServiceUdf = value, "ServiceUdf"), 
-            new GuiBoundPropertyString ((object data) => (data as ReportPending).Message, (object data,string value) => (data as ReportPending).Message = value, "Message")
+            new GuiBoundPropertyString ((object data) => (data as ReportPending).ServiceMessage, (object data,string value) => (data as ReportPending).ServiceMessage = value, "ServiceMessage")
 
             });
 
+    ///<inheritdoc/>
+    public object[] GetValues() => new [] { 
+        ServiceName,
+        LocalName,
+        ServiceCallsign,
+        ServiceAddress,
+        ServiceUdf,
+        ServiceMessage};
     }
 
 
@@ -1425,7 +1527,12 @@ public partial record _HttpRequestFail : IFail {
 
     ///<summary>The binding for the data type.</summary> 
     public static GuiBinding BaseBinding  { get; } = new (
-        null, Array.Empty<GuiBoundProperty>());
+        (object test) => test is HttpRequestFail,
+        Array.Empty<GuiBoundProperty>());
+
+    ///<inheritdoc/>
+    public object[] GetValues() => Array.Empty<object>();
+
 
     }
 
@@ -1454,12 +1561,20 @@ public partial record _ServiceNotFound : IFail {
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
 
+    ///<summary></summary> 
+    public virtual string ServiceName { get; set;} 
+
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
     public static GuiBinding BaseBinding  { get; } = new (
-        null, Array.Empty<GuiBoundProperty>());
+        (object test) => test is ServiceNotFound,
+        Array.Empty<GuiBoundProperty>());
+
+    ///<inheritdoc/>
+    public object[] GetValues() => new [] { 
+        ServiceName};
 
     }
 
@@ -1488,12 +1603,20 @@ public partial record _HostNotFound : IFail {
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
 
+    ///<summary></summary> 
+    public virtual string ServiceName { get; set;} 
+
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
     public static GuiBinding BaseBinding  { get; } = new (
-        null, Array.Empty<GuiBoundProperty>());
+        (object test) => test is HostNotFound,
+        Array.Empty<GuiBoundProperty>());
+
+    ///<inheritdoc/>
+    public object[] GetValues() => new [] { 
+        ServiceName};
 
     }
 
@@ -1527,7 +1650,12 @@ public partial record _InvalidHostCredential : IFail {
 
     ///<summary>The binding for the data type.</summary> 
     public static GuiBinding BaseBinding  { get; } = new (
-        null, Array.Empty<GuiBoundProperty>());
+        (object test) => test is InvalidHostCredential,
+        Array.Empty<GuiBoundProperty>());
+
+    ///<inheritdoc/>
+    public object[] GetValues() => Array.Empty<object>();
+
 
     }
 
@@ -1561,7 +1689,12 @@ public partial record _CredentialRefused : IFail {
 
     ///<summary>The binding for the data type.</summary> 
     public static GuiBinding BaseBinding  { get; } = new (
-        null, Array.Empty<GuiBoundProperty>());
+        (object test) => test is CredentialRefused,
+        Array.Empty<GuiBoundProperty>());
+
+    ///<inheritdoc/>
+    public object[] GetValues() => Array.Empty<object>();
+
 
     }
 
@@ -1595,7 +1728,12 @@ public partial record _DeviceRefused : IFail {
 
     ///<summary>The binding for the data type.</summary> 
     public static GuiBinding BaseBinding  { get; } = new (
-        null, Array.Empty<GuiBoundProperty>());
+        (object test) => test is DeviceRefused,
+        Array.Empty<GuiBoundProperty>());
+
+    ///<inheritdoc/>
+    public object[] GetValues() => Array.Empty<object>();
+
 
     }
 
@@ -1624,12 +1762,20 @@ public partial record _FileWriteError : IFail {
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
 
+    ///<summary></summary> 
+    public virtual string Filename { get; set;} 
+
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
     public static GuiBinding BaseBinding  { get; } = new (
-        null, Array.Empty<GuiBoundProperty>());
+        (object test) => test is FileWriteError,
+        Array.Empty<GuiBoundProperty>());
+
+    ///<inheritdoc/>
+    public object[] GetValues() => new [] { 
+        Filename};
 
     }
 
@@ -1658,12 +1804,20 @@ public partial record _FileReadError : IFail {
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
 
+    ///<summary></summary> 
+    public virtual string Filename { get; set;} 
+
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
     public static GuiBinding BaseBinding  { get; } = new (
-        null, Array.Empty<GuiBoundProperty>());
+        (object test) => test is FileReadError,
+        Array.Empty<GuiBoundProperty>());
+
+    ///<inheritdoc/>
+    public object[] GetValues() => new [] { 
+        Filename};
 
     }
 
@@ -1697,7 +1851,12 @@ public partial record _AccountProfileInvalid : IFail {
 
     ///<summary>The binding for the data type.</summary> 
     public static GuiBinding BaseBinding  { get; } = new (
-        null, Array.Empty<GuiBoundProperty>());
+        (object test) => test is AccountProfileInvalid,
+        Array.Empty<GuiBoundProperty>());
+
+    ///<inheritdoc/>
+    public object[] GetValues() => Array.Empty<object>();
+
 
     }
 
@@ -1731,7 +1890,12 @@ public partial record _DeviceProfileInvalid : IFail {
 
     ///<summary>The binding for the data type.</summary> 
     public static GuiBinding BaseBinding  { get; } = new (
-        null, Array.Empty<GuiBoundProperty>());
+        (object test) => test is DeviceProfileInvalid,
+        Array.Empty<GuiBoundProperty>());
+
+    ///<inheritdoc/>
+    public object[] GetValues() => Array.Empty<object>();
+
 
     }
 
@@ -1760,12 +1924,32 @@ public partial record _ActivationKeyNotFound : IFail {
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
 
+    ///<summary></summary> 
+    public virtual string ProfileName { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string LocalName { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string ProfileUdf { get; set;} 
+
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
     public static GuiBinding BaseBinding  { get; } = new (
-        null, Array.Empty<GuiBoundProperty>());
+        (object test) => test is ActivationKeyNotFound,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as ActivationKeyNotFound).LocalName, (object data,string value) => (data as ActivationKeyNotFound).LocalName = value, "LocalName"), 
+            new GuiBoundPropertyString ((object data) => (data as ActivationKeyNotFound).ProfileUdf, (object data,string value) => (data as ActivationKeyNotFound).ProfileUdf = value, "ProfileUdf")
+
+            });
+
+    ///<inheritdoc/>
+    public object[] GetValues() => new [] { 
+        ProfileName,
+        LocalName,
+        ProfileUdf};
 
     }
 
@@ -1794,12 +1978,33 @@ public partial record _NotAuthorizedCatalog : IFail {
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
 
+    ///<summary></summary> 
+    public virtual string CatalogName { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string LocalName { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string ProfileUdf { get; set;} 
+
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
     public static GuiBinding BaseBinding  { get; } = new (
-        null, Array.Empty<GuiBoundProperty>());
+        (object test) => test is NotAuthorizedCatalog,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as NotAuthorizedCatalog).CatalogName, (object data,string value) => (data as NotAuthorizedCatalog).CatalogName = value, "CatalogName"), 
+            new GuiBoundPropertyString ((object data) => (data as NotAuthorizedCatalog).LocalName, (object data,string value) => (data as NotAuthorizedCatalog).LocalName = value, "LocalName"), 
+            new GuiBoundPropertyString ((object data) => (data as NotAuthorizedCatalog).ProfileUdf, (object data,string value) => (data as NotAuthorizedCatalog).ProfileUdf = value, "ProfileUdf")
+
+            });
+
+    ///<inheritdoc/>
+    public object[] GetValues() => new [] { 
+        CatalogName,
+        LocalName,
+        ProfileUdf};
 
     }
 
@@ -1833,7 +2038,12 @@ public partial record _NotAuthorizedAdministration : IFail {
 
     ///<summary>The binding for the data type.</summary> 
     public static GuiBinding BaseBinding  { get; } = new (
-        null, Array.Empty<GuiBoundProperty>());
+        (object test) => test is NotAuthorizedAdministration,
+        Array.Empty<GuiBoundProperty>());
+
+    ///<inheritdoc/>
+    public object[] GetValues() => Array.Empty<object>();
+
 
     }
 
@@ -1867,7 +2077,12 @@ public partial record _NotAuthorizedFCatalog : IFail {
 
     ///<summary>The binding for the data type.</summary> 
     public static GuiBinding BaseBinding  { get; } = new (
-        null, Array.Empty<GuiBoundProperty>());
+        (object test) => test is NotAuthorizedFCatalog,
+        Array.Empty<GuiBoundProperty>());
+
+    ///<inheritdoc/>
+    public object[] GetValues() => Array.Empty<object>();
+
 
     }
 
@@ -1901,7 +2116,12 @@ public partial record _CounterpartyApproval : IFail {
 
     ///<summary>The binding for the data type.</summary> 
     public static GuiBinding BaseBinding  { get; } = new (
-        null, Array.Empty<GuiBoundProperty>());
+        (object test) => test is CounterpartyApproval,
+        Array.Empty<GuiBoundProperty>());
+
+    ///<inheritdoc/>
+    public object[] GetValues() => Array.Empty<object>();
+
 
     }
 
@@ -1935,7 +2155,12 @@ public partial record _SystemExeption : IFail {
 
     ///<summary>The binding for the data type.</summary> 
     public static GuiBinding BaseBinding  { get; } = new (
-        null, Array.Empty<GuiBoundProperty>());
+        (object test) => test is SystemExeption,
+        Array.Empty<GuiBoundProperty>());
+
+    ///<inheritdoc/>
+    public object[] GetValues() => Array.Empty<object>();
+
 
     }
 
@@ -2090,6 +2315,8 @@ public class _EverythingMaui : Gui {
 	// Dialogs
     ///<summary>Result ResultReportHost.</summary> 
 	public GuiResult ResultReportHost { get; } = new ();
+    ///<summary>Result ResultReportAccountCreate.</summary> 
+	public GuiResult ResultReportAccountCreate { get; } = new ();
     ///<summary>Result ResultReportAccount.</summary> 
 	public GuiResult ResultReportAccount { get; } = new ();
     ///<summary>Result ResultReportPending.</summary> 
@@ -2254,8 +2481,7 @@ public class _EverythingMaui : Gui {
 
         ActionTestService.Callback = (x, mode) => TestService (x as TestService, mode) ;
 	    ActionTestService.Entries = new () { 
-			new GuiText ("Dummy", "Ignore", 0), 
-			new GuiText ("ServiceAddress", "Service address", 1)
+			new GuiText ("ServiceAddress", "Service address", 0)
 		    };
 
         ActionAccountCreate.Callback = (x, mode) => AccountCreate (x as AccountCreate, mode) ;
@@ -2422,24 +2648,34 @@ public class _EverythingMaui : Gui {
 			new GuiText ("HostUdf", "Host fingerprint", 3)			
 		    };
 
-	    ResultReportAccount.Entries = new () { 
-			new GuiText ("ServiceCallsign", "Callsign", 0), 
+	    ResultReportAccountCreate.Entries = new () { 
+			new GuiText ("LocalName", "Local", 0), 
 			new GuiText ("ServiceAddress", "DNS", 1), 
-			new GuiText ("ProfileUdf", "Service fingerprint", 2), 
+			new GuiText ("ProfileUdf", "Profile fingerprint", 2), 
 			new GuiText ("ServiceUdf", "Service fingerprint", 3)			
 		    };
 
+	    ResultReportAccount.Entries = new () { 
+			new GuiText ("LocalName", "Local", 0), 
+			new GuiText ("ServiceCallsign", "Callsign", 1), 
+			new GuiText ("ServiceAddress", "DNS", 2), 
+			new GuiText ("ProfileUdf", "Profile fingerprint", 3), 
+			new GuiText ("ServiceUdf", "Service fingerprint", 4)			
+		    };
+
 	    ResultReportPending.Entries = new () { 
-			new GuiText ("ServiceCallsign", "Callsign", 0), 
-			new GuiText ("ServiceAddress", "DNS", 1), 
-			new GuiText ("ServiceUdf", "Service fingerprint", 2), 
-			new GuiText ("Message", "Message", 3)			
+			new GuiText ("LocalName", "Local", 0), 
+			new GuiText ("ServiceCallsign", "Callsign", 1), 
+			new GuiText ("ServiceAddress", "DNS", 2), 
+			new GuiText ("ServiceUdf", "Service fingerprint", 3), 
+			new GuiText ("ServiceMessage", "Message", 4)			
 		    };
 
 
 
         Results = new List<GuiResult>() {  
 		    ResultReportHost, 
+		    ResultReportAccountCreate, 
 		    ResultReportAccount, 
 		    ResultReportPending
 		    };
