@@ -134,7 +134,7 @@ public partial class TestService {
         // second device
         var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
         var boundPin = contextAccountAlice_1_a.GetPinAsync(MeshConstants.MessagePINActionDevice).Sync();
-        var contextAccountAlice_2 = machineAlice2.MeshHost.Connect(AccountAlice, pin: boundPin.Pin);
+        var contextAccountAlice_2 = machineAlice2.MeshHost.ConnectAsync(AccountAlice, pin: boundPin.Pin).Sync();
         var sync = contextAccountAlice_1_a.SynchronizeAsync().Sync();
         var connectRequest = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
         contextAccountAlice_1_a.ProcessAsync(connectRequest, roles: RightsDirect).Sync();
@@ -181,7 +181,7 @@ public partial class TestService {
         machineAlice2.CheckHostCatalogExtended(); // initial
 
         var boundPin = contextAccountAlice_1_a.GetPinAsync(MeshConstants.MessagePINActionDevice).Sync();
-        var contextAccountAlice_2 = machineAlice2.MeshHost.Connect(AccountAlice, pin: boundPin.Pin);
+        var contextAccountAlice_2 = machineAlice2.MeshHost.ConnectAsync(AccountAlice, pin: boundPin.Pin).Sync();
         machineAlice2.CheckHostCatalogExtended(); // Connect pending
 
         // Still have to process of course to get the data
@@ -208,7 +208,7 @@ public partial class TestService {
 
         // Connect a third device by approving a request
         var machineAlice3 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice3);
-        var contextAccount3 = machineAlice3.MeshHost.Connect(AccountAlice);
+        var contextAccount3 = machineAlice3.MeshHost.ConnectAsync(AccountAlice).Sync();
 
         sync = contextAccountAlice_1_a.SynchronizeAsync().Sync();
         var connectRequest3 = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();

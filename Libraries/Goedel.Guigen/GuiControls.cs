@@ -188,11 +188,17 @@ public record GuiBoundPropertySize(
 
 
 public record GuiBoundPropertyDecimal(
-                Func<object, double> Get,
-                Action<object, double> Set,
+                Func<object, decimal?> Get,
+                Action<object, decimal?> Set,
                 string? Label = null) : GuiBoundProperty(Label) {
     }
 
+
+public record GuiBoundPropertyInteger(
+                Func<object, int?> Get,
+                Action<object, int?> Set,
+                string? Label = null) : GuiBoundProperty(Label) {
+    }
 
 public record GuiBoundPropertyIcon(
                 Func<object, IFieldIcon> Get,
@@ -350,6 +356,14 @@ public record GuiDecimal(
             int Index = -1
             ) : GuiField(Id, Prompt, Index) {
     }
+
+public record GuiInteger(
+            string Id,
+            string Prompt,
+            int Index = -1
+            ) : GuiField(Id, Prompt, Index) {
+    }
+
 public record GuiIcon(
             string Id,
             string Prompt,

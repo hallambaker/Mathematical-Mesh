@@ -103,7 +103,7 @@ public class ContextMeshPending : ContextAccount {
     /// <param name="bits">Work factor of the secret seed.</param>
     /// <returns>The <see cref="ContextMeshPending"/> record describing the state of the 
     /// pending connection.</returns>
-    public static ContextMeshPending ConnectService(
+    public static async Task<ContextMeshPending> ConnectServiceAsync(
             MeshHost meshHost,
             string accountAddress,
             string localName = null,
@@ -122,7 +122,7 @@ public class ContextMeshPending : ContextAccount {
 
         profileDevice.PersistSeed(meshHost.KeyCollection);
 
-        return ConnectService(meshHost, profileDevice, accountAddress, localName, pin, rights: rights);
+        return await ConnectServiceAsync(meshHost, profileDevice, accountAddress, localName, pin, rights: rights);
         }
 
 
@@ -137,7 +137,7 @@ public class ContextMeshPending : ContextAccount {
     /// <param name="rights">The list of rights being requested by the device.</param>
     /// <returns>The <see cref="ContextMeshPending"/> record describing the state of the 
     /// pending connection.</returns>
-    public static ContextMeshPending ConnectService(
+    public static async Task<ContextMeshPending> ConnectServiceAsync(
             MeshHost meshHost,
             ProfileDevice profileDevice,
             string accountAddress,
@@ -176,7 +176,7 @@ public class ContextMeshPending : ContextAccount {
             Rights = rights
             };
 
-        var connectResponse = meshClient.Connect(connectRequest);
+        var connectResponse = await meshClient.ConnectAsync(connectRequest);
 
         // create the pending connection here
 

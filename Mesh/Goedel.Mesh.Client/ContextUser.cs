@@ -1031,7 +1031,8 @@ public partial class ContextUser : ContextAccount {
     /// <param name="uri">The connection URI</param>
     /// <param name="rights">The list of rights being requested by the device.</param>
     /// <returns>The </returns>
-    public async Task<CatalogedDevice> ConnectStaticUriAsync(string uri, List<string> rights = null) {
+    /// <param name="localName"></param>
+    public async Task<CatalogedDevice> ConnectStaticUriAsync(string uri, List<string> rights = null, string localName = null) {
 
         var envelopedProfileDevice = ClaimPublication(uri, out var responseId);
 
@@ -1601,11 +1602,12 @@ public partial class ContextUser : ContextAccount {
     /// <param name="pin">Optional pin value used to authenticate a response.</param>
     /// <param name="localname">Local name for the contact</param>
     /// <param name="reply">if true, request return of the recpients contact info in reply.</param>
+    /// <param name="message">Optional message to explain the request.</param>
     public async Task<MessageContact> ContactRequestAsync(string recipient,
                     string pin = null,
                     string localname = null,
-                    bool reply = true) {
-
+                    bool reply = true,
+                    string message = null) {
 
         // process the recipient to get the service, unless known.
 
@@ -1630,7 +1632,7 @@ public partial class ContextUser : ContextAccount {
 
         //"agh... not creating the pin code for the response here.".TaskFunctionality(true);
 
-        var message = new MessageContact() {
+        var contactMessage = new MessageContact() {
             Recipient = recipient,
             Subject = recipient,
             AuthenticatedData = contactSelf,
@@ -1644,19 +1646,19 @@ public partial class ContextUser : ContextAccount {
             if (reply) {
                 var messagePin = await GetPinAsync(MeshConstants.MessagePINActionContact, true,
                     128, register: false);
-                message.PIN = messagePin.Pin;
+                contactMessage.PIN = messagePin.Pin;
                 transaction.LocalMessage(messagePin, KeyCommonEncryption);
                 }
 
             // If a PIN value was specified in the request, use it to authenticate the response.
-            message.Authenticate(pin);
+            contactMessage.Authenticate(pin);
 
             // send it to the service
-            transaction.OutboundMessage(recipient, recipientEncryptionKey, message);
+            transaction.OutboundMessage(recipient, recipientEncryptionKey, contactMessage);
             await transaction.TransactAsync();
             }
 
-        return message;
+        return contactMessage;
         }
 
 

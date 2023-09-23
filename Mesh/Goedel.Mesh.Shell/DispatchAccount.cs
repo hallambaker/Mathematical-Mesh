@@ -187,7 +187,7 @@ public partial class Shell {
 
 
     /// <summary>
-    /// Dispatch method
+    /// Dispatch method connects a device from a URI, possibly obtained from a QR code.
     /// </summary>
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>

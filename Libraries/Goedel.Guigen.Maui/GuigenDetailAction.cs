@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Goedel.Guigen.Maui;
+﻿namespace Goedel.Guigen.Maui;
 
 
 public class GuigenDetaiPage : ContentPage, IPresentation {

@@ -625,10 +625,10 @@ public partial class _ContactPhysicalAddress : IBindable {
     public virtual string Country { get; set;} 
 
     ///<summary></summary> 
-    public virtual double Latitude { get; set;} 
+    public virtual decimal? Latitude { get; set;} 
 
     ///<summary></summary> 
-    public virtual double Longitude { get; set;} 
+    public virtual decimal? Longitude { get; set;} 
 
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
@@ -644,8 +644,8 @@ public partial class _ContactPhysicalAddress : IBindable {
             new GuiBoundPropertyString ((object data) => (data as _ContactPhysicalAddress).County, (object data,string value) => (data as _ContactPhysicalAddress).County = value, "County"), 
             new GuiBoundPropertyString ((object data) => (data as _ContactPhysicalAddress).Postcode, (object data,string value) => (data as _ContactPhysicalAddress).Postcode = value, "Postcode"), 
             new GuiBoundPropertyString ((object data) => (data as _ContactPhysicalAddress).Country, (object data,string value) => (data as _ContactPhysicalAddress).Country = value, "Country"), 
-            new GuiBoundPropertyDecimal ((object data) => (data as _ContactPhysicalAddress).Latitude, (object data,double value) => (data as _ContactPhysicalAddress).Latitude = value, "Latitude"), 
-            new GuiBoundPropertyDecimal ((object data) => (data as _ContactPhysicalAddress).Longitude, (object data,double value) => (data as _ContactPhysicalAddress).Longitude = value, "Longitude")
+            new GuiBoundPropertyDecimal ((object data) => (data as _ContactPhysicalAddress).Latitude, (object data,decimal? value) => (data as _ContactPhysicalAddress).Latitude = value, "Latitude"), 
+            new GuiBoundPropertyDecimal ((object data) => (data as _ContactPhysicalAddress).Longitude, (object data,decimal? value) => (data as _ContactPhysicalAddress).Longitude = value, "Longitude")
 
             });
 
@@ -851,16 +851,16 @@ public partial class _AccountCreate : IParameter {
 
 
 /// <summary>
-/// Callback parameters for action AccountConnect 
+/// Callback parameters for action AccountRequestConnect 
 /// </summary>
-public partial class AccountConnect : _AccountConnect {
+public partial class AccountRequestConnect : _AccountRequestConnect {
     }
 
 
 /// <summary>
-/// Callback parameters for action AccountConnect 
+/// Callback parameters for action AccountRequestConnect 
 /// </summary>
-public partial class _AccountConnect : IParameter {
+public partial class _AccountRequestConnect : IParameter {
 
     ///<summary></summary> 
     public virtual string ConnectionString { get; set;} 
@@ -868,15 +868,207 @@ public partial class _AccountConnect : IParameter {
     ///<summary></summary> 
     public virtual string ConnectionPin { get; set;} 
 
+    ///<summary></summary> 
+    public virtual string Rights { get; set;} 
+
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
     public static GuiBinding BaseBinding  { get; } = new (
-        (object test) => test is _AccountConnect,
+        (object test) => test is _AccountRequestConnect,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as _AccountConnect).ConnectionString, (object data,string value) => (data as _AccountConnect).ConnectionString = value, "ConnectionString"), 
-            new GuiBoundPropertyString ((object data) => (data as _AccountConnect).ConnectionPin, (object data,string value) => (data as _AccountConnect).ConnectionPin = value, "ConnectionPin")
+            new GuiBoundPropertyString ((object data) => (data as _AccountRequestConnect).ConnectionString, (object data,string value) => (data as _AccountRequestConnect).ConnectionString = value, "ConnectionString"), 
+            new GuiBoundPropertyString ((object data) => (data as _AccountRequestConnect).ConnectionPin, (object data,string value) => (data as _AccountRequestConnect).ConnectionPin = value, "ConnectionPin"), 
+            new GuiBoundPropertyString ((object data) => (data as _AccountRequestConnect).Rights, (object data,string value) => (data as _AccountRequestConnect).Rights = value, "Rights")
+
+            });
+
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize() => NullResult.Initialized;
+    }
+
+
+/// <summary>
+/// Callback parameters for action AccountConnectUri 
+/// </summary>
+public partial class AccountConnectUri : _AccountConnectUri {
+    }
+
+
+/// <summary>
+/// Callback parameters for action AccountConnectUri 
+/// </summary>
+public partial class _AccountConnectUri : IParameter {
+
+    ///<summary></summary> 
+    public virtual string ConnectionUri { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string LocalName { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string Rights { get; set;} 
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _AccountConnectUri,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _AccountConnectUri).ConnectionUri, (object data,string value) => (data as _AccountConnectUri).ConnectionUri = value, "ConnectionUri"), 
+            new GuiBoundPropertyString ((object data) => (data as _AccountConnectUri).LocalName, (object data,string value) => (data as _AccountConnectUri).LocalName = value, "LocalName"), 
+            new GuiBoundPropertyString ((object data) => (data as _AccountConnectUri).Rights, (object data,string value) => (data as _AccountConnectUri).Rights = value, "Rights")
+
+            });
+
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize() => NullResult.Initialized;
+    }
+
+
+/// <summary>
+/// Callback parameters for action DeviceDynamicUri 
+/// </summary>
+public partial class DeviceDynamicUri : _DeviceDynamicUri {
+    }
+
+
+/// <summary>
+/// Callback parameters for action DeviceDynamicUri 
+/// </summary>
+public partial class _DeviceDynamicUri : IParameter {
+
+    ///<summary></summary> 
+    public virtual string LocalName { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string Rights { get; set;} 
+
+    ///<summary></summary> 
+    public virtual int? Security { get; set;} 
+
+    ///<summary></summary> 
+    public virtual int? Expire { get; set;} 
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _DeviceDynamicUri,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _DeviceDynamicUri).LocalName, (object data,string value) => (data as _DeviceDynamicUri).LocalName = value, "LocalName"), 
+            new GuiBoundPropertyString ((object data) => (data as _DeviceDynamicUri).Rights, (object data,string value) => (data as _DeviceDynamicUri).Rights = value, "Rights"), 
+            new GuiBoundPropertyInteger ((object data) => (data as _DeviceDynamicUri).Security, (object data,int? value) => (data as _DeviceDynamicUri).Security = value, "Security"), 
+            new GuiBoundPropertyInteger ((object data) => (data as _DeviceDynamicUri).Expire, (object data,int? value) => (data as _DeviceDynamicUri).Expire = value, "Expire")
+
+            });
+
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize() => NullResult.Initialized;
+    }
+
+
+/// <summary>
+/// Callback parameters for action AccountGetPin 
+/// </summary>
+public partial class AccountGetPin : _AccountGetPin {
+    }
+
+
+/// <summary>
+/// Callback parameters for action AccountGetPin 
+/// </summary>
+public partial class _AccountGetPin : IParameter {
+
+    ///<summary></summary> 
+    public virtual string Rights { get; set;} 
+
+    ///<summary></summary> 
+    public virtual int? Security { get; set;} 
+
+    ///<summary></summary> 
+    public virtual int? Expire { get; set;} 
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _AccountGetPin,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _AccountGetPin).Rights, (object data,string value) => (data as _AccountGetPin).Rights = value, "Rights"), 
+            new GuiBoundPropertyInteger ((object data) => (data as _AccountGetPin).Security, (object data,int? value) => (data as _AccountGetPin).Security = value, "Security"), 
+            new GuiBoundPropertyInteger ((object data) => (data as _AccountGetPin).Expire, (object data,int? value) => (data as _AccountGetPin).Expire = value, "Expire")
+
+            });
+
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize() => NullResult.Initialized;
+    }
+
+
+/// <summary>
+/// Callback parameters for action DeviceStaticUri 
+/// </summary>
+public partial class DeviceStaticUri : _DeviceStaticUri {
+    }
+
+
+/// <summary>
+/// Callback parameters for action DeviceStaticUri 
+/// </summary>
+public partial class _DeviceStaticUri : IParameter {
+
+    ///<summary></summary> 
+    public virtual string ConnectionUri { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string LocalName { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string Rights { get; set;} 
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _DeviceStaticUri,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _DeviceStaticUri).ConnectionUri, (object data,string value) => (data as _DeviceStaticUri).ConnectionUri = value, "ConnectionUri"), 
+            new GuiBoundPropertyString ((object data) => (data as _DeviceStaticUri).LocalName, (object data,string value) => (data as _DeviceStaticUri).LocalName = value, "LocalName"), 
+            new GuiBoundPropertyString ((object data) => (data as _DeviceStaticUri).Rights, (object data,string value) => (data as _DeviceStaticUri).Rights = value, "Rights")
 
             });
 
@@ -1041,38 +1233,6 @@ public partial class _AccountSwitch : IParameter {
 
 
 /// <summary>
-/// Callback parameters for action AccountGetPin 
-/// </summary>
-public partial class AccountGetPin : _AccountGetPin {
-    }
-
-
-/// <summary>
-/// Callback parameters for action AccountGetPin 
-/// </summary>
-public partial class _AccountGetPin : IParameter {
-
-    ///<inheritdoc/>
-    public GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
-        (object test) => test is _AccountGetPin,
-        Array.Empty<GuiBoundProperty>());
-
-    ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
-        GuiResultInvalid result = null;
-
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
-    }
-
-
-/// <summary>
 /// Callback parameters for action AccountGenerateRecovery 
 /// </summary>
 public partial class AccountGenerateRecovery : _AccountGenerateRecovery {
@@ -1085,10 +1245,10 @@ public partial class AccountGenerateRecovery : _AccountGenerateRecovery {
 public partial class _AccountGenerateRecovery : IParameter {
 
     ///<summary></summary> 
-    public virtual string NumberShares { get; set;} 
+    public virtual int? NumberShares { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Quorum { get; set;} 
+    public virtual int? Quorum { get; set;} 
 
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
@@ -1097,8 +1257,8 @@ public partial class _AccountGenerateRecovery : IParameter {
     public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AccountGenerateRecovery,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as _AccountGenerateRecovery).NumberShares, (object data,string value) => (data as _AccountGenerateRecovery).NumberShares = value, "NumberShares"), 
-            new GuiBoundPropertyString ((object data) => (data as _AccountGenerateRecovery).Quorum, (object data,string value) => (data as _AccountGenerateRecovery).Quorum = value, "Quorum")
+            new GuiBoundPropertyInteger ((object data) => (data as _AccountGenerateRecovery).NumberShares, (object data,int? value) => (data as _AccountGenerateRecovery).NumberShares = value, "NumberShares"), 
+            new GuiBoundPropertyInteger ((object data) => (data as _AccountGenerateRecovery).Quorum, (object data,int? value) => (data as _AccountGenerateRecovery).Quorum = value, "Quorum")
 
             });
 
@@ -1127,7 +1287,10 @@ public partial class RequestContact : _RequestContact {
 public partial class _RequestContact : IParameter {
 
     ///<summary></summary> 
-    public virtual string Address { get; set;} 
+    public virtual string Recipient { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string Message { get; set;} 
 
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
@@ -1136,7 +1299,8 @@ public partial class _RequestContact : IParameter {
     public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _RequestContact,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as _RequestContact).Address, (object data,string value) => (data as _RequestContact).Address = value, "Address")
+            new GuiBoundPropertyString ((object data) => (data as _RequestContact).Recipient, (object data,string value) => (data as _RequestContact).Recipient = value, "Recipient"), 
+            new GuiBoundPropertyString ((object data) => (data as _RequestContact).Message, (object data,string value) => (data as _RequestContact).Message = value, "Message")
 
             });
 
@@ -1165,7 +1329,10 @@ public partial class RequestConfirmation : _RequestConfirmation {
 public partial class _RequestConfirmation : IParameter {
 
     ///<summary></summary> 
-    public virtual string Address { get; set;} 
+    public virtual string Recipient { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string Message { get; set;} 
 
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
@@ -1174,7 +1341,8 @@ public partial class _RequestConfirmation : IParameter {
     public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _RequestConfirmation,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as _RequestConfirmation).Address, (object data,string value) => (data as _RequestConfirmation).Address = value, "Address")
+            new GuiBoundPropertyString ((object data) => (data as _RequestConfirmation).Recipient, (object data,string value) => (data as _RequestConfirmation).Recipient = value, "Recipient"), 
+            new GuiBoundPropertyString ((object data) => (data as _RequestConfirmation).Message, (object data,string value) => (data as _RequestConfirmation).Message = value, "Message")
 
             });
 
@@ -2665,16 +2833,22 @@ public class _EverythingMaui : Gui {
 	public GuiAction ActionTestService { get; } = new ("TestService", "Test Service", "test_service", () => new TestService());
     ///<summary>Action ActionAccountCreate.</summary> 
 	public GuiAction ActionAccountCreate { get; } = new ("AccountCreate", "Create Mesh Account", "new", () => new AccountCreate());
-    ///<summary>Action ActionAccountConnect.</summary> 
-	public GuiAction ActionAccountConnect { get; } = new ("AccountConnect", "Connect To Existing Account", "connect", () => new AccountConnect());
+    ///<summary>Action ActionAccountRequestConnect.</summary> 
+	public GuiAction ActionAccountRequestConnect { get; } = new ("AccountRequestConnect", "Connect by Address", "connect", () => new AccountRequestConnect());
+    ///<summary>Action ActionAccountConnectUri.</summary> 
+	public GuiAction ActionAccountConnectUri { get; } = new ("AccountConnectUri", "Connect by QR", "connect", () => new AccountConnectUri());
+    ///<summary>Action ActionDeviceDynamicUri.</summary> 
+	public GuiAction ActionDeviceDynamicUri { get; } = new ("DeviceDynamicUri", "Present QR", "connect", () => new DeviceDynamicUri());
+    ///<summary>Action ActionAccountGetPin.</summary> 
+	public GuiAction ActionAccountGetPin { get; } = new ("AccountGetPin", "Create connection PIN", "recover", () => new AccountGetPin());
+    ///<summary>Action ActionDeviceStaticUri.</summary> 
+	public GuiAction ActionDeviceStaticUri { get; } = new ("DeviceStaticUri", "Scan QR", "connect", () => new DeviceStaticUri());
     ///<summary>Action ActionAccountRecover.</summary> 
 	public GuiAction ActionAccountRecover { get; } = new ("AccountRecover", "Recover Mesh Account", "recover", () => new AccountRecover());
     ///<summary>Action ActionAccountDelete.</summary> 
 	public GuiAction ActionAccountDelete { get; } = new ("AccountDelete", "Delete Account", "test_service", () => new AccountDelete());
     ///<summary>Action ActionAccountSwitch.</summary> 
 	public GuiAction ActionAccountSwitch { get; } = new ("AccountSwitch", "Change Account", "test_service", () => new AccountSwitch());
-    ///<summary>Action ActionAccountGetPin.</summary> 
-	public GuiAction ActionAccountGetPin { get; } = new ("AccountGetPin", "Create connection PIN", "recover", () => new AccountGetPin());
     ///<summary>Action ActionAccountGenerateRecovery.</summary> 
 	public GuiAction ActionAccountGenerateRecovery { get; } = new ("AccountGenerateRecovery", "Create recovery", "share_nodes_solid", () => new AccountGenerateRecovery());
     ///<summary>Action ActionRequestContact.</summary> 
@@ -2748,10 +2922,12 @@ public class _EverythingMaui : Gui {
 	    SectionAccount.Active = () => StateAlways;
 	    SectionAccount.Entries =  new () {  
 			new GuiButton ("AccountCreate", ActionAccountCreate), 
+			new GuiButton ("AccountRequestConnect", ActionAccountRequestConnect), 
+			new GuiButton ("AccountConnectUri", ActionAccountConnectUri), 
 			new GuiButton ("TestService", ActionTestService), 
-			new GuiButton ("AccountConnect", ActionAccountConnect), 
 			new GuiButton ("AccountRecover", ActionAccountRecover), 
 			new GuiButton ("AccountGenerateRecovery", ActionAccountGenerateRecovery), 
+			new GuiButton ("AccountSwitch", ActionAccountSwitch), 
 			new GuiText ("ServiceAddress", "Service Address", 0), 
 			new GuiText ("ProfileUdf", "Profile fingerprint", 1), 
 			new GuiText ("LocalAddress", "Local Address", 2)		    
@@ -2843,6 +3019,7 @@ public class _EverythingMaui : Gui {
 	    SectionApplications.Entries =  new () {  
 			new GuiButton ("AddMailAccount", ActionAddMailAccount), 
 			new GuiButton ("AddSshAccount", ActionAddSshAccount), 
+			new GuiButton ("AddGitAccount", ActionAddGitAccount), 
 			new GuiButton ("AddCodeSigningKey", ActionAddCodeSigningKey), 
 			new GuiChooser ("ChooseApplication", "Applications", "Applications", 0, new () { 
 				new GuiView (BindingCatalogedApplication)
@@ -2852,6 +3029,9 @@ public class _EverythingMaui : Gui {
 	    SectionDevices.Gui = this;
 	    SectionDevices.Active = () => StateDefault;
 	    SectionDevices.Entries =  new () {  
+			new GuiButton ("DeviceDynamicUri", ActionDeviceDynamicUri), 
+			new GuiButton ("DeviceStaticUri", ActionDeviceStaticUri), 
+			new GuiButton ("AccountGetPin", ActionAccountGetPin), 
 			new GuiChooser ("ChooseDevice", "Devices", "Devices", 0, new () { 
 				new GuiView (BindingCatalogedDevice)
 				}) 		    
@@ -2906,10 +3086,40 @@ public class _EverythingMaui : Gui {
 			new GuiText ("Coupon", "Activation code (if provided)", 2)
 		    };
 
-        ActionAccountConnect.Callback = (x, mode) => AccountConnect (x as AccountConnect, mode) ;
-	    ActionAccountConnect.Entries = new () { 
+        ActionAccountRequestConnect.Callback = (x, mode) => AccountRequestConnect (x as AccountRequestConnect, mode) ;
+	    ActionAccountRequestConnect.Entries = new () { 
 			new GuiText ("ConnectionString", "Account address", 0), 
-			new GuiText ("ConnectionPin", "Activation code (if provided)", 1)
+			new GuiText ("ConnectionPin", "Activation code (if provided)", 1), 
+			new GuiText ("Rights", "Requested rights", 2)
+		    };
+
+        ActionAccountConnectUri.Callback = (x, mode) => AccountConnectUri (x as AccountConnectUri, mode) ;
+	    ActionAccountConnectUri.Entries = new () { 
+			new GuiText ("ConnectionUri", "Connection URI", 0), 
+			new GuiText ("LocalName", "Friendly name (optional)", 1), 
+			new GuiText ("Rights", "Requested rights", 2)
+		    };
+
+        ActionDeviceDynamicUri.Callback = (x, mode) => DeviceDynamicUri (x as DeviceDynamicUri, mode) ;
+	    ActionDeviceDynamicUri.Entries = new () { 
+			new GuiText ("LocalName", "Friendly name (optional)", 0), 
+			new GuiText ("Rights", "Assigned rights", 1), 
+			new GuiInteger ("Security", "Security level", 2), 
+			new GuiInteger ("Expire", "Expiry in hours", 3)
+		    };
+
+        ActionAccountGetPin.Callback = (x, mode) => AccountGetPin (x as AccountGetPin, mode) ;
+	    ActionAccountGetPin.Entries = new () { 
+			new GuiText ("Rights", "Assigned rights", 0), 
+			new GuiInteger ("Security", "Security level", 1), 
+			new GuiInteger ("Expire", "Expiry in hours", 2)
+		    };
+
+        ActionDeviceStaticUri.Callback = (x, mode) => DeviceStaticUri (x as DeviceStaticUri, mode) ;
+	    ActionDeviceStaticUri.Entries = new () { 
+			new GuiText ("ConnectionUri", "Connection URI", 0), 
+			new GuiText ("LocalName", "Friendly name (optional)", 1), 
+			new GuiText ("Rights", "Requested rights", 2)
 		    };
 
         ActionAccountRecover.Callback = (x, mode) => AccountRecover (x as AccountRecover, mode) ;
@@ -2937,24 +3147,22 @@ public class _EverythingMaui : Gui {
 				}) 
 		    };
 
-        ActionAccountGetPin.Callback = (x, mode) => AccountGetPin (x as AccountGetPin, mode) ;
-	    ActionAccountGetPin.Entries = new () {
-		    };
-
         ActionAccountGenerateRecovery.Callback = (x, mode) => AccountGenerateRecovery (x as AccountGenerateRecovery, mode) ;
 	    ActionAccountGenerateRecovery.Entries = new () { 
-			new GuiText ("NumberShares", "Total number of shares", 0), 
-			new GuiText ("Quorum", "Quorum required for recovery", 1)
+			new GuiInteger ("NumberShares", "Total number of shares", 0), 
+			new GuiInteger ("Quorum", "Quorum required for recovery", 1)
 		    };
 
         ActionRequestContact.Callback = (x, mode) => RequestContact (x as RequestContact, mode) ;
 	    ActionRequestContact.Entries = new () { 
-			new GuiText ("Address", "Address", 0)
+			new GuiText ("Recipient", "Address", 0), 
+			new GuiText ("Message", "Message", 1)
 		    };
 
         ActionRequestConfirmation.Callback = (x, mode) => RequestConfirmation (x as RequestConfirmation, mode) ;
 	    ActionRequestConfirmation.Entries = new () { 
-			new GuiText ("Address", "Address", 0)
+			new GuiText ("Recipient", "Address", 0), 
+			new GuiText ("Message", "Message", 1)
 		    };
 
         ActionCreateMail.Callback = (x, mode) => CreateMail (x as CreateMail, mode) ;
@@ -3001,11 +3209,14 @@ public class _EverythingMaui : Gui {
         Actions = new List<GuiAction>() {  
 		    ActionTestService, 
 		    ActionAccountCreate, 
-		    ActionAccountConnect, 
+		    ActionAccountRequestConnect, 
+		    ActionAccountConnectUri, 
+		    ActionDeviceDynamicUri, 
+		    ActionAccountGetPin, 
+		    ActionDeviceStaticUri, 
 		    ActionAccountRecover, 
 		    ActionAccountDelete, 
 		    ActionAccountSwitch, 
-		    ActionAccountGetPin, 
 		    ActionAccountGenerateRecovery, 
 		    ActionRequestContact, 
 		    ActionRequestConfirmation, 
@@ -3167,7 +3378,31 @@ public class _EverythingMaui : Gui {
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> AccountConnect (AccountConnect data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> AccountRequestConnect (AccountRequestConnect data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> AccountConnectUri (AccountConnectUri data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> DeviceDynamicUri (DeviceDynamicUri data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> AccountGetPin (AccountGetPin data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> DeviceStaticUri (DeviceStaticUri data, ActionMode mode = ActionMode.Execute) 
                 => throw new NYI();
 
     /// <summary>
@@ -3186,12 +3421,6 @@ public class _EverythingMaui : Gui {
     /// GUI action
     /// </summary>
     public virtual Task<IResult> AccountSwitch (AccountSwitch data, ActionMode mode = ActionMode.Execute) 
-                => throw new NYI();
-
-    /// <summary>
-    /// GUI action
-    /// </summary>
-    public virtual Task<IResult> AccountGetPin (AccountGetPin data, ActionMode mode = ActionMode.Execute) 
                 => throw new NYI();
 
     /// <summary>

@@ -590,14 +590,26 @@ public class MeshHost : Disposable {
             string accountAddress,
             string localName = null,
             string pin = null,
-            List<string> rights = null) => ContextMeshPending.ConnectService(this, accountAddress, localName, pin,
-                rights: rights);
+            List<string> rights = null) => ContextMeshPending.ConnectServiceAsync(this, accountAddress, localName, pin,
+                rights: rights).Sync();
 
     /// <summary>
     /// Begin connection to a service.
     /// </summary>
     /// <returns>Context for administering the Mesh account via the service</returns>
-    public ContextMeshPending Join(
+    public async Task< ContextMeshPending> ConnectAsync(
+            string accountAddress,
+            string localName = null,
+            string pin = null,
+            List<string> rights = null) => await ContextMeshPending.ConnectServiceAsync(this, accountAddress, localName, pin,
+                rights: rights);
+
+
+    /// <summary>
+    /// Begin connection to a service.
+    /// </summary>
+    /// <returns>Context for administering the Mesh account via the service</returns>
+    public async Task<ContextMeshPending> JoinAsync(
             string uriAddress,
             string localName = null,
             CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
@@ -611,7 +623,7 @@ public class MeshHost : Disposable {
         (var accountAddress, var pin) = MeshUri.ParseConnectUri(uriAddress);
 
         // connect to alice@example.com using pin NACE-ZMVM-L6FV-NCHE-LY
-        return ContextMeshPending.ConnectService(this, accountAddress, localName, pin);
+        return await ContextMeshPending.ConnectServiceAsync(this, accountAddress, localName, pin);
 
         }
 

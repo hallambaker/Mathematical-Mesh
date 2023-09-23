@@ -9,10 +9,13 @@ Class Goedel.Everything EverythingMaui
 Section Account "Account" "user"
 	Condition Always
 	Button AccountCreate 
+	Button AccountRequestConnect 
+	Button AccountConnectUri 
 	Button TestService 
-	Button AccountConnect 
 	Button AccountRecover 
 	Button AccountGenerateRecovery 
+	Button AccountSwitch 
+
 	Text ServiceAddress "Service Address"
 		Readonly
 	Text ProfileUdf "Profile fingerprint"
@@ -46,13 +49,12 @@ Section Contacts "Contacts" "contacts"
 		Filter All "Others"
 
 Section Documents "Documents" "Documents"
-	Button SendDocument "Send document" "document_send"
-	Button ShareDocument "Share document" "document_share"
+	Button SendDocument
+	Button ShareDocument 
 	Chooser ChooseDocuments "Documents" "documents" CatalogedDocument
 		View CatalogedDocument
 
 Section Groups "Groups" "groups"
-	//Button GroupCreate "Create Mesh Group" "new"
 	Chooser ChooseGroup "User" "account_group" CatalogedGroup
 		View CatalogedGroup
 
@@ -79,11 +81,15 @@ Section Bookmark "Bookmark" "bookmark"
 Section Applications "Applications" "applications"
 	Button AddMailAccount	
 	Button AddSshAccount	
+	Button AddGitAccount
 	Button AddCodeSigningKey
 	Chooser ChooseApplication "Applications" "Applications" CatalogedApplication
 		View CatalogedApplication
 
 Section Devices "Devices" "devices"
+	Button DeviceDynamicUri
+	Button DeviceStaticUri
+	Button AccountGetPin 
 	Chooser ChooseDevice "Devices" "Devices" Device
 		View CatalogedDevice
 
@@ -194,6 +200,9 @@ Fail NotYetImplemented				"This feature is not yet implemented"
 
 // Account Actions
 Action TestService "Test Service" "test_service"
+	Description
+		|Attempts to contact the specified address to obtain Mesh Service. If 
+		|successful, return the fingerprints of the host and service.
 	Return ReportHost
 	Text ServiceAddress "Service address"
 		Error ServiceAddressNotValid "Not a valid service address"
@@ -202,17 +211,63 @@ Action TestService "Test Service" "test_service"
 			|ServiceAddress == null || ServiceAddress?.Length == 0
 
 Action AccountCreate "Create Mesh Account" "new"
+	Description
+		|Create a new Mesh account services by the specified Mesh Service provider.
 	Return ReportAccount
 	Text ServiceAddress "Account service address"
 	Text LocalName "Friendly name (optional)"
 	Text Coupon "Activation code (if provided)"
 
-Action AccountConnect  "Connect To Existing Account" "connect"
+Action AccountRequestConnect  "Connect by Address" "connect"
+	Description
+		|
 	Return ReportPending
 	Text ConnectionString "Account address"
 	Text ConnectionPin "Activation code (if provided)"
+	Text Rights "Requested rights"
+
+Action AccountConnectUri  "Connect by QR" "connect"
+	Description
+		|
+	Return ReportPending
+	Text ConnectionUri "Connection URI"
+	Text LocalName "Friendly name (optional)"
+	Text Rights "Requested rights"
+
+Action DeviceDynamicUri  "Present QR" "connect"
+	Description
+		|Creates a QR code which may be scanned by a device with a camera affordance
+		|to connect to the account.
+	Return ReportPending
+	Text LocalName "Friendly name (optional)"
+	Text Rights "Assigned rights"
+	Integer Security "Security level"
+		Error SecurityRange "Must be an integer 0-5"
+			|(Security >= 0) & (Security <= 5)
+	Integer Expire "Expiry in hours"
+
+Action AccountGetPin "Create connection PIN" "recover"
+	Description
+		|
+	Text Rights "Assigned rights"
+	Integer Security "Security level"
+		Error SecurityRange "Must be an integer 0-5"
+			|(Security >= 0) & (Security <= 5)
+	Integer Expire "Expiry in hours"
+
+Action DeviceStaticUri  "Scan QR" "connect"
+	Description
+		|Connects a device to the account by means of a static QR code
+		|printed on the product or a URI entered.
+	Return ReportPending
+	Text ConnectionUri "Connection URI"
+	Text LocalName "Friendly name (optional)"
+	Text Rights "Requested rights"
+
 
 Action AccountRecover "Recover Mesh Account" "recover"
+	Description
+		|
 	Return ReportAccount
 	Text ServiceAddress "Account service address"
 	Text LocalName "Friendly name (optional)"
@@ -228,36 +283,74 @@ Action AccountRecover "Recover Mesh Account" "recover"
 	Text Share8 "Recovery share"
 
 Action AccountDelete "Delete Account" "test_service"
+	Description
+		|
 	Return ReportAccount
 
 Action AccountSwitch "Change Account" "test_service"
+	Description
+		|
 	Return ReportAccount
 	Chooser ChooseUser "User" "account_user" AccountUser
 
-Action AccountGetPin "Create connection PIN" "recover"
+
 
 
 Action AccountGenerateRecovery "Create recovery" "share_nodes_solid"
-	Text NumberShares "Total number of shares"
-	Text Quorum "Quorum required for recovery"
+	Description
+		|
+	Integer NumberShares "Total number of shares"
+		Error NumberSharesRange "Must be an integer 1-15"
+			|(NumberShares >= 1) & (NumberShares <= 15)
+	Integer Quorum "Quorum required for recovery"
+		Error NumberSharesRange "Must be less than or equal to number of shares"
+			|(Quorum >= 1) & (Quorum <= NumberSharesRange)
+
 
 // Contact Actions
 Action RequestContact "Contact Request" "contact"
-	Text Address "Address"
+	Description
+		|
+	Text Recipient "Address"
+	Text Message "Message"
+
 Action RequestConfirmation "Confirmation Request" "clipboard_check_solid"
-	Text Address "Address"
+	Description
+		|
+	Text Recipient "Address"
+	Text Message "Message"
 
 Action CreateMail "New Mail" "mail"
+	Description
+		|
 Action CreateChat "New Chat" "chat"
+	Description
+		|
 Action StartVoice "New Voice" "voice"
+	Description
+		|
 Action StartVideo "New Video" "video"
+	Description
+		|
 Action SendDocument "Send document" "document_send"
+	Description
+		|
 Action ShareDocument "Share document" "document_share"
+	Description
+		|
 
 Action AddMailAccount "Add email account" "mail"
+	Description
+		|
 Action AddSshAccount "Create SSH credential" "credentials"
+	Description
+		|
 Action AddGitAccount "Create git credentials" "git"
+	Description
+		|
 Action AddCodeSigningKey "Add Code Signing Key" "signature"
+	Description
+		|
 
 
 Dialog AccountUser
@@ -343,7 +436,7 @@ Binding CatalogedDocument
 		
 	DateTime DateModified "Updated"
 		
-	Integer Size "Size"
+	//Integer Size "Size"
 		
 	Text Description "Description"
 

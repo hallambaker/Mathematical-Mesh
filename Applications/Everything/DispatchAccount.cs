@@ -1,43 +1,4 @@
-﻿using Goedel.Cryptography;
-using Goedel.Mesh;
-using Goedel.Mesh.Client;
-using Goedel.Protocol;
-
-
-using System.Resources;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-
-using ZXing.QrCode.Internal;
-
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace Goedel.Everything;
-
-public partial class TestService {
-    //ResourceManager ResourceManager;
-
-    //public override IResult Validate() {
-    //    GuiResultInvalid result = null;
-
-    //    // error on ServiceAddress
-    //    if (ServiceAddress == null
-    //        ) {
-    //        result ??= new GuiResultInvalid(this);
-    //        result.SetError(1, "Service address cannot be blank", "ServiceAddressNotEmpty");
-    //        }
-
-    //    // error on ServiceAddress
-    //    if (!ServiceAddress.TryParseServiceAddress()
-    //        ) {
-    //        result ??= new GuiResultInvalid(this);
-    //        result.SetError(1, "Not a valid service address", "ServiceAddressNotValid");
-    //        }
-
-    //    return (result as IResult) ?? NullResult.Valid;
-    //    }
-
-    }
+﻿namespace Goedel.Everything;
 
 public partial class ChooseContact {
 
@@ -125,17 +86,16 @@ public partial class EverythingMaui {
 
         }
 
-    public override async Task<IResult> AccountConnect(AccountConnect data, ActionMode mode = ActionMode.Execute) {
+
+    public override async Task<IResult> AccountRequestConnect(AccountRequestConnect data, ActionMode mode = ActionMode.Execute) {
         try {
+            var accountAddress = data.ConnectionString;
+            var pin = data.ConnectionPin;
+            var rights = ParseRights(data.Rights);
 
-            //var contextAccount = GetContextUser(options);
-            //var rights = GetRights(options);
+            var contextMeshPending = await MeshHost.ConnectAsync(accountAddress, pin: pin, rights: rights);
 
-            //var catalogedDevice = contextAccount.ConnectStaticUriAsync(options.Uri.Value, rights).Sync();
-
-
-            await Task.Delay(0);
-            return new NotYetImplemented() {
+            return new ReportPending() {
                 };
             }
         catch (Exception exception) {
@@ -146,6 +106,29 @@ public partial class EverythingMaui {
             }
         }
 
+
+    public override async Task<IResult> AccountConnectUri(AccountConnectUri data, ActionMode mode = ActionMode.Execute) {
+        try {
+
+            var uri = data.ConnectionUri;
+            var local = data.LocalName;
+            var contextMeshPending = await MeshHost.JoinAsync(uri, local);
+
+            return new ReportPending() {
+                };
+            }
+        catch (Exception exception) {
+            if (TryProcessException(exception, data, out var result)) {
+                return result;
+                }
+            return new ErrorResult(exception);
+            }
+        }
+
+
+
+
+    ///<inheritdoc/>
     public override async Task<IResult> AccountRecover(AccountRecover data, ActionMode mode = ActionMode.Execute) {
         try {
             await Task.Delay(0);
@@ -160,6 +143,7 @@ public partial class EverythingMaui {
             }
         }
 
+    ///<inheritdoc/>
     public override async Task<IResult> AccountDelete(AccountDelete data, ActionMode mode = ActionMode.Execute) {
         try {
 
@@ -179,47 +163,37 @@ public partial class EverythingMaui {
             }
         }
 
-    public override async Task<IResult> AccountGenerateRecovery(AccountGenerateRecovery data, ActionMode mode = ActionMode.Execute) {
+    ///<inheritdoc/>
+    public override Task<IResult> AccountGenerateRecovery(AccountGenerateRecovery data, ActionMode mode = ActionMode.Execute) {
         try {
-            //var contextMesh = GetContextUser(options);
-            //var shares = contextMesh.Escrow(3, 2);
+            var numberShares = data.NumberShares ?? 3;
+            var quorum = data.Quorum ?? 2;
+
+            var shares = ContextUser.Escrow(numberShares, quorum);
+
+
 
             //var textShares = new List<string>();
             //foreach (var share in shares) {
             //    textShares.Add(share.UDFKey);
             //    }
 
-            await Task.Delay(0);
-            return new NotYetImplemented() {
-                };
+            //await Task.Delay(0);
+
+            return Task.FromResult<IResult>(new NotYetImplemented() {
+                });
             }
         catch (Exception exception) {
             if (TryProcessException(exception, data, out var result)) {
-                return result;
+                return Task.FromResult<IResult>(result);
                 }
-            return new ErrorResult(exception);
-            }
-        }
-
-    public override async Task<IResult> AccountGetPin(AccountGetPin data, ActionMode mode = ActionMode.Execute) {
-        try {
-            await Task.Delay(0);
-
-            //var messageConnectionPIN = await ContextUser.GetPinAsync(MeshConstants.MessagePINActionDevice,
-            //validity: expire.Ticks, roles: rights, bits: bits).Sync();
-
-            return new NotYetImplemented() {
-                };
-            }
-        catch (Exception exception) {
-            if (TryProcessException(exception, data, out var result)) {
-                return result;
-                }
-            return new ErrorResult(exception);
+            return Task.FromResult<IResult>(new ErrorResult(exception));
             }
         }
 
 
+
+    ///<inheritdoc/>
     public override async Task<IResult> AccountSwitch(AccountSwitch data, ActionMode mode = ActionMode.Execute) {
         try {
             await Task.Delay(0);
@@ -234,195 +208,23 @@ public partial class EverythingMaui {
             }
         }
 
-    public override async Task<IResult> RequestContact(RequestContact data, ActionMode mode = ActionMode.Execute) {
-        try {
-            await Task.Delay(0);
-
-            //var contextAccount = GetContextUser(options);
-            //var recipient = options.Recipient.Value;
-
-            //var message = contextAccount.ContactRequestAsync(recipient).Sync();
-
-            //var result = new ResultSent() {
-            //    Success = true,
-            //    Message = message
-            //    };
-
-            return new NotYetImplemented() {
-                };
-            }
-        catch (Exception exception) {
-            if (TryProcessException(exception, data, out var result)) {
-                return result;
-                }
-            return new ErrorResult(exception);
-            }
-        }
-
-
-    public override async Task<IResult> RequestConfirmation(RequestConfirmation data, ActionMode mode = ActionMode.Execute) {
-        try {
-
-            //var contextAccount = GetContextUser(options);
-            //var recipient = options.Recipient.Value;
-            //var text = options.Text.Value;
-
-
-            //var message = contextAccount.ConfirmationRequestAsync(recipient, text).Sync();
-
-            //var result = new ResultSent() {
-            //    Success = true,
-            //    Message = message
-            //    };
-
-
-            await Task.Delay(0);
-            return new NotYetImplemented() {
-                };
-            }
-        catch (Exception exception) {
-            if (TryProcessException(exception, data, out var result)) {
-                return result;
-                }
-            return new ErrorResult(exception);
-            }
-        }
 
 
 
 
-    public override async Task<IResult> CreateMail(CreateMail data, ActionMode mode = ActionMode.Execute) {
-        try {
-            await Task.Delay(0);
-            return new NotYetImplemented() {
-                };
-            }
-        catch (Exception exception) {
-            if (TryProcessException(exception, data, out var result)) {
-                return result;
-                }
-            return new ErrorResult(exception);
-            }
-        }
-    public override async Task<IResult> CreateChat(CreateChat data, ActionMode mode = ActionMode.Execute) {
-        try {
-            await Task.Delay(0);
-            return new NotYetImplemented() {
-                };
-            }
-        catch (Exception exception) {
-            if (TryProcessException(exception, data, out var result)) {
-                return result;
-                }
-            return new ErrorResult(exception);
-            }
-        }
-    public override async Task<IResult> StartVoice(StartVoice data, ActionMode mode = ActionMode.Execute) {
-        try {
-            await Task.Delay(0);
-            return new NotYetImplemented() {
-                };
-            }
-        catch (Exception exception) {
-            if (TryProcessException(exception, data, out var result)) {
-                return result;
-                }
-            return new ErrorResult(exception);
-            }
-        }
-    public override async Task<IResult> StartVideo(StartVideo data, ActionMode mode = ActionMode.Execute) {
-        try {
-            await Task.Delay(0);
-            return new NotYetImplemented() {
-                };
-            }
-        catch (Exception exception) {
-            if (TryProcessException(exception, data, out var result)) {
-                return result;
-                }
-            return new ErrorResult(exception);
-            }
-        }
-    public override async Task<IResult> SendDocument(SendDocument data, ActionMode mode = ActionMode.Execute) {
-        try {
-            await Task.Delay(0);
-            return new NotYetImplemented() {
-                };
-            }
-        catch (Exception exception) {
-            if (TryProcessException(exception, data, out var result)) {
-                return result;
-                }
-            return new ErrorResult(exception);
-            }
-        }
-    public override async Task<IResult> ShareDocument(ShareDocument data, ActionMode mode = ActionMode.Execute) {
-        try {
-            await Task.Delay(0);
-            return new NotYetImplemented() {
-                };
-            }
-        catch (Exception exception) {
-            if (TryProcessException(exception, data, out var result)) {
-                return result;
-                }
-            return new ErrorResult(exception);
-            }
-        }
 
-    public override async Task<IResult> AddMailAccount(AddMailAccount data, ActionMode mode = ActionMode.Execute) {
-        try {
-            await Task.Delay(0);
-            return new NotYetImplemented() {
-                };
-            }
-        catch (Exception exception) {
-            if (TryProcessException(exception, data, out var result)) {
-                return result;
-                }
-            return new ErrorResult(exception);
-            }
-        }
-    public override async Task<IResult> AddSshAccount(AddSshAccount data, ActionMode mode = ActionMode.Execute) {
-        try {
-            await Task.Delay(0);
-            return new NotYetImplemented() {
-                };
-            }
-        catch (Exception exception) {
-            if (TryProcessException(exception, data, out var result)) {
-                return result;
-                }
-            return new ErrorResult(exception);
-            }
-        }
-    public override async Task<IResult> AddGitAccount(AddGitAccount data, ActionMode mode = ActionMode.Execute) {
-        try {
-            await Task.Delay(0);
-            return new NotYetImplemented() {
-                };
-            }
-        catch (Exception exception) {
-            if (TryProcessException(exception, data, out var result)) {
-                return result;
-                }
-            return new ErrorResult(exception);
-            }
-        }
-    public override async Task<IResult> AddCodeSigningKey(AddCodeSigningKey data, ActionMode mode = ActionMode.Execute) {
-        try {
-            await Task.Delay(0);
-            return new NotYetImplemented() {
-                };
-            }
-        catch (Exception exception) {
-            if (TryProcessException(exception, data, out var result)) {
-                return result;
-                }
-            return new ErrorResult(exception);
-            }
-        }
 
+
+
+
+    /// <summary>
+    /// Attempt to create a canned response for an exception of type <paramref name="exception"/>
+    /// thrown by initial input <paramref name="parameters"/>.
+    /// </summary>
+    /// <param name="exception">The exception to respong to</param>
+    /// <param name="parameters">The parameters.</param>
+    /// <param name="result">The generated result.</param>
+    /// <returns></returns>
     public bool TryProcessException(Exception exception, IParameter parameters, out IResult result) {
 
         switch (exception) {
@@ -442,9 +244,13 @@ public partial class EverythingMaui {
                 }
             }
 
+
         result = null;
         return false;
         }
+
+
+    public List<string> ParseRights(string text) => new List<string>() { text };
 
     }
 

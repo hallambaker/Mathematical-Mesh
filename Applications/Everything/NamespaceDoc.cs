@@ -27,6 +27,8 @@ global using Goedel.Everything;
 global using Goedel.Guigen;
 global using Goedel.Guigen.Maui;
 global using Goedel.Mesh;
+global using Goedel.Cryptography;
+global using Goedel.Protocol;
 global using Goedel.Mesh.Client;
 global using Microsoft.Extensions.Logging;
 global using Camera.MAUI;

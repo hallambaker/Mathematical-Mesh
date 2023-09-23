@@ -138,7 +138,7 @@ public class MeshMachineTest : MeshMachineCore {
 
         connectUri.Future();
         var machine = new MeshMachineTest(testEnvironmentCommon, machineName);
-        return machine.MeshHost.Connect(accountId, localName, pin: PIN);
+        return machine.MeshHost.ConnectAsync(accountId, localName, pin: PIN).Sync();
         }
 
     readonly Dictionary<string, KeyPair> dictionaryKeyPairByUDF = new();

@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Utilities;
+
 namespace Goedel.Mesh.Shell;
 
 public partial class Shell {
@@ -38,7 +40,7 @@ public partial class Shell {
 
         var rights = GetRights(options, false);
 
-        var contextMeshPending = MeshHost.Connect(accountAddress, pin: pin, rights: rights);
+        var contextMeshPending = MeshHost.ConnectAsync(accountAddress, pin: pin, rights: rights).Sync();
 
         var result = new ResultConnect() {
             CatalogedMachine = contextMeshPending.CatalogedMachine,
@@ -58,7 +60,7 @@ public partial class Shell {
     public override ShellResult DeviceJoin(DeviceJoin options) {
         var uri = options.Uri.Value;
 
-        var contextMeshPending = MeshHost.Join(uri);
+        var contextMeshPending = MeshHost.JoinAsync(uri).Sync();
         var result = new ResultConnect() {
             CatalogedMachine = contextMeshPending.CatalogedMachine
             };
