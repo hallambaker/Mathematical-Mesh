@@ -33,8 +33,8 @@ Section Messages "Messages" "messages"
 	Button StartVoice
 	Button StartVideo
 
-	Chooser ChooseMessage "Messages" "inbox_messages" Message
-		View Message
+	Chooser ChooseMessage "Messages" "inbox_messages" 
+		//View Message
 		Filter ContactRequest		"Contact Request"
 		Filter ConfirmationRequest	"Confirmation Request"
 		Filter DeviceRequest		"Device Request"
@@ -43,39 +43,42 @@ Section Messages "Messages" "messages"
 Section Contacts "Contacts" "contacts"
 	Primary
 	Button RequestContact
-	Chooser ChooseContact "Contacts" "contact_other" CatalogedContact
-		View CatalogedContact
+	Chooser ChooseContact "Contacts" "contact_other" 
+		View BoundContactPerson
+		//Entry BoundContactBusiness
+		//Entry BoundContactPlace
+
 		Filter Self "Self"
 		Filter All "Others"
 
 Section Documents "Documents" "Documents"
 	Button SendDocument
 	Button ShareDocument 
-	Chooser ChooseDocuments "Documents" "documents" CatalogedDocument
+	Chooser ChooseDocuments "Documents" "documents" 
 		View CatalogedDocument
 
 Section Groups "Groups" "groups"
-	Chooser ChooseGroup "User" "account_group" CatalogedGroup
+	Chooser ChooseGroup "User" "account_group" 
 		View CatalogedGroup
 
 Section Feeds "Feeds" "feeds"
-	Chooser ChooseFeed "Feeds" "feeds" Feed
+	Chooser ChooseFeed "Feeds" "feeds" 
 		View CatalogedFeed
 
 Section Credentials "Credentials" "credentials"
-	Chooser ChooseCredential "Credentials" "credentials" CatalogedCredential
+	Chooser ChooseCredential "Credentials" "credentials" 
 		View CatalogedCredential
 
 Section Tasks "Tasks" "tasks"
-	Chooser ChooseTask "Tasks" "Tasks" Task
+	Chooser ChooseTask "Tasks" "Tasks" 
 		View CatalogedTask
 
 Section Calendar "Calendar" "calendar"
-	Chooser ChooseAppointment "Tasks" "Tasks" Task
+	Chooser ChooseAppointment "Tasks" "Tasks" 
 		View CatalogedTask
 
 Section Bookmark "Bookmark" "bookmark"
-	Chooser ChooseBookmark "Bookmark" "Bookmark" CatalogedBookmark
+	Chooser ChooseBookmark "Bookmark" "Bookmark" 
 		View CatalogedBookmark
 
 Section Applications "Applications" "applications"
@@ -83,29 +86,37 @@ Section Applications "Applications" "applications"
 	Button AddSshAccount	
 	Button AddGitAccount
 	Button AddCodeSigningKey
-	Chooser ChooseApplication "Applications" "Applications" CatalogedApplication
+	Chooser ChooseApplication "Applications" "Applications" 
 		View CatalogedApplication
 
 Section Devices "Devices" "devices"
 	Button DeviceDynamicUri
 	Button DeviceStaticUri
 	Button AccountGetPin 
-	Chooser ChooseDevice "Devices" "Devices" Device
+	Chooser ChooseDevice "Devices" "Devices" 
 		View CatalogedDevice
 
 Section Services "Services" "Services"
-	Chooser ChooseService "Services" "account_service.png" AccountGroup
+	Chooser ChooseService "Services" "account_service.png" 
 
 
 Section Settings "Settings" "settings"
 	Condition Always
 	Primary
-	Dialog Appearance
+	Section Appearance "Appearance" "display"
 		Color BackgroundColor  "Background Color"
 		Color HighlightColor "Highlight Color"
 		Color TextColor "Text Color"
 		Size TextSize "Text Size"
 		Size IconSize "Icon Size"
+
+
+//Dialog Appearance "Appearance" "display"
+//	Color BackgroundColor  "Background Color"
+//	Color HighlightColor "Highlight Color"
+//	Color TextColor "Text Color"
+//	Size TextSize "Text Size"
+//	Size IconSize "Icon Size"
 
 
 // Action results
@@ -291,7 +302,7 @@ Action AccountSwitch "Change Account" "test_service"
 	Description
 		|
 	Return ReportAccount
-	Chooser ChooseUser "User" "account_user" AccountUser
+	Chooser ChooseUser "User" "account_user" 
 
 
 
@@ -353,36 +364,42 @@ Action AddCodeSigningKey "Add Code Signing Key" "signature"
 		|
 
 
-Dialog AccountUser
+Dialog AccountUser "Account" "user"
 	Text Udf "Fingerprint"
 	Text ServiceAddress "Account service address"
 	Text Local "Friendly name"
 	Text Description "Description"
 
-	Chooser UserChooseDevice "Devices" "device" Device
+	Chooser UserChooseDevice "Devices" "device" 
 	
 
 
 
-Dialog Contact
-	Text Local "Friendly name"
-	Text Full "Full name"
+Dialog BoundContactPerson "Person" "contacts"
+	// Present alphabetically on Last name
+
+	Text Display "Display name"
+		Readonly
+		Primary
+
+	Text Local "Friendly name"4
 	Text First "First name"
 	Text Last "Last name"
 	Text Prefix "Prefix"
 	Text Suffix "Suffix"
 
-	Chooser NetworkAddress "Network Addresses" "network" ContactNetworkAddress
-	Chooser PhysicalAddress "Locations" "location" ContactPhysicalAddress
+	Chooser NetworkAddress "Network Addresses" "network" 
+		View ContactNetworkAddress
+	Chooser PhysicalAddress "Locations" "location" 
+		View ContactPhysicalAddress
 
 
-Dialog ContactNetworkAddress
-	Icon ProtocolIcon "protocol_icon"
+Dialog ContactNetworkAddress "Network" "protocol_icon"
 	Text Protocol "Protocol"
 	Text Address "Address"
 	Text Fingerprint "Fingerprint"
 
-Dialog ContactPhysicalAddress
+Dialog ContactPhysicalAddress "Place" "location_pin"
 	Text Appartment "Appartment"
 	Text Street "Street"
 	Text District "District"
@@ -395,29 +412,29 @@ Dialog ContactPhysicalAddress
 
 
 
-Dialog MessageContactRequest
-	Text To "To"
-	Text Comment "Comment"
+//Binding MessageContactRequest
+//	Text To "To"
+//	Text Comment "Comment"
+//
+//Binding MessageConfirmationRequest
+//	Text To "To"
+//	Text Request "Request"
 
-Dialog MessageConfirmationRequest
-	Text To "To"
-	Text Request "Request"
-
-Dialog MessageMail
-	Text To "To"
-	Text Subject "Subject"
-	Text Body "Body"
+//Binding MessageMail
+//	Text To "To"
+//	Text Subject "Subject"
+//	Text Body "Body"
 
 
-Binding Message
-	Type MessageDefault  "icon"
-	Type MessageConnection "icon"
-	Type MessageContact "icon"
-	Type MessageConfirmation "icon"
-	Type MessageTask "icon"
-	Type MessageError "icon"
-	Type MessageComplete "icon"
-	Type MessageGroup "icon"
+//Binding Message
+//	Type MessageDefault  "icon"
+//	Type MessageConnection "icon"
+//	Type MessageContact "icon"
+//	Type MessageConfirmation "icon"
+//	Type MessageTask "icon"
+//	Type MessageError "icon"
+//	Type MessageComplete "icon"
+//	Type MessageGroup "icon"
 
 
 
@@ -474,5 +491,28 @@ Binding CatalogedApplication
 	Text LocalName "Name"
 
 
+// Icons used in the interface
+Group Interface
+	Icon Add "Add" "plus"
+	Icon Warning "Warning" "triangle_exclamation_solid"
+
+// Icons used for choosing stuff
+Group Messaging
+	Icon Skype "Skype" "brand_skype"
+	Icon Signal "Signal" "brand_signal"
+	Icon Telephone "Phone" "voice"
+	Icon Facetime "Facetime" "brand_facetime"
+	Icon Whatsapp "Whatsapp" "brand_whatsapp"
+	Icon Telegram "Telegram" "brand_telegram"
+	Icon Facebook "Messenger" "brand_facebook_messenger"
+
+// Various social media things
+Group Social
+	Icon Twitter "Twitter" "brand_twitter"
+	Icon Wordpress "Wordpress" "brand_wordpress"
+	Icon Medium "Medium" "brand_medium"
+	Icon LinkedIn "LinkedIn" "brand_linkedin"
+	Icon Facebook "Facebook" "brand_facebook"
+	Icon GitHub "GitHub" "brand_github"
 
 

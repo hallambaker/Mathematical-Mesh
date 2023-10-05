@@ -410,10 +410,8 @@ public partial class _Settings : IBindable {
 
     }
 
-#endregion
-#region // Dialogs
 /// <summary>
-/// Callback parameters for dialog Appearance 
+/// Callback parameters for section Appearance 
 /// </summary>
 public partial class Appearance : _Appearance {
     }
@@ -455,6 +453,8 @@ public partial class _Appearance : IBindable {
 
     }
 
+#endregion
+#region // Dialogs
 /// <summary>
 /// Callback parameters for dialog AccountUser 
 /// </summary>
@@ -464,7 +464,7 @@ public partial class AccountUser : _AccountUser {
 /// <summary>
 /// Callback parameters for section AccountUser 
 /// </summary>
-public partial class _AccountUser : IBindable {
+public partial class _AccountUser : IParameter {
 
     ///<summary></summary> 
     public virtual string Udf { get; set;} 
@@ -495,25 +495,37 @@ public partial class _AccountUser : IBindable {
             new GuiBoundPropertyChooser ((object data) => (data as _AccountUser).UserChooseDevice, (object data,ISelectCollection value) => (data as _AccountUser).UserChooseDevice = value, "UserChooseDevice")
 
             });
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize() => NullResult.Initialized;
+
+    //public virtual IResult Validate() => null;
+    //public virtual IResult Initialize() => null;
 
     }
 
 /// <summary>
-/// Callback parameters for dialog Contact 
+/// Callback parameters for dialog BoundContactPerson 
 /// </summary>
-public partial class Contact : _Contact {
+public partial class BoundContactPerson : _BoundContactPerson {
     }
 
 /// <summary>
-/// Callback parameters for section Contact 
+/// Callback parameters for section BoundContactPerson 
 /// </summary>
-public partial class _Contact : IBindable {
+public partial class _BoundContactPerson : IParameter {
+
+    ///<summary></summary> 
+    public virtual string Display { get;} 
 
     ///<summary></summary> 
     public virtual string Local { get; set;} 
-
-    ///<summary></summary> 
-    public virtual string Full { get; set;} 
 
     ///<summary></summary> 
     public virtual string First { get; set;} 
@@ -538,18 +550,30 @@ public partial class _Contact : IBindable {
 
     ///<summary>The binding for the data type.</summary> 
     public static GuiBinding BaseBinding  { get; } = new (
-        (object test) => test is _Contact,
+        (object test) => test is _BoundContactPerson,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as _Contact).Local, (object data,string value) => (data as _Contact).Local = value, "Local"), 
-            new GuiBoundPropertyString ((object data) => (data as _Contact).Full, (object data,string value) => (data as _Contact).Full = value, "Full"), 
-            new GuiBoundPropertyString ((object data) => (data as _Contact).First, (object data,string value) => (data as _Contact).First = value, "First"), 
-            new GuiBoundPropertyString ((object data) => (data as _Contact).Last, (object data,string value) => (data as _Contact).Last = value, "Last"), 
-            new GuiBoundPropertyString ((object data) => (data as _Contact).Prefix, (object data,string value) => (data as _Contact).Prefix = value, "Prefix"), 
-            new GuiBoundPropertyString ((object data) => (data as _Contact).Suffix, (object data,string value) => (data as _Contact).Suffix = value, "Suffix"), 
-            new GuiBoundPropertyChooser ((object data) => (data as _Contact).NetworkAddress, (object data,ISelectCollection value) => (data as _Contact).NetworkAddress = value, "NetworkAddress"), 
-            new GuiBoundPropertyChooser ((object data) => (data as _Contact).PhysicalAddress, (object data,ISelectCollection value) => (data as _Contact).PhysicalAddress = value, "PhysicalAddress")
+            new GuiBoundPropertyString ((object data) => (data as _BoundContactPerson).Display, null, "Display"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundContactPerson).Local, (object data,string value) => (data as _BoundContactPerson).Local = value, "Local"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundContactPerson).First, (object data,string value) => (data as _BoundContactPerson).First = value, "First"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundContactPerson).Last, (object data,string value) => (data as _BoundContactPerson).Last = value, "Last"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundContactPerson).Prefix, (object data,string value) => (data as _BoundContactPerson).Prefix = value, "Prefix"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundContactPerson).Suffix, (object data,string value) => (data as _BoundContactPerson).Suffix = value, "Suffix"), 
+            new GuiBoundPropertyChooser ((object data) => (data as _BoundContactPerson).NetworkAddress, (object data,ISelectCollection value) => (data as _BoundContactPerson).NetworkAddress = value, "NetworkAddress"), 
+            new GuiBoundPropertyChooser ((object data) => (data as _BoundContactPerson).PhysicalAddress, (object data,ISelectCollection value) => (data as _BoundContactPerson).PhysicalAddress = value, "PhysicalAddress")
 
             });
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize() => NullResult.Initialized;
+
+    //public virtual IResult Validate() => null;
+    //public virtual IResult Initialize() => null;
 
     }
 
@@ -562,10 +586,7 @@ public partial class ContactNetworkAddress : _ContactNetworkAddress {
 /// <summary>
 /// Callback parameters for section ContactNetworkAddress 
 /// </summary>
-public partial class _ContactNetworkAddress : IBindable {
-
-    ///<summary></summary> 
-    public virtual IFieldIcon ProtocolIcon { get; set;} 
+public partial class _ContactNetworkAddress : IParameter {
 
     ///<summary></summary> 
     public virtual string Protocol { get; set;} 
@@ -583,12 +604,23 @@ public partial class _ContactNetworkAddress : IBindable {
     public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _ContactNetworkAddress,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ((object data) => (data as _ContactNetworkAddress).ProtocolIcon, (object data,IFieldIcon value) => (data as _ContactNetworkAddress).ProtocolIcon = value, "ProtocolIcon"), 
             new GuiBoundPropertyString ((object data) => (data as _ContactNetworkAddress).Protocol, (object data,string value) => (data as _ContactNetworkAddress).Protocol = value, "Protocol"), 
             new GuiBoundPropertyString ((object data) => (data as _ContactNetworkAddress).Address, (object data,string value) => (data as _ContactNetworkAddress).Address = value, "Address"), 
             new GuiBoundPropertyString ((object data) => (data as _ContactNetworkAddress).Fingerprint, (object data,string value) => (data as _ContactNetworkAddress).Fingerprint = value, "Fingerprint")
 
             });
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize() => NullResult.Initialized;
+
+    //public virtual IResult Validate() => null;
+    //public virtual IResult Initialize() => null;
 
     }
 
@@ -601,7 +633,7 @@ public partial class ContactPhysicalAddress : _ContactPhysicalAddress {
 /// <summary>
 /// Callback parameters for section ContactPhysicalAddress 
 /// </summary>
-public partial class _ContactPhysicalAddress : IBindable {
+public partial class _ContactPhysicalAddress : IParameter {
 
     ///<summary></summary> 
     public virtual string Appartment { get; set;} 
@@ -648,103 +680,18 @@ public partial class _ContactPhysicalAddress : IBindable {
             new GuiBoundPropertyDecimal ((object data) => (data as _ContactPhysicalAddress).Longitude, (object data,decimal? value) => (data as _ContactPhysicalAddress).Longitude = value, "Longitude")
 
             });
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate() {
+        GuiResultInvalid result = null;
 
-    }
+        return (result as IResult) ?? NullResult.Valid;
+        }
 
-/// <summary>
-/// Callback parameters for dialog MessageContactRequest 
-/// </summary>
-public partial class MessageContactRequest : _MessageContactRequest {
-    }
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize() => NullResult.Initialized;
 
-/// <summary>
-/// Callback parameters for section MessageContactRequest 
-/// </summary>
-public partial class _MessageContactRequest : IBindable {
-
-    ///<summary></summary> 
-    public virtual string To { get; set;} 
-
-    ///<summary></summary> 
-    public virtual string Comment { get; set;} 
-
-    ///<inheritdoc/>
-    public GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
-        (object test) => test is _MessageContactRequest,
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as _MessageContactRequest).To, (object data,string value) => (data as _MessageContactRequest).To = value, "To"), 
-            new GuiBoundPropertyString ((object data) => (data as _MessageContactRequest).Comment, (object data,string value) => (data as _MessageContactRequest).Comment = value, "Comment")
-
-            });
-
-    }
-
-/// <summary>
-/// Callback parameters for dialog MessageConfirmationRequest 
-/// </summary>
-public partial class MessageConfirmationRequest : _MessageConfirmationRequest {
-    }
-
-/// <summary>
-/// Callback parameters for section MessageConfirmationRequest 
-/// </summary>
-public partial class _MessageConfirmationRequest : IBindable {
-
-    ///<summary></summary> 
-    public virtual string To { get; set;} 
-
-    ///<summary></summary> 
-    public virtual string Request { get; set;} 
-
-    ///<inheritdoc/>
-    public GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
-        (object test) => test is _MessageConfirmationRequest,
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as _MessageConfirmationRequest).To, (object data,string value) => (data as _MessageConfirmationRequest).To = value, "To"), 
-            new GuiBoundPropertyString ((object data) => (data as _MessageConfirmationRequest).Request, (object data,string value) => (data as _MessageConfirmationRequest).Request = value, "Request")
-
-            });
-
-    }
-
-/// <summary>
-/// Callback parameters for dialog MessageMail 
-/// </summary>
-public partial class MessageMail : _MessageMail {
-    }
-
-/// <summary>
-/// Callback parameters for section MessageMail 
-/// </summary>
-public partial class _MessageMail : IBindable {
-
-    ///<summary></summary> 
-    public virtual string To { get; set;} 
-
-    ///<summary></summary> 
-    public virtual string Subject { get; set;} 
-
-    ///<summary></summary> 
-    public virtual string Body { get; set;} 
-
-    ///<inheritdoc/>
-    public GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
-        (object test) => test is _MessageMail,
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as _MessageMail).To, (object data,string value) => (data as _MessageMail).To = value, "To"), 
-            new GuiBoundPropertyString ((object data) => (data as _MessageMail).Subject, (object data,string value) => (data as _MessageMail).Subject = value, "Subject"), 
-            new GuiBoundPropertyString ((object data) => (data as _MessageMail).Body, (object data,string value) => (data as _MessageMail).Body = value, "Body")
-
-            });
+    //public virtual IResult Validate() => null;
+    //public virtual IResult Initialize() => null;
 
     }
 
@@ -777,7 +724,6 @@ public partial class _TestService : IParameter {
             new GuiBoundPropertyString ((object data) => (data as _TestService).ServiceAddress, (object data,string value) => (data as _TestService).ServiceAddress = value, "ServiceAddress")
 
             });
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -801,6 +747,8 @@ public partial class _TestService : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 
@@ -837,7 +785,6 @@ public partial class _AccountCreate : IParameter {
             new GuiBoundPropertyString ((object data) => (data as _AccountCreate).Coupon, (object data,string value) => (data as _AccountCreate).Coupon = value, "Coupon")
 
             });
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -847,6 +794,8 @@ public partial class _AccountCreate : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 
@@ -883,7 +832,6 @@ public partial class _AccountRequestConnect : IParameter {
             new GuiBoundPropertyString ((object data) => (data as _AccountRequestConnect).Rights, (object data,string value) => (data as _AccountRequestConnect).Rights = value, "Rights")
 
             });
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -893,6 +841,8 @@ public partial class _AccountRequestConnect : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 
@@ -929,7 +879,6 @@ public partial class _AccountConnectUri : IParameter {
             new GuiBoundPropertyString ((object data) => (data as _AccountConnectUri).Rights, (object data,string value) => (data as _AccountConnectUri).Rights = value, "Rights")
 
             });
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -939,6 +888,8 @@ public partial class _AccountConnectUri : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 
@@ -979,7 +930,6 @@ public partial class _DeviceDynamicUri : IParameter {
             new GuiBoundPropertyInteger ((object data) => (data as _DeviceDynamicUri).Expire, (object data,int? value) => (data as _DeviceDynamicUri).Expire = value, "Expire")
 
             });
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -989,6 +939,8 @@ public partial class _DeviceDynamicUri : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 
@@ -1025,7 +977,6 @@ public partial class _AccountGetPin : IParameter {
             new GuiBoundPropertyInteger ((object data) => (data as _AccountGetPin).Expire, (object data,int? value) => (data as _AccountGetPin).Expire = value, "Expire")
 
             });
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -1035,6 +986,8 @@ public partial class _AccountGetPin : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 
@@ -1071,7 +1024,6 @@ public partial class _DeviceStaticUri : IParameter {
             new GuiBoundPropertyString ((object data) => (data as _DeviceStaticUri).Rights, (object data,string value) => (data as _DeviceStaticUri).Rights = value, "Rights")
 
             });
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -1081,6 +1033,8 @@ public partial class _DeviceStaticUri : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 
@@ -1149,7 +1103,6 @@ public partial class _AccountRecover : IParameter {
             new GuiBoundPropertyString ((object data) => (data as _AccountRecover).Share8, (object data,string value) => (data as _AccountRecover).Share8 = value, "Share8")
 
             });
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -1159,6 +1112,8 @@ public partial class _AccountRecover : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 
@@ -1181,7 +1136,6 @@ public partial class _AccountDelete : IParameter {
     public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AccountDelete,
         Array.Empty<GuiBoundProperty>());
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -1191,6 +1145,8 @@ public partial class _AccountDelete : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 
@@ -1219,7 +1175,6 @@ public partial class _AccountSwitch : IParameter {
             new GuiBoundPropertyChooser ((object data) => (data as _AccountSwitch).ChooseUser, (object data,ISelectCollection value) => (data as _AccountSwitch).ChooseUser = value, "ChooseUser")
 
             });
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -1229,6 +1184,8 @@ public partial class _AccountSwitch : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 
@@ -1261,7 +1218,6 @@ public partial class _AccountGenerateRecovery : IParameter {
             new GuiBoundPropertyInteger ((object data) => (data as _AccountGenerateRecovery).Quorum, (object data,int? value) => (data as _AccountGenerateRecovery).Quorum = value, "Quorum")
 
             });
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -1271,6 +1227,8 @@ public partial class _AccountGenerateRecovery : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 
@@ -1303,7 +1261,6 @@ public partial class _RequestContact : IParameter {
             new GuiBoundPropertyString ((object data) => (data as _RequestContact).Message, (object data,string value) => (data as _RequestContact).Message = value, "Message")
 
             });
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -1313,6 +1270,8 @@ public partial class _RequestContact : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 
@@ -1345,7 +1304,6 @@ public partial class _RequestConfirmation : IParameter {
             new GuiBoundPropertyString ((object data) => (data as _RequestConfirmation).Message, (object data,string value) => (data as _RequestConfirmation).Message = value, "Message")
 
             });
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -1355,6 +1313,8 @@ public partial class _RequestConfirmation : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 
@@ -1377,7 +1337,6 @@ public partial class _CreateMail : IParameter {
     public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _CreateMail,
         Array.Empty<GuiBoundProperty>());
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -1387,6 +1346,8 @@ public partial class _CreateMail : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 
@@ -1409,7 +1370,6 @@ public partial class _CreateChat : IParameter {
     public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _CreateChat,
         Array.Empty<GuiBoundProperty>());
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -1419,6 +1379,8 @@ public partial class _CreateChat : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 
@@ -1441,7 +1403,6 @@ public partial class _StartVoice : IParameter {
     public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _StartVoice,
         Array.Empty<GuiBoundProperty>());
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -1451,6 +1412,8 @@ public partial class _StartVoice : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 
@@ -1473,7 +1436,6 @@ public partial class _StartVideo : IParameter {
     public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _StartVideo,
         Array.Empty<GuiBoundProperty>());
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -1483,6 +1445,8 @@ public partial class _StartVideo : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 
@@ -1505,7 +1469,6 @@ public partial class _SendDocument : IParameter {
     public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _SendDocument,
         Array.Empty<GuiBoundProperty>());
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -1515,6 +1478,8 @@ public partial class _SendDocument : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 
@@ -1537,7 +1502,6 @@ public partial class _ShareDocument : IParameter {
     public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _ShareDocument,
         Array.Empty<GuiBoundProperty>());
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -1547,6 +1511,8 @@ public partial class _ShareDocument : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 
@@ -1569,7 +1535,6 @@ public partial class _AddMailAccount : IParameter {
     public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AddMailAccount,
         Array.Empty<GuiBoundProperty>());
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -1579,6 +1544,8 @@ public partial class _AddMailAccount : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 
@@ -1601,7 +1568,6 @@ public partial class _AddSshAccount : IParameter {
     public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AddSshAccount,
         Array.Empty<GuiBoundProperty>());
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -1611,6 +1577,8 @@ public partial class _AddSshAccount : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 
@@ -1633,7 +1601,6 @@ public partial class _AddGitAccount : IParameter {
     public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AddGitAccount,
         Array.Empty<GuiBoundProperty>());
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -1643,6 +1610,8 @@ public partial class _AddGitAccount : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 
@@ -1665,7 +1634,6 @@ public partial class _AddCodeSigningKey : IParameter {
     public static GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AddCodeSigningKey,
         Array.Empty<GuiBoundProperty>());
-
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
         GuiResultInvalid result = null;
@@ -1675,6 +1643,8 @@ public partial class _AddCodeSigningKey : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize() => NullResult.Initialized;
+
+
     }
 
 #endregion
@@ -2767,6 +2737,18 @@ public class _EverythingMaui : Gui {
 	readonly List<GuiImage> icons = new () {  
 		new GuiImage ("applications") , 
 		new GuiImage ("bookmark") , 
+		new GuiImage ("brand_facebook") , 
+		new GuiImage ("brand_facebook_messenger") , 
+		new GuiImage ("brand_facetime") , 
+		new GuiImage ("brand_github") , 
+		new GuiImage ("brand_linkedin") , 
+		new GuiImage ("brand_medium") , 
+		new GuiImage ("brand_signal") , 
+		new GuiImage ("brand_skype") , 
+		new GuiImage ("brand_telegram") , 
+		new GuiImage ("brand_twitter") , 
+		new GuiImage ("brand_whatsapp") , 
+		new GuiImage ("brand_wordpress") , 
 		new GuiImage ("calendar") , 
 		new GuiImage ("chat") , 
 		new GuiImage ("clipboard_check_solid") , 
@@ -2775,15 +2757,19 @@ public class _EverythingMaui : Gui {
 		new GuiImage ("contacts") , 
 		new GuiImage ("credentials") , 
 		new GuiImage ("devices") , 
+		new GuiImage ("display") , 
 		new GuiImage ("document_send") , 
 		new GuiImage ("document_share") , 
 		new GuiImage ("documents") , 
 		new GuiImage ("feeds") , 
 		new GuiImage ("git") , 
 		new GuiImage ("groups") , 
+		new GuiImage ("location_pin") , 
 		new GuiImage ("mail") , 
 		new GuiImage ("messages") , 
 		new GuiImage ("new") , 
+		new GuiImage ("plus") , 
+		new GuiImage ("protocol_icon") , 
 		new GuiImage ("recover") , 
 		new GuiImage ("services") , 
 		new GuiImage ("settings") , 
@@ -2791,13 +2777,14 @@ public class _EverythingMaui : Gui {
 		new GuiImage ("signature") , 
 		new GuiImage ("tasks") , 
 		new GuiImage ("test_service") , 
+		new GuiImage ("triangle_exclamation_solid") , 
 		new GuiImage ("user") , 
 		new GuiImage ("video") , 
 		new GuiImage ("voice") 
 		};
 
 
-	// Sections
+#region // Sections
     ///<summary>Section SectionAccount.</summary> 
 	public GuiSection SectionAccount { get; } = new ("Account", "Account", "user", false);
     ///<summary>Section SectionMessages.</summary> 
@@ -2826,9 +2813,10 @@ public class _EverythingMaui : Gui {
 	public GuiSection SectionServices { get; } = new ("Services", "Services", "Services", false);
     ///<summary>Section SectionSettings.</summary> 
 	public GuiSection SectionSettings { get; } = new ("Settings", "Settings", "settings", true);
-
-	
-	// Actions
+    ///<summary>Section SectionAppearance.</summary> 
+	public GuiSection SectionAppearance { get; } = new ("Appearance", "Appearance", "display", false);
+#endregion
+#region // Actions
     ///<summary>Action ActionTestService.</summary> 
 	public GuiAction ActionTestService { get; } = new ("TestService", "Test Service", "test_service", () => new TestService());
     ///<summary>Action ActionAccountCreate.</summary> 
@@ -2876,25 +2864,19 @@ public class _EverythingMaui : Gui {
     ///<summary>Action ActionAddCodeSigningKey.</summary> 
 	public GuiAction ActionAddCodeSigningKey { get; } = new ("AddCodeSigningKey", "Add Code Signing Key", "signature", () => new AddCodeSigningKey());
 
-	// Dialogs
-    ///<summary>Dialog DialogAppearance.</summary> 
-	public GuiDialog DialogAppearance { get; } = new ("Appearance");
+#endregion
+#region // Dialogs
     ///<summary>Dialog DialogAccountUser.</summary> 
-	public GuiDialog DialogAccountUser { get; } = new ("AccountUser");
-    ///<summary>Dialog DialogContact.</summary> 
-	public GuiDialog DialogContact { get; } = new ("Contact");
+	public GuiDialog DialogAccountUser { get; } = new ("AccountUser", "Account", "user", () => new AccountUser());
+    ///<summary>Dialog DialogBoundContactPerson.</summary> 
+	public GuiDialog DialogBoundContactPerson { get; } = new ("BoundContactPerson", "Person", "contacts", () => new BoundContactPerson());
     ///<summary>Dialog DialogContactNetworkAddress.</summary> 
-	public GuiDialog DialogContactNetworkAddress { get; } = new ("ContactNetworkAddress");
+	public GuiDialog DialogContactNetworkAddress { get; } = new ("ContactNetworkAddress", "Network", "protocol_icon", () => new ContactNetworkAddress());
     ///<summary>Dialog DialogContactPhysicalAddress.</summary> 
-	public GuiDialog DialogContactPhysicalAddress { get; } = new ("ContactPhysicalAddress");
-    ///<summary>Dialog DialogMessageContactRequest.</summary> 
-	public GuiDialog DialogMessageContactRequest { get; } = new ("MessageContactRequest");
-    ///<summary>Dialog DialogMessageConfirmationRequest.</summary> 
-	public GuiDialog DialogMessageConfirmationRequest { get; } = new ("MessageConfirmationRequest");
-    ///<summary>Dialog DialogMessageMail.</summary> 
-	public GuiDialog DialogMessageMail { get; } = new ("MessageMail");
+	public GuiDialog DialogContactPhysicalAddress { get; } = new ("ContactPhysicalAddress", "Place", "location_pin", () => new ContactPhysicalAddress());
 
-	// Dialogs
+#endregion
+#region // Results
     ///<summary>Result ResultReportHost.</summary> 
 	public GuiResult ResultReportHost { get; } = new ();
     ///<summary>Result ResultReportAccountCreate.</summary> 
@@ -2911,7 +2893,8 @@ public class _EverythingMaui : Gui {
         new() {
                 { typeof(HttpRequestException).FullName, () => new HttpRequestFail() }
             };
-
+#endregion
+#region // Constructors
     /// <summary>
     /// Default constructor returning an instance.
     /// </summary>
@@ -2942,8 +2925,7 @@ public class _EverythingMaui : Gui {
 			new GuiButton ("CreateChat", ActionCreateChat), 
 			new GuiButton ("StartVoice", ActionStartVoice), 
 			new GuiButton ("StartVideo", ActionStartVideo), 
-			new GuiChooser ("ChooseMessage", "Messages", "inbox_messages", 0, new () { 
-				new GuiView (BindingMessage)
+			new GuiChooser ("ChooseMessage", "Messages", "inbox_messages", 0, new () {
 				}) 		    
             };
 
@@ -2952,7 +2934,7 @@ public class _EverythingMaui : Gui {
 	    SectionContacts.Entries =  new () {  
 			new GuiButton ("RequestContact", ActionRequestContact), 
 			new GuiChooser ("ChooseContact", "Contacts", "contact_other", 0, new () { 
-				new GuiView (BindingCatalogedContact)
+				new GuiViewDialog (DialogBoundContactPerson)
 				}) 		    
             };
 
@@ -2962,7 +2944,7 @@ public class _EverythingMaui : Gui {
 			new GuiButton ("SendDocument", ActionSendDocument), 
 			new GuiButton ("ShareDocument", ActionShareDocument), 
 			new GuiChooser ("ChooseDocuments", "Documents", "documents", 0, new () { 
-				new GuiView (BindingCatalogedDocument)
+				new GuiViewBinding (BindingCatalogedDocument)
 				}) 		    
             };
 
@@ -2970,7 +2952,7 @@ public class _EverythingMaui : Gui {
 	    SectionGroups.Active = () => StateDefault;
 	    SectionGroups.Entries =  new () {  
 			new GuiChooser ("ChooseGroup", "User", "account_group", 0, new () { 
-				new GuiView (BindingCatalogedGroup)
+				new GuiViewBinding (BindingCatalogedGroup)
 				}) 		    
             };
 
@@ -2978,7 +2960,7 @@ public class _EverythingMaui : Gui {
 	    SectionFeeds.Active = () => StateDefault;
 	    SectionFeeds.Entries =  new () {  
 			new GuiChooser ("ChooseFeed", "Feeds", "feeds", 0, new () { 
-				new GuiView (BindingCatalogedFeed)
+				new GuiViewBinding (BindingCatalogedFeed)
 				}) 		    
             };
 
@@ -2986,7 +2968,7 @@ public class _EverythingMaui : Gui {
 	    SectionCredentials.Active = () => StateDefault;
 	    SectionCredentials.Entries =  new () {  
 			new GuiChooser ("ChooseCredential", "Credentials", "credentials", 0, new () { 
-				new GuiView (BindingCatalogedCredential)
+				new GuiViewBinding (BindingCatalogedCredential)
 				}) 		    
             };
 
@@ -2994,7 +2976,7 @@ public class _EverythingMaui : Gui {
 	    SectionTasks.Active = () => StateDefault;
 	    SectionTasks.Entries =  new () {  
 			new GuiChooser ("ChooseTask", "Tasks", "Tasks", 0, new () { 
-				new GuiView (BindingCatalogedTask)
+				new GuiViewBinding (BindingCatalogedTask)
 				}) 		    
             };
 
@@ -3002,7 +2984,7 @@ public class _EverythingMaui : Gui {
 	    SectionCalendar.Active = () => StateDefault;
 	    SectionCalendar.Entries =  new () {  
 			new GuiChooser ("ChooseAppointment", "Tasks", "Tasks", 0, new () { 
-				new GuiView (BindingCatalogedTask)
+				new GuiViewBinding (BindingCatalogedTask)
 				}) 		    
             };
 
@@ -3010,7 +2992,7 @@ public class _EverythingMaui : Gui {
 	    SectionBookmark.Active = () => StateDefault;
 	    SectionBookmark.Entries =  new () {  
 			new GuiChooser ("ChooseBookmark", "Bookmark", "Bookmark", 0, new () { 
-				new GuiView (BindingCatalogedBookmark)
+				new GuiViewBinding (BindingCatalogedBookmark)
 				}) 		    
             };
 
@@ -3022,7 +3004,7 @@ public class _EverythingMaui : Gui {
 			new GuiButton ("AddGitAccount", ActionAddGitAccount), 
 			new GuiButton ("AddCodeSigningKey", ActionAddCodeSigningKey), 
 			new GuiChooser ("ChooseApplication", "Applications", "Applications", 0, new () { 
-				new GuiView (BindingCatalogedApplication)
+				new GuiViewBinding (BindingCatalogedApplication)
 				}) 		    
             };
 
@@ -3033,7 +3015,7 @@ public class _EverythingMaui : Gui {
 			new GuiButton ("DeviceStaticUri", ActionDeviceStaticUri), 
 			new GuiButton ("AccountGetPin", ActionAccountGetPin), 
 			new GuiChooser ("ChooseDevice", "Devices", "Devices", 0, new () { 
-				new GuiView (BindingCatalogedDevice)
+				new GuiViewBinding (BindingCatalogedDevice)
 				}) 		    
             };
 
@@ -3047,16 +3029,22 @@ public class _EverythingMaui : Gui {
 	    SectionSettings.Gui = this;
 	    SectionSettings.Active = () => StateAlways;
 	    SectionSettings.Entries =  new () {  
-			new GuiDialog ("Appearance", new () { 
-				new GuiColor ("BackgroundColor", "Background Color"), 
-				new GuiColor ("HighlightColor", "Highlight Color"), 
-				new GuiColor ("TextColor", "Text Color"), 
-				new GuiSize ("TextSize", "Text Size"), 
-				new GuiSize ("IconSize", "Icon Size")
-			    }) 		    
+		    
+            };
+
+	    SectionAppearance.Gui = this;
+	    SectionAppearance.Active = () => StateDefault;
+	    SectionAppearance.Entries =  new () {  
+			new GuiColor ("BackgroundColor", "Background Color"), 
+			new GuiColor ("HighlightColor", "Highlight Color"), 
+			new GuiColor ("TextColor", "Text Color"), 
+			new GuiSize ("TextSize", "Text Size"), 
+			new GuiSize ("IconSize", "Icon Size")		    
             };
 
 
+#endregion
+#region // Initialize Sections
         Sections = new List<GuiSection> () {  
 		    SectionAccount, 
 		    SectionMessages, 
@@ -3071,9 +3059,12 @@ public class _EverythingMaui : Gui {
 		    SectionApplications, 
 		    SectionDevices, 
 		    SectionServices, 
-		    SectionSettings
+		    SectionSettings, 
+		    SectionAppearance
             };
 
+#endregion
+#region // Initialize Actions
         ActionTestService.Callback = (x, mode) => TestService (x as TestService, mode) ;
 	    ActionTestService.Entries = new () { 
 			new GuiText ("ServiceAddress", "Service address", 0)
@@ -3232,15 +3223,8 @@ public class _EverythingMaui : Gui {
 		    ActionAddCodeSigningKey
 		    };
 
-
-	    DialogAppearance.Entries = new () { 
-			new GuiColor ("BackgroundColor", "Background Color"), 
-			new GuiColor ("HighlightColor", "Highlight Color"), 
-			new GuiColor ("TextColor", "Text Color"), 
-			new GuiSize ("TextSize", "Text Size"), 
-			new GuiSize ("IconSize", "Icon Size")			
-		    };
-
+#endregion
+#region // Initialize Dialogs
 	    DialogAccountUser.Entries = new () { 
 			new GuiText ("Udf", "Fingerprint", 0), 
 			new GuiText ("ServiceAddress", "Account service address", 1), 
@@ -3250,24 +3234,25 @@ public class _EverythingMaui : Gui {
 				}) 			
 		    };
 
-	    DialogContact.Entries = new () { 
-			new GuiText ("Local", "Friendly name", 0), 
-			new GuiText ("Full", "Full name", 1), 
+	    DialogBoundContactPerson.Entries = new () { 
+			new GuiText ("Display", "Display name", 0), 
+			new GuiText ("Local", "Friendly name", 1), 
 			new GuiText ("First", "First name", 2), 
 			new GuiText ("Last", "Last name", 3), 
 			new GuiText ("Prefix", "Prefix", 4), 
 			new GuiText ("Suffix", "Suffix", 5), 
-			new GuiChooser ("NetworkAddress", "Network Addresses", "network", 6, new () {
+			new GuiChooser ("NetworkAddress", "Network Addresses", "network", 6, new () { 
+				new GuiViewDialog (DialogContactNetworkAddress)
 				}) , 
-			new GuiChooser ("PhysicalAddress", "Locations", "location", 7, new () {
+			new GuiChooser ("PhysicalAddress", "Locations", "location", 7, new () { 
+				new GuiViewDialog (DialogContactPhysicalAddress)
 				}) 			
 		    };
 
 	    DialogContactNetworkAddress.Entries = new () { 
-			new GuiIcon ("ProtocolIcon", "protocol_icon"), 
-			new GuiText ("Protocol", "Protocol", 1), 
-			new GuiText ("Address", "Address", 2), 
-			new GuiText ("Fingerprint", "Fingerprint", 3)			
+			new GuiText ("Protocol", "Protocol", 0), 
+			new GuiText ("Address", "Address", 1), 
+			new GuiText ("Fingerprint", "Fingerprint", 2)			
 		    };
 
 	    DialogContactPhysicalAddress.Entries = new () { 
@@ -3282,34 +3267,16 @@ public class _EverythingMaui : Gui {
 			new GuiDecimal ("Longitude", "Longitude")			
 		    };
 
-	    DialogMessageContactRequest.Entries = new () { 
-			new GuiText ("To", "To", 0), 
-			new GuiText ("Comment", "Comment", 1)			
-		    };
-
-	    DialogMessageConfirmationRequest.Entries = new () { 
-			new GuiText ("To", "To", 0), 
-			new GuiText ("Request", "Request", 1)			
-		    };
-
-	    DialogMessageMail.Entries = new () { 
-			new GuiText ("To", "To", 0), 
-			new GuiText ("Subject", "Subject", 1), 
-			new GuiText ("Body", "Body", 2)			
-		    };
-
 
         Dialogs = new List<GuiDialog>() {  
-		    DialogAppearance, 
 		    DialogAccountUser, 
-		    DialogContact, 
+		    DialogBoundContactPerson, 
 		    DialogContactNetworkAddress, 
-		    DialogContactPhysicalAddress, 
-		    DialogMessageContactRequest, 
-		    DialogMessageConfirmationRequest, 
-		    DialogMessageMail
+		    DialogContactPhysicalAddress
 		    };
 
+#endregion
+#region // Initialize Results
 	    ResultReportHost.Entries = new () { 
 			new GuiText ("ServiceCallsign", "Callsign", 0), 
 			new GuiText ("ServiceDns", "DNS", 1), 
@@ -3363,6 +3330,8 @@ public class _EverythingMaui : Gui {
 
         }
 
+#endregion
+#region // Initialize Actions
     /// <summary>
     /// GUI action
     /// </summary>
@@ -3501,11 +3470,9 @@ public class _EverythingMaui : Gui {
     public virtual Task<IResult> AddCodeSigningKey (AddCodeSigningKey data, ActionMode mode = ActionMode.Execute) 
                 => throw new NYI();
 
-    
-    /// <summary> </summary>
-    public static GuiBinding BindingMessage  { get; } = new (
-        (object test) => test is Message,
-        Array.Empty<GuiBoundProperty>());
+ 
+#endregion
+#region // Initialize Bindings
     /// <summary> </summary>
     public static GuiBinding BindingCatalogedDevice  { get; } = new (
         (object test) => test is CatalogedDevice,
@@ -3577,7 +3544,7 @@ public class _EverythingMaui : Gui {
 
             });
 
-
+#endregion
 	}
 
 #endregion

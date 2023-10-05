@@ -1,7 +1,6 @@
 ﻿using Goedel.Utilities;
 
 using System;
-using System.Collections;
 using System.Threading.Tasks;
 
 namespace Goedel.Guigen;
@@ -155,7 +154,8 @@ public record GuiBinding {
 
 
 public record GuiBoundProperty (
-        string? Label = null){
+                string? Label,
+                bool Primary = false) {
 
 
     }
@@ -164,14 +164,25 @@ public record GuiBoundProperty (
 public record GuiBoundPropertyString (
                 Func<object, string> Get,
                 Action<object, string> Set,
-                string? Label = null) : GuiBoundProperty (Label) {
+                string? Label,
+                bool Primary = false) : GuiBoundProperty (Label, Primary) {
     }
 
 public record GuiBoundPropertyChooser(
                 Func<object, ISelectCollection> Get,
                 Action<object, ISelectCollection> Set,
-                string? Label = null) : GuiBoundProperty(Label) {
+                string? Label,
+                List<GuiEntry>? Entries = null) : GuiBoundProperty(Label) {
     }
+
+
+public record GuiEntry(
+                Func<object, bool> isType,
+                GuiBoundProperty[] boundProperties,
+                string Label) : GuiBinding(isType, boundProperties) {
+    }
+
+
 
 public record GuiBoundPropertyColor(
                 Func<object, IFieldColor> Get,
@@ -219,46 +230,35 @@ public record GuiItem(
             string Id) {
     }
 
-public record GuiDialog : GuiItem , IGuiEntry {
+public record GuiDialog(
+
+            string Id,
+            string Prompt,
+            string Icon,
+            FactoryCallback Factory) : GuiPrompt(Id, Prompt), IGuiEntry {
     public IPresentation? Presentation { get; set; } = null;
 
     public List<IGuiEntry> Entries { get; set; } = null!;
 
-    public GuiDialog(
-           string id,
-            List<IGuiEntry> entries = null!
-           ) : base(id){
-        Entries = entries;
 
-        }
 
 
     }
-
-
-
 
 public record GuiButton(
             string Id,
             IButtonTarget Target
             ) : GuiItem(Id), IGuiEntry {
-
-
     }
-
 
 public record GuiPrompt(
             string Id,
             string Prompt
             ) : GuiItem(Id), IGuiEntry {
-
-
-
     }
 
 
 public record GuiSection (
-
             string Id,
             string Prompt,
             string Icon,
@@ -372,10 +372,12 @@ public record GuiIcon(
     }
 
 
-public record GuiView(
-            GuiBinding Binding
-            ) : IGuiEntry {
+public record GuiViewDialog(GuiDialog Dialog) : IGuiEntry {
     }
+public record GuiViewBinding(GuiBinding Dialog)  : IGuiEntry {
+    }
+
+
 
 
 
@@ -407,9 +409,4 @@ public interface IFieldColor {
 public interface IFieldSize {
     }
 public interface IFieldIcon {
-    }
-
-
-
-public interface ISelectCollection : IEnumerable{
     }

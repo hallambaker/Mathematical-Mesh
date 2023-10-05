@@ -56,6 +56,24 @@ public class GuigenDetailResult : GuigenDetaiPage {
 
                         break;
                         }
+                    case GuiBoundPropertyInteger text: {
+
+                        var view = new HorizontalStackLayout();
+                        var label = new Label() {
+                            Text = text.Label
+                            };
+
+                        var fieldValue = text.Get(result);
+                        var field = new Label() {
+                            Text = fieldValue.ToString()
+                            };
+
+                        view.Add(label);
+                        view.Add(field);
+                        stack.Add(view);
+
+                        break;
+                        }
                     }
                 }
             }

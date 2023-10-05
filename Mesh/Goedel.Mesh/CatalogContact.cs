@@ -116,18 +116,19 @@ public class CatalogContact : Catalog<CatalogedContact> {
         var catalogedContact = catalogedEntry as CatalogedContact;
         var contact = catalogedContact.Contact;
 
+        if (contact.NetworkAddresses != null) {
         foreach (var networkAddress in contact.NetworkAddresses) {
             DictionaryByNetworkAddress.AddSafe(networkAddress.Address,
                 new NetworkProtocolEntry(catalogedContact, networkAddress));
 
             if (networkAddress.Capabilities != null) {
-                foreach (var capability in networkAddress.Capabilities) {
-                    capability.KeyCollection = KeyCollection;
-                    switch (capability) {
-                        case CapabilityDecrypt capabilityDecrypt: {
+                    foreach (var capability in networkAddress.Capabilities) {
+                        capability.KeyCollection = KeyCollection;
+                        switch (capability) {
+                            case CapabilityDecrypt capabilityDecrypt: {
                                 //Console.WriteLine($"Key {networkAddress.Address} -> {capability.Id}");
 
-                                if (DictionaryDecryptByKeyId.TryGetValue(capability.Id, out var existing) ){
+                                if (DictionaryDecryptByKeyId.TryGetValue(capability.Id, out var existing)) {
                                     if (capabilityDecrypt.Issued > existing.Issued) {
                                         DictionaryDecryptByKeyId.Remove(capability.Id);
                                         DictionaryDecryptByKeyId.Add(capability.Id, capabilityDecrypt);
@@ -140,11 +141,10 @@ public class CatalogContact : Catalog<CatalogedContact> {
                                 //DictionaryDecryptByKeyId.Replace(capability.Id, capabilityDecrypt);
                                 break;
                                 }
+                            }
                         }
                     }
                 }
-
-
             }
         }
 

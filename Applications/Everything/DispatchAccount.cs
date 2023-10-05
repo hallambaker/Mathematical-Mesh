@@ -171,25 +171,38 @@ public partial class EverythingMaui {
 
             var shares = ContextUser.Escrow(numberShares, quorum);
 
+            if (shares == null || shares.Length <= 0) {
+                return TaskResult(new SystemExeption() {
+                    });
+                }
 
-
-            //var textShares = new List<string>();
-            //foreach (var share in shares) {
-            //    textShares.Add(share.UDFKey);
-            //    }
-
-            //await Task.Delay(0);
-
-            return Task.FromResult<IResult>(new NotYetImplemented() {
-                });
+            var result = new ReportShares() {
+                Share1 = GetIndexOr(shares,0),
+                Share2 = GetIndexOr(shares, 1),
+                Share3 = GetIndexOr(shares, 2),
+                Share4 = GetIndexOr(shares, 3),
+                Share5 = GetIndexOr(shares, 4),
+                Share6 = GetIndexOr(shares, 5),
+                Share7 = GetIndexOr(shares, 6),
+                Share8 = GetIndexOr(shares, 7)
+                };  
+            return TaskResult(result);
             }
         catch (Exception exception) {
             if (TryProcessException(exception, data, out var result)) {
-                return Task.FromResult<IResult>(result);
+                return TaskResult(result);
                 }
-            return Task.FromResult<IResult>(new ErrorResult(exception));
+            return TaskResult(new ErrorResult(exception));
             }
+
+        string GetIndexOr(KeyShareSymmetric[] array, int index) {
+            var x = GetIndexOrNull(array, index);
+            return x?.UDFKey;
+            }
+
         }
+
+
 
 
 

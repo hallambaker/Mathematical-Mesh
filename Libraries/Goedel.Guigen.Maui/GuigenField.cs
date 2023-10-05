@@ -4,6 +4,9 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Collections.ObjectModel;
 using static System.Net.Mime.MediaTypeNames;
 using System.Collections;
+using Goedel.Utilities;
+using static System.Collections.Specialized.BitVector32;
+using System.Collections.Generic;
 
 namespace Goedel.Guigen.Maui;
 
@@ -52,10 +55,16 @@ public class GuigenFieldSet : IWidget {
                     FieldMap[i++] = field.Index;
                     break;
                     }
-                case GuiChooser chooser: {
-                    var field = new GuigenFieldChooser(chooser);
+                case GuiInteger integer: {
+                    var field = new GuigenFieldInteger(MainWindow, integer, stack);
                     Fields.Add(field);
-                    stack.Add(field.ListView);
+                    FieldMap[i++] = field.Index;
+                    break;
+                    }
+                case GuiChooser chooser: {
+                    var field = new GuigenFieldChooser(MainWindow, chooser, stack);
+                    Fields.Add(field);
+                    //stack.Add(field.ListView);
                     FieldMap[i++] = field.Index;
                     break;
                     }
@@ -146,7 +155,9 @@ public class GuigenFieldString : GuigenField, IWidget {
 
     public override void GetField(IBindable data) {
         var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyString;
-        binding.Set(data, ValueField.Text);
+        if (binding.Set is not null) {
+            binding.Set(data, ValueField.Text);
+            }
         }
 
 
@@ -162,119 +173,134 @@ public class GuigenFieldString : GuigenField, IWidget {
     }
 
 
-
-
-public class GuigenFieldChooser : GuigenField {
-    public IView View => ListView;
-    public GuiChooser Chooser => Field as GuiChooser;
+public class GuigenFieldInteger : GuigenField, IWidget {
+    public IMainWindow MainWindow { get; }
+    public IView View { get; private set; }
 
     public Entry ValueField;
-    public ListView ListView;
+    Label FieldLabel;
+    Label Feedback = new() {
+        IsVisible = false
+        };
 
+    public GuigenFieldInteger(IMainWindow mainWindow, GuiInteger text, Layout stack) : base(text) {
+        MainWindow = mainWindow;
 
-
-
-
-    public GuigenFieldChooser(GuiChooser chooser) : base(chooser) {
-        //List<Person> people = new List<Person> {
-        //        new Person("Abigail", new DateTime(1975, 1, 15)),
-        //        new Person("Bob", new DateTime(1976, 2, 20)),
-        //        // ...etc.,...
-        //        new Person("Yvonne", new DateTime(1987, 1, 10)),
-        //        new Person("Zachary", new DateTime(1988, 2, 5))
-        //    };
-
-
-        ListView = new ListView {
-            ItemTemplate = new BindableTemplate(this)
+        var view = new HorizontalStackLayout();
+        FieldLabel = new Label() {
+            Text = text.Prompt
+            };
+        ValueField = new Entry() {
             };
 
+        view.Add(FieldLabel);
+        view.Add(ValueField);
+        View = view;
 
+        MainWindow.FormatFieldLabel(FieldLabel);
+        MainWindow.FormatFieldEntry(ValueField);
+        MainWindow.FormatFeedback(Feedback);
+
+        stack.Add(View);
+        stack.Add(Feedback);
         }
+
 
 
     public override void SetField(IBindable data) {
-        //ListView.ItemsSource = new string[] { "Alice", "Bob", "Carol", "Doug", "Mallet" };
-        ListView.ItemsSource = data as IEnumerable;
+        var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyInteger;
+        ValueField.Text = binding.Get(data).ToString();
 
-
-
-        var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyChooser;
-        var selector = binding.Get(data);
-        ListView.ItemsSource = selector;
         }
 
     public override void GetField(IBindable data) {
+        var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyInteger;
+        int? fieldValue = Int32.TryParse(ValueField.Text, out var result) ? result : null;
+        binding.Set(data, fieldValue);
         }
 
 
-
-
-
-
-    static object GetCell() {
-
-
-        throw new NotImplementedException();
+    public override void ClearFeedback() {
+        Feedback.IsVisible = false;
         }
+
+    public override void SetFeedback(IndexedMessage message) {
+        Feedback.IsVisible = true;
+        Feedback.Text = message.Text;
+        }
+
     }
 
 
+public class BoundListView : ListView {
 
-public class FieldBinding {
 
-    GuiBinding Binding;
-    Label[] Labels;
+    public object BoundData { get; set; }
 
-    public FieldBinding(MyViewCell cell) {
-        var stack = new HorizontalStackLayout();
-        cell.View = stack;
 
-        var chooser = cell.Chooser.Chooser;
-        foreach (var entry in chooser.Entries) {
-            switch (entry) {
-                case GuiView view: {
-                    Binding ??= view.Binding;
 
-                    break;
-                    }
-                }
-            }
-
-        int i = 0;
-        Labels = new Label[Binding.BoundProperties.Length];
-        foreach (var property in Binding.BoundProperties) {
-            var label = new Label();
-            Labels[i++] = label;
-            stack.Add(label);
-            }
-        }
-
-    public void Bind(object data) {
-        if (data == null) {
-            return;
-            }
-
-        for (var i=0; i< Binding.BoundProperties.Length; i++) {
-            var field = Binding.BoundProperties[i] as GuiBoundPropertyString;
-            var value = field.Get(data);
-
-            Labels[i].Text = value;
-            }
-
-        }
 
 
     }
 
 
+//public class FieldBinding {
+
+//    GuiBinding Binding;
+//    Label[] Labels;
+
+//    public FieldBinding(MyViewCell cell) {
+//        var stack = new HorizontalStackLayout();
+//        cell.View = stack;
+
+//        var chooser = cell.Chooser.Chooser;
+//        foreach (var entry in chooser.Entries) {
+//            switch (entry) {
+//                case GuiView view: {
+//                    Binding ??= view.Binding;
+
+//                    break;
+//                    }
+//                }
+//            }
+
+//        int i = 0;
+//        Labels = new Label[Binding.BoundProperties.Length];
+//        foreach (var property in Binding.BoundProperties) {
+//            var label = new Label();
+//            Labels[i++] = label;
+//            stack.Add(label);
+//            }
+//        }
+
+//    public void Bind(object data) {
+//        if (data == null) {
+//            return;
+//            }
+
+//        for (var i=0; i< Binding.BoundProperties.Length; i++) {
+//            var field = Binding.BoundProperties[i] as GuiBoundPropertyString;
+//            var value = field.Get(data);
+
+//            Labels[i].Text = value;
+//            }
+
+//        }
+
+
+//    }
+
+/// <summary>
+/// <see cref="ViewCell"/> bound to the cell data specified by <see cref="BindingContext"/> described
+/// by the binding data described by <see cref="Chooser"/>.
+/// </summary>
 public class MyViewCell : ViewCell {
 
     public bool Visible { get; set; }
     public GuigenFieldChooser Chooser { get; }
-    ISelectCollection value;
+    ISelectCollection SelectCollection => Chooser.SelectCollection;
 
-    FieldBinding FieldBinding { get; set; }
+    //FieldBinding FieldBinding { get; set; }
 
 
     public MyViewCell(GuigenFieldChooser chooser) { 
@@ -283,6 +309,7 @@ public class MyViewCell : ViewCell {
         PropertyChanged += OnPropertyChanged;
         Appearing += OnAppearing;
         Disappearing += OnDisappearing;
+        //FieldBinding = new FieldBinding(this);
         }
 
 
@@ -296,21 +323,19 @@ public class MyViewCell : ViewCell {
 
     public void OnBindingChanged(object? sender, EventArgs e) {
 
-        value = Chooser.ListView.ItemsSource as ISelectCollection;
-        FieldBinding ??= new FieldBinding(this);
+        //value = Chooser.ListView.ItemsSource as ISelectCollection;
 
-        FieldBinding.Bind(BindingContext);
+
+        //FieldBinding.Bind(BindingContext);
         }
 
 
     public void OnPropertyChanged(object? sender, EventArgs e) {
-        if (BindingContext != null) {
-            }
+        //if (BindingContext != null) {
+        //    FieldBinding.Bind(BindingContext);
+        //    }
 
         }
-
-
-
 
 
     }

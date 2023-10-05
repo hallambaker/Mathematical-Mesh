@@ -144,6 +144,13 @@ public partial class EverythingMaui {
 
         throw new NotImplementedException();
         }
+
+    Task<IResult> TaskResult (IResult result) => Task.FromResult<IResult>(result);
+
+
+    T? GetIndexOrNull<T>(T[] array, int index) =>
+        index < array.Length ? array[index] : default(T);
+
     }
 
 
@@ -195,6 +202,9 @@ public partial class Account {
     }
 
 
+
+
+
 public partial class Messages {
 
     Account Account { get; }
@@ -209,19 +219,6 @@ public partial class Messages {
 
     }
 
-public partial class Contacts {
-
-    Account Account { get; }
-    ContextUser ContextUser => Account.ContextUser;
-
-    public Contacts(Account account) {
-        Account = account;
-        //ChooseSelf = null;
-        //ContactMessage = null;
-        //ChooseOther = null;
-        }
-
-    }
 
 public partial class Documents {
 
@@ -265,7 +262,7 @@ public partial class Credentials {
     public Credentials(Account account) {
         Account = account;
 
-        ChooseCredential = new CatalogSelector(ContextUser.GetStore(CatalogCredential.Label));
+        //ChooseCredential = new CatalogSelector(ContextUser.GetStore(CatalogCredential.Label));
         }
 
     }
@@ -315,7 +312,7 @@ public partial class Devices {
     public Devices(Account account) {
         Account = account;
 
-        ChooseDevice = new CatalogSelector(ContextUser.GetStore(CatalogDevice.Label));
+        //ChooseDevice = new CatalogSelector(ContextUser.GetStore(CatalogDevice.Label));
         }
 
 
