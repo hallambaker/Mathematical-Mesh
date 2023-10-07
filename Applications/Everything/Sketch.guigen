@@ -412,6 +412,7 @@ Dialog ContactPhysicalAddress "Place" "location_pin"
 
 
 
+
 //Binding MessageContactRequest
 //	Text To "To"
 //	Text Comment "Comment"

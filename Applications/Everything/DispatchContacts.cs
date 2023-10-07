@@ -113,9 +113,13 @@ public abstract class Selection<T> : ISelectCollection
     public virtual void Remove(IBindable item) { }
     }
 
-public partial class BoundContactPerson {
+public partial class BoundContactPerson : ISelectSummary {
 
     public override string Display => (First ?? "") + " " + (Last ?? "");
+
+    public string? LabelValue => Display;
+
+    public string? IconValue => "account.png";
 
 
     }
@@ -195,6 +199,9 @@ public partial class ContactSelection : Selection<GuigenCatalogContact>, INotify
             CommonNames = new List<PersonName>() { personName },
             NetworkAddresses = new()
             };
+
+        // should add in a second listbox for additional names.
+
         return result;
         }
 

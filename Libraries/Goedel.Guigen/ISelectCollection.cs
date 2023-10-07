@@ -3,6 +3,16 @@ using System.Collections.ObjectModel;
 
 namespace Goedel.Guigen;
 
+
+public interface ISelectSummary {
+
+    string? LabelValue { get; }
+
+
+    string? IconValue { get;}
+    }
+
+
 public interface ISelectCollection : IEnumerable{
 
     ObservableCollection<object> Entries { get; }

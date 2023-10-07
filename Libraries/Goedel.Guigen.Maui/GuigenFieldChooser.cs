@@ -2,6 +2,8 @@
 
 using Microsoft.Maui.Controls;
 
+using System.Runtime.CompilerServices;
+
 namespace Goedel.Guigen.Maui;
 
 
@@ -10,15 +12,26 @@ namespace Goedel.Guigen.Maui;
 /// </summary>
 /// <param name="Chooser"></param>
 /// <param name="Dialog"></param>
-public record BoundPresentation(
-            GuigenFieldChooser Chooser,
-            GuiDialog Dialog) {
+public record BoundPresentation{
 
-    public StackBase Layout => layout ?? MakeLayout().CacheValue(out layout);
-    StackBase layout;
+    GuigenFieldChooser Chooser;
+    GuiDialog Dialog;
+    public StackBase Layout { get; }
+    //    => layout ?? MakeLayout().CacheValue(out layout);
+    //StackBase layout;
     GuigenFieldSet fieldSet;
 
     IBindable data;
+
+
+    public BoundPresentation(
+            GuigenFieldChooser chooser,
+            GuiDialog dialog) {
+        Chooser = chooser;
+        Dialog = dialog;
+        Layout = MakeLayout(); 
+        }
+
 
     StackBase MakeLayout() {
         var stack = new VerticalStackLayout();
@@ -40,7 +53,6 @@ public record BoundPresentation(
         }
 
     public void Initialize() {
-
         data = Dialog.Factory();
         fieldSet.SetFields(data);
         }
@@ -52,8 +64,8 @@ public record BoundPresentation(
         // need to validate the input fields here and respond accordingly
 
         fieldSet.GetFields(data);
+        Chooser.AddItem(data);
 
-        Chooser.SelectCollection.Add(data);
         data = null; // prevent reuse of this item as it has been incorporated in the list
         }
 
@@ -153,7 +165,13 @@ public class GuigenFieldChooser : GuigenField {
         MainLayout.Add(view);
         }
 
+    public void AddItem(IBindable data) {
 
+        ListView.BeginRefresh();
+        SelectCollection.Add(data);
+        ListView.EndRefresh();
+
+        }
 
 
     public override void SetField(IBindable data) {
@@ -165,8 +183,8 @@ public class GuigenFieldChooser : GuigenField {
             Binding.Set(data, SelectCollection);
             }
 
-        //ListView.ItemsSource = SelectCollection.Entries;
-        ListView.ItemsSource = SelectCollection;
+        ListView.ItemsSource = SelectCollection.Entries;
+        //ListView.ItemsSource = SelectCollection;
 
         //ValueField.Text = binding.Get(data).ToString();
 

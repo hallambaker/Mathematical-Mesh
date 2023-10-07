@@ -30,6 +30,16 @@ public interface IParameter : IBindable {
     public IResult Initialize();
     }
 
+public interface ISelectable : IParameter {
+
+    GuiBinding SelectionBinding { get; } 
+
+    }
+
+
+
+
+
 public enum ReturnResult {
     Completed,
     Initialized,
@@ -37,6 +47,10 @@ public enum ReturnResult {
     Invalid,
     Error
     }
+
+
+
+
 
 public interface IResult : IBindable {
 

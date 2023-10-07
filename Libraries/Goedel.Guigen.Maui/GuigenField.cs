@@ -8,6 +8,9 @@ using Goedel.Utilities;
 using static System.Collections.Specialized.BitVector32;
 using System.Collections.Generic;
 
+
+using Image = Microsoft.Maui.Controls.Image;
+
 namespace Goedel.Guigen.Maui;
 
 public abstract class GuigenField(GuiField field) {
@@ -34,6 +37,7 @@ public class GuigenFieldSet : IWidget {
     public IMainWindow MainWindow { get; }
     public Layout View { get; private set; }
 
+    View? summary = null;
 
     public List<GuigenField> Fields { get; } = new();
 
@@ -244,101 +248,79 @@ public class BoundListView : ListView {
     }
 
 
-//public class FieldBinding {
+public class FieldBinding {
+    MyViewCell Cell;
+    IBindable Data => Cell.Data;
+    GuiBinding Binding => Data?.Binding;
+    Label[] Labels;
 
-//    GuiBinding Binding;
-//    Label[] Labels;
+    public FieldBinding(MyViewCell cell) {
+        Cell = cell;
 
-//    public FieldBinding(MyViewCell cell) {
-//        var stack = new HorizontalStackLayout();
-//        cell.View = stack;
-
-//        var chooser = cell.Chooser.Chooser;
-//        foreach (var entry in chooser.Entries) {
-//            switch (entry) {
-//                case GuiView view: {
-//                    Binding ??= view.Binding;
-
-//                    break;
-//                    }
-//                }
-//            }
-
-//        int i = 0;
-//        Labels = new Label[Binding.BoundProperties.Length];
-//        foreach (var property in Binding.BoundProperties) {
-//            var label = new Label();
-//            Labels[i++] = label;
-//            stack.Add(label);
-//            }
-//        }
-
-//    public void Bind(object data) {
-//        if (data == null) {
-//            return;
-//            }
-
-//        for (var i=0; i< Binding.BoundProperties.Length; i++) {
-//            var field = Binding.BoundProperties[i] as GuiBoundPropertyString;
-//            var value = field.Get(data);
-
-//            Labels[i].Text = value;
-//            }
-
-//        }
+        foreach (var field in Binding.BoundProperties) {
+            }
 
 
-//    }
+        //var stack = new HorizontalStackLayout();
+        //cell.View = stack;
 
-/// <summary>
-/// <see cref="ViewCell"/> bound to the cell data specified by <see cref="BindingContext"/> described
-/// by the binding data described by <see cref="Chooser"/>.
-/// </summary>
-public class MyViewCell : ViewCell {
+        //var chooser = cell.Chooser.Chooser;
+        //foreach (var entry in chooser.Entries) {
+        //    switch (entry) {
+        //        case GuiView view: {
+        //            Binding ??= view.Binding;
 
-    public bool Visible { get; set; }
-    public GuigenFieldChooser Chooser { get; }
-    ISelectCollection SelectCollection => Chooser.SelectCollection;
-
-    //FieldBinding FieldBinding { get; set; }
-
-
-    public MyViewCell(GuigenFieldChooser chooser) { 
-        Chooser = chooser;
-        BindingContextChanged += OnBindingChanged;
-        PropertyChanged += OnPropertyChanged;
-        Appearing += OnAppearing;
-        Disappearing += OnDisappearing;
-        //FieldBinding = new FieldBinding(this);
-        }
-
-
-    public void OnAppearing(object? sender, EventArgs e) {
-        Visible = true;
-        }
-
-    public void OnDisappearing(object? sender, EventArgs e) {
-        Visible = false;
-        }
-
-    public void OnBindingChanged(object? sender, EventArgs e) {
-
-        //value = Chooser.ListView.ItemsSource as ISelectCollection;
-
-
-        //FieldBinding.Bind(BindingContext);
-        }
-
-
-    public void OnPropertyChanged(object? sender, EventArgs e) {
-        //if (BindingContext != null) {
-        //    FieldBinding.Bind(BindingContext);
+        //            break;
+        //            }
+        //        }
         //    }
 
+        //int i = 0;
+        //Labels = new Label[Binding.BoundProperties.Length];
+        //foreach (var property in Binding.BoundProperties) {
+        //    var label = new Label();
+        //    Labels[i++] = label;
+        //    stack.Add(label);
+        //    }
         }
+
+    //public void Bind(object data) {
+    //    if (data == null) {
+    //        return;
+    //        }
+
+    //    for (var i = 0; i < Binding.BoundProperties.Length; i++) {
+    //        var field = Binding.BoundProperties[i] as GuiBoundPropertyString;
+    //        var value = field.Get(data);
+
+    //        Labels[i].Text = value;
+    //        }
+
+    //    }
 
 
     }
+
+
+
+public class SummaryView : HorizontalStackLayout {
+
+    Image Image = new();
+    Label Label = new();
+
+    public SummaryView() {
+        Add(Image);
+        Add(Label);
+        }
+
+    public void Set(ISelectSummary summary) {
+        Image.Source = summary.IconValue;
+        Image.IsVisible = Image.Source is not null;
+        Label.Text = summary.LabelValue;
+        }
+
+    }
+
 
 public class BindableTemplate(GuigenFieldChooser fieldChooser) : DataTemplate( () => new MyViewCell (fieldChooser)) {
     GuigenFieldChooser FieldChooser { get; } = fieldChooser;
