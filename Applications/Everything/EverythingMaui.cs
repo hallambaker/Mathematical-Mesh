@@ -105,14 +105,12 @@ public partial class EverythingMaui {
 
         ContextUser = contextUser;
 
-
         var accounts = new Account(contextUser);
-
         SectionAccount.Data = accounts;
 
 
         SectionMessages.BindData = () => accounts.Messages;
-        SectionContacts.BindData = () => accounts.Contacts;
+        SectionContactsSection.BindData = () => accounts.Contacts;
         SectionDocuments.BindData = () => accounts.Documents;
         SectionGroups.BindData = () => accounts.Groups;
         SectionFeeds.BindData = () => accounts.Feeds;
@@ -164,8 +162,8 @@ public partial class Account {
     public Messages Messages => messages ?? new Messages(this).CacheValue(out messages);
     Messages messages;
 
-    public Contacts Contacts => contacts ?? new Contacts(this).CacheValue(out contacts);
-    Contacts contacts;
+    public ContactsSection Contacts => contacts ?? new ContactsSection(this).CacheValue(out contacts);
+    ContactsSection contacts;
     public Documents Documents => documents ?? new Documents(this).CacheValue(out documents);
     Documents documents;
     public Groups Groups => groups ?? new Groups(this).CacheValue(out groups);
@@ -256,28 +254,28 @@ public partial class Feeds {
 
     }
 
-public partial class Credentials {
-    Account Account { get; }
-    ContextUser ContextUser => Account.ContextUser;
-    public Credentials(Account account) {
-        Account = account;
+//public partial class Credentials {
+//    Account Account { get; }
+//    ContextUser ContextUser => Account.ContextUser;
+//    public Credentials(Account account) {
+//        Account = account;
 
-        //ChooseCredential = new CatalogSelector(ContextUser.GetStore(CatalogCredential.Label));
-        }
+//        //ChooseCredential = new CatalogSelector(ContextUser.GetStore(CatalogCredential.Label));
+//        }
 
-    }
+//    }
 
-public partial class Tasks {
+//public partial class Tasks {
 
-    Account Account { get; }
-    ContextUser ContextUser => Account.ContextUser;
+//    Account Account { get; }
+//    ContextUser ContextUser => Account.ContextUser;
 
-    public Tasks(Account account) {
-        Account = account;
-        ChooseTask = null;
-        }
+//    public Tasks(Account account) {
+//        Account = account;
+//        ChooseTask = null;
+//        }
 
-    }
+//    }
 
 public partial class Calendar {
 
@@ -291,34 +289,34 @@ public partial class Calendar {
 
     }
 
-public partial class Applications {
+//public partial class Applications {
 
-    Account Account { get; }
-    ContextUser ContextUser => Account.ContextUser;
+//    Account Account { get; }
+//    ContextUser ContextUser => Account.ContextUser;
 
-    public Applications(Account account) {
-        Account = account;
+//    public Applications(Account account) {
+//        Account = account;
 
-        ChooseApplication = null;
-        }
+//        ChooseApplication = null;
+//        }
 
-    }
+//    }
 
-public partial class Devices {
+//public partial class Devices {
 
-    Account Account { get; }
-    ContextUser ContextUser => Account.ContextUser;
+//    Account Account { get; }
+//    ContextUser ContextUser => Account.ContextUser;
 
-    public Devices(Account account) {
-        Account = account;
+//    public Devices(Account account) {
+//        Account = account;
 
-        //ChooseDevice = new CatalogSelector(ContextUser.GetStore(CatalogDevice.Label));
-        }
-
-
+//        //ChooseDevice = new CatalogSelector(ContextUser.GetStore(CatalogDevice.Label));
+//        }
 
 
-    }
+
+
+//    }
 
 public partial class Services {
 

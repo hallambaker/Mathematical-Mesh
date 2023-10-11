@@ -34,8 +34,8 @@ public class MyViewCell : ViewCell {
         };
 
     Image EntryImage = new Image() { 
-        HeightRequest = 60,
-        WidthRequest = 60};
+        HeightRequest = 30,
+        WidthRequest = 30};
     Label MainLabel = new Label();
     Label SecondaryLabel = new Label();
 
@@ -48,7 +48,7 @@ public class MyViewCell : ViewCell {
         View = Grid;
 
         Grid.Add(EntryImage);
-        Grid.SetColumnSpan((IView)EntryImage, 2);
+        Grid.SetRowSpan((IView)EntryImage, 2);
         Grid.Add(MainLabel);
         Grid.SetColumn((IView)MainLabel, 1);
         Grid.Add(SecondaryLabel);
@@ -56,6 +56,8 @@ public class MyViewCell : ViewCell {
         Grid.SetRow((IView)SecondaryLabel, 1);
         //FieldBinding = new FieldBinding(this);
         }
+
+
 
 
     public void OnAppearing(object? sender, EventArgs e) {
@@ -71,6 +73,7 @@ public class MyViewCell : ViewCell {
         if (BindingContext is ISelectSummary summary) {
             EntryImage.Source = summary.IconValue;
             MainLabel.Text = summary.LabelValue;
+            SecondaryLabel.Text = "Bong";
             }
         }
 

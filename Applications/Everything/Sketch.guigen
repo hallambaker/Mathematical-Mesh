@@ -40,7 +40,7 @@ Section Messages "Messages" "messages"
 		Filter DeviceRequest		"Device Request"
 		Filter Inbox "Inbox"
 
-Section Contacts "Contacts" "contacts"
+Section ContactsSection "Contacts" "contacts"
 	Primary
 	Button RequestContact
 	Chooser ChooseContact "Contacts" "contact_other" 
@@ -363,6 +363,42 @@ Action AddCodeSigningKey "Add Code Signing Key" "signature"
 	Description
 		|
 
+Dialog BoundAccount "Account" "contacts"
+	Text Display "Display name"
+
+
+Dialog BoundMessage "Message" "contacts"
+	Text Display "Display name"
+
+Dialog BoundDocument "Message" "contacts"
+	Text Display "Display name"
+
+Dialog BoundGroup "Message" "contacts"
+	Text Display "Display name"
+
+Dialog BoundFeed "Message" "contacts"
+	Text Display "Display name"
+
+Dialog BoundPassword "Message" "contacts"
+	Text Display "Display name"
+
+Dialog BoundCredential "Message" "contacts"
+	Text Display "Display name"
+
+Dialog BoundTask "Message" "contacts"
+	Text Display "Display name"
+
+Dialog BoundAppointment "Message" "contacts"
+	Text Display "Display name"
+
+Dialog BoundBookmark "Message" "contacts"
+	Text Display "Display name"
+
+Dialog BoundApplication "Message" "contacts"
+	Text Display "Display name"
+
+Dialog BoundDevice "Message" "contacts"
+	Text Display "Display name"
 
 Dialog AccountUser "Account" "user"
 	Text Udf "Fingerprint"
@@ -392,6 +428,12 @@ Dialog BoundContactPerson "Person" "contacts"
 		View ContactNetworkAddress
 	Chooser PhysicalAddress "Locations" "location" 
 		View ContactPhysicalAddress
+
+Dialog BoundContactBusiness "Organization" "contacts"
+	Text Display "Display name"
+
+Dialog BoundContactPlace "Place" "contacts"
+	Text Display "Display name"
 
 
 Dialog ContactNetworkAddress "Network" "protocol_icon"

@@ -144,6 +144,7 @@ public class GuigenFieldChooser : GuigenField {
         ListView = new ListView {
             ItemTemplate = new BindableTemplate(this)
             };
+        ListView.ItemSelected += OnClickSelect;
         stack.Add(CommandButtons);
 
         MainLayout = new();
@@ -184,16 +185,6 @@ public class GuigenFieldChooser : GuigenField {
             }
 
         ListView.ItemsSource = SelectCollection.Entries;
-        //ListView.ItemsSource = SelectCollection;
-
-        //ValueField.Text = binding.Get(data).ToString();
-
-        //ListView.ItemsSource = new string[] { "Alice", "Bob", "Carol", "Doug", "Mallet" };
-        //ListView.ItemsSource = data as IEnumerable;
-
-        //var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyChooser;
-        //var selector = binding.Get(data);
-        //ListView.ItemsSource = selector;
         }
 
 
@@ -212,13 +203,15 @@ public class GuigenFieldChooser : GuigenField {
         }
 
 
-
-
-
     public void OnClickFilter(object sender, EventArgs e) { 
         }
 
     public void OnClickSelect(object sender, EventArgs e) {
+
+        // Here we want to create a view dialog below the list box.
+        // Buttons are Update / Delete
+
+
         }
 
     public void OnClickDelete(object sender, EventArgs e) {
@@ -227,23 +220,5 @@ public class GuigenFieldChooser : GuigenField {
     public void OnClickUpdate(object sender, EventArgs e) {
         }
     }
-
-
-
-
-
-//class Person {
-//    public Person(string name, DateTime birthday) {
-//        this.Name = name;
-//        this.Birthday = birthday;
-//        this.FavoriteColor = Color.FromArgb("00f00f");
-//        }
-
-//    public string Name { private set; get; }
-
-//    public DateTime Birthday { private set; get; }
-
-//    public Color FavoriteColor { private set; get; }
-//    };
 
 

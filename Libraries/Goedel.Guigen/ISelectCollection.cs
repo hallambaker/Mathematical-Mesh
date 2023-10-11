@@ -4,6 +4,12 @@ using System.Collections.ObjectModel;
 namespace Goedel.Guigen;
 
 
+public interface IBoundPresentation : IBindable{
+
+    object Bound { get; set; }
+    
+    }
+
 public interface ISelectSummary {
 
     string? LabelValue { get; }
@@ -15,7 +21,7 @@ public interface ISelectSummary {
 
 public interface ISelectCollection : IEnumerable{
 
-    ObservableCollection<object> Entries { get; }
+    ObservableCollection<IBindable> Entries { get; }
 
 
 
@@ -30,7 +36,7 @@ public interface ISelectCollection : IEnumerable{
 
 
 public class SelectList : ISelectCollection {
-    public ObservableCollection<object> Entries { get; } = new();
+    public ObservableCollection<IBindable> Entries { get; } = new();
 
     public void Add(IBindable item) => Entries.Add(item);
 

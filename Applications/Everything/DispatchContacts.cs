@@ -7,7 +7,48 @@ using Contact = Goedel.Mesh.Contact;
 
 namespace Goedel.Everything;
 
+#region // Bindings to classes specified through the Guigen schema.
 
+public partial class ContactsSection {
+
+    Account Account { get; }
+    ContextUser ContextUser => Account.ContextUser;
+
+    /// <summary>
+    /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
+    /// </summary>
+    /// <param name="account">The account whose contacts are to be used.</param>
+    public ContactsSection(Account account) {
+        Account = account;
+        ContextUser.DictionaryCatalogDelegates.Replace(CatalogContact.Label, GuigenCatalogContact.Factory);
+        var catalog = ContextUser.GetStore(CatalogContact.Label, create: false) as GuigenCatalogContact;
+        ChooseContact = new ContactSelection(catalog);
+        }
+
+    }
+
+public partial class BoundContactPerson : ISelectSummary, IBoundPresentation {
+
+    public object Bound { get; set; }
+
+    public CatalogedEntry CatalogedEntry {get; set; }
+
+    public override string Display => (First ?? "") + " " + (Last ?? "");
+
+    public string? LabelValue => Display;
+
+    public string? IconValue => "account.png";
+
+
+    }
+
+#endregion
+#region // Binding to classes specified in the Mesh schema
+
+/// <summary>
+/// Extends <see cref="CatalogContact"/> to override the <see cref="Intern"/> method
+/// so as to allow the bound selection boxes to be updated.
+/// </summary>
 public class GuigenCatalogContact : CatalogContact {
 
     /// <summary>
@@ -64,119 +105,33 @@ public class GuigenCatalogContact : CatalogContact {
                     decrypt: decrypt, create: create, bitmask: bitmask) {
         }
 
-    }
-
-
-public partial class Contacts {
-
-    Account Account { get; }
-    ContextUser ContextUser => Account.ContextUser;
-
-
-
-    public Contacts(Account account) {
-        Account = account;
-
-        ContextUser.DictionaryCatalogDelegates.Replace(CatalogContact.Label, GuigenCatalogContact.Factory);
-
-
-        var catalog = ContextUser.GetStore(CatalogContact.Label, create:false) as GuigenCatalogContact;
-        ChooseContact = new ContactSelection(catalog);
-
-        //ChooseSelf = null;
-        //ContactMessage = null;
-        //ChooseOther = null;
+    public override void Intern(SequenceIndexEntry indexEntry) {
+        base.Intern(indexEntry);
         }
 
-    }
-
-
-public abstract class Selection<T> : ISelectCollection 
-                    where T : Store{
-
-    public T Store { get; }
-
-    public ObservableCollection<object> Entries { get; } = new();
-
-
-    public Selection(T store) {
-        Store = store;
-        }
-
-
-    public abstract IEnumerator GetEnumerator();
-
-
-    public virtual void Add(IBindable item) { 
-        }
-
-    public virtual void Remove(IBindable item) { }
-    }
-
-public partial class BoundContactPerson : ISelectSummary {
-
-    public override string Display => (First ?? "") + " " + (Last ?? "");
-
-    public string? LabelValue => Display;
-
-    public string? IconValue => "account.png";
 
 
     }
 
 
-public partial class ContactSelection : Selection<GuigenCatalogContact>, INotifyCollectionChanged {
-
-    GuigenCatalogContact CatalogContact => Store;
+#endregion
 
 
+#region // Selection Catalog backing type.
 
-    ///<summary>Specify the entry dialog</summary> 
-    //public GuiBinding EntryDialog => _BoundContactPerson.BaseBinding;
+public partial class ContactSelection : SelectionCatalog<GuigenCatalogContact,
+            CatalogedContact, BoundContactPerson> {
 
-    public event NotifyCollectionChangedEventHandler CollectionChanged;
-
-    ///<summary>Factory method</summary> 
-    //public IBindable Factory() => new BindingBoundContactPerson();
-
-    ///<summary>Type check</summary> 
-    public bool IsType (object data) => data is CatalogedContact;
-
-    ///<summary>Convert the Gui contact form to a cataloged contact</summary> 
-    public CatalogedContact ConvertFromDialog (IBindable contact) => throw new NYI();
-
-    ///<summary>Convert the Gui contact form to a cataloged contact</summary> 
-    public IBindable ConvertToDialog(CatalogedContact cataloged) => throw new NYI();
-
-    ///<summary>Return an enumerator</summary>
-    ///<param name="filter">Optional filter.</param>
-    public IEnumerator GetEnumerator(string filter = null) => Entries.GetEnumerator();
-
-
-
-
-    public ContactSelection(GuigenCatalogContact contacts) : base (contacts){
-
+    /// <summary>
+    /// Constructor returning an instance of the selection data backer bound to the 
+    /// catalog <paramref name="catalog"/>.
+    /// </summary>
+    /// <param name="catalog"></param>
+    public ContactSelection(GuigenCatalogContact catalog) : base(catalog) {
         }
 
-
-    CatalogedContact Make(string name) => new CatalogedContact {
-        Contact = new Goedel.Mesh.ContactPerson() {
-            Local = name
-            }
-        };
-
-
-    public override void Add(IBindable item) {
-
-        var contact = Convert(item);
-        CatalogContact.Add(contact);
-
-        Entries.Add(item);
-
-        }
-
-    public Contact Convert(IBindable contact) {
+    #region // Conversion overrides
+    public override CatalogedContact ConvertFromBindable(IBindable contact) {
         switch (contact) {
             case BoundContactPerson boundContactPerson:
             return Convert(boundContactPerson);
@@ -184,7 +139,7 @@ public partial class ContactSelection : Selection<GuigenCatalogContact>, INotify
         return null;
         }
 
-    public Contact Convert(BoundContactPerson input) {
+    public CatalogedContact Convert(BoundContactPerson input) {
 
         var personName = new PersonName() {
             FullName = input.Display,
@@ -195,42 +150,46 @@ public partial class ContactSelection : Selection<GuigenCatalogContact>, INotify
             };
 
 
-        var result = new ContactPerson() {
+        var contact = new ContactPerson() {
             CommonNames = new List<PersonName>() { personName },
             NetworkAddresses = new()
             };
 
         // should add in a second listbox for additional names.
 
+        var result = new CatalogedContact(contact, false);
+
         return result;
         }
 
+    public override BoundContactPerson ConvertToBindable(CatalogedContact input) {
+        var result = new BoundContactPerson() {
+            First = "Existing",
+            Last = "Item"
+            };
 
-    public override IEnumerator GetEnumerator() => Entries.GetEnumerator();
+        return result;
+        } 
+    #endregion
+
+    //public override BoundContactBusiness ConvertToBindable(CatalogedContact input) {
+    //    var result = new BoundContactBusiness() {
+    //        Display = "Existing"
+    //        };
+
+    //    return result;
+    //    }
+
+    //public override BoundContactPlace ConvertToBindable(CatalogedContact input) {
+    //    var result = new BoundContactPlace() {
+    //        Display = "Existing"
+    //        };
+
+    //    return result;
+    //    }
+
+
     }
 
 
-public abstract class BoundEntry<T> {
-
-    public T Value { get; }
-
-
-    public GuiBinding SummaryBinding { get; }
-
-
-    }
-
-public class BoundContact {
-
-    public CatalogedContact CatalogedContact;
-
-    public Mesh.Contact? Contact => CatalogedContact?.Contact;
-    public string? FullName { get; set; }
-
-    public BoundContact(CatalogedContact catalogedContact) {
-        CatalogedContact = catalogedContact;
-        FullName = Contact?.Local;
-
-
-        }
-    }
+#endregion
