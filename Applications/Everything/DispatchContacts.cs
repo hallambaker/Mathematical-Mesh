@@ -9,20 +9,19 @@ namespace Goedel.Everything;
 
 #region // Bindings to classes specified through the Guigen schema.
 
-public partial class ContactsSection {
+public partial class ContactSection {
 
-    Account Account { get; }
+    AccountSection Account { get; }
     ContextUser ContextUser => Account.ContextUser;
 
     /// <summary>
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public ContactsSection(Account account) {
+    public ContactSection(AccountSection account) {
         Account = account;
-        ContextUser.DictionaryCatalogDelegates.Replace(CatalogContact.Label, GuigenCatalogContact.Factory);
         var catalog = ContextUser.GetStore(CatalogContact.Label, create: false) as GuigenCatalogContact;
-        ChooseContact = new ContactSelection(catalog);
+        ChooseContact = catalog is null ? null : new ContactSelection(catalog);
         }
 
     }

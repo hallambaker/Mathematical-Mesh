@@ -896,6 +896,7 @@
 			Description
 				|Means of authenticating the host key
 
+
 	Structure CatalogedApplicationSsh
 		Inherits CatalogedApplication
 

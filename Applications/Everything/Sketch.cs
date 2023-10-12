@@ -33,7 +33,7 @@ namespace Goedel.Everything;
 /// <summary>
 /// Callback parameters for section Account 
 /// </summary>
-public partial class Account : _Account {
+public partial class AccountSection : _Account {
     }
 
 /// <summary>
@@ -68,7 +68,7 @@ public partial class _Account : IBindable {
 /// <summary>
 /// Callback parameters for section Messages 
 /// </summary>
-public partial class Messages : _Messages {
+public partial class MessageSection : _Messages {
     }
 
 /// <summary>
@@ -95,7 +95,7 @@ public partial class _Messages : IBindable {
 /// <summary>
 /// Callback parameters for section ContactsSection 
 /// </summary>
-public partial class ContactsSection : _ContactsSection {
+public partial class ContactSection : _ContactsSection {
     }
 
 /// <summary>
@@ -122,7 +122,7 @@ public partial class _ContactsSection : IBindable {
 /// <summary>
 /// Callback parameters for section Documents 
 /// </summary>
-public partial class Documents : _Documents {
+public partial class DocumentSection : _Documents {
     }
 
 /// <summary>
@@ -149,7 +149,7 @@ public partial class _Documents : IBindable {
 /// <summary>
 /// Callback parameters for section Groups 
 /// </summary>
-public partial class Groups : _Groups {
+public partial class GroupSection : _Groups {
     }
 
 /// <summary>
@@ -176,7 +176,7 @@ public partial class _Groups : IBindable {
 /// <summary>
 /// Callback parameters for section Feeds 
 /// </summary>
-public partial class Feeds : _Feeds {
+public partial class FeedSection : _Feeds {
     }
 
 /// <summary>
@@ -203,7 +203,7 @@ public partial class _Feeds : IBindable {
 /// <summary>
 /// Callback parameters for section Credentials 
 /// </summary>
-public partial class Credentials : _Credentials {
+public partial class CredentialSection : _Credentials {
     }
 
 /// <summary>
@@ -230,7 +230,7 @@ public partial class _Credentials : IBindable {
 /// <summary>
 /// Callback parameters for section Tasks 
 /// </summary>
-public partial class Tasks : _Tasks {
+public partial class TaskSection : _Tasks {
     }
 
 /// <summary>
@@ -257,7 +257,7 @@ public partial class _Tasks : IBindable {
 /// <summary>
 /// Callback parameters for section Calendar 
 /// </summary>
-public partial class Calendar : _Calendar {
+public partial class CalendarSection : _Calendar {
     }
 
 /// <summary>
@@ -284,7 +284,7 @@ public partial class _Calendar : IBindable {
 /// <summary>
 /// Callback parameters for section Bookmark 
 /// </summary>
-public partial class Bookmark : _Bookmark {
+public partial class BookmarkSection : _Bookmark {
     }
 
 /// <summary>
@@ -311,7 +311,7 @@ public partial class _Bookmark : IBindable {
 /// <summary>
 /// Callback parameters for section Applications 
 /// </summary>
-public partial class Applications : _Applications {
+public partial class ApplicationSection : _Applications {
     }
 
 /// <summary>
@@ -338,7 +338,7 @@ public partial class _Applications : IBindable {
 /// <summary>
 /// Callback parameters for section Devices 
 /// </summary>
-public partial class Devices : _Devices {
+public partial class DeviceSection : _Devices {
     }
 
 /// <summary>
@@ -365,7 +365,7 @@ public partial class _Devices : IBindable {
 /// <summary>
 /// Callback parameters for section Services 
 /// </summary>
-public partial class Services : _Services {
+public partial class ServiceSection : _Services {
     }
 
 /// <summary>

@@ -3890,6 +3890,153 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="T:Goedel.Mesh.CatalogDocument">
+            <summary>
+            Device catalog. Describes the properties of all devices connected to the user's Mesh account.
+            </summary>
+            <remarks>
+            <para>
+            </para>
+            This code is designed to support single files without considering versions. Of course all files
+            should be versioned and the system should track relations between versions, when documents were
+            split, merged, etc.
+            <para>Ideally, a diff/patch/merge engine would be built into the system. Currently, the
+            Myers algorithm https://neil.fraser.name/writing/diff/myers.pdf seems to be best
+            regarded. However, this may matter a lot less these days as compressing </para>
+            </remarks>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogDocument.Label">
+            <summary>The canonical label for the catalog</summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogDocument.StoreType">
+            <inheritdocs/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogDocument.SequenceDefault">
+            <summary>The catalog label</summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogDocument.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
+            <summary>
+            Factory delegate
+            </summary>
+            <param name="directory">Directory of store file on local machine.</param>
+            <param name="storeId">Store identifier.</param>
+            <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+            <param name="policy">The cryptographic policy to be applied to the catalog.</param>
+            <param name="keyCollection">Key collection to be used to resolve keys</param>
+            <param name="decrypt">If true, attempt decryption of payload contents./</param>
+            <param name="create">If true, create a new file if none exists.</param>
+            <param name="meshClient">Means of obtaining a Mesh Client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+            <returns>The instance created.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogDocument.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
+            <summary>
+            Constructor for a catalog named <paramref name="storeName"/> in directory
+            <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
+            and key collection <paramref name="keyCollection"/>.
+            </summary>
+            <param name="create">Create a new persistence store on disk if it does not already exist.</param>
+            <param name="decrypt">Attempt to decrypt the contents of the catalog if encrypted.</param>
+            <param name="directory">The directory in which the catalog persistence container is stored.</param>
+            <param name="storeName">The catalog persistence container file name.</param>
+            <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
+            <param name="policy">The cryptographic policy to be applied to the container.</param>
+            <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+        </member>
+        <member name="T:Goedel.Mesh.CatalogedDocument">
+             <summary>
+            
+             A document stored on a service somewhere.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument._PrimaryKey">
+            <summary>The primary key is protocol:site </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedDocument.Describe(System.Text.StringBuilder,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedDocument.ItemToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument.Udf">
+             <summary>
+            Document fingerprint.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument.URI">
+             <summary>
+            Locator to be used to retrieve the data.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument.ContentType">
+             <summary>
+            IANA content type of the encoded content.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument.Encoding">
+             <summary>
+            Content encoding, typically DARE envelope.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument.Created">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument.Updated">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument.Length">
+             <summary>
+            Encoded document length in bytes.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedDocument._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedDocument._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedDocument._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedDocument.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedDocument._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedDocument.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
         <member name="T:Goedel.Mesh.CatalogedEntryFormat">
             <summary>
             Enumeration of file formats recognized by the Mesh support library.
@@ -5084,6 +5231,9 @@
         </member>
         <member name="F:Goedel.Mesh.MeshConstants.StoreTypeAccountTag">
             <summary>Jose enumeration tag for StoreType.Account</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.StoreTypeDocumentTag">
+            <summary>Jose enumeration tag for StoreType.Document</summary>
         </member>
         <member name="M:Goedel.Mesh.MeshConstants.ToStoreType(System.String)">
             <summary>
@@ -7038,6 +7188,9 @@
         </member>
         <member name="F:Goedel.Mesh.StoreType.Account">
             <summary>Account Catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StoreType.Document">
+            <summary>Document Catalog</summary>
         </member>
         <member name="T:Goedel.Mesh.StateSpoolMessage">
             <summary>Inbound spool message state</summary>
@@ -14959,90 +15112,6 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Mesh.Engagement.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="T:Goedel.Mesh.CatalogedDocument">
-             <summary>
-            
-             A document stored on a service somewhere.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedDocument.Udf">
-             <summary>
-            Document fingerprint.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedDocument.URI">
-             <summary>
-            Locator to be used to retrieve the data.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedDocument.ContentType">
-             <summary>
-            IANA content type of the encoded content.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedDocument.Encoding">
-             <summary>
-            Content encoding, typically DARE envelope.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedDocument.Created">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedDocument.Updated">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedDocument.Length">
-             <summary>
-            Encoded document length in bytes.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedDocument._Binding">
-            <summary>Implement IBinding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.CatalogedDocument._binding">
-            <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.CatalogedDocument._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.CatalogedDocument._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedDocument._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedDocument._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedDocument._ParentProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedDocument._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.CatalogedDocument.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedDocument._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedDocument.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>

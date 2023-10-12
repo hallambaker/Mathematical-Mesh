@@ -4,20 +4,19 @@ namespace Goedel.Everything;
 #region // Bindings to classes specified through the Guigen schema.
 
 // Documented in Guigen output
-public partial class Tasks {
+public partial class TaskSection {
 
-    Account Account { get; }
+    AccountSection Account { get; }
     ContextUser ContextUser => Account.ContextUser;
 
     /// <summary>
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public Tasks(Account account) {
+    public TaskSection(AccountSection account) {
         Account = account;
-        ContextUser.DictionaryCatalogDelegates.Replace(CatalogApplication.Label, GuigenCatalogApplication.Factory);
-        var catalog = ContextUser.GetStore(CatalogApplication.Label, create: false) as GuigenCatalogTasks;
-        ChooseTask = new TaskSelection(catalog);
+        var catalog = ContextUser.GetStore(CatalogTask.Label, create: false) as GuigenCatalogTasks;
+        ChooseTask = catalog is null ? null : new TaskSelection(catalog);
         }
 
     }

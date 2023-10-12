@@ -105,11 +105,11 @@ public partial class EverythingMaui {
 
         ContextUser = contextUser;
 
-        var accounts = new Account(contextUser);
+        var accounts = new AccountSection(contextUser);
         SectionAccount.Data = accounts;
 
 
-        SectionMessages.BindData = () => accounts.Messages;
+        SectionMessages.BindData = () => accounts.MessageSection;
         SectionContactsSection.BindData = () => accounts.Contacts;
         SectionDocuments.BindData = () => accounts.Documents;
         SectionGroups.BindData = () => accounts.Groups;
@@ -155,36 +155,56 @@ public partial class EverythingMaui {
 
 
 
-public partial class Account {
+public partial class AccountSection {
     public ContextUser ContextUser { get; }
 
+    ///<summary>The messages section context.</summary> 
+    public MessageSection MessageSection => messages ?? new MessageSection(this).CacheValue(out messages);
+    MessageSection messages;
 
-    public Messages Messages => messages ?? new Messages(this).CacheValue(out messages);
-    Messages messages;
+    ///<summary>The contacts section context.</summary> 
+    public ContactSection Contacts => contacts ?? new ContactSection(this).CacheValue(out contacts);
+    ContactSection contacts;
 
-    public ContactsSection Contacts => contacts ?? new ContactsSection(this).CacheValue(out contacts);
-    ContactsSection contacts;
-    public Documents Documents => documents ?? new Documents(this).CacheValue(out documents);
-    Documents documents;
-    public Groups Groups => groups ?? new Groups(this).CacheValue(out groups);
-    Groups groups;
-    public Feeds Feeds => feeds ?? new Feeds(this).CacheValue(out feeds);
-    Feeds feeds;
-    public Credentials Credentials => credentials ?? new Credentials(this).CacheValue(out credentials);
-    Credentials credentials;
-    public Tasks Tasks => tasks ?? new Tasks(this).CacheValue(out tasks);
-    Tasks tasks;
-    public Calendar Calendar => calendar ?? new Calendar(this).CacheValue(out calendar);
-    Calendar calendar;
-    public Applications Applications => applications ?? new Applications(this).CacheValue(out applications);
-    Applications applications;
-    public Devices Devices => devices ?? new Devices(this).CacheValue(out devices);
-    Devices devices;
-    public Services Services => services ?? new Services(this).CacheValue(out services);
-    Services services;
+    ///<summary>The documents section context.</summary> 
+    public DocumentSection Documents => documents ?? new DocumentSection(this).CacheValue(out documents);
+    DocumentSection documents;
 
+    ///<summary>The feeds section context.</summary> 
+    public FeedSection Feeds => feeds ?? new FeedSection(this).CacheValue(out feeds);
+    FeedSection feeds;
 
+    ///<summary>The groups section context.</summary> 
+    public GroupSection Groups => groups ?? new GroupSection(this).CacheValue(out groups);
+    GroupSection groups;
 
+    ///<summary>The credentials section context.</summary> 
+    public CredentialSection Credentials => credentials ?? new CredentialSection(this).CacheValue(out credentials);
+    CredentialSection credentials;
+
+    ///<summary>The tasks section context.</summary> 
+    public TaskSection Tasks => tasks ?? new TaskSection(this).CacheValue(out tasks);
+    TaskSection tasks;
+
+    ///<summary>The calendar section context.</summary> 
+    public CalendarSection Calendar => calendar ?? new CalendarSection(this).CacheValue(out calendar);
+    CalendarSection calendar;
+
+    ///<summary>The applications section context.</summary> 
+    public BookmarkSection Bookmarks => bookmark ?? new BookmarkSection(this).CacheValue(out bookmark);
+    BookmarkSection bookmark;
+
+    ///<summary>The applications section context.</summary> 
+    public ApplicationSection Applications => applications ?? new ApplicationSection(this).CacheValue(out applications);
+    ApplicationSection applications;
+
+    ///<summary>The devices section context.</summary> 
+    public DeviceSection Devices => devices ?? new DeviceSection(this).CacheValue(out devices);
+    DeviceSection devices;
+
+    ///<summary>The services section context.</summary> 
+    public ServiceSection Services => services ?? new ServiceSection(this).CacheValue(out services);
+    ServiceSection services;
 
 
     public override string ServiceAddress => ContextUser?.ServiceAddress;
@@ -194,8 +214,21 @@ public partial class Account {
     public override string LocalAddress => ContextUser?.CatalogedMachine.Local;
 
 
-    public Account(ContextUser contextUser) {
+    public AccountSection(ContextUser contextUser) {
         ContextUser = contextUser;
+
+        ContextUser.DictionaryCatalogDelegates.Replace(CatalogContact.Label, GuigenCatalogContact.Factory);
+        ContextUser.DictionaryCatalogDelegates.Replace(CatalogDocument.Label, GuigenCatalogApplication.Factory);
+        // Feeds is a subset of Bookmarks
+        // Groups is a subset of Application
+        ContextUser.DictionaryCatalogDelegates.Replace(CatalogCredential.Label, GuigenCatalogCredential.Factory);
+        ContextUser.DictionaryCatalogDelegates.Replace(CatalogTask.Label, GuigenCatalogTasks.Factory);
+        // Calendar is just a different presentation for tasks
+        ContextUser.DictionaryCatalogDelegates.Replace(CatalogBookmark.Label, GuigenCatalogBookmark.Factory);
+        ContextUser.DictionaryCatalogDelegates.Replace(CatalogApplication.Label, GuigenCatalogApplication.Factory);
+        ContextUser.DictionaryCatalogDelegates.Replace(CatalogDevice.Label, GuigenCatalogDevice.Factory);
+        // Services is a subset of Application
+
         }
     }
 
@@ -203,132 +236,8 @@ public partial class Account {
 
 
 
-public partial class Messages {
-
-    Account Account { get; }
-    ContextUser ContextUser => Account.ContextUser;
-
-    public Messages(Account account) {
-        Account = account;
-        //UrgentMessage = null;
-        //ContactRequests = null;
-        //OtherMessage = null;
-        }
-
-    }
 
 
-public partial class Documents {
-
-    Account Account { get; }
-    ContextUser ContextUser => Account.ContextUser;
-
-    public Documents(Account account) {
-        Account = account;
-        ChooseDocuments = null;
-        }
-
-    }
-
-public partial class Groups {
-
-    Account Account { get; }
-    ContextUser ContextUser => Account.ContextUser;
-
-    public Groups(Account account) {
-        Account = account;
-        ChooseGroup = null;
-        }
-
-    }
-
-public partial class Feeds {
-
-    Account Account { get; }
-    ContextUser ContextUser => Account.ContextUser;
-
-    public Feeds(Account account) {
-        Account = account;
-        ChooseFeed = null;
-        }
-
-    }
-
-//public partial class Credentials {
-//    Account Account { get; }
-//    ContextUser ContextUser => Account.ContextUser;
-//    public Credentials(Account account) {
-//        Account = account;
-
-//        //ChooseCredential = new CatalogSelector(ContextUser.GetStore(CatalogCredential.Label));
-//        }
-
-//    }
-
-//public partial class Tasks {
-
-//    Account Account { get; }
-//    ContextUser ContextUser => Account.ContextUser;
-
-//    public Tasks(Account account) {
-//        Account = account;
-//        ChooseTask = null;
-//        }
-
-//    }
-
-public partial class Calendar {
-
-    Account Account { get; }
-    ContextUser ContextUser => Account.ContextUser;
-
-    public Calendar(Account account) {
-        Account = account;
-        ChooseAppointment = null;
-        }
-
-    }
-
-//public partial class Applications {
-
-//    Account Account { get; }
-//    ContextUser ContextUser => Account.ContextUser;
-
-//    public Applications(Account account) {
-//        Account = account;
-
-//        ChooseApplication = null;
-//        }
-
-//    }
-
-//public partial class Devices {
-
-//    Account Account { get; }
-//    ContextUser ContextUser => Account.ContextUser;
-
-//    public Devices(Account account) {
-//        Account = account;
-
-//        //ChooseDevice = new CatalogSelector(ContextUser.GetStore(CatalogDevice.Label));
-//        }
-
-
-
-
-//    }
-
-public partial class Services {
-
-    Account Account { get; }
-    ContextUser ContextUser => Account.ContextUser;
-
-    public Services(Account account) {
-        Account = account;
-        ChooseService = null;
-        }
-
-    }
 
 public partial class Settings {
 

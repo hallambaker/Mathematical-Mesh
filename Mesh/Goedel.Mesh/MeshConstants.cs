@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 10/11/2023 6:31:02 PM
+//  This file was automatically generated at 10/12/2023 3:37:57 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -63,7 +63,9 @@ public enum StoreType {
     ///<summary>Task Catalog</summary>
     Task,
     ///<summary>Account Catalog</summary>
-    Account    }
+    Account,
+    ///<summary>Document Catalog</summary>
+    Document    }
 
 ///<summary>Inbound spool message state</summary>
 public enum StateSpoolMessage {
@@ -230,6 +232,8 @@ public static partial class MeshConstants {
     public const string  StoreTypeTaskTag = "Task";
     ///<summary>Jose enumeration tag for StoreType.Account</summary>
     public const string  StoreTypeAccountTag = "Account";
+    ///<summary>Jose enumeration tag for StoreType.Document</summary>
+    public const string  StoreTypeDocumentTag = "Document";
 
     /// <summary>
     /// Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -258,6 +262,7 @@ public static partial class MeshConstants {
             StoreTypePublicationTag => StoreType.Publication,
             StoreTypeTaskTag => StoreType.Task,
             StoreTypeAccountTag => StoreType.Account,
+            StoreTypeDocumentTag => StoreType.Document,
             _ => StoreType.Unknown
             };
 
@@ -288,6 +293,7 @@ public static partial class MeshConstants {
             StoreType.Publication => StoreTypePublicationTag,
             StoreType.Task => StoreTypeTaskTag,
             StoreType.Account => StoreTypeAccountTag,
+            StoreType.Document => StoreTypeDocumentTag,
             _ => null
             };
 

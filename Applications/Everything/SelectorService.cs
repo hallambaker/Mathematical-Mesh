@@ -4,7 +4,7 @@ namespace Goedel.Everything;
 #region // Bindings to classes specified through the Guigen schema.
 
 // Documented in Guigen output
-public partial class FeedSection {
+public partial class ServiceSection {
 
     AccountSection Account { get; }
     ContextUser ContextUser => Account.ContextUser;
@@ -13,33 +13,32 @@ public partial class FeedSection {
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public FeedSection(AccountSection account) {
+    public ServiceSection(AccountSection account) {
         Account = account;
-
-        var catalog = ContextUser.GetStore(CatalogBookmark.Label, create: false) as GuigenCatalogBookmark;
-        ChooseFeed = new FeedSelection(catalog);
+        var catalog = ContextUser.GetStore(CatalogApplication.Label, create: false) as GuigenCatalogApplication;
+        ChooseService = new GroupSelection(catalog);
         }
 
     }
 
 
-#endregion
 
+#endregion
 
 
 #region // Selection Catalog backing type.
 
-public partial class FeedSelection : BookmarkSelection {
+public partial class ServiceSelection : ApplicationSelection {
 
     /// <summary>
     /// Constructor returning an instance of the selection data backer bound to the 
     /// catalog <paramref name="catalog"/>.
     /// </summary>
     /// <param name="catalog"></param>
-    public FeedSelection(GuigenCatalogBookmark catalog) : base(catalog) {
+    public ServiceSelection(GuigenCatalogApplication catalog) : base(catalog) {
         }
 
-    #region // Conversion overrides
+    //#region // Conversion overrides
     //public override CatalogedApplication ConvertFromBindable(IBindable contact) {
     //    throw new NYI();
     //    }
@@ -47,7 +46,7 @@ public partial class FeedSelection : BookmarkSelection {
     //public override BoundApplication ConvertToBindable(CatalogedApplication input) {
     //    throw new NYI();
     //    }
-    #endregion
+    //#endregion
 
 
     }

@@ -6,7 +6,7 @@ Class Goedel.Everything EverythingMaui
 
 // Sections
 
-Section Account "Account" "user"
+Section AccountSection "Account" "user"
 	Condition Always
 	Button AccountCreate 
 	Button AccountRequestConnect 
@@ -24,7 +24,7 @@ Section Account "Account" "user"
 		Readonly
 
 
-Section Messages "Messages" "messages"
+Section MessageSection "Messages" "messages"
 	Primary
 	Button RequestContact 
 	Button RequestConfirmation
@@ -40,7 +40,7 @@ Section Messages "Messages" "messages"
 		Filter DeviceRequest		"Device Request"
 		Filter Inbox "Inbox"
 
-Section ContactsSection "Contacts" "contacts"
+Section ContactSection "Contacts" "contacts"
 	Primary
 	Button RequestContact
 	Chooser ChooseContact "Contacts" "contact_other" 
@@ -51,37 +51,39 @@ Section ContactsSection "Contacts" "contacts"
 		Filter Self "Self"
 		Filter All "Others"
 
-Section Documents "Documents" "Documents"
+Section DocumentSection "Documents" "Documents"
 	Button SendDocument
 	Button ShareDocument 
 	Chooser ChooseDocuments "Documents" "documents" 
 		View CatalogedDocument
 
-Section Groups "Groups" "groups"
-	Chooser ChooseGroup "User" "account_group" 
-		View CatalogedGroup
-
-Section Feeds "Feeds" "feeds"
+Section FeedSection "Feeds" "feeds"
 	Chooser ChooseFeed "Feeds" "feeds" 
 		View CatalogedFeed
 
-Section Credentials "Credentials" "credentials"
+
+Section GroupSection "Groups" "groups"
+	Chooser ChooseGroup "User" "account_group" 
+		View CatalogedGroup
+
+
+Section CredentialSection "Credentials" "credentials"
 	Chooser ChooseCredential "Credentials" "credentials" 
 		View CatalogedCredential
 
-Section Tasks "Tasks" "tasks"
+Section TaskSection "Tasks" "tasks"
 	Chooser ChooseTask "Tasks" "Tasks" 
 		View CatalogedTask
 
-Section Calendar "Calendar" "calendar"
+Section CalendarSection "Calendar" "calendar"
 	Chooser ChooseAppointment "Tasks" "Tasks" 
 		View CatalogedTask
 
-Section Bookmark "Bookmark" "bookmark"
+Section BookmarkSection "Bookmark" "bookmark"
 	Chooser ChooseBookmark "Bookmark" "Bookmark" 
 		View CatalogedBookmark
 
-Section Applications "Applications" "applications"
+Section ApplicationSection "Applications" "applications"
 	Button AddMailAccount	
 	Button AddSshAccount	
 	Button AddGitAccount
@@ -89,18 +91,18 @@ Section Applications "Applications" "applications"
 	Chooser ChooseApplication "Applications" "Applications" 
 		View CatalogedApplication
 
-Section Devices "Devices" "devices"
+Section DeviceSection "Devices" "devices"
 	Button DeviceDynamicUri
 	Button DeviceStaticUri
 	Button AccountGetPin 
 	Chooser ChooseDevice "Devices" "Devices" 
 		View CatalogedDevice
 
-Section Services "Services" "Services"
+Section ServiceSection "Services" "Services"
 	Chooser ChooseService "Services" "account_service.png" 
 
 
-Section Settings "Settings" "settings"
+Section SettingSection "Settings" "settings"
 	Condition Always
 	Primary
 	Section Appearance "Appearance" "display"

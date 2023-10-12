@@ -490,6 +490,7 @@ public partial class ContextUser : ContextAccount {
 
         // All contexts have a capability catalog:
             { CatalogAccess.Label, CatalogAccess.Factory },
+            { CatalogDocument.Label, CatalogDocument.Factory },
             { CatalogPublication.Label, CatalogPublication.Factory }
         };
 

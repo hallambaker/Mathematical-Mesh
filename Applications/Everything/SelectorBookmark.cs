@@ -4,20 +4,19 @@ namespace Goedel.Everything;
 #region // Bindings to classes specified through the Guigen schema.
 
 // Documented in Guigen output
-public partial class Bookmark {
+public partial class BookmarkSection {
 
-    Account Account { get; }
+    AccountSection Account { get; }
     ContextUser ContextUser => Account.ContextUser;
 
     /// <summary>
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public Bookmark(Account account) {
+    public BookmarkSection(AccountSection account) {
         Account = account;
-        ContextUser.DictionaryCatalogDelegates.Replace(CatalogBookmark.Label, GuigenCatalogBookmark.Factory);
         var catalog = ContextUser.GetStore(CatalogBookmark.Label, create: false) as GuigenCatalogBookmark;
-        ChooseBookmark = new BookmarkSelection(catalog);
+        ChooseBookmark = catalog is null ? null : new BookmarkSelection(catalog);
         }
 
     }
