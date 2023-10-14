@@ -26,8 +26,8 @@ public interface IParameter : IBindable {
 
 
 
-    public IResult Validate();
-    public IResult Initialize();
+    IResult Validate();
+    IResult Initialize();
     }
 
 public interface ISelectable : IParameter {
@@ -254,8 +254,8 @@ public record GuiDialog(
 
     public List<IGuiEntry> Entries { get; set; } = null!;
 
-
-
+    public Func<object, bool> IsBoundType { get; set; }
+    public Func<object, bool> IsBacker { get; set; } = (object _) => false;
 
     }
 

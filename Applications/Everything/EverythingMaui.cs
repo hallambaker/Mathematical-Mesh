@@ -83,7 +83,7 @@ public partial class EverythingMaui {
 
     public ContextUser ContextUser { get; set; }
 
-    public Settings Settings { get; } = new();
+    public SettingSection Settings { get; } = new();
 
     public EverythingMaui() {
         ResourceManager = Sketch_resources.ResourceManager;
@@ -92,7 +92,7 @@ public partial class EverythingMaui {
         //MeshHost.ConfigureMesh("alice@example.com", "null");
 
 
-        SectionSettings.Data = Settings;
+        SectionSettingSection.Data = Settings;
         SetContext(MeshHost.GetContext(MeshHost.DefaultAccount) as ContextUser);
 
         }
@@ -106,20 +106,20 @@ public partial class EverythingMaui {
         ContextUser = contextUser;
 
         var accounts = new AccountSection(contextUser);
-        SectionAccount.Data = accounts;
+        SectionAccountSection.Data = accounts;
 
 
-        SectionMessages.BindData = () => accounts.MessageSection;
-        SectionContactsSection.BindData = () => accounts.Contacts;
-        SectionDocuments.BindData = () => accounts.Documents;
-        SectionGroups.BindData = () => accounts.Groups;
-        SectionFeeds.BindData = () => accounts.Feeds;
-        SectionCredentials.BindData = () => accounts.Credentials;
-        SectionTasks.BindData = () => accounts.Tasks;
-        SectionCalendar.BindData = () => accounts.Calendar;
-        SectionApplications.BindData = () => accounts.Applications;
-        SectionDevices.BindData = () => accounts.Devices;
-        SectionServices.BindData = () => accounts.Services;
+        SectionMessageSection.BindData = () => accounts.MessageSection;
+        SectionContactSection.BindData = () => accounts.Contacts;
+        SectionDocumentSection.BindData = () => accounts.Documents;
+        SectionGroupSection.BindData = () => accounts.Groups;
+        SectionFeedSection.BindData = () => accounts.Feeds;
+        SectionCredentialSection.BindData = () => accounts.Credentials;
+        SectionTaskSection.BindData = () => accounts.Tasks;
+        SectionCalendarSection.BindData = () => accounts.Calendar;
+        SectionApplicationSection.BindData = () => accounts.Applications;
+        SectionDeviceSection.BindData = () => accounts.Devices;
+        SectionServiceSection.BindData = () => accounts.Services;
 
 
         }
@@ -239,10 +239,10 @@ public partial class AccountSection {
 
 
 
-public partial class Settings {
+public partial class SettingsSection {
 
 
-    public Settings() {
+    public SettingsSection() {
 
         }
 

@@ -8,76 +8,6 @@ namespace Goedel.Guigen.Maui;
 
 
 /// <summary>
-/// Backer class for a bound presentation, the object that the Add / Accept buttons interact with.
-/// </summary>
-/// <param name="Chooser"></param>
-/// <param name="Dialog"></param>
-public record BoundPresentation{
-
-    GuigenFieldChooser Chooser;
-    GuiDialog Dialog;
-    public StackBase Layout { get; }
-    //    => layout ?? MakeLayout().CacheValue(out layout);
-    //StackBase layout;
-    GuigenFieldSet fieldSet;
-
-    IBindable data;
-
-
-    public BoundPresentation(
-            GuigenFieldChooser chooser,
-            GuiDialog dialog) {
-        Chooser = chooser;
-        Dialog = dialog;
-        Layout = MakeLayout(); 
-        }
-
-
-    StackBase MakeLayout() {
-        var stack = new VerticalStackLayout();
-        fieldSet = new GuigenFieldSet(Chooser.MainWindow, Dialog.Entries, stack);
-
-        var accept = new Button() {
-            Text = "Accept"
-            };
-        accept.Clicked += OnClickAccept;
-
-        var cancel = new Button() {
-            Text = "Cancel"
-            };
-        cancel.Clicked += OnClickCancel;
-        var buttons = new HorizontalStackLayout() { accept, cancel};
-        stack.Add(buttons);
-
-        return stack;
-        }
-
-    public void Initialize() {
-        data = Dialog.Factory();
-        fieldSet.SetFields(data);
-        }
-
-
-    public void OnClickAccept(object sender, EventArgs e) {
-        Chooser.RestoreView();
-
-        // need to validate the input fields here and respond accordingly
-
-        fieldSet.GetFields(data);
-        Chooser.AddItem(data);
-
-        data = null; // prevent reuse of this item as it has been incorporated in the list
-        }
-
-    public void OnClickCancel(object sender, EventArgs e) {
-        Chooser.RestoreView();
-        }
-
-
-    }
-
-
-/// <summary>
 /// Instance class for chooser and associated add/update/delete interactions.
 /// </summary>
 public class GuigenFieldChooser : GuigenField {
@@ -99,6 +29,7 @@ public class GuigenFieldChooser : GuigenField {
 
     public StackBase CommandButtons { get; }
     public HorizontalStackLayout MainLayout;
+    List<BoundPresentation> BoundPresentations = new();
 
     public GuigenFieldChooser(IMainWindow mainWindow, GuiChooser chooser, Layout stack) : base(chooser) {
 
@@ -124,6 +55,7 @@ public class GuigenFieldChooser : GuigenField {
                     addButton.Clicked += OnClickAdd;
 
                     CommandButtons.Add(addButton);
+                    BoundPresentations.Add(presentation);
                     break;
                     }
                 }
@@ -153,6 +85,20 @@ public class GuigenFieldChooser : GuigenField {
         RestoreView();
 
         }
+
+    BoundPresentation GetPresentation(IBindable binding) {
+        foreach (var presentation in BoundPresentations) {
+            var dialog = presentation.Dialog;
+
+            if (dialog?.IsBoundType(binding)==true) {
+                return presentation;
+                }
+
+            }
+
+        return null;
+        }
+
 
     public void RestoreView() {
         CommandButtons.IsVisible = true;
@@ -210,8 +156,14 @@ public class GuigenFieldChooser : GuigenField {
 
         // Here we want to create a view dialog below the list box.
         // Buttons are Update / Delete
+        // need a bound presentation of the 
 
+        var selectEvent = e as SelectedItemChangedEventArgs;
+        var selectedItem = selectEvent.SelectedItem as IBindable;
+        var presentation = GetPresentation(selectedItem);
 
+        presentation.SetDialogMode(DialogMode.Update);
+        SetView(presentation.Layout);
         }
 
     public void OnClickDelete(object sender, EventArgs e) {

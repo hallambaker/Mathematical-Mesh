@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 namespace Goedel.Guigen;
 
 
-public interface IBoundPresentation : IBindable{
+public interface IBoundPresentation : IParameter {
 
     object Bound { get; set; }
     
@@ -23,7 +23,7 @@ public interface ISelectCollection : IEnumerable{
 
     ObservableCollection<IBindable> Entries { get; }
 
-
+    //public  GuiDialog GetDialog(IBindable data);
 
     void Add(IBindable item);
 
@@ -44,6 +44,6 @@ public class SelectList : ISelectCollection {
 
     public void Remove(IBindable item) => Entries.Remove(item);
 
-
+    //public GuiDialog GetDialog(IBindable data) => null;
 
     }

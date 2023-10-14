@@ -2,6 +2,7 @@
 
 using System.Collections;
 using System.Collections.Specialized;
+using System.Runtime.CompilerServices;
 
 using Contact = Goedel.Mesh.Contact;
 
@@ -28,7 +29,12 @@ public partial class ContactSection {
 
 public partial class BoundContactPerson : ISelectSummary, IBoundPresentation {
 
-    public object Bound { get; set; }
+    static BoundContactPerson() {
+        IsBacker = isBacker;
+        }
+
+
+    static bool isBacker (object data) => data is CatalogedContact;
 
     public CatalogedEntry CatalogedEntry {get; set; }
 
@@ -38,6 +44,7 @@ public partial class BoundContactPerson : ISelectSummary, IBoundPresentation {
 
     public string? IconValue => "account.png";
 
+    //public static Func<object, GuiDialog> GetDialog { get; set; }
 
     }
 
@@ -168,7 +175,10 @@ public partial class ContactSelection : SelectionCatalog<GuigenCatalogContact,
             };
 
         return result;
-        } 
+        }
+
+
+    //public override GuiDialog GetDialog(IBindable data) => BoundContactPerson.GetDialog (data);
     #endregion
 
     //public override BoundContactBusiness ConvertToBindable(CatalogedContact input) {

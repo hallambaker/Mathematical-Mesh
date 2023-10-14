@@ -30,7 +30,11 @@ public abstract class SelectionStore<TStore, TPersist, TBindable> : ISelectColle
     public abstract TPersist ConvertFromBindable(IBindable contact);
 
     ///<summary>Convert the Gui contact form to a cataloged contact</summary> 
-    public abstract IBindable ConvertToBindable(TPersist cataloged);
+    public abstract TBindable ConvertToBindable(TPersist cataloged);
+
+
+    //public virtual GuiDialog GetDialog(IBindable data) => null;
+
 
     ///<inheritdoc/>
     public abstract void Add(IBindable item);
@@ -55,6 +59,7 @@ public abstract class SelectionCatalog<TCatalog,TPersist,TBindable> : SelectionS
     public SelectionCatalog(TCatalog store) : base (store){
         foreach (var item in store) {
             var bound = ConvertToBindable(item);
+            bound.Bound = item;
             Entries.Add(bound);
             }
         }
