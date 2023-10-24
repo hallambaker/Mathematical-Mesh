@@ -128,6 +128,13 @@ public class GuigenCatalogContact : CatalogContact {
 public partial class ContactSelection : SelectionCatalog<GuigenCatalogContact,
             CatalogedContact, BoundContactPerson> {
 
+
+    static PersonName Default = new PersonName() {
+        First = "Unspecified",
+        Last = "Contact"
+        };
+
+
     /// <summary>
     /// Constructor returning an instance of the selection data backer bound to the 
     /// catalog <paramref name="catalog"/>.
@@ -169,33 +176,23 @@ public partial class ContactSelection : SelectionCatalog<GuigenCatalogContact,
         }
 
     public override BoundContactPerson ConvertToBindable(CatalogedContact input) {
+
+        var contact = input.Contact as ContactPerson;
+        var name = contact.CommonNames?.FirstOrDefault() ?? Default;
+
         var result = new BoundContactPerson() {
-            First = "Existing",
-            Last = "Item"
+            First = name.First,
+            Last = name.Last,
+            Prefix = name.Prefix,
+            Suffix = name.Suffix
             };
 
         return result;
         }
 
 
-    //public override GuiDialog GetDialog(IBindable data) => BoundContactPerson.GetDialog (data);
     #endregion
 
-    //public override BoundContactBusiness ConvertToBindable(CatalogedContact input) {
-    //    var result = new BoundContactBusiness() {
-    //        Display = "Existing"
-    //        };
-
-    //    return result;
-    //    }
-
-    //public override BoundContactPlace ConvertToBindable(CatalogedContact input) {
-    //    var result = new BoundContactPlace() {
-    //        Display = "Existing"
-    //        };
-
-    //    return result;
-    //    }
 
 
     }

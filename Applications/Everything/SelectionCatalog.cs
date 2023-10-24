@@ -7,7 +7,7 @@ using System.Collections;
 namespace Goedel.Everything;
 
 
-public abstract class SelectionStore<TStore, TPersist, TBindable> : ISelectCollection
+public abstract class SelectionStore<TStore, TPersist, TEnum, TBindable> : ISelectCollection
                     where TStore : Store
                     //where TPersist : CatalogedEntry
                     where TBindable : IBoundPresentation {
@@ -27,7 +27,7 @@ public abstract class SelectionStore<TStore, TPersist, TBindable> : ISelectColle
     public virtual IEnumerator GetEnumerator() => Entries.GetEnumerator();
 
     ///<summary>Convert the Gui contact form to a cataloged contact</summary> 
-    public abstract TPersist ConvertFromBindable(IBindable contact);
+    public abstract TEnum ConvertFromBindable(IBindable contact);
 
     ///<summary>Convert the Gui contact form to a cataloged contact</summary> 
     public abstract TBindable ConvertToBindable(TPersist cataloged);
@@ -37,18 +37,18 @@ public abstract class SelectionStore<TStore, TPersist, TBindable> : ISelectColle
 
 
     ///<inheritdoc/>
-    public abstract void Add(IBindable item);
+    public abstract void Add(IBoundPresentation item);
 
     ///<inheritdoc/>
-    public abstract void Update(IBindable item);
+    public abstract void Update(IBoundPresentation item);
 
     ///<inheritdoc/>
-    public abstract void Remove(IBindable item);
+    public abstract void Remove(IBoundPresentation item);
     }
 
 
 
-public abstract class SelectionCatalog<TCatalog,TPersist,TBindable> : SelectionStore<TCatalog, TPersist, TBindable>,
+public abstract class SelectionCatalog<TCatalog,TPersist,TBindable> : SelectionStore<TCatalog, TPersist, TPersist, TBindable>,
                         ISelectCollection 
                     where TCatalog : Catalog<TPersist>
                     where TPersist : CatalogedEntry
@@ -64,22 +64,24 @@ public abstract class SelectionCatalog<TCatalog,TPersist,TBindable> : SelectionS
             }
         }
 
-    public override void Add(IBindable item) {
+    public override void Add(IBoundPresentation item) {
         var contact = ConvertFromBindable(item);
         Catalog.New(contact);
         Entries.Add(item);
         }
 
-    public override void Remove(IBindable item) { 
+    public override void Remove(IBoundPresentation item) {
+        Catalog.Delete(item.Bound as TPersist);
+        //base.Remove(item);
         }
 
-    public override void Update(IBindable item) {
+    public override void Update(IBoundPresentation item) {
         }
 
     }
 
 
-public abstract class SelectionSpool<TCatalog, TBindable> : SelectionStore<TCatalog, SpoolIndexEntry, TBindable>,
+public abstract class SelectionSpool<TCatalog, TBindable> : SelectionStore<TCatalog, SpoolIndexEntry, Message, TBindable>,
                         ISelectCollection
                     where TCatalog : Spool
                     //where TPersist : CatalogedEntry
@@ -94,16 +96,16 @@ public abstract class SelectionSpool<TCatalog, TBindable> : SelectionStore<TCata
         //    }
         }
 
-    public override void Add(IBindable item) {
+    public override void Add(IBoundPresentation item) {
         //var contact = ConvertFromBindable(item);
         //Catalog.New(contact);
         //Entries.Add(item);
         }
 
-    public override void Remove(IBindable item) {
+    public override void Remove(IBoundPresentation item) {
         }
 
-    public override void Update(IBindable item) {
+    public override void Update(IBoundPresentation item) {
         }
 
     }

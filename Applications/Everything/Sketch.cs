@@ -54,7 +54,7 @@ public partial class _AccountSection : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AccountSection,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _AccountSection).ServiceAddress, null, "ServiceAddress"), 
@@ -83,7 +83,7 @@ public partial class _MessageSection : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _MessageSection,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyChooser ((object data) => (data as _MessageSection).ChooseMessage, (object data,ISelectCollection value) => (data as _MessageSection).ChooseMessage = value, "ChooseMessage")
@@ -110,7 +110,7 @@ public partial class _ContactSection : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _ContactSection,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyChooser ((object data) => (data as _ContactSection).ChooseContact, (object data,ISelectCollection value) => (data as _ContactSection).ChooseContact = value, "ChooseContact")
@@ -137,7 +137,7 @@ public partial class _DocumentSection : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _DocumentSection,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyChooser ((object data) => (data as _DocumentSection).ChooseDocuments, (object data,ISelectCollection value) => (data as _DocumentSection).ChooseDocuments = value, "ChooseDocuments")
@@ -164,7 +164,7 @@ public partial class _FeedSection : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _FeedSection,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyChooser ((object data) => (data as _FeedSection).ChooseFeed, (object data,ISelectCollection value) => (data as _FeedSection).ChooseFeed = value, "ChooseFeed")
@@ -191,7 +191,7 @@ public partial class _GroupSection : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _GroupSection,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyChooser ((object data) => (data as _GroupSection).ChooseGroup, (object data,ISelectCollection value) => (data as _GroupSection).ChooseGroup = value, "ChooseGroup")
@@ -218,7 +218,7 @@ public partial class _CredentialSection : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _CredentialSection,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyChooser ((object data) => (data as _CredentialSection).ChooseCredential, (object data,ISelectCollection value) => (data as _CredentialSection).ChooseCredential = value, "ChooseCredential")
@@ -245,7 +245,7 @@ public partial class _TaskSection : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _TaskSection,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyChooser ((object data) => (data as _TaskSection).ChooseTask, (object data,ISelectCollection value) => (data as _TaskSection).ChooseTask = value, "ChooseTask")
@@ -272,7 +272,7 @@ public partial class _CalendarSection : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _CalendarSection,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyChooser ((object data) => (data as _CalendarSection).ChooseAppointment, (object data,ISelectCollection value) => (data as _CalendarSection).ChooseAppointment = value, "ChooseAppointment")
@@ -299,7 +299,7 @@ public partial class _BookmarkSection : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BookmarkSection,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyChooser ((object data) => (data as _BookmarkSection).ChooseBookmark, (object data,ISelectCollection value) => (data as _BookmarkSection).ChooseBookmark = value, "ChooseBookmark")
@@ -326,7 +326,7 @@ public partial class _ApplicationSection : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _ApplicationSection,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyChooser ((object data) => (data as _ApplicationSection).ChooseApplication, (object data,ISelectCollection value) => (data as _ApplicationSection).ChooseApplication = value, "ChooseApplication")
@@ -353,7 +353,7 @@ public partial class _DeviceSection : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _DeviceSection,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyChooser ((object data) => (data as _DeviceSection).ChooseDevice, (object data,ISelectCollection value) => (data as _DeviceSection).ChooseDevice = value, "ChooseDevice")
@@ -380,7 +380,7 @@ public partial class _ServiceSection : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _ServiceSection,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyChooser ((object data) => (data as _ServiceSection).ChooseService, (object data,ISelectCollection value) => (data as _ServiceSection).ChooseService = value, "ChooseService")
@@ -404,7 +404,7 @@ public partial class _SettingSection : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _SettingSection,
         Array.Empty<GuiBoundProperty>());
 
@@ -440,7 +440,7 @@ public partial class _Appearance : IBindable {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _Appearance,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyColor ((object data) => (data as _Appearance).BackgroundColor, (object data,IFieldColor value) => (data as _Appearance).BackgroundColor = value, "BackgroundColor"), 
@@ -460,7 +460,7 @@ public partial class _Appearance : IBindable {
 /// </summary>
 public partial class BoundAccount : _BoundAccount {
     /// <summary>Type check verification.</summary>
-    public static Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    public static  Func<object, bool> IsBacker { get; set; } = (object _) => false;
     }
 
 /// <summary>
@@ -470,6 +470,7 @@ public partial class _BoundAccount : IParameter {
 
     public object Bound { get; set; }
 
+
     ///<summary></summary> 
     public virtual string Display { get; set;} 
 
@@ -477,7 +478,7 @@ public partial class _BoundAccount : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundAccount,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _BoundAccount).Display, (object data,string value) => (data as _BoundAccount).Display = value, "Display")
@@ -501,7 +502,7 @@ public partial class _BoundAccount : IParameter {
 /// </summary>
 public partial class BoundMessage : _BoundMessage {
     /// <summary>Type check verification.</summary>
-    public static Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    public static  Func<object, bool> IsBacker { get; set; } = (object _) => false;
     }
 
 /// <summary>
@@ -511,17 +512,26 @@ public partial class _BoundMessage : IParameter {
 
     public object Bound { get; set; }
 
+
     ///<summary></summary> 
-    public virtual string Display { get; set;} 
+    public virtual string Subject { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string TimeSent { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string Sender { get; set;} 
 
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundMessage,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as _BoundMessage).Display, (object data,string value) => (data as _BoundMessage).Display = value, "Display")
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessage).Subject, (object data,string value) => (data as _BoundMessage).Subject = value, "Subject"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessage).TimeSent, (object data,string value) => (data as _BoundMessage).TimeSent = value, "TimeSent"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessage).Sender, (object data,string value) => (data as _BoundMessage).Sender = value, "Sender")
 
             });
     ///<summary>Validation</summary> 
@@ -538,11 +548,267 @@ public partial class _BoundMessage : IParameter {
     }
 
 /// <summary>
+/// Callback parameters for dialog BoundMailMail 
+/// </summary>
+public partial class BoundMailMail : _BoundMailMail {
+    /// <summary>Type check verification.</summary>
+    public static new Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    }
+
+/// <summary>
+/// Callback parameters for section BoundMailMail 
+/// </summary>
+public partial class _BoundMailMail : BoundMessage {
+
+
+    ///<summary>The binding for the data type.</summary> 
+    public static new GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _BoundMailMail,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMailMail).Subject, (object data,string value) => (data as _BoundMailMail).Subject = value, "Subject"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMailMail).TimeSent, (object data,string value) => (data as _BoundMailMail).TimeSent = value, "TimeSent"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMailMail).Sender, (object data,string value) => (data as _BoundMailMail).Sender = value, "Sender")
+
+            });
+    ///<summary>Validation</summary> 
+    public override IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public override IResult Initialize() => NullResult.Initialized;
+
+
+    }
+
+/// <summary>
+/// Callback parameters for dialog BoundMessageConfirmationRequest 
+/// </summary>
+public partial class BoundMessageConfirmationRequest : _BoundMessageConfirmationRequest {
+    /// <summary>Type check verification.</summary>
+    public static new Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    }
+
+/// <summary>
+/// Callback parameters for section BoundMessageConfirmationRequest 
+/// </summary>
+public partial class _BoundMessageConfirmationRequest : BoundMessage {
+
+
+    ///<summary></summary> 
+    public virtual string RequestMessage { get; set;} 
+
+    ///<summary>The binding for the data type.</summary> 
+    public static new GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _BoundMessageConfirmationRequest,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessageConfirmationRequest).Subject, (object data,string value) => (data as _BoundMessageConfirmationRequest).Subject = value, "Subject"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessageConfirmationRequest).TimeSent, (object data,string value) => (data as _BoundMessageConfirmationRequest).TimeSent = value, "TimeSent"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessageConfirmationRequest).Sender, (object data,string value) => (data as _BoundMessageConfirmationRequest).Sender = value, "Sender"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessageConfirmationRequest).RequestMessage, (object data,string value) => (data as _BoundMessageConfirmationRequest).RequestMessage = value, "RequestMessage")
+
+            });
+    ///<summary>Validation</summary> 
+    public override IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public override IResult Initialize() => NullResult.Initialized;
+
+
+    }
+
+/// <summary>
+/// Callback parameters for dialog BoundMessageConfirmationResponse 
+/// </summary>
+public partial class BoundMessageConfirmationResponse : _BoundMessageConfirmationResponse {
+    /// <summary>Type check verification.</summary>
+    public static new Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    }
+
+/// <summary>
+/// Callback parameters for section BoundMessageConfirmationResponse 
+/// </summary>
+public partial class _BoundMessageConfirmationResponse : BoundMessage {
+
+
+    ///<summary>The binding for the data type.</summary> 
+    public static new GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _BoundMessageConfirmationResponse,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessageConfirmationResponse).Subject, (object data,string value) => (data as _BoundMessageConfirmationResponse).Subject = value, "Subject"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessageConfirmationResponse).TimeSent, (object data,string value) => (data as _BoundMessageConfirmationResponse).TimeSent = value, "TimeSent"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessageConfirmationResponse).Sender, (object data,string value) => (data as _BoundMessageConfirmationResponse).Sender = value, "Sender")
+
+            });
+    ///<summary>Validation</summary> 
+    public override IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public override IResult Initialize() => NullResult.Initialized;
+
+
+    }
+
+/// <summary>
+/// Callback parameters for dialog BoundMessageContactRequest 
+/// </summary>
+public partial class BoundMessageContactRequest : _BoundMessageContactRequest {
+    /// <summary>Type check verification.</summary>
+    public static new Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    }
+
+/// <summary>
+/// Callback parameters for section BoundMessageContactRequest 
+/// </summary>
+public partial class _BoundMessageContactRequest : BoundMessage {
+
+
+    ///<summary>The binding for the data type.</summary> 
+    public static new GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _BoundMessageContactRequest,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessageContactRequest).Subject, (object data,string value) => (data as _BoundMessageContactRequest).Subject = value, "Subject"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessageContactRequest).TimeSent, (object data,string value) => (data as _BoundMessageContactRequest).TimeSent = value, "TimeSent"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessageContactRequest).Sender, (object data,string value) => (data as _BoundMessageContactRequest).Sender = value, "Sender")
+
+            });
+    ///<summary>Validation</summary> 
+    public override IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public override IResult Initialize() => NullResult.Initialized;
+
+
+    }
+
+/// <summary>
+/// Callback parameters for dialog BoundMessageConnectionRequest 
+/// </summary>
+public partial class BoundMessageConnectionRequest : _BoundMessageConnectionRequest {
+    /// <summary>Type check verification.</summary>
+    public static new Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    }
+
+/// <summary>
+/// Callback parameters for section BoundMessageConnectionRequest 
+/// </summary>
+public partial class _BoundMessageConnectionRequest : BoundMessage {
+
+
+    ///<summary>The binding for the data type.</summary> 
+    public static new GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _BoundMessageConnectionRequest,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessageConnectionRequest).Subject, (object data,string value) => (data as _BoundMessageConnectionRequest).Subject = value, "Subject"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessageConnectionRequest).TimeSent, (object data,string value) => (data as _BoundMessageConnectionRequest).TimeSent = value, "TimeSent"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessageConnectionRequest).Sender, (object data,string value) => (data as _BoundMessageConnectionRequest).Sender = value, "Sender")
+
+            });
+    ///<summary>Validation</summary> 
+    public override IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public override IResult Initialize() => NullResult.Initialized;
+
+
+    }
+
+/// <summary>
+/// Callback parameters for dialog BoundMessageGroupInvitation 
+/// </summary>
+public partial class BoundMessageGroupInvitation : _BoundMessageGroupInvitation {
+    /// <summary>Type check verification.</summary>
+    public static new Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    }
+
+/// <summary>
+/// Callback parameters for section BoundMessageGroupInvitation 
+/// </summary>
+public partial class _BoundMessageGroupInvitation : BoundMessage {
+
+
+    ///<summary>The binding for the data type.</summary> 
+    public static new GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _BoundMessageGroupInvitation,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessageGroupInvitation).Subject, (object data,string value) => (data as _BoundMessageGroupInvitation).Subject = value, "Subject"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessageGroupInvitation).TimeSent, (object data,string value) => (data as _BoundMessageGroupInvitation).TimeSent = value, "TimeSent"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessageGroupInvitation).Sender, (object data,string value) => (data as _BoundMessageGroupInvitation).Sender = value, "Sender")
+
+            });
+    ///<summary>Validation</summary> 
+    public override IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public override IResult Initialize() => NullResult.Initialized;
+
+
+    }
+
+/// <summary>
+/// Callback parameters for dialog BoundMessageTaskRequest 
+/// </summary>
+public partial class BoundMessageTaskRequest : _BoundMessageTaskRequest {
+    /// <summary>Type check verification.</summary>
+    public static new Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    }
+
+/// <summary>
+/// Callback parameters for section BoundMessageTaskRequest 
+/// </summary>
+public partial class _BoundMessageTaskRequest : BoundMessage {
+
+
+    ///<summary>The binding for the data type.</summary> 
+    public static new GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _BoundMessageTaskRequest,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessageTaskRequest).Subject, (object data,string value) => (data as _BoundMessageTaskRequest).Subject = value, "Subject"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessageTaskRequest).TimeSent, (object data,string value) => (data as _BoundMessageTaskRequest).TimeSent = value, "TimeSent"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessageTaskRequest).Sender, (object data,string value) => (data as _BoundMessageTaskRequest).Sender = value, "Sender")
+
+            });
+    ///<summary>Validation</summary> 
+    public override IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public override IResult Initialize() => NullResult.Initialized;
+
+
+    }
+
+/// <summary>
 /// Callback parameters for dialog BoundDocument 
 /// </summary>
 public partial class BoundDocument : _BoundDocument {
     /// <summary>Type check verification.</summary>
-    public static Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    public static  Func<object, bool> IsBacker { get; set; } = (object _) => false;
     }
 
 /// <summary>
@@ -552,6 +818,7 @@ public partial class _BoundDocument : IParameter {
 
     public object Bound { get; set; }
 
+
     ///<summary></summary> 
     public virtual string Display { get; set;} 
 
@@ -559,7 +826,7 @@ public partial class _BoundDocument : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundDocument,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _BoundDocument).Display, (object data,string value) => (data as _BoundDocument).Display = value, "Display")
@@ -583,7 +850,7 @@ public partial class _BoundDocument : IParameter {
 /// </summary>
 public partial class BoundGroup : _BoundGroup {
     /// <summary>Type check verification.</summary>
-    public static Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    public static  Func<object, bool> IsBacker { get; set; } = (object _) => false;
     }
 
 /// <summary>
@@ -593,6 +860,7 @@ public partial class _BoundGroup : IParameter {
 
     public object Bound { get; set; }
 
+
     ///<summary></summary> 
     public virtual string Display { get; set;} 
 
@@ -600,51 +868,10 @@ public partial class _BoundGroup : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundGroup,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _BoundGroup).Display, (object data,string value) => (data as _BoundGroup).Display = value, "Display")
-
-            });
-    ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
-        GuiResultInvalid result = null;
-
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
-
-
-    }
-
-/// <summary>
-/// Callback parameters for dialog BoundFeed 
-/// </summary>
-public partial class BoundFeed : _BoundFeed {
-    /// <summary>Type check verification.</summary>
-    public static Func<object, bool> IsBacker { get; set; } = (object _) => false;
-    }
-
-/// <summary>
-/// Callback parameters for section BoundFeed 
-/// </summary>
-public partial class _BoundFeed : IParameter {
-
-    public object Bound { get; set; }
-
-    ///<summary></summary> 
-    public virtual string Display { get; set;} 
-
-    ///<inheritdoc/>
-    public GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
-        (object test) => test is _BoundFeed,
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as _BoundFeed).Display, (object data,string value) => (data as _BoundFeed).Display = value, "Display")
 
             });
     ///<summary>Validation</summary> 
@@ -665,7 +892,7 @@ public partial class _BoundFeed : IParameter {
 /// </summary>
 public partial class BoundPassword : _BoundPassword {
     /// <summary>Type check verification.</summary>
-    public static Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    public static  Func<object, bool> IsBacker { get; set; } = (object _) => false;
     }
 
 /// <summary>
@@ -675,6 +902,7 @@ public partial class _BoundPassword : IParameter {
 
     public object Bound { get; set; }
 
+
     ///<summary></summary> 
     public virtual string Display { get; set;} 
 
@@ -682,7 +910,7 @@ public partial class _BoundPassword : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundPassword,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _BoundPassword).Display, (object data,string value) => (data as _BoundPassword).Display = value, "Display")
@@ -706,7 +934,7 @@ public partial class _BoundPassword : IParameter {
 /// </summary>
 public partial class BoundCredential : _BoundCredential {
     /// <summary>Type check verification.</summary>
-    public static Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    public static  Func<object, bool> IsBacker { get; set; } = (object _) => false;
     }
 
 /// <summary>
@@ -716,6 +944,7 @@ public partial class _BoundCredential : IParameter {
 
     public object Bound { get; set; }
 
+
     ///<summary></summary> 
     public virtual string Display { get; set;} 
 
@@ -723,7 +952,7 @@ public partial class _BoundCredential : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundCredential,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _BoundCredential).Display, (object data,string value) => (data as _BoundCredential).Display = value, "Display")
@@ -747,7 +976,7 @@ public partial class _BoundCredential : IParameter {
 /// </summary>
 public partial class BoundTask : _BoundTask {
     /// <summary>Type check verification.</summary>
-    public static Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    public static  Func<object, bool> IsBacker { get; set; } = (object _) => false;
     }
 
 /// <summary>
@@ -757,6 +986,7 @@ public partial class _BoundTask : IParameter {
 
     public object Bound { get; set; }
 
+
     ///<summary></summary> 
     public virtual string Display { get; set;} 
 
@@ -764,7 +994,7 @@ public partial class _BoundTask : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundTask,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _BoundTask).Display, (object data,string value) => (data as _BoundTask).Display = value, "Display")
@@ -788,7 +1018,7 @@ public partial class _BoundTask : IParameter {
 /// </summary>
 public partial class BoundAppointment : _BoundAppointment {
     /// <summary>Type check verification.</summary>
-    public static Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    public static  Func<object, bool> IsBacker { get; set; } = (object _) => false;
     }
 
 /// <summary>
@@ -798,6 +1028,7 @@ public partial class _BoundAppointment : IParameter {
 
     public object Bound { get; set; }
 
+
     ///<summary></summary> 
     public virtual string Display { get; set;} 
 
@@ -805,7 +1036,7 @@ public partial class _BoundAppointment : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundAppointment,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _BoundAppointment).Display, (object data,string value) => (data as _BoundAppointment).Display = value, "Display")
@@ -829,7 +1060,7 @@ public partial class _BoundAppointment : IParameter {
 /// </summary>
 public partial class BoundBookmark : _BoundBookmark {
     /// <summary>Type check verification.</summary>
-    public static Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    public static  Func<object, bool> IsBacker { get; set; } = (object _) => false;
     }
 
 /// <summary>
@@ -839,6 +1070,7 @@ public partial class _BoundBookmark : IParameter {
 
     public object Bound { get; set; }
 
+
     ///<summary></summary> 
     public virtual string Display { get; set;} 
 
@@ -846,7 +1078,7 @@ public partial class _BoundBookmark : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundBookmark,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _BoundBookmark).Display, (object data,string value) => (data as _BoundBookmark).Display = value, "Display")
@@ -866,11 +1098,45 @@ public partial class _BoundBookmark : IParameter {
     }
 
 /// <summary>
+/// Callback parameters for dialog BoundFeed 
+/// </summary>
+public partial class BoundFeed : _BoundFeed {
+    /// <summary>Type check verification.</summary>
+    public static new Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    }
+
+/// <summary>
+/// Callback parameters for section BoundFeed 
+/// </summary>
+public partial class _BoundFeed : BoundBookmark {
+
+
+    ///<summary>The binding for the data type.</summary> 
+    public static new GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _BoundFeed,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _BoundFeed).Display, (object data,string value) => (data as _BoundFeed).Display = value, "Display")
+
+            });
+    ///<summary>Validation</summary> 
+    public override IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public override IResult Initialize() => NullResult.Initialized;
+
+
+    }
+
+/// <summary>
 /// Callback parameters for dialog BoundApplication 
 /// </summary>
 public partial class BoundApplication : _BoundApplication {
     /// <summary>Type check verification.</summary>
-    public static Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    public static  Func<object, bool> IsBacker { get; set; } = (object _) => false;
     }
 
 /// <summary>
@@ -880,6 +1146,7 @@ public partial class _BoundApplication : IParameter {
 
     public object Bound { get; set; }
 
+
     ///<summary></summary> 
     public virtual string Display { get; set;} 
 
@@ -887,7 +1154,7 @@ public partial class _BoundApplication : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundApplication,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _BoundApplication).Display, (object data,string value) => (data as _BoundApplication).Display = value, "Display")
@@ -907,11 +1174,249 @@ public partial class _BoundApplication : IParameter {
     }
 
 /// <summary>
+/// Callback parameters for dialog BoundApplicationMail 
+/// </summary>
+public partial class BoundApplicationMail : _BoundApplicationMail {
+    /// <summary>Type check verification.</summary>
+    public static new Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    }
+
+/// <summary>
+/// Callback parameters for section BoundApplicationMail 
+/// </summary>
+public partial class _BoundApplicationMail : BoundApplication {
+
+
+    ///<summary>The binding for the data type.</summary> 
+    public static new GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _BoundApplicationMail,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _BoundApplicationMail).Display, (object data,string value) => (data as _BoundApplicationMail).Display = value, "Display")
+
+            });
+    ///<summary>Validation</summary> 
+    public override IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public override IResult Initialize() => NullResult.Initialized;
+
+
+    }
+
+/// <summary>
+/// Callback parameters for dialog BoundApplicationSsh 
+/// </summary>
+public partial class BoundApplicationSsh : _BoundApplicationSsh {
+    /// <summary>Type check verification.</summary>
+    public static new Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    }
+
+/// <summary>
+/// Callback parameters for section BoundApplicationSsh 
+/// </summary>
+public partial class _BoundApplicationSsh : BoundApplication {
+
+
+    ///<summary>The binding for the data type.</summary> 
+    public static new GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _BoundApplicationSsh,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _BoundApplicationSsh).Display, (object data,string value) => (data as _BoundApplicationSsh).Display = value, "Display")
+
+            });
+    ///<summary>Validation</summary> 
+    public override IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public override IResult Initialize() => NullResult.Initialized;
+
+
+    }
+
+/// <summary>
+/// Callback parameters for dialog BoundApplicationOpenPgp 
+/// </summary>
+public partial class BoundApplicationOpenPgp : _BoundApplicationOpenPgp {
+    /// <summary>Type check verification.</summary>
+    public static new Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    }
+
+/// <summary>
+/// Callback parameters for section BoundApplicationOpenPgp 
+/// </summary>
+public partial class _BoundApplicationOpenPgp : BoundApplication {
+
+
+    ///<summary>The binding for the data type.</summary> 
+    public static new GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _BoundApplicationOpenPgp,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _BoundApplicationOpenPgp).Display, (object data,string value) => (data as _BoundApplicationOpenPgp).Display = value, "Display")
+
+            });
+    ///<summary>Validation</summary> 
+    public override IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public override IResult Initialize() => NullResult.Initialized;
+
+
+    }
+
+/// <summary>
+/// Callback parameters for dialog BoundApplicationDeveloper 
+/// </summary>
+public partial class BoundApplicationDeveloper : _BoundApplicationDeveloper {
+    /// <summary>Type check verification.</summary>
+    public static new Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    }
+
+/// <summary>
+/// Callback parameters for section BoundApplicationDeveloper 
+/// </summary>
+public partial class _BoundApplicationDeveloper : BoundApplication {
+
+
+    ///<summary>The binding for the data type.</summary> 
+    public static new GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _BoundApplicationDeveloper,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _BoundApplicationDeveloper).Display, (object data,string value) => (data as _BoundApplicationDeveloper).Display = value, "Display")
+
+            });
+    ///<summary>Validation</summary> 
+    public override IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public override IResult Initialize() => NullResult.Initialized;
+
+
+    }
+
+/// <summary>
+/// Callback parameters for dialog BoundApplicationPkix 
+/// </summary>
+public partial class BoundApplicationPkix : _BoundApplicationPkix {
+    /// <summary>Type check verification.</summary>
+    public static new Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    }
+
+/// <summary>
+/// Callback parameters for section BoundApplicationPkix 
+/// </summary>
+public partial class _BoundApplicationPkix : BoundApplication {
+
+
+    ///<summary>The binding for the data type.</summary> 
+    public static new GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _BoundApplicationPkix,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _BoundApplicationPkix).Display, (object data,string value) => (data as _BoundApplicationPkix).Display = value, "Display")
+
+            });
+    ///<summary>Validation</summary> 
+    public override IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public override IResult Initialize() => NullResult.Initialized;
+
+
+    }
+
+/// <summary>
+/// Callback parameters for dialog BoundApplicationGroup 
+/// </summary>
+public partial class BoundApplicationGroup : _BoundApplicationGroup {
+    /// <summary>Type check verification.</summary>
+    public static new Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    }
+
+/// <summary>
+/// Callback parameters for section BoundApplicationGroup 
+/// </summary>
+public partial class _BoundApplicationGroup : BoundApplication {
+
+
+    ///<summary>The binding for the data type.</summary> 
+    public static new GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _BoundApplicationGroup,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _BoundApplicationGroup).Display, (object data,string value) => (data as _BoundApplicationGroup).Display = value, "Display")
+
+            });
+    ///<summary>Validation</summary> 
+    public override IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public override IResult Initialize() => NullResult.Initialized;
+
+
+    }
+
+/// <summary>
+/// Callback parameters for dialog BoundApplicationCallSign 
+/// </summary>
+public partial class BoundApplicationCallSign : _BoundApplicationCallSign {
+    /// <summary>Type check verification.</summary>
+    public static new Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    }
+
+/// <summary>
+/// Callback parameters for section BoundApplicationCallSign 
+/// </summary>
+public partial class _BoundApplicationCallSign : BoundApplication {
+
+
+    ///<summary>The binding for the data type.</summary> 
+    public static new GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _BoundApplicationCallSign,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _BoundApplicationCallSign).Display, (object data,string value) => (data as _BoundApplicationCallSign).Display = value, "Display")
+
+            });
+    ///<summary>Validation</summary> 
+    public override IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public override IResult Initialize() => NullResult.Initialized;
+
+
+    }
+
+/// <summary>
 /// Callback parameters for dialog BoundDevice 
 /// </summary>
 public partial class BoundDevice : _BoundDevice {
     /// <summary>Type check verification.</summary>
-    public static Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    public static  Func<object, bool> IsBacker { get; set; } = (object _) => false;
     }
 
 /// <summary>
@@ -921,6 +1426,7 @@ public partial class _BoundDevice : IParameter {
 
     public object Bound { get; set; }
 
+
     ///<summary></summary> 
     public virtual string Display { get; set;} 
 
@@ -928,7 +1434,7 @@ public partial class _BoundDevice : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundDevice,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _BoundDevice).Display, (object data,string value) => (data as _BoundDevice).Display = value, "Display")
@@ -952,7 +1458,7 @@ public partial class _BoundDevice : IParameter {
 /// </summary>
 public partial class AccountUser : _AccountUser {
     /// <summary>Type check verification.</summary>
-    public static Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    public static  Func<object, bool> IsBacker { get; set; } = (object _) => false;
     }
 
 /// <summary>
@@ -961,6 +1467,7 @@ public partial class AccountUser : _AccountUser {
 public partial class _AccountUser : IParameter {
 
     public object Bound { get; set; }
+
 
     ///<summary></summary> 
     public virtual string Udf { get; set;} 
@@ -981,7 +1488,7 @@ public partial class _AccountUser : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AccountUser,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _AccountUser).Udf, (object data,string value) => (data as _AccountUser).Udf = value, "Udf"), 
@@ -1009,7 +1516,7 @@ public partial class _AccountUser : IParameter {
 /// </summary>
 public partial class BoundContactPerson : _BoundContactPerson {
     /// <summary>Type check verification.</summary>
-    public static Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    public static  Func<object, bool> IsBacker { get; set; } = (object _) => false;
     }
 
 /// <summary>
@@ -1018,6 +1525,7 @@ public partial class BoundContactPerson : _BoundContactPerson {
 public partial class _BoundContactPerson : IParameter {
 
     public object Bound { get; set; }
+
 
     ///<summary></summary> 
     public virtual string Display { get;} 
@@ -1047,7 +1555,7 @@ public partial class _BoundContactPerson : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundContactPerson,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _BoundContactPerson).Display, null, "Display"), 
@@ -1078,7 +1586,7 @@ public partial class _BoundContactPerson : IParameter {
 /// </summary>
 public partial class BoundContactBusiness : _BoundContactBusiness {
     /// <summary>Type check verification.</summary>
-    public static Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    public static  Func<object, bool> IsBacker { get; set; } = (object _) => false;
     }
 
 /// <summary>
@@ -1088,6 +1596,7 @@ public partial class _BoundContactBusiness : IParameter {
 
     public object Bound { get; set; }
 
+
     ///<summary></summary> 
     public virtual string Display { get; set;} 
 
@@ -1095,7 +1604,7 @@ public partial class _BoundContactBusiness : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundContactBusiness,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _BoundContactBusiness).Display, (object data,string value) => (data as _BoundContactBusiness).Display = value, "Display")
@@ -1119,7 +1628,7 @@ public partial class _BoundContactBusiness : IParameter {
 /// </summary>
 public partial class BoundContactPlace : _BoundContactPlace {
     /// <summary>Type check verification.</summary>
-    public static Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    public static  Func<object, bool> IsBacker { get; set; } = (object _) => false;
     }
 
 /// <summary>
@@ -1129,6 +1638,7 @@ public partial class _BoundContactPlace : IParameter {
 
     public object Bound { get; set; }
 
+
     ///<summary></summary> 
     public virtual string Display { get; set;} 
 
@@ -1136,7 +1646,7 @@ public partial class _BoundContactPlace : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundContactPlace,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _BoundContactPlace).Display, (object data,string value) => (data as _BoundContactPlace).Display = value, "Display")
@@ -1160,7 +1670,7 @@ public partial class _BoundContactPlace : IParameter {
 /// </summary>
 public partial class ContactNetworkAddress : _ContactNetworkAddress {
     /// <summary>Type check verification.</summary>
-    public static Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    public static  Func<object, bool> IsBacker { get; set; } = (object _) => false;
     }
 
 /// <summary>
@@ -1169,6 +1679,7 @@ public partial class ContactNetworkAddress : _ContactNetworkAddress {
 public partial class _ContactNetworkAddress : IParameter {
 
     public object Bound { get; set; }
+
 
     ///<summary></summary> 
     public virtual string Protocol { get; set;} 
@@ -1183,7 +1694,7 @@ public partial class _ContactNetworkAddress : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _ContactNetworkAddress,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _ContactNetworkAddress).Protocol, (object data,string value) => (data as _ContactNetworkAddress).Protocol = value, "Protocol"), 
@@ -1209,7 +1720,7 @@ public partial class _ContactNetworkAddress : IParameter {
 /// </summary>
 public partial class ContactPhysicalAddress : _ContactPhysicalAddress {
     /// <summary>Type check verification.</summary>
-    public static Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    public static  Func<object, bool> IsBacker { get; set; } = (object _) => false;
     }
 
 /// <summary>
@@ -1218,6 +1729,7 @@ public partial class ContactPhysicalAddress : _ContactPhysicalAddress {
 public partial class _ContactPhysicalAddress : IParameter {
 
     public object Bound { get; set; }
+
 
     ///<summary></summary> 
     public virtual string Appartment { get; set;} 
@@ -1250,7 +1762,7 @@ public partial class _ContactPhysicalAddress : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _ContactPhysicalAddress,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _ContactPhysicalAddress).Appartment, (object data,string value) => (data as _ContactPhysicalAddress).Appartment = value, "Appartment"), 
@@ -1300,7 +1812,7 @@ public partial class _TestService : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _TestService,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _TestService).ServiceAddress, (object data,string value) => (data as _TestService).ServiceAddress = value, "ServiceAddress")
@@ -1359,7 +1871,7 @@ public partial class _AccountCreate : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AccountCreate,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _AccountCreate).ServiceAddress, (object data,string value) => (data as _AccountCreate).ServiceAddress = value, "ServiceAddress"), 
@@ -1406,7 +1918,7 @@ public partial class _AccountRequestConnect : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AccountRequestConnect,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _AccountRequestConnect).ConnectionString, (object data,string value) => (data as _AccountRequestConnect).ConnectionString = value, "ConnectionString"), 
@@ -1453,7 +1965,7 @@ public partial class _AccountConnectUri : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AccountConnectUri,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _AccountConnectUri).ConnectionUri, (object data,string value) => (data as _AccountConnectUri).ConnectionUri = value, "ConnectionUri"), 
@@ -1503,7 +2015,7 @@ public partial class _DeviceDynamicUri : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _DeviceDynamicUri,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _DeviceDynamicUri).LocalName, (object data,string value) => (data as _DeviceDynamicUri).LocalName = value, "LocalName"), 
@@ -1551,7 +2063,7 @@ public partial class _AccountGetPin : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AccountGetPin,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _AccountGetPin).Rights, (object data,string value) => (data as _AccountGetPin).Rights = value, "Rights"), 
@@ -1598,7 +2110,7 @@ public partial class _DeviceStaticUri : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _DeviceStaticUri,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _DeviceStaticUri).ConnectionUri, (object data,string value) => (data as _DeviceStaticUri).ConnectionUri = value, "ConnectionUri"), 
@@ -1669,7 +2181,7 @@ public partial class _AccountRecover : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AccountRecover,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _AccountRecover).ServiceAddress, (object data,string value) => (data as _AccountRecover).ServiceAddress = value, "ServiceAddress"), 
@@ -1715,7 +2227,7 @@ public partial class _AccountDelete : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AccountDelete,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
@@ -1751,7 +2263,7 @@ public partial class _AccountSwitch : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AccountSwitch,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyChooser ((object data) => (data as _AccountSwitch).ChooseUser, (object data,ISelectCollection value) => (data as _AccountSwitch).ChooseUser = value, "ChooseUser")
@@ -1793,7 +2305,7 @@ public partial class _AccountGenerateRecovery : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AccountGenerateRecovery,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyInteger ((object data) => (data as _AccountGenerateRecovery).NumberShares, (object data,int? value) => (data as _AccountGenerateRecovery).NumberShares = value, "NumberShares"), 
@@ -1836,7 +2348,7 @@ public partial class _RequestContact : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _RequestContact,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _RequestContact).Recipient, (object data,string value) => (data as _RequestContact).Recipient = value, "Recipient"), 
@@ -1879,7 +2391,7 @@ public partial class _RequestConfirmation : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _RequestConfirmation,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _RequestConfirmation).Recipient, (object data,string value) => (data as _RequestConfirmation).Recipient = value, "Recipient"), 
@@ -1916,7 +2428,7 @@ public partial class _CreateMail : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _CreateMail,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
@@ -1949,7 +2461,7 @@ public partial class _CreateChat : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _CreateChat,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
@@ -1982,7 +2494,7 @@ public partial class _StartVoice : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _StartVoice,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
@@ -2015,7 +2527,7 @@ public partial class _StartVideo : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _StartVideo,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
@@ -2048,7 +2560,7 @@ public partial class _SendDocument : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _SendDocument,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
@@ -2081,7 +2593,7 @@ public partial class _ShareDocument : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _ShareDocument,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
@@ -2114,7 +2626,7 @@ public partial class _AddMailAccount : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AddMailAccount,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
@@ -2147,7 +2659,7 @@ public partial class _AddSshAccount : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AddSshAccount,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
@@ -2180,7 +2692,7 @@ public partial class _AddGitAccount : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AddGitAccount,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
@@ -2213,8 +2725,74 @@ public partial class _AddCodeSigningKey : IParameter {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AddCodeSigningKey,
+        Array.Empty<GuiBoundProperty>());
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize() => NullResult.Initialized;
+
+
+    }
+
+
+/// <summary>
+/// Callback parameters for action ConfirmationAccept 
+/// </summary>
+public partial class ConfirmationAccept : _ConfirmationAccept {
+    }
+
+
+/// <summary>
+/// Callback parameters for action ConfirmationAccept 
+/// </summary>
+public partial class _ConfirmationAccept : IParameter {
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _ConfirmationAccept,
+        Array.Empty<GuiBoundProperty>());
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate() {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize() => NullResult.Initialized;
+
+
+    }
+
+
+/// <summary>
+/// Callback parameters for action ConfirmationReject 
+/// </summary>
+public partial class ConfirmationReject : _ConfirmationReject {
+    }
+
+
+/// <summary>
+/// Callback parameters for action ConfirmationReject 
+/// </summary>
+public partial class _ConfirmationReject : IParameter {
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _ConfirmationReject,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate() {
@@ -2274,7 +2852,7 @@ public partial record _ReportHost : IResult {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is ReportHost,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as ReportHost).ServiceCallsign, (object data,string value) => (data as ReportHost).ServiceCallsign = value, "ServiceCallsign"), 
@@ -2335,7 +2913,7 @@ public partial record _ReportAccountCreate : IResult {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is ReportAccountCreate,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as ReportAccountCreate).LocalName, (object data,string value) => (data as ReportAccountCreate).LocalName = value, "LocalName"), 
@@ -2399,7 +2977,7 @@ public partial record _ReportAccount : IResult {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is ReportAccount,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as ReportAccount).LocalName, (object data,string value) => (data as ReportAccount).LocalName = value, "LocalName"), 
@@ -2465,7 +3043,7 @@ public partial record _ReportPending : IResult {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is ReportPending,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as ReportPending).LocalName, (object data,string value) => (data as ReportPending).LocalName = value, "LocalName"), 
@@ -2537,7 +3115,7 @@ public partial record _ReportShares : IResult {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is ReportShares,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as ReportShares).Share1, (object data,string value) => (data as ReportShares).Share1 = value, "Share1"), 
@@ -2595,7 +3173,7 @@ public partial record _HttpRequestFail : IFail {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is HttpRequestFail,
         Array.Empty<GuiBoundProperty>());
 
@@ -2637,13 +3215,52 @@ public partial record _ServiceNotFound : IFail {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is ServiceNotFound,
         Array.Empty<GuiBoundProperty>());
 
     ///<inheritdoc/>
     public object[] GetValues() => new [] { 
         ServiceName};
+
+    }
+
+
+
+
+/// <summary>
+/// Return parameters for failure result ServiceRefused 
+/// </summary>
+public partial record ServiceRefused : _ServiceRefused {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result ServiceRefused 
+/// </summary>
+public partial record _ServiceRefused : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "The service refused the request";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("ServiceRefused");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is ServiceRefused,
+        Array.Empty<GuiBoundProperty>());
+
+    ///<inheritdoc/>
+    public object[] GetValues() => Array.Empty<object>();
+
 
     }
 
@@ -2679,7 +3296,7 @@ public partial record _HostNotFound : IFail {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is HostNotFound,
         Array.Empty<GuiBoundProperty>());
 
@@ -2718,7 +3335,7 @@ public partial record _InvalidHostCredential : IFail {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is InvalidHostCredential,
         Array.Empty<GuiBoundProperty>());
 
@@ -2757,7 +3374,7 @@ public partial record _CredentialRefused : IFail {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is CredentialRefused,
         Array.Empty<GuiBoundProperty>());
 
@@ -2796,7 +3413,7 @@ public partial record _DeviceRefused : IFail {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is DeviceRefused,
         Array.Empty<GuiBoundProperty>());
 
@@ -2838,7 +3455,7 @@ public partial record _FileWriteError : IFail {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is FileWriteError,
         Array.Empty<GuiBoundProperty>());
 
@@ -2880,7 +3497,7 @@ public partial record _FileReadError : IFail {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is FileReadError,
         Array.Empty<GuiBoundProperty>());
 
@@ -2919,7 +3536,7 @@ public partial record _AccountProfileInvalid : IFail {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is AccountProfileInvalid,
         Array.Empty<GuiBoundProperty>());
 
@@ -2958,7 +3575,7 @@ public partial record _DeviceProfileInvalid : IFail {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is DeviceProfileInvalid,
         Array.Empty<GuiBoundProperty>());
 
@@ -3006,7 +3623,7 @@ public partial record _ActivationKeyNotFound : IFail {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is ActivationKeyNotFound,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as ActivationKeyNotFound).LocalName, (object data,string value) => (data as ActivationKeyNotFound).LocalName = value, "LocalName"), 
@@ -3060,7 +3677,7 @@ public partial record _NotAuthorizedCatalog : IFail {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is NotAuthorizedCatalog,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as NotAuthorizedCatalog).CatalogName, (object data,string value) => (data as NotAuthorizedCatalog).CatalogName = value, "CatalogName"), 
@@ -3106,7 +3723,7 @@ public partial record _NotAuthorizedAdministration : IFail {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is NotAuthorizedAdministration,
         Array.Empty<GuiBoundProperty>());
 
@@ -3145,7 +3762,7 @@ public partial record _NotAuthorizedFCatalog : IFail {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is NotAuthorizedFCatalog,
         Array.Empty<GuiBoundProperty>());
 
@@ -3184,7 +3801,7 @@ public partial record _CounterpartyApproval : IFail {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is CounterpartyApproval,
         Array.Empty<GuiBoundProperty>());
 
@@ -3223,7 +3840,7 @@ public partial record _SystemExeption : IFail {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is SystemExeption,
         Array.Empty<GuiBoundProperty>());
 
@@ -3262,7 +3879,7 @@ public partial record _NotYetImplemented : IFail {
     public GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
+    public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is NotYetImplemented,
         Array.Empty<GuiBoundProperty>());
 
@@ -3315,6 +3932,7 @@ public class _EverythingMaui : Gui {
 
 
 	///<inheritdoc/>
+
 	public override List<GuiImage> Icons => icons;
 	readonly List<GuiImage> icons = new () {  
 		new GuiImage ("applications") , 
@@ -3333,23 +3951,43 @@ public class _EverythingMaui : Gui {
 		new GuiImage ("brand_wordpress") , 
 		new GuiImage ("calendar") , 
 		new GuiImage ("chat") , 
+		new GuiImage ("circle_check") , 
+		new GuiImage ("circle_cross") , 
+		new GuiImage ("circle_question") , 
 		new GuiImage ("clipboard_check_solid") , 
 		new GuiImage ("connect") , 
 		new GuiImage ("contact") , 
 		new GuiImage ("contacts") , 
 		new GuiImage ("credentials") , 
+		new GuiImage ("device_console") , 
+		new GuiImage ("device_desktop") , 
+		new GuiImage ("device_headphones") , 
+		new GuiImage ("device_keyboard") , 
+		new GuiImage ("device_laptop") , 
+		new GuiImage ("device_mobile") , 
+		new GuiImage ("device_plug") , 
+		new GuiImage ("device_server") , 
+		new GuiImage ("device_tablet") , 
+		new GuiImage ("device_tv") , 
 		new GuiImage ("devices") , 
 		new GuiImage ("display") , 
 		new GuiImage ("document_send") , 
 		new GuiImage ("document_share") , 
 		new GuiImage ("documents") , 
 		new GuiImage ("feeds") , 
+		new GuiImage ("file_excel") , 
+		new GuiImage ("file_image") , 
+		new GuiImage ("file_pdf") , 
+		new GuiImage ("file_powerpoint") , 
+		new GuiImage ("file_word") , 
+		new GuiImage ("file_zipper") , 
 		new GuiImage ("git") , 
 		new GuiImage ("groups") , 
 		new GuiImage ("location_pin") , 
 		new GuiImage ("mail") , 
 		new GuiImage ("messages") , 
 		new GuiImage ("new") , 
+		new GuiImage ("plug") , 
 		new GuiImage ("plus") , 
 		new GuiImage ("protocol_icon") , 
 		new GuiImage ("recover") , 
@@ -3357,6 +3995,7 @@ public class _EverythingMaui : Gui {
 		new GuiImage ("settings") , 
 		new GuiImage ("share_nodes_solid") , 
 		new GuiImage ("signature") , 
+		new GuiImage ("task") , 
 		new GuiImage ("tasks") , 
 		new GuiImage ("test_service") , 
 		new GuiImage ("triangle_exclamation_solid") , 
@@ -3367,155 +4006,287 @@ public class _EverythingMaui : Gui {
 
 
 #region // Sections
+
     ///<summary>Section SectionAccountSection.</summary> 
 	public GuiSection SectionAccountSection { get; } = new ("AccountSection", "Account", "user", false);
+
     ///<summary>Section SectionMessageSection.</summary> 
 	public GuiSection SectionMessageSection { get; } = new ("MessageSection", "Messages", "messages", true);
+
     ///<summary>Section SectionContactSection.</summary> 
 	public GuiSection SectionContactSection { get; } = new ("ContactSection", "Contacts", "contacts", true);
+
     ///<summary>Section SectionDocumentSection.</summary> 
 	public GuiSection SectionDocumentSection { get; } = new ("DocumentSection", "Documents", "Documents", false);
+
     ///<summary>Section SectionFeedSection.</summary> 
 	public GuiSection SectionFeedSection { get; } = new ("FeedSection", "Feeds", "feeds", false);
+
     ///<summary>Section SectionGroupSection.</summary> 
 	public GuiSection SectionGroupSection { get; } = new ("GroupSection", "Groups", "groups", false);
+
     ///<summary>Section SectionCredentialSection.</summary> 
 	public GuiSection SectionCredentialSection { get; } = new ("CredentialSection", "Credentials", "credentials", false);
+
     ///<summary>Section SectionTaskSection.</summary> 
 	public GuiSection SectionTaskSection { get; } = new ("TaskSection", "Tasks", "tasks", false);
+
     ///<summary>Section SectionCalendarSection.</summary> 
 	public GuiSection SectionCalendarSection { get; } = new ("CalendarSection", "Calendar", "calendar", false);
+
     ///<summary>Section SectionBookmarkSection.</summary> 
 	public GuiSection SectionBookmarkSection { get; } = new ("BookmarkSection", "Bookmark", "bookmark", false);
+
     ///<summary>Section SectionApplicationSection.</summary> 
 	public GuiSection SectionApplicationSection { get; } = new ("ApplicationSection", "Applications", "applications", false);
+
     ///<summary>Section SectionDeviceSection.</summary> 
 	public GuiSection SectionDeviceSection { get; } = new ("DeviceSection", "Devices", "devices", false);
+
     ///<summary>Section SectionServiceSection.</summary> 
 	public GuiSection SectionServiceSection { get; } = new ("ServiceSection", "Services", "Services", false);
+
     ///<summary>Section SectionSettingSection.</summary> 
 	public GuiSection SectionSettingSection { get; } = new ("SettingSection", "Settings", "settings", true);
+
     ///<summary>Section SectionAppearance.</summary> 
 	public GuiSection SectionAppearance { get; } = new ("Appearance", "Appearance", "display", false);
 #endregion
 #region // Actions
+
     ///<summary>Action ActionTestService.</summary> 
 	public GuiAction ActionTestService { get; } = new ("TestService", "Test Service", "test_service", () => new TestService());
+
     ///<summary>Action ActionAccountCreate.</summary> 
 	public GuiAction ActionAccountCreate { get; } = new ("AccountCreate", "Create Mesh Account", "new", () => new AccountCreate());
+
     ///<summary>Action ActionAccountRequestConnect.</summary> 
 	public GuiAction ActionAccountRequestConnect { get; } = new ("AccountRequestConnect", "Connect by Address", "connect", () => new AccountRequestConnect());
+
     ///<summary>Action ActionAccountConnectUri.</summary> 
 	public GuiAction ActionAccountConnectUri { get; } = new ("AccountConnectUri", "Connect by QR", "connect", () => new AccountConnectUri());
+
     ///<summary>Action ActionDeviceDynamicUri.</summary> 
 	public GuiAction ActionDeviceDynamicUri { get; } = new ("DeviceDynamicUri", "Present QR", "connect", () => new DeviceDynamicUri());
+
     ///<summary>Action ActionAccountGetPin.</summary> 
 	public GuiAction ActionAccountGetPin { get; } = new ("AccountGetPin", "Create connection PIN", "recover", () => new AccountGetPin());
+
     ///<summary>Action ActionDeviceStaticUri.</summary> 
 	public GuiAction ActionDeviceStaticUri { get; } = new ("DeviceStaticUri", "Scan QR", "connect", () => new DeviceStaticUri());
+
     ///<summary>Action ActionAccountRecover.</summary> 
 	public GuiAction ActionAccountRecover { get; } = new ("AccountRecover", "Recover Mesh Account", "recover", () => new AccountRecover());
+
     ///<summary>Action ActionAccountDelete.</summary> 
 	public GuiAction ActionAccountDelete { get; } = new ("AccountDelete", "Delete Account", "test_service", () => new AccountDelete());
+
     ///<summary>Action ActionAccountSwitch.</summary> 
 	public GuiAction ActionAccountSwitch { get; } = new ("AccountSwitch", "Change Account", "test_service", () => new AccountSwitch());
+
     ///<summary>Action ActionAccountGenerateRecovery.</summary> 
 	public GuiAction ActionAccountGenerateRecovery { get; } = new ("AccountGenerateRecovery", "Create recovery", "share_nodes_solid", () => new AccountGenerateRecovery());
+
     ///<summary>Action ActionRequestContact.</summary> 
 	public GuiAction ActionRequestContact { get; } = new ("RequestContact", "Contact Request", "contact", () => new RequestContact());
+
     ///<summary>Action ActionRequestConfirmation.</summary> 
 	public GuiAction ActionRequestConfirmation { get; } = new ("RequestConfirmation", "Confirmation Request", "clipboard_check_solid", () => new RequestConfirmation());
+
     ///<summary>Action ActionCreateMail.</summary> 
 	public GuiAction ActionCreateMail { get; } = new ("CreateMail", "New Mail", "mail", () => new CreateMail());
+
     ///<summary>Action ActionCreateChat.</summary> 
 	public GuiAction ActionCreateChat { get; } = new ("CreateChat", "New Chat", "chat", () => new CreateChat());
+
     ///<summary>Action ActionStartVoice.</summary> 
 	public GuiAction ActionStartVoice { get; } = new ("StartVoice", "New Voice", "voice", () => new StartVoice());
+
     ///<summary>Action ActionStartVideo.</summary> 
 	public GuiAction ActionStartVideo { get; } = new ("StartVideo", "New Video", "video", () => new StartVideo());
+
     ///<summary>Action ActionSendDocument.</summary> 
 	public GuiAction ActionSendDocument { get; } = new ("SendDocument", "Send document", "document_send", () => new SendDocument());
+
     ///<summary>Action ActionShareDocument.</summary> 
 	public GuiAction ActionShareDocument { get; } = new ("ShareDocument", "Share document", "document_share", () => new ShareDocument());
+
     ///<summary>Action ActionAddMailAccount.</summary> 
 	public GuiAction ActionAddMailAccount { get; } = new ("AddMailAccount", "Add email account", "mail", () => new AddMailAccount());
+
     ///<summary>Action ActionAddSshAccount.</summary> 
 	public GuiAction ActionAddSshAccount { get; } = new ("AddSshAccount", "Create SSH credential", "credentials", () => new AddSshAccount());
+
     ///<summary>Action ActionAddGitAccount.</summary> 
 	public GuiAction ActionAddGitAccount { get; } = new ("AddGitAccount", "Create git credentials", "git", () => new AddGitAccount());
+
     ///<summary>Action ActionAddCodeSigningKey.</summary> 
 	public GuiAction ActionAddCodeSigningKey { get; } = new ("AddCodeSigningKey", "Add Code Signing Key", "signature", () => new AddCodeSigningKey());
 
+    ///<summary>Action ActionConfirmationAccept.</summary> 
+	public GuiAction ActionConfirmationAccept { get; } = new ("ConfirmationAccept", "Respond", "circle_check", () => new ConfirmationAccept());
+
+    ///<summary>Action ActionConfirmationReject.</summary> 
+	public GuiAction ActionConfirmationReject { get; } = new ("ConfirmationReject", "Respond", "circle_cross", () => new ConfirmationReject());
+
 #endregion
 #region // Dialogs
+
     ///<summary>Dialog DialogBoundAccount.</summary> 
 	public GuiDialog DialogBoundAccount { get; } = new ("BoundAccount", "Account", "contacts", () => new BoundAccount()) {
                 IsBoundType = (object data) => data is BoundAccount
                 };
+
     ///<summary>Dialog DialogBoundMessage.</summary> 
 	public GuiDialog DialogBoundMessage { get; } = new ("BoundMessage", "Message", "contacts", () => new BoundMessage()) {
                 IsBoundType = (object data) => data is BoundMessage
                 };
+
+    ///<summary>Dialog DialogBoundMailMail.</summary> 
+	public GuiDialog DialogBoundMailMail { get; } = new ("BoundMailMail", "Mail", "messages", () => new BoundMailMail()) {
+                IsBoundType = (object data) => data is BoundMailMail
+                };
+
+    ///<summary>Dialog DialogBoundMessageConfirmationRequest.</summary> 
+	public GuiDialog DialogBoundMessageConfirmationRequest { get; } = new ("BoundMessageConfirmationRequest", "Mail", "circle_question", () => new BoundMessageConfirmationRequest()) {
+                IsBoundType = (object data) => data is BoundMessageConfirmationRequest
+                };
+
+    ///<summary>Dialog DialogBoundMessageConfirmationResponse.</summary> 
+	public GuiDialog DialogBoundMessageConfirmationResponse { get; } = new ("BoundMessageConfirmationResponse", "Mail", "circle_check", () => new BoundMessageConfirmationResponse()) {
+                IsBoundType = (object data) => data is BoundMessageConfirmationResponse
+                };
+
+    ///<summary>Dialog DialogBoundMessageContactRequest.</summary> 
+	public GuiDialog DialogBoundMessageContactRequest { get; } = new ("BoundMessageContactRequest", "Mail", "contact", () => new BoundMessageContactRequest()) {
+                IsBoundType = (object data) => data is BoundMessageContactRequest
+                };
+
+    ///<summary>Dialog DialogBoundMessageConnectionRequest.</summary> 
+	public GuiDialog DialogBoundMessageConnectionRequest { get; } = new ("BoundMessageConnectionRequest", "Mail", "connect", () => new BoundMessageConnectionRequest()) {
+                IsBoundType = (object data) => data is BoundMessageConnectionRequest
+                };
+
+    ///<summary>Dialog DialogBoundMessageGroupInvitation.</summary> 
+	public GuiDialog DialogBoundMessageGroupInvitation { get; } = new ("BoundMessageGroupInvitation", "Mail", "groups", () => new BoundMessageGroupInvitation()) {
+                IsBoundType = (object data) => data is BoundMessageGroupInvitation
+                };
+
+    ///<summary>Dialog DialogBoundMessageTaskRequest.</summary> 
+	public GuiDialog DialogBoundMessageTaskRequest { get; } = new ("BoundMessageTaskRequest", "Mail", "task", () => new BoundMessageTaskRequest()) {
+                IsBoundType = (object data) => data is BoundMessageTaskRequest
+                };
+
     ///<summary>Dialog DialogBoundDocument.</summary> 
 	public GuiDialog DialogBoundDocument { get; } = new ("BoundDocument", "Message", "contacts", () => new BoundDocument()) {
                 IsBoundType = (object data) => data is BoundDocument
                 };
+
     ///<summary>Dialog DialogBoundGroup.</summary> 
 	public GuiDialog DialogBoundGroup { get; } = new ("BoundGroup", "Message", "contacts", () => new BoundGroup()) {
                 IsBoundType = (object data) => data is BoundGroup
                 };
-    ///<summary>Dialog DialogBoundFeed.</summary> 
-	public GuiDialog DialogBoundFeed { get; } = new ("BoundFeed", "Message", "contacts", () => new BoundFeed()) {
-                IsBoundType = (object data) => data is BoundFeed
-                };
+
     ///<summary>Dialog DialogBoundPassword.</summary> 
 	public GuiDialog DialogBoundPassword { get; } = new ("BoundPassword", "Message", "contacts", () => new BoundPassword()) {
                 IsBoundType = (object data) => data is BoundPassword
                 };
+
     ///<summary>Dialog DialogBoundCredential.</summary> 
 	public GuiDialog DialogBoundCredential { get; } = new ("BoundCredential", "Message", "contacts", () => new BoundCredential()) {
                 IsBoundType = (object data) => data is BoundCredential
                 };
+
     ///<summary>Dialog DialogBoundTask.</summary> 
-	public GuiDialog DialogBoundTask { get; } = new ("BoundTask", "Message", "contacts", () => new BoundTask()) {
+	public GuiDialog DialogBoundTask { get; } = new ("BoundTask", "Message", "task", () => new BoundTask()) {
                 IsBoundType = (object data) => data is BoundTask
                 };
+
     ///<summary>Dialog DialogBoundAppointment.</summary> 
-	public GuiDialog DialogBoundAppointment { get; } = new ("BoundAppointment", "Message", "contacts", () => new BoundAppointment()) {
+	public GuiDialog DialogBoundAppointment { get; } = new ("BoundAppointment", "Message", "task", () => new BoundAppointment()) {
                 IsBoundType = (object data) => data is BoundAppointment
                 };
+
     ///<summary>Dialog DialogBoundBookmark.</summary> 
-	public GuiDialog DialogBoundBookmark { get; } = new ("BoundBookmark", "Message", "contacts", () => new BoundBookmark()) {
+	public GuiDialog DialogBoundBookmark { get; } = new ("BoundBookmark", "Message", "bookmark", () => new BoundBookmark()) {
                 IsBoundType = (object data) => data is BoundBookmark
                 };
+
+    ///<summary>Dialog DialogBoundFeed.</summary> 
+	public GuiDialog DialogBoundFeed { get; } = new ("BoundFeed", "Message", "bookmark", () => new BoundFeed()) {
+                IsBoundType = (object data) => data is BoundFeed
+                };
+
     ///<summary>Dialog DialogBoundApplication.</summary> 
 	public GuiDialog DialogBoundApplication { get; } = new ("BoundApplication", "Message", "contacts", () => new BoundApplication()) {
                 IsBoundType = (object data) => data is BoundApplication
                 };
+
+    ///<summary>Dialog DialogBoundApplicationMail.</summary> 
+	public GuiDialog DialogBoundApplicationMail { get; } = new ("BoundApplicationMail", "Message", "contacts", () => new BoundApplicationMail()) {
+                IsBoundType = (object data) => data is BoundApplicationMail
+                };
+
+    ///<summary>Dialog DialogBoundApplicationSsh.</summary> 
+	public GuiDialog DialogBoundApplicationSsh { get; } = new ("BoundApplicationSsh", "Message", "contacts", () => new BoundApplicationSsh()) {
+                IsBoundType = (object data) => data is BoundApplicationSsh
+                };
+
+    ///<summary>Dialog DialogBoundApplicationOpenPgp.</summary> 
+	public GuiDialog DialogBoundApplicationOpenPgp { get; } = new ("BoundApplicationOpenPgp", "Message", "contacts", () => new BoundApplicationOpenPgp()) {
+                IsBoundType = (object data) => data is BoundApplicationOpenPgp
+                };
+
+    ///<summary>Dialog DialogBoundApplicationDeveloper.</summary> 
+	public GuiDialog DialogBoundApplicationDeveloper { get; } = new ("BoundApplicationDeveloper", "Message", "contacts", () => new BoundApplicationDeveloper()) {
+                IsBoundType = (object data) => data is BoundApplicationDeveloper
+                };
+
+    ///<summary>Dialog DialogBoundApplicationPkix.</summary> 
+	public GuiDialog DialogBoundApplicationPkix { get; } = new ("BoundApplicationPkix", "Message", "contacts", () => new BoundApplicationPkix()) {
+                IsBoundType = (object data) => data is BoundApplicationPkix
+                };
+
+    ///<summary>Dialog DialogBoundApplicationGroup.</summary> 
+	public GuiDialog DialogBoundApplicationGroup { get; } = new ("BoundApplicationGroup", "Message", "contacts", () => new BoundApplicationGroup()) {
+                IsBoundType = (object data) => data is BoundApplicationGroup
+                };
+
+    ///<summary>Dialog DialogBoundApplicationCallSign.</summary> 
+	public GuiDialog DialogBoundApplicationCallSign { get; } = new ("BoundApplicationCallSign", "Message", "contacts", () => new BoundApplicationCallSign()) {
+                IsBoundType = (object data) => data is BoundApplicationCallSign
+                };
+
     ///<summary>Dialog DialogBoundDevice.</summary> 
-	public GuiDialog DialogBoundDevice { get; } = new ("BoundDevice", "Message", "contacts", () => new BoundDevice()) {
+	public GuiDialog DialogBoundDevice { get; } = new ("BoundDevice", "Message", "plug", () => new BoundDevice()) {
                 IsBoundType = (object data) => data is BoundDevice
                 };
+
     ///<summary>Dialog DialogAccountUser.</summary> 
 	public GuiDialog DialogAccountUser { get; } = new ("AccountUser", "Account", "user", () => new AccountUser()) {
                 IsBoundType = (object data) => data is AccountUser
                 };
+
     ///<summary>Dialog DialogBoundContactPerson.</summary> 
 	public GuiDialog DialogBoundContactPerson { get; } = new ("BoundContactPerson", "Person", "contacts", () => new BoundContactPerson()) {
                 IsBoundType = (object data) => data is BoundContactPerson
                 };
+
     ///<summary>Dialog DialogBoundContactBusiness.</summary> 
 	public GuiDialog DialogBoundContactBusiness { get; } = new ("BoundContactBusiness", "Organization", "contacts", () => new BoundContactBusiness()) {
                 IsBoundType = (object data) => data is BoundContactBusiness
                 };
+
     ///<summary>Dialog DialogBoundContactPlace.</summary> 
 	public GuiDialog DialogBoundContactPlace { get; } = new ("BoundContactPlace", "Place", "contacts", () => new BoundContactPlace()) {
                 IsBoundType = (object data) => data is BoundContactPlace
                 };
+
     ///<summary>Dialog DialogContactNetworkAddress.</summary> 
 	public GuiDialog DialogContactNetworkAddress { get; } = new ("ContactNetworkAddress", "Network", "protocol_icon", () => new ContactNetworkAddress()) {
                 IsBoundType = (object data) => data is ContactNetworkAddress
                 };
+
     ///<summary>Dialog DialogContactPhysicalAddress.</summary> 
 	public GuiDialog DialogContactPhysicalAddress { get; } = new ("ContactPhysicalAddress", "Place", "location_pin", () => new ContactPhysicalAddress()) {
                 IsBoundType = (object data) => data is ContactPhysicalAddress
@@ -3523,22 +4294,27 @@ public class _EverythingMaui : Gui {
 
 #endregion
 #region // Results
+
     ///<summary>Result ResultReportHost.</summary> 
 	public GuiResult ResultReportHost { get; } = new ();
+
     ///<summary>Result ResultReportAccountCreate.</summary> 
 	public GuiResult ResultReportAccountCreate { get; } = new ();
+
     ///<summary>Result ResultReportAccount.</summary> 
 	public GuiResult ResultReportAccount { get; } = new ();
+
     ///<summary>Result ResultReportPending.</summary> 
 	public GuiResult ResultReportPending { get; } = new ();
+
     ///<summary>Result ResultReportShares.</summary> 
 	public GuiResult ResultReportShares { get; } = new ();
 	
     ///<summary>Dictionary resolving exception name to factory method.</summary> 
     public Dictionary<string, Func<IResult>> ExceptionDirectory =
-        new() {
-                { typeof(HttpRequestException).FullName, () => new HttpRequestFail() }
-            };
+        new() { 
+                { typeof(HttpRequestException).FullName, () => new HttpRequestFail() } , 
+                { typeof(ServerOperationFailed).FullName, () => new ServiceRefused() }             };
 #endregion
 #region // Constructors
     /// <summary>
@@ -3842,6 +4618,14 @@ public class _EverythingMaui : Gui {
 	    ActionAddCodeSigningKey.Entries = new () {
 		    };
 
+        ActionConfirmationAccept.Callback = (x, mode) => ConfirmationAccept (x as ConfirmationAccept, mode) ;
+	    ActionConfirmationAccept.Entries = new () {
+		    };
+
+        ActionConfirmationReject.Callback = (x, mode) => ConfirmationReject (x as ConfirmationReject, mode) ;
+	    ActionConfirmationReject.Entries = new () {
+		    };
+
 
         Actions = new List<GuiAction>() {  
 		    ActionTestService, 
@@ -3866,7 +4650,9 @@ public class _EverythingMaui : Gui {
 		    ActionAddMailAccount, 
 		    ActionAddSshAccount, 
 		    ActionAddGitAccount, 
-		    ActionAddCodeSigningKey
+		    ActionAddCodeSigningKey, 
+		    ActionConfirmationAccept, 
+		    ActionConfirmationReject
 		    };
 
 #endregion
@@ -3874,87 +4660,153 @@ public class _EverythingMaui : Gui {
 	    DialogBoundAccount.Entries = new () { 
 			new GuiText ("Display", "Display name", 0)			
 		    };
-        //DialogBoundContactPerson.IsBacker = (object data) => BoundContactPerson.IsBacker(data);
-        //BoundAccount.GetDialog = (object _) => DialogBoundAccount;
+
         BoundAccount.IsBacker = (object data) => DialogBoundAccount.IsBacker(data);
-        //BoundAccount.IsBoundType = (object data) => data is BoundAccount;
 	    DialogBoundMessage.Entries = new () { 
-			new GuiText ("Display", "Display name", 0)			
+			new GuiText ("Subject", "Subject", 0), 
+			new GuiText ("TimeSent", "Sent", 1), 
+			new GuiText ("Sender", "Sender", 2)			
 		    };
-        //DialogBoundContactPerson.IsBacker = (object data) => BoundContactPerson.IsBacker(data);
-        //BoundMessage.GetDialog = (object _) => DialogBoundMessage;
+
         BoundMessage.IsBacker = (object data) => DialogBoundMessage.IsBacker(data);
-        //BoundMessage.IsBoundType = (object data) => data is BoundMessage;
+	    DialogBoundMailMail.Entries = new () { 
+			new GuiText ("Subject", "Subject", 0), 
+			new GuiText ("TimeSent", "Sent", 1), 
+			new GuiText ("Sender", "Sender", 2), 
+			
+		    };
+
+        BoundMailMail.IsBacker = (object data) => DialogBoundMailMail.IsBacker(data);
+	    DialogBoundMessageConfirmationRequest.Entries = new () { 
+			new GuiText ("Subject", "Subject", 0), 
+			new GuiText ("TimeSent", "Sent", 1), 
+			new GuiText ("Sender", "Sender", 2), 
+			new GuiText ("RequestMessage", "Request", 3), 
+			new GuiButton ("ConfirmationAccept", ActionConfirmationAccept), 
+			new GuiButton ("ConfirmationReject", ActionConfirmationReject)			
+		    };
+
+        BoundMessageConfirmationRequest.IsBacker = (object data) => DialogBoundMessageConfirmationRequest.IsBacker(data);
+	    DialogBoundMessageConfirmationResponse.Entries = new () { 
+			new GuiText ("Subject", "Subject", 0), 
+			new GuiText ("TimeSent", "Sent", 1), 
+			new GuiText ("Sender", "Sender", 2)			
+		    };
+
+        BoundMessageConfirmationResponse.IsBacker = (object data) => DialogBoundMessageConfirmationResponse.IsBacker(data);
+	    DialogBoundMessageContactRequest.Entries = new () { 
+			new GuiText ("Subject", "Subject", 0), 
+			new GuiText ("TimeSent", "Sent", 1), 
+			new GuiText ("Sender", "Sender", 2)			
+		    };
+
+        BoundMessageContactRequest.IsBacker = (object data) => DialogBoundMessageContactRequest.IsBacker(data);
+	    DialogBoundMessageConnectionRequest.Entries = new () { 
+			new GuiText ("Subject", "Subject", 0), 
+			new GuiText ("TimeSent", "Sent", 1), 
+			new GuiText ("Sender", "Sender", 2)			
+		    };
+
+        BoundMessageConnectionRequest.IsBacker = (object data) => DialogBoundMessageConnectionRequest.IsBacker(data);
+	    DialogBoundMessageGroupInvitation.Entries = new () { 
+			new GuiText ("Subject", "Subject", 0), 
+			new GuiText ("TimeSent", "Sent", 1), 
+			new GuiText ("Sender", "Sender", 2)			
+		    };
+
+        BoundMessageGroupInvitation.IsBacker = (object data) => DialogBoundMessageGroupInvitation.IsBacker(data);
+	    DialogBoundMessageTaskRequest.Entries = new () { 
+			new GuiText ("Subject", "Subject", 0), 
+			new GuiText ("TimeSent", "Sent", 1), 
+			new GuiText ("Sender", "Sender", 2)			
+		    };
+
+        BoundMessageTaskRequest.IsBacker = (object data) => DialogBoundMessageTaskRequest.IsBacker(data);
 	    DialogBoundDocument.Entries = new () { 
 			new GuiText ("Display", "Display name", 0)			
 		    };
-        //DialogBoundContactPerson.IsBacker = (object data) => BoundContactPerson.IsBacker(data);
-        //BoundDocument.GetDialog = (object _) => DialogBoundDocument;
+
         BoundDocument.IsBacker = (object data) => DialogBoundDocument.IsBacker(data);
-        //BoundDocument.IsBoundType = (object data) => data is BoundDocument;
 	    DialogBoundGroup.Entries = new () { 
 			new GuiText ("Display", "Display name", 0)			
 		    };
-        //DialogBoundContactPerson.IsBacker = (object data) => BoundContactPerson.IsBacker(data);
-        //BoundGroup.GetDialog = (object _) => DialogBoundGroup;
+
         BoundGroup.IsBacker = (object data) => DialogBoundGroup.IsBacker(data);
-        //BoundGroup.IsBoundType = (object data) => data is BoundGroup;
-	    DialogBoundFeed.Entries = new () { 
-			new GuiText ("Display", "Display name", 0)			
-		    };
-        //DialogBoundContactPerson.IsBacker = (object data) => BoundContactPerson.IsBacker(data);
-        //BoundFeed.GetDialog = (object _) => DialogBoundFeed;
-        BoundFeed.IsBacker = (object data) => DialogBoundFeed.IsBacker(data);
-        //BoundFeed.IsBoundType = (object data) => data is BoundFeed;
 	    DialogBoundPassword.Entries = new () { 
 			new GuiText ("Display", "Display name", 0)			
 		    };
-        //DialogBoundContactPerson.IsBacker = (object data) => BoundContactPerson.IsBacker(data);
-        //BoundPassword.GetDialog = (object _) => DialogBoundPassword;
+
         BoundPassword.IsBacker = (object data) => DialogBoundPassword.IsBacker(data);
-        //BoundPassword.IsBoundType = (object data) => data is BoundPassword;
 	    DialogBoundCredential.Entries = new () { 
 			new GuiText ("Display", "Display name", 0)			
 		    };
-        //DialogBoundContactPerson.IsBacker = (object data) => BoundContactPerson.IsBacker(data);
-        //BoundCredential.GetDialog = (object _) => DialogBoundCredential;
+
         BoundCredential.IsBacker = (object data) => DialogBoundCredential.IsBacker(data);
-        //BoundCredential.IsBoundType = (object data) => data is BoundCredential;
 	    DialogBoundTask.Entries = new () { 
 			new GuiText ("Display", "Display name", 0)			
 		    };
-        //DialogBoundContactPerson.IsBacker = (object data) => BoundContactPerson.IsBacker(data);
-        //BoundTask.GetDialog = (object _) => DialogBoundTask;
+
         BoundTask.IsBacker = (object data) => DialogBoundTask.IsBacker(data);
-        //BoundTask.IsBoundType = (object data) => data is BoundTask;
 	    DialogBoundAppointment.Entries = new () { 
 			new GuiText ("Display", "Display name", 0)			
 		    };
-        //DialogBoundContactPerson.IsBacker = (object data) => BoundContactPerson.IsBacker(data);
-        //BoundAppointment.GetDialog = (object _) => DialogBoundAppointment;
+
         BoundAppointment.IsBacker = (object data) => DialogBoundAppointment.IsBacker(data);
-        //BoundAppointment.IsBoundType = (object data) => data is BoundAppointment;
 	    DialogBoundBookmark.Entries = new () { 
 			new GuiText ("Display", "Display name", 0)			
 		    };
-        //DialogBoundContactPerson.IsBacker = (object data) => BoundContactPerson.IsBacker(data);
-        //BoundBookmark.GetDialog = (object _) => DialogBoundBookmark;
+
         BoundBookmark.IsBacker = (object data) => DialogBoundBookmark.IsBacker(data);
-        //BoundBookmark.IsBoundType = (object data) => data is BoundBookmark;
+	    DialogBoundFeed.Entries = new () { 
+			new GuiText ("Display", "Display name", 0)			
+		    };
+
+        BoundFeed.IsBacker = (object data) => DialogBoundFeed.IsBacker(data);
 	    DialogBoundApplication.Entries = new () { 
 			new GuiText ("Display", "Display name", 0)			
 		    };
-        //DialogBoundContactPerson.IsBacker = (object data) => BoundContactPerson.IsBacker(data);
-        //BoundApplication.GetDialog = (object _) => DialogBoundApplication;
+
         BoundApplication.IsBacker = (object data) => DialogBoundApplication.IsBacker(data);
-        //BoundApplication.IsBoundType = (object data) => data is BoundApplication;
+	    DialogBoundApplicationMail.Entries = new () { 
+			new GuiText ("Display", "Display name", 0)			
+		    };
+
+        BoundApplicationMail.IsBacker = (object data) => DialogBoundApplicationMail.IsBacker(data);
+	    DialogBoundApplicationSsh.Entries = new () { 
+			new GuiText ("Display", "Display name", 0)			
+		    };
+
+        BoundApplicationSsh.IsBacker = (object data) => DialogBoundApplicationSsh.IsBacker(data);
+	    DialogBoundApplicationOpenPgp.Entries = new () { 
+			new GuiText ("Display", "Display name", 0)			
+		    };
+
+        BoundApplicationOpenPgp.IsBacker = (object data) => DialogBoundApplicationOpenPgp.IsBacker(data);
+	    DialogBoundApplicationDeveloper.Entries = new () { 
+			new GuiText ("Display", "Display name", 0)			
+		    };
+
+        BoundApplicationDeveloper.IsBacker = (object data) => DialogBoundApplicationDeveloper.IsBacker(data);
+	    DialogBoundApplicationPkix.Entries = new () { 
+			new GuiText ("Display", "Display name", 0)			
+		    };
+
+        BoundApplicationPkix.IsBacker = (object data) => DialogBoundApplicationPkix.IsBacker(data);
+	    DialogBoundApplicationGroup.Entries = new () { 
+			new GuiText ("Display", "Display name", 0)			
+		    };
+
+        BoundApplicationGroup.IsBacker = (object data) => DialogBoundApplicationGroup.IsBacker(data);
+	    DialogBoundApplicationCallSign.Entries = new () { 
+			new GuiText ("Display", "Display name", 0)			
+		    };
+
+        BoundApplicationCallSign.IsBacker = (object data) => DialogBoundApplicationCallSign.IsBacker(data);
 	    DialogBoundDevice.Entries = new () { 
 			new GuiText ("Display", "Display name", 0)			
 		    };
-        //DialogBoundContactPerson.IsBacker = (object data) => BoundContactPerson.IsBacker(data);
-        //BoundDevice.GetDialog = (object _) => DialogBoundDevice;
+
         BoundDevice.IsBacker = (object data) => DialogBoundDevice.IsBacker(data);
-        //BoundDevice.IsBoundType = (object data) => data is BoundDevice;
 	    DialogAccountUser.Entries = new () { 
 			new GuiText ("Udf", "Fingerprint", 0), 
 			new GuiText ("ServiceAddress", "Account service address", 1), 
@@ -3963,10 +4815,8 @@ public class _EverythingMaui : Gui {
 			new GuiChooser ("UserChooseDevice", "Devices", "device", 4, new () {
 				}) 			
 		    };
-        //DialogBoundContactPerson.IsBacker = (object data) => BoundContactPerson.IsBacker(data);
-        //AccountUser.GetDialog = (object _) => DialogAccountUser;
+
         AccountUser.IsBacker = (object data) => DialogAccountUser.IsBacker(data);
-        //AccountUser.IsBoundType = (object data) => data is AccountUser;
 	    DialogBoundContactPerson.Entries = new () { 
 			new GuiText ("Display", "Display name", 0), 
 			new GuiText ("Local", "Friendly name", 1), 
@@ -3981,33 +4831,25 @@ public class _EverythingMaui : Gui {
 				new GuiViewDialog (DialogContactPhysicalAddress)
 				}) 			
 		    };
-        //DialogBoundContactPerson.IsBacker = (object data) => BoundContactPerson.IsBacker(data);
-        //BoundContactPerson.GetDialog = (object _) => DialogBoundContactPerson;
+
         BoundContactPerson.IsBacker = (object data) => DialogBoundContactPerson.IsBacker(data);
-        //BoundContactPerson.IsBoundType = (object data) => data is BoundContactPerson;
 	    DialogBoundContactBusiness.Entries = new () { 
 			new GuiText ("Display", "Display name", 0)			
 		    };
-        //DialogBoundContactPerson.IsBacker = (object data) => BoundContactPerson.IsBacker(data);
-        //BoundContactBusiness.GetDialog = (object _) => DialogBoundContactBusiness;
+
         BoundContactBusiness.IsBacker = (object data) => DialogBoundContactBusiness.IsBacker(data);
-        //BoundContactBusiness.IsBoundType = (object data) => data is BoundContactBusiness;
 	    DialogBoundContactPlace.Entries = new () { 
 			new GuiText ("Display", "Display name", 0)			
 		    };
-        //DialogBoundContactPerson.IsBacker = (object data) => BoundContactPerson.IsBacker(data);
-        //BoundContactPlace.GetDialog = (object _) => DialogBoundContactPlace;
+
         BoundContactPlace.IsBacker = (object data) => DialogBoundContactPlace.IsBacker(data);
-        //BoundContactPlace.IsBoundType = (object data) => data is BoundContactPlace;
 	    DialogContactNetworkAddress.Entries = new () { 
 			new GuiText ("Protocol", "Protocol", 0), 
 			new GuiText ("Address", "Address", 1), 
 			new GuiText ("Fingerprint", "Fingerprint", 2)			
 		    };
-        //DialogBoundContactPerson.IsBacker = (object data) => BoundContactPerson.IsBacker(data);
-        //ContactNetworkAddress.GetDialog = (object _) => DialogContactNetworkAddress;
+
         ContactNetworkAddress.IsBacker = (object data) => DialogContactNetworkAddress.IsBacker(data);
-        //ContactNetworkAddress.IsBoundType = (object data) => data is ContactNetworkAddress;
 	    DialogContactPhysicalAddress.Entries = new () { 
 			new GuiText ("Appartment", "Appartment", 0), 
 			new GuiText ("Street", "Street", 1), 
@@ -4019,23 +4861,35 @@ public class _EverythingMaui : Gui {
 			new GuiDecimal ("Latitude", "Latitude"), 
 			new GuiDecimal ("Longitude", "Longitude")			
 		    };
-        //DialogBoundContactPerson.IsBacker = (object data) => BoundContactPerson.IsBacker(data);
-        //ContactPhysicalAddress.GetDialog = (object _) => DialogContactPhysicalAddress;
+
         ContactPhysicalAddress.IsBacker = (object data) => DialogContactPhysicalAddress.IsBacker(data);
-        //ContactPhysicalAddress.IsBoundType = (object data) => data is ContactPhysicalAddress;
 
         Dialogs = new List<GuiDialog>() {  
 		    DialogBoundAccount, 
 		    DialogBoundMessage, 
+		    DialogBoundMailMail, 
+		    DialogBoundMessageConfirmationRequest, 
+		    DialogBoundMessageConfirmationResponse, 
+		    DialogBoundMessageContactRequest, 
+		    DialogBoundMessageConnectionRequest, 
+		    DialogBoundMessageGroupInvitation, 
+		    DialogBoundMessageTaskRequest, 
 		    DialogBoundDocument, 
 		    DialogBoundGroup, 
-		    DialogBoundFeed, 
 		    DialogBoundPassword, 
 		    DialogBoundCredential, 
 		    DialogBoundTask, 
 		    DialogBoundAppointment, 
 		    DialogBoundBookmark, 
+		    DialogBoundFeed, 
 		    DialogBoundApplication, 
+		    DialogBoundApplicationMail, 
+		    DialogBoundApplicationSsh, 
+		    DialogBoundApplicationOpenPgp, 
+		    DialogBoundApplicationDeveloper, 
+		    DialogBoundApplicationPkix, 
+		    DialogBoundApplicationGroup, 
+		    DialogBoundApplicationCallSign, 
 		    DialogBoundDevice, 
 		    DialogAccountUser, 
 		    DialogBoundContactPerson, 
@@ -4238,6 +5092,18 @@ public class _EverythingMaui : Gui {
     /// GUI action
     /// </summary>
     public virtual Task<IResult> AddCodeSigningKey (AddCodeSigningKey data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> ConfirmationAccept (ConfirmationAccept data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> ConfirmationReject (ConfirmationReject data, ActionMode mode = ActionMode.Execute) 
                 => throw new NYI();
 
  

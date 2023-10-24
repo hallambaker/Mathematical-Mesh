@@ -299,6 +299,10 @@ public partial class CatalogedContact {
     ///contact exchange method.</summary> 
     public Message Message { get; set; } = null;
 
+
+
+
+
     ///<summary>Typed enveloped data</summary> 
     public Enveloped<CatalogedContact> GetEnvelopedCatalogedContact() =>
         new(DareEnvelope);

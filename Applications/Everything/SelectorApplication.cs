@@ -1,4 +1,5 @@
-﻿using Goedel.Cryptography.Dare;
+﻿using Goedel.Callsign;
+using Goedel.Cryptography.Dare;
 namespace Goedel.Everything;
 
 #region // Bindings to classes specified through the Guigen schema.
@@ -30,6 +31,24 @@ public partial class BoundApplication : ISelectSummary, IBoundPresentation {
     public string? LabelValue => Display;
 
     public string? IconValue => "account.png";
+
+    public CatalogedApplication Convert() {
+        throw new NotImplementedException();    
+        //var result = new CatalogedApplication();
+
+        //return result;
+        }
+
+    public static BoundApplication Convert(CatalogedApplication application) {
+        var result = new BoundApplication();
+        result.Fill(application);
+
+        return result;
+
+        }
+    protected void Fill(CatalogedApplication application) {
+
+        }
 
 
     }
@@ -123,12 +142,39 @@ public partial class ApplicationSelection : SelectionCatalog<GuigenCatalogApplic
         }
 
     #region // Conversion overrides
-    public override CatalogedApplication ConvertFromBindable(IBindable contact) {
-        throw new NYI();
-        }
+    public override CatalogedApplication ConvertFromBindable(IBindable contact) =>
+        (contact as BoundApplication)?.Convert();
 
     public override BoundApplication ConvertToBindable(CatalogedApplication input) {
-        throw new NYI();
+
+        switch (input) {
+            case CatalogedApplicationMail application: {
+                return BoundApplicationMail.Convert(application);
+                }
+            case CatalogedApplicationSsh application: {
+                return BoundApplicationSsh.Convert(application);
+                }
+            case CatalogedApplicationOpenPgp application: {
+                return BoundApplicationOpenPgp.Convert(application);
+                }
+            case CatalogedApplicationDeveloper application: {
+                return BoundApplicationDeveloper.Convert(application);
+                }
+            case CatalogedApplicationPkix application: {
+                return BoundApplicationPkix.Convert(application);
+                }
+            case CatalogedGroup application: {
+                return BoundApplicationGroup.Convert(application);
+                }
+            case CatalogedApplicationCallsign application: {
+                return BoundApplicationCallSign.Convert(application);
+                }
+
+            default: {
+                return BoundApplication.Convert(input);
+                }
+            }
+
         }
     #endregion
 

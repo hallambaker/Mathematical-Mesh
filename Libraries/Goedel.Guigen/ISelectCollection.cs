@@ -25,12 +25,12 @@ public interface ISelectCollection : IEnumerable{
 
     //public  GuiDialog GetDialog(IBindable data);
 
-    void Add(IBindable item);
+    void Add(IBoundPresentation item);
 
-    void Remove(IBindable item);
+    void Remove(IBoundPresentation item);
 
 
-
+    void Update(IBoundPresentation item);
 
     }
 
@@ -38,11 +38,14 @@ public interface ISelectCollection : IEnumerable{
 public class SelectList : ISelectCollection {
     public ObservableCollection<IBindable> Entries { get; } = new();
 
-    public void Add(IBindable item) => Entries.Add(item);
+    public void Add(IBoundPresentation item) => Entries.Add(item);
 
     public IEnumerator GetEnumerator() => Entries.GetEnumerator();
 
-    public void Remove(IBindable item) => Entries.Remove(item);
+    public void Remove(IBoundPresentation item) => Entries.Remove(item);
+
+    public void Update(IBoundPresentation item) {
+        }
 
     //public GuiDialog GetDialog(IBindable data) => null;
 

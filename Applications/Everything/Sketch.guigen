@@ -171,6 +171,8 @@ Fail HttpRequestFail		"The Mesh service did not respond"
 
 Fail ServiceNotFound				"The service {0} could not be found"
 	Hidden ServiceName
+Fail ServiceRefused					"The service refused the request"
+	Exception ServerOperationFailed
 
 Fail HostNotFound					"No host could not be reached for service {0}"
 	Hidden ServiceName
@@ -370,15 +372,50 @@ Dialog BoundAccount "Account" "contacts"
 
 
 Dialog BoundMessage "Message" "contacts"
-	Text Display "Display name"
+	Text Subject "Subject"
+	Text TimeSent "Sent"
+	Text Sender "Sender"
 
+Dialog BoundMailMail "Mail" "messages"
+	Inherit BoundMessage
+	TextArea Message "Message"
+
+Dialog BoundMessageConfirmationRequest "Mail" "circle_question"
+	Inherit BoundMessage
+	Text RequestMessage "Request"
+	Button ConfirmationAccept
+	Button ConfirmationReject
+
+Action ConfirmationAccept "Respond" "circle_check"
+	Description
+		|Accept a confirmation request
+
+Action ConfirmationReject "Respond" "circle_cross"
+	Description
+		|Reject a confirmation request
+
+Dialog BoundMessageConfirmationResponse "Mail" "circle_check"
+	Inherit BoundMessage
+
+Dialog BoundMessageContactRequest "Mail" "contact"
+	Inherit BoundMessage
+
+
+Dialog BoundMessageConnectionRequest "Mail" "connect"
+	Inherit BoundMessage
+
+Dialog BoundMessageGroupInvitation "Mail" "groups"
+	Inherit BoundMessage
+
+Dialog BoundMessageTaskRequest "Mail" "task"
+	Inherit BoundMessage
+
+
+// Messages have different classes because they have different response options
 Dialog BoundDocument "Message" "contacts"
 	Text Display "Display name"
 
 Dialog BoundGroup "Message" "contacts"
-	Text Display "Display name"
-
-Dialog BoundFeed "Message" "contacts"
 	Text Display "Display name"
 
 Dialog BoundPassword "Message" "contacts"
@@ -387,19 +424,36 @@ Dialog BoundPassword "Message" "contacts"
 Dialog BoundCredential "Message" "contacts"
 	Text Display "Display name"
 
-Dialog BoundTask "Message" "contacts"
+Dialog BoundTask "Message" "task"
 	Text Display "Display name"
 
-Dialog BoundAppointment "Message" "contacts"
+Dialog BoundAppointment "Message" "task"
 	Text Display "Display name"
 
-Dialog BoundBookmark "Message" "contacts"
+Dialog BoundBookmark "Message" "bookmark"
 	Text Display "Display name"
+Dialog BoundFeed "Message" "bookmark"
+	Inherit BoundBookmark
 
 Dialog BoundApplication "Message" "contacts"
 	Text Display "Display name"
 
-Dialog BoundDevice "Message" "contacts"
+Dialog BoundApplicationMail "Message" "contacts"
+	Inherit BoundApplication
+Dialog BoundApplicationSsh "Message" "contacts"
+	Inherit BoundApplication
+Dialog BoundApplicationOpenPgp "Message" "contacts"
+	Inherit BoundApplication
+Dialog BoundApplicationDeveloper "Message" "contacts"
+	Inherit BoundApplication
+Dialog BoundApplicationPkix "Message" "contacts"
+	Inherit BoundApplication
+Dialog BoundApplicationGroup "Message" "contacts"
+	Inherit BoundApplication
+Dialog BoundApplicationCallSign "Message" "contacts"
+	Inherit BoundApplication
+
+Dialog BoundDevice "Message" "plug"
 	Text Display "Display name"
 
 Dialog AccountUser "Account" "user"
@@ -456,33 +510,6 @@ Dialog ContactPhysicalAddress "Place" "location_pin"
 
 
 
-
-//Binding MessageContactRequest
-//	Text To "To"
-//	Text Comment "Comment"
-//
-//Binding MessageConfirmationRequest
-//	Text To "To"
-//	Text Request "Request"
-
-//Binding MessageMail
-//	Text To "To"
-//	Text Subject "Subject"
-//	Text Body "Body"
-
-
-//Binding Message
-//	Type MessageDefault  "icon"
-//	Type MessageConnection "icon"
-//	Type MessageContact "icon"
-//	Type MessageConfirmation "icon"
-//	Type MessageTask "icon"
-//	Type MessageError "icon"
-//	Type MessageComplete "icon"
-//	Type MessageGroup "icon"
-
-
-
 Binding CatalogedDevice
 	Type Default  "icon"
 	Type Admin "icon"
@@ -490,6 +517,8 @@ Binding CatalogedDevice
 	Text Udf "Fingerprint"
 	Text LocalName "Local"
 	Text Description "Description"
+
+
 
 Binding CatalogedDocument
 	//Text Name "Name"
@@ -560,4 +589,23 @@ Group Social
 	Icon Facebook "Facebook" "brand_facebook"
 	Icon GitHub "GitHub" "brand_github"
 
+Group DocumentTypes
+	Icon Word "Word" "file_word"
+	Icon PowerPoint "PowerPoint" "file_powerpoint"
+	Icon Excel "Excel" "file_excel"
+	Icon PDF "PDF" "file_pdf"
+	Icon Zip "Zip" "file_zipper"
+	Icon Image "Image" "file_image"
+
+Group Devices
+	Icon Word "Word" "device_mobile"
+	Icon Word "Word" "device_server"
+	Icon Word "Word" "device_tv"
+	Icon Word "Word" "device_keyboard"
+	Icon Word "Word" "device_console"
+	Icon Word "Word" "device_headphones"
+	Icon Word "Word" "device_tablet"
+	Icon Word "Word" "device_desktop"
+	Icon Word "Word" "device_laptop"
+	Icon Word "Word" "device_plug"
 

@@ -89,7 +89,6 @@ public partial class JbcdStream : Disposable {
         if (fileStatus == FileStatus.ConcurrentLocked) {
             LockGlobal = new LockGlobal(Udf.LockName(fileName));
             }
-
         if (fileStatus != FileStatus.Read) {
             //Screen.WriteLine($"Open for write {fileName}");
 

@@ -413,7 +413,9 @@
 		Struct ProfileAccount CallsignServiceProfile
 			Description
 				|Profile of the callsign registry used by the service.
-
+		Struct Enveloped<ProfileService> EnvelopedProfileService
+			Description
+				|Profile of the service.
 
 	Structure ConnectionHost
 		Inherits Connection
@@ -1176,9 +1178,18 @@
 			Description
 				|The OpenPGP encryption key
 
-	Structure CatalogedApplicationNetwork
+	Structure CatalogedApplicationPkix
 		Inherits CatalogedApplication
-		// The recryption key
+
+	Structure CatalogedApplicationOpenPgp
+		Inherits CatalogedApplication
+
+	Structure CatalogedApplicationDeveloper
+		Inherits CatalogedApplication
+
+	//	Structure CatalogedApplicationNetwork
+	//		Inherits CatalogedApplication
+	//		// The recryption key
 
 
 	// For the future wallet catalog
@@ -1342,7 +1353,9 @@
 			Description
 				|The contact data.
 
-
+	Structure MessageMail
+		Inherits Message
+		String Text
 
 
 	Structure RequestConfirmation

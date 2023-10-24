@@ -31,6 +31,18 @@ public partial class BoundDevice : ISelectSummary, IBoundPresentation {
 
     public string? IconValue => "account.png";
 
+    public CatalogedDevice Convert() {
+        var result = new CatalogedDevice();
+
+        return result;
+        }
+
+    public static BoundDevice Convert(CatalogedDevice application) {
+        var result = new BoundDevice();
+
+        return result;
+
+        }
 
     }
 
@@ -124,13 +136,10 @@ public partial class DeviceSelection : SelectionCatalog<GuigenCatalogDevice,
         }
 
     #region // Conversion overrides
-    public override CatalogedDevice ConvertFromBindable(IBindable contact) {
-        throw new NYI();
-        }
+    public override CatalogedDevice ConvertFromBindable(IBindable contact) =>
+        (contact as BoundDevice)?.Convert();
 
-    public override BoundDevice ConvertToBindable(CatalogedDevice input) {
-        throw new NYI();
-        }
+    public override BoundDevice ConvertToBindable(CatalogedDevice input) => BoundDevice.Convert(input);
     #endregion
 
 

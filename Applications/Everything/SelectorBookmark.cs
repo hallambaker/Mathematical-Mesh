@@ -30,7 +30,18 @@ public partial class BoundBookmark : ISelectSummary, IBoundPresentation {
 
     public string? IconValue => "account.png";
 
+    public CatalogedBookmark Convert() {
+        var result = new CatalogedBookmark();
 
+        return result;
+        }
+
+    public static BoundBookmark Convert(CatalogedBookmark application) {
+        var result = new BoundBookmark();
+
+        return result;
+
+        }
     }
 
 #endregion
@@ -122,12 +133,18 @@ public partial class BookmarkSelection : SelectionCatalog<GuigenCatalogBookmark,
         }
 
     #region // Conversion overrides
-    public override CatalogedBookmark ConvertFromBindable(IBindable contact) {
-        throw new NYI();
-        }
+    public override CatalogedBookmark ConvertFromBindable(IBindable input) =>
+        (input as BoundBookmark)?.Convert();
 
     public override BoundBookmark ConvertToBindable(CatalogedBookmark input) {
-        throw new NYI();
+        switch (input) {
+            case CatalogedFeed feed: {
+                return BoundFeed.Convert(feed);
+                }
+            default: {
+                return BoundBookmark.Convert(input);
+                }
+            }
         }
     #endregion
 

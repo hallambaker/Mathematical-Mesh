@@ -191,8 +191,13 @@ public partial class ContextUser : ContextAccount {
             (AccountAuthentication.KeyIdentifier).AssertEqual(
                     ConnectionService.Authentication.CryptoKey.KeyIdentifier,
                     KeyActivationFailed.Throw);
-            }
 
+            var connectionService = catalogedMachine?.CatalogedDevice?.EnvelopedConnectionService.Decode();
+            }
+        if (catalogedMachine?.EnvelopedAccountHostAssignment != null) {
+            var hostAssignment = catalogedMachine?.EnvelopedAccountHostAssignment.Decode();
+            ProfileService = hostAssignment.EnvelopedProfileService?.Decode();
+            }
 
         if (catalogedMachine?.CatalogedDevice?.EnvelopedConnectionDevice != null) {
             //Logger.ActivateConnection("Signature", ConnectionDevice.Signature.CryptoKey.KeyIdentifier);

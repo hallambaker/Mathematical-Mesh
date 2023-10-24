@@ -1,4 +1,7 @@
 ﻿using Goedel.Cryptography.Dare;
+
+using Microsoft.UI.Xaml.Media.Animation;
+
 namespace Goedel.Everything;
 
 #region // Bindings to classes specified through the Guigen schema.
@@ -25,12 +28,104 @@ public partial class MessageSection {
 // Documented in Guigen output
 public partial class BoundMessage : ISelectSummary, IBoundPresentation {
 
-    public object Bound { get; set; }
-
-    public string? LabelValue => Display;
+    public string? LabelValue => Subject;
 
     public string? IconValue => "account.png";
+
+    public Message Convert() {
+        var result = new Message();
+        return result;
+        }
+
+    public static BoundMessage Convert(SpoolIndexEntry input) {
+        var message = input.Message;
+        var result = new BoundMessage();
+        result.Fill(input);
+
+        return result;
+        }
+
+    protected void Fill(SpoolIndexEntry input) {
+        var message = input.Message;
+        }
     }
+
+
+public partial class BoundMessageConnectionRequest {
+    public static BoundMessageConnectionRequest Convert(SpoolIndexEntry input) {
+        var message = input.Message as RequestConnection;
+        var result = new BoundMessageConnectionRequest();
+        result.Fill(input);
+
+        return result;
+        }
+    }
+
+public partial class BoundMailMail {
+    public static BoundMailMail Convert(SpoolIndexEntry input) {
+        var message = input.Message as MessageMail;
+        var result = new BoundMailMail();
+        result.Fill(input);
+
+        return result;
+        }
+    }
+
+public partial class BoundMessageConfirmationRequest {
+    public static BoundMessageConfirmationRequest Convert(SpoolIndexEntry input) {
+        var message = input.Message as Mesh.RequestConfirmation;
+        var result = new BoundMessageConfirmationRequest();
+        result.Fill(input);
+
+        return result;
+        }
+    }
+
+public partial class BoundMessageConfirmationResponse {
+    public static BoundMessageConfirmationResponse Convert(SpoolIndexEntry input) {
+        var message = input.Message as ResponseConfirmation;
+        var result = new BoundMessageConfirmationResponse();
+        result.Fill(input);
+
+        return result;
+        }
+    }
+
+public partial class BoundMessageContactRequest {
+    public static BoundMessageContactRequest Convert(SpoolIndexEntry input) {
+        var message = input.Message as RequestConnection;
+        var result = new BoundMessageContactRequest();
+        result.Fill(input);
+
+        return result;
+        }
+    }
+
+
+public partial class BoundMessageGroupInvitation {
+    public static BoundMessageGroupInvitation Convert(SpoolIndexEntry input) {
+        var message = input.Message as GroupInvitation;
+        var result = new BoundMessageGroupInvitation();
+        result.Fill(input);
+
+        return result;
+        }
+    }
+
+public partial class BoundMessageTaskRequest {
+    public static BoundMessageTaskRequest Convert(SpoolIndexEntry input) {
+        var message = input.Message as RequestTask;
+        var result = new BoundMessageTaskRequest();
+        result.Fill(input);
+
+        return result;
+        }
+    }
+
+
+
+
+
 
 #endregion
 #region // Binding to classes specified in the Mesh schema
@@ -120,12 +215,38 @@ public partial class MessageSelection : SelectionSpool<GuigenSpoolLocal, BoundMe
         }
 
     #region // Conversion overrides
-    public override SpoolIndexEntry ConvertFromBindable(IBindable contact) {
-        throw new NYI();
-        }
+    public override Message ConvertFromBindable(IBindable entry) =>
+        (entry as BoundMessage)?.Convert();
 
     public override BoundMessage ConvertToBindable(SpoolIndexEntry input) {
-        throw new NYI();
+
+        switch (input.Message) {
+
+            case MessageMail: {
+                return BoundMailMail.Convert(input);
+                }
+            case RequestConnection: {
+                return BoundMessageConnectionRequest.Convert(input);
+                }
+            case Mesh.RequestConfirmation: {
+                return BoundMessageConfirmationRequest.Convert(input);
+                }
+            case ResponseConfirmation: {
+                return BoundMessageConfirmationResponse.Convert(input);
+                }
+            case MessageContact: {
+                return BoundMessageContactRequest.Convert(input);
+                }
+            case GroupInvitation: {
+                return BoundMessageGroupInvitation.Convert(input);
+                }
+            case RequestTask: {
+                return BoundMessageTaskRequest.Convert(input);
+                }
+            default:  {
+                return BoundMessage.Convert(input);
+                }
+            }
         }
     #endregion
 

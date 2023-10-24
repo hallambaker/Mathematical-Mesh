@@ -45,11 +45,18 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
     public static string MeshConfigurationDirectory = null!;
 
 
+    //static string GetWindowsAppRoot() => Path.Combine(
+    //                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData\\Local");
+
+    static string GetWindowsAppRoot() => Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Mesh");
+
+
     static KeyCollectionCore() {
         var platform = Environment.OSVersion.Platform;
         switch (platform) {
             case PlatformID.Win32NT: {
-                var appsRoot = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                var appsRoot = GetWindowsAppRoot();
 
                 MeshConfigurationDirectory =  Path.Combine(appsRoot, WindowsMeshDirectory);
                 directoryKeys = Path.Combine(MeshConfigurationDirectory, KeysDirectory);
@@ -76,7 +83,7 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
         var platform = Environment.OSVersion.Platform;
         switch (platform) {
             case PlatformID.Win32NT: {
-                var appsRoot = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                var appsRoot = GetWindowsAppRoot();
                 return Path.Combine(appsRoot, WindowsMeshDirectory, service);
                 }
             default: {

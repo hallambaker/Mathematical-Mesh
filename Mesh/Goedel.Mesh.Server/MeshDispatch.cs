@@ -461,10 +461,13 @@ public class PublicMeshService : MeshService {
             request.AccountAddress = request.AccountAddress.CannonicalAccountAddress();
             var account = request.AccountAddress;
 
+            var envelopedProfileService = ProfileService.GetEnvelopedProfileService();
+
             var accountHostAssignment = new AccountHostAssignment() {
                 AccountAddess = account,
                 AccessEncrypt = ProfileHost.Encryption,
-                CallsignServiceProfile = CallsignServiceProfile
+                CallsignServiceProfile = CallsignServiceProfile,
+                EnvelopedProfileService = envelopedProfileService
                 };
             accountHostAssignment.Envelope();
 

@@ -1,4 +1,6 @@
-﻿namespace Goedel.Everything;
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace Goedel.Everything;
 
 public partial class ChooseContact {
 
@@ -60,10 +62,6 @@ public partial class EverythingMaui {
                 return result;
                 }
 
-            if (ExceptionDirectory.TryGetValue(exception.GetType().FullName, out var factory)) {
-                return factory();
-                }
-
             return new ErrorResult(exception);
             }
 
@@ -74,13 +72,21 @@ public partial class EverythingMaui {
 
         try {
             var contextUser = await MeshHost.ConfigureMeshAsync(data.ServiceAddress, data.LocalName);
-            return new ReportAccount() {
+            return new ReportAccountCreate() {
+                LocalName = contextUser.CatalogedDevice?.LocalName,
+                ServiceAddress = contextUser.ServiceAddress,
+                ProfileUdf = contextUser.ProfileUser.UdfString,
+                ServiceUdf = contextUser.ProfileService?.UdfString
                 };
             }
         catch (Exception exception) {
             if (TryProcessException(exception, data, out var result)) {
                 return result;
                 }
+            if (ExceptionDirectory.TryGetValue(exception.GetType().FullName, out var factory)) {
+                return factory();
+                }
+
             return new ErrorResult(exception);
             }
 
@@ -256,7 +262,10 @@ public partial class EverythingMaui {
 
                 }
             }
-
+        if (ExceptionDirectory.TryGetValue(exception.GetType().FullName, out var factory)) {
+            result = factory();
+            return true;
+            }
 
         result = null;
         return false;

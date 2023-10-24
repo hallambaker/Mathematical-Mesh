@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/14/2023 12:26:53 AM
+//  This file was automatically generated at 10/24/2023 7:40:54 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -157,7 +157,9 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"CatalogedGroup", CatalogedGroup._Factory},
 	    {"CatalogedFeed", CatalogedFeed._Factory},
 	    {"CatalogedApplicationMail", CatalogedApplicationMail._Factory},
-	    {"CatalogedApplicationNetwork", CatalogedApplicationNetwork._Factory},
+	    {"CatalogedApplicationPkix", CatalogedApplicationPkix._Factory},
+	    {"CatalogedApplicationOpenPgp", CatalogedApplicationOpenPgp._Factory},
+	    {"CatalogedApplicationDeveloper", CatalogedApplicationDeveloper._Factory},
 	    {"MessageInvoice", MessageInvoice._Factory},
 	    {"CatalogedReceipt", CatalogedReceipt._Factory},
 	    {"CatalogedTicket", CatalogedTicket._Factory},
@@ -173,6 +175,7 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"RespondConnection", RespondConnection._Factory},
 	    {"MessageContact", MessageContact._Factory},
 	    {"GroupInvitation", GroupInvitation._Factory},
+	    {"MessageMail", MessageMail._Factory},
 	    {"RequestConfirmation", RequestConfirmation._Factory},
 	    {"ResponseConfirmation", ResponseConfirmation._Factory},
 	    {"RequestTask", RequestTask._Factory},
@@ -2502,6 +2505,12 @@ public partial class AccountHostAssignment : Assertion {
 
 	public virtual ProfileAccount?						CallsignServiceProfile  {get; set;}
 
+        /// <summary>
+        ///Profile of the service.
+        /// </summary>
+
+	public virtual Enveloped<ProfileService>?						EnvelopedProfileService  {get; set;}
+
 
 
     ///<summary>Implement IBinding</summary> 
@@ -2523,7 +2532,10 @@ public partial class AccountHostAssignment : Assertion {
 					false, ()=>new  KeyData(), ()=>new KeyData())} ,
 			{ "CallsignServiceProfile", new PropertyStruct ("CallsignServiceProfile", 
 					(IBinding data, object? value) => {(data as AccountHostAssignment).CallsignServiceProfile = value as ProfileAccount;}, (IBinding data) => (data as AccountHostAssignment).CallsignServiceProfile,
-					false, ()=>new  ProfileAccount(), ()=>new ProfileAccount())} 
+					false, ()=>new  ProfileAccount(), ()=>new ProfileAccount())} ,
+			{ "EnvelopedProfileService", new PropertyStruct ("EnvelopedProfileService", 
+					(IBinding data, object? value) => {(data as AccountHostAssignment).EnvelopedProfileService = value as Enveloped<ProfileService>;}, (IBinding data) => (data as AccountHostAssignment).EnvelopedProfileService,
+					false, ()=>new  Enveloped<ProfileService>(), ()=>new Enveloped<ProfileService>())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -8136,7 +8148,7 @@ public partial class CatalogedApplicationMail : CatalogedApplication {
 
 	/// <summary>
 	/// </summary>
-public partial class CatalogedApplicationNetwork : CatalogedApplication {
+public partial class CatalogedApplicationPkix : CatalogedApplication {
 
 
     ///<summary>Implement IBinding</summary> 
@@ -8144,7 +8156,7 @@ public partial class CatalogedApplicationNetwork : CatalogedApplication {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new CatalogedApplicationNetwork(), CatalogedApplication._binding);
+			_StaticProperties, __Tag,() => new CatalogedApplicationPkix(), CatalogedApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
@@ -8175,13 +8187,13 @@ public partial class CatalogedApplicationNetwork : CatalogedApplication {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "CatalogedApplicationNetwork";
+	public new const string __Tag = "CatalogedApplicationPkix";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new CatalogedApplicationNetwork();
+	public static new JsonObject _Factory () => new CatalogedApplicationPkix();
 
 
     /// <summary>
@@ -8190,15 +8202,161 @@ public partial class CatalogedApplicationNetwork : CatalogedApplication {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new CatalogedApplicationNetwork FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new CatalogedApplicationPkix FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CatalogedApplicationNetwork;
+			return Out as CatalogedApplicationPkix;
 			}
-		var Result = new CatalogedApplicationNetwork ();
+		var Result = new CatalogedApplicationPkix ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class CatalogedApplicationOpenPgp : CatalogedApplication {
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedApplicationOpenPgp(), CatalogedApplication._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, CatalogedApplication._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "CatalogedApplicationOpenPgp";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new CatalogedApplicationOpenPgp();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new CatalogedApplicationOpenPgp FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as CatalogedApplicationOpenPgp;
+			}
+		var Result = new CatalogedApplicationOpenPgp ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class CatalogedApplicationDeveloper : CatalogedApplication {
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedApplicationDeveloper(), CatalogedApplication._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, CatalogedApplication._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "CatalogedApplicationDeveloper";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new CatalogedApplicationDeveloper();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new CatalogedApplicationDeveloper FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as CatalogedApplicationDeveloper;
+			}
+		var Result = new CatalogedApplicationDeveloper ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -9567,6 +9725,86 @@ public partial class GroupInvitation : Message {
 			return Out as GroupInvitation;
 			}
 		var Result = new GroupInvitation ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class MessageMail : Message {
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						Text  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new MessageMail(), Message._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Text", new PropertyString ("Text", 
+					(IBinding data, string? value) => {(data as MessageMail).Text = value;}, (IBinding data) => (data as MessageMail).Text )}
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, Message._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "MessageMail";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new MessageMail();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new MessageMail FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as MessageMail;
+			}
+		var Result = new MessageMail ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

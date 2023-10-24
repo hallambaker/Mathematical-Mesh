@@ -31,6 +31,18 @@ public partial class BoundDocument : ISelectSummary, IBoundPresentation {
 
     public string? IconValue => "account.png";
 
+    public CatalogedDocument Convert() {
+        var result = new CatalogedDocument();
+
+        return result;
+        }
+
+    public static BoundDocument Convert(CatalogedDocument application) {
+        var result = new BoundDocument();
+
+        return result;
+
+        }
 
     }
 
@@ -123,13 +135,10 @@ public partial class DocumentSelection : SelectionCatalog<GuigenCatalogDocument,
         }
 
     #region // Conversion overrides
-    public override CatalogedDocument ConvertFromBindable(IBindable contact) {
-        throw new NYI();
-        }
+    public override CatalogedDocument ConvertFromBindable(IBindable contact) =>
+        (contact as BoundDocument)?.Convert();
 
-    public override BoundDocument ConvertToBindable(CatalogedDocument input) {
-        throw new NYI();
-        }
+    public override BoundDocument ConvertToBindable(CatalogedDocument input) => BoundDocument.Convert(input);
     #endregion
 
 

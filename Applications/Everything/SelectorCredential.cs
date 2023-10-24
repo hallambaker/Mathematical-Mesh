@@ -31,7 +31,18 @@ public partial class BoundPassword : ISelectSummary, IBoundPresentation {
 
     public string? IconValue => "account.png";
 
+    public CatalogedCredential Convert() {
+        var result = new CatalogedCredential();
 
+        return result;
+        }
+
+    public static BoundPassword Convert(CatalogedCredential application) {
+        var result = new BoundPassword();
+
+        return result;
+
+        }
     }
 
 #endregion
@@ -123,13 +134,10 @@ public partial class CredentialSelection : SelectionCatalog<GuigenCatalogCredent
         }
 
     #region // Conversion overrides
-    public override CatalogedCredential ConvertFromBindable(IBindable contact) {
-        throw new NYI();
-        }
+    public override CatalogedCredential ConvertFromBindable(IBindable contact) =>
+        (contact as BoundPassword)?.Convert();
 
-    public override BoundPassword ConvertToBindable(CatalogedCredential input) {
-        throw new NYI();
-        }
+    public override BoundPassword ConvertToBindable(CatalogedCredential input) => BoundPassword.Convert(input);
     #endregion
 
 

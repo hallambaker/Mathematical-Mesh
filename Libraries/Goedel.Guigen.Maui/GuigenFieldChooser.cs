@@ -17,9 +17,9 @@ public class GuigenFieldChooser : GuigenField {
     public GuiChooser Chooser => Field as GuiChooser;
 
     public Entry ValueField;
-    public ListView ListView;
-
-
+    public ListView ListView { get; } = new ();
+    RefreshView RefreshView { get; } = new();
+    ScrollView ScrollView { get; } = new();
 
     public Button AddButton;
     public Entry FilterInput;
@@ -72,11 +72,15 @@ public class GuigenFieldChooser : GuigenField {
         CommandButtons.Add(FilterInput);
         CommandButtons.Add(FilterButton);
 
-
-        ListView = new ListView {
-            ItemTemplate = new BindableTemplate(this)
-            };
+        ListView.ItemTemplate = new BindableTemplate(this);
         ListView.ItemSelected += OnClickSelect;
+        ListView.VerticalScrollBarVisibility = ScrollBarVisibility.Always;
+        ListView.HeightRequest = 200;
+        ListView.WidthRequest = 500;
+
+        //ScrollView.Content = ListView;
+        RefreshView.Content = ListView;
+
         stack.Add(CommandButtons);
 
         MainLayout = new();
@@ -103,7 +107,7 @@ public class GuigenFieldChooser : GuigenField {
     public void RestoreView() {
         CommandButtons.IsVisible = true;
         MainLayout.Clear();
-        MainLayout.Add(ListView);
+        MainLayout.Add(RefreshView);
         }
 
     public void SetView(View view) {
@@ -112,7 +116,7 @@ public class GuigenFieldChooser : GuigenField {
         MainLayout.Add(view);
         }
 
-    public void AddItem(IBindable data) {
+    public void AddItem(IBoundPresentation data) {
 
         ListView.BeginRefresh();
         SelectCollection.Add(data);
@@ -120,6 +124,13 @@ public class GuigenFieldChooser : GuigenField {
 
         }
 
+    public void DeleteItem(IBoundPresentation data) {
+        SelectCollection.Remove(data);
+        }
+
+    public void UpdateItem(IBoundPresentation data) {
+        SelectCollection.Update(data);
+        }
 
     public override void SetField(IBindable data) {
         Binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyChooser;
@@ -159,18 +170,15 @@ public class GuigenFieldChooser : GuigenField {
         // need a bound presentation of the 
 
         var selectEvent = e as SelectedItemChangedEventArgs;
-        var selectedItem = selectEvent.SelectedItem as IBindable;
+        var selectedItem = selectEvent.SelectedItem as IBoundPresentation;
         var presentation = GetPresentation(selectedItem);
 
         presentation.SetDialogMode(DialogMode.Update);
+        presentation.Data = selectedItem;
         SetView(presentation.Layout);
         }
 
-    public void OnClickDelete(object sender, EventArgs e) {
-        }
 
-    public void OnClickUpdate(object sender, EventArgs e) {
-        }
     }
 
 

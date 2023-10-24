@@ -20,13 +20,19 @@ public record BoundPresentation{
 
     GuigenFieldChooser Chooser;
     public GuiDialog Dialog;
-    public StackBase Layout { get; }
+    public View Layout { get; set;  }
+    StackBase StackBase { get; }
     //    => layout ?? MakeLayout().CacheValue(out layout);
     //StackBase layout;
     GuigenFieldSet fieldSet;
 
-    IBindable data;
-
+    public IBoundPresentation Data { get => data;
+        set {
+            data = value;
+            SetFields();
+            }
+        }
+    IBoundPresentation data;
     public DialogMode DialogMode { 
         get => dialogMode;
         set => dialogMode = SetDialogMode(value); }
@@ -42,7 +48,11 @@ public record BoundPresentation{
             GuiDialog dialog) {
         Chooser = chooser;
         Dialog = dialog;
-        Layout = MakeLayout(); 
+        StackBase = MakeLayout();
+        Layout = new ScrollView() {
+            Content = StackBase,
+            VerticalScrollBarVisibility = ScrollBarVisibility.Always
+            };
         }
 
 
@@ -78,9 +88,12 @@ public record BoundPresentation{
         }
 
     public void Initialize() {
-        data = Dialog.Factory();
-        fieldSet.SetFields(data);
+        Data = Dialog.Factory() as IBoundPresentation;
+        fieldSet.SetFields(Data);
         }
+
+
+    void SetFields () => fieldSet.SetFields(Data);
 
 
     public void OnClickAdd(object sender, EventArgs e) {
@@ -88,15 +101,18 @@ public record BoundPresentation{
 
         // need to validate the input fields here and respond accordingly
 
-        fieldSet.GetFields(data);
-        Chooser.AddItem(data);
+        fieldSet.GetFields(Data);
+        Chooser.AddItem(Data);
 
-        data = null; // prevent reuse of this item as it has been incorporated in the list
+        Data = null; // prevent reuse of this item as it has been incorporated in the list
         }
 
     public void OnClickUpdate(object sender, EventArgs e) {
+        fieldSet.GetFields(Data);
+        Chooser.UpdateItem(Data);
         }
     public void OnClickDelete(object sender, EventArgs e) {
+        Chooser.DeleteItem(Data);
         }
 
     public void OnClickCancel(object sender, EventArgs e) {

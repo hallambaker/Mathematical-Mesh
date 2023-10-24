@@ -119,7 +119,7 @@ public record ValidResult : NullResult {
     }
 
 
-public record ErrorResult : NullResult {
+public record ErrorResult : NullResult, IFail {
 
     public  string? Error { get; }
     Exception? Exception { get; }
@@ -298,7 +298,7 @@ public record GuiSection (
     }
 
 public delegate  Task<IResult> ActionCallback(object IBindable, ActionMode mode= ActionMode.Execute);
-public delegate IParameter FactoryCallback();
+public delegate IBindable FactoryCallback();
 public record GuiAction(
             string Id,
             string Prompt,

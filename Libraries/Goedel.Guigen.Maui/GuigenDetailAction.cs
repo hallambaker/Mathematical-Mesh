@@ -65,7 +65,7 @@ public class GuigenDetailAction : GuigenDetaiPage {
         ActionViews.Add(ConfirmButton);
         ActionViews.Add(CancelButton);
 
-        Result = Action.Factory();
+        Result = Action.Factory() as IParameter;
 
         EnableActions();
 
@@ -86,7 +86,7 @@ public class GuigenDetailAction : GuigenDetaiPage {
         }
 
     private void OnClickConfirm(object sender, EventArgs e) {
-        var result = Action.Factory();
+        var result = Action.Factory() as IParameter;
 
 
         FieldSet.GetFields(result);
