@@ -849,6 +849,7 @@
 		String Udf
 			Description
 				|Document fingerprint.
+		String Filename
 		String URI
 			Description
 				|Locator to be used to retrieve the data.

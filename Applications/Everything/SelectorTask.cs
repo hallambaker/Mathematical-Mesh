@@ -140,7 +140,7 @@ public partial class TaskSelection : SelectionCatalog<GuigenCatalogTasks,
         }
 
     #region // Conversion overrides
-    public override CatalogedTask ConvertFromBindable(IBindable input) =>
+    public override CatalogedTask CreateFromBindable(IBindable input) =>
         (input as BoundTask)?.Convert();
 
     public override BoundTask ConvertToBindable(CatalogedTask input) =>

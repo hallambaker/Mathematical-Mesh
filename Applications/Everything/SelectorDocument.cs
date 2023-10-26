@@ -1,4 +1,6 @@
 ﻿using Goedel.Cryptography.Dare;
+using Microsoft.Maui.Storage;
+
 namespace Goedel.Everything;
 
 #region // Bindings to classes specified through the Guigen schema.
@@ -25,28 +27,70 @@ public partial class DocumentSection {
 // Documented in Guigen output
 public partial class BoundDocument : ISelectSummary, IBoundPresentation {
 
-    public object Bound { get; set; }
+    public static readonly Dictionary<string, string> DictionaryExtensionContentType =
+        new() {
+                { "doc", "application/msword"},
+                { "docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document" },
+                { "xls", "application/vnd.ms-excel" },
+                { "xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" },
+                { "ppt", "application/vnd.ms-powerpoint" },
+                { "pptx", "application/application/vnd.openxmlformats-officedocument.presentationml.presentation" },
+                { "mdb", "application/ms-access" }
 
-    public string? LabelValue => Display;
+            };
 
-    public string? IconValue => "account.png";
+    public static readonly Dictionary<string, string> DictionaryContentTypeLogo = new() {
+                { "application/msword", "file_word.png"},
+                { "application/vnd.openxmlformats-officedocument.wordprocessingml.document" , "file_word.png"},
+                { "application/vnd.ms-excel" , "file_excel.png"},
+                { "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "file_excel.png" },
+                { "application/vnd.ms-powerpoint" , "file_powerpoint.png"},
+                { "application/application/vnd.openxmlformats-officedocument.presentationml.presentation" , "file_powerpoint.png"},
+                { "application/pdf" , "file_pdf.png"}
+            };
+
+
+    public string? LabelValue => Filename;
+
+    public string? IconValue => GetIcon();
+    public string ContentType {get; set;}
 
     public CatalogedDocument Convert() {
-        var result = new CatalogedDocument();
+        var result = new CatalogedDocument() {
+            Filename = Filename
+            };
 
         return result;
         }
 
-    public static BoundDocument Convert(CatalogedDocument application) {
-        var result = new BoundDocument();
+    public static BoundDocument Convert(CatalogedDocument entry) {
+        var result = new BoundDocument() {
+            Filename = entry.Filename,
+            ContentType = entry.ContentType ?? GetContentType(entry.Filename)
+            };
 
         return result;
 
         }
 
+    public string GetIcon() {
+        var contentType = ContentType ?? GetContentType(Filename);
+        if (contentType != null) {
+            if (DictionaryContentTypeLogo.TryGetValue(contentType, out var icon)) {
+                return icon;
+                }
+            }
 
+        return "file_regular.png";
+        }
 
-
+    public static string GetContentType(string filename) {
+        var extension = Path.GetExtension(filename);
+        if (DictionaryExtensionContentType.TryGetValue(extension, out var contentType)) {
+            return contentType;
+            }
+        return null;
+        }
 
     }
 
@@ -139,7 +183,7 @@ public partial class DocumentSelection : SelectionCatalog<GuigenCatalogDocument,
         }
 
     #region // Conversion overrides
-    public override CatalogedDocument ConvertFromBindable(IBindable contact) =>
+    public override CatalogedDocument CreateFromBindable(IBindable contact) =>
         (contact as BoundDocument)?.Convert();
 
     public override BoundDocument ConvertToBindable(CatalogedDocument input) => BoundDocument.Convert(input);

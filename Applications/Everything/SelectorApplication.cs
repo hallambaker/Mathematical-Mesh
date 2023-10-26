@@ -26,13 +26,11 @@ public partial class ApplicationSection {
 // Documented in Guigen output
 public partial class BoundApplication : ISelectSummary, IBoundPresentation {
 
-    public object Bound { get; set; }
-
     public string? LabelValue => Display;
 
-    public string? IconValue => "account.png";
+    public virtual string? IconValue => "account.png";
 
-    public CatalogedApplication Convert() {
+    public virtual CatalogedApplication Convert() {
         throw new NotImplementedException();    
         //var result = new CatalogedApplication();
 
@@ -50,8 +48,157 @@ public partial class BoundApplication : ISelectSummary, IBoundPresentation {
 
         }
 
+    public virtual void Fill() {
+        var bound = Bound as CatalogedApplication;
+        }
+
 
     }
+
+public partial class BoundApplicationMail {
+
+    public virtual string? IconValue => "account.png";
+
+    public override CatalogedApplication Convert() {
+        var result = new CatalogedApplicationMail() {
+            };
+
+        Fill();
+        return result;
+        }
+
+    public static BoundApplicationMail Convert(CatalogedApplicationMail application) {
+        var result = new BoundApplicationMail();
+        result.Fill(application);
+
+        return result;
+
+        }
+
+    public override void Fill() {
+        base.Fill();
+        var bound = Bound as CatalogedApplicationMail;
+
+
+        }
+
+    }
+
+public partial class BoundApplicationSsh {
+
+    public virtual string? IconValue => "account.png";
+
+    public override CatalogedApplication Convert() {
+        throw new NotImplementedException();
+        //var result = new CatalogedApplication();
+
+        //return result;
+        }
+
+    public static BoundApplication Convert(CatalogedApplicationSsh application) {
+        var result = new BoundApplicationSsh();
+        result.Fill(application);
+
+        return result;
+
+        }
+    }
+public partial class BoundApplicationOpenPgp {
+
+    public virtual string? IconValue => "account.png";
+
+    public override CatalogedApplication Convert() {
+        throw new NotImplementedException();
+        //var result = new CatalogedApplication();
+
+        //return result;
+        }
+
+    public static BoundApplicationOpenPgp Convert(CatalogedApplicationOpenPgp application) {
+        var result = new BoundApplicationOpenPgp();
+        result.Fill(application);
+
+        return result;
+
+        }
+    }
+public partial class BoundApplicationDeveloper {
+
+    public virtual string? IconValue => "account.png";
+
+    public override CatalogedApplication Convert() {
+        throw new NotImplementedException();
+        //var result = new CatalogedApplication();
+
+        //return result;
+        }
+
+    public static BoundApplicationDeveloper Convert(CatalogedApplicationDeveloper application) {
+        var result = new BoundApplicationDeveloper();
+        result.Fill(application);
+
+        return result;
+
+        }
+    }
+public partial class BoundApplicationPkix {
+
+    public virtual string? IconValue => "account.png";
+
+    public override CatalogedApplication Convert() {
+        throw new NotImplementedException();
+        //var result = new CatalogedApplication();
+
+        //return result;
+        }
+
+    public static BoundApplicationPkix Convert(CatalogedApplicationPkix application) {
+        var result = new BoundApplicationPkix();
+        result.Fill(application);
+
+        return result;
+
+        }
+    }
+public partial class BoundApplicationGroup {
+
+    public virtual string? IconValue => "account.png";
+
+    public override CatalogedApplication Convert() {
+        throw new NotImplementedException();
+        //var result = new CatalogedApplication();
+
+        //return result;
+        }
+
+    public static BoundApplicationGroup Convert(CatalogedGroup application) {
+        var result = new BoundApplicationGroup();
+        result.Fill(application);
+
+        return result;
+
+        }
+    }
+public partial class BoundApplicationCallSign {
+
+    public virtual string? IconValue => "account.png";
+
+    public override CatalogedApplication Convert() {
+        throw new NotImplementedException();
+        //var result = new CatalogedApplication();
+
+        //return result;
+        }
+
+    public static BoundApplicationCallSign Convert(CatalogedApplicationCallsign application) {
+        var result = new BoundApplicationCallSign();
+        result.Fill(application);
+
+        return result;
+
+        }
+    }
+
 
 #endregion
 #region // Binding to classes specified in the Mesh schema
@@ -142,7 +289,7 @@ public partial class ApplicationSelection : SelectionCatalog<GuigenCatalogApplic
         }
 
     #region // Conversion overrides
-    public override CatalogedApplication ConvertFromBindable(IBindable contact) =>
+    public override CatalogedApplication CreateFromBindable(IBindable contact) =>
         (contact as BoundApplication)?.Convert();
 
     public override BoundApplication ConvertToBindable(CatalogedApplication input) {
@@ -176,6 +323,14 @@ public partial class ApplicationSelection : SelectionCatalog<GuigenCatalogApplic
             }
 
         }
+
+    public override CatalogedApplication UpdateWithBindable(IBindable entry) {
+        var binding = entry as BoundApplication;
+        binding.Fill();
+        return binding.Bound as CatalogedApplication;
+        }
+
+
     #endregion
 
 

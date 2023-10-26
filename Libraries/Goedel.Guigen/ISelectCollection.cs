@@ -50,3 +50,5 @@ public class SelectList : ISelectCollection {
     //public GuiDialog GetDialog(IBindable data) => null;
 
     }
+
+

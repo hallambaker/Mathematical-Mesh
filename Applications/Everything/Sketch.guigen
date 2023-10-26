@@ -49,10 +49,8 @@ Section ContactSection "Contacts" "contacts"
 		Filter All "Others"
 
 Section DocumentSection "Documents" "Documents"
-	Button SendDocument
-	Button ShareDocument 
 	Chooser ChooseDocuments "Documents" "documents" 
-		View CatalogedDocument
+		View BoundDocument
 
 Section FeedSection "Feeds" "feeds"
 	Chooser ChooseFeed "Feeds" "feeds" 
@@ -410,17 +408,10 @@ Dialog BoundMessageTaskRequest "Mail" "task"
 
 
 // Messages have different classes because they have different response options
-Dialog BoundDocument "Message" "contacts"
-	Text Display "Display name"
-	Text Display "Display name"
-	Text Display "Display name"
-	Text Display "Display name"
-	Text Display "Display name"
-	Text Display "Display name"
-	Text Display "Display name"
-	Text Display "Display name"
+Dialog BoundDocument "Document" "contacts"
+	Text Filename "File name"
 
-Dialog BoundGroup "Message" "contacts"
+Dialog BoundGroup "Group" "contacts"
 	Text Display "Display name"
 
 Dialog BoundCredential "Passkey" "credentials"
@@ -439,7 +430,7 @@ Dialog BoundPasskey "Passkey" "password"
 Dialog BoundTask "Task" "task"
 	Text Title "Title"
 
-Dialog BoundAppointment "Message" "task"
+Dialog BoundAppointment "Appointment" "task"
 	Text Display "Display name"
 
 Dialog BoundBookmark "Bookmark" "bookmark"
@@ -473,7 +464,8 @@ Dialog BoundApplicationCallSign "Message" "contacts"
 	Inherit BoundApplication
 
 Dialog BoundDevice "Message" "plug"
-	Text Display "Display name"
+	Text LocalName "Name"
+	Text Udf "Udf"
 
 Dialog AccountUser "Account" "user"
 	Text Udf "Fingerprint"
@@ -609,15 +601,29 @@ Group DocumentTypes
 	Icon Zip "Zip" "file_zipper"
 	Icon Image "Image" "file_image"
 
-Group Devices
-	Icon Word "Word" "device_mobile"
-	Icon Word "Word" "device_server"
-	Icon Word "Word" "device_tv"
-	Icon Word "Word" "device_keyboard"
-	Icon Word "Word" "device_console"
-	Icon Word "Word" "device_headphones"
-	Icon Word "Word" "device_tablet"
-	Icon Word "Word" "device_desktop"
-	Icon Word "Word" "device_laptop"
-	Icon Word "Word" "device_plug"
+Group Platforms
+	Icon Windows "Windows" "platform_windows"
+	Icon MacOs "Windows" "platform_macos"
+	Icon Linux "Windows" "platform_linux"
+	Icon IOS "Windows" "platform_ios"
+	Icon Android "Windows" "platform_android"
+	Icon RasberryPi "RasberryPi" "platform_rasberry_pi"
 
+
+Group Devices
+	Icon Word "Offline" "vault"
+	Icon Word "Administrator" "device_administrator"
+	Icon Word "Workstation" "device_desktop"
+	Icon Word "Portable" "device_laptop"
+	Icon Word "Mobile" "device_mobile"
+	Icon Word "Tablet" "device_tablet"
+	Icon Word "Server" "device_server"
+	Icon Word "TV" "device_tv"
+	Icon Word "Input" "device_keyboard"
+	Icon Word "Console" "device_console"
+	Icon Word "Headphones" "device_headphones"
+	Icon Word "IoT" "device_plug"
+	Icon Word "Wired" "ethernet"
+	Icon Word "Wireless" "wireless"
+	Icon Word "Personal" "watch"
+	Icon Word "Networking" "wifi_router"

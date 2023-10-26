@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/25/2023 6:25:51 PM
+//  This file was automatically generated at 10/26/2023 4:13:52 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -5593,6 +5593,11 @@ public partial class CatalogedDocument : CatalogedEntry {
 	public virtual string?						Udf  {get; set;}
 
         /// <summary>
+        /// </summary>
+
+	public virtual string?						Filename  {get; set;}
+
+        /// <summary>
         ///Locator to be used to retrieve the data.
         /// </summary>
 
@@ -5640,6 +5645,8 @@ public partial class CatalogedDocument : CatalogedEntry {
 
 			{ "Udf", new PropertyString ("Udf", 
 					(IBinding data, string? value) => {(data as CatalogedDocument).Udf = value;}, (IBinding data) => (data as CatalogedDocument).Udf )},
+			{ "Filename", new PropertyString ("Filename", 
+					(IBinding data, string? value) => {(data as CatalogedDocument).Filename = value;}, (IBinding data) => (data as CatalogedDocument).Filename )},
 			{ "URI", new PropertyString ("URI", 
 					(IBinding data, string? value) => {(data as CatalogedDocument).URI = value;}, (IBinding data) => (data as CatalogedDocument).URI )},
 			{ "ContentType", new PropertyString ("ContentType", 

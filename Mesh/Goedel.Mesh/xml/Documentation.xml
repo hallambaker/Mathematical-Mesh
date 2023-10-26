@@ -4086,6 +4086,10 @@
             Document fingerprint.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument.Filename">
+            <summary>
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedDocument.URI">
              <summary>
             Locator to be used to retrieve the data.

@@ -2,6 +2,8 @@
 
 using Microsoft.UI.Xaml.Media.Animation;
 
+using System.Xml.Linq;
+
 namespace Goedel.Everything;
 
 #region // Bindings to classes specified through the Guigen schema.
@@ -30,10 +32,11 @@ public partial class BoundMessage : ISelectSummary, IBoundPresentation {
 
     public string? LabelValue => Subject;
 
-    public string? IconValue => "account.png";
+    public virtual string? IconValue => "account.png";
 
-    public Message Convert() {
+    public virtual Message Convert() {
         var result = new Message();
+        Fill();
         return result;
         }
 
@@ -45,14 +48,26 @@ public partial class BoundMessage : ISelectSummary, IBoundPresentation {
         return result;
         }
 
-    protected void Fill(SpoolIndexEntry input) {
+    protected virtual void Fill(SpoolIndexEntry input) {
         var message = input.Message;
         }
+
+    public virtual void Fill() {
+        }
+
     }
 
 
 public partial class BoundMessageConnectionRequest {
-    public static BoundMessageConnectionRequest Convert(SpoolIndexEntry input) {
+
+    public override string? IconValue => "account.png";
+
+    public override Message Convert() {
+        var result = new Message();
+        return result;
+        }
+
+    public static new BoundMessageConnectionRequest Convert(SpoolIndexEntry input) {
         var message = input.Message as RequestConnection;
         var result = new BoundMessageConnectionRequest();
         result.Fill(input);
@@ -62,9 +77,20 @@ public partial class BoundMessageConnectionRequest {
     }
 
 public partial class BoundMailMail {
-    public static BoundMailMail Convert(SpoolIndexEntry input) {
+
+
+    public override string? IconValue => "account.png";
+
+    public override Message Convert() {
+        var result = new Message();
+        return result;
+        }
+
+    public static new BoundMailMail Convert(SpoolIndexEntry input) {
         var message = input.Message as MessageMail;
-        var result = new BoundMailMail();
+        var result = new BoundMailMail() {
+            Bound = input
+            };
         result.Fill(input);
 
         return result;
@@ -72,7 +98,14 @@ public partial class BoundMailMail {
     }
 
 public partial class BoundMessageConfirmationRequest {
-    public static BoundMessageConfirmationRequest Convert(SpoolIndexEntry input) {
+
+    public override string? IconValue => "account.png";
+
+    public override Message Convert() {
+        var result = new Message();
+        return result;
+        }
+    public static new BoundMessageConfirmationRequest Convert(SpoolIndexEntry input) {
         var message = input.Message as Mesh.RequestConfirmation;
         var result = new BoundMessageConfirmationRequest();
         result.Fill(input);
@@ -82,7 +115,13 @@ public partial class BoundMessageConfirmationRequest {
     }
 
 public partial class BoundMessageConfirmationResponse {
-    public static BoundMessageConfirmationResponse Convert(SpoolIndexEntry input) {
+
+    public override string? IconValue => "account.png";
+    public override Message Convert() {
+        var result = new Message();
+        return result;
+        }
+    public static new BoundMessageConfirmationResponse Convert(SpoolIndexEntry input) {
         var message = input.Message as ResponseConfirmation;
         var result = new BoundMessageConfirmationResponse();
         result.Fill(input);
@@ -92,7 +131,13 @@ public partial class BoundMessageConfirmationResponse {
     }
 
 public partial class BoundMessageContactRequest {
-    public static BoundMessageContactRequest Convert(SpoolIndexEntry input) {
+
+    public override string? IconValue => "account.png";
+    public override Message Convert() {
+        var result = new Message();
+        return result;
+        }
+    public static new BoundMessageContactRequest Convert(SpoolIndexEntry input) {
         var message = input.Message as RequestConnection;
         var result = new BoundMessageContactRequest();
         result.Fill(input);
@@ -103,7 +148,13 @@ public partial class BoundMessageContactRequest {
 
 
 public partial class BoundMessageGroupInvitation {
-    public static BoundMessageGroupInvitation Convert(SpoolIndexEntry input) {
+
+    public override string? IconValue => "account.png";
+    public override Message Convert() {
+        var result = new Message();
+        return result;
+        }
+    public static new BoundMessageGroupInvitation Convert(SpoolIndexEntry input) {
         var message = input.Message as GroupInvitation;
         var result = new BoundMessageGroupInvitation();
         result.Fill(input);
@@ -113,7 +164,13 @@ public partial class BoundMessageGroupInvitation {
     }
 
 public partial class BoundMessageTaskRequest {
-    public static BoundMessageTaskRequest Convert(SpoolIndexEntry input) {
+
+    public override string? IconValue => "account.png";
+    public override Message Convert() {
+        var result = new Message();
+        return result;
+        }
+    public static new BoundMessageTaskRequest Convert(SpoolIndexEntry input) {
         var message = input.Message as RequestTask;
         var result = new BoundMessageTaskRequest();
         result.Fill(input);
@@ -206,6 +263,9 @@ public class GuigenSpoolLocal : SpoolLocal {
 
 public partial class MessageSelection : SelectionSpool<GuigenSpoolLocal, BoundMessage> {
 
+    ///<summary>Messages are immutable, they cannot be changed.</summary> 
+    public override bool Readonly => true;
+
     /// <summary>
     /// Constructor returning an instance of the selection data backer bound to the 
     /// catalog <paramref name="catalog"/>.
@@ -215,7 +275,7 @@ public partial class MessageSelection : SelectionSpool<GuigenSpoolLocal, BoundMe
         }
 
     #region // Conversion overrides
-    public override Message ConvertFromBindable(IBindable entry) =>
+    public override Message CreateFromBindable(IBindable entry) =>
         (entry as BoundMessage)?.Convert();
 
     public override BoundMessage ConvertToBindable(SpoolIndexEntry input) {
@@ -243,11 +303,18 @@ public partial class MessageSelection : SelectionSpool<GuigenSpoolLocal, BoundMe
             case RequestTask: {
                 return BoundMessageTaskRequest.Convert(input);
                 }
-            default:  {
+            default: {
                 return BoundMessage.Convert(input);
                 }
             }
         }
+
+    public override SpoolIndexEntry UpdateWithBindable(IBindable entry) {
+        var binding = entry as BoundMessage;
+        binding.Fill();
+        return binding.Bound as SpoolIndexEntry;
+        }
+    
     #endregion
 
 

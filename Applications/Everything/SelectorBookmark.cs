@@ -33,17 +33,16 @@ public partial class BoundBookmark : ISelectSummary, IBoundPresentation {
 
     public virtual CatalogedBookmark Convert() {
         var result = new CatalogedBookmark() {
-            Uri = Uri,
-            Title = Title,
-            Comments = Comments.ParseComments(),
             Uid = Udf.Nonce()
             };
 
+        Fill();
         return result;
         }
 
     public static BoundBookmark Convert(CatalogedBookmark entry) {
         var result = new BoundBookmark() {
+            Bound = entry,
             Uri = entry.Uri,
             Title = entry.Title,
             Comments = entry.Comments.ParseComments()
@@ -52,6 +51,15 @@ public partial class BoundBookmark : ISelectSummary, IBoundPresentation {
         return result;
 
         }
+
+    public virtual void Fill() {
+        var bound = Bound as CatalogedBookmark;
+
+        bound.Uri = Uri;
+        bound.Title = Title;
+        bound.Comments = Comments.ParseComments();
+        }
+
 
     public override IResult Validate() {
         return base.Validate();
@@ -176,7 +184,7 @@ public partial class BookmarkSelection : SelectionCatalog<GuigenCatalogBookmark,
         }
 
     #region // Conversion overrides
-    public override CatalogedBookmark ConvertFromBindable(IBindable input) =>
+    public override CatalogedBookmark CreateFromBindable(IBindable input) =>
         (input as BoundBookmark)?.Convert();
 
     public override BoundBookmark ConvertToBindable(CatalogedBookmark input) {
@@ -189,6 +197,13 @@ public partial class BookmarkSelection : SelectionCatalog<GuigenCatalogBookmark,
                 }
             }
         }
+
+    public override CatalogedBookmark UpdateWithBindable(IBindable entry) {
+        var binding = entry as BoundBookmark;
+        binding.Fill();
+        return binding.Bound as CatalogedBookmark;
+        }
+
     #endregion
 
 

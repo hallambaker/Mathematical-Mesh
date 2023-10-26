@@ -178,7 +178,7 @@ public partial class CredentialSelection : SelectionCatalog<GuigenCatalogCredent
         }
 
     #region // Conversion overrides
-    public override CatalogedCredential ConvertFromBindable(IBindable contact) =>
+    public override CatalogedCredential CreateFromBindable(IBindable contact) =>
         (contact as BoundPassword)?.Convert();
 
     public override BoundPassword ConvertToBindable(CatalogedCredential input) => BoundPassword.Convert(input);

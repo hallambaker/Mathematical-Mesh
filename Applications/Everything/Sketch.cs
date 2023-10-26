@@ -865,7 +865,7 @@ public partial class _BoundDocument : IParameter {
 
 
     ///<summary></summary> 
-    public virtual string Display { get; set;} 
+    public virtual string Filename { get; set;} 
 
 
     ///<inheritdoc/>
@@ -875,7 +875,7 @@ public partial class _BoundDocument : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundDocument,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as _BoundDocument).Display, (object data,string value) => (data as _BoundDocument).Display = value, "Display")
+            new GuiBoundPropertyString ((object data) => (data as _BoundDocument).Filename, (object data,string value) => (data as _BoundDocument).Filename = value, "Filename")
 
             });
     ///<summary>Validation</summary> 
@@ -1583,7 +1583,10 @@ public partial class _BoundDevice : IParameter {
 
 
     ///<summary></summary> 
-    public virtual string Display { get; set;} 
+    public virtual string LocalName { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string Udf { get; set;} 
 
 
     ///<inheritdoc/>
@@ -1593,7 +1596,8 @@ public partial class _BoundDevice : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundDevice,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as _BoundDevice).Display, (object data,string value) => (data as _BoundDevice).Display = value, "Display")
+            new GuiBoundPropertyString ((object data) => (data as _BoundDevice).LocalName, (object data,string value) => (data as _BoundDevice).LocalName = value, "LocalName"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundDevice).Udf, (object data,string value) => (data as _BoundDevice).Udf = value, "Udf")
 
             });
     ///<summary>Validation</summary> 
@@ -4169,6 +4173,7 @@ public class _EverythingMaui : Gui {
 		new GuiImage ("contact") , 
 		new GuiImage ("contacts") , 
 		new GuiImage ("credentials") , 
+		new GuiImage ("device_administrator") , 
 		new GuiImage ("device_console") , 
 		new GuiImage ("device_desktop") , 
 		new GuiImage ("device_headphones") , 
@@ -4184,6 +4189,7 @@ public class _EverythingMaui : Gui {
 		new GuiImage ("document_send") , 
 		new GuiImage ("document_share") , 
 		new GuiImage ("documents") , 
+		new GuiImage ("ethernet") , 
 		new GuiImage ("feeds") , 
 		new GuiImage ("file_excel") , 
 		new GuiImage ("file_image") , 
@@ -4198,6 +4204,12 @@ public class _EverythingMaui : Gui {
 		new GuiImage ("messages") , 
 		new GuiImage ("new") , 
 		new GuiImage ("password") , 
+		new GuiImage ("platform_android") , 
+		new GuiImage ("platform_ios") , 
+		new GuiImage ("platform_linux") , 
+		new GuiImage ("platform_macos") , 
+		new GuiImage ("platform_rasberry_pi") , 
+		new GuiImage ("platform_windows") , 
 		new GuiImage ("plug") , 
 		new GuiImage ("plus") , 
 		new GuiImage ("protocol_icon") , 
@@ -4211,8 +4223,12 @@ public class _EverythingMaui : Gui {
 		new GuiImage ("test_service") , 
 		new GuiImage ("triangle_exclamation_solid") , 
 		new GuiImage ("user") , 
+		new GuiImage ("vault") , 
 		new GuiImage ("video") , 
-		new GuiImage ("voice") 
+		new GuiImage ("voice") , 
+		new GuiImage ("watch") , 
+		new GuiImage ("wifi_router") , 
+		new GuiImage ("wireless") 
 		};
 
 
@@ -4389,12 +4405,12 @@ public class _EverythingMaui : Gui {
                 };
 
     ///<summary>Dialog DialogBoundDocument.</summary> 
-	public GuiDialog DialogBoundDocument { get; } = new ("BoundDocument", "Message", "contacts", () => new BoundDocument()) {
+	public GuiDialog DialogBoundDocument { get; } = new ("BoundDocument", "Document", "contacts", () => new BoundDocument()) {
                 IsBoundType = (object data) => data is BoundDocument
                 };
 
     ///<summary>Dialog DialogBoundGroup.</summary> 
-	public GuiDialog DialogBoundGroup { get; } = new ("BoundGroup", "Message", "contacts", () => new BoundGroup()) {
+	public GuiDialog DialogBoundGroup { get; } = new ("BoundGroup", "Group", "contacts", () => new BoundGroup()) {
                 IsBoundType = (object data) => data is BoundGroup
                 };
 
@@ -4419,7 +4435,7 @@ public class _EverythingMaui : Gui {
                 };
 
     ///<summary>Dialog DialogBoundAppointment.</summary> 
-	public GuiDialog DialogBoundAppointment { get; } = new ("BoundAppointment", "Message", "task", () => new BoundAppointment()) {
+	public GuiDialog DialogBoundAppointment { get; } = new ("BoundAppointment", "Appointment", "task", () => new BoundAppointment()) {
                 IsBoundType = (object data) => data is BoundAppointment
                 };
 
@@ -4579,10 +4595,8 @@ public class _EverythingMaui : Gui {
 	    SectionDocumentSection.Gui = this;
 	    SectionDocumentSection.Active = () => StateDefault;
 	    SectionDocumentSection.Entries =  new () {  
-			new GuiButton ("SendDocument", ActionSendDocument), 
-			new GuiButton ("ShareDocument", ActionShareDocument), 
 			new GuiChooser ("ChooseDocuments", "Documents", "documents", 0, new () { 
-				new GuiViewBinding (BindingCatalogedDocument)
+				new GuiViewDialog (DialogBoundDocument)
 				}) 		    
             };
 
@@ -4941,7 +4955,7 @@ public class _EverythingMaui : Gui {
 
         BoundMessageTaskRequest.IsBacker = (object data) => DialogBoundMessageTaskRequest.IsBacker(data);
 	    DialogBoundDocument.Entries = new () { 
-			new GuiText ("Display", "Display name", 0)			
+			new GuiText ("Filename", "File name", 0)			
 		    };
 
         BoundDocument.IsBacker = (object data) => DialogBoundDocument.IsBacker(data);
@@ -5038,7 +5052,8 @@ public class _EverythingMaui : Gui {
 
         BoundApplicationCallSign.IsBacker = (object data) => DialogBoundApplicationCallSign.IsBacker(data);
 	    DialogBoundDevice.Entries = new () { 
-			new GuiText ("Display", "Display name", 0)			
+			new GuiText ("LocalName", "Name", 0), 
+			new GuiText ("Udf", "Udf", 1)			
 		    };
 
         BoundDevice.IsBacker = (object data) => DialogBoundDevice.IsBacker(data);

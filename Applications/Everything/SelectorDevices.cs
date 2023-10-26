@@ -1,4 +1,6 @@
 ﻿using Goedel.Cryptography.Dare;
+using System.Xml.Linq;
+
 namespace Goedel.Everything;
 
 #region // Bindings to classes specified through the Guigen schema.
@@ -25,24 +27,35 @@ public partial class DeviceSection {
 // Documented in Guigen output
 public partial class BoundDevice : ISelectSummary, IBoundPresentation {
 
-    public object Bound { get; set; }
 
-    public string? LabelValue => Display;
+    public string? LabelValue => LocalName;
 
-    public string? IconValue => "account.png";
+    public string? IconValue => "device_plug.png";
 
     public CatalogedDevice Convert() {
-        var result = new CatalogedDevice();
+        var result = new CatalogedDevice() {
+            };
 
+        Fill();
         return result;
         }
 
-    public static BoundDevice Convert(CatalogedDevice application) {
-        var result = new BoundDevice();
+    public static BoundDevice Convert(CatalogedDevice entry) {
+        var result = new BoundDevice() {
+            LocalName = entry.LocalName,
+            Udf = entry.Udf
 
+            };
         return result;
 
         }
+
+    public virtual void Fill() {
+        var bound = Bound as CatalogedDevice;
+
+        bound.LocalName = LocalName;
+        }
+
 
     }
 
@@ -136,13 +149,17 @@ public partial class DeviceSelection : SelectionCatalog<GuigenCatalogDevice,
         }
 
     #region // Conversion overrides
-    public override CatalogedDevice ConvertFromBindable(IBindable contact) =>
+    public override CatalogedDevice CreateFromBindable(IBindable contact) =>
         (contact as BoundDevice)?.Convert();
 
     public override BoundDevice ConvertToBindable(CatalogedDevice input) => BoundDevice.Convert(input);
     #endregion
 
-
+    public override CatalogedDevice UpdateWithBindable(IBindable entry) {
+        var binding = entry as BoundDevice;
+        binding.Fill();
+        return binding.Bound as CatalogedDevice;
+        }
     }
 
 

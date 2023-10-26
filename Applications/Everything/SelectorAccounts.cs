@@ -123,7 +123,7 @@ public partial class AccountSelection : SelectionCatalog<GuigenCatalogContact,
         }
 
     #region // Conversion overrides
-    public override CatalogedContact ConvertFromBindable(IBindable contact) {
+    public override CatalogedContact CreateFromBindable(IBindable contact) {
         switch (contact) {
             case BoundContactPerson boundContactPerson:
             return Convert(boundContactPerson);

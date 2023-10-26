@@ -26,6 +26,10 @@ public abstract class SelectionStore<TStore, TPersist, TEnum, TBindable> : ISele
 
     public TStore Store { get; }
 
+    ///<summary>If true, entries in the store are immutable and cannot be changed.</summary> 
+    public virtual bool Readonly => false;
+
+
     public ObservableCollection<IBindable> Entries { get; } = new();
 
     public SelectionStore(TStore store) {
@@ -35,13 +39,19 @@ public abstract class SelectionStore<TStore, TPersist, TEnum, TBindable> : ISele
     ///<summary>Type check</summary> 
     public bool IsPersistedType(object data) => data is TPersist;
 
+
     ///<inheritdoc/>
     public virtual IEnumerator GetEnumerator() => Entries.GetEnumerator();
 
-    ///<summary>Convert the Gui contact form to a cataloged contact</summary> 
-    public abstract TEnum ConvertFromBindable(IBindable contact);
+    ///<summary>Create a new entry from information in the GUI.</summary> 
+    public abstract TEnum CreateFromBindable(IBindable contact);
 
-    ///<summary>Convert the Gui contact form to a cataloged contact</summary> 
+    ///<summary>Update the bound object with information from the GUI and return the 
+    ///updated object.</summary> 
+    public abstract TPersist UpdateWithBindable(IBindable contact);
+
+
+    ///<summary>Construct a GUI binding for the entry.</summary> 
     public abstract TBindable ConvertToBindable(TPersist cataloged);
 
 
@@ -80,7 +90,7 @@ public abstract class SelectionCatalog<TCatalog,TPersist,TBindable> : SelectionS
         }
 
     public override void Add(IBoundPresentation item) {
-        var contact = ConvertFromBindable(item);
+        var contact = CreateFromBindable(item);
         Catalog.New(contact);
         Entries.Add(item);
         }

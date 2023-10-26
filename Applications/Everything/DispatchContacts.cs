@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Specialized;
 using System.Runtime.CompilerServices;
+using System.Xml.Linq;
 
 using Contact = Goedel.Mesh.Contact;
 
@@ -44,7 +45,60 @@ public partial class BoundContactPerson : ISelectSummary, IBoundPresentation {
 
     public string? IconValue => "account.png";
 
-    //public static Func<object, GuiDialog> GetDialog { get; set; }
+    static PersonName Default = new PersonName() {
+        First = "Unspecified",
+        Last = "Contact"
+        };
+
+    public virtual CatalogedContact Convert() {
+        var result = new CatalogedContact() {
+            Key = Udf.Nonce()
+            };
+        Fill();
+        return result;
+        }
+
+    public static BoundContactPerson Convert(CatalogedContact input) {
+        var contact = input.Contact as ContactPerson;
+        var name = contact.CommonNames?.FirstOrDefault() ?? Default;
+
+        var result = new BoundContactPerson() {
+            First = name.First,
+            Last = name.Last,
+            Prefix = name.Prefix,
+            Suffix = name.Suffix
+            };
+
+        return result;
+
+        }
+
+    public virtual void Fill() {
+        var bound = Bound as CatalogedContact;
+
+        var personName = new PersonName() {
+            FullName = Display,
+            Prefix = Prefix,
+            Suffix = Suffix,
+            First = First,
+            Last = Last
+            };  
+
+        var contact = new ContactPerson() {
+            CommonNames = new List<PersonName>() { personName },
+            NetworkAddresses = new()
+            };
+
+        bound.Contact = contact;
+        }
+
+
+    public override IResult Validate() {
+        return base.Validate();
+        }
+
+
+
 
     }
 
@@ -144,53 +198,18 @@ public partial class ContactSelection : SelectionCatalog<GuigenCatalogContact,
         }
 
     #region // Conversion overrides
-    public override CatalogedContact ConvertFromBindable(IBindable contact) {
-        switch (contact) {
-            case BoundContactPerson boundContactPerson:
-            return Convert(boundContactPerson);
-            }
-        return null;
+    public override CatalogedContact CreateFromBindable(IBindable input) =>
+            (input as BoundContactPerson)?.Convert();
+
+
+    public override BoundContactPerson ConvertToBindable(CatalogedContact input) =>
+        BoundContactPerson.Convert(input);
+
+    public override CatalogedContact UpdateWithBindable(IBindable entry) {
+        var binding = entry as BoundContactPerson;
+        binding.Fill();
+        return binding.Bound as CatalogedContact;
         }
-
-    public CatalogedContact Convert(BoundContactPerson input) {
-
-        var personName = new PersonName() {
-            FullName = input.Display,
-            Prefix = input.Prefix,
-            Suffix = input.Suffix,
-            First = input.First,
-            Last = input.Last
-            };
-
-
-        var contact = new ContactPerson() {
-            CommonNames = new List<PersonName>() { personName },
-            NetworkAddresses = new()
-            };
-
-        // should add in a second listbox for additional names.
-
-        var result = new CatalogedContact(contact, false);
-
-        return result;
-        }
-
-    public override BoundContactPerson ConvertToBindable(CatalogedContact input) {
-
-        var contact = input.Contact as ContactPerson;
-        var name = contact.CommonNames?.FirstOrDefault() ?? Default;
-
-        var result = new BoundContactPerson() {
-            First = name.First,
-            Last = name.Last,
-            Prefix = name.Prefix,
-            Suffix = name.Suffix
-            };
-
-        return result;
-        }
-
-
     #endregion
 
 
@@ -199,3 +218,14 @@ public partial class ContactSelection : SelectionCatalog<GuigenCatalogContact,
 
 
 #endregion
+
+
+
+
+
+
+
+
+
+
+
