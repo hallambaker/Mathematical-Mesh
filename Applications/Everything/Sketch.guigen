@@ -45,9 +45,6 @@ Section ContactSection "Contacts" "contacts"
 	Button RequestContact
 	Chooser ChooseContact "Contacts" "contact_other" 
 		View BoundContactPerson
-		//Entry BoundContactBusiness
-		//Entry BoundContactPlace
-
 		Filter Self "Self"
 		Filter All "Others"
 
@@ -59,21 +56,21 @@ Section DocumentSection "Documents" "Documents"
 
 Section FeedSection "Feeds" "feeds"
 	Chooser ChooseFeed "Feeds" "feeds" 
-		View CatalogedFeed
+		View BoundFeed
 
 
 Section GroupSection "Groups" "groups"
 	Chooser ChooseGroup "User" "account_group" 
 		View CatalogedGroup
 
-
 Section CredentialSection "Credentials" "credentials"
 	Chooser ChooseCredential "Credentials" "credentials" 
-		View CatalogedCredential
+		View BoundPassword
+		View BoundPasskey
 
 Section TaskSection "Tasks" "tasks"
 	Chooser ChooseTask "Tasks" "Tasks" 
-		View CatalogedTask
+		View BoundTask
 
 Section CalendarSection "Calendar" "calendar"
 	Chooser ChooseAppointment "Tasks" "Tasks" 
@@ -81,7 +78,8 @@ Section CalendarSection "Calendar" "calendar"
 
 Section BookmarkSection "Bookmark" "bookmark"
 	Chooser ChooseBookmark "Bookmark" "Bookmark" 
-		View CatalogedBookmark
+		View BoundBookmark
+		View BoundFeed
 
 Section ApplicationSection "Applications" "applications"
 	Button AddMailAccount	
@@ -414,26 +412,47 @@ Dialog BoundMessageTaskRequest "Mail" "task"
 // Messages have different classes because they have different response options
 Dialog BoundDocument "Message" "contacts"
 	Text Display "Display name"
+	Text Display "Display name"
+	Text Display "Display name"
+	Text Display "Display name"
+	Text Display "Display name"
+	Text Display "Display name"
+	Text Display "Display name"
+	Text Display "Display name"
 
 Dialog BoundGroup "Message" "contacts"
 	Text Display "Display name"
 
-Dialog BoundPassword "Message" "contacts"
-	Text Display "Display name"
+Dialog BoundCredential "Passkey" "credentials"
+	Text Protocol "Protocol"
+	Text Service "Service"
+	Text Username "Username"
 
-Dialog BoundCredential "Message" "contacts"
-	Text Display "Display name"
+Dialog BoundPassword "Password" "password"
+	Inherit BoundCredential
+	Text Password "Password"
 
-Dialog BoundTask "Message" "task"
-	Text Display "Display name"
+Dialog BoundPasskey "Passkey" "password"
+	Inherit BoundCredential
+
+
+Dialog BoundTask "Task" "task"
+	Text Title "Title"
 
 Dialog BoundAppointment "Message" "task"
 	Text Display "Display name"
 
-Dialog BoundBookmark "Message" "bookmark"
-	Text Display "Display name"
-Dialog BoundFeed "Message" "bookmark"
+Dialog BoundBookmark "Bookmark" "bookmark"
+	Text Title "Title"
+	Text Uri "Link"
+		Error LinkIsNull "Must specify a URI"
+			|(Uri != null)
+	Text Comments "Comments"
+
+
+Dialog BoundFeed "Feed" "feeds"
 	Inherit BoundBookmark
+	Text Protocol "Protocol"
 
 Dialog BoundApplication "Message" "contacts"
 	Text Display "Display name"
@@ -537,8 +556,6 @@ Binding CatalogedGroup
 	//Text ServiceAddress "Address"
 
 
-Binding CatalogedFeed
-
 Binding CatalogedContact
 	Type Default  "icon"
 	Type Self "icon"
@@ -555,11 +572,6 @@ Binding CatalogedTask
 	Text LocalName "Name"
 	Text Title "Title"
 
-Binding CatalogedBookmark
-	Text LocalName "Name"
-	Text Uri "Uri"
-	Text Title "Title"
-	Text Description "Description"
 
 Binding CatalogedApplication
 	Text LocalName "Name"

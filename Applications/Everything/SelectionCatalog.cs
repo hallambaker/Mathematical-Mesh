@@ -6,6 +6,18 @@ using System.Collections;
 
 namespace Goedel.Everything;
 
+public static class Extensions {
+    public static List<string> ParseComments(this string text) =>
+        new List<string> { text };
+
+    public static string ParseComments(this List<string> texts) =>
+        texts.First();
+
+
+
+    public static string NullifyIfEmpty (this string text) => text == "" ? null : text;
+    }
+
 
 public abstract class SelectionStore<TStore, TPersist, TEnum, TBindable> : ISelectCollection
                     where TStore : Store
@@ -44,6 +56,9 @@ public abstract class SelectionStore<TStore, TPersist, TEnum, TBindable> : ISele
 
     ///<inheritdoc/>
     public abstract void Remove(IBoundPresentation item);
+
+
+
     }
 
 

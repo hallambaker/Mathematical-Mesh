@@ -84,7 +84,9 @@ public class GuigenFieldSet : IWidget {
         if (data == null) {
             return;
             }
-
+        if (!data.Binding.IsType(data)) {
+            return;
+            }
         foreach (var field in Fields) {
             field.SetField(data);
             }

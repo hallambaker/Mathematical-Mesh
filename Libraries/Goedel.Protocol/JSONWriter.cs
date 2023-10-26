@@ -133,6 +133,11 @@ public class JsonWriter : Writer {
     /// <summary>Write string.</summary>
     /// <param name="data">Elements to write</param>
     public override void WriteString(string data) {
+        if (data is null) {
+            Output.Write("null");
+            return;
+            }
+
         Output.Write("\"");
         foreach (char c in data) {
             if (c == '\"') {

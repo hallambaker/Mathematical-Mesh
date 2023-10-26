@@ -1,4 +1,6 @@
 ﻿using Goedel.Cryptography.Dare;
+using System.Xml.Linq;
+
 namespace Goedel.Everything;
 
 #region // Bindings to classes specified through the Guigen schema.
@@ -24,11 +26,27 @@ public partial class TaskSection {
 // Documented in Guigen output
 public partial class BoundTask : ISelectSummary, IBoundPresentation {
 
-    public object Bound { get; set; }
+    public string? LabelValue => Title;
 
-    public string? LabelValue => Display;
+    public string? IconValue => "task.png";
 
-    public string? IconValue => "account.png";
+    public virtual CatalogedTask Convert() {
+        var result = new CatalogedTask() {
+            Title = Title,
+            Uid = Udf.Nonce()
+            };
+
+        return result;
+        }
+
+    public static BoundTask Convert(CatalogedTask entry) {
+        var result = new BoundTask() {
+            Title = entry.Title
+            };
+
+        return result;
+
+        }
 
 
     }
@@ -122,13 +140,11 @@ public partial class TaskSelection : SelectionCatalog<GuigenCatalogTasks,
         }
 
     #region // Conversion overrides
-    public override CatalogedTask ConvertFromBindable(IBindable contact) {
-        throw new NYI();
-        }
+    public override CatalogedTask ConvertFromBindable(IBindable input) =>
+        (input as BoundTask)?.Convert();
 
-    public override BoundTask ConvertToBindable(CatalogedTask input) {
-        throw new NYI();
-        }
+    public override BoundTask ConvertToBindable(CatalogedTask input) =>
+        BoundTask.Convert(input);
     #endregion
 
 

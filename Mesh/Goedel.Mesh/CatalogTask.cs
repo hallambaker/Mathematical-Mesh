@@ -107,13 +107,13 @@ public partial class CatalogedTask {
     /// <summary>
     /// The primary key used to catalog the entry. 
     /// </summary>
-    public override string _PrimaryKey => Key;
+    public override string _PrimaryKey => Uid;
     #endregion
     #region // Factory methods and constructors
     /// <summary>
     /// Default constructor
     /// </summary>
-    public CatalogedTask() => Key = Udf.Nonce();
+    public CatalogedTask() => Uid = Udf.Nonce();
 
     #endregion
 

@@ -4,69 +4,17 @@ using System.Resources;
 
 namespace Goedel.Everything;
 
+// List entries
+// ToDo: Clean up display of list items. Use four cornered presentation
+// ToDo: Fix ListBox scroll bars
+// ToDo: Validate inputs to list box add before adding
+// ToDo: Filter enumerated results to entries of a particular type
 
+// Nit: Better icons for passwords/passkeys.
 
-// ToDo: Suppress display of the Account if there is no account yet.
+// ToDo: Password / Contact / Bookmark / etc. - create useful display format
+// ToDo: Copy Uid etc into restored cataloged object on copy.
 
-// ToDo: Test Service
-// ToDo: Create Account - Basic implementation
-// ToDo: Create Account - Account name rejected
-// ToDo: Create account - Server not found
-// ToDo: Create account - Timeout
-
-// ToDo: Select different account
-
-// ToDo: Connect via activation code
-// ToDo: Display dynamic QR code on admin device
-// ToDo: Scan static QR code on IoT device
-
-// ToDo: List Connected Devices
-
-// ToDo: Create default contact
-// ToDo: Select contact
-// ToDo: Remote contact exchange
-// ToDo: QR code contact exchange
-
-// ToDo: Set permissions for contact
-
-// ToDo: Create Email credentials
-// ToDo: Create Developer credentials
-
-// ToDo: Confirmation challenge
-
-
-// ToDo: Bookmarks
-// ToDo: Credentials
-// ToDo: Settings
-// ToDo: Feeds
-
-// ToDo: Documents
-// ToDo: Document upload
-// ToDo: Document download
-
-// ToDo: Document annotation
-
-// ToDo: File Viewer - image
-// ToDo: File Viewer - video
-// ToDo: File Viewer - sequence
-
-// ToDo: Group create
-// ToDo: Group list
-// ToDo: Group add / delete members
-// ToDo: Group accounting
-
-
-// ToDo: Discussions - start
-// ToDo: Discussions - list
-// ToDo: Discussions - add user
-// ToDo: Start voice
-// ToDo: Start video
-
-// ToDo: Server upload document
-// ToDo: Server enroll signature in notary chain
-// ToDo: Server maintain notary chain
-// ToDo: Client create notary attestation chain
-// ToDo: Client verify notary atestation chain.
 
 
 public partial class EverythingMaui {
@@ -111,6 +59,7 @@ public partial class EverythingMaui {
 
         SectionMessageSection.BindData = () => accounts.MessageSection;
         SectionContactSection.BindData = () => accounts.Contacts;
+        SectionBookmarkSection.BindData = () => accounts.Bookmarks;
         SectionDocumentSection.BindData = () => accounts.Documents;
         SectionGroupSection.BindData = () => accounts.Groups;
         SectionFeedSection.BindData = () => accounts.Feeds;

@@ -38,16 +38,6 @@ public partial class GroupSelection : ApplicationSelection {
     public GroupSelection(GuigenCatalogApplication catalog) : base(catalog) {
         }
 
-    //#region // Conversion overrides
-    //public override CatalogedApplication ConvertFromBindable(IBindable contact) {
-    //    throw new NYI();
-    //    }
-
-    //public override BoundApplication ConvertToBindable(CatalogedApplication input) {
-    //    throw new NYI();
-    //    }
-    //#endregion
-
 
     }
 

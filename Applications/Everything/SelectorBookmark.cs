@@ -1,4 +1,6 @@
 ﻿using Goedel.Cryptography.Dare;
+using System.Xml.Linq;
+
 namespace Goedel.Everything;
 
 #region // Bindings to classes specified through the Guigen schema.
@@ -24,20 +26,61 @@ public partial class BookmarkSection {
 // Documented in Guigen output
 public partial class BoundBookmark : ISelectSummary, IBoundPresentation {
 
-    public object Bound { get; set; }
+    public string? LabelValue => Title.NullifyIfEmpty() ??
+            Uri.NullifyIfEmpty();
 
-    public string? LabelValue => Display;
+    public virtual string? IconValue => "bookmark.png";
 
-    public string? IconValue => "account.png";
-
-    public CatalogedBookmark Convert() {
-        var result = new CatalogedBookmark();
+    public virtual CatalogedBookmark Convert() {
+        var result = new CatalogedBookmark() {
+            Uri = Uri,
+            Title = Title,
+            Comments = Comments.ParseComments(),
+            Uid = Udf.Nonce()
+            };
 
         return result;
         }
 
-    public static BoundBookmark Convert(CatalogedBookmark application) {
-        var result = new BoundBookmark();
+    public static BoundBookmark Convert(CatalogedBookmark entry) {
+        var result = new BoundBookmark() {
+            Uri = entry.Uri,
+            Title = entry.Title,
+            Comments = entry.Comments.ParseComments()
+            };
+
+        return result;
+
+        }
+
+    public override IResult Validate() {
+        return base.Validate();
+        }
+    }
+
+public partial class BoundFeed {
+
+    public override string? IconValue => "feeds.png";
+
+    public override CatalogedFeed Convert() {
+        var result = new CatalogedFeed() {
+            Uri = Uri,
+            Title = Title,
+            Comments = Comments.ParseComments(),
+            Uid = Udf.Nonce(),
+            Protocol = Protocol
+            };
+
+        return result;
+        }
+
+    public static BoundFeed Convert(CatalogedFeed entry) {
+        var result = new BoundFeed() {
+            Uri = entry.Uri,
+            Title = entry.Title,
+            Comments = entry.Comments.ParseComments(),
+            Protocol = entry.Protocol
+            };
 
         return result;
 

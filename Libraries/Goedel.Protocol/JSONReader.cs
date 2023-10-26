@@ -668,6 +668,9 @@ public partial class JsonReader : Reader {
     /// <returns>The data read</returns>
     public override string ReadString() {
         GetToken();
+        if (TokenType == Token.Null) {
+            return null;
+            }
         if (TokenType != Token.String) {
             throw new InvalidInput("Expected \"String\"");
             }

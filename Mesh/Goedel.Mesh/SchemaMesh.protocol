@@ -1104,13 +1104,7 @@
 	Structure CatalogedTask
 		Inherits CatalogedEntry
 		Struct Enveloped<Engagement> EnvelopedTask
-		// Calendar entry
-		// Geolocation entry
 		String Title
-		String Key
-			Description
-				|Unique key.
-
 
 		
 

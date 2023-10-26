@@ -4949,11 +4949,6 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedTask.Key">
-             <summary>
-            Unique key.
-             </summary>
-        </member>
         <member name="P:Goedel.Mesh.CatalogedTask._Binding">
             <summary>Implement IBinding</summary> 
         </member>

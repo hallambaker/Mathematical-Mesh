@@ -25,25 +25,69 @@ public partial class CredentialSection {
 // Documented in Guigen output
 public partial class BoundPassword : ISelectSummary, IBoundPresentation {
 
-    public object Bound { get; set; }
 
-    public string? LabelValue => Display;
+    public string? LabelValue => Service.NullifyIfEmpty() ?? "Unknown";
 
-    public string? IconValue => "account.png";
+    public string? IconValue => "password.png";
 
     public CatalogedCredential Convert() {
-        var result = new CatalogedCredential();
+        var result = new CatalogedCredential() {
+            Protocol = Protocol,
+            Service = Service,
+            Username = Username,
+            Password = Password,
+            Uid = Udf.Nonce()
+            };
 
         return result;
         }
 
-    public static BoundPassword Convert(CatalogedCredential application) {
-        var result = new BoundPassword();
+    public static BoundPassword Convert(CatalogedCredential entry) {
+        var result = new BoundPassword() {
+            Protocol = entry.Protocol,
+            Service = entry.Service,
+            Username = entry.Username,
+            Password = entry.Password
+            };
 
         return result;
 
         }
     }
+
+public partial class BoundPasskey: ISelectSummary, IBoundPresentation {
+
+
+
+    public string? LabelValue => Service.NullifyIfEmpty() ?? "Unknown";
+
+    public string? IconValue => "credentials.png";
+
+    public CatalogedCredential Convert() {
+        var result = new CatalogedCredential() {
+            Protocol = Protocol,
+            Service = Service,
+            Username = Username,
+            Uid = Udf.Nonce()
+            };
+
+        return result;
+        }
+
+    public static BoundPasskey Convert(CatalogedCredential entry) {
+        var result = new BoundPasskey() {
+            Protocol = entry.Protocol,
+            Service = entry.Service,
+            Username = entry.Username
+            };
+
+        return result;
+
+        }
+    }
+
+
+
 
 #endregion
 #region // Binding to classes specified in the Mesh schema

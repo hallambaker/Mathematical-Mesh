@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/24/2023 7:40:54 PM
+//  This file was automatically generated at 10/25/2023 6:25:51 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -7547,12 +7547,6 @@ public partial class CatalogedTask : CatalogedEntry {
 
 	public virtual string?						Title  {get; set;}
 
-        /// <summary>
-        ///Unique key.
-        /// </summary>
-
-	public virtual string?						Key  {get; set;}
-
 
 
     ///<summary>Implement IBinding</summary> 
@@ -7569,9 +7563,7 @@ public partial class CatalogedTask : CatalogedEntry {
 					(IBinding data, object? value) => {(data as CatalogedTask).EnvelopedTask = value as Enveloped<Engagement>;}, (IBinding data) => (data as CatalogedTask).EnvelopedTask,
 					false, ()=>new  Enveloped<Engagement>(), ()=>new Enveloped<Engagement>())} ,
 			{ "Title", new PropertyString ("Title", 
-					(IBinding data, string? value) => {(data as CatalogedTask).Title = value;}, (IBinding data) => (data as CatalogedTask).Title )},
-			{ "Key", new PropertyString ("Key", 
-					(IBinding data, string? value) => {(data as CatalogedTask).Key = value;}, (IBinding data) => (data as CatalogedTask).Key )}
+					(IBinding data, string? value) => {(data as CatalogedTask).Title = value;}, (IBinding data) => (data as CatalogedTask).Title )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
