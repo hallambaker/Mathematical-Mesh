@@ -358,7 +358,7 @@ public partial class TestCLI : CommandLineInterpreter {
         var result = Dispatch($"calendar get {key}") as ResultEntry;
         var entry = result.CatalogEntry as CatalogedTask;
 
-        (key == entry.Key).TestTrue();
+        (key == entry.Uid).TestTrue();
         return true;
         }
 

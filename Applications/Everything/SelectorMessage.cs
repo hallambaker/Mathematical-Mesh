@@ -32,7 +32,9 @@ public partial class BoundMessage : ISelectSummary, IBoundPresentation {
 
     public string? LabelValue => Subject;
 
-    public virtual string? IconValue => "account.png";
+    public virtual string? IconValue => IsRead ? "mail_read" : "mail_unread";
+
+    public bool IsRead => false;
 
     public virtual Message Convert() {
         var result = new Message();
@@ -60,7 +62,7 @@ public partial class BoundMessage : ISelectSummary, IBoundPresentation {
 
 public partial class BoundMessageConnectionRequest {
 
-    public override string? IconValue => "account.png";
+    public override string? IconValue => IsRead ? "connect_read" : "connect_unread";
 
     public override Message Convert() {
         var result = new Message();
@@ -78,8 +80,7 @@ public partial class BoundMessageConnectionRequest {
 
 public partial class BoundMailMail {
 
-
-    public override string? IconValue => "account.png";
+    public override string? IconValue => IsRead ? "mail_read" : "mail_unread";
 
     public override Message Convert() {
         var result = new Message();
@@ -99,7 +100,7 @@ public partial class BoundMailMail {
 
 public partial class BoundMessageConfirmationRequest {
 
-    public override string? IconValue => "account.png";
+    public override string? IconValue => IsRead ? "confirm_read" : "confirm_unread";
 
     public override Message Convert() {
         var result = new Message();
@@ -116,7 +117,13 @@ public partial class BoundMessageConfirmationRequest {
 
 public partial class BoundMessageConfirmationResponse {
 
-    public override string? IconValue => "account.png";
+    public override string? IconValue => 
+        IsRead ? (Accepted ? "confirm_accept_read" : "confirm_reject_read") :
+                (Accepted ? "confirm_accept_unread" : "confirm_reject_unread");
+
+    public bool Accepted => false;
+
+
     public override Message Convert() {
         var result = new Message();
         return result;
@@ -132,7 +139,7 @@ public partial class BoundMessageConfirmationResponse {
 
 public partial class BoundMessageContactRequest {
 
-    public override string? IconValue => "account.png";
+    public override string? IconValue => IsRead ? "contact_read" : "contact_unread";
     public override Message Convert() {
         var result = new Message();
         return result;
@@ -149,7 +156,7 @@ public partial class BoundMessageContactRequest {
 
 public partial class BoundMessageGroupInvitation {
 
-    public override string? IconValue => "account.png";
+    public override string? IconValue => IsRead ? "group_read" : "group_unread";
     public override Message Convert() {
         var result = new Message();
         return result;
@@ -165,7 +172,12 @@ public partial class BoundMessageGroupInvitation {
 
 public partial class BoundMessageTaskRequest {
 
-    public override string? IconValue => "account.png";
+    public override string? IconValue =>
+    IsRead ? (Accepted ? "appointment_read" : "appointment_unread") :
+            (Accepted ? "task_read" : "task_unread");
+
+    public bool Accepted => false;
+
     public override Message Convert() {
         var result = new Message();
         return result;

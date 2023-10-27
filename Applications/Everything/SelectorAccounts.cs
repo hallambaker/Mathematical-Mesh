@@ -21,7 +21,6 @@ NB This will need very special treatment as it is not backed by a catalog in the
 
 public partial class BoundAccount : ISelectSummary, IBoundPresentation {
 
-    public object Bound { get; set; }
 
     public CatalogedEntry CatalogedEntry {get; set; }
 
@@ -112,7 +111,7 @@ public partial class BoundAccount : ISelectSummary, IBoundPresentation {
 #region // Selection Catalog backing type.
 
 public partial class AccountSelection : SelectionCatalog<GuigenCatalogContact,
-            CatalogedContact, BoundContactPerson> {
+            CatalogedContact, BoundAccount> {
 
     /// <summary>
     /// Constructor returning an instance of the selection data backer bound to the 
@@ -124,63 +123,21 @@ public partial class AccountSelection : SelectionCatalog<GuigenCatalogContact,
 
     #region // Conversion overrides
     public override CatalogedContact CreateFromBindable(IBindable contact) {
-        switch (contact) {
-            case BoundContactPerson boundContactPerson:
-            return Convert(boundContactPerson);
-            }
-        return null;
+        throw new NYI();
         }
 
-    public CatalogedContact Convert(BoundContactPerson input) {
 
-        var personName = new PersonName() {
-            FullName = input.Display,
-            Prefix = input.Prefix,
-            Suffix = input.Suffix,
-            First = input.First,
-            Last = input.Last
-            };
-
-
-        var contact = new ContactPerson() {
-            CommonNames = new List<PersonName>() { personName },
-            NetworkAddresses = new()
-            };
-
-        // should add in a second listbox for additional names.
-
-        var result = new CatalogedContact(contact, false);
-
-        return result;
+    public override BoundAccount ConvertToBindable(CatalogedContact input) {
+        throw new NYI();
         }
 
-    public override BoundContactPerson ConvertToBindable(CatalogedContact input) {
-        var result = new BoundContactPerson() {
-            First = "Existing",
-            Last = "Item"
-            };
 
-        return result;
-        } 
+    public override CatalogedContact UpdateWithBindable(IBindable entry) {
+        throw new NYI();
+        }
+
+
     #endregion
-
-    //public override BoundContactBusiness ConvertToBindable(CatalogedContact input) {
-    //    var result = new BoundContactBusiness() {
-    //        Display = "Existing"
-    //        };
-
-    //    return result;
-    //    }
-
-    //public override BoundContactPlace ConvertToBindable(CatalogedContact input) {
-    //    var result = new BoundContactPlace() {
-    //        Display = "Existing"
-    //        };
-
-    //    return result;
-    //    }
-
-
     }
 
 

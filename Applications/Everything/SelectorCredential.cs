@@ -53,6 +53,10 @@ public partial class BoundPassword : ISelectSummary, IBoundPresentation {
         return result;
 
         }
+
+    public virtual void Fill() {
+        }
+
     }
 
 public partial class BoundPasskey: ISelectSummary, IBoundPresentation {
@@ -182,6 +186,13 @@ public partial class CredentialSelection : SelectionCatalog<GuigenCatalogCredent
         (contact as BoundPassword)?.Convert();
 
     public override BoundPassword ConvertToBindable(CatalogedCredential input) => BoundPassword.Convert(input);
+
+    public override CatalogedCredential UpdateWithBindable(IBindable entry) {
+        var binding = entry as BoundPassword;
+        binding.Fill();
+        return binding.Bound as CatalogedCredential;
+        }
+
     #endregion
 
 

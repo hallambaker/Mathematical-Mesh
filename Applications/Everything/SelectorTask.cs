@@ -48,6 +48,9 @@ public partial class BoundTask : ISelectSummary, IBoundPresentation {
 
         }
 
+    public virtual void Fill() {
+        }
+
 
     }
 
@@ -145,6 +148,13 @@ public partial class TaskSelection : SelectionCatalog<GuigenCatalogTasks,
 
     public override BoundTask ConvertToBindable(CatalogedTask input) =>
         BoundTask.Convert(input);
+
+    public override CatalogedTask UpdateWithBindable(IBindable entry) {
+        var binding = entry as BoundTask;
+        binding.Fill();
+        return binding.Bound as CatalogedTask;
+        }
+
     #endregion
 
 

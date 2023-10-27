@@ -59,7 +59,7 @@ Section FeedSection "Feeds" "feeds"
 
 Section GroupSection "Groups" "groups"
 	Chooser ChooseGroup "User" "account_group" 
-		View CatalogedGroup
+		View BoundGroup
 
 Section CredentialSection "Credentials" "credentials"
 	Chooser ChooseCredential "Credentials" "credentials" 
@@ -72,7 +72,7 @@ Section TaskSection "Tasks" "tasks"
 
 Section CalendarSection "Calendar" "calendar"
 	Chooser ChooseAppointment "Tasks" "Tasks" 
-		View CatalogedTask
+		View BoundTask
 
 Section BookmarkSection "Bookmark" "bookmark"
 	Chooser ChooseBookmark "Bookmark" "Bookmark" 
@@ -237,7 +237,7 @@ Action AccountRequestConnect  "Connect by Address" "connect"
 	Text ConnectionPin "Activation code (if provided)"
 	Text Rights "Requested rights"
 
-Action AccountConnectUri  "Connect by QR" "connect"
+Action AccountConnectUri  "Connect by QR" "scan_qr"
 	Description
 		|
 	Return ReportPending
@@ -245,7 +245,7 @@ Action AccountConnectUri  "Connect by QR" "connect"
 	Text LocalName "Friendly name (optional)"
 	Text Rights "Requested rights"
 
-Action DeviceDynamicUri  "Present QR" "connect"
+Action DeviceDynamicUri  "Present QR" "present_qr"
 	Description
 		|Creates a QR code which may be scanned by a device with a camera affordance
 		|to connect to the account.
@@ -266,7 +266,7 @@ Action AccountGetPin "Create connection PIN" "recover"
 			|(Security >= 0) & (Security <= 5)
 	Integer Expire "Expiry in hours"
 
-Action DeviceStaticUri  "Scan QR" "connect"
+Action DeviceStaticUri  "Scan QR" "scan_qr"
 	Description
 		|Connects a device to the account by means of a static QR code
 		|printed on the product or a URI entered.
@@ -276,7 +276,7 @@ Action DeviceStaticUri  "Scan QR" "connect"
 	Text Rights "Requested rights"
 
 
-Action AccountRecover "Recover Mesh Account" "recover"
+Action AccountRecover "Recover Mesh Account" "recover_account"
 	Description
 		|
 	Return ReportAccount
@@ -325,7 +325,7 @@ Action RequestContact "Contact Request" "contact"
 	Text Recipient "Address"
 	Text Message "Message"
 
-Action RequestConfirmation "Confirmation Request" "clipboard_check_solid"
+Action RequestConfirmation "Confirmation Request" "confirm"
 	Description
 		|
 	Text Recipient "Address"

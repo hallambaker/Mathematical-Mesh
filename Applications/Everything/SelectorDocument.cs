@@ -22,6 +22,9 @@ public partial class DocumentSection {
         ChooseDocuments = catalog is null ? null : new DocumentSelection(catalog);
         }
 
+    public virtual void Fill() {
+        }
+
     }
 
 // Documented in Guigen output
@@ -91,7 +94,8 @@ public partial class BoundDocument : ISelectSummary, IBoundPresentation {
             }
         return null;
         }
-
+    public virtual void Fill() {
+        }
     }
 
 #endregion
@@ -187,6 +191,13 @@ public partial class DocumentSelection : SelectionCatalog<GuigenCatalogDocument,
         (contact as BoundDocument)?.Convert();
 
     public override BoundDocument ConvertToBindable(CatalogedDocument input) => BoundDocument.Convert(input);
+
+    public override CatalogedDocument UpdateWithBindable(IBindable entry) {
+        var binding = entry as BoundDocument;
+        binding.Fill();
+        return binding.Bound as CatalogedDocument;
+        }
+
     #endregion
 
 

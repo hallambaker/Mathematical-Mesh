@@ -37,7 +37,7 @@ public partial class Shell {
         var identifier = options.Identifier.Value ?? Udf.Nonce();
 
         var entry = new CatalogedTask() {
-            Key = identifier,
+            Uid = identifier,
             Title = title
             };
 

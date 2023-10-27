@@ -57,7 +57,7 @@ public partial class BoundApplication : ISelectSummary, IBoundPresentation {
 
 public partial class BoundApplicationMail {
 
-    public virtual string? IconValue => "account.png";
+    public override string? IconValue => "mail.png";
 
     public override CatalogedApplication Convert() {
         var result = new CatalogedApplicationMail() {
@@ -86,7 +86,7 @@ public partial class BoundApplicationMail {
 
 public partial class BoundApplicationSsh {
 
-    public virtual string? IconValue => "account.png";
+    public override string? IconValue => "application_ssh.png";
 
     public override CatalogedApplication Convert() {
         throw new NotImplementedException();
@@ -105,7 +105,7 @@ public partial class BoundApplicationSsh {
     }
 public partial class BoundApplicationOpenPgp {
 
-    public virtual string? IconValue => "account.png";
+    public override string? IconValue => "application_openpgp.png";
 
     public override CatalogedApplication Convert() {
         throw new NotImplementedException();
@@ -124,7 +124,7 @@ public partial class BoundApplicationOpenPgp {
     }
 public partial class BoundApplicationDeveloper {
 
-    public virtual string? IconValue => "account.png";
+    public override string? IconValue => "application_developer.png";
 
     public override CatalogedApplication Convert() {
         throw new NotImplementedException();
@@ -143,7 +143,7 @@ public partial class BoundApplicationDeveloper {
     }
 public partial class BoundApplicationPkix {
 
-    public virtual string? IconValue => "account.png";
+    public override string? IconValue => "application_pkix.png";
 
     public override CatalogedApplication Convert() {
         throw new NotImplementedException();
@@ -162,7 +162,7 @@ public partial class BoundApplicationPkix {
     }
 public partial class BoundApplicationGroup {
 
-    public virtual string? IconValue => "account.png";
+    public override string? IconValue => "application_group.png";
 
     public override CatalogedApplication Convert() {
         throw new NotImplementedException();
@@ -181,7 +181,7 @@ public partial class BoundApplicationGroup {
     }
 public partial class BoundApplicationCallSign {
 
-    public virtual string? IconValue => "account.png";
+    public override string? IconValue => "application_callsign.png";
 
     public override CatalogedApplication Convert() {
         throw new NotImplementedException();

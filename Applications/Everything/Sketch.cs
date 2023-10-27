@@ -4168,7 +4168,7 @@ public class _EverythingMaui : Gui {
 		new GuiImage ("circle_check") , 
 		new GuiImage ("circle_cross") , 
 		new GuiImage ("circle_question") , 
-		new GuiImage ("clipboard_check_solid") , 
+		new GuiImage ("confirm") , 
 		new GuiImage ("connect") , 
 		new GuiImage ("contact") , 
 		new GuiImage ("contacts") , 
@@ -4212,8 +4212,11 @@ public class _EverythingMaui : Gui {
 		new GuiImage ("platform_windows") , 
 		new GuiImage ("plug") , 
 		new GuiImage ("plus") , 
+		new GuiImage ("present_qr") , 
 		new GuiImage ("protocol_icon") , 
 		new GuiImage ("recover") , 
+		new GuiImage ("recover_account") , 
+		new GuiImage ("scan_qr") , 
 		new GuiImage ("services") , 
 		new GuiImage ("settings") , 
 		new GuiImage ("share_nodes_solid") , 
@@ -4291,19 +4294,19 @@ public class _EverythingMaui : Gui {
 	public GuiAction ActionAccountRequestConnect { get; } = new ("AccountRequestConnect", "Connect by Address", "connect", () => new AccountRequestConnect());
 
     ///<summary>Action ActionAccountConnectUri.</summary> 
-	public GuiAction ActionAccountConnectUri { get; } = new ("AccountConnectUri", "Connect by QR", "connect", () => new AccountConnectUri());
+	public GuiAction ActionAccountConnectUri { get; } = new ("AccountConnectUri", "Connect by QR", "scan_qr", () => new AccountConnectUri());
 
     ///<summary>Action ActionDeviceDynamicUri.</summary> 
-	public GuiAction ActionDeviceDynamicUri { get; } = new ("DeviceDynamicUri", "Present QR", "connect", () => new DeviceDynamicUri());
+	public GuiAction ActionDeviceDynamicUri { get; } = new ("DeviceDynamicUri", "Present QR", "present_qr", () => new DeviceDynamicUri());
 
     ///<summary>Action ActionAccountGetPin.</summary> 
 	public GuiAction ActionAccountGetPin { get; } = new ("AccountGetPin", "Create connection PIN", "recover", () => new AccountGetPin());
 
     ///<summary>Action ActionDeviceStaticUri.</summary> 
-	public GuiAction ActionDeviceStaticUri { get; } = new ("DeviceStaticUri", "Scan QR", "connect", () => new DeviceStaticUri());
+	public GuiAction ActionDeviceStaticUri { get; } = new ("DeviceStaticUri", "Scan QR", "scan_qr", () => new DeviceStaticUri());
 
     ///<summary>Action ActionAccountRecover.</summary> 
-	public GuiAction ActionAccountRecover { get; } = new ("AccountRecover", "Recover Mesh Account", "recover", () => new AccountRecover());
+	public GuiAction ActionAccountRecover { get; } = new ("AccountRecover", "Recover Mesh Account", "recover_account", () => new AccountRecover());
 
     ///<summary>Action ActionAccountDelete.</summary> 
 	public GuiAction ActionAccountDelete { get; } = new ("AccountDelete", "Delete Account", "test_service", () => new AccountDelete());
@@ -4318,7 +4321,7 @@ public class _EverythingMaui : Gui {
 	public GuiAction ActionRequestContact { get; } = new ("RequestContact", "Contact Request", "contact", () => new RequestContact());
 
     ///<summary>Action ActionRequestConfirmation.</summary> 
-	public GuiAction ActionRequestConfirmation { get; } = new ("RequestConfirmation", "Confirmation Request", "clipboard_check_solid", () => new RequestConfirmation());
+	public GuiAction ActionRequestConfirmation { get; } = new ("RequestConfirmation", "Confirmation Request", "confirm", () => new RequestConfirmation());
 
     ///<summary>Action ActionCreateMail.</summary> 
 	public GuiAction ActionCreateMail { get; } = new ("CreateMail", "New Mail", "mail", () => new CreateMail());
@@ -4612,7 +4615,7 @@ public class _EverythingMaui : Gui {
 	    SectionGroupSection.Active = () => StateDefault;
 	    SectionGroupSection.Entries =  new () {  
 			new GuiChooser ("ChooseGroup", "User", "account_group", 0, new () { 
-				new GuiViewBinding (BindingCatalogedGroup)
+				new GuiViewDialog (DialogBoundGroup)
 				}) 		    
             };
 
@@ -4637,7 +4640,7 @@ public class _EverythingMaui : Gui {
 	    SectionCalendarSection.Active = () => StateDefault;
 	    SectionCalendarSection.Entries =  new () {  
 			new GuiChooser ("ChooseAppointment", "Tasks", "Tasks", 0, new () { 
-				new GuiViewBinding (BindingCatalogedTask)
+				new GuiViewDialog (DialogBoundTask)
 				}) 		    
             };
 
