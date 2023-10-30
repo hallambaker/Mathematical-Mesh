@@ -26,8 +26,8 @@ public interface IParameter : IBindable {
 
 
 
-    IResult Validate();
-    IResult Initialize();
+    IResult Validate(Gui mainWindow);
+    IResult Initialize(Gui mainWindow);
     }
 
 public interface ISelectable : IParameter {
@@ -180,6 +180,31 @@ public record GuiBoundPropertyString (
                 Action<object, string> Set,
                 string? Label,
                 bool Primary = false) : GuiBoundProperty (Label, Primary) {
+    }
+
+public record GuiBoundPropertyQRScan(
+                Func<object, GuiQR> Get,
+                Action<object, GuiQR> Set,
+                string? Label,
+                bool Primary = false) : GuiBoundProperty(Label, Primary) {
+    }
+
+public record GuiBoundTextArea(
+                Func<object, string> Get,
+                Action<object, string> Set,
+                string? Label,
+                bool Primary = false) : GuiBoundProperty(Label, Primary) {
+    }
+
+
+public class GuiQR {
+
+    public string? Offer { get; set; }
+
+    public GuiQR() { 
+        }
+
+
     }
 
 public record GuiBoundPropertyChooser(
@@ -352,6 +377,21 @@ public record GuiText(
             ) : GuiField(Id, Prompt, Index) {
     }
 
+public record GuiQRScan(
+            string Id,
+            string Prompt,
+            int Index = -1
+            ) : GuiField(Id, Prompt, Index) {
+    }
+
+public record GuiTextArea(
+            string Id,
+            string Prompt,
+            int Index = -1
+            ) : GuiField(Id, Prompt, Index) {
+    }
+
+
 public record GuiColor(
             string Id,
             string Prompt,
@@ -390,6 +430,10 @@ public record GuiViewDialog(GuiDialog Dialog) : IGuiEntry {
     }
 public record GuiViewBinding(GuiBinding Dialog)  : IGuiEntry {
     }
+
+
+
+
 
 
 

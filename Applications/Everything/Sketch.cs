@@ -501,14 +501,14 @@ public partial class _BoundAccount : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -552,14 +552,14 @@ public partial class _BoundMessage : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -578,6 +578,9 @@ public partial class BoundMailMail : _BoundMailMail {
 public partial class _BoundMailMail : BoundMessage {
 
 
+    ///<summary></summary> 
+    public virtual string Message { get; set;} 
+
 
     ///<inheritdoc/>
     public override GuiBinding Binding => BaseBinding;
@@ -588,18 +591,19 @@ public partial class _BoundMailMail : BoundMessage {
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _BoundMailMail).Subject, (object data,string value) => (data as _BoundMailMail).Subject = value, "Subject"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMailMail).TimeSent, (object data,string value) => (data as _BoundMailMail).TimeSent = value, "TimeSent"), 
-            new GuiBoundPropertyString ((object data) => (data as _BoundMailMail).Sender, (object data,string value) => (data as _BoundMailMail).Sender = value, "Sender")
+            new GuiBoundPropertyString ((object data) => (data as _BoundMailMail).Sender, (object data,string value) => (data as _BoundMailMail).Sender = value, "Sender"), 
+            new GuiBoundTextArea ((object data) => (data as _BoundMailMail).Message, (object data,string value) => (data as _BoundMailMail).Message = value, "Message")
 
             });
     ///<summary>Validation</summary> 
-    public override IResult Validate() {
+    public override IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public override IResult Initialize() => NullResult.Initialized;
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -636,14 +640,14 @@ public partial class _BoundMessageConfirmationRequest : BoundMessage {
 
             });
     ///<summary>Validation</summary> 
-    public override IResult Validate() {
+    public override IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public override IResult Initialize() => NullResult.Initialized;
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -676,14 +680,14 @@ public partial class _BoundMessageConfirmationResponse : BoundMessage {
 
             });
     ///<summary>Validation</summary> 
-    public override IResult Validate() {
+    public override IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public override IResult Initialize() => NullResult.Initialized;
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -716,14 +720,14 @@ public partial class _BoundMessageContactRequest : BoundMessage {
 
             });
     ///<summary>Validation</summary> 
-    public override IResult Validate() {
+    public override IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public override IResult Initialize() => NullResult.Initialized;
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -756,14 +760,14 @@ public partial class _BoundMessageConnectionRequest : BoundMessage {
 
             });
     ///<summary>Validation</summary> 
-    public override IResult Validate() {
+    public override IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public override IResult Initialize() => NullResult.Initialized;
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -796,14 +800,14 @@ public partial class _BoundMessageGroupInvitation : BoundMessage {
 
             });
     ///<summary>Validation</summary> 
-    public override IResult Validate() {
+    public override IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public override IResult Initialize() => NullResult.Initialized;
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -836,14 +840,14 @@ public partial class _BoundMessageTaskRequest : BoundMessage {
 
             });
     ///<summary>Validation</summary> 
-    public override IResult Validate() {
+    public override IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public override IResult Initialize() => NullResult.Initialized;
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -879,14 +883,14 @@ public partial class _BoundDocument : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -922,14 +926,14 @@ public partial class _BoundGroup : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -973,14 +977,14 @@ public partial class _BoundCredential : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -1017,14 +1021,14 @@ public partial class _BoundPassword : BoundCredential {
 
             });
     ///<summary>Validation</summary> 
-    public override IResult Validate() {
+    public override IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public override IResult Initialize() => NullResult.Initialized;
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -1057,14 +1061,14 @@ public partial class _BoundPasskey : BoundCredential {
 
             });
     ///<summary>Validation</summary> 
-    public override IResult Validate() {
+    public override IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public override IResult Initialize() => NullResult.Initialized;
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -1100,14 +1104,14 @@ public partial class _BoundTask : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -1143,14 +1147,14 @@ public partial class _BoundAppointment : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -1194,7 +1198,7 @@ public partial class _BoundBookmark : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         // error on Uri
@@ -1208,7 +1212,7 @@ public partial class _BoundBookmark : IParameter {
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -1245,14 +1249,14 @@ public partial class _BoundFeed : BoundBookmark {
 
             });
     ///<summary>Validation</summary> 
-    public override IResult Validate() {
+    public override IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public override IResult Initialize() => NullResult.Initialized;
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -1288,14 +1292,14 @@ public partial class _BoundApplication : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -1326,14 +1330,14 @@ public partial class _BoundApplicationMail : BoundApplication {
 
             });
     ///<summary>Validation</summary> 
-    public override IResult Validate() {
+    public override IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public override IResult Initialize() => NullResult.Initialized;
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -1364,14 +1368,14 @@ public partial class _BoundApplicationSsh : BoundApplication {
 
             });
     ///<summary>Validation</summary> 
-    public override IResult Validate() {
+    public override IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public override IResult Initialize() => NullResult.Initialized;
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -1402,14 +1406,14 @@ public partial class _BoundApplicationOpenPgp : BoundApplication {
 
             });
     ///<summary>Validation</summary> 
-    public override IResult Validate() {
+    public override IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public override IResult Initialize() => NullResult.Initialized;
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -1440,14 +1444,14 @@ public partial class _BoundApplicationDeveloper : BoundApplication {
 
             });
     ///<summary>Validation</summary> 
-    public override IResult Validate() {
+    public override IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public override IResult Initialize() => NullResult.Initialized;
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -1478,14 +1482,14 @@ public partial class _BoundApplicationPkix : BoundApplication {
 
             });
     ///<summary>Validation</summary> 
-    public override IResult Validate() {
+    public override IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public override IResult Initialize() => NullResult.Initialized;
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -1516,14 +1520,14 @@ public partial class _BoundApplicationGroup : BoundApplication {
 
             });
     ///<summary>Validation</summary> 
-    public override IResult Validate() {
+    public override IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public override IResult Initialize() => NullResult.Initialized;
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -1554,14 +1558,14 @@ public partial class _BoundApplicationCallSign : BoundApplication {
 
             });
     ///<summary>Validation</summary> 
-    public override IResult Validate() {
+    public override IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public override IResult Initialize() => NullResult.Initialized;
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -1601,14 +1605,14 @@ public partial class _BoundDevice : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -1660,14 +1664,14 @@ public partial class _AccountUser : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -1731,14 +1735,14 @@ public partial class _BoundContactPerson : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -1774,14 +1778,14 @@ public partial class _BoundContactBusiness : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -1817,14 +1821,14 @@ public partial class _BoundContactPlace : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -1868,14 +1872,14 @@ public partial class _ContactNetworkAddress : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -1943,14 +1947,14 @@ public partial class _ContactPhysicalAddress : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -1986,7 +1990,7 @@ public partial class _TestService : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         // error on ServiceAddress
@@ -2007,7 +2011,7 @@ public partial class _TestService : IParameter {
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -2048,14 +2052,14 @@ public partial class _AccountCreate : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -2096,33 +2100,33 @@ public partial class _AccountRequestConnect : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
 
 
 /// <summary>
-/// Callback parameters for action AccountConnectUri 
+/// Callback parameters for action DeviceConnectQR 
 /// </summary>
-public partial class AccountConnectUri : _AccountConnectUri {
+public partial class DeviceConnectQR : _DeviceConnectQR {
     }
 
 
 /// <summary>
-/// Callback parameters for action AccountConnectUri 
+/// Callback parameters for action DeviceConnectQR 
 /// </summary>
-public partial class _AccountConnectUri : IParameter {
+public partial class _DeviceConnectQR : IParameter {
 
     ///<summary></summary> 
-    public virtual string ConnectionUri { get; set;} 
+    public virtual GuiQR? QrCode { get; set;} 
 
     ///<summary></summary> 
     public virtual string LocalName { get; set;} 
@@ -2136,74 +2140,22 @@ public partial class _AccountConnectUri : IParameter {
 
     ///<summary>The binding for the data type.</summary> 
     public static  GuiBinding BaseBinding  { get; } = new (
-        (object test) => test is _AccountConnectUri,
+        (object test) => test is _DeviceConnectQR,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as _AccountConnectUri).ConnectionUri, (object data,string value) => (data as _AccountConnectUri).ConnectionUri = value, "ConnectionUri"), 
-            new GuiBoundPropertyString ((object data) => (data as _AccountConnectUri).LocalName, (object data,string value) => (data as _AccountConnectUri).LocalName = value, "LocalName"), 
-            new GuiBoundPropertyString ((object data) => (data as _AccountConnectUri).Rights, (object data,string value) => (data as _AccountConnectUri).Rights = value, "Rights")
+            new GuiBoundPropertyQRScan ((object data) => (data as _DeviceConnectQR).QrCode, (object data,GuiQR? value) => (data as _DeviceConnectQR).QrCode = value, "QrCode"), 
+            new GuiBoundPropertyString ((object data) => (data as _DeviceConnectQR).LocalName, (object data,string value) => (data as _DeviceConnectQR).LocalName = value, "LocalName"), 
+            new GuiBoundPropertyString ((object data) => (data as _DeviceConnectQR).Rights, (object data,string value) => (data as _DeviceConnectQR).Rights = value, "Rights")
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
-
-
-    }
-
-
-/// <summary>
-/// Callback parameters for action DeviceDynamicUri 
-/// </summary>
-public partial class DeviceDynamicUri : _DeviceDynamicUri {
-    }
-
-
-/// <summary>
-/// Callback parameters for action DeviceDynamicUri 
-/// </summary>
-public partial class _DeviceDynamicUri : IParameter {
-
-    ///<summary></summary> 
-    public virtual string LocalName { get; set;} 
-
-    ///<summary></summary> 
-    public virtual string Rights { get; set;} 
-
-    ///<summary></summary> 
-    public virtual int? Security { get; set;} 
-
-    ///<summary></summary> 
-    public virtual int? Expire { get; set;} 
-
-
-    ///<inheritdoc/>
-    public virtual GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static  GuiBinding BaseBinding  { get; } = new (
-        (object test) => test is _DeviceDynamicUri,
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as _DeviceDynamicUri).LocalName, (object data,string value) => (data as _DeviceDynamicUri).LocalName = value, "LocalName"), 
-            new GuiBoundPropertyString ((object data) => (data as _DeviceDynamicUri).Rights, (object data,string value) => (data as _DeviceDynamicUri).Rights = value, "Rights"), 
-            new GuiBoundPropertyInteger ((object data) => (data as _DeviceDynamicUri).Security, (object data,int? value) => (data as _DeviceDynamicUri).Security = value, "Security"), 
-            new GuiBoundPropertyInteger ((object data) => (data as _DeviceDynamicUri).Expire, (object data,int? value) => (data as _DeviceDynamicUri).Expire = value, "Expire")
-
-            });
-    ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
-        GuiResultInvalid result = null;
-
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -2244,14 +2196,14 @@ public partial class _AccountGetPin : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -2292,14 +2244,14 @@ public partial class _DeviceStaticUri : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -2372,14 +2324,14 @@ public partial class _AccountRecover : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -2406,14 +2358,14 @@ public partial class _AccountDelete : IParameter {
         (object test) => test is _AccountDelete,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -2446,14 +2398,14 @@ public partial class _AccountSwitch : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -2490,14 +2442,14 @@ public partial class _AccountGenerateRecovery : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -2534,14 +2486,54 @@ public partial class _RequestContact : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    }
+
+
+/// <summary>
+/// Callback parameters for action QrContact 
+/// </summary>
+public partial class QrContact : _QrContact {
+    }
+
+
+/// <summary>
+/// Callback parameters for action QrContact 
+/// </summary>
+public partial class _QrContact : IParameter {
+
+    ///<summary></summary> 
+    public virtual GuiQR? QrCode { get; set;} 
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _QrContact,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyQRScan ((object data) => (data as _QrContact).QrCode, (object data,GuiQR? value) => (data as _QrContact).QrCode = value, "QrCode")
+
+            });
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate(Gui gui) {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -2578,14 +2570,14 @@ public partial class _RequestConfirmation : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -2612,14 +2604,14 @@ public partial class _CreateMail : IParameter {
         (object test) => test is _CreateMail,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -2646,14 +2638,14 @@ public partial class _CreateChat : IParameter {
         (object test) => test is _CreateChat,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -2680,14 +2672,14 @@ public partial class _StartVoice : IParameter {
         (object test) => test is _StartVoice,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -2714,14 +2706,14 @@ public partial class _StartVideo : IParameter {
         (object test) => test is _StartVideo,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -2748,14 +2740,14 @@ public partial class _SendDocument : IParameter {
         (object test) => test is _SendDocument,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -2782,14 +2774,14 @@ public partial class _ShareDocument : IParameter {
         (object test) => test is _ShareDocument,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -2816,14 +2808,14 @@ public partial class _AddMailAccount : IParameter {
         (object test) => test is _AddMailAccount,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -2850,14 +2842,14 @@ public partial class _AddSshAccount : IParameter {
         (object test) => test is _AddSshAccount,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -2884,14 +2876,14 @@ public partial class _AddGitAccount : IParameter {
         (object test) => test is _AddGitAccount,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -2918,14 +2910,14 @@ public partial class _AddCodeSigningKey : IParameter {
         (object test) => test is _AddCodeSigningKey,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -2952,14 +2944,14 @@ public partial class _ConfirmationAccept : IParameter {
         (object test) => test is _ConfirmationAccept,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -2986,14 +2978,14 @@ public partial class _ConfirmationReject : IParameter {
         (object test) => test is _ConfirmationReject,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     }
@@ -4293,11 +4285,8 @@ public class _EverythingMaui : Gui {
     ///<summary>Action ActionAccountRequestConnect.</summary> 
 	public GuiAction ActionAccountRequestConnect { get; } = new ("AccountRequestConnect", "Connect by Address", "connect", () => new AccountRequestConnect());
 
-    ///<summary>Action ActionAccountConnectUri.</summary> 
-	public GuiAction ActionAccountConnectUri { get; } = new ("AccountConnectUri", "Connect by QR", "scan_qr", () => new AccountConnectUri());
-
-    ///<summary>Action ActionDeviceDynamicUri.</summary> 
-	public GuiAction ActionDeviceDynamicUri { get; } = new ("DeviceDynamicUri", "Present QR", "present_qr", () => new DeviceDynamicUri());
+    ///<summary>Action ActionDeviceConnectQR.</summary> 
+	public GuiAction ActionDeviceConnectQR { get; } = new ("DeviceConnectQR", "Present QR", "present_qr", () => new DeviceConnectQR());
 
     ///<summary>Action ActionAccountGetPin.</summary> 
 	public GuiAction ActionAccountGetPin { get; } = new ("AccountGetPin", "Create connection PIN", "recover", () => new AccountGetPin());
@@ -4318,7 +4307,10 @@ public class _EverythingMaui : Gui {
 	public GuiAction ActionAccountGenerateRecovery { get; } = new ("AccountGenerateRecovery", "Create recovery", "share_nodes_solid", () => new AccountGenerateRecovery());
 
     ///<summary>Action ActionRequestContact.</summary> 
-	public GuiAction ActionRequestContact { get; } = new ("RequestContact", "Contact Request", "contact", () => new RequestContact());
+	public GuiAction ActionRequestContact { get; } = new ("RequestContact", "Request Contact", "contact", () => new RequestContact());
+
+    ///<summary>Action ActionQrContact.</summary> 
+	public GuiAction ActionQrContact { get; } = new ("QrContact", "Connect by QR", "contact", () => new QrContact());
 
     ///<summary>Action ActionRequestConfirmation.</summary> 
 	public GuiAction ActionRequestConfirmation { get; } = new ("RequestConfirmation", "Confirmation Request", "confirm", () => new RequestConfirmation());
@@ -4563,7 +4555,6 @@ public class _EverythingMaui : Gui {
 	    SectionAccountSection.Entries =  new () {  
 			new GuiButton ("AccountCreate", ActionAccountCreate), 
 			new GuiButton ("AccountRequestConnect", ActionAccountRequestConnect), 
-			new GuiButton ("AccountConnectUri", ActionAccountConnectUri), 
 			new GuiButton ("TestService", ActionTestService), 
 			new GuiButton ("AccountRecover", ActionAccountRecover), 
 			new GuiButton ("AccountGenerateRecovery", ActionAccountGenerateRecovery), 
@@ -4589,6 +4580,7 @@ public class _EverythingMaui : Gui {
 	    SectionContactSection.Gui = this;
 	    SectionContactSection.Active = () => StateDefault;
 	    SectionContactSection.Entries =  new () {  
+			new GuiButton ("QrContact", ActionQrContact), 
 			new GuiButton ("RequestContact", ActionRequestContact), 
 			new GuiChooser ("ChooseContact", "Contacts", "contact_other", 0, new () { 
 				new GuiViewDialog (DialogBoundContactPerson)
@@ -4668,8 +4660,7 @@ public class _EverythingMaui : Gui {
 	    SectionDeviceSection.Gui = this;
 	    SectionDeviceSection.Active = () => StateDefault;
 	    SectionDeviceSection.Entries =  new () {  
-			new GuiButton ("DeviceDynamicUri", ActionDeviceDynamicUri), 
-			new GuiButton ("DeviceStaticUri", ActionDeviceStaticUri), 
+			new GuiButton ("DeviceConnectQR", ActionDeviceConnectQR), 
 			new GuiButton ("AccountGetPin", ActionAccountGetPin), 
 			new GuiChooser ("ChooseDevice", "Devices", "Devices", 0, new () { 
 				new GuiViewBinding (BindingCatalogedDevice)
@@ -4741,19 +4732,11 @@ public class _EverythingMaui : Gui {
 			new GuiText ("Rights", "Requested rights", 2)
 		    };
 
-        ActionAccountConnectUri.Callback = (x, mode) => AccountConnectUri (x as AccountConnectUri, mode) ;
-	    ActionAccountConnectUri.Entries = new () { 
-			new GuiText ("ConnectionUri", "Connection URI", 0), 
+        ActionDeviceConnectQR.Callback = (x, mode) => DeviceConnectQR (x as DeviceConnectQR, mode) ;
+	    ActionDeviceConnectQR.Entries = new () { 
+			new GuiQRScan ("QrCode", "Contact QR", 0), 
 			new GuiText ("LocalName", "Friendly name (optional)", 1), 
-			new GuiText ("Rights", "Requested rights", 2)
-		    };
-
-        ActionDeviceDynamicUri.Callback = (x, mode) => DeviceDynamicUri (x as DeviceDynamicUri, mode) ;
-	    ActionDeviceDynamicUri.Entries = new () { 
-			new GuiText ("LocalName", "Friendly name (optional)", 0), 
-			new GuiText ("Rights", "Assigned rights", 1), 
-			new GuiInteger ("Security", "Security level", 2), 
-			new GuiInteger ("Expire", "Expiry in hours", 3)
+			new GuiText ("Rights", "Assigned rights", 2)
 		    };
 
         ActionAccountGetPin.Callback = (x, mode) => AccountGetPin (x as AccountGetPin, mode) ;
@@ -4805,6 +4788,11 @@ public class _EverythingMaui : Gui {
 	    ActionRequestContact.Entries = new () { 
 			new GuiText ("Recipient", "Address", 0), 
 			new GuiText ("Message", "Message", 1)
+		    };
+
+        ActionQrContact.Callback = (x, mode) => QrContact (x as QrContact, mode) ;
+	    ActionQrContact.Entries = new () { 
+			new GuiQRScan ("QrCode", "Contact QR", 0)
 		    };
 
         ActionRequestConfirmation.Callback = (x, mode) => RequestConfirmation (x as RequestConfirmation, mode) ;
@@ -4866,8 +4854,7 @@ public class _EverythingMaui : Gui {
 		    ActionTestService, 
 		    ActionAccountCreate, 
 		    ActionAccountRequestConnect, 
-		    ActionAccountConnectUri, 
-		    ActionDeviceDynamicUri, 
+		    ActionDeviceConnectQR, 
 		    ActionAccountGetPin, 
 		    ActionDeviceStaticUri, 
 		    ActionAccountRecover, 
@@ -4875,6 +4862,7 @@ public class _EverythingMaui : Gui {
 		    ActionAccountSwitch, 
 		    ActionAccountGenerateRecovery, 
 		    ActionRequestContact, 
+		    ActionQrContact, 
 		    ActionRequestConfirmation, 
 		    ActionCreateMail, 
 		    ActionCreateChat, 
@@ -4908,7 +4896,7 @@ public class _EverythingMaui : Gui {
 			new GuiText ("Subject", "Subject", 0), 
 			new GuiText ("TimeSent", "Sent", 1), 
 			new GuiText ("Sender", "Sender", 2), 
-			
+			new GuiTextArea ("Message", "Message", 3)			
 		    };
 
         BoundMailMail.IsBacker = (object data) => DialogBoundMailMail.IsBacker(data);
@@ -5231,13 +5219,7 @@ public class _EverythingMaui : Gui {
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> AccountConnectUri (AccountConnectUri data, ActionMode mode = ActionMode.Execute) 
-                => throw new NYI();
-
-    /// <summary>
-    /// GUI action
-    /// </summary>
-    public virtual Task<IResult> DeviceDynamicUri (DeviceDynamicUri data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> DeviceConnectQR (DeviceConnectQR data, ActionMode mode = ActionMode.Execute) 
                 => throw new NYI();
 
     /// <summary>
@@ -5280,6 +5262,12 @@ public class _EverythingMaui : Gui {
     /// GUI action
     /// </summary>
     public virtual Task<IResult> RequestContact (RequestContact data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> QrContact (QrContact data, ActionMode mode = ActionMode.Execute) 
                 => throw new NYI();
 
     /// <summary>

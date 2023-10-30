@@ -113,23 +113,23 @@ public partial class EverythingMaui {
         }
 
 
-    public override async Task<IResult> AccountConnectUri(AccountConnectUri data, ActionMode mode = ActionMode.Execute) {
-        try {
+    //public override async Task<IResult> AccountConnectUri(AccountConnectUri data, ActionMode mode = ActionMode.Execute) {
+    //    try {
 
-            var uri = data.ConnectionUri;
-            var local = data.LocalName;
-            var contextMeshPending = await MeshHost.JoinAsync(uri, local);
+    //        var uri = data.ConnectionUri;
+    //        var local = data.LocalName;
+    //        var contextMeshPending = await MeshHost.JoinAsync(uri, local);
 
-            return new ReportPending() {
-                };
-            }
-        catch (Exception exception) {
-            if (TryProcessException(exception, data, out var result)) {
-                return result;
-                }
-            return new ErrorResult(exception);
-            }
-        }
+    //        return new ReportPending() {
+    //            };
+    //        }
+    //    catch (Exception exception) {
+    //        if (TryProcessException(exception, data, out var result)) {
+    //            return result;
+    //            }
+    //        return new ErrorResult(exception);
+    //        }
+    //    }
 
 
 

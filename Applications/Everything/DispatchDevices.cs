@@ -20,17 +20,14 @@ public partial class EverythingMaui {
         }
 
     ///<inheritdoc/>
-    public override async Task<IResult> DeviceDynamicUri(DeviceDynamicUri data, ActionMode mode = ActionMode.Execute) {
+    public override async Task<IResult> DeviceConnectQR(DeviceConnectQR data, ActionMode mode = ActionMode.Execute) {
         try {
 
 
 
             var rights = ParseRights(data.Rights);
-            var bits = 120 + 20 * data.Security ?? 120;
-            var expire = (data.Expire ?? 24) * TimeSpan.TicksPerHour;
 
-            var messageConnectionPIN = await ContextUser.GetPinAsync(MeshConstants.MessagePINActionDevice,
-                        validity: expire * TimeSpan.TicksPerHour, roles: rights, bits: bits);
+
 
 
             return new NotYetImplemented() {

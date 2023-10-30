@@ -31,11 +31,11 @@ public class GuigenDetailAction : GuigenDetaiPage {
     GuigenFieldSet FieldSet { get; }
 
     IParameter Result { get; set; }
-
+    Gui Gui { get; }
 
     public GuigenDetailAction(IMainWindow mainWindow, GuiAction action) : base (mainWindow) {
         Action = action;
-        BoundValue = action.Factory();
+        Gui = mainWindow.Binding.Gui;
 
         action.Presentation = this;
 
@@ -66,6 +66,7 @@ public class GuigenDetailAction : GuigenDetaiPage {
         ActionViews.Add(CancelButton);
 
         Result = Action.Factory() as IParameter;
+        Result.Initialize(Gui);
 
         EnableActions();
 
@@ -76,9 +77,6 @@ public class GuigenDetailAction : GuigenDetaiPage {
         Content = stack;
         }
 
-    private void OnActivate() {
-        Result.Initialize();
-        }
 
 
     private void OnClickCancel(object sender, EventArgs e) {
@@ -91,7 +89,7 @@ public class GuigenDetailAction : GuigenDetaiPage {
 
         FieldSet.GetFields(result);
 
-        var verify = result.Validate();
+        var verify = result.Validate(Gui);
 
         switch (verify) {
             case ValidResult: {

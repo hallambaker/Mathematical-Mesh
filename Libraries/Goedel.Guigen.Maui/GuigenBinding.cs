@@ -105,7 +105,7 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
     ///<summary>The current section.</summary> 
     GuiSection CurrentSection { get; set; }
 
-    Gui Gui => Binding.Gui;
+    public Gui Gui => Binding.Gui;
 
     public GuigenMainFlyout(GuigenBinding binding) {
         Binding = binding;

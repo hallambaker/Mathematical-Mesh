@@ -93,11 +93,6 @@ public partial class BoundContactPerson : ISelectSummary, IBoundPresentation {
         }
 
 
-    public override IResult Validate() {
-        return base.Validate();
-        }
-
-
 
 
     }

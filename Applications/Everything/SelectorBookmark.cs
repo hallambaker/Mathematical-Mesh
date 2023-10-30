@@ -61,9 +61,7 @@ public partial class BoundBookmark : ISelectSummary, IBoundPresentation {
         }
 
 
-    public override IResult Validate() {
-        return base.Validate();
-        }
+
     }
 
 public partial class BoundFeed {

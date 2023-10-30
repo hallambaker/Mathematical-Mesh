@@ -10,7 +10,6 @@ Section AccountSection "Account" "user"
 	Condition Always
 	Button AccountCreate 
 	Button AccountRequestConnect 
-	Button AccountConnectUri 
 	Button TestService 
 	Button AccountRecover 
 	Button AccountGenerateRecovery 
@@ -42,6 +41,8 @@ Section MessageSection "Messages" "messages"
 
 Section ContactSection "Contacts" "contacts"
 	Primary
+
+	Button QrContact
 	Button RequestContact
 	Chooser ChooseContact "Contacts" "contact_other" 
 		View BoundContactPerson
@@ -88,8 +89,7 @@ Section ApplicationSection "Applications" "applications"
 		View CatalogedApplication
 
 Section DeviceSection "Devices" "devices"
-	Button DeviceDynamicUri
-	Button DeviceStaticUri
+	Button DeviceConnectQR
 	Button AccountGetPin 
 	Chooser ChooseDevice "Devices" "Devices" 
 		View CatalogedDevice
@@ -237,25 +237,27 @@ Action AccountRequestConnect  "Connect by Address" "connect"
 	Text ConnectionPin "Activation code (if provided)"
 	Text Rights "Requested rights"
 
-Action AccountConnectUri  "Connect by QR" "scan_qr"
-	Description
-		|
-	Return ReportPending
-	Text ConnectionUri "Connection URI"
-	Text LocalName "Friendly name (optional)"
-	Text Rights "Requested rights"
+//Action AccountConnectUri  "Connect by QR" "scan_qr"
+//	Description
+//		|
+//	Return ReportPending
+//	Text ConnectionUri "Connection URI"
+//	Text LocalName "Friendly name (optional)"
+//	Text Rights "Requested rights"
 
-Action DeviceDynamicUri  "Present QR" "present_qr"
+Action DeviceConnectQR  "Present QR" "present_qr"
 	Description
-		|Creates a QR code which may be scanned by a device with a camera affordance
-		|to connect to the account.
+		|Presents a bidirectional scanning interface that presents a QR code to 
+		|be scanned and if a camera affordance is available, scans
 	Return ReportPending
+	QRScan QrCode "Contact QR"
 	Text LocalName "Friendly name (optional)"
 	Text Rights "Assigned rights"
-	Integer Security "Security level"
-		Error SecurityRange "Must be an integer 0-5"
-			|(Security >= 0) & (Security <= 5)
-	Integer Expire "Expiry in hours"
+
+	//Integer Security "Security level"
+	//	Error SecurityRange "Must be an integer 0-5"
+	//		|(Security >= 0) & (Security <= 5)
+	//Integer Expire "Expiry in hours"
 
 Action AccountGetPin "Create connection PIN" "recover"
 	Description
@@ -319,11 +321,17 @@ Action AccountGenerateRecovery "Create recovery" "share_nodes_solid"
 
 
 // Contact Actions
-Action RequestContact "Contact Request" "contact"
+Action RequestContact "Request Contact" "contact"
 	Description
 		|
 	Text Recipient "Address"
 	Text Message "Message"
+
+
+Action QrContact "Connect by QR" "contact"
+	Description
+		|
+	QRScan QrCode "Contact QR"
 
 Action RequestConfirmation "Confirmation Request" "confirm"
 	Description

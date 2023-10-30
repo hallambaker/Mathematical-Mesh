@@ -1,5 +1,7 @@
 ﻿using Everything.Resources;
 
+using Goedel.Mesh.Client;
+
 using System.Resources;
 
 namespace Goedel.Everything;
@@ -70,7 +72,6 @@ public partial class EverythingMaui {
         SectionDeviceSection.BindData = () => accounts.Devices;
         SectionServiceSection.BindData = () => accounts.Services;
 
-
         }
 
 
@@ -98,10 +99,56 @@ public partial class EverythingMaui {
     T? GetIndexOrNull<T>(T[] array, int index) =>
         index < array.Length ? array[index] : default(T);
 
+
+
+    public GuiQR GetContactQR() {
+        if (ContextUser == null) {
+            return null;
+            }
+        var combinedKey = new CryptoKeySymmetricSigner();
+        var pin = combinedKey.SecretKey;
+
+        return new GuiQR() {
+            Offer = MeshUri.ConnectUri(ContextUser.ServiceAddress, pin)
+            };
+
+        }
+
+
+
+
+
+    //public string GetDeviceConnect() {
+    //    }
+
+
+
     }
 
 
 
+
+public partial class QrContact {
+
+    public override IResult Initialize(Gui gui) {
+        var everything = gui as EverythingMaui;
+        QrCode = everything.GetContactQR();
+
+        return NullResult.Initialized;
+        }
+
+    }
+
+public partial class DeviceConnectQR {
+
+    public override IResult Initialize(Gui gui) {
+        var everything = gui as EverythingMaui;
+        QrCode = everything.GetContactQR();
+
+        return NullResult.Initialized;
+        }
+
+    }
 
 
 public partial class AccountSection {
