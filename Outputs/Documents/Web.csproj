@@ -1,16 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Configurations>Debug;Release;Sandcastle;Github</Configurations>
+    <TargetFramework>net8.0</TargetFramework>
+    <Configurations>Release;Sandcastle;Github</Configurations>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Remove="Config\MeshVoodoo.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Config\MeshVoodoo.json" />
-  </ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
-		<TargetFramework>net7.0-maccatalyst</TargetFramework>
+		<TargetFramework>net8.0-maccatalyst</TargetFramework>
 		<!--<RuntimeIdentifiers>maccatalyst-arm64;maccatalyst-x64</RuntimeIdentifiers>-->
 		<!--<TargetPlatformVersion>10.14</TargetPlatformVersion>-->
 		<ImplicitUsings>enable</ImplicitUsings>

@@ -200,6 +200,8 @@ public record GuiBoundTextArea(
 public class GuiQR {
 
     public string? Offer { get; set; }
+    public string? CapturedByCamera { get; set; }
+    public object? ReceivedByMessage { get; set; }
 
     public GuiQR() { 
         }
@@ -279,7 +281,7 @@ public record GuiDialog(
 
     public List<IGuiEntry> Entries { get; set; } = null!;
 
-    public Func<object, bool> IsBoundType { get; set; }
+    public Func<object, bool> IsBoundType { get; set; } = (object _) => false;
     public Func<object, bool> IsBacker { get; set; } = (object _) => false;
 
     }

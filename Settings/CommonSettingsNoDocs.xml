@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
     <!--<RuntimeIdentifiers>win-x64;win-x86;win-arm;win-arm64;osx-x64;linux-x64;linux-arm;linux-arm64</RuntimeIdentifiers>-->
     <Company>Threshold Secrets LLC.</Company>
 		<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>

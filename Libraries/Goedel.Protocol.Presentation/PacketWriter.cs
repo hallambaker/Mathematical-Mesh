@@ -244,7 +244,7 @@ public class PacketWriter : Disposable {
     ///<inheritdoc/>
     public virtual void Encrypt(byte[] key, PacketWriter writerIn, bool pad = true) {
         //Screen.WriteLine($"Encrypt Key {key.ToStringBase16()}");
-        var aes = new AesGcm(key);
+        var aes = new AesGcm(key, PresentationConstants.SizeTagAesGcm);
 
         //Screen.Write("Auth: ");
         var authSpan = GetSpan(0, MemoryStream.Position);
@@ -314,7 +314,7 @@ public class PacketWriter : Disposable {
         var count = streamId.Length;
 
 
-        var aes = new AesGcm(key);
+        var aes = new AesGcm(key, PresentationConstants.SizeTagAesGcm);
 
         var iv = Platform.GetRandomBytes(PresentationConstants.SizeIvAesGcm);
         var ivSpan = new ReadOnlySpan<byte>(iv);

@@ -31,11 +31,12 @@ public class GuigenDetailAction : GuigenDetaiPage {
     GuigenFieldSet FieldSet { get; }
 
     IParameter Result { get; set; }
-    Gui Gui { get; }
+    //Gui Gui { get; }
 
     public GuigenDetailAction(IMainWindow mainWindow, GuiAction action) : base (mainWindow) {
         Action = action;
-        Gui = mainWindow.Binding.Gui;
+
+
 
         action.Presentation = this;
 

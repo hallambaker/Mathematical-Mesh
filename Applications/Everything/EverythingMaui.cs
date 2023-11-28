@@ -23,7 +23,7 @@ public partial class EverythingMaui {
     ResourceManager ResourceManager;
 
 
-    public override bool StateDefault => ContextUser!= null;
+    public override bool StateDefault => ContextUser != null;
 
 
 
@@ -93,7 +93,7 @@ public partial class EverythingMaui {
         throw new NotImplementedException();
         }
 
-    Task<IResult> TaskResult (IResult result) => Task.FromResult<IResult>(result);
+    Task<IResult> TaskResult(IResult result) => Task.FromResult<IResult>(result);
 
 
     T? GetIndexOrNull<T>(T[] array, int index) =>
@@ -114,8 +114,24 @@ public partial class EverythingMaui {
 
         }
 
+    // need to have a continuous poll loop going and a mechanism to refresh the
+    // output data if changed.
 
+    // QR code thingies will be subscribed on the message spool, as will messages.
 
+    // Most other stuff will be subscribed on the relevant catalog.
+    public async Task<long> Poll (){
+
+        // we would typically only need to poll on the inbound spool.
+        // set up a delay and retry.
+        // need a cancellation mechasnism as well.
+
+        if (ContextUser == null) {
+            return 0;
+            }
+        var x = await ContextUser.SynchronizeAsync();
+        return x;
+        }
 
 
     //public string GetDeviceConnect() {

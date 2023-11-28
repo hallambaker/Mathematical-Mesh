@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="$(SolutionDir)Settings/CommonSettingsMaccatalyst.xml" />
   <PropertyGroup>
-	  <TargetFramework>net7.0-maccatalyst</TargetFramework>
+	  <TargetFramework>net8.0-maccatalyst</TargetFramework>
     <RootNamespace>Goedel.Cryptography.Maccatalyst</RootNamespace>
     <Product>Goedel.Cryptography.Maccatalyst</Product>
     <Description>Platform specific Maccatalyst libraries.</Description>

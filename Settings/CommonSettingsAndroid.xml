@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
-		<TargetFramework>net7.0-android</TargetFramework>
+		<TargetFramework>net8.0-android</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Company>Threshold Secrets LLC.</Company>
 		<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>

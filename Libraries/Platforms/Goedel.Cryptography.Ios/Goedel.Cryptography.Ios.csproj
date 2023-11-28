@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="$(SolutionDir)Settings/CommonSettingsIos.xml" />
   <PropertyGroup>
-	  <TargetFramework>net7.0-ios</TargetFramework>
+	  <TargetFramework>net8.0-ios</TargetFramework>
     <RootNamespace>Goedel.Cryptography.Ios</RootNamespace>
     <Product>Goedel.Cryptography.Ios</Product>
     <Description>Platform specific Ios libraries.</Description>

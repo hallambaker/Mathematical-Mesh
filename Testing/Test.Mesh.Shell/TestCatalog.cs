@@ -183,7 +183,7 @@ public partial class ShellTests {
         }
 
     static string GetTaskKey(ShellResult result) =>
-        ((result as ResultEntry).CatalogEntry as CatalogedTask).Key;
+        ((result as ResultEntry).CatalogEntry as CatalogedTask).Uid;
     static string GetContactKey(ShellResult result) =>
         ((result as ResultEntry).CatalogEntry as CatalogedContact).Key;
 

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Guigen</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Guigen.Gui">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Goedel.Guigen.Gui.Icons">
+            <summary>List of all the Icon Descriptions</summary> 
+        </member>
+        <member name="P:Goedel.Guigen.Gui.Sections">
+            <summary>List of all the Section Descriptions</summary> 
+        </member>
+        <member name="P:Goedel.Guigen.Gui.Actions">
+            <summary>List of all the Action Descriptions</summary> 
+        </member>
+        <member name="P:Goedel.Guigen.Gui.Dialogs">
+            <summary>List of all the Dialog Descriptions</summary> 
+        </member>
+        <member name="P:Goedel.Guigen.Gui.Results">
+            <summary>List of all the Result Descriptions</summary> 
+        </member>
+        <member name="P:Goedel.Guigen.IBindable.Binding">
+            <summary>Returns the binding for the data type</summary> 
+        </member>
+        <member name="P:Goedel.Guigen.NullResult.Initialized">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Guigen.GuiImage">
+            <summary></summary> 
+        </member>
+        <member name="M:Goedel.Guigen.GuiImage.#ctor(System.String)">
+            <summary></summary> 
+        </member>
+        <member name="M:Goedel.Guigen.GuiResultInvalid.#ctor(Goedel.Guigen.IParameter,System.String[])">
+            <summary>
+            Constructor, returns new instance reporting validity of the specified fields
+            in <paramref name="parameter"/>. The constructor MAY optionally specify a sequence
+            of { field, Message } pairs specifying messages to be used to populate the return result.
+            </summary>
+            <param name="parameter"></param>
+            <param name="parameters"></param>
+        </member>
+        <member name="M:Goedel.Guigen.GuiResultInvalid.SetError(System.String,System.String,System.String)">
+            <summary>
+            Set the error report for the field <paramref name="field"/> to 
+            <paramref name="error"/>. This method is intended for use with the
+            C# nameof function.
+            </summary>
+            <param name="field">The name of the field to set the error result for.</param>
+            <param name="error">The error result to be set.</param>
+        </member>
+    </members>
+</doc>

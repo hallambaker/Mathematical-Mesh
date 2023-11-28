@@ -1,14 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="$(SolutionDir)Settings/CommonSettingsNoDocs.xml" />
+	<PropertyGroup>
+		<Product>Goedel.Guigen</Product>
+		<Description>Support library for GUI generator.</Description>
+		<Copyright>© 2023</Copyright>
+		<Title>Goedel.Guigen</Title>
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-	  <UseMaui>true</UseMaui>
-  </PropertyGroup>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<!--<UseMaui>true</UseMaui>-->
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+	</ItemGroup>
 
 </Project>

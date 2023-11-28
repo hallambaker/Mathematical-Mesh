@@ -268,14 +268,14 @@ Action AccountGetPin "Create connection PIN" "recover"
 			|(Security >= 0) & (Security <= 5)
 	Integer Expire "Expiry in hours"
 
-Action DeviceStaticUri  "Scan QR" "scan_qr"
-	Description
-		|Connects a device to the account by means of a static QR code
-		|printed on the product or a URI entered.
-	Return ReportPending
-	Text ConnectionUri "Connection URI"
-	Text LocalName "Friendly name (optional)"
-	Text Rights "Requested rights"
+//Action DeviceStaticUri  "Scan QR" "scan_qr"
+//	Description
+//		|Connects a device to the account by means of a static QR code
+//		|printed on the product or a URI entered.
+//	Return ReportPending
+//	Text ConnectionUri "Connection URI"
+//	Text LocalName "Friendly name (optional)"
+//	Text Rights "Requested rights"
 
 
 Action AccountRecover "Recover Mesh Account" "recover_account"

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="$(SolutionDir)Settings/CommonSettingsLinux.xml" />
   <PropertyGroup>
-	  <TargetFramework>net7.0</TargetFramework>
+	  <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>Goedel.Cryptography.Linux</RootNamespace>
     <Product>Goedel.Cryptography.Linux</Product>
     <Description>Platform specific Linux libraries.</Description>

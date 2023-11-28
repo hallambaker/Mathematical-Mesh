@@ -345,9 +345,9 @@ public class DeterministicSeed {
         var key = KeyDeriveHKDF.Derive(tag, info: info, length: 128);
 
 
-        var aes = new AesGcm(key);
+        var aes = new AesGcm(key,16);
         var nonce = new byte[AesGcm.NonceByteSizes.MinSize];
-        var discard = new byte[AesGcm.TagByteSizes.MinSize];
+        var discard = new byte[16];
 
 
         aes.Encrypt(nonce, result, result, discard);

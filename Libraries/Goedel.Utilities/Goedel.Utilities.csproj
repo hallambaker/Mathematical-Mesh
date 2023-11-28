@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<Product>Goedel.Utilities</Product>
 		<Description>Coding utilities common to all Goedel libraries.</Description>
-		<Copyright>© 2020</Copyright>
+		<Copyright>© 2023</Copyright>
 		<Title>Goedel.Utilities</Title>
 	</PropertyGroup>
 

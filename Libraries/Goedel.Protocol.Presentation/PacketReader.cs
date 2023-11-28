@@ -251,7 +251,7 @@ public class PacketReader {
             ReadOnlySpan<byte> tag,
             Span<byte> plaintext,
             ReadOnlySpan<byte> associatedData = default) {
-        var aes = new AesGcm(key);
+        var aes = new AesGcm(key, tag.Length);
         aes.Decrypt(nonce, ciphertext, tag, plaintext, associatedData);
 
         }

@@ -3,7 +3,7 @@
 	<Choose>
 		<When Condition="$(TargetFramework.Contains('-windows'))">
 			<PropertyGroup>
-				<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+				<!--<RuntimeIdentifier>win10-x64</RuntimeIdentifier>-->
 				<!--<RuntimeIdentifiers>win10-x64;win10-arm;win10-x86;win10-arm64</RuntimeIdentifiers>-->
 				<DefineConstants>$(DefineConstants);USE_PLATFORM_WINDOWS</DefineConstants>
 			</PropertyGroup>
