@@ -3,6 +3,33 @@
 using ZXing.QrCode.Internal;
 
 namespace Goedel.Everything;
+
+
+public partial class DeviceConnectQR : IMessageable {
+
+    public IResult MessageReceived() {
+        throw new NYI();
+        }
+
+    public IResult TearDown(Gui gui) {
+        if (QrCode != null) {
+            var everything = gui as EverythingMaui;
+            everything.UnRegister(QrCode);
+            }
+
+        return NullResult.Teardown;
+        }
+
+    public override IResult Initialize(Gui gui) {
+        var everything = gui as EverythingMaui;
+        QrCode = everything.GetQrDevice(this);
+
+        return NullResult.Initialized;
+        }
+
+    }
+
+
 public partial class EverythingMaui {
 
     /////<inheritdoc/>

@@ -51,8 +51,19 @@ public class MeshUri {
     /// <param name="account">The account to connect to.</param>
     /// <param name="pin">The secret value.</param>
     /// <returns>The connection URI</returns>
-    public static string ConnectUri(string account, string pin) =>
-         $"{MeshConstants.MeshConnectURI}://{account}/{pin}";
+    public static string ConnectUriDevice(string account, string pin) =>
+         $"{MeshConstants.MeshConnectURIDevice}://{account}/{pin}";
+
+
+    /// <summary>
+    /// Generate a connection URI for <paramref name="account"/> with secret 
+    /// <paramref name="pin"/>.
+    /// </summary>
+    /// <param name="account">The account to connect to.</param>
+    /// <param name="pin">The secret value.</param>
+    /// <returns>The connection URI</returns>
+    public static string ConnectUriUser(string account, string pin) =>
+         $"{MeshConstants.MeshConnectURIUser}://{account}/{pin}";
 
 
     /// <summary>
@@ -83,7 +94,7 @@ public class MeshUri {
     public static (string, string) ParseConnectUri(string uriAddress) {
         try {
             var uri = new Uri(uriAddress);
-            (uri.Scheme == MeshConstants.MeshConnectURI).AssertTrue(InvalidUriMethod.Throw);
+            (uri.Scheme == MeshConstants.MeshConnectURIDevice).AssertTrue(InvalidUriMethod.Throw);
             var pin = uri.LocalPath[1..];
             var accountAddress = $"{uri.UserInfo}@{uri.Authority}";
 

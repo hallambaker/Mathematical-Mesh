@@ -304,7 +304,7 @@ public partial class MessagePin {
     /// Get the 
     /// </summary>
     /// <returns></returns>
-    public string GetURI() => MeshUri.ConnectUri(Account, Pin);
+    public string GetURI() => MeshUri.ConnectUriDevice(Account, Pin);
 
     /// <summary>
     /// PIN code identifier 

@@ -209,9 +209,44 @@ public partial class ContactSelection : SelectionCatalog<GuigenCatalogContact,
 
 
 
+
+    }
+
+public partial class QrContact : IMessageable {
+
+    public IResult MessageReceived() {
+        throw new NYI();
+        }
+
+    public override IResult TearDown(Gui gui) {
+        if (QrCode != null) {
+            var everything = gui as EverythingMaui;
+            everything.UnRegister(QrCode);
+            }
+
+        return NullResult.Teardown;
+        }
+
+    public override IResult Initialize(Gui gui) {
+        var everything = gui as EverythingMaui;
+        QrCode = everything.GetQrContact(this);
+
+        return NullResult.Initialized;
+        }
+
     }
 
 
+public partial class EverythingMaui {
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public override Task<IResult> QrContact(QrContact data, ActionMode mode = ActionMode.Execute) {
+        throw new NYI();
+        }
+
+
+    }
 #endregion
 
 

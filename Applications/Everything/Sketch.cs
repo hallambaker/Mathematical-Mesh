@@ -511,6 +511,10 @@ public partial class _BoundAccount : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 /// <summary>
@@ -562,6 +566,10 @@ public partial class _BoundMessage : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 /// <summary>
@@ -604,6 +612,10 @@ public partial class _BoundMailMail : BoundMessage {
 
     ///<summary>Initialization.</summary> 
     public override IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -650,6 +662,10 @@ public partial class _BoundMessageConfirmationRequest : BoundMessage {
     public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 /// <summary>
@@ -688,6 +704,10 @@ public partial class _BoundMessageConfirmationResponse : BoundMessage {
 
     ///<summary>Initialization.</summary> 
     public override IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -730,6 +750,10 @@ public partial class _BoundMessageContactRequest : BoundMessage {
     public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 /// <summary>
@@ -768,6 +792,10 @@ public partial class _BoundMessageConnectionRequest : BoundMessage {
 
     ///<summary>Initialization.</summary> 
     public override IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -810,6 +838,10 @@ public partial class _BoundMessageGroupInvitation : BoundMessage {
     public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 /// <summary>
@@ -848,6 +880,10 @@ public partial class _BoundMessageTaskRequest : BoundMessage {
 
     ///<summary>Initialization.</summary> 
     public override IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -893,6 +929,10 @@ public partial class _BoundDocument : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 /// <summary>
@@ -934,6 +974,10 @@ public partial class _BoundGroup : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -987,6 +1031,10 @@ public partial class _BoundCredential : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 /// <summary>
@@ -1031,6 +1079,10 @@ public partial class _BoundPassword : BoundCredential {
     public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 /// <summary>
@@ -1069,6 +1121,10 @@ public partial class _BoundPasskey : BoundCredential {
 
     ///<summary>Initialization.</summary> 
     public override IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -1114,6 +1170,10 @@ public partial class _BoundTask : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 /// <summary>
@@ -1155,6 +1215,10 @@ public partial class _BoundAppointment : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -1215,6 +1279,10 @@ public partial class _BoundBookmark : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 /// <summary>
@@ -1257,6 +1325,10 @@ public partial class _BoundFeed : BoundBookmark {
 
     ///<summary>Initialization.</summary> 
     public override IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -1302,6 +1374,10 @@ public partial class _BoundApplication : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 /// <summary>
@@ -1338,6 +1414,10 @@ public partial class _BoundApplicationMail : BoundApplication {
 
     ///<summary>Initialization.</summary> 
     public override IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -1378,6 +1458,10 @@ public partial class _BoundApplicationSsh : BoundApplication {
     public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 /// <summary>
@@ -1414,6 +1498,10 @@ public partial class _BoundApplicationOpenPgp : BoundApplication {
 
     ///<summary>Initialization.</summary> 
     public override IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -1454,6 +1542,10 @@ public partial class _BoundApplicationDeveloper : BoundApplication {
     public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 /// <summary>
@@ -1490,6 +1582,10 @@ public partial class _BoundApplicationPkix : BoundApplication {
 
     ///<summary>Initialization.</summary> 
     public override IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -1530,6 +1626,10 @@ public partial class _BoundApplicationGroup : BoundApplication {
     public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 /// <summary>
@@ -1566,6 +1666,10 @@ public partial class _BoundApplicationCallSign : BoundApplication {
 
     ///<summary>Initialization.</summary> 
     public override IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -1613,6 +1717,10 @@ public partial class _BoundDevice : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -1672,6 +1780,10 @@ public partial class _AccountUser : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -1745,6 +1857,10 @@ public partial class _BoundContactPerson : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 /// <summary>
@@ -1788,6 +1904,10 @@ public partial class _BoundContactBusiness : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 /// <summary>
@@ -1829,6 +1949,10 @@ public partial class _BoundContactPlace : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -1880,6 +2004,10 @@ public partial class _ContactNetworkAddress : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -1957,6 +2085,10 @@ public partial class _ContactPhysicalAddress : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 #endregion
@@ -2014,6 +2146,10 @@ public partial class _TestService : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 
@@ -2060,6 +2196,10 @@ public partial class _AccountCreate : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -2110,6 +2250,10 @@ public partial class _AccountRequestConnect : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 
@@ -2156,6 +2300,10 @@ public partial class _DeviceConnectQR : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -2206,52 +2354,8 @@ public partial class _AccountGetPin : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
-    }
-
-
-/// <summary>
-/// Callback parameters for action DeviceStaticUri 
-/// </summary>
-public partial class DeviceStaticUri : _DeviceStaticUri {
-    }
-
-
-/// <summary>
-/// Callback parameters for action DeviceStaticUri 
-/// </summary>
-public partial class _DeviceStaticUri : IParameter {
-
-    ///<summary></summary> 
-    public virtual string ConnectionUri { get; set;} 
-
-    ///<summary></summary> 
-    public virtual string LocalName { get; set;} 
-
-    ///<summary></summary> 
-    public virtual string Rights { get; set;} 
-
-
-    ///<inheritdoc/>
-    public virtual GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static  GuiBinding BaseBinding  { get; } = new (
-        (object test) => test is _DeviceStaticUri,
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as _DeviceStaticUri).ConnectionUri, (object data,string value) => (data as _DeviceStaticUri).ConnectionUri = value, "ConnectionUri"), 
-            new GuiBoundPropertyString ((object data) => (data as _DeviceStaticUri).LocalName, (object data,string value) => (data as _DeviceStaticUri).LocalName = value, "LocalName"), 
-            new GuiBoundPropertyString ((object data) => (data as _DeviceStaticUri).Rights, (object data,string value) => (data as _DeviceStaticUri).Rights = value, "Rights")
-
-            });
-    ///<summary>Validation</summary> 
-    public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
-
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -2334,6 +2438,10 @@ public partial class _AccountRecover : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 
@@ -2366,6 +2474,10 @@ public partial class _AccountDelete : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -2406,6 +2518,10 @@ public partial class _AccountSwitch : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -2452,6 +2568,10 @@ public partial class _AccountGenerateRecovery : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 
@@ -2496,6 +2616,10 @@ public partial class _RequestContact : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 
@@ -2534,6 +2658,10 @@ public partial class _QrContact : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -2580,6 +2708,10 @@ public partial class _RequestConfirmation : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 
@@ -2612,6 +2744,10 @@ public partial class _CreateMail : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -2648,6 +2784,10 @@ public partial class _CreateChat : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 
@@ -2680,6 +2820,10 @@ public partial class _StartVoice : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -2716,6 +2860,10 @@ public partial class _StartVideo : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 
@@ -2748,6 +2896,10 @@ public partial class _SendDocument : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -2784,6 +2936,10 @@ public partial class _ShareDocument : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 
@@ -2816,6 +2972,10 @@ public partial class _AddMailAccount : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -2852,6 +3012,10 @@ public partial class _AddSshAccount : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 
@@ -2884,6 +3048,10 @@ public partial class _AddGitAccount : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -2920,6 +3088,10 @@ public partial class _AddCodeSigningKey : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 
@@ -2954,6 +3126,10 @@ public partial class _ConfirmationAccept : IParameter {
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
     }
 
 
@@ -2986,6 +3162,10 @@ public partial class _ConfirmationReject : IParameter {
 
     ///<summary>Initialization.</summary> 
     public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -3327,6 +3507,102 @@ public partial record _ReportShares : IResult {
         Share6,
         Share7,
         Share8};
+    }
+
+
+/// <summary>
+/// Return parameters for result MessageSentContact 
+/// </summary>
+public partial record MessageSentContact : _MessageSentContact {
+    }
+
+
+/// <summary>
+/// Callback parameters for result MessageSentContact 
+/// </summary>
+public partial record _MessageSentContact : IResult {
+
+    ///<inheritdoc/>
+    public string Message => "Contact Requested";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("MessageSentContact");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Completed;
+
+    ///<summary></summary> 
+    public virtual string AccountName { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string Identifier { get; set;} 
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is MessageSentContact,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as MessageSentContact).AccountName, (object data,string value) => (data as MessageSentContact).AccountName = value, "AccountName"), 
+            new GuiBoundPropertyString ((object data) => (data as MessageSentContact).Identifier, (object data,string value) => (data as MessageSentContact).Identifier = value, "Identifier")
+
+            });
+
+    ///<inheritdoc/>
+    public object[] GetValues() => new [] { 
+        AccountName,
+        Identifier};
+    }
+
+
+/// <summary>
+/// Return parameters for result MessageSentDevice 
+/// </summary>
+public partial record MessageSentDevice : _MessageSentDevice {
+    }
+
+
+/// <summary>
+/// Callback parameters for result MessageSentDevice 
+/// </summary>
+public partial record _MessageSentDevice : IResult {
+
+    ///<inheritdoc/>
+    public string Message => "Connection Requested";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("MessageSentDevice");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Completed;
+
+    ///<summary></summary> 
+    public virtual string AccountName { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string Identifier { get; set;} 
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is MessageSentDevice,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as MessageSentDevice).AccountName, (object data,string value) => (data as MessageSentDevice).AccountName = value, "AccountName"), 
+            new GuiBoundPropertyString ((object data) => (data as MessageSentDevice).Identifier, (object data,string value) => (data as MessageSentDevice).Identifier = value, "Identifier")
+
+            });
+
+    ///<inheritdoc/>
+    public object[] GetValues() => new [] { 
+        AccountName,
+        Identifier};
     }
 
 
@@ -4208,7 +4484,6 @@ public class _EverythingMaui : Gui {
 		new GuiImage ("protocol_icon") , 
 		new GuiImage ("recover") , 
 		new GuiImage ("recover_account") , 
-		new GuiImage ("scan_qr") , 
 		new GuiImage ("services") , 
 		new GuiImage ("settings") , 
 		new GuiImage ("share_nodes_solid") , 
@@ -4290,9 +4565,6 @@ public class _EverythingMaui : Gui {
 
     ///<summary>Action ActionAccountGetPin.</summary> 
 	public GuiAction ActionAccountGetPin { get; } = new ("AccountGetPin", "Create connection PIN", "recover", () => new AccountGetPin());
-
-    ///<summary>Action ActionDeviceStaticUri.</summary> 
-	public GuiAction ActionDeviceStaticUri { get; } = new ("DeviceStaticUri", "Scan QR", "scan_qr", () => new DeviceStaticUri());
 
     ///<summary>Action ActionAccountRecover.</summary> 
 	public GuiAction ActionAccountRecover { get; } = new ("AccountRecover", "Recover Mesh Account", "recover_account", () => new AccountRecover());
@@ -4536,6 +4808,12 @@ public class _EverythingMaui : Gui {
 
     ///<summary>Result ResultReportShares.</summary> 
 	public GuiResult ResultReportShares { get; } = new ();
+
+    ///<summary>Result ResultMessageSentContact.</summary> 
+	public GuiResult ResultMessageSentContact { get; } = new ();
+
+    ///<summary>Result ResultMessageSentDevice.</summary> 
+	public GuiResult ResultMessageSentDevice { get; } = new ();
 	
     ///<summary>Dictionary resolving exception name to factory method.</summary> 
     public Dictionary<string, Func<IResult>> ExceptionDirectory =
@@ -4746,13 +5024,6 @@ public class _EverythingMaui : Gui {
 			new GuiInteger ("Expire", "Expiry in hours", 2)
 		    };
 
-        ActionDeviceStaticUri.Callback = (x, mode) => DeviceStaticUri (x as DeviceStaticUri, mode) ;
-	    ActionDeviceStaticUri.Entries = new () { 
-			new GuiText ("ConnectionUri", "Connection URI", 0), 
-			new GuiText ("LocalName", "Friendly name (optional)", 1), 
-			new GuiText ("Rights", "Requested rights", 2)
-		    };
-
         ActionAccountRecover.Callback = (x, mode) => AccountRecover (x as AccountRecover, mode) ;
 	    ActionAccountRecover.Entries = new () { 
 			new GuiText ("ServiceAddress", "Account service address", 0), 
@@ -4856,7 +5127,6 @@ public class _EverythingMaui : Gui {
 		    ActionAccountRequestConnect, 
 		    ActionDeviceConnectQR, 
 		    ActionAccountGetPin, 
-		    ActionDeviceStaticUri, 
 		    ActionAccountRecover, 
 		    ActionAccountDelete, 
 		    ActionAccountSwitch, 
@@ -5184,6 +5454,16 @@ public class _EverythingMaui : Gui {
 			new GuiText ("Share8", "Recovery share", 7)			
 		    };
 
+	    ResultMessageSentContact.Entries = new () { 
+			new GuiText ("AccountName", "Account", 0), 
+			new GuiText ("Identifier", "Identifier", 1)			
+		    };
+
+	    ResultMessageSentDevice.Entries = new () { 
+			new GuiText ("AccountName", "Account", 0), 
+			new GuiText ("Identifier", "Identifier", 1)			
+		    };
+
 
 
         Results = new List<GuiResult>() {  
@@ -5191,7 +5471,9 @@ public class _EverythingMaui : Gui {
 		    ResultReportAccountCreate, 
 		    ResultReportAccount, 
 		    ResultReportPending, 
-		    ResultReportShares
+		    ResultReportShares, 
+		    ResultMessageSentContact, 
+		    ResultMessageSentDevice
 		    };
 
         }
@@ -5226,12 +5508,6 @@ public class _EverythingMaui : Gui {
     /// GUI action
     /// </summary>
     public virtual Task<IResult> AccountGetPin (AccountGetPin data, ActionMode mode = ActionMode.Execute) 
-                => throw new NYI();
-
-    /// <summary>
-    /// GUI action
-    /// </summary>
-    public virtual Task<IResult> DeviceStaticUri (DeviceStaticUri data, ActionMode mode = ActionMode.Execute) 
                 => throw new NYI();
 
     /// <summary>

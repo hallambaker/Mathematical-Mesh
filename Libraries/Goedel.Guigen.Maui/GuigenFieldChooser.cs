@@ -1,11 +1,11 @@
 ﻿using Goedel.Utilities;
 
 using Microsoft.Maui.Controls;
+//using Microsoft.UI.Xaml.Controls;
 
 using System.Runtime.CompilerServices;
 
 namespace Goedel.Guigen.Maui;
-
 
 /// <summary>
 /// Instance class for chooser and associated add/update/delete interactions.
@@ -31,7 +31,7 @@ public class GuigenFieldChooser : GuigenField {
     public HorizontalStackLayout MainLayout;
     List<BoundPresentation> BoundPresentations = new();
 
-    public GuigenFieldChooser(IMainWindow mainWindow, GuiChooser chooser, Layout stack) : base(chooser) {
+    public GuigenFieldChooser(IMainWindow mainWindow, GuiChooser chooser, GuigenFieldSet fieldsSet) : base(chooser) {
 
         MainWindow = mainWindow;
 
@@ -81,10 +81,13 @@ public class GuigenFieldChooser : GuigenField {
         //ScrollView.Content = ListView;
         RefreshView.Content = ListView;
 
-        stack.Add(CommandButtons);
+        //stack.Add(CommandButtons);
 
         MainLayout = new();
-        stack.Add(MainLayout);
+        //stack.Add(MainLayout);
+
+        var Layout = new VerticalStackLayout() { CommandButtons, MainLayout };
+        fieldsSet.AddField(Layout);
 
         RestoreView();
 

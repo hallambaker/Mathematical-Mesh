@@ -79,6 +79,7 @@ public class GuigenBinding(Gui gui, DisplayMode display = DisplayMode.Default) {
 
     public int IconHeight = 20;
     public int IconWidth = 20;
+    public int ButtonHeight = 30;
     public Page GetMain() {
         return new GuigenMainFlyout(this).Page;
         }
@@ -92,7 +93,7 @@ public class GuigenBinding(Gui gui, DisplayMode display = DisplayMode.Default) {
     }
 
 public class GuigenMainFlyout : IReformat, IMainWindow {
-
+    
     public StyleSheet StyleSheet => StyleSheet.DefaultStyleSheet;
     public GuigenBinding Binding { get; }
 
@@ -106,6 +107,8 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
     GuiSection CurrentSection { get; set; }
 
     public Gui Gui => Binding.Gui;
+
+    public GuigenDetailAction CurrentAction { get; set; }
 
     public GuigenMainFlyout(GuigenBinding binding) {
         Binding = binding;
@@ -125,6 +128,10 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
     /// </summary>
     /// <param name="section"></param>
     public void SetDetailWindow(GuiSection section = null) {
+        if (CurrentAction != null) {
+            CurrentAction.TearDown();
+            }
+
         section ??= CurrentSection;
 
         CurrentSection = section;

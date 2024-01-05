@@ -151,9 +151,12 @@ File MiscUnsorted
 	String IanaTypeMeshAuthenticator "application/mmm/authenticator"
 		Description
 			|The proposed IANA content identifier for the Mesh message type.
-	String MeshConnectURI "mcu"
+	String MeshConnectURIDevice "mcd"
 		Description
-			|The proposed IANA URI scheme.
+			|The proposed IANA URI scheme for offering a device connection.
+	String MeshConnectURIUser "mcu"
+		Description
+			|The proposed IANA URI scheme for offering to exchange contacts.
 	String ServiceAuthenticatorInfo "mmm/key/authenticate/service"
 		Description
 			|HKDF info tag for deriving Service Authenticator from IKM

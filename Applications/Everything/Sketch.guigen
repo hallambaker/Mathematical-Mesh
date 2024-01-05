@@ -159,6 +159,13 @@ Result ReportShares "Secret shares"
 	Text Share7 "Recovery share"
 	Text Share8 "Recovery share"
 
+Result MessageSentContact "Contact Requested"
+	Text AccountName			"Account"
+	Text Identifier				"Identifier"
+
+Result MessageSentDevice "Connection Requested"
+	Text AccountName			"Account"
+	Text Identifier				"Identifier"
 
 // Exceptions
 

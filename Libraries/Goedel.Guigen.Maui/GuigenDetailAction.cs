@@ -34,6 +34,8 @@ public class GuigenDetailAction : GuigenDetaiPage {
     //Gui Gui { get; }
 
     public GuigenDetailAction(IMainWindow mainWindow, GuiAction action) : base (mainWindow) {
+        mainWindow.CurrentAction = this;
+
         Action = action;
 
 
@@ -68,6 +70,7 @@ public class GuigenDetailAction : GuigenDetaiPage {
 
         Result = Action.Factory() as IParameter;
         Result.Initialize(Gui);
+        FieldSet.SetFields(Result);
 
         EnableActions();
 
@@ -78,27 +81,35 @@ public class GuigenDetailAction : GuigenDetaiPage {
         Content = stack;
         }
 
-
+    public void TearDown() {
+        Result?.TearDown(Gui);
+        MainWindow.CurrentAction = null;
+        }
 
     private void OnClickCancel(object sender, EventArgs e) {
+        TearDown();
         MainWindow.SetDetailWindow();
         }
 
     private void OnClickConfirm(object sender, EventArgs e) {
-        var result = Action.Factory() as IParameter;
+        //var result = Action.Factory() as IParameter;
 
 
-        FieldSet.GetFields(result);
+        FieldSet.GetFields(Result);
 
-        var verify = result.Validate(Gui);
+        var verify = Result.Validate(Gui);
 
         switch (verify) {
             case ValidResult: {
-                if (Action.Callback != null) {
-                    DisableActions();
 
-                    var task = Action.Callback(result, ActionMode.Execute);
+                if (Action.Callback != null) {
+                    MainWindow.CurrentAction = null;
+                    DisableActions();
+                    var task = Action.Callback(Result, ActionMode.Execute);
                     task.ContinueWith(Continue, null);
+                    }
+                else {
+                    TearDown();
                     }
                 break;
                 }
@@ -114,6 +125,7 @@ public class GuigenDetailAction : GuigenDetaiPage {
 
         // Check here to see if there is a result value!
         var result = task.Result;
+
 
         switch (result) {
             case CompletedResult: {

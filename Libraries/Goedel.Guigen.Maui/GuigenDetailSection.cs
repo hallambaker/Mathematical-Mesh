@@ -1,4 +1,6 @@
-﻿namespace Goedel.Guigen.Maui;
+﻿using static System.Collections.Specialized.BitVector32;
+
+namespace Goedel.Guigen.Maui;
 
 public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
     public IMainWindow MainWindow { get; }
@@ -56,10 +58,10 @@ public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
         switch (button.Target) {
 
             case GuiSection section: {
-                return new GuigenSectionButton (MainWindow, section);
+                return new GuigenSectionButton (MainWindow, section).View;
                 }
             case GuiAction action: {
-                return new GuigenActionButton(MainWindow, action);
+                return new GuigenActionButton(MainWindow, action).View;
                 }
 
 
@@ -75,20 +77,43 @@ public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
 
 
 
-public class GuigenActionButton : Button {
-    IMainWindow MainWindow { get; }
+public class GuigenActionButton : IWidget {
+    public IMainWindow MainWindow { get; }
     GuigenBinding Binding => MainWindow.Binding;
     GuiAction Action { get; }
+
+    ImageButton ImageButton { get; }
+    Button TextButton { get; }
+    Layout Stack { get; }
+
+    public View View => Stack;
+
 
     public GuigenActionButton(IMainWindow mainWindow, GuiAction action) {
         MainWindow = mainWindow;
         Action = action;
 
-        Text = action.Prompt;
-        ImageSource = action.Icon.GetFilename();
-        HeightRequest = Binding.IconHeight * 2;
 
-        Clicked += OnClick;
+        ImageButton = new ImageButton {
+            Source = action.Icon.GetFilename(),
+            WidthRequest = Binding.IconWidth ,
+            HeightRequest = Binding.IconHeight ,
+            };
+        ImageButton.Clicked += OnClick;
+
+        TextButton = new Button {
+            Text = action.Prompt,
+            HeightRequest = Binding.ButtonHeight
+            };
+        TextButton.Clicked += OnClick;
+
+        Stack = new HorizontalStackLayout() { ImageButton, TextButton };
+
+        //Text = action.Prompt;
+        //ImageSource = action.Icon.GetFilename();
+        //HeightRequest = Binding.IconHeight * 2;
+
+        //Clicked += OnClick;
 
         }
 

@@ -17,7 +17,9 @@ public partial class EverythingMaui {
             //    Message = message
             //    };
 
-            return new NotYetImplemented() {
+            return new MessageSentContact() {
+                AccountName = "Fred",
+                Identifier = "Id"
                 };
             }
         catch (Exception exception) {

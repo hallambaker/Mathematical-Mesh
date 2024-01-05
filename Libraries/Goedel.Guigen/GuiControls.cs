@@ -27,7 +27,16 @@ public interface IParameter : IBindable {
 
 
     IResult Validate(Gui mainWindow);
-    IResult Initialize(Gui mainWindow);
+    IResult Initialize(Gui mainWindow) => NullResult.Initialized;
+
+    IResult TearDown(Gui mainWindow) => NullResult.Teardown;
+
+    }
+
+
+public interface IMessageable {
+
+    IResult MessageReceived();
     }
 
 public interface ISelectable : IParameter {
@@ -45,7 +54,8 @@ public enum ReturnResult {
     Initialized,
     Valid,
     Invalid,
-    Error
+    Error,
+    Teardown
     }
 
 
@@ -94,6 +104,8 @@ public abstract record NullResult : IResult {
 
     ///<summary></summary> 
 
+    public static NullResult Teardown { get; } = new TeardownResult() { };
+
     public static NullResult Initialized { get; }  = new InitializedResult() { };
 
     public static NullResult Valid { get; } = new ValidResult();
@@ -111,6 +123,11 @@ public record CompletedResult : NullResult {
 
 public record InitializedResult : NullResult {
     public override ReturnResult ReturnResult { get; init; } = ReturnResult.Initialized
+;
+    }
+
+public record TeardownResult : NullResult {
+    public override ReturnResult ReturnResult { get; init; } = ReturnResult.Teardown
 ;
     }
 
@@ -200,6 +217,7 @@ public record GuiBoundTextArea(
 public class GuiQR {
 
     public string? Offer { get; set; }
+    public string? Identifier { get; set; }
     public string? CapturedByCamera { get; set; }
     public object? ReceivedByMessage { get; set; }
 

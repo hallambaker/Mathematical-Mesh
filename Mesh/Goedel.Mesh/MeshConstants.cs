@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 11/28/2023 5:20:05 PM
+//  This file was automatically generated at 1/5/2024 5:03:15 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -515,9 +515,14 @@ public static partial class MeshConstants {
     public const string IanaTypeMeshAuthenticator = "application/mmm/authenticator";
 
     ///<summary>
-    ///The proposed IANA URI scheme.
+    ///The proposed IANA URI scheme for offering a device connection.
     ///</summary>
-    public const string MeshConnectURI = "mcu";
+    public const string MeshConnectURIDevice = "mcd";
+
+    ///<summary>
+    ///The proposed IANA URI scheme for offering to exchange contacts.
+    ///</summary>
+    public const string MeshConnectURIUser = "mcu";
 
     ///<summary>
     ///HKDF info tag for deriving Service Authenticator from IKM

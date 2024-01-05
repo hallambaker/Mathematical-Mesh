@@ -993,7 +993,7 @@ public partial class ContextUser : ContextAccount {
 
         var key = new CryptoKeySymmetric(pin);
 
-        var connectURI = MeshUri.ConnectUri(ServiceAddress, pin);
+        var connectURI = MeshUri.ConnectUriDevice(ServiceAddress, pin);
 
         // Create a device profile 
         var profileDevice = new ProfileDevice(secretSeed);
@@ -1597,7 +1597,7 @@ public partial class ContextUser : ContextAccount {
             }
 
         // return the contact address
-        return MeshUri.ConnectUri(ServiceAddress, pin);
+        return MeshUri.ConnectUriDevice(ServiceAddress, pin);
         }
 
 

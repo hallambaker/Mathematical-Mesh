@@ -9,10 +9,12 @@ namespace Goedel.Guigen.Maui;
 public class GuigenDetailResult : GuigenDetaiPage {
 
     public Button DismissButton;
+    int GridRow { get; set; } = 0;
 
     public GuigenDetailResult(IMainWindow mainWindow, IResult result) : base(mainWindow) {
 
         var stack = new VerticalStackLayout();
+
 
         if (result is IFail fail) {
             var view = new HorizontalStackLayout();
@@ -30,48 +32,67 @@ public class GuigenDetailResult : GuigenDetaiPage {
                 Text = text
                 };
 
-
-
-
             view.Add(image);
             view.Add(label);
             stack.Add(view);
             }
         else {
+            var grid = new Grid();
+            grid.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
+            grid.AddColumnDefinition(new ColumnDefinition(GridLength.Star));
+            stack.Add(grid);
+
             foreach (var entry in result.Binding.BoundProperties) {
                 switch (entry) {
                     case GuiBoundPropertyString text: {
 
-                        var view = new HorizontalStackLayout();
-                        var label = new Label() {
-                            Text = text.Label
-                            };
-                        var field = new Label() {
-                            Text = text.Get(result)
-                            };
+                        var value = text.Get(result);
+                        if (value != null) {
 
-                        view.Add(label);
-                        view.Add(field);
-                        stack.Add(view);
+                            var view = new HorizontalStackLayout();
+                            var label = new Label() {
+                                Text = text.Label
+                                };
+                            var field = new Label() {
+                                Text = text.Get(result)
+                                };
+
+                            //view.Add(label);
+                            //view.Add(field);
+                            //stack.Add(view);
+
+                            MainWindow.FormatFieldLabel(label);
+                            MainWindow.FormatFieldEntry(field);
+
+                            grid.Add(label, 0, GridRow);
+                            grid.Add(field, 1, GridRow++);
+                            }
 
                         break;
                         }
                     case GuiBoundPropertyInteger text: {
-
-                        var view = new HorizontalStackLayout();
-                        var label = new Label() {
-                            Text = text.Label
-                            };
-
                         var fieldValue = text.Get(result);
-                        var field = new Label() {
-                            Text = fieldValue.ToString()
-                            };
+                        if (fieldValue != null) {
+                            var view = new HorizontalStackLayout();
+                            var label = new Label() {
+                                Text = text.Label
+                                };
 
-                        view.Add(label);
-                        view.Add(field);
-                        stack.Add(view);
 
+                            var field = new Label() {
+                                Text = fieldValue.ToString()
+                                };
+
+                            //view.Add(label);
+                            //view.Add(field);
+                            //stack.Add(view);
+
+                            MainWindow.FormatFieldLabel(label);
+                            MainWindow.FormatFieldEntry(field);
+
+                            grid.Add(label, 0, GridRow);
+                            grid.Add(field, 1, GridRow++);
+                            }
                         break;
                         }
                     }
@@ -85,6 +106,7 @@ public class GuigenDetailResult : GuigenDetaiPage {
         DismissButton.Clicked += OnClickDismiss;
 
         hview.Add(DismissButton);
+
         stack.Add(hview);
         Content = stack;
         }

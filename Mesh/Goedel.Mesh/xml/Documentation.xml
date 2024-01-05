@@ -5526,9 +5526,14 @@
             The proposed IANA content identifier for the Mesh message type.
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MeshConnectURI">
+        <member name="F:Goedel.Mesh.MeshConstants.MeshConnectURIDevice">
             <summary>
-            The proposed IANA URI scheme.
+            The proposed IANA URI scheme for offering a device connection.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshConnectURIUser">
+            <summary>
+            The proposed IANA URI scheme for offering to exchange contacts.
             </summary>
         </member>
         <member name="F:Goedel.Mesh.MeshConstants.ServiceAuthenticatorInfo">
@@ -16496,7 +16501,16 @@
             <param name="account">The account address.</param>
             <param name="pin">The pin value.</param>
         </member>
-        <member name="M:Goedel.Mesh.MeshUri.ConnectUri(System.String,System.String)">
+        <member name="M:Goedel.Mesh.MeshUri.ConnectUriDevice(System.String,System.String)">
+            <summary>
+            Generate a connection URI for <paramref name="account"/> with secret 
+            <paramref name="pin"/>.
+            </summary>
+            <param name="account">The account to connect to.</param>
+            <param name="pin">The secret value.</param>
+            <returns>The connection URI</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshUri.ConnectUriUser(System.String,System.String)">
             <summary>
             Generate a connection URI for <paramref name="account"/> with secret 
             <paramref name="pin"/>.

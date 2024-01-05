@@ -2,6 +2,7 @@
 
 using Goedel.Mesh.Client;
 
+using System.Net.NetworkInformation;
 using System.Resources;
 
 namespace Goedel.Everything;
@@ -34,6 +35,8 @@ public partial class EverythingMaui {
     public ContextUser ContextUser { get; set; }
 
     public SettingSection Settings { get; } = new();
+
+    public Dictionary<string, IMessageable> WaitingOnMessage { get; } = new();
 
     public EverythingMaui() {
         ResourceManager = Sketch_resources.ResourceManager;
@@ -101,7 +104,21 @@ public partial class EverythingMaui {
 
 
 
-    public GuiQR GetContactQR() {
+    public GuiQR GetQrContact(IMessageable source) {
+        if (ContextUser == null) {
+            return null;
+            }
+        var combinedKey = new CryptoKeySymmetricSigner();
+        var pin = combinedKey.SecretKey;
+
+        var qr = MeshUri.ConnectUriUser(ContextUser.ServiceAddress, pin);
+
+
+        return Register(pin, qr, source);
+
+        }
+
+    public GuiQR GetQrDevice(IMessageable source) {
         if (ContextUser == null) {
             return null;
             }
@@ -109,10 +126,23 @@ public partial class EverythingMaui {
         var pin = combinedKey.SecretKey;
 
         return new GuiQR() {
-            Offer = MeshUri.ConnectUri(ContextUser.ServiceAddress, pin)
+            Offer = MeshUri.ConnectUriDevice(ContextUser.ServiceAddress, pin)
             };
 
+
         }
+
+    GuiQR Register(string id, string qr, IMessageable source) {
+        WaitingOnMessage.TryAdd(id, source);
+
+        return new GuiQR() {
+            Identifier = id,
+            Offer = qr
+            };
+        }
+
+    public bool UnRegister(GuiQR guiQR) =>  WaitingOnMessage.Remove(guiQR.Identifier);
+
 
     // need to have a continuous poll loop going and a mechanism to refresh the
     // output data if changed.
@@ -144,27 +174,7 @@ public partial class EverythingMaui {
 
 
 
-public partial class QrContact {
 
-    public override IResult Initialize(Gui gui) {
-        var everything = gui as EverythingMaui;
-        QrCode = everything.GetContactQR();
-
-        return NullResult.Initialized;
-        }
-
-    }
-
-public partial class DeviceConnectQR {
-
-    public override IResult Initialize(Gui gui) {
-        var everything = gui as EverythingMaui;
-        QrCode = everything.GetContactQR();
-
-        return NullResult.Initialized;
-        }
-
-    }
 
 
 public partial class AccountSection {

@@ -35,7 +35,9 @@ public abstract class GuigenField(GuiField field) {
 public class GuigenFieldSet : IWidget {
 
     public IMainWindow MainWindow { get; }
-    public Layout View { get; private set; }
+    //public Layout View { get; private set; }
+
+    public Grid View { get; private set; }
 
     View? summary = null;
 
@@ -43,30 +45,50 @@ public class GuigenFieldSet : IWidget {
 
     int[] FieldMap;
 
+    int GridRow { get; set; } = 0;
+    int GridColumn { get; set; } = 0;
 
-    public GuigenFieldSet(IMainWindow mainWindow, List<IGuiEntry> fields, Layout stack) {
+    public GuigenFieldSet(IMainWindow mainWindow, List<IGuiEntry> fields, Layout? stack) {
         MainWindow = mainWindow;
-        stack ??= new VerticalStackLayout();
-        View = stack;
+
+        //stack ??= new VerticalStackLayout();
+        //View = stack;
+
+        View = new Grid();
+        View.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
+        View.AddColumnDefinition(new ColumnDefinition(GridLength.Star));
+        stack?.Add(View);
+
 
         FieldMap = new int[fields.Count];
         int i = 0;
         foreach (var entry in fields) {
             switch (entry) {
                 case GuiText text: {
-                    var field = new GuigenFieldString(MainWindow, text, stack);
+                    var field = new GuigenFieldString(MainWindow, text, this);
                     Fields.Add(field);
                     FieldMap[i++] = field.Index;
                     break;
                     }
                 case GuiInteger integer: {
-                    var field = new GuigenFieldInteger(MainWindow, integer, stack);
+                    var field = new GuigenFieldInteger(MainWindow, integer, this);
                     Fields.Add(field);
                     FieldMap[i++] = field.Index;
                     break;
                     }
                 case GuiChooser chooser: {
-                    var field = new GuigenFieldChooser(MainWindow, chooser, stack);
+                    var field = new GuigenFieldChooser(MainWindow, chooser, this);
+                    Fields.Add(field);
+                    //stack.Add(field.ListView);
+                    FieldMap[i++] = field.Index;
+                    break;
+                    }
+                case GuiQRScan qrscan: {
+                    //var label = new Label() {
+                    //    Text = "Flopple"};
+                    //Fields.Add(label);
+
+                    var field = new GuigenFieldQr(MainWindow, qrscan, this);
                     Fields.Add(field);
                     //stack.Add(field.ListView);
                     FieldMap[i++] = field.Index;
@@ -116,6 +138,24 @@ public class GuigenFieldSet : IWidget {
             }
         }
 
+
+    public void AddField(IView label, IView child, IView feedback) {
+
+        //var stack = new HorizontalStackLayout();
+        //stack.Add(label);
+        //stack.Add(child);
+        //View.Add(stack);
+        //View.Add(feedback);
+
+        View.Add(label, 0, GridRow);
+        View.Add(child, 1, GridRow++);
+        View.Add(feedback, 2, GridRow++);
+        }
+
+    public void AddField(IView child) {
+        View.Add(child, 0, GridRow++);
+        //View.Add(child);
+        }
     }
 
 
@@ -129,7 +169,7 @@ public class GuigenFieldString : GuigenField, IWidget {
         IsVisible = false
         };
 
-    public GuigenFieldString(IMainWindow mainWindow, GuiText text, Layout stack) : base(text) {
+    public GuigenFieldString(IMainWindow mainWindow, GuiText text, GuigenFieldSet fieldsSet) : base(text) {
         MainWindow = mainWindow;
 
         var view = new HorizontalStackLayout();
@@ -147,8 +187,10 @@ public class GuigenFieldString : GuigenField, IWidget {
         MainWindow.FormatFieldEntry(ValueField);
         MainWindow.FormatFeedback(Feedback);
 
-        stack.Add(View);
-        stack.Add(Feedback);
+        //stack.Add(View);
+        //stack.Add(Feedback);
+
+        fieldsSet.AddField(FieldLabel, ValueField, Feedback);
         }
 
 
@@ -189,7 +231,7 @@ public class GuigenFieldInteger : GuigenField, IWidget {
         IsVisible = false
         };
 
-    public GuigenFieldInteger(IMainWindow mainWindow, GuiInteger text, Layout stack) : base(text) {
+    public GuigenFieldInteger(IMainWindow mainWindow, GuiInteger text, GuigenFieldSet fieldsSet) : base(text) {
         MainWindow = mainWindow;
 
         var view = new HorizontalStackLayout();
@@ -207,8 +249,10 @@ public class GuigenFieldInteger : GuigenField, IWidget {
         MainWindow.FormatFieldEntry(ValueField);
         MainWindow.FormatFeedback(Feedback);
 
-        stack.Add(View);
-        stack.Add(Feedback);
+        //stack.Add(View);
+        //stack.Add(Feedback);
+
+        fieldsSet.AddField(FieldLabel, ValueField, Feedback);
         }
 
 

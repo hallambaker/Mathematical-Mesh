@@ -328,7 +328,7 @@ public partial class TestService {
 
         // Create the QR Code with PIN
         var boundPin = contextAdmin.GetPinAsync(MeshConstants.MessagePINActionDevice, roles: RightsDirect).Sync();
-        var connectUri = MeshUri.ConnectUri(contextAdmin.ServiceAddress, boundPin.Pin);
+        var connectUri = MeshUri.ConnectUriDevice(contextAdmin.ServiceAddress, boundPin.Pin);
 
         ReportDevices(contextAdmin);
 

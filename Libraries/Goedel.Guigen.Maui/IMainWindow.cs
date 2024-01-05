@@ -13,6 +13,10 @@ public interface IMainWindow  {
 
     public StyleSheet StyleSheet { get; }
 
+
+    public GuigenDetailAction CurrentAction { get; set; }
+
+
     public void SetDetailWindow(GuiSection section = null);
 
     public void SetDetailWindow(GuiAction action);
@@ -31,6 +35,10 @@ public interface IMainWindow  {
     public void FormatFieldEntry(View view);
 
     public void FormatFeedback(Label view);
+
+
+
+
 
     }
 
