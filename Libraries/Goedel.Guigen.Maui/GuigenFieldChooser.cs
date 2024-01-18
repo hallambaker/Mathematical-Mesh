@@ -1,9 +1,9 @@
 ﻿using Goedel.Utilities;
 
 using Microsoft.Maui.Controls;
-//using Microsoft.UI.Xaml.Controls;
-
 using System.Runtime.CompilerServices;
+
+using static System.Collections.Specialized.BitVector32;
 
 namespace Goedel.Guigen.Maui;
 
@@ -34,6 +34,9 @@ public class GuigenFieldChooser : GuigenField {
     public GuiBinding SelectionBinding { get; set; } = null;
     public List<GridLength> Widths { get; } = new();
     public Grid GridHeadings { get; } = new();
+
+
+    public VerticalStackLayout EntryForm { get; } = new();
 
     public GuigenFieldChooser(IMainWindow mainWindow, GuiChooser chooser, GuigenFieldSet fieldsSet) : base(chooser) {
 
@@ -90,7 +93,7 @@ public class GuigenFieldChooser : GuigenField {
         MainLayout = new();
         //stack.Add(MainLayout);
 
-        var Layout = new VerticalStackLayout() { CommandButtons, MainLayout };
+        var Layout = new VerticalStackLayout() { CommandButtons, MainLayout, EntryForm };
         fieldsSet.AddField(Layout);
 
         RestoreView();
@@ -206,13 +209,33 @@ public class GuigenFieldChooser : GuigenField {
         // need a bound presentation of the 
 
         var selectEvent = e as SelectedItemChangedEventArgs;
-        var selectedItem = selectEvent.SelectedItem as IBoundPresentation;
-        var presentation = GetPresentation(selectedItem);
 
-        presentation.SetDialogMode(DialogMode.Update);
-        presentation.Data = selectedItem;
-        SetView(presentation.Layout);
+
+        var dialog = selectEvent.SelectedItem as IDialog;
+        var bindable = selectEvent.SelectedItem as IBindable;
+
+        //var fieldSet = new GuigenFieldSet(MainWindow, dialog.Dialog(MainWindow.Gui).Entries, EntryForm);
+        //fieldSet.SetFields(bindable);
+
+        //if (selectEvent.SelectedItem is IBoundPresentation selectedItem) {
+
+
+
+        //    var presentation = GetPresentation(selectedItem);
+
+        //    presentation.SetDialogMode(DialogMode.Update);
+        //    presentation.Data = selectedItem;
+        //    SetView(presentation.Layout);
+        //    return;
+        //    }
+
+
+
+
         }
+
+
+
 
 
     }

@@ -7,6 +7,46 @@ using System.Resources;
 
 namespace Goedel.Everything;
 
+// Focus: 001 Present Dialog for BoundDevice
+// Focus: 002 Add buttons to dialog
+// Focus: 003 Delete entry on device dialog
+// Focus: 004 Update button on device dialog
+// Focus: 005 Read only fields
+// Focus: 006 Fill in platform field in create account
+// Focus: 007 Rights field in device dialog
+// Focus: 010 Implement selector Password credential
+// Focus: 011 Implement selector Messages
+// Focus: 012 Implement selector Contacts
+// Focus: 013 Implement selector Bookmarks / Feeds
+// Focus: 014 Implement selector Feeds
+// Focus: 015 Implement selector Applications
+// Focus: 016 Implement selector Tasks
+// Focus: 017 Implement selector Calendar
+// Focus: 017 Implement selector Groups
+// Focus: 018 Implement selector Documents
+// Focus: 020 Implement camera on QR
+// Focus: 021 Implement Confirmation transaction
+// Focus: 022 Implement Contact request transaction
+// Focus: 023 Implement Device connect transaction
+// Focus: 030 Upload document
+// Focus: 031 Send mail message
+// Focus: 032 Send Mail attachment
+// Focus: 033 Application SSH 
+// Focus: 034 Application SMTP
+// Focus: 035 Application Developer
+// Focus: 036 Comment feed
+// Focus: 036 Annotation feed
+// Focus: 040 Rights
+// Focus: 041 Message polling
+// Focus: 042 Presence push
+// Focus: 043 Chat
+// Focus: 044 WebRTC voice/video
+// Focus: 050 Windows
+// Focus: 051 macOS
+// Focus: 052 iOs
+// Focus: 053 Android
+
+
 // List entries
 // ToDo: Clean up display of list items. Use four cornered presentation
 // ToDo: Fix ListBox scroll bars

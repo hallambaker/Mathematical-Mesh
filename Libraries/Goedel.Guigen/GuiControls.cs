@@ -10,7 +10,10 @@ public interface IPresentation {
     }
 
 
+public interface IDialog {
 
+    GuiDialog Dialog(Gui gui);
+    }
 
 public interface IBindable {
     

@@ -479,10 +479,12 @@ Dialog BoundApplicationCallSign "Message" "contacts"
 	Inherit BoundApplication
 
 Dialog BoundDevice "Message" "plug"
-	Text DeviceType		"Platform"
-	Text Rights			"Rights"
-	Text LocalName		"Name"
-	Text Udf			"Udf"
+	Text DeviceType		"Platform"  // Readonly
+	Text Rights			"Rights"  // editable
+	Text LocalName		"Name" // editable
+	Text Udf			"Udf" // readonly
+	// Button Rights
+	// Button Delete
 
 Dialog AccountUser "Account" "user"
 	Text Udf "Fingerprint"
