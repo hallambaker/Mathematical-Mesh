@@ -479,8 +479,10 @@ Dialog BoundApplicationCallSign "Message" "contacts"
 	Inherit BoundApplication
 
 Dialog BoundDevice "Message" "plug"
-	Text LocalName "Name"
-	Text Udf "Udf"
+	Text DeviceType		"Platform"
+	Text Rights			"Rights"
+	Text LocalName		"Name"
+	Text Udf			"Udf"
 
 Dialog AccountUser "Account" "user"
 	Text Udf "Fingerprint"

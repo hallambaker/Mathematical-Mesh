@@ -86,7 +86,7 @@ public class GuigenBinding(Gui gui, DisplayMode display = DisplayMode.Default) {
 
 
     public string Resolve(ResourceId resourceId) =>
-        resourceId.GetString();
+        resourceId?.GetString();
 
     public string Resolve(string resourceId) =>
         ResourceResolver.GetString(resourceId);

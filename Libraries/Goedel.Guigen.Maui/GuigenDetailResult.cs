@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-
+﻿
 namespace Goedel.Guigen.Maui;
 
 /// <summary>
@@ -16,27 +15,24 @@ public class GuigenDetailResult : GuigenDetaiPage {
         var stack = new VerticalStackLayout();
 
 
+        string source = (result is IFail) ? "result_fail.pb" : "";
+
+
         if (result is IFail fail) {
-            var view = new HorizontalStackLayout();
-            var image = new Image() {
-                Source = "triangle_exclamation_solid.png",
-                HeightRequest = Binding.IconHeight * 2
-                };
 
             var values = result.GetValues();
-            var format = Binding.Resolve(fail.ResourceId);
+            var format = Binding.Resolve(fail.ResourceId) ?? fail.Message;
 
             var text = values.Length > 0 ? String.Format(format, values) : format;
 
-            var label = new Label() {
-                Text = text
-                };
-
-            view.Add(image);
-            view.Add(label);
+            var view = GetTitle("result_fail.png", text);
             stack.Add(view);
             }
         else {
+            var titleText = Binding.Resolve(result.ResourceId) ?? result.Message;
+            var title = GetTitle("result_success.png", titleText);
+            stack.Add(title);
+
             var grid = new Grid();
             grid.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
             grid.AddColumnDefinition(new ColumnDefinition(GridLength.Star));
@@ -109,6 +105,23 @@ public class GuigenDetailResult : GuigenDetaiPage {
 
         stack.Add(hview);
         Content = stack;
+        }
+
+
+    IView GetTitle(string icon, string text) {
+        var view = new HorizontalStackLayout();
+        var image = new Image() {
+            Source = icon,
+            HeightRequest = Binding.IconHeight * 2
+            };
+        var label = new Label() {
+            Text = text
+            };
+
+        view.Add(image);
+        view.Add(label);
+
+        return view;
         }
 
     private void OnClickDismiss(object sender, EventArgs e) {

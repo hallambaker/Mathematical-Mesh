@@ -7,11 +7,13 @@ namespace Goedel.Everything;
 
 public partial class DeviceConnectQR : IMessageable {
 
+    ///<inheritdoc/>
     public IResult MessageReceived() {
         throw new NYI();
         }
 
-    public IResult TearDown(Gui gui) {
+    ///<inheritdoc/>
+    public override IResult TearDown(Gui gui) {
         if (QrCode != null) {
             var everything = gui as EverythingMaui;
             everything.UnRegister(QrCode);
@@ -20,6 +22,7 @@ public partial class DeviceConnectQR : IMessageable {
         return NullResult.Teardown;
         }
 
+    ///<inheritdoc/>
     public override IResult Initialize(Gui gui) {
         var everything = gui as EverythingMaui;
         QrCode = everything.GetQrDevice(this);
@@ -32,23 +35,6 @@ public partial class DeviceConnectQR : IMessageable {
 
 public partial class EverythingMaui {
 
-    /////<inheritdoc/>
-    //public override async Task<IResult> DeviceStaticUri(DeviceStaticUri data, ActionMode mode = ActionMode.Execute) {
-    //    try {
-    //        var rights = ParseRights(data.Rights);
-    //        var catalogedDevice = await ContextUser.ConnectStaticUriAsync(
-    //                data.ConnectionUri, rights, data.LocalName);
-
-    //        return new NotYetImplemented() {
-    //            };
-    //        }
-    //    catch (Exception exception) {
-    //        if (TryProcessException(exception, data, out var result)) {
-    //            return result;
-    //            }
-    //        return new ErrorResult(exception);
-    //        }
-    //    }
 
     ///<inheritdoc/>
     public override async Task<IResult> DeviceConnectQR(DeviceConnectQR data, ActionMode mode = ActionMode.Execute) {

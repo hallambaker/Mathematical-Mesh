@@ -54,7 +54,7 @@ public partial class BoundDocument : ISelectSummary, IBoundPresentation {
 
 
     public string? LabelValue => Filename;
-
+    public string? SecondaryValue => "TBS";
     public string? IconValue => GetIcon();
     public string ContentType {get; set;}
 

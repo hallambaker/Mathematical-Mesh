@@ -1691,6 +1691,12 @@ public partial class _BoundDevice : IParameter {
 
 
     ///<summary></summary> 
+    public virtual string DeviceType { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string Rights { get; set;} 
+
+    ///<summary></summary> 
     public virtual string LocalName { get; set;} 
 
     ///<summary></summary> 
@@ -1704,6 +1710,8 @@ public partial class _BoundDevice : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundDevice,
         new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _BoundDevice).DeviceType, (object data,string value) => (data as _BoundDevice).DeviceType = value, "DeviceType"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundDevice).Rights, (object data,string value) => (data as _BoundDevice).Rights = value, "Rights"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundDevice).LocalName, (object data,string value) => (data as _BoundDevice).LocalName = value, "LocalName"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundDevice).Udf, (object data,string value) => (data as _BoundDevice).Udf = value, "Udf")
 
@@ -5313,8 +5321,10 @@ public class _EverythingMaui : Gui {
 
         BoundApplicationCallSign.IsBacker = (object data) => DialogBoundApplicationCallSign.IsBacker(data);
 	    DialogBoundDevice.Entries = new () { 
-			new GuiText ("LocalName", "Name", 0), 
-			new GuiText ("Udf", "Udf", 1)			
+			new GuiText ("DeviceType", "Platform", 0), 
+			new GuiText ("Rights", "Rights", 1), 
+			new GuiText ("LocalName", "Name", 2), 
+			new GuiText ("Udf", "Udf", 3)			
 		    };
 
         BoundDevice.IsBacker = (object data) => DialogBoundDevice.IsBacker(data);

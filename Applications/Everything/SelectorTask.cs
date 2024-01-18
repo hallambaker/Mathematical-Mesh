@@ -29,7 +29,7 @@ public partial class BoundTask : ISelectSummary, IBoundPresentation {
     public string? LabelValue => Title;
 
     public string? IconValue => "task.png";
-
+    public string? SecondaryValue => "TBS";
     public virtual CatalogedTask Convert() {
         var result = new CatalogedTask() {
             Title = Title,

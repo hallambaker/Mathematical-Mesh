@@ -38,6 +38,10 @@ global using System.Net.Http;
 global using System.Collections.ObjectModel;
 
 global using Goedel.Discovery;
+
+global using Microsoft.Maui.Controls;
+
+
 #if !(_Github_)
 //[assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif

@@ -29,7 +29,7 @@ public partial class BoundPassword : ISelectSummary, IBoundPresentation {
     public string? LabelValue => Service.NullifyIfEmpty() ?? "Unknown";
 
     public string? IconValue => "password.png";
-
+    public string? SecondaryValue => "TBS";
     public CatalogedCredential Convert() {
         var result = new CatalogedCredential() {
             Protocol = Protocol,
@@ -62,7 +62,7 @@ public partial class BoundPassword : ISelectSummary, IBoundPresentation {
 public partial class BoundPasskey: ISelectSummary, IBoundPresentation {
 
 
-
+    public string? SecondaryValue => "TBS";
     public string? LabelValue => Service.NullifyIfEmpty() ?? "Unknown";
 
     public string? IconValue => "credentials.png";

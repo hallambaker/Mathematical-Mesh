@@ -6,10 +6,12 @@ namespace Goedel.Everything;
 #region // Bindings to classes specified through the Guigen schema.
 
 // Documented in Guigen output
-public partial class DeviceSection {
+public partial class DeviceSection : IHeadedSelection {
 
     AccountSection Account { get; }
     ContextUser ContextUser => Account.ContextUser;
+
+    public GuiBinding SelectionBinding => _BoundDevice.BaseBinding;
 
     /// <summary>
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
@@ -25,12 +27,14 @@ public partial class DeviceSection {
     }
 
 // Documented in Guigen output
-public partial class BoundDevice : ISelectSummary, IBoundPresentation {
+public partial class BoundDevice :  IBoundPresentation {
 
 
     public string? LabelValue => LocalName;
 
     public string? IconValue => "device_plug.png";
+
+    public string? SecondaryValue => DeviceType;
 
     public CatalogedDevice Convert() {
         var result = new CatalogedDevice() {
@@ -42,8 +46,11 @@ public partial class BoundDevice : ISelectSummary, IBoundPresentation {
 
     public static BoundDevice Convert(CatalogedDevice entry) {
         var result = new BoundDevice() {
-            LocalName = entry.LocalName,
-            Udf = entry.Udf
+            Bound = entry,
+            LocalName = entry.LocalName ?? "A Device",
+            Udf = entry.DeviceUdf,
+            DeviceType = "Windows",
+            Rights = "Admin"
 
             };
         return result;

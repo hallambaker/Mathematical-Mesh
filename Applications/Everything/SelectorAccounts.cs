@@ -25,7 +25,7 @@ public partial class BoundAccount : ISelectSummary, IBoundPresentation {
     public CatalogedEntry CatalogedEntry {get; set; }
 
     public override string Display => "An Account";
-
+    public string? SecondaryValue => "TBS";
     public string? LabelValue => Display;
 
     public string? IconValue => "account.png";

@@ -46,7 +46,9 @@ public interface ISelectable : IParameter {
     }
 
 
-
+public interface IHeadedSelection {
+    GuiBinding SelectionBinding { get; }
+    }
 
 
 public enum ReturnResult {

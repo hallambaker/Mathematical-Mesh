@@ -27,7 +27,7 @@ public partial class ApplicationSection {
 public partial class BoundApplication : ISelectSummary, IBoundPresentation {
 
     public string? LabelValue => Display;
-
+    public string? SecondaryValue => "TBS";
     public virtual string? IconValue => "account.png";
 
     public virtual CatalogedApplication Convert() {

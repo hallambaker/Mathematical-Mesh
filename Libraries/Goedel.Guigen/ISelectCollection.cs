@@ -14,7 +14,7 @@ public interface ISelectSummary {
 
     string? LabelValue { get; }
 
-
+    string? SecondaryValue { get; }
     string? IconValue { get;}
     }
 

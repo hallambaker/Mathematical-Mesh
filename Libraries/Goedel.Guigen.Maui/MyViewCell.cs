@@ -16,48 +16,28 @@ public class MyViewCell : ViewCell {
 
     SummaryView? SummaryView;
 
-    Grid Grid { get; } = new Grid() {
-        RowDefinitions = new RowDefinitionCollection(
-                        new RowDefinition() {
-                            Height = GridLength.Auto
-                            },
-                        new RowDefinition() {
-                            Height = GridLength.Auto
-                            }),
-        ColumnDefinitions = new ColumnDefinitionCollection(
-                        new ColumnDefinition() {
-                            Width = GridLength.Auto
-                            },
-                        new ColumnDefinition() {
-                            Width = GridLength.Auto
-                            })
-        };
 
-    Image EntryImage = new Image() { 
-        HeightRequest = 30,
-        WidthRequest = 30};
-    Label MainLabel = new Label();
-    Label SecondaryLabel = new Label();
+    SelectGrid SelectGrid {get; set; }
+    //ArrayGrid ArrayGrid { get; set; }
+    public Grid GridCell { get; } = new();
 
     public MyViewCell(GuigenFieldChooser chooser) { 
         Chooser = chooser;
         BindingContextChanged += OnBindingChanged;
-        PropertyChanged += OnPropertyChanged;
+        //PropertyChanged += OnPropertyChanged;
         Appearing += OnAppearing;
         Disappearing += OnDisappearing;
-        View = Grid;
+        Tapped += OnTapped;
+        View = null;
 
-        Grid.Add(EntryImage);
-        Grid.SetRowSpan((IView)EntryImage, 2);
-        Grid.Add(MainLabel);
-        Grid.SetColumn((IView)MainLabel, 1);
-        Grid.Add(SecondaryLabel);
-        Grid.SetColumn((IView)SecondaryLabel, 1);
-        Grid.SetRow((IView)SecondaryLabel, 1);
+
         //FieldBinding = new FieldBinding(this);
         }
 
 
+    public void OnTapped(object? sender, EventArgs e) {
+
+        }
 
 
     public void OnAppearing(object? sender, EventArgs e) {
@@ -71,10 +51,43 @@ public class MyViewCell : ViewCell {
     public void OnBindingChanged(object? sender, EventArgs e) {
 
         if (BindingContext is ISelectSummary summary) {
-            EntryImage.Source = summary.IconValue;
-            MainLabel.Text = summary.LabelValue;
-            SecondaryLabel.Text = "Bong";
+            SelectGrid ??= new();
+            SelectGrid.Set(summary);
+            View = SelectGrid.Grid;
+            return;
             }
+
+        GridCell.ColumnDefinitions = Chooser.GridHeadings.ColumnDefinitions;
+        GridCell.Clear();
+        View = GridCell;
+
+        if (!Chooser.SelectionBinding.IsType(BindingContext)) {
+            return;
+            }
+
+        var col = 0;
+        foreach (var item in Chooser.SelectionBinding.BoundProperties) {
+            switch (item) {
+                case GuiBoundPropertyString propertyString: {
+
+                    var value = propertyString.Get(BindingContext);
+
+                    var label = new Label() {
+                        Text = value
+                        };
+
+                    GridCell.Add(label, col++);
+
+                    break;
+                    }
+
+                }
+
+            }
+
+
+
+
         }
 
 
@@ -92,6 +105,80 @@ public class MyViewCell : ViewCell {
     }
 
 
+class SelectGrid {
+
+    public Grid Grid { get; } = new Grid() {
+        RowDefinitions = new RowDefinitionCollection(
+                new RowDefinition() {
+                    Height = GridLength.Auto
+                    },
+                new RowDefinition() {
+                    Height = GridLength.Auto
+                    }),
+        ColumnDefinitions = new ColumnDefinitionCollection(
+                new ColumnDefinition() {
+                    Width = GridLength.Auto
+                    },
+                new ColumnDefinition() {
+                    Width = GridLength.Auto
+                    })
+        };
+    Image EntryImage = new Image() {
+        HeightRequest = 30,
+        WidthRequest = 30
+        };
+    Label MainLabel = new Label();
+    Label SecondaryLabel = new Label();
+
+    public SelectGrid() {
+        Grid.Add(EntryImage);
+        Grid.SetRowSpan((IView)EntryImage, 2);
+        Grid.Add(MainLabel);
+        Grid.SetColumn((IView)MainLabel, 1);
+        Grid.Add(SecondaryLabel);
+        Grid.SetColumn((IView)SecondaryLabel, 1);
+        Grid.SetRow((IView)SecondaryLabel, 1);
+        }
+
+
+
+
+    public void Set(ISelectSummary summary) {
+        EntryImage.Source = summary.IconValue;
+        MainLabel.Text = summary.LabelValue;
+        SecondaryLabel.Text = summary.SecondaryValue;
+        }
+
+    }
+
+class ArrayGrid {
+    List<GridLength> Widths { get; }
+    public Grid Grid { get; set; } = new();
+
+    
+
+    public ArrayGrid(List<GridLength> widths) {
+        Widths = widths;
+        }
+
+
+    public void Set(IBindable data) {
+        // check if is of same type, if so, reuse
+        Grid.Clear();
+
+        var binding = data.Binding;
+
+        var col = 0;
+        foreach (var property in binding.BoundProperties) {
+            }
+
+        }
+
+    public void Resize() {
+        }
+
+
+    }
 
 
 

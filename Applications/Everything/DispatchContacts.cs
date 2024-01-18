@@ -43,6 +43,8 @@ public partial class BoundContactPerson : ISelectSummary, IBoundPresentation {
 
     public string? LabelValue => Display;
 
+    public string? SecondaryValue => "TBS";
+
     public string? IconValue => "account.png";
 
     static PersonName Default = new PersonName() {

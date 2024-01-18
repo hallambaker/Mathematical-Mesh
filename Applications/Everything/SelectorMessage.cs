@@ -31,7 +31,7 @@ public partial class MessageSection {
 public partial class BoundMessage : ISelectSummary, IBoundPresentation {
 
     public string? LabelValue => Subject;
-
+    public string? SecondaryValue => "TBS";
     public virtual string? IconValue => IsRead ? "mail_read" : "mail_unread";
 
     public bool IsRead => false;

@@ -31,6 +31,10 @@ public class GuigenFieldChooser : GuigenField {
     public HorizontalStackLayout MainLayout;
     List<BoundPresentation> BoundPresentations = new();
 
+    public GuiBinding SelectionBinding { get; set; } = null;
+    public List<GridLength> Widths { get; } = new();
+    public Grid GridHeadings { get; } = new();
+
     public GuigenFieldChooser(IMainWindow mainWindow, GuiChooser chooser, GuigenFieldSet fieldsSet) : base(chooser) {
 
         MainWindow = mainWindow;
@@ -136,6 +140,12 @@ public class GuigenFieldChooser : GuigenField {
         }
 
     public override void SetField(IBindable data) {
+        if (data is IHeadedSelection headed) {
+            if (SelectionBinding is null) {
+                MakeHeadings(headed.SelectionBinding);
+                }
+            }
+
         Binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyChooser;
         SelectCollection = Binding.Get(data);
 
@@ -147,6 +157,29 @@ public class GuigenFieldChooser : GuigenField {
         ListView.ItemsSource = SelectCollection.Entries;
         }
 
+    public void MakeHeadings(GuiBinding selectionBinding) {
+        SelectionBinding = selectionBinding;
+        var col = 0;
+        foreach (var item in SelectionBinding.BoundProperties) {
+            switch (item) {
+                case GuiBoundPropertyString propertyString : {
+                    var width = new GridLength(100);
+                    Widths.Add (width);
+                    var label = new Label() {
+                        Text = propertyString.Label,
+
+                        };
+                    GridHeadings.AddColumnDefinition(new ColumnDefinition(width));
+                    GridHeadings.Add(label, col++);
+
+                    break;
+                    }
+                
+                }
+
+            }
+        ListView.Header = GridHeadings;
+        }
 
 
 

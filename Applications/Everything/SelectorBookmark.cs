@@ -30,7 +30,7 @@ public partial class BoundBookmark : ISelectSummary, IBoundPresentation {
             Uri.NullifyIfEmpty();
 
     public virtual string? IconValue => "bookmark.png";
-
+    public string? SecondaryValue => "TBS";
     public virtual CatalogedBookmark Convert() {
         var result = new CatalogedBookmark() {
             Uid = Udf.Nonce()
