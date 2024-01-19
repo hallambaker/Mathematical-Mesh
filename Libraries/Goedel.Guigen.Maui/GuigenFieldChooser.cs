@@ -212,10 +212,15 @@ public class GuigenFieldChooser : GuigenField {
 
 
         var dialog = selectEvent.SelectedItem as IDialog;
-        var bindable = selectEvent.SelectedItem as IBindable;
 
-        //var fieldSet = new GuigenFieldSet(MainWindow, dialog.Dialog(MainWindow.Gui).Entries, EntryForm);
-        //fieldSet.SetFields(bindable);
+
+
+        var bindable = selectEvent.SelectedItem as IBindable;
+        var gui = MainWindow.Binding.Gui;
+        var entries = dialog.Dialog(gui).Entries;
+
+        var fieldSet = new GuigenFieldSet(MainWindow, entries, EntryForm);
+        fieldSet.SetFields(bindable);
 
         //if (selectEvent.SelectedItem is IBoundPresentation selectedItem) {
 

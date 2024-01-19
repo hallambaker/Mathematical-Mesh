@@ -3163,7 +3163,7 @@
             </summary>
             <param name="key">The profile to delete</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.MeshHost.ConfigureMeshAsync(System.String,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.ProfileDevice,System.Collections.Generic.List{System.String},System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.MeshHost.ConfigureMeshAsync(System.String,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.ProfileDevice,System.Collections.Generic.List{System.String},System.Boolean,Goedel.Mesh.DeviceDescription)">
              <summary>
              Create a new Mesh master profile and bind to a Mesh service at <paramref name="accountAddress"/>.
              </summary>

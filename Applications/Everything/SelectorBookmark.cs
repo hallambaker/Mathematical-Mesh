@@ -6,10 +6,12 @@ namespace Goedel.Everything;
 #region // Bindings to classes specified through the Guigen schema.
 
 // Documented in Guigen output
-public partial class BookmarkSection {
+public partial class BookmarkSection : IHeadedSelection {
 
     AccountSection Account { get; }
     ContextUser ContextUser => Account.ContextUser;
+
+    public GuiBinding SelectionBinding => _BoundBookmark.BaseBinding;
 
     /// <summary>
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
@@ -24,7 +26,9 @@ public partial class BookmarkSection {
     }
 
 // Documented in Guigen output
-public partial class BoundBookmark : ISelectSummary, IBoundPresentation {
+public partial class BoundBookmark : IBoundPresentation, IDialog {
+
+    public virtual GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundBookmark;
 
     public string? LabelValue => Title.NullifyIfEmpty() ??
             Uri.NullifyIfEmpty();

@@ -18,8 +18,8 @@ public partial class EverythingMaui {
             //    };
 
             return new MessageSentContact() {
-                AccountName = "Fred",
-                Identifier = "Id"
+                AccountName = recipient,
+                Identifier = response.MessageId
                 };
             }
         catch (Exception exception) {

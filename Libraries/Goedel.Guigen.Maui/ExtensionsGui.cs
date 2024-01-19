@@ -16,6 +16,21 @@ public static class Extensions {
 
 
 
+    public static string AsToken (this DeviceIdiom deviceIdiom) => deviceIdiom.ToString();
+
+    public static string AsToken(this DevicePlatform devicePlatform) {
+        if (devicePlatform == DevicePlatform.WinUI) {
+            return "Windows";
+            }
+        if (devicePlatform == DevicePlatform.MacCatalyst) {
+            return DevicePlatform.macOS.ToString();
+            }
+        return devicePlatform.ToString();
+
+
+        }
+
+
     }
 
 

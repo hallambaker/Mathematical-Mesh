@@ -504,7 +504,7 @@ Dialog BoundContactPerson "Person" "contacts"
 		Readonly
 		Primary
 
-	Text Local "Friendly name"4
+	Text Local "Friendly name"
 	Text First "First name"
 	Text Last "Last name"
 	Text Prefix "Prefix"

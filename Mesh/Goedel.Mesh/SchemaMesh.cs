@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 1/18/2024 4:34:17 PM
+//  This file was automatically generated at 1/19/2024 6:17:55 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -129,6 +129,7 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"Engagement", Engagement._Factory},
 	    {"CatalogedEntry", CatalogedEntry._Factory},
 	    {"CatalogedDevice", CatalogedDevice._Factory},
+	    {"DeviceDescription", DeviceDescription._Factory},
 	    {"CatalogedSignature", CatalogedSignature._Factory},
 	    {"CatalogedDocument", CatalogedDocument._Factory},
 	    {"CatalogedPublication", CatalogedPublication._Factory},
@@ -5353,6 +5354,12 @@ public partial class CatalogedDevice : CatalogedEntry {
 	public virtual string?						Udf  {get; set;}
 
         /// <summary>
+        ///Device Platform
+        /// </summary>
+
+	public virtual string?						Platform  {get; set;}
+
+        /// <summary>
         ///UDF of the offline signature key of the device
         /// </summary>
 
@@ -5376,6 +5383,12 @@ public partial class CatalogedDevice : CatalogedEntry {
         /// </summary>
 
 	public virtual Enveloped<ProfileDevice>?						EnvelopedProfileDevice  {get; set;}
+
+        /// <summary>
+        ///Description of the device
+        /// </summary>
+
+	public virtual DeviceDescription?						DeviceDescription  {get; set;}
 
         /// <summary>
         ///Slim version of ConnectionDevice used by the presentation layer
@@ -5422,6 +5435,8 @@ public partial class CatalogedDevice : CatalogedEntry {
 					(IBinding data, DateTime? value) => {(data as CatalogedDevice).Updated = value;}, (IBinding data) => (data as CatalogedDevice).Updated )},
 			{ "Udf", new PropertyString ("Udf", 
 					(IBinding data, string? value) => {(data as CatalogedDevice).Udf = value;}, (IBinding data) => (data as CatalogedDevice).Udf )},
+			{ "Platform", new PropertyString ("Platform", 
+					(IBinding data, string? value) => {(data as CatalogedDevice).Platform = value;}, (IBinding data) => (data as CatalogedDevice).Platform )},
 			{ "DeviceUdf", new PropertyString ("DeviceUdf", 
 					(IBinding data, string? value) => {(data as CatalogedDevice).DeviceUdf = value;}, (IBinding data) => (data as CatalogedDevice).DeviceUdf )},
 			{ "SignatureUdf", new PropertyString ("SignatureUdf", 
@@ -5432,6 +5447,9 @@ public partial class CatalogedDevice : CatalogedEntry {
 			{ "EnvelopedProfileDevice", new PropertyStruct ("EnvelopedProfileDevice", 
 					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;}, (IBinding data) => (data as CatalogedDevice).EnvelopedProfileDevice,
 					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())} ,
+			{ "DeviceDescription", new PropertyStruct ("DeviceDescription", 
+					(IBinding data, object? value) => {(data as CatalogedDevice).DeviceDescription = value as DeviceDescription;}, (IBinding data) => (data as CatalogedDevice).DeviceDescription,
+					false, ()=>new  DeviceDescription(), ()=>new DeviceDescription())} ,
 			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", 
 					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as CatalogedDevice).EnvelopedConnectionService,
 					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())} ,
@@ -5498,6 +5516,134 @@ public partial class CatalogedDevice : CatalogedEntry {
 			return Out as CatalogedDevice;
 			}
 		var Result = new CatalogedDevice ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class DeviceDescription : MeshItem {
+        /// <summary>
+        ///The device form factor, valid values are Desktop, Phone, Tablet, TV, Watch
+        /// </summary>
+
+	public virtual string?						Idiom  {get; set;}
+
+        /// <summary>
+        ///Manufacturer name
+        /// </summary>
+
+	public virtual string?						Manufacturer  {get; set;}
+
+        /// <summary>
+        ///Manufacturer defined model
+        /// </summary>
+
+	public virtual string?						Model  {get; set;}
+
+        /// <summary>
+        ///Name of the device as specified by the user
+        /// </summary>
+
+	public virtual string?						Name  {get; set;}
+
+        /// <summary>
+        ///The device platform or operating system: Android / iOS / macOS / Tizen / watchOS / Windows
+        /// </summary>
+
+	public virtual string?						Platform  {get; set;}
+
+        /// <summary>
+        ///Platform version in format Major.Minor.Build.Revision
+        /// </summary>
+
+	public virtual string?						Version  {get; set;}
+
+        /// <summary>
+        ///EARL specifying an image of the device.
+        /// </summary>
+
+	public virtual string?						ImageLocator  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new DeviceDescription(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Idiom", new PropertyString ("Idiom", 
+					(IBinding data, string? value) => {(data as DeviceDescription).Idiom = value;}, (IBinding data) => (data as DeviceDescription).Idiom )},
+			{ "Manufacturer", new PropertyString ("Manufacturer", 
+					(IBinding data, string? value) => {(data as DeviceDescription).Manufacturer = value;}, (IBinding data) => (data as DeviceDescription).Manufacturer )},
+			{ "Model", new PropertyString ("Model", 
+					(IBinding data, string? value) => {(data as DeviceDescription).Model = value;}, (IBinding data) => (data as DeviceDescription).Model )},
+			{ "Name", new PropertyString ("Name", 
+					(IBinding data, string? value) => {(data as DeviceDescription).Name = value;}, (IBinding data) => (data as DeviceDescription).Name )},
+			{ "Platform", new PropertyString ("Platform", 
+					(IBinding data, string? value) => {(data as DeviceDescription).Platform = value;}, (IBinding data) => (data as DeviceDescription).Platform )},
+			{ "Version", new PropertyString ("Version", 
+					(IBinding data, string? value) => {(data as DeviceDescription).Version = value;}, (IBinding data) => (data as DeviceDescription).Version )},
+			{ "ImageLocator", new PropertyString ("ImageLocator", 
+					(IBinding data, string? value) => {(data as DeviceDescription).ImageLocator = value;}, (IBinding data) => (data as DeviceDescription).ImageLocator )}
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "DeviceDescription";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new DeviceDescription();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new DeviceDescription FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as DeviceDescription;
+			}
+		var Result = new DeviceDescription ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

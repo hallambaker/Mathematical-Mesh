@@ -395,11 +395,13 @@ public class MeshHost : Disposable {
             PrivateKeyUDF accountSeed = null,
             ProfileDevice profileDevice = null,
             List<string> rights = null,
-            bool create = true) {
+            bool create = true,
+                DeviceDescription deviceDescription = null) {
 
 
         using var contextUser = InitializeAdminContext(accountAddress, localName,
-            ref accountSeed, ref profileDevice, ref rights, out var _);
+            ref accountSeed, ref profileDevice, ref rights, // out var _,
+                deviceDescription: deviceDescription);
 
         await contextUser.SetServiceAsync(accountAddress);
 
@@ -428,7 +430,8 @@ public class MeshHost : Disposable {
                 ref ProfileDevice profileDevice,
                 ref List<string> rights,
 
-                out ActivationCommon activationCommon) {
+                //out ActivationCommon activationCommon,
+                DeviceDescription deviceDescription = null) {
         // Generate the initial seed for the account if not already specified.
         commonSeed ??= new PrivateKeyUDF(udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount);
 
@@ -447,7 +450,7 @@ public class MeshHost : Disposable {
 
         // Create the set of cryptographic keys to initialize the account.
         // create the root activation.
-        activationCommon = new ActivationCommon(KeyCollection, commonSeed) {
+        var activationCommon = new ActivationCommon(KeyCollection, commonSeed) {
             DefaultActive = true
 
             };
@@ -474,7 +477,11 @@ public class MeshHost : Disposable {
         // create a Cataloged activationRoot.Device entry for the admin device
         var catalogedDevice = activationCommon.CreateCataloguedDevice(
                 profileUser, profileDevice, activationAccount, activationCommon,
-                activationCommon.AdministratorSignatureKey);
+                activationCommon.AdministratorSignatureKey, 
+                deviceDescription: deviceDescription);
+
+        //catalogedDevice.Description = "Initial device";
+        //catalogedDevice.Platform = Platform.GetPlatform();
 
         // Create the host catalog entry and apply to the context user.
         var catalogedMachine = new CatalogedStandard() {

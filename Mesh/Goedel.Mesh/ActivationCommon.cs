@@ -259,7 +259,8 @@ public partial class ActivationCommon {
                     //KeyPair keyPairOnlineSignature = null, // hack. 
                     List<string> roles = null,
                     ITransactContextAccount transactContextAccount = null,
-                    ActivationAccount activationDevice = null) {
+                    ActivationAccount activationDevice = null,
+                    DeviceDescription deviceDescription = null) {
 
 
 
@@ -268,7 +269,7 @@ public partial class ActivationCommon {
 
         var catalogedDevice = CreateCataloguedDevice(
                 profileUser, profileDevice, activationDevice, activationAccount,
-                AdministratorSignatureKey);
+                AdministratorSignatureKey, deviceDescription: deviceDescription);
 
         return catalogedDevice;
         }
@@ -291,7 +292,8 @@ public partial class ActivationCommon {
                 ActivationAccount activationDevice,
                 ActivationCommon activationAccount,
                 KeyPair signature,
-                List<ApplicationEntry> applicationEntries = null) {
+                List<ApplicationEntry> applicationEntries = null, 
+                DeviceDescription deviceDescription = null) {
 
         //PrivateAccountOnlineSignature.AssertNotNull(NotAdministrator.Throw);
 
@@ -356,7 +358,8 @@ public partial class ActivationCommon {
             EnvelopedActivationAccount = activationDevice?.GetEnvelopedActivationDevice(),
             EnvelopedActivationCommon = activationAccount?.GetEnvelopedActivationAccount(),
             ApplicationEntries = applicationEntries,
-            DeviceUdf = profileDevice.UdfString
+            DeviceUdf = profileDevice.UdfString,
+            DeviceDescription = deviceDescription
             //AccessCapability = accessCapability
 
             //AdditionalRecipients = new() { activationDevice.DeviceEncryption}

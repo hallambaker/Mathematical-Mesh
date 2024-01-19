@@ -798,6 +798,9 @@
 		String Udf
 			Description
 				|UDF of the signature key of the device in the Mesh
+		String Platform
+			Description
+				|Device Platform
 		String DeviceUdf
 			Description
 				|UDF of the offline signature key of the device
@@ -811,13 +814,9 @@
 		Struct Enveloped<ProfileDevice> EnvelopedProfileDevice
 			Description
 				|The device profile
-		
-		//Struct Enveloped<ConnectionStripped> EnvelopedConnectionAddress
-		//	Description
-		//		|The assertion binding the account to an address. This should
-		//		|be moved out to an account record.
-
-
+		Struct DeviceDescription DeviceDescription
+			Description
+				|Description of the device
 		Struct Enveloped<ConnectionService> EnvelopedConnectionService
 			Description
 				|Slim version of ConnectionDevice used by the presentation layer
@@ -835,7 +834,29 @@
 			Multiple
 			Description
 				|Application activations granted to the device.
-
+	
+	Structure DeviceDescription
+		String Idiom
+			Description
+				|The device form factor, valid values are Desktop, Phone, Tablet, TV, Watch
+		String Manufacturer
+			Description
+				|Manufacturer name
+		String Model
+			Description
+				|Manufacturer defined model
+		String Name
+			Description
+				|Name of the device as specified by the user
+		String Platform
+			Description
+				|The device platform or operating system: Android / iOS / macOS / Tizen / watchOS / Windows
+		String Version
+			Description
+				|Platform version in format Major.Minor.Build.Revision
+		String ImageLocator
+			Description
+				|EARL specifying an image of the device.
 
 	Structure CatalogedSignature
 		Inherits CatalogedEntry

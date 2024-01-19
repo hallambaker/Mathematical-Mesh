@@ -4,10 +4,13 @@ namespace Goedel.Everything;
 #region // Bindings to classes specified through the Guigen schema.
 
 // Documented in Guigen output
-public partial class CredentialSection {
+public partial class CredentialSection : IHeadedSelection {
 
     AccountSection Account { get; }
     ContextUser ContextUser => Account.ContextUser;
+
+    ///<inheritdoc/>
+    public GuiBinding SelectionBinding => _BoundCredential.BaseBinding;
 
     /// <summary>
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
@@ -23,9 +26,9 @@ public partial class CredentialSection {
     }
 
 // Documented in Guigen output
-public partial class BoundPassword : ISelectSummary, IBoundPresentation {
+public partial class BoundPassword : IBoundPresentation, IDialog {
 
-
+    public GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundCredential;
     public string? LabelValue => Service.NullifyIfEmpty() ?? "Unknown";
 
     public string? IconValue => "password.png";

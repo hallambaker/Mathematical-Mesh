@@ -78,6 +78,8 @@ public partial class ContextUser : ContextAccount {
     ///<summary>The connection device</summary>
     public ConnectionDevice ConnectionAccount => CatalogedDevice?.ConnectionDevice;
 
+    public DeviceDescription DeviceDescription => CatalogedDevice?.DeviceDescription;
+
     /////<summary>The connection of the profile to the account address</summary>
     //public ConnectionStripped ConnectionAddress => CatalogedDevice?.ConnectionAccount;
 
@@ -380,7 +382,8 @@ public partial class ContextUser : ContextAccount {
         var transact = TransactBegin();
 
         CatalogedMachine.CatalogedDevice = ActivationCommon.MakeCatalogedDevice(
-                ProfileDevice, ProfileUser, rights, transact, ActivationAccount);
+                ProfileDevice, ProfileUser, rights, transact, ActivationAccount,
+                deviceDescription: DeviceDescription);
 
         // When creating a device for the first time, the update is always encrypted
         // under the device key.

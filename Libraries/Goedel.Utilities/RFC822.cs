@@ -188,7 +188,11 @@ public static partial class Extension {
     /// <returns>The service component.</returns>
     public static string GetService(this string identifier) => GetServiceRaw(identifier).ToLower();
 
+    public static string GetAccount(this string identifier) {
+        identifier.SplitAccountAddress(out var _, out var account);
+        return account;
 
+        }
 
     /// <summary>
     /// Parse a string that may contain an account identifier to extract the service and 

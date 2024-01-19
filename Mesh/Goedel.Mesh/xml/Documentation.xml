@@ -417,7 +417,7 @@
             </summary>
             <param name="profileService">Description of the service to bind to.</param>
         </member>
-        <member name="M:Goedel.Mesh.ActivationCommon.MakeCatalogedDevice(Goedel.Mesh.ProfileDevice,Goedel.Mesh.ProfileUser,System.Collections.Generic.List{System.String},Goedel.Mesh.ITransactContextAccount,Goedel.Mesh.ActivationAccount)">
+        <member name="M:Goedel.Mesh.ActivationCommon.MakeCatalogedDevice(Goedel.Mesh.ProfileDevice,Goedel.Mesh.ProfileUser,System.Collections.Generic.List{System.String},Goedel.Mesh.ITransactContextAccount,Goedel.Mesh.ActivationAccount,Goedel.Mesh.DeviceDescription)">
             <summary>
             Add the device specified by <paramref name="profileDevice"/> to the account granting 
             the set of privileged specified in <paramref name="roles"/>.
@@ -430,7 +430,7 @@
             <param name="activationDevice">The device activation.</param>
             <returns>The catalog entry.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ActivationCommon.CreateCataloguedDevice(Goedel.Mesh.ProfileUser,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ActivationAccount,Goedel.Mesh.ActivationCommon,Goedel.Cryptography.KeyPair,System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry})">
+        <member name="M:Goedel.Mesh.ActivationCommon.CreateCataloguedDevice(Goedel.Mesh.ProfileUser,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ActivationAccount,Goedel.Mesh.ActivationCommon,Goedel.Cryptography.KeyPair,System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Mesh.DeviceDescription)">
             <summary>
             Create a CatalogedDevice entry for the device with profile <paramref name="profileDevice"/>
             and activation <paramref name="activationDevice"/>.
@@ -3921,6 +3921,11 @@
             UDF of the signature key of the device in the Mesh
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedDevice.Platform">
+             <summary>
+            Device Platform
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedDevice.DeviceUdf">
              <summary>
             UDF of the offline signature key of the device
@@ -3940,6 +3945,11 @@
         <member name="P:Goedel.Mesh.CatalogedDevice.EnvelopedProfileDevice">
              <summary>
             The device profile
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDevice.DeviceDescription">
+             <summary>
+            Description of the device
              </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedDevice.EnvelopedConnectionService">
@@ -15243,6 +15253,90 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Mesh.Engagement.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.DeviceDescription">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DeviceDescription.Idiom">
+             <summary>
+            The device form factor, valid values are Desktop, Phone, Tablet, TV, Watch
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DeviceDescription.Manufacturer">
+             <summary>
+            Manufacturer name
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DeviceDescription.Model">
+             <summary>
+            Manufacturer defined model
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DeviceDescription.Name">
+             <summary>
+            Name of the device as specified by the user
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DeviceDescription.Platform">
+             <summary>
+            The device platform or operating system: Android / iOS / macOS / Tizen / watchOS / Windows
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DeviceDescription.Version">
+             <summary>
+            Platform version in format Major.Minor.Build.Revision
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DeviceDescription.ImageLocator">
+             <summary>
+            EARL specifying an image of the device.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DeviceDescription._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.DeviceDescription._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.DeviceDescription._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.DeviceDescription._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.DeviceDescription._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.DeviceDescription._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.DeviceDescription._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.DeviceDescription._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.DeviceDescription.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.DeviceDescription._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.DeviceDescription.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>

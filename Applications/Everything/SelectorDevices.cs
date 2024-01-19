@@ -11,6 +11,7 @@ public partial class DeviceSection : IHeadedSelection {
     AccountSection Account { get; }
     ContextUser ContextUser => Account.ContextUser;
 
+    ///<inheritdoc/>
     public GuiBinding SelectionBinding => _BoundDevice.BaseBinding;
 
     /// <summary>
@@ -28,8 +29,7 @@ public partial class DeviceSection : IHeadedSelection {
 
 // Documented in Guigen output
 public partial class BoundDevice : IBoundPresentation, IDialog {
-
-    public GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundDevice;
+    public virtual GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundDevice;
     public string? LabelValue => LocalName;
 
     public string? IconValue => "device_plug.png";
@@ -45,11 +45,13 @@ public partial class BoundDevice : IBoundPresentation, IDialog {
         }
 
     public static BoundDevice Convert(CatalogedDevice entry) {
+        var description = entry.DeviceDescription;
+
         var result = new BoundDevice() {
             Bound = entry,
-            LocalName = entry.LocalName ?? "A Device",
+            LocalName = entry.LocalName ?? description?.Name ?? "A Device",
             Udf = entry.DeviceUdf,
-            DeviceType = "Windows",
+            DeviceType = description ?.Platform,
             Rights = "Admin"
 
             };

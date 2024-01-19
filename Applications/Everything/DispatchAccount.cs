@@ -67,13 +67,21 @@ public partial class EverythingMaui {
 
         }
 
+
     ///<inheritdoc/>
     public override async Task<IResult> AccountCreate(AccountCreate data, ActionMode mode = ActionMode.Execute) {
 
         try {
-            var contextUser = await MeshHost.ConfigureMeshAsync(data.ServiceAddress, data.LocalName);
+            var deviceDescription = GetDeviceDescription();
+            var localName = data.LocalName.IsBlank() ? data.ServiceAddress.GetAccount() : data.LocalName;
+
+            var contextUser = await MeshHost.ConfigureMeshAsync(data.ServiceAddress, localName,
+                deviceDescription: deviceDescription);
+
+
+
             return new ReportAccountCreate() {
-                LocalName = contextUser.CatalogedDevice?.LocalName,
+                LocalName = localName,
                 ServiceAddress = contextUser.ServiceAddress,
                 ProfileUdf = contextUser.ProfileUser.UdfString,
                 ServiceUdf = contextUser.ProfileService?.UdfString

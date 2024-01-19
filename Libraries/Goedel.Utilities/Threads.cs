@@ -14,7 +14,14 @@ using System.Threading.Tasks;
 
 namespace Goedel.Utilities;
 
+
+
 public static partial class Extension {
+
+
+
+
+
 
     /// <summary>
     /// Wait for the task <paramref name="task"/> to complete and return the result.

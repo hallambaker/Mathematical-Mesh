@@ -20,6 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 using Goedel.Cryptography.Standard;
+using System.Runtime.InteropServices;
 
 namespace Goedel.Cryptography;
 
@@ -28,6 +29,12 @@ namespace Goedel.Cryptography;
 /// factory methods. 
 /// </summary>
 public static class Platform {
+
+
+
+
+
+
     ///<summary>Initialization witness flag. This may be used to force initialization
     ///of the module prior to other modules being initialized.</summary> 
     public static bool Initialized { get; private set; }

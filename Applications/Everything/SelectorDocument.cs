@@ -6,11 +6,11 @@ namespace Goedel.Everything;
 #region // Bindings to classes specified through the Guigen schema.
 
 // Documented in Guigen output
-public partial class DocumentSection {
+public partial class DocumentSection : IHeadedSelection {
 
     AccountSection Account { get; }
     ContextUser ContextUser => Account.ContextUser;
-
+    public GuiBinding SelectionBinding => _BoundDocument.BaseBinding;
     /// <summary>
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
@@ -28,7 +28,10 @@ public partial class DocumentSection {
     }
 
 // Documented in Guigen output
-public partial class BoundDocument : ISelectSummary, IBoundPresentation {
+public partial class BoundDocument : IBoundPresentation, IDialog {
+
+    public virtual GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundDocument;
+
 
     public static readonly Dictionary<string, string> DictionaryExtensionContentType =
         new() {

@@ -2,12 +2,14 @@
 
 using Goedel.Mesh.Client;
 
+using Microsoft.Maui.Controls;
+
 using System.Net.NetworkInformation;
 using System.Resources;
 
 namespace Goedel.Everything;
 
-// Focus: 001 Present Dialog for BoundDevice
+
 // Focus: 002 Add buttons to dialog
 // Focus: 003 Delete entry on device dialog
 // Focus: 004 Update button on device dialog
@@ -181,7 +183,13 @@ public partial class EverythingMaui {
             };
         }
 
-    public bool UnRegister(GuiQR guiQR) =>  WaitingOnMessage.Remove(guiQR.Identifier);
+    public bool UnRegister(GuiQR guiQR) {
+        if (WaitingOnMessage.ContainsKey(guiQR.Identifier)) {
+            WaitingOnMessage.Remove(guiQR.Identifier);
+            return true;
+            }
+        return false;
+        }
 
 
     // need to have a continuous poll loop going and a mechanism to refresh the
@@ -207,6 +215,26 @@ public partial class EverythingMaui {
     //public string GetDeviceConnect() {
     //    }
 
+    public DeviceDescription GetDeviceDescription() {
+
+
+        var device = DeviceInfo.Current;
+        // ToDo: Device specific grab of Model reaching into the registry to fetch "Baseboard Product" etc. on Windows
+
+
+        var deviceDescription = new DeviceDescription() {
+            Idiom = device.Idiom.AsToken(),
+            Manufacturer = device.Manufacturer,
+            Model = device.Model,
+            Name = device.Name,
+            Platform = device.Platform.AsToken(),
+            Version = device.VersionString
+
+
+            };
+
+        return deviceDescription;
+        }
 
 
     }

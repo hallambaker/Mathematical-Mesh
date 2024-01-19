@@ -50,6 +50,8 @@ public interface ISelectable : IParameter {
 
 
 public interface IHeadedSelection {
+
+    ///<summary>The binding used to select items for display in a selector box.</summary> 
     GuiBinding SelectionBinding { get; }
     }
 
