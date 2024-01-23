@@ -78,6 +78,7 @@ public partial class EverythingMaui {
             var contextUser = await MeshHost.ConfigureMeshAsync(data.ServiceAddress, localName,
                 deviceDescription: deviceDescription);
 
+            // Make this the current account!
 
 
             return new ReportAccountCreate() {

@@ -86,6 +86,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		GUI.md = GUI.md
 		LICENSE.txt = LICENSE.txt
 		readme.md = readme.md
+		Resources.md = Resources.md
 		ServerConfig.md = ServerConfig.md
 		TemplateClass.cs = TemplateClass.cs
 		ToDo.md = ToDo.md

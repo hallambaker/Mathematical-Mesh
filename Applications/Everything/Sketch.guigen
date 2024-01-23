@@ -408,6 +408,7 @@ Action ConfirmationReject "Respond" "circle_cross"
 Dialog BoundMessageConfirmationResponse "Mail" "circle_check"
 	Inherit BoundMessage
 
+
 Dialog BoundMessageContactRequest "Mail" "contact"
 	Inherit BoundMessage
 

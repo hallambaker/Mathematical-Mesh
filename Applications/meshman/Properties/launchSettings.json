@@ -5,6 +5,11 @@
       "commandLineArgs": "invalid",
       "workingDirectory": "..\\..\\TestResults\\Service"
     },
+    "Messages Pending": {
+      "commandName": "Project",
+      "commandLineArgs": "message pending",
+      "workingDirectory": "..\\..\\TestResults\\Service"
+    },
     "Help": {
       "commandName": "Project",
       "commandLineArgs": "help",

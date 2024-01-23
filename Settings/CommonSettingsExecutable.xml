@@ -10,6 +10,7 @@
 		<Configurations>Debug;Release;Sandcastle;Github</Configurations>
 		<DocumentationFile>xml\Documentation.xml</DocumentationFile>
 		<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+		<JsonSerializerIsReflectionEnabledByDefault>true</JsonSerializerIsReflectionEnabledByDefault>
 		<!--<UseSharedCompilation>false</UseSharedCompilation>-->
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
