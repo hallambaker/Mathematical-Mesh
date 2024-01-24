@@ -10,6 +10,7 @@ using System.Collections.Generic;
 
 
 using Image = Microsoft.Maui.Controls.Image;
+using Microsoft.UI.Xaml.Controls.Primitives;
 
 namespace Goedel.Guigen.Maui;
 
@@ -40,16 +41,19 @@ public class GuigenFieldSet : IWidget {
     public Grid View { get; private set; }
 
     View? summary = null;
-
-    public List<GuigenField> Fields { get; } = new();
+    public List<IGuiEntry> Fields { get; }
+    public List<GuigenField> MauiFields { get; } = new();
 
     int[] FieldMap;
 
     int GridRow { get; set; } = 0;
     int GridColumn { get; set; } = 0;
 
+    IBindable Data { get; set; }
+
     public GuigenFieldSet(IMainWindow mainWindow, List<IGuiEntry> fields, Layout? stack) {
         MainWindow = mainWindow;
+        Fields = fields;
 
         //stack ??= new VerticalStackLayout();
         //View = stack;
@@ -66,19 +70,19 @@ public class GuigenFieldSet : IWidget {
             switch (entry) {
                 case GuiText text: {
                     var field = new GuigenFieldString(MainWindow, text, this);
-                    Fields.Add(field);
+                    MauiFields.Add(field);
                     FieldMap[i++] = field.Index;
                     break;
                     }
                 case GuiInteger integer: {
                     var field = new GuigenFieldInteger(MainWindow, integer, this);
-                    Fields.Add(field);
+                    MauiFields.Add(field);
                     FieldMap[i++] = field.Index;
                     break;
                     }
                 case GuiChooser chooser: {
                     var field = new GuigenFieldChooser(MainWindow, chooser, this);
-                    Fields.Add(field);
+                    MauiFields.Add(field);
                     //stack.Add(field.ListView);
                     FieldMap[i++] = field.Index;
                     break;
@@ -89,7 +93,7 @@ public class GuigenFieldSet : IWidget {
                     //Fields.Add(label);
 
                     var field = new GuigenFieldQr(MainWindow, qrscan, this);
-                    Fields.Add(field);
+                    MauiFields.Add(field);
                     //stack.Add(field.ListView);
                     FieldMap[i++] = field.Index;
                     break;
@@ -103,13 +107,14 @@ public class GuigenFieldSet : IWidget {
         }
 
     public void SetFields(IBindable data) {
+        Data = data;
         if (data == null) {
             return;
             }
         if (!data.Binding.IsType(data)) {
             return;
             }
-        foreach (var field in Fields) {
+        foreach (var field in MauiFields) {
             field.SetField(data);
             }
         }
@@ -119,21 +124,21 @@ public class GuigenFieldSet : IWidget {
             return;
             }
 
-        foreach (var field in Fields) {
+        foreach (var field in MauiFields) {
             field.GetField(data);
             }
         }
 
 
     public void Feedback(GuiResultInvalid feedback) {
-        foreach (var field in Fields) {
+        foreach (var field in MauiFields) {
             field.ClearFeedback();
             }
 
         foreach (var message in feedback.Messages) {
             var index = FieldMap[message.Index];
             if (index != -1) {
-                Fields[index].SetFeedback(message);
+                MauiFields[index].SetFeedback(message);
                 }
             }
         }
@@ -156,6 +161,38 @@ public class GuigenFieldSet : IWidget {
         View.Add(child, 0, GridRow++);
         //View.Add(child);
         }
+
+
+    public void AddButtons(Layout layout) {
+
+        foreach (var entry in Fields) {
+            switch (entry) {
+                case GuiButton button: {
+                    layout.Add(AddButton(button));
+                    break;
+                    }
+                }
+            }
+
+        }
+
+    IView AddButton(GuiButton button) {
+
+        switch (button.Target) {
+
+            case GuiSection section: {
+                return new GuigenSectionButton(MainWindow, section).View;
+                }
+            case GuiAction action: {
+                return new GuigenActionButton(MainWindow, action) {
+                    FieldSet = this}.View;
+                }
+            }
+        throw new NotImplementedException();
+
+
+        }
+
     }
 
 

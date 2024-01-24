@@ -397,20 +397,30 @@ Dialog BoundMessageConfirmationRequest "Mail" "circle_question"
 	Button ConfirmationAccept
 	Button ConfirmationReject
 
-Action ConfirmationAccept "Respond" "circle_check"
-	Description
-		|Accept a confirmation request
-
-Action ConfirmationReject "Respond" "circle_cross"
-	Description
-		|Reject a confirmation request
-
 Dialog BoundMessageConfirmationResponse "Mail" "circle_check"
 	Inherit BoundMessage
 
+Action ConfirmationAccept "Accept" "circle_check"
+	Description
+		|Accept a confirmation request
+
+Action ConfirmationReject "Reject" "circle_cross"
+	Description
+		|Reject a confirmation request
 
 Dialog BoundMessageContactRequest "Mail" "contact"
 	Inherit BoundMessage
+	Button ContactAccept
+	Button ContactReject
+
+
+Action ContactAccept "Accept" "circle_check"
+	Description
+		|Accept a contact request
+
+Action ContactReject "Reject" "circle_cross"
+	Description
+		|Reject a contact request
 
 
 Dialog BoundMessageConnectionRequest "Mail" "connect"

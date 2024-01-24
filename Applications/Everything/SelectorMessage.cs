@@ -56,6 +56,9 @@ public partial class BoundMessage : IBoundPresentation, IDialog {
 
     protected virtual void Fill(SpoolIndexEntry input) {
         var message = input.Message;
+        Sender = message.Sender;
+        var receiver = message?.EnvelopedMessage?.Header?.Received;
+        TimeSent = receiver.ToRFC3339();
         }
 
     public virtual void Fill() {
@@ -143,14 +146,19 @@ public partial class BoundMessageConfirmationResponse {
 
 public partial class BoundMessageContactRequest {
 
+    public override GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundMessageContactRequest;
+
     public override string? IconValue => IsRead ? "contact_read" : "contact_unread";
     public override Message Convert() {
         var result = new Message();
         return result;
         }
     public static new BoundMessageContactRequest Convert(SpoolIndexEntry input) {
-        var message = input.Message as RequestConnection;
-        var result = new BoundMessageContactRequest();
+        var message = input.Message as MessageContact;
+        var result = new BoundMessageContactRequest() {
+            Subject = message.Subject
+
+            };
         result.Fill(input);
 
         return result;

@@ -37,7 +37,7 @@ public class GuigenFieldChooser : GuigenField {
 
 
     public VerticalStackLayout EntryForm { get; } = new();
-
+    public HorizontalStackLayout ButtonBar = new();
     public GuigenFieldChooser(IMainWindow mainWindow, GuiChooser chooser, GuigenFieldSet fieldsSet) : base(chooser) {
 
         MainWindow = mainWindow;
@@ -91,9 +91,11 @@ public class GuigenFieldChooser : GuigenField {
         //stack.Add(CommandButtons);
 
         MainLayout = new();
+
+
         //stack.Add(MainLayout);
 
-        var Layout = new VerticalStackLayout() { CommandButtons, MainLayout, EntryForm };
+        var Layout = new VerticalStackLayout() { CommandButtons, MainLayout, EntryForm, ButtonBar };
         fieldsSet.AddField(Layout);
 
         RestoreView();
@@ -221,20 +223,12 @@ public class GuigenFieldChooser : GuigenField {
 
         var fieldSet = new GuigenFieldSet(MainWindow, entries, EntryForm);
         fieldSet.SetFields(bindable);
-
-        //if (selectEvent.SelectedItem is IBoundPresentation selectedItem) {
-
-
-
-        //    var presentation = GetPresentation(selectedItem);
-
-        //    presentation.SetDialogMode(DialogMode.Update);
-        //    presentation.Data = selectedItem;
-        //    SetView(presentation.Layout);
-        //    return;
-        //    }
+        ButtonBar.Clear();
+        fieldSet.AddButtons(ButtonBar);
 
 
+
+        // now add in all the buttons from entries.
 
 
         }

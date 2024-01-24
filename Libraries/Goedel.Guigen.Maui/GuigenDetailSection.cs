@@ -87,7 +87,7 @@ public class GuigenActionButton : IWidget {
     Layout Stack { get; }
 
     public View View => Stack;
-
+    public GuigenFieldSet FieldSet { get; init; }
 
     public GuigenActionButton(IMainWindow mainWindow, GuiAction action) {
         MainWindow = mainWindow;

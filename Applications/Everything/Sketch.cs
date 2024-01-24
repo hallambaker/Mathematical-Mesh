@@ -3178,6 +3178,82 @@ public partial class _ConfirmationReject : IParameter {
 
     }
 
+
+/// <summary>
+/// Callback parameters for action ContactAccept 
+/// </summary>
+public partial class ContactAccept : _ContactAccept {
+    }
+
+
+/// <summary>
+/// Callback parameters for action ContactAccept 
+/// </summary>
+public partial class _ContactAccept : IParameter {
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _ContactAccept,
+        Array.Empty<GuiBoundProperty>());
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate(Gui gui) {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
+    }
+
+
+/// <summary>
+/// Callback parameters for action ContactReject 
+/// </summary>
+public partial class ContactReject : _ContactReject {
+    }
+
+
+/// <summary>
+/// Callback parameters for action ContactReject 
+/// </summary>
+public partial class _ContactReject : IParameter {
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _ContactReject,
+        Array.Empty<GuiBoundProperty>());
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate(Gui gui) {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
+    }
+
 #endregion
 #region // Results
 
@@ -4626,10 +4702,16 @@ public class _EverythingMaui : Gui {
 	public GuiAction ActionAddCodeSigningKey { get; } = new ("AddCodeSigningKey", "Add Code Signing Key", "signature", () => new AddCodeSigningKey());
 
     ///<summary>Action ActionConfirmationAccept.</summary> 
-	public GuiAction ActionConfirmationAccept { get; } = new ("ConfirmationAccept", "Respond", "circle_check", () => new ConfirmationAccept());
+	public GuiAction ActionConfirmationAccept { get; } = new ("ConfirmationAccept", "Accept", "circle_check", () => new ConfirmationAccept());
 
     ///<summary>Action ActionConfirmationReject.</summary> 
-	public GuiAction ActionConfirmationReject { get; } = new ("ConfirmationReject", "Respond", "circle_cross", () => new ConfirmationReject());
+	public GuiAction ActionConfirmationReject { get; } = new ("ConfirmationReject", "Reject", "circle_cross", () => new ConfirmationReject());
+
+    ///<summary>Action ActionContactAccept.</summary> 
+	public GuiAction ActionContactAccept { get; } = new ("ContactAccept", "Accept", "circle_check", () => new ContactAccept());
+
+    ///<summary>Action ActionContactReject.</summary> 
+	public GuiAction ActionContactReject { get; } = new ("ContactReject", "Reject", "circle_cross", () => new ContactReject());
 
 #endregion
 #region // Dialogs
@@ -5128,6 +5210,14 @@ public class _EverythingMaui : Gui {
 	    ActionConfirmationReject.Entries = new () {
 		    };
 
+        ActionContactAccept.Callback = (x, mode) => ContactAccept (x as ContactAccept, mode) ;
+	    ActionContactAccept.Entries = new () {
+		    };
+
+        ActionContactReject.Callback = (x, mode) => ContactReject (x as ContactReject, mode) ;
+	    ActionContactReject.Entries = new () {
+		    };
+
 
         Actions = new List<GuiAction>() {  
 		    ActionTestService, 
@@ -5153,7 +5243,9 @@ public class _EverythingMaui : Gui {
 		    ActionAddGitAccount, 
 		    ActionAddCodeSigningKey, 
 		    ActionConfirmationAccept, 
-		    ActionConfirmationReject
+		    ActionConfirmationReject, 
+		    ActionContactAccept, 
+		    ActionContactReject
 		    };
 
 #endregion
@@ -5198,7 +5290,9 @@ public class _EverythingMaui : Gui {
 	    DialogBoundMessageContactRequest.Entries = new () { 
 			new GuiText ("Subject", "Subject", 0), 
 			new GuiText ("TimeSent", "Sent", 1), 
-			new GuiText ("Sender", "Sender", 2)			
+			new GuiText ("Sender", "Sender", 2), 
+			new GuiButton ("ContactAccept", ActionContactAccept), 
+			new GuiButton ("ContactReject", ActionContactReject)			
 		    };
 
         BoundMessageContactRequest.IsBacker = (object data) => DialogBoundMessageContactRequest.IsBacker(data);
@@ -5632,6 +5726,18 @@ public class _EverythingMaui : Gui {
     /// GUI action
     /// </summary>
     public virtual Task<IResult> ConfirmationReject (ConfirmationReject data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> ContactAccept (ContactAccept data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> ContactReject (ContactReject data, ActionMode mode = ActionMode.Execute) 
                 => throw new NYI();
 
  
