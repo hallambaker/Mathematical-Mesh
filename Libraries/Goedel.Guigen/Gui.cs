@@ -13,6 +13,9 @@ public abstract class Gui {
     ///<summary>List of all the Action Descriptions</summary> 
     public abstract List<GuiAction> Actions { get; }
 
+    ///<summary>List of all the Action Descriptions</summary> 
+    public abstract List<GuiAction> Selections { get; }
+
     ///<summary>List of all the Dialog Descriptions</summary> 
     public abstract List<GuiDialog> Dialogs { get; }
 

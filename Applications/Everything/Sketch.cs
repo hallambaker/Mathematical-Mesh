@@ -770,6 +770,9 @@ public partial class BoundMessageConnectionRequest : _BoundMessageConnectionRequ
 public partial class _BoundMessageConnectionRequest : BoundMessage {
 
 
+    ///<summary></summary> 
+    public virtual string RequestMessage { get; set;} 
+
 
     ///<inheritdoc/>
     public override GuiBinding Binding => BaseBinding;
@@ -780,7 +783,8 @@ public partial class _BoundMessageConnectionRequest : BoundMessage {
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessageConnectionRequest).Subject, (object data,string value) => (data as _BoundMessageConnectionRequest).Subject = value, "Subject"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessageConnectionRequest).TimeSent, (object data,string value) => (data as _BoundMessageConnectionRequest).TimeSent = value, "TimeSent"), 
-            new GuiBoundPropertyString ((object data) => (data as _BoundMessageConnectionRequest).Sender, (object data,string value) => (data as _BoundMessageConnectionRequest).Sender = value, "Sender")
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessageConnectionRequest).Sender, (object data,string value) => (data as _BoundMessageConnectionRequest).Sender = value, "Sender"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundMessageConnectionRequest).RequestMessage, (object data,string value) => (data as _BoundMessageConnectionRequest).RequestMessage = value, "RequestMessage")
 
             });
     ///<summary>Validation</summary> 
@@ -1831,10 +1835,10 @@ public partial class _BoundContactPerson : IParameter {
     public virtual string Suffix { get; set;} 
 
     ///<summary></summary> 
-    public virtual ISelectCollection NetworkAddress { get; set;} 
+    public virtual ISelectCollection NetworkAddresses { get; set;} 
 
     ///<summary></summary> 
-    public virtual ISelectCollection PhysicalAddress { get; set;} 
+    public virtual ISelectCollection PhysicalAddresses { get; set;} 
 
 
     ///<inheritdoc/>
@@ -1850,8 +1854,8 @@ public partial class _BoundContactPerson : IParameter {
             new GuiBoundPropertyString ((object data) => (data as _BoundContactPerson).Last, (object data,string value) => (data as _BoundContactPerson).Last = value, "Last"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundContactPerson).Prefix, (object data,string value) => (data as _BoundContactPerson).Prefix = value, "Prefix"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundContactPerson).Suffix, (object data,string value) => (data as _BoundContactPerson).Suffix = value, "Suffix"), 
-            new GuiBoundPropertyChooser ((object data) => (data as _BoundContactPerson).NetworkAddress, (object data,ISelectCollection value) => (data as _BoundContactPerson).NetworkAddress = value, "NetworkAddress"), 
-            new GuiBoundPropertyChooser ((object data) => (data as _BoundContactPerson).PhysicalAddress, (object data,ISelectCollection value) => (data as _BoundContactPerson).PhysicalAddress = value, "PhysicalAddress")
+            new GuiBoundPropertyList ((object data) => (data as _BoundContactPerson).NetworkAddresses, (object data,ISelectCollection value) => (data as _BoundContactPerson).NetworkAddresses = value, "NetworkAddresses"), 
+            new GuiBoundPropertyList ((object data) => (data as _BoundContactPerson).PhysicalAddresses, (object data,ISelectCollection value) => (data as _BoundContactPerson).PhysicalAddresses = value, "PhysicalAddresses")
 
             });
     ///<summary>Validation</summary> 
@@ -2046,13 +2050,10 @@ public partial class _ContactPhysicalAddress : IParameter {
     public virtual string District { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Locality { get; set;} 
+    public virtual string Region { get; set;} 
 
     ///<summary></summary> 
-    public virtual string County { get; set;} 
-
-    ///<summary></summary> 
-    public virtual string Postcode { get; set;} 
+    public virtual string Code { get; set;} 
 
     ///<summary></summary> 
     public virtual string Country { get; set;} 
@@ -2074,9 +2075,8 @@ public partial class _ContactPhysicalAddress : IParameter {
             new GuiBoundPropertyString ((object data) => (data as _ContactPhysicalAddress).Appartment, (object data,string value) => (data as _ContactPhysicalAddress).Appartment = value, "Appartment"), 
             new GuiBoundPropertyString ((object data) => (data as _ContactPhysicalAddress).Street, (object data,string value) => (data as _ContactPhysicalAddress).Street = value, "Street"), 
             new GuiBoundPropertyString ((object data) => (data as _ContactPhysicalAddress).District, (object data,string value) => (data as _ContactPhysicalAddress).District = value, "District"), 
-            new GuiBoundPropertyString ((object data) => (data as _ContactPhysicalAddress).Locality, (object data,string value) => (data as _ContactPhysicalAddress).Locality = value, "Locality"), 
-            new GuiBoundPropertyString ((object data) => (data as _ContactPhysicalAddress).County, (object data,string value) => (data as _ContactPhysicalAddress).County = value, "County"), 
-            new GuiBoundPropertyString ((object data) => (data as _ContactPhysicalAddress).Postcode, (object data,string value) => (data as _ContactPhysicalAddress).Postcode = value, "Postcode"), 
+            new GuiBoundPropertyString ((object data) => (data as _ContactPhysicalAddress).Region, (object data,string value) => (data as _ContactPhysicalAddress).Region = value, "Region"), 
+            new GuiBoundPropertyString ((object data) => (data as _ContactPhysicalAddress).Code, (object data,string value) => (data as _ContactPhysicalAddress).Code = value, "Code"), 
             new GuiBoundPropertyString ((object data) => (data as _ContactPhysicalAddress).Country, (object data,string value) => (data as _ContactPhysicalAddress).Country = value, "Country"), 
             new GuiBoundPropertyDecimal ((object data) => (data as _ContactPhysicalAddress).Latitude, (object data,decimal? value) => (data as _ContactPhysicalAddress).Latitude = value, "Latitude"), 
             new GuiBoundPropertyDecimal ((object data) => (data as _ContactPhysicalAddress).Longitude, (object data,decimal? value) => (data as _ContactPhysicalAddress).Longitude = value, "Longitude")
@@ -3102,6 +3102,9 @@ public partial class _AddCodeSigningKey : IParameter {
 
     }
 
+#endregion
+#region // Selections
+
 
 /// <summary>
 /// Callback parameters for action ConfirmationAccept 
@@ -3236,6 +3239,234 @@ public partial class _ContactReject : IParameter {
     ///<summary>The binding for the data type.</summary> 
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _ContactReject,
+        Array.Empty<GuiBoundProperty>());
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate(Gui gui) {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
+    }
+
+
+/// <summary>
+/// Callback parameters for action ConnectAccept 
+/// </summary>
+public partial class ConnectAccept : _ConnectAccept {
+    }
+
+
+/// <summary>
+/// Callback parameters for action ConnectAccept 
+/// </summary>
+public partial class _ConnectAccept : IParameter {
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _ConnectAccept,
+        Array.Empty<GuiBoundProperty>());
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate(Gui gui) {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
+    }
+
+
+/// <summary>
+/// Callback parameters for action ConnectReject 
+/// </summary>
+public partial class ConnectReject : _ConnectReject {
+    }
+
+
+/// <summary>
+/// Callback parameters for action ConnectReject 
+/// </summary>
+public partial class _ConnectReject : IParameter {
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _ConnectReject,
+        Array.Empty<GuiBoundProperty>());
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate(Gui gui) {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
+    }
+
+
+/// <summary>
+/// Callback parameters for action GroupAccept 
+/// </summary>
+public partial class GroupAccept : _GroupAccept {
+    }
+
+
+/// <summary>
+/// Callback parameters for action GroupAccept 
+/// </summary>
+public partial class _GroupAccept : IParameter {
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _GroupAccept,
+        Array.Empty<GuiBoundProperty>());
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate(Gui gui) {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
+    }
+
+
+/// <summary>
+/// Callback parameters for action GroupReject 
+/// </summary>
+public partial class GroupReject : _GroupReject {
+    }
+
+
+/// <summary>
+/// Callback parameters for action GroupReject 
+/// </summary>
+public partial class _GroupReject : IParameter {
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _GroupReject,
+        Array.Empty<GuiBoundProperty>());
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate(Gui gui) {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
+    }
+
+
+/// <summary>
+/// Callback parameters for action TaskAccept 
+/// </summary>
+public partial class TaskAccept : _TaskAccept {
+    }
+
+
+/// <summary>
+/// Callback parameters for action TaskAccept 
+/// </summary>
+public partial class _TaskAccept : IParameter {
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _TaskAccept,
+        Array.Empty<GuiBoundProperty>());
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate(Gui gui) {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
+    }
+
+
+/// <summary>
+/// Callback parameters for action TaskReject 
+/// </summary>
+public partial class TaskReject : _TaskReject {
+    }
+
+
+/// <summary>
+/// Callback parameters for action TaskReject 
+/// </summary>
+public partial class _TaskReject : IParameter {
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _TaskReject,
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
@@ -4494,6 +4725,9 @@ public class _EverythingMaui : Gui {
     public override List<GuiAction> Actions { get; }
 
     ///<inheritdoc/> 
+    public override List<GuiAction> Selections { get; }
+
+    ///<inheritdoc/> 
     public override List<GuiResult> Results { get; }
 
 
@@ -4701,17 +4935,38 @@ public class _EverythingMaui : Gui {
     ///<summary>Action ActionAddCodeSigningKey.</summary> 
 	public GuiAction ActionAddCodeSigningKey { get; } = new ("AddCodeSigningKey", "Add Code Signing Key", "signature", () => new AddCodeSigningKey());
 
-    ///<summary>Action ActionConfirmationAccept.</summary> 
-	public GuiAction ActionConfirmationAccept { get; } = new ("ConfirmationAccept", "Accept", "circle_check", () => new ConfirmationAccept());
+#endregion
+#region // Actions
 
-    ///<summary>Action ActionConfirmationReject.</summary> 
-	public GuiAction ActionConfirmationReject { get; } = new ("ConfirmationReject", "Reject", "circle_cross", () => new ConfirmationReject());
+    ///<summary>Selection SelectionConfirmationAccept.</summary> 
+	public GuiAction SelectionConfirmationAccept { get; } = new ("ConfirmationAccept", "Accept", "circle_check", () => new ConfirmationAccept(), IsSelect:true);
 
-    ///<summary>Action ActionContactAccept.</summary> 
-	public GuiAction ActionContactAccept { get; } = new ("ContactAccept", "Accept", "circle_check", () => new ContactAccept());
+    ///<summary>Selection SelectionConfirmationReject.</summary> 
+	public GuiAction SelectionConfirmationReject { get; } = new ("ConfirmationReject", "Reject", "circle_cross", () => new ConfirmationReject(), IsSelect:true);
 
-    ///<summary>Action ActionContactReject.</summary> 
-	public GuiAction ActionContactReject { get; } = new ("ContactReject", "Reject", "circle_cross", () => new ContactReject());
+    ///<summary>Selection SelectionContactAccept.</summary> 
+	public GuiAction SelectionContactAccept { get; } = new ("ContactAccept", "Accept", "circle_check", () => new ContactAccept(), IsSelect:true);
+
+    ///<summary>Selection SelectionContactReject.</summary> 
+	public GuiAction SelectionContactReject { get; } = new ("ContactReject", "Reject", "circle_cross", () => new ContactReject(), IsSelect:true);
+
+    ///<summary>Selection SelectionConnectAccept.</summary> 
+	public GuiAction SelectionConnectAccept { get; } = new ("ConnectAccept", "Accept", "circle_check", () => new ConnectAccept(), IsSelect:true);
+
+    ///<summary>Selection SelectionConnectReject.</summary> 
+	public GuiAction SelectionConnectReject { get; } = new ("ConnectReject", "Reject", "circle_cross", () => new ConnectReject(), IsSelect:true);
+
+    ///<summary>Selection SelectionGroupAccept.</summary> 
+	public GuiAction SelectionGroupAccept { get; } = new ("GroupAccept", "Accept", "circle_check", () => new GroupAccept(), IsSelect:true);
+
+    ///<summary>Selection SelectionGroupReject.</summary> 
+	public GuiAction SelectionGroupReject { get; } = new ("GroupReject", "Reject", "circle_cross", () => new GroupReject(), IsSelect:true);
+
+    ///<summary>Selection SelectionTaskAccept.</summary> 
+	public GuiAction SelectionTaskAccept { get; } = new ("TaskAccept", "Accept", "circle_check", () => new TaskAccept(), IsSelect:true);
+
+    ///<summary>Selection SelectionTaskReject.</summary> 
+	public GuiAction SelectionTaskReject { get; } = new ("TaskReject", "Reject", "circle_cross", () => new TaskReject(), IsSelect:true);
 
 #endregion
 #region // Dialogs
@@ -5081,40 +5336,40 @@ public class _EverythingMaui : Gui {
 
 #endregion
 #region // Initialize Actions
-        ActionTestService.Callback = (x, mode) => TestService (x as TestService, mode) ;
+        ActionTestService.Callback = (x) => TestService (x as TestService) ;
 	    ActionTestService.Entries = new () { 
 			new GuiText ("ServiceAddress", "Service address", 0)
 		    };
 
-        ActionAccountCreate.Callback = (x, mode) => AccountCreate (x as AccountCreate, mode) ;
+        ActionAccountCreate.Callback = (x) => AccountCreate (x as AccountCreate) ;
 	    ActionAccountCreate.Entries = new () { 
 			new GuiText ("ServiceAddress", "Account service address", 0), 
 			new GuiText ("LocalName", "Friendly name (optional)", 1), 
 			new GuiText ("Coupon", "Activation code (if provided)", 2)
 		    };
 
-        ActionAccountRequestConnect.Callback = (x, mode) => AccountRequestConnect (x as AccountRequestConnect, mode) ;
+        ActionAccountRequestConnect.Callback = (x) => AccountRequestConnect (x as AccountRequestConnect) ;
 	    ActionAccountRequestConnect.Entries = new () { 
 			new GuiText ("ConnectionString", "Account address", 0), 
 			new GuiText ("ConnectionPin", "Activation code (if provided)", 1), 
 			new GuiText ("Rights", "Requested rights", 2)
 		    };
 
-        ActionDeviceConnectQR.Callback = (x, mode) => DeviceConnectQR (x as DeviceConnectQR, mode) ;
+        ActionDeviceConnectQR.Callback = (x) => DeviceConnectQR (x as DeviceConnectQR) ;
 	    ActionDeviceConnectQR.Entries = new () { 
 			new GuiQRScan ("QrCode", "Contact QR", 0), 
 			new GuiText ("LocalName", "Friendly name (optional)", 1), 
 			new GuiText ("Rights", "Assigned rights", 2)
 		    };
 
-        ActionAccountGetPin.Callback = (x, mode) => AccountGetPin (x as AccountGetPin, mode) ;
+        ActionAccountGetPin.Callback = (x) => AccountGetPin (x as AccountGetPin) ;
 	    ActionAccountGetPin.Entries = new () { 
 			new GuiText ("Rights", "Assigned rights", 0), 
 			new GuiInteger ("Security", "Security level", 1), 
 			new GuiInteger ("Expire", "Expiry in hours", 2)
 		    };
 
-        ActionAccountRecover.Callback = (x, mode) => AccountRecover (x as AccountRecover, mode) ;
+        ActionAccountRecover.Callback = (x) => AccountRecover (x as AccountRecover) ;
 	    ActionAccountRecover.Entries = new () { 
 			new GuiText ("ServiceAddress", "Account service address", 0), 
 			new GuiText ("LocalName", "Friendly name (optional)", 1), 
@@ -5129,93 +5384,77 @@ public class _EverythingMaui : Gui {
 			new GuiText ("Share8", "Recovery share", 10)
 		    };
 
-        ActionAccountDelete.Callback = (x, mode) => AccountDelete (x as AccountDelete, mode) ;
+        ActionAccountDelete.Callback = (x) => AccountDelete (x as AccountDelete) ;
 	    ActionAccountDelete.Entries = new () {
 		    };
 
-        ActionAccountSwitch.Callback = (x, mode) => AccountSwitch (x as AccountSwitch, mode) ;
+        ActionAccountSwitch.Callback = (x) => AccountSwitch (x as AccountSwitch) ;
 	    ActionAccountSwitch.Entries = new () { 
 			new GuiChooser ("ChooseUser", "User", "account_user", 0, new () {
 				}) 
 		    };
 
-        ActionAccountGenerateRecovery.Callback = (x, mode) => AccountGenerateRecovery (x as AccountGenerateRecovery, mode) ;
+        ActionAccountGenerateRecovery.Callback = (x) => AccountGenerateRecovery (x as AccountGenerateRecovery) ;
 	    ActionAccountGenerateRecovery.Entries = new () { 
 			new GuiInteger ("NumberShares", "Total number of shares", 0), 
 			new GuiInteger ("Quorum", "Quorum required for recovery", 1)
 		    };
 
-        ActionRequestContact.Callback = (x, mode) => RequestContact (x as RequestContact, mode) ;
+        ActionRequestContact.Callback = (x) => RequestContact (x as RequestContact) ;
 	    ActionRequestContact.Entries = new () { 
 			new GuiText ("Recipient", "Address", 0), 
 			new GuiText ("Message", "Message", 1)
 		    };
 
-        ActionQrContact.Callback = (x, mode) => QrContact (x as QrContact, mode) ;
+        ActionQrContact.Callback = (x) => QrContact (x as QrContact) ;
 	    ActionQrContact.Entries = new () { 
 			new GuiQRScan ("QrCode", "Contact QR", 0)
 		    };
 
-        ActionRequestConfirmation.Callback = (x, mode) => RequestConfirmation (x as RequestConfirmation, mode) ;
+        ActionRequestConfirmation.Callback = (x) => RequestConfirmation (x as RequestConfirmation) ;
 	    ActionRequestConfirmation.Entries = new () { 
 			new GuiText ("Recipient", "Address", 0), 
 			new GuiText ("Message", "Message", 1)
 		    };
 
-        ActionCreateMail.Callback = (x, mode) => CreateMail (x as CreateMail, mode) ;
+        ActionCreateMail.Callback = (x) => CreateMail (x as CreateMail) ;
 	    ActionCreateMail.Entries = new () {
 		    };
 
-        ActionCreateChat.Callback = (x, mode) => CreateChat (x as CreateChat, mode) ;
+        ActionCreateChat.Callback = (x) => CreateChat (x as CreateChat) ;
 	    ActionCreateChat.Entries = new () {
 		    };
 
-        ActionStartVoice.Callback = (x, mode) => StartVoice (x as StartVoice, mode) ;
+        ActionStartVoice.Callback = (x) => StartVoice (x as StartVoice) ;
 	    ActionStartVoice.Entries = new () {
 		    };
 
-        ActionStartVideo.Callback = (x, mode) => StartVideo (x as StartVideo, mode) ;
+        ActionStartVideo.Callback = (x) => StartVideo (x as StartVideo) ;
 	    ActionStartVideo.Entries = new () {
 		    };
 
-        ActionSendDocument.Callback = (x, mode) => SendDocument (x as SendDocument, mode) ;
+        ActionSendDocument.Callback = (x) => SendDocument (x as SendDocument) ;
 	    ActionSendDocument.Entries = new () {
 		    };
 
-        ActionShareDocument.Callback = (x, mode) => ShareDocument (x as ShareDocument, mode) ;
+        ActionShareDocument.Callback = (x) => ShareDocument (x as ShareDocument) ;
 	    ActionShareDocument.Entries = new () {
 		    };
 
-        ActionAddMailAccount.Callback = (x, mode) => AddMailAccount (x as AddMailAccount, mode) ;
+        ActionAddMailAccount.Callback = (x) => AddMailAccount (x as AddMailAccount) ;
 	    ActionAddMailAccount.Entries = new () {
 		    };
 
-        ActionAddSshAccount.Callback = (x, mode) => AddSshAccount (x as AddSshAccount, mode) ;
+        ActionAddSshAccount.Callback = (x) => AddSshAccount (x as AddSshAccount) ;
 	    ActionAddSshAccount.Entries = new () {
 		    };
 
-        ActionAddGitAccount.Callback = (x, mode) => AddGitAccount (x as AddGitAccount, mode) ;
+        ActionAddGitAccount.Callback = (x) => AddGitAccount (x as AddGitAccount) ;
 	    ActionAddGitAccount.Entries = new () {
 		    };
 
-        ActionAddCodeSigningKey.Callback = (x, mode) => AddCodeSigningKey (x as AddCodeSigningKey, mode) ;
+        ActionAddCodeSigningKey.Callback = (x) => AddCodeSigningKey (x as AddCodeSigningKey) ;
 	    ActionAddCodeSigningKey.Entries = new () {
-		    };
-
-        ActionConfirmationAccept.Callback = (x, mode) => ConfirmationAccept (x as ConfirmationAccept, mode) ;
-	    ActionConfirmationAccept.Entries = new () {
-		    };
-
-        ActionConfirmationReject.Callback = (x, mode) => ConfirmationReject (x as ConfirmationReject, mode) ;
-	    ActionConfirmationReject.Entries = new () {
-		    };
-
-        ActionContactAccept.Callback = (x, mode) => ContactAccept (x as ContactAccept, mode) ;
-	    ActionContactAccept.Entries = new () {
-		    };
-
-        ActionContactReject.Callback = (x, mode) => ContactReject (x as ContactReject, mode) ;
-	    ActionContactReject.Entries = new () {
 		    };
 
 
@@ -5241,14 +5480,68 @@ public class _EverythingMaui : Gui {
 		    ActionAddMailAccount, 
 		    ActionAddSshAccount, 
 		    ActionAddGitAccount, 
-		    ActionAddCodeSigningKey, 
-		    ActionConfirmationAccept, 
-		    ActionConfirmationReject, 
-		    ActionContactAccept, 
-		    ActionContactReject
+		    ActionAddCodeSigningKey
 		    };
 
 #endregion
+
+#region // Initialize Selections
+        SelectionConfirmationAccept.Callback = (x) => ConfirmationAccept (x as BoundMessageConfirmationRequest) ;
+	    SelectionConfirmationAccept.Entries = new () {
+		    };
+
+        SelectionConfirmationReject.Callback = (x) => ConfirmationReject (x as BoundMessageConfirmationRequest) ;
+	    SelectionConfirmationReject.Entries = new () {
+		    };
+
+        SelectionContactAccept.Callback = (x) => ContactAccept (x as BoundMessageContactRequest) ;
+	    SelectionContactAccept.Entries = new () {
+		    };
+
+        SelectionContactReject.Callback = (x) => ContactReject (x as BoundMessageContactRequest) ;
+	    SelectionContactReject.Entries = new () {
+		    };
+
+        SelectionConnectAccept.Callback = (x) => ConnectAccept (x as BoundMessageConnectionRequest) ;
+	    SelectionConnectAccept.Entries = new () {
+		    };
+
+        SelectionConnectReject.Callback = (x) => ConnectReject (x as BoundMessageConnectionRequest) ;
+	    SelectionConnectReject.Entries = new () {
+		    };
+
+        SelectionGroupAccept.Callback = (x) => GroupAccept (x as BoundMessageGroupInvitation) ;
+	    SelectionGroupAccept.Entries = new () {
+		    };
+
+        SelectionGroupReject.Callback = (x) => GroupReject (x as BoundMessageGroupInvitation) ;
+	    SelectionGroupReject.Entries = new () {
+		    };
+
+        SelectionTaskAccept.Callback = (x) => TaskAccept (x as BoundMessageTaskRequest) ;
+	    SelectionTaskAccept.Entries = new () {
+		    };
+
+        SelectionTaskReject.Callback = (x) => TaskReject (x as BoundMessageTaskRequest) ;
+	    SelectionTaskReject.Entries = new () {
+		    };
+
+
+        Selections = new List<GuiAction>() {  
+		    SelectionConfirmationAccept, 
+		    SelectionConfirmationReject, 
+		    SelectionContactAccept, 
+		    SelectionContactReject, 
+		    SelectionConnectAccept, 
+		    SelectionConnectReject, 
+		    SelectionGroupAccept, 
+		    SelectionGroupReject, 
+		    SelectionTaskAccept, 
+		    SelectionTaskReject
+		    };
+
+#endregion
+
 #region // Initialize Dialogs
 	    DialogBoundAccount.Entries = new () { 
 			new GuiText ("Display", "Display name", 0)			
@@ -5275,8 +5568,8 @@ public class _EverythingMaui : Gui {
 			new GuiText ("TimeSent", "Sent", 1), 
 			new GuiText ("Sender", "Sender", 2), 
 			new GuiText ("RequestMessage", "Request", 3), 
-			new GuiButton ("ConfirmationAccept", ActionConfirmationAccept), 
-			new GuiButton ("ConfirmationReject", ActionConfirmationReject)			
+			new GuiButton ("ConfirmationAccept", SelectionConfirmationAccept), 
+			new GuiButton ("ConfirmationReject", SelectionConfirmationReject)			
 		    };
 
         BoundMessageConfirmationRequest.IsBacker = (object data) => DialogBoundMessageConfirmationRequest.IsBacker(data);
@@ -5291,29 +5584,36 @@ public class _EverythingMaui : Gui {
 			new GuiText ("Subject", "Subject", 0), 
 			new GuiText ("TimeSent", "Sent", 1), 
 			new GuiText ("Sender", "Sender", 2), 
-			new GuiButton ("ContactAccept", ActionContactAccept), 
-			new GuiButton ("ContactReject", ActionContactReject)			
+			new GuiButton ("ContactAccept", SelectionContactAccept), 
+			new GuiButton ("ContactReject", SelectionContactReject)			
 		    };
 
         BoundMessageContactRequest.IsBacker = (object data) => DialogBoundMessageContactRequest.IsBacker(data);
 	    DialogBoundMessageConnectionRequest.Entries = new () { 
 			new GuiText ("Subject", "Subject", 0), 
 			new GuiText ("TimeSent", "Sent", 1), 
-			new GuiText ("Sender", "Sender", 2)			
+			new GuiText ("Sender", "Sender", 2), 
+			new GuiText ("RequestMessage", "Request", 3), 
+			new GuiButton ("ConnectAccept", SelectionConnectAccept), 
+			new GuiButton ("ConnectReject", SelectionConnectReject)			
 		    };
 
         BoundMessageConnectionRequest.IsBacker = (object data) => DialogBoundMessageConnectionRequest.IsBacker(data);
 	    DialogBoundMessageGroupInvitation.Entries = new () { 
 			new GuiText ("Subject", "Subject", 0), 
 			new GuiText ("TimeSent", "Sent", 1), 
-			new GuiText ("Sender", "Sender", 2)			
+			new GuiText ("Sender", "Sender", 2), 
+			new GuiButton ("GroupAccept", SelectionGroupAccept), 
+			new GuiButton ("GroupReject", SelectionGroupReject)			
 		    };
 
         BoundMessageGroupInvitation.IsBacker = (object data) => DialogBoundMessageGroupInvitation.IsBacker(data);
 	    DialogBoundMessageTaskRequest.Entries = new () { 
 			new GuiText ("Subject", "Subject", 0), 
 			new GuiText ("TimeSent", "Sent", 1), 
-			new GuiText ("Sender", "Sender", 2)			
+			new GuiText ("Sender", "Sender", 2), 
+			new GuiButton ("TaskAccept", SelectionTaskAccept), 
+			new GuiButton ("TaskReject", SelectionTaskReject)			
 		    };
 
         BoundMessageTaskRequest.IsBacker = (object data) => DialogBoundMessageTaskRequest.IsBacker(data);
@@ -5439,11 +5739,9 @@ public class _EverythingMaui : Gui {
 			new GuiText ("Last", "Last name", 3), 
 			new GuiText ("Prefix", "Prefix", 4), 
 			new GuiText ("Suffix", "Suffix", 5), 
-			new GuiChooser ("NetworkAddress", "Network Addresses", "network", 6, new () { 
-				new GuiViewDialog (DialogContactNetworkAddress)
+			new GuiList ("NetworkAddresses", "Network Addresses", "network", 6, new () {
 				}) , 
-			new GuiChooser ("PhysicalAddress", "Locations", "location", 7, new () { 
-				new GuiViewDialog (DialogContactPhysicalAddress)
+			new GuiList ("PhysicalAddresses", "Locations", "location", 7, new () {
 				}) 			
 		    };
 
@@ -5469,10 +5767,9 @@ public class _EverythingMaui : Gui {
 			new GuiText ("Appartment", "Appartment", 0), 
 			new GuiText ("Street", "Street", 1), 
 			new GuiText ("District", "District", 2), 
-			new GuiText ("Locality", "Locality", 3), 
-			new GuiText ("County", "County", 4), 
-			new GuiText ("Postcode", "Postcode", 5), 
-			new GuiText ("Country", "Country", 6), 
+			new GuiText ("Region", "Region", 3), 
+			new GuiText ("Code", "Postcode", 4), 
+			new GuiText ("Country", "Country", 5), 
 			new GuiDecimal ("Latitude", "Latitude"), 
 			new GuiDecimal ("Longitude", "Longitude")			
 		    };
@@ -5587,160 +5884,195 @@ public class _EverythingMaui : Gui {
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> TestService (TestService data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> TestService (TestService data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> AccountCreate (AccountCreate data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> AccountCreate (AccountCreate data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> AccountRequestConnect (AccountRequestConnect data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> AccountRequestConnect (AccountRequestConnect data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> DeviceConnectQR (DeviceConnectQR data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> DeviceConnectQR (DeviceConnectQR data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> AccountGetPin (AccountGetPin data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> AccountGetPin (AccountGetPin data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> AccountRecover (AccountRecover data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> AccountRecover (AccountRecover data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> AccountDelete (AccountDelete data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> AccountDelete (AccountDelete data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> AccountSwitch (AccountSwitch data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> AccountSwitch (AccountSwitch data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> AccountGenerateRecovery (AccountGenerateRecovery data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> AccountGenerateRecovery (AccountGenerateRecovery data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> RequestContact (RequestContact data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> RequestContact (RequestContact data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> QrContact (QrContact data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> QrContact (QrContact data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> RequestConfirmation (RequestConfirmation data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> RequestConfirmation (RequestConfirmation data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> CreateMail (CreateMail data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> CreateMail (CreateMail data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> CreateChat (CreateChat data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> CreateChat (CreateChat data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> StartVoice (StartVoice data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> StartVoice (StartVoice data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> StartVideo (StartVideo data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> StartVideo (StartVideo data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> SendDocument (SendDocument data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> SendDocument (SendDocument data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> ShareDocument (ShareDocument data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> ShareDocument (ShareDocument data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> AddMailAccount (AddMailAccount data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> AddMailAccount (AddMailAccount data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> AddSshAccount (AddSshAccount data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> AddSshAccount (AddSshAccount data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> AddGitAccount (AddGitAccount data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> AddGitAccount (AddGitAccount data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> AddCodeSigningKey (AddCodeSigningKey data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> AddCodeSigningKey (AddCodeSigningKey data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> ConfirmationAccept (ConfirmationAccept data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> ConfirmationAccept (BoundMessageConfirmationRequest data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> ConfirmationReject (ConfirmationReject data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> ConfirmationReject (BoundMessageConfirmationRequest data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> ContactAccept (ContactAccept data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> ContactAccept (BoundMessageContactRequest data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> ContactReject (ContactReject data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> ContactReject (BoundMessageContactRequest data) 
                 => throw new NYI();
 
- 
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> ConnectAccept (BoundMessageConnectionRequest data) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> ConnectReject (BoundMessageConnectionRequest data) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> GroupAccept (BoundMessageGroupInvitation data) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> GroupReject (BoundMessageGroupInvitation data) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> TaskAccept (BoundMessageTaskRequest data) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> TaskReject (BoundMessageTaskRequest data) 
+                => throw new NYI();
+
 #endregion
 #region // Initialize Bindings
     /// <summary> </summary>

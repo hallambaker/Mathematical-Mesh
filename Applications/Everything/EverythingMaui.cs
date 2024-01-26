@@ -10,7 +10,6 @@ using System.Resources;
 namespace Goedel.Everything;
 
 
-// Focus: 002 Add buttons to dialog
 // Focus: 003 Delete entry on device dialog
 // Focus: 004 Update button on device dialog
 // Focus: 005 Read only fields

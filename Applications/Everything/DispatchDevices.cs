@@ -37,7 +37,7 @@ public partial class EverythingMaui {
 
 
     ///<inheritdoc/>
-    public override async Task<IResult> DeviceConnectQR(DeviceConnectQR data, ActionMode mode = ActionMode.Execute) {
+    public override async Task<IResult> DeviceConnectQR(DeviceConnectQR data) {
         try {
 
 
@@ -72,7 +72,7 @@ public partial class EverythingMaui {
         }
 
     ///<inheritdoc/>
-    public override async Task<IResult> AccountGetPin(AccountGetPin data, ActionMode mode = ActionMode.Execute) {
+    public override async Task<IResult> AccountGetPin(AccountGetPin data) {
         try {
 
             var rights = ParseRights(data.Rights);

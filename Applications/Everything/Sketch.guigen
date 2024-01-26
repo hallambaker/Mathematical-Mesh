@@ -394,43 +394,59 @@ Dialog BoundMailMail "Mail" "messages"
 Dialog BoundMessageConfirmationRequest "Mail" "circle_question"
 	Inherit BoundMessage
 	Text RequestMessage "Request"
-	Button ConfirmationAccept
-	Button ConfirmationReject
+	Selection ConfirmationAccept "Accept" "circle_check"
+		Description
+			|Accept a contact request	
+	Selection ConfirmationReject "Reject" "circle_cross"
+		Description
+			|Reject a contact request
+
 
 Dialog BoundMessageConfirmationResponse "Mail" "circle_check"
 	Inherit BoundMessage
 
-Action ConfirmationAccept "Accept" "circle_check"
-	Description
-		|Accept a confirmation request
-
-Action ConfirmationReject "Reject" "circle_cross"
-	Description
-		|Reject a confirmation request
 
 Dialog BoundMessageContactRequest "Mail" "contact"
 	Inherit BoundMessage
-	Button ContactAccept
-	Button ContactReject
-
-
-Action ContactAccept "Accept" "circle_check"
-	Description
-		|Accept a contact request
-
-Action ContactReject "Reject" "circle_cross"
-	Description
-		|Reject a contact request
+	Selection ContactAccept "Accept" "circle_check"
+		Description
+			|Accept a contact request	
+	Selection ContactReject "Reject" "circle_cross"
+		Description
+			|Reject a contact request
 
 
 Dialog BoundMessageConnectionRequest "Mail" "connect"
 	Inherit BoundMessage
+	Text RequestMessage "Request"
+	Selection ConnectAccept "Accept" "circle_check"
+		Description
+			|Accept a contact request	
+	Selection ConnectReject "Reject" "circle_cross"
+		Description
+			|Reject a contact request
+
 
 Dialog BoundMessageGroupInvitation "Mail" "groups"
 	Inherit BoundMessage
+	Selection GroupAccept "Accept" "circle_check"
+		Description
+			|Accept a contact request	
+	Selection GroupReject "Reject" "circle_cross"
+		Description
+			|Reject a contact request
+
 
 Dialog BoundMessageTaskRequest "Mail" "task"
 	Inherit BoundMessage
+	Selection TaskAccept "Accept" "circle_check"
+		Description
+			|Accept a contact request	
+	Selection TaskReject "Reject" "circle_cross"
+		Description
+			|Reject a contact request
+
+
 
 
 // Messages have different classes because they have different response options
@@ -521,10 +537,8 @@ Dialog BoundContactPerson "Person" "contacts"
 	Text Prefix "Prefix"
 	Text Suffix "Suffix"
 
-	Chooser NetworkAddress "Network Addresses" "network" 
-		View ContactNetworkAddress
-	Chooser PhysicalAddress "Locations" "location" 
-		View ContactPhysicalAddress
+	List NetworkAddresses ContactNetworkAddress "Network Addresses" "network" 
+	List PhysicalAddresses ContactPhysicalAddress "Locations" "location" 
 
 Dialog BoundContactBusiness "Organization" "contacts"
 	Text Display "Display name"
@@ -539,15 +553,14 @@ Dialog ContactNetworkAddress "Network" "protocol_icon"
 	Text Fingerprint "Fingerprint"
 
 Dialog ContactPhysicalAddress "Place" "location_pin"
-	Text Appartment "Appartment"
-	Text Street "Street"
-	Text District "District"
-	Text Locality "Locality"
-	Text County "County"
-	Text Postcode "Postcode"
-	Text Country "Country"
-	Decimal Latitude "Latitude"
-	Decimal Longitude "Longitude"
+	Text Appartment		"Appartment"
+	Text Street			"Street"
+	Text District		"District"
+	Text Region			"Region"
+	Text Code			"Postcode"
+	Text Country		"Country"
+	Decimal Latitude	"Latitude"
+	Decimal Longitude	"Longitude"
 
 
 

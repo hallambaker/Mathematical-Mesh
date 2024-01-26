@@ -5,7 +5,7 @@ public partial class EverythingMaui {
 
 
     ///<inheritdoc/>
-    public override async Task<IResult> SendDocument(SendDocument data, ActionMode mode = ActionMode.Execute) {
+    public override async Task<IResult> SendDocument(SendDocument data) {
         try {
             await Task.Delay(0);
             return new NotYetImplemented() {
@@ -20,7 +20,7 @@ public partial class EverythingMaui {
         }
 
     ///<inheritdoc/>
-    public override async Task<IResult> ShareDocument(ShareDocument data, ActionMode mode = ActionMode.Execute) {
+    public override async Task<IResult> ShareDocument(ShareDocument data) {
         try {
             await Task.Delay(0);
             return new NotYetImplemented() {

@@ -160,12 +160,12 @@ public record ErrorResult : NullResult, IFail {
 
     }
 
-[Flags]
-public enum ActionMode {
-    Initialize = 1,
-    Validate = 2,
-    Execute = 4
-    }
+//[Flags]
+//public enum ActionMode {
+//    Initialize = 1,
+//    Validate = 2,
+//    Execute = 4
+//    }
 
 
 public record GuiBinding {
@@ -235,6 +235,13 @@ public class GuiQR {
     }
 
 public record GuiBoundPropertyChooser(
+                Func<object, ISelectCollection> Get,
+                Action<object, ISelectCollection> Set,
+                string? Label,
+                List<GuiEntry>? Entries = null) : GuiBoundProperty(Label) {
+    }
+
+public record GuiBoundPropertyList(
                 Func<object, ISelectCollection> Get,
                 Action<object, ISelectCollection> Set,
                 string? Label,
@@ -349,14 +356,14 @@ public record GuiSection (
 
     }
 
-public delegate  Task<IResult> ActionCallback(object IBindable, ActionMode mode= ActionMode.Execute);
+public delegate  Task<IResult> ActionCallback(object IBindable);
 public delegate IBindable FactoryCallback();
 public record GuiAction(
             string Id,
             string Prompt,
             string Icon,
             FactoryCallback Factory,
-            ActionMode ActionMode = ActionMode.Execute
+            bool IsSelect = false
             ) : GuiPrompt(Id, Prompt), IButtonTarget {
     public IPresentation? Presentation { get; set; } = null;
 
@@ -378,7 +385,6 @@ public record GuiChooser(
             string Prompt,
             string Icon,
             int Index = -1,
-            //GuiBinding Binding,
             List<IGuiEntry> Entries = null!
             ) : GuiField(Id, Prompt, Index), IGuiEntry {
 
@@ -451,6 +457,16 @@ public record GuiIcon(
             int Index = -1
             ) : GuiField(Id, Prompt, Index) {
     }
+
+public record GuiList(
+            string Id,
+            string Prompt,
+            string Icon,
+            int Index = -1,
+            List<IGuiEntry> Entries = null!
+            ) : GuiField(Id, Prompt, Index) {
+    }
+
 
 
 public record GuiViewDialog(GuiDialog Dialog) : IGuiEntry {

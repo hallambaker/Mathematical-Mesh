@@ -118,6 +118,13 @@ public class GuigenActionButton : IWidget {
         }
 
     private void OnClick(object sender, EventArgs e) {
+        if (Action.IsSelect) {
+            Action.Callback(FieldSet.Data);
+
+            return;
+            }
+
+
         MainWindow.SetDetailWindow(Action);
         }
 

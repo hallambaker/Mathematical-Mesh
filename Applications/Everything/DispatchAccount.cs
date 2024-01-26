@@ -23,7 +23,7 @@ public partial class EverythingMaui {
 
 
     ///<inheritdoc/>
-    public override async Task<IResult> TestService(TestService data, ActionMode mode = ActionMode.Execute) {
+    public override async Task<IResult> TestService(TestService data) {
 
 
         //var meshClient = GetMeshClient(options, options.Account.Value);
@@ -69,7 +69,7 @@ public partial class EverythingMaui {
 
 
     ///<inheritdoc/>
-    public override async Task<IResult> AccountCreate(AccountCreate data, ActionMode mode = ActionMode.Execute) {
+    public override async Task<IResult> AccountCreate(AccountCreate data) {
 
         try {
             var deviceDescription = GetDeviceDescription();
@@ -102,7 +102,7 @@ public partial class EverythingMaui {
         }
 
 
-    public override async Task<IResult> AccountRequestConnect(AccountRequestConnect data, ActionMode mode = ActionMode.Execute) {
+    public override async Task<IResult> AccountRequestConnect(AccountRequestConnect data) {
         try {
             var accountAddress = data.ConnectionString;
             var pin = data.ConnectionPin;
@@ -144,7 +144,7 @@ public partial class EverythingMaui {
 
 
     ///<inheritdoc/>
-    public override async Task<IResult> AccountRecover(AccountRecover data, ActionMode mode = ActionMode.Execute) {
+    public override async Task<IResult> AccountRecover(AccountRecover data) {
         try {
             await Task.Delay(0);
             return new NotYetImplemented() {
@@ -159,7 +159,7 @@ public partial class EverythingMaui {
         }
 
     ///<inheritdoc/>
-    public override async Task<IResult> AccountDelete(AccountDelete data, ActionMode mode = ActionMode.Execute) {
+    public override async Task<IResult> AccountDelete(AccountDelete data) {
         try {
 
             await ContextUser.DeleteAccountAsync();
@@ -179,7 +179,7 @@ public partial class EverythingMaui {
         }
 
     ///<inheritdoc/>
-    public override Task<IResult> AccountGenerateRecovery(AccountGenerateRecovery data, ActionMode mode = ActionMode.Execute) {
+    public override Task<IResult> AccountGenerateRecovery(AccountGenerateRecovery data) {
         try {
             var numberShares = data.NumberShares ?? 3;
             var quorum = data.Quorum ?? 2;
@@ -222,7 +222,7 @@ public partial class EverythingMaui {
 
 
     ///<inheritdoc/>
-    public override async Task<IResult> AccountSwitch(AccountSwitch data, ActionMode mode = ActionMode.Execute) {
+    public override async Task<IResult> AccountSwitch(AccountSwitch data) {
         try {
             await Task.Delay(0);
             return new NotYetImplemented() {

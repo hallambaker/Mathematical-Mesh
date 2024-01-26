@@ -49,7 +49,7 @@ public class GuigenFieldSet : IWidget {
     int GridRow { get; set; } = 0;
     int GridColumn { get; set; } = 0;
 
-    IBindable Data { get; set; }
+    public IBindable Data { get; set; }
 
     public GuigenFieldSet(IMainWindow mainWindow, List<IGuiEntry> fields, Layout? stack) {
         MainWindow = mainWindow;

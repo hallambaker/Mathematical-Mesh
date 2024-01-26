@@ -105,7 +105,7 @@ public class GuigenDetailAction : GuigenDetaiPage {
                 if (Action.Callback != null) {
                     MainWindow.CurrentAction = null;
                     DisableActions();
-                    var task = Action.Callback(Result, ActionMode.Execute);
+                    var task = Action.Callback(Result);
                     task.ContinueWith(Continue, null);
                     }
                 else {

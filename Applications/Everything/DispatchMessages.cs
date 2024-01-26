@@ -2,7 +2,7 @@
 public partial class EverythingMaui {
 
     ///<inheritdoc/>
-    public override async Task<IResult> RequestContact(RequestContact data, ActionMode mode = ActionMode.Execute) {
+    public override async Task<IResult> RequestContact(RequestContact data) {
         try {
             await Task.Delay(0);
 
@@ -31,7 +31,7 @@ public partial class EverythingMaui {
         }
 
     ///<inheritdoc/>
-    public override async Task<IResult> RequestConfirmation(RequestConfirmation data, ActionMode mode = ActionMode.Execute) {
+    public override async Task<IResult> RequestConfirmation(RequestConfirmation data) {
         try {
 
 
@@ -62,7 +62,7 @@ public partial class EverythingMaui {
     // *********************** NYI
 
     ///<inheritdoc/>
-    public override async Task<IResult> CreateMail(CreateMail data, ActionMode mode = ActionMode.Execute) {
+    public override async Task<IResult> CreateMail(CreateMail data) {
         try {
             await Task.Delay(0);
             return new NotYetImplemented() {
@@ -77,7 +77,7 @@ public partial class EverythingMaui {
         }
 
     ///<inheritdoc/>
-    public override async Task<IResult> CreateChat(CreateChat data, ActionMode mode = ActionMode.Execute) {
+    public override async Task<IResult> CreateChat(CreateChat data) {
         try {
             await Task.Delay(0);
             return new NotYetImplemented() {
@@ -92,7 +92,7 @@ public partial class EverythingMaui {
         }
 
     ///<inheritdoc/>
-    public override async Task<IResult> StartVoice(StartVoice data, ActionMode mode = ActionMode.Execute) {
+    public override async Task<IResult> StartVoice(StartVoice data) {
         try {
             await Task.Delay(0);
             return new NotYetImplemented() {
@@ -107,7 +107,7 @@ public partial class EverythingMaui {
         }
 
     ///<inheritdoc/>
-    public override async Task<IResult> StartVideo(StartVideo data, ActionMode mode = ActionMode.Execute) {
+    public override async Task<IResult> StartVideo(StartVideo data) {
         try {
             await Task.Delay(0);
             return new NotYetImplemented() {

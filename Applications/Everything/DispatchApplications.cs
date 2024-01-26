@@ -3,7 +3,7 @@ public partial class EverythingMaui {
 
 
     ///<inheritdoc/>
-    public override async Task<IResult> AddMailAccount(AddMailAccount data, ActionMode mode = ActionMode.Execute) {
+    public override async Task<IResult> AddMailAccount(AddMailAccount data) {
         try {
             await Task.Delay(0);
             return new NotYetImplemented() {
@@ -18,7 +18,7 @@ public partial class EverythingMaui {
         }
 
     ///<inheritdoc/>
-    public override async Task<IResult> AddSshAccount(AddSshAccount data, ActionMode mode = ActionMode.Execute) {
+    public override async Task<IResult> AddSshAccount(AddSshAccount data) {
         try {
             await Task.Delay(0);
             return new NotYetImplemented() {
@@ -33,7 +33,7 @@ public partial class EverythingMaui {
         }
 
     ///<inheritdoc/>
-    public override async Task<IResult> AddGitAccount(AddGitAccount data, ActionMode mode = ActionMode.Execute) {
+    public override async Task<IResult> AddGitAccount(AddGitAccount data) {
         try {
             await Task.Delay(0);
             return new NotYetImplemented() {
@@ -49,7 +49,7 @@ public partial class EverythingMaui {
 
 
     ///<inheritdoc/>
-    public override async Task<IResult> AddCodeSigningKey(AddCodeSigningKey data, ActionMode mode = ActionMode.Execute) {
+    public override async Task<IResult> AddCodeSigningKey(AddCodeSigningKey data) {
         try {
             await Task.Delay(0);
             return new NotYetImplemented() {

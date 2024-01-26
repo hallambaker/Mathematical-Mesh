@@ -55,6 +55,7 @@ public partial class BoundMessage : IBoundPresentation, IDialog {
         }
 
     protected virtual void Fill(SpoolIndexEntry input) {
+        Bound = input;
         var message = input.Message;
         Sender = message.Sender;
         var receiver = message?.EnvelopedMessage?.Header?.Received;
@@ -164,6 +165,9 @@ public partial class BoundMessageContactRequest {
         return result;
         }
     }
+
+
+
 
 
 public partial class BoundMessageGroupInvitation {
