@@ -1801,23 +1801,69 @@ public partial class _AccountUser : IParameter {
     }
 
 /// <summary>
-/// Callback parameters for dialog BoundContactPerson 
+/// Callback parameters for dialog BoundContact 
 /// </summary>
-public partial class BoundContactPerson : _BoundContactPerson {
+public partial class BoundContact : _BoundContact {
     /// <summary>Type check verification.</summary>
     public static  Func<object, bool> IsBacker { get; set; } = (object _) => false;
     }
 
 /// <summary>
-/// Callback parameters for section BoundContactPerson 
+/// Callback parameters for section BoundContact 
 /// </summary>
-public partial class _BoundContactPerson : IParameter {
+public partial class _BoundContact : IParameter {
 
     public object Bound { get; set; }
 
 
     ///<summary></summary> 
+    public virtual IFieldIcon Type { get; set;} 
+
+    ///<summary></summary> 
     public virtual string Display { get;} 
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _BoundContact,
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundContact).Type, (object data,IFieldIcon value) => (data as _BoundContact).Type = value, "Type"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundContact).Display, null, "Display")
+
+            });
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate(Gui gui) {
+        GuiResultInvalid result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
+    }
+
+/// <summary>
+/// Callback parameters for dialog BoundContactPerson 
+/// </summary>
+public partial class BoundContactPerson : _BoundContactPerson {
+    /// <summary>Type check verification.</summary>
+    public static new Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    }
+
+/// <summary>
+/// Callback parameters for section BoundContactPerson 
+/// </summary>
+public partial class _BoundContactPerson : BoundContact {
+
 
     ///<summary></summary> 
     public virtual string Local { get; set;} 
@@ -1842,12 +1888,13 @@ public partial class _BoundContactPerson : IParameter {
 
 
     ///<inheritdoc/>
-    public virtual GuiBinding Binding => BaseBinding;
+    public override GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static  GuiBinding BaseBinding  { get; } = new (
+    public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundContactPerson,
         new GuiBoundProperty[] { 
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundContactPerson).Type, (object data,IFieldIcon value) => (data as _BoundContactPerson).Type = value, "Type"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundContactPerson).Display, null, "Display"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundContactPerson).Local, (object data,string value) => (data as _BoundContactPerson).Local = value, "Local"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundContactPerson).First, (object data,string value) => (data as _BoundContactPerson).First = value, "First"), 
@@ -1859,18 +1906,18 @@ public partial class _BoundContactPerson : IParameter {
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate(Gui gui) {
+    public override IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     ///<summary>Teardown.</summary> 
-    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -1880,44 +1927,40 @@ public partial class _BoundContactPerson : IParameter {
 /// </summary>
 public partial class BoundContactBusiness : _BoundContactBusiness {
     /// <summary>Type check verification.</summary>
-    public static  Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    public static new Func<object, bool> IsBacker { get; set; } = (object _) => false;
     }
 
 /// <summary>
 /// Callback parameters for section BoundContactBusiness 
 /// </summary>
-public partial class _BoundContactBusiness : IParameter {
+public partial class _BoundContactBusiness : BoundContact {
 
-    public object Bound { get; set; }
-
-
-    ///<summary></summary> 
-    public virtual string Display { get; set;} 
 
 
     ///<inheritdoc/>
-    public virtual GuiBinding Binding => BaseBinding;
+    public override GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static  GuiBinding BaseBinding  { get; } = new (
+    public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundContactBusiness,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as _BoundContactBusiness).Display, (object data,string value) => (data as _BoundContactBusiness).Display = value, "Display")
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundContactBusiness).Type, (object data,IFieldIcon value) => (data as _BoundContactBusiness).Type = value, "Type"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundContactBusiness).Display, null, "Display")
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate(Gui gui) {
+    public override IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     ///<summary>Teardown.</summary> 
-    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -1927,44 +1970,40 @@ public partial class _BoundContactBusiness : IParameter {
 /// </summary>
 public partial class BoundContactPlace : _BoundContactPlace {
     /// <summary>Type check verification.</summary>
-    public static  Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    public static new Func<object, bool> IsBacker { get; set; } = (object _) => false;
     }
 
 /// <summary>
 /// Callback parameters for section BoundContactPlace 
 /// </summary>
-public partial class _BoundContactPlace : IParameter {
+public partial class _BoundContactPlace : BoundContact {
 
-    public object Bound { get; set; }
-
-
-    ///<summary></summary> 
-    public virtual string Display { get; set;} 
 
 
     ///<inheritdoc/>
-    public virtual GuiBinding Binding => BaseBinding;
+    public override GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static  GuiBinding BaseBinding  { get; } = new (
+    public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundContactPlace,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as _BoundContactPlace).Display, (object data,string value) => (data as _BoundContactPlace).Display = value, "Display")
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundContactPlace).Type, (object data,IFieldIcon value) => (data as _BoundContactPlace).Type = value, "Type"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundContactPlace).Display, null, "Display")
 
             });
     ///<summary>Validation</summary> 
-    public virtual IResult Validate(Gui gui) {
+    public override IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     ///<summary>Teardown.</summary> 
-    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -5111,6 +5150,11 @@ public class _EverythingMaui : Gui {
                 IsBoundType = (object data) => data is AccountUser
                 };
 
+    ///<summary>Dialog DialogBoundContact.</summary> 
+	public GuiDialog DialogBoundContact { get; } = new ("BoundContact", "Contact", "contacts", () => new BoundContact()) {
+                IsBoundType = (object data) => data is BoundContact
+                };
+
     ///<summary>Dialog DialogBoundContactPerson.</summary> 
 	public GuiDialog DialogBoundContactPerson { get; } = new ("BoundContactPerson", "Person", "contacts", () => new BoundContactPerson()) {
                 IsBoundType = (object data) => data is BoundContactPerson
@@ -5732,27 +5776,36 @@ public class _EverythingMaui : Gui {
 		    };
 
         AccountUser.IsBacker = (object data) => DialogAccountUser.IsBacker(data);
+	    DialogBoundContact.Entries = new () { 
+			new GuiIcon ("Type", "Type"), 
+			new GuiText ("Display", "Display name", 1)			
+		    };
+
+        BoundContact.IsBacker = (object data) => DialogBoundContact.IsBacker(data);
 	    DialogBoundContactPerson.Entries = new () { 
-			new GuiText ("Display", "Display name", 0), 
-			new GuiText ("Local", "Friendly name", 1), 
-			new GuiText ("First", "First name", 2), 
-			new GuiText ("Last", "Last name", 3), 
-			new GuiText ("Prefix", "Prefix", 4), 
-			new GuiText ("Suffix", "Suffix", 5), 
-			new GuiList ("NetworkAddresses", "Network Addresses", "network", 6, new () {
+			new GuiIcon ("Type", "Type"), 
+			new GuiText ("Display", "Display name", 1), 
+			new GuiText ("Local", "Friendly name", 2), 
+			new GuiText ("First", "First name", 3), 
+			new GuiText ("Last", "Last name", 4), 
+			new GuiText ("Prefix", "Prefix", 5), 
+			new GuiText ("Suffix", "Suffix", 6), 
+			new GuiList ("NetworkAddresses", "Network Addresses", "network", 7, new () {
 				}) , 
-			new GuiList ("PhysicalAddresses", "Locations", "location", 7, new () {
+			new GuiList ("PhysicalAddresses", "Locations", "location", 8, new () {
 				}) 			
 		    };
 
         BoundContactPerson.IsBacker = (object data) => DialogBoundContactPerson.IsBacker(data);
 	    DialogBoundContactBusiness.Entries = new () { 
-			new GuiText ("Display", "Display name", 0)			
+			new GuiIcon ("Type", "Type"), 
+			new GuiText ("Display", "Display name", 1)			
 		    };
 
         BoundContactBusiness.IsBacker = (object data) => DialogBoundContactBusiness.IsBacker(data);
 	    DialogBoundContactPlace.Entries = new () { 
-			new GuiText ("Display", "Display name", 0)			
+			new GuiIcon ("Type", "Type"), 
+			new GuiText ("Display", "Display name", 1)			
 		    };
 
         BoundContactPlace.IsBacker = (object data) => DialogBoundContactPlace.IsBacker(data);
@@ -5805,6 +5858,7 @@ public class _EverythingMaui : Gui {
 		    DialogBoundApplicationCallSign, 
 		    DialogBoundDevice, 
 		    DialogAccountUser, 
+		    DialogBoundContact, 
 		    DialogBoundContactPerson, 
 		    DialogBoundContactBusiness, 
 		    DialogBoundContactPlace, 

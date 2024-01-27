@@ -521,16 +521,15 @@ Dialog AccountUser "Account" "user"
 
 	Chooser UserChooseDevice "Devices" "device" 
 	
-
-
-
-Dialog BoundContactPerson "Person" "contacts"
-	// Present alphabetically on Last name
-
+Dialog BoundContact "Contact" "contacts"
+	Icon Type "Type" "user"
 	Text Display "Display name"
 		Readonly
 		Primary
 
+Dialog BoundContactPerson "Person" "contacts"
+	Inherit BoundContact
+	// Present alphabetically on Last name
 	Text Local "Friendly name"
 	Text First "First name"
 	Text Last "Last name"
@@ -541,10 +540,10 @@ Dialog BoundContactPerson "Person" "contacts"
 	List PhysicalAddresses ContactPhysicalAddress "Locations" "location" 
 
 Dialog BoundContactBusiness "Organization" "contacts"
-	Text Display "Display name"
+	Inherit BoundContact
 
 Dialog BoundContactPlace "Place" "contacts"
-	Text Display "Display name"
+	Inherit BoundContact
 
 
 Dialog ContactNetworkAddress "Network" "protocol_icon"

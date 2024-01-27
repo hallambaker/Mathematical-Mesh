@@ -1,55 +1,69 @@
 ﻿using Goedel.Cryptography.Dare;
-namespace Goedel.Everything;
 
+namespace Goedel.Everything;
 #region // Bindings to classes specified through the Guigen schema.
 
-// Documented in Guigen output
-public partial class CredentialSection : IHeadedSelection {
+public partial class ContactSection : IHeadedSelection {
 
     AccountSection Account { get; }
     ContextUser ContextUser => Account.ContextUser;
 
     ///<inheritdoc/>
-    public GuiBinding SelectionBinding => _BoundCredential.BaseBinding;
+    public GuiBinding SelectionBinding => _BoundContact.BaseBinding;
 
     /// <summary>
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public CredentialSection(AccountSection account) {
+    public ContactSection(AccountSection account) {
         Account = account;
-
-        var catalog = ContextUser.GetStore(CatalogCredential.Label, create: false) as GuigenCatalogCredential;
-        ChooseCredential = new CredentialSelection(catalog);
+        var catalog = ContextUser.GetStore(CatalogContact.Label, create: false) as GuigenCatalogContact;
+        ChooseContact = catalog is null ? null : new ContactSelection(catalog);
         }
 
     }
+#endregion
+#region // Bindings to classes specified through the Guigen schema.
 
-// Documented in Guigen output
-public partial class BoundPassword : IBoundPresentation, IDialog {
+public partial class BoundContactPerson : IBoundPresentation, IDialog {
 
-    public GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundPassword;
-    public string? LabelValue => Service.NullifyIfEmpty() ?? "Unknown";
+    public GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundContact;
+
+    static BoundContactPerson() {
+        IsBacker = isBacker;
+        }
 
 
-    public CatalogedCredential Convert() {
-        var result = new CatalogedCredential() {
-            Protocol = Protocol,
-            Service = Service,
-            Username = Username,
-            Password = Password,
-            Uid = Udf.Nonce()
+    static bool isBacker(object data) => data is CatalogedContact;
+
+    public CatalogedEntry CatalogedEntry { get; set; }
+
+    public override string Display => (First ?? "") + " " + (Last ?? "");
+
+    public string? IconValue => "account.png";
+
+    static PersonName Default = new PersonName() {
+        First = "Unspecified",
+        Last = "Contact"
+        };
+
+    public virtual CatalogedContact Convert() {
+        var result = new CatalogedContact() {
+            Key = Udf.Nonce()
             };
-
+        Fill();
         return result;
         }
 
-    public static BoundPassword Convert(CatalogedCredential entry) {
-        var result = new BoundPassword() {
-            Protocol = entry.Protocol,
-            Service = entry.Service,
-            Username = entry.Username,
-            Password = entry.Password
+    public static BoundContactPerson Convert(CatalogedContact input) {
+        var contact = input.Contact as ContactPerson;
+        var name = contact.CommonNames?.FirstOrDefault() ?? Default;
+
+        var result = new BoundContactPerson() {
+            First = name.First,
+            Last = name.Last,
+            Prefix = name.Prefix,
+            Suffix = name.Suffix
             };
 
         return result;
@@ -57,50 +71,41 @@ public partial class BoundPassword : IBoundPresentation, IDialog {
         }
 
     public virtual void Fill() {
-        }
+        var bound = Bound as CatalogedContact;
 
-    }
-
-public partial class BoundPasskey: IBoundPresentation, IDialog {
-
-    public GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundCredential;
-
-    public string? IconValue => "credentials.png";
-
-    public CatalogedCredential Convert() {
-        var result = new CatalogedCredential() {
-            Protocol = Protocol,
-            Service = Service,
-            Username = Username,
-            Uid = Udf.Nonce()
+        var personName = new PersonName() {
+            FullName = Display,
+            Prefix = Prefix,
+            Suffix = Suffix,
+            First = First,
+            Last = Last
             };
 
-        return result;
-        }
-
-    public static BoundPasskey Convert(CatalogedCredential entry) {
-        var result = new BoundPasskey() {
-            Protocol = entry.Protocol,
-            Service = entry.Service,
-            Username = entry.Username
+        var contact = new ContactPerson() {
+            CommonNames = new List<PersonName>() { personName },
+            NetworkAddresses = new()
             };
 
-        return result;
-
+        bound.Contact = contact;
         }
+
+
+
+
     }
-
-
-
 
 #endregion
+
+
+
+
 #region // Binding to classes specified in the Mesh schema
 
 /// <summary>
-/// Extends <see cref="CatalogApplication"/> to override the <see cref="Intern"/> method
+/// Extends <see cref="CatalogContact"/> to override the <see cref="Intern"/> method
 /// so as to allow the bound selection boxes to be updated.
 /// </summary>
-public class GuigenCatalogCredential : CatalogCredential {
+public class GuigenCatalogContact : CatalogContact {
 
     /// <summary>
     /// Factory delegate
@@ -125,7 +130,7 @@ public class GuigenCatalogCredential : CatalogCredential {
                 bool decrypt = true,
                 bool create = true,
                 byte[] bitmask = null) =>
-        new GuigenCatalogCredential(directory, storeId, policy, cryptoParameters, keyCollection,
+        new GuigenCatalogContact(directory, storeId, policy, cryptoParameters, keyCollection,
             decrypt, create, bitmask: bitmask);
 
 
@@ -142,7 +147,7 @@ public class GuigenCatalogCredential : CatalogCredential {
     /// <param name="policy">The cryptographic policy to be applied to the container.</param>
     /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
     /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
-    public GuigenCatalogCredential(
+    public GuigenCatalogContact(
                 string directory,
                 string storeName = null,
                 DarePolicy policy = null,
@@ -170,33 +175,74 @@ public class GuigenCatalogCredential : CatalogCredential {
 
 #region // Selection Catalog backing type.
 
-public partial class CredentialSelection : SelectionCatalog<GuigenCatalogCredential,
-            CatalogedCredential, BoundPassword> {
+public partial class ContactSelection : SelectionCatalog<GuigenCatalogContact,
+            CatalogedContact, BoundContactPerson> {
+
+
+    static PersonName Default = new PersonName() {
+        First = "Unspecified",
+        Last = "Contact"
+        };
+
 
     /// <summary>
     /// Constructor returning an instance of the selection data backer bound to the 
     /// catalog <paramref name="catalog"/>.
     /// </summary>
     /// <param name="catalog"></param>
-    public CredentialSelection(GuigenCatalogCredential catalog) : base(catalog) {
+    public ContactSelection(GuigenCatalogContact catalog) : base(catalog) {
         }
 
     #region // Conversion overrides
-    public override CatalogedCredential CreateFromBindable(IBindable contact) =>
-        (contact as BoundPassword)?.Convert();
+    public override CatalogedContact CreateFromBindable(IBindable input) =>
+            (input as BoundContactPerson)?.Convert();
 
-    public override BoundPassword ConvertToBindable(CatalogedCredential input) => BoundPassword.Convert(input);
 
-    public override CatalogedCredential UpdateWithBindable(IBindable entry) {
-        var binding = entry as BoundPassword;
+    public override BoundContactPerson ConvertToBindable(CatalogedContact input) =>
+        BoundContactPerson.Convert(input);
+
+    public override CatalogedContact UpdateWithBindable(IBindable entry) {
+        var binding = entry as BoundContactPerson;
         binding.Fill();
-        return binding.Bound as CatalogedCredential;
+        return binding.Bound as CatalogedContact;
         }
-
     #endregion
 
+
+
+
+    }
+
+public partial class QrContact : IMessageable {
+
+    public IResult MessageReceived() {
+        throw new NYI();
+        }
+
+    public override IResult TearDown(Gui gui) {
+        if (QrCode != null) {
+            var everything = gui as EverythingMaui;
+            everything.UnRegister(QrCode);
+            }
+
+        return NullResult.Teardown;
+        }
+
+    public override IResult Initialize(Gui gui) {
+        var everything = gui as EverythingMaui;
+        QrCode = everything.GetQrContact(this);
+
+        return NullResult.Initialized;
+        }
 
     }
 
 
 #endregion
+
+
+
+
+
+
+
