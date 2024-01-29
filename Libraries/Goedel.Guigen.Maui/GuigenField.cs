@@ -66,7 +66,7 @@ public class GuigenFieldSet : IWidget {
 
         FieldMap = new int[fields.Count];
         int i = 0;
-        foreach (var entry in fields) {
+       foreach (var entry in fields) {
             switch (entry) {
                 case GuiText text: {
                     var field = new GuigenFieldString(MainWindow, text, this);
@@ -96,6 +96,14 @@ public class GuigenFieldSet : IWidget {
                     MauiFields.Add(field);
                     //stack.Add(field.ListView);
                     FieldMap[i++] = field.Index;
+                    break;
+                    }
+                case GuiList list: {
+                    FieldMap[i++] = -1;
+                    break;
+                    }
+                case GuiIcon icon: {
+                    FieldMap[i++] = -1;
                     break;
                     }
                 default : {

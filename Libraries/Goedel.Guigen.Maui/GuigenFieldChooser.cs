@@ -102,20 +102,6 @@ public class GuigenFieldChooser : GuigenField {
 
         }
 
-    BoundPresentation GetPresentation(IBindable binding) {
-        foreach (var presentation in BoundPresentations) {
-            var dialog = presentation.Dialog;
-
-            if (dialog?.IsBoundType(binding)==true) {
-                return presentation;
-                }
-
-            }
-
-        return null;
-        }
-
-
     public void RestoreView() {
         CommandButtons.IsVisible = true;
         MainLayout.Clear();
@@ -179,7 +165,9 @@ public class GuigenFieldChooser : GuigenField {
 
                     break;
                     }
-                
+                case GuiBoundPropertyIcon icon : {
+                    break;
+                    }
                 }
 
             }

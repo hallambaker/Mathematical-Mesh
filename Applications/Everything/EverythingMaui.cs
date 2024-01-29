@@ -127,15 +127,15 @@ public partial class EverythingMaui {
 
         }
 
-    public static Dictionary<Type, GuiBinding> BindingDictionary = new() {
-            { typeof(CatalogedCredential), BindingCatalogedCredential }
-        };
+    //public static Dictionary<Type, GuiBinding> BindingDictionary = new() {
+    //        { typeof(CatalogedCredential), BindingCatalogedCredential }
+    //    };
 
-    public static GuiBinding GetBinding(object data) {
-        if (BindingDictionary.TryGetValue(data.GetType(), out var binding)) return binding;
+    //public static GuiBinding GetBinding(object data) {
+    //    if (BindingDictionary.TryGetValue(data.GetType(), out var binding)) return binding;
 
-        throw new NotImplementedException();
-        }
+    //    throw new NotImplementedException();
+    //    }
 
     Task<IResult> TaskResult(IResult result) => Task.FromResult<IResult>(result);
 

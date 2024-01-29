@@ -33,7 +33,6 @@ Section MessageSection "Messages" "messages"
 	Button StartVideo
 
 	Chooser ChooseMessage "Messages" "inbox_messages" 
-		//View Message
 		Filter ContactRequest		"Contact Request"
 		Filter ConfirmationRequest	"Confirmation Request"
 		Filter DeviceRequest		"Device Request"
@@ -45,40 +44,37 @@ Section ContactSection "Contacts" "contacts"
 	Button QrContact
 	Button RequestContact
 	Chooser ChooseContact "Contacts" "contact_other" 
-		View BoundContactPerson
 		Filter Self "Self"
 		Filter All "Others"
 
 Section DocumentSection "Documents" "Documents"
 	Chooser ChooseDocuments "Documents" "documents" 
-		View BoundDocument
+
 
 Section FeedSection "Feeds" "feeds"
 	Chooser ChooseFeed "Feeds" "feeds" 
-		View BoundFeed
+
 
 
 Section GroupSection "Groups" "groups"
 	Chooser ChooseGroup "User" "account_group" 
-		View BoundGroup
+
 
 Section CredentialSection "Credentials" "credentials"
 	Chooser ChooseCredential "Credentials" "credentials" 
-		View BoundPassword
-		View BoundPasskey
+
 
 Section TaskSection "Tasks" "tasks"
 	Chooser ChooseTask "Tasks" "Tasks" 
-		View BoundTask
+
 
 Section CalendarSection "Calendar" "calendar"
 	Chooser ChooseAppointment "Tasks" "Tasks" 
-		View BoundTask
+
 
 Section BookmarkSection "Bookmark" "bookmark"
 	Chooser ChooseBookmark "Bookmark" "Bookmark" 
-		View BoundBookmark
-		View BoundFeed
+
 
 Section ApplicationSection "Applications" "applications"
 	Button AddMailAccount	
@@ -86,13 +82,13 @@ Section ApplicationSection "Applications" "applications"
 	Button AddGitAccount
 	Button AddCodeSigningKey
 	Chooser ChooseApplication "Applications" "Applications" 
-		View CatalogedApplication
+
 
 Section DeviceSection "Devices" "devices"
 	Button DeviceConnectQR
 	Button AccountGetPin 
 	Chooser ChooseDevice "Devices" "Devices" 
-		View CatalogedDevice
+
 
 Section ServiceSection "Services" "Services"
 	Chooser ChooseService "Services" "account_service.png" 
@@ -244,14 +240,6 @@ Action AccountRequestConnect  "Connect by Address" "connect"
 	Text ConnectionPin "Activation code (if provided)"
 	Text Rights "Requested rights"
 
-//Action AccountConnectUri  "Connect by QR" "scan_qr"
-//	Description
-//		|
-//	Return ReportPending
-//	Text ConnectionUri "Connection URI"
-//	Text LocalName "Friendly name (optional)"
-//	Text Rights "Requested rights"
-
 Action DeviceConnectQR  "Present QR" "present_qr"
 	Description
 		|Presents a bidirectional scanning interface that presents a QR code to 
@@ -274,16 +262,6 @@ Action AccountGetPin "Create connection PIN" "recover"
 		Error SecurityRange "Must be an integer 0-5"
 			|(Security >= 0) & (Security <= 5)
 	Integer Expire "Expiry in hours"
-
-//Action DeviceStaticUri  "Scan QR" "scan_qr"
-//	Description
-//		|Connects a device to the account by means of a static QR code
-//		|printed on the product or a URI entered.
-//	Return ReportPending
-//	Text ConnectionUri "Connection URI"
-//	Text LocalName "Friendly name (optional)"
-//	Text Rights "Requested rights"
-
 
 Action AccountRecover "Recover Mesh Account" "recover_account"
 	Description
@@ -312,9 +290,6 @@ Action AccountSwitch "Change Account" "test_service"
 		|
 	Return ReportAccount
 	Chooser ChooseUser "User" "account_user" 
-
-
-
 
 Action AccountGenerateRecovery "Create recovery" "share_nodes_solid"
 	Description
@@ -383,6 +358,7 @@ Dialog BoundAccount "Account" "contacts"
 
 
 Dialog BoundMessage "Message" "contacts"
+	Icon Type "Type" "message"
 	Text Subject "Subject"
 	Text TimeSent "Sent"
 	Text Sender "Sender"
@@ -446,17 +422,16 @@ Dialog BoundMessageTaskRequest "Mail" "task"
 		Description
 			|Reject a contact request
 
-
-
-
 // Messages have different classes because they have different response options
-Dialog BoundDocument "Document" "contacts"
+Dialog BoundDocument "Document" "documents"
+	Icon Type "Type" "documents"
 	Text Filename "File name"
 
-Dialog BoundGroup "Group" "contacts"
+Dialog BoundGroup "Group" "application_group"
 	Text Display "Display name"
 
 Dialog BoundCredential "Passkey" "credentials"
+	Icon Type "Type" "password"
 	Text Protocol "Protocol"
 	Text Service "Service"
 	Text Username "Username"
@@ -465,7 +440,7 @@ Dialog BoundPassword "Password" "password"
 	Inherit BoundCredential
 	Text Password "Password"
 
-Dialog BoundPasskey "Passkey" "password"
+Dialog BoundPasskey "Passkey" "passkey"
 	Inherit BoundCredential
 
 
@@ -476,6 +451,7 @@ Dialog BoundAppointment "Appointment" "task"
 	Text Display "Display name"
 
 Dialog BoundBookmark "Bookmark" "bookmark"
+	Icon Type "Type" "message"
 	Text Title "Title"
 	Text Uri "Link"
 		Error LinkIsNull "Must specify a URI"
@@ -487,25 +463,26 @@ Dialog BoundFeed "Feed" "feeds"
 	Inherit BoundBookmark
 	Text Protocol "Protocol"
 
-Dialog BoundApplication "Message" "contacts"
+Dialog BoundApplication "Message" "applications"
 	Text Display "Display name"
 
-Dialog BoundApplicationMail "Message" "contacts"
+Dialog BoundApplicationMail "Message" "mail"
 	Inherit BoundApplication
-Dialog BoundApplicationSsh "Message" "contacts"
+Dialog BoundApplicationSsh "Message" "application_ssh"
 	Inherit BoundApplication
-Dialog BoundApplicationOpenPgp "Message" "contacts"
+Dialog BoundApplicationOpenPgp "Message" "application_openpgp"
 	Inherit BoundApplication
-Dialog BoundApplicationDeveloper "Message" "contacts"
+Dialog BoundApplicationDeveloper "Message" "application_developer"
 	Inherit BoundApplication
-Dialog BoundApplicationPkix "Message" "contacts"
+Dialog BoundApplicationPkix "Message" "application_pkix"
 	Inherit BoundApplication
-Dialog BoundApplicationGroup "Message" "contacts"
+Dialog BoundApplicationGroup "Message" "application_group"
 	Inherit BoundApplication
-Dialog BoundApplicationCallSign "Message" "contacts"
+Dialog BoundApplicationCallSign "Message" "application_callsign"
 	Inherit BoundApplication
 
 Dialog BoundDevice "Message" "plug"
+	Icon Type "Type" "plug"
 	Text DeviceType		"Platform"  // Readonly
 	Text Rights			"Rights"  // editable
 	Text LocalName		"Name" // editable
@@ -563,52 +540,6 @@ Dialog ContactPhysicalAddress "Place" "location_pin"
 
 
 
-Binding CatalogedDevice
-	Type Default  "icon"
-	Type Admin "icon"
-	Text LocalName "Local"
-	Text Udf "Fingerprint"
-	Text LocalName "Local"
-	Text Description "Description"
-
-
-
-Binding CatalogedDocument
-	//Text Name "Name"
-	Text ContentType "Type"
-	DateTime DateCreated "Created"
-		
-	DateTime DateModified "Updated"
-		
-	//Integer Size "Size"
-		
-	Text Description "Description"
-
-
-Binding CatalogedGroup
-	Text LocalName "Name"
-	//Text ServiceAddress "Address"
-
-
-Binding CatalogedContact
-	Type Default  "icon"
-	Type Self "icon"
-
-Binding CatalogedCredential
-	Text LocalName "Local"
-	Text Service "Site"
-	Text Username "Username""
-	Text Password "Password"
-	Text Protocol "Protocol"
-	Text Description "Description"
-
-Binding CatalogedTask
-	Text LocalName "Name"
-	Text Title "Title"
-
-
-Binding CatalogedApplication
-	Text LocalName "Name"
 
 
 // Icons used in the interface
