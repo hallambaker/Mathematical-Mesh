@@ -8,6 +8,8 @@ namespace Goedel.Everything;
 
 #region // Bindings to classes specified through the Guigen schema.
 
+
+
 // Documented in Guigen output
 public partial class MessageSection : IHeadedSelection{
 
@@ -15,6 +17,9 @@ public partial class MessageSection : IHeadedSelection{
     ContextUser ContextUser => Account.ContextUser;
 
     public GuiBinding SelectionBinding => _BoundMessage.BaseBinding;
+
+
+
 
     /// <summary>
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
@@ -34,9 +39,8 @@ public partial class BoundMessage : IBoundPresentation, IDialog {
 
     public virtual GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundMessage;
 
-    public string? LabelValue => Subject;
-    public string? SecondaryValue => "TBS";
-    public virtual string? IconValue => IsRead ? "mail_read" : "mail_unread";
+    public override IFieldIcon Type => FieldIcons.Message(IsRead);
+
 
     public bool IsRead => false;
 
@@ -70,7 +74,7 @@ public partial class BoundMessage : IBoundPresentation, IDialog {
 
 public partial class BoundMessageConnectionRequest {
 
-    public override string? IconValue => IsRead ? "connect_read" : "connect_unread";
+    public override IFieldIcon Type => FieldIcons.Connection(IsRead);
 
     public override Message Convert() {
         var result = new Message();
@@ -88,7 +92,7 @@ public partial class BoundMessageConnectionRequest {
 
 public partial class BoundMailMail {
 
-    public override string? IconValue => IsRead ? "mail_read" : "mail_unread";
+    public override IFieldIcon Type  => FieldIcons.Mail(IsRead);
 
     public override Message Convert() {
         var result = new Message();
@@ -108,7 +112,8 @@ public partial class BoundMailMail {
 
 public partial class BoundMessageConfirmationRequest {
 
-    public override string? IconValue => IsRead ? "confirm_read" : "confirm_unread";
+    public override IFieldIcon Type  => FieldIcons.ConfirmationRequest(IsRead);
+
 
     public override Message Convert() {
         var result = new Message();
@@ -125,9 +130,7 @@ public partial class BoundMessageConfirmationRequest {
 
 public partial class BoundMessageConfirmationResponse {
 
-    public override string? IconValue => 
-        IsRead ? (Accepted ? "confirm_accept_read" : "confirm_reject_read") :
-                (Accepted ? "confirm_accept_unread" : "confirm_reject_unread");
+    public override IFieldIcon Type => FieldIcons.ConfirmationResponse(IsRead, Accepted);
 
     public bool Accepted => false;
 
@@ -149,7 +152,8 @@ public partial class BoundMessageContactRequest {
 
     public override GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundMessageContactRequest;
 
-    public override string? IconValue => IsRead ? "contact_read" : "contact_unread";
+    public override IFieldIcon Type => FieldIcons.ContactRequest(IsRead);
+
     public override Message Convert() {
         var result = new Message();
         return result;
@@ -167,12 +171,10 @@ public partial class BoundMessageContactRequest {
     }
 
 
-
-
-
 public partial class BoundMessageGroupInvitation {
 
-    public override string? IconValue => IsRead ? "group_read" : "group_unread";
+    public override IFieldIcon Type  => FieldIcons.GroupInvitation(IsRead);
+
     public override Message Convert() {
         var result = new Message();
         return result;
@@ -188,9 +190,8 @@ public partial class BoundMessageGroupInvitation {
 
 public partial class BoundMessageTaskRequest {
 
-    public override string? IconValue =>
-    IsRead ? (Accepted ? "appointment_read" : "appointment_unread") :
-            (Accepted ? "task_read" : "task_unread");
+    public override IFieldIcon Type => FieldIcons.TaskRequest(IsRead, Accepted);
+
 
     public bool Accepted => false;
 

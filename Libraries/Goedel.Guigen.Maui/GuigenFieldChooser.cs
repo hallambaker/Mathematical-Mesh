@@ -166,6 +166,13 @@ public class GuigenFieldChooser : GuigenField {
                     break;
                     }
                 case GuiBoundPropertyIcon icon : {
+                    var width = MainWindow.Binding.IconWidth;
+                    var image = new Image() {
+                        Source = "messages",
+                        WidthRequest = width
+                        };
+                    GridHeadings.AddColumnDefinition(new ColumnDefinition(width));
+                    GridHeadings.Add(image, col++);
                     break;
                     }
                 }
@@ -209,7 +216,7 @@ public class GuigenFieldChooser : GuigenField {
         var gui = MainWindow.Binding.Gui;
         var entries = dialog.Dialog(gui).Entries;
 
-        var fieldSet = new GuigenFieldSet(MainWindow, entries, EntryForm);
+        var fieldSet = new GuigenFieldSet(MainWindow, entries, EntryForm, false);
         fieldSet.SetFields(bindable);
         ButtonBar.Clear();
         fieldSet.AddButtons(ButtonBar);

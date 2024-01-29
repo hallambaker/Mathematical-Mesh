@@ -1,6 +1,8 @@
 ﻿using Goedel.Cryptography.Dare;
 using Microsoft.Maui.Storage;
 
+using System.Threading;
+
 namespace Goedel.Everything;
 
 #region // Bindings to classes specified through the Guigen schema.
@@ -56,9 +58,8 @@ public partial class BoundDocument : IBoundPresentation, IDialog {
             };
 
 
-    public string? LabelValue => Filename;
-    public string? SecondaryValue => "TBS";
-    public string? IconValue => GetIcon();
+    public override IFieldIcon Type  => FieldIcons.Document(Filename, ContentType);
+
     public string ContentType {get; set;}
 
     public CatalogedDocument Convert() {

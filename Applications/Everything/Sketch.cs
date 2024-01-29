@@ -534,7 +534,7 @@ public partial class _BoundMessage : IParameter {
 
 
     ///<summary></summary> 
-    public virtual IFieldIcon Type { get; set;} 
+    public virtual IFieldIcon Type { get;} 
 
     ///<summary></summary> 
     public virtual string Subject { get; set;} 
@@ -553,7 +553,7 @@ public partial class _BoundMessage : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundMessage,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ((object data) => (data as _BoundMessage).Type, (object data,IFieldIcon value) => (data as _BoundMessage).Type = value, "Type"), 
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundMessage).Type, null, "Type"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessage).Subject, (object data,string value) => (data as _BoundMessage).Subject = value, "Subject"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessage).TimeSent, (object data,string value) => (data as _BoundMessage).TimeSent = value, "TimeSent"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessage).Sender, (object data,string value) => (data as _BoundMessage).Sender = value, "Sender")
@@ -601,7 +601,7 @@ public partial class _BoundMailMail : BoundMessage {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundMailMail,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ((object data) => (data as _BoundMailMail).Type, (object data,IFieldIcon value) => (data as _BoundMailMail).Type = value, "Type"), 
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundMailMail).Type, null, "Type"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMailMail).Subject, (object data,string value) => (data as _BoundMailMail).Subject = value, "Subject"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMailMail).TimeSent, (object data,string value) => (data as _BoundMailMail).TimeSent = value, "TimeSent"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMailMail).Sender, (object data,string value) => (data as _BoundMailMail).Sender = value, "Sender"), 
@@ -650,7 +650,7 @@ public partial class _BoundMessageConfirmationRequest : BoundMessage {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundMessageConfirmationRequest,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ((object data) => (data as _BoundMessageConfirmationRequest).Type, (object data,IFieldIcon value) => (data as _BoundMessageConfirmationRequest).Type = value, "Type"), 
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundMessageConfirmationRequest).Type, null, "Type"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessageConfirmationRequest).Subject, (object data,string value) => (data as _BoundMessageConfirmationRequest).Subject = value, "Subject"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessageConfirmationRequest).TimeSent, (object data,string value) => (data as _BoundMessageConfirmationRequest).TimeSent = value, "TimeSent"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessageConfirmationRequest).Sender, (object data,string value) => (data as _BoundMessageConfirmationRequest).Sender = value, "Sender"), 
@@ -696,7 +696,7 @@ public partial class _BoundMessageConfirmationResponse : BoundMessage {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundMessageConfirmationResponse,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ((object data) => (data as _BoundMessageConfirmationResponse).Type, (object data,IFieldIcon value) => (data as _BoundMessageConfirmationResponse).Type = value, "Type"), 
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundMessageConfirmationResponse).Type, null, "Type"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessageConfirmationResponse).Subject, (object data,string value) => (data as _BoundMessageConfirmationResponse).Subject = value, "Subject"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessageConfirmationResponse).TimeSent, (object data,string value) => (data as _BoundMessageConfirmationResponse).TimeSent = value, "TimeSent"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessageConfirmationResponse).Sender, (object data,string value) => (data as _BoundMessageConfirmationResponse).Sender = value, "Sender")
@@ -741,7 +741,7 @@ public partial class _BoundMessageContactRequest : BoundMessage {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundMessageContactRequest,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ((object data) => (data as _BoundMessageContactRequest).Type, (object data,IFieldIcon value) => (data as _BoundMessageContactRequest).Type = value, "Type"), 
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundMessageContactRequest).Type, null, "Type"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessageContactRequest).Subject, (object data,string value) => (data as _BoundMessageContactRequest).Subject = value, "Subject"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessageContactRequest).TimeSent, (object data,string value) => (data as _BoundMessageContactRequest).TimeSent = value, "TimeSent"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessageContactRequest).Sender, (object data,string value) => (data as _BoundMessageContactRequest).Sender = value, "Sender")
@@ -789,7 +789,7 @@ public partial class _BoundMessageConnectionRequest : BoundMessage {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundMessageConnectionRequest,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ((object data) => (data as _BoundMessageConnectionRequest).Type, (object data,IFieldIcon value) => (data as _BoundMessageConnectionRequest).Type = value, "Type"), 
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundMessageConnectionRequest).Type, null, "Type"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessageConnectionRequest).Subject, (object data,string value) => (data as _BoundMessageConnectionRequest).Subject = value, "Subject"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessageConnectionRequest).TimeSent, (object data,string value) => (data as _BoundMessageConnectionRequest).TimeSent = value, "TimeSent"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessageConnectionRequest).Sender, (object data,string value) => (data as _BoundMessageConnectionRequest).Sender = value, "Sender"), 
@@ -835,7 +835,7 @@ public partial class _BoundMessageGroupInvitation : BoundMessage {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundMessageGroupInvitation,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ((object data) => (data as _BoundMessageGroupInvitation).Type, (object data,IFieldIcon value) => (data as _BoundMessageGroupInvitation).Type = value, "Type"), 
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundMessageGroupInvitation).Type, null, "Type"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessageGroupInvitation).Subject, (object data,string value) => (data as _BoundMessageGroupInvitation).Subject = value, "Subject"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessageGroupInvitation).TimeSent, (object data,string value) => (data as _BoundMessageGroupInvitation).TimeSent = value, "TimeSent"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessageGroupInvitation).Sender, (object data,string value) => (data as _BoundMessageGroupInvitation).Sender = value, "Sender")
@@ -880,7 +880,7 @@ public partial class _BoundMessageTaskRequest : BoundMessage {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundMessageTaskRequest,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ((object data) => (data as _BoundMessageTaskRequest).Type, (object data,IFieldIcon value) => (data as _BoundMessageTaskRequest).Type = value, "Type"), 
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundMessageTaskRequest).Type, null, "Type"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessageTaskRequest).Subject, (object data,string value) => (data as _BoundMessageTaskRequest).Subject = value, "Subject"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessageTaskRequest).TimeSent, (object data,string value) => (data as _BoundMessageTaskRequest).TimeSent = value, "TimeSent"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundMessageTaskRequest).Sender, (object data,string value) => (data as _BoundMessageTaskRequest).Sender = value, "Sender")
@@ -920,6 +920,12 @@ public partial class _BoundDocument : IParameter {
 
 
     ///<summary></summary> 
+    public virtual IFieldIcon Type { get;} 
+
+    ///<summary></summary> 
+    public virtual string FileType { get;} 
+
+    ///<summary></summary> 
     public virtual string Filename { get; set;} 
 
 
@@ -930,6 +936,8 @@ public partial class _BoundDocument : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundDocument,
         new GuiBoundProperty[] { 
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundDocument).Type, null, "Type"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundDocument).FileType, null, "FileType"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundDocument).Filename, (object data,string value) => (data as _BoundDocument).Filename = value, "Filename")
 
             });
@@ -1014,7 +1022,7 @@ public partial class _BoundCredential : IParameter {
 
 
     ///<summary></summary> 
-    public virtual IFieldIcon Type { get; set;} 
+    public virtual IFieldIcon Type { get;} 
 
     ///<summary></summary> 
     public virtual string Protocol { get; set;} 
@@ -1033,7 +1041,7 @@ public partial class _BoundCredential : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundCredential,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ((object data) => (data as _BoundCredential).Type, (object data,IFieldIcon value) => (data as _BoundCredential).Type = value, "Type"), 
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundCredential).Type, null, "Type"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundCredential).Protocol, (object data,string value) => (data as _BoundCredential).Protocol = value, "Protocol"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundCredential).Service, (object data,string value) => (data as _BoundCredential).Service = value, "Service"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundCredential).Username, (object data,string value) => (data as _BoundCredential).Username = value, "Username")
@@ -1081,7 +1089,7 @@ public partial class _BoundPassword : BoundCredential {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundPassword,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ((object data) => (data as _BoundPassword).Type, (object data,IFieldIcon value) => (data as _BoundPassword).Type = value, "Type"), 
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundPassword).Type, null, "Type"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundPassword).Protocol, (object data,string value) => (data as _BoundPassword).Protocol = value, "Protocol"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundPassword).Service, (object data,string value) => (data as _BoundPassword).Service = value, "Service"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundPassword).Username, (object data,string value) => (data as _BoundPassword).Username = value, "Username"), 
@@ -1127,7 +1135,7 @@ public partial class _BoundPasskey : BoundCredential {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundPasskey,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ((object data) => (data as _BoundPasskey).Type, (object data,IFieldIcon value) => (data as _BoundPasskey).Type = value, "Type"), 
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundPasskey).Type, null, "Type"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundPasskey).Protocol, (object data,string value) => (data as _BoundPasskey).Protocol = value, "Protocol"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundPasskey).Service, (object data,string value) => (data as _BoundPasskey).Service = value, "Service"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundPasskey).Username, (object data,string value) => (data as _BoundPasskey).Username = value, "Username")
@@ -1261,7 +1269,7 @@ public partial class _BoundBookmark : IParameter {
 
 
     ///<summary></summary> 
-    public virtual IFieldIcon Type { get; set;} 
+    public virtual IFieldIcon Type { get;} 
 
     ///<summary></summary> 
     public virtual string Title { get; set;} 
@@ -1280,7 +1288,7 @@ public partial class _BoundBookmark : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundBookmark,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ((object data) => (data as _BoundBookmark).Type, (object data,IFieldIcon value) => (data as _BoundBookmark).Type = value, "Type"), 
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundBookmark).Type, null, "Type"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundBookmark).Title, (object data,string value) => (data as _BoundBookmark).Title = value, "Title"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundBookmark).Uri, (object data,string value) => (data as _BoundBookmark).Uri = value, "Uri"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundBookmark).Comments, (object data,string value) => (data as _BoundBookmark).Comments = value, "Comments")
@@ -1335,7 +1343,7 @@ public partial class _BoundFeed : BoundBookmark {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundFeed,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ((object data) => (data as _BoundFeed).Type, (object data,IFieldIcon value) => (data as _BoundFeed).Type = value, "Type"), 
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundFeed).Type, null, "Type"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundFeed).Title, (object data,string value) => (data as _BoundFeed).Title = value, "Title"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundFeed).Uri, (object data,string value) => (data as _BoundFeed).Uri = value, "Uri"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundFeed).Comments, (object data,string value) => (data as _BoundFeed).Comments = value, "Comments"), 
@@ -1717,7 +1725,7 @@ public partial class _BoundDevice : IParameter {
 
 
     ///<summary></summary> 
-    public virtual IFieldIcon Type { get; set;} 
+    public virtual IFieldIcon Type { get;} 
 
     ///<summary></summary> 
     public virtual string DeviceType { get; set;} 
@@ -1739,7 +1747,7 @@ public partial class _BoundDevice : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundDevice,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ((object data) => (data as _BoundDevice).Type, (object data,IFieldIcon value) => (data as _BoundDevice).Type = value, "Type"), 
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundDevice).Type, null, "Type"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundDevice).DeviceType, (object data,string value) => (data as _BoundDevice).DeviceType = value, "DeviceType"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundDevice).Rights, (object data,string value) => (data as _BoundDevice).Rights = value, "Rights"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundDevice).LocalName, (object data,string value) => (data as _BoundDevice).LocalName = value, "LocalName"), 
@@ -1843,7 +1851,7 @@ public partial class _BoundContact : IParameter {
 
 
     ///<summary></summary> 
-    public virtual IFieldIcon Type { get; set;} 
+    public virtual IFieldIcon Type { get;} 
 
     ///<summary></summary> 
     public virtual string Display { get;} 
@@ -1856,7 +1864,7 @@ public partial class _BoundContact : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundContact,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ((object data) => (data as _BoundContact).Type, (object data,IFieldIcon value) => (data as _BoundContact).Type = value, "Type"), 
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundContact).Type, null, "Type"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundContact).Display, null, "Display")
 
             });
@@ -1920,7 +1928,7 @@ public partial class _BoundContactPerson : BoundContact {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundContactPerson,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ((object data) => (data as _BoundContactPerson).Type, (object data,IFieldIcon value) => (data as _BoundContactPerson).Type = value, "Type"), 
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundContactPerson).Type, null, "Type"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundContactPerson).Display, null, "Display"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundContactPerson).Local, (object data,string value) => (data as _BoundContactPerson).Local = value, "Local"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundContactPerson).First, (object data,string value) => (data as _BoundContactPerson).First = value, "First"), 
@@ -1970,7 +1978,7 @@ public partial class _BoundContactBusiness : BoundContact {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundContactBusiness,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ((object data) => (data as _BoundContactBusiness).Type, (object data,IFieldIcon value) => (data as _BoundContactBusiness).Type = value, "Type"), 
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundContactBusiness).Type, null, "Type"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundContactBusiness).Display, null, "Display")
 
             });
@@ -2013,7 +2021,7 @@ public partial class _BoundContactPlace : BoundContact {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundContactPlace,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ((object data) => (data as _BoundContactPlace).Type, (object data,IFieldIcon value) => (data as _BoundContactPlace).Type = value, "Type"), 
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundContactPlace).Type, null, "Type"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundContactPlace).Display, null, "Display")
 
             });
@@ -5090,12 +5098,12 @@ public class _EverythingMaui : Gui {
                 };
 
     ///<summary>Dialog DialogBoundDocument.</summary> 
-	public GuiDialog DialogBoundDocument { get; } = new ("BoundDocument", "Document", "contacts", () => new BoundDocument()) {
+	public GuiDialog DialogBoundDocument { get; } = new ("BoundDocument", "Document", "documents", () => new BoundDocument()) {
                 IsBoundType = (object data) => data is BoundDocument
                 };
 
     ///<summary>Dialog DialogBoundGroup.</summary> 
-	public GuiDialog DialogBoundGroup { get; } = new ("BoundGroup", "Group", "contacts", () => new BoundGroup()) {
+	public GuiDialog DialogBoundGroup { get; } = new ("BoundGroup", "Group", "application_group", () => new BoundGroup()) {
                 IsBoundType = (object data) => data is BoundGroup
                 };
 
@@ -5692,7 +5700,9 @@ public class _EverythingMaui : Gui {
 
         BoundMessageTaskRequest.IsBacker = (object data) => DialogBoundMessageTaskRequest.IsBacker(data);
 	    DialogBoundDocument.Entries = new () { 
-			new GuiText ("Filename", "File name", 0)			
+			new GuiIcon ("Type", "Type"), 
+			new GuiText ("FileType", "Type", 1), 
+			new GuiText ("Filename", "File name", 2)			
 		    };
 
         BoundDocument.IsBacker = (object data) => DialogBoundDocument.IsBacker(data);

@@ -425,6 +425,8 @@ Dialog BoundMessageTaskRequest "Mail" "task"
 // Messages have different classes because they have different response options
 Dialog BoundDocument "Document" "documents"
 	Icon Type "Type" "documents"
+	Text FileType "Type"
+		Readonly
 	Text Filename "File name"
 
 Dialog BoundGroup "Group" "application_group"

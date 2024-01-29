@@ -8,11 +8,14 @@ public class MyViewCell : ViewCell {
 
     public bool Visible { get; set; }
     public GuigenFieldChooser Chooser { get; }
+    public IMainWindow MainWindow => Chooser.MainWindow;
+    GuigenBinding Binding => MainWindow.Binding;
+
     ISelectCollection SelectCollection => Chooser.SelectCollection;
 
     public IBindable Data => BindingContext as IBindable;
 
-    FieldBinding FieldBinding { get; set; }
+    //FieldBinding FieldBinding { get; set; }
 
     SummaryView? SummaryView;
 
@@ -80,7 +83,16 @@ public class MyViewCell : ViewCell {
 
                     break;
                     }
-
+                case GuiBoundPropertyIcon icon: {
+                    var value = icon.Get(BindingContext) as FieldIcon;
+                    var image = new Image() {
+                        Source = value.Source ,
+                        WidthRequest = Binding.IconWidth,
+                        HeightRequest = Binding.IconHeight
+                        };
+                    GridCell.Add(image, col++);
+                    break;
+                    }
                 }
 
             }
