@@ -1175,6 +1175,9 @@ public partial class _BoundTask : IParameter {
 
 
     ///<summary></summary> 
+    public virtual IFieldIcon Type { get;} 
+
+    ///<summary></summary> 
     public virtual string Title { get; set;} 
 
 
@@ -1185,6 +1188,7 @@ public partial class _BoundTask : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundTask,
         new GuiBoundProperty[] { 
+            new GuiBoundPropertyIcon ((object data) => (data as _BoundTask).Type, null, "Type"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundTask).Title, (object data,string value) => (data as _BoundTask).Title = value, "Title")
 
             });
@@ -5737,7 +5741,8 @@ public class _EverythingMaui : Gui {
 
         BoundPasskey.IsBacker = (object data) => DialogBoundPasskey.IsBacker(data);
 	    DialogBoundTask.Entries = new () { 
-			new GuiText ("Title", "Title", 0)			
+			new GuiIcon ("Type", "Type"), 
+			new GuiText ("Title", "Title", 1)			
 		    };
 
         BoundTask.IsBacker = (object data) => DialogBoundTask.IsBacker(data);

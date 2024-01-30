@@ -1,5 +1,7 @@
 ﻿using Goedel.Cryptography.Dare;
 
+using System.Threading;
+
 namespace Goedel.Everything;
 #region // Bindings to classes specified through the Guigen schema.
 
@@ -25,9 +27,28 @@ public partial class ContactSection : IHeadedSelection {
 #endregion
 #region // Bindings to classes specified through the Guigen schema.
 
+
+public partial class BoundContact : IBoundPresentation, IDialog {
+    public GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundContact;
+    }
+
+public partial class BoundContactBusiness : IBoundPresentation, IDialog {
+    public override IFieldIcon Type => FieldIcons.ContactBusiness;
+
+    }
+
+public partial class BoundContactPlace : IBoundPresentation, IDialog {
+    public override IFieldIcon Type => FieldIcons.ContactPlace;
+
+    }
+
+
 public partial class BoundContactPerson : IBoundPresentation, IDialog {
 
-    public GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundContact;
+
+
+
+    public override IFieldIcon Type => FieldIcons.ContactPerson;
 
     static BoundContactPerson() {
         IsBacker = isBacker;
@@ -40,7 +61,6 @@ public partial class BoundContactPerson : IBoundPresentation, IDialog {
 
     public override string Display => (First ?? "") + " " + (Last ?? "");
 
-    public string? IconValue => "account.png";
 
     static PersonName Default = new PersonName() {
         First = "Unspecified",

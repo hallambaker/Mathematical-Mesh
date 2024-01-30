@@ -1,4 +1,6 @@
 ﻿using Goedel.Cryptography.Dare;
+
+using System.Threading;
 using System.Xml.Linq;
 
 namespace Goedel.Everything;
@@ -31,10 +33,7 @@ public partial class BoundTask : IBoundPresentation, IDialog {
 
     public virtual GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundTask;
 
-    public string? LabelValue => Title;
-
-    public string? IconValue => "task.png";
-    public string? SecondaryValue => "TBS";
+    public override IFieldIcon Type => FieldIcons.TaskComplete;
     public virtual CatalogedTask Convert() {
         var result = new CatalogedTask() {
             Title = Title,

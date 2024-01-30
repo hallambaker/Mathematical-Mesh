@@ -30,11 +30,8 @@ public partial class BoundBookmark : IBoundPresentation, IDialog {
 
     public virtual GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundBookmark;
 
-    public string? LabelValue => Title.NullifyIfEmpty() ??
-            Uri.NullifyIfEmpty();
+    public override IFieldIcon Type => FieldIcons.Bookmark(Uri);
 
-    public virtual string? IconValue => "bookmark.png";
-    public string? SecondaryValue => "TBS";
     public virtual CatalogedBookmark Convert() {
         var result = new CatalogedBookmark() {
             Uid = Udf.Nonce()
@@ -70,7 +67,6 @@ public partial class BoundBookmark : IBoundPresentation, IDialog {
 
 public partial class BoundFeed {
 
-    public override string? IconValue => "feeds.png";
 
     public override CatalogedFeed Convert() {
         var result = new CatalogedFeed() {

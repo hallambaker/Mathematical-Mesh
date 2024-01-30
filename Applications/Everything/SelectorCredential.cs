@@ -25,12 +25,16 @@ public partial class CredentialSection : IHeadedSelection {
 
     }
 
+
+public partial class BoundCredential : IBoundPresentation, IDialog {
+    public GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundCredential;
+    }
+
 // Documented in Guigen output
 public partial class BoundPassword : IBoundPresentation, IDialog {
 
-    public GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundPassword;
-    public string? LabelValue => Service.NullifyIfEmpty() ?? "Unknown";
 
+    public override IFieldIcon Type => FieldIcons.CredentialPassword;
 
     public CatalogedCredential Convert() {
         var result = new CatalogedCredential() {
@@ -63,10 +67,8 @@ public partial class BoundPassword : IBoundPresentation, IDialog {
 
 public partial class BoundPasskey: IBoundPresentation, IDialog {
 
-    public GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundCredential;
 
-    public string? IconValue => "credentials.png";
-
+    public override IFieldIcon Type => FieldIcons.CredentialPasskey;
     public CatalogedCredential Convert() {
         var result = new CatalogedCredential() {
             Protocol = Protocol,

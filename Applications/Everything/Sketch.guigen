@@ -447,6 +447,7 @@ Dialog BoundPasskey "Passkey" "passkey"
 
 
 Dialog BoundTask "Task" "task"
+	Icon Type "Type" "password"
 	Text Title "Title"
 
 Dialog BoundAppointment "Appointment" "task"

@@ -189,6 +189,21 @@ public static partial class FieldIcons  {
 
     #endregion
 
+    #region // Task 
+
+    ///<summary>Icon for credential password</summary> 
+    public static FieldIcon TaskComplete { get; } = new("password");
+
+    ///<summary>Icon for credential password</summary> 
+    public static FieldIcon TaskPriorityHigh { get; } = new("passkey");
+
+    public static FieldIcon TaskPriorityLow { get; } = new("passkey");
+
+    public static FieldIcon TaskPriorityNormal { get; } = new("passkey");
+
+    #endregion
+
+
     #region // Bookmark 
 
     ///<summary>Icon for credential password</summary> 

@@ -4,10 +4,13 @@ namespace Goedel.Everything;
 #region // Bindings to classes specified through the Guigen schema.
 
 // Documented in Guigen output
-public partial class CalendarSection {
+public partial class CalendarSection : IHeadedSelection {
 
     AccountSection Account { get; }
     ContextUser ContextUser => Account.ContextUser;
+
+    ///<inheritdoc/>
+    public GuiBinding SelectionBinding => _BoundAppointment.BaseBinding;
 
     /// <summary>
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
@@ -21,10 +24,7 @@ public partial class CalendarSection {
 
     }
 
-
-
 #endregion
-
 #region // Selection Catalog backing type.
 
 public partial class CalendarSelection : TaskSelection  {
@@ -37,10 +37,6 @@ public partial class CalendarSelection : TaskSelection  {
     public CalendarSelection(GuigenCatalogTasks catalog) : base(catalog) {
         }
 
-
-
-
     }
-
 
 #endregion

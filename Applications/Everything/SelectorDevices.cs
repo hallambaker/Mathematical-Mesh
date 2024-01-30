@@ -30,11 +30,10 @@ public partial class DeviceSection : IHeadedSelection {
 // Documented in Guigen output
 public partial class BoundDevice : IBoundPresentation, IDialog {
     public virtual GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundDevice;
-    public string? LabelValue => LocalName;
 
-    public string? IconValue => "device_plug.png";
 
-    public string? SecondaryValue => DeviceType;
+    public override IFieldIcon Type => FieldIcons.Device(DeviceType);
+
 
     public CatalogedDevice Convert() {
         var result = new CatalogedDevice() {
