@@ -72,60 +72,61 @@ public class GuigenFieldSet : IWidget {
 
 
         FieldMap = new int[fields.Count];
-        int i = 0;
+        int index = 0;
        foreach (var entry in fields) {
             switch (entry) {
                 case GuiText text: {
                     var field = new GuigenFieldString(MainWindow, text, this);
                     MauiFields.Add(field);
-                    FieldMap[i++] = field.Index;
+                    FieldMap[index++] = field.Index;
+                    break;
+                    }
+                case GuiTextArea text: {
+                    var field = new GuigenFieldTextArea(MainWindow, text, this);
+                    MauiFields.Add(field);
+                    FieldMap[index++] = field.Index;
                     break;
                     }
                 case GuiInteger integer: {
                     var field = new GuigenFieldInteger(MainWindow, integer, this);
                     MauiFields.Add(field);
-                    FieldMap[i++] = field.Index;
+                    FieldMap[index++] = field.Index;
                     break;
                     }
                 case GuiChooser chooser: {
                     var field = new GuigenFieldChooser(MainWindow, chooser, this);
                     MauiFields.Add(field);
                     //stack.Add(field.ListView);
-                    FieldMap[i++] = field.Index;
+                    FieldMap[index++] = field.Index;
                     break;
                     }
                 case GuiQRScan qrscan: {
-                    //var label = new Label() {
-                    //    Text = "Flopple"};
-                    //Fields.Add(label);
-
                     var field = new GuigenFieldQr(MainWindow, qrscan, this);
                     MauiFields.Add(field);
                     //stack.Add(field.ListView);
-                    FieldMap[i++] = field.Index;
+                    FieldMap[index++] = field.Index;
                     break;
                     }
                 case GuiList list: {
                     var field = new GuigenFieldList(MainWindow, list, this);
                     MauiFields.Add(field);
-                    FieldMap[i++] = field.Index;
-                    break;
+                    FieldMap[index++] = field.Index;
                     break;
                     }
                 case GuiIcon icon: {
                     if (isEntry) {
-                        FieldMap[i++] = -1;
+                        FieldMap[index++] = -1;
                         }
                     else {
                         var field = new GuigenFieldIcon(MainWindow, icon, this);
                         MauiFields.Add(field);
-                        FieldMap[i++] = field.Index;
+                        FieldMap[index++] = field.Index;
                         break;
                         }
                     break;
                     }
                 default : {
-                    FieldMap[i++] = -1;
+                    FieldMap[index++] = -1;
                     break;
                     }
                 }

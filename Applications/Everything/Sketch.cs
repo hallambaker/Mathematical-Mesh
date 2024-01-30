@@ -2812,6 +2812,15 @@ public partial class CreateMail : _CreateMail {
 /// </summary>
 public partial class _CreateMail : IParameter {
 
+    ///<summary></summary> 
+    public virtual string Recipient { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string Subject { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string Message { get; set;} 
+
 
     ///<inheritdoc/>
     public virtual GuiBinding Binding => BaseBinding;
@@ -2819,7 +2828,12 @@ public partial class _CreateMail : IParameter {
     ///<summary>The binding for the data type.</summary> 
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _CreateMail,
-        Array.Empty<GuiBoundProperty>());
+        new GuiBoundProperty[] { 
+            new GuiBoundPropertyString ((object data) => (data as _CreateMail).Recipient, (object data,string value) => (data as _CreateMail).Recipient = value, "Recipient"), 
+            new GuiBoundPropertyString ((object data) => (data as _CreateMail).Subject, (object data,string value) => (data as _CreateMail).Subject = value, "Subject"), 
+            new GuiBoundTextArea ((object data) => (data as _CreateMail).Message, (object data,string value) => (data as _CreateMail).Message = value, "Message")
+
+            });
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
@@ -5496,7 +5510,10 @@ public class _EverythingMaui : Gui {
 		    };
 
         ActionCreateMail.Callback = (x) => CreateMail (x as CreateMail) ;
-	    ActionCreateMail.Entries = new () {
+	    ActionCreateMail.Entries = new () { 
+			new GuiText ("Recipient", "Address", 0), 
+			new GuiText ("Subject", "Subject", 1), 
+			new GuiTextArea ("Message", "Message", 2)
 		    };
 
         ActionCreateChat.Callback = (x) => CreateChat (x as CreateChat) ;

@@ -324,6 +324,11 @@ Action RequestConfirmation "Confirmation Request" "confirm"
 Action CreateMail "New Mail" "mail"
 	Description
 		|
+	Text Recipient "Address"
+	Text Subject "Subject"
+	TextArea Message "Message"
+
+
 Action CreateChat "New Chat" "chat"
 	Description
 		|
