@@ -1,5 +1,6 @@
 ﻿using Goedel.Cryptography.Dare;
 
+using System.Collections;
 using System.Threading;
 
 namespace Goedel.Everything;
@@ -28,6 +29,19 @@ public partial class ContactSection : IHeadedSelection {
 #region // Bindings to classes specified through the Guigen schema.
 
 
+public partial class ContactNetworkAddress : IBoundPresentation {
+
+    public ContactNetworkAddress () { }
+    public ContactNetworkAddress(NetworkAddress address) {
+        Bound = address;
+        Protocol = "TBS";
+        Address = address.Address;
+        Fingerprint = null;
+        }
+
+    }
+
+
 public partial class BoundContact : IBoundPresentation, IDialog {
     public GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundContact;
     }
@@ -45,7 +59,7 @@ public partial class BoundContactPlace : IBoundPresentation, IDialog {
 
 public partial class BoundContactPerson : IBoundPresentation, IDialog {
 
-
+    public GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundContactPerson;
 
 
     public override IFieldIcon Type => FieldIcons.ContactPerson;
@@ -83,12 +97,31 @@ public partial class BoundContactPerson : IBoundPresentation, IDialog {
             First = name.First,
             Last = name.Last,
             Prefix = name.Prefix,
-            Suffix = name.Suffix
+            Suffix = name.Suffix,
+            NetworkAddresses = Bind(contact.NetworkAddresses)
             };
 
         return result;
 
         }
+
+    public static ISelectCollection Bind(IEnumerable<NetworkAddress> input) {
+        var result = new SelectList();
+
+        foreach (var inputItem in input) {
+            var entry = new ContactNetworkAddress(inputItem) ;
+            result.Add(entry);
+
+
+            }
+
+
+        return result;
+
+
+
+        }
+
 
     public virtual void Fill() {
         var bound = Bound as CatalogedContact;

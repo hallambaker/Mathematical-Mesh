@@ -489,6 +489,12 @@ public partial class _BoundAccount : IParameter {
     ///<summary></summary> 
     public virtual string Display { get; set;} 
 
+    ///<summary></summary> 
+    public virtual string Service { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string UDF { get; set;} 
+
 
     ///<inheritdoc/>
     public virtual GuiBinding Binding => BaseBinding;
@@ -497,7 +503,9 @@ public partial class _BoundAccount : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundAccount,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as _BoundAccount).Display, (object data,string value) => (data as _BoundAccount).Display = value, "Display")
+            new GuiBoundPropertyString ((object data) => (data as _BoundAccount).Display, (object data,string value) => (data as _BoundAccount).Display = value, "Display"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundAccount).Service, (object data,string value) => (data as _BoundAccount).Service = value, "Service"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundAccount).UDF, (object data,string value) => (data as _BoundAccount).UDF = value, "UDF")
 
             });
     ///<summary>Validation</summary> 
@@ -2063,6 +2071,9 @@ public partial class _ContactNetworkAddress : IParameter {
 
 
     ///<summary></summary> 
+    public virtual IFieldIcon Type { get;} 
+
+    ///<summary></summary> 
     public virtual string Protocol { get; set;} 
 
     ///<summary></summary> 
@@ -2079,6 +2090,7 @@ public partial class _ContactNetworkAddress : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _ContactNetworkAddress,
         new GuiBoundProperty[] { 
+            new GuiBoundPropertyIcon ((object data) => (data as _ContactNetworkAddress).Type, null, "Type"), 
             new GuiBoundPropertyString ((object data) => (data as _ContactNetworkAddress).Protocol, (object data,string value) => (data as _ContactNetworkAddress).Protocol = value, "Protocol"), 
             new GuiBoundPropertyString ((object data) => (data as _ContactNetworkAddress).Address, (object data,string value) => (data as _ContactNetworkAddress).Address = value, "Address"), 
             new GuiBoundPropertyString ((object data) => (data as _ContactNetworkAddress).Fingerprint, (object data,string value) => (data as _ContactNetworkAddress).Fingerprint = value, "Fingerprint")
@@ -5639,7 +5651,9 @@ public class _EverythingMaui : Gui {
 
 #region // Initialize Dialogs
 	    DialogBoundAccount.Entries = new () { 
-			new GuiText ("Display", "Display name", 0)			
+			new GuiText ("Display", "Display name", 0), 
+			new GuiText ("Service", "Service", 1), 
+			new GuiText ("UDF", "Fingerprint", 2)			
 		    };
 
         BoundAccount.IsBacker = (object data) => DialogBoundAccount.IsBacker(data);
@@ -5858,9 +5872,9 @@ public class _EverythingMaui : Gui {
 			new GuiText ("Last", "Last name", 4), 
 			new GuiText ("Prefix", "Prefix", 5), 
 			new GuiText ("Suffix", "Suffix", 6), 
-			new GuiList ("NetworkAddresses", "Network Addresses", "network", 7, new () {
+			new GuiList ("NetworkAddresses", "Network Addresses", "network", DialogContactNetworkAddress, 7, new () {
 				}) , 
-			new GuiList ("PhysicalAddresses", "Locations", "location", 8, new () {
+			new GuiList ("PhysicalAddresses", "Locations", "location", DialogContactPhysicalAddress, 8, new () {
 				}) 			
 		    };
 
@@ -5878,9 +5892,10 @@ public class _EverythingMaui : Gui {
 
         BoundContactPlace.IsBacker = (object data) => DialogBoundContactPlace.IsBacker(data);
 	    DialogContactNetworkAddress.Entries = new () { 
-			new GuiText ("Protocol", "Protocol", 0), 
-			new GuiText ("Address", "Address", 1), 
-			new GuiText ("Fingerprint", "Fingerprint", 2)			
+			new GuiIcon ("Type", "Type"), 
+			new GuiText ("Protocol", "Protocol", 1), 
+			new GuiText ("Address", "Address", 2), 
+			new GuiText ("Fingerprint", "Fingerprint", 3)			
 		    };
 
         ContactNetworkAddress.IsBacker = (object data) => DialogContactNetworkAddress.IsBacker(data);

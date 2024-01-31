@@ -171,7 +171,7 @@ public class GuigenFieldSet : IWidget {
         }
 
 
-    public void AddField(IView label, IView child, IView feedback) {
+    public void AddField(IView label, IView child, IView? feedback=null) {
 
         //var stack = new HorizontalStackLayout();
         //stack.Add(label);
@@ -181,7 +181,9 @@ public class GuigenFieldSet : IWidget {
 
         View.Add(label, 0, GridRow);
         View.Add(child, 1, GridRow++);
-        View.Add(feedback, 2, GridRow++);
+        if (feedback != null) {
+            View.Add(feedback, 2, GridRow++);
+            }
         }
 
     public void AddField(IView child) {

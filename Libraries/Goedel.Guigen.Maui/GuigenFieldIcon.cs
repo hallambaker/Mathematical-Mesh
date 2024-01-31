@@ -15,7 +15,7 @@ public class GuigenFieldIcon : GuigenField, IWidget {
     public GuigenFieldIcon(IMainWindow mainWindow, GuiIcon icon, GuigenFieldSet fieldsSet) : base(icon) {
         MainWindow = mainWindow;
 
-        var view = new HorizontalStackLayout();
+        //var view = new HorizontalStackLayout();
         //FieldLabel = new Label() {
         //    Text = text.Prompt
         //    };
@@ -39,12 +39,12 @@ public class GuigenFieldIcon : GuigenField, IWidget {
 
 
     public override void GetField(IBindable data) {
-        var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyList;
+        //var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyList;
         //ValueField.Text = binding.Get(data).ToString();
         }
 
     public override void SetField(IBindable data) {
-        var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyList;
+        //var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyList;
         //int? fieldValue = Int32.TryParse(ValueField.Text, out var result) ? result : null;
         //binding.Set(data, fieldValue);
         }

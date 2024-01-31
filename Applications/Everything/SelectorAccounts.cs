@@ -19,16 +19,27 @@ NB This will need very special treatment as it is not backed by a catalog in the
 #region // Bindings to classes specified through the Guigen schema.
 
 
-public partial class BoundAccount : ISelectSummary, IBoundPresentation {
+public partial class BoundAccount : IBoundPresentation, IDialog {
 
-
-    public CatalogedEntry CatalogedEntry {get; set; }
 
     public override string Display => "An Account";
-    public string? SecondaryValue => "TBS";
-    public string? LabelValue => Display;
 
-    public string? IconValue => "account.png";
+    public GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundAccount;
+
+
+    public static BoundAccount Convert(ContextUser input) {
+
+
+        var result = new BoundAccount() {
+            Service = input.ServiceDns,
+            Display = "TBS",
+            UDF = input.Profile.UdfString
+            };
+
+        return result;
+
+        }
+
 
 
     }
@@ -37,6 +48,7 @@ public partial class BoundAccount : ISelectSummary, IBoundPresentation {
 
 #region // Selection Catalog backing type.
 
+// ToDo: move this to store / enumerate the Context User entries...
 public partial class AccountSelection : SelectionCatalog<GuigenCatalogContact,
             CatalogedContact, BoundAccount> {
 

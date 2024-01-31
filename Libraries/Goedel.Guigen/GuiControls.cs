@@ -462,6 +462,7 @@ public record GuiList(
             string Id,
             string Prompt,
             string Icon,
+            GuiDialog dialog = null!,
             int Index = -1,
             List<IGuiEntry> Entries = null!
             ) : GuiField(Id, Prompt, Index) {

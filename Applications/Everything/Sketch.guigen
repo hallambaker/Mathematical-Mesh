@@ -359,8 +359,9 @@ Action AddCodeSigningKey "Add Code Signing Key" "signature"
 		|
 
 Dialog BoundAccount "Account" "contacts"
-	Text Display "Display name"
-
+	Text Display	"Display name"
+	Text Service	"Service"
+	Text UDF		"Fingerprint"
 
 Dialog BoundMessage "Message" "contacts"
 	Icon Type "Type" "message"
@@ -532,6 +533,7 @@ Dialog BoundContactPlace "Place" "contacts"
 
 
 Dialog ContactNetworkAddress "Network" "protocol_icon"
+	Icon Type "Type" "plug"
 	Text Protocol "Protocol"
 	Text Address "Address"
 	Text Fingerprint "Fingerprint"
