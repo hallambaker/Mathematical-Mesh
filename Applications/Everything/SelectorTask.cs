@@ -10,7 +10,7 @@ namespace Goedel.Everything;
 // Documented in Guigen output
 public partial class TaskSection : IHeadedSelection {
 
-    AccountSection Account { get; }
+    IAccountSelector Account { get; }
     ContextUser ContextUser => Account.ContextUser;
 
     ///<inheritdoc/>
@@ -20,7 +20,7 @@ public partial class TaskSection : IHeadedSelection {
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public TaskSection(AccountSection account) {
+    public TaskSection(IAccountSelector account) {
         Account = account;
         var catalog = ContextUser.GetStore(CatalogTask.Label, create: false) as GuigenCatalogTasks;
         ChooseTask = catalog is null ? null : new TaskSelection(catalog);

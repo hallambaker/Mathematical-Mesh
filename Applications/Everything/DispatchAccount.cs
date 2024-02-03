@@ -2,16 +2,7 @@
 
 namespace Goedel.Everything;
 
-public partial class ChooseContact {
 
-    public Task<IResult> Add() => throw new NYI();
-    public Task<IResult> Delete() => throw new NYI();
-
-    public void Select () => throw new NYI();
-
-
-
-    }
 
 public partial class EverythingMaui {
 
@@ -164,7 +155,9 @@ public partial class EverythingMaui {
 
             await ContextUser.DeleteAccountAsync();
             ContextUser.Dispose();
-            ContextUser = null;
+
+            BoundAccounts.Remove(CurrentAccount);
+            SetDefaultAccount();
 
             /* need to clear the context user here*/
             return new NotYetImplemented() {

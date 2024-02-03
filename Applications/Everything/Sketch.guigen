@@ -229,6 +229,7 @@ Action AccountCreate "Create Mesh Account" "new"
 		|Create a new Mesh account services by the specified Mesh Service provider.
 	Return ReportAccount
 	Text ServiceAddress "Account service address"
+	Text ContactName "Contact Name  (optional)"
 	Text LocalName "Friendly name (optional)"
 	Text Coupon "Activation code (if provided)"
 
@@ -360,8 +361,11 @@ Action AddCodeSigningKey "Add Code Signing Key" "signature"
 
 Dialog BoundAccount "Account" "contacts"
 	Text Display	"Display name"
+		Readonly
 	Text Service	"Service"
+		Readonly
 	Text UDF		"Fingerprint"
+		Readonly
 
 Dialog BoundMessage "Message" "contacts"
 	Icon Type "Type" "message"
@@ -514,6 +518,7 @@ Dialog BoundContact "Contact" "contacts"
 		Primary
 
 Dialog BoundContactPerson "Person" "contacts"
+	Boolean Self "Self"
 	Inherit BoundContact
 	// Present alphabetically on Last name
 	Text Local "Friendly name"

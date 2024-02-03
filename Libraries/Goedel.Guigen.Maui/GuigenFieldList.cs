@@ -4,18 +4,33 @@ public class GuigenFieldList : GuigenField, IWidget {
 
 
     public IMainWindow MainWindow { get; }
+    GuigenBinding Binding => MainWindow.Binding;
+
     public IView View { get; private set; }
 
     Label FieldLabel;
     Grid ValueField = new();
-
+    ImageButton AddButton ;
 
     public GuigenFieldList(IMainWindow mainWindow, GuiList list, GuigenFieldSet fieldsSet) : base(list) {
         MainWindow = mainWindow;
 
+
+
         FieldLabel = new Label() {
             Text = list.Prompt
             };
+        AddButton = new() {
+            Source = "plus.png",
+            WidthRequest = Binding.ListIconWidth,
+            HeightRequest = Binding.ListIconHeight
+            };
+        AddButton.Clicked += OnClickAdd;
+
+
+        var layout = new HorizontalStackLayout() { FieldLabel, AddButton };
+
+
         //ValueField = new Entry() {
         //    };
 
@@ -30,10 +45,12 @@ public class GuigenFieldList : GuigenField, IWidget {
         ////stack.Add(View);
         ////stack.Add(Feedback);
 
-        fieldsSet.AddField(FieldLabel, ValueField);
+        fieldsSet.AddField(layout, ValueField);
         }
 
+    public void OnClickAdd(object sender, EventArgs e) {
 
+        }
 
     public override void GetField(IBindable data) {
         var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyList;
@@ -54,12 +71,21 @@ public class GuigenFieldList : GuigenField, IWidget {
 
             foreach (var property in entry.Binding.BoundProperties) {
                 if (property is GuiBoundPropertyIcon icon) {
-                    var cell = new Label() { Text="Icon"};
+                    var evalue = icon.Get(entry) as FieldIcon;
+
+
+                    var cell = new Image() {
+                        Source = evalue?.Source ?? "messages",
+                        WidthRequest = Binding.IconWidth,
+                        HeightRequest = Binding.IconHeight
+                        };
                     ValueField.Add(cell, col, row);
                     col++;
                     }
                 if (property is GuiBoundPropertyString text) {
-                    var cell = new Label() { Text = "NYI" };
+                    var evalue = text.Get(entry);
+
+                    var cell = new Label() { Text = evalue };
                     ValueField.Add(cell, col, row);
                     col++;
                     }

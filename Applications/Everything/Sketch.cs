@@ -487,13 +487,13 @@ public partial class _BoundAccount : IParameter {
 
 
     ///<summary></summary> 
-    public virtual string Display { get; set;} 
+    public virtual string Display { get;} 
 
     ///<summary></summary> 
-    public virtual string Service { get; set;} 
+    public virtual string Service { get;} 
 
     ///<summary></summary> 
-    public virtual string UDF { get; set;} 
+    public virtual string UDF { get;} 
 
 
     ///<inheritdoc/>
@@ -503,9 +503,9 @@ public partial class _BoundAccount : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundAccount,
         new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ((object data) => (data as _BoundAccount).Display, (object data,string value) => (data as _BoundAccount).Display = value, "Display"), 
-            new GuiBoundPropertyString ((object data) => (data as _BoundAccount).Service, (object data,string value) => (data as _BoundAccount).Service = value, "Service"), 
-            new GuiBoundPropertyString ((object data) => (data as _BoundAccount).UDF, (object data,string value) => (data as _BoundAccount).UDF = value, "UDF")
+            new GuiBoundPropertyString ((object data) => (data as _BoundAccount).Display, null, "Display"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundAccount).Service, null, "Service"), 
+            new GuiBoundPropertyString ((object data) => (data as _BoundAccount).UDF, null, "UDF")
 
             });
     ///<summary>Validation</summary> 
@@ -1912,6 +1912,9 @@ public partial class _BoundContactPerson : BoundContact {
 
 
     ///<summary></summary> 
+    public virtual bool Self { get; set;} 
+
+    ///<summary></summary> 
     public virtual string Local { get; set;} 
 
     ///<summary></summary> 
@@ -1940,6 +1943,7 @@ public partial class _BoundContactPerson : BoundContact {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundContactPerson,
         new GuiBoundProperty[] { 
+            new GuiBoundPropertyBoolean ((object data) => (data as _BoundContactPerson).Self, (object data,bool value) => (data as _BoundContactPerson).Self = value, "Self"), 
             new GuiBoundPropertyIcon ((object data) => (data as _BoundContactPerson).Type, null, "Type"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundContactPerson).Display, null, "Display"), 
             new GuiBoundPropertyString ((object data) => (data as _BoundContactPerson).Local, (object data,string value) => (data as _BoundContactPerson).Local = value, "Local"), 
@@ -2266,6 +2270,9 @@ public partial class _AccountCreate : IParameter {
     public virtual string ServiceAddress { get; set;} 
 
     ///<summary></summary> 
+    public virtual string ContactName { get; set;} 
+
+    ///<summary></summary> 
     public virtual string LocalName { get; set;} 
 
     ///<summary></summary> 
@@ -2280,6 +2287,7 @@ public partial class _AccountCreate : IParameter {
         (object test) => test is _AccountCreate,
         new GuiBoundProperty[] { 
             new GuiBoundPropertyString ((object data) => (data as _AccountCreate).ServiceAddress, (object data,string value) => (data as _AccountCreate).ServiceAddress = value, "ServiceAddress"), 
+            new GuiBoundPropertyString ((object data) => (data as _AccountCreate).ContactName, (object data,string value) => (data as _AccountCreate).ContactName = value, "ContactName"), 
             new GuiBoundPropertyString ((object data) => (data as _AccountCreate).LocalName, (object data,string value) => (data as _AccountCreate).LocalName = value, "LocalName"), 
             new GuiBoundPropertyString ((object data) => (data as _AccountCreate).Coupon, (object data,string value) => (data as _AccountCreate).Coupon = value, "Coupon")
 
@@ -5448,8 +5456,9 @@ public class _EverythingMaui : Gui {
         ActionAccountCreate.Callback = (x) => AccountCreate (x as AccountCreate) ;
 	    ActionAccountCreate.Entries = new () { 
 			new GuiText ("ServiceAddress", "Account service address", 0), 
-			new GuiText ("LocalName", "Friendly name (optional)", 1), 
-			new GuiText ("Coupon", "Activation code (if provided)", 2)
+			new GuiText ("ContactName", "Contact Name  (optional)", 1), 
+			new GuiText ("LocalName", "Friendly name (optional)", 2), 
+			new GuiText ("Coupon", "Activation code (if provided)", 3)
 		    };
 
         ActionAccountRequestConnect.Callback = (x) => AccountRequestConnect (x as AccountRequestConnect) ;
@@ -5865,16 +5874,17 @@ public class _EverythingMaui : Gui {
 
         BoundContact.IsBacker = (object data) => DialogBoundContact.IsBacker(data);
 	    DialogBoundContactPerson.Entries = new () { 
+			new GuiBoolean ("Self", "Self", 0), 
 			new GuiIcon ("Type", "Type"), 
 			new GuiText ("Display", "Display name", 1), 
-			new GuiText ("Local", "Friendly name", 2), 
-			new GuiText ("First", "First name", 3), 
-			new GuiText ("Last", "Last name", 4), 
-			new GuiText ("Prefix", "Prefix", 5), 
-			new GuiText ("Suffix", "Suffix", 6), 
-			new GuiList ("NetworkAddresses", "Network Addresses", "network", DialogContactNetworkAddress, 7, new () {
+			new GuiText ("Local", "Friendly name", 3), 
+			new GuiText ("First", "First name", 4), 
+			new GuiText ("Last", "Last name", 5), 
+			new GuiText ("Prefix", "Prefix", 6), 
+			new GuiText ("Suffix", "Suffix", 7), 
+			new GuiList ("NetworkAddresses", "Network Addresses", "network", DialogContactNetworkAddress, 8, new () {
 				}) , 
-			new GuiList ("PhysicalAddresses", "Locations", "location", DialogContactPhysicalAddress, 8, new () {
+			new GuiList ("PhysicalAddresses", "Locations", "location", DialogContactPhysicalAddress, 9, new () {
 				}) 			
 		    };
 

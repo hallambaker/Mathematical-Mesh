@@ -198,6 +198,12 @@ public record GuiBoundProperty (
 
     }
 
+public record GuiBoundPropertyBoolean(
+                Func<object, bool> Get,
+                Action<object, bool> Set,
+                string? Label,
+                bool Primary = false) : GuiBoundProperty(Label, Primary) {
+    }
 
 public record GuiBoundPropertyString (
                 Func<object, string> Get,
@@ -404,6 +410,13 @@ public record GuiContext(
     }
 
 public record GuiText(
+            string Id,
+            string Prompt,
+            int Index = -1
+            ) : GuiField(Id, Prompt, Index) {
+    }
+
+public record GuiBoolean(
             string Id,
             string Prompt,
             int Index = -1

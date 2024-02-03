@@ -6,14 +6,14 @@ namespace Goedel.Everything;
 // Documented in Guigen output
 public partial class ServiceSection {
 
-    AccountSection Account { get; }
+    IAccountSelector Account { get; }
     ContextUser ContextUser => Account.ContextUser;
 
     /// <summary>
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public ServiceSection(AccountSection account) {
+    public ServiceSection(IAccountSelector account) {
         Account = account;
         var catalog = ContextUser.GetStore(CatalogApplication.Label, create: false) as GuigenCatalogApplication;
         ChooseService = new GroupSelection(catalog);

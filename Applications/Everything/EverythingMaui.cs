@@ -1,5 +1,6 @@
 ﻿using Everything.Resources;
 
+using Goedel.Cryptography.Dare;
 using Goedel.Mesh.Client;
 
 using Microsoft.Maui.Controls;
@@ -10,21 +11,21 @@ using System.Resources;
 namespace Goedel.Everything;
 
 
+
+// Focus: 001 Add name to create widget
+// Focus: 002 Put name in contact list properly
+// Focus: 003 Switch account context on create account
+// Focus: 004 Enumerate accounts to display selector
+// Focus: 005 Add to enumeration of accounts on create account.
+
+
+
+
 // Focus: 003 Delete entry on device dialog
 // Focus: 004 Update button on device dialog
 // Focus: 005 Read only fields
 // Focus: 006 Fill in platform field in create account
 // Focus: 007 Rights field in device dialog
-// Focus: 010 Implement selector Password credential
-// Focus: 011 Implement selector Messages
-// Focus: 012 Implement selector Contacts
-// Focus: 013 Implement selector Bookmarks / Feeds
-// Focus: 014 Implement selector Feeds
-// Focus: 015 Implement selector Applications
-// Focus: 016 Implement selector Tasks
-// Focus: 017 Implement selector Calendar
-// Focus: 017 Implement selector Groups
-// Focus: 018 Implement selector Documents
 // Focus: 020 Implement camera on QR
 // Focus: 021 Implement Confirmation transaction
 // Focus: 022 Implement Contact request transaction
@@ -54,8 +55,6 @@ namespace Goedel.Everything;
 // ToDo: Validate inputs to list box add before adding
 // ToDo: Filter enumerated results to entries of a particular type
 
-// Nit: Better icons for passwords/passkeys.
-
 // ToDo: Password / Contact / Bookmark / etc. - create useful display format
 // ToDo: Copy Uid etc into restored cataloged object on copy.
 
@@ -73,48 +72,97 @@ public partial class EverythingMaui {
     public MeshHost MeshHost => MeshMachine?.MeshHost;
 
 
-    public ContextUser ContextUser { get; set; }
+    public ContextUser ContextUser => CurrentAccount.ContextUser;
 
     public SettingSection Settings { get; } = new();
 
     public Dictionary<string, IMessageable> WaitingOnMessage { get; } = new();
+
+
+    public ObservableCollection<IBindable> BoundAccounts { get; } = new();
+
+    public BoundAccount CurrentAccount = null;
+    AccountSection AccountSection { get; }
+
+    public ISelectCollection ChooseUser { get; }
+
 
     public EverythingMaui() {
         ResourceManager = Sketch_resources.ResourceManager;
 
         MeshMachine = new MeshMachineCore();
         //MeshHost.ConfigureMesh("alice@example.com", "null");
+        
+        //var accounts = new AccountSection(null);
+        //accounts
+        foreach (var entry in MeshHost.ObjectIndex) {
+            var catalogedMachine = entry.Value.JsonObject as CatalogedMachine;
+            switch (catalogedMachine) {
+                case CatalogedStandard standardEntry: {
+                    var bound = GetContextUser(standardEntry);
+                    BoundAccounts.Add(bound);
 
+                    CurrentAccount ??= bound;
+                    break;
+                    }
+                }
+            }
+
+        AccountSection = new AccountSection(this);
+        ChooseUser = new AccountSelection(this);
+        SectionAccountSection.Data = AccountSection;
 
         SectionSettingSection.Data = Settings;
-        SetContext(MeshHost.GetContext(MeshHost.DefaultAccount) as ContextUser);
-
+        //SetContext(MeshHost.GetContext(MeshHost.DefaultAccount) as ContextUser);
+        SetContext(CurrentAccount);
         }
 
 
-    public void SetContext(ContextUser contextUser) {
-        if (contextUser == null) {
-            return;
-            }
+    BoundAccount GetContextUser(CatalogedStandard catalogedStandard ) {
+        var contextUser = MeshHost.GetContext(catalogedStandard) as ContextUser;
 
-        ContextUser = contextUser;
+        contextUser.DictionaryCatalogDelegates.Replace(CatalogContact.Label, GuigenCatalogContact.Factory);
+        contextUser.DictionaryCatalogDelegates.Replace(CatalogDocument.Label, GuigenCatalogApplication.Factory);
+        // Feeds is a subset of Bookmarks
+        // Groups is a subset of Application
+        contextUser.DictionaryCatalogDelegates.Replace(CatalogCredential.Label, GuigenCatalogCredential.Factory);
+        contextUser.DictionaryCatalogDelegates.Replace(CatalogTask.Label, GuigenCatalogTasks.Factory);
+        // Calendar is just a different presentation for tasks
+        contextUser.DictionaryCatalogDelegates.Replace(CatalogBookmark.Label, GuigenCatalogBookmark.Factory);
+        contextUser.DictionaryCatalogDelegates.Replace(CatalogApplication.Label, GuigenCatalogApplication.Factory);
+        contextUser.DictionaryCatalogDelegates.Replace(CatalogDevice.Label, GuigenCatalogDevice.Factory);
+        // Services is a subset of Application
+        contextUser.DictionarySpoolDelegates.Replace(SpoolInbound.Label, GuigenSpoolInbound.Factory);
+        contextUser.DictionarySpoolDelegates.Replace(SpoolOutbound.Label, GuigenSpoolOutbound.Factory);
+        contextUser.DictionarySpoolDelegates.Replace(SpoolLocal.Label, GuigenSpoolLocal.Factory);
 
-        var accounts = new AccountSection(contextUser);
-        SectionAccountSection.Data = accounts;
+        return new BoundAccount(contextUser);
+        }
 
 
-        SectionMessageSection.BindData = () => accounts.MessageSection;
-        SectionContactSection.BindData = () => accounts.Contacts;
-        SectionBookmarkSection.BindData = () => accounts.Bookmarks;
-        SectionDocumentSection.BindData = () => accounts.Documents;
-        SectionGroupSection.BindData = () => accounts.Groups;
-        SectionFeedSection.BindData = () => accounts.Feeds;
-        SectionCredentialSection.BindData = () => accounts.Credentials;
-        SectionTaskSection.BindData = () => accounts.Tasks;
-        SectionCalendarSection.BindData = () => accounts.Calendar;
-        SectionApplicationSection.BindData = () => accounts.Applications;
-        SectionDeviceSection.BindData = () => accounts.Devices;
-        SectionServiceSection.BindData = () => accounts.Services;
+
+    public void SetDefaultAccount() {
+        CurrentAccount = null;
+        }
+
+
+    public void SetContext(BoundAccount boundAccount) {
+
+        CurrentAccount = boundAccount;
+
+
+        SectionMessageSection.BindData = () => CurrentAccount.MessageSection;
+        SectionContactSection.BindData = () => CurrentAccount.Contacts;
+        SectionBookmarkSection.BindData = () => CurrentAccount.Bookmarks;
+        SectionDocumentSection.BindData = () => CurrentAccount.Documents;
+        SectionGroupSection.BindData = () => CurrentAccount.Groups;
+        SectionFeedSection.BindData = () => CurrentAccount.Feeds;
+        SectionCredentialSection.BindData = () => CurrentAccount.Credentials;
+        SectionTaskSection.BindData = () => CurrentAccount.Tasks;
+        SectionCalendarSection.BindData = () => CurrentAccount.Calendar;
+        SectionApplicationSection.BindData = () => CurrentAccount.Applications;
+        SectionDeviceSection.BindData = () => CurrentAccount.Devices;
+        SectionServiceSection.BindData = () => CurrentAccount.Services;
 
         }
 
@@ -240,88 +288,6 @@ public partial class EverythingMaui {
 
 
 
-
-
-
-
-public partial class AccountSection {
-    public ContextUser ContextUser { get; }
-
-    ///<summary>The messages section context.</summary> 
-    public MessageSection MessageSection => messages ?? new MessageSection(this).CacheValue(out messages);
-    MessageSection messages;
-
-    ///<summary>The contacts section context.</summary> 
-    public ContactSection Contacts => contacts ?? new ContactSection(this).CacheValue(out contacts);
-    ContactSection contacts;
-
-    ///<summary>The documents section context.</summary> 
-    public DocumentSection Documents => documents ?? new DocumentSection(this).CacheValue(out documents);
-    DocumentSection documents;
-
-    ///<summary>The feeds section context.</summary> 
-    public FeedSection Feeds => feeds ?? new FeedSection(this).CacheValue(out feeds);
-    FeedSection feeds;
-
-    ///<summary>The groups section context.</summary> 
-    public GroupSection Groups => groups ?? new GroupSection(this).CacheValue(out groups);
-    GroupSection groups;
-
-    ///<summary>The credentials section context.</summary> 
-    public CredentialSection Credentials => credentials ?? new CredentialSection(this).CacheValue(out credentials);
-    CredentialSection credentials;
-
-    ///<summary>The tasks section context.</summary> 
-    public TaskSection Tasks => tasks ?? new TaskSection(this).CacheValue(out tasks);
-    TaskSection tasks;
-
-    ///<summary>The calendar section context.</summary> 
-    public CalendarSection Calendar => calendar ?? new CalendarSection(this).CacheValue(out calendar);
-    CalendarSection calendar;
-
-    ///<summary>The applications section context.</summary> 
-    public BookmarkSection Bookmarks => bookmark ?? new BookmarkSection(this).CacheValue(out bookmark);
-    BookmarkSection bookmark;
-
-    ///<summary>The applications section context.</summary> 
-    public ApplicationSection Applications => applications ?? new ApplicationSection(this).CacheValue(out applications);
-    ApplicationSection applications;
-
-    ///<summary>The devices section context.</summary> 
-    public DeviceSection Devices => devices ?? new DeviceSection(this).CacheValue(out devices);
-    DeviceSection devices;
-
-    ///<summary>The services section context.</summary> 
-    public ServiceSection Services => services ?? new ServiceSection(this).CacheValue(out services);
-    ServiceSection services;
-
-
-    public override string ServiceAddress => ContextUser?.ServiceAddress;
-
-    public override string ProfileUdf => ContextUser?.Profile.UdfString;
-
-    public override string LocalAddress => ContextUser?.CatalogedMachine.Local;
-
-
-    public AccountSection(ContextUser contextUser) {
-        ContextUser = contextUser;
-
-        ContextUser.DictionaryCatalogDelegates.Replace(CatalogContact.Label, GuigenCatalogContact.Factory);
-        ContextUser.DictionaryCatalogDelegates.Replace(CatalogDocument.Label, GuigenCatalogApplication.Factory);
-        // Feeds is a subset of Bookmarks
-        // Groups is a subset of Application
-        ContextUser.DictionaryCatalogDelegates.Replace(CatalogCredential.Label, GuigenCatalogCredential.Factory);
-        ContextUser.DictionaryCatalogDelegates.Replace(CatalogTask.Label, GuigenCatalogTasks.Factory);
-        // Calendar is just a different presentation for tasks
-        ContextUser.DictionaryCatalogDelegates.Replace(CatalogBookmark.Label, GuigenCatalogBookmark.Factory);
-        ContextUser.DictionaryCatalogDelegates.Replace(CatalogApplication.Label, GuigenCatalogApplication.Factory);
-        ContextUser.DictionaryCatalogDelegates.Replace(CatalogDevice.Label, GuigenCatalogDevice.Factory);
-        // Services is a subset of Application
-        ContextUser.DictionarySpoolDelegates.Replace(SpoolInbound.Label, GuigenSpoolInbound.Factory);
-        ContextUser.DictionarySpoolDelegates.Replace(SpoolOutbound.Label, GuigenSpoolOutbound.Factory);
-        ContextUser.DictionarySpoolDelegates.Replace(SpoolLocal.Label, GuigenSpoolLocal.Factory);
-        }
-    }
 
 
 

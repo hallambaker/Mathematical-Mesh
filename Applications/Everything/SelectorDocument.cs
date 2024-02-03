@@ -10,14 +10,14 @@ namespace Goedel.Everything;
 // Documented in Guigen output
 public partial class DocumentSection : IHeadedSelection {
 
-    AccountSection Account { get; }
+    IAccountSelector Account { get; }
     ContextUser ContextUser => Account.ContextUser;
     public GuiBinding SelectionBinding => _BoundDocument.BaseBinding;
     /// <summary>
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public DocumentSection(AccountSection account) {
+    public DocumentSection(IAccountSelector account) {
         Account = account;
 
         var catalog = ContextUser.GetStore(CatalogDocument.Label, create: false) as GuigenCatalogDocument;

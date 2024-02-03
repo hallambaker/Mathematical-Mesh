@@ -8,7 +8,7 @@ namespace Goedel.Everything;
 // Documented in Guigen output
 public partial class BookmarkSection : IHeadedSelection {
 
-    AccountSection Account { get; }
+    IAccountSelector Account { get; }
     ContextUser ContextUser => Account.ContextUser;
 
     public GuiBinding SelectionBinding => _BoundBookmark.BaseBinding;
@@ -17,7 +17,7 @@ public partial class BookmarkSection : IHeadedSelection {
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public BookmarkSection(AccountSection account) {
+    public BookmarkSection(IAccountSelector account) {
         Account = account;
         var catalog = ContextUser.GetStore(CatalogBookmark.Label, create: false) as GuigenCatalogBookmark;
         ChooseBookmark = catalog is null ? null : new BookmarkSelection(catalog);

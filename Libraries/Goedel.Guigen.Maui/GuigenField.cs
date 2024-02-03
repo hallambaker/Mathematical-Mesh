@@ -81,6 +81,12 @@ public class GuigenFieldSet : IWidget {
                     FieldMap[index++] = field.Index;
                     break;
                     }
+                case GuiBoolean text: {
+                    var field = new GuigenFieldBoolean(MainWindow, text, this);
+                    MauiFields.Add(field);
+                    FieldMap[index++] = field.Index;
+                    break;
+                    }
                 case GuiTextArea text: {
                     var field = new GuigenFieldTextArea(MainWindow, text, this);
                     MauiFields.Add(field);

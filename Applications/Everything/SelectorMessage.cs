@@ -13,7 +13,7 @@ namespace Goedel.Everything;
 // Documented in Guigen output
 public partial class MessageSection : IHeadedSelection{
 
-    AccountSection Account { get; }
+    IAccountSelector Account { get; }
     ContextUser ContextUser => Account.ContextUser;
 
     public GuiBinding SelectionBinding => _BoundMessage.BaseBinding;
@@ -25,7 +25,7 @@ public partial class MessageSection : IHeadedSelection{
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public MessageSection(AccountSection account) {
+    public MessageSection(IAccountSelector account) {
         Account = account;
         //ContextUser.DictionaryCatalogDelegates.Replace(CatalogApplication.Label, GuigenCatalogApplication.Factory);
         var catalog = ContextUser.GetStore(SpoolInbound.Label, create: false) as GuigenSpoolInbound;

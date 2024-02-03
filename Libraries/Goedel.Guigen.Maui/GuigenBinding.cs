@@ -79,6 +79,10 @@ public class GuigenBinding(Gui gui, DisplayMode display = DisplayMode.Default) {
 
     public int IconHeight = 20;
     public int IconWidth = 20;
+
+    public int ListIconHeight = 10;
+    public int ListIconWidth = 10;
+
     public int ButtonHeight = 30;
     public Page GetMain() {
         return new GuigenMainFlyout(this).Page;

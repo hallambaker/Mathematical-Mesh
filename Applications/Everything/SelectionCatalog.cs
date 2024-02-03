@@ -19,6 +19,9 @@ public static class Extensions {
     }
 
 
+
+
+
 public abstract class SelectionStore<TStore, TPersist, TEnum, TBindable> : ISelectCollection
                     where TStore : Store
                     //where TPersist : CatalogedEntry
