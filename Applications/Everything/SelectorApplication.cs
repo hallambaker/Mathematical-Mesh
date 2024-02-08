@@ -7,7 +7,7 @@ namespace Goedel.Everything;
 // Documented in Guigen output
 public partial class ApplicationSection : IHeadedSelection {
 
-    IAccountSelector Account { get; }
+    public IAccountSelector Account { get; init; }
     ContextUser ContextUser => Account.ContextUser;
 
     ///<inheritdoc/>
@@ -17,7 +17,7 @@ public partial class ApplicationSection : IHeadedSelection {
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public ApplicationSection(IAccountSelector account) {
+    public ApplicationSection(IAccountSelector account=null) {
         Account = account;
 
         var catalog = ContextUser.GetStore(CatalogApplication.Label, create: false) as GuigenCatalogApplication;

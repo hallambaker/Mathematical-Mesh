@@ -30,7 +30,7 @@ public partial class AccountSection: IAccountSelector {
     public ContextUser ContextUser => BoundAccount.ContextUser;
     public BoundAccount BoundAccount => EverythingMaui.CurrentAccount;
 
-    EverythingMaui EverythingMaui;
+    public EverythingMaui EverythingMaui { get;  init; }
 
     public override string ServiceAddress => ContextUser?.ServiceAddress;
 
@@ -39,9 +39,7 @@ public partial class AccountSection: IAccountSelector {
     public override string LocalAddress => ContextUser?.CatalogedMachine.Local;
 
 
-    public AccountSection(EverythingMaui parent) {
-        EverythingMaui = parent;
-        }
+
     }
 
 
@@ -127,21 +125,6 @@ public partial class BoundAccount : IBoundPresentation, IDialog, IAccountSelecto
     public BoundAccount(ContextUser contextUser =null) {
         ContextUser = contextUser;
         }
-
-
-    //public static BoundAccount Convert(ContextUser input) {
-
-
-    //    var result = new BoundAccount() {
-    //        Service = input.ServiceDns,
-    //        Display = "TBS",
-    //        UDF = input.Profile.UdfString
-    //        };
-
-    //    return result;
-
-    //    }
-
 
 
     }

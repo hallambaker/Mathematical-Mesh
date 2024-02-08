@@ -112,6 +112,13 @@ public static partial class ExtensionMethods {
         return bold ? "<b>" + Message + "</b>" : Message;
         }
 
+
+    public static string ValueOrNull (this string value) => value == null ? "null" : value;
+
+    public static string NotNullTagged(this string value, string? tag) => value == null ? "" :
+        (tag == null ? "" : tag) + value;
+
+
     }
 
 

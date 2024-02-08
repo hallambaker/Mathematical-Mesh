@@ -58,7 +58,7 @@ public class GuigenDetailResult : GuigenDetaiPage {
                             //stack.Add(view);
 
                             MainWindow.FormatFieldLabel(label);
-                            MainWindow.FormatFieldEntry(field);
+                            MainWindow.FormatFieldEntry(field, null, text);
 
                             grid.Add(label, 0, GridRow);
                             grid.Add(field, 1, GridRow++);
@@ -84,7 +84,7 @@ public class GuigenDetailResult : GuigenDetaiPage {
                             //stack.Add(view);
 
                             MainWindow.FormatFieldLabel(label);
-                            MainWindow.FormatFieldEntry(field);
+                            MainWindow.FormatFieldEntry(field, null, text);
 
                             grid.Add(label, 0, GridRow);
                             grid.Add(field, 1, GridRow++);

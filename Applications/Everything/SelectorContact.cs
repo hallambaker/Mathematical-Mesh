@@ -18,7 +18,7 @@ public partial class ContactSection : IHeadedSelection {
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public ContactSection(IAccountSelector account) {
+    public ContactSection(IAccountSelector account = null) {
         Account = account;
         var catalog = ContextUser.GetStore(CatalogContact.Label, create: false) as GuigenCatalogContact;
         ChooseContact = catalog is null ? null : new ContactSelection(catalog);
@@ -64,9 +64,9 @@ public partial class BoundContactPerson : IBoundPresentation, IDialog {
 
     public override IFieldIcon Type => FieldIcons.ContactPerson;
 
-    static BoundContactPerson() {
-        IsBacker = isBacker;
-        }
+    //static BoundContactPerson() {
+    //    IsBacker = isBacker;
+    //    }
 
 
     static bool isBacker(object data) => data is CatalogedContact;

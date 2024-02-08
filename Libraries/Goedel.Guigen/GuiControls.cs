@@ -168,9 +168,14 @@ public record ErrorResult : NullResult, IFail {
 //    }
 
 
+
+
 public record GuiBinding {
 
     public Func<object, bool> IsType { get; }
+
+    public Func<IBindable> Factory { get; }
+
 
     public GuiBoundProperty[] BoundProperties { get; }
 
@@ -178,10 +183,12 @@ public record GuiBinding {
 
     public GuiBinding(
                 Func<object, bool> isType,
+                Func<IBindable> factory,
                 GuiBoundProperty[] boundProperties
                 ) {
         BoundProperties = boundProperties;
         IsType = isType;
+        Factory = factory;
         }
 
     }
@@ -192,39 +199,125 @@ public record GuiBinding {
 
 
 public record GuiBoundProperty (
+                string? Label) {
+
+
+    }
+
+public record GuiBoundPropertyButton(
+                string? Label) : GuiBoundProperty(Label) {
+    public IButtonTarget Target = null!;
+
+    }
+
+public record GuiBoundPropertyPrompted(
                 string? Label,
-                bool Primary = false) {
-
-
+                string? Prompt) : GuiBoundProperty (Label){
     }
 
 public record GuiBoundPropertyBoolean(
-                Func<object, bool> Get,
-                Action<object, bool> Set,
                 string? Label,
-                bool Primary = false) : GuiBoundProperty(Label, Primary) {
+                string? Prompt,
+                Func<object, bool> Get,
+                Action<object, bool> Set
+                ) : GuiBoundPropertyPrompted(Label, Prompt) {
     }
 
-public record GuiBoundPropertyString (
+public record GuiBoundPropertyString(
+                string? Label,
+                string? Prompt,
                 Func<object, string> Get,
                 Action<object, string> Set,
-                string? Label,
-                bool Primary = false) : GuiBoundProperty (Label, Primary) {
-    }
-
-public record GuiBoundPropertyQRScan(
-                Func<object, GuiQR> Get,
-                Action<object, GuiQR> Set,
-                string? Label,
-                bool Primary = false) : GuiBoundProperty(Label, Primary) {
+                int? Width = null) : GuiBoundPropertyPrompted(Label, Prompt) {
     }
 
 public record GuiBoundTextArea(
-                Func<object, string> Get,
-                Action<object, string> Set,
                 string? Label,
-                bool Primary = false) : GuiBoundProperty(Label, Primary) {
+                string? Prompt,
+                Func<object, string> Get,
+                Action<object, string> Set) : GuiBoundPropertyPrompted(Label, Prompt) {
     }
+
+
+public record GuiBoundPropertyColor(
+                string? Label,
+                string? Prompt,
+                Func<object, IFieldColor> Get,
+                Action<object, IFieldColor> Set) : GuiBoundPropertyPrompted(Label, Prompt) {
+    }
+
+
+public record GuiBoundPropertySize(
+                string? Label,
+                string? Prompt,
+                Func<object, IFieldSize> Get,
+                Action<object, IFieldSize> Set) : GuiBoundPropertyPrompted(Label, Prompt) {
+    }
+
+
+public record GuiBoundPropertyDecimal(
+                string? Label,
+                string? Prompt,
+                Func<object, decimal?> Get,
+                Action<object, decimal?> Set) : GuiBoundPropertyPrompted(Label, Prompt) {
+    }
+
+
+public record GuiBoundPropertyInteger(
+                string? Label,
+                string? Prompt,
+                Func<object, int?> Get,
+                Action<object, int?> Set) : GuiBoundPropertyPrompted(Label, Prompt) {
+    }
+
+
+
+public record GuiBoundPropertyQRScan(
+                string? Label,
+                string? Prompt,
+                Func<object, GuiQR> Get,
+                Action<object, GuiQR> Set) : GuiBoundPropertyPrompted(Label, Prompt) {
+    }
+
+
+public record GuiBoundPropertyIcon(
+                string? Label,
+                string? Prompt,
+                Func<object, IFieldIcon> Get,
+                Action<object, IFieldIcon> Set) : GuiBoundPropertyPrompted(Label, Prompt) {
+    }
+
+public record GuiBoundPropertyChooser(
+                string? Label,
+                string? Prompt,
+                Func<object, ISelectCollection> Get,
+                Action<object, ISelectCollection> Set,
+                List<GuiEntry>? Entries = null) : GuiBoundPropertyPrompted(Label, Prompt) {
+    }
+
+public record GuiBoundPropertyList(
+                string? Label,
+                string? Prompt,
+                Func<object, ISelectCollection> Get,
+                Action<object, ISelectCollection> Set,
+                GuiBinding EntryBinding,
+                List<GuiEntry>? Entries = null) : GuiBoundPropertyPrompted(Label, Prompt) {
+    }
+
+
+public record GuiEntry(
+                string? Label,
+                Func<object, bool> isType,
+                GuiBoundProperty[] boundProperties) : GuiBinding(isType, null, boundProperties) {
+    }
+
+
+
+
+
+
+
+
 
 
 public class GuiQR {
@@ -234,68 +327,11 @@ public class GuiQR {
     public string? CapturedByCamera { get; set; }
     public object? ReceivedByMessage { get; set; }
 
-    public GuiQR() { 
+    public GuiQR() {
         }
 
 
     }
-
-public record GuiBoundPropertyChooser(
-                Func<object, ISelectCollection> Get,
-                Action<object, ISelectCollection> Set,
-                string? Label,
-                List<GuiEntry>? Entries = null) : GuiBoundProperty(Label) {
-    }
-
-public record GuiBoundPropertyList(
-                Func<object, ISelectCollection> Get,
-                Action<object, ISelectCollection> Set,
-                string? Label,
-                List<GuiEntry>? Entries = null) : GuiBoundProperty(Label) {
-    }
-
-
-public record GuiEntry(
-                Func<object, bool> isType,
-                GuiBoundProperty[] boundProperties,
-                string Label) : GuiBinding(isType, boundProperties) {
-    }
-
-
-
-public record GuiBoundPropertyColor(
-                Func<object, IFieldColor> Get,
-                Action<object, IFieldColor> Set,
-                string? Label = null) : GuiBoundProperty(Label) {
-    }
-
-
-public record GuiBoundPropertySize(
-                Func<object, IFieldSize> Get,
-                Action<object, IFieldSize> Set,
-                string? Label = null) : GuiBoundProperty(Label) {
-    }
-
-
-public record GuiBoundPropertyDecimal(
-                Func<object, decimal?> Get,
-                Action<object, decimal?> Set,
-                string? Label = null) : GuiBoundProperty(Label) {
-    }
-
-
-public record GuiBoundPropertyInteger(
-                Func<object, int?> Get,
-                Action<object, int?> Set,
-                string? Label = null) : GuiBoundProperty(Label) {
-    }
-
-public record GuiBoundPropertyIcon(
-                Func<object, IFieldIcon> Get,
-                Action<object, IFieldIcon> Set,
-                string? Label = null) : GuiBoundProperty(Label) {
-    }
-
 
 
 ///<summary></summary> 
@@ -305,17 +341,55 @@ public record GuiImage (
     }
 
 
+/// <summary>
+/// Backing class for a GUI item.
+/// </summary>
+/// <param name="Id"></param>
 public record GuiItem(
             string Id) {
     }
 
+
+/// <summary>
+/// Backing class for a GUI element that has a prompt.
+/// </summary>
+/// <param name="Id">The unique identifier</param>
+/// <param name="Prompt">The prompt.</param>
+public record GuiPrompt(
+            string Id,
+            string Prompt
+            ) : GuiItem(Id), IGuiEntry {
+    }
+
+/// <summary>
+/// Backing class for a GUI element that presents a set of bound fields.
+/// </summary>
+/// <param name="Id"></param>
+/// <param name="Prompt"></param>
+/// <param name="Binding"></param>
+public record GuiFieldSet (
+            string Id,
+            string Prompt,
+            GuiBinding Binding
+            ) : GuiPrompt(Id, Prompt){
+    }
+
+
+/// <summary>
+/// Backing class for a GUI Dialog 
+/// </summary>
+/// <param name="Id"></param>
+/// <param name="Prompt"></param>
+/// <param name="Icon"></param>
+/// <param name="Factory"></param>
 public record GuiDialog(
 
             string Id,
             string Prompt,
             string Icon,
-            FactoryCallback Factory) : GuiPrompt(Id, Prompt), IGuiEntry {
-    public IPresentation? Presentation { get; set; } = null;
+            GuiBinding Binding,
+            FactoryCallback Factory) : GuiFieldSet(Id, Prompt, Binding), IGuiEntry {
+
 
     public List<IGuiEntry> Entries { get; set; } = null!;
 
@@ -324,25 +398,16 @@ public record GuiDialog(
 
     }
 
-public record GuiButton(
-            string Id,
-            IButtonTarget Target
-            ) : GuiItem(Id), IGuiEntry {
-    }
 
-public record GuiPrompt(
-            string Id,
-            string Prompt
-            ) : GuiItem(Id), IGuiEntry {
-    }
 
 
 public record GuiSection (
             string Id,
             string Prompt,
             string Icon,
+            GuiBinding Binding,
             bool Primary
-            ) : GuiPrompt(Id, Prompt), IButtonTarget {
+            ) : GuiFieldSet(Id, Prompt, Binding), IButtonTarget {
 
     public Func<bool> Active { get; set; } = () => false;
 
@@ -362,15 +427,15 @@ public record GuiSection (
 
     }
 
-public delegate  Task<IResult> ActionCallback(object IBindable);
-public delegate IBindable FactoryCallback();
+
 public record GuiAction(
             string Id,
             string Prompt,
             string Icon,
+            GuiBinding Binding,
             FactoryCallback Factory,
             bool IsSelect = false
-            ) : GuiPrompt(Id, Prompt), IButtonTarget {
+            ) : GuiFieldSet(Id, Prompt, Binding), IButtonTarget {
     public IPresentation? Presentation { get; set; } = null;
 
     public List<IGuiEntry> Entries { get; set; } = null!;
@@ -379,12 +444,26 @@ public record GuiAction(
     }
 
 
+public delegate Task<IResult> ActionCallback(object IBindable);
+public delegate IBindable FactoryCallback();
+
+
+
+
 public record GuiField(
             string Id,
             string Prompt,
             int Index
             ) : GuiPrompt(Id, Prompt), IGuiEntry {
     }
+
+public record GuiButton(
+            string Id,
+            IButtonTarget Target
+            ) : GuiItem(Id), IGuiEntry {
+    }
+
+
 
 public record GuiChooser(
             string Id,
@@ -412,7 +491,8 @@ public record GuiContext(
 public record GuiText(
             string Id,
             string Prompt,
-            int Index = -1
+            int Index = -1,
+            int? Width = null
             ) : GuiField(Id, Prompt, Index) {
     }
 

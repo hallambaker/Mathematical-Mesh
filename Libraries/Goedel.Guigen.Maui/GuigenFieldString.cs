@@ -25,7 +25,7 @@ public class GuigenFieldString : GuigenField, IWidget {
         View = view;
 
         MainWindow.FormatFieldLabel(FieldLabel);
-        MainWindow.FormatFieldEntry(ValueField);
+        MainWindow.FormatFieldEntry(ValueField, text, null);
         MainWindow.FormatFeedback(Feedback);
 
         //stack.Add(View);

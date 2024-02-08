@@ -17,7 +17,7 @@ public partial class DocumentSection : IHeadedSelection {
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public DocumentSection(IAccountSelector account) {
+    public DocumentSection(IAccountSelector account=null) {
         Account = account;
 
         var catalog = ContextUser.GetStore(CatalogDocument.Label, create: false) as GuigenCatalogDocument;

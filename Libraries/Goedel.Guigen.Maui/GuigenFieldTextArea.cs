@@ -30,7 +30,7 @@ public class GuigenFieldTextArea : GuigenField, IWidget {
         View = view;
 
         MainWindow.FormatFieldLabel(FieldLabel);
-        MainWindow.FormatFieldEntry(ValueField);
+        MainWindow.FormatFieldEntry(ValueField, Field, null);
         MainWindow.FormatFeedback(Feedback);
 
 

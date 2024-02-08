@@ -18,7 +18,7 @@ public partial class DeviceSection : IHeadedSelection {
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public DeviceSection(IAccountSelector account) {
+    public DeviceSection(IAccountSelector account=null) {
         Account = account;
 
         var catalog = ContextUser.GetStore(CatalogDevice.Label, create: false) as GuigenCatalogDevice;

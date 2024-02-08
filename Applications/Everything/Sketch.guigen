@@ -105,14 +105,6 @@ Section SettingSection "Settings" "settings"
 		Size IconSize "Icon Size"
 
 
-//Dialog Appearance "Appearance" "display"
-//	Color BackgroundColor  "Background Color"
-//	Color HighlightColor "Highlight Color"
-//	Color TextColor "Text Color"
-//	Size TextSize "Text Size"
-//	Size IconSize "Icon Size"
-
-
 // Action results
 
 Result ReportHost "Host {0} acknowledged your request."
@@ -369,9 +361,12 @@ Dialog BoundAccount "Account" "contacts"
 
 Dialog BoundMessage "Message" "contacts"
 	Icon Type "Type" "message"
-	Text Subject "Subject"
 	Text TimeSent "Sent"
+		Width 100
 	Text Sender "Sender"
+		Width 150
+	Text Subject "Subject"
+		Width 300
 
 Dialog BoundMailMail "Mail" "messages"
 	Inherit BoundMessage
@@ -518,8 +513,8 @@ Dialog BoundContact "Contact" "contacts"
 		Primary
 
 Dialog BoundContactPerson "Person" "contacts"
-	Boolean Self "Self"
 	Inherit BoundContact
+	Boolean Self "Self"
 	// Present alphabetically on Last name
 	Text Local "Friendly name"
 	Text First "First name"

@@ -16,7 +16,7 @@ public partial class CalendarSection : IHeadedSelection {
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public CalendarSection(IAccountSelector account) {
+    public CalendarSection(IAccountSelector account = null) {
         Account = account;
         var catalog = ContextUser.GetStore(CatalogTask.Label, create: false) as GuigenCatalogTasks;
         ChooseAppointment = catalog is null ? null : new CalendarSelection(catalog);

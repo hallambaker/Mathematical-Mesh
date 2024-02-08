@@ -108,7 +108,10 @@ public partial class EverythingMaui {
                 }
             }
 
-        AccountSection = new AccountSection(this);
+        AccountSection = new AccountSection() {
+            EverythingMaui = this
+            };
+
         ChooseUser = new AccountSelection(this);
         SectionAccountSection.Data = AccountSection;
 

@@ -17,7 +17,7 @@ public partial class BookmarkSection : IHeadedSelection {
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public BookmarkSection(IAccountSelector account) {
+    public BookmarkSection(IAccountSelector account=null) {
         Account = account;
         var catalog = ContextUser.GetStore(CatalogBookmark.Label, create: false) as GuigenCatalogBookmark;
         ChooseBookmark = catalog is null ? null : new BookmarkSelection(catalog);

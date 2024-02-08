@@ -25,7 +25,7 @@ public partial class MessageSection : IHeadedSelection{
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public MessageSection(IAccountSelector account) {
+    public MessageSection(IAccountSelector account = null) {
         Account = account;
         //ContextUser.DictionaryCatalogDelegates.Replace(CatalogApplication.Label, GuigenCatalogApplication.Factory);
         var catalog = ContextUser.GetStore(SpoolInbound.Label, create: false) as GuigenSpoolInbound;
