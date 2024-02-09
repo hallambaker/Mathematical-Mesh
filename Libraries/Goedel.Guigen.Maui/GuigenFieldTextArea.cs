@@ -1,22 +1,16 @@
 ﻿namespace Goedel.Guigen.Maui;
 
-public class GuigenFieldTextArea : GuigenField, IWidget {
-    public IMainWindow MainWindow { get; }
-    public IView View { get; private set; }
+public class GuigenFieldTextArea : GuigenFieldSimple, IWidget {
 
-    public Editor ValueField;
-    Label FieldLabel;
-    Label Feedback = new() {
-        IsVisible = false
-        };
+    GuiBoundTextArea TypedBinding => Binding as GuiBoundTextArea;
 
-    public GuigenFieldTextArea(IMainWindow mainWindow, GuiTextArea text, GuigenFieldSet fieldsSet) : base(text) {
-        MainWindow = mainWindow;
+    Editor ValueField;
 
-        var view = new HorizontalStackLayout();
-        FieldLabel = new Label() {
-            Text = text.Prompt
-            };
+    public GuigenFieldTextArea(
+                IMainWindow mainWindow,
+                GuigenFieldSet fieldsSet,
+                GuiBoundTextArea binding) : base(mainWindow, fieldsSet, binding) {
+
         ValueField = new Editor() {
             AutoSize = EditorAutoSizeOption.TextChanges,
             IsSpellCheckEnabled = true,
@@ -25,41 +19,23 @@ public class GuigenFieldTextArea : GuigenField, IWidget {
             Placeholder = "Infinite monkeys with typewriters say"
             };
 
-        view.Add(FieldLabel);
-        view.Add(ValueField);
-        View = view;
+        MainWindow.FormatFieldEntry(ValueField, binding);
 
-        MainWindow.FormatFieldLabel(FieldLabel);
-        MainWindow.FormatFieldEntry(ValueField, Field, null);
-        MainWindow.FormatFeedback(Feedback);
-
-
+        View = new HorizontalStackLayout() { FieldLabel, ValueField };
         fieldsSet.AddField(FieldLabel, ValueField, Feedback);
         }
 
-
-
+    ///<inheritdoc/>
     public override void SetField(IBindable data) {
-        var binding = data.Binding.BoundProperties[Index] as GuiBoundTextArea;
-        ValueField.Text = binding.Get(data);
+        ValueField.Text = TypedBinding.Get(data);
 
         }
 
+    ///<inheritdoc/>
     public override void GetField(IBindable data) {
-        var binding = data.Binding.BoundProperties[Index] as GuiBoundTextArea;
-        if (binding.Set is not null) {
-            binding.Set(data, ValueField.Text);
+        if (TypedBinding.Set is not null) {
+            TypedBinding.Set(data, ValueField.Text);
             }
-        }
-
-
-    public override void ClearFeedback() {
-        Feedback.IsVisible =false;
-        }
-
-    public override void SetFeedback(IndexedMessage message) {
-        Feedback.IsVisible = true;
-        Feedback.Text = message.Text;
         }
 
     }

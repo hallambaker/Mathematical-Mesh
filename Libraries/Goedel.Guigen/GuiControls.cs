@@ -563,8 +563,8 @@ public record GuiList(
 
 
 
-public record GuiViewDialog(GuiDialog Dialog) : IGuiEntry {
-    }
+//public record GuiViewDialog(GuiDialog Dialog) : IGuiEntry {
+//    }
 public record GuiViewBinding(GuiBinding Dialog)  : IGuiEntry {
     }
 

@@ -1,62 +1,36 @@
 ﻿namespace Goedel.Guigen.Maui;
 
-public class GuigenFieldBoolean: GuigenField, IWidget {
-    public IMainWindow MainWindow { get; }
-    public IView View { get; private set; }
+public class GuigenFieldBoolean: GuigenFieldSimple, IWidget {
 
-    public CheckBox ValueField;
-    Label FieldLabel;
-    Label Feedback = new() {
-        IsVisible = false
-        };
+    GuiBoundPropertyBoolean TypedBinding => Binding as GuiBoundPropertyBoolean;
 
-    public GuigenFieldBoolean(IMainWindow mainWindow, GuiBoolean text, GuigenFieldSet fieldsSet) : base(text) {
-        MainWindow = mainWindow;
+    CheckBox ValueField;
 
-        var view = new HorizontalStackLayout();
-        FieldLabel = new Label() {
-            Text = text.Prompt
-            };
+    public GuigenFieldBoolean(
+                IMainWindow mainWindow, 
+                GuigenFieldSet fieldsSet,
+                GuiBoundPropertyBoolean binding) : base(mainWindow, fieldsSet, binding) {
+
         ValueField = new CheckBox() {
             };
+        MainWindow.FormatFieldEntry(ValueField, binding);
 
-        view.Add(FieldLabel);
-        view.Add(ValueField);
-        View = view;
-
-        MainWindow.FormatFieldLabel(FieldLabel);
-        MainWindow.FormatFieldEntry(ValueField, text, null);
-        MainWindow.FormatFeedback(Feedback);
-
-        //stack.Add(View);
-        //stack.Add(Feedback);
-
+        View = new HorizontalStackLayout() { FieldLabel, ValueField };
         fieldsSet.AddField(FieldLabel, ValueField, Feedback);
         }
 
 
-
+    ///<inheritdoc/>
     public override void SetField(IBindable data) {
-        var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyBoolean;
-        ValueField.IsChecked = binding.Get(data);
+        ValueField.IsChecked = TypedBinding.Get(data);
 
         }
 
+    ///<inheritdoc/>
     public override void GetField(IBindable data) {
-        var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyBoolean;
-        if (binding.Set is not null) {
-            binding.Set(data, ValueField.IsChecked);
+        if (TypedBinding.Set is not null) {
+            TypedBinding.Set(data, ValueField.IsChecked);
             }
-        }
-
-
-    public override void ClearFeedback() {
-        Feedback.IsVisible =false;
-        }
-
-    public override void SetFeedback(IndexedMessage message) {
-        Feedback.IsVisible = true;
-        Feedback.Text = message.Text;
         }
 
     }

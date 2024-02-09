@@ -12,24 +12,21 @@ namespace Goedel.Guigen.Maui;
 /// </summary>
 public class GuigenFieldChooser : GuigenField {
 
-    public IMainWindow MainWindow { get; }
-    public IView View => ListView;
-    public GuiChooser Chooser => Field as GuiChooser;
+
+    GuiBoundPropertyChooser TypedBinding => Binding as GuiBoundPropertyChooser;
+
 
     public Entry ValueField;
     public ListView ListView { get; } = new ();
     RefreshView RefreshView { get; } = new();
-    ScrollView ScrollView { get; } = new();
 
     public Button AddButton;
     public Entry FilterInput;
     public Button FilterButton;
     public ISelectCollection SelectCollection;
-    GuiBoundPropertyChooser Binding;
 
     public StackBase CommandButtons { get; }
     public HorizontalStackLayout MainLayout;
-    List<BoundPresentation> BoundPresentations = new();
 
     public GuiBinding SelectionBinding { get; set; } = null;
     public List<GridLength> Widths { get; } = new();
@@ -38,35 +35,37 @@ public class GuigenFieldChooser : GuigenField {
 
     public VerticalStackLayout EntryForm { get; } = new();
     public HorizontalStackLayout ButtonBar = new();
-    public GuigenFieldChooser(IMainWindow mainWindow, GuiChooser chooser, GuigenFieldSet fieldsSet) : base(chooser) {
+    public GuigenFieldChooser(IMainWindow mainWindow,
+                GuigenFieldSet fieldsSet,
+                GuiBoundPropertyChooser binding) : base(mainWindow, binding) {
 
-        MainWindow = mainWindow;
+
 
         CommandButtons = new HorizontalStackLayout() {
             FilterInput,
             FilterButton
             };
 
-        foreach (var entry in Chooser.Entries) {
-            switch (entry) {
-                case GuiViewDialog viewDialog: {
-                    var dialog = viewDialog.Dialog;
-                    var presentation = new BoundPresentation(this, dialog);
+        //foreach (var entry in Chooser.Entries) {
+        //    switch (entry) {
+        //        case GuiViewDialog viewDialog: {
+        //            var dialog = viewDialog.Dialog;
+        //            var presentation = new BoundPresentation(this, dialog);
 
 
-                    var text = "Add " + (mainWindow.Binding.Resolve(dialog.Id) ?? dialog.Prompt);
+        //            var text = "Add " + (mainWindow.Binding.Resolve(dialog.Id) ?? dialog.Prompt);
 
-                    var addButton = new DataButton(presentation) {
-                        Text = text
-                        };
-                    addButton.Clicked += OnClickAdd;
+        //            var addButton = new DataButton(presentation) {
+        //                Text = text
+        //                };
+        //            addButton.Clicked += OnClickAdd;
 
-                    CommandButtons.Add(addButton);
-                    BoundPresentations.Add(presentation);
-                    break;
-                    }
-                }
-            }
+        //            CommandButtons.Add(addButton);
+        //            BoundPresentations.Add(presentation);
+        //            break;
+        //            }
+        //        }
+        //    }
 
         FilterInput = new Entry() {
             };
@@ -137,12 +136,11 @@ public class GuigenFieldChooser : GuigenField {
                 }
             }
 
-        Binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyChooser;
-        SelectCollection = Binding.Get(data);
+        SelectCollection = TypedBinding.Get(data);
 
         if (SelectCollection == null) {
             SelectCollection = new SelectList();
-            Binding.Set(data, SelectCollection);
+            TypedBinding.Set(data, SelectCollection);
             }
 
         ListView.ItemsSource = SelectCollection.Entries;
@@ -216,7 +214,7 @@ public class GuigenFieldChooser : GuigenField {
         var gui = MainWindow.Binding.Gui;
         var entries = dialog.Dialog(gui).Entries;
 
-        var fieldSet = new GuigenFieldSet(MainWindow, entries, EntryForm, false);
+        var fieldSet = new GuigenFieldSet(MainWindow, entries, EntryForm, bindable.Binding, false);
         fieldSet.SetFields(bindable);
         ButtonBar.Clear();
         fieldSet.AddButtons(ButtonBar);

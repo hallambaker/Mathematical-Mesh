@@ -45,7 +45,7 @@ public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
 
 
 
-        FieldSet = new GuigenFieldSet(MainWindow, section.Entries, stack);
+        FieldSet = new GuigenFieldSet(MainWindow, section.Entries, stack, section.Binding);
 
         FieldSet.SetFields(section.Data);
 

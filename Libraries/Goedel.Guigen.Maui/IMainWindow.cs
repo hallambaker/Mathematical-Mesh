@@ -32,7 +32,7 @@ public interface IMainWindow  {
 
     public void FormatFieldLabel(Label view);
 
-    public void FormatFieldEntry(View view, GuiField guiText, GuiBoundProperty boundProperty);
+    public void FormatFieldEntry(View view, GuiBoundProperty boundProperty);
 
     public void FormatFeedback(Label view);
 

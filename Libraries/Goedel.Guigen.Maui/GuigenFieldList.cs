@@ -2,9 +2,8 @@
 
 public class GuigenFieldList : GuigenField, IWidget {
 
-
-    public IMainWindow MainWindow { get; }
-    GuigenBinding Binding => MainWindow.Binding;
+    GuiBoundPropertyList TypedBinding => Binding as GuiBoundPropertyList;
+    GuigenBinding MainBinding => MainWindow.Binding;
 
     public IView View { get; private set; }
 
@@ -12,38 +11,21 @@ public class GuigenFieldList : GuigenField, IWidget {
     Grid ValueField = new();
     ImageButton AddButton ;
 
-    public GuigenFieldList(IMainWindow mainWindow, GuiList list, GuigenFieldSet fieldsSet) : base(list) {
-        MainWindow = mainWindow;
-
-
+    public GuigenFieldList(IMainWindow mainWindow,
+                GuigenFieldSet fieldsSet,
+                GuiBoundPropertyList binding) : base(mainWindow, binding) {
 
         FieldLabel = new Label() {
-            Text = list.Prompt
+            Text = binding.Prompt
             };
         AddButton = new() {
             Source = "plus.png",
-            WidthRequest = Binding.ListIconWidth,
-            HeightRequest = Binding.ListIconHeight
+            WidthRequest = MainBinding.ListIconWidth,
+            HeightRequest = MainBinding.ListIconHeight
             };
         AddButton.Clicked += OnClickAdd;
 
-
         var layout = new HorizontalStackLayout() { FieldLabel, AddButton };
-
-
-        //ValueField = new Entry() {
-        //    };
-
-        //view.Add(FieldLabel);
-        //view.Add(ValueField);
-
-
-        //MainWindow.FormatFieldLabel(FieldLabel);
-        //MainWindow.FormatFieldEntry(ValueField);
-        //MainWindow.FormatFeedback(Feedback);
-
-        ////stack.Add(View);
-        ////stack.Add(Feedback);
 
         fieldsSet.AddField(layout, ValueField);
         }
@@ -53,13 +35,12 @@ public class GuigenFieldList : GuigenField, IWidget {
         }
 
     public override void GetField(IBindable data) {
-        var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyList;
+        //var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyList;
         //ValueField.Text = binding.Get(data).ToString();
         }
 
     public override void SetField(IBindable data) {
-        var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyList;
-        var value = binding.Get(data);
+        var value = TypedBinding.Get(data);
 
         ValueField.Clear();
         if (value?.Entries == null) {
@@ -76,8 +57,8 @@ public class GuigenFieldList : GuigenField, IWidget {
 
                     var cell = new Image() {
                         Source = evalue?.Source ?? "messages",
-                        WidthRequest = Binding.IconWidth,
-                        HeightRequest = Binding.IconHeight
+                        WidthRequest = MainBinding.IconWidth,
+                        HeightRequest = MainBinding.IconHeight
                         };
                     ValueField.Add(cell, col, row);
                     col++;
@@ -94,23 +75,6 @@ public class GuigenFieldList : GuigenField, IWidget {
 
             row++;
             }
-
-
-        var a = 1;
-
-
-        //int? fieldValue = Int32.TryParse(ValueField.Text, out var result) ? result : null;
-        //binding.Set(data, fieldValue);
-        }
-
-
-    public override void ClearFeedback() {
-        //Feedback.IsVisible = false;
-        }
-
-    public override void SetFeedback(IndexedMessage message) {
-        //Feedback.IsVisible = true;
-        //Feedback.Text = message.Text;
         }
     }
 

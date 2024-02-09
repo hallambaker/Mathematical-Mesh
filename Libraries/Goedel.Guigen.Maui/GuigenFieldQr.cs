@@ -7,9 +7,9 @@ namespace Goedel.Guigen.Maui;
 
 public class GuigenFieldQr : GuigenField {
 
-    public IMainWindow MainWindow { get; }
-    public IView View => Layout;
-    //public ListView ListView { get; } = new();
+
+    GuiBoundPropertyQRScan TypedBinding => Binding as GuiBoundPropertyQRScan;
+
 
     BarcodeImage QrImage;
     Label QrLabel;
@@ -18,9 +18,12 @@ public class GuigenFieldQr : GuigenField {
     Layout Layout;
 
     public GuiQR SelectCollection;
-    GuiBoundPropertyQRScan Binding;
 
-    public GuigenFieldQr(IMainWindow mainWindow, GuiQRScan chooser, GuigenFieldSet fieldsSet) : base(chooser) {
+
+    public GuigenFieldQr(IMainWindow mainWindow,
+                GuigenFieldSet fieldsSet,
+                GuiBoundPropertyQRScan binding) : base(mainWindow, binding) {
+
         // Generate a random 
         QrImage = new() {
             WidthRequest = 400,
@@ -42,8 +45,7 @@ public class GuigenFieldQr : GuigenField {
 
 
     public override void SetField(IBindable data) {
-        Binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyQRScan;
-        var guiQr = Binding.Get(data);
+        var guiQr = TypedBinding.Get(data);
 
         QrLabel.Text = guiQr.Offer;
         QrImage.Barcode = guiQr.Offer;

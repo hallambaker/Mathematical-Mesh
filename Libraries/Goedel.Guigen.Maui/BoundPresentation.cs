@@ -1,4 +1,6 @@
-﻿namespace Goedel.Guigen.Maui;
+﻿using System;
+
+namespace Goedel.Guigen.Maui;
 
 public enum DialogMode {
     Display,
@@ -58,7 +60,7 @@ public record BoundPresentation{
 
     StackBase MakeLayout(DialogMode dialogMode = DialogMode.Add) {
         var stack = new VerticalStackLayout();
-        fieldSet = new GuigenFieldSet(Chooser.MainWindow, Dialog.Entries, stack);
+        fieldSet = new GuigenFieldSet(Chooser.MainWindow, Dialog.Entries, stack, Dialog.Binding);
 
         Accept = new Button() {
             Text = "Add"

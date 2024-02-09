@@ -1,81 +1,132 @@
 ﻿namespace Goedel.Guigen.Maui;
 
-public class GuigenFieldInteger : GuigenField, IWidget {
-    public IMainWindow MainWindow { get; }
-    public IView View { get; private set; }
+public class GuigenFieldInteger : GuigenFieldSimple, IWidget {
+    GuiBoundPropertyInteger TypedBinding => Binding as GuiBoundPropertyInteger;
 
-    public Entry ValueField;
-    Label FieldLabel;
-    Label Feedback = new() {
-        IsVisible = false
-        };
+    Entry ValueField;
 
-    public GuigenFieldInteger(IMainWindow mainWindow, GuiInteger text, GuigenFieldSet fieldsSet) : base(text) {
-        MainWindow = mainWindow;
 
-        var view = new HorizontalStackLayout();
-        FieldLabel = new Label() {
-            Text = text.Prompt
-            };
+    public GuigenFieldInteger(IMainWindow mainWindow,
+                GuigenFieldSet fieldsSet,
+                GuiBoundPropertyInteger binding) : base(mainWindow, fieldsSet, binding) {
+
+
         ValueField = new Entry() {
             };
+        MainWindow.FormatFieldEntry(ValueField, binding);
 
-        view.Add(FieldLabel);
-        view.Add(ValueField);
-        View = view;
-
-        MainWindow.FormatFieldLabel(FieldLabel);
-        MainWindow.FormatFieldEntry(ValueField, text, null);
-        MainWindow.FormatFeedback(Feedback);
-
-        //stack.Add(View);
-        //stack.Add(Feedback);
-
+        View = new HorizontalStackLayout() { FieldLabel, ValueField };
         fieldsSet.AddField(FieldLabel, ValueField, Feedback);
         }
 
-
-
+    ///<inheritdoc/>
     public override void SetField(IBindable data) {
-        var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyInteger;
-        ValueField.Text = binding.Get(data).ToString();
-
+        ValueField.Text = TypedBinding.Get(data).ToString();
         }
 
+    ///<inheritdoc/>
     public override void GetField(IBindable data) {
-        var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyInteger;
         int? fieldValue = Int32.TryParse(ValueField.Text, out var result) ? result : null;
-        binding.Set(data, fieldValue);
+        TypedBinding.Set(data, fieldValue);
         }
 
+    }
 
-    public override void ClearFeedback() {
-        Feedback.IsVisible = false;
+public class GuigenFieldColor : GuigenFieldSimple, IWidget {
+    GuiBoundPropertyColor TypedBinding => Binding as GuiBoundPropertyColor;
+
+    Entry ValueField;
+
+
+    public GuigenFieldColor(IMainWindow mainWindow,
+                GuigenFieldSet fieldsSet,
+                GuiBoundPropertyColor binding) : base(mainWindow, fieldsSet, binding) {
+
+
+        ValueField = new Entry() {
+            };
+        MainWindow.FormatFieldEntry(ValueField, binding);
+
+        View = new HorizontalStackLayout() { FieldLabel, ValueField };
+        fieldsSet.AddField(FieldLabel, ValueField, Feedback);
         }
 
-    public override void SetFeedback(IndexedMessage message) {
-        Feedback.IsVisible = true;
-        Feedback.Text = message.Text;
+    ///<inheritdoc/>
+    public override void SetField(IBindable data) {
+        //ValueField.Text = TypedBinding.Get(data).ToString();
+        }
+
+    ///<inheritdoc/>
+    public override void GetField(IBindable data) {
+        //int? fieldValue = Float32.TryParse(ValueField.Text, out var result) ? result : null;
+        //TypedBinding.Set(data, fieldValue);
+        }
+
+    }
+
+
+public class GuigenFieldSize : GuigenFieldSimple, IWidget {
+    GuiBoundPropertySize TypedBinding => Binding as GuiBoundPropertySize;
+
+    Entry ValueField;
+
+
+    public GuigenFieldSize(IMainWindow mainWindow,
+                GuigenFieldSet fieldsSet,
+                GuiBoundPropertySize binding) : base(mainWindow, fieldsSet, binding) {
+
+
+        ValueField = new Entry() {
+            };
+        MainWindow.FormatFieldEntry(ValueField, binding);
+
+        View = new HorizontalStackLayout() { FieldLabel, ValueField };
+        fieldsSet.AddField(FieldLabel, ValueField, Feedback);
+        }
+
+    ///<inheritdoc/>
+    public override void SetField(IBindable data) {
+        //ValueField.Text = TypedBinding.Get(data).ToString();
+        }
+
+    ///<inheritdoc/>
+    public override void GetField(IBindable data) {
+        //int? fieldValue = Int32.TryParse(ValueField.Text, out var result) ? result : null;
+        //TypedBinding.Set(data, fieldValue);
         }
 
     }
 
 
 
+public class GuigenFieldDecimal : GuigenFieldSimple, IWidget {
+    GuiBoundPropertyDecimal TypedBinding => Binding as GuiBoundPropertyDecimal;
+
+    Entry ValueField;
 
 
-//class Person {
-//    public Person(string name, DateTime birthday) {
-//        this.Name = name;
-//        this.Birthday = birthday;
-//        this.FavoriteColor = Color.FromArgb("00f00f");
-//        }
-
-//    public string Name { private set; get; }
-
-//    public DateTime Birthday { private set; get; }
-
-//    public Color FavoriteColor { private set; get; }
-//    };
+    public GuigenFieldDecimal(IMainWindow mainWindow,
+                GuigenFieldSet fieldsSet,
+                GuiBoundPropertyDecimal binding) : base(mainWindow, fieldsSet, binding) {
 
 
+        ValueField = new Entry() {
+            };
+        MainWindow.FormatFieldEntry(ValueField, binding);
+
+        View = new HorizontalStackLayout() { FieldLabel, ValueField };
+        fieldsSet.AddField(FieldLabel, ValueField, Feedback);
+        }
+
+    ///<inheritdoc/>
+    public override void SetField(IBindable data) {
+        //ValueField.Text = TypedBinding.Get(data).ToString();
+        }
+
+    ///<inheritdoc/>
+    public override void GetField(IBindable data) {
+        //int? fieldValue = Int32.TryParse(ValueField.Text, out var result) ? result : null;
+        //TypedBinding.Set(data, fieldValue);
+        }
+
+    }

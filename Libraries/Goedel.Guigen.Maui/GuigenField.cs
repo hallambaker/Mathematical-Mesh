@@ -21,11 +21,10 @@ public partial record FieldIcon(string File) : IFieldIcon {
 
     }
 
-public abstract class GuigenField(GuiField field) {
-    public IBindable Value { get; set; }
+public abstract class GuigenField(IMainWindow mainWindow, GuiBoundProperty binding) {
 
-    public GuiField Field { get; } = field;
-    public int Index => Field.Index;
+    public IMainWindow MainWindow { get; } = mainWindow;
+    public GuiBoundProperty Binding { get; } = binding;
 
     public abstract void SetField(IBindable data);
 
@@ -38,6 +37,48 @@ public abstract class GuigenField(GuiField field) {
     public virtual void SetFeedback(IndexedMessage message) {
         }
     }
+
+
+
+public abstract class GuigenFieldSimple : GuigenField, IWidget {
+    public IView View { get; protected set; }
+
+    protected Label FieldLabel;
+    protected Label Feedback = new() {
+        IsVisible = false
+        };
+
+    public GuigenFieldSimple(
+            IMainWindow mainWindow,
+            GuigenFieldSet fieldsSet,
+            GuiBoundPropertyPrompted binding) : base(mainWindow, binding) {
+
+        FieldLabel = new Label() {
+            Text = binding.Prompt
+            };
+
+        MainWindow.FormatFieldLabel(FieldLabel);
+
+        MainWindow.FormatFeedback(Feedback);
+
+        }
+
+    ///<inheritdoc/>
+    public override void ClearFeedback() {
+        Feedback.IsVisible = false;
+        }
+
+    ///<inheritdoc/>
+    public override void SetFeedback(IndexedMessage message) {
+        Feedback.IsVisible = true;
+        Feedback.Text = message.Text;
+        }
+
+    }
+
+
+
+
 
 
 public class GuigenFieldSet : IWidget {
@@ -58,7 +99,7 @@ public class GuigenFieldSet : IWidget {
 
     public IBindable Data { get; set; }
 
-    public GuigenFieldSet(IMainWindow mainWindow, List<IGuiEntry> fields, Layout? stack, bool isEntry=true) {
+    public GuigenFieldSet(IMainWindow mainWindow, List<IGuiEntry> fields, Layout? stack, GuiBinding binding = null, bool isEntry = true) {
         MainWindow = mainWindow;
         Fields = fields;
 
@@ -70,73 +111,155 @@ public class GuigenFieldSet : IWidget {
         View.AddColumnDefinition(new ColumnDefinition(GridLength.Star));
         stack?.Add(View);
 
-
         FieldMap = new int[fields.Count];
         int index = 0;
-       foreach (var entry in fields) {
+        foreach (var entry in binding.BoundProperties) {
             switch (entry) {
-                case GuiText text: {
-                    var field = new GuigenFieldString(MainWindow, text, this);
+                case GuiBoundPropertyBoolean bound: {
+                    var field = new GuigenFieldBoolean(MainWindow, this, bound);
                     MauiFields.Add(field);
-                    FieldMap[index++] = field.Index;
+                    FieldMap[index++] = -1;
                     break;
                     }
-                case GuiBoolean text: {
-                    var field = new GuigenFieldBoolean(MainWindow, text, this);
+                case GuiBoundPropertyString bound: {
+                    var field = new GuigenFieldString(MainWindow, this, bound);
                     MauiFields.Add(field);
-                    FieldMap[index++] = field.Index;
+                    FieldMap[index++] = -1;
                     break;
                     }
-                case GuiTextArea text: {
-                    var field = new GuigenFieldTextArea(MainWindow, text, this);
+                case GuiBoundTextArea bound: {
+                    var field = new GuigenFieldTextArea(MainWindow, this, bound);
                     MauiFields.Add(field);
-                    FieldMap[index++] = field.Index;
+                    FieldMap[index++] = -1;
                     break;
                     }
-                case GuiInteger integer: {
-                    var field = new GuigenFieldInteger(MainWindow, integer, this);
+                case GuiBoundPropertyColor bound: {
+                    var field = new GuigenFieldColor(MainWindow, this, bound);
                     MauiFields.Add(field);
-                    FieldMap[index++] = field.Index;
+                    FieldMap[index++] = -1;
                     break;
                     }
-                case GuiChooser chooser: {
-                    var field = new GuigenFieldChooser(MainWindow, chooser, this);
+                case GuiBoundPropertySize bound: {
+                    var field = new GuigenFieldSize(MainWindow, this, bound);
                     MauiFields.Add(field);
-                    //stack.Add(field.ListView);
-                    FieldMap[index++] = field.Index;
+                    FieldMap[index++] = -1;
                     break;
                     }
-                case GuiQRScan qrscan: {
-                    var field = new GuigenFieldQr(MainWindow, qrscan, this);
+                case GuiBoundPropertyDecimal bound: {
+                    var field = new GuigenFieldDecimal(MainWindow, this, bound);
                     MauiFields.Add(field);
-                    //stack.Add(field.ListView);
-                    FieldMap[index++] = field.Index;
+                    FieldMap[index++] = -1;
                     break;
                     }
-                case GuiList list: {
-                    var field = new GuigenFieldList(MainWindow, list, this);
+                case GuiBoundPropertyInteger bound: {
+                    var field = new GuigenFieldInteger(MainWindow, this, bound);
                     MauiFields.Add(field);
-                    FieldMap[index++] = field.Index;
+                    FieldMap[index++] = -1;
                     break;
                     }
-                case GuiIcon icon: {
+                case GuiBoundPropertyQRScan bound: {
+                    var field = new GuigenFieldQr(MainWindow, this, bound);
+                    MauiFields.Add(field);
+                    FieldMap[index++] = -1;
+                    break;
+                    }
+                case GuiBoundPropertyIcon bound: {
                     if (isEntry) {
                         FieldMap[index++] = -1;
                         }
                     else {
-                        var field = new GuigenFieldIcon(MainWindow, icon, this);
+                        var field = new GuigenFieldIcon(MainWindow, this, bound);
                         MauiFields.Add(field);
-                        FieldMap[index++] = field.Index;
+                        FieldMap[index++] = -1;
                         break;
                         }
                     break;
                     }
-                default : {
+                case GuiBoundPropertyChooser bound: {
+                    var field = new GuigenFieldChooser(MainWindow, this, bound);
+                    MauiFields.Add(field);
+                    FieldMap[index++] = -1;
+                    break;
+                    }
+                case GuiBoundPropertyList bound: {
+                    var field = new GuigenFieldList(MainWindow, this, bound);
+                    MauiFields.Add(field);
+                    FieldMap[index++] = -1;
+                    break;
+                    }
+                default: {
                     FieldMap[index++] = -1;
                     break;
                     }
                 }
+
             }
+
+
+
+
+       //foreach (var entry in fields) {
+       //     switch (entry) {
+       //         case GuiText text: {
+
+       //             break;
+       //             }
+       //         case GuiBoolean text: {
+       //             var field = new GuigenFieldBoolean(MainWindow, text, this);
+       //             MauiFields.Add(field);
+       //             FieldMap[index++] = field.Index;
+       //             break;
+       //             }
+       //         case GuiTextArea text: {
+       //             var field = new GuigenFieldTextArea(MainWindow, text, this);
+       //             MauiFields.Add(field);
+       //             FieldMap[index++] = field.Index;
+       //             break;
+       //             }
+       //         case GuiInteger integer: {
+       //             var field = new GuigenFieldInteger(MainWindow, integer, this);
+       //             MauiFields.Add(field);
+       //             FieldMap[index++] = field.Index;
+       //             break;
+       //             }
+       //         case GuiChooser chooser: {
+       //             var field = new GuigenFieldChooser(MainWindow, chooser, this);
+       //             MauiFields.Add(field);
+       //             //stack.Add(field.ListView);
+       //             FieldMap[index++] = field.Index;
+       //             break;
+       //             }
+       //         case GuiQRScan qrscan: {
+       //             var field = new GuigenFieldQr(MainWindow, qrscan, this);
+       //             MauiFields.Add(field);
+       //             //stack.Add(field.ListView);
+       //             FieldMap[index++] = field.Index;
+       //             break;
+       //             }
+       //         case GuiList list: {
+       //             var field = new GuigenFieldList(MainWindow, list, this);
+       //             MauiFields.Add(field);
+       //             FieldMap[index++] = field.Index;
+       //             break;
+       //             }
+       //         case GuiIcon icon: {
+       //             if (isEntry) {
+       //                 FieldMap[index++] = -1;
+       //                 }
+       //             else {
+       //                 var field = new GuigenFieldIcon(MainWindow, icon, this);
+       //                 MauiFields.Add(field);
+       //                 FieldMap[index++] = field.Index;
+       //                 break;
+       //                 }
+       //             break;
+       //             }
+       //         default : {
+       //             FieldMap[index++] = -1;
+       //             break;
+       //             }
+       //         }
+       //   }
         }
 
     public void SetFields(IBindable data) {

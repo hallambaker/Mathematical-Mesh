@@ -194,7 +194,7 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
         view.WidthRequest = 150;
         }
 
-    public void FormatFieldEntry(View view, GuiField guiText, GuiBoundProperty boundProperty) {
+    public void FormatFieldEntry(View view, GuiBoundProperty boundProperty) {
         }
 
     public void FormatFeedback(Label view) {

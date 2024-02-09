@@ -5,35 +5,14 @@ namespace Goedel.Guigen.Maui;
 public class GuigenFieldIcon : GuigenField, IWidget {
 
 
-    public IMainWindow MainWindow { get; }
-    public IView View { get; private set; }
+    GuiBoundPropertyIcon TypedBinding => Binding as GuiBoundPropertyIcon;
 
-    Label Feedback = new() {
-        IsVisible = false
-    };
 
-    public GuigenFieldIcon(IMainWindow mainWindow, GuiIcon icon, GuigenFieldSet fieldsSet) : base(icon) {
-        MainWindow = mainWindow;
 
-        //var view = new HorizontalStackLayout();
-        //FieldLabel = new Label() {
-        //    Text = text.Prompt
-        //    };
-        //ValueField = new Entry() {
-        //    };
+    public GuigenFieldIcon(IMainWindow mainWindow,
+                GuigenFieldSet fieldsSet,
+                GuiBoundPropertyIcon binding) : base(mainWindow, binding) {
 
-        //view.Add(FieldLabel);
-        //view.Add(ValueField);
-        //View = view;
-
-        //MainWindow.FormatFieldLabel(FieldLabel);
-        //MainWindow.FormatFieldEntry(ValueField);
-        //MainWindow.FormatFeedback(Feedback);
-
-        ////stack.Add(View);
-        ////stack.Add(Feedback);
-
-        //fieldsSet.AddField(FieldLabel, ValueField, Feedback);
         }
 
 
@@ -49,15 +28,6 @@ public class GuigenFieldIcon : GuigenField, IWidget {
         //binding.Set(data, fieldValue);
         }
 
-
-    public override void ClearFeedback() {
-        Feedback.IsVisible = false;
-        }
-
-    public override void SetFeedback(IndexedMessage message) {
-        Feedback.IsVisible = true;
-        Feedback.Text = message.Text;
-        }
     }
 
 

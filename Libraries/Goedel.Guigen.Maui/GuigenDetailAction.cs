@@ -1,4 +1,6 @@
-﻿namespace Goedel.Guigen.Maui;
+﻿using static System.Collections.Specialized.BitVector32;
+
+namespace Goedel.Guigen.Maui;
 
 
 public class GuigenDetaiPage : ContentPage, IPresentation {
@@ -48,10 +50,10 @@ public class GuigenDetailAction : GuigenDetaiPage {
 
         var label = new Label() {
             Text = action.Prompt,
-            };
+        };
         stack.Add(label);
 
-        FieldSet = new GuigenFieldSet(MainWindow, action.Entries, stack);
+        FieldSet = new GuigenFieldSet(MainWindow, action.Entries, stack, action.Binding);
 
         var view = new HorizontalStackLayout();
 
