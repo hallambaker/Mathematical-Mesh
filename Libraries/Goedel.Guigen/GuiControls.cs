@@ -160,15 +160,6 @@ public record ErrorResult : NullResult, IFail {
 
     }
 
-//[Flags]
-//public enum ActionMode {
-//    Initialize = 1,
-//    Validate = 2,
-//    Execute = 4
-//    }
-
-
-
 
 public record GuiBinding {
 
@@ -390,7 +381,7 @@ public record GuiDialog(
             GuiBinding Binding,
             FactoryCallback Factory) : GuiFieldSet(Id, Prompt, Binding), IGuiEntry {
 
-
+    ///<summary>The action entries</summary> 
     public List<IGuiEntry> Entries { get; set; } = null!;
 
     public Func<object, bool> IsBoundType { get; set; } = (object _) => false;
@@ -420,8 +411,11 @@ public record GuiSection (
             set => data = value; }
     IBindable? data = null;
 
+
     public Func<IBindable> BindData { get; set; } = () => null! ;
 
+
+    ///<summary>The action entries</summary> 
     public List<IGuiEntry> Entries { get; set; } = null!;
 
 
@@ -450,125 +444,11 @@ public delegate IBindable FactoryCallback();
 
 
 
-public record GuiField(
-            string Id,
-            string Prompt,
-            int Index
-            ) : GuiPrompt(Id, Prompt), IGuiEntry {
-    }
-
 public record GuiButton(
             string Id,
             IButtonTarget Target
             ) : GuiItem(Id), IGuiEntry {
     }
-
-
-
-public record GuiChooser(
-            string Id,
-            string Prompt,
-            string Icon,
-            int Index = -1,
-            List<IGuiEntry> Entries = null!
-            ) : GuiField(Id, Prompt, Index), IGuiEntry {
-
-
-    }
-
-
-
-
-
-
-public record GuiContext(
-            string Id,
-            string Prompt,
-            int Index = -1
-            ) : GuiField (Id, Prompt, Index) { 
-    }
-
-public record GuiText(
-            string Id,
-            string Prompt,
-            int Index = -1,
-            int? Width = null
-            ) : GuiField(Id, Prompt, Index) {
-    }
-
-public record GuiBoolean(
-            string Id,
-            string Prompt,
-            int Index = -1
-            ) : GuiField(Id, Prompt, Index) {
-    }
-
-public record GuiQRScan(
-            string Id,
-            string Prompt,
-            int Index = -1
-            ) : GuiField(Id, Prompt, Index) {
-    }
-
-public record GuiTextArea(
-            string Id,
-            string Prompt,
-            int Index = -1
-            ) : GuiField(Id, Prompt, Index) {
-    }
-
-
-public record GuiColor(
-            string Id,
-            string Prompt,
-            int Index = -1
-            ) : GuiField(Id, Prompt, Index) {
-    }
-public record GuiSize(
-            string Id,
-            string Prompt,
-            int Index = -1
-            ) : GuiField(Id, Prompt, Index) {
-    }
-public record GuiDecimal(
-            string Id,
-            string Prompt,
-            int Index = -1
-            ) : GuiField(Id, Prompt, Index) {
-    }
-
-public record GuiInteger(
-            string Id,
-            string Prompt,
-            int Index = -1
-            ) : GuiField(Id, Prompt, Index) {
-    }
-
-public record GuiIcon(
-            string Id,
-            string Prompt,
-            int Index = -1
-            ) : GuiField(Id, Prompt, Index) {
-    }
-
-public record GuiList(
-            string Id,
-            string Prompt,
-            string Icon,
-            GuiDialog dialog = null!,
-            int Index = -1,
-            List<IGuiEntry> Entries = null!
-            ) : GuiField(Id, Prompt, Index) {
-    }
-
-
-
-//public record GuiViewDialog(GuiDialog Dialog) : IGuiEntry {
-//    }
-public record GuiViewBinding(GuiBinding Dialog)  : IGuiEntry {
-    }
-
-
 
 
 
@@ -581,17 +461,6 @@ public interface IGuiEntry {
 
 
 
-//public interface ISectionEntry {
-//    }
-
-//public interface IActionEntry {
-//    }
-
-//public interface IDialogEntry {
-//    }
-
-//public interface IChooserEntry {
-//    }
 
 public interface IButtonTarget {
     }

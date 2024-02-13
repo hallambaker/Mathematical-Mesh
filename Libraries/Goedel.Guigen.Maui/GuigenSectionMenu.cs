@@ -66,17 +66,6 @@ public class GuigenSectionButton : IWidget {
         Stack = new HorizontalStackLayout() { ImageButton , TextButton};
 
 
-        //Text = section.Prompt;
-        //ImageSource = section.Icon.GetFilename();
-     
-        //HeightRequest = Binding.IconHeight * 2;
-        //VerticalOptions = new LayoutOptions(LayoutAlignment.Start, true);
-        //ContentLayout = new ButtonContentLayout(ButtonContentLayout.ImagePosition.Left, 0);
-        //Scale = 0.5;
-        //WidthRequest = Binding.IconWidth * 2;
-
-
-
         }
 
     private void OnClick(object sender, EventArgs e) {

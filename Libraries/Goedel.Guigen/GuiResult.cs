@@ -4,14 +4,11 @@ using System.Reflection.Metadata;
 
 namespace Goedel.Guigen;
 
-public record GuiResult {
+public record GuiResult (GuiBinding Binding) {
 
     public List<IGuiEntry> Entries { get; set; } = null!;
 
 
-
-    public GuiResult() {
-        }
 
     }
 

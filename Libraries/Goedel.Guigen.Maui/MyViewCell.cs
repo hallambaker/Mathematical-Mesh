@@ -136,8 +136,8 @@ class SelectGrid {
                     })
         };
     Image EntryImage = new Image() {
-        HeightRequest = 30,
-        WidthRequest = 30
+        HeightRequest = 20,
+        WidthRequest = 20
         };
     Label MainLabel = new Label();
     Label SecondaryLabel = new Label();

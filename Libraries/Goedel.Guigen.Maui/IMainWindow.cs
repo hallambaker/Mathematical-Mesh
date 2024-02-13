@@ -17,6 +17,10 @@ public interface IMainWindow  {
     public GuigenDetailAction CurrentAction { get; set; }
 
 
+
+    public int GetDetailWidth();
+
+
     public void SetDetailWindow(GuiSection section = null);
 
     public void SetDetailWindow(GuiAction action);

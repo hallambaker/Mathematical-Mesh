@@ -46,27 +46,6 @@ public class GuigenFieldChooser : GuigenField {
             FilterButton
             };
 
-        //foreach (var entry in Chooser.Entries) {
-        //    switch (entry) {
-        //        case GuiViewDialog viewDialog: {
-        //            var dialog = viewDialog.Dialog;
-        //            var presentation = new BoundPresentation(this, dialog);
-
-
-        //            var text = "Add " + (mainWindow.Binding.Resolve(dialog.Id) ?? dialog.Prompt);
-
-        //            var addButton = new DataButton(presentation) {
-        //                Text = text
-        //                };
-        //            addButton.Clicked += OnClickAdd;
-
-        //            CommandButtons.Add(addButton);
-        //            BoundPresentations.Add(presentation);
-        //            break;
-        //            }
-        //        }
-        //    }
-
         FilterInput = new Entry() {
             };
         FilterButton = new Button() {
@@ -82,17 +61,11 @@ public class GuigenFieldChooser : GuigenField {
         ListView.ItemSelected += OnClickSelect;
         ListView.VerticalScrollBarVisibility = ScrollBarVisibility.Always;
         ListView.HeightRequest = 200;
-        ListView.WidthRequest = 500;
+        //ListView.WidthRequest = 500;
 
-        //ScrollView.Content = ListView;
         RefreshView.Content = ListView;
 
-        //stack.Add(CommandButtons);
-
         MainLayout = new();
-
-
-        //stack.Add(MainLayout);
 
         var Layout = new VerticalStackLayout() { CommandButtons, MainLayout, EntryForm, ButtonBar };
         fieldsSet.AddField(Layout);
@@ -147,12 +120,34 @@ public class GuigenFieldChooser : GuigenField {
         }
 
     public void MakeHeadings(GuiBinding selectionBinding) {
+
         SelectionBinding = selectionBinding;
+        var fixedWidth = 0;
+        var relativeWidth = 0;
+        foreach (var item in SelectionBinding.BoundProperties) {
+            switch (item) {
+                case GuiBoundPropertyString propertyString: {
+                    relativeWidth++;
+                    break;
+                    }
+                case GuiBoundPropertyIcon icon: {
+                    fixedWidth += MainWindow.Binding.IconWidth;
+                    break;
+                    }
+                }
+            }
+
+        var colWidth = (MainWindow.GetDetailWidth() - fixedWidth) / relativeWidth;
+
+
+
+
         var col = 0;
         foreach (var item in SelectionBinding.BoundProperties) {
             switch (item) {
                 case GuiBoundPropertyString propertyString : {
-                    var width = new GridLength(100);
+                    var width = new GridLength(colWidth);
+                    //width = GridLength.Auto;
                     Widths.Add (width);
                     var label = new Label() {
                         Text = propertyString.Label,

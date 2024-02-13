@@ -126,6 +126,9 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
         SetDetailWindow(Gui.DefaultSection);
         }
 
+    public int GetDetailWidth() => (int) FlyoutPage.Window.Width;
+
+
     /// <summary>
     /// Event callback. Display the cached detail window associated with <paramref name="section"/>
     /// if it exists, otherwise create a new detail window.
@@ -204,6 +207,8 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
     public void DisableView(View view) {
         throw new NotImplementedException();
         }
+
+
     }
 
 

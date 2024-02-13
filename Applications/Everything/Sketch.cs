@@ -2020,10 +2020,8 @@ public partial class _BoundContactPerson : BoundContact {
             new GuiBoundPropertyString ("Last", "Last name", (object data) => (data as _BoundContactPerson).Last , (object data,string value) => (data as _BoundContactPerson).Last = value), 
             new GuiBoundPropertyString ("Prefix", "Prefix", (object data) => (data as _BoundContactPerson).Prefix , (object data,string value) => (data as _BoundContactPerson).Prefix = value), 
             new GuiBoundPropertyString ("Suffix", "Suffix", (object data) => (data as _BoundContactPerson).Suffix , (object data,string value) => (data as _BoundContactPerson).Suffix = value), 
-            new GuiBoundPropertyList ("NetworkAddresses", "Network Addresses", (object data) => (data as _BoundContactPerson).NetworkAddresses , (object data,ISelectCollection value) => (data as _BoundContactPerson).NetworkAddresses = value, _ContactNetworkAddress.BaseBinding
-), 
-            new GuiBoundPropertyList ("PhysicalAddresses", "Locations", (object data) => (data as _BoundContactPerson).PhysicalAddresses , (object data,ISelectCollection value) => (data as _BoundContactPerson).PhysicalAddresses = value, _ContactPhysicalAddress.BaseBinding
-)
+            new GuiBoundPropertyList ("NetworkAddresses", "Network Addresses", (object data) => (data as _BoundContactPerson).NetworkAddresses , (object data,ISelectCollection value) => (data as _BoundContactPerson).NetworkAddresses = value, _ContactNetworkAddress.BaseBinding), 
+            new GuiBoundPropertyList ("PhysicalAddresses", "Locations", (object data) => (data as _BoundContactPerson).PhysicalAddresses , (object data,ISelectCollection value) => (data as _BoundContactPerson).PhysicalAddresses = value, _ContactPhysicalAddress.BaseBinding)
 
             });
     ///<summary>Validation</summary> 
@@ -5477,25 +5475,25 @@ public class _EverythingMaui : Gui {
 #region // Results
 
     ///<summary>Result ResultReportHost.</summary> 
-	public GuiResult ResultReportHost { get; } = new ();
+	public GuiResult ResultReportHost { get; } = new (_ReportHost.BaseBinding);
 
     ///<summary>Result ResultReportAccountCreate.</summary> 
-	public GuiResult ResultReportAccountCreate { get; } = new ();
+	public GuiResult ResultReportAccountCreate { get; } = new (_ReportAccountCreate.BaseBinding);
 
     ///<summary>Result ResultReportAccount.</summary> 
-	public GuiResult ResultReportAccount { get; } = new ();
+	public GuiResult ResultReportAccount { get; } = new (_ReportAccount.BaseBinding);
 
     ///<summary>Result ResultReportPending.</summary> 
-	public GuiResult ResultReportPending { get; } = new ();
+	public GuiResult ResultReportPending { get; } = new (_ReportPending.BaseBinding);
 
     ///<summary>Result ResultReportShares.</summary> 
-	public GuiResult ResultReportShares { get; } = new ();
+	public GuiResult ResultReportShares { get; } = new (_ReportShares.BaseBinding);
 
     ///<summary>Result ResultMessageSentContact.</summary> 
-	public GuiResult ResultMessageSentContact { get; } = new ();
+	public GuiResult ResultMessageSentContact { get; } = new (_MessageSentContact.BaseBinding);
 
     ///<summary>Result ResultMessageSentDevice.</summary> 
-	public GuiResult ResultMessageSentDevice { get; } = new ();
+	public GuiResult ResultMessageSentDevice { get; } = new (_MessageSentDevice.BaseBinding);
 	
     ///<summary>Dictionary resolving exception name to factory method.</summary> 
     public Dictionary<string, Func<IResult>> ExceptionDirectory =
@@ -5512,131 +5510,83 @@ public class _EverythingMaui : Gui {
 
 	    SectionAccountSection.Gui = this;
 	    SectionAccountSection.Active = () => StateAlways;
-	    SectionAccountSection.Entries =  new () {  
-			new GuiButton ("AccountCreate", ActionAccountCreate), 
-			new GuiButton ("AccountRequestConnect", ActionAccountRequestConnect), 
-			new GuiButton ("TestService", ActionTestService), 
-			new GuiButton ("AccountRecover", ActionAccountRecover), 
-			new GuiButton ("AccountGenerateRecovery", ActionAccountGenerateRecovery), 
-			new GuiButton ("AccountSwitch", ActionAccountSwitch), 
-			new GuiText ("ServiceAddress", "Service Address", 0, null), 
-			new GuiText ("ProfileUdf", "Profile fingerprint", 1, null), 
-			new GuiText ("LocalAddress", "Local Address", 2, null)		    
-            };
+	    SectionAccountSection.Entries = [
+			new GuiButton ("AccountCreate", ActionAccountCreate),
+			new GuiButton ("AccountRequestConnect", ActionAccountRequestConnect),
+			new GuiButton ("TestService", ActionTestService),
+			new GuiButton ("AccountRecover", ActionAccountRecover),
+			new GuiButton ("AccountGenerateRecovery", ActionAccountGenerateRecovery),
+			new GuiButton ("AccountSwitch", ActionAccountSwitch)];
 
 	    SectionMessageSection.Gui = this;
 	    SectionMessageSection.Active = () => StateDefault;
-	    SectionMessageSection.Entries =  new () {  
-			new GuiButton ("RequestContact", ActionRequestContact), 
-			new GuiButton ("RequestConfirmation", ActionRequestConfirmation), 
-			new GuiButton ("CreateMail", ActionCreateMail), 
-			new GuiButton ("CreateChat", ActionCreateChat), 
-			new GuiButton ("StartVoice", ActionStartVoice), 
-			new GuiButton ("StartVideo", ActionStartVideo), 
-			new GuiChooser ("ChooseMessage", "Messages", "inbox_messages", 0, new () {
-				}) 		    
-            };
+	    SectionMessageSection.Entries = [
+			new GuiButton ("RequestContact", ActionRequestContact),
+			new GuiButton ("RequestConfirmation", ActionRequestConfirmation),
+			new GuiButton ("CreateMail", ActionCreateMail),
+			new GuiButton ("CreateChat", ActionCreateChat),
+			new GuiButton ("StartVoice", ActionStartVoice),
+			new GuiButton ("StartVideo", ActionStartVideo)];
 
 	    SectionContactSection.Gui = this;
 	    SectionContactSection.Active = () => StateDefault;
-	    SectionContactSection.Entries =  new () {  
-			new GuiButton ("QrContact", ActionQrContact), 
-			new GuiButton ("RequestContact", ActionRequestContact), 
-			new GuiChooser ("ChooseContact", "Contacts", "contact_other", 0, new () {
-				}) 		    
-            };
+	    SectionContactSection.Entries = [
+			new GuiButton ("QrContact", ActionQrContact),
+			new GuiButton ("RequestContact", ActionRequestContact)];
 
 	    SectionDocumentSection.Gui = this;
 	    SectionDocumentSection.Active = () => StateDefault;
-	    SectionDocumentSection.Entries =  new () {  
-			new GuiChooser ("ChooseDocuments", "Documents", "documents", 0, new () {
-				}) 		    
-            };
+	    SectionDocumentSection.Entries = [];
 
 	    SectionFeedSection.Gui = this;
 	    SectionFeedSection.Active = () => StateDefault;
-	    SectionFeedSection.Entries =  new () {  
-			new GuiChooser ("ChooseFeed", "Feeds", "feeds", 0, new () {
-				}) 		    
-            };
+	    SectionFeedSection.Entries = [];
 
 	    SectionGroupSection.Gui = this;
 	    SectionGroupSection.Active = () => StateDefault;
-	    SectionGroupSection.Entries =  new () {  
-			new GuiChooser ("ChooseGroup", "User", "account_group", 0, new () {
-				}) 		    
-            };
+	    SectionGroupSection.Entries = [];
 
 	    SectionCredentialSection.Gui = this;
 	    SectionCredentialSection.Active = () => StateDefault;
-	    SectionCredentialSection.Entries =  new () {  
-			new GuiChooser ("ChooseCredential", "Credentials", "credentials", 0, new () {
-				}) 		    
-            };
+	    SectionCredentialSection.Entries = [];
 
 	    SectionTaskSection.Gui = this;
 	    SectionTaskSection.Active = () => StateDefault;
-	    SectionTaskSection.Entries =  new () {  
-			new GuiChooser ("ChooseTask", "Tasks", "Tasks", 0, new () {
-				}) 		    
-            };
+	    SectionTaskSection.Entries = [];
 
 	    SectionCalendarSection.Gui = this;
 	    SectionCalendarSection.Active = () => StateDefault;
-	    SectionCalendarSection.Entries =  new () {  
-			new GuiChooser ("ChooseAppointment", "Tasks", "Tasks", 0, new () {
-				}) 		    
-            };
+	    SectionCalendarSection.Entries = [];
 
 	    SectionBookmarkSection.Gui = this;
 	    SectionBookmarkSection.Active = () => StateDefault;
-	    SectionBookmarkSection.Entries =  new () {  
-			new GuiChooser ("ChooseBookmark", "Bookmark", "Bookmark", 0, new () {
-				}) 		    
-            };
+	    SectionBookmarkSection.Entries = [];
 
 	    SectionApplicationSection.Gui = this;
 	    SectionApplicationSection.Active = () => StateDefault;
-	    SectionApplicationSection.Entries =  new () {  
-			new GuiButton ("AddMailAccount", ActionAddMailAccount), 
-			new GuiButton ("AddSshAccount", ActionAddSshAccount), 
-			new GuiButton ("AddGitAccount", ActionAddGitAccount), 
-			new GuiButton ("AddCodeSigningKey", ActionAddCodeSigningKey), 
-			new GuiChooser ("ChooseApplication", "Applications", "Applications", 0, new () {
-				}) 		    
-            };
+	    SectionApplicationSection.Entries = [
+			new GuiButton ("AddMailAccount", ActionAddMailAccount),
+			new GuiButton ("AddSshAccount", ActionAddSshAccount),
+			new GuiButton ("AddGitAccount", ActionAddGitAccount),
+			new GuiButton ("AddCodeSigningKey", ActionAddCodeSigningKey)];
 
 	    SectionDeviceSection.Gui = this;
 	    SectionDeviceSection.Active = () => StateDefault;
-	    SectionDeviceSection.Entries =  new () {  
-			new GuiButton ("DeviceConnectQR", ActionDeviceConnectQR), 
-			new GuiButton ("AccountGetPin", ActionAccountGetPin), 
-			new GuiChooser ("ChooseDevice", "Devices", "Devices", 0, new () {
-				}) 		    
-            };
+	    SectionDeviceSection.Entries = [
+			new GuiButton ("DeviceConnectQR", ActionDeviceConnectQR),
+			new GuiButton ("AccountGetPin", ActionAccountGetPin)];
 
 	    SectionServiceSection.Gui = this;
 	    SectionServiceSection.Active = () => StateDefault;
-	    SectionServiceSection.Entries =  new () {  
-			new GuiChooser ("ChooseService", "Services", "account_service.png", 0, new () {
-				}) 		    
-            };
+	    SectionServiceSection.Entries = [];
 
 	    SectionSettingSection.Gui = this;
 	    SectionSettingSection.Active = () => StateAlways;
-	    SectionSettingSection.Entries =  new () {  
-		    
-            };
+	    SectionSettingSection.Entries = [];
 
 	    SectionAppearance.Gui = this;
 	    SectionAppearance.Active = () => StateDefault;
-	    SectionAppearance.Entries =  new () {  
-			new GuiColor ("BackgroundColor", "Background Color"), 
-			new GuiColor ("HighlightColor", "Highlight Color"), 
-			new GuiColor ("TextColor", "Text Color"), 
-			new GuiSize ("TextSize", "Text Size"), 
-			new GuiSize ("IconSize", "Icon Size")		    
-            };
+	    SectionAppearance.Entries = [];
 
 
 #endregion
@@ -5662,129 +5612,48 @@ public class _EverythingMaui : Gui {
 #endregion
 #region // Initialize Actions
         ActionTestService.Callback = (x) => TestService (x as TestService) ;
-	    ActionTestService.Entries = new () { 
-			new GuiText ("ServiceAddress", "Service address", 0, null)
-		    };
 
         ActionAccountCreate.Callback = (x) => AccountCreate (x as AccountCreate) ;
-	    ActionAccountCreate.Entries = new () { 
-			new GuiText ("ServiceAddress", "Account service address", 0, null), 
-			new GuiText ("ContactName", "Contact Name  (optional)", 1, null), 
-			new GuiText ("LocalName", "Friendly name (optional)", 2, null), 
-			new GuiText ("Coupon", "Activation code (if provided)", 3, null)
-		    };
 
         ActionAccountRequestConnect.Callback = (x) => AccountRequestConnect (x as AccountRequestConnect) ;
-	    ActionAccountRequestConnect.Entries = new () { 
-			new GuiText ("ConnectionString", "Account address", 0, null), 
-			new GuiText ("ConnectionPin", "Activation code (if provided)", 1, null), 
-			new GuiText ("Rights", "Requested rights", 2, null)
-		    };
 
         ActionDeviceConnectQR.Callback = (x) => DeviceConnectQR (x as DeviceConnectQR) ;
-	    ActionDeviceConnectQR.Entries = new () { 
-			new GuiQRScan ("QrCode", "Contact QR", 0), 
-			new GuiText ("LocalName", "Friendly name (optional)", 1, null), 
-			new GuiText ("Rights", "Assigned rights", 2, null)
-		    };
 
         ActionAccountGetPin.Callback = (x) => AccountGetPin (x as AccountGetPin) ;
-	    ActionAccountGetPin.Entries = new () { 
-			new GuiText ("Rights", "Assigned rights", 0, null), 
-			new GuiInteger ("Security", "Security level", 1), 
-			new GuiInteger ("Expire", "Expiry in hours", 2)
-		    };
 
         ActionAccountRecover.Callback = (x) => AccountRecover (x as AccountRecover) ;
-	    ActionAccountRecover.Entries = new () { 
-			new GuiText ("ServiceAddress", "Account service address", 0, null), 
-			new GuiText ("LocalName", "Friendly name (optional)", 1, null), 
-			new GuiText ("Coupon", "Activation code (if provided)", 2, null), 
-			new GuiText ("Share1", "Recovery share", 3, null), 
-			new GuiText ("Share2", "Recovery share", 4, null), 
-			new GuiText ("Share3", "Recovery share", 5, null), 
-			new GuiText ("Share4", "Recovery share", 6, null), 
-			new GuiText ("Share5", "Recovery share", 7, null), 
-			new GuiText ("Share6", "Recovery share", 8, null), 
-			new GuiText ("Share7", "Recovery share", 9, null), 
-			new GuiText ("Share8", "Recovery share", 10, null)
-		    };
 
         ActionAccountDelete.Callback = (x) => AccountDelete (x as AccountDelete) ;
-	    ActionAccountDelete.Entries = new () {
-		    };
 
         ActionAccountSwitch.Callback = (x) => AccountSwitch (x as AccountSwitch) ;
-	    ActionAccountSwitch.Entries = new () { 
-			new GuiChooser ("ChooseUser", "User", "account_user", 0, new () {
-				}) 
-		    };
 
         ActionAccountGenerateRecovery.Callback = (x) => AccountGenerateRecovery (x as AccountGenerateRecovery) ;
-	    ActionAccountGenerateRecovery.Entries = new () { 
-			new GuiInteger ("NumberShares", "Total number of shares", 0), 
-			new GuiInteger ("Quorum", "Quorum required for recovery", 1)
-		    };
 
         ActionRequestContact.Callback = (x) => RequestContact (x as RequestContact) ;
-	    ActionRequestContact.Entries = new () { 
-			new GuiText ("Recipient", "Address", 0, null), 
-			new GuiText ("Message", "Message", 1, null)
-		    };
 
         ActionQrContact.Callback = (x) => QrContact (x as QrContact) ;
-	    ActionQrContact.Entries = new () { 
-			new GuiQRScan ("QrCode", "Contact QR", 0)
-		    };
 
         ActionRequestConfirmation.Callback = (x) => RequestConfirmation (x as RequestConfirmation) ;
-	    ActionRequestConfirmation.Entries = new () { 
-			new GuiText ("Recipient", "Address", 0, null), 
-			new GuiText ("Message", "Message", 1, null)
-		    };
 
         ActionCreateMail.Callback = (x) => CreateMail (x as CreateMail) ;
-	    ActionCreateMail.Entries = new () { 
-			new GuiText ("Recipient", "Address", 0, null), 
-			new GuiText ("Subject", "Subject", 1, null), 
-			new GuiTextArea ("Message", "Message", 2)
-		    };
 
         ActionCreateChat.Callback = (x) => CreateChat (x as CreateChat) ;
-	    ActionCreateChat.Entries = new () {
-		    };
 
         ActionStartVoice.Callback = (x) => StartVoice (x as StartVoice) ;
-	    ActionStartVoice.Entries = new () {
-		    };
 
         ActionStartVideo.Callback = (x) => StartVideo (x as StartVideo) ;
-	    ActionStartVideo.Entries = new () {
-		    };
 
         ActionSendDocument.Callback = (x) => SendDocument (x as SendDocument) ;
-	    ActionSendDocument.Entries = new () {
-		    };
 
         ActionShareDocument.Callback = (x) => ShareDocument (x as ShareDocument) ;
-	    ActionShareDocument.Entries = new () {
-		    };
 
         ActionAddMailAccount.Callback = (x) => AddMailAccount (x as AddMailAccount) ;
-	    ActionAddMailAccount.Entries = new () {
-		    };
 
         ActionAddSshAccount.Callback = (x) => AddSshAccount (x as AddSshAccount) ;
-	    ActionAddSshAccount.Entries = new () {
-		    };
 
         ActionAddGitAccount.Callback = (x) => AddGitAccount (x as AddGitAccount) ;
-	    ActionAddGitAccount.Entries = new () {
-		    };
 
         ActionAddCodeSigningKey.Callback = (x) => AddCodeSigningKey (x as AddCodeSigningKey) ;
-	    ActionAddCodeSigningKey.Entries = new () {
-		    };
 
 
         Actions = new List<GuiAction>() {  
@@ -5816,44 +5685,24 @@ public class _EverythingMaui : Gui {
 
 #region // Initialize Selections
         SelectionConfirmationAccept.Callback = (x) => ConfirmationAccept (x as BoundMessageConfirmationRequest) ;
-	    SelectionConfirmationAccept.Entries = new () {
-		    };
 
         SelectionConfirmationReject.Callback = (x) => ConfirmationReject (x as BoundMessageConfirmationRequest) ;
-	    SelectionConfirmationReject.Entries = new () {
-		    };
 
         SelectionContactAccept.Callback = (x) => ContactAccept (x as BoundMessageContactRequest) ;
-	    SelectionContactAccept.Entries = new () {
-		    };
 
         SelectionContactReject.Callback = (x) => ContactReject (x as BoundMessageContactRequest) ;
-	    SelectionContactReject.Entries = new () {
-		    };
 
         SelectionConnectAccept.Callback = (x) => ConnectAccept (x as BoundMessageConnectionRequest) ;
-	    SelectionConnectAccept.Entries = new () {
-		    };
 
         SelectionConnectReject.Callback = (x) => ConnectReject (x as BoundMessageConnectionRequest) ;
-	    SelectionConnectReject.Entries = new () {
-		    };
 
         SelectionGroupAccept.Callback = (x) => GroupAccept (x as BoundMessageGroupInvitation) ;
-	    SelectionGroupAccept.Entries = new () {
-		    };
 
         SelectionGroupReject.Callback = (x) => GroupReject (x as BoundMessageGroupInvitation) ;
-	    SelectionGroupReject.Entries = new () {
-		    };
 
         SelectionTaskAccept.Callback = (x) => TaskAccept (x as BoundMessageTaskRequest) ;
-	    SelectionTaskAccept.Entries = new () {
-		    };
 
         SelectionTaskReject.Callback = (x) => TaskReject (x as BoundMessageTaskRequest) ;
-	    SelectionTaskReject.Entries = new () {
-		    };
 
 
         Selections = new List<GuiAction>() {  
@@ -5870,270 +5719,76 @@ public class _EverythingMaui : Gui {
 		    };
 
 #endregion
-
 #region // Initialize Dialogs
-	    DialogBoundAccount.Entries = new () { 
-			new GuiText ("Display", "Display name", 0, null), 
-			new GuiText ("Service", "Service", 1, null), 
-			new GuiText ("UDF", "Fingerprint", 2, null)			
-		    };
 
-        //BoundAccount.IsBacker = (object data) => DialogBoundAccount.IsBacker(data);
-	    DialogBoundMessage.Entries = new () { 
-			new GuiIcon ("Type", "Type"), 
-			new GuiText ("TimeSent", "Sent", 1, 100), 
-			new GuiText ("Sender", "Sender", 2, 150), 
-			new GuiText ("Subject", "Subject", 3, 300)			
-		    };
+	    DialogBoundAccount.Entries = [];
 
-        //BoundMessage.IsBacker = (object data) => DialogBoundMessage.IsBacker(data);
-	    DialogBoundMailMail.Entries = new () { 
-			new GuiIcon ("Type", "Type"), 
-			new GuiText ("TimeSent", "Sent", 1, 100), 
-			new GuiText ("Sender", "Sender", 2, 150), 
-			new GuiText ("Subject", "Subject", 3, 300), 
-			new GuiTextArea ("Message", "Message", 4)			
-		    };
+	    DialogBoundMessage.Entries = [];
 
-        //BoundMailMail.IsBacker = (object data) => DialogBoundMailMail.IsBacker(data);
-	    DialogBoundMessageConfirmationRequest.Entries = new () { 
-			new GuiIcon ("Type", "Type"), 
-			new GuiText ("TimeSent", "Sent", 1, 100), 
-			new GuiText ("Sender", "Sender", 2, 150), 
-			new GuiText ("Subject", "Subject", 3, 300), 
-			new GuiText ("RequestMessage", "Request", 4, null), 
-			new GuiButton ("ConfirmationAccept", SelectionConfirmationAccept), 
-			new GuiButton ("ConfirmationReject", SelectionConfirmationReject)			
-		    };
+	    DialogBoundMailMail.Entries = [];
 
-        //BoundMessageConfirmationRequest.IsBacker = (object data) => DialogBoundMessageConfirmationRequest.IsBacker(data);
-	    DialogBoundMessageConfirmationResponse.Entries = new () { 
-			new GuiIcon ("Type", "Type"), 
-			new GuiText ("TimeSent", "Sent", 1, 100), 
-			new GuiText ("Sender", "Sender", 2, 150), 
-			new GuiText ("Subject", "Subject", 3, 300)			
-		    };
+	    DialogBoundMessageConfirmationRequest.Entries = [];
 
-        //BoundMessageConfirmationResponse.IsBacker = (object data) => DialogBoundMessageConfirmationResponse.IsBacker(data);
-	    DialogBoundMessageContactRequest.Entries = new () { 
-			new GuiIcon ("Type", "Type"), 
-			new GuiText ("TimeSent", "Sent", 1, 100), 
-			new GuiText ("Sender", "Sender", 2, 150), 
-			new GuiText ("Subject", "Subject", 3, 300), 
-			new GuiButton ("ContactAccept", SelectionContactAccept), 
-			new GuiButton ("ContactReject", SelectionContactReject)			
-		    };
+	    DialogBoundMessageConfirmationResponse.Entries = [];
 
-        //BoundMessageContactRequest.IsBacker = (object data) => DialogBoundMessageContactRequest.IsBacker(data);
-	    DialogBoundMessageConnectionRequest.Entries = new () { 
-			new GuiIcon ("Type", "Type"), 
-			new GuiText ("TimeSent", "Sent", 1, 100), 
-			new GuiText ("Sender", "Sender", 2, 150), 
-			new GuiText ("Subject", "Subject", 3, 300), 
-			new GuiText ("RequestMessage", "Request", 4, null), 
-			new GuiButton ("ConnectAccept", SelectionConnectAccept), 
-			new GuiButton ("ConnectReject", SelectionConnectReject)			
-		    };
+	    DialogBoundMessageContactRequest.Entries = [];
 
-        //BoundMessageConnectionRequest.IsBacker = (object data) => DialogBoundMessageConnectionRequest.IsBacker(data);
-	    DialogBoundMessageGroupInvitation.Entries = new () { 
-			new GuiIcon ("Type", "Type"), 
-			new GuiText ("TimeSent", "Sent", 1, 100), 
-			new GuiText ("Sender", "Sender", 2, 150), 
-			new GuiText ("Subject", "Subject", 3, 300), 
-			new GuiButton ("GroupAccept", SelectionGroupAccept), 
-			new GuiButton ("GroupReject", SelectionGroupReject)			
-		    };
+	    DialogBoundMessageConnectionRequest.Entries = [];
 
-        //BoundMessageGroupInvitation.IsBacker = (object data) => DialogBoundMessageGroupInvitation.IsBacker(data);
-	    DialogBoundMessageTaskRequest.Entries = new () { 
-			new GuiIcon ("Type", "Type"), 
-			new GuiText ("TimeSent", "Sent", 1, 100), 
-			new GuiText ("Sender", "Sender", 2, 150), 
-			new GuiText ("Subject", "Subject", 3, 300), 
-			new GuiButton ("TaskAccept", SelectionTaskAccept), 
-			new GuiButton ("TaskReject", SelectionTaskReject)			
-		    };
+	    DialogBoundMessageGroupInvitation.Entries = [];
 
-        //BoundMessageTaskRequest.IsBacker = (object data) => DialogBoundMessageTaskRequest.IsBacker(data);
-	    DialogBoundDocument.Entries = new () { 
-			new GuiIcon ("Type", "Type"), 
-			new GuiText ("FileType", "Type", 1, null), 
-			new GuiText ("Filename", "File name", 2, null)			
-		    };
+	    DialogBoundMessageTaskRequest.Entries = [];
 
-        //BoundDocument.IsBacker = (object data) => DialogBoundDocument.IsBacker(data);
-	    DialogBoundGroup.Entries = new () { 
-			new GuiText ("Display", "Display name", 0, null)			
-		    };
+	    DialogBoundDocument.Entries = [];
 
-        //BoundGroup.IsBacker = (object data) => DialogBoundGroup.IsBacker(data);
-	    DialogBoundCredential.Entries = new () { 
-			new GuiIcon ("Type", "Type"), 
-			new GuiText ("Protocol", "Protocol", 1, null), 
-			new GuiText ("Service", "Service", 2, null), 
-			new GuiText ("Username", "Username", 3, null)			
-		    };
+	    DialogBoundGroup.Entries = [];
 
-        //BoundCredential.IsBacker = (object data) => DialogBoundCredential.IsBacker(data);
-	    DialogBoundPassword.Entries = new () { 
-			new GuiIcon ("Type", "Type"), 
-			new GuiText ("Protocol", "Protocol", 1, null), 
-			new GuiText ("Service", "Service", 2, null), 
-			new GuiText ("Username", "Username", 3, null), 
-			new GuiText ("Password", "Password", 4, null)			
-		    };
+	    DialogBoundCredential.Entries = [];
 
-        //BoundPassword.IsBacker = (object data) => DialogBoundPassword.IsBacker(data);
-	    DialogBoundPasskey.Entries = new () { 
-			new GuiIcon ("Type", "Type"), 
-			new GuiText ("Protocol", "Protocol", 1, null), 
-			new GuiText ("Service", "Service", 2, null), 
-			new GuiText ("Username", "Username", 3, null)			
-		    };
+	    DialogBoundPassword.Entries = [];
 
-        //BoundPasskey.IsBacker = (object data) => DialogBoundPasskey.IsBacker(data);
-	    DialogBoundTask.Entries = new () { 
-			new GuiIcon ("Type", "Type"), 
-			new GuiText ("Title", "Title", 1, null)			
-		    };
+	    DialogBoundPasskey.Entries = [];
 
-        //BoundTask.IsBacker = (object data) => DialogBoundTask.IsBacker(data);
-	    DialogBoundAppointment.Entries = new () { 
-			new GuiText ("Display", "Display name", 0, null)			
-		    };
+	    DialogBoundTask.Entries = [];
 
-        //BoundAppointment.IsBacker = (object data) => DialogBoundAppointment.IsBacker(data);
-	    DialogBoundBookmark.Entries = new () { 
-			new GuiIcon ("Type", "Type"), 
-			new GuiText ("Title", "Title", 1, null), 
-			new GuiText ("Uri", "Link", 2, null), 
-			new GuiText ("Comments", "Comments", 3, null)			
-		    };
+	    DialogBoundAppointment.Entries = [];
 
-        //BoundBookmark.IsBacker = (object data) => DialogBoundBookmark.IsBacker(data);
-	    DialogBoundFeed.Entries = new () { 
-			new GuiIcon ("Type", "Type"), 
-			new GuiText ("Title", "Title", 1, null), 
-			new GuiText ("Uri", "Link", 2, null), 
-			new GuiText ("Comments", "Comments", 3, null), 
-			new GuiText ("Protocol", "Protocol", 4, null)			
-		    };
+	    DialogBoundBookmark.Entries = [];
 
-        //BoundFeed.IsBacker = (object data) => DialogBoundFeed.IsBacker(data);
-	    DialogBoundApplication.Entries = new () { 
-			new GuiText ("Display", "Display name", 0, null)			
-		    };
+	    DialogBoundFeed.Entries = [];
 
-        //BoundApplication.IsBacker = (object data) => DialogBoundApplication.IsBacker(data);
-	    DialogBoundApplicationMail.Entries = new () { 
-			new GuiText ("Display", "Display name", 0, null)			
-		    };
+	    DialogBoundApplication.Entries = [];
 
-        //BoundApplicationMail.IsBacker = (object data) => DialogBoundApplicationMail.IsBacker(data);
-	    DialogBoundApplicationSsh.Entries = new () { 
-			new GuiText ("Display", "Display name", 0, null)			
-		    };
+	    DialogBoundApplicationMail.Entries = [];
 
-        //BoundApplicationSsh.IsBacker = (object data) => DialogBoundApplicationSsh.IsBacker(data);
-	    DialogBoundApplicationOpenPgp.Entries = new () { 
-			new GuiText ("Display", "Display name", 0, null)			
-		    };
+	    DialogBoundApplicationSsh.Entries = [];
 
-        //BoundApplicationOpenPgp.IsBacker = (object data) => DialogBoundApplicationOpenPgp.IsBacker(data);
-	    DialogBoundApplicationDeveloper.Entries = new () { 
-			new GuiText ("Display", "Display name", 0, null)			
-		    };
+	    DialogBoundApplicationOpenPgp.Entries = [];
 
-        //BoundApplicationDeveloper.IsBacker = (object data) => DialogBoundApplicationDeveloper.IsBacker(data);
-	    DialogBoundApplicationPkix.Entries = new () { 
-			new GuiText ("Display", "Display name", 0, null)			
-		    };
+	    DialogBoundApplicationDeveloper.Entries = [];
 
-        //BoundApplicationPkix.IsBacker = (object data) => DialogBoundApplicationPkix.IsBacker(data);
-	    DialogBoundApplicationGroup.Entries = new () { 
-			new GuiText ("Display", "Display name", 0, null)			
-		    };
+	    DialogBoundApplicationPkix.Entries = [];
 
-        //BoundApplicationGroup.IsBacker = (object data) => DialogBoundApplicationGroup.IsBacker(data);
-	    DialogBoundApplicationCallSign.Entries = new () { 
-			new GuiText ("Display", "Display name", 0, null)			
-		    };
+	    DialogBoundApplicationGroup.Entries = [];
 
-        //BoundApplicationCallSign.IsBacker = (object data) => DialogBoundApplicationCallSign.IsBacker(data);
-	    DialogBoundDevice.Entries = new () { 
-			new GuiIcon ("Type", "Type"), 
-			new GuiText ("DeviceType", "Platform", 1, null), 
-			new GuiText ("Rights", "Rights", 2, null), 
-			new GuiText ("LocalName", "Name", 3, null), 
-			new GuiText ("Udf", "Udf", 4, null)			
-		    };
+	    DialogBoundApplicationCallSign.Entries = [];
 
-        //BoundDevice.IsBacker = (object data) => DialogBoundDevice.IsBacker(data);
-	    DialogAccountUser.Entries = new () { 
-			new GuiText ("Udf", "Fingerprint", 0, null), 
-			new GuiText ("ServiceAddress", "Account service address", 1, null), 
-			new GuiText ("Local", "Friendly name", 2, null), 
-			new GuiText ("Description", "Description", 3, null), 
-			new GuiChooser ("UserChooseDevice", "Devices", "device", 4, new () {
-				}) 			
-		    };
+	    DialogBoundDevice.Entries = [];
 
-        //AccountUser.IsBacker = (object data) => DialogAccountUser.IsBacker(data);
-	    DialogBoundContact.Entries = new () { 
-			new GuiIcon ("Type", "Type"), 
-			new GuiText ("Display", "Display name", 1, null)			
-		    };
+	    DialogAccountUser.Entries = [];
 
-        //BoundContact.IsBacker = (object data) => DialogBoundContact.IsBacker(data);
-	    DialogBoundContactPerson.Entries = new () { 
-			new GuiIcon ("Type", "Type"), 
-			new GuiText ("Display", "Display name", 1, null), 
-			new GuiBoolean ("Self", "Self", 2), 
-			new GuiText ("Local", "Friendly name", 3, null), 
-			new GuiText ("First", "First name", 4, null), 
-			new GuiText ("Last", "Last name", 5, null), 
-			new GuiText ("Prefix", "Prefix", 6, null), 
-			new GuiText ("Suffix", "Suffix", 7, null), 
-			new GuiList ("NetworkAddresses", "Network Addresses", "network", DialogContactNetworkAddress, 8, new () {
-				}) , 
-			new GuiList ("PhysicalAddresses", "Locations", "location", DialogContactPhysicalAddress, 9, new () {
-				}) 			
-		    };
+	    DialogBoundContact.Entries = [];
 
-        //BoundContactPerson.IsBacker = (object data) => DialogBoundContactPerson.IsBacker(data);
-	    DialogBoundContactBusiness.Entries = new () { 
-			new GuiIcon ("Type", "Type"), 
-			new GuiText ("Display", "Display name", 1, null)			
-		    };
+	    DialogBoundContactPerson.Entries = [];
 
-        //BoundContactBusiness.IsBacker = (object data) => DialogBoundContactBusiness.IsBacker(data);
-	    DialogBoundContactPlace.Entries = new () { 
-			new GuiIcon ("Type", "Type"), 
-			new GuiText ("Display", "Display name", 1, null)			
-		    };
+	    DialogBoundContactBusiness.Entries = [];
 
-        //BoundContactPlace.IsBacker = (object data) => DialogBoundContactPlace.IsBacker(data);
-	    DialogContactNetworkAddress.Entries = new () { 
-			new GuiIcon ("Type", "Type"), 
-			new GuiText ("Protocol", "Protocol", 1, null), 
-			new GuiText ("Address", "Address", 2, null), 
-			new GuiText ("Fingerprint", "Fingerprint", 3, null)			
-		    };
+	    DialogBoundContactPlace.Entries = [];
 
-        //ContactNetworkAddress.IsBacker = (object data) => DialogContactNetworkAddress.IsBacker(data);
-	    DialogContactPhysicalAddress.Entries = new () { 
-			new GuiText ("Appartment", "Appartment", 0, null), 
-			new GuiText ("Street", "Street", 1, null), 
-			new GuiText ("District", "District", 2, null), 
-			new GuiText ("Region", "Region", 3, null), 
-			new GuiText ("Code", "Postcode", 4, null), 
-			new GuiText ("Country", "Country", 5, null), 
-			new GuiDecimal ("Latitude", "Latitude"), 
-			new GuiDecimal ("Longitude", "Longitude")			
-		    };
+	    DialogContactNetworkAddress.Entries = [];
 
-        //ContactPhysicalAddress.IsBacker = (object data) => DialogContactPhysicalAddress.IsBacker(data);
+	    DialogContactPhysicalAddress.Entries = [];
+
 
         Dialogs = new List<GuiDialog>() {  
 		    DialogBoundAccount, 
@@ -6174,58 +5829,6 @@ public class _EverythingMaui : Gui {
 
 #endregion
 #region // Initialize Results
-	    ResultReportHost.Entries = new () { 
-			new GuiText ("ServiceCallsign", "Callsign", 0, null), 
-			new GuiText ("ServiceDns", "DNS", 1, null), 
-			new GuiText ("ServiceUdf", "Service fingerprint", 2, null), 
-			new GuiText ("HostUdf", "Host fingerprint", 3, null)			
-		    };
-
-	    ResultReportAccountCreate.Entries = new () { 
-			new GuiText ("LocalName", "Local", 0, null), 
-			new GuiText ("ServiceAddress", "DNS", 1, null), 
-			new GuiText ("ProfileUdf", "Profile fingerprint", 2, null), 
-			new GuiText ("ServiceUdf", "Service fingerprint", 3, null)			
-		    };
-
-	    ResultReportAccount.Entries = new () { 
-			new GuiText ("LocalName", "Local", 0, null), 
-			new GuiText ("ServiceCallsign", "Callsign", 1, null), 
-			new GuiText ("ServiceAddress", "DNS", 2, null), 
-			new GuiText ("ProfileUdf", "Profile fingerprint", 3, null), 
-			new GuiText ("ServiceUdf", "Service fingerprint", 4, null)			
-		    };
-
-	    ResultReportPending.Entries = new () { 
-			new GuiText ("LocalName", "Local", 0, null), 
-			new GuiText ("ServiceCallsign", "Callsign", 1, null), 
-			new GuiText ("ServiceAddress", "DNS", 2, null), 
-			new GuiText ("ServiceUdf", "Service fingerprint", 3, null), 
-			new GuiText ("ServiceMessage", "Message", 4, null)			
-		    };
-
-	    ResultReportShares.Entries = new () { 
-			new GuiText ("Share1", "Recovery share", 0, null), 
-			new GuiText ("Share2", "Recovery share", 1, null), 
-			new GuiText ("Share3", "Recovery share", 2, null), 
-			new GuiText ("Share4", "Recovery share", 3, null), 
-			new GuiText ("Share5", "Recovery share", 4, null), 
-			new GuiText ("Share6", "Recovery share", 5, null), 
-			new GuiText ("Share7", "Recovery share", 6, null), 
-			new GuiText ("Share8", "Recovery share", 7, null)			
-		    };
-
-	    ResultMessageSentContact.Entries = new () { 
-			new GuiText ("AccountName", "Account", 0, null), 
-			new GuiText ("Identifier", "Identifier", 1, null)			
-		    };
-
-	    ResultMessageSentDevice.Entries = new () { 
-			new GuiText ("AccountName", "Account", 0, null), 
-			new GuiText ("Identifier", "Identifier", 1, null)			
-		    };
-
-
 
         Results = new List<GuiResult>() {  
 		    ResultReportHost, 
