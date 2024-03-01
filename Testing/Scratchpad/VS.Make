@@ -27,6 +27,7 @@ LinkFiles = \
     Test.Cryptography.Dare.dll\
     Test.Cryptography.Platform.dll\
     Test.Cryptography.dll\
+    Test.Discovery.dll\
     Test.MakeSiteDocs.dll\
     Test.Mesh.Presence.dll\
     Test.Mesh.Protocol.dll\

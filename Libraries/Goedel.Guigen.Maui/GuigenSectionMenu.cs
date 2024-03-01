@@ -10,22 +10,22 @@ public class GuigenSectionMenu : ContentPage, IReformat{
 
     //GuigenBinding Binding => MainWindow.Binding;
 
-    Layout Layout { get; set; }
+    Layout MenuLayout { get; set; }
 
     public GuigenSectionMenu(GuigenBinding binding) {
         Binding = binding;
 
-        Layout = binding.GetSectionMenuLayout();
+        MenuLayout = binding.GetSectionMenuLayout();
 
         
         foreach (var section in Gui.Sections) {
             var button = new GuigenSectionButton(Binding, section);
-            Layout.Add(button.View);
+            MenuLayout.Add(button.View);
             }
 
         // The content page
         ContentPage = new ContentPage() {
-            Content = Layout,
+            Content = MenuLayout,
             Title = "Main"
             };
         }

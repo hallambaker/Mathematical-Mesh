@@ -59,7 +59,10 @@ public partial class EverythingMaui {
     public ISelectCollection ChooseUser { get; }
 
 
-    public EverythingMaui() {
+    public EverythingMaui(
+                ResourceManager ResourceManager,
+                Func<DeviceDescription> getDeviceDescription
+                ) {
         ResourceManager = Sketch_resources.ResourceManager;
 
         MeshMachine = new MeshMachineCore();

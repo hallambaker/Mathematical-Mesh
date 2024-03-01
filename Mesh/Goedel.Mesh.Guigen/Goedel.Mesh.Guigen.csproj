@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="$(SolutionDir)Settings/CommonSettingsNoDocs.xml" />
+	<PropertyGroup>
+		<Product>Goedel.Mesh.Guigen</Product>
+		<Description>Dispatch callbacks for Mesh Everything.</Description>
+		<Copyright>© 2024</Copyright>
+		<Title>Goedel.Guigen</Title>
+
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<!--<UseMaui>true</UseMaui>-->
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Guigen\Goedel.Guigen.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj" />
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Core\Goedel.Mesh.Core.csproj" />
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
+	</ItemGroup>
+	
+	
+</Project>

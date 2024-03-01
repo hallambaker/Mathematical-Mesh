@@ -18,7 +18,8 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Discovery.dll
+    Goedel.Discovery.dll\
+    Goedel.Test.dll
 
 ToolTargets = 
 
