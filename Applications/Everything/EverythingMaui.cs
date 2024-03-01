@@ -8,55 +8,27 @@ using Microsoft.Maui.Controls;
 using System.Net.NetworkInformation;
 using System.Resources;
 
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 namespace Goedel.Everything;
 
 
 
-// Focus: 001 Add name to create widget
-// Focus: 002 Put name in contact list properly
-// Focus: 003 Switch account context on create account
-// Focus: 004 Enumerate accounts to display selector
-// Focus: 005 Add to enumeration of accounts on create account.
 
+// Focus: 001 General callback async mechanism
+//    Freeze the UI
+//    Make the request asynchronously
+//    Await the result
+//    Process result [Home / Selection / Result value]
+// Focus: 002 Bug - missing commit buttons
+// Focus: 003 Actions on selected items
 
+// Focus: 010 Delete Account
+// Focus: 012 Device Request connect
+// Focus: 013 Device Accept connect
+// Focus: 014 Set default account
+// Focus: 015 Recover account
 
-
-// Focus: 003 Delete entry on device dialog
-// Focus: 004 Update button on device dialog
-// Focus: 005 Read only fields
-// Focus: 006 Fill in platform field in create account
-// Focus: 007 Rights field in device dialog
-// Focus: 020 Implement camera on QR
-// Focus: 021 Implement Confirmation transaction
-// Focus: 022 Implement Contact request transaction
-// Focus: 023 Implement Device connect transaction
-// Focus: 030 Upload document
-// Focus: 031 Send mail message
-// Focus: 032 Send Mail attachment
-// Focus: 033 Application SSH 
-// Focus: 034 Application SMTP
-// Focus: 035 Application Developer
-// Focus: 036 Comment feed
-// Focus: 036 Annotation feed
-// Focus: 040 Rights
-// Focus: 041 Message polling
-// Focus: 042 Presence push
-// Focus: 043 Chat
-// Focus: 044 WebRTC voice/video
-// Focus: 050 Windows
-// Focus: 051 macOS
-// Focus: 052 iOs
-// Focus: 053 Android
-
-
-// List entries
-// ToDo: Clean up display of list items. Use four cornered presentation
-// ToDo: Fix ListBox scroll bars
-// ToDo: Validate inputs to list box add before adding
-// ToDo: Filter enumerated results to entries of a particular type
-
-// ToDo: Password / Contact / Bookmark / etc. - create useful display format
-// ToDo: Copy Uid etc into restored cataloged object on copy.
 
 
 
@@ -153,7 +125,6 @@ public partial class EverythingMaui {
 
         CurrentAccount = boundAccount;
 
-
         SectionMessageSection.BindData = () => CurrentAccount.MessageSection;
         SectionContactSection.BindData = () => CurrentAccount.Contacts;
         SectionBookmarkSection.BindData = () => CurrentAccount.Bookmarks;
@@ -178,15 +149,7 @@ public partial class EverythingMaui {
 
         }
 
-    //public static Dictionary<Type, GuiBinding> BindingDictionary = new() {
-    //        { typeof(CatalogedCredential), BindingCatalogedCredential }
-    //    };
 
-    //public static GuiBinding GetBinding(object data) {
-    //    if (BindingDictionary.TryGetValue(data.GetType(), out var binding)) return binding;
-
-    //    throw new NotImplementedException();
-    //    }
 
     Task<IResult> TaskResult(IResult result) => Task.FromResult<IResult>(result);
 
@@ -286,27 +249,66 @@ public partial class EverythingMaui {
         return deviceDescription;
         }
 
+    /// <summary>
+    /// Attempt to create a canned response for an exception of type <paramref name="exception"/>
+    /// thrown by initial input <paramref name="parameters"/>.
+    /// </summary>
+    /// <param name="exception">The exception to respong to</param>
+    /// <param name="parameters">The parameters.</param>
+    /// <param name="result">The generated result.</param>
+    /// <returns></returns>
+    public bool TryProcessException(Exception exception, IParameter parameters, out IResult result) {
 
-    }
+        switch (exception) {
+            case HttpRequestException httpRequestException: {
+                if (exception.InnerException is System.Net.Sockets.SocketException) {
+                    var data = parameters as IServiceAddress;
+                    result = new ServiceNotFound() {
+                        ServiceName = data.ServiceAddress
+                        };
+                    return true;
+                    }
+                else {
+                    result = new HttpRequestFail();
+                    return true;
+                    }
+
+                }
+            }
+        if (ExceptionDirectory.TryGetValue(exception.GetType().FullName, out var factory)) {
+            result = factory();
+            return true;
+            }
+
+        result = null;
+        return false;
+        }
 
 
-
-
-
-
-
-
-
-
-
-public partial class SettingsSection {
-
-
-    public SettingsSection() {
-
+    public IResult ProcessException(Exception exception, IParameter parameters) {
+        if (TryProcessException(exception, parameters, out var result)) {
+            return result;
+            }
+        return new ErrorResult(exception);
         }
 
     }
+
+
+
+public interface IServiceAddress {
+
+    ///<summary></summary> 
+    public string ServiceAddress { get; }
+    }
+
+public partial class TestService : IServiceAddress {
+    }
+
+public partial class AccountCreate : IServiceAddress {
+    }
+
+
 
 
 

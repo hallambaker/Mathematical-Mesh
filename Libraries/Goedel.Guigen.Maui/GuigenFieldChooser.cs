@@ -35,11 +35,15 @@ public class GuigenFieldChooser : GuigenField {
 
     public VerticalStackLayout EntryForm { get; } = new();
     public HorizontalStackLayout ButtonBar = new();
+
+    GuigenFieldSet SelectionDialog { get; set; }
+    GuigenFieldSet FieldSet { get; }
+
+
     public GuigenFieldChooser(IMainWindow mainWindow,
                 GuigenFieldSet fieldsSet,
                 GuiBoundPropertyChooser binding) : base(mainWindow, binding) {
-
-
+        FieldSet = fieldsSet;
 
         CommandButtons = new HorizontalStackLayout() {
             FilterInput,
@@ -52,7 +56,6 @@ public class GuigenFieldChooser : GuigenField {
             Text = "Filter"
             };
         FilterButton.Clicked += OnClickFilter;
-
 
         CommandButtons.Add(FilterInput);
         CommandButtons.Add(FilterButton);
@@ -68,38 +71,16 @@ public class GuigenFieldChooser : GuigenField {
         MainLayout = new();
 
         var Layout = new VerticalStackLayout() { CommandButtons, MainLayout, EntryForm, ButtonBar };
+        //var Layout = new VerticalStackLayout() { CommandButtons, MainLayout, EntryForm};
         fieldsSet.AddField(Layout);
 
         RestoreView();
-
         }
 
     public void RestoreView() {
         CommandButtons.IsVisible = true;
         MainLayout.Clear();
         MainLayout.Add(RefreshView);
-        }
-
-    public void SetView(View view) {
-        CommandButtons.IsVisible = false;
-        MainLayout.Clear();
-        MainLayout.Add(view);
-        }
-
-    public void AddItem(IBoundPresentation data) {
-
-        ListView.BeginRefresh();
-        SelectCollection.Add(data);
-        ListView.EndRefresh();
-
-        }
-
-    public void DeleteItem(IBoundPresentation data) {
-        SelectCollection.Remove(data);
-        }
-
-    public void UpdateItem(IBoundPresentation data) {
-        SelectCollection.Update(data);
         }
 
     public override void SetField(IBindable data) {
@@ -139,9 +120,6 @@ public class GuigenFieldChooser : GuigenField {
 
         var colWidth = (MainWindow.GetDetailWidth() - fixedWidth) / relativeWidth;
 
-
-
-
         var col = 0;
         foreach (var item in SelectionBinding.BoundProperties) {
             switch (item) {
@@ -179,15 +157,6 @@ public class GuigenFieldChooser : GuigenField {
     public override void GetField(IBindable data) {
         }
 
-    public void OnClickAdd(object sender, EventArgs e) {
-        var addButton = sender as DataButton;
-        var presentation = addButton.Data as BoundPresentation;
-        presentation.Initialize();
-
-
-        SetView(presentation.Layout);
-        }
-
 
     public void OnClickFilter(object sender, EventArgs e) { 
         }
@@ -208,14 +177,17 @@ public class GuigenFieldChooser : GuigenField {
         var bindable = selectEvent.SelectedItem as IBindable;
         var gui = MainWindow.Binding.Gui;
         var entries = dialog.Dialog(gui).Entries;
+        EntryForm.Clear();
+        SelectionDialog = new GuigenFieldSet(MainWindow, entries, EntryForm, bindable.Binding, false);
+        SelectionDialog.SetFields(bindable);
 
-        var fieldSet = new GuigenFieldSet(MainWindow, entries, EntryForm, bindable.Binding, false);
-        fieldSet.SetFields(bindable);
-        ButtonBar.Clear();
-        fieldSet.AddButtons(ButtonBar);
-
-
-
+        MainWindow.Binding.Dispatcher.Dispatch(() => {
+            //FieldSet.ButtonBox.BatchBegin();
+            FieldSet.ButtonBox.Clear();
+            SelectionDialog.AddButtons(FieldSet.ButtonBox);
+            //FieldSet.ButtonBox.BatchCommit();
+            (FieldSet.ButtonBox as IView).InvalidateArrange();
+            });
         // now add in all the buttons from entries.
 
 

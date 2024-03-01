@@ -12,6 +12,14 @@ public partial class DocumentSection : IHeadedSelection {
 
     IAccountSelector Account { get; }
     ContextUser ContextUser => Account.ContextUser;
+
+    public DocumentSelection DocumentSelection { get; }
+
+    GuigenCatalogDocument Catalog { get; }
+
+    ///<inheritdoc/>
+    public override ISelectCollection ChooseDocuments { get => DocumentSelection; set { } }
+
     public GuiBinding SelectionBinding => _BoundDocument.BaseBinding;
     /// <summary>
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
@@ -19,18 +27,46 @@ public partial class DocumentSection : IHeadedSelection {
     /// <param name="account">The account whose contacts are to be used.</param>
     public DocumentSection(IAccountSelector account=null) {
         Account = account;
-
-        var catalog = ContextUser.GetStore(CatalogDocument.Label, create: false) as GuigenCatalogDocument;
-        ChooseDocuments = catalog is null ? null : new DocumentSelection(catalog);
+        Catalog = ContextUser.GetStore(CatalogDocument.Label, create: false) as GuigenCatalogDocument;
+        DocumentSelection = Catalog is null ? null : new DocumentSelection(Catalog);
         }
 
-    public virtual void Fill() {
+    public async Task AddAsync(CatalogedDocument entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry);
+        await transaction.TransactAsync();
+
+        var bound =  BoundDocument.Factory(entry);
+        DocumentSelection.Add(bound);
+        }
+
+
+    public async Task UpdateAsync(BoundDocument entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry.CatalogedDocument);
+        await transaction.TransactAsync();
+
+        DocumentSelection.Update(entry);
+        }
+
+
+    public async Task DeleteAsync(BoundDocument entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry.CatalogedDocument);
+        await transaction.TransactAsync();
+
+        DocumentSelection.Remove(entry);
         }
 
     }
 
 // Documented in Guigen output
 public partial class BoundDocument : IBoundPresentation, IDialog {
+
+    public CatalogedDocument CatalogedDocument => Bound as CatalogedDocument;
 
     public virtual GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundDocument;
 
@@ -62,6 +98,14 @@ public partial class BoundDocument : IBoundPresentation, IDialog {
 
     public string ContentType {get; set;}
 
+
+    public static BoundDocument Factory(CatalogedDocument contact) {
+        var result = new BoundDocument();
+        result.Bound = contact;
+        result.ReadBound();
+        return result;
+        }
+
     public CatalogedDocument Convert() {
         var result = new CatalogedDocument() {
             Filename = Filename
@@ -79,6 +123,20 @@ public partial class BoundDocument : IBoundPresentation, IDialog {
         return result;
 
         }
+
+    public static BoundTask Factory(CatalogedTask contact) {
+        var result = new BoundTask();
+        result.Bound = contact;
+        result.ReadBound();
+        return result;
+        }
+
+    public void ReadBound() {
+        }
+
+    public void SetBound() {
+        }
+
 
     public string GetIcon() {
         var contentType = ContentType ?? GetContentType(Filename);
@@ -100,6 +158,9 @@ public partial class BoundDocument : IBoundPresentation, IDialog {
         }
     public virtual void Fill() {
         }
+
+
+
     }
 
 #endregion
@@ -191,8 +252,8 @@ public partial class DocumentSelection : SelectionCatalog<GuigenCatalogDocument,
         }
 
     #region // Conversion overrides
-    public override CatalogedDocument CreateFromBindable(IBindable contact) =>
-        (contact as BoundDocument)?.Convert();
+    //public override CatalogedDocument CreateFromBindable(IBindable contact) =>
+    //    (contact as BoundDocument)?.Convert();
 
     public override BoundDocument ConvertToBindable(CatalogedDocument input) => BoundDocument.Convert(input);
 

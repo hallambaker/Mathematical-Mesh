@@ -134,7 +134,7 @@ public partial class BoundAccount : IBoundPresentation, IDialog, IAccountSelecto
 #region // Selection Catalog backing type.
 
 // ToDo: move this to store / enumerate the Context User entries...
-public partial class AccountSelection : ISelectCollection {
+public partial class AccountSelection : ISelectCollection{
     
     EverythingMaui EverythingMaui;
     public ObservableCollection<IBindable> Entries => EverythingMaui.BoundAccounts;

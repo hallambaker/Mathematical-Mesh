@@ -3,6 +3,8 @@
 using System.Threading;
 using System.Xml.Linq;
 
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 namespace Goedel.Everything;
 
 #region // Bindings to classes specified through the Guigen schema.
@@ -13,6 +15,13 @@ public partial class TaskSection : IHeadedSelection {
     IAccountSelector Account { get; }
     ContextUser ContextUser => Account.ContextUser;
 
+    TaskSelection TaskSelection { get; }
+
+    GuigenCatalogTasks Catalog { get; }
+
+    ///<inheritdoc/>
+    public override ISelectCollection ChooseTask { get => TaskSelection; set { } }
+
     ///<inheritdoc/>
     public GuiBinding SelectionBinding => _BoundTask.BaseBinding;
 
@@ -22,39 +31,87 @@ public partial class TaskSection : IHeadedSelection {
     /// <param name="account">The account whose contacts are to be used.</param>
     public TaskSection(IAccountSelector account =null) {
         Account = account;
-        var catalog = ContextUser.GetStore(CatalogTask.Label, create: false) as GuigenCatalogTasks;
-        ChooseTask = catalog is null ? null : new TaskSelection(catalog);
+        Catalog = ContextUser.GetStore(CatalogTask.Label, create: false) as GuigenCatalogTasks;
+        TaskSelection = Catalog is null ? null : new TaskSelection(Catalog);
         }
+
+
+    public async Task AddAsync(CatalogedTask entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry);
+        await transaction.TransactAsync();
+
+        var bound = new BoundTask(entry);
+        TaskSelection.Add(bound);
+        }
+
+
+    public async Task UpdateAsync(BoundTask entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry.CatalogedTask);
+        await transaction.TransactAsync();
+
+        TaskSelection.Update(entry);
+        }
+
+
+    public async Task DeleteAsync(BoundTask entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry.CatalogedTask);
+        await transaction.TransactAsync();
+
+        TaskSelection.Remove(entry);
+        }
+
 
     }
 
 // Documented in Guigen output
 public partial class BoundTask : IBoundPresentation, IDialog {
 
+    public CatalogedTask CatalogedTask => Bound as CatalogedTask;
+
     public virtual GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundTask;
 
     public override IFieldIcon Type => FieldIcons.TaskComplete;
     public virtual CatalogedTask Convert() {
         var result = new CatalogedTask() {
-            Title = Title,
             Uid = Udf.Nonce()
             };
-
+        ReadBound();
         return result;
         }
 
-    public static BoundTask Convert(CatalogedTask entry) {
-        var result = new BoundTask() {
-            Title = entry.Title
-            };
 
+    public BoundTask() {
+        }
+
+    public BoundTask(CatalogedTask entry) {
+        Bound = entry;
+        ReadBound();
+        }
+
+    public static BoundTask Factory(CatalogedTask contact) {
+        var result = new BoundTask();
+        result.Bound = contact;
+        result.ReadBound();
         return result;
-
         }
 
-    public virtual void Fill() {
-        }
 
+    public virtual void ReadBound() {
+        Title = CatalogedTask.Title;
+        Description = CatalogedTask.Description;
+        Path = CatalogedTask.Path;
+        }
+    public virtual void SetBound() {
+        CatalogedTask.Title = Title;
+        CatalogedTask.Description = Description;
+        CatalogedTask.Path = Path;
+        }
 
     }
 
@@ -147,19 +204,25 @@ public partial class TaskSelection : SelectionCatalog<GuigenCatalogTasks,
         }
 
     #region // Conversion overrides
-    public override CatalogedTask CreateFromBindable(IBindable input) =>
-        (input as BoundTask)?.Convert();
+    //public override CatalogedTask CreateFromBindable(IBindable input) =>
+    //    (input as BoundTask)?.Convert();
 
     public override BoundTask ConvertToBindable(CatalogedTask input) =>
-        BoundTask.Convert(input);
+        new BoundTask (input);
 
     public override CatalogedTask UpdateWithBindable(IBindable entry) {
         var binding = entry as BoundTask;
-        binding.Fill();
+        binding.ReadBound();
         return binding.Bound as CatalogedTask;
         }
 
+
+
+
     #endregion
+
+
+
 
 
     }

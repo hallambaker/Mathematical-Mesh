@@ -1427,28 +1427,11 @@
             looking at messages after the request was sent.</param>
             <returns>True if found, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.GetPendingMessage(System.String)">
-            <summary>
-            Search the inbound spool and return the last message of type <paramref name="tag"/>.
-            This is obviously a placeholder for something more comprehensive.
-            </summary>
-            <param name="tag">Message selector.</param>
-            <returns>The message found.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.GetPendingMessageByID(System.String,System.Boolean@)">
-            <summary>
-            Return the last message with messageID <paramref name="messageID"/>. If the message
-            has been read, the value <paramref name="read"/> is true.
-            </summary>
-            <param name="messageID">The message to locate.</param>
-            <param name="read">If true, the message has already been read.</param>
-            <returns>The message value (if unread).</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.CreateGroupAsync(System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.List{System.String},System.Byte[])">
+        <member name="M:Goedel.Mesh.Client.ContextUser.CreateGroupAsync(System.String,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.List{System.String},System.Byte[])">
             <summary>
             Create a threshold encryption group.
             </summary>
-            <param name="groupName">Name of the group to create.</param>
+            <param name="groupAddress">Name of the group to create.</param>
             <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
             <param name="roles">List of rights to be granted.</param>
             <param name="cover">Specifies HTML content containing a default cover page.</param>

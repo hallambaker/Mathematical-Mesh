@@ -1,5 +1,8 @@
 ﻿
 
+
+
+
 using Everything.Resources;
 
 using System.Globalization;

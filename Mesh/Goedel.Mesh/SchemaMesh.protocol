@@ -531,9 +531,6 @@
 		Inherits ApplicationEntry
 		Struct Enveloped<ActivationApplicationMail> EnvelopedActivation
 
-	//Structure ApplicationEntryCallsignObsolete
-	//	Inherits ApplicationEntry
-	//	Struct Enveloped<ActivationApplicationCallsignObsolete> EnvelopedActivation
 
 	Section 2 "Data Structures"
 		Description
@@ -774,16 +771,15 @@
 		Abstract
 		Description
 			|Base class for cataloged Mesh data.
-		String Labels
-			Multiple
-			Description
-				|The set of labels describing the entry
-		String LocalName
-			Description
-				|User specified identifier.
 		String Uid
 			Description
 				|Globaly unique identifier
+		String LocalName
+			Description
+				|User specified identifier.
+		String Path
+			Description
+				|The set of labels describing the entry
 		String Description
 			Description
 				|Description
@@ -871,6 +867,8 @@
 			Description
 				|Document fingerprint.
 		String Filename
+		String Title
+		String Version
 		String URI
 			Description
 				|Locator to be used to retrieve the data.
@@ -919,14 +917,6 @@
 			Multiple
 			Description
 				|Means of authenticating the host key
-
-
-	Structure CatalogedApplicationSsh
-		Inherits CatalogedApplication
-
-		Struct KeyData ClientKey
-			Description
-				|The S/Mime encryption key
 
 
 	Structure CatalogedNetwork
@@ -1076,19 +1066,6 @@
 			|with the Micali Fair Electronic Exchange with Invisible Trusted Parties
 			|protocol.
 
-
-	//Structure CatalogedCallsignObsolete
-	//	Inherits CatalogedApplication
-	//	String Canonical
-	//		Description
-	//			|Fast lookup for the canonical form of the callsign.
-	//	String ProfileUdf
-	//		Description
-	//			|Fast lookup for the profile to which the name is bound.		
-	//	Struct Enveloped<CallsignBinding> EnvelopedCallsignBinding
-	//		Description
-	//			|The enveloped binnding of the callsign to the profile.		
-
 	Structure NamedService
 		String Prefix
 			Description
@@ -1175,7 +1152,6 @@
 		Inherits CatalogedBookmark
 		String Protocol
 
-
 	Structure CatalogedApplicationMail
 		Inherits CatalogedApplication
 		String AccountAddress
@@ -1200,12 +1176,18 @@
 	Structure CatalogedApplicationOpenPgp
 		Inherits CatalogedApplication
 
-	Structure CatalogedApplicationDeveloper
+	Structure CatalogedApplicationSsh
 		Inherits CatalogedApplication
 
-	//	Structure CatalogedApplicationNetwork
-	//		Inherits CatalogedApplication
-	//		// The recryption key
+		Struct KeyData ClientKey
+			Description
+				|The S/Mime encryption key
+
+	Structure CatalogedApplicationGit
+		Inherits CatalogedApplication
+
+	Structure CatalogedApplicationDeveloper
+		Inherits CatalogedApplication
 
 
 	// For the future wallet catalog

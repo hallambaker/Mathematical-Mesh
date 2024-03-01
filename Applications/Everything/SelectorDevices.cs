@@ -1,4 +1,6 @@
 ﻿using Goedel.Cryptography.Dare;
+using Microsoft.UI.Xaml.Documents;
+
 using System.Xml.Linq;
 
 namespace Goedel.Everything;
@@ -8,8 +10,17 @@ namespace Goedel.Everything;
 // Documented in Guigen output
 public partial class DeviceSection : IHeadedSelection {
 
+
+
     IAccountSelector Account { get; }
     ContextUser ContextUser => Account.ContextUser;
+
+    public DeviceSelection DeviceSelection { get; }
+
+    GuigenCatalogDevice Catalog { get; }
+
+    ///<inheritdoc/>
+    public override ISelectCollection ChooseDevice { get => DeviceSelection; set { } }
 
     ///<inheritdoc/>
     public GuiBinding SelectionBinding => _BoundDevice.BaseBinding;
@@ -20,9 +31,38 @@ public partial class DeviceSection : IHeadedSelection {
     /// <param name="account">The account whose contacts are to be used.</param>
     public DeviceSection(IAccountSelector account=null) {
         Account = account;
+        Catalog = ContextUser.GetStore(CatalogDevice.Label, create: false) as GuigenCatalogDevice;
+        DeviceSelection = Catalog is null ? null : new DeviceSelection(Catalog);
+        }
 
-        var catalog = ContextUser.GetStore(CatalogDevice.Label, create: false) as GuigenCatalogDevice;
-        ChooseDevice = catalog is null ? null : new DeviceSelection(catalog);
+    public async Task AddAsync(CatalogedDevice entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry);
+        await transaction.TransactAsync();
+
+        var bound = BoundDevice.Factory(entry);
+        DeviceSelection.Add(bound);
+        }
+
+
+    public async Task UpdateAsync(BoundDevice entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry.CatalogedDevice);
+        await transaction.TransactAsync();
+
+        DeviceSelection.Update(entry);
+        }
+
+
+    public async Task DeleteAsync(BoundDevice entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry.CatalogedDevice);
+        await transaction.TransactAsync();
+
+        DeviceSelection.Remove(entry);
         }
 
     }
@@ -31,15 +71,25 @@ public partial class DeviceSection : IHeadedSelection {
 public partial class BoundDevice : IBoundPresentation, IDialog {
     public virtual GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundDevice;
 
+    public CatalogedDevice CatalogedDevice => Bound as CatalogedDevice;
 
     public override IFieldIcon Type => FieldIcons.Device(DeviceType);
 
+
+    public override string Udf => CatalogedDevice.DeviceUdf;
+
+    public static BoundDevice Factory(CatalogedDevice contact) {
+        var result = new BoundDevice();
+        result.Bound = contact;
+        result.ReadBound();
+        return result;
+        }
 
     public CatalogedDevice Convert() {
         var result = new CatalogedDevice() {
             };
 
-        Fill();
+        SetBound();
         return result;
         }
 
@@ -49,19 +99,29 @@ public partial class BoundDevice : IBoundPresentation, IDialog {
         var result = new BoundDevice() {
             Bound = entry,
             LocalName = entry.LocalName ?? description?.Name ?? "A Device",
-            Udf = entry.DeviceUdf,
             DeviceType = description ?.Platform,
             Rights = "Admin"
-
             };
         return result;
 
         }
 
-    public virtual void Fill() {
-        var bound = Bound as CatalogedDevice;
+    public static BoundTask Factory(CatalogedTask contact) {
+        var result = new BoundTask();
+        result.Bound = contact;
+        result.ReadBound();
+        return result;
+        }
 
-        bound.LocalName = LocalName;
+    public virtual void ReadBound() {
+        LocalName = CatalogedDevice.LocalName;
+        Description = CatalogedDevice.Description;
+        }
+
+    public virtual void SetBound() {
+
+        CatalogedDevice.LocalName = LocalName;
+        CatalogedDevice.Description = Description;
         }
 
 
@@ -157,15 +217,15 @@ public partial class DeviceSelection : SelectionCatalog<GuigenCatalogDevice,
         }
 
     #region // Conversion overrides
-    public override CatalogedDevice CreateFromBindable(IBindable contact) =>
-        (contact as BoundDevice)?.Convert();
+    //public override CatalogedDevice CreateFromBindable(IBindable contact) =>
+    //    (contact as BoundDevice)?.Convert();
 
     public override BoundDevice ConvertToBindable(CatalogedDevice input) => BoundDevice.Convert(input);
     #endregion
 
     public override CatalogedDevice UpdateWithBindable(IBindable entry) {
         var binding = entry as BoundDevice;
-        binding.Fill();
+        binding.SetBound();
         return binding.Bound as CatalogedDevice;
         }
     }

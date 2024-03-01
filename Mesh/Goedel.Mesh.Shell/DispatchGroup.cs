@@ -33,6 +33,7 @@ public partial class Shell {
     public override ShellResult GroupCreate(GroupCreate options) {
         var rights = GetRights(options);
         var groupID = options.GroupID.Value;
+        var groupName = options.GroupName.Value;
         rights ??= new List<string> {"super", "admin" };
         var contextAccount = GetContextUser(options);
 
@@ -42,7 +43,7 @@ public partial class Shell {
             }
 
 
-        var contextGroup = contextAccount.CreateGroupAsync(groupID, roles: rights, cover: cover).Sync();
+        var contextGroup = contextAccount.CreateGroupAsync(groupID, groupName, roles: rights, cover: cover).Sync();
 
         //Screen.WriteLine($"Group Encryption key is {contextGroup.ProfileGroup.AccountEncryptionKey.KeyIdentifier}");
 
@@ -65,7 +66,7 @@ public partial class Shell {
         var contextGroup = contextAccount.GetContextGroup(groupID);
 
 
-        var entryMember = contextGroup.Add(memberID);
+        var entryMember = contextGroup.AddAsync(memberID).Sync();
 
         var result = new ResultEntry() {
             CatalogEntry = entryMember

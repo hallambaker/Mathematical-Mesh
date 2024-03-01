@@ -11,10 +11,10 @@ public abstract class Gui {
     public abstract List<GuiSection> Sections { get; }
 
     ///<summary>List of all the Action Descriptions</summary> 
-    public abstract List<GuiAction> Actions { get; }
+    public abstract Dictionary<string, GuiAction> Actions { get; }
 
     ///<summary>List of all the Action Descriptions</summary> 
-    public abstract List<GuiAction> Selections { get; }
+    public abstract Dictionary<string, GuiAction> Selections { get; }
 
     ///<summary>List of all the Dialog Descriptions</summary> 
     public abstract List<GuiDialog> Dialogs { get; }

@@ -49,11 +49,7 @@ public partial class EverythingMaui {
             }
 
         catch (Exception exception) {
-            if (TryProcessException(exception, data, out var result)) {
-                return result;
-                }
-
-            return new ErrorResult(exception);
+            return ProcessException(exception, data);
             }
 
         }
@@ -73,6 +69,7 @@ public partial class EverythingMaui {
 
 
             return new ReportAccountCreate() {
+                ReturnResult = ReturnResult.Home,
                 LocalName = localName,
                 ServiceAddress = contextUser.ServiceAddress,
                 ProfileUdf = contextUser.ProfileUser.UdfString,
@@ -105,31 +102,10 @@ public partial class EverythingMaui {
                 };
             }
         catch (Exception exception) {
-            if (TryProcessException(exception, data, out var result)) {
-                return result;
-                }
-            return new ErrorResult(exception);
+            return ProcessException(exception, data);
             }
         }
 
-
-    //public override async Task<IResult> AccountConnectUri(AccountConnectUri data, ActionMode mode = ActionMode.Execute) {
-    //    try {
-
-    //        var uri = data.ConnectionUri;
-    //        var local = data.LocalName;
-    //        var contextMeshPending = await MeshHost.JoinAsync(uri, local);
-
-    //        return new ReportPending() {
-    //            };
-    //        }
-    //    catch (Exception exception) {
-    //        if (TryProcessException(exception, data, out var result)) {
-    //            return result;
-    //            }
-    //        return new ErrorResult(exception);
-    //        }
-    //    }
 
 
 
@@ -142,10 +118,7 @@ public partial class EverythingMaui {
                 };
             }
         catch (Exception exception) {
-            if (TryProcessException(exception, data, out var result)) {
-                return result;
-                }
-            return new ErrorResult(exception);
+            return ProcessException(exception, data);
             }
         }
 
@@ -164,10 +137,7 @@ public partial class EverythingMaui {
                 };
             }
         catch (Exception exception) {
-            if (TryProcessException(exception, data, out var result)) {
-                return result;
-                }
-            return new ErrorResult(exception);
+            return ProcessException(exception, data);
             }
         }
 
@@ -211,15 +181,12 @@ public partial class EverythingMaui {
         }
 
 
-
-
-
     ///<inheritdoc/>
-    public override async Task<IResult> AccountSwitch(AccountSwitch data) {
+    public override async Task<IResult> AccountSelect(BoundAccount data) {
         try {
-            await Task.Delay(0);
-            return new NotYetImplemented() {
-                };
+            SetContext(data);
+
+            return NullResult.HomeResult;
             }
         catch (Exception exception) {
             if (TryProcessException(exception, data, out var result)) {
@@ -233,59 +200,7 @@ public partial class EverythingMaui {
 
 
 
-
-
-
-
-
-    /// <summary>
-    /// Attempt to create a canned response for an exception of type <paramref name="exception"/>
-    /// thrown by initial input <paramref name="parameters"/>.
-    /// </summary>
-    /// <param name="exception">The exception to respong to</param>
-    /// <param name="parameters">The parameters.</param>
-    /// <param name="result">The generated result.</param>
-    /// <returns></returns>
-    public bool TryProcessException(Exception exception, IParameter parameters, out IResult result) {
-
-        switch (exception) {
-            case HttpRequestException httpRequestException: {
-                if (exception.InnerException is System.Net.Sockets.SocketException) {
-                    var data = parameters as IServiceAddress;
-                    result = new ServiceNotFound() {
-                        ServiceName = data.ServiceAddress
-                        };
-                    return true;
-                    }
-                else {
-                    result = new HttpRequestFail();
-                    return true;
-                    }
-
-                }
-            }
-        if (ExceptionDirectory.TryGetValue(exception.GetType().FullName, out var factory)) {
-            result = factory();
-            return true;
-            }
-
-        result = null;
-        return false;
-        }
-
-
     public List<string> ParseRights(string text) => new List<string>() { text };
 
     }
 
-public interface IServiceAddress {
-
-    ///<summary></summary> 
-    public string ServiceAddress { get;}
-    }
-
-public partial class TestService : IServiceAddress {
-    }
-
-public partial class AccountCreate : IServiceAddress {
-    }

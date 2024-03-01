@@ -4,7 +4,7 @@ Class Goedel.Everything EverythingMaui
 	|Defines the graphical user interface.
 
 
-// Sections
+// **** Account
 
 Section AccountSection "Account" "user"
 	Condition Always
@@ -22,189 +22,6 @@ Section AccountSection "Account" "user"
 	Text LocalAddress "Local Address"
 		Readonly
 
-
-Section MessageSection "Messages" "messages"
-	Primary
-	Button RequestContact 
-	Button RequestConfirmation
-	Button CreateMail 
-	Button CreateChat
-	Button StartVoice
-	Button StartVideo
-
-	Chooser ChooseMessage "Messages" "inbox_messages" 
-		Filter ContactRequest		"Contact Request"
-		Filter ConfirmationRequest	"Confirmation Request"
-		Filter DeviceRequest		"Device Request"
-		Filter Inbox "Inbox"
-
-Section ContactSection "Contacts" "contacts"
-	Primary
-
-	Button QrContact
-	Button RequestContact
-	Chooser ChooseContact "Contacts" "contact_other" 
-		Filter Self "Self"
-		Filter All "Others"
-
-Section DocumentSection "Documents" "Documents"
-	Chooser ChooseDocuments "Documents" "documents" 
-
-
-Section FeedSection "Feeds" "feeds"
-	Chooser ChooseFeed "Feeds" "feeds" 
-
-
-
-Section GroupSection "Groups" "groups"
-	Chooser ChooseGroup "User" "account_group" 
-
-
-Section CredentialSection "Credentials" "credentials"
-	Chooser ChooseCredential "Credentials" "credentials" 
-
-
-Section TaskSection "Tasks" "tasks"
-	Chooser ChooseTask "Tasks" "Tasks" 
-
-
-Section CalendarSection "Calendar" "calendar"
-	Chooser ChooseAppointment "Tasks" "Tasks" 
-
-
-Section BookmarkSection "Bookmark" "bookmark"
-	Chooser ChooseBookmark "Bookmark" "Bookmark" 
-
-
-Section ApplicationSection "Applications" "applications"
-	Button AddMailAccount	
-	Button AddSshAccount	
-	Button AddGitAccount
-	Button AddCodeSigningKey
-	Chooser ChooseApplication "Applications" "Applications" 
-
-
-Section DeviceSection "Devices" "devices"
-	Button DeviceConnectQR
-	Button AccountGetPin 
-	Chooser ChooseDevice "Devices" "Devices" 
-
-
-Section ServiceSection "Services" "Services"
-	Chooser ChooseService "Services" "account_service.png" 
-
-
-Section SettingSection "Settings" "settings"
-	Condition Always
-	Primary
-	Section Appearance "Appearance" "display"
-		Color BackgroundColor  "Background Color"
-		Color HighlightColor "Highlight Color"
-		Color TextColor "Text Color"
-		Size TextSize "Text Size"
-		Size IconSize "Icon Size"
-
-
-// Action results
-
-Result ReportHost "Host {0} acknowledged your request."
-	Hidden ServiceAddress
-	Text ServiceCallsign	"Callsign"
-	Text ServiceDns			"DNS"
-	Text ServiceUdf			"Service fingerprint"
-	Text HostUdf			"Host fingerprint"
-
-Result ReportAccountCreate "Created account {0}."
-	Hidden ServiceName
-	Text LocalName			"Local"
-	Text ServiceAddress		"DNS"
-	Text ProfileUdf			"Profile fingerprint"
-	Text ServiceUdf			"Service fingerprint"
-
-Result ReportAccount "Connection to account {0} is active."
-	Hidden ServiceName
-	Text LocalName			"Local"
-	Text ServiceCallsign	"Callsign"
-	Text ServiceAddress		"DNS"
-	Text ProfileUdf			"Profile fingerprint"
-	Text ServiceUdf			"Service fingerprint"
-
-Result ReportPending "Connection to account {0} is pending."
-	Hidden ServiceName
-	Text LocalName			"Local"
-	Text ServiceCallsign	"Callsign"
-	Text ServiceAddress		"DNS"
-	Text ServiceUdf			"Service fingerprint"
-	Text ServiceMessage			"Message"
-
-Result ReportShares "Secret shares"
-	Text Share1 "Recovery share"
-	Text Share2 "Recovery share"
-	Text Share3 "Recovery share"
-	Text Share4 "Recovery share"
-	Text Share5 "Recovery share"
-	Text Share6 "Recovery share"
-	Text Share7 "Recovery share"
-	Text Share8 "Recovery share"
-
-Result MessageSentContact "Contact Requested"
-	Text AccountName			"Account"
-	Text Identifier				"Identifier"
-
-Result MessageSentDevice "Connection Requested"
-	Text AccountName			"Account"
-	Text Identifier				"Identifier"
-
-// Exceptions
-
-Fail HttpRequestFail		"The Mesh service did not respond"
-	Exception HttpRequestException
-
-Fail ServiceNotFound				"The service {0} could not be found"
-	Hidden ServiceName
-Fail ServiceRefused					"The service refused the request"
-	Exception ServerOperationFailed
-
-Fail HostNotFound					"No host could not be reached for service {0}"
-	Hidden ServiceName
-
-
-Fail InvalidHostCredential			"The host presented an invalid credential"
-Fail CredentialRefused				"The host refused service on account of an invalid credential"
-Fail DeviceRefused					"This device is no longer authorized to access this account"
-Fail FileWriteError					"Could not write file {0}"
-	Hidden Filename
-
-
-Fail FileReadError					"Could not read file {0}"
-	Hidden Filename
-
-Fail AccountProfileInvalid			"Account profile file is invalid"
-Fail DeviceProfileInvalid			"Device profile file is invalid"
-Fail ActivationKeyNotFound			"The activation key for the profile {0} could not be found"
-	Hidden ProfileName
-	Text LocalName			"Local"
-	Text ProfileUdf			"Profile fingerprint"
-
-Fail NotAuthorizedCatalog			"This device is not authorized to access the {0} catalog"
-	Text CatalogName		"Catalog"
-	Text LocalName			"Profile"
-	Text ProfileUdf			"Profile fingerprint"
-
-Fail NotAuthorizedAdministration	"This device is not authorized to perform administrative requests"
-Fail NotAuthorizedFCatalog			"This device is not authorized to access the {0} catalog"
-Fail CounterpartyApproval			"Request requires counterparty confirmation"
-
-Fail SystemExeption					"Application failure"
-	Default
-
-
-Fail NotYetImplemented				"This feature is not yet implemented"
-
-
-// Actions
-
-// Account Actions
 Action TestService "Test Service" "test_service"
 	Description
 		|Attempts to contact the specified address to obtain Mesh Service. If 
@@ -215,6 +32,7 @@ Action TestService "Test Service" "test_service"
 			|!ServiceAddress.TryParseServiceAddress()
 		Error ServiceAddressNotEmpty "Service address cannot be blank"
 			|ServiceAddress == null || ServiceAddress?.Length == 0
+
 
 Action AccountCreate "Create Mesh Account" "new"
 	Description
@@ -247,14 +65,7 @@ Action DeviceConnectQR  "Present QR" "present_qr"
 	//		|(Security >= 0) & (Security <= 5)
 	//Integer Expire "Expiry in hours"
 
-Action AccountGetPin "Create connection PIN" "recover"
-	Description
-		|
-	Text Rights "Assigned rights"
-	Integer Security "Security level"
-		Error SecurityRange "Must be an integer 0-5"
-			|(Security >= 0) & (Security <= 5)
-	Integer Expire "Expiry in hours"
+
 
 Action AccountRecover "Recover Mesh Account" "recover_account"
 	Description
@@ -295,18 +106,36 @@ Action AccountGenerateRecovery "Create recovery" "share_nodes_solid"
 			|(Quorum >= 1) & (Quorum <= NumberSharesRange)
 
 
-// Contact Actions
-Action RequestContact "Request Contact" "contact"
-	Description
-		|
-	Text Recipient "Address"
-	Text Message "Message"
+
+Dialog BoundAccount "Account" "contacts"
+	Text Display	"Display name"
+		Readonly
+	Boolean Default "Default"
+	Text Service	"Service"
+		Readonly
+	Text UDF		"Fingerprint"
+		Readonly
+	Selection AccountSelect "Switch" "circle_check"
+		Description
+			|Switch to the chosen account.	
 
 
-Action QrContact "Connect by QR" "contact"
-	Description
-		|
-	QRScan QrCode "Contact QR"
+
+// **** Messages
+Section MessageSection "Messages" "messages"
+	Primary
+	Button RequestContact 
+	Button RequestConfirmation
+	Button CreateMail 
+	Button CreateChat
+	Button StartVoice
+	Button StartVideo
+
+	Chooser ChooseMessage "Messages" "inbox_messages" 
+		Filter ContactRequest		"Contact Request"
+		Filter ConfirmationRequest	"Confirmation Request"
+		Filter DeviceRequest		"Device Request"
+		Filter Inbox "Inbox"
 
 Action RequestConfirmation "Confirmation Request" "confirm"
 	Description
@@ -321,7 +150,6 @@ Action CreateMail "New Mail" "mail"
 	Text Subject "Subject"
 	TextArea Message "Message"
 
-
 Action CreateChat "New Chat" "chat"
 	Description
 		|
@@ -331,33 +159,6 @@ Action StartVoice "New Voice" "voice"
 Action StartVideo "New Video" "video"
 	Description
 		|
-Action SendDocument "Send document" "document_send"
-	Description
-		|
-Action ShareDocument "Share document" "document_share"
-	Description
-		|
-
-Action AddMailAccount "Add email account" "mail"
-	Description
-		|
-Action AddSshAccount "Create SSH credential" "credentials"
-	Description
-		|
-Action AddGitAccount "Create git credentials" "git"
-	Description
-		|
-Action AddCodeSigningKey "Add Code Signing Key" "signature"
-	Description
-		|
-
-Dialog BoundAccount "Account" "contacts"
-	Text Display	"Display name"
-		Readonly
-	Text Service	"Service"
-		Readonly
-	Text UDF		"Fingerprint"
-		Readonly
 
 Dialog BoundMessage "Message" "contacts"
 	Icon Type "Type" "message"
@@ -427,21 +228,210 @@ Dialog BoundMessageTaskRequest "Mail" "task"
 		Description
 			|Reject a contact request
 
-// Messages have different classes because they have different response options
+
+// **** Contacts
+Section ContactSection "Contacts" "contacts"
+	Primary
+	Button AddPerson
+	Button AddOrganization
+	Button AddLocation
+	Button QrContact
+	Button RequestContact
+	Chooser ChooseContact "Contacts" "contact_other" 
+		Filter Self "Self"
+		Filter All "Others"
+
+Action AddPerson "Add Person" "contact"
+	Description
+		|Need to make this bring up BoundContact
+
+Action AddOrganization "Add Organization" "contact"
+	Description
+		|Need to make this bring up BoundContact
+
+Action AddLocation "Add Location" "contact"
+	Description
+		|Need to make this bring up BoundContact
+
+Action RequestContact "Request Contact" "contact"
+	Description
+		|
+	Text Recipient "Address"
+	Text Message "Message"
+
+Action QrContact "Connect by QR" "contact"
+	Description
+		|
+	QRScan QrCode "Contact QR"
+
+Dialog BoundContact "Contact" "contacts"
+	Icon Type "Type" "user"
+	Text Display "Display name"
+		Readonly
+		Primary
+	Selection ContactUpdate "Update" "circle_cross"
+		Description
+			|Update the contact
+	Selection ContactDelete "Delete" "circle_cross"
+		Description
+			|Delete the contact
+
+Dialog BoundContactPerson "Person" "contacts"
+	Inherit BoundContact
+	Boolean Self "Self"
+	// Present alphabetically on Last name
+	Text Local "Friendly name"
+	Text First "First name"
+	Text Last "Last name"
+	Text Prefix "Prefix"
+	Text Suffix "Suffix"
+
+	List NetworkAddresses ContactNetworkAddress "Network Addresses" "network" 
+	List PhysicalAddresses ContactPhysicalAddress "Locations" "location" 
+
+	Selection ContactInteractMesh "Mail" "circle_cross"
+		Description
+			|Connect to the contact
+
+Dialog BoundContactBusiness "Organization" "contacts"
+	Inherit BoundContact
+
+Dialog BoundContactPlace "Place" "contacts"
+	Inherit BoundContact
+
+Dialog ContactNetworkAddress "Network" "protocol_icon"
+	Icon Type "Type" "plug"
+	Text Protocol "Protocol"
+	Text Address "Address"
+	Text Fingerprint "Fingerprint"
+	Selection ContactInteractAddress "Mail" "circle_cross"
+		Description
+			|Connect to the contact
+
+Dialog ContactPhysicalAddress "Place" "location_pin"
+	Text Appartment		"Appartment"
+	Text Street			"Street"
+	Text District		"District"
+	Text Region			"Region"
+	Text Code			"Postcode"
+	Text Country		"Country"
+	Decimal Latitude	"Latitude"
+	Decimal Longitude	"Longitude"
+
+// **** Documents
+Section DocumentSection "Documents" "Documents"
+	Button UploadDocument
+	Chooser ChooseDocuments "Documents" "documents" 
+
+
+Action UploadDocument "Connect by QR" "contact"
+	Description
+		|
+	Text Title			"Title"
+	Text Version		"Version"
+	Text Path			"Path"
+	Text Description	"Description"
+
 Dialog BoundDocument "Document" "documents"
 	Icon Type "Type" "documents"
 	Text FileType "Type"
 		Readonly
 	Text Filename "File name"
+	Selection DocumentUpdate "Update" "circle_cross"
+		Description
+			|Update the document
+
+	Selection DocumentExport "Export" "circle_cross"
+		Description
+			|Update the contact
+	Selection DocumentSend "Send" "circle_cross"
+		Description
+			|Update the contact
+
+	Selection DocumentDelete "Delete" "circle_cross"
+		Description
+			|Update the contact
+
+
+// **** Feeds
+Section FeedSection "Feeds" "feeds"
+	Chooser ChooseFeed "Feeds" "feeds" 
+
+Action AddFeed "Add Feed" "account_group"
+	Description
+		|Create a new feed
+	Text Title "Title"
+	Text Uri "Uri"
+	Text Path "Path"
+
+
+// **** Groups
+Section GroupSection "Groups" "groups"
+	Button AddGroup
+	Chooser ChooseGroup "User" "account_group" 
+
+Action AddGroup "Create group" "account_group"
+	Description
+		|Create a new group
+	Text GroupName "Name"
+	Text GroupAddress "Address"
+		//Description
+		//	|The group name
+
+Result SuccessGroupCreate "Group Created"
+	Text GroupName "Name"
+	Text GroupAddress "Address"
 
 Dialog BoundGroup "Group" "application_group"
-	Text Display "Display name"
+	Text GroupName "Display name"
+	Text GroupAddress "Address"
+	List Members BoundGroupMember "Members"  "contacts"
+	Button GroupInvite
+
+Action GroupInvite "Invite member" "account_group"
+	Text Address "Member Address"
+	Text Message "Message"
+
+Dialog BoundGroupMember "Member" "Group Member"
+	Text ContactName "Name"
+	Text Address "Address"
+	Selection MemberDelete "Delete" "circle_cross"
+		Description
+			|Delete the contact
+	Selection MemberReInvite "Sesent Invitation" "circle_cross"
+		Description
+			|Delete the contact
+
+// **** Credentials
+Section CredentialSection "Credentials" "credentials"
+	Button AddPassword
+	Button AddPasskey
+	Chooser ChooseCredential "Credentials" "credentials" 
+
+Action AddPassword "Create password" "credentials"
+	Text Protocol "Protocol"
+	Text Service "Service"
+	Text Username "Username"
+	Text Password "Password"	
+
+	Description
+		|Add a password
+
+Action AddPasskey "Create password" "credentials"
+	Description
+		|Add a password
 
 Dialog BoundCredential "Passkey" "credentials"
 	Icon Type "Type" "password"
 	Text Protocol "Protocol"
 	Text Service "Service"
 	Text Username "Username"
+	Selection CredentialUpdate "Update" "circle_cross"
+		Description
+			|Update the contact
+	Selection CredentialDelete "Delete" "circle_cross"
+		Description
+			|Delete the contact
 
 Dialog BoundPassword "Password" "password"
 	Inherit BoundCredential
@@ -451,28 +441,121 @@ Dialog BoundPasskey "Passkey" "passkey"
 	Inherit BoundCredential
 
 
-Dialog BoundTask "Task" "task"
-	Icon Type "Type" "password"
+// **** Tasks
+Section TaskSection "Tasks" "tasks"
+	Button AddTask
+	Chooser ChooseTask "Tasks" "Tasks" 
+
+Action AddTask "Create password" "credentials"
+	Description
+		|Add a password
 	Text Title "Title"
+	Text Path "Path"
+	Text Description "Description"
+
+Dialog BoundTask "Task" "task"
+	Icon Type "Type" "tasks"
+	Text Title "Title"
+	Text Description "Description"
+	Text Path "Path"
+	Selection TaskUpdate "Update" "circle_cross"
+		Description
+			|Delete the contact
+	Selection TaskDelete "Delete" "circle_cross"
+		Description
+			|Delete the contact
 
 Dialog BoundAppointment "Appointment" "task"
 	Text Display "Display name"
 
+
+Section CalendarSection "Calendar" "calendar"
+	Button AddTask
+	Chooser ChooseAppointment "Tasks" "Tasks" 
+
+// **** Bookmarks
+Section BookmarkSection "Bookmark" "bookmark"
+	Button AddBookmark
+	Chooser ChooseBookmark "Bookmark" "Bookmark" 
+
+Action AddBookmark "Add Bookmark" "account_group"
+	Description
+		|Create a new feed
+	Text Title "Title"
+	Text Uri "Uri"
+	Text Path "Path"
+	Text Description "Description"
+
 Dialog BoundBookmark "Bookmark" "bookmark"
 	Icon Type "Type" "message"
+	Text Path "Path"
 	Text Title "Title"
 	Text Uri "Link"
-		Error LinkIsNull "Must specify a URI"
-			|(Uri != null)
-	Text Comments "Comments"
-
+	Text Description "Description"
+	Selection BookmarkUpdate "Update" "circle_cross"
+		Description
+			|Update the contact
+	Selection BookmarkDelete "Delete" "circle_cross"
+		Description
+			|Delete the contact
 
 Dialog BoundFeed "Feed" "feeds"
 	Inherit BoundBookmark
 	Text Protocol "Protocol"
 
+
+// **** Applications
+Section ApplicationSection "Applications" "applications"
+	Button AddMailAccount	
+	Button AddSshAccount	
+	Button AddGitAccount
+	Button AddCodeSigningKey
+	Chooser ChooseApplication "Applications" "Applications" 
+
+Action AddMailAccount "Add email account" "mail"
+	Description
+		|
+	Text AccountAddress "Address"
+	Text LocalName "Local"
+	Text Description "Description"
+	Text Path "Path"
+	Text InboundConnect "Inbound Service"
+	Text OutboundConnect "Outbound Service"
+
+Action AddSshAccount "Create SSH credential" "credentials"
+	Description
+		|
+	Text Algorithm "Algorithm"
+	Text LocalName "Local"
+	Text Description "Description"
+	Text Path "Path"
+
+Action AddGitAccount "Create git credentials" "git"
+	Description
+		|
+	Text Algorithm "Algorithm"
+	Text LocalName "Local"
+	Text Description "Description"
+	Text Path "Path"
+
+Action AddCodeSigningKey "Add Code Signing Key" "signature"
+	Description
+		|
+	Text Algorithm "Algorithm"
+	Text LocalName "Local"
+	Text Description "Description"
+	Text Path "Path"
+
 Dialog BoundApplication "Message" "applications"
-	Text Display "Display name"
+	Text LocalName "Local"
+	Text Description "Description"
+	Text Path "Path"
+	Selection ApplicationUpdate "Update" "circle_cross"
+		Description
+			|Update the contact
+	Selection ApplicationDelete "Delete" "circle_cross"
+		Description
+			|Delete the contact
 
 Dialog BoundApplicationMail "Message" "mail"
 	Inherit BoundApplication
@@ -489,64 +572,158 @@ Dialog BoundApplicationGroup "Message" "application_group"
 Dialog BoundApplicationCallSign "Message" "application_callsign"
 	Inherit BoundApplication
 
+
+// **** Devices
+Section DeviceSection "Devices" "devices"
+	Button DeviceConnectQR
+	Button AccountGetPin 
+	Chooser ChooseDevice "Devices" "Devices" 
+
 Dialog BoundDevice "Message" "plug"
 	Icon Type "Type" "plug"
 	Text DeviceType		"Platform"  // Readonly
 	Text Rights			"Rights"  // editable
 	Text LocalName		"Name" // editable
 	Text Udf			"Udf" // readonly
-	// Button Rights
-	// Button Delete
-
-Dialog AccountUser "Account" "user"
-	Text Udf "Fingerprint"
-	Text ServiceAddress "Account service address"
-	Text Local "Friendly name"
-	Text Description "Description"
-
-	Chooser UserChooseDevice "Devices" "device" 
-	
-Dialog BoundContact "Contact" "contacts"
-	Icon Type "Type" "user"
-	Text Display "Display name"
 		Readonly
-		Primary
+	Text Path			"Path" // editable
+	Text Description	"Description"
+	Selection DeviceUpdate "Update" "circle_cross"
+		Description
+			|Update the contact
+	Selection DeviceDelete "Delete" "circle_cross"
+		Description
+			|Delete the contact
 
-Dialog BoundContactPerson "Person" "contacts"
-	Inherit BoundContact
-	Boolean Self "Self"
-	// Present alphabetically on Last name
-	Text Local "Friendly name"
-	Text First "First name"
-	Text Last "Last name"
-	Text Prefix "Prefix"
-	Text Suffix "Suffix"
+Action AccountGetPin "Create connection PIN" "recover"
+	Description
+		|
+	Text Rights "Assigned rights"
+	Integer Security "Security level"
+		Error SecurityRange "Must be an integer 0-5"
+			|(Security >= 0) & (Security <= 5)
+	Integer Expire "Expiry in hours"
 
-	List NetworkAddresses ContactNetworkAddress "Network Addresses" "network" 
-	List PhysicalAddresses ContactPhysicalAddress "Locations" "location" 
+Result ReportPinValue "Pin Value"
+	Text Pin			"Pin"
+	Text Expiry			"Expires"
+	Text Rights			"Rights"
 
-Dialog BoundContactBusiness "Organization" "contacts"
-	Inherit BoundContact
+// **** Services
+Section ServiceSection "Services" "Services"
+	Chooser ChooseService "Services" "account_service.png" 
 
-Dialog BoundContactPlace "Place" "contacts"
-	Inherit BoundContact
+// **** Settings
+Section SettingSection "Settings" "settings"
+	Condition Always
+	Primary
+	Section Appearance "Appearance" "display"
+		Color BackgroundColor  "Background Color"
+		Color HighlightColor "Highlight Color"
+		Color TextColor "Text Color"
+		Size TextSize "Text Size"
+		Size IconSize "Icon Size"
 
 
-Dialog ContactNetworkAddress "Network" "protocol_icon"
-	Icon Type "Type" "plug"
-	Text Protocol "Protocol"
-	Text Address "Address"
-	Text Fingerprint "Fingerprint"
+// Action results
 
-Dialog ContactPhysicalAddress "Place" "location_pin"
-	Text Appartment		"Appartment"
-	Text Street			"Street"
-	Text District		"District"
-	Text Region			"Region"
-	Text Code			"Postcode"
-	Text Country		"Country"
-	Decimal Latitude	"Latitude"
-	Decimal Longitude	"Longitude"
+Result ReportHost "Host {0} acknowledged your request."
+	Hidden ServiceAddress
+	Text ServiceCallsign	"Callsign"
+	Text ServiceDns			"DNS"
+	Text ServiceUdf			"Service fingerprint"
+	Text HostUdf			"Host fingerprint"
+
+Result ReportAccountCreate "Created account {0}."
+	Hidden ServiceName
+	Text LocalName			"Local"
+	Text ServiceAddress		"DNS"
+	Text ProfileUdf			"Profile fingerprint"
+	Text ServiceUdf			"Service fingerprint"
+
+Result ReportAccount "Connection to account {0} is active."
+	Hidden ServiceName
+	Text LocalName			"Local"
+	Text ServiceCallsign	"Callsign"
+	Text ServiceAddress		"DNS"
+	Text ProfileUdf			"Profile fingerprint"
+	Text ServiceUdf			"Service fingerprint"
+
+Result ReportPending "Connection to account {0} is pending."
+	Hidden ServiceName
+	Text LocalName			"Local"
+	Text ServiceCallsign	"Callsign"
+	Text ServiceAddress		"DNS"
+	Text ServiceUdf			"Service fingerprint"
+	Text ServiceMessage			"Message"
+
+Result ReportShares "Secret shares"
+	Text Share1 "Recovery share"
+	Text Share2 "Recovery share"
+	Text Share3 "Recovery share"
+	Text Share4 "Recovery share"
+	Text Share5 "Recovery share"
+	Text Share6 "Recovery share"
+	Text Share7 "Recovery share"
+	Text Share8 "Recovery share"
+
+Result MessageSentContact "Contact Requested"
+	Text AccountName			"Account"
+	Text Identifier				"Identifier"
+
+Result MessageSentDevice "Connection Requested"
+	Text AccountName			"Account"
+	Text Identifier				"Identifier"
+
+Result BeginCommunication "TBS Dialog to implement commuinication interaction"
+
+
+// Exceptions
+
+Fail HttpRequestFail		"The Mesh service did not respond"
+	Exception HttpRequestException
+
+Fail ServiceNotFound				"The service {0} could not be found"
+	Hidden ServiceName
+Fail ServiceRefused					"The service refused the request"
+	Exception ServerOperationFailed
+
+Fail HostNotFound					"No host could not be reached for service {0}"
+	Hidden ServiceName
+
+
+Fail InvalidHostCredential			"The host presented an invalid credential"
+Fail CredentialRefused				"The host refused service on account of an invalid credential"
+Fail DeviceRefused					"This device is no longer authorized to access this account"
+Fail FileWriteError					"Could not write file {0}"
+	Hidden Filename
+
+
+Fail FileReadError					"Could not read file {0}"
+	Hidden Filename
+
+Fail AccountProfileInvalid			"Account profile file is invalid"
+Fail DeviceProfileInvalid			"Device profile file is invalid"
+Fail ActivationKeyNotFound			"The activation key for the profile {0} could not be found"
+	Hidden ProfileName
+	Text LocalName			"Local"
+	Text ProfileUdf			"Profile fingerprint"
+
+Fail NotAuthorizedCatalog			"This device is not authorized to access the {0} catalog"
+	Text CatalogName		"Catalog"
+	Text LocalName			"Profile"
+	Text ProfileUdf			"Profile fingerprint"
+
+Fail NotAuthorizedAdministration	"This device is not authorized to perform administrative requests"
+Fail NotAuthorizedFCatalog			"This device is not authorized to access the {0} catalog"
+Fail CounterpartyApproval			"Request requires counterparty confirmation"
+
+Fail SystemExeption					"Application failure"
+	Default
+
+
+Fail NotYetImplemented				"This feature is not yet implemented"
+
 
 
 

@@ -445,8 +445,8 @@ public partial class MessageSelection : SelectionSpool<GuigenSpoolInbound, Bound
         }
 
     #region // Conversion overrides
-    public override Message CreateFromBindable(IBindable entry) =>
-        (entry as BoundMessage)?.Convert();
+    //public override Message CreateFromBindable(IBindable entry) =>
+    //    (entry as BoundMessage)?.Convert();
 
     public override BoundMessage ConvertToBindable(SpoolIndexEntry input) {
 

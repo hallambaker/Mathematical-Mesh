@@ -702,88 +702,8 @@ public partial class ContextUser : ContextAccount {
         }
 
 
-    /// <summary>
-    /// Search the inbound spool and return the last message of type <paramref name="tag"/>.
-    /// This is obviously a placeholder for something more comprehensive.
-    /// </summary>
-    /// <param name="tag">Message selector.</param>
-    /// <returns>The message found.</returns>
-    public Message GetPendingMessage(string tag) {
 
-        throw new NYI(); // ToDo: remove
 
-        //var completed = new Dictionary<string, Message>();
-        //var spool = GetSpoolInbound();
-
-        //Console.WriteLine($"Spool has messages {spool.FrameCount}");
-
-        //foreach (var message in spool.Select(-1, true)) {
-        //    var contentMeta = message.Header.ContentMeta;
-
-        //    if (!completed.ContainsKey(contentMeta.UniqueId)) {
-        //        var meshMessage = Message.Decode(message, KeyCollection);
-        //        //Console.WriteLine($"Message {contentMeta?.MessageType} ID {meshMessage.MessageID}");
-        //        if (contentMeta.MessageType == tag) {
-        //            return meshMessage;
-        //            }
-        //        switch (meshMessage) {
-        //            case MessageComplete meshMessageComplete: {
-        //                    foreach (var reference in meshMessageComplete.References) {
-        //                        completed.Add(reference.MessageId, meshMessageComplete);
-        //                        // Hack: This should make actual use of the relationship
-        //                        //   (Accept, Reject, Read)
-        //                        }
-        //                    break;
-        //                    }
-
-        //            default:
-        //                break;
-        //            }
-        //        }
-        //    }
-        //return null;
-        }
-
-    /// <summary>
-    /// Return the last message with messageID <paramref name="messageID"/>. If the message
-    /// has been read, the value <paramref name="read"/> is true.
-    /// </summary>
-    /// <param name="messageID">The message to locate.</param>
-    /// <param name="read">If true, the message has already been read.</param>
-    /// <returns>The message value (if unread).</returns>
-    public Message GetPendingMessageByID(string messageID, out bool read) {
-        throw new NYI();
-        //foreach (var envelope in GetSpoolInbound().Select(1, true)) {
-        //    var contentMeta = envelope.Header.ContentMeta;
-        //    var meshMessage = Message.Decode(envelope, KeyCollection);
-
-        //    // Message.FromJson(envelope.GetBodyReader());
-        //    //meshMessage.DareEnvelope = envelope;
-        //    //Console.WriteLine($"Message {contentMeta?.MessageType} ID {meshMessage.MessageID}");
-
-        //    if (meshMessage.MessageId == messageID) {
-        //        read = true;
-        //        return meshMessage;
-        //        }
-        //    switch (meshMessage) {
-        //        case MessageComplete meshMessageComplete: {
-        //                foreach (var reference in meshMessageComplete.References) {
-        //                    if (reference.MessageId == messageID) {
-        //                        read = true;
-        //                        return null;
-        //                        }
-        //                    }
-        //                break;
-        //                }
-
-        //        default:
-        //            break;
-        //        }
-        //    }
-
-        //read = false;
-        //return null;
-        }
 
 
 
@@ -793,13 +713,15 @@ public partial class ContextUser : ContextAccount {
     /// <summary>
     /// Create a threshold encryption group.
     /// </summary>
-    /// <param name="groupName">Name of the group to create.</param>
+    /// <param name="groupAddress">Name of the group to create.</param>
     /// <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
     /// <param name="roles">List of rights to be granted.</param>
     /// <param name="cover">Specifies HTML content containing a default cover page.</param>
     /// <returns></returns>
 
-    public async Task<ContextGroup> CreateGroupAsync(string groupName,
+    public async Task<ContextGroup> CreateGroupAsync(
+                    string groupAddress,
+                    string groupName,
                     PrivateKeyUDF accountSeed = null,
                     List<string> roles = null,
                     byte[]cover=null
@@ -814,7 +736,7 @@ public partial class ContextUser : ContextAccount {
         var activationGroup = new ActivationCommon(keyCollectionGroup, accountSeed) {
             ActivationKey = accountSeed.PrivateValue
             };
-        var profileGroup = new ProfileGroup(groupName, activationGroup) {
+        var profileGroup = new ProfileGroup(groupAddress, activationGroup) {
             Cover = cover
             };
 
@@ -832,11 +754,11 @@ public partial class ContextUser : ContextAccount {
             };
 
 
-        var envelopedBindings = MakeBindings(profileGroup, groupName);
+        var envelopedBindings = MakeBindings(profileGroup, groupAddress);
 
         // here we request creation of the group at the service.
         var createRequest = new BindRequest() {
-            AccountAddress = groupName,
+            AccountAddress = groupAddress,
             EnvelopedProfileAccount = profileGroup.GetEnvelopedProfileAccount(),
             EnvelopedCallsignBinding = envelopedBindings
             };
@@ -846,7 +768,7 @@ public partial class ContextUser : ContextAccount {
         var credentialPrivate = new MeshKeyCredentialPrivate(
                     activationGroup.CommonAuthenticationKey as KeyPairAdvanced, profileGroup.UdfString);
 
-        var groupClient = MeshMachine.GetMeshClient(credentialPrivate, groupName);
+        var groupClient = MeshMachine.GetMeshClient(credentialPrivate, groupAddress);
 
 
         var createResponse = groupClient.BindAccount(createRequest);

@@ -572,7 +572,7 @@ public partial class TestService {
         Exchange(contextAccountAlice, contextAccountBob);
 
         // Generate a recryption group
-        var contextGroup = contextAccountAlice.CreateGroupAsync(AccountGroup, roles: RightsDirect).Sync();
+        var contextGroup = contextAccountAlice.CreateGroupAsync(AccountGroup, "TBS", roles: RightsDirect).Sync();
 
         var groupList = new List<string>() { AccountGroup };
         // Encrypt to the group

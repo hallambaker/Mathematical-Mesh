@@ -87,12 +87,14 @@ public abstract class GuigenFieldSimple : GuigenField, IWidget {
 public class GuigenFieldSet : IWidget {
 
     public IMainWindow MainWindow { get; }
+
+    public GuigenBinding Binding => MainWindow.Binding;
     //public Layout View { get; private set; }
 
     public Grid View { get; private set; }
 
     View? summary = null;
-    public List<IGuiEntry> Fields { get; }
+
     public List<GuigenField> MauiFields { get; } = new();
 
     //int[] FieldMap;
@@ -101,10 +103,19 @@ public class GuigenFieldSet : IWidget {
     int GridColumn { get; set; } = 0;
 
     public IBindable Data { get; set; }
+    public Layout ButtonBox { get; private set;  }
 
-    public GuigenFieldSet(IMainWindow mainWindow, List<IGuiEntry> fields, Layout? stack, GuiBinding binding = null, bool isEntry = true) {
+    public bool IsChooser { get; set; } = false;
+    GuiBinding FieldBinding { get; }
+
+    public GuigenFieldSet(
+                IMainWindow mainWindow, 
+                List<IGuiEntry> fields, 
+                Layout? stack, 
+                GuiBinding binding = null, 
+                bool isEntry = true) {
         MainWindow = mainWindow;
-        Fields = fields;
+        FieldBinding = binding;
 
         View = new Grid();
         View.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
@@ -166,6 +177,8 @@ public class GuigenFieldSet : IWidget {
                 case GuiBoundPropertyChooser bound: {
                     var field = new GuigenFieldChooser(MainWindow, this, bound);
                     MauiFields.Add(field);
+                    ButtonBox = new HorizontalStackLayout();
+                    IsChooser = true;
                     break;
                     }
                 case GuiBoundPropertyList bound: {
@@ -239,10 +252,20 @@ public class GuigenFieldSet : IWidget {
 
     public void AddButtons(Layout layout) {
 
-        foreach (var entry in Fields) {
-            switch (entry) {
-                case GuiButton button: {
-                    layout.Add(AddButton(button));
+        foreach (var field in FieldBinding.BoundProperties) {
+            switch (field) {
+                case GuiBoundPropertyButton button1: {
+                    if (MainWindow.Gui.Selections.TryGetValue(button1.Label, out var action)) {
+                        var button = new GuigenSelectionButton(MainWindow, action, Data);
+                        layout.Add(button.View);
+                        }
+                    break;
+                    }
+                case GuiBoundPropertySelection selection: {
+                    if (MainWindow.Gui.Selections.TryGetValue(selection.Label, out var action)) {
+                        var button = new GuigenSelectionButton(MainWindow, action, Data);
+                        layout.Add (button.View);
+                        }
                     break;
                     }
                 }
@@ -255,7 +278,7 @@ public class GuigenFieldSet : IWidget {
         switch (button.Target) {
 
             case GuiSection section: {
-                return new GuigenSectionButton(MainWindow, section).View;
+                return new GuigenSectionButton(Binding, section).View;
                 }
             case GuiAction action: {
                 return new GuigenActionButton(MainWindow, action) {

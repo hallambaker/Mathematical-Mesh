@@ -1,4 +1,7 @@
-﻿using static System.Collections.Specialized.BitVector32;
+﻿using Microsoft.Maui;
+
+using static System.Collections.Specialized.BitVector32;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Goedel.Guigen.Maui;
 
@@ -47,7 +50,7 @@ public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
 
         FieldSet = new GuigenFieldSet(MainWindow, section.Entries, stack, section.Binding);
 
-        FieldSet.SetFields(section.Data);
+        Refresh();
 
         Content = stack;
         }
@@ -58,7 +61,7 @@ public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
         switch (button.Target) {
 
             case GuiSection section: {
-                return new GuigenSectionButton (MainWindow, section).View;
+                return new GuigenSectionButton (Binding, section).View;
                 }
             case GuiAction action: {
                 return new GuigenActionButton(MainWindow, action).View;
@@ -72,6 +75,7 @@ public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
         }
 
     public void Refresh() {
+        FieldSet.SetFields(Section.Data);
         }
     }
 
@@ -93,7 +97,6 @@ public class GuigenActionButton : IWidget {
         MainWindow = mainWindow;
         Action = action;
 
-
         ImageButton = new ImageButton {
             Source = action.Icon.GetFilename(),
             WidthRequest = Binding.IconWidth ,
@@ -108,13 +111,6 @@ public class GuigenActionButton : IWidget {
         TextButton.Clicked += OnClick;
 
         Stack = new HorizontalStackLayout() { ImageButton, TextButton };
-
-        //Text = action.Prompt;
-        //ImageSource = action.Icon.GetFilename();
-        //HeightRequest = Binding.IconHeight * 2;
-
-        //Clicked += OnClick;
-
         }
 
     private void OnClick(object sender, EventArgs e) {
@@ -132,4 +128,51 @@ public class GuigenActionButton : IWidget {
     }
 
 
+public class GuigenSelectionButton : IWidget {
+    public IMainWindow MainWindow { get; }
+    GuigenBinding Binding => MainWindow.Binding;
+    GuiAction Action { get; }
 
+    Layout Stack { get; }
+
+    ImageButton ImageButton { get; }
+    Button TextButton { get; }
+    IBindable Data { get; }
+    public View View => Stack;
+    public GuigenSelectionButton(IMainWindow mainWindow, GuiAction action, IBindable data) {
+        MainWindow = mainWindow;
+        Action = action;
+        Data = data;
+
+        ImageButton = new ImageButton {
+            Source = action.Icon.GetFilename(),
+            WidthRequest = Binding.IconWidth,
+            HeightRequest = Binding.IconHeight,
+            };
+        ImageButton.Clicked += OnClick;
+
+        TextButton = new Button {
+            Text = action.Prompt,
+            HeightRequest = Binding.ButtonHeight
+            };
+        TextButton.Clicked += OnClick;
+
+        Stack = new HorizontalStackLayout() { ImageButton, TextButton };
+        }
+
+
+    private void OnClick(object sender, EventArgs e) {
+
+        if (Action.IsSelect) {
+            var x = Action.Callback(Data);
+            x.Wait();
+            Binding.SetResult(x.Result);
+            return;
+            }
+
+
+        MainWindow.SetDetailWindow(Action);
+
+
+        }
+    }

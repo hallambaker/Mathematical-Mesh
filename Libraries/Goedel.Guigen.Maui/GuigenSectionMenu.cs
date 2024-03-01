@@ -1,28 +1,31 @@
 ﻿namespace Goedel.Guigen.Maui;
 
-public class GuigenSectionMenu : ContentPage, IReformat, IWidget {
+public class GuigenSectionMenu : ContentPage, IReformat{
 
-    public IMainWindow MainWindow { get; }
+    GuigenBinding Binding { get; }
+    Gui Gui => Binding.Gui;
 
     public Page Page => ContentPage;
     ContentPage ContentPage;
 
-    GuigenBinding Binding => MainWindow.Binding;
-    Gui Gui => Binding.Gui;
+    //GuigenBinding Binding => MainWindow.Binding;
 
+    Layout Layout { get; set; }
 
-    public GuigenSectionMenu(IMainWindow mainWindow) {
-        MainWindow = mainWindow;
+    public GuigenSectionMenu(GuigenBinding binding) {
+        Binding = binding;
 
-        var stack = new VerticalStackLayout();
+        Layout = binding.GetSectionMenuLayout();
+
+        
         foreach (var section in Gui.Sections) {
-            var button = new GuigenSectionButton(mainWindow, section);
-            stack.Add(button.View);
+            var button = new GuigenSectionButton(Binding, section);
+            Layout.Add(button.View);
             }
 
         // The content page
         ContentPage = new ContentPage() {
-            Content = stack,
+            Content = Layout,
             Title = "Main"
             };
         }
@@ -35,9 +38,9 @@ public class GuigenSectionMenu : ContentPage, IReformat, IWidget {
 
 
 
-public class GuigenSectionButton : IWidget {
-    public IMainWindow MainWindow { get; }
-    GuigenBinding Binding => MainWindow.Binding;
+public class GuigenSectionButton {
+
+    GuigenBinding Binding { get; }
     GuiSection Section { get; }
 
     ImageButton ImageButton { get; }
@@ -46,8 +49,9 @@ public class GuigenSectionButton : IWidget {
 
     public View View => Stack;
 
-    public GuigenSectionButton(IMainWindow mainWindow, GuiSection section) {
-        MainWindow = mainWindow;
+    public GuigenSectionButton(GuigenBinding binding, GuiSection section) {
+
+        Binding = binding;
         Section = section;
 
         ImageButton = new ImageButton {
@@ -69,7 +73,9 @@ public class GuigenSectionButton : IWidget {
         }
 
     private void OnClick(object sender, EventArgs e) {
-        MainWindow.SetDetailWindow(Section);
+        //MainWindow.SetDetailWindow(Section);
+
+        Binding.GotoSection(Section);
         }
 
 

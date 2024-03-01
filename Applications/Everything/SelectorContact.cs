@@ -11,6 +11,13 @@ public partial class ContactSection : IHeadedSelection {
     IAccountSelector  Account { get; }
     ContextUser ContextUser => Account.ContextUser;
 
+    public ContactSelection ContactSelection { get; }
+
+    GuigenCatalogContact Catalog { get; }
+
+    ///<inheritdoc/>
+    public override ISelectCollection ChooseContact { get => ContactSelection; set { } }
+
     ///<inheritdoc/>
     public GuiBinding SelectionBinding => _BoundContact.BaseBinding;
 
@@ -20,8 +27,38 @@ public partial class ContactSection : IHeadedSelection {
     /// <param name="account">The account whose contacts are to be used.</param>
     public ContactSection(IAccountSelector account = null) {
         Account = account;
-        var catalog = ContextUser.GetStore(CatalogContact.Label, create: false) as GuigenCatalogContact;
-        ChooseContact = catalog is null ? null : new ContactSelection(catalog);
+        Catalog = ContextUser.GetStore(CatalogContact.Label, create: false) as GuigenCatalogContact;
+        ContactSelection = Catalog is null ? null : new ContactSelection(Catalog);
+        }
+
+    public async Task AddAsync(CatalogedContact entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry);
+        await transaction.TransactAsync();
+
+        var bound = BoundContact.Factory(entry);
+        ContactSelection.Add(bound);
+        }
+
+
+    public async Task UpdateAsync(BoundContact entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry.CatalogedContact);
+        await transaction.TransactAsync();
+
+        ContactSelection.Update(entry);
+        }
+
+
+    public async Task DeleteAsync(BoundContact entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry.CatalogedContact);
+        await transaction.TransactAsync();
+
+        ContactSelection.Remove(entry);
         }
 
     }
@@ -43,15 +80,40 @@ public partial class ContactNetworkAddress : IBoundPresentation {
 
 
 public partial class BoundContact : IBoundPresentation, IDialog {
+
+    public CatalogedContact CatalogedContact => Bound as CatalogedContact;
     public GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundContact;
+
+    public static BoundContact Factory(CatalogedContact contact) {
+        var result = new BoundContact();
+        result.Bound = contact;
+        result.ReadBound();
+        return result;
+        }
+
+    public virtual void ReadBound() {
+        //Title = CatalogedContact.Title;
+        //Description = CatalogedContact.Description;
+        //Path = CatalogedContact.Path;
+        }
+    public virtual void SetBound() {
+        //CatalogedContact.Title = Title;
+        //CatalogedContact.Description = Description;
+        //CatalogedContact.Path = Path;
+        }
+
+
+
     }
 
 public partial class BoundContactBusiness : IBoundPresentation, IDialog {
+
     public override IFieldIcon Type => FieldIcons.ContactBusiness;
 
     }
 
 public partial class BoundContactPlace : IBoundPresentation, IDialog {
+
     public override IFieldIcon Type => FieldIcons.ContactPlace;
 
     }
@@ -247,8 +309,8 @@ public partial class ContactSelection : SelectionCatalog<GuigenCatalogContact,
         }
 
     #region // Conversion overrides
-    public override CatalogedContact CreateFromBindable(IBindable input) =>
-            (input as BoundContactPerson)?.Convert();
+    //public override CatalogedContact CreateFromBindable(IBindable input) =>
+    //        (input as BoundContactPerson)?.Convert();
 
 
     public override BoundContactPerson ConvertToBindable(CatalogedContact input) =>

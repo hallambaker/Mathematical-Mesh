@@ -8,6 +8,12 @@ public partial class CredentialSection : IHeadedSelection {
 
     IAccountSelector Account { get; }
     ContextUser ContextUser => Account.ContextUser;
+    public CredentialSelection CredentialSelection { get; }
+
+    GuigenCatalogCredential Catalog { get; }
+
+    ///<inheritdoc/>
+    public override ISelectCollection ChooseCredential { get => CredentialSelection; set { } }
 
     ///<inheritdoc/>
     public GuiBinding SelectionBinding => _BoundCredential.BaseBinding;
@@ -18,16 +24,68 @@ public partial class CredentialSection : IHeadedSelection {
     /// <param name="account">The account whose contacts are to be used.</param>
     public CredentialSection(IAccountSelector account=null) {
         Account = account;
+        Catalog = ContextUser.GetStore(CatalogCredential.Label, create: false) as GuigenCatalogCredential;
+        CredentialSelection = new CredentialSelection(Catalog);
+        }
 
-        var catalog = ContextUser.GetStore(CatalogCredential.Label, create: false) as GuigenCatalogCredential;
-        ChooseCredential = new CredentialSelection(catalog);
+    public async Task AddAsync(CatalogedCredential entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry);
+        await transaction.TransactAsync();
+
+        var bound = BoundCredential.Factory(entry);
+        CredentialSelection.Add(bound);
+        }
+
+
+    public async Task UpdateAsync(BoundCredential entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry.CatalogedCredential);
+        await transaction.TransactAsync();
+
+        CredentialSelection.Update(entry);
+        }
+
+
+    public async Task DeleteAsync(BoundCredential entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry.CatalogedCredential);
+        await transaction.TransactAsync();
+
+        CredentialSelection.Remove(entry);
         }
 
     }
 
 
 public partial class BoundCredential : IBoundPresentation, IDialog {
+
+    public CatalogedCredential CatalogedCredential => Bound as CatalogedCredential;
     public GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundCredential;
+
+
+    public static BoundCredential Factory(CatalogedCredential contact) {
+        var result = new BoundCredential();
+        result.Bound = contact;
+        result.ReadBound();
+        return result;
+        }
+
+    public virtual void ReadBound() {
+        Protocol = CatalogedCredential.Protocol;
+        Protocol = CatalogedCredential.Protocol;
+        Service = CatalogedCredential.Service;
+        Username = CatalogedCredential.Username;
+        }
+
+    public virtual void SetBound() {
+        CatalogedCredential.Protocol = Protocol;
+        CatalogedCredential.Service = Service;
+        CatalogedCredential.Username = Username;
+        }
     }
 
 // Documented in Guigen output
@@ -50,18 +108,22 @@ public partial class BoundPassword : IBoundPresentation, IDialog {
 
     public static BoundPassword Convert(CatalogedCredential entry) {
         var result = new BoundPassword() {
-            Protocol = entry.Protocol,
-            Service = entry.Service,
-            Username = entry.Username,
-            Password = entry.Password
+            Bound = entry
             };
-
+        result.ReadBound();
         return result;
-
         }
 
-    public virtual void Fill() {
+    public override void ReadBound() {
+        base.ReadBound();
+        Password = CatalogedCredential.Password;
         }
+
+    public override void SetBound() {
+        base.SetBound();
+        CatalogedCredential.Password = Password;
+        }
+
 
     }
 
@@ -184,14 +246,14 @@ public partial class CredentialSelection : SelectionCatalog<GuigenCatalogCredent
         }
 
     #region // Conversion overrides
-    public override CatalogedCredential CreateFromBindable(IBindable contact) =>
-        (contact as BoundPassword)?.Convert();
+    //public override CatalogedCredential CreateFromBindable(IBindable contact) =>
+    //    (contact as BoundPassword)?.Convert();
 
     public override BoundPassword ConvertToBindable(CatalogedCredential input) => BoundPassword.Convert(input);
 
     public override CatalogedCredential UpdateWithBindable(IBindable entry) {
         var binding = entry as BoundPassword;
-        binding.Fill();
+        binding.ReadBound();
         return binding.Bound as CatalogedCredential;
         }
 

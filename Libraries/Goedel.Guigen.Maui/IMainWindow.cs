@@ -8,14 +8,22 @@ public interface IWidget {
     }
 
 
+
+
+
 public interface IMainWindow  {
+
+    Page Page { get; }
+
+
+    Gui Gui { get; }
     GuigenBinding Binding { get; }
+
+
 
     public StyleSheet StyleSheet { get; }
 
-
     public GuigenDetailAction CurrentAction { get; set; }
-
 
 
     public int GetDetailWidth();

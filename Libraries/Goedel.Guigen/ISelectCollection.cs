@@ -25,29 +25,32 @@ public interface ISelectCollection : IEnumerable{
 
     //public  GuiDialog GetDialog(IBindable data);
 
+
+
     void Add(IBoundPresentation item);
 
     void Remove(IBoundPresentation item);
 
-
     void Update(IBoundPresentation item);
+
 
     }
 
 
-public class SelectList : ISelectCollection {
+
+
+public class SelectList : ISelectCollection{
     public ObservableCollection<IBindable> Entries { get; } = new();
 
-    public void Add(IBoundPresentation item) => Entries.Add(item);
-
     public IEnumerator GetEnumerator() => Entries.GetEnumerator();
+
+    public void Add(IBoundPresentation item) => Entries.Add(item);
 
     public void Remove(IBoundPresentation item) => Entries.Remove(item);
 
     public void Update(IBoundPresentation item) {
         }
 
-    //public GuiDialog GetDialog(IBindable data) => null;
 
     }
 

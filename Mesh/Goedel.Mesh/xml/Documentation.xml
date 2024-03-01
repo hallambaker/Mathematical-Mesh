@@ -2878,6 +2878,67 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="T:Goedel.Mesh.CatalogedApplicationGit">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationGit.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationGit.GetEscrow">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationGit.GetActivation(Goedel.Mesh.CatalogedDevice)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationGit.ToBuilder(System.Text.StringBuilder)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationGit._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedApplicationGit._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedApplicationGit._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedApplicationGit._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationGit._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationGit._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationGit._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationGit._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedApplicationGit.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationGit._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationGit.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
         <member name="T:Goedel.Mesh.CatalogBlind">
             <summary>
             Dummy catalog class that binds to a persistence store as a collection of
@@ -4100,6 +4161,14 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument.Title">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDocument.Version">
+            <summary>
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedDocument.URI">
              <summary>
             Locator to be used to retrieve the data.
@@ -4262,9 +4331,9 @@
             <param name="stream">The stream to write the data to.</param>
             <param name="format">The file format to write the output in.</param>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedEntry.Labels">
+        <member name="P:Goedel.Mesh.CatalogedEntry.Uid">
              <summary>
-            The set of labels describing the entry
+            Globaly unique identifier
              </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedEntry.LocalName">
@@ -4272,9 +4341,9 @@
             User specified identifier.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedEntry.Uid">
+        <member name="P:Goedel.Mesh.CatalogedEntry.Path">
              <summary>
-            Globaly unique identifier
+            The set of labels describing the entry
              </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedEntry.Description">

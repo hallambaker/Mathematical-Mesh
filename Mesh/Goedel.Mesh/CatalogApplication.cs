@@ -325,4 +325,25 @@ public partial class CatalogedApplicationDeveloper {
 
         }
     }
+
+
+public partial class CatalogedApplicationGit {
+
+
+    ///<inheritdoc/>
+    public override void Activate(List<ApplicationEntry> activationEntry, ProfileDevice profileDevice, IKeyCollection keyCollection) {
+        }
+
+    ///<inheritdoc/>
+    public override KeyData[] GetEscrow() => Array.Empty<KeyData>();
+
+    ///<inheritdoc/>
+    public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) => throw new NYI();
+
+    ///<inheritdoc/>
+    public override void ToBuilder(StringBuilder output) {
+
+        }
+    }
+
 #endregion

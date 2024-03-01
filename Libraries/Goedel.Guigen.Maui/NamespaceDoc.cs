@@ -23,6 +23,7 @@
 global using Goedel.Utilities;
 global using Microsoft.Extensions.Logging;
 global using System.Text;
+global using Microsoft.Maui.Layouts;
 
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]

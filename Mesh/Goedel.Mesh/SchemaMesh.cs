@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/13/2024 12:20:04 AM
+//  This file was automatically generated at 2/23/2024 3:10:01 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -134,7 +134,6 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"CatalogedDocument", CatalogedDocument._Factory},
 	    {"CatalogedPublication", CatalogedPublication._Factory},
 	    {"CatalogedCredential", CatalogedCredential._Factory},
-	    {"CatalogedApplicationSsh", CatalogedApplicationSsh._Factory},
 	    {"CatalogedNetwork", CatalogedNetwork._Factory},
 	    {"CatalogedContact", CatalogedContact._Factory},
 	    {"CatalogedAccess", CatalogedAccess._Factory},
@@ -160,6 +159,8 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"CatalogedApplicationMail", CatalogedApplicationMail._Factory},
 	    {"CatalogedApplicationPkix", CatalogedApplicationPkix._Factory},
 	    {"CatalogedApplicationOpenPgp", CatalogedApplicationOpenPgp._Factory},
+	    {"CatalogedApplicationSsh", CatalogedApplicationSsh._Factory},
+	    {"CatalogedApplicationGit", CatalogedApplicationGit._Factory},
 	    {"CatalogedApplicationDeveloper", CatalogedApplicationDeveloper._Factory},
 	    {"MessageInvoice", MessageInvoice._Factory},
 	    {"CatalogedReceipt", CatalogedReceipt._Factory},
@@ -5240,10 +5241,11 @@ public partial class Engagement : MeshItem {
 	/// </summary>
 abstract public partial class CatalogedEntry : MeshItem {
         /// <summary>
-        ///The set of labels describing the entry
+        ///Globaly unique identifier
         /// </summary>
 
-	public virtual List<string>?					Labels  {get; set;}
+	public virtual string?						Uid  {get; set;}
+
         /// <summary>
         ///User specified identifier.
         /// </summary>
@@ -5251,10 +5253,10 @@ abstract public partial class CatalogedEntry : MeshItem {
 	public virtual string?						LocalName  {get; set;}
 
         /// <summary>
-        ///Globaly unique identifier
+        ///The set of labels describing the entry
         /// </summary>
 
-	public virtual string?						Uid  {get; set;}
+	public virtual string?						Path  {get; set;}
 
         /// <summary>
         ///Description
@@ -5274,12 +5276,12 @@ abstract public partial class CatalogedEntry : MeshItem {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Labels", new PropertyListString ("Labels", 
-					(IBinding data, List<string>? value) => {(data as CatalogedEntry).Labels = value;}, (IBinding data) => (data as CatalogedEntry).Labels )},
-			{ "LocalName", new PropertyString ("LocalName", 
-					(IBinding data, string? value) => {(data as CatalogedEntry).LocalName = value;}, (IBinding data) => (data as CatalogedEntry).LocalName )},
 			{ "Uid", new PropertyString ("Uid", 
 					(IBinding data, string? value) => {(data as CatalogedEntry).Uid = value;}, (IBinding data) => (data as CatalogedEntry).Uid )},
+			{ "LocalName", new PropertyString ("LocalName", 
+					(IBinding data, string? value) => {(data as CatalogedEntry).LocalName = value;}, (IBinding data) => (data as CatalogedEntry).LocalName )},
+			{ "Path", new PropertyString ("Path", 
+					(IBinding data, string? value) => {(data as CatalogedEntry).Path = value;}, (IBinding data) => (data as CatalogedEntry).Path )},
 			{ "Description", new PropertyString ("Description", 
 					(IBinding data, string? value) => {(data as CatalogedEntry).Description = value;}, (IBinding data) => (data as CatalogedEntry).Description )}
         };
@@ -5744,6 +5746,16 @@ public partial class CatalogedDocument : CatalogedEntry {
 	public virtual string?						Filename  {get; set;}
 
         /// <summary>
+        /// </summary>
+
+	public virtual string?						Title  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						Version  {get; set;}
+
+        /// <summary>
         ///Locator to be used to retrieve the data.
         /// </summary>
 
@@ -5793,6 +5805,10 @@ public partial class CatalogedDocument : CatalogedEntry {
 					(IBinding data, string? value) => {(data as CatalogedDocument).Udf = value;}, (IBinding data) => (data as CatalogedDocument).Udf )},
 			{ "Filename", new PropertyString ("Filename", 
 					(IBinding data, string? value) => {(data as CatalogedDocument).Filename = value;}, (IBinding data) => (data as CatalogedDocument).Filename )},
+			{ "Title", new PropertyString ("Title", 
+					(IBinding data, string? value) => {(data as CatalogedDocument).Title = value;}, (IBinding data) => (data as CatalogedDocument).Title )},
+			{ "Version", new PropertyString ("Version", 
+					(IBinding data, string? value) => {(data as CatalogedDocument).Version = value;}, (IBinding data) => (data as CatalogedDocument).Version )},
 			{ "URI", new PropertyString ("URI", 
 					(IBinding data, string? value) => {(data as CatalogedDocument).URI = value;}, (IBinding data) => (data as CatalogedDocument).URI )},
 			{ "ContentType", new PropertyString ("ContentType", 
@@ -6081,88 +6097,6 @@ public partial class CatalogedCredential : CatalogedEntry {
 			return Out as CatalogedCredential;
 			}
 		var Result = new CatalogedCredential ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-
-
-	}
-
-	/// <summary>
-	/// </summary>
-public partial class CatalogedApplicationSsh : CatalogedApplication {
-        /// <summary>
-        ///The S/Mime encryption key
-        /// </summary>
-
-	public virtual KeyData?						ClientKey  {get; set;}
-
-
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new CatalogedApplicationSsh(), CatalogedApplication._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-			{ "ClientKey", new PropertyStruct ("ClientKey", 
-					(IBinding data, object? value) => {(data as CatalogedApplicationSsh).ClientKey = value as KeyData;}, (IBinding data) => (data as CatalogedApplicationSsh).ClientKey,
-					false, ()=>new  KeyData(), ()=>new KeyData())} 
-        };
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedApplication._StaticAllProperties);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "CatalogedApplicationSsh";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new CatalogedApplicationSsh();
-
-
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CatalogedApplicationSsh FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CatalogedApplicationSsh;
-			}
-		var Result = new CatalogedApplicationSsh ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -8429,6 +8363,161 @@ public partial class CatalogedApplicationOpenPgp : CatalogedApplication {
 			return Out as CatalogedApplicationOpenPgp;
 			}
 		var Result = new CatalogedApplicationOpenPgp ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class CatalogedApplicationSsh : CatalogedApplication {
+        /// <summary>
+        ///The S/Mime encryption key
+        /// </summary>
+
+	public virtual KeyData?						ClientKey  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedApplicationSsh(), CatalogedApplication._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "ClientKey", new PropertyStruct ("ClientKey", 
+					(IBinding data, object? value) => {(data as CatalogedApplicationSsh).ClientKey = value as KeyData;}, (IBinding data) => (data as CatalogedApplicationSsh).ClientKey,
+					false, ()=>new  KeyData(), ()=>new KeyData())} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, CatalogedApplication._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "CatalogedApplicationSsh";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new CatalogedApplicationSsh();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new CatalogedApplicationSsh FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as CatalogedApplicationSsh;
+			}
+		var Result = new CatalogedApplicationSsh ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class CatalogedApplicationGit : CatalogedApplication {
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new CatalogedApplicationGit(), CatalogedApplication._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, CatalogedApplication._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "CatalogedApplicationGit";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new CatalogedApplicationGit();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new CatalogedApplicationGit FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as CatalogedApplicationGit;
+			}
+		var Result = new CatalogedApplicationGit ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

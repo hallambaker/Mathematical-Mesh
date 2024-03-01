@@ -2669,6 +2669,9 @@
         <member name="P:Goedel.Mesh.Shell._GroupCreate.GroupID">
             <summary>Field accessor for parameter []</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._GroupCreate.GroupName">
+            <summary>Field accessor for parameter []</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._GroupCreate.Cover">
             <summary>Field accessor for option [cover]</summary>
         </member>

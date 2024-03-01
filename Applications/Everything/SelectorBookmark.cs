@@ -1,4 +1,6 @@
 ﻿using Goedel.Cryptography.Dare;
+using Goedel.Mesh;
+
 using System.Xml.Linq;
 
 namespace Goedel.Everything;
@@ -11,6 +13,14 @@ public partial class BookmarkSection : IHeadedSelection {
     IAccountSelector Account { get; }
     ContextUser ContextUser => Account.ContextUser;
 
+    BookmarkSelection BookmarkSelection { get; }
+
+    GuigenCatalogBookmark Catalog { get; }
+
+    ///<inheritdoc/>
+    public override ISelectCollection ChooseBookmark { get => BookmarkSelection; set { } }
+
+    ///<inheritdoc/>
     public GuiBinding SelectionBinding => _BoundBookmark.BaseBinding;
 
     /// <summary>
@@ -19,79 +29,89 @@ public partial class BookmarkSection : IHeadedSelection {
     /// <param name="account">The account whose contacts are to be used.</param>
     public BookmarkSection(IAccountSelector account=null) {
         Account = account;
-        var catalog = ContextUser.GetStore(CatalogBookmark.Label, create: false) as GuigenCatalogBookmark;
-        ChooseBookmark = catalog is null ? null : new BookmarkSelection(catalog);
+        Catalog = ContextUser.GetStore(CatalogBookmark.Label, create: false) as GuigenCatalogBookmark;
+        BookmarkSelection = Catalog is null ? null : new BookmarkSelection(Catalog);
         }
+
+    public async Task AddAsync(CatalogedBookmark entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry);
+        await transaction.TransactAsync();
+
+        var bound =  BoundBookmark.Factory(entry);
+        BookmarkSelection.Add(bound);
+        }
+
+
+    public async Task UpdateAsync(BoundBookmark entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry.CatalogedBookmark);
+        await transaction.TransactAsync();
+
+        BookmarkSelection.Update(entry);
+        }
+
+
+    public async Task DeleteAsync(BoundBookmark entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry.CatalogedBookmark);
+        await transaction.TransactAsync();
+
+        BookmarkSelection.Remove(entry);
+        }
+
 
     }
 
 // Documented in Guigen output
 public partial class BoundBookmark : IBoundPresentation, IDialog {
 
+    public CatalogedBookmark CatalogedBookmark => Bound as CatalogedBookmark;
+
     public virtual GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundBookmark;
 
     public override IFieldIcon Type => FieldIcons.Bookmark(Uri);
+
 
     public virtual CatalogedBookmark Convert() {
         var result = new CatalogedBookmark() {
             Uid = Udf.Nonce()
             };
 
-        Fill();
+        ReadBound();
         return result;
         }
 
-    public static BoundBookmark Convert(CatalogedBookmark entry) {
+    public static BoundBookmark Factory(CatalogedBookmark entry) {
         var result = new BoundBookmark() {
-            Bound = entry,
-            Uri = entry.Uri,
-            Title = entry.Title,
-            Comments = entry.Comments.ParseComments()
+            Bound = entry
             };
-
+        result.ReadBound();
         return result;
 
         }
 
-    public virtual void Fill() {
-        var bound = Bound as CatalogedBookmark;
+    public virtual void ReadBound() {
 
-        bound.Uri = Uri;
-        bound.Title = Title;
-        bound.Comments = Comments.ParseComments();
+
+        Uri = CatalogedBookmark.Uri;
+        Title = CatalogedBookmark.Title;
+        Path = CatalogedBookmark.Path;
+        Description = CatalogedBookmark.Description;
         }
 
+    public virtual void SetBound() {
 
+        CatalogedBookmark.Title = Title;
+        CatalogedBookmark.Path = Path;
+        }
 
     }
 
-public partial class BoundFeed {
 
-
-    public override CatalogedFeed Convert() {
-        var result = new CatalogedFeed() {
-            Uri = Uri,
-            Title = Title,
-            Comments = Comments.ParseComments(),
-            Uid = Udf.Nonce(),
-            Protocol = Protocol
-            };
-
-        return result;
-        }
-
-    public static BoundFeed Convert(CatalogedFeed entry) {
-        var result = new BoundFeed() {
-            Uri = entry.Uri,
-            Title = entry.Title,
-            Comments = entry.Comments.ParseComments(),
-            Protocol = entry.Protocol
-            };
-
-        return result;
-
-        }
-    }
 
 #endregion
 #region // Binding to classes specified in the Mesh schema
@@ -182,23 +202,23 @@ public partial class BookmarkSelection : SelectionCatalog<GuigenCatalogBookmark,
         }
 
     #region // Conversion overrides
-    public override CatalogedBookmark CreateFromBindable(IBindable input) =>
-        (input as BoundBookmark)?.Convert();
+    //public override CatalogedBookmark CreateFromBindable(IBindable input) =>
+    //    (input as BoundBookmark)?.Convert();
 
     public override BoundBookmark ConvertToBindable(CatalogedBookmark input) {
         switch (input) {
             case CatalogedFeed feed: {
-                return BoundFeed.Convert(feed);
+                return BoundFeed.Factory(feed);
                 }
             default: {
-                return BoundBookmark.Convert(input);
+                return BoundBookmark.Factory(input);
                 }
             }
         }
 
     public override CatalogedBookmark UpdateWithBindable(IBindable entry) {
         var binding = entry as BoundBookmark;
-        binding.Fill();
+        binding.ReadBound();
         return binding.Bound as CatalogedBookmark;
         }
 

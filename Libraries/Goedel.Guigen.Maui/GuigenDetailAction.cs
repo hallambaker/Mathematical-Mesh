@@ -1,4 +1,6 @@
-﻿using static System.Collections.Specialized.BitVector32;
+﻿using Microsoft.Maui.Controls.Compatibility.Platform.UWP;
+
+using static System.Collections.Specialized.BitVector32;
 
 namespace Goedel.Guigen.Maui;
 
@@ -57,17 +59,29 @@ public class GuigenDetailAction : GuigenDetaiPage {
 
         var view = new HorizontalStackLayout();
 
-        ConfirmButton = new Button() {
-            Text = "Accept"
-            };
-        ConfirmButton.Clicked += OnClickConfirm;
+        if (FieldSet.IsChooser) {
+            ActionViews.Add(FieldSet.ButtonBox);
+            //ConfirmButton = new Button() {
+            //    Text = "Hyperspace"
+            //    };
+            //FieldSet.ButtonBox.Add(ConfirmButton);
+            }
+        else {
+            ConfirmButton = new Button() {
+                Text = "Accept"
+                };
+            ConfirmButton.Clicked += OnClickConfirm;
+            ActionViews.Add(ConfirmButton);
+            }
+
+
 
         CancelButton = new Button() {
             Text = "Cancel",
             };
         CancelButton.Clicked += OnClickCancel;
 
-        ActionViews.Add(ConfirmButton);
+
         ActionViews.Add(CancelButton);
 
         Result = Action.Factory() as IParameter;
@@ -76,7 +90,7 @@ public class GuigenDetailAction : GuigenDetaiPage {
 
         EnableActions();
 
-        view.Add(ConfirmButton);
+        view.Add(FieldSet.ButtonBox);
         view.Add(CancelButton);
         stack.Add(view);
 

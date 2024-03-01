@@ -17,18 +17,89 @@ namespace Goedel.Everything;
 
 public partial class EverythingMaui {
 
+    ///<inheritdoc/>
+    public override async Task<IResult> AddPerson(AddPerson data) {
+        var uid = Udf.Nonce();
+        var entry = new CatalogedContact() {
+            Uid = uid
+            };
+
+        await CurrentAccount.Contacts.AddAsync(entry);
+
+        return NullResult.Completed;
+        }
+    ///<inheritdoc/>
+    public override async Task<IResult> AddOrganization(AddOrganization data) {
+        var uid = Udf.Nonce();
+        var entry = new CatalogedContact() {
+            Uid = uid
+            };
+
+        await CurrentAccount.Contacts.AddAsync(entry);
+
+        return NullResult.Completed;
+        }
+
+    ///<inheritdoc/>
+    public override async Task<IResult> AddLocation(AddLocation data) {
+        var uid = Udf.Nonce();
+        var entry = new CatalogedContact() {
+            Uid = uid
+            };
+
+        await CurrentAccount.Contacts.AddAsync(entry);
+
+        return NullResult.Completed;
+        }
+
+    ///<inheritdoc/>
+    public override async Task<IResult> ContactUpdate(BoundContact entry) {
+        entry.SetBound();
+
+        await CurrentAccount.Contacts.UpdateAsync(entry);
+
+        return NullResult.Completed;
+        }
+
+    ///<inheritdoc/>
+    public override async Task<IResult> ContactDelete(BoundContact entry) {
+
+        await CurrentAccount.Contacts.DeleteAsync(entry);
+
+        return NullResult.Completed;
+
+        }
+
+    // Focus: 020 Engage QR code dialogs
+
+
+
+    ///<inheritdoc/>
+    public override async Task<IResult> QrContact(QrContact data) => await NotYetImplemented();
+
+    // This is in messages
+    //public override async Task<IResult> RequestContact(RequestContact data) => await NotYetImplemented();
+
+    // Focus: 021 Engage Mesh messaging dialogs
+
+
+    ///<inheritdoc/>
+    public override async Task<IResult> ContactInteractMesh(BoundContactPerson data) => await NotYetImplemented();
+
+    ///<inheritdoc/>
+    public override async Task<IResult> ContactInteractAddress(ContactNetworkAddress data) => await NotYetImplemented();
+
+
+    // Focus: 022 Engage handoff to other applications.
 
     ///<inheritdoc/>
     public override async Task<IResult> CreateMail(CreateMail data) => await NotYetImplemented();
 
-
     ///<inheritdoc/>
     public override async Task<IResult> CreateChat(CreateChat data) => await NotYetImplemented();
 
-
     ///<inheritdoc/>
     public override async Task<IResult> StartVoice(StartVoice data) => await NotYetImplemented();
-
 
     ///<inheritdoc/>
     public override async Task<IResult> StartVideo(StartVideo data) => await NotYetImplemented();

@@ -472,6 +472,8 @@
 			Include DeviceAuthOptions
 			Parameter GroupID "group" String
 				Brief "Recryption group name in user@example.com format"
+			Parameter GroupName "name" String
+				Brief "Recryption group name in user@example.com format"
 			Option Cover "cover" ExistingFile
 				Brief "File containing a default cover to be added to encrypted files"
 

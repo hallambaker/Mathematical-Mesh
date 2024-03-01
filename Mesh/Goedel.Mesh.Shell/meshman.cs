@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 2/13/2024 12:19:00 AM
+//  This file was automatically generated at 2/22/2024 2:36:12 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -8263,6 +8263,7 @@ public class _GroupCreate : Goedel.Command.Dispatch ,
 		new String (),
 		new Flag (),
 		new String (),
+		new String (),
 		new ExistingFile ()		} ;
 
 
@@ -8458,14 +8459,23 @@ public class _GroupCreate : Goedel.Command.Dispatch ,
 	public virtual string _GroupID {
 		set => _Data[20].Parameter (value);
 		}
-	/// <summary>Field accessor for option [cover]</summary>
-	public virtual ExistingFile Cover {
-		get => _Data[21] as ExistingFile;
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual String GroupName {
+		get => _Data[21] as String;
 		set => _Data[21]  = value;
 		}
 
-	public virtual string _Cover {
+	public virtual string _GroupName {
 		set => _Data[21].Parameter (value);
+		}
+	/// <summary>Field accessor for option [cover]</summary>
+	public virtual ExistingFile Cover {
+		get => _Data[22] as ExistingFile;
+		set => _Data[22]  = value;
+		}
+
+	public virtual string _Cover {
+		set => _Data[22].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -8622,11 +8632,18 @@ public class _GroupCreate : Goedel.Command.Dispatch ,
 				Index = 20,
 				Key = ""
 				},
+			new DescribeEntryParameter () {
+				Identifier = "GroupName", 
+				Default = null, // null if null
+				Brief = "Recryption group name in user@example.com format",
+				Index = 21,
+				Key = ""
+				},
 			new DescribeEntryOption () {
 				Identifier = "Cover", 
 				Default = null, // null if null
 				Brief = "File containing a default cover to be added to encrypted files",
-				Index = 21,
+				Index = 22,
 				Key = "cover"
 				}
 			}

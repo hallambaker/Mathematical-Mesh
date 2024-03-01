@@ -46,8 +46,8 @@ public abstract class SelectionStore<TStore, TPersist, TEnum, TBindable> : ISele
     ///<inheritdoc/>
     public virtual IEnumerator GetEnumerator() => Entries.GetEnumerator();
 
-    ///<summary>Create a new entry from information in the GUI.</summary> 
-    public abstract TEnum CreateFromBindable(IBindable contact);
+    /////<summary>Create a new entry from information in the GUI.</summary> 
+    //public abstract TEnum CreateFromBindable(IBindable contact);
 
     ///<summary>Update the bound object with information from the GUI and return the 
     ///updated object.</summary> 
@@ -61,8 +61,11 @@ public abstract class SelectionStore<TStore, TPersist, TEnum, TBindable> : ISele
     //public virtual GuiDialog GetDialog(IBindable data) => null;
 
 
+
+
     ///<inheritdoc/>
     public abstract void Add(IBoundPresentation item);
+
 
     ///<inheritdoc/>
     public abstract void Update(IBoundPresentation item);
@@ -93,14 +96,11 @@ public abstract class SelectionCatalog<TCatalog,TPersist,TBindable> : SelectionS
         }
 
     public override void Add(IBoundPresentation item) {
-        var contact = CreateFromBindable(item);
-        Catalog.New(contact);
         Entries.Add(item);
         }
 
     public override void Remove(IBoundPresentation item) {
-        Catalog.Delete(item.Bound as TPersist);
-        //base.Remove(item);
+        Entries.Remove(item);
         }
 
     public override void Update(IBoundPresentation item) {

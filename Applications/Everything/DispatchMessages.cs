@@ -63,13 +63,6 @@ public partial class EverythingMaui {
 
 
 
-    /// <summary>
-    /// GUI action
-    /// </summary>
-    public override Task<IResult> QrContact(QrContact data) {
-        throw new NYI();
-        }
-
 
     #region Contact
     ///<inheritdoc/>

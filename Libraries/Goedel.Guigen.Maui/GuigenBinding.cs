@@ -71,11 +71,16 @@ public interface IReformat{
     }
 
 
+public record BoundFieldSet (
+            GuiFieldSet FieldSet,
+            IBindable   Data){
 
-public class GuigenBinding(Gui gui, DisplayMode display = DisplayMode.Default) {
-    public Gui Gui { get; } = gui;
-    public DisplayMode DisplayMode { get; } = display;
+    }
 
+
+public class GuigenBinding {
+    public Gui Gui { get; }
+    public DisplayMode Display { get; set; }
 
     public int IconHeight = 20;
     public int IconWidth = 20;
@@ -84,8 +89,113 @@ public class GuigenBinding(Gui gui, DisplayMode display = DisplayMode.Default) {
     public int ListIconWidth = 10;
 
     public int ButtonHeight = 30;
+
+    public Page Page =>MainWindow.Page;
+
+    IMainWindow MainWindow;
+
+    //IMainWindow MainWindow => GuigenMainFlyout;
+    public IDispatcher Dispatcher => Page.Dispatcher;
+
+    public GuigenBinding(Gui gui) {
+        Gui = gui;
+
+        // Can't use this because it isn't supported on Windows.
+        //OnDisplayChanged(null, null);
+        //DeviceDisplay.MainDisplayInfoChanged += OnDisplayChanged;
+
+        Display = DisplayMode.Mobile;
+        if (DeviceInfo.Current.Idiom == DeviceIdiom.Desktop) {
+            Display = DisplayMode.Desktop;
+            }
+
+        //Display = DisplayMode.Mobile;
+        }
+
+
+
+    /// <summary>
+    /// Event is called to reset the display parameters when the display characteristics change.
+    /// The arguments are ignored.
+    /// </summary>
+    /// <param name="sender">Sender, always this class, ignored.</param>
+    /// <param name="args">Arguments, always report the DeviceDisplay.Current.MainDisplayInfo</param>
+    private void OnDisplayChanged(object? sender, DisplayInfoChangedEventArgs args) {
+        var displayInfo = DeviceDisplay.Current.MainDisplayInfo;
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+    public void GotoSection(GuiSection section) {
+
+        MainWindow.SetDetailWindow(section);
+
+        }
+
+    public void MakeSelection(IBindable Data) {
+        }
+
+    public void BeginAction(GuiAction action, IBindable data) {
+        // Do we need parameters for this action?
+
+        // No, just begin the task.
+        }
+
+    public async Task BeginTask(GuiAction action, IBindable data) {
+
+        try {
+            await action.Callback(data);
+            }
+        catch (Exception e) {
+            }
+        }
+
+    public void CancelTask () { 
+        }
+
+    public void EndAction(IResult result) {
+        // Is there a message to display
+
+
+        // return to the previous state
+
+        }
+
+
+
+
+
+    public Layout GetSectionMenuLayout() => Display switch {
+        DisplayMode.Desktop => new VerticalStackLayout(),
+        _ => new FlexLayout() {
+            Wrap = FlexWrap.Wrap,
+            JustifyContent = FlexJustify.Start
+            }
+        };
+
+
+
+
+
+
     public Page GetMain() {
-        return new GuigenMainFlyout(this).Page;
+
+        //MainWindow = new GuigenDesktop(this);
+
+
+        MainWindow = new GuigenMainFlyout(this);
+
+        return Page;
         }
 
 
@@ -94,7 +204,21 @@ public class GuigenBinding(Gui gui, DisplayMode display = DisplayMode.Default) {
 
     public string Resolve(string resourceId) =>
         ResourceResolver.GetString(resourceId);
+
+
+
+    public void SetResult(IResult result) {
+
+        if (result.ReturnResult == ReturnResult.Home) {
+            MainWindow.SetDetailWindow(Gui.DefaultSection);
+            }
+
+        }
+
     }
+
+
+
 
 public class GuigenMainFlyout : IReformat, IMainWindow {
     
@@ -115,8 +239,11 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
     public GuigenDetailAction CurrentAction { get; set; }
 
     public GuigenMainFlyout(GuigenBinding binding) {
+
         Binding = binding;
-        SectionMenu = new GuigenSectionMenu(this);
+        SectionMenu = new GuigenSectionMenu(Binding);
+
+
 
         FlyoutPage = new FlyoutPage() {
             Title = "Fred",
@@ -124,6 +251,8 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
             };
 
         SetDetailWindow(Gui.DefaultSection);
+
+
         }
 
     public int GetDetailWidth() => (int) FlyoutPage.Window.Width;
@@ -149,10 +278,15 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
             return;
             }
 
-        // Call refresh only if the window is newly created.
         detail.Refresh();
         FlyoutPage.Detail = detail;
         }
+
+
+
+
+
+
 
     /// <summary>
     /// Event callback, MUST be called on the main display thread. Displays the result values

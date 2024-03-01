@@ -56,8 +56,18 @@ public interface IHeadedSelection {
     }
 
 
+
+public enum ReturnNavigation {
+    Home,
+    Section,
+    Action
+    }
+
+
 public enum ReturnResult {
+    Home,
     Completed,
+    Report,
     Initialized,
     Valid,
     Invalid,
@@ -71,12 +81,15 @@ public enum ReturnResult {
 
 public interface IResult : IBindable {
 
+
+
     public string Message { get; }
 
 
     public ResourceId? ResourceId { get; }
 
     ReturnResult ReturnResult { get; }
+
 
     public object[] GetValues();
 
@@ -119,7 +132,14 @@ public abstract record NullResult : IResult {
 
     public static NullResult Completed { get; } = new CompletedResult();
 
+    public static NullResult HomeResult { get; } = new HomeResult();
+
     public object[] GetValues() => Array.Empty<object>();
+    }
+
+public record HomeResult : NullResult {
+    public override ReturnResult ReturnResult { get; init; } = ReturnResult.Home
+;
     }
 
 
@@ -197,6 +217,13 @@ public record GuiBoundProperty (
 
 public record GuiBoundPropertyButton(
                 string? Label) : GuiBoundProperty(Label) {
+    public IButtonTarget Target = null!;
+
+    }
+
+public record GuiBoundPropertySelection(
+                string? Label,
+                string? Prompt) : GuiBoundPropertyPrompted(Label, Prompt) {
     public IButtonTarget Target = null!;
 
     }

@@ -1,5 +1,6 @@
 ﻿using Goedel.Callsign;
 using Goedel.Cryptography.Dare;
+using Goedel.Mesh;
 namespace Goedel.Everything;
 
 #region // Bindings to classes specified through the Guigen schema.
@@ -10,6 +11,13 @@ public partial class ApplicationSection : IHeadedSelection {
     public IAccountSelector Account { get; init; }
     ContextUser ContextUser => Account.ContextUser;
 
+    ApplicationSelection ApplicationSelection { get; }
+
+    GuigenCatalogApplication Catalog { get; }
+
+    ///<inheritdoc/>
+    public override ISelectCollection ChooseApplication { get => ApplicationSelection; set { } }
+
     ///<inheritdoc/>
     public GuiBinding SelectionBinding => _BoundApplication.BaseBinding;
 
@@ -19,19 +27,49 @@ public partial class ApplicationSection : IHeadedSelection {
     /// <param name="account">The account whose contacts are to be used.</param>
     public ApplicationSection(IAccountSelector account=null) {
         Account = account;
-
-        var catalog = ContextUser.GetStore(CatalogApplication.Label, create: false) as GuigenCatalogApplication;
-        ChooseApplication = catalog is null ? null : new ApplicationSelection(catalog);
+        Catalog = ContextUser.GetStore(CatalogApplication.Label, create: false) as GuigenCatalogApplication;
+        ApplicationSelection = Catalog is null ? null : new ApplicationSelection(Catalog);
         }
+
+    public async Task AddAsync(CatalogedApplication entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry);
+        await transaction.TransactAsync();
+
+        var bound = new BoundApplication(entry);
+        ApplicationSelection.Add(bound);
+        }
+
+
+    public async Task UpdateAsync(BoundApplication entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry.CatalogedApplication);
+        await transaction.TransactAsync();
+
+        ApplicationSelection.Update(entry);
+        }
+
+
+    public async Task DeleteAsync(BoundApplication entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry.CatalogedApplication);
+        await transaction.TransactAsync();
+
+        ApplicationSelection.Remove(entry);
+        }
+
 
     }
 
 // Documented in Guigen output
 public partial class BoundApplication : IBoundPresentation, IDialog {
-
+    public CatalogedApplication CatalogedApplication => Bound as CatalogedApplication;
     public virtual GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundApplication;
 
-    public string? LabelValue => Display;
+    public string? LabelValue => LocalName;
     public string? SecondaryValue => "TBS";
     public virtual string? IconValue => "account.png";
 
@@ -42,13 +80,21 @@ public partial class BoundApplication : IBoundPresentation, IDialog {
         //return result;
         }
 
-    public static BoundApplication Convert(CatalogedApplication application) {
-        var result = new BoundApplication();
-        result.Fill(application);
-
-        return result;
-
+    public BoundApplication() {
         }
+
+    public BoundApplication(CatalogedApplication entry) {
+        Bound = entry;
+        ReadBound();
+        }
+
+    public static BoundTask Factory(CatalogedTask contact) {
+        var result = new BoundTask();
+        result.Bound = contact;
+        result.ReadBound();
+        return result;
+        }
+
     protected void Fill(CatalogedApplication application) {
 
         }
@@ -57,6 +103,17 @@ public partial class BoundApplication : IBoundPresentation, IDialog {
         var bound = Bound as CatalogedApplication;
         }
 
+
+    public virtual void ReadBound() {
+        LocalName = CatalogedApplication.LocalName;
+        Description = CatalogedApplication.Description;
+        Path = CatalogedApplication.Path;
+        }
+    public virtual void SetBound() {
+        CatalogedApplication.LocalName = LocalName;
+        CatalogedApplication.Description = Description;
+        CatalogedApplication.Path = Path;
+        }
 
     }
 
@@ -294,8 +351,8 @@ public partial class ApplicationSelection : SelectionCatalog<GuigenCatalogApplic
         }
 
     #region // Conversion overrides
-    public override CatalogedApplication CreateFromBindable(IBindable contact) =>
-        (contact as BoundApplication)?.Convert();
+    //public override CatalogedApplication CreateFromBindable(IBindable contact) =>
+    //    (contact as BoundApplication)?.Convert();
 
     public override BoundApplication ConvertToBindable(CatalogedApplication input) {
 
@@ -323,7 +380,7 @@ public partial class ApplicationSelection : SelectionCatalog<GuigenCatalogApplic
                 }
 
             default: {
-                return BoundApplication.Convert(input);
+                return new BoundApplication(input);
                 }
             }
 

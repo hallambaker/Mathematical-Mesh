@@ -9,6 +9,13 @@ public partial class CalendarSection : IHeadedSelection {
     IAccountSelector Account { get; }
     ContextUser ContextUser => Account.ContextUser;
 
+    public CalendarSelection CalendarSelection { get; }
+
+    GuigenCatalogTasks Catalog { get; }
+
+    ///<inheritdoc/>
+    public override ISelectCollection ChooseAppointment { get => CalendarSelection; set { } }
+
     ///<inheritdoc/>
     public GuiBinding SelectionBinding => _BoundAppointment.BaseBinding;
 
@@ -18,8 +25,38 @@ public partial class CalendarSection : IHeadedSelection {
     /// <param name="account">The account whose contacts are to be used.</param>
     public CalendarSection(IAccountSelector account = null) {
         Account = account;
-        var catalog = ContextUser.GetStore(CatalogTask.Label, create: false) as GuigenCatalogTasks;
-        ChooseAppointment = catalog is null ? null : new CalendarSelection(catalog);
+        Catalog = ContextUser.GetStore(CatalogTask.Label, create: false) as GuigenCatalogTasks;
+        CalendarSelection = Catalog is null ? null : new CalendarSelection(Catalog);
+        }
+
+    public async Task AddAsync(CatalogedTask entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry);
+        await transaction.TransactAsync();
+
+        var bound = new BoundTask(entry);
+        CalendarSelection.Add(bound);
+        }
+
+
+    public async Task UpdateAsync(BoundTask entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry.CatalogedTask);
+        await transaction.TransactAsync();
+
+        CalendarSelection.Update(entry);
+        }
+
+
+    public async Task DeleteAsync(BoundTask entry) {
+
+        var transaction = ContextUser.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry.CatalogedTask);
+        await transaction.TransactAsync();
+
+        CalendarSelection.Remove(entry);
         }
 
     }
