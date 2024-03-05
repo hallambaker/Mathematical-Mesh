@@ -1,4 +1,6 @@
-﻿namespace Goedel.Guigen.Maui;
+﻿using static System.Collections.Specialized.BitVector32;
+
+namespace Goedel.Guigen.Maui;
 
 public class GuigenSectionMenu : ContentPage, IReformat{
 
@@ -17,9 +19,13 @@ public class GuigenSectionMenu : ContentPage, IReformat{
 
         MenuLayout = binding.GetSectionMenuLayout();
 
-        
         foreach (var section in Gui.Sections) {
-            var button = new GuigenSectionButton(Binding, section);
+
+            void callback(object sender, EventArgs e) { 
+                Binding.GotoSection(section); 
+                }
+
+            var button = new GuigenButton(Binding, section, callback);
             MenuLayout.Add(button.View);
             }
 
@@ -32,6 +38,9 @@ public class GuigenSectionMenu : ContentPage, IReformat{
 
     public void Reformat() {
         }
+
+
+
 
 
     }

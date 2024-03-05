@@ -2,7 +2,7 @@
 
 public class GuigenFieldList : GuigenField, IWidget {
 
-    GuiBoundPropertyList TypedBinding => Binding as GuiBoundPropertyList;
+    GuiBoundPropertyList TypedBinding => PropertyBinding as GuiBoundPropertyList;
     GuigenBinding MainBinding => MainWindow.Binding;
 
     public IView View { get; private set; }

@@ -2,6 +2,12 @@
 #region // Bindings to classes specified through the Guigen schema.
 
 
+public partial record FieldIcon(string File) : IFieldIcon {
+    public string Source => File + ".png";
+
+
+    }
+
 /// <summary>
 /// Static class returning handlers for standard icons.
 /// </summary>

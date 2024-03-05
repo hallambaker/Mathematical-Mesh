@@ -1,7 +1,7 @@
 ﻿namespace Goedel.Guigen.Maui;
 
 public class GuigenFieldInteger : GuigenFieldSimple, IWidget {
-    GuiBoundPropertyInteger TypedBinding => Binding as GuiBoundPropertyInteger;
+    GuiBoundPropertyInteger TypedBinding => PropertyBinding as GuiBoundPropertyInteger;
 
     Entry ValueField;
 
@@ -33,7 +33,7 @@ public class GuigenFieldInteger : GuigenFieldSimple, IWidget {
     }
 
 public class GuigenFieldColor : GuigenFieldSimple, IWidget {
-    GuiBoundPropertyColor TypedBinding => Binding as GuiBoundPropertyColor;
+    GuiBoundPropertyColor TypedBinding => PropertyBinding as GuiBoundPropertyColor;
 
     Entry ValueField;
 
@@ -66,7 +66,7 @@ public class GuigenFieldColor : GuigenFieldSimple, IWidget {
 
 
 public class GuigenFieldSize : GuigenFieldSimple, IWidget {
-    GuiBoundPropertySize TypedBinding => Binding as GuiBoundPropertySize;
+    GuiBoundPropertySize TypedBinding => PropertyBinding as GuiBoundPropertySize;
 
     Entry ValueField;
 
@@ -100,7 +100,7 @@ public class GuigenFieldSize : GuigenFieldSimple, IWidget {
 
 
 public class GuigenFieldDecimal : GuigenFieldSimple, IWidget {
-    GuiBoundPropertyDecimal TypedBinding => Binding as GuiBoundPropertyDecimal;
+    GuiBoundPropertyDecimal TypedBinding => PropertyBinding as GuiBoundPropertyDecimal;
 
     Entry ValueField;
 

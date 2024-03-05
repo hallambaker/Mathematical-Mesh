@@ -36,21 +36,29 @@ public partial class EverythingMaui {
     public override bool StateDefault => ContextUser != null;
 
 
-
+    ///<summary>The Mesh Machine representation</summary> 
     public IMeshMachineClient MeshMachine;
-    public MeshHost MeshHost => MeshMachine?.MeshHost;
 
+    ///<summary>Catalog of accounts stored on the Mesh Machine</summary> 
+    public MeshHost MeshHost => MeshMachine.MeshHost;
 
-    public ContextUser ContextUser => CurrentAccount.ContextUser;
+    ///<summary>The current account, null if the device is unbound.</summary> 
+    public BoundAccount? CurrentAccount = null;
 
+    ///<summary>The current account user context, null if the device is unbound.</summary> 
+    public ContextUser? ContextUser => CurrentAccount?.ContextUser;
+
+    ///<summary>The settings section.</summary> 
     public SettingSection Settings { get; } = new();
 
-    public Dictionary<string, IMessageable> WaitingOnMessage { get; } = new();
+    ///<summary>Account bindings to the account contexts on the current machine.</summary> 
+    public ObservableCollection<IBindable> BoundAccounts { get; } = [];
+
+    public Dictionary<string, IMessageable> WaitingOnMessage { get; } = [];
 
 
-    public ObservableCollection<IBindable> BoundAccounts { get; } = new();
 
-    public BoundAccount? CurrentAccount = null;
+
     AccountSection AccountSection { get; }
 
     public ISelectCollection ChooseUser { get; }
@@ -87,9 +95,9 @@ public partial class EverythingMaui {
 
         ChooseUser = new AccountSelection(this);
         SectionAccountSection.Data = AccountSection;
-
         SectionSettingSection.Data = Settings;
         //SetContext(MeshHost.GetContext(MeshHost.DefaultAccount) as ContextUser);
+
         SetContext(CurrentAccount);
         }
 
@@ -122,28 +130,62 @@ public partial class EverythingMaui {
         }
 
 
-    public void SetContext(BoundAccount boundAccount) {
+    public void SetContext(BoundAccount? boundAccount) {
 
         CurrentAccount = boundAccount;
 
-        SectionMessageSection.BindData = () => CurrentAccount.MessageSection;
-        SectionContactSection.BindData = () => CurrentAccount.Contacts;
-        SectionBookmarkSection.BindData = () => CurrentAccount.Bookmarks;
-        SectionDocumentSection.BindData = () => CurrentAccount.Documents;
-        SectionGroupSection.BindData = () => CurrentAccount.Groups;
-        SectionFeedSection.BindData = () => CurrentAccount.Feeds;
-        SectionCredentialSection.BindData = () => CurrentAccount.Credentials;
-        SectionTaskSection.BindData = () => CurrentAccount.Tasks;
-        SectionCalendarSection.BindData = () => CurrentAccount.Calendar;
-        SectionApplicationSection.BindData = () => CurrentAccount.Applications;
-        SectionDeviceSection.BindData = () => CurrentAccount.Devices;
-        SectionServiceSection.BindData = () => CurrentAccount.Services;
+        // Accounts and settings are always active or enabled
+        SectionAccountSection.GetButton = () => ButtonStateUnconditional (SectionAccountSection);
+        SectionSettingSection.GetButton = () => ButtonStateUnconditional(SectionSettingSection);
+
+        // These sections only available if there is an account
+        SectionMessageSection.BindData = () => CurrentAccount?.MessageSection;
+        SectionMessageSection.GetButton = () => ButtonStateConditional(SectionMessageSection);
+
+        SectionContactSection.BindData = () => CurrentAccount?.Contacts;
+        SectionContactSection.GetButton = () => ButtonStateConditional(SectionContactSection);
+
+        SectionBookmarkSection.BindData = () => CurrentAccount?.Bookmarks;
+        SectionBookmarkSection.GetButton = () => ButtonStateConditional(SectionBookmarkSection);
+
+        SectionDocumentSection.BindData = () => CurrentAccount?.Documents;
+        SectionDocumentSection.GetButton = () => ButtonStateConditional(SectionDocumentSection);
+
+        SectionGroupSection.BindData = () => CurrentAccount?.Groups;
+        SectionGroupSection.GetButton = () => ButtonStateConditional(SectionGroupSection);
+
+        SectionFeedSection.BindData = () => CurrentAccount?.Feeds;
+        SectionFeedSection.GetButton = () => ButtonStateConditional(SectionFeedSection);
+
+        SectionCredentialSection.BindData = () => CurrentAccount?.Credentials;
+        SectionCredentialSection.GetButton = () => ButtonStateConditional(SectionCredentialSection);
+
+        SectionTaskSection.BindData = () => CurrentAccount?.Tasks;
+        SectionTaskSection.GetButton = () => ButtonStateConditional(SectionTaskSection);
+
+        SectionCalendarSection.BindData = () => CurrentAccount?.Calendar;
+        SectionCalendarSection.GetButton = () => ButtonStateConditional(SectionCalendarSection);
+
+        SectionApplicationSection.BindData = () => CurrentAccount?.Applications;
+        SectionApplicationSection.GetButton = () => ButtonStateConditional(SectionApplicationSection);
+
+        SectionDeviceSection.BindData = () => CurrentAccount?.Devices;
+        SectionDeviceSection.GetButton = () => ButtonStateConditional(SectionDeviceSection);
+
+        SectionServiceSection.BindData = () => CurrentAccount?.Services;
+        SectionServiceSection.GetButton = () => ButtonStateConditional(SectionServiceSection);
 
         }
 
+    ButtonState ButtonStateUnconditional (GuiSection section) =>
+        CurrentSection == section ? ButtonState.Active : ButtonState.Enabled;
+
+    ButtonState ButtonStateConditional(GuiSection section) =>
+        CurrentSection == section ? ButtonState.Active : 
+            (CurrentAccount is null ? ButtonState.Disabled : ButtonState.Enabled);
 
 
-    public override string GetPrompt(GuiPrompt guiPrompt) {
+    public override string? GetPrompt(GuiPrompt guiPrompt) {
 
         return ResourceManager.GetString(guiPrompt.Id);
 
@@ -160,7 +202,7 @@ public partial class EverythingMaui {
 
 
 
-    public GuiQR GetQrContact(IMessageable source) {
+    public GuiQR? GetQrContact(IMessageable source) {
         if (ContextUser == null) {
             return null;
             }
@@ -174,7 +216,7 @@ public partial class EverythingMaui {
 
         }
 
-    public GuiQR GetQrDevice(IMessageable source) {
+    public GuiQR? GetQrDevice(IMessageable source) {
         if (ContextUser == null) {
             return null;
             }
@@ -288,7 +330,8 @@ public partial class EverythingMaui {
 
     public IResult ProcessException(Exception exception, IParameter parameters) {
         if (TryProcessException(exception, parameters, out var result)) {
-            return result;
+            // The value result is never null if TryProcessException returned true.
+            return result!;
             }
         return new ErrorResult(exception);
         }

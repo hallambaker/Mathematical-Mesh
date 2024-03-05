@@ -5,7 +5,7 @@ namespace Goedel.Guigen.Maui;
 public class GuigenFieldIcon : GuigenField, IWidget {
 
 
-    GuiBoundPropertyIcon TypedBinding => Binding as GuiBoundPropertyIcon;
+    GuiBoundPropertyIcon TypedBinding => PropertyBinding as GuiBoundPropertyIcon;
 
 
 

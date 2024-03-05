@@ -10,7 +10,7 @@ public class GuigenDetailResult : GuigenDetaiPage {
     public Button DismissButton;
     int GridRow { get; set; } = 0;
 
-    public GuigenDetailResult(IMainWindow mainWindow, IResult result) : base(mainWindow) {
+    public GuigenDetailResult(GuigenBinding binding, IResult result) : base(binding) {
 
         var stack = new VerticalStackLayout();
 

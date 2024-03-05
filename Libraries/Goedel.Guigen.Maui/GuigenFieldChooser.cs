@@ -13,7 +13,7 @@ namespace Goedel.Guigen.Maui;
 public class GuigenFieldChooser : GuigenField {
 
 
-    GuiBoundPropertyChooser TypedBinding => Binding as GuiBoundPropertyChooser;
+    GuiBoundPropertyChooser TypedBinding => PropertyBinding as GuiBoundPropertyChooser;
 
 
     public Entry ValueField;
@@ -178,7 +178,7 @@ public class GuigenFieldChooser : GuigenField {
         var gui = MainWindow.Binding.Gui;
         var entries = dialog.Dialog(gui).Entries;
         EntryForm.Clear();
-        SelectionDialog = new GuigenFieldSet(MainWindow, entries, EntryForm, bindable.Binding, false);
+        SelectionDialog = new GuigenFieldSet(Binding, entries, EntryForm, bindable.Binding, false);
         SelectionDialog.SetFields(bindable);
 
         MainWindow.Binding.Dispatcher.Dispatch(() => {

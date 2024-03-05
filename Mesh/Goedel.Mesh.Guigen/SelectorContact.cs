@@ -6,10 +6,13 @@ using System.Threading;
 namespace Goedel.Everything;
 #region // Bindings to classes specified through the Guigen schema.
 
-public partial class ContactSection : IHeadedSelection {
+public partial class ContactSection : IHeadedSelection{
 
-    IAccountSelector  Account { get; }
+    IAccountSelector? Account { get; }
     ContextUser ContextUser => Account.ContextUser;
+
+
+    //public ButtonState ButtonState => Account is null ? ButtonState.Disabled : ButtonState.Enabled;
 
     public ContactSelection ContactSelection { get; }
 

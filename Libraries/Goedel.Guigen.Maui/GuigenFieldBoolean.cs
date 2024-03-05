@@ -2,7 +2,7 @@
 
 public class GuigenFieldBoolean: GuigenFieldSimple, IWidget {
 
-    GuiBoundPropertyBoolean TypedBinding => Binding as GuiBoundPropertyBoolean;
+    GuiBoundPropertyBoolean TypedBinding => PropertyBinding as GuiBoundPropertyBoolean;
 
     CheckBox ValueField;
 
@@ -22,7 +22,7 @@ public class GuigenFieldBoolean: GuigenFieldSimple, IWidget {
 
     ///<inheritdoc/>
     public override void SetField(IBindable data) {
-        ValueField.IsChecked = TypedBinding.Get(data);
+        ValueField.IsChecked = TypedBinding.Get(data) == true;
 
         }
 

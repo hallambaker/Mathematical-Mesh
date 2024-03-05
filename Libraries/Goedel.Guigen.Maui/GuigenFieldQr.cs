@@ -8,7 +8,7 @@ namespace Goedel.Guigen.Maui;
 public class GuigenFieldQr : GuigenField {
 
 
-    GuiBoundPropertyQRScan TypedBinding => Binding as GuiBoundPropertyQRScan;
+    GuiBoundPropertyQRScan TypedBinding => PropertyBinding as GuiBoundPropertyQRScan;
 
 
     BarcodeImage QrImage;

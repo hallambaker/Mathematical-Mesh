@@ -6,8 +6,11 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace Goedel.Guigen.Maui;
 
 public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
-    public IMainWindow MainWindow { get; }
-    GuigenBinding Binding => MainWindow.Binding;
+    ///<summary>The bound UI</summary> 
+    public GuigenBinding Binding { get; }
+
+    ///<summary>The main window.</summary> 
+    public IMainWindow MainWindow => Binding.MainWindow;
 
     public Page Page => this;
 
@@ -17,8 +20,8 @@ public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
     Gui Gui => Binding.Gui;
     GuigenFieldSet FieldSet { get; }
 
-    public GuigenDetailSection(IMainWindow mainWindow, GuiSection section) {
-        MainWindow = mainWindow;
+    public GuigenDetailSection(GuigenBinding binding, GuiSection section) {
+        Binding = binding;
         Section = section;
 
         section.Presentation = this;
@@ -48,7 +51,7 @@ public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
 
 
 
-        FieldSet = new GuigenFieldSet(MainWindow, section.Entries, stack, section.Binding);
+        FieldSet = new GuigenFieldSet(Binding, section.Entries, stack, section.Binding);
 
         Refresh();
 
@@ -64,7 +67,7 @@ public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
                 return new GuigenSectionButton (Binding, section).View;
                 }
             case GuiAction action: {
-                return new GuigenActionButton(MainWindow, action).View;
+                return new GuigenActionButton(Binding, action).View;
                 }
 
 
@@ -82,8 +85,11 @@ public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
 
 
 public class GuigenActionButton : IWidget {
-    public IMainWindow MainWindow { get; }
-    GuigenBinding Binding => MainWindow.Binding;
+    ///<summary>The bound UI</summary> 
+    public GuigenBinding Binding { get; }
+
+    ///<summary>The main window.</summary> 
+    public IMainWindow MainWindow => Binding.MainWindow;
     GuiAction Action { get; }
 
     ImageButton ImageButton { get; }
@@ -93,8 +99,8 @@ public class GuigenActionButton : IWidget {
     public View View => Stack;
     public GuigenFieldSet FieldSet { get; init; }
 
-    public GuigenActionButton(IMainWindow mainWindow, GuiAction action) {
-        MainWindow = mainWindow;
+    public GuigenActionButton(GuigenBinding binding, GuiAction action) {
+        Binding = binding;
         Action = action;
 
         ImageButton = new ImageButton {

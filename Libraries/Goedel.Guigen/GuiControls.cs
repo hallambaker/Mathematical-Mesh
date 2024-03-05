@@ -55,7 +55,10 @@ public interface IHeadedSelection {
     GuiBinding SelectionBinding { get; }
     }
 
+public interface IButtonState {
 
+    ButtonState ButtonState { get; }
+    }
 
 public enum ReturnNavigation {
     Home,
@@ -77,6 +80,13 @@ public enum ReturnResult {
 
 
 
+public enum ButtonState {
+    Enabled,
+    Active,
+    Disabled
+
+
+    }
 
 
 public interface IResult : IBindable {
@@ -91,7 +101,7 @@ public interface IResult : IBindable {
     ReturnResult ReturnResult { get; }
 
 
-    public object[] GetValues();
+    public object?[] GetValues();
 
     }
 
@@ -236,40 +246,40 @@ public record GuiBoundPropertyPrompted(
 public record GuiBoundPropertyBoolean(
                 string? Label,
                 string? Prompt,
-                Func<object, bool> Get,
-                Action<object, bool> Set
+                Func<object, bool?> Get,
+                Action<object, bool?>? Set
                 ) : GuiBoundPropertyPrompted(Label, Prompt) {
     }
 
 public record GuiBoundPropertyString(
                 string? Label,
                 string? Prompt,
-                Func<object, string> Get,
-                Action<object, string> Set,
+                Func<object, string?> Get,
+                Action<object, string?>? Set,
                 int? Width = null) : GuiBoundPropertyPrompted(Label, Prompt) {
     }
 
 public record GuiBoundTextArea(
                 string? Label,
                 string? Prompt,
-                Func<object, string> Get,
-                Action<object, string> Set) : GuiBoundPropertyPrompted(Label, Prompt) {
+                Func<object, string?> Get,
+                Action<object, string?>? Set) : GuiBoundPropertyPrompted(Label, Prompt) {
     }
 
 
 public record GuiBoundPropertyColor(
                 string? Label,
                 string? Prompt,
-                Func<object, IFieldColor> Get,
-                Action<object, IFieldColor> Set) : GuiBoundPropertyPrompted(Label, Prompt) {
+                Func<object, IFieldColor?> Get,
+                Action<object, IFieldColor?>? Set) : GuiBoundPropertyPrompted(Label, Prompt) {
     }
 
 
 public record GuiBoundPropertySize(
                 string? Label,
                 string? Prompt,
-                Func<object, IFieldSize> Get,
-                Action<object, IFieldSize> Set) : GuiBoundPropertyPrompted(Label, Prompt) {
+                Func<object, IFieldSize?> Get,
+                Action<object, IFieldSize?>? Set) : GuiBoundPropertyPrompted(Label, Prompt) {
     }
 
 
@@ -277,7 +287,7 @@ public record GuiBoundPropertyDecimal(
                 string? Label,
                 string? Prompt,
                 Func<object, decimal?> Get,
-                Action<object, decimal?> Set) : GuiBoundPropertyPrompted(Label, Prompt) {
+                Action<object, decimal?>? Set) : GuiBoundPropertyPrompted(Label, Prompt) {
     }
 
 
@@ -285,7 +295,7 @@ public record GuiBoundPropertyInteger(
                 string? Label,
                 string? Prompt,
                 Func<object, int?> Get,
-                Action<object, int?> Set) : GuiBoundPropertyPrompted(Label, Prompt) {
+                Action<object, int?>? Set) : GuiBoundPropertyPrompted(Label, Prompt) {
     }
 
 
@@ -293,31 +303,31 @@ public record GuiBoundPropertyInteger(
 public record GuiBoundPropertyQRScan(
                 string? Label,
                 string? Prompt,
-                Func<object, GuiQR> Get,
-                Action<object, GuiQR> Set) : GuiBoundPropertyPrompted(Label, Prompt) {
+                Func<object, GuiQR?> Get,
+                Action<object, GuiQR?>? Set) : GuiBoundPropertyPrompted(Label, Prompt) {
     }
 
 
 public record GuiBoundPropertyIcon(
                 string? Label,
                 string? Prompt,
-                Func<object, IFieldIcon> Get,
-                Action<object, IFieldIcon> Set) : GuiBoundPropertyPrompted(Label, Prompt) {
+                Func<object, IFieldIcon?> Get,
+                Action<object, IFieldIcon?>? Set) : GuiBoundPropertyPrompted(Label, Prompt) {
     }
 
 public record GuiBoundPropertyChooser(
                 string? Label,
                 string? Prompt,
-                Func<object, ISelectCollection> Get,
-                Action<object, ISelectCollection> Set,
+                Func<object, ISelectCollection?> Get,
+                Action<object, ISelectCollection?>? Set,
                 List<GuiEntry>? Entries = null) : GuiBoundPropertyPrompted(Label, Prompt) {
     }
 
 public record GuiBoundPropertyList(
                 string? Label,
                 string? Prompt,
-                Func<object, ISelectCollection> Get,
-                Action<object, ISelectCollection> Set,
+                Func<object, ISelectCollection?> Get,
+                Action<object, ISelectCollection?>? Set,
                 GuiBinding EntryBinding,
                 List<GuiEntry>? Entries = null) : GuiBoundPropertyPrompted(Label, Prompt) {
     }
@@ -439,12 +449,15 @@ public record GuiSection (
     IBindable? data = null;
 
 
-    public Func<IBindable> BindData { get; set; } = () => null! ;
+    public Func<IBindable?> BindData { get; set; } = () => null! ;
 
 
     ///<summary>The action entries</summary> 
     public List<IGuiEntry> Entries { get; set; } = null!;
 
+
+
+    public Func<ButtonState>? GetButton = null;
 
     }
 

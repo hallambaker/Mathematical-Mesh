@@ -55,6 +55,10 @@ public partial class EverythingMaui {
         }
 
 
+    //public partial class AccountCreate {
+    //    public override Validate 
+    //    }
+
     ///<inheritdoc/>
     public override async Task<IResult> AccountCreate(AccountCreate data) {
 

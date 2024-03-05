@@ -42,13 +42,13 @@ public partial class AccountSection : _AccountSection {
 public partial class _AccountSection : IBindable {
 
     ///<summary></summary> 
-    public virtual string ServiceAddress { get;} 
+    public virtual string? ServiceAddress { get;} 
 
     ///<summary></summary> 
-    public virtual string ProfileUdf { get;} 
+    public virtual string? ProfileUdf { get;} 
 
     ///<summary></summary> 
-    public virtual string LocalAddress { get;} 
+    public virtual string? LocalAddress { get;} 
 
 
     ///<inheritdoc/>
@@ -58,18 +58,17 @@ public partial class _AccountSection : IBindable {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AccountSection,
         () => new AccountSection(),
-        new GuiBoundProperty[] { 
+        [ 
             new GuiBoundPropertyButton ("AccountCreate"), 
             new GuiBoundPropertyButton ("AccountRequestConnect"), 
             new GuiBoundPropertyButton ("TestService"), 
             new GuiBoundPropertyButton ("AccountRecover"), 
             new GuiBoundPropertyButton ("AccountGenerateRecovery"), 
             new GuiBoundPropertyButton ("AccountSwitch"), 
-            new GuiBoundPropertyString ("ServiceAddress", "Service Address", (object data) => (data as _AccountSection).ServiceAddress , null), 
-            new GuiBoundPropertyString ("ProfileUdf", "Profile fingerprint", (object data) => (data as _AccountSection).ProfileUdf , null), 
-            new GuiBoundPropertyString ("LocalAddress", "Local Address", (object data) => (data as _AccountSection).LocalAddress , null)
-
-            });
+            new GuiBoundPropertyString ("ServiceAddress", "Service Address", (object data) => (data as _AccountSection)?.ServiceAddress , null), 
+            new GuiBoundPropertyString ("ProfileUdf", "Profile fingerprint", (object data) => (data as _AccountSection)?.ProfileUdf , null), 
+            new GuiBoundPropertyString ("LocalAddress", "Local Address", (object data) => (data as _AccountSection)?.LocalAddress , null)
+            ]);
 
     }
 
@@ -85,7 +84,7 @@ public partial class MessageSection : _MessageSection {
 public partial class _MessageSection : IBindable {
 
     ///<summary></summary> 
-    public virtual ISelectCollection ChooseMessage { get; set;} 
+    public virtual ISelectCollection? ChooseMessage { get; set;} 
 
 
     ///<inheritdoc/>
@@ -95,16 +94,15 @@ public partial class _MessageSection : IBindable {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _MessageSection,
         () => new MessageSection(),
-        new GuiBoundProperty[] { 
+        [ 
             new GuiBoundPropertyButton ("RequestContact"), 
             new GuiBoundPropertyButton ("RequestConfirmation"), 
             new GuiBoundPropertyButton ("CreateMail"), 
             new GuiBoundPropertyButton ("CreateChat"), 
             new GuiBoundPropertyButton ("StartVoice"), 
             new GuiBoundPropertyButton ("StartVideo"), 
-            new GuiBoundPropertyChooser ("ChooseMessage", "Messages", (object data) => (data as _MessageSection).ChooseMessage , null)
-
-            });
+            new GuiBoundPropertyChooser ("ChooseMessage", "Messages", (object data) => (data as _MessageSection)?.ChooseMessage , null)
+            ]);
 
     }
 
@@ -120,7 +118,7 @@ public partial class ContactSection : _ContactSection {
 public partial class _ContactSection : IBindable {
 
     ///<summary></summary> 
-    public virtual ISelectCollection ChooseContact { get; set;} 
+    public virtual ISelectCollection? ChooseContact { get; set;} 
 
 
     ///<inheritdoc/>
@@ -130,15 +128,14 @@ public partial class _ContactSection : IBindable {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _ContactSection,
         () => new ContactSection(),
-        new GuiBoundProperty[] { 
+        [ 
             new GuiBoundPropertyButton ("AddPerson"), 
             new GuiBoundPropertyButton ("AddOrganization"), 
             new GuiBoundPropertyButton ("AddLocation"), 
             new GuiBoundPropertyButton ("QrContact"), 
             new GuiBoundPropertyButton ("RequestContact"), 
-            new GuiBoundPropertyChooser ("ChooseContact", "Contacts", (object data) => (data as _ContactSection).ChooseContact , null)
-
-            });
+            new GuiBoundPropertyChooser ("ChooseContact", "Contacts", (object data) => (data as _ContactSection)?.ChooseContact , null)
+            ]);
 
     }
 
@@ -154,7 +151,7 @@ public partial class DocumentSection : _DocumentSection {
 public partial class _DocumentSection : IBindable {
 
     ///<summary></summary> 
-    public virtual ISelectCollection ChooseDocuments { get; set;} 
+    public virtual ISelectCollection? ChooseDocuments { get; set;} 
 
 
     ///<inheritdoc/>
@@ -164,11 +161,10 @@ public partial class _DocumentSection : IBindable {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _DocumentSection,
         () => new DocumentSection(),
-        new GuiBoundProperty[] { 
+        [ 
             new GuiBoundPropertyButton ("UploadDocument"), 
-            new GuiBoundPropertyChooser ("ChooseDocuments", "Documents", (object data) => (data as _DocumentSection).ChooseDocuments , null)
-
-            });
+            new GuiBoundPropertyChooser ("ChooseDocuments", "Documents", (object data) => (data as _DocumentSection)?.ChooseDocuments , null)
+            ]);
 
     }
 
@@ -184,7 +180,7 @@ public partial class FeedSection : _FeedSection {
 public partial class _FeedSection : IBindable {
 
     ///<summary></summary> 
-    public virtual ISelectCollection ChooseFeed { get; set;} 
+    public virtual ISelectCollection? ChooseFeed { get; set;} 
 
 
     ///<inheritdoc/>
@@ -194,10 +190,9 @@ public partial class _FeedSection : IBindable {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _FeedSection,
         () => new FeedSection(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyChooser ("ChooseFeed", "Feeds", (object data) => (data as _FeedSection).ChooseFeed , null)
-
-            });
+        [ 
+            new GuiBoundPropertyChooser ("ChooseFeed", "Feeds", (object data) => (data as _FeedSection)?.ChooseFeed , null)
+            ]);
 
     }
 
@@ -213,7 +208,7 @@ public partial class GroupSection : _GroupSection {
 public partial class _GroupSection : IBindable {
 
     ///<summary></summary> 
-    public virtual ISelectCollection ChooseGroup { get; set;} 
+    public virtual ISelectCollection? ChooseGroup { get; set;} 
 
 
     ///<inheritdoc/>
@@ -223,11 +218,10 @@ public partial class _GroupSection : IBindable {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _GroupSection,
         () => new GroupSection(),
-        new GuiBoundProperty[] { 
+        [ 
             new GuiBoundPropertyButton ("AddGroup"), 
-            new GuiBoundPropertyChooser ("ChooseGroup", "User", (object data) => (data as _GroupSection).ChooseGroup , null)
-
-            });
+            new GuiBoundPropertyChooser ("ChooseGroup", "User", (object data) => (data as _GroupSection)?.ChooseGroup , null)
+            ]);
 
     }
 
@@ -243,7 +237,7 @@ public partial class CredentialSection : _CredentialSection {
 public partial class _CredentialSection : IBindable {
 
     ///<summary></summary> 
-    public virtual ISelectCollection ChooseCredential { get; set;} 
+    public virtual ISelectCollection? ChooseCredential { get; set;} 
 
 
     ///<inheritdoc/>
@@ -253,12 +247,11 @@ public partial class _CredentialSection : IBindable {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _CredentialSection,
         () => new CredentialSection(),
-        new GuiBoundProperty[] { 
+        [ 
             new GuiBoundPropertyButton ("AddPassword"), 
             new GuiBoundPropertyButton ("AddPasskey"), 
-            new GuiBoundPropertyChooser ("ChooseCredential", "Credentials", (object data) => (data as _CredentialSection).ChooseCredential , null)
-
-            });
+            new GuiBoundPropertyChooser ("ChooseCredential", "Credentials", (object data) => (data as _CredentialSection)?.ChooseCredential , null)
+            ]);
 
     }
 
@@ -274,7 +267,7 @@ public partial class TaskSection : _TaskSection {
 public partial class _TaskSection : IBindable {
 
     ///<summary></summary> 
-    public virtual ISelectCollection ChooseTask { get; set;} 
+    public virtual ISelectCollection? ChooseTask { get; set;} 
 
 
     ///<inheritdoc/>
@@ -284,11 +277,10 @@ public partial class _TaskSection : IBindable {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _TaskSection,
         () => new TaskSection(),
-        new GuiBoundProperty[] { 
+        [ 
             new GuiBoundPropertyButton ("AddTask"), 
-            new GuiBoundPropertyChooser ("ChooseTask", "Tasks", (object data) => (data as _TaskSection).ChooseTask , null)
-
-            });
+            new GuiBoundPropertyChooser ("ChooseTask", "Tasks", (object data) => (data as _TaskSection)?.ChooseTask , null)
+            ]);
 
     }
 
@@ -304,7 +296,7 @@ public partial class CalendarSection : _CalendarSection {
 public partial class _CalendarSection : IBindable {
 
     ///<summary></summary> 
-    public virtual ISelectCollection ChooseAppointment { get; set;} 
+    public virtual ISelectCollection? ChooseAppointment { get; set;} 
 
 
     ///<inheritdoc/>
@@ -314,11 +306,10 @@ public partial class _CalendarSection : IBindable {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _CalendarSection,
         () => new CalendarSection(),
-        new GuiBoundProperty[] { 
+        [ 
             new GuiBoundPropertyButton ("AddTask"), 
-            new GuiBoundPropertyChooser ("ChooseAppointment", "Tasks", (object data) => (data as _CalendarSection).ChooseAppointment , null)
-
-            });
+            new GuiBoundPropertyChooser ("ChooseAppointment", "Tasks", (object data) => (data as _CalendarSection)?.ChooseAppointment , null)
+            ]);
 
     }
 
@@ -334,7 +325,7 @@ public partial class BookmarkSection : _BookmarkSection {
 public partial class _BookmarkSection : IBindable {
 
     ///<summary></summary> 
-    public virtual ISelectCollection ChooseBookmark { get; set;} 
+    public virtual ISelectCollection? ChooseBookmark { get; set;} 
 
 
     ///<inheritdoc/>
@@ -344,11 +335,10 @@ public partial class _BookmarkSection : IBindable {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BookmarkSection,
         () => new BookmarkSection(),
-        new GuiBoundProperty[] { 
+        [ 
             new GuiBoundPropertyButton ("AddBookmark"), 
-            new GuiBoundPropertyChooser ("ChooseBookmark", "Bookmark", (object data) => (data as _BookmarkSection).ChooseBookmark , null)
-
-            });
+            new GuiBoundPropertyChooser ("ChooseBookmark", "Bookmark", (object data) => (data as _BookmarkSection)?.ChooseBookmark , null)
+            ]);
 
     }
 
@@ -364,7 +354,7 @@ public partial class ApplicationSection : _ApplicationSection {
 public partial class _ApplicationSection : IBindable {
 
     ///<summary></summary> 
-    public virtual ISelectCollection ChooseApplication { get; set;} 
+    public virtual ISelectCollection? ChooseApplication { get; set;} 
 
 
     ///<inheritdoc/>
@@ -374,14 +364,13 @@ public partial class _ApplicationSection : IBindable {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _ApplicationSection,
         () => new ApplicationSection(),
-        new GuiBoundProperty[] { 
+        [ 
             new GuiBoundPropertyButton ("AddMailAccount"), 
             new GuiBoundPropertyButton ("AddSshAccount"), 
             new GuiBoundPropertyButton ("AddGitAccount"), 
             new GuiBoundPropertyButton ("AddCodeSigningKey"), 
-            new GuiBoundPropertyChooser ("ChooseApplication", "Applications", (object data) => (data as _ApplicationSection).ChooseApplication , null)
-
-            });
+            new GuiBoundPropertyChooser ("ChooseApplication", "Applications", (object data) => (data as _ApplicationSection)?.ChooseApplication , null)
+            ]);
 
     }
 
@@ -397,7 +386,7 @@ public partial class DeviceSection : _DeviceSection {
 public partial class _DeviceSection : IBindable {
 
     ///<summary></summary> 
-    public virtual ISelectCollection ChooseDevice { get; set;} 
+    public virtual ISelectCollection? ChooseDevice { get; set;} 
 
 
     ///<inheritdoc/>
@@ -407,12 +396,11 @@ public partial class _DeviceSection : IBindable {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _DeviceSection,
         () => new DeviceSection(),
-        new GuiBoundProperty[] { 
+        [ 
             new GuiBoundPropertyButton ("DeviceConnectQR"), 
             new GuiBoundPropertyButton ("AccountGetPin"), 
-            new GuiBoundPropertyChooser ("ChooseDevice", "Devices", (object data) => (data as _DeviceSection).ChooseDevice , null)
-
-            });
+            new GuiBoundPropertyChooser ("ChooseDevice", "Devices", (object data) => (data as _DeviceSection)?.ChooseDevice , null)
+            ]);
 
     }
 
@@ -428,7 +416,7 @@ public partial class ServiceSection : _ServiceSection {
 public partial class _ServiceSection : IBindable {
 
     ///<summary></summary> 
-    public virtual ISelectCollection ChooseService { get; set;} 
+    public virtual ISelectCollection? ChooseService { get; set;} 
 
 
     ///<inheritdoc/>
@@ -438,10 +426,9 @@ public partial class _ServiceSection : IBindable {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _ServiceSection,
         () => new ServiceSection(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyChooser ("ChooseService", "Services", (object data) => (data as _ServiceSection).ChooseService , null)
-
-            });
+        [ 
+            new GuiBoundPropertyChooser ("ChooseService", "Services", (object data) => (data as _ServiceSection)?.ChooseService , null)
+            ]);
 
     }
 
@@ -456,6 +443,21 @@ public partial class SettingSection : _SettingSection {
 /// </summary>
 public partial class _SettingSection : IBindable {
 
+    ///<summary></summary> 
+    public virtual IFieldColor? BackgroundColor { get; set;} 
+
+    ///<summary></summary> 
+    public virtual IFieldColor? HighlightColor { get; set;} 
+
+    ///<summary></summary> 
+    public virtual IFieldColor? TextColor { get; set;} 
+
+    ///<summary></summary> 
+    public virtual IFieldSize? TextSize { get; set;} 
+
+    ///<summary></summary> 
+    public virtual IFieldSize? IconSize { get; set;} 
+
 
     ///<inheritdoc/>
     public virtual GuiBinding Binding => BaseBinding;
@@ -464,52 +466,18 @@ public partial class _SettingSection : IBindable {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _SettingSection,
         () => new SettingSection(),
-        Array.Empty<GuiBoundProperty>());
-
-    }
-
-/// <summary>
-/// Callback parameters for section Appearance 
-/// </summary>
-public partial class Appearance : _Appearance {
-    }
-
-/// <summary>
-/// Callback parameters for section Appearance 
-/// </summary>
-public partial class _Appearance : IBindable {
-
-    ///<summary></summary> 
-    public virtual IFieldColor BackgroundColor { get; set;} 
-
-    ///<summary></summary> 
-    public virtual IFieldColor HighlightColor { get; set;} 
-
-    ///<summary></summary> 
-    public virtual IFieldColor TextColor { get; set;} 
-
-    ///<summary></summary> 
-    public virtual IFieldSize TextSize { get; set;} 
-
-    ///<summary></summary> 
-    public virtual IFieldSize IconSize { get; set;} 
-
-
-    ///<inheritdoc/>
-    public virtual GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static  GuiBinding BaseBinding  { get; } = new (
-        (object test) => test is _Appearance,
-        () => new Appearance(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyColor ("BackgroundColor", "Background Color", (object data) => (data as _Appearance).BackgroundColor , (object data,IFieldColor value) => (data as _Appearance).BackgroundColor = value), 
-            new GuiBoundPropertyColor ("HighlightColor", "Highlight Color", (object data) => (data as _Appearance).HighlightColor , (object data,IFieldColor value) => (data as _Appearance).HighlightColor = value), 
-            new GuiBoundPropertyColor ("TextColor", "Text Color", (object data) => (data as _Appearance).TextColor , (object data,IFieldColor value) => (data as _Appearance).TextColor = value), 
-            new GuiBoundPropertySize ("TextSize", "Text Size", (object data) => (data as _Appearance).TextSize , (object data,IFieldSize value) => (data as _Appearance).TextSize = value), 
-            new GuiBoundPropertySize ("IconSize", "Icon Size", (object data) => (data as _Appearance).IconSize , (object data,IFieldSize value) => (data as _Appearance).IconSize = value)
-
-            });
+        [ 
+            new GuiBoundPropertyColor ("BackgroundColor", "Background Color", (object data) => (data as _SettingSection)?.BackgroundColor , 
+                (object data,IFieldColor? value) => { if (data is _SettingSection datad) { datad.BackgroundColor = value; }}), 
+            new GuiBoundPropertyColor ("HighlightColor", "Highlight Color", (object data) => (data as _SettingSection)?.HighlightColor , 
+                (object data,IFieldColor? value) => { if (data is _SettingSection datad) { datad.HighlightColor = value; }}), 
+            new GuiBoundPropertyColor ("TextColor", "Text Color", (object data) => (data as _SettingSection)?.TextColor , 
+                (object data,IFieldColor? value) => { if (data is _SettingSection datad) { datad.TextColor = value; }}), 
+            new GuiBoundPropertySize ("TextSize", "Text Size", (object data) => (data as _SettingSection)?.TextSize , 
+                (object data,IFieldSize? value) => { if (data is _SettingSection datad) { datad.TextSize = value; }}), 
+            new GuiBoundPropertySize ("IconSize", "Icon Size", (object data) => (data as _SettingSection)?.IconSize , 
+                (object data,IFieldSize? value) => { if (data is _SettingSection datad) { datad.IconSize = value; }})
+            ]);
 
     }
 
@@ -528,20 +496,20 @@ public partial class BoundAccount : _BoundAccount {
 /// </summary>
 public partial class _BoundAccount : IParameter {
 
-    public object Bound { get; set; }
+    public object? Bound { get; set; }
 
 
     ///<summary></summary> 
-    public virtual string Display { get;} 
+    public virtual string? Display { get;} 
 
     ///<summary></summary> 
-    public virtual bool Default { get; set;} 
+    public virtual bool? Default { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Service { get;} 
+    public virtual string? Service { get;} 
 
     ///<summary></summary> 
-    public virtual string UDF { get;} 
+    public virtual string? UDF { get;} 
 
 
     ///<inheritdoc/>
@@ -551,17 +519,17 @@ public partial class _BoundAccount : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundAccount,
         () => new BoundAccount(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundAccount).Display , null), 
-            new GuiBoundPropertyBoolean ("Default", "Default", (object data) => (data as _BoundAccount).Default , (object data,bool value) => (data as _BoundAccount).Default = value), 
-            new GuiBoundPropertyString ("Service", "Service", (object data) => (data as _BoundAccount).Service , null), 
-            new GuiBoundPropertyString ("UDF", "Fingerprint", (object data) => (data as _BoundAccount).UDF , null), 
+        [ 
+            new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundAccount)?.Display , null), 
+            new GuiBoundPropertyBoolean ("Default", "Default", (object data) => (data as _BoundAccount)?.Default , 
+                (object data,bool? value) => { if (data is _BoundAccount datad) { datad.Default = value; }}), 
+            new GuiBoundPropertyString ("Service", "Service", (object data) => (data as _BoundAccount)?.Service , null), 
+            new GuiBoundPropertyString ("UDF", "Fingerprint", (object data) => (data as _BoundAccount)?.UDF , null), 
             new GuiBoundPropertySelection ("AccountSelect", "Switch")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -589,20 +557,20 @@ public partial class BoundMessage : _BoundMessage {
 /// </summary>
 public partial class _BoundMessage : IParameter {
 
-    public object Bound { get; set; }
+    public object? Bound { get; set; }
 
 
     ///<summary></summary> 
-    public virtual IFieldIcon Type { get;} 
+    public virtual IFieldIcon? Type { get;} 
 
     ///<summary></summary> 
-    public virtual string TimeSent { get; set;} 
+    public virtual string? TimeSent { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Sender { get; set;} 
+    public virtual string? Sender { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Subject { get; set;} 
+    public virtual string? Subject { get; set;} 
 
 
     ///<inheritdoc/>
@@ -612,16 +580,18 @@ public partial class _BoundMessage : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundMessage,
         () => new BoundMessage(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessage).Type , null), 
-            new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessage).TimeSent , (object data,string value) => (data as _BoundMessage).TimeSent = value, Width: 100), 
-            new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessage).Sender , (object data,string value) => (data as _BoundMessage).Sender = value, Width: 150), 
-            new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessage).Subject , (object data,string value) => (data as _BoundMessage).Subject = value, Width: 300)
-
-            });
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessage)?.Type , null), 
+            new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessage)?.TimeSent , 
+                (object data,string? value) => { if (data is _BoundMessage datad) { datad.TimeSent = value; }}, Width: 100), 
+            new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessage)?.Sender , 
+                (object data,string? value) => { if (data is _BoundMessage datad) { datad.Sender = value; }}, Width: 150), 
+            new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessage)?.Subject , 
+                (object data,string? value) => { if (data is _BoundMessage datad) { datad.Subject = value; }}, Width: 300)
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -651,7 +621,7 @@ public partial class _BoundMailMail : BoundMessage {
 
 
     ///<summary></summary> 
-    public virtual string Message { get; set;} 
+    public virtual string? Message { get; set;} 
 
 
     ///<inheritdoc/>
@@ -661,17 +631,20 @@ public partial class _BoundMailMail : BoundMessage {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundMailMail,
         () => new BoundMailMail(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMailMail).Type , null), 
-            new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMailMail).TimeSent , (object data,string value) => (data as _BoundMailMail).TimeSent = value, Width: 100), 
-            new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMailMail).Sender , (object data,string value) => (data as _BoundMailMail).Sender = value, Width: 150), 
-            new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMailMail).Subject , (object data,string value) => (data as _BoundMailMail).Subject = value, Width: 300), 
-            new GuiBoundTextArea ("Message", "Message", (object data) => (data as _BoundMailMail).Message , (object data,string value) => (data as _BoundMailMail).Message = value)
-
-            });
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMailMail)?.Type , null), 
+            new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMailMail)?.TimeSent , 
+                (object data,string? value) => { if (data is _BoundMailMail datad) { datad.TimeSent = value; }}, Width: 100), 
+            new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMailMail)?.Sender , 
+                (object data,string? value) => { if (data is _BoundMailMail datad) { datad.Sender = value; }}, Width: 150), 
+            new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMailMail)?.Subject , 
+                (object data,string? value) => { if (data is _BoundMailMail datad) { datad.Subject = value; }}, Width: 300), 
+            new GuiBoundTextArea ("Message", "Message", (object data) => (data as _BoundMailMail)?.Message , 
+                (object data,string? value) => { if (data is _BoundMailMail datad) { datad.Message = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -701,7 +674,7 @@ public partial class _BoundMessageConfirmationRequest : BoundMessage {
 
 
     ///<summary></summary> 
-    public virtual string RequestMessage { get; set;} 
+    public virtual string? RequestMessage { get; set;} 
 
 
     ///<inheritdoc/>
@@ -711,19 +684,22 @@ public partial class _BoundMessageConfirmationRequest : BoundMessage {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundMessageConfirmationRequest,
         () => new BoundMessageConfirmationRequest(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessageConfirmationRequest).Type , null), 
-            new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessageConfirmationRequest).TimeSent , (object data,string value) => (data as _BoundMessageConfirmationRequest).TimeSent = value, Width: 100), 
-            new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageConfirmationRequest).Sender , (object data,string value) => (data as _BoundMessageConfirmationRequest).Sender = value, Width: 150), 
-            new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageConfirmationRequest).Subject , (object data,string value) => (data as _BoundMessageConfirmationRequest).Subject = value, Width: 300), 
-            new GuiBoundPropertyString ("RequestMessage", "Request", (object data) => (data as _BoundMessageConfirmationRequest).RequestMessage , (object data,string value) => (data as _BoundMessageConfirmationRequest).RequestMessage = value), 
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessageConfirmationRequest)?.Type , null), 
+            new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessageConfirmationRequest)?.TimeSent , 
+                (object data,string? value) => { if (data is _BoundMessageConfirmationRequest datad) { datad.TimeSent = value; }}, Width: 100), 
+            new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageConfirmationRequest)?.Sender , 
+                (object data,string? value) => { if (data is _BoundMessageConfirmationRequest datad) { datad.Sender = value; }}, Width: 150), 
+            new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageConfirmationRequest)?.Subject , 
+                (object data,string? value) => { if (data is _BoundMessageConfirmationRequest datad) { datad.Subject = value; }}, Width: 300), 
+            new GuiBoundPropertyString ("RequestMessage", "Request", (object data) => (data as _BoundMessageConfirmationRequest)?.RequestMessage , 
+                (object data,string? value) => { if (data is _BoundMessageConfirmationRequest datad) { datad.RequestMessage = value; }}), 
             new GuiBoundPropertySelection ("ConfirmationAccept", "Accept"), 
             new GuiBoundPropertySelection ("ConfirmationReject", "Reject")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -760,16 +736,18 @@ public partial class _BoundMessageConfirmationResponse : BoundMessage {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundMessageConfirmationResponse,
         () => new BoundMessageConfirmationResponse(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessageConfirmationResponse).Type , null), 
-            new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessageConfirmationResponse).TimeSent , (object data,string value) => (data as _BoundMessageConfirmationResponse).TimeSent = value, Width: 100), 
-            new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageConfirmationResponse).Sender , (object data,string value) => (data as _BoundMessageConfirmationResponse).Sender = value, Width: 150), 
-            new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageConfirmationResponse).Subject , (object data,string value) => (data as _BoundMessageConfirmationResponse).Subject = value, Width: 300)
-
-            });
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessageConfirmationResponse)?.Type , null), 
+            new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessageConfirmationResponse)?.TimeSent , 
+                (object data,string? value) => { if (data is _BoundMessageConfirmationResponse datad) { datad.TimeSent = value; }}, Width: 100), 
+            new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageConfirmationResponse)?.Sender , 
+                (object data,string? value) => { if (data is _BoundMessageConfirmationResponse datad) { datad.Sender = value; }}, Width: 150), 
+            new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageConfirmationResponse)?.Subject , 
+                (object data,string? value) => { if (data is _BoundMessageConfirmationResponse datad) { datad.Subject = value; }}, Width: 300)
+            ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -806,18 +784,20 @@ public partial class _BoundMessageContactRequest : BoundMessage {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundMessageContactRequest,
         () => new BoundMessageContactRequest(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessageContactRequest).Type , null), 
-            new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessageContactRequest).TimeSent , (object data,string value) => (data as _BoundMessageContactRequest).TimeSent = value, Width: 100), 
-            new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageContactRequest).Sender , (object data,string value) => (data as _BoundMessageContactRequest).Sender = value, Width: 150), 
-            new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageContactRequest).Subject , (object data,string value) => (data as _BoundMessageContactRequest).Subject = value, Width: 300), 
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessageContactRequest)?.Type , null), 
+            new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessageContactRequest)?.TimeSent , 
+                (object data,string? value) => { if (data is _BoundMessageContactRequest datad) { datad.TimeSent = value; }}, Width: 100), 
+            new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageContactRequest)?.Sender , 
+                (object data,string? value) => { if (data is _BoundMessageContactRequest datad) { datad.Sender = value; }}, Width: 150), 
+            new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageContactRequest)?.Subject , 
+                (object data,string? value) => { if (data is _BoundMessageContactRequest datad) { datad.Subject = value; }}, Width: 300), 
             new GuiBoundPropertySelection ("ContactAccept", "Accept"), 
             new GuiBoundPropertySelection ("ContactReject", "Reject")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -847,7 +827,7 @@ public partial class _BoundMessageConnectionRequest : BoundMessage {
 
 
     ///<summary></summary> 
-    public virtual string RequestMessage { get; set;} 
+    public virtual string? RequestMessage { get; set;} 
 
 
     ///<inheritdoc/>
@@ -857,19 +837,22 @@ public partial class _BoundMessageConnectionRequest : BoundMessage {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundMessageConnectionRequest,
         () => new BoundMessageConnectionRequest(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessageConnectionRequest).Type , null), 
-            new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessageConnectionRequest).TimeSent , (object data,string value) => (data as _BoundMessageConnectionRequest).TimeSent = value, Width: 100), 
-            new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageConnectionRequest).Sender , (object data,string value) => (data as _BoundMessageConnectionRequest).Sender = value, Width: 150), 
-            new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageConnectionRequest).Subject , (object data,string value) => (data as _BoundMessageConnectionRequest).Subject = value, Width: 300), 
-            new GuiBoundPropertyString ("RequestMessage", "Request", (object data) => (data as _BoundMessageConnectionRequest).RequestMessage , (object data,string value) => (data as _BoundMessageConnectionRequest).RequestMessage = value), 
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessageConnectionRequest)?.Type , null), 
+            new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessageConnectionRequest)?.TimeSent , 
+                (object data,string? value) => { if (data is _BoundMessageConnectionRequest datad) { datad.TimeSent = value; }}, Width: 100), 
+            new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageConnectionRequest)?.Sender , 
+                (object data,string? value) => { if (data is _BoundMessageConnectionRequest datad) { datad.Sender = value; }}, Width: 150), 
+            new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageConnectionRequest)?.Subject , 
+                (object data,string? value) => { if (data is _BoundMessageConnectionRequest datad) { datad.Subject = value; }}, Width: 300), 
+            new GuiBoundPropertyString ("RequestMessage", "Request", (object data) => (data as _BoundMessageConnectionRequest)?.RequestMessage , 
+                (object data,string? value) => { if (data is _BoundMessageConnectionRequest datad) { datad.RequestMessage = value; }}), 
             new GuiBoundPropertySelection ("ConnectAccept", "Accept"), 
             new GuiBoundPropertySelection ("ConnectReject", "Reject")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -906,18 +889,20 @@ public partial class _BoundMessageGroupInvitation : BoundMessage {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundMessageGroupInvitation,
         () => new BoundMessageGroupInvitation(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessageGroupInvitation).Type , null), 
-            new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessageGroupInvitation).TimeSent , (object data,string value) => (data as _BoundMessageGroupInvitation).TimeSent = value, Width: 100), 
-            new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageGroupInvitation).Sender , (object data,string value) => (data as _BoundMessageGroupInvitation).Sender = value, Width: 150), 
-            new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageGroupInvitation).Subject , (object data,string value) => (data as _BoundMessageGroupInvitation).Subject = value, Width: 300), 
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessageGroupInvitation)?.Type , null), 
+            new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessageGroupInvitation)?.TimeSent , 
+                (object data,string? value) => { if (data is _BoundMessageGroupInvitation datad) { datad.TimeSent = value; }}, Width: 100), 
+            new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageGroupInvitation)?.Sender , 
+                (object data,string? value) => { if (data is _BoundMessageGroupInvitation datad) { datad.Sender = value; }}, Width: 150), 
+            new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageGroupInvitation)?.Subject , 
+                (object data,string? value) => { if (data is _BoundMessageGroupInvitation datad) { datad.Subject = value; }}, Width: 300), 
             new GuiBoundPropertySelection ("GroupAccept", "Accept"), 
             new GuiBoundPropertySelection ("GroupReject", "Reject")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -954,18 +939,20 @@ public partial class _BoundMessageTaskRequest : BoundMessage {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundMessageTaskRequest,
         () => new BoundMessageTaskRequest(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessageTaskRequest).Type , null), 
-            new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessageTaskRequest).TimeSent , (object data,string value) => (data as _BoundMessageTaskRequest).TimeSent = value, Width: 100), 
-            new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageTaskRequest).Sender , (object data,string value) => (data as _BoundMessageTaskRequest).Sender = value, Width: 150), 
-            new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageTaskRequest).Subject , (object data,string value) => (data as _BoundMessageTaskRequest).Subject = value, Width: 300), 
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessageTaskRequest)?.Type , null), 
+            new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessageTaskRequest)?.TimeSent , 
+                (object data,string? value) => { if (data is _BoundMessageTaskRequest datad) { datad.TimeSent = value; }}, Width: 100), 
+            new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageTaskRequest)?.Sender , 
+                (object data,string? value) => { if (data is _BoundMessageTaskRequest datad) { datad.Sender = value; }}, Width: 150), 
+            new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageTaskRequest)?.Subject , 
+                (object data,string? value) => { if (data is _BoundMessageTaskRequest datad) { datad.Subject = value; }}, Width: 300), 
             new GuiBoundPropertySelection ("TaskAccept", "Accept"), 
             new GuiBoundPropertySelection ("TaskReject", "Reject")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -993,14 +980,14 @@ public partial class BoundContact : _BoundContact {
 /// </summary>
 public partial class _BoundContact : IParameter {
 
-    public object Bound { get; set; }
+    public object? Bound { get; set; }
 
 
     ///<summary></summary> 
-    public virtual IFieldIcon Type { get;} 
+    public virtual IFieldIcon? Type { get;} 
 
     ///<summary></summary> 
-    public virtual string Display { get;} 
+    public virtual string? Display { get;} 
 
 
     ///<inheritdoc/>
@@ -1010,16 +997,15 @@ public partial class _BoundContact : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundContact,
         () => new BoundContact(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundContact).Type , null), 
-            new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundContact).Display , null), 
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundContact)?.Type , null), 
+            new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundContact)?.Display , null), 
             new GuiBoundPropertySelection ("ContactUpdate", "Update"), 
             new GuiBoundPropertySelection ("ContactDelete", "Delete")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -1049,28 +1035,28 @@ public partial class _BoundContactPerson : BoundContact {
 
 
     ///<summary></summary> 
-    public virtual bool Self { get; set;} 
+    public virtual bool? Self { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Local { get; set;} 
+    public virtual string? Local { get; set;} 
 
     ///<summary></summary> 
-    public virtual string First { get; set;} 
+    public virtual string? First { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Last { get; set;} 
+    public virtual string? Last { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Prefix { get; set;} 
+    public virtual string? Prefix { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Suffix { get; set;} 
+    public virtual string? Suffix { get; set;} 
 
     ///<summary></summary> 
-    public virtual ISelectCollection NetworkAddresses { get; set;} 
+    public virtual ISelectCollection? NetworkAddresses { get; set;} 
 
     ///<summary></summary> 
-    public virtual ISelectCollection PhysicalAddresses { get; set;} 
+    public virtual ISelectCollection? PhysicalAddresses { get; set;} 
 
 
     ///<inheritdoc/>
@@ -1080,25 +1066,32 @@ public partial class _BoundContactPerson : BoundContact {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundContactPerson,
         () => new BoundContactPerson(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundContactPerson).Type , null), 
-            new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundContactPerson).Display , null), 
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundContactPerson)?.Type , null), 
+            new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundContactPerson)?.Display , null), 
             new GuiBoundPropertySelection ("ContactUpdate", "Update"), 
             new GuiBoundPropertySelection ("ContactDelete", "Delete"), 
-            new GuiBoundPropertyBoolean ("Self", "Self", (object data) => (data as _BoundContactPerson).Self , (object data,bool value) => (data as _BoundContactPerson).Self = value), 
-            new GuiBoundPropertyString ("Local", "Friendly name", (object data) => (data as _BoundContactPerson).Local , (object data,string value) => (data as _BoundContactPerson).Local = value), 
-            new GuiBoundPropertyString ("First", "First name", (object data) => (data as _BoundContactPerson).First , (object data,string value) => (data as _BoundContactPerson).First = value), 
-            new GuiBoundPropertyString ("Last", "Last name", (object data) => (data as _BoundContactPerson).Last , (object data,string value) => (data as _BoundContactPerson).Last = value), 
-            new GuiBoundPropertyString ("Prefix", "Prefix", (object data) => (data as _BoundContactPerson).Prefix , (object data,string value) => (data as _BoundContactPerson).Prefix = value), 
-            new GuiBoundPropertyString ("Suffix", "Suffix", (object data) => (data as _BoundContactPerson).Suffix , (object data,string value) => (data as _BoundContactPerson).Suffix = value), 
-            new GuiBoundPropertyList ("NetworkAddresses", "Network Addresses", (object data) => (data as _BoundContactPerson).NetworkAddresses , (object data,ISelectCollection value) => (data as _BoundContactPerson).NetworkAddresses = value, _ContactNetworkAddress.BaseBinding), 
-            new GuiBoundPropertyList ("PhysicalAddresses", "Locations", (object data) => (data as _BoundContactPerson).PhysicalAddresses , (object data,ISelectCollection value) => (data as _BoundContactPerson).PhysicalAddresses = value, _ContactPhysicalAddress.BaseBinding), 
+            new GuiBoundPropertyBoolean ("Self", "Self", (object data) => (data as _BoundContactPerson)?.Self , 
+                (object data,bool? value) => { if (data is _BoundContactPerson datad) { datad.Self = value; }}), 
+            new GuiBoundPropertyString ("Local", "Friendly name", (object data) => (data as _BoundContactPerson)?.Local , 
+                (object data,string? value) => { if (data is _BoundContactPerson datad) { datad.Local = value; }}), 
+            new GuiBoundPropertyString ("First", "First name", (object data) => (data as _BoundContactPerson)?.First , 
+                (object data,string? value) => { if (data is _BoundContactPerson datad) { datad.First = value; }}), 
+            new GuiBoundPropertyString ("Last", "Last name", (object data) => (data as _BoundContactPerson)?.Last , 
+                (object data,string? value) => { if (data is _BoundContactPerson datad) { datad.Last = value; }}), 
+            new GuiBoundPropertyString ("Prefix", "Prefix", (object data) => (data as _BoundContactPerson)?.Prefix , 
+                (object data,string? value) => { if (data is _BoundContactPerson datad) { datad.Prefix = value; }}), 
+            new GuiBoundPropertyString ("Suffix", "Suffix", (object data) => (data as _BoundContactPerson)?.Suffix , 
+                (object data,string? value) => { if (data is _BoundContactPerson datad) { datad.Suffix = value; }}), 
+            new GuiBoundPropertyList ("NetworkAddresses", "Network Addresses", (object data) => (data as _BoundContactPerson)?.NetworkAddresses , 
+                (object data,ISelectCollection? value) => { if (data is _BoundContactPerson datad) { datad.NetworkAddresses = value; }}, _ContactNetworkAddress.BaseBinding), 
+            new GuiBoundPropertyList ("PhysicalAddresses", "Locations", (object data) => (data as _BoundContactPerson)?.PhysicalAddresses , 
+                (object data,ISelectCollection? value) => { if (data is _BoundContactPerson datad) { datad.PhysicalAddresses = value; }}, _ContactPhysicalAddress.BaseBinding), 
             new GuiBoundPropertySelection ("ContactInteractMesh", "Mail")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -1135,16 +1128,15 @@ public partial class _BoundContactBusiness : BoundContact {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundContactBusiness,
         () => new BoundContactBusiness(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundContactBusiness).Type , null), 
-            new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundContactBusiness).Display , null), 
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundContactBusiness)?.Type , null), 
+            new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundContactBusiness)?.Display , null), 
             new GuiBoundPropertySelection ("ContactUpdate", "Update"), 
             new GuiBoundPropertySelection ("ContactDelete", "Delete")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -1181,16 +1173,15 @@ public partial class _BoundContactPlace : BoundContact {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundContactPlace,
         () => new BoundContactPlace(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundContactPlace).Type , null), 
-            new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundContactPlace).Display , null), 
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundContactPlace)?.Type , null), 
+            new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundContactPlace)?.Display , null), 
             new GuiBoundPropertySelection ("ContactUpdate", "Update"), 
             new GuiBoundPropertySelection ("ContactDelete", "Delete")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -1218,20 +1209,20 @@ public partial class ContactNetworkAddress : _ContactNetworkAddress {
 /// </summary>
 public partial class _ContactNetworkAddress : IParameter {
 
-    public object Bound { get; set; }
+    public object? Bound { get; set; }
 
 
     ///<summary></summary> 
-    public virtual IFieldIcon Type { get;} 
+    public virtual IFieldIcon? Type { get;} 
 
     ///<summary></summary> 
-    public virtual string Protocol { get; set;} 
+    public virtual string? Protocol { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Address { get; set;} 
+    public virtual string? Address { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Fingerprint { get; set;} 
+    public virtual string? Fingerprint { get; set;} 
 
 
     ///<inheritdoc/>
@@ -1241,17 +1232,19 @@ public partial class _ContactNetworkAddress : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _ContactNetworkAddress,
         () => new ContactNetworkAddress(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _ContactNetworkAddress).Type , null), 
-            new GuiBoundPropertyString ("Protocol", "Protocol", (object data) => (data as _ContactNetworkAddress).Protocol , (object data,string value) => (data as _ContactNetworkAddress).Protocol = value), 
-            new GuiBoundPropertyString ("Address", "Address", (object data) => (data as _ContactNetworkAddress).Address , (object data,string value) => (data as _ContactNetworkAddress).Address = value), 
-            new GuiBoundPropertyString ("Fingerprint", "Fingerprint", (object data) => (data as _ContactNetworkAddress).Fingerprint , (object data,string value) => (data as _ContactNetworkAddress).Fingerprint = value), 
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _ContactNetworkAddress)?.Type , null), 
+            new GuiBoundPropertyString ("Protocol", "Protocol", (object data) => (data as _ContactNetworkAddress)?.Protocol , 
+                (object data,string? value) => { if (data is _ContactNetworkAddress datad) { datad.Protocol = value; }}), 
+            new GuiBoundPropertyString ("Address", "Address", (object data) => (data as _ContactNetworkAddress)?.Address , 
+                (object data,string? value) => { if (data is _ContactNetworkAddress datad) { datad.Address = value; }}), 
+            new GuiBoundPropertyString ("Fingerprint", "Fingerprint", (object data) => (data as _ContactNetworkAddress)?.Fingerprint , 
+                (object data,string? value) => { if (data is _ContactNetworkAddress datad) { datad.Fingerprint = value; }}), 
             new GuiBoundPropertySelection ("ContactInteractAddress", "Mail")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -1279,26 +1272,26 @@ public partial class ContactPhysicalAddress : _ContactPhysicalAddress {
 /// </summary>
 public partial class _ContactPhysicalAddress : IParameter {
 
-    public object Bound { get; set; }
+    public object? Bound { get; set; }
 
 
     ///<summary></summary> 
-    public virtual string Appartment { get; set;} 
+    public virtual string? Appartment { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Street { get; set;} 
+    public virtual string? Street { get; set;} 
 
     ///<summary></summary> 
-    public virtual string District { get; set;} 
+    public virtual string? District { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Region { get; set;} 
+    public virtual string? Region { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Code { get; set;} 
+    public virtual string? Code { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Country { get; set;} 
+    public virtual string? Country { get; set;} 
 
     ///<summary></summary> 
     public virtual decimal? Latitude { get; set;} 
@@ -1314,20 +1307,27 @@ public partial class _ContactPhysicalAddress : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _ContactPhysicalAddress,
         () => new ContactPhysicalAddress(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("Appartment", "Appartment", (object data) => (data as _ContactPhysicalAddress).Appartment , (object data,string value) => (data as _ContactPhysicalAddress).Appartment = value), 
-            new GuiBoundPropertyString ("Street", "Street", (object data) => (data as _ContactPhysicalAddress).Street , (object data,string value) => (data as _ContactPhysicalAddress).Street = value), 
-            new GuiBoundPropertyString ("District", "District", (object data) => (data as _ContactPhysicalAddress).District , (object data,string value) => (data as _ContactPhysicalAddress).District = value), 
-            new GuiBoundPropertyString ("Region", "Region", (object data) => (data as _ContactPhysicalAddress).Region , (object data,string value) => (data as _ContactPhysicalAddress).Region = value), 
-            new GuiBoundPropertyString ("Code", "Postcode", (object data) => (data as _ContactPhysicalAddress).Code , (object data,string value) => (data as _ContactPhysicalAddress).Code = value), 
-            new GuiBoundPropertyString ("Country", "Country", (object data) => (data as _ContactPhysicalAddress).Country , (object data,string value) => (data as _ContactPhysicalAddress).Country = value), 
-            new GuiBoundPropertyDecimal ("Latitude", "Latitude", (object data) => (data as _ContactPhysicalAddress).Latitude , (object data,decimal? value) => (data as _ContactPhysicalAddress).Latitude = value), 
-            new GuiBoundPropertyDecimal ("Longitude", "Longitude", (object data) => (data as _ContactPhysicalAddress).Longitude , (object data,decimal? value) => (data as _ContactPhysicalAddress).Longitude = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("Appartment", "Appartment", (object data) => (data as _ContactPhysicalAddress)?.Appartment , 
+                (object data,string? value) => { if (data is _ContactPhysicalAddress datad) { datad.Appartment = value; }}), 
+            new GuiBoundPropertyString ("Street", "Street", (object data) => (data as _ContactPhysicalAddress)?.Street , 
+                (object data,string? value) => { if (data is _ContactPhysicalAddress datad) { datad.Street = value; }}), 
+            new GuiBoundPropertyString ("District", "District", (object data) => (data as _ContactPhysicalAddress)?.District , 
+                (object data,string? value) => { if (data is _ContactPhysicalAddress datad) { datad.District = value; }}), 
+            new GuiBoundPropertyString ("Region", "Region", (object data) => (data as _ContactPhysicalAddress)?.Region , 
+                (object data,string? value) => { if (data is _ContactPhysicalAddress datad) { datad.Region = value; }}), 
+            new GuiBoundPropertyString ("Code", "Postcode", (object data) => (data as _ContactPhysicalAddress)?.Code , 
+                (object data,string? value) => { if (data is _ContactPhysicalAddress datad) { datad.Code = value; }}), 
+            new GuiBoundPropertyString ("Country", "Country", (object data) => (data as _ContactPhysicalAddress)?.Country , 
+                (object data,string? value) => { if (data is _ContactPhysicalAddress datad) { datad.Country = value; }}), 
+            new GuiBoundPropertyDecimal ("Latitude", "Latitude", (object data) => (data as _ContactPhysicalAddress)?.Latitude , 
+                (object data,decimal? value) => { if (data is _ContactPhysicalAddress datad) { datad.Latitude = value; }}), 
+            new GuiBoundPropertyDecimal ("Longitude", "Longitude", (object data) => (data as _ContactPhysicalAddress)?.Longitude , 
+                (object data,decimal? value) => { if (data is _ContactPhysicalAddress datad) { datad.Longitude = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -1355,17 +1355,17 @@ public partial class BoundDocument : _BoundDocument {
 /// </summary>
 public partial class _BoundDocument : IParameter {
 
-    public object Bound { get; set; }
+    public object? Bound { get; set; }
 
 
     ///<summary></summary> 
-    public virtual IFieldIcon Type { get;} 
+    public virtual IFieldIcon? Type { get;} 
 
     ///<summary></summary> 
-    public virtual string FileType { get;} 
+    public virtual string? FileType { get;} 
 
     ///<summary></summary> 
-    public virtual string Filename { get; set;} 
+    public virtual string? Filename { get; set;} 
 
 
     ///<inheritdoc/>
@@ -1375,19 +1375,19 @@ public partial class _BoundDocument : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundDocument,
         () => new BoundDocument(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundDocument).Type , null), 
-            new GuiBoundPropertyString ("FileType", "Type", (object data) => (data as _BoundDocument).FileType , null), 
-            new GuiBoundPropertyString ("Filename", "File name", (object data) => (data as _BoundDocument).Filename , (object data,string value) => (data as _BoundDocument).Filename = value), 
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundDocument)?.Type , null), 
+            new GuiBoundPropertyString ("FileType", "Type", (object data) => (data as _BoundDocument)?.FileType , null), 
+            new GuiBoundPropertyString ("Filename", "File name", (object data) => (data as _BoundDocument)?.Filename , 
+                (object data,string? value) => { if (data is _BoundDocument datad) { datad.Filename = value; }}), 
             new GuiBoundPropertySelection ("DocumentUpdate", "Update"), 
             new GuiBoundPropertySelection ("DocumentExport", "Export"), 
             new GuiBoundPropertySelection ("DocumentSend", "Send"), 
             new GuiBoundPropertySelection ("DocumentDelete", "Delete")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -1415,17 +1415,17 @@ public partial class BoundGroup : _BoundGroup {
 /// </summary>
 public partial class _BoundGroup : IParameter {
 
-    public object Bound { get; set; }
+    public object? Bound { get; set; }
 
 
     ///<summary></summary> 
-    public virtual string GroupName { get; set;} 
+    public virtual string? GroupName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string GroupAddress { get; set;} 
+    public virtual string? GroupAddress { get; set;} 
 
     ///<summary></summary> 
-    public virtual ISelectCollection Members { get; set;} 
+    public virtual ISelectCollection? Members { get; set;} 
 
 
     ///<inheritdoc/>
@@ -1435,16 +1435,18 @@ public partial class _BoundGroup : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundGroup,
         () => new BoundGroup(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("GroupName", "Display name", (object data) => (data as _BoundGroup).GroupName , (object data,string value) => (data as _BoundGroup).GroupName = value), 
-            new GuiBoundPropertyString ("GroupAddress", "Address", (object data) => (data as _BoundGroup).GroupAddress , (object data,string value) => (data as _BoundGroup).GroupAddress = value), 
-            new GuiBoundPropertyList ("Members", "Members", (object data) => (data as _BoundGroup).Members , (object data,ISelectCollection value) => (data as _BoundGroup).Members = value, _BoundGroupMember.BaseBinding), 
+        [ 
+            new GuiBoundPropertyString ("GroupName", "Display name", (object data) => (data as _BoundGroup)?.GroupName , 
+                (object data,string? value) => { if (data is _BoundGroup datad) { datad.GroupName = value; }}), 
+            new GuiBoundPropertyString ("GroupAddress", "Address", (object data) => (data as _BoundGroup)?.GroupAddress , 
+                (object data,string? value) => { if (data is _BoundGroup datad) { datad.GroupAddress = value; }}), 
+            new GuiBoundPropertyList ("Members", "Members", (object data) => (data as _BoundGroup)?.Members , 
+                (object data,ISelectCollection? value) => { if (data is _BoundGroup datad) { datad.Members = value; }}, _BoundGroupMember.BaseBinding), 
             new GuiBoundPropertyButton ("GroupInvite")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -1472,14 +1474,14 @@ public partial class BoundGroupMember : _BoundGroupMember {
 /// </summary>
 public partial class _BoundGroupMember : IParameter {
 
-    public object Bound { get; set; }
+    public object? Bound { get; set; }
 
 
     ///<summary></summary> 
-    public virtual string ContactName { get; set;} 
+    public virtual string? ContactName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Address { get; set;} 
+    public virtual string? Address { get; set;} 
 
 
     ///<inheritdoc/>
@@ -1489,16 +1491,17 @@ public partial class _BoundGroupMember : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundGroupMember,
         () => new BoundGroupMember(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("ContactName", "Name", (object data) => (data as _BoundGroupMember).ContactName , (object data,string value) => (data as _BoundGroupMember).ContactName = value), 
-            new GuiBoundPropertyString ("Address", "Address", (object data) => (data as _BoundGroupMember).Address , (object data,string value) => (data as _BoundGroupMember).Address = value), 
+        [ 
+            new GuiBoundPropertyString ("ContactName", "Name", (object data) => (data as _BoundGroupMember)?.ContactName , 
+                (object data,string? value) => { if (data is _BoundGroupMember datad) { datad.ContactName = value; }}), 
+            new GuiBoundPropertyString ("Address", "Address", (object data) => (data as _BoundGroupMember)?.Address , 
+                (object data,string? value) => { if (data is _BoundGroupMember datad) { datad.Address = value; }}), 
             new GuiBoundPropertySelection ("MemberDelete", "Delete"), 
             new GuiBoundPropertySelection ("MemberReInvite", "Sesent Invitation")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -1526,20 +1529,20 @@ public partial class BoundCredential : _BoundCredential {
 /// </summary>
 public partial class _BoundCredential : IParameter {
 
-    public object Bound { get; set; }
+    public object? Bound { get; set; }
 
 
     ///<summary></summary> 
-    public virtual IFieldIcon Type { get;} 
+    public virtual IFieldIcon? Type { get;} 
 
     ///<summary></summary> 
-    public virtual string Protocol { get; set;} 
+    public virtual string? Protocol { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Service { get; set;} 
+    public virtual string? Service { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Username { get; set;} 
+    public virtual string? Username { get; set;} 
 
 
     ///<inheritdoc/>
@@ -1549,18 +1552,20 @@ public partial class _BoundCredential : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundCredential,
         () => new BoundCredential(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundCredential).Type , null), 
-            new GuiBoundPropertyString ("Protocol", "Protocol", (object data) => (data as _BoundCredential).Protocol , (object data,string value) => (data as _BoundCredential).Protocol = value), 
-            new GuiBoundPropertyString ("Service", "Service", (object data) => (data as _BoundCredential).Service , (object data,string value) => (data as _BoundCredential).Service = value), 
-            new GuiBoundPropertyString ("Username", "Username", (object data) => (data as _BoundCredential).Username , (object data,string value) => (data as _BoundCredential).Username = value), 
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundCredential)?.Type , null), 
+            new GuiBoundPropertyString ("Protocol", "Protocol", (object data) => (data as _BoundCredential)?.Protocol , 
+                (object data,string? value) => { if (data is _BoundCredential datad) { datad.Protocol = value; }}), 
+            new GuiBoundPropertyString ("Service", "Service", (object data) => (data as _BoundCredential)?.Service , 
+                (object data,string? value) => { if (data is _BoundCredential datad) { datad.Service = value; }}), 
+            new GuiBoundPropertyString ("Username", "Username", (object data) => (data as _BoundCredential)?.Username , 
+                (object data,string? value) => { if (data is _BoundCredential datad) { datad.Username = value; }}), 
             new GuiBoundPropertySelection ("CredentialUpdate", "Update"), 
             new GuiBoundPropertySelection ("CredentialDelete", "Delete")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -1590,7 +1595,7 @@ public partial class _BoundPassword : BoundCredential {
 
 
     ///<summary></summary> 
-    public virtual string Password { get; set;} 
+    public virtual string? Password { get; set;} 
 
 
     ///<inheritdoc/>
@@ -1600,19 +1605,22 @@ public partial class _BoundPassword : BoundCredential {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundPassword,
         () => new BoundPassword(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundPassword).Type , null), 
-            new GuiBoundPropertyString ("Protocol", "Protocol", (object data) => (data as _BoundPassword).Protocol , (object data,string value) => (data as _BoundPassword).Protocol = value), 
-            new GuiBoundPropertyString ("Service", "Service", (object data) => (data as _BoundPassword).Service , (object data,string value) => (data as _BoundPassword).Service = value), 
-            new GuiBoundPropertyString ("Username", "Username", (object data) => (data as _BoundPassword).Username , (object data,string value) => (data as _BoundPassword).Username = value), 
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundPassword)?.Type , null), 
+            new GuiBoundPropertyString ("Protocol", "Protocol", (object data) => (data as _BoundPassword)?.Protocol , 
+                (object data,string? value) => { if (data is _BoundPassword datad) { datad.Protocol = value; }}), 
+            new GuiBoundPropertyString ("Service", "Service", (object data) => (data as _BoundPassword)?.Service , 
+                (object data,string? value) => { if (data is _BoundPassword datad) { datad.Service = value; }}), 
+            new GuiBoundPropertyString ("Username", "Username", (object data) => (data as _BoundPassword)?.Username , 
+                (object data,string? value) => { if (data is _BoundPassword datad) { datad.Username = value; }}), 
             new GuiBoundPropertySelection ("CredentialUpdate", "Update"), 
             new GuiBoundPropertySelection ("CredentialDelete", "Delete"), 
-            new GuiBoundPropertyString ("Password", "Password", (object data) => (data as _BoundPassword).Password , (object data,string value) => (data as _BoundPassword).Password = value)
-
-            });
+            new GuiBoundPropertyString ("Password", "Password", (object data) => (data as _BoundPassword)?.Password , 
+                (object data,string? value) => { if (data is _BoundPassword datad) { datad.Password = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -1649,18 +1657,20 @@ public partial class _BoundPasskey : BoundCredential {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundPasskey,
         () => new BoundPasskey(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundPasskey).Type , null), 
-            new GuiBoundPropertyString ("Protocol", "Protocol", (object data) => (data as _BoundPasskey).Protocol , (object data,string value) => (data as _BoundPasskey).Protocol = value), 
-            new GuiBoundPropertyString ("Service", "Service", (object data) => (data as _BoundPasskey).Service , (object data,string value) => (data as _BoundPasskey).Service = value), 
-            new GuiBoundPropertyString ("Username", "Username", (object data) => (data as _BoundPasskey).Username , (object data,string value) => (data as _BoundPasskey).Username = value), 
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundPasskey)?.Type , null), 
+            new GuiBoundPropertyString ("Protocol", "Protocol", (object data) => (data as _BoundPasskey)?.Protocol , 
+                (object data,string? value) => { if (data is _BoundPasskey datad) { datad.Protocol = value; }}), 
+            new GuiBoundPropertyString ("Service", "Service", (object data) => (data as _BoundPasskey)?.Service , 
+                (object data,string? value) => { if (data is _BoundPasskey datad) { datad.Service = value; }}), 
+            new GuiBoundPropertyString ("Username", "Username", (object data) => (data as _BoundPasskey)?.Username , 
+                (object data,string? value) => { if (data is _BoundPasskey datad) { datad.Username = value; }}), 
             new GuiBoundPropertySelection ("CredentialUpdate", "Update"), 
             new GuiBoundPropertySelection ("CredentialDelete", "Delete")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -1688,20 +1698,20 @@ public partial class BoundTask : _BoundTask {
 /// </summary>
 public partial class _BoundTask : IParameter {
 
-    public object Bound { get; set; }
+    public object? Bound { get; set; }
 
 
     ///<summary></summary> 
-    public virtual IFieldIcon Type { get;} 
+    public virtual IFieldIcon? Type { get;} 
 
     ///<summary></summary> 
-    public virtual string Title { get; set;} 
+    public virtual string? Title { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Description { get; set;} 
+    public virtual string? Description { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Path { get; set;} 
+    public virtual string? Path { get; set;} 
 
 
     ///<inheritdoc/>
@@ -1711,18 +1721,20 @@ public partial class _BoundTask : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundTask,
         () => new BoundTask(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundTask).Type , null), 
-            new GuiBoundPropertyString ("Title", "Title", (object data) => (data as _BoundTask).Title , (object data,string value) => (data as _BoundTask).Title = value), 
-            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundTask).Description , (object data,string value) => (data as _BoundTask).Description = value), 
-            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundTask).Path , (object data,string value) => (data as _BoundTask).Path = value), 
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundTask)?.Type , null), 
+            new GuiBoundPropertyString ("Title", "Title", (object data) => (data as _BoundTask)?.Title , 
+                (object data,string? value) => { if (data is _BoundTask datad) { datad.Title = value; }}), 
+            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundTask)?.Description , 
+                (object data,string? value) => { if (data is _BoundTask datad) { datad.Description = value; }}), 
+            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundTask)?.Path , 
+                (object data,string? value) => { if (data is _BoundTask datad) { datad.Path = value; }}), 
             new GuiBoundPropertySelection ("TaskUpdate", "Update"), 
             new GuiBoundPropertySelection ("TaskDelete", "Delete")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -1750,11 +1762,11 @@ public partial class BoundAppointment : _BoundAppointment {
 /// </summary>
 public partial class _BoundAppointment : IParameter {
 
-    public object Bound { get; set; }
+    public object? Bound { get; set; }
 
 
     ///<summary></summary> 
-    public virtual string Display { get; set;} 
+    public virtual string? Display { get; set;} 
 
 
     ///<inheritdoc/>
@@ -1764,13 +1776,13 @@ public partial class _BoundAppointment : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundAppointment,
         () => new BoundAppointment(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundAppointment).Display , (object data,string value) => (data as _BoundAppointment).Display = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundAppointment)?.Display , 
+                (object data,string? value) => { if (data is _BoundAppointment datad) { datad.Display = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -1798,23 +1810,23 @@ public partial class BoundBookmark : _BoundBookmark {
 /// </summary>
 public partial class _BoundBookmark : IParameter {
 
-    public object Bound { get; set; }
+    public object? Bound { get; set; }
 
 
     ///<summary></summary> 
-    public virtual IFieldIcon Type { get;} 
+    public virtual IFieldIcon? Type { get;} 
 
     ///<summary></summary> 
-    public virtual string Path { get; set;} 
+    public virtual string? Path { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Title { get; set;} 
+    public virtual string? Title { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Uri { get; set;} 
+    public virtual string? Uri { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Description { get; set;} 
+    public virtual string? Description { get; set;} 
 
 
     ///<inheritdoc/>
@@ -1824,19 +1836,22 @@ public partial class _BoundBookmark : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundBookmark,
         () => new BoundBookmark(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundBookmark).Type , null), 
-            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundBookmark).Path , (object data,string value) => (data as _BoundBookmark).Path = value), 
-            new GuiBoundPropertyString ("Title", "Title", (object data) => (data as _BoundBookmark).Title , (object data,string value) => (data as _BoundBookmark).Title = value), 
-            new GuiBoundPropertyString ("Uri", "Link", (object data) => (data as _BoundBookmark).Uri , (object data,string value) => (data as _BoundBookmark).Uri = value), 
-            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundBookmark).Description , (object data,string value) => (data as _BoundBookmark).Description = value), 
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundBookmark)?.Type , null), 
+            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundBookmark)?.Path , 
+                (object data,string? value) => { if (data is _BoundBookmark datad) { datad.Path = value; }}), 
+            new GuiBoundPropertyString ("Title", "Title", (object data) => (data as _BoundBookmark)?.Title , 
+                (object data,string? value) => { if (data is _BoundBookmark datad) { datad.Title = value; }}), 
+            new GuiBoundPropertyString ("Uri", "Link", (object data) => (data as _BoundBookmark)?.Uri , 
+                (object data,string? value) => { if (data is _BoundBookmark datad) { datad.Uri = value; }}), 
+            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundBookmark)?.Description , 
+                (object data,string? value) => { if (data is _BoundBookmark datad) { datad.Description = value; }}), 
             new GuiBoundPropertySelection ("BookmarkUpdate", "Update"), 
             new GuiBoundPropertySelection ("BookmarkDelete", "Delete")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -1866,7 +1881,7 @@ public partial class _BoundFeed : BoundBookmark {
 
 
     ///<summary></summary> 
-    public virtual string Protocol { get; set;} 
+    public virtual string? Protocol { get; set;} 
 
 
     ///<inheritdoc/>
@@ -1876,20 +1891,24 @@ public partial class _BoundFeed : BoundBookmark {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundFeed,
         () => new BoundFeed(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundFeed).Type , null), 
-            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundFeed).Path , (object data,string value) => (data as _BoundFeed).Path = value), 
-            new GuiBoundPropertyString ("Title", "Title", (object data) => (data as _BoundFeed).Title , (object data,string value) => (data as _BoundFeed).Title = value), 
-            new GuiBoundPropertyString ("Uri", "Link", (object data) => (data as _BoundFeed).Uri , (object data,string value) => (data as _BoundFeed).Uri = value), 
-            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundFeed).Description , (object data,string value) => (data as _BoundFeed).Description = value), 
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundFeed)?.Type , null), 
+            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundFeed)?.Path , 
+                (object data,string? value) => { if (data is _BoundFeed datad) { datad.Path = value; }}), 
+            new GuiBoundPropertyString ("Title", "Title", (object data) => (data as _BoundFeed)?.Title , 
+                (object data,string? value) => { if (data is _BoundFeed datad) { datad.Title = value; }}), 
+            new GuiBoundPropertyString ("Uri", "Link", (object data) => (data as _BoundFeed)?.Uri , 
+                (object data,string? value) => { if (data is _BoundFeed datad) { datad.Uri = value; }}), 
+            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundFeed)?.Description , 
+                (object data,string? value) => { if (data is _BoundFeed datad) { datad.Description = value; }}), 
             new GuiBoundPropertySelection ("BookmarkUpdate", "Update"), 
             new GuiBoundPropertySelection ("BookmarkDelete", "Delete"), 
-            new GuiBoundPropertyString ("Protocol", "Protocol", (object data) => (data as _BoundFeed).Protocol , (object data,string value) => (data as _BoundFeed).Protocol = value)
-
-            });
+            new GuiBoundPropertyString ("Protocol", "Protocol", (object data) => (data as _BoundFeed)?.Protocol , 
+                (object data,string? value) => { if (data is _BoundFeed datad) { datad.Protocol = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -1917,17 +1936,17 @@ public partial class BoundApplication : _BoundApplication {
 /// </summary>
 public partial class _BoundApplication : IParameter {
 
-    public object Bound { get; set; }
+    public object? Bound { get; set; }
 
 
     ///<summary></summary> 
-    public virtual string LocalName { get; set;} 
+    public virtual string? LocalName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Description { get; set;} 
+    public virtual string? Description { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Path { get; set;} 
+    public virtual string? Path { get; set;} 
 
 
     ///<inheritdoc/>
@@ -1937,17 +1956,19 @@ public partial class _BoundApplication : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundApplication,
         () => new BoundApplication(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _BoundApplication).LocalName , (object data,string value) => (data as _BoundApplication).LocalName = value), 
-            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundApplication).Description , (object data,string value) => (data as _BoundApplication).Description = value), 
-            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundApplication).Path , (object data,string value) => (data as _BoundApplication).Path = value), 
+        [ 
+            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _BoundApplication)?.LocalName , 
+                (object data,string? value) => { if (data is _BoundApplication datad) { datad.LocalName = value; }}), 
+            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundApplication)?.Description , 
+                (object data,string? value) => { if (data is _BoundApplication datad) { datad.Description = value; }}), 
+            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundApplication)?.Path , 
+                (object data,string? value) => { if (data is _BoundApplication datad) { datad.Path = value; }}), 
             new GuiBoundPropertySelection ("ApplicationUpdate", "Update"), 
             new GuiBoundPropertySelection ("ApplicationDelete", "Delete")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -1984,17 +2005,19 @@ public partial class _BoundApplicationMail : BoundApplication {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundApplicationMail,
         () => new BoundApplicationMail(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _BoundApplicationMail).LocalName , (object data,string value) => (data as _BoundApplicationMail).LocalName = value), 
-            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundApplicationMail).Description , (object data,string value) => (data as _BoundApplicationMail).Description = value), 
-            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundApplicationMail).Path , (object data,string value) => (data as _BoundApplicationMail).Path = value), 
+        [ 
+            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _BoundApplicationMail)?.LocalName , 
+                (object data,string? value) => { if (data is _BoundApplicationMail datad) { datad.LocalName = value; }}), 
+            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundApplicationMail)?.Description , 
+                (object data,string? value) => { if (data is _BoundApplicationMail datad) { datad.Description = value; }}), 
+            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundApplicationMail)?.Path , 
+                (object data,string? value) => { if (data is _BoundApplicationMail datad) { datad.Path = value; }}), 
             new GuiBoundPropertySelection ("ApplicationUpdate", "Update"), 
             new GuiBoundPropertySelection ("ApplicationDelete", "Delete")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -2031,17 +2054,19 @@ public partial class _BoundApplicationSsh : BoundApplication {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundApplicationSsh,
         () => new BoundApplicationSsh(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _BoundApplicationSsh).LocalName , (object data,string value) => (data as _BoundApplicationSsh).LocalName = value), 
-            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundApplicationSsh).Description , (object data,string value) => (data as _BoundApplicationSsh).Description = value), 
-            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundApplicationSsh).Path , (object data,string value) => (data as _BoundApplicationSsh).Path = value), 
+        [ 
+            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _BoundApplicationSsh)?.LocalName , 
+                (object data,string? value) => { if (data is _BoundApplicationSsh datad) { datad.LocalName = value; }}), 
+            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundApplicationSsh)?.Description , 
+                (object data,string? value) => { if (data is _BoundApplicationSsh datad) { datad.Description = value; }}), 
+            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundApplicationSsh)?.Path , 
+                (object data,string? value) => { if (data is _BoundApplicationSsh datad) { datad.Path = value; }}), 
             new GuiBoundPropertySelection ("ApplicationUpdate", "Update"), 
             new GuiBoundPropertySelection ("ApplicationDelete", "Delete")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -2078,17 +2103,19 @@ public partial class _BoundApplicationOpenPgp : BoundApplication {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundApplicationOpenPgp,
         () => new BoundApplicationOpenPgp(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _BoundApplicationOpenPgp).LocalName , (object data,string value) => (data as _BoundApplicationOpenPgp).LocalName = value), 
-            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundApplicationOpenPgp).Description , (object data,string value) => (data as _BoundApplicationOpenPgp).Description = value), 
-            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundApplicationOpenPgp).Path , (object data,string value) => (data as _BoundApplicationOpenPgp).Path = value), 
+        [ 
+            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _BoundApplicationOpenPgp)?.LocalName , 
+                (object data,string? value) => { if (data is _BoundApplicationOpenPgp datad) { datad.LocalName = value; }}), 
+            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundApplicationOpenPgp)?.Description , 
+                (object data,string? value) => { if (data is _BoundApplicationOpenPgp datad) { datad.Description = value; }}), 
+            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundApplicationOpenPgp)?.Path , 
+                (object data,string? value) => { if (data is _BoundApplicationOpenPgp datad) { datad.Path = value; }}), 
             new GuiBoundPropertySelection ("ApplicationUpdate", "Update"), 
             new GuiBoundPropertySelection ("ApplicationDelete", "Delete")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -2125,17 +2152,19 @@ public partial class _BoundApplicationDeveloper : BoundApplication {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundApplicationDeveloper,
         () => new BoundApplicationDeveloper(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _BoundApplicationDeveloper).LocalName , (object data,string value) => (data as _BoundApplicationDeveloper).LocalName = value), 
-            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundApplicationDeveloper).Description , (object data,string value) => (data as _BoundApplicationDeveloper).Description = value), 
-            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundApplicationDeveloper).Path , (object data,string value) => (data as _BoundApplicationDeveloper).Path = value), 
+        [ 
+            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _BoundApplicationDeveloper)?.LocalName , 
+                (object data,string? value) => { if (data is _BoundApplicationDeveloper datad) { datad.LocalName = value; }}), 
+            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundApplicationDeveloper)?.Description , 
+                (object data,string? value) => { if (data is _BoundApplicationDeveloper datad) { datad.Description = value; }}), 
+            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundApplicationDeveloper)?.Path , 
+                (object data,string? value) => { if (data is _BoundApplicationDeveloper datad) { datad.Path = value; }}), 
             new GuiBoundPropertySelection ("ApplicationUpdate", "Update"), 
             new GuiBoundPropertySelection ("ApplicationDelete", "Delete")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -2172,17 +2201,19 @@ public partial class _BoundApplicationPkix : BoundApplication {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundApplicationPkix,
         () => new BoundApplicationPkix(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _BoundApplicationPkix).LocalName , (object data,string value) => (data as _BoundApplicationPkix).LocalName = value), 
-            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundApplicationPkix).Description , (object data,string value) => (data as _BoundApplicationPkix).Description = value), 
-            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundApplicationPkix).Path , (object data,string value) => (data as _BoundApplicationPkix).Path = value), 
+        [ 
+            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _BoundApplicationPkix)?.LocalName , 
+                (object data,string? value) => { if (data is _BoundApplicationPkix datad) { datad.LocalName = value; }}), 
+            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundApplicationPkix)?.Description , 
+                (object data,string? value) => { if (data is _BoundApplicationPkix datad) { datad.Description = value; }}), 
+            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundApplicationPkix)?.Path , 
+                (object data,string? value) => { if (data is _BoundApplicationPkix datad) { datad.Path = value; }}), 
             new GuiBoundPropertySelection ("ApplicationUpdate", "Update"), 
             new GuiBoundPropertySelection ("ApplicationDelete", "Delete")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -2219,17 +2250,19 @@ public partial class _BoundApplicationGroup : BoundApplication {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundApplicationGroup,
         () => new BoundApplicationGroup(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _BoundApplicationGroup).LocalName , (object data,string value) => (data as _BoundApplicationGroup).LocalName = value), 
-            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundApplicationGroup).Description , (object data,string value) => (data as _BoundApplicationGroup).Description = value), 
-            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundApplicationGroup).Path , (object data,string value) => (data as _BoundApplicationGroup).Path = value), 
+        [ 
+            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _BoundApplicationGroup)?.LocalName , 
+                (object data,string? value) => { if (data is _BoundApplicationGroup datad) { datad.LocalName = value; }}), 
+            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundApplicationGroup)?.Description , 
+                (object data,string? value) => { if (data is _BoundApplicationGroup datad) { datad.Description = value; }}), 
+            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundApplicationGroup)?.Path , 
+                (object data,string? value) => { if (data is _BoundApplicationGroup datad) { datad.Path = value; }}), 
             new GuiBoundPropertySelection ("ApplicationUpdate", "Update"), 
             new GuiBoundPropertySelection ("ApplicationDelete", "Delete")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -2266,17 +2299,19 @@ public partial class _BoundApplicationCallSign : BoundApplication {
     public static new GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundApplicationCallSign,
         () => new BoundApplicationCallSign(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _BoundApplicationCallSign).LocalName , (object data,string value) => (data as _BoundApplicationCallSign).LocalName = value), 
-            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundApplicationCallSign).Description , (object data,string value) => (data as _BoundApplicationCallSign).Description = value), 
-            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundApplicationCallSign).Path , (object data,string value) => (data as _BoundApplicationCallSign).Path = value), 
+        [ 
+            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _BoundApplicationCallSign)?.LocalName , 
+                (object data,string? value) => { if (data is _BoundApplicationCallSign datad) { datad.LocalName = value; }}), 
+            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundApplicationCallSign)?.Description , 
+                (object data,string? value) => { if (data is _BoundApplicationCallSign datad) { datad.Description = value; }}), 
+            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundApplicationCallSign)?.Path , 
+                (object data,string? value) => { if (data is _BoundApplicationCallSign datad) { datad.Path = value; }}), 
             new GuiBoundPropertySelection ("ApplicationUpdate", "Update"), 
             new GuiBoundPropertySelection ("ApplicationDelete", "Delete")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -2304,29 +2339,29 @@ public partial class BoundDevice : _BoundDevice {
 /// </summary>
 public partial class _BoundDevice : IParameter {
 
-    public object Bound { get; set; }
+    public object? Bound { get; set; }
 
 
     ///<summary></summary> 
-    public virtual IFieldIcon Type { get;} 
+    public virtual IFieldIcon? Type { get;} 
 
     ///<summary></summary> 
-    public virtual string DeviceType { get; set;} 
+    public virtual string? DeviceType { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Rights { get; set;} 
+    public virtual string? Rights { get; set;} 
 
     ///<summary></summary> 
-    public virtual string LocalName { get; set;} 
+    public virtual string? LocalName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Udf { get;} 
+    public virtual string? Udf { get;} 
 
     ///<summary></summary> 
-    public virtual string Path { get; set;} 
+    public virtual string? Path { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Description { get; set;} 
+    public virtual string? Description { get; set;} 
 
 
     ///<inheritdoc/>
@@ -2336,21 +2371,25 @@ public partial class _BoundDevice : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _BoundDevice,
         () => new BoundDevice(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundDevice).Type , null), 
-            new GuiBoundPropertyString ("DeviceType", "Platform", (object data) => (data as _BoundDevice).DeviceType , (object data,string value) => (data as _BoundDevice).DeviceType = value), 
-            new GuiBoundPropertyString ("Rights", "Rights", (object data) => (data as _BoundDevice).Rights , (object data,string value) => (data as _BoundDevice).Rights = value), 
-            new GuiBoundPropertyString ("LocalName", "Name", (object data) => (data as _BoundDevice).LocalName , (object data,string value) => (data as _BoundDevice).LocalName = value), 
-            new GuiBoundPropertyString ("Udf", "Udf", (object data) => (data as _BoundDevice).Udf , null), 
-            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundDevice).Path , (object data,string value) => (data as _BoundDevice).Path = value), 
-            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundDevice).Description , (object data,string value) => (data as _BoundDevice).Description = value), 
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundDevice)?.Type , null), 
+            new GuiBoundPropertyString ("DeviceType", "Platform", (object data) => (data as _BoundDevice)?.DeviceType , 
+                (object data,string? value) => { if (data is _BoundDevice datad) { datad.DeviceType = value; }}), 
+            new GuiBoundPropertyString ("Rights", "Rights", (object data) => (data as _BoundDevice)?.Rights , 
+                (object data,string? value) => { if (data is _BoundDevice datad) { datad.Rights = value; }}), 
+            new GuiBoundPropertyString ("LocalName", "Name", (object data) => (data as _BoundDevice)?.LocalName , 
+                (object data,string? value) => { if (data is _BoundDevice datad) { datad.LocalName = value; }}), 
+            new GuiBoundPropertyString ("Udf", "Udf", (object data) => (data as _BoundDevice)?.Udf , null), 
+            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundDevice)?.Path , 
+                (object data,string? value) => { if (data is _BoundDevice datad) { datad.Path = value; }}), 
+            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundDevice)?.Description , 
+                (object data,string? value) => { if (data is _BoundDevice datad) { datad.Description = value; }}), 
             new GuiBoundPropertySelection ("DeviceUpdate", "Update"), 
             new GuiBoundPropertySelection ("DeviceDelete", "Delete")
-
-            });
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -2382,7 +2421,7 @@ public partial class TestService : _TestService {
 public partial class _TestService : IParameter {
 
     ///<summary></summary> 
-    public virtual string ServiceAddress { get; set;} 
+    public virtual string? ServiceAddress { get; set;} 
 
 
     ///<inheritdoc/>
@@ -2392,13 +2431,13 @@ public partial class _TestService : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _TestService,
         () => new TestService(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("ServiceAddress", "Service address", (object data) => (data as _TestService).ServiceAddress , (object data,string value) => (data as _TestService).ServiceAddress = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("ServiceAddress", "Service address", (object data) => (data as _TestService)?.ServiceAddress , 
+                (object data,string? value) => { if (data is _TestService datad) { datad.ServiceAddress = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         // error on ServiceAddress
         if (!ServiceAddress.TryParseServiceAddress()
@@ -2441,16 +2480,16 @@ public partial class AccountCreate : _AccountCreate {
 public partial class _AccountCreate : IParameter {
 
     ///<summary></summary> 
-    public virtual string ServiceAddress { get; set;} 
+    public virtual string? ServiceAddress { get; set;} 
 
     ///<summary></summary> 
-    public virtual string ContactName { get; set;} 
+    public virtual string? ContactName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string LocalName { get; set;} 
+    public virtual string? LocalName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Coupon { get; set;} 
+    public virtual string? Coupon { get; set;} 
 
 
     ///<inheritdoc/>
@@ -2460,16 +2499,33 @@ public partial class _AccountCreate : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AccountCreate,
         () => new AccountCreate(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("ServiceAddress", "Account service address", (object data) => (data as _AccountCreate).ServiceAddress , (object data,string value) => (data as _AccountCreate).ServiceAddress = value), 
-            new GuiBoundPropertyString ("ContactName", "Contact Name  (optional)", (object data) => (data as _AccountCreate).ContactName , (object data,string value) => (data as _AccountCreate).ContactName = value), 
-            new GuiBoundPropertyString ("LocalName", "Friendly name (optional)", (object data) => (data as _AccountCreate).LocalName , (object data,string value) => (data as _AccountCreate).LocalName = value), 
-            new GuiBoundPropertyString ("Coupon", "Activation code (if provided)", (object data) => (data as _AccountCreate).Coupon , (object data,string value) => (data as _AccountCreate).Coupon = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("ServiceAddress", "Account service address", (object data) => (data as _AccountCreate)?.ServiceAddress , 
+                (object data,string? value) => { if (data is _AccountCreate datad) { datad.ServiceAddress = value; }}), 
+            new GuiBoundPropertyString ("ContactName", "Contact Name  (optional)", (object data) => (data as _AccountCreate)?.ContactName , 
+                (object data,string? value) => { if (data is _AccountCreate datad) { datad.ContactName = value; }}), 
+            new GuiBoundPropertyString ("LocalName", "Friendly name (optional)", (object data) => (data as _AccountCreate)?.LocalName , 
+                (object data,string? value) => { if (data is _AccountCreate datad) { datad.LocalName = value; }}), 
+            new GuiBoundPropertyString ("Coupon", "Activation code (if provided)", (object data) => (data as _AccountCreate)?.Coupon , 
+                (object data,string? value) => { if (data is _AccountCreate datad) { datad.Coupon = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
+
+        // error on ServiceAddress
+        if (!ServiceAddress.TryParseServiceAddress()
+            ) {
+            result ??=new GuiResultInvalid(this);
+            result.SetError (0, "Not a valid service address", "ServiceAddressNotValid");
+            }
+
+        // error on ServiceAddress
+        if (ServiceAddress == null || ServiceAddress?.Length == 0
+            ) {
+            result ??=new GuiResultInvalid(this);
+            result.SetError (0, "Service address cannot be blank", "ServiceAddressNotEmpty");
+            }
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -2498,13 +2554,13 @@ public partial class AccountRequestConnect : _AccountRequestConnect {
 public partial class _AccountRequestConnect : IParameter {
 
     ///<summary></summary> 
-    public virtual string ConnectionString { get; set;} 
+    public virtual string? ConnectionString { get; set;} 
 
     ///<summary></summary> 
-    public virtual string ConnectionPin { get; set;} 
+    public virtual string? ConnectionPin { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Rights { get; set;} 
+    public virtual string? Rights { get; set;} 
 
 
     ///<inheritdoc/>
@@ -2514,15 +2570,17 @@ public partial class _AccountRequestConnect : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AccountRequestConnect,
         () => new AccountRequestConnect(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("ConnectionString", "Account address", (object data) => (data as _AccountRequestConnect).ConnectionString , (object data,string value) => (data as _AccountRequestConnect).ConnectionString = value), 
-            new GuiBoundPropertyString ("ConnectionPin", "Activation code (if provided)", (object data) => (data as _AccountRequestConnect).ConnectionPin , (object data,string value) => (data as _AccountRequestConnect).ConnectionPin = value), 
-            new GuiBoundPropertyString ("Rights", "Requested rights", (object data) => (data as _AccountRequestConnect).Rights , (object data,string value) => (data as _AccountRequestConnect).Rights = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("ConnectionString", "Account address", (object data) => (data as _AccountRequestConnect)?.ConnectionString , 
+                (object data,string? value) => { if (data is _AccountRequestConnect datad) { datad.ConnectionString = value; }}), 
+            new GuiBoundPropertyString ("ConnectionPin", "Activation code (if provided)", (object data) => (data as _AccountRequestConnect)?.ConnectionPin , 
+                (object data,string? value) => { if (data is _AccountRequestConnect datad) { datad.ConnectionPin = value; }}), 
+            new GuiBoundPropertyString ("Rights", "Requested rights", (object data) => (data as _AccountRequestConnect)?.Rights , 
+                (object data,string? value) => { if (data is _AccountRequestConnect datad) { datad.Rights = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -2554,10 +2612,10 @@ public partial class _DeviceConnectQR : IParameter {
     public virtual GuiQR? QrCode { get; set;} 
 
     ///<summary></summary> 
-    public virtual string LocalName { get; set;} 
+    public virtual string? LocalName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Rights { get; set;} 
+    public virtual string? Rights { get; set;} 
 
 
     ///<inheritdoc/>
@@ -2567,15 +2625,17 @@ public partial class _DeviceConnectQR : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _DeviceConnectQR,
         () => new DeviceConnectQR(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyQRScan ("QrCode", "Contact QR", (object data) => (data as _DeviceConnectQR).QrCode , (object data,GuiQR? value) => (data as _DeviceConnectQR).QrCode = value), 
-            new GuiBoundPropertyString ("LocalName", "Friendly name (optional)", (object data) => (data as _DeviceConnectQR).LocalName , (object data,string value) => (data as _DeviceConnectQR).LocalName = value), 
-            new GuiBoundPropertyString ("Rights", "Assigned rights", (object data) => (data as _DeviceConnectQR).Rights , (object data,string value) => (data as _DeviceConnectQR).Rights = value)
-
-            });
+        [ 
+            new GuiBoundPropertyQRScan ("QrCode", "Contact QR", (object data) => (data as _DeviceConnectQR)?.QrCode , 
+                (object data,GuiQR? value) => { if (data is _DeviceConnectQR datad) { datad.QrCode = value; }}), 
+            new GuiBoundPropertyString ("LocalName", "Friendly name (optional)", (object data) => (data as _DeviceConnectQR)?.LocalName , 
+                (object data,string? value) => { if (data is _DeviceConnectQR datad) { datad.LocalName = value; }}), 
+            new GuiBoundPropertyString ("Rights", "Assigned rights", (object data) => (data as _DeviceConnectQR)?.Rights , 
+                (object data,string? value) => { if (data is _DeviceConnectQR datad) { datad.Rights = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -2604,37 +2664,37 @@ public partial class AccountRecover : _AccountRecover {
 public partial class _AccountRecover : IParameter {
 
     ///<summary></summary> 
-    public virtual string ServiceAddress { get; set;} 
+    public virtual string? ServiceAddress { get; set;} 
 
     ///<summary></summary> 
-    public virtual string LocalName { get; set;} 
+    public virtual string? LocalName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Coupon { get; set;} 
+    public virtual string? Coupon { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Share1 { get; set;} 
+    public virtual string? Share1 { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Share2 { get; set;} 
+    public virtual string? Share2 { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Share3 { get; set;} 
+    public virtual string? Share3 { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Share4 { get; set;} 
+    public virtual string? Share4 { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Share5 { get; set;} 
+    public virtual string? Share5 { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Share6 { get; set;} 
+    public virtual string? Share6 { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Share7 { get; set;} 
+    public virtual string? Share7 { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Share8 { get; set;} 
+    public virtual string? Share8 { get; set;} 
 
 
     ///<inheritdoc/>
@@ -2644,23 +2704,33 @@ public partial class _AccountRecover : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AccountRecover,
         () => new AccountRecover(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("ServiceAddress", "Account service address", (object data) => (data as _AccountRecover).ServiceAddress , (object data,string value) => (data as _AccountRecover).ServiceAddress = value), 
-            new GuiBoundPropertyString ("LocalName", "Friendly name (optional)", (object data) => (data as _AccountRecover).LocalName , (object data,string value) => (data as _AccountRecover).LocalName = value), 
-            new GuiBoundPropertyString ("Coupon", "Activation code (if provided)", (object data) => (data as _AccountRecover).Coupon , (object data,string value) => (data as _AccountRecover).Coupon = value), 
-            new GuiBoundPropertyString ("Share1", "Recovery share", (object data) => (data as _AccountRecover).Share1 , (object data,string value) => (data as _AccountRecover).Share1 = value), 
-            new GuiBoundPropertyString ("Share2", "Recovery share", (object data) => (data as _AccountRecover).Share2 , (object data,string value) => (data as _AccountRecover).Share2 = value), 
-            new GuiBoundPropertyString ("Share3", "Recovery share", (object data) => (data as _AccountRecover).Share3 , (object data,string value) => (data as _AccountRecover).Share3 = value), 
-            new GuiBoundPropertyString ("Share4", "Recovery share", (object data) => (data as _AccountRecover).Share4 , (object data,string value) => (data as _AccountRecover).Share4 = value), 
-            new GuiBoundPropertyString ("Share5", "Recovery share", (object data) => (data as _AccountRecover).Share5 , (object data,string value) => (data as _AccountRecover).Share5 = value), 
-            new GuiBoundPropertyString ("Share6", "Recovery share", (object data) => (data as _AccountRecover).Share6 , (object data,string value) => (data as _AccountRecover).Share6 = value), 
-            new GuiBoundPropertyString ("Share7", "Recovery share", (object data) => (data as _AccountRecover).Share7 , (object data,string value) => (data as _AccountRecover).Share7 = value), 
-            new GuiBoundPropertyString ("Share8", "Recovery share", (object data) => (data as _AccountRecover).Share8 , (object data,string value) => (data as _AccountRecover).Share8 = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("ServiceAddress", "Account service address", (object data) => (data as _AccountRecover)?.ServiceAddress , 
+                (object data,string? value) => { if (data is _AccountRecover datad) { datad.ServiceAddress = value; }}), 
+            new GuiBoundPropertyString ("LocalName", "Friendly name (optional)", (object data) => (data as _AccountRecover)?.LocalName , 
+                (object data,string? value) => { if (data is _AccountRecover datad) { datad.LocalName = value; }}), 
+            new GuiBoundPropertyString ("Coupon", "Activation code (if provided)", (object data) => (data as _AccountRecover)?.Coupon , 
+                (object data,string? value) => { if (data is _AccountRecover datad) { datad.Coupon = value; }}), 
+            new GuiBoundPropertyString ("Share1", "Recovery share", (object data) => (data as _AccountRecover)?.Share1 , 
+                (object data,string? value) => { if (data is _AccountRecover datad) { datad.Share1 = value; }}), 
+            new GuiBoundPropertyString ("Share2", "Recovery share", (object data) => (data as _AccountRecover)?.Share2 , 
+                (object data,string? value) => { if (data is _AccountRecover datad) { datad.Share2 = value; }}), 
+            new GuiBoundPropertyString ("Share3", "Recovery share", (object data) => (data as _AccountRecover)?.Share3 , 
+                (object data,string? value) => { if (data is _AccountRecover datad) { datad.Share3 = value; }}), 
+            new GuiBoundPropertyString ("Share4", "Recovery share", (object data) => (data as _AccountRecover)?.Share4 , 
+                (object data,string? value) => { if (data is _AccountRecover datad) { datad.Share4 = value; }}), 
+            new GuiBoundPropertyString ("Share5", "Recovery share", (object data) => (data as _AccountRecover)?.Share5 , 
+                (object data,string? value) => { if (data is _AccountRecover datad) { datad.Share5 = value; }}), 
+            new GuiBoundPropertyString ("Share6", "Recovery share", (object data) => (data as _AccountRecover)?.Share6 , 
+                (object data,string? value) => { if (data is _AccountRecover datad) { datad.Share6 = value; }}), 
+            new GuiBoundPropertyString ("Share7", "Recovery share", (object data) => (data as _AccountRecover)?.Share7 , 
+                (object data,string? value) => { if (data is _AccountRecover datad) { datad.Share7 = value; }}), 
+            new GuiBoundPropertyString ("Share8", "Recovery share", (object data) => (data as _AccountRecover)?.Share8 , 
+                (object data,string? value) => { if (data is _AccountRecover datad) { datad.Share8 = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -2699,7 +2769,7 @@ public partial class _AccountDelete : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -2728,7 +2798,7 @@ public partial class AccountSwitch : _AccountSwitch {
 public partial class _AccountSwitch : IParameter {
 
     ///<summary></summary> 
-    public virtual ISelectCollection ChooseUser { get; set;} 
+    public virtual ISelectCollection? ChooseUser { get; set;} 
 
 
     ///<inheritdoc/>
@@ -2738,13 +2808,12 @@ public partial class _AccountSwitch : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AccountSwitch,
         () => new AccountSwitch(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyChooser ("ChooseUser", "User", (object data) => (data as _AccountSwitch).ChooseUser , null)
-
-            });
+        [ 
+            new GuiBoundPropertyChooser ("ChooseUser", "User", (object data) => (data as _AccountSwitch)?.ChooseUser , null)
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -2786,14 +2855,15 @@ public partial class _AccountGenerateRecovery : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AccountGenerateRecovery,
         () => new AccountGenerateRecovery(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyInteger ("NumberShares", "Total number of shares", (object data) => (data as _AccountGenerateRecovery).NumberShares , (object data,int? value) => (data as _AccountGenerateRecovery).NumberShares = value), 
-            new GuiBoundPropertyInteger ("Quorum", "Quorum required for recovery", (object data) => (data as _AccountGenerateRecovery).Quorum , (object data,int? value) => (data as _AccountGenerateRecovery).Quorum = value)
-
-            });
+        [ 
+            new GuiBoundPropertyInteger ("NumberShares", "Total number of shares", (object data) => (data as _AccountGenerateRecovery)?.NumberShares , 
+                (object data,int? value) => { if (data is _AccountGenerateRecovery datad) { datad.NumberShares = value; }}), 
+            new GuiBoundPropertyInteger ("Quorum", "Quorum required for recovery", (object data) => (data as _AccountGenerateRecovery)?.Quorum , 
+                (object data,int? value) => { if (data is _AccountGenerateRecovery datad) { datad.Quorum = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -2822,10 +2892,10 @@ public partial class RequestConfirmation : _RequestConfirmation {
 public partial class _RequestConfirmation : IParameter {
 
     ///<summary></summary> 
-    public virtual string Recipient { get; set;} 
+    public virtual string? Recipient { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Message { get; set;} 
+    public virtual string? Message { get; set;} 
 
 
     ///<inheritdoc/>
@@ -2835,14 +2905,15 @@ public partial class _RequestConfirmation : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _RequestConfirmation,
         () => new RequestConfirmation(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("Recipient", "Address", (object data) => (data as _RequestConfirmation).Recipient , (object data,string value) => (data as _RequestConfirmation).Recipient = value), 
-            new GuiBoundPropertyString ("Message", "Message", (object data) => (data as _RequestConfirmation).Message , (object data,string value) => (data as _RequestConfirmation).Message = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("Recipient", "Address", (object data) => (data as _RequestConfirmation)?.Recipient , 
+                (object data,string? value) => { if (data is _RequestConfirmation datad) { datad.Recipient = value; }}), 
+            new GuiBoundPropertyString ("Message", "Message", (object data) => (data as _RequestConfirmation)?.Message , 
+                (object data,string? value) => { if (data is _RequestConfirmation datad) { datad.Message = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -2871,13 +2942,13 @@ public partial class CreateMail : _CreateMail {
 public partial class _CreateMail : IParameter {
 
     ///<summary></summary> 
-    public virtual string Recipient { get; set;} 
+    public virtual string? Recipient { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Subject { get; set;} 
+    public virtual string? Subject { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Message { get; set;} 
+    public virtual string? Message { get; set;} 
 
 
     ///<inheritdoc/>
@@ -2887,15 +2958,17 @@ public partial class _CreateMail : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _CreateMail,
         () => new CreateMail(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("Recipient", "Address", (object data) => (data as _CreateMail).Recipient , (object data,string value) => (data as _CreateMail).Recipient = value), 
-            new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _CreateMail).Subject , (object data,string value) => (data as _CreateMail).Subject = value), 
-            new GuiBoundTextArea ("Message", "Message", (object data) => (data as _CreateMail).Message , (object data,string value) => (data as _CreateMail).Message = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("Recipient", "Address", (object data) => (data as _CreateMail)?.Recipient , 
+                (object data,string? value) => { if (data is _CreateMail datad) { datad.Recipient = value; }}), 
+            new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _CreateMail)?.Subject , 
+                (object data,string? value) => { if (data is _CreateMail datad) { datad.Subject = value; }}), 
+            new GuiBoundTextArea ("Message", "Message", (object data) => (data as _CreateMail)?.Message , 
+                (object data,string? value) => { if (data is _CreateMail datad) { datad.Message = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -2934,7 +3007,7 @@ public partial class _CreateChat : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -2973,7 +3046,7 @@ public partial class _StartVoice : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -3012,7 +3085,7 @@ public partial class _StartVideo : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -3051,7 +3124,7 @@ public partial class _AddPerson : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -3090,7 +3163,7 @@ public partial class _AddOrganization : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -3129,7 +3202,7 @@ public partial class _AddLocation : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -3158,10 +3231,10 @@ public partial class RequestContact : _RequestContact {
 public partial class _RequestContact : IParameter {
 
     ///<summary></summary> 
-    public virtual string Recipient { get; set;} 
+    public virtual string? Recipient { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Message { get; set;} 
+    public virtual string? Message { get; set;} 
 
 
     ///<inheritdoc/>
@@ -3171,14 +3244,15 @@ public partial class _RequestContact : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _RequestContact,
         () => new RequestContact(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("Recipient", "Address", (object data) => (data as _RequestContact).Recipient , (object data,string value) => (data as _RequestContact).Recipient = value), 
-            new GuiBoundPropertyString ("Message", "Message", (object data) => (data as _RequestContact).Message , (object data,string value) => (data as _RequestContact).Message = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("Recipient", "Address", (object data) => (data as _RequestContact)?.Recipient , 
+                (object data,string? value) => { if (data is _RequestContact datad) { datad.Recipient = value; }}), 
+            new GuiBoundPropertyString ("Message", "Message", (object data) => (data as _RequestContact)?.Message , 
+                (object data,string? value) => { if (data is _RequestContact datad) { datad.Message = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -3217,13 +3291,13 @@ public partial class _QrContact : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _QrContact,
         () => new QrContact(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyQRScan ("QrCode", "Contact QR", (object data) => (data as _QrContact).QrCode , (object data,GuiQR? value) => (data as _QrContact).QrCode = value)
-
-            });
+        [ 
+            new GuiBoundPropertyQRScan ("QrCode", "Contact QR", (object data) => (data as _QrContact)?.QrCode , 
+                (object data,GuiQR? value) => { if (data is _QrContact datad) { datad.QrCode = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -3252,16 +3326,16 @@ public partial class UploadDocument : _UploadDocument {
 public partial class _UploadDocument : IParameter {
 
     ///<summary></summary> 
-    public virtual string Title { get; set;} 
+    public virtual string? Title { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Version { get; set;} 
+    public virtual string? Version { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Path { get; set;} 
+    public virtual string? Path { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Description { get; set;} 
+    public virtual string? Description { get; set;} 
 
 
     ///<inheritdoc/>
@@ -3271,16 +3345,19 @@ public partial class _UploadDocument : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _UploadDocument,
         () => new UploadDocument(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("Title", "Title", (object data) => (data as _UploadDocument).Title , (object data,string value) => (data as _UploadDocument).Title = value), 
-            new GuiBoundPropertyString ("Version", "Version", (object data) => (data as _UploadDocument).Version , (object data,string value) => (data as _UploadDocument).Version = value), 
-            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _UploadDocument).Path , (object data,string value) => (data as _UploadDocument).Path = value), 
-            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _UploadDocument).Description , (object data,string value) => (data as _UploadDocument).Description = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("Title", "Title", (object data) => (data as _UploadDocument)?.Title , 
+                (object data,string? value) => { if (data is _UploadDocument datad) { datad.Title = value; }}), 
+            new GuiBoundPropertyString ("Version", "Version", (object data) => (data as _UploadDocument)?.Version , 
+                (object data,string? value) => { if (data is _UploadDocument datad) { datad.Version = value; }}), 
+            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _UploadDocument)?.Path , 
+                (object data,string? value) => { if (data is _UploadDocument datad) { datad.Path = value; }}), 
+            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _UploadDocument)?.Description , 
+                (object data,string? value) => { if (data is _UploadDocument datad) { datad.Description = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -3309,13 +3386,13 @@ public partial class AddFeed : _AddFeed {
 public partial class _AddFeed : IParameter {
 
     ///<summary></summary> 
-    public virtual string Title { get; set;} 
+    public virtual string? Title { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Uri { get; set;} 
+    public virtual string? Uri { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Path { get; set;} 
+    public virtual string? Path { get; set;} 
 
 
     ///<inheritdoc/>
@@ -3325,15 +3402,17 @@ public partial class _AddFeed : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AddFeed,
         () => new AddFeed(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("Title", "Title", (object data) => (data as _AddFeed).Title , (object data,string value) => (data as _AddFeed).Title = value), 
-            new GuiBoundPropertyString ("Uri", "Uri", (object data) => (data as _AddFeed).Uri , (object data,string value) => (data as _AddFeed).Uri = value), 
-            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _AddFeed).Path , (object data,string value) => (data as _AddFeed).Path = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("Title", "Title", (object data) => (data as _AddFeed)?.Title , 
+                (object data,string? value) => { if (data is _AddFeed datad) { datad.Title = value; }}), 
+            new GuiBoundPropertyString ("Uri", "Uri", (object data) => (data as _AddFeed)?.Uri , 
+                (object data,string? value) => { if (data is _AddFeed datad) { datad.Uri = value; }}), 
+            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _AddFeed)?.Path , 
+                (object data,string? value) => { if (data is _AddFeed datad) { datad.Path = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -3362,10 +3441,10 @@ public partial class AddGroup : _AddGroup {
 public partial class _AddGroup : IParameter {
 
     ///<summary></summary> 
-    public virtual string GroupName { get; set;} 
+    public virtual string? GroupName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string GroupAddress { get; set;} 
+    public virtual string? GroupAddress { get; set;} 
 
 
     ///<inheritdoc/>
@@ -3375,14 +3454,15 @@ public partial class _AddGroup : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AddGroup,
         () => new AddGroup(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("GroupName", "Name", (object data) => (data as _AddGroup).GroupName , (object data,string value) => (data as _AddGroup).GroupName = value), 
-            new GuiBoundPropertyString ("GroupAddress", "Address", (object data) => (data as _AddGroup).GroupAddress , (object data,string value) => (data as _AddGroup).GroupAddress = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("GroupName", "Name", (object data) => (data as _AddGroup)?.GroupName , 
+                (object data,string? value) => { if (data is _AddGroup datad) { datad.GroupName = value; }}), 
+            new GuiBoundPropertyString ("GroupAddress", "Address", (object data) => (data as _AddGroup)?.GroupAddress , 
+                (object data,string? value) => { if (data is _AddGroup datad) { datad.GroupAddress = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -3411,10 +3491,10 @@ public partial class GroupInvite : _GroupInvite {
 public partial class _GroupInvite : IParameter {
 
     ///<summary></summary> 
-    public virtual string Address { get; set;} 
+    public virtual string? Address { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Message { get; set;} 
+    public virtual string? Message { get; set;} 
 
 
     ///<inheritdoc/>
@@ -3424,14 +3504,15 @@ public partial class _GroupInvite : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _GroupInvite,
         () => new GroupInvite(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("Address", "Member Address", (object data) => (data as _GroupInvite).Address , (object data,string value) => (data as _GroupInvite).Address = value), 
-            new GuiBoundPropertyString ("Message", "Message", (object data) => (data as _GroupInvite).Message , (object data,string value) => (data as _GroupInvite).Message = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("Address", "Member Address", (object data) => (data as _GroupInvite)?.Address , 
+                (object data,string? value) => { if (data is _GroupInvite datad) { datad.Address = value; }}), 
+            new GuiBoundPropertyString ("Message", "Message", (object data) => (data as _GroupInvite)?.Message , 
+                (object data,string? value) => { if (data is _GroupInvite datad) { datad.Message = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -3460,16 +3541,16 @@ public partial class AddPassword : _AddPassword {
 public partial class _AddPassword : IParameter {
 
     ///<summary></summary> 
-    public virtual string Protocol { get; set;} 
+    public virtual string? Protocol { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Service { get; set;} 
+    public virtual string? Service { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Username { get; set;} 
+    public virtual string? Username { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Password { get; set;} 
+    public virtual string? Password { get; set;} 
 
 
     ///<inheritdoc/>
@@ -3479,16 +3560,19 @@ public partial class _AddPassword : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AddPassword,
         () => new AddPassword(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("Protocol", "Protocol", (object data) => (data as _AddPassword).Protocol , (object data,string value) => (data as _AddPassword).Protocol = value), 
-            new GuiBoundPropertyString ("Service", "Service", (object data) => (data as _AddPassword).Service , (object data,string value) => (data as _AddPassword).Service = value), 
-            new GuiBoundPropertyString ("Username", "Username", (object data) => (data as _AddPassword).Username , (object data,string value) => (data as _AddPassword).Username = value), 
-            new GuiBoundPropertyString ("Password", "Password", (object data) => (data as _AddPassword).Password , (object data,string value) => (data as _AddPassword).Password = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("Protocol", "Protocol", (object data) => (data as _AddPassword)?.Protocol , 
+                (object data,string? value) => { if (data is _AddPassword datad) { datad.Protocol = value; }}), 
+            new GuiBoundPropertyString ("Service", "Service", (object data) => (data as _AddPassword)?.Service , 
+                (object data,string? value) => { if (data is _AddPassword datad) { datad.Service = value; }}), 
+            new GuiBoundPropertyString ("Username", "Username", (object data) => (data as _AddPassword)?.Username , 
+                (object data,string? value) => { if (data is _AddPassword datad) { datad.Username = value; }}), 
+            new GuiBoundPropertyString ("Password", "Password", (object data) => (data as _AddPassword)?.Password , 
+                (object data,string? value) => { if (data is _AddPassword datad) { datad.Password = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -3527,7 +3611,7 @@ public partial class _AddPasskey : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -3556,13 +3640,13 @@ public partial class AddTask : _AddTask {
 public partial class _AddTask : IParameter {
 
     ///<summary></summary> 
-    public virtual string Title { get; set;} 
+    public virtual string? Title { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Path { get; set;} 
+    public virtual string? Path { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Description { get; set;} 
+    public virtual string? Description { get; set;} 
 
 
     ///<inheritdoc/>
@@ -3572,15 +3656,17 @@ public partial class _AddTask : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AddTask,
         () => new AddTask(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("Title", "Title", (object data) => (data as _AddTask).Title , (object data,string value) => (data as _AddTask).Title = value), 
-            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _AddTask).Path , (object data,string value) => (data as _AddTask).Path = value), 
-            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _AddTask).Description , (object data,string value) => (data as _AddTask).Description = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("Title", "Title", (object data) => (data as _AddTask)?.Title , 
+                (object data,string? value) => { if (data is _AddTask datad) { datad.Title = value; }}), 
+            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _AddTask)?.Path , 
+                (object data,string? value) => { if (data is _AddTask datad) { datad.Path = value; }}), 
+            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _AddTask)?.Description , 
+                (object data,string? value) => { if (data is _AddTask datad) { datad.Description = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -3609,16 +3695,16 @@ public partial class AddBookmark : _AddBookmark {
 public partial class _AddBookmark : IParameter {
 
     ///<summary></summary> 
-    public virtual string Title { get; set;} 
+    public virtual string? Title { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Uri { get; set;} 
+    public virtual string? Uri { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Path { get; set;} 
+    public virtual string? Path { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Description { get; set;} 
+    public virtual string? Description { get; set;} 
 
 
     ///<inheritdoc/>
@@ -3628,16 +3714,19 @@ public partial class _AddBookmark : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AddBookmark,
         () => new AddBookmark(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("Title", "Title", (object data) => (data as _AddBookmark).Title , (object data,string value) => (data as _AddBookmark).Title = value), 
-            new GuiBoundPropertyString ("Uri", "Uri", (object data) => (data as _AddBookmark).Uri , (object data,string value) => (data as _AddBookmark).Uri = value), 
-            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _AddBookmark).Path , (object data,string value) => (data as _AddBookmark).Path = value), 
-            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _AddBookmark).Description , (object data,string value) => (data as _AddBookmark).Description = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("Title", "Title", (object data) => (data as _AddBookmark)?.Title , 
+                (object data,string? value) => { if (data is _AddBookmark datad) { datad.Title = value; }}), 
+            new GuiBoundPropertyString ("Uri", "Uri", (object data) => (data as _AddBookmark)?.Uri , 
+                (object data,string? value) => { if (data is _AddBookmark datad) { datad.Uri = value; }}), 
+            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _AddBookmark)?.Path , 
+                (object data,string? value) => { if (data is _AddBookmark datad) { datad.Path = value; }}), 
+            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _AddBookmark)?.Description , 
+                (object data,string? value) => { if (data is _AddBookmark datad) { datad.Description = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -3666,22 +3755,22 @@ public partial class AddMailAccount : _AddMailAccount {
 public partial class _AddMailAccount : IParameter {
 
     ///<summary></summary> 
-    public virtual string AccountAddress { get; set;} 
+    public virtual string? AccountAddress { get; set;} 
 
     ///<summary></summary> 
-    public virtual string LocalName { get; set;} 
+    public virtual string? LocalName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Description { get; set;} 
+    public virtual string? Description { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Path { get; set;} 
+    public virtual string? Path { get; set;} 
 
     ///<summary></summary> 
-    public virtual string InboundConnect { get; set;} 
+    public virtual string? InboundConnect { get; set;} 
 
     ///<summary></summary> 
-    public virtual string OutboundConnect { get; set;} 
+    public virtual string? OutboundConnect { get; set;} 
 
 
     ///<inheritdoc/>
@@ -3691,18 +3780,23 @@ public partial class _AddMailAccount : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AddMailAccount,
         () => new AddMailAccount(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("AccountAddress", "Address", (object data) => (data as _AddMailAccount).AccountAddress , (object data,string value) => (data as _AddMailAccount).AccountAddress = value), 
-            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _AddMailAccount).LocalName , (object data,string value) => (data as _AddMailAccount).LocalName = value), 
-            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _AddMailAccount).Description , (object data,string value) => (data as _AddMailAccount).Description = value), 
-            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _AddMailAccount).Path , (object data,string value) => (data as _AddMailAccount).Path = value), 
-            new GuiBoundPropertyString ("InboundConnect", "Inbound Service", (object data) => (data as _AddMailAccount).InboundConnect , (object data,string value) => (data as _AddMailAccount).InboundConnect = value), 
-            new GuiBoundPropertyString ("OutboundConnect", "Outbound Service", (object data) => (data as _AddMailAccount).OutboundConnect , (object data,string value) => (data as _AddMailAccount).OutboundConnect = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("AccountAddress", "Address", (object data) => (data as _AddMailAccount)?.AccountAddress , 
+                (object data,string? value) => { if (data is _AddMailAccount datad) { datad.AccountAddress = value; }}), 
+            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _AddMailAccount)?.LocalName , 
+                (object data,string? value) => { if (data is _AddMailAccount datad) { datad.LocalName = value; }}), 
+            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _AddMailAccount)?.Description , 
+                (object data,string? value) => { if (data is _AddMailAccount datad) { datad.Description = value; }}), 
+            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _AddMailAccount)?.Path , 
+                (object data,string? value) => { if (data is _AddMailAccount datad) { datad.Path = value; }}), 
+            new GuiBoundPropertyString ("InboundConnect", "Inbound Service", (object data) => (data as _AddMailAccount)?.InboundConnect , 
+                (object data,string? value) => { if (data is _AddMailAccount datad) { datad.InboundConnect = value; }}), 
+            new GuiBoundPropertyString ("OutboundConnect", "Outbound Service", (object data) => (data as _AddMailAccount)?.OutboundConnect , 
+                (object data,string? value) => { if (data is _AddMailAccount datad) { datad.OutboundConnect = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -3731,16 +3825,16 @@ public partial class AddSshAccount : _AddSshAccount {
 public partial class _AddSshAccount : IParameter {
 
     ///<summary></summary> 
-    public virtual string Algorithm { get; set;} 
+    public virtual string? Algorithm { get; set;} 
 
     ///<summary></summary> 
-    public virtual string LocalName { get; set;} 
+    public virtual string? LocalName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Description { get; set;} 
+    public virtual string? Description { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Path { get; set;} 
+    public virtual string? Path { get; set;} 
 
 
     ///<inheritdoc/>
@@ -3750,16 +3844,19 @@ public partial class _AddSshAccount : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AddSshAccount,
         () => new AddSshAccount(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("Algorithm", "Algorithm", (object data) => (data as _AddSshAccount).Algorithm , (object data,string value) => (data as _AddSshAccount).Algorithm = value), 
-            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _AddSshAccount).LocalName , (object data,string value) => (data as _AddSshAccount).LocalName = value), 
-            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _AddSshAccount).Description , (object data,string value) => (data as _AddSshAccount).Description = value), 
-            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _AddSshAccount).Path , (object data,string value) => (data as _AddSshAccount).Path = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("Algorithm", "Algorithm", (object data) => (data as _AddSshAccount)?.Algorithm , 
+                (object data,string? value) => { if (data is _AddSshAccount datad) { datad.Algorithm = value; }}), 
+            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _AddSshAccount)?.LocalName , 
+                (object data,string? value) => { if (data is _AddSshAccount datad) { datad.LocalName = value; }}), 
+            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _AddSshAccount)?.Description , 
+                (object data,string? value) => { if (data is _AddSshAccount datad) { datad.Description = value; }}), 
+            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _AddSshAccount)?.Path , 
+                (object data,string? value) => { if (data is _AddSshAccount datad) { datad.Path = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -3788,16 +3885,16 @@ public partial class AddGitAccount : _AddGitAccount {
 public partial class _AddGitAccount : IParameter {
 
     ///<summary></summary> 
-    public virtual string Algorithm { get; set;} 
+    public virtual string? Algorithm { get; set;} 
 
     ///<summary></summary> 
-    public virtual string LocalName { get; set;} 
+    public virtual string? LocalName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Description { get; set;} 
+    public virtual string? Description { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Path { get; set;} 
+    public virtual string? Path { get; set;} 
 
 
     ///<inheritdoc/>
@@ -3807,16 +3904,19 @@ public partial class _AddGitAccount : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AddGitAccount,
         () => new AddGitAccount(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("Algorithm", "Algorithm", (object data) => (data as _AddGitAccount).Algorithm , (object data,string value) => (data as _AddGitAccount).Algorithm = value), 
-            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _AddGitAccount).LocalName , (object data,string value) => (data as _AddGitAccount).LocalName = value), 
-            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _AddGitAccount).Description , (object data,string value) => (data as _AddGitAccount).Description = value), 
-            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _AddGitAccount).Path , (object data,string value) => (data as _AddGitAccount).Path = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("Algorithm", "Algorithm", (object data) => (data as _AddGitAccount)?.Algorithm , 
+                (object data,string? value) => { if (data is _AddGitAccount datad) { datad.Algorithm = value; }}), 
+            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _AddGitAccount)?.LocalName , 
+                (object data,string? value) => { if (data is _AddGitAccount datad) { datad.LocalName = value; }}), 
+            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _AddGitAccount)?.Description , 
+                (object data,string? value) => { if (data is _AddGitAccount datad) { datad.Description = value; }}), 
+            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _AddGitAccount)?.Path , 
+                (object data,string? value) => { if (data is _AddGitAccount datad) { datad.Path = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -3845,16 +3945,16 @@ public partial class AddCodeSigningKey : _AddCodeSigningKey {
 public partial class _AddCodeSigningKey : IParameter {
 
     ///<summary></summary> 
-    public virtual string Algorithm { get; set;} 
+    public virtual string? Algorithm { get; set;} 
 
     ///<summary></summary> 
-    public virtual string LocalName { get; set;} 
+    public virtual string? LocalName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Description { get; set;} 
+    public virtual string? Description { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Path { get; set;} 
+    public virtual string? Path { get; set;} 
 
 
     ///<inheritdoc/>
@@ -3864,16 +3964,19 @@ public partial class _AddCodeSigningKey : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AddCodeSigningKey,
         () => new AddCodeSigningKey(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("Algorithm", "Algorithm", (object data) => (data as _AddCodeSigningKey).Algorithm , (object data,string value) => (data as _AddCodeSigningKey).Algorithm = value), 
-            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _AddCodeSigningKey).LocalName , (object data,string value) => (data as _AddCodeSigningKey).LocalName = value), 
-            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _AddCodeSigningKey).Description , (object data,string value) => (data as _AddCodeSigningKey).Description = value), 
-            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _AddCodeSigningKey).Path , (object data,string value) => (data as _AddCodeSigningKey).Path = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("Algorithm", "Algorithm", (object data) => (data as _AddCodeSigningKey)?.Algorithm , 
+                (object data,string? value) => { if (data is _AddCodeSigningKey datad) { datad.Algorithm = value; }}), 
+            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _AddCodeSigningKey)?.LocalName , 
+                (object data,string? value) => { if (data is _AddCodeSigningKey datad) { datad.LocalName = value; }}), 
+            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _AddCodeSigningKey)?.Description , 
+                (object data,string? value) => { if (data is _AddCodeSigningKey datad) { datad.Description = value; }}), 
+            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _AddCodeSigningKey)?.Path , 
+                (object data,string? value) => { if (data is _AddCodeSigningKey datad) { datad.Path = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -3902,7 +4005,7 @@ public partial class AccountGetPin : _AccountGetPin {
 public partial class _AccountGetPin : IParameter {
 
     ///<summary></summary> 
-    public virtual string Rights { get; set;} 
+    public virtual string? Rights { get; set;} 
 
     ///<summary></summary> 
     public virtual int? Security { get; set;} 
@@ -3918,15 +4021,17 @@ public partial class _AccountGetPin : IParameter {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is _AccountGetPin,
         () => new AccountGetPin(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("Rights", "Assigned rights", (object data) => (data as _AccountGetPin).Rights , (object data,string value) => (data as _AccountGetPin).Rights = value), 
-            new GuiBoundPropertyInteger ("Security", "Security level", (object data) => (data as _AccountGetPin).Security , (object data,int? value) => (data as _AccountGetPin).Security = value), 
-            new GuiBoundPropertyInteger ("Expire", "Expiry in hours", (object data) => (data as _AccountGetPin).Expire , (object data,int? value) => (data as _AccountGetPin).Expire = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("Rights", "Assigned rights", (object data) => (data as _AccountGetPin)?.Rights , 
+                (object data,string? value) => { if (data is _AccountGetPin datad) { datad.Rights = value; }}), 
+            new GuiBoundPropertyInteger ("Security", "Security level", (object data) => (data as _AccountGetPin)?.Security , 
+                (object data,int? value) => { if (data is _AccountGetPin datad) { datad.Security = value; }}), 
+            new GuiBoundPropertyInteger ("Expire", "Expiry in hours", (object data) => (data as _AccountGetPin)?.Expire , 
+                (object data,int? value) => { if (data is _AccountGetPin datad) { datad.Expire = value; }})
+            ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -3968,7 +4073,7 @@ public partial class _AccountSelect : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4007,7 +4112,7 @@ public partial class _ConfirmationAccept : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4046,7 +4151,7 @@ public partial class _ConfirmationReject : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4085,7 +4190,7 @@ public partial class _ContactAccept : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4124,7 +4229,7 @@ public partial class _ContactReject : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4163,7 +4268,7 @@ public partial class _ConnectAccept : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4202,7 +4307,7 @@ public partial class _ConnectReject : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4241,7 +4346,7 @@ public partial class _GroupAccept : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4280,7 +4385,7 @@ public partial class _GroupReject : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4319,7 +4424,7 @@ public partial class _TaskAccept : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4358,7 +4463,7 @@ public partial class _TaskReject : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4397,7 +4502,7 @@ public partial class _ContactUpdate : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4436,7 +4541,7 @@ public partial class _ContactDelete : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4475,7 +4580,7 @@ public partial class _ContactInteractMesh : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4514,7 +4619,7 @@ public partial class _ContactInteractAddress : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4553,7 +4658,7 @@ public partial class _DocumentUpdate : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4592,7 +4697,7 @@ public partial class _DocumentExport : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4631,7 +4736,7 @@ public partial class _DocumentSend : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4670,7 +4775,7 @@ public partial class _DocumentDelete : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4709,7 +4814,7 @@ public partial class _MemberDelete : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4748,7 +4853,7 @@ public partial class _MemberReInvite : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4787,7 +4892,7 @@ public partial class _CredentialUpdate : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4826,7 +4931,7 @@ public partial class _CredentialDelete : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4865,7 +4970,7 @@ public partial class _TaskUpdate : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4904,7 +5009,7 @@ public partial class _TaskDelete : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4943,7 +5048,7 @@ public partial class _BookmarkUpdate : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -4982,7 +5087,7 @@ public partial class _BookmarkDelete : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -5021,7 +5126,7 @@ public partial class _ApplicationUpdate : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -5060,7 +5165,7 @@ public partial class _ApplicationDelete : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -5099,7 +5204,7 @@ public partial class _DeviceUpdate : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -5138,7 +5243,7 @@ public partial class _DeviceDelete : IParameter {
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -5180,10 +5285,10 @@ public partial record _SuccessGroupCreate : IResult {
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Report;
 
     ///<summary></summary> 
-    public virtual string GroupName { get; set;} 
+    public virtual string? GroupName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string GroupAddress { get; set;} 
+    public virtual string? GroupAddress { get; set;} 
 
 
     ///<inheritdoc/>
@@ -5193,14 +5298,15 @@ public partial record _SuccessGroupCreate : IResult {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is SuccessGroupCreate,
         () => new SuccessGroupCreate(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("GroupName", "Name", (object data) => (data as SuccessGroupCreate).GroupName , (object data,string value) => (data as SuccessGroupCreate).GroupName = value), 
-            new GuiBoundPropertyString ("GroupAddress", "Address", (object data) => (data as SuccessGroupCreate).GroupAddress , (object data,string value) => (data as SuccessGroupCreate).GroupAddress = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("GroupName", "Name", (object data) => (data as SuccessGroupCreate)?.GroupName , 
+                (object data,string? value) => { if (data is SuccessGroupCreate datad) { datad.GroupName = value; }}), 
+            new GuiBoundPropertyString ("GroupAddress", "Address", (object data) => (data as SuccessGroupCreate)?.GroupAddress , 
+                (object data,string? value) => { if (data is SuccessGroupCreate datad) { datad.GroupAddress = value; }})
+            ]);
 
     ///<inheritdoc/>
-    public object[] GetValues() => new [] { 
+    public object?[] GetValues() => new [] { 
         GroupName,
         GroupAddress};
     }
@@ -5229,13 +5335,13 @@ public partial record _ReportPinValue : IResult {
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Report;
 
     ///<summary></summary> 
-    public virtual string Pin { get; set;} 
+    public virtual string? Pin { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Expiry { get; set;} 
+    public virtual string? Expiry { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Rights { get; set;} 
+    public virtual string? Rights { get; set;} 
 
 
     ///<inheritdoc/>
@@ -5245,15 +5351,17 @@ public partial record _ReportPinValue : IResult {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is ReportPinValue,
         () => new ReportPinValue(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("Pin", "Pin", (object data) => (data as ReportPinValue).Pin , (object data,string value) => (data as ReportPinValue).Pin = value), 
-            new GuiBoundPropertyString ("Expiry", "Expires", (object data) => (data as ReportPinValue).Expiry , (object data,string value) => (data as ReportPinValue).Expiry = value), 
-            new GuiBoundPropertyString ("Rights", "Rights", (object data) => (data as ReportPinValue).Rights , (object data,string value) => (data as ReportPinValue).Rights = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("Pin", "Pin", (object data) => (data as ReportPinValue)?.Pin , 
+                (object data,string? value) => { if (data is ReportPinValue datad) { datad.Pin = value; }}), 
+            new GuiBoundPropertyString ("Expiry", "Expires", (object data) => (data as ReportPinValue)?.Expiry , 
+                (object data,string? value) => { if (data is ReportPinValue datad) { datad.Expiry = value; }}), 
+            new GuiBoundPropertyString ("Rights", "Rights", (object data) => (data as ReportPinValue)?.Rights , 
+                (object data,string? value) => { if (data is ReportPinValue datad) { datad.Rights = value; }})
+            ]);
 
     ///<inheritdoc/>
-    public object[] GetValues() => new [] { 
+    public object?[] GetValues() => new [] { 
         Pin,
         Expiry,
         Rights};
@@ -5283,19 +5391,19 @@ public partial record _ReportHost : IResult {
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Report;
 
     ///<summary></summary> 
-    public virtual string ServiceAddress { get; set;} 
+    public virtual string? ServiceAddress { get; set;} 
 
     ///<summary></summary> 
-    public virtual string ServiceCallsign { get; set;} 
+    public virtual string? ServiceCallsign { get; set;} 
 
     ///<summary></summary> 
-    public virtual string ServiceDns { get; set;} 
+    public virtual string? ServiceDns { get; set;} 
 
     ///<summary></summary> 
-    public virtual string ServiceUdf { get; set;} 
+    public virtual string? ServiceUdf { get; set;} 
 
     ///<summary></summary> 
-    public virtual string HostUdf { get; set;} 
+    public virtual string? HostUdf { get; set;} 
 
 
     ///<inheritdoc/>
@@ -5305,16 +5413,19 @@ public partial record _ReportHost : IResult {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is ReportHost,
         () => new ReportHost(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("ServiceCallsign", "Callsign", (object data) => (data as ReportHost).ServiceCallsign , (object data,string value) => (data as ReportHost).ServiceCallsign = value), 
-            new GuiBoundPropertyString ("ServiceDns", "DNS", (object data) => (data as ReportHost).ServiceDns , (object data,string value) => (data as ReportHost).ServiceDns = value), 
-            new GuiBoundPropertyString ("ServiceUdf", "Service fingerprint", (object data) => (data as ReportHost).ServiceUdf , (object data,string value) => (data as ReportHost).ServiceUdf = value), 
-            new GuiBoundPropertyString ("HostUdf", "Host fingerprint", (object data) => (data as ReportHost).HostUdf , (object data,string value) => (data as ReportHost).HostUdf = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("ServiceCallsign", "Callsign", (object data) => (data as ReportHost)?.ServiceCallsign , 
+                (object data,string? value) => { if (data is ReportHost datad) { datad.ServiceCallsign = value; }}), 
+            new GuiBoundPropertyString ("ServiceDns", "DNS", (object data) => (data as ReportHost)?.ServiceDns , 
+                (object data,string? value) => { if (data is ReportHost datad) { datad.ServiceDns = value; }}), 
+            new GuiBoundPropertyString ("ServiceUdf", "Service fingerprint", (object data) => (data as ReportHost)?.ServiceUdf , 
+                (object data,string? value) => { if (data is ReportHost datad) { datad.ServiceUdf = value; }}), 
+            new GuiBoundPropertyString ("HostUdf", "Host fingerprint", (object data) => (data as ReportHost)?.HostUdf , 
+                (object data,string? value) => { if (data is ReportHost datad) { datad.HostUdf = value; }})
+            ]);
 
     ///<inheritdoc/>
-    public object[] GetValues() => new [] { 
+    public object?[] GetValues() => new [] { 
         ServiceAddress,
         ServiceCallsign,
         ServiceDns,
@@ -5346,19 +5457,19 @@ public partial record _ReportAccountCreate : IResult {
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Report;
 
     ///<summary></summary> 
-    public virtual string ServiceName { get; set;} 
+    public virtual string? ServiceName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string LocalName { get; set;} 
+    public virtual string? LocalName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string ServiceAddress { get; set;} 
+    public virtual string? ServiceAddress { get; set;} 
 
     ///<summary></summary> 
-    public virtual string ProfileUdf { get; set;} 
+    public virtual string? ProfileUdf { get; set;} 
 
     ///<summary></summary> 
-    public virtual string ServiceUdf { get; set;} 
+    public virtual string? ServiceUdf { get; set;} 
 
 
     ///<inheritdoc/>
@@ -5368,16 +5479,19 @@ public partial record _ReportAccountCreate : IResult {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is ReportAccountCreate,
         () => new ReportAccountCreate(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as ReportAccountCreate).LocalName , (object data,string value) => (data as ReportAccountCreate).LocalName = value), 
-            new GuiBoundPropertyString ("ServiceAddress", "DNS", (object data) => (data as ReportAccountCreate).ServiceAddress , (object data,string value) => (data as ReportAccountCreate).ServiceAddress = value), 
-            new GuiBoundPropertyString ("ProfileUdf", "Profile fingerprint", (object data) => (data as ReportAccountCreate).ProfileUdf , (object data,string value) => (data as ReportAccountCreate).ProfileUdf = value), 
-            new GuiBoundPropertyString ("ServiceUdf", "Service fingerprint", (object data) => (data as ReportAccountCreate).ServiceUdf , (object data,string value) => (data as ReportAccountCreate).ServiceUdf = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as ReportAccountCreate)?.LocalName , 
+                (object data,string? value) => { if (data is ReportAccountCreate datad) { datad.LocalName = value; }}), 
+            new GuiBoundPropertyString ("ServiceAddress", "DNS", (object data) => (data as ReportAccountCreate)?.ServiceAddress , 
+                (object data,string? value) => { if (data is ReportAccountCreate datad) { datad.ServiceAddress = value; }}), 
+            new GuiBoundPropertyString ("ProfileUdf", "Profile fingerprint", (object data) => (data as ReportAccountCreate)?.ProfileUdf , 
+                (object data,string? value) => { if (data is ReportAccountCreate datad) { datad.ProfileUdf = value; }}), 
+            new GuiBoundPropertyString ("ServiceUdf", "Service fingerprint", (object data) => (data as ReportAccountCreate)?.ServiceUdf , 
+                (object data,string? value) => { if (data is ReportAccountCreate datad) { datad.ServiceUdf = value; }})
+            ]);
 
     ///<inheritdoc/>
-    public object[] GetValues() => new [] { 
+    public object?[] GetValues() => new [] { 
         ServiceName,
         LocalName,
         ServiceAddress,
@@ -5409,22 +5523,22 @@ public partial record _ReportAccount : IResult {
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Report;
 
     ///<summary></summary> 
-    public virtual string ServiceName { get; set;} 
+    public virtual string? ServiceName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string LocalName { get; set;} 
+    public virtual string? LocalName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string ServiceCallsign { get; set;} 
+    public virtual string? ServiceCallsign { get; set;} 
 
     ///<summary></summary> 
-    public virtual string ServiceAddress { get; set;} 
+    public virtual string? ServiceAddress { get; set;} 
 
     ///<summary></summary> 
-    public virtual string ProfileUdf { get; set;} 
+    public virtual string? ProfileUdf { get; set;} 
 
     ///<summary></summary> 
-    public virtual string ServiceUdf { get; set;} 
+    public virtual string? ServiceUdf { get; set;} 
 
 
     ///<inheritdoc/>
@@ -5434,17 +5548,21 @@ public partial record _ReportAccount : IResult {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is ReportAccount,
         () => new ReportAccount(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as ReportAccount).LocalName , (object data,string value) => (data as ReportAccount).LocalName = value), 
-            new GuiBoundPropertyString ("ServiceCallsign", "Callsign", (object data) => (data as ReportAccount).ServiceCallsign , (object data,string value) => (data as ReportAccount).ServiceCallsign = value), 
-            new GuiBoundPropertyString ("ServiceAddress", "DNS", (object data) => (data as ReportAccount).ServiceAddress , (object data,string value) => (data as ReportAccount).ServiceAddress = value), 
-            new GuiBoundPropertyString ("ProfileUdf", "Profile fingerprint", (object data) => (data as ReportAccount).ProfileUdf , (object data,string value) => (data as ReportAccount).ProfileUdf = value), 
-            new GuiBoundPropertyString ("ServiceUdf", "Service fingerprint", (object data) => (data as ReportAccount).ServiceUdf , (object data,string value) => (data as ReportAccount).ServiceUdf = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as ReportAccount)?.LocalName , 
+                (object data,string? value) => { if (data is ReportAccount datad) { datad.LocalName = value; }}), 
+            new GuiBoundPropertyString ("ServiceCallsign", "Callsign", (object data) => (data as ReportAccount)?.ServiceCallsign , 
+                (object data,string? value) => { if (data is ReportAccount datad) { datad.ServiceCallsign = value; }}), 
+            new GuiBoundPropertyString ("ServiceAddress", "DNS", (object data) => (data as ReportAccount)?.ServiceAddress , 
+                (object data,string? value) => { if (data is ReportAccount datad) { datad.ServiceAddress = value; }}), 
+            new GuiBoundPropertyString ("ProfileUdf", "Profile fingerprint", (object data) => (data as ReportAccount)?.ProfileUdf , 
+                (object data,string? value) => { if (data is ReportAccount datad) { datad.ProfileUdf = value; }}), 
+            new GuiBoundPropertyString ("ServiceUdf", "Service fingerprint", (object data) => (data as ReportAccount)?.ServiceUdf , 
+                (object data,string? value) => { if (data is ReportAccount datad) { datad.ServiceUdf = value; }})
+            ]);
 
     ///<inheritdoc/>
-    public object[] GetValues() => new [] { 
+    public object?[] GetValues() => new [] { 
         ServiceName,
         LocalName,
         ServiceCallsign,
@@ -5477,22 +5595,22 @@ public partial record _ReportPending : IResult {
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Report;
 
     ///<summary></summary> 
-    public virtual string ServiceName { get; set;} 
+    public virtual string? ServiceName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string LocalName { get; set;} 
+    public virtual string? LocalName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string ServiceCallsign { get; set;} 
+    public virtual string? ServiceCallsign { get; set;} 
 
     ///<summary></summary> 
-    public virtual string ServiceAddress { get; set;} 
+    public virtual string? ServiceAddress { get; set;} 
 
     ///<summary></summary> 
-    public virtual string ServiceUdf { get; set;} 
+    public virtual string? ServiceUdf { get; set;} 
 
     ///<summary></summary> 
-    public virtual string ServiceMessage { get; set;} 
+    public virtual string? ServiceMessage { get; set;} 
 
 
     ///<inheritdoc/>
@@ -5502,17 +5620,21 @@ public partial record _ReportPending : IResult {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is ReportPending,
         () => new ReportPending(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as ReportPending).LocalName , (object data,string value) => (data as ReportPending).LocalName = value), 
-            new GuiBoundPropertyString ("ServiceCallsign", "Callsign", (object data) => (data as ReportPending).ServiceCallsign , (object data,string value) => (data as ReportPending).ServiceCallsign = value), 
-            new GuiBoundPropertyString ("ServiceAddress", "DNS", (object data) => (data as ReportPending).ServiceAddress , (object data,string value) => (data as ReportPending).ServiceAddress = value), 
-            new GuiBoundPropertyString ("ServiceUdf", "Service fingerprint", (object data) => (data as ReportPending).ServiceUdf , (object data,string value) => (data as ReportPending).ServiceUdf = value), 
-            new GuiBoundPropertyString ("ServiceMessage", "Message", (object data) => (data as ReportPending).ServiceMessage , (object data,string value) => (data as ReportPending).ServiceMessage = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as ReportPending)?.LocalName , 
+                (object data,string? value) => { if (data is ReportPending datad) { datad.LocalName = value; }}), 
+            new GuiBoundPropertyString ("ServiceCallsign", "Callsign", (object data) => (data as ReportPending)?.ServiceCallsign , 
+                (object data,string? value) => { if (data is ReportPending datad) { datad.ServiceCallsign = value; }}), 
+            new GuiBoundPropertyString ("ServiceAddress", "DNS", (object data) => (data as ReportPending)?.ServiceAddress , 
+                (object data,string? value) => { if (data is ReportPending datad) { datad.ServiceAddress = value; }}), 
+            new GuiBoundPropertyString ("ServiceUdf", "Service fingerprint", (object data) => (data as ReportPending)?.ServiceUdf , 
+                (object data,string? value) => { if (data is ReportPending datad) { datad.ServiceUdf = value; }}), 
+            new GuiBoundPropertyString ("ServiceMessage", "Message", (object data) => (data as ReportPending)?.ServiceMessage , 
+                (object data,string? value) => { if (data is ReportPending datad) { datad.ServiceMessage = value; }})
+            ]);
 
     ///<inheritdoc/>
-    public object[] GetValues() => new [] { 
+    public object?[] GetValues() => new [] { 
         ServiceName,
         LocalName,
         ServiceCallsign,
@@ -5545,28 +5667,28 @@ public partial record _ReportShares : IResult {
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Report;
 
     ///<summary></summary> 
-    public virtual string Share1 { get; set;} 
+    public virtual string? Share1 { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Share2 { get; set;} 
+    public virtual string? Share2 { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Share3 { get; set;} 
+    public virtual string? Share3 { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Share4 { get; set;} 
+    public virtual string? Share4 { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Share5 { get; set;} 
+    public virtual string? Share5 { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Share6 { get; set;} 
+    public virtual string? Share6 { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Share7 { get; set;} 
+    public virtual string? Share7 { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Share8 { get; set;} 
+    public virtual string? Share8 { get; set;} 
 
 
     ///<inheritdoc/>
@@ -5576,20 +5698,27 @@ public partial record _ReportShares : IResult {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is ReportShares,
         () => new ReportShares(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("Share1", "Recovery share", (object data) => (data as ReportShares).Share1 , (object data,string value) => (data as ReportShares).Share1 = value), 
-            new GuiBoundPropertyString ("Share2", "Recovery share", (object data) => (data as ReportShares).Share2 , (object data,string value) => (data as ReportShares).Share2 = value), 
-            new GuiBoundPropertyString ("Share3", "Recovery share", (object data) => (data as ReportShares).Share3 , (object data,string value) => (data as ReportShares).Share3 = value), 
-            new GuiBoundPropertyString ("Share4", "Recovery share", (object data) => (data as ReportShares).Share4 , (object data,string value) => (data as ReportShares).Share4 = value), 
-            new GuiBoundPropertyString ("Share5", "Recovery share", (object data) => (data as ReportShares).Share5 , (object data,string value) => (data as ReportShares).Share5 = value), 
-            new GuiBoundPropertyString ("Share6", "Recovery share", (object data) => (data as ReportShares).Share6 , (object data,string value) => (data as ReportShares).Share6 = value), 
-            new GuiBoundPropertyString ("Share7", "Recovery share", (object data) => (data as ReportShares).Share7 , (object data,string value) => (data as ReportShares).Share7 = value), 
-            new GuiBoundPropertyString ("Share8", "Recovery share", (object data) => (data as ReportShares).Share8 , (object data,string value) => (data as ReportShares).Share8 = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("Share1", "Recovery share", (object data) => (data as ReportShares)?.Share1 , 
+                (object data,string? value) => { if (data is ReportShares datad) { datad.Share1 = value; }}), 
+            new GuiBoundPropertyString ("Share2", "Recovery share", (object data) => (data as ReportShares)?.Share2 , 
+                (object data,string? value) => { if (data is ReportShares datad) { datad.Share2 = value; }}), 
+            new GuiBoundPropertyString ("Share3", "Recovery share", (object data) => (data as ReportShares)?.Share3 , 
+                (object data,string? value) => { if (data is ReportShares datad) { datad.Share3 = value; }}), 
+            new GuiBoundPropertyString ("Share4", "Recovery share", (object data) => (data as ReportShares)?.Share4 , 
+                (object data,string? value) => { if (data is ReportShares datad) { datad.Share4 = value; }}), 
+            new GuiBoundPropertyString ("Share5", "Recovery share", (object data) => (data as ReportShares)?.Share5 , 
+                (object data,string? value) => { if (data is ReportShares datad) { datad.Share5 = value; }}), 
+            new GuiBoundPropertyString ("Share6", "Recovery share", (object data) => (data as ReportShares)?.Share6 , 
+                (object data,string? value) => { if (data is ReportShares datad) { datad.Share6 = value; }}), 
+            new GuiBoundPropertyString ("Share7", "Recovery share", (object data) => (data as ReportShares)?.Share7 , 
+                (object data,string? value) => { if (data is ReportShares datad) { datad.Share7 = value; }}), 
+            new GuiBoundPropertyString ("Share8", "Recovery share", (object data) => (data as ReportShares)?.Share8 , 
+                (object data,string? value) => { if (data is ReportShares datad) { datad.Share8 = value; }})
+            ]);
 
     ///<inheritdoc/>
-    public object[] GetValues() => new [] { 
+    public object?[] GetValues() => new [] { 
         Share1,
         Share2,
         Share3,
@@ -5624,10 +5753,10 @@ public partial record _MessageSentContact : IResult {
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Report;
 
     ///<summary></summary> 
-    public virtual string AccountName { get; set;} 
+    public virtual string? AccountName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Identifier { get; set;} 
+    public virtual string? Identifier { get; set;} 
 
 
     ///<inheritdoc/>
@@ -5637,14 +5766,15 @@ public partial record _MessageSentContact : IResult {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is MessageSentContact,
         () => new MessageSentContact(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("AccountName", "Account", (object data) => (data as MessageSentContact).AccountName , (object data,string value) => (data as MessageSentContact).AccountName = value), 
-            new GuiBoundPropertyString ("Identifier", "Identifier", (object data) => (data as MessageSentContact).Identifier , (object data,string value) => (data as MessageSentContact).Identifier = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("AccountName", "Account", (object data) => (data as MessageSentContact)?.AccountName , 
+                (object data,string? value) => { if (data is MessageSentContact datad) { datad.AccountName = value; }}), 
+            new GuiBoundPropertyString ("Identifier", "Identifier", (object data) => (data as MessageSentContact)?.Identifier , 
+                (object data,string? value) => { if (data is MessageSentContact datad) { datad.Identifier = value; }})
+            ]);
 
     ///<inheritdoc/>
-    public object[] GetValues() => new [] { 
+    public object?[] GetValues() => new [] { 
         AccountName,
         Identifier};
     }
@@ -5673,10 +5803,10 @@ public partial record _MessageSentDevice : IResult {
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Report;
 
     ///<summary></summary> 
-    public virtual string AccountName { get; set;} 
+    public virtual string? AccountName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string Identifier { get; set;} 
+    public virtual string? Identifier { get; set;} 
 
 
     ///<inheritdoc/>
@@ -5686,14 +5816,15 @@ public partial record _MessageSentDevice : IResult {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is MessageSentDevice,
         () => new MessageSentDevice(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("AccountName", "Account", (object data) => (data as MessageSentDevice).AccountName , (object data,string value) => (data as MessageSentDevice).AccountName = value), 
-            new GuiBoundPropertyString ("Identifier", "Identifier", (object data) => (data as MessageSentDevice).Identifier , (object data,string value) => (data as MessageSentDevice).Identifier = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("AccountName", "Account", (object data) => (data as MessageSentDevice)?.AccountName , 
+                (object data,string? value) => { if (data is MessageSentDevice datad) { datad.AccountName = value; }}), 
+            new GuiBoundPropertyString ("Identifier", "Identifier", (object data) => (data as MessageSentDevice)?.Identifier , 
+                (object data,string? value) => { if (data is MessageSentDevice datad) { datad.Identifier = value; }})
+            ]);
 
     ///<inheritdoc/>
-    public object[] GetValues() => new [] { 
+    public object?[] GetValues() => new [] { 
         AccountName,
         Identifier};
     }
@@ -5732,7 +5863,7 @@ public partial record _BeginCommunication : IResult {
         Array.Empty<GuiBoundProperty>());
 
     ///<inheritdoc/>
-    public object[] GetValues() => Array.Empty<object>();
+    public object?[] GetValues() => Array.Empty<object>();
 
     }
 
@@ -5775,7 +5906,7 @@ public partial record _HttpRequestFail : IFail {
         Array.Empty<GuiBoundProperty>());
 
     ///<inheritdoc/>
-    public object[] GetValues() => Array.Empty<object>();
+    public object?[] GetValues() => Array.Empty<object>();
 
 
     }
@@ -5806,7 +5937,7 @@ public partial record _ServiceNotFound : IFail {
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
 
     ///<summary></summary> 
-    public virtual string ServiceName { get; set;} 
+    public virtual string? ServiceName { get; set;} 
 
 
     ///<inheritdoc/>
@@ -5819,7 +5950,7 @@ public partial record _ServiceNotFound : IFail {
         Array.Empty<GuiBoundProperty>());
 
     ///<inheritdoc/>
-    public object[] GetValues() => new [] { 
+    public object?[] GetValues() => new [] { 
         ServiceName};
 
     }
@@ -5860,7 +5991,7 @@ public partial record _ServiceRefused : IFail {
         Array.Empty<GuiBoundProperty>());
 
     ///<inheritdoc/>
-    public object[] GetValues() => Array.Empty<object>();
+    public object?[] GetValues() => Array.Empty<object>();
 
 
     }
@@ -5891,7 +6022,7 @@ public partial record _HostNotFound : IFail {
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
 
     ///<summary></summary> 
-    public virtual string ServiceName { get; set;} 
+    public virtual string? ServiceName { get; set;} 
 
 
     ///<inheritdoc/>
@@ -5904,7 +6035,7 @@ public partial record _HostNotFound : IFail {
         Array.Empty<GuiBoundProperty>());
 
     ///<inheritdoc/>
-    public object[] GetValues() => new [] { 
+    public object?[] GetValues() => new [] { 
         ServiceName};
 
     }
@@ -5945,7 +6076,7 @@ public partial record _InvalidHostCredential : IFail {
         Array.Empty<GuiBoundProperty>());
 
     ///<inheritdoc/>
-    public object[] GetValues() => Array.Empty<object>();
+    public object?[] GetValues() => Array.Empty<object>();
 
 
     }
@@ -5986,7 +6117,7 @@ public partial record _CredentialRefused : IFail {
         Array.Empty<GuiBoundProperty>());
 
     ///<inheritdoc/>
-    public object[] GetValues() => Array.Empty<object>();
+    public object?[] GetValues() => Array.Empty<object>();
 
 
     }
@@ -6027,7 +6158,7 @@ public partial record _DeviceRefused : IFail {
         Array.Empty<GuiBoundProperty>());
 
     ///<inheritdoc/>
-    public object[] GetValues() => Array.Empty<object>();
+    public object?[] GetValues() => Array.Empty<object>();
 
 
     }
@@ -6058,7 +6189,7 @@ public partial record _FileWriteError : IFail {
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
 
     ///<summary></summary> 
-    public virtual string Filename { get; set;} 
+    public virtual string? Filename { get; set;} 
 
 
     ///<inheritdoc/>
@@ -6071,7 +6202,7 @@ public partial record _FileWriteError : IFail {
         Array.Empty<GuiBoundProperty>());
 
     ///<inheritdoc/>
-    public object[] GetValues() => new [] { 
+    public object?[] GetValues() => new [] { 
         Filename};
 
     }
@@ -6102,7 +6233,7 @@ public partial record _FileReadError : IFail {
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
 
     ///<summary></summary> 
-    public virtual string Filename { get; set;} 
+    public virtual string? Filename { get; set;} 
 
 
     ///<inheritdoc/>
@@ -6115,7 +6246,7 @@ public partial record _FileReadError : IFail {
         Array.Empty<GuiBoundProperty>());
 
     ///<inheritdoc/>
-    public object[] GetValues() => new [] { 
+    public object?[] GetValues() => new [] { 
         Filename};
 
     }
@@ -6156,7 +6287,7 @@ public partial record _AccountProfileInvalid : IFail {
         Array.Empty<GuiBoundProperty>());
 
     ///<inheritdoc/>
-    public object[] GetValues() => Array.Empty<object>();
+    public object?[] GetValues() => Array.Empty<object>();
 
 
     }
@@ -6197,7 +6328,7 @@ public partial record _DeviceProfileInvalid : IFail {
         Array.Empty<GuiBoundProperty>());
 
     ///<inheritdoc/>
-    public object[] GetValues() => Array.Empty<object>();
+    public object?[] GetValues() => Array.Empty<object>();
 
 
     }
@@ -6228,13 +6359,13 @@ public partial record _ActivationKeyNotFound : IFail {
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
 
     ///<summary></summary> 
-    public virtual string ProfileName { get; set;} 
+    public virtual string? ProfileName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string LocalName { get; set;} 
+    public virtual string? LocalName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string ProfileUdf { get; set;} 
+    public virtual string? ProfileUdf { get; set;} 
 
 
     ///<inheritdoc/>
@@ -6244,14 +6375,15 @@ public partial record _ActivationKeyNotFound : IFail {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is ActivationKeyNotFound,
         () => new ActivationKeyNotFound(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as ActivationKeyNotFound).LocalName , (object data,string value) => (data as ActivationKeyNotFound).LocalName = value), 
-            new GuiBoundPropertyString ("ProfileUdf", "Profile fingerprint", (object data) => (data as ActivationKeyNotFound).ProfileUdf , (object data,string value) => (data as ActivationKeyNotFound).ProfileUdf = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as ActivationKeyNotFound)?.LocalName , 
+                (object data,string? value) => { if (data is ActivationKeyNotFound datad) { datad.LocalName = value; }}), 
+            new GuiBoundPropertyString ("ProfileUdf", "Profile fingerprint", (object data) => (data as ActivationKeyNotFound)?.ProfileUdf , 
+                (object data,string? value) => { if (data is ActivationKeyNotFound datad) { datad.ProfileUdf = value; }})
+            ]);
 
     ///<inheritdoc/>
-    public object[] GetValues() => new [] { 
+    public object?[] GetValues() => new [] { 
         ProfileName,
         LocalName,
         ProfileUdf};
@@ -6284,13 +6416,13 @@ public partial record _NotAuthorizedCatalog : IFail {
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
 
     ///<summary></summary> 
-    public virtual string CatalogName { get; set;} 
+    public virtual string? CatalogName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string LocalName { get; set;} 
+    public virtual string? LocalName { get; set;} 
 
     ///<summary></summary> 
-    public virtual string ProfileUdf { get; set;} 
+    public virtual string? ProfileUdf { get; set;} 
 
 
     ///<inheritdoc/>
@@ -6300,15 +6432,17 @@ public partial record _NotAuthorizedCatalog : IFail {
     public static  GuiBinding BaseBinding  { get; } = new (
         (object test) => test is NotAuthorizedCatalog,
         () => new NotAuthorizedCatalog(),
-        new GuiBoundProperty[] { 
-            new GuiBoundPropertyString ("CatalogName", "Catalog", (object data) => (data as NotAuthorizedCatalog).CatalogName , (object data,string value) => (data as NotAuthorizedCatalog).CatalogName = value), 
-            new GuiBoundPropertyString ("LocalName", "Profile", (object data) => (data as NotAuthorizedCatalog).LocalName , (object data,string value) => (data as NotAuthorizedCatalog).LocalName = value), 
-            new GuiBoundPropertyString ("ProfileUdf", "Profile fingerprint", (object data) => (data as NotAuthorizedCatalog).ProfileUdf , (object data,string value) => (data as NotAuthorizedCatalog).ProfileUdf = value)
-
-            });
+        [ 
+            new GuiBoundPropertyString ("CatalogName", "Catalog", (object data) => (data as NotAuthorizedCatalog)?.CatalogName , 
+                (object data,string? value) => { if (data is NotAuthorizedCatalog datad) { datad.CatalogName = value; }}), 
+            new GuiBoundPropertyString ("LocalName", "Profile", (object data) => (data as NotAuthorizedCatalog)?.LocalName , 
+                (object data,string? value) => { if (data is NotAuthorizedCatalog datad) { datad.LocalName = value; }}), 
+            new GuiBoundPropertyString ("ProfileUdf", "Profile fingerprint", (object data) => (data as NotAuthorizedCatalog)?.ProfileUdf , 
+                (object data,string? value) => { if (data is NotAuthorizedCatalog datad) { datad.ProfileUdf = value; }})
+            ]);
 
     ///<inheritdoc/>
-    public object[] GetValues() => new [] { 
+    public object?[] GetValues() => new [] { 
         CatalogName,
         LocalName,
         ProfileUdf};
@@ -6351,7 +6485,7 @@ public partial record _NotAuthorizedAdministration : IFail {
         Array.Empty<GuiBoundProperty>());
 
     ///<inheritdoc/>
-    public object[] GetValues() => Array.Empty<object>();
+    public object?[] GetValues() => Array.Empty<object>();
 
 
     }
@@ -6392,7 +6526,7 @@ public partial record _NotAuthorizedFCatalog : IFail {
         Array.Empty<GuiBoundProperty>());
 
     ///<inheritdoc/>
-    public object[] GetValues() => Array.Empty<object>();
+    public object?[] GetValues() => Array.Empty<object>();
 
 
     }
@@ -6433,7 +6567,7 @@ public partial record _CounterpartyApproval : IFail {
         Array.Empty<GuiBoundProperty>());
 
     ///<inheritdoc/>
-    public object[] GetValues() => Array.Empty<object>();
+    public object?[] GetValues() => Array.Empty<object>();
 
 
     }
@@ -6474,7 +6608,7 @@ public partial record _SystemExeption : IFail {
         Array.Empty<GuiBoundProperty>());
 
     ///<inheritdoc/>
-    public object[] GetValues() => Array.Empty<object>();
+    public object?[] GetValues() => Array.Empty<object>();
 
 
     }
@@ -6515,7 +6649,7 @@ public partial record _NotYetImplemented : IFail {
         Array.Empty<GuiBoundProperty>());
 
     ///<inheritdoc/>
-    public object[] GetValues() => Array.Empty<object>();
+    public object?[] GetValues() => Array.Empty<object>();
 
 
     }
@@ -6612,7 +6746,6 @@ public class _EverythingMaui : Gui {
 		new GuiImage ("device_tablet") , 
 		new GuiImage ("device_tv") , 
 		new GuiImage ("devices") , 
-		new GuiImage ("display") , 
 		new GuiImage ("documents") , 
 		new GuiImage ("ethernet") , 
 		new GuiImage ("feeds") , 
@@ -6718,11 +6851,7 @@ public class _EverythingMaui : Gui {
 
     ///<summary>Section SectionSettingSection.</summary> 
 	public GuiSection SectionSettingSection { get; } = new (
-        "SettingSection", "Settings", "settings", _SettingSection.BaseBinding, true);
-
-    ///<summary>Section SectionAppearance.</summary> 
-	public GuiSection SectionAppearance { get; } = new (
-        "Appearance", "Appearance", "display", _Appearance.BaseBinding, false);
+        "SettingSection", "Settings", "settings", _SettingSection.BaseBinding, false);
 #endregion
 #region // Actions
 
@@ -7220,8 +7349,8 @@ public class _EverythingMaui : Gui {
     ///<summary>Dictionary resolving exception name to factory method.</summary> 
     public Dictionary<string, Func<IResult>> ExceptionDirectory =
         new() { 
-                { typeof(HttpRequestException).FullName, () => new HttpRequestFail() } , 
-                { typeof(ServerOperationFailed).FullName, () => new ServiceRefused() }             };
+                { typeof(HttpRequestException)?.FullName!, () => new HttpRequestFail() } , 
+                { typeof(ServerOperationFailed)?.FullName!, () => new ServiceRefused() }             };
 #endregion
 #region // Constructors
     /// <summary>
@@ -7313,12 +7442,8 @@ public class _EverythingMaui : Gui {
 	    SectionServiceSection.Entries = [];
 
 	    SectionSettingSection.Gui = this;
-	    SectionSettingSection.Active = () => StateAlways;
+	    SectionSettingSection.Active = () => StateDefault;
 	    SectionSettingSection.Entries = [];
-
-	    SectionAppearance.Gui = this;
-	    SectionAppearance.Active = () => StateDefault;
-	    SectionAppearance.Entries = [];
 
 
 #endregion
@@ -7337,73 +7462,227 @@ public class _EverythingMaui : Gui {
 		    SectionApplicationSection, 
 		    SectionDeviceSection, 
 		    SectionServiceSection, 
-		    SectionSettingSection, 
-		    SectionAppearance
+		    SectionSettingSection
             };
 
 #endregion
 #region // Initialize Actions
-        ActionTestService.Callback = (x) => TestService (x as TestService) ;
+        ActionTestService.Callback = (x) => {
+            if (x is TestService xx) {
+                return TestService (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionAccountCreate.Callback = (x) => AccountCreate (x as AccountCreate) ;
+        ActionAccountCreate.Callback = (x) => {
+            if (x is AccountCreate xx) {
+                return AccountCreate (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionAccountRequestConnect.Callback = (x) => AccountRequestConnect (x as AccountRequestConnect) ;
+        ActionAccountRequestConnect.Callback = (x) => {
+            if (x is AccountRequestConnect xx) {
+                return AccountRequestConnect (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionDeviceConnectQR.Callback = (x) => DeviceConnectQR (x as DeviceConnectQR) ;
+        ActionDeviceConnectQR.Callback = (x) => {
+            if (x is DeviceConnectQR xx) {
+                return DeviceConnectQR (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionAccountRecover.Callback = (x) => AccountRecover (x as AccountRecover) ;
+        ActionAccountRecover.Callback = (x) => {
+            if (x is AccountRecover xx) {
+                return AccountRecover (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionAccountDelete.Callback = (x) => AccountDelete (x as AccountDelete) ;
+        ActionAccountDelete.Callback = (x) => {
+            if (x is AccountDelete xx) {
+                return AccountDelete (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionAccountSwitch.Callback = (x) => AccountSwitch (x as AccountSwitch) ;
+        ActionAccountSwitch.Callback = (x) => {
+            if (x is AccountSwitch xx) {
+                return AccountSwitch (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionAccountGenerateRecovery.Callback = (x) => AccountGenerateRecovery (x as AccountGenerateRecovery) ;
+        ActionAccountGenerateRecovery.Callback = (x) => {
+            if (x is AccountGenerateRecovery xx) {
+                return AccountGenerateRecovery (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionRequestConfirmation.Callback = (x) => RequestConfirmation (x as RequestConfirmation) ;
+        ActionRequestConfirmation.Callback = (x) => {
+            if (x is RequestConfirmation xx) {
+                return RequestConfirmation (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionCreateMail.Callback = (x) => CreateMail (x as CreateMail) ;
+        ActionCreateMail.Callback = (x) => {
+            if (x is CreateMail xx) {
+                return CreateMail (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionCreateChat.Callback = (x) => CreateChat (x as CreateChat) ;
+        ActionCreateChat.Callback = (x) => {
+            if (x is CreateChat xx) {
+                return CreateChat (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionStartVoice.Callback = (x) => StartVoice (x as StartVoice) ;
+        ActionStartVoice.Callback = (x) => {
+            if (x is StartVoice xx) {
+                return StartVoice (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionStartVideo.Callback = (x) => StartVideo (x as StartVideo) ;
+        ActionStartVideo.Callback = (x) => {
+            if (x is StartVideo xx) {
+                return StartVideo (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionAddPerson.Callback = (x) => AddPerson (x as AddPerson) ;
+        ActionAddPerson.Callback = (x) => {
+            if (x is AddPerson xx) {
+                return AddPerson (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionAddOrganization.Callback = (x) => AddOrganization (x as AddOrganization) ;
+        ActionAddOrganization.Callback = (x) => {
+            if (x is AddOrganization xx) {
+                return AddOrganization (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionAddLocation.Callback = (x) => AddLocation (x as AddLocation) ;
+        ActionAddLocation.Callback = (x) => {
+            if (x is AddLocation xx) {
+                return AddLocation (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionRequestContact.Callback = (x) => RequestContact (x as RequestContact) ;
+        ActionRequestContact.Callback = (x) => {
+            if (x is RequestContact xx) {
+                return RequestContact (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionQrContact.Callback = (x) => QrContact (x as QrContact) ;
+        ActionQrContact.Callback = (x) => {
+            if (x is QrContact xx) {
+                return QrContact (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionUploadDocument.Callback = (x) => UploadDocument (x as UploadDocument) ;
+        ActionUploadDocument.Callback = (x) => {
+            if (x is UploadDocument xx) {
+                return UploadDocument (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionAddFeed.Callback = (x) => AddFeed (x as AddFeed) ;
+        ActionAddFeed.Callback = (x) => {
+            if (x is AddFeed xx) {
+                return AddFeed (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionAddGroup.Callback = (x) => AddGroup (x as AddGroup) ;
+        ActionAddGroup.Callback = (x) => {
+            if (x is AddGroup xx) {
+                return AddGroup (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionGroupInvite.Callback = (x) => GroupInvite (x as GroupInvite) ;
+        ActionGroupInvite.Callback = (x) => {
+            if (x is GroupInvite xx) {
+                return GroupInvite (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionAddPassword.Callback = (x) => AddPassword (x as AddPassword) ;
+        ActionAddPassword.Callback = (x) => {
+            if (x is AddPassword xx) {
+                return AddPassword (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionAddPasskey.Callback = (x) => AddPasskey (x as AddPasskey) ;
+        ActionAddPasskey.Callback = (x) => {
+            if (x is AddPasskey xx) {
+                return AddPasskey (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionAddTask.Callback = (x) => AddTask (x as AddTask) ;
+        ActionAddTask.Callback = (x) => {
+            if (x is AddTask xx) {
+                return AddTask (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionAddBookmark.Callback = (x) => AddBookmark (x as AddBookmark) ;
+        ActionAddBookmark.Callback = (x) => {
+            if (x is AddBookmark xx) {
+                return AddBookmark (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionAddMailAccount.Callback = (x) => AddMailAccount (x as AddMailAccount) ;
+        ActionAddMailAccount.Callback = (x) => {
+            if (x is AddMailAccount xx) {
+                return AddMailAccount (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionAddSshAccount.Callback = (x) => AddSshAccount (x as AddSshAccount) ;
+        ActionAddSshAccount.Callback = (x) => {
+            if (x is AddSshAccount xx) {
+                return AddSshAccount (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionAddGitAccount.Callback = (x) => AddGitAccount (x as AddGitAccount) ;
+        ActionAddGitAccount.Callback = (x) => {
+            if (x is AddGitAccount xx) {
+                return AddGitAccount (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionAddCodeSigningKey.Callback = (x) => AddCodeSigningKey (x as AddCodeSigningKey) ;
+        ActionAddCodeSigningKey.Callback = (x) => {
+            if (x is AddCodeSigningKey xx) {
+                return AddCodeSigningKey (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        ActionAccountGetPin.Callback = (x) => AccountGetPin (x as AccountGetPin) ;
+        ActionAccountGetPin.Callback = (x) => {
+            if (x is AccountGetPin xx) {
+                return AccountGetPin (xx); 
+                }
+            throw new NYI();
+            } ;
 
 
         Actions = new Dictionary<string,GuiAction>() {  
@@ -7443,67 +7722,222 @@ public class _EverythingMaui : Gui {
 #endregion
 
 #region // Initialize Selections
-        SelectionAccountSelect.Callback = (x) => AccountSelect (x as BoundAccount) ;
+        SelectionAccountSelect.Callback = (x) => {
+            if (x is BoundAccount xx) {
+                return AccountSelect (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionConfirmationAccept.Callback = (x) => ConfirmationAccept (x as BoundMessageConfirmationRequest) ;
+        SelectionConfirmationAccept.Callback = (x) => {
+            if (x is BoundMessageConfirmationRequest xx) {
+                return ConfirmationAccept (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionConfirmationReject.Callback = (x) => ConfirmationReject (x as BoundMessageConfirmationRequest) ;
+        SelectionConfirmationReject.Callback = (x) => {
+            if (x is BoundMessageConfirmationRequest xx) {
+                return ConfirmationReject (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionContactAccept.Callback = (x) => ContactAccept (x as BoundMessageContactRequest) ;
+        SelectionContactAccept.Callback = (x) => {
+            if (x is BoundMessageContactRequest xx) {
+                return ContactAccept (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionContactReject.Callback = (x) => ContactReject (x as BoundMessageContactRequest) ;
+        SelectionContactReject.Callback = (x) => {
+            if (x is BoundMessageContactRequest xx) {
+                return ContactReject (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionConnectAccept.Callback = (x) => ConnectAccept (x as BoundMessageConnectionRequest) ;
+        SelectionConnectAccept.Callback = (x) => {
+            if (x is BoundMessageConnectionRequest xx) {
+                return ConnectAccept (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionConnectReject.Callback = (x) => ConnectReject (x as BoundMessageConnectionRequest) ;
+        SelectionConnectReject.Callback = (x) => {
+            if (x is BoundMessageConnectionRequest xx) {
+                return ConnectReject (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionGroupAccept.Callback = (x) => GroupAccept (x as BoundMessageGroupInvitation) ;
+        SelectionGroupAccept.Callback = (x) => {
+            if (x is BoundMessageGroupInvitation xx) {
+                return GroupAccept (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionGroupReject.Callback = (x) => GroupReject (x as BoundMessageGroupInvitation) ;
+        SelectionGroupReject.Callback = (x) => {
+            if (x is BoundMessageGroupInvitation xx) {
+                return GroupReject (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionTaskAccept.Callback = (x) => TaskAccept (x as BoundMessageTaskRequest) ;
+        SelectionTaskAccept.Callback = (x) => {
+            if (x is BoundMessageTaskRequest xx) {
+                return TaskAccept (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionTaskReject.Callback = (x) => TaskReject (x as BoundMessageTaskRequest) ;
+        SelectionTaskReject.Callback = (x) => {
+            if (x is BoundMessageTaskRequest xx) {
+                return TaskReject (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionContactUpdate.Callback = (x) => ContactUpdate (x as BoundContact) ;
+        SelectionContactUpdate.Callback = (x) => {
+            if (x is BoundContact xx) {
+                return ContactUpdate (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionContactDelete.Callback = (x) => ContactDelete (x as BoundContact) ;
+        SelectionContactDelete.Callback = (x) => {
+            if (x is BoundContact xx) {
+                return ContactDelete (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionContactInteractMesh.Callback = (x) => ContactInteractMesh (x as BoundContactPerson) ;
+        SelectionContactInteractMesh.Callback = (x) => {
+            if (x is BoundContactPerson xx) {
+                return ContactInteractMesh (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionContactInteractAddress.Callback = (x) => ContactInteractAddress (x as ContactNetworkAddress) ;
+        SelectionContactInteractAddress.Callback = (x) => {
+            if (x is ContactNetworkAddress xx) {
+                return ContactInteractAddress (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionDocumentUpdate.Callback = (x) => DocumentUpdate (x as BoundDocument) ;
+        SelectionDocumentUpdate.Callback = (x) => {
+            if (x is BoundDocument xx) {
+                return DocumentUpdate (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionDocumentExport.Callback = (x) => DocumentExport (x as BoundDocument) ;
+        SelectionDocumentExport.Callback = (x) => {
+            if (x is BoundDocument xx) {
+                return DocumentExport (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionDocumentSend.Callback = (x) => DocumentSend (x as BoundDocument) ;
+        SelectionDocumentSend.Callback = (x) => {
+            if (x is BoundDocument xx) {
+                return DocumentSend (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionDocumentDelete.Callback = (x) => DocumentDelete (x as BoundDocument) ;
+        SelectionDocumentDelete.Callback = (x) => {
+            if (x is BoundDocument xx) {
+                return DocumentDelete (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionMemberDelete.Callback = (x) => MemberDelete (x as BoundGroupMember) ;
+        SelectionMemberDelete.Callback = (x) => {
+            if (x is BoundGroupMember xx) {
+                return MemberDelete (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionMemberReInvite.Callback = (x) => MemberReInvite (x as BoundGroupMember) ;
+        SelectionMemberReInvite.Callback = (x) => {
+            if (x is BoundGroupMember xx) {
+                return MemberReInvite (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionCredentialUpdate.Callback = (x) => CredentialUpdate (x as BoundCredential) ;
+        SelectionCredentialUpdate.Callback = (x) => {
+            if (x is BoundCredential xx) {
+                return CredentialUpdate (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionCredentialDelete.Callback = (x) => CredentialDelete (x as BoundCredential) ;
+        SelectionCredentialDelete.Callback = (x) => {
+            if (x is BoundCredential xx) {
+                return CredentialDelete (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionTaskUpdate.Callback = (x) => TaskUpdate (x as BoundTask) ;
+        SelectionTaskUpdate.Callback = (x) => {
+            if (x is BoundTask xx) {
+                return TaskUpdate (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionTaskDelete.Callback = (x) => TaskDelete (x as BoundTask) ;
+        SelectionTaskDelete.Callback = (x) => {
+            if (x is BoundTask xx) {
+                return TaskDelete (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionBookmarkUpdate.Callback = (x) => BookmarkUpdate (x as BoundBookmark) ;
+        SelectionBookmarkUpdate.Callback = (x) => {
+            if (x is BoundBookmark xx) {
+                return BookmarkUpdate (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionBookmarkDelete.Callback = (x) => BookmarkDelete (x as BoundBookmark) ;
+        SelectionBookmarkDelete.Callback = (x) => {
+            if (x is BoundBookmark xx) {
+                return BookmarkDelete (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionApplicationUpdate.Callback = (x) => ApplicationUpdate (x as BoundApplication) ;
+        SelectionApplicationUpdate.Callback = (x) => {
+            if (x is BoundApplication xx) {
+                return ApplicationUpdate (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionApplicationDelete.Callback = (x) => ApplicationDelete (x as BoundApplication) ;
+        SelectionApplicationDelete.Callback = (x) => {
+            if (x is BoundApplication xx) {
+                return ApplicationDelete (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionDeviceUpdate.Callback = (x) => DeviceUpdate (x as BoundDevice) ;
+        SelectionDeviceUpdate.Callback = (x) => {
+            if (x is BoundDevice xx) {
+                return DeviceUpdate (xx); 
+                }
+            throw new NYI();
+            } ;
 
-        SelectionDeviceDelete.Callback = (x) => DeviceDelete (x as BoundDevice) ;
+        SelectionDeviceDelete.Callback = (x) => {
+            if (x is BoundDevice xx) {
+                return DeviceDelete (xx); 
+                }
+            throw new NYI();
+            } ;
 
 
         Selections = new Dictionary<string,GuiAction>() {  

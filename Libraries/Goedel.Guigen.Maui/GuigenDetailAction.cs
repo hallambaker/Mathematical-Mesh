@@ -6,15 +6,17 @@ namespace Goedel.Guigen.Maui;
 
 
 public class GuigenDetaiPage : ContentPage, IPresentation {
-    protected IMainWindow MainWindow { get; }
+    ///<summary>The bound UI</summary> 
+    public GuigenBinding Binding { get; }
 
-    protected GuigenBinding Binding => MainWindow.Binding;
+    ///<summary>The main window.</summary> 
+    public IMainWindow MainWindow => Binding.MainWindow;
     protected Gui Gui => Binding.Gui;
 
     public Page Page => this;
 
-    public GuigenDetaiPage(IMainWindow mainWindow) {
-        MainWindow = mainWindow;
+    public GuigenDetaiPage(GuigenBinding binding) {
+        Binding = binding;
         }
     }
 
@@ -27,8 +29,8 @@ public class GuigenDetailAction : GuigenDetaiPage {
 
     IBindable BoundValue;
 
-    public Button ConfirmButton;
-    public Button CancelButton;
+    public Button? ConfirmButton;
+    public Button? CancelButton;
 
     public List<View> ActionViews = new();
 
@@ -37,13 +39,10 @@ public class GuigenDetailAction : GuigenDetaiPage {
     IParameter Result { get; set; }
     //Gui Gui { get; }
 
-    public GuigenDetailAction(IMainWindow mainWindow, GuiAction action) : base (mainWindow) {
-        mainWindow.CurrentAction = this;
+    public GuigenDetailAction(GuigenBinding binding, GuiAction action) : base (binding) {
+        MainWindow.CurrentAction = this;
 
         Action = action;
-
-
-
         action.Presentation = this;
 
         Title = action.Prompt;
@@ -52,19 +51,15 @@ public class GuigenDetailAction : GuigenDetaiPage {
 
         var label = new Label() {
             Text = action.Prompt,
-        };
+            };
         stack.Add(label);
 
-        FieldSet = new GuigenFieldSet(MainWindow, action.Entries, stack, action.Binding);
+        FieldSet = new GuigenFieldSet(binding, action.Entries, stack, action.Binding);
 
         var view = new HorizontalStackLayout();
 
         if (FieldSet.IsChooser) {
             ActionViews.Add(FieldSet.ButtonBox);
-            //ConfirmButton = new Button() {
-            //    Text = "Hyperspace"
-            //    };
-            //FieldSet.ButtonBox.Add(ConfirmButton);
             }
         else {
             ConfirmButton = new Button() {
@@ -91,6 +86,9 @@ public class GuigenDetailAction : GuigenDetaiPage {
         EnableActions();
 
         view.Add(FieldSet.ButtonBox);
+        if (ConfirmButton != null) {
+            view.Add(ConfirmButton);
+            }
         view.Add(CancelButton);
         stack.Add(view);
 

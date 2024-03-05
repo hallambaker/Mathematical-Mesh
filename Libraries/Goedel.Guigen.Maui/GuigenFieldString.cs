@@ -2,7 +2,7 @@
 
 public class GuigenFieldString : GuigenFieldSimple, IWidget {
 
-    GuiBoundPropertyString TypedBinding => Binding as GuiBoundPropertyString;
+    GuiBoundPropertyString TypedBinding => PropertyBinding as GuiBoundPropertyString;
 
     public override bool IsEditable => (TypedBinding.Set is not null);
 

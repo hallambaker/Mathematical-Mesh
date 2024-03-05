@@ -2,7 +2,7 @@
 
 public class GuigenFieldTextArea : GuigenFieldSimple, IWidget {
 
-    GuiBoundTextArea TypedBinding => Binding as GuiBoundTextArea;
+    GuiBoundTextArea TypedBinding => PropertyBinding as GuiBoundTextArea;
 
     Editor ValueField;
 

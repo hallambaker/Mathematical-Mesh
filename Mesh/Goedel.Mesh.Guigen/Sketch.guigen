@@ -39,6 +39,10 @@ Action AccountCreate "Create Mesh Account" "new"
 		|Create a new Mesh account services by the specified Mesh Service provider.
 	Return ReportAccount
 	Text ServiceAddress "Account service address"
+		Error ServiceAddressNotValid "Not a valid service address"
+			|!ServiceAddress.TryParseServiceAddress()
+		Error ServiceAddressNotEmpty "Service address cannot be blank"
+			|ServiceAddress == null || ServiceAddress?.Length == 0
 	Text ContactName "Contact Name  (optional)"
 	Text LocalName "Friendly name (optional)"
 	Text Coupon "Activation code (if provided)"
@@ -615,14 +619,12 @@ Section ServiceSection "Services" "Services"
 
 // **** Settings
 Section SettingSection "Settings" "settings"
-	Condition Always
-	Primary
-	Section Appearance "Appearance" "display"
-		Color BackgroundColor  "Background Color"
-		Color HighlightColor "Highlight Color"
-		Color TextColor "Text Color"
-		Size TextSize "Text Size"
-		Size IconSize "Icon Size"
+
+	Color BackgroundColor  "Background Color"
+	Color HighlightColor "Highlight Color"
+	Color TextColor "Text Color"
+	Size TextSize "Text Size"
+	Size IconSize "Icon Size"
 
 
 // Action results

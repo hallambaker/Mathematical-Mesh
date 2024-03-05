@@ -70,6 +70,7 @@
 	  <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
 	  <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj" />
 	  <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Core\Goedel.Mesh.Core.csproj" />
+	  <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Guigen\Goedel.Mesh.Guigen.csproj" />
 	  <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
 	</ItemGroup>
 

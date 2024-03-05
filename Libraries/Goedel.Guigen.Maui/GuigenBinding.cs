@@ -1,5 +1,7 @@
 ﻿using Goedel.Utilities;
 
+using Microsoft.Maui;
+
 using System;
 using System.Security.Cryptography.X509Certificates;
 
@@ -80,6 +82,7 @@ public record BoundFieldSet (
 
 public class GuigenBinding {
     public Gui Gui { get; }
+
     public DisplayMode Display { get; set; }
 
     public int IconHeight = 20;
@@ -92,7 +95,10 @@ public class GuigenBinding {
 
     public Page Page =>MainWindow.Page;
 
-    IMainWindow MainWindow;
+    public IMainWindow MainWindow { get; set; }
+
+    public GuiSection CurrentSection { get; set; }
+
 
     //IMainWindow MainWindow => GuigenMainFlyout;
     public IDispatcher Dispatcher => Page.Dispatcher;
@@ -129,7 +135,10 @@ public class GuigenBinding {
 
 
 
-
+    public GuigenButton MakeButton(
+                string icon,
+                string text,
+                EventHandler callback) => new GuigenButton (this, icon, text, callback);
 
 
 
@@ -137,7 +146,7 @@ public class GuigenBinding {
 
 
     public void GotoSection(GuiSection section) {
-
+        CurrentSection = section;
         MainWindow.SetDetailWindow(section);
 
         }
@@ -210,13 +219,75 @@ public class GuigenBinding {
     public void SetResult(IResult result) {
 
         if (result.ReturnResult == ReturnResult.Home) {
-            MainWindow.SetDetailWindow(Gui.DefaultSection);
+            GotoSection(Gui.DefaultSection);
             }
 
         }
 
     }
 
+
+
+public class GuigenButton {
+    GuigenBinding Binding { get; }
+    public View View => Stack;
+    Layout Stack { get; }
+    ImageButton ImageButton { get; }
+    Button TextButton { get; }
+
+    public GuigenButton(
+                GuigenBinding binding,
+                string icon,
+                string text,
+                EventHandler callback) {
+
+        Binding = binding;
+
+        ImageButton = new ImageButton {
+            Source = icon.GetFilename(),
+            WidthRequest = Binding.IconWidth,
+            HeightRequest = Binding.IconHeight,
+            };
+        ImageButton.Clicked += callback;
+
+        TextButton = new Button {
+            Text = text,
+            HeightRequest = Binding.ButtonHeight
+            };
+        TextButton.Clicked += callback;
+
+        Stack = new HorizontalStackLayout() { ImageButton, TextButton };
+        }
+
+
+    public GuigenButton(
+                GuigenBinding binding, GuiSection section, EventHandler callback) :
+            this(binding, section.Icon, section.Prompt, callback) {
+        }
+
+    public void SetState (ButtonState state) {
+        switch (state) {
+            case ButtonState.Enabled: {
+                ImageButton.IsEnabled = true;
+                TextButton.IsEnabled = true;
+                break;
+                }
+            case ButtonState.Active: {
+                ImageButton.IsEnabled = false; 
+                TextButton.IsEnabled = false;
+                break;
+                }
+            case ButtonState.Disabled: {
+                ImageButton.IsEnabled = false;
+                TextButton.IsEnabled = false;
+                break;
+                }
+            }
+
+        }
+
+
+    }
 
 
 
@@ -241,6 +312,7 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
     public GuigenMainFlyout(GuigenBinding binding) {
 
         Binding = binding;
+        binding.MainWindow = this; // Hack!!! Ugh!!!
         SectionMenu = new GuigenSectionMenu(Binding);
 
 
@@ -250,7 +322,7 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
             Flyout = SectionMenu.Page
             };
 
-        SetDetailWindow(Gui.DefaultSection);
+        Binding.GotoSection(Gui.DefaultSection);
 
 
         }
@@ -274,7 +346,7 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
 
         // Do we have this presentation cached?
         if (section.Presentation is not GuigenDetailSection detail) {
-            FlyoutPage.Detail = new GuigenDetailSection(this, section).Page;
+            FlyoutPage.Detail = new GuigenDetailSection(this.Binding, section).Page;
             return;
             }
 
@@ -294,7 +366,7 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
     /// </summary>
     /// <param name="result">The result to present.</param>
     public void SetResultWindow(IResult result) {
-        FlyoutPage.Detail = new GuigenDetailResult(this, result);
+        FlyoutPage.Detail = new GuigenDetailResult(this.Binding, result);
         }
 
 
@@ -306,7 +378,7 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
     /// <param name="action">The action window to raise.</param>
     public void SetDetailWindow(GuiAction action) {
         if (action.Presentation is not GuigenDetailSection detail) {
-            FlyoutPage.Detail = new GuigenDetailAction(this, action).Page;
+            FlyoutPage.Detail = new GuigenDetailAction(this.Binding, action).Page;
             return;
             }
 
