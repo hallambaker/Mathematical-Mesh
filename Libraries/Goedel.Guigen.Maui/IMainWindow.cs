@@ -28,7 +28,7 @@ public interface IMainWindow  {
 
     public int GetDetailWidth();
 
-
+    public void Reformat();
     public void SetDetailWindow(GuiSection section = null);
 
     public void SetDetailWindow(GuiAction action);

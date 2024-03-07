@@ -93,11 +93,19 @@ public class GuigenBinding {
 
     public int ButtonHeight = 30;
 
+    public Color BorderColor = Colors.Purple;
+    public Color ColorSelected = Colors.Purple;
+    public Color ColorEnabled= Colors.White;
+    public Color ColorInactive = Colors.Grey;
+    public Color TextSelected= Colors.White;
+    public Color TextEnabled = Colors.White;
+    public Color TextInactive = Colors.Grey;
+
     public Page Page =>MainWindow.Page;
 
     public IMainWindow MainWindow { get; set; }
 
-    public GuiSection CurrentSection { get; set; }
+
 
 
     //IMainWindow MainWindow => GuigenMainFlyout;
@@ -118,6 +126,55 @@ public class GuigenBinding {
         //Display = DisplayMode.Mobile;
         }
 
+
+    public void SetState(ButtonState state, ImageButton imageButton) {
+        switch (state) {
+            case ButtonState.Enabled: {
+                imageButton.IsEnabled = true;
+                imageButton.BorderColor = BorderColor;
+                imageButton.BackgroundColor = ColorSelected;
+                break;
+                }
+            case ButtonState.Selected: {
+                imageButton.IsEnabled = false;
+                imageButton.BorderColor = BorderColor;
+                imageButton.BackgroundColor = ColorSelected;
+                break;
+                }
+            case ButtonState.Disabled: {
+                imageButton.IsEnabled = false;
+                imageButton.BorderColor = ColorInactive;
+                imageButton.BackgroundColor = ColorInactive;
+                break;
+                }
+            }
+        }
+
+    public void SetState(ButtonState state, Button imageButton) {
+        switch (state) {
+            case ButtonState.Enabled: {
+                imageButton.IsEnabled = true;
+                imageButton.BorderColor = BorderColor;
+                imageButton.BackgroundColor = ColorSelected;
+                imageButton.TextColor = TextEnabled;
+                break;
+                }
+            case ButtonState.Selected: {
+                imageButton.IsEnabled = false;
+                imageButton.BorderColor = BorderColor;
+                imageButton.BackgroundColor = ColorSelected;
+                imageButton.TextColor = TextSelected;
+                break;
+                }
+            case ButtonState.Disabled: {
+                imageButton.IsEnabled = false;
+                imageButton.BorderColor = ColorInactive;
+                imageButton.BackgroundColor = ColorInactive;
+                imageButton.TextColor = ColorInactive;
+                break;
+                }
+            }
+        }
 
 
     /// <summary>
@@ -146,7 +203,9 @@ public class GuigenBinding {
 
 
     public void GotoSection(GuiSection section) {
-        CurrentSection = section;
+        Gui.CurrentSection = section;
+
+        MainWindow.Reformat();
         MainWindow.SetDetailWindow(section);
 
         }
@@ -228,69 +287,6 @@ public class GuigenBinding {
 
 
 
-public class GuigenButton {
-    GuigenBinding Binding { get; }
-    public View View => Stack;
-    Layout Stack { get; }
-    ImageButton ImageButton { get; }
-    Button TextButton { get; }
-
-    public GuigenButton(
-                GuigenBinding binding,
-                string icon,
-                string text,
-                EventHandler callback) {
-
-        Binding = binding;
-
-        ImageButton = new ImageButton {
-            Source = icon.GetFilename(),
-            WidthRequest = Binding.IconWidth,
-            HeightRequest = Binding.IconHeight,
-            };
-        ImageButton.Clicked += callback;
-
-        TextButton = new Button {
-            Text = text,
-            HeightRequest = Binding.ButtonHeight
-            };
-        TextButton.Clicked += callback;
-
-        Stack = new HorizontalStackLayout() { ImageButton, TextButton };
-        }
-
-
-    public GuigenButton(
-                GuigenBinding binding, GuiSection section, EventHandler callback) :
-            this(binding, section.Icon, section.Prompt, callback) {
-        }
-
-    public void SetState (ButtonState state) {
-        switch (state) {
-            case ButtonState.Enabled: {
-                ImageButton.IsEnabled = true;
-                TextButton.IsEnabled = true;
-                break;
-                }
-            case ButtonState.Active: {
-                ImageButton.IsEnabled = false; 
-                TextButton.IsEnabled = false;
-                break;
-                }
-            case ButtonState.Disabled: {
-                ImageButton.IsEnabled = false;
-                TextButton.IsEnabled = false;
-                break;
-                }
-            }
-
-        }
-
-
-    }
-
-
-
 public class GuigenMainFlyout : IReformat, IMainWindow {
     
     public StyleSheet StyleSheet => StyleSheet.DefaultStyleSheet;
@@ -325,6 +321,10 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
         Binding.GotoSection(Gui.DefaultSection);
 
 
+        }
+
+    public void Reformat() {
+        SectionMenu.Reformat();
         }
 
     public int GetDetailWidth() => (int) FlyoutPage.Window.Width;

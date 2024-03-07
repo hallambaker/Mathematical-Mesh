@@ -52,7 +52,7 @@ public class GuigenFieldList : GuigenField, IWidget {
 
             foreach (var property in entry.Binding.BoundProperties) {
                 if (property is GuiBoundPropertyIcon icon) {
-                    var evalue = icon.Get(entry) as FieldIcon;
+                    var evalue = icon.Get(entry);
 
 
                     var cell = new Image() {

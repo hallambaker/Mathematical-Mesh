@@ -82,7 +82,7 @@ public enum ReturnResult {
 
 public enum ButtonState {
     Enabled,
-    Active,
+    Selected,
     Disabled
 
 
@@ -426,7 +426,9 @@ public record GuiDialog(
 
     }
 
-
+public interface IGetState {
+    Func<ButtonState>? GetButton { get; }
+    }
 
 
 public record GuiSection (
@@ -435,7 +437,7 @@ public record GuiSection (
             string Icon,
             GuiBinding Binding,
             bool Primary
-            ) : GuiFieldSet(Id, Prompt, Binding), IButtonTarget {
+            ) : GuiFieldSet(Id, Prompt, Binding), IButtonTarget, IGetState {
 
     public Func<bool> Active { get; set; } = () => false;
 
@@ -457,7 +459,7 @@ public record GuiSection (
 
 
 
-    public Func<ButtonState>? GetButton = null;
+    public Func<ButtonState>? GetButton { get; set; } = null;
 
     }
 
@@ -513,4 +515,6 @@ public interface IFieldColor {
 public interface IFieldSize {
     }
 public interface IFieldIcon {
+
+    public string Source { get; }
     }

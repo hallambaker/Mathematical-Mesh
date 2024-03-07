@@ -14,6 +14,9 @@ public class GuigenSectionMenu : ContentPage, IReformat{
 
     Layout MenuLayout { get; set; }
 
+
+    List<GuigenButton> Buttons { get; } = new();
+
     public GuigenSectionMenu(GuigenBinding binding) {
         Binding = binding;
 
@@ -26,6 +29,8 @@ public class GuigenSectionMenu : ContentPage, IReformat{
                 }
 
             var button = new GuigenButton(Binding, section, callback);
+
+            Buttons.Add(button);
             MenuLayout.Add(button.View);
             }
 
@@ -37,6 +42,9 @@ public class GuigenSectionMenu : ContentPage, IReformat{
         }
 
     public void Reformat() {
+        foreach (var button in Buttons) {
+            button.Reformat();
+            }
         }
 
 

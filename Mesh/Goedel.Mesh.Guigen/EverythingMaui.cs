@@ -178,10 +178,10 @@ public partial class EverythingMaui {
         }
 
     ButtonState ButtonStateUnconditional (GuiSection section) =>
-        CurrentSection == section ? ButtonState.Active : ButtonState.Enabled;
+        CurrentSection == section ? ButtonState.Selected : ButtonState.Enabled;
 
     ButtonState ButtonStateConditional(GuiSection section) =>
-        CurrentSection == section ? ButtonState.Active : 
+        CurrentSection == section ? ButtonState.Selected : 
             (CurrentAccount is null ? ButtonState.Disabled : ButtonState.Enabled);
 
 
