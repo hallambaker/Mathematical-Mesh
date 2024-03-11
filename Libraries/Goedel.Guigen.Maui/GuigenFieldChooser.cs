@@ -93,8 +93,10 @@ public class GuigenFieldChooser : GuigenField {
         SelectCollection = TypedBinding.Get(data);
 
         if (SelectCollection == null) {
-            SelectCollection = new SelectList();
-            TypedBinding.Set(data, SelectCollection);
+            return;
+
+            //SelectCollection = new SelectList();
+            //TypedBinding.Set(data, SelectCollection);
             }
 
         ListView.ItemsSource = SelectCollection.Entries;

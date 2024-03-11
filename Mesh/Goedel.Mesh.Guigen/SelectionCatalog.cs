@@ -13,9 +13,7 @@ public static class Extensions {
     public static string ParseComments(this List<string> texts) =>
         texts.First();
 
-
-
-    public static string NullifyIfEmpty (this string text) => text == "" ? null : text;
+    public static string? NullifyIfEmpty (this string text) => text == "" ? null : text;
     }
 
 

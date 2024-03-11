@@ -30,11 +30,11 @@ public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
         var stack = new VerticalStackLayout();
         HorizontalStackLayout buttonbar = null;
 
-        var label = new Label() {
-            Text = section.Prompt,
-            };
+        //var label = new Label() {
+        //    Text = section.Prompt,
+        //    };
 
-        stack.Add(label);
+        //stack.Add(label);
 
         foreach (var entry in section.Entries) {
             switch (entry) {

@@ -70,6 +70,8 @@ public partial class EverythingMaui {
                 deviceDescription: deviceDescription);
 
             // Make this the current account!
+            var bound = GetBoundAccount(contextUser);
+            SetContext(bound);
 
 
             return new ReportAccountCreate() {

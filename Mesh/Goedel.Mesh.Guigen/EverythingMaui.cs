@@ -56,7 +56,7 @@ public partial class EverythingMaui {
 
     public Dictionary<string, IMessageable> WaitingOnMessage { get; } = [];
 
-
+    Task SyncTask { get; set; }
 
 
     AccountSection AccountSection { get; }
@@ -73,17 +73,17 @@ public partial class EverythingMaui {
 
         MeshMachine = new MeshMachineCore();
         //MeshHost.ConfigureMesh("alice@example.com", "null");
-        
+
         //var accounts = new AccountSection(null);
         //accounts
+
+        BoundAccount? currentAccount = null;
         foreach (var entry in MeshHost.ObjectIndex) {
             var catalogedMachine = entry.Value.JsonObject as CatalogedMachine;
             switch (catalogedMachine) {
                 case CatalogedStandard standardEntry: {
-                    var bound = GetContextUser(standardEntry);
-                    BoundAccounts.Add(bound);
-
-                    CurrentAccount ??= bound;
+                    var bound = GetBoundAccount(standardEntry);
+                    currentAccount ??= bound;
                     break;
                     }
                 }
@@ -98,12 +98,19 @@ public partial class EverythingMaui {
         SectionSettingSection.Data = Settings;
         //SetContext(MeshHost.GetContext(MeshHost.DefaultAccount) as ContextUser);
 
-        SetContext(CurrentAccount);
+        SetContext(currentAccount);
         }
 
-
-    BoundAccount GetContextUser(CatalogedStandard catalogedStandard ) {
+    BoundAccount? GetBoundAccount(CatalogedStandard catalogedStandard) {
         var contextUser = MeshHost.GetContext(catalogedStandard) as ContextUser;
+        if (contextUser == null) {
+            return null;
+            }
+
+        return GetBoundAccount(contextUser);
+        }
+     BoundAccount GetBoundAccount(ContextUser contextUser) {
+        //contextUser.StatusAsync().Sync();
 
         contextUser.DictionaryCatalogDelegates.Replace(CatalogContact.Label, GuigenCatalogContact.Factory);
         contextUser.DictionaryCatalogDelegates.Replace(CatalogDocument.Label, GuigenCatalogApplication.Factory);
@@ -120,7 +127,12 @@ public partial class EverythingMaui {
         contextUser.DictionarySpoolDelegates.Replace(SpoolOutbound.Label, GuigenSpoolOutbound.Factory);
         contextUser.DictionarySpoolDelegates.Replace(SpoolLocal.Label, GuigenSpoolLocal.Factory);
 
-        return new BoundAccount(contextUser);
+        var bound = new BoundAccount(contextUser);
+
+        BoundAccounts.Add(bound);
+        //CurrentAccount ??= bound;
+
+        return bound;
         }
 
 
@@ -131,8 +143,19 @@ public partial class EverythingMaui {
 
 
     public void SetContext(BoundAccount? boundAccount) {
+        if (CurrentAccount == boundAccount) {
+            return;
+            }
+        if (CurrentAccount is not null) {
+            CurrentAccount.Synchronize = false;
+            }
+        if (boundAccount is  null) {
+            return;
+            }
 
         CurrentAccount = boundAccount;
+
+
 
         // Accounts and settings are always active or enabled
         SectionAccountSection.GetButton = () => ButtonStateUnconditional (SectionAccountSection);
@@ -174,6 +197,9 @@ public partial class EverythingMaui {
 
         SectionServiceSection.BindData = () => CurrentAccount?.Services;
         SectionServiceSection.GetButton = () => ButtonStateConditional(SectionServiceSection);
+
+        boundAccount.Synchronize = true;
+        SyncTask = boundAccount.StartSync();
 
         }
 

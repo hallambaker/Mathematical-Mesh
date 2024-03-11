@@ -32,6 +32,7 @@ public class RudStreamClient : RudStream, IJpcSession {
     ///<inheritdoc/>
     public virtual string TargetAccount => throw new NYI();
 
+    SemaphoreSlim SemaphoreSlim { get; } = new (1,1);
 
     #endregion
     #region // Constructors
@@ -87,8 +88,15 @@ public class RudStreamClient : RudStream, IJpcSession {
             await Initialize();
             }
 
+        await SemaphoreSlim.WaitAsync();
 
-        return await base.PostAsync(tag, request);
+        // We only have one outstanding 
+        try {
+            return await base.PostAsync(tag, request);
+            }
+        finally {
+            SemaphoreSlim.Release();
+            }
         }
 
     ///<inheritdoc cref="IJpcSession"/>

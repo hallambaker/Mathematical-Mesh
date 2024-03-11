@@ -1,4 +1,5 @@
 ﻿using Goedel.Cryptography.Dare;
+using Goedel.Mesh.Client;
 
 using System.Collections;
 using System.Collections.Specialized;
@@ -51,7 +52,9 @@ public partial class AccountSection: IAccountSelector {
 
 
 public partial class BoundAccount : IBoundPresentation, IDialog, IAccountSelector {
+    public bool Synchronize { get; set; }
 
+    public int Polling { get; set; } = 60*1000;
 
     public ContextUser ContextUser  { get; }
 
@@ -124,6 +127,20 @@ public partial class BoundAccount : IBoundPresentation, IDialog, IAccountSelecto
 
     public BoundAccount(ContextUser? contextUser =null) {
         ContextUser = contextUser;
+        }
+
+
+
+    public async Task StartSync() {
+        while (Synchronize) {
+            var result = await ContextUser.SyncPartialAsync();
+
+
+            // if synchronized
+            if (result.Complete) {
+                await Task.Delay(Polling);
+                }
+            }
         }
 
 
