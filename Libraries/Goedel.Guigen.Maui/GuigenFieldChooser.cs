@@ -186,12 +186,15 @@ public class GuigenFieldChooser : GuigenField {
         //ButtonBar.Clear();
         //SelectionDialog.AddButtons(ButtonBar);
         SelectionDialog.SetFields(bindable);
+        FieldSet.ButtonBox.Clear();
+        SelectionDialog.AddButtons(FieldSet.ButtonBox);
 
-        MainWindow.Binding.Dispatcher.Dispatch(() => {
-            FieldSet.ButtonBox.Clear();
-            SelectionDialog.AddButtons(FieldSet.ButtonBox);
-            (FieldSet.ButtonBox as IView).InvalidateArrange();
-            });
+
+        //MainWindow.Binding.Dispatcher.Dispatch(() => {
+        //    FieldSet.ButtonBox.Clear();
+        //    SelectionDialog.AddButtons(FieldSet.ButtonBox);
+        //    (FieldSet.ButtonBox as IView).InvalidateArrange();
+        //    });
         // now add in all the buttons from entries.
 
 

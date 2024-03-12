@@ -52,6 +52,7 @@ public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
 
 
         FieldSet = new GuigenFieldSet(Binding, section.Entries, stack, section.Binding);
+        stack.Add (FieldSet.ButtonBox);
 
         Refresh();
 
