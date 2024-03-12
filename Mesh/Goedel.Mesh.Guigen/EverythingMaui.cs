@@ -149,54 +149,54 @@ public partial class EverythingMaui {
         if (CurrentAccount is not null) {
             CurrentAccount.Synchronize = false;
             }
-        if (boundAccount is  null) {
+        if (boundAccount is null) {
             return;
             }
 
         CurrentAccount = boundAccount;
 
-
-
         // Accounts and settings are always active or enabled
-        SectionAccountSection.GetButton = () => ButtonStateUnconditional (SectionAccountSection);
+        SectionAccountSection.GetButton = () => ButtonStateUnconditional(SectionAccountSection);
         SectionSettingSection.GetButton = () => ButtonStateUnconditional(SectionSettingSection);
 
         // These sections only available if there is an account
-        SectionMessageSection.BindData = () => CurrentAccount?.MessageSection;
-        SectionMessageSection.GetButton = () => ButtonStateConditional(SectionMessageSection);
+        SectionMessageSection.Reset(() => CurrentAccount?.MessageSection,
+                () => ButtonStateConditional(SectionMessageSection));
 
-        SectionContactSection.BindData = () => CurrentAccount?.Contacts;
-        SectionContactSection.GetButton = () => ButtonStateConditional(SectionContactSection);
+        SectionContactSection.Reset(() => CurrentAccount?.Contacts,
+                () => ButtonStateConditional(SectionContactSection));
 
-        SectionBookmarkSection.BindData = () => CurrentAccount?.Bookmarks;
-        SectionBookmarkSection.GetButton = () => ButtonStateConditional(SectionBookmarkSection);
+        SectionBookmarkSection.Reset(() => CurrentAccount?.Bookmarks,
+                () => ButtonStateConditional(SectionBookmarkSection));
 
-        SectionDocumentSection.BindData = () => CurrentAccount?.Documents;
-        SectionDocumentSection.GetButton = () => ButtonStateConditional(SectionDocumentSection);
+        SectionDocumentSection.Reset(() => CurrentAccount?.Documents,
+                () => ButtonStateConditional(SectionDocumentSection));
 
-        SectionGroupSection.BindData = () => CurrentAccount?.Groups;
-        SectionGroupSection.GetButton = () => ButtonStateConditional(SectionGroupSection);
 
-        SectionFeedSection.BindData = () => CurrentAccount?.Feeds;
-        SectionFeedSection.GetButton = () => ButtonStateConditional(SectionFeedSection);
+        SectionGroupSection.Reset(() => CurrentAccount?.Groups,
+                () => ButtonStateConditional(SectionGroupSection));
 
-        SectionCredentialSection.BindData = () => CurrentAccount?.Credentials;
-        SectionCredentialSection.GetButton = () => ButtonStateConditional(SectionCredentialSection);
+        SectionFeedSection.Reset(() => CurrentAccount?.Feeds,
+                () => ButtonStateConditional(SectionFeedSection));
 
-        SectionTaskSection.BindData = () => CurrentAccount?.Tasks;
-        SectionTaskSection.GetButton = () => ButtonStateConditional(SectionTaskSection);
+        SectionCredentialSection.Reset(() => CurrentAccount?.Credentials,
+                () => ButtonStateConditional(SectionCredentialSection));
 
-        SectionCalendarSection.BindData = () => CurrentAccount?.Calendar;
-        SectionCalendarSection.GetButton = () => ButtonStateConditional(SectionCalendarSection);
+        SectionTaskSection.Reset(() => CurrentAccount?.Tasks,
+                () => ButtonStateConditional(SectionTaskSection));
 
-        SectionApplicationSection.BindData = () => CurrentAccount?.Applications;
-        SectionApplicationSection.GetButton = () => ButtonStateConditional(SectionApplicationSection);
 
-        SectionDeviceSection.BindData = () => CurrentAccount?.Devices;
-        SectionDeviceSection.GetButton = () => ButtonStateConditional(SectionDeviceSection);
+        SectionCalendarSection.Reset(() => CurrentAccount?.Calendar,
+                () => ButtonStateConditional(SectionCalendarSection));
 
-        SectionServiceSection.BindData = () => CurrentAccount?.Services;
-        SectionServiceSection.GetButton = () => ButtonStateConditional(SectionServiceSection);
+        SectionApplicationSection.Reset(() => CurrentAccount?.Applications,
+                () => ButtonStateConditional(SectionApplicationSection));
+
+        SectionDeviceSection.Reset(() => CurrentAccount?.Devices,
+                () => ButtonStateConditional(SectionDeviceSection));
+
+        SectionServiceSection.Reset(() => CurrentAccount?.Services,
+                () => ButtonStateConditional(SectionServiceSection));
 
         boundAccount.Synchronize = true;
         SyncTask = boundAccount.StartSync();

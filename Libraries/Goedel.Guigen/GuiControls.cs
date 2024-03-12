@@ -461,6 +461,12 @@ public record GuiSection (
 
     public Func<ButtonState>? GetButton { get; set; } = null;
 
+    public void Reset(Func<IBindable?> bindData, Func<ButtonState>? getButton) {
+        Data = null;
+        BindData = bindData;
+        GetButton = getButton;
+        }
+
     }
 
 
