@@ -1,6 +1,8 @@
 ﻿using Goedel.Utilities;
 
 using Microsoft.Maui.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
+
 using System.Runtime.CompilerServices;
 
 using static System.Collections.Specialized.BitVector32;
@@ -181,6 +183,8 @@ public class GuigenFieldChooser : GuigenField {
         var entries = dialog.Dialog(gui).Entries;
         EntryForm.Clear();
         SelectionDialog = new GuigenFieldSet(Binding, entries, EntryForm, bindable.Binding, false);
+        ButtonBar.Clear();
+        SelectionDialog.AddButtons(ButtonBar);
         SelectionDialog.SetFields(bindable);
 
         MainWindow.Binding.Dispatcher.Dispatch(() => {

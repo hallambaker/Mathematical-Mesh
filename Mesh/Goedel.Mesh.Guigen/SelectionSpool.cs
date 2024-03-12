@@ -18,7 +18,9 @@ public abstract class SelectionSpool<TCatalog, TBindable> : SelectionStore<TCata
                 if (meshMessage != null) {
 
                     var bindable = ConvertToBindable(index);
-                    Entries.Add(bindable);
+                    if (bindable != null) {
+                        Entries.Add(bindable);
+                        }
 
                     }
                 }

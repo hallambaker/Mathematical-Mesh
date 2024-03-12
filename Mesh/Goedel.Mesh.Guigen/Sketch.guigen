@@ -177,60 +177,37 @@ Dialog BoundMailMail "Mail" "messages"
 	Inherit BoundMessage
 	TextArea Message "Message"
 
-Dialog BoundMessageConfirmationRequest "Mail" "circle_question"
+Dialog BoundMessageActionRequest "Message" "contacts"
 	Inherit BoundMessage
 	Text RequestMessage "Request"
-	Selection ConfirmationAccept "Accept" "circle_check"
+	Selection ActionAccept "Accept" "circle_check"
 		Description
-			|Accept a contact request	
-	Selection ConfirmationReject "Reject" "circle_cross"
+			|Accept the request	
+	Selection ActionReject "Reject" "circle_cross"
 		Description
-			|Reject a contact request
+			|Reject the request
 
+Dialog BoundMessageConfirmationRequest "Mail" "circle_question"
+	Inherit BoundMessageActionRequest
 
 Dialog BoundMessageConfirmationResponse "Mail" "circle_check"
 	Inherit BoundMessage
 
-
 Dialog BoundMessageContactRequest "Mail" "contact"
-	Inherit BoundMessage
-	Selection ContactAccept "Accept" "circle_check"
-		Description
-			|Accept a contact request	
-	Selection ContactReject "Reject" "circle_cross"
-		Description
-			|Reject a contact request
+	Inherit BoundMessageActionRequest
 
+Dialog BoundMessageAcknowledgeConnection "Mail" "connect"
+	Inherit BoundMessageActionRequest
 
 Dialog BoundMessageConnectionRequest "Mail" "connect"
-	Inherit BoundMessage
-	Text RequestMessage "Request"
-	Selection ConnectAccept "Accept" "circle_check"
-		Description
-			|Accept a contact request	
-	Selection ConnectReject "Reject" "circle_cross"
-		Description
-			|Reject a contact request
-
+	Inherit BoundMessageActionRequest
 
 Dialog BoundMessageGroupInvitation "Mail" "groups"
-	Inherit BoundMessage
-	Selection GroupAccept "Accept" "circle_check"
-		Description
-			|Accept a contact request	
-	Selection GroupReject "Reject" "circle_cross"
-		Description
-			|Reject a contact request
-
+	Inherit BoundMessageActionRequest
 
 Dialog BoundMessageTaskRequest "Mail" "task"
-	Inherit BoundMessage
-	Selection TaskAccept "Accept" "circle_check"
-		Description
-			|Accept a contact request	
-	Selection TaskReject "Reject" "circle_cross"
-		Description
-			|Reject a contact request
+	Inherit BoundMessageActionRequest
+
 
 
 // **** Contacts

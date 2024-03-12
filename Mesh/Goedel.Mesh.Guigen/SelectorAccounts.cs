@@ -135,7 +135,6 @@ public partial class BoundAccount : IBoundPresentation, IDialog, IAccountSelecto
         while (Synchronize) {
             var result = await ContextUser.SyncPartialAsync();
 
-
             // if synchronized
             if (result.Complete) {
                 await Task.Delay(Polling);

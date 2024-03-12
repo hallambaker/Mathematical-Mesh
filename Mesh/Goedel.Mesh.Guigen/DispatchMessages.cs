@@ -64,52 +64,15 @@ public partial class EverythingMaui {
 
 
 
-    #region Contact
+    #region Process actions
     ///<inheritdoc/>
-    public override async Task<IResult> ContactAccept(BoundMessageContactRequest data) =>
-        await Process(data, true, true);
-
-    ///<inheritdoc/>
-    public override async Task<IResult> ContactReject(BoundMessageContactRequest data) =>
-        await Process(data, false, true);
-
-    #endregion
-    #region Confirmation
-    ///<inheritdoc/>
-    public override async Task<IResult> ConfirmationAccept(BoundMessageConfirmationRequest data) =>
+    public override async Task<IResult> ActionAccept(BoundMessageActionRequest data) =>
         await Process(data, true);
 
     ///<inheritdoc/>
-    public override async Task<IResult> ConfirmationReject(BoundMessageConfirmationRequest data) =>
+    public override async Task<IResult> ActionReject(BoundMessageActionRequest data) =>
         await Process(data, false);
 
-    #endregion
-    #region Device
-    ///<inheritdoc/>
-    public override async Task<IResult> ConnectAccept(BoundMessageConnectionRequest data) =>
-        await Process(data, true);
-
-    ///<inheritdoc/>
-    public override async Task<IResult> ConnectReject(BoundMessageConnectionRequest data) =>
-        await Process(data, false);
-    #endregion
-    #region Group
-    ///<inheritdoc/>
-    public override async Task<IResult> GroupAccept(BoundMessageGroupInvitation data) =>
-        await Process(data, true);
-
-    ///<inheritdoc/>
-    public override async Task<IResult> GroupReject(BoundMessageGroupInvitation data) =>
-        await Process(data, false);
-    #endregion
-    #region Task
-    ///<inheritdoc/>
-    public override async Task<IResult> TaskAccept(BoundMessageTaskRequest data) =>
-        await Process(data, true);
-
-    ///<inheritdoc/>
-    public override async Task<IResult> TaskReject(BoundMessageTaskRequest data) =>
-        await Process(data, false);
     #endregion
 
     async Task<IResult> Process(BoundMessage data, bool accept, bool reciprocate = false) {

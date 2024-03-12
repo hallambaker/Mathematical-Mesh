@@ -50,8 +50,13 @@ public partial class BoundMessage : IBoundPresentation, IDialog {
         return result;
         }
 
-    public static BoundMessage Convert(SpoolIndexEntry input) {
+    public static BoundMessage? Convert(SpoolIndexEntry input) {
         var message = input.Message;
+        if (message is MessageComplete) {
+            return null;
+            }
+
+
         var result = new BoundMessage();
         result.Fill(input);
 
@@ -89,6 +94,30 @@ public partial class BoundMessageConnectionRequest {
         return result;
         }
     }
+
+public partial class BoundMessageAcknowledgeConnection {
+
+    public override IFieldIcon Type => FieldIcons.Connection(IsRead);
+
+    public override Message Convert() {
+        var result = new Message();
+        return result;
+        }
+
+    public static new BoundMessageAcknowledgeConnection Convert(SpoolIndexEntry input) {
+        var message = input.Message as AcknowledgeConnection;
+        var result = new BoundMessageAcknowledgeConnection();
+        result.Fill(input);
+
+
+
+        result.Subject ??= $"Device Connection Request {message.Witness}";
+        result.Sender ??= message.MessageConnectionRequest.ProfileDevice.UdfString;
+
+        return result;
+        }
+    }
+
 
 public partial class BoundMailMail {
 
@@ -455,6 +484,9 @@ public partial class MessageSelection : SelectionSpool<GuigenSpoolInbound, Bound
             case MessageMail: {
                 return BoundMailMail.Convert(input);
                 }
+            case AcknowledgeConnection: {
+                return BoundMessageAcknowledgeConnection.Convert(input);
+                }
             case RequestConnection: {
                 return BoundMessageConnectionRequest.Convert(input);
                 }
@@ -473,6 +505,7 @@ public partial class MessageSelection : SelectionSpool<GuigenSpoolInbound, Bound
             case RequestTask: {
                 return BoundMessageTaskRequest.Convert(input);
                 }
+            //case Compl
             default: {
                 return BoundMessage.Convert(input);
                 }

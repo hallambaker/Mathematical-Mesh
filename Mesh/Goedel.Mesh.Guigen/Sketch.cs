@@ -660,6 +660,61 @@ public partial class _BoundMailMail : BoundMessage {
     }
 
 /// <summary>
+/// Callback parameters for dialog BoundMessageActionRequest 
+/// </summary>
+public partial class BoundMessageActionRequest : _BoundMessageActionRequest {
+    // <summary>Type check verification.</summary>
+    // public static new Func<object, bool> IsBacker { get; set; } = (object _) => false; 
+    }
+
+/// <summary>
+/// Callback parameters for section BoundMessageActionRequest 
+/// </summary>
+public partial class _BoundMessageActionRequest : BoundMessage {
+
+
+    ///<summary></summary> 
+    public virtual string? RequestMessage { get; set;} 
+
+
+    ///<inheritdoc/>
+    public override GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static new GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _BoundMessageActionRequest,
+        () => new BoundMessageActionRequest(),
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessageActionRequest)?.Type , null), 
+            new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessageActionRequest)?.TimeSent , 
+                (object data,string? value) => { if (data is _BoundMessageActionRequest datad) { datad.TimeSent = value; }}, Width: 100), 
+            new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageActionRequest)?.Sender , 
+                (object data,string? value) => { if (data is _BoundMessageActionRequest datad) { datad.Sender = value; }}, Width: 150), 
+            new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageActionRequest)?.Subject , 
+                (object data,string? value) => { if (data is _BoundMessageActionRequest datad) { datad.Subject = value; }}, Width: 300), 
+            new GuiBoundPropertyString ("RequestMessage", "Request", (object data) => (data as _BoundMessageActionRequest)?.RequestMessage , 
+                (object data,string? value) => { if (data is _BoundMessageActionRequest datad) { datad.RequestMessage = value; }}), 
+            new GuiBoundPropertySelection ("ActionAccept", "Accept"), 
+            new GuiBoundPropertySelection ("ActionReject", "Reject")
+            ]);
+    ///<summary>Validation</summary> 
+    public override IResult Validate(Gui gui) {
+        GuiResultInvalid? result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
+    }
+
+/// <summary>
 /// Callback parameters for dialog BoundMessageConfirmationRequest 
 /// </summary>
 public partial class BoundMessageConfirmationRequest : _BoundMessageConfirmationRequest {
@@ -670,11 +725,8 @@ public partial class BoundMessageConfirmationRequest : _BoundMessageConfirmation
 /// <summary>
 /// Callback parameters for section BoundMessageConfirmationRequest 
 /// </summary>
-public partial class _BoundMessageConfirmationRequest : BoundMessage {
+public partial class _BoundMessageConfirmationRequest : BoundMessageActionRequest {
 
-
-    ///<summary></summary> 
-    public virtual string? RequestMessage { get; set;} 
 
 
     ///<inheritdoc/>
@@ -694,8 +746,8 @@ public partial class _BoundMessageConfirmationRequest : BoundMessage {
                 (object data,string? value) => { if (data is _BoundMessageConfirmationRequest datad) { datad.Subject = value; }}, Width: 300), 
             new GuiBoundPropertyString ("RequestMessage", "Request", (object data) => (data as _BoundMessageConfirmationRequest)?.RequestMessage , 
                 (object data,string? value) => { if (data is _BoundMessageConfirmationRequest datad) { datad.RequestMessage = value; }}), 
-            new GuiBoundPropertySelection ("ConfirmationAccept", "Accept"), 
-            new GuiBoundPropertySelection ("ConfirmationReject", "Reject")
+            new GuiBoundPropertySelection ("ActionAccept", "Accept"), 
+            new GuiBoundPropertySelection ("ActionReject", "Reject")
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -773,7 +825,7 @@ public partial class BoundMessageContactRequest : _BoundMessageContactRequest {
 /// <summary>
 /// Callback parameters for section BoundMessageContactRequest 
 /// </summary>
-public partial class _BoundMessageContactRequest : BoundMessage {
+public partial class _BoundMessageContactRequest : BoundMessageActionRequest {
 
 
 
@@ -792,8 +844,62 @@ public partial class _BoundMessageContactRequest : BoundMessage {
                 (object data,string? value) => { if (data is _BoundMessageContactRequest datad) { datad.Sender = value; }}, Width: 150), 
             new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageContactRequest)?.Subject , 
                 (object data,string? value) => { if (data is _BoundMessageContactRequest datad) { datad.Subject = value; }}, Width: 300), 
-            new GuiBoundPropertySelection ("ContactAccept", "Accept"), 
-            new GuiBoundPropertySelection ("ContactReject", "Reject")
+            new GuiBoundPropertyString ("RequestMessage", "Request", (object data) => (data as _BoundMessageContactRequest)?.RequestMessage , 
+                (object data,string? value) => { if (data is _BoundMessageContactRequest datad) { datad.RequestMessage = value; }}), 
+            new GuiBoundPropertySelection ("ActionAccept", "Accept"), 
+            new GuiBoundPropertySelection ("ActionReject", "Reject")
+            ]);
+    ///<summary>Validation</summary> 
+    public override IResult Validate(Gui gui) {
+        GuiResultInvalid? result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
+    }
+
+/// <summary>
+/// Callback parameters for dialog BoundMessageAcknowledgeConnection 
+/// </summary>
+public partial class BoundMessageAcknowledgeConnection : _BoundMessageAcknowledgeConnection {
+    // <summary>Type check verification.</summary>
+    // public static new Func<object, bool> IsBacker { get; set; } = (object _) => false; 
+    }
+
+/// <summary>
+/// Callback parameters for section BoundMessageAcknowledgeConnection 
+/// </summary>
+public partial class _BoundMessageAcknowledgeConnection : BoundMessageActionRequest {
+
+
+
+    ///<inheritdoc/>
+    public override GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static new GuiBinding BaseBinding  { get; } = new (
+        (object test) => test is _BoundMessageAcknowledgeConnection,
+        () => new BoundMessageAcknowledgeConnection(),
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessageAcknowledgeConnection)?.Type , null), 
+            new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessageAcknowledgeConnection)?.TimeSent , 
+                (object data,string? value) => { if (data is _BoundMessageAcknowledgeConnection datad) { datad.TimeSent = value; }}, Width: 100), 
+            new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageAcknowledgeConnection)?.Sender , 
+                (object data,string? value) => { if (data is _BoundMessageAcknowledgeConnection datad) { datad.Sender = value; }}, Width: 150), 
+            new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageAcknowledgeConnection)?.Subject , 
+                (object data,string? value) => { if (data is _BoundMessageAcknowledgeConnection datad) { datad.Subject = value; }}, Width: 300), 
+            new GuiBoundPropertyString ("RequestMessage", "Request", (object data) => (data as _BoundMessageAcknowledgeConnection)?.RequestMessage , 
+                (object data,string? value) => { if (data is _BoundMessageAcknowledgeConnection datad) { datad.RequestMessage = value; }}), 
+            new GuiBoundPropertySelection ("ActionAccept", "Accept"), 
+            new GuiBoundPropertySelection ("ActionReject", "Reject")
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -823,11 +929,8 @@ public partial class BoundMessageConnectionRequest : _BoundMessageConnectionRequ
 /// <summary>
 /// Callback parameters for section BoundMessageConnectionRequest 
 /// </summary>
-public partial class _BoundMessageConnectionRequest : BoundMessage {
+public partial class _BoundMessageConnectionRequest : BoundMessageActionRequest {
 
-
-    ///<summary></summary> 
-    public virtual string? RequestMessage { get; set;} 
 
 
     ///<inheritdoc/>
@@ -847,8 +950,8 @@ public partial class _BoundMessageConnectionRequest : BoundMessage {
                 (object data,string? value) => { if (data is _BoundMessageConnectionRequest datad) { datad.Subject = value; }}, Width: 300), 
             new GuiBoundPropertyString ("RequestMessage", "Request", (object data) => (data as _BoundMessageConnectionRequest)?.RequestMessage , 
                 (object data,string? value) => { if (data is _BoundMessageConnectionRequest datad) { datad.RequestMessage = value; }}), 
-            new GuiBoundPropertySelection ("ConnectAccept", "Accept"), 
-            new GuiBoundPropertySelection ("ConnectReject", "Reject")
+            new GuiBoundPropertySelection ("ActionAccept", "Accept"), 
+            new GuiBoundPropertySelection ("ActionReject", "Reject")
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -878,7 +981,7 @@ public partial class BoundMessageGroupInvitation : _BoundMessageGroupInvitation 
 /// <summary>
 /// Callback parameters for section BoundMessageGroupInvitation 
 /// </summary>
-public partial class _BoundMessageGroupInvitation : BoundMessage {
+public partial class _BoundMessageGroupInvitation : BoundMessageActionRequest {
 
 
 
@@ -897,8 +1000,10 @@ public partial class _BoundMessageGroupInvitation : BoundMessage {
                 (object data,string? value) => { if (data is _BoundMessageGroupInvitation datad) { datad.Sender = value; }}, Width: 150), 
             new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageGroupInvitation)?.Subject , 
                 (object data,string? value) => { if (data is _BoundMessageGroupInvitation datad) { datad.Subject = value; }}, Width: 300), 
-            new GuiBoundPropertySelection ("GroupAccept", "Accept"), 
-            new GuiBoundPropertySelection ("GroupReject", "Reject")
+            new GuiBoundPropertyString ("RequestMessage", "Request", (object data) => (data as _BoundMessageGroupInvitation)?.RequestMessage , 
+                (object data,string? value) => { if (data is _BoundMessageGroupInvitation datad) { datad.RequestMessage = value; }}), 
+            new GuiBoundPropertySelection ("ActionAccept", "Accept"), 
+            new GuiBoundPropertySelection ("ActionReject", "Reject")
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -928,7 +1033,7 @@ public partial class BoundMessageTaskRequest : _BoundMessageTaskRequest {
 /// <summary>
 /// Callback parameters for section BoundMessageTaskRequest 
 /// </summary>
-public partial class _BoundMessageTaskRequest : BoundMessage {
+public partial class _BoundMessageTaskRequest : BoundMessageActionRequest {
 
 
 
@@ -947,8 +1052,10 @@ public partial class _BoundMessageTaskRequest : BoundMessage {
                 (object data,string? value) => { if (data is _BoundMessageTaskRequest datad) { datad.Sender = value; }}, Width: 150), 
             new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageTaskRequest)?.Subject , 
                 (object data,string? value) => { if (data is _BoundMessageTaskRequest datad) { datad.Subject = value; }}, Width: 300), 
-            new GuiBoundPropertySelection ("TaskAccept", "Accept"), 
-            new GuiBoundPropertySelection ("TaskReject", "Reject")
+            new GuiBoundPropertyString ("RequestMessage", "Request", (object data) => (data as _BoundMessageTaskRequest)?.RequestMessage , 
+                (object data,string? value) => { if (data is _BoundMessageTaskRequest datad) { datad.RequestMessage = value; }}), 
+            new GuiBoundPropertySelection ("ActionAccept", "Accept"), 
+            new GuiBoundPropertySelection ("ActionReject", "Reject")
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -4090,16 +4197,16 @@ public partial class _AccountSelect : IParameter {
 
 
 /// <summary>
-/// Callback parameters for action ConfirmationAccept 
+/// Callback parameters for action ActionAccept 
 /// </summary>
-public partial class ConfirmationAccept : _ConfirmationAccept {
+public partial class ActionAccept : _ActionAccept {
     }
 
 
 /// <summary>
-/// Callback parameters for action ConfirmationAccept 
+/// Callback parameters for action ActionAccept 
 /// </summary>
-public partial class _ConfirmationAccept : IParameter {
+public partial class _ActionAccept : IParameter {
 
 
     ///<inheritdoc/>
@@ -4107,8 +4214,8 @@ public partial class _ConfirmationAccept : IParameter {
 
     ///<summary>The binding for the data type.</summary> 
     public static  GuiBinding BaseBinding  { get; } = new (
-        (object test) => test is _ConfirmationAccept,
-        () => new ConfirmationAccept(),
+        (object test) => test is _ActionAccept,
+        () => new ActionAccept(),
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
@@ -4129,16 +4236,16 @@ public partial class _ConfirmationAccept : IParameter {
 
 
 /// <summary>
-/// Callback parameters for action ConfirmationReject 
+/// Callback parameters for action ActionReject 
 /// </summary>
-public partial class ConfirmationReject : _ConfirmationReject {
+public partial class ActionReject : _ActionReject {
     }
 
 
 /// <summary>
-/// Callback parameters for action ConfirmationReject 
+/// Callback parameters for action ActionReject 
 /// </summary>
-public partial class _ConfirmationReject : IParameter {
+public partial class _ActionReject : IParameter {
 
 
     ///<inheritdoc/>
@@ -4146,320 +4253,8 @@ public partial class _ConfirmationReject : IParameter {
 
     ///<summary>The binding for the data type.</summary> 
     public static  GuiBinding BaseBinding  { get; } = new (
-        (object test) => test is _ConfirmationReject,
-        () => new ConfirmationReject(),
-        Array.Empty<GuiBoundProperty>());
-    ///<summary>Validation</summary> 
-    public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid? result = null;
-
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
-
-
-    ///<summary>Teardown.</summary> 
-    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
-
-
-    }
-
-
-/// <summary>
-/// Callback parameters for action ContactAccept 
-/// </summary>
-public partial class ContactAccept : _ContactAccept {
-    }
-
-
-/// <summary>
-/// Callback parameters for action ContactAccept 
-/// </summary>
-public partial class _ContactAccept : IParameter {
-
-
-    ///<inheritdoc/>
-    public virtual GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static  GuiBinding BaseBinding  { get; } = new (
-        (object test) => test is _ContactAccept,
-        () => new ContactAccept(),
-        Array.Empty<GuiBoundProperty>());
-    ///<summary>Validation</summary> 
-    public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid? result = null;
-
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
-
-
-    ///<summary>Teardown.</summary> 
-    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
-
-
-    }
-
-
-/// <summary>
-/// Callback parameters for action ContactReject 
-/// </summary>
-public partial class ContactReject : _ContactReject {
-    }
-
-
-/// <summary>
-/// Callback parameters for action ContactReject 
-/// </summary>
-public partial class _ContactReject : IParameter {
-
-
-    ///<inheritdoc/>
-    public virtual GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static  GuiBinding BaseBinding  { get; } = new (
-        (object test) => test is _ContactReject,
-        () => new ContactReject(),
-        Array.Empty<GuiBoundProperty>());
-    ///<summary>Validation</summary> 
-    public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid? result = null;
-
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
-
-
-    ///<summary>Teardown.</summary> 
-    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
-
-
-    }
-
-
-/// <summary>
-/// Callback parameters for action ConnectAccept 
-/// </summary>
-public partial class ConnectAccept : _ConnectAccept {
-    }
-
-
-/// <summary>
-/// Callback parameters for action ConnectAccept 
-/// </summary>
-public partial class _ConnectAccept : IParameter {
-
-
-    ///<inheritdoc/>
-    public virtual GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static  GuiBinding BaseBinding  { get; } = new (
-        (object test) => test is _ConnectAccept,
-        () => new ConnectAccept(),
-        Array.Empty<GuiBoundProperty>());
-    ///<summary>Validation</summary> 
-    public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid? result = null;
-
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
-
-
-    ///<summary>Teardown.</summary> 
-    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
-
-
-    }
-
-
-/// <summary>
-/// Callback parameters for action ConnectReject 
-/// </summary>
-public partial class ConnectReject : _ConnectReject {
-    }
-
-
-/// <summary>
-/// Callback parameters for action ConnectReject 
-/// </summary>
-public partial class _ConnectReject : IParameter {
-
-
-    ///<inheritdoc/>
-    public virtual GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static  GuiBinding BaseBinding  { get; } = new (
-        (object test) => test is _ConnectReject,
-        () => new ConnectReject(),
-        Array.Empty<GuiBoundProperty>());
-    ///<summary>Validation</summary> 
-    public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid? result = null;
-
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
-
-
-    ///<summary>Teardown.</summary> 
-    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
-
-
-    }
-
-
-/// <summary>
-/// Callback parameters for action GroupAccept 
-/// </summary>
-public partial class GroupAccept : _GroupAccept {
-    }
-
-
-/// <summary>
-/// Callback parameters for action GroupAccept 
-/// </summary>
-public partial class _GroupAccept : IParameter {
-
-
-    ///<inheritdoc/>
-    public virtual GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static  GuiBinding BaseBinding  { get; } = new (
-        (object test) => test is _GroupAccept,
-        () => new GroupAccept(),
-        Array.Empty<GuiBoundProperty>());
-    ///<summary>Validation</summary> 
-    public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid? result = null;
-
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
-
-
-    ///<summary>Teardown.</summary> 
-    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
-
-
-    }
-
-
-/// <summary>
-/// Callback parameters for action GroupReject 
-/// </summary>
-public partial class GroupReject : _GroupReject {
-    }
-
-
-/// <summary>
-/// Callback parameters for action GroupReject 
-/// </summary>
-public partial class _GroupReject : IParameter {
-
-
-    ///<inheritdoc/>
-    public virtual GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static  GuiBinding BaseBinding  { get; } = new (
-        (object test) => test is _GroupReject,
-        () => new GroupReject(),
-        Array.Empty<GuiBoundProperty>());
-    ///<summary>Validation</summary> 
-    public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid? result = null;
-
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
-
-
-    ///<summary>Teardown.</summary> 
-    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
-
-
-    }
-
-
-/// <summary>
-/// Callback parameters for action TaskAccept 
-/// </summary>
-public partial class TaskAccept : _TaskAccept {
-    }
-
-
-/// <summary>
-/// Callback parameters for action TaskAccept 
-/// </summary>
-public partial class _TaskAccept : IParameter {
-
-
-    ///<inheritdoc/>
-    public virtual GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static  GuiBinding BaseBinding  { get; } = new (
-        (object test) => test is _TaskAccept,
-        () => new TaskAccept(),
-        Array.Empty<GuiBoundProperty>());
-    ///<summary>Validation</summary> 
-    public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid? result = null;
-
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
-
-
-    ///<summary>Teardown.</summary> 
-    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
-
-
-    }
-
-
-/// <summary>
-/// Callback parameters for action TaskReject 
-/// </summary>
-public partial class TaskReject : _TaskReject {
-    }
-
-
-/// <summary>
-/// Callback parameters for action TaskReject 
-/// </summary>
-public partial class _TaskReject : IParameter {
-
-
-    ///<inheritdoc/>
-    public virtual GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static  GuiBinding BaseBinding  { get; } = new (
-        (object test) => test is _TaskReject,
-        () => new TaskReject(),
+        (object test) => test is _ActionReject,
+        () => new ActionReject(),
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
@@ -6986,45 +6781,13 @@ public class _EverythingMaui : Gui {
 	public GuiAction SelectionAccountSelect { get; } = new (
         "AccountSelect", "Switch", "circle_check", _AccountSelect.BaseBinding, () => new AccountSelect(), IsSelect:true);
 
-    ///<summary>Selection SelectionConfirmationAccept.</summary> 
-	public GuiAction SelectionConfirmationAccept { get; } = new (
-        "ConfirmationAccept", "Accept", "circle_check", _ConfirmationAccept.BaseBinding, () => new ConfirmationAccept(), IsSelect:true);
+    ///<summary>Selection SelectionActionAccept.</summary> 
+	public GuiAction SelectionActionAccept { get; } = new (
+        "ActionAccept", "Accept", "circle_check", _ActionAccept.BaseBinding, () => new ActionAccept(), IsSelect:true);
 
-    ///<summary>Selection SelectionConfirmationReject.</summary> 
-	public GuiAction SelectionConfirmationReject { get; } = new (
-        "ConfirmationReject", "Reject", "circle_cross", _ConfirmationReject.BaseBinding, () => new ConfirmationReject(), IsSelect:true);
-
-    ///<summary>Selection SelectionContactAccept.</summary> 
-	public GuiAction SelectionContactAccept { get; } = new (
-        "ContactAccept", "Accept", "circle_check", _ContactAccept.BaseBinding, () => new ContactAccept(), IsSelect:true);
-
-    ///<summary>Selection SelectionContactReject.</summary> 
-	public GuiAction SelectionContactReject { get; } = new (
-        "ContactReject", "Reject", "circle_cross", _ContactReject.BaseBinding, () => new ContactReject(), IsSelect:true);
-
-    ///<summary>Selection SelectionConnectAccept.</summary> 
-	public GuiAction SelectionConnectAccept { get; } = new (
-        "ConnectAccept", "Accept", "circle_check", _ConnectAccept.BaseBinding, () => new ConnectAccept(), IsSelect:true);
-
-    ///<summary>Selection SelectionConnectReject.</summary> 
-	public GuiAction SelectionConnectReject { get; } = new (
-        "ConnectReject", "Reject", "circle_cross", _ConnectReject.BaseBinding, () => new ConnectReject(), IsSelect:true);
-
-    ///<summary>Selection SelectionGroupAccept.</summary> 
-	public GuiAction SelectionGroupAccept { get; } = new (
-        "GroupAccept", "Accept", "circle_check", _GroupAccept.BaseBinding, () => new GroupAccept(), IsSelect:true);
-
-    ///<summary>Selection SelectionGroupReject.</summary> 
-	public GuiAction SelectionGroupReject { get; } = new (
-        "GroupReject", "Reject", "circle_cross", _GroupReject.BaseBinding, () => new GroupReject(), IsSelect:true);
-
-    ///<summary>Selection SelectionTaskAccept.</summary> 
-	public GuiAction SelectionTaskAccept { get; } = new (
-        "TaskAccept", "Accept", "circle_check", _TaskAccept.BaseBinding, () => new TaskAccept(), IsSelect:true);
-
-    ///<summary>Selection SelectionTaskReject.</summary> 
-	public GuiAction SelectionTaskReject { get; } = new (
-        "TaskReject", "Reject", "circle_cross", _TaskReject.BaseBinding, () => new TaskReject(), IsSelect:true);
+    ///<summary>Selection SelectionActionReject.</summary> 
+	public GuiAction SelectionActionReject { get; } = new (
+        "ActionReject", "Reject", "circle_cross", _ActionReject.BaseBinding, () => new ActionReject(), IsSelect:true);
 
     ///<summary>Selection SelectionContactUpdate.</summary> 
 	public GuiAction SelectionContactUpdate { get; } = new (
@@ -7127,6 +6890,12 @@ public class _EverythingMaui : Gui {
                 IsBoundType = (object data) => data is BoundMailMail
                 };
 
+    ///<summary>Dialog DialogBoundMessageActionRequest.</summary> 
+	public GuiDialog DialogBoundMessageActionRequest { get; } = new (
+        "BoundMessageActionRequest", "Message", "contacts", _BoundMessageActionRequest.BaseBinding, () => new BoundMessageActionRequest()) {
+                IsBoundType = (object data) => data is BoundMessageActionRequest
+                };
+
     ///<summary>Dialog DialogBoundMessageConfirmationRequest.</summary> 
 	public GuiDialog DialogBoundMessageConfirmationRequest { get; } = new (
         "BoundMessageConfirmationRequest", "Mail", "circle_question", _BoundMessageConfirmationRequest.BaseBinding, () => new BoundMessageConfirmationRequest()) {
@@ -7143,6 +6912,12 @@ public class _EverythingMaui : Gui {
 	public GuiDialog DialogBoundMessageContactRequest { get; } = new (
         "BoundMessageContactRequest", "Mail", "contact", _BoundMessageContactRequest.BaseBinding, () => new BoundMessageContactRequest()) {
                 IsBoundType = (object data) => data is BoundMessageContactRequest
+                };
+
+    ///<summary>Dialog DialogBoundMessageAcknowledgeConnection.</summary> 
+	public GuiDialog DialogBoundMessageAcknowledgeConnection { get; } = new (
+        "BoundMessageAcknowledgeConnection", "Mail", "connect", _BoundMessageAcknowledgeConnection.BaseBinding, () => new BoundMessageAcknowledgeConnection()) {
+                IsBoundType = (object data) => data is BoundMessageAcknowledgeConnection
                 };
 
     ///<summary>Dialog DialogBoundMessageConnectionRequest.</summary> 
@@ -7729,72 +7504,16 @@ public class _EverythingMaui : Gui {
             throw new NYI();
             } ;
 
-        SelectionConfirmationAccept.Callback = (x) => {
-            if (x is BoundMessageConfirmationRequest xx) {
-                return ConfirmationAccept (xx); 
+        SelectionActionAccept.Callback = (x) => {
+            if (x is BoundMessageActionRequest xx) {
+                return ActionAccept (xx); 
                 }
             throw new NYI();
             } ;
 
-        SelectionConfirmationReject.Callback = (x) => {
-            if (x is BoundMessageConfirmationRequest xx) {
-                return ConfirmationReject (xx); 
-                }
-            throw new NYI();
-            } ;
-
-        SelectionContactAccept.Callback = (x) => {
-            if (x is BoundMessageContactRequest xx) {
-                return ContactAccept (xx); 
-                }
-            throw new NYI();
-            } ;
-
-        SelectionContactReject.Callback = (x) => {
-            if (x is BoundMessageContactRequest xx) {
-                return ContactReject (xx); 
-                }
-            throw new NYI();
-            } ;
-
-        SelectionConnectAccept.Callback = (x) => {
-            if (x is BoundMessageConnectionRequest xx) {
-                return ConnectAccept (xx); 
-                }
-            throw new NYI();
-            } ;
-
-        SelectionConnectReject.Callback = (x) => {
-            if (x is BoundMessageConnectionRequest xx) {
-                return ConnectReject (xx); 
-                }
-            throw new NYI();
-            } ;
-
-        SelectionGroupAccept.Callback = (x) => {
-            if (x is BoundMessageGroupInvitation xx) {
-                return GroupAccept (xx); 
-                }
-            throw new NYI();
-            } ;
-
-        SelectionGroupReject.Callback = (x) => {
-            if (x is BoundMessageGroupInvitation xx) {
-                return GroupReject (xx); 
-                }
-            throw new NYI();
-            } ;
-
-        SelectionTaskAccept.Callback = (x) => {
-            if (x is BoundMessageTaskRequest xx) {
-                return TaskAccept (xx); 
-                }
-            throw new NYI();
-            } ;
-
-        SelectionTaskReject.Callback = (x) => {
-            if (x is BoundMessageTaskRequest xx) {
-                return TaskReject (xx); 
+        SelectionActionReject.Callback = (x) => {
+            if (x is BoundMessageActionRequest xx) {
+                return ActionReject (xx); 
                 }
             throw new NYI();
             } ;
@@ -7942,16 +7661,8 @@ public class _EverythingMaui : Gui {
 
         Selections = new Dictionary<string,GuiAction>() {  
 		    {"AccountSelect", SelectionAccountSelect}, 
-		    {"ConfirmationAccept", SelectionConfirmationAccept}, 
-		    {"ConfirmationReject", SelectionConfirmationReject}, 
-		    {"ContactAccept", SelectionContactAccept}, 
-		    {"ContactReject", SelectionContactReject}, 
-		    {"ConnectAccept", SelectionConnectAccept}, 
-		    {"ConnectReject", SelectionConnectReject}, 
-		    {"GroupAccept", SelectionGroupAccept}, 
-		    {"GroupReject", SelectionGroupReject}, 
-		    {"TaskAccept", SelectionTaskAccept}, 
-		    {"TaskReject", SelectionTaskReject}, 
+		    {"ActionAccept", SelectionActionAccept}, 
+		    {"ActionReject", SelectionActionReject}, 
 		    {"ContactUpdate", SelectionContactUpdate}, 
 		    {"ContactDelete", SelectionContactDelete}, 
 		    {"ContactInteractMesh", SelectionContactInteractMesh}, 
@@ -7983,11 +7694,15 @@ public class _EverythingMaui : Gui {
 
 	    DialogBoundMailMail.Entries = [];
 
+	    DialogBoundMessageActionRequest.Entries = [];
+
 	    DialogBoundMessageConfirmationRequest.Entries = [];
 
 	    DialogBoundMessageConfirmationResponse.Entries = [];
 
 	    DialogBoundMessageContactRequest.Entries = [];
+
+	    DialogBoundMessageAcknowledgeConnection.Entries = [];
 
 	    DialogBoundMessageConnectionRequest.Entries = [];
 
@@ -8051,9 +7766,11 @@ public class _EverythingMaui : Gui {
 		    DialogBoundAccount, 
 		    DialogBoundMessage, 
 		    DialogBoundMailMail, 
+		    DialogBoundMessageActionRequest, 
 		    DialogBoundMessageConfirmationRequest, 
 		    DialogBoundMessageConfirmationResponse, 
 		    DialogBoundMessageContactRequest, 
+		    DialogBoundMessageAcknowledgeConnection, 
 		    DialogBoundMessageConnectionRequest, 
 		    DialogBoundMessageGroupInvitation, 
 		    DialogBoundMessageTaskRequest, 
@@ -8299,61 +8016,13 @@ public class _EverythingMaui : Gui {
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> ConfirmationAccept (BoundMessageConfirmationRequest data) 
+    public virtual Task<IResult> ActionAccept (BoundMessageActionRequest data) 
                 => throw new NYI();
 
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> ConfirmationReject (BoundMessageConfirmationRequest data) 
-                => throw new NYI();
-
-    /// <summary>
-    /// GUI action
-    /// </summary>
-    public virtual Task<IResult> ContactAccept (BoundMessageContactRequest data) 
-                => throw new NYI();
-
-    /// <summary>
-    /// GUI action
-    /// </summary>
-    public virtual Task<IResult> ContactReject (BoundMessageContactRequest data) 
-                => throw new NYI();
-
-    /// <summary>
-    /// GUI action
-    /// </summary>
-    public virtual Task<IResult> ConnectAccept (BoundMessageConnectionRequest data) 
-                => throw new NYI();
-
-    /// <summary>
-    /// GUI action
-    /// </summary>
-    public virtual Task<IResult> ConnectReject (BoundMessageConnectionRequest data) 
-                => throw new NYI();
-
-    /// <summary>
-    /// GUI action
-    /// </summary>
-    public virtual Task<IResult> GroupAccept (BoundMessageGroupInvitation data) 
-                => throw new NYI();
-
-    /// <summary>
-    /// GUI action
-    /// </summary>
-    public virtual Task<IResult> GroupReject (BoundMessageGroupInvitation data) 
-                => throw new NYI();
-
-    /// <summary>
-    /// GUI action
-    /// </summary>
-    public virtual Task<IResult> TaskAccept (BoundMessageTaskRequest data) 
-                => throw new NYI();
-
-    /// <summary>
-    /// GUI action
-    /// </summary>
-    public virtual Task<IResult> TaskReject (BoundMessageTaskRequest data) 
+    public virtual Task<IResult> ActionReject (BoundMessageActionRequest data) 
                 => throw new NYI();
 
     /// <summary>
