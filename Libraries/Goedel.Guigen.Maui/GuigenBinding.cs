@@ -210,6 +210,30 @@ public class GuigenBinding {
 
         }
 
+    /// <summary>
+    /// Dispatch the action <paramref name="action"/> on  data <paramref name="data"/>.
+    /// All action callback dispatch should be directed through here after the parameters 
+    /// are fully assembled and validated.
+    /// <para>
+    /// If the action completes normally, the results are presented. Otherwise the exception 
+    /// result is presented.
+    /// </para>
+    /// </summary>
+    /// <param name="action">The action to perform.</param>
+    /// <param name="data">The data parameters.</param>
+    /// <returns>Task descriptor.</returns>
+    public async Task BeginTask(GuiAction action, IBindable data) {
+
+        try {
+            var result = await action.Callback(data);
+            SetResult(result);
+            }
+        catch (Exception e) {
+            }
+        }
+
+
+
     public void MakeSelection(IBindable Data) {
         }
 
@@ -219,14 +243,9 @@ public class GuigenBinding {
         // No, just begin the task.
         }
 
-    public async Task BeginTask(GuiAction action, IBindable data) {
 
-        try {
-            await action.Callback(data);
-            }
-        catch (Exception e) {
-            }
-        }
+
+
 
     public void CancelTask () { 
         }
