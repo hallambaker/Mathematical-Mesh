@@ -9,14 +9,14 @@ namespace Goedel.Everything;
 public partial class ContactSection : IHeadedSelection{
 
     IAccountSelector? Account { get; }
-    ContextUser ContextUser => Account.ContextUser;
+    ContextUser? ContextUser => Account?.ContextUser;
 
 
     //public ButtonState ButtonState => Account is null ? ButtonState.Disabled : ButtonState.Enabled;
 
-    public ContactSelection ContactSelection { get; }
+    public ContactSelection? ContactSelection { get; }
 
-    GuigenCatalogContact Catalog { get; }
+    GuigenCatalogContact? Catalog { get; }
 
     ///<inheritdoc/>
     public override ISelectCollection ChooseContact { get => ContactSelection; set { } }
@@ -138,7 +138,9 @@ public partial class BoundContactPerson : IBoundPresentation, IDialog {
 
     public CatalogedEntry CatalogedEntry { get; set; }
 
-    public override string Display => (First ?? "") + " " + (Last ?? "");
+
+    public string? FullName;
+    public override string Display => Local ?? FullName;
 
 
     static PersonName Default = new PersonName() {
@@ -156,28 +158,45 @@ public partial class BoundContactPerson : IBoundPresentation, IDialog {
 
     public static BoundContactPerson Convert(CatalogedContact input) {
         var contact = input.Contact as ContactPerson;
-        var name = contact.CommonNames?.FirstOrDefault() ?? Default;
 
-        var result = new BoundContactPerson() {
-            First = name.First,
-            Last = name.Last,
-            Prefix = name.Prefix,
-            Suffix = name.Suffix,
+        if (contact == null) {
+            return null!; // should never happen
+            }
+
+        var name = contact.CommonNames?.FirstOrDefault();
+
+        if (name is not null) {
+            name.SetFullName();
+            return new BoundContactPerson() {
+                FullName = name.FullName,
+                First = name.First,
+                Last = name.Last,
+                Prefix = name.Prefix,
+                Suffix = name.Suffix,
+                NetworkAddresses = Bind(contact.NetworkAddresses)
+                };
+            }
+
+        var address = contact.NetworkAddresses?.FirstOrDefault();
+        return  new BoundContactPerson() {
+            Local = address?.Address,
             NetworkAddresses = Bind(contact.NetworkAddresses)
             };
 
-        return result;
-
         }
 
-    public static ISelectCollection Bind(IEnumerable<NetworkAddress> input) {
+
+
+    public static ISelectCollection Bind(IEnumerable<NetworkAddress>? input) {
+        if (input == null) { 
+            return null!; 
+            }
+
         var result = new SelectList();
 
         foreach (var inputItem in input) {
             var entry = new ContactNetworkAddress(inputItem) ;
             result.Add(entry);
-
-
             }
 
 
@@ -211,6 +230,9 @@ public partial class BoundContactPerson : IBoundPresentation, IDialog {
 
 
     }
+
+
+
 
 #endregion
 

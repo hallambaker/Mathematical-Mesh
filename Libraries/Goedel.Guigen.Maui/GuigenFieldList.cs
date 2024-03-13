@@ -8,6 +8,7 @@ public class GuigenFieldList : GuigenField, IWidget {
     public IView View { get; private set; }
 
     Label FieldLabel;
+    Grid InputField = new();
     Grid ValueField = new();
     ImageButton AddButton ;
 
@@ -27,12 +28,35 @@ public class GuigenFieldList : GuigenField, IWidget {
 
         var layout = new HorizontalStackLayout() { FieldLabel, AddButton };
 
-        fieldsSet.AddField(layout, ValueField);
+        var vlayout = new VerticalStackLayout() { InputField, ValueField };
+        InputField.IsVisible = false;
+        FillGrid();
+
+        fieldsSet.AddField(layout, vlayout);
         }
 
     public void OnClickAdd(object sender, EventArgs e) {
+        InputField.IsVisible = true;
+        // add row to grid
 
+        // set row in edit mode
+
+        // 
         }
+
+    public void FillGrid() {
+        var col = 0;
+        foreach (var property in TypedBinding.EntryBinding.BoundProperties) {
+            if (property is GuiBoundPropertyIcon icon) {
+                }
+            if (property is GuiBoundPropertyString text) {
+                var cell = new Entry();
+                InputField.Add(cell, col, 0);
+                col++;
+                }
+            }
+        }
+
 
     public override void GetField(IBindable data) {
         //var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyList;
@@ -76,6 +100,10 @@ public class GuigenFieldList : GuigenField, IWidget {
             row++;
             }
         }
+
+
+
+
     }
 
 

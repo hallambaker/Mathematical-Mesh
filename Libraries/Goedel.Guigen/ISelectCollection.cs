@@ -6,7 +6,7 @@ namespace Goedel.Guigen;
 
 public interface IBoundPresentation : IParameter {
 
-    object Bound { get; set; }
+    object? Bound { get; set; }
     
     }
 
