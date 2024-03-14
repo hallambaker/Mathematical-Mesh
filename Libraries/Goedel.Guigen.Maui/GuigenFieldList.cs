@@ -8,9 +8,12 @@ public class GuigenFieldList : GuigenField, IWidget {
     public IView View { get; private set; }
 
     Label FieldLabel;
-    Grid InputField = new();
-    Grid ValueField = new();
+    Microsoft.Maui.Controls.Grid InputField = new();
+    Microsoft.Maui.Controls.Grid ValueField = new();
     ImageButton AddButton ;
+
+
+    IBindable entryField;
 
     public GuigenFieldList(IMainWindow mainWindow,
                 GuigenFieldSet fieldsSet,
@@ -19,20 +22,20 @@ public class GuigenFieldList : GuigenField, IWidget {
         FieldLabel = new Label() {
             Text = binding.Prompt
             };
-        AddButton = new() {
-            Source = "plus.png",
-            WidthRequest = MainBinding.ListIconWidth,
-            HeightRequest = MainBinding.ListIconHeight
-            };
-        AddButton.Clicked += OnClickAdd;
+        //AddButton = new() {
+        //    Source = "plus.png",
+        //    WidthRequest = MainBinding.ListIconWidth,
+        //    HeightRequest = MainBinding.ListIconHeight
+        //    };
+        //AddButton.Clicked += OnClickAdd;
 
-        var layout = new HorizontalStackLayout() { FieldLabel, AddButton };
+        //var layout = new HorizontalStackLayout() { FieldLabel, AddButton };
 
-        var vlayout = new VerticalStackLayout() { InputField, ValueField };
-        InputField.IsVisible = false;
-        FillGrid();
+        //var vlayout = new VerticalStackLayout() { ValueField, InputField};
+        //InputField.IsVisible = false;
+        //FillGrid();
 
-        fieldsSet.AddField(layout, vlayout);
+        fieldsSet.AddField(FieldLabel, ValueField);
         }
 
     public void OnClickAdd(object sender, EventArgs e) {
@@ -46,6 +49,14 @@ public class GuigenFieldList : GuigenField, IWidget {
 
     public void FillGrid() {
         var col = 0;
+
+        var add_icon = new ImageButton() {
+            Source = "item_delete_minus.png",
+            WidthRequest = MainBinding.ListIconWidth,
+            HeightRequest = MainBinding.ListIconHeight
+            };
+        ValueField.Add(add_icon, col++, 0);
+
         foreach (var property in TypedBinding.EntryBinding.BoundProperties) {
             if (property is GuiBoundPropertyIcon icon) {
                 }
@@ -55,6 +66,13 @@ public class GuigenFieldList : GuigenField, IWidget {
                 col++;
                 }
             }
+        var add_icon2 = new ImageButton() {
+            Source = "item_delete_minus.png",
+            WidthRequest = MainBinding.ListIconWidth,
+            HeightRequest = MainBinding.ListIconHeight
+            };
+        ValueField.Add(add_icon2, col++, 0);
+
         }
 
 
@@ -70,43 +88,111 @@ public class GuigenFieldList : GuigenField, IWidget {
         if (value?.Entries == null) {
             return;
             }
+
         var row = 0;
-        var col = 0;
         foreach (var entry in value.Entries) {
-
-            foreach (var property in entry.Binding.BoundProperties) {
-                if (property is GuiBoundPropertyIcon icon) {
-                    var evalue = icon.Get(entry);
-
-
-                    var cell = new Image() {
-                        Source = evalue?.Source ?? "messages",
-                        WidthRequest = MainBinding.IconWidth,
-                        HeightRequest = MainBinding.IconHeight
-                        };
-                    ValueField.Add(cell, col, row);
-                    col++;
-                    }
-                if (property is GuiBoundPropertyString text) {
-                    var evalue = text.Get(entry);
-
-                    var cell = new Label() { Text = evalue };
-                    ValueField.Add(cell, col, row);
-                    col++;
-                    }
-                }
-
-
-            row++;
+            MakeRow(value, row++, entry);
             }
+
+        entryField = TypedBinding.EntryBinding.Factory();
+        MakeRow(value, row++, entryField, true);
+        }
+
+    private int MakeRow(ISelectCollection collection, int row, IBindable entry, bool isEntry=false) {
+        var col = 0;
+        foreach (var property in entry.Binding.BoundProperties) {
+            if (property is GuiBoundPropertyIcon icon) {
+                var evalue = icon.Get(entry);
+
+
+                var cell = new Microsoft.Maui.Controls.Image() {
+                    Source = evalue?.Source ?? "messages.png",
+                    WidthRequest = MainBinding.IconWidth,
+                    HeightRequest = MainBinding.IconHeight
+                    };
+                ValueField.Add(cell, col, row);
+                col++;
+                }
+            if (property is GuiBoundPropertyString text) {
+                var evalue = text.Get(entry);
+                var cell = new Entry() {
+                    Text = evalue
+                    };
+                ValueField.Add(cell, col, row);
+                col++;
+                }
+            }
+
+        //var iconSource = isEntry ? "item_add.png" : "item_delete_minus.png";
+
+        //var delete_icon = new ImageButton() {
+        //    Source = iconSource,
+        //    WidthRequest = MainBinding.ListIconWidth,
+        //    HeightRequest = MainBinding.ListIconHeight
+        //    };
+
+
+        ImageButton delete_icon = isEntry ? new AddItemButton(MainBinding, collection, row) :
+                new DeleteItemButton(MainBinding, collection, row);
+
+        ValueField.Add(delete_icon, col, row);
+
+        return col;
+        }
+    }
+
+public class DeleteItemButton : ImageButton {
+    ISelectCollection Collection { get; }
+    int Row { get; }
+    public DeleteItemButton(GuigenBinding binding, ISelectCollection collection, int row) { 
+        Collection = collection;
+        Row = row;
+        Clicked += OnClickDelete;
+        Source = "item_delete_minus.png";
+        WidthRequest = binding.IconWidth;
+        HeightRequest = binding.IconHeight;
+        }
+
+    public void OnClickDelete(object sender, EventArgs e) {
+        Collection.Entries.RemoveAt(Row);
+        // refresh the display here.
         }
 
 
+    }
+
+public class AddItemButton : ImageButton {
+    ISelectCollection Collection { get; }
+    int Row { get; }
+    public AddItemButton(GuigenBinding binding, ISelectCollection collection, int row) {
+        Collection = collection;
+        Row = row;
+
+        Clicked += OnClickAdd;
+        Source = "item_add.png";
+        WidthRequest = binding.IconWidth;
+        HeightRequest = binding.IconHeight;
+        }
+
+    public void OnClickAdd(object sender, EventArgs e) {
+        }
 
 
     }
 
 
 
+public class BoundEntry : Entry {
+    GuiBoundPropertyString Property { get; }
+    IBindable Entry { get; }
+
+    public BoundEntry(GuiBoundPropertyString property, IBindable entry) { 
+        Property = property;
+        Entry = entry;
+        }
 
 
+
+
+
+    }
