@@ -14,6 +14,7 @@ public class GuigenFieldList : GuigenField, IWidget {
 
 
     IBindable entryField;
+    public ISelectCollection Collection {get; set;}
 
     public GuigenFieldList(IMainWindow mainWindow,
                 GuigenFieldSet fieldsSet,
@@ -47,58 +48,34 @@ public class GuigenFieldList : GuigenField, IWidget {
         // 
         }
 
-    public void FillGrid() {
-        var col = 0;
-
-        var add_icon = new ImageButton() {
-            Source = "item_delete_minus.png",
-            WidthRequest = MainBinding.ListIconWidth,
-            HeightRequest = MainBinding.ListIconHeight
-            };
-        ValueField.Add(add_icon, col++, 0);
-
-        foreach (var property in TypedBinding.EntryBinding.BoundProperties) {
-            if (property is GuiBoundPropertyIcon icon) {
-                }
-            if (property is GuiBoundPropertyString text) {
-                var cell = new Entry();
-                InputField.Add(cell, col, 0);
-                col++;
-                }
-            }
-        var add_icon2 = new ImageButton() {
-            Source = "item_delete_minus.png",
-            WidthRequest = MainBinding.ListIconWidth,
-            HeightRequest = MainBinding.ListIconHeight
-            };
-        ValueField.Add(add_icon2, col++, 0);
-
-        }
-
-
     public override void GetField(IBindable data) {
         //var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyList;
         //ValueField.Text = binding.Get(data).ToString();
         }
 
     public override void SetField(IBindable data) {
-        var value = TypedBinding.Get(data);
+        Collection = TypedBinding.Get(data);
+        SetField();
+        }
 
+
+    public void SetField() {
         ValueField.Clear();
-        if (value?.Entries == null) {
+        if (Collection?.Entries == null) {
             return;
             }
 
         var row = 0;
-        foreach (var entry in value.Entries) {
-            MakeRow(value, row++, entry);
+        foreach (var entry in Collection.Entries) {
+            MakeRow(row++, entry);
             }
 
         entryField = TypedBinding.EntryBinding.Factory();
-        MakeRow(value, row++, entryField, true);
+        MakeRow(row++, entryField, true);
         }
 
-    private int MakeRow(ISelectCollection collection, int row, IBindable entry, bool isEntry=false) {
+
+    private int MakeRow(int row, IBindable entry, bool isEntry=false) {
         var col = 0;
         foreach (var property in entry.Binding.BoundProperties) {
             if (property is GuiBoundPropertyIcon icon) {
@@ -123,17 +100,8 @@ public class GuigenFieldList : GuigenField, IWidget {
                 }
             }
 
-        //var iconSource = isEntry ? "item_add.png" : "item_delete_minus.png";
-
-        //var delete_icon = new ImageButton() {
-        //    Source = iconSource,
-        //    WidthRequest = MainBinding.ListIconWidth,
-        //    HeightRequest = MainBinding.ListIconHeight
-        //    };
-
-
-        ImageButton delete_icon = isEntry ? new AddItemButton(MainBinding, collection, row) :
-                new DeleteItemButton(MainBinding, collection, row);
+        ImageButton delete_icon = isEntry ? new AddItemButton(MainBinding, this, entry, row) :
+                new DeleteItemButton(MainBinding, this, row);
 
         ValueField.Add(delete_icon, col, row);
 
@@ -142,10 +110,11 @@ public class GuigenFieldList : GuigenField, IWidget {
     }
 
 public class DeleteItemButton : ImageButton {
-    ISelectCollection Collection { get; }
+    GuigenFieldList GuigenFieldList { get; }
+    ISelectCollection Collection => GuigenFieldList.Collection;
     int Row { get; }
-    public DeleteItemButton(GuigenBinding binding, ISelectCollection collection, int row) { 
-        Collection = collection;
+    public DeleteItemButton(GuigenBinding binding, GuigenFieldList guigenFieldList, int row) {
+        GuigenFieldList = guigenFieldList;
         Row = row;
         Clicked += OnClickDelete;
         Source = "item_delete_minus.png";
@@ -155,17 +124,22 @@ public class DeleteItemButton : ImageButton {
 
     public void OnClickDelete(object sender, EventArgs e) {
         Collection.Entries.RemoveAt(Row);
-        // refresh the display here.
+        GuigenFieldList.SetField();
         }
 
 
     }
 
 public class AddItemButton : ImageButton {
-    ISelectCollection Collection { get; }
+
+    GuigenFieldList GuigenFieldList { get; }
+    ISelectCollection Collection => GuigenFieldList.Collection;
     int Row { get; }
-    public AddItemButton(GuigenBinding binding, ISelectCollection collection, int row) {
-        Collection = collection;
+
+    IBindable Entry { get; }
+    public AddItemButton(GuigenBinding binding, GuigenFieldList guigenFieldList, IBindable entry, int row) {
+        GuigenFieldList = guigenFieldList;
+        Entry = entry;
         Row = row;
 
         Clicked += OnClickAdd;
@@ -175,6 +149,8 @@ public class AddItemButton : ImageButton {
         }
 
     public void OnClickAdd(object sender, EventArgs e) {
+        Collection.Entries.Add(Entry);
+        GuigenFieldList.SetField();
         }
 
 
