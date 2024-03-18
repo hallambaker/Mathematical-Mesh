@@ -56,7 +56,7 @@ public partial class EverythingMaui {
 
     public Dictionary<string, IMessageable> WaitingOnMessage { get; } = [];
 
-    Task SyncTask { get; set; }
+    Task? SyncTask { get; set; } = null;
 
 
     AccountSection AccountSection { get; }

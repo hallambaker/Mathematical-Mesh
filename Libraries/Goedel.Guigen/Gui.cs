@@ -28,7 +28,7 @@ public abstract class Gui {
 
     public GuiSection? CurrentSection { get; set; } 
 
-    public virtual string GetPrompt(GuiPrompt guiPrompt) => guiPrompt.Prompt;
+    public virtual string? GetPrompt(GuiPrompt guiPrompt) => guiPrompt.Prompt;
 
 
 

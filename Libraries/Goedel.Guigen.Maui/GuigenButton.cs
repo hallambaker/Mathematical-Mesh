@@ -11,6 +11,14 @@ public class GuigenButton {
 
     IGetState Backing;
 
+    public bool IsVisible {
+        get => ImageButton.IsVisible;
+        set {
+            ImageButton.IsVisible = value;
+            TextButton.IsVisible = value;
+            } 
+        }
+
     public GuigenButton(
                 GuigenBinding binding,
                 string icon,

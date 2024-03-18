@@ -7,6 +7,15 @@ public class GuigenFieldString : GuigenFieldSimple, IWidget {
     public override bool IsEditable => (TypedBinding.Set is not null);
 
 
+    public override void SetEditable(bool isEditable) {
+        if (!IsEditable) { 
+            return; 
+            }
+
+        }
+
+
+
     IView ViewField;
 
     Entry EntryField => ViewField as Entry;

@@ -23,19 +23,6 @@ public class GuigenFieldList : GuigenField, IWidget {
         FieldLabel = new Label() {
             Text = binding.Prompt
             };
-        //AddButton = new() {
-        //    Source = "plus.png",
-        //    WidthRequest = MainBinding.ListIconWidth,
-        //    HeightRequest = MainBinding.ListIconHeight
-        //    };
-        //AddButton.Clicked += OnClickAdd;
-
-        //var layout = new HorizontalStackLayout() { FieldLabel, AddButton };
-
-        //var vlayout = new VerticalStackLayout() { ValueField, InputField};
-        //InputField.IsVisible = false;
-        //FillGrid();
-
         fieldsSet.AddField(FieldLabel, ValueField);
         }
 

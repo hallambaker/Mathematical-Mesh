@@ -31,6 +31,7 @@ public abstract class GuigenField(IMainWindow mainWindow, GuiBoundProperty bindi
     public abstract void SetField(IBindable data);
 
     public abstract void GetField(IBindable data);
+    public abstract void SetEditable(bool isEditable);
 
 
     public virtual void ClearFeedback() {

@@ -1,4 +1,10 @@
-﻿namespace Goedel.Guigen.Maui;
+﻿using Microsoft.UI.Xaml.Documents;
+
+using System.Security.Cryptography;
+
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace Goedel.Guigen.Maui;
 
 public class GuigenFieldSet : IWidget {
 
@@ -25,6 +31,12 @@ public class GuigenFieldSet : IWidget {
 
     public bool IsChooser { get; set; } = false;
     GuiBinding FieldBinding { get; }
+
+
+    public bool IsReadOnly { get; set; } = true;
+
+    public bool IsEditable { get; set; } = false;
+
 
     public GuigenFieldSet(
                 GuigenBinding uiBinding, 
@@ -107,13 +119,28 @@ public class GuigenFieldSet : IWidget {
                 default: {
                     break;
                     }
+
                 }
-
+            IsReadOnly &= entry.IsReadOnly;
             }
-
-
-
         }
+
+
+    public void SetEditable(bool isEditable) {
+        IsEditable = isEditable;
+        foreach (var field in MauiFields) {
+            field.SetEditable(isEditable);
+            }
+    }
+
+    public void Update() {
+        GetFields(Data);
+        SetEditable(false);
+        }
+
+
+
+
 
     public void SetFields(IBindable data) {
         Data = data;

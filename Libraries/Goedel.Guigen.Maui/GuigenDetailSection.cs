@@ -20,6 +20,11 @@ public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
     Gui Gui => Binding.Gui;
     GuigenFieldSet FieldSet { get; }
 
+    GuigenButton ButtonEdit { get; }
+    GuigenButton ButtonUpdate { get; }
+
+    Layout UpdateMenu { get; }
+
     public GuigenDetailSection(GuigenBinding binding, GuiSection section) {
         Binding = binding;
         Section = section;
@@ -49,16 +54,33 @@ public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
             stack.Add(buttonbar);
             }
 
-
-
         FieldSet = new GuigenFieldSet(Binding, section.Entries, stack, section.Binding);
         stack.Add (FieldSet.ButtonBox);
+
+        if (!FieldSet.IsReadOnly) {
+            
+            ButtonEdit = new(Binding, "edit", "Edit", OnUpdate) {
+                IsVisible = true
+                };
+            ButtonUpdate = new(Binding, "update", "Update", OnUpdate) {
+                IsVisible = false
+                };
+            UpdateMenu = new HorizontalStackLayout () { ButtonEdit.View, ButtonUpdate.View };
+            stack.Add(ButtonEdit.View);
+            }
+
 
         Refresh();
 
         Content = stack;
         }
 
+    private void OnUpdate(object sender, EventArgs e) {
+
+        }
+    private void OnEdit(object sender, EventArgs e) {
+
+        }
 
     IView AddButton(GuiButton button) {
 

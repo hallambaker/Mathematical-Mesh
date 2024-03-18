@@ -221,7 +221,7 @@ public record GuiBinding {
 
 public record GuiBoundProperty (
                 string? Label) {
-
+    public virtual bool IsReadOnly => true;
 
     }
 
@@ -249,6 +249,7 @@ public record GuiBoundPropertyBoolean(
                 Func<object, bool?> Get,
                 Action<object, bool?>? Set
                 ) : GuiBoundPropertyPrompted(Label, Prompt) {
+    public override bool IsReadOnly => Set is null;
     }
 
 public record GuiBoundPropertyString(
@@ -257,6 +258,7 @@ public record GuiBoundPropertyString(
                 Func<object, string?> Get,
                 Action<object, string?>? Set,
                 int? Width = null) : GuiBoundPropertyPrompted(Label, Prompt) {
+    public override bool IsReadOnly => Set is null;
     }
 
 public record GuiBoundTextArea(
@@ -264,6 +266,7 @@ public record GuiBoundTextArea(
                 string? Prompt,
                 Func<object, string?> Get,
                 Action<object, string?>? Set) : GuiBoundPropertyPrompted(Label, Prompt) {
+    public override bool IsReadOnly => Set is null;
     }
 
 
@@ -272,6 +275,7 @@ public record GuiBoundPropertyColor(
                 string? Prompt,
                 Func<object, IFieldColor?> Get,
                 Action<object, IFieldColor?>? Set) : GuiBoundPropertyPrompted(Label, Prompt) {
+    public override bool IsReadOnly => Set is null;
     }
 
 
@@ -280,6 +284,7 @@ public record GuiBoundPropertySize(
                 string? Prompt,
                 Func<object, IFieldSize?> Get,
                 Action<object, IFieldSize?>? Set) : GuiBoundPropertyPrompted(Label, Prompt) {
+    public override bool IsReadOnly => Set is null;
     }
 
 
@@ -288,6 +293,7 @@ public record GuiBoundPropertyDecimal(
                 string? Prompt,
                 Func<object, decimal?> Get,
                 Action<object, decimal?>? Set) : GuiBoundPropertyPrompted(Label, Prompt) {
+    public override bool IsReadOnly => Set is null;
     }
 
 
@@ -296,6 +302,7 @@ public record GuiBoundPropertyInteger(
                 string? Prompt,
                 Func<object, int?> Get,
                 Action<object, int?>? Set) : GuiBoundPropertyPrompted(Label, Prompt) {
+    public override bool IsReadOnly => Set is null;
     }
 
 
@@ -305,6 +312,7 @@ public record GuiBoundPropertyQRScan(
                 string? Prompt,
                 Func<object, GuiQR?> Get,
                 Action<object, GuiQR?>? Set) : GuiBoundPropertyPrompted(Label, Prompt) {
+    public override bool IsReadOnly => Set is null;
     }
 
 
@@ -313,6 +321,7 @@ public record GuiBoundPropertyIcon(
                 string? Prompt,
                 Func<object, IFieldIcon?> Get,
                 Action<object, IFieldIcon?>? Set) : GuiBoundPropertyPrompted(Label, Prompt) {
+    public override bool IsReadOnly => Set is null;
     }
 
 public record GuiBoundPropertyChooser(
@@ -321,6 +330,9 @@ public record GuiBoundPropertyChooser(
                 Func<object, ISelectCollection?> Get,
                 Action<object, ISelectCollection?>? Set,
                 List<GuiEntry>? Entries = null) : GuiBoundPropertyPrompted(Label, Prompt) {
+
+    // The selection is always read only, but items in the selection MAY be editable.
+    public override bool IsReadOnly => true;
     }
 
 public record GuiBoundPropertyList(
@@ -330,6 +342,7 @@ public record GuiBoundPropertyList(
                 Action<object, ISelectCollection?>? Set,
                 GuiBinding EntryBinding,
                 List<GuiEntry>? Entries = null) : GuiBoundPropertyPrompted(Label, Prompt) {
+    public override bool IsReadOnly => Set is null;
     }
 
 
