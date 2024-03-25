@@ -95,13 +95,13 @@ public class GuigenBinding {
 
     public Color BorderColor = Colors.Purple;
     public Color ColorSelected = Colors.Purple;
-    public Color ColorEnabled= Colors.White;
+    public Color ColorEnabled = Colors.White;
     public Color ColorInactive = Colors.Grey;
-    public Color TextSelected= Colors.White;
+    public Color TextSelected = Colors.White;
     public Color TextEnabled = Colors.White;
     public Color TextInactive = Colors.Grey;
 
-    public Page Page =>MainWindow.Page;
+    public Page Page => MainWindow.Page;
 
     public IMainWindow MainWindow { get; set; }
 
@@ -195,10 +195,28 @@ public class GuigenBinding {
     public GuigenButton MakeButton(
                 string icon,
                 string text,
-                EventHandler callback) => new GuigenButton (this, icon, text, callback);
+                EventHandler callback) => new GuigenButton(this, icon, text, callback);
 
 
+    public Entry GetEntry() => new();
 
+    public Editor GetEditor() => new() {
+        AutoSize = EditorAutoSizeOption.TextChanges,
+        IsSpellCheckEnabled = true,
+        IsTextPredictionEnabled = false,
+        Keyboard = Keyboard.Text,
+        Placeholder = "Infinite monkeys with typewriters say"
+        };
+
+    public Label GetFeedback() => new() {
+        IsVisible = false
+        };
+    public Label GetLabel() => new();
+
+    public Label GetPrompt(string? prompt = null) => new() {
+        Text = prompt
+        };
+    public CheckBox GetCheckBox() => new();
 
 
 
@@ -237,14 +255,29 @@ public class GuigenBinding {
     public void MakeSelection(IBindable Data) {
         }
 
+
+
+    /*  The new way to handle everything */
+    public void PushActionDialog() {
+        }
+
+    public void CancelActionDialog() {
+        }
+
+
+    public void AttemptActionCallback() {
+        }
+
+
+
+
+
+
     public void BeginAction(GuiAction action, IBindable data) {
         // Do we need parameters for this action?
 
         // No, just begin the task.
         }
-
-
-
 
 
     public void CancelTask () { 

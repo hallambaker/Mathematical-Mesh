@@ -21,17 +21,24 @@ public partial record FieldIcon(string File) : IFieldIcon {
 
     }
 
-public abstract class GuigenField(IMainWindow mainWindow, GuiBoundProperty binding) {
+public abstract class GuigenField(GuigenFieldSet fieldsSet, GuiBoundProperty fieldBinding) {
 
-    public IMainWindow MainWindow { get; } = mainWindow;
+    public IMainWindow MainWindow => Binding.MainWindow;
 
-    public GuigenBinding Binding => MainWindow.Binding;
-    public GuiBoundProperty PropertyBinding { get; } = binding;
+
+    public GuigenFieldSet FieldSet { get; } = fieldsSet;
+    public GuigenBinding Binding { get; } = fieldsSet.Binding;
+    public GuiBoundProperty PropertyBinding { get; } = fieldBinding;
+
+    public bool IsEditMode => FieldSet.IsEditMode;
+
+
+
 
     public abstract void SetField(IBindable data);
 
     public abstract void GetField(IBindable data);
-    public abstract void SetEditable(bool isEditable);
+    public abstract void SetEditable();
 
 
     public virtual void ClearFeedback() {
@@ -44,29 +51,21 @@ public abstract class GuigenField(IMainWindow mainWindow, GuiBoundProperty bindi
 
 
 public abstract class GuigenFieldSimple : GuigenField, IWidget {
-    public IView View { get; protected set; }
+    public virtual IView View { get; }
 
     public virtual bool IsEditable => true;
 
+    protected Label FieldLabel { get; }
+    protected Label Feedback { get; }
 
-    protected Label FieldLabel;
-    protected Label Feedback = new() {
-        IsVisible = false
-        };
+
 
     public GuigenFieldSimple(
-            IMainWindow mainWindow,
             GuigenFieldSet fieldsSet,
-            GuiBoundPropertyPrompted binding) : base(mainWindow, binding) {
+            GuiBoundPropertyPrompted fieldBinding) : base(fieldsSet, fieldBinding) {
 
-        FieldLabel = new Label() {
-            Text = binding.Prompt
-            };
-
-        MainWindow.FormatFieldLabel(FieldLabel);
-
-        MainWindow.FormatFeedback(Feedback);
-
+        FieldLabel = Binding.GetPrompt(fieldBinding.Prompt);
+        Feedback = Binding.GetFeedback();
         }
 
     ///<inheritdoc/>

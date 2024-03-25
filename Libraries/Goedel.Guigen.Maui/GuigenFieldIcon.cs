@@ -9,13 +9,17 @@ public class GuigenFieldIcon : GuigenField, IWidget {
 
 
 
-    public GuigenFieldIcon(IMainWindow mainWindow,
+    public GuigenFieldIcon(
                 GuigenFieldSet fieldsSet,
-                GuiBoundPropertyIcon binding) : base(mainWindow, binding) {
+                GuiBoundPropertyIcon binding,
+                IBindable? data = null) : base(fieldsSet, binding) {
 
         }
 
+    ///<inheritdoc/>
+    public override void SetEditable() {
 
+        }
 
     public override void GetField(IBindable data) {
         //var binding = data.Binding.BoundProperties[Index] as GuiBoundPropertyList;

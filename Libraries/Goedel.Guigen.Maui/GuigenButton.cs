@@ -2,9 +2,13 @@
 
 namespace Goedel.Guigen.Maui;
 
+
+
+
+
 public class GuigenButton {
     GuigenBinding Binding { get; }
-    public View View => Stack;
+    public View View { get; }
     Layout Stack { get; }
     ImageButton ImageButton { get; }
     Button TextButton { get; }
@@ -27,30 +31,28 @@ public class GuigenButton {
 
         Binding = binding;
 
+        TextButton = new Button {
+            Text = text,
+            //ImageSource = image,
+            HeightRequest = Binding.ButtonHeight,
+
+            };
+        TextButton.Clicked += callback;
+
+        if (icon is null) {
+            View = TextButton;
+            return;
+            }
+
         ImageButton = new ImageButton {
             Source = icon.GetFilename(),
             WidthRequest = Binding.IconWidth,
             HeightRequest = Binding.IconHeight,
             };
         ImageButton.Clicked += callback;
-        //var file = icon.GetFilename();
-        //var image = new FileImageSource() {
-        //    //File = icon.GetFilename(),
-           
-        //    //WidthRequest = Binding.IconWidth,
-        //    //HeightRequest = Binding.IconHeight,
-        //    };
-
-
-        TextButton = new Button {
-            Text = text,
-            //ImageSource = image,
-            HeightRequest = Binding.ButtonHeight,
-            
-            };
-        TextButton.Clicked += callback;
 
         Stack = new HorizontalStackLayout() { ImageButton, TextButton };
+        View = Stack;
         }
 
 
@@ -70,8 +72,12 @@ public class GuigenButton {
 
 
     public void SetState (ButtonState state) {
-        Binding.SetState(state, ImageButton);
-        Binding.SetState(state, TextButton);
+        if (TextButton != null) {
+            Binding.SetState(state, TextButton);
+            }
+        if (ImageButton != null) {
+            Binding.SetState(state, ImageButton);
+            }
         }
 
 

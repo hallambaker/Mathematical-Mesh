@@ -2,9 +2,15 @@
 
 using System.Security.Cryptography;
 
+using Windows.ApplicationModel.VoiceCommands;
+
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Goedel.Guigen.Maui;
+
+
+
+
 
 public class GuigenFieldSet : IWidget {
 
@@ -33,18 +39,52 @@ public class GuigenFieldSet : IWidget {
     GuiBinding FieldBinding { get; }
 
 
+    public bool IsSection { get; set; } = true;
+
     public bool IsReadOnly { get; set; } = true;
 
-    public bool IsEditable { get; set; } = false;
+    public bool IsEditMode { get; set; } = false;
+
+
+    /*
+     * The primary containers used in the display.
+     * 
+     * On a desktop platform, these appear as a stacked list, on a mobile device,
+     * a paged mod may be employed.
+     * 
+     *      ActionMenu
+     *      [Chooser]
+     *      Fields
+     *      ContextMenu
+     */
+
+    ///<summary>Container for the action section</summary> 
+    public Layout ActionMenu            { get; set; }
+
+    ///<summary>Container for the fields section</summary> 
+    public Layout Fields                { get; set; }
+
+    ///<summary>Container for the confirm/cancel/context section</summary> 
+    public Layout ContextMenu          { get; set; }
+
+
+    public GuigenButton ConfirmButton       { get; set; }
+
+    public GuigenButton CancelButton        { get; set; }
+
+    public GuigenButton EditButton          { get; set; }
+
+    public GuigenButton UpdateButton        { get; set; }
+
+
 
 
     public GuigenFieldSet(
-                GuigenBinding uiBinding, 
-                List<IGuiEntry> fields, 
-                Layout? stack, 
-                GuiBinding fieldBinding = null, 
-                bool isEntry = true) {
-        Binding = uiBinding;
+                GuigenBinding binding,
+                Layout? stack,
+                GuiBinding fieldBinding = null,
+                IBindable? data = null) {
+        Binding = binding;
         FieldBinding = fieldBinding;
 
         View = new Grid();
@@ -55,64 +95,64 @@ public class GuigenFieldSet : IWidget {
         foreach (var entry in fieldBinding.BoundProperties) {
             switch (entry) {
                 case GuiBoundPropertyBoolean bound: {
-                    var field = new GuigenFieldBoolean(MainWindow, this, bound);
+                    var field = new GuigenFieldBoolean(this, bound, data);
                     MauiFields.Add(field);
                     break;
                     }
                 case GuiBoundPropertyString bound: {
-                    var field = new GuigenFieldString(MainWindow, this, bound);
+                    var field = new GuigenFieldString(this, bound, data);
                     MauiFields.Add(field);
                     break;
                     }
                 case GuiBoundTextArea bound: {
-                    var field = new GuigenFieldTextArea(MainWindow, this, bound);
+                    var field = new GuigenFieldTextArea(this, bound, data);
                     MauiFields.Add(field);
                     break;
                     }
                 case GuiBoundPropertyColor bound: {
-                    var field = new GuigenFieldColor(MainWindow, this, bound);
+                    var field = new GuigenFieldColor(this, bound, data);
                     MauiFields.Add(field);
                     break;
                     }
                 case GuiBoundPropertySize bound: {
-                    var field = new GuigenFieldSize(MainWindow, this, bound);
+                    var field = new GuigenFieldSize(this, bound, data);
                     MauiFields.Add(field);
                     break;
                     }
                 case GuiBoundPropertyDecimal bound: {
-                    var field = new GuigenFieldDecimal(MainWindow, this, bound);
+                    var field = new GuigenFieldDecimal(this, bound, data);
                     MauiFields.Add(field);
                     break;
                     }
                 case GuiBoundPropertyInteger bound: {
-                    var field = new GuigenFieldInteger(MainWindow, this, bound);
+                    var field = new GuigenFieldInteger(this, bound, data);
                     MauiFields.Add(field);
                     break;
                     }
                 case GuiBoundPropertyQRScan bound: {
-                    var field = new GuigenFieldQr(MainWindow, this, bound);
+                    var field = new GuigenFieldQr(this, bound, data);
                     MauiFields.Add(field);
                     break;
                     }
                 case GuiBoundPropertyIcon bound: {
-                    if (isEntry) {
+                    if (fieldBinding.IsReadOnly) {
                         }
                     else {
-                        var field = new GuigenFieldIcon(MainWindow, this, bound);
+                        var field = new GuigenFieldIcon(this, bound, data);
                         MauiFields.Add(field);
                         break;
                         }
                     break;
                     }
                 case GuiBoundPropertyChooser bound: {
-                    var field = new GuigenFieldChooser(MainWindow, this, bound);
+                    var field = new GuigenFieldChooser(this, bound, data);
                     MauiFields.Add(field);
                     ButtonBox = new HorizontalStackLayout();
                     IsChooser = true;
                     break;
                     }
                 case GuiBoundPropertyList bound: {
-                    var field = new GuigenFieldList(MainWindow, this, bound);
+                    var field = new GuigenFieldList(this, bound, data);
                     MauiFields.Add(field);
                     break;
                     }
@@ -127,9 +167,9 @@ public class GuigenFieldSet : IWidget {
 
 
     public void SetEditable(bool isEditable) {
-        IsEditable = isEditable;
+        IsEditMode = isEditable;
         foreach (var field in MauiFields) {
-            field.SetEditable(isEditable);
+            field.SetEditable();
             }
     }
 
@@ -180,15 +220,23 @@ public class GuigenFieldSet : IWidget {
         }
 
 
-    public void AddField(IView label, IView child, IView? feedback=null) {
-
+    public int AddField(IView label, IView child, IView? feedback=null) {
 
         View.Add(label, 0, GridRow);
-        View.Add(child, 1, GridRow++);
-        if (feedback != null) {
-            View.Add(feedback, 2, GridRow++);
+        if (child != null) {
+            View.Add(child, 1, GridRow);
             }
+        if (feedback != null) {
+            View.Add(feedback, 2, GridRow);
+            }
+        return GridRow++;
         }
+
+    public void ReplaceField(IView current, IView replacement, int gridRow) {
+        View.Remove(current);
+        View.Add(replacement, 1, gridRow);
+        }
+
 
     public void AddField(IView child) {
         View.Add(child, 0, GridRow++);
@@ -237,5 +285,129 @@ public class GuigenFieldSet : IWidget {
 
     }
 
+/// <summary>
+/// Present field set for an action dialog.
+/// </summary>
+public class GuigenFieldSetAction : GuigenFieldSet {
 
+    public GuigenFieldSetAction(
+            GuigenBinding binding,
+            Layout? stack,
+            GuiBindingSingle fieldBinding = null,
+            IBindable? data = null) : base(binding, stack, fieldBinding, data) {
+        SetState();
+
+        CancelButton = new GuigenButton(Binding, null, "Cancel", OnCancel);
+        CancelButton = new GuigenButton(Binding, null, "Confirm", OnCancel);
+        }
+
+    private void SetState() {
+        ContextMenu.Clear();
+
+        ContextMenu.Add(CancelButton.View);
+        ContextMenu.Add(ConfirmButton.View);
+        }
+
+    private void OnCancel(object sender, EventArgs e) {
+        Binding.CancelActionDialog();
+        }
+
+    private void OnConfirm(object sender, EventArgs e) {
+        Binding.AttemptActionCallback();
+        }
+
+    }
+
+public class GuigenFieldSetSingle : GuigenFieldSet {
+
+    public GuigenFieldSetSingle(
+            GuigenBinding binding,
+            Layout? stack,
+            GuiBindingSingle fieldBinding = null,
+            IBindable? data = null) : base(binding, stack, fieldBinding, data) {
+        SetState();
+        }
+
+    void SetState() {
+        ContextMenu.Clear();
+
+        if (!IsSection | IsEditMode) {
+            ContextMenu.Add(CancelButton.View);
+            }
+        else if (!IsReadOnly) {
+            ContextMenu.Add(IsEditMode ? UpdateButton.View: EditButton.View);
+            }
+        }
+
+    private void OnCancel(object sender, EventArgs e) {
+        SetEditable(false);
+        }
+
+    private void OnEdit(object sender, EventArgs e) {
+        SetEditable(true);
+        }
+
+    private void OnUpdate(object sender, EventArgs e) {
+        // pull data from the fields
+
+        // preform the commit action
+
+        SetEditable(false);
+        }
+
+    }
+
+
+public class GuigenFieldSetMultiple : GuigenFieldSet {
+
+    ///<summary>The chooser section (if present)</summary> 
+    public GuigenFieldChooser Chooser { get; set; }
+
+    public GuigenFieldSetMultiple(
+            GuigenBinding binding,
+            Layout? stack,
+            GuiBindingMultiple fieldBinding = null,
+            IBindable? data = null) : base(binding, stack, fieldBinding, data) {
+        SetState();
+        }
+
+    void SetState() {
+
+        }
+
+    private void OnCancel(object sender, EventArgs e) {
+        SetEditable(false);
+        }
+
+    private void OnEdit(object sender, EventArgs e) {
+        SetEditable(true);
+        }
+
+    private void OnUpdate(object sender, EventArgs e) {
+        // pull data from the fields
+
+        // preform the commit action
+
+        SetEditable(false);
+        }
+
+    }
+
+
+
+public class GuigenFieldSetQr : GuigenFieldSet {
+
+    public GuigenFieldSetQr(
+            GuigenBinding binding,
+            Layout? stack,
+            GuiBindingQr fieldBinding = null,
+            IBindable? data = null) : base(binding, stack, fieldBinding, data) {
+        SetState();
+        }
+
+    void SetState() {
+
+        }
+
+    }
 

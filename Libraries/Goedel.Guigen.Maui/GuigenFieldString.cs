@@ -1,51 +1,72 @@
-﻿namespace Goedel.Guigen.Maui;
+﻿using System.Data;
 
+namespace Goedel.Guigen.Maui;
+
+/// <summary>
+/// Backing class for a string entry field.
+/// </summary>
 public class GuigenFieldString : GuigenFieldSimple, IWidget {
 
     GuiBoundPropertyString TypedBinding => PropertyBinding as GuiBoundPropertyString;
 
-    public override bool IsEditable => (TypedBinding.Set is not null);
+    ///<inheritdoc/>
+    public override bool IsEditable => IsEditMode & (TypedBinding.Set is not null);
 
 
-    public override void SetEditable(bool isEditable) {
-        if (!IsEditable) { 
-            return; 
-            }
+    Entry FieldAsEntry { get; set; } 
+    Label FieldAsLabel { get; set; }
 
-        }
+    IBindable Data;
 
+    int GridRow { get; set; }
 
-
-    IView ViewField;
-
-    Entry EntryField => ViewField as Entry;
-    Label LabelField => ViewField as Label;
-    public GuigenFieldString(IMainWindow mainWindow, 
+    /// <summary>
+    /// Return a new instance of a field to be displayed in the field set <paramref name="fieldsSet"/>
+    /// with properties defined by <paramref name="fieldBinding"/> bound to the value <paramref name="data"/>.
+    /// </summary>
+    /// <param name="fieldsSet">The field set to present the field within</param>
+    /// <param name="fieldBinding">Description of the field parameters.</param>
+    /// <param name="data">Data to which the field is to be bound.</param>
+    public GuigenFieldString(
                 GuigenFieldSet fieldsSet,
-                GuiBoundPropertyString binding) : base(mainWindow, fieldsSet, binding) {
-
-        ViewField = IsEditable ? new Entry() : new Label();
-
-        MainWindow.FormatFieldEntry(EntryField, binding);
-
-        View = new HorizontalStackLayout() { FieldLabel, EntryField };
-        fieldsSet.AddField(FieldLabel, ViewField, Feedback);
+                GuiBoundPropertyString fieldBinding,
+                IBindable? data = null) : base(fieldsSet, fieldBinding) {
+        GridRow = fieldsSet.AddField(FieldLabel, null, Feedback);
+        SetEditable();
+        SetField(data);
         }
 
     ///<inheritdoc/>
-    public override void SetField(IBindable data) {
-        if (IsEditable) {
-            EntryField.Text = TypedBinding.Get(data);
+    public override void SetEditable() {
+        if (IsEditable ) {
+            FieldAsEntry ??= Binding.GetEntry();
+            FieldSet.ReplaceField(FieldAsLabel, FieldAsEntry, GridRow);
             }
         else {
-            LabelField.Text = TypedBinding.Get(data);
+            FieldAsLabel ??= Binding.GetLabel();
+            FieldSet.ReplaceField(FieldAsEntry, FieldAsLabel, GridRow);
+            }
+        }
+
+    ///<inheritdoc/>
+    public override void SetField(IBindable? data) {
+        Data = data;
+        if (Data is null) {
+            return;
+            }
+
+        if (IsEditable) {
+            FieldAsEntry.Text = TypedBinding.Get(data);
+            }
+        else {
+            FieldAsLabel.Text = TypedBinding.Get(data);
             }
         }
 
     ///<inheritdoc/>
     public override void GetField(IBindable data) {
         if (IsEditable) {
-            TypedBinding.Set(data, EntryField.Text);
+            TypedBinding.Set(data, FieldAsEntry.Text);
             }
         }
 

@@ -17,6 +17,8 @@ public class GuigenFieldChooser : GuigenField {
 
     GuiBoundPropertyChooser TypedBinding => PropertyBinding as GuiBoundPropertyChooser;
 
+    ///<inheritdoc/>
+    public bool IsEditable => IsEditMode & (TypedBinding.Set is not null);
 
     public Entry ValueField;
     public ListView ListView { get; } = new ();
@@ -42,9 +44,10 @@ public class GuigenFieldChooser : GuigenField {
     GuigenFieldSet FieldSet { get; }
 
 
-    public GuigenFieldChooser(IMainWindow mainWindow,
+    public GuigenFieldChooser(
                 GuigenFieldSet fieldsSet,
-                GuiBoundPropertyChooser binding) : base(mainWindow, binding) {
+                GuiBoundPropertyChooser binding,
+                IBindable? data = null) : base(fieldsSet, binding) {
         FieldSet = fieldsSet;
 
         CommandButtons = new HorizontalStackLayout() {
@@ -78,6 +81,12 @@ public class GuigenFieldChooser : GuigenField {
 
         RestoreView();
         }
+
+    ///<inheritdoc/>
+    public override void SetEditable() {
+
+        }
+
 
     public void RestoreView() {
         CommandButtons.IsVisible = true;
@@ -182,7 +191,7 @@ public class GuigenFieldChooser : GuigenField {
         var gui = MainWindow.Binding.Gui;
         var entries = dialog.Dialog(gui).Entries;
         EntryForm.Clear();
-        SelectionDialog = new GuigenFieldSet(Binding, entries, EntryForm, bindable.Binding, false);
+        SelectionDialog = new GuigenFieldSet(Binding, EntryForm, bindable.Binding);
         //ButtonBar.Clear();
         //SelectionDialog.AddButtons(ButtonBar);
         SelectionDialog.SetFields(bindable);

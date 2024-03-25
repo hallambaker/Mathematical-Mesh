@@ -1,22 +1,33 @@
-﻿namespace Goedel.Guigen.Maui;
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
 
+namespace Goedel.Guigen.Maui;
+
+
+/// <summary>
+/// Backing class for an integer entry field.
+/// </summary>
 public class GuigenFieldInteger : GuigenFieldSimple, IWidget {
     GuiBoundPropertyInteger TypedBinding => PropertyBinding as GuiBoundPropertyInteger;
+    ///<inheritdoc/>
+    public override bool IsEditable => IsEditMode & (TypedBinding.Set is not null);
 
     Entry ValueField;
 
 
-    public GuigenFieldInteger(IMainWindow mainWindow,
+    public GuigenFieldInteger(
                 GuigenFieldSet fieldsSet,
-                GuiBoundPropertyInteger binding) : base(mainWindow, fieldsSet, binding) {
+                GuiBoundPropertyInteger binding,
+                IBindable? data = null) : base(fieldsSet, binding) {
 
-
-        ValueField = new Entry() {
-            };
-        MainWindow.FormatFieldEntry(ValueField, binding);
-
-        View = new HorizontalStackLayout() { FieldLabel, ValueField };
+        ValueField = Binding.GetEntry();
         fieldsSet.AddField(FieldLabel, ValueField, Feedback);
+        SetEditable();
+        SetField(data);
+        }
+
+    ///<inheritdoc/>
+    public override void SetEditable() {
+        ValueField.IsEnabled = IsEditable;
         }
 
     ///<inheritdoc/>
@@ -34,21 +45,27 @@ public class GuigenFieldInteger : GuigenFieldSimple, IWidget {
 
 public class GuigenFieldColor : GuigenFieldSimple, IWidget {
     GuiBoundPropertyColor TypedBinding => PropertyBinding as GuiBoundPropertyColor;
+    ///<inheritdoc/>
+    public override bool IsEditable => IsEditMode & (TypedBinding.Set is not null);
 
     Entry ValueField;
 
 
-    public GuigenFieldColor(IMainWindow mainWindow,
+    public GuigenFieldColor(
                 GuigenFieldSet fieldsSet,
-                GuiBoundPropertyColor binding) : base(mainWindow, fieldsSet, binding) {
+                GuiBoundPropertyColor binding,
+                IBindable? data = null) : base(fieldsSet, binding) {
 
 
-        ValueField = new Entry() {
-            };
-        MainWindow.FormatFieldEntry(ValueField, binding);
-
-        View = new HorizontalStackLayout() { FieldLabel, ValueField };
+        ValueField = Binding.GetEntry();
         fieldsSet.AddField(FieldLabel, ValueField, Feedback);
+        SetEditable();
+        SetField(data);
+        }
+
+    ///<inheritdoc/>
+    public override void SetEditable() {
+        ValueField.IsEnabled = IsEditable;
         }
 
     ///<inheritdoc/>
@@ -67,21 +84,27 @@ public class GuigenFieldColor : GuigenFieldSimple, IWidget {
 
 public class GuigenFieldSize : GuigenFieldSimple, IWidget {
     GuiBoundPropertySize TypedBinding => PropertyBinding as GuiBoundPropertySize;
+    ///<inheritdoc/>
+    public override bool IsEditable => IsEditMode & (TypedBinding.Set is not null);
 
     Entry ValueField;
 
 
-    public GuigenFieldSize(IMainWindow mainWindow,
+    public GuigenFieldSize(
                 GuigenFieldSet fieldsSet,
-                GuiBoundPropertySize binding) : base(mainWindow, fieldsSet, binding) {
+                GuiBoundPropertySize binding,
+                IBindable? data = null) : base(fieldsSet, binding) {
 
 
-        ValueField = new Entry() {
-            };
-        MainWindow.FormatFieldEntry(ValueField, binding);
-
-        View = new HorizontalStackLayout() { FieldLabel, ValueField };
+        ValueField = Binding.GetEntry();
         fieldsSet.AddField(FieldLabel, ValueField, Feedback);
+        SetEditable();
+        SetField(data);
+        }
+
+    ///<inheritdoc/>
+    public override void SetEditable() {
+        ValueField.IsEnabled = IsEditable;
         }
 
     ///<inheritdoc/>
@@ -101,21 +124,27 @@ public class GuigenFieldSize : GuigenFieldSimple, IWidget {
 
 public class GuigenFieldDecimal : GuigenFieldSimple, IWidget {
     GuiBoundPropertyDecimal TypedBinding => PropertyBinding as GuiBoundPropertyDecimal;
+    ///<inheritdoc/>
+    public override bool IsEditable => IsEditMode & (TypedBinding.Set is not null);
 
     Entry ValueField;
 
 
-    public GuigenFieldDecimal(IMainWindow mainWindow,
+    public GuigenFieldDecimal(
                 GuigenFieldSet fieldsSet,
-                GuiBoundPropertyDecimal binding) : base(mainWindow, fieldsSet, binding) {
+                GuiBoundPropertyDecimal binding,
+                IBindable? data = null) : base(fieldsSet, binding) {
 
 
-        ValueField = new Entry() {
-            };
-        MainWindow.FormatFieldEntry(ValueField, binding);
-
-        View = new HorizontalStackLayout() { FieldLabel, ValueField };
+        ValueField = Binding.GetEntry();
         fieldsSet.AddField(FieldLabel, ValueField, Feedback);
+        SetEditable();
+        SetField(data);
+        }
+
+    ///<inheritdoc/>
+    public override void SetEditable() {
+        ValueField.IsEnabled = IsEditable;
         }
 
     ///<inheritdoc/>

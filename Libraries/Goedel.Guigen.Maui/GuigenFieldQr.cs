@@ -20,9 +20,10 @@ public class GuigenFieldQr : GuigenField {
     public GuiQR SelectCollection;
 
 
-    public GuigenFieldQr(IMainWindow mainWindow,
+    public GuigenFieldQr(
                 GuigenFieldSet fieldsSet,
-                GuiBoundPropertyQRScan binding) : base(mainWindow, binding) {
+                GuiBoundPropertyQRScan binding,
+                IBindable? data = null) : base(fieldsSet, binding) {
 
         // Generate a random 
         QrImage = new() {
@@ -42,7 +43,9 @@ public class GuigenFieldQr : GuigenField {
         fieldsSet.AddField(Layout);
         }
 
-
+    ///<inheritdoc/>
+    public override void SetEditable() {
+        }
 
     public override void SetField(IBindable data) {
         var guiQr = TypedBinding.Get(data);

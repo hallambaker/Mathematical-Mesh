@@ -191,32 +191,38 @@ public record ErrorResult : NullResult, IFail {
     }
 
 
-public record GuiBinding {
-
-    public Func<object, bool> IsType { get; }
-
-    public Func<IBindable> Factory { get; }
-
-
-    public GuiBoundProperty[] BoundProperties { get; }
-
-
-
-    public GuiBinding(
-                Func<object, bool> isType,
-                Func<IBindable> factory,
-                GuiBoundProperty[] boundProperties
+public record GuiBinding(
+                Func<object, bool> IsType,
+                Func<IBindable> Factory,
+                GuiBoundProperty[] BoundProperties
                 ) {
-        BoundProperties = boundProperties;
-        IsType = isType;
-        Factory = factory;
-        }
-
+    public bool IsReadOnly { get; } = false;
     }
 
+public record GuiBindingSingle(
+                Func<object, bool> IsType,
+                Func<IBindable> Factory,
+                GuiBoundProperty[] BoundProperties
+                ) : GuiBinding(IsType, Factory, BoundProperties) {
+    }
 
+public record GuiBindingMultiple(
+                Func<object, bool> IsType,
+                Func<IBindable> Factory,
+                GuiBoundProperty[] BoundProperties,
+                int Index
+                ) : GuiBinding(IsType, Factory, BoundProperties) {
+    GuiBoundPropertyChooser Chooser => (BoundProperties[Index] as GuiBoundPropertyChooser)!;
+    }
 
-
+public record GuiBindingQr(
+                Func<object, bool> IsType,
+                Func<IBindable> Factory,
+                GuiBoundProperty[] BoundProperties,
+                int Index
+                ) : GuiBinding(IsType, Factory, BoundProperties) {
+    GuiBoundPropertyQRScan Chooser => (BoundProperties[Index] as GuiBoundPropertyQRScan)!;
+    }
 
 
 public record GuiBoundProperty (

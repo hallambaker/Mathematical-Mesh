@@ -33,8 +33,6 @@ public static partial class FieldIcons  {
     /// <returns>The icon descriptor.</returns>
     public static FieldIcon Mail (bool read) => Message(read);
 
-
-
     #region // Connection
     ///<summary>Icon for generic message that has been read.</summary> 
     public static FieldIcon ConnectionRead { get; } = new("connect_read");

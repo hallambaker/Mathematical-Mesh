@@ -1,28 +1,30 @@
-﻿namespace Goedel.Guigen.Maui;
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace Goedel.Guigen.Maui;
 
 public class GuigenFieldTextArea : GuigenFieldSimple, IWidget {
 
     GuiBoundTextArea TypedBinding => PropertyBinding as GuiBoundTextArea;
 
+    ///<inheritdoc/>
+    public override bool IsEditable => IsEditMode & (TypedBinding.Set is not null);
+
     Editor ValueField;
 
     public GuigenFieldTextArea(
-                IMainWindow mainWindow,
                 GuigenFieldSet fieldsSet,
-                GuiBoundTextArea binding) : base(mainWindow, fieldsSet, binding) {
+                GuiBoundTextArea binding,
+                IBindable? data = null) : base(fieldsSet, binding) {
 
-        ValueField = new Editor() {
-            AutoSize = EditorAutoSizeOption.TextChanges,
-            IsSpellCheckEnabled = true,
-            IsTextPredictionEnabled = false,
-            Keyboard = Keyboard.Text,
-            Placeholder = "Infinite monkeys with typewriters say"
-            };
-
-        MainWindow.FormatFieldEntry(ValueField, binding);
-
-        View = new HorizontalStackLayout() { FieldLabel, ValueField };
+        ValueField = Binding.GetEditor();
         fieldsSet.AddField(FieldLabel, ValueField, Feedback);
+        SetEditable();
+        SetField(data);
+        }
+
+    ///<inheritdoc/>
+    public override void SetEditable() {
+        ValueField.IsEnabled = IsEditable;
         }
 
     ///<inheritdoc/>

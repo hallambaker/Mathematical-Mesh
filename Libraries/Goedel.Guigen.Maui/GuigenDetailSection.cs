@@ -54,7 +54,7 @@ public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
             stack.Add(buttonbar);
             }
 
-        FieldSet = new GuigenFieldSet(Binding, section.Entries, stack, section.Binding);
+        FieldSet = new GuigenFieldSet(Binding, stack, section.Binding);
         stack.Add (FieldSet.ButtonBox);
 
         if (!FieldSet.IsReadOnly) {

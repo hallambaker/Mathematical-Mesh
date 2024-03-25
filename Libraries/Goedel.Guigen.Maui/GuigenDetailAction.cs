@@ -54,7 +54,7 @@ public class GuigenDetailAction : GuigenDetaiPage {
             };
         stack.Add(label);
 
-        FieldSet = new GuigenFieldSet(binding, action.Entries, stack, action.Binding);
+        FieldSet = new GuigenFieldSet(binding, stack, action.Binding);
 
         var view = new HorizontalStackLayout();
 

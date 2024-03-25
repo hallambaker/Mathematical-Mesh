@@ -16,9 +16,10 @@ public class GuigenFieldList : GuigenField, IWidget {
     IBindable entryField;
     public ISelectCollection Collection {get; set;}
 
-    public GuigenFieldList(IMainWindow mainWindow,
+    public GuigenFieldList(
                 GuigenFieldSet fieldsSet,
-                GuiBoundPropertyList binding) : base(mainWindow, binding) {
+                GuiBoundPropertyList binding,
+                IBindable? data = null) : base(fieldsSet, binding) {
 
         FieldLabel = new Label() {
             Text = binding.Prompt
@@ -33,6 +34,10 @@ public class GuigenFieldList : GuigenField, IWidget {
         // set row in edit mode
 
         // 
+        }
+
+    ///<inheritdoc/>
+    public override void SetEditable() {
         }
 
     public override void GetField(IBindable data) {
