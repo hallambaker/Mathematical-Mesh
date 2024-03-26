@@ -219,6 +219,27 @@ public class GuigenBinding {
     public CheckBox GetCheckBox() => new();
 
 
+    /// <summary>
+    /// Return a button whose callback either causes the section to change or initiates
+    /// an action interaction.
+    /// </summary>
+    /// <param name="buttonTarget">The button target</param>
+    /// <returns>The created button</returns>
+    /// <exception cref="NYI"></exception>
+    public GuigenButton GetButton(IButtonTarget buttonTarget) =>
+        buttonTarget switch {
+            GuiAction action => new GuigenButton<GuiAction>(this, action, OnActionClick),
+            GuiSection section => new GuigenButton<GuiSection>(this, section, OnSectionClick),
+            _ => throw new NotImplementedException()
+            };
+
+    private void OnActionClick(GuiAction action) {
+        // here we begin the process of 
+        }
+
+    private void OnSectionClick(GuiSection section) {
+        }
+
 
     public void GotoSection(GuiSection section) {
         Gui.CurrentSection = section;

@@ -191,7 +191,7 @@ public class GuigenFieldChooser : GuigenField {
         var gui = MainWindow.Binding.Gui;
         var entries = dialog.Dialog(gui).Entries;
         EntryForm.Clear();
-        SelectionDialog = new GuigenFieldSet(Binding, EntryForm, bindable.Binding);
+        SelectionDialog = new GuigenFieldSet(Binding, bindable.Binding);
         //ButtonBar.Clear();
         //SelectionDialog.AddButtons(ButtonBar);
         SelectionDialog.SetFields(bindable);

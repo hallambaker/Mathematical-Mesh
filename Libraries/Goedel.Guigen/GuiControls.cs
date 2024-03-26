@@ -530,6 +530,8 @@ public interface IGuiEntry {
 
 
 public interface IButtonTarget {
+    string Icon { get; }
+    string Prompt { get; }
     }
 
 

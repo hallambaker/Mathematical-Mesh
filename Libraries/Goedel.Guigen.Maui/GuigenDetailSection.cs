@@ -54,25 +54,39 @@ public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
             stack.Add(buttonbar);
             }
 
-        FieldSet = new GuigenFieldSet(Binding, stack, section.Binding);
-        stack.Add (FieldSet.ButtonBox);
-
-        if (!FieldSet.IsReadOnly) {
-            
-            ButtonEdit = new(Binding, "edit", "Edit", OnUpdate) {
-                IsVisible = true
-                };
-            ButtonUpdate = new(Binding, "update", "Update", OnUpdate) {
-                IsVisible = false
-                };
-            UpdateMenu = new HorizontalStackLayout () { ButtonEdit.View, ButtonUpdate.View };
-            stack.Add(ButtonEdit.View);
+        switch (section.Binding) {
+            case GuiBindingSingle singleBinding : {
+                FieldSet = new GuigenFieldSetSingle(Binding, singleBinding, guiSection: section);
+                break;
+                }
+            case GuiBindingMultiple multipleBinding: {
+                FieldSet = new GuigenFieldSetMultiple(Binding, stack, multipleBinding);
+                break;
+                }
             }
 
 
-        Refresh();
 
-        Content = stack;
+
+        //FieldSet = new GuigenFieldSet(Binding, stack, section.Binding);
+        //stack.Add (FieldSet.ButtonBox);
+
+        //if (!FieldSet.IsReadOnly) {
+
+        //    ButtonEdit = new(Binding, "edit", "Edit", OnUpdate) {
+        //        IsVisible = true
+        //        };
+        //    ButtonUpdate = new(Binding, "update", "Update", OnUpdate) {
+        //        IsVisible = false
+        //        };
+        //    UpdateMenu = new HorizontalStackLayout () { ButtonEdit.View, ButtonUpdate.View };
+        //    stack.Add(ButtonEdit.View);
+        //    }
+
+
+        //Refresh();
+
+        Content = FieldSet.View;
         }
 
     private void OnUpdate(object sender, EventArgs e) {

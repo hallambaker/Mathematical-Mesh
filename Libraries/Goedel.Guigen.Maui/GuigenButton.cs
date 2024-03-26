@@ -1,4 +1,5 @@
 ﻿using static System.Collections.Specialized.BitVector32;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Goedel.Guigen.Maui;
 
@@ -27,7 +28,7 @@ public class GuigenButton {
                 GuigenBinding binding,
                 string icon,
                 string text,
-                EventHandler callback) {
+                EventHandler? callback=null) {
 
         Binding = binding;
 
@@ -37,7 +38,10 @@ public class GuigenButton {
             HeightRequest = Binding.ButtonHeight,
 
             };
-        TextButton.Clicked += callback;
+
+        if (callback is not null) {
+            TextButton.Clicked += callback;
+            }
 
         if (icon is null) {
             View = TextButton;
@@ -49,11 +53,15 @@ public class GuigenButton {
             WidthRequest = Binding.IconWidth,
             HeightRequest = Binding.IconHeight,
             };
-        ImageButton.Clicked += callback;
 
+
+        if (callback is not null) {
+            ImageButton.Clicked += callback;
+            }
         Stack = new HorizontalStackLayout() { ImageButton, TextButton };
         View = Stack;
         }
+
 
 
     public GuigenButton(
@@ -61,6 +69,15 @@ public class GuigenButton {
             this(binding, section.Icon, section.Prompt, callback) {
         Backing = section;
         //Reformat();
+        }
+
+    public void BindCallback(EventHandler callback) {
+        if (TextButton is not null) {
+            TextButton.Clicked += callback;
+            }
+        if (ImageButton is not null) {
+            ImageButton.Clicked += callback;
+            }
         }
 
     public void Reformat() {
@@ -83,6 +100,24 @@ public class GuigenButton {
 
     }
 
+public class GuigenButton<T> : GuigenButton where T : IButtonTarget {
+
+    T Data;
+    Action<T> Action;
+
+    public GuigenButton(GuigenBinding binding,
+                T data,
+                Action<T> callback) : base(binding, data.Icon, data.Prompt) {
+        Data = data;
+        Action = callback;
+        BindCallback(OnClick);
+        }
+
+    private void OnClick(object sender, EventArgs e) {
+        Action(Data);
+        }
+
+    }
 
 
 
