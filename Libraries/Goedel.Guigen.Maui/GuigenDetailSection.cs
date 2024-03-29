@@ -18,7 +18,7 @@ public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
 
     GuiSection Section { get; }
     Gui Gui => Binding.Gui;
-    GuigenFieldSet FieldSet { get; }
+    public GuigenFieldSet FieldSet { get; }
 
     GuigenButton ButtonEdit { get; }
     GuigenButton ButtonUpdate { get; }
@@ -56,35 +56,15 @@ public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
 
         switch (section.Binding) {
             case GuiBindingSingle singleBinding : {
-                FieldSet = new GuigenFieldSetSingle(Binding, singleBinding, guiSection: section);
+                FieldSet = new GuigenFieldSetSingle(Binding, singleBinding, Section.Data, guiSection: section);
                 break;
                 }
             case GuiBindingMultiple multipleBinding: {
-                FieldSet = new GuigenFieldSetMultiple(Binding, stack, multipleBinding);
+                FieldSet = new GuigenFieldSetMultiple(Binding, multipleBinding, guiSection: section, data: Section.Data);
                 break;
                 }
             }
 
-
-
-
-        //FieldSet = new GuigenFieldSet(Binding, stack, section.Binding);
-        //stack.Add (FieldSet.ButtonBox);
-
-        //if (!FieldSet.IsReadOnly) {
-
-        //    ButtonEdit = new(Binding, "edit", "Edit", OnUpdate) {
-        //        IsVisible = true
-        //        };
-        //    ButtonUpdate = new(Binding, "update", "Update", OnUpdate) {
-        //        IsVisible = false
-        //        };
-        //    UpdateMenu = new HorizontalStackLayout () { ButtonEdit.View, ButtonUpdate.View };
-        //    stack.Add(ButtonEdit.View);
-        //    }
-
-
-        //Refresh();
 
         Content = FieldSet.View;
         }

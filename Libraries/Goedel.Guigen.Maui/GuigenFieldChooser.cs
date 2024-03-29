@@ -21,6 +21,10 @@ public class GuigenFieldChooser : GuigenField {
     public bool IsEditable => IsEditMode & (TypedBinding.Set is not null);
 
     public Entry ValueField;
+
+    public View View => Layout;
+    public Layout Layout { get; }
+
     public ListView ListView { get; } = new ();
     RefreshView RefreshView { get; } = new();
 
@@ -30,7 +34,7 @@ public class GuigenFieldChooser : GuigenField {
     public ISelectCollection SelectCollection;
 
     public StackBase CommandButtons { get; }
-    public HorizontalStackLayout MainLayout;
+    //public HorizontalStackLayout MainLayout;
 
     public GuiBinding SelectionBinding { get; set; } = null;
     public List<GridLength> Widths { get; } = new();
@@ -41,45 +45,47 @@ public class GuigenFieldChooser : GuigenField {
     public HorizontalStackLayout ButtonBar = new();
 
     GuigenFieldSet SelectionDialog { get; set; }
-    GuigenFieldSet FieldSet { get; }
+    GuigenFieldSetMultiple FieldSetMultiple => FieldSet as GuigenFieldSetMultiple;
 
 
     public GuigenFieldChooser(
-                GuigenFieldSet fieldsSet,
+                GuigenFieldSetMultiple fieldSet,
                 GuiBoundPropertyChooser binding,
-                IBindable? data = null) : base(fieldsSet, binding) {
-        FieldSet = fieldsSet;
+                IBindable? data = null) : base (fieldSet, binding) {
 
-        CommandButtons = new HorizontalStackLayout() {
-            FilterInput,
-            FilterButton
-            };
 
-        FilterInput = new Entry() {
-            };
-        FilterButton = new Button() {
-            Text = "Filter"
-            };
-        FilterButton.Clicked += OnClickFilter;
+        //CommandButtons = new HorizontalStackLayout() {
+        //    FilterInput,
+        //    FilterButton
+        //    };
 
-        CommandButtons.Add(FilterInput);
-        CommandButtons.Add(FilterButton);
+        //FilterInput = new Entry() {
+        //    };
+        //FilterButton = new Button() {
+        //    Text = "Filter"
+        //    };
+        //FilterButton.Clicked += OnClickFilter;
+
+        //CommandButtons.Add(FilterInput);
+        //CommandButtons.Add(FilterButton);
 
         ListView.ItemTemplate = new BindableTemplate(this);
         ListView.ItemSelected += OnClickSelect;
         ListView.VerticalScrollBarVisibility = ScrollBarVisibility.Always;
         ListView.HeightRequest = 200;
-        //ListView.WidthRequest = 500;
 
         RefreshView.Content = ListView;
 
-        MainLayout = new();
+        Layout = new VerticalStackLayout() { CommandButtons, ListView };
 
-        var Layout = new VerticalStackLayout() { CommandButtons, MainLayout, EntryForm, ButtonBar };
+        if (data != null) {
+            SetField(data);
+            }
+
         //var Layout = new VerticalStackLayout() { CommandButtons, MainLayout, EntryForm};
-        fieldsSet.AddField(Layout);
 
-        RestoreView();
+
+        //RestoreView();
         }
 
     ///<inheritdoc/>
@@ -88,11 +94,11 @@ public class GuigenFieldChooser : GuigenField {
         }
 
 
-    public void RestoreView() {
-        CommandButtons.IsVisible = true;
-        MainLayout.Clear();
-        MainLayout.Add(RefreshView);
-        }
+    //public void RestoreView() {
+    //    CommandButtons.IsVisible = true;
+    //    MainLayout.Clear();
+    //    MainLayout.Add(RefreshView);
+    //    }
 
     public override void SetField(IBindable data) {
         if (data is IHeadedSelection headed) {
@@ -183,28 +189,19 @@ public class GuigenFieldChooser : GuigenField {
         var selectEvent = e as SelectedItemChangedEventArgs;
 
 
-        var dialog = selectEvent.SelectedItem as IDialog;
-
-
-
         var bindable = selectEvent.SelectedItem as IBindable;
-        var gui = MainWindow.Binding.Gui;
-        var entries = dialog.Dialog(gui).Entries;
-        EntryForm.Clear();
-        SelectionDialog = new GuigenFieldSet(Binding, bindable.Binding);
-        //ButtonBar.Clear();
-        //SelectionDialog.AddButtons(ButtonBar);
-        SelectionDialog.SetFields(bindable);
-        FieldSet.ButtonBox.Clear();
-        SelectionDialog.AddButtons(FieldSet.ButtonBox);
 
 
-        //MainWindow.Binding.Dispatcher.Dispatch(() => {
-        //    FieldSet.ButtonBox.Clear();
-        //    SelectionDialog.AddButtons(FieldSet.ButtonBox);
-        //    (FieldSet.ButtonBox as IView).InvalidateArrange();
-        //    });
-        // now add in all the buttons from entries.
+        FieldSetMultiple.OnItemSelected(bindable);
+
+        //EntryForm.Clear();
+        //SelectionDialog = new GuigenFieldSet(Binding, bindable.Binding);
+        ////ButtonBar.Clear();
+        ////SelectionDialog.AddButtons(ButtonBar);
+        //SelectionDialog.SetFields(bindable);
+        //FieldSet.ButtonBox.Clear();
+        //SelectionDialog.AddButtons(FieldSet.ButtonBox);
+
 
 
         }

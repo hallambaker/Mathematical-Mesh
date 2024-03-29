@@ -234,19 +234,26 @@ public class GuigenBinding {
             };
 
     private void OnActionClick(GuiAction action) {
-        // here we begin the process of 
+        Gui.CurrentAction = action;
+
+        if (!action.IsConfirmation) {
+            // Action does not require parameters, it runs automatically
+            }
+        else {
+            MainWindow.SetDetailWindow(action);
+            }
+
+
         }
 
-    private void OnSectionClick(GuiSection section) {
-        }
+    private void OnSectionClick(GuiSection section) =>
+                GotoSection (section);
+     
 
 
     public void GotoSection(GuiSection section) {
         Gui.CurrentSection = section;
-
-        MainWindow.Reformat();
         MainWindow.SetDetailWindow(section);
-
         }
 
     /// <summary>
@@ -355,138 +362,6 @@ public class GuigenBinding {
             }
 
         }
-
-    }
-
-
-
-public class GuigenMainFlyout : IReformat, IMainWindow {
-    
-    public StyleSheet StyleSheet => StyleSheet.DefaultStyleSheet;
-    public GuigenBinding Binding { get; }
-
-    ///<summary>The Maui widget for this page (A FlyoutPage).</summary> 
-    public Page Page => FlyoutPage;
-    FlyoutPage FlyoutPage { get; }
-    ///<summary>The section menu.</summary> 
-    public GuigenSectionMenu SectionMenu { get; }
-
-    ///<summary>The current section.</summary> 
-    GuiSection CurrentSection { get; set; }
-
-    public Gui Gui => Binding.Gui;
-
-    public GuigenDetailAction CurrentAction { get; set; }
-
-    public GuigenMainFlyout(GuigenBinding binding) {
-
-        Binding = binding;
-        binding.MainWindow = this; // Hack!!! Ugh!!!
-        SectionMenu = new GuigenSectionMenu(Binding);
-
-
-
-        FlyoutPage = new FlyoutPage() {
-            Title = "Fred",
-            Flyout = SectionMenu.Page
-            };
-
-        Binding.GotoSection(Gui.DefaultSection);
-
-
-        }
-
-    public void Reformat() {
-        SectionMenu.Reformat();
-        }
-
-    public int GetDetailWidth() => (int) FlyoutPage.Window.Width;
-
-
-    /// <summary>
-    /// Event callback. Display the cached detail window associated with <paramref name="section"/>
-    /// if it exists, otherwise create a new detail window.
-    /// </summary>
-    /// <param name="section"></param>
-    public void SetDetailWindow(GuiSection section = null) {
-        if (CurrentAction != null) {
-            CurrentAction.TearDown();
-            }
-
-        section ??= CurrentSection;
-
-        CurrentSection = section;
-
-        // Do we have this presentation cached?
-        if (section.Presentation is not GuigenDetailSection detail) {
-            FlyoutPage.Detail = new GuigenDetailSection(this.Binding, section).Page;
-            return;
-            }
-
-        detail.Refresh();
-        FlyoutPage.Detail = detail;
-        }
-
-
-
-
-
-
-
-    /// <summary>
-    /// Event callback, MUST be called on the main display thread. Displays the result values
-    /// held in <paramref name="result"/>. Since these vary from call to call, they are not cached.
-    /// </summary>
-    /// <param name="result">The result to present.</param>
-    public void SetResultWindow(IResult result) {
-        FlyoutPage.Detail = new GuigenDetailResult(this.Binding, result);
-        }
-
-
-
-    /// <summary>
-    /// Event callback. Display the  detail window associated with <paramref name="action"/>
-    /// if it exists, otherwise create a new detail window.
-    /// </summary>
-    /// <param name="action">The action window to raise.</param>
-    public void SetDetailWindow(GuiAction action) {
-        if (action.Presentation is not GuigenDetailSection detail) {
-            FlyoutPage.Detail = new GuigenDetailAction(this.Binding, action).Page;
-            return;
-            }
-
-        // Call refresh only if the window is newly created.
-        detail.Refresh();
-        FlyoutPage.Detail = detail;
-        }
-
-    public void FormatAction(View view) {
-        switch (view) {
-            case Button button: {
-                button.BackgroundColor = StyleSheet.BackgroundColor;
-                button.BorderColor = StyleSheet.BorderColor;
-                button.TextColor = button.IsEnabled ? StyleSheet.TextColor : StyleSheet.InactiveTextColor;
-                break;
-                }
-            }
-        }
-
-
-    public void FormatFieldLabel(Label view) {
-        view.WidthRequest = 150;
-        }
-
-    public void FormatFieldEntry(View view, GuiBoundProperty boundProperty) {
-        }
-
-    public void FormatFeedback(Label view) {
-        view.TextColor = Colors.Red;
-        }
-
-    public void DisableView(View view) {
-        throw new NotImplementedException();
-        }
-
 
     }
 

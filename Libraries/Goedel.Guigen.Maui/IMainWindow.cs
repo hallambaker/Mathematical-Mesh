@@ -23,7 +23,10 @@ public interface IMainWindow  {
 
     public StyleSheet StyleSheet { get; }
 
-    public GuigenDetailAction CurrentAction { get; set; }
+
+
+
+    public GuigenDetailAction CurrentActionOld { get; set; }
 
 
     public int GetDetailWidth();

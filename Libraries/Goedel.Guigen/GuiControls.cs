@@ -212,7 +212,7 @@ public record GuiBindingMultiple(
                 GuiBoundProperty[] BoundProperties,
                 int Index
                 ) : GuiBinding(IsType, Factory, BoundProperties) {
-    GuiBoundPropertyChooser Chooser => (BoundProperties[Index] as GuiBoundPropertyChooser)!;
+    public GuiBoundPropertyChooser Chooser => (BoundProperties[Index] as GuiBoundPropertyChooser)!;
     }
 
 public record GuiBindingQr(
@@ -221,7 +221,7 @@ public record GuiBindingQr(
                 GuiBoundProperty[] BoundProperties,
                 int Index
                 ) : GuiBinding(IsType, Factory, BoundProperties) {
-    GuiBoundPropertyQRScan Chooser => (BoundProperties[Index] as GuiBoundPropertyQRScan)!;
+    public GuiBoundPropertyQRScan Chooser => (BoundProperties[Index] as GuiBoundPropertyQRScan)!;
     }
 
 
@@ -495,7 +495,8 @@ public record GuiAction(
             string Icon,
             GuiBinding Binding,
             FactoryCallback Factory,
-            bool IsSelect = false
+            bool IsSelect = false,
+            bool IsConfirmation = false
             ) : GuiFieldSet(Id, Prompt, Binding), IButtonTarget {
     public IPresentation? Presentation { get; set; } = null;
 

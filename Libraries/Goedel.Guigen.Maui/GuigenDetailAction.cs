@@ -40,7 +40,7 @@ public class GuigenDetailAction : GuigenDetaiPage {
     //Gui Gui { get; }
 
     public GuigenDetailAction(GuigenBinding binding, GuiAction action) : base (binding) {
-        MainWindow.CurrentAction = this;
+        MainWindow.CurrentActionOld = this;
 
         Action = action;
         action.Presentation = this;
@@ -97,7 +97,7 @@ public class GuigenDetailAction : GuigenDetaiPage {
 
     public void TearDown() {
         Result?.TearDown(Gui);
-        MainWindow.CurrentAction = null;
+        MainWindow.CurrentActionOld = null;
         }
 
     private void OnClickCancel(object sender, EventArgs e) {
@@ -117,7 +117,7 @@ public class GuigenDetailAction : GuigenDetaiPage {
             case ValidResult: {
 
                 if (Action.Callback != null) {
-                    MainWindow.CurrentAction = null;
+                    MainWindow.CurrentActionOld = null;
                     DisableActions();
                     var task = Action.Callback(Result);
                     task.ContinueWith(Continue, null);

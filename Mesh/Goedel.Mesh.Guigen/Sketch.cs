@@ -6609,185 +6609,261 @@ public class _EverythingMaui : Gui {
 
     ///<summary>Section SectionAccountSection.</summary> 
 	public GuiSection SectionAccountSection { get; } = new (
-        "AccountSection", "Account", "user", _AccountSection.BaseBinding, false);
+        "AccountSection", "Account", "user", 
+        _AccountSection.BaseBinding, false);
 
     ///<summary>Section SectionMessageSection.</summary> 
 	public GuiSection SectionMessageSection { get; } = new (
-        "MessageSection", "Messages", "messages", _MessageSection.BaseBinding, true);
+        "MessageSection", "Messages", "messages", 
+        _MessageSection.BaseBinding, true);
 
     ///<summary>Section SectionContactSection.</summary> 
 	public GuiSection SectionContactSection { get; } = new (
-        "ContactSection", "Contacts", "contacts", _ContactSection.BaseBinding, true);
+        "ContactSection", "Contacts", "contacts", 
+        _ContactSection.BaseBinding, true);
 
     ///<summary>Section SectionDocumentSection.</summary> 
 	public GuiSection SectionDocumentSection { get; } = new (
-        "DocumentSection", "Documents", "Documents", _DocumentSection.BaseBinding, false);
+        "DocumentSection", "Documents", "Documents", 
+        _DocumentSection.BaseBinding, false);
 
     ///<summary>Section SectionFeedSection.</summary> 
 	public GuiSection SectionFeedSection { get; } = new (
-        "FeedSection", "Feeds", "feeds", _FeedSection.BaseBinding, false);
+        "FeedSection", "Feeds", "feeds", 
+        _FeedSection.BaseBinding, false);
 
     ///<summary>Section SectionGroupSection.</summary> 
 	public GuiSection SectionGroupSection { get; } = new (
-        "GroupSection", "Groups", "groups", _GroupSection.BaseBinding, false);
+        "GroupSection", "Groups", "groups", 
+        _GroupSection.BaseBinding, false);
 
     ///<summary>Section SectionCredentialSection.</summary> 
 	public GuiSection SectionCredentialSection { get; } = new (
-        "CredentialSection", "Credentials", "credentials", _CredentialSection.BaseBinding, false);
+        "CredentialSection", "Credentials", "credentials", 
+        _CredentialSection.BaseBinding, false);
 
     ///<summary>Section SectionTaskSection.</summary> 
 	public GuiSection SectionTaskSection { get; } = new (
-        "TaskSection", "Tasks", "tasks", _TaskSection.BaseBinding, false);
+        "TaskSection", "Tasks", "tasks", 
+        _TaskSection.BaseBinding, false);
 
     ///<summary>Section SectionCalendarSection.</summary> 
 	public GuiSection SectionCalendarSection { get; } = new (
-        "CalendarSection", "Calendar", "calendar", _CalendarSection.BaseBinding, false);
+        "CalendarSection", "Calendar", "calendar", 
+        _CalendarSection.BaseBinding, false);
 
     ///<summary>Section SectionBookmarkSection.</summary> 
 	public GuiSection SectionBookmarkSection { get; } = new (
-        "BookmarkSection", "Bookmark", "bookmark", _BookmarkSection.BaseBinding, false);
+        "BookmarkSection", "Bookmark", "bookmark", 
+        _BookmarkSection.BaseBinding, false);
 
     ///<summary>Section SectionApplicationSection.</summary> 
 	public GuiSection SectionApplicationSection { get; } = new (
-        "ApplicationSection", "Applications", "applications", _ApplicationSection.BaseBinding, false);
+        "ApplicationSection", "Applications", "applications", 
+        _ApplicationSection.BaseBinding, false);
 
     ///<summary>Section SectionDeviceSection.</summary> 
 	public GuiSection SectionDeviceSection { get; } = new (
-        "DeviceSection", "Devices", "devices", _DeviceSection.BaseBinding, false);
+        "DeviceSection", "Devices", "devices", 
+        _DeviceSection.BaseBinding, false);
 
     ///<summary>Section SectionServiceSection.</summary> 
 	public GuiSection SectionServiceSection { get; } = new (
-        "ServiceSection", "Services", "Services", _ServiceSection.BaseBinding, false);
+        "ServiceSection", "Services", "Services", 
+        _ServiceSection.BaseBinding, false);
 
     ///<summary>Section SectionSettingSection.</summary> 
 	public GuiSection SectionSettingSection { get; } = new (
-        "SettingSection", "Settings", "settings", _SettingSection.BaseBinding, false);
+        "SettingSection", "Settings", "settings", 
+        _SettingSection.BaseBinding, false);
 #endregion
 #region // Actions
 
     ///<summary>Action ActionTestService.</summary> 
 	public GuiAction ActionTestService { get; } = new (
-        "TestService", "Test Service", "test_service", _TestService.BaseBinding, () => new TestService());
+        "TestService", "Test Service", "test_service", 
+        _TestService.BaseBinding, () => new TestService(),
+        IsConfirmation: true);
 
     ///<summary>Action ActionAccountCreate.</summary> 
 	public GuiAction ActionAccountCreate { get; } = new (
-        "AccountCreate", "Create Mesh Account", "new", _AccountCreate.BaseBinding, () => new AccountCreate());
+        "AccountCreate", "Create Mesh Account", "new", 
+        _AccountCreate.BaseBinding, () => new AccountCreate(),
+        IsConfirmation: true);
 
     ///<summary>Action ActionAccountRequestConnect.</summary> 
 	public GuiAction ActionAccountRequestConnect { get; } = new (
-        "AccountRequestConnect", "Connect by Address", "connect", _AccountRequestConnect.BaseBinding, () => new AccountRequestConnect());
+        "AccountRequestConnect", "Connect by Address", "connect", 
+        _AccountRequestConnect.BaseBinding, () => new AccountRequestConnect(),
+        IsConfirmation: true);
 
     ///<summary>Action ActionDeviceConnectQR.</summary> 
 	public GuiAction ActionDeviceConnectQR { get; } = new (
-        "DeviceConnectQR", "Present QR", "present_qr", _DeviceConnectQR.BaseBinding, () => new DeviceConnectQR());
+        "DeviceConnectQR", "Present QR", "present_qr", 
+        _DeviceConnectQR.BaseBinding, () => new DeviceConnectQR(),
+        IsConfirmation: true);
 
     ///<summary>Action ActionAccountRecover.</summary> 
 	public GuiAction ActionAccountRecover { get; } = new (
-        "AccountRecover", "Recover Mesh Account", "recover_account", _AccountRecover.BaseBinding, () => new AccountRecover());
+        "AccountRecover", "Recover Mesh Account", "recover_account", 
+        _AccountRecover.BaseBinding, () => new AccountRecover(),
+        IsConfirmation: true);
 
     ///<summary>Action ActionAccountDelete.</summary> 
 	public GuiAction ActionAccountDelete { get; } = new (
-        "AccountDelete", "Delete Account", "test_service", _AccountDelete.BaseBinding, () => new AccountDelete());
+        "AccountDelete", "Delete Account", "test_service", 
+        _AccountDelete.BaseBinding, () => new AccountDelete(),
+        IsConfirmation: false);
 
     ///<summary>Action ActionAccountSwitch.</summary> 
 	public GuiAction ActionAccountSwitch { get; } = new (
-        "AccountSwitch", "Change Account", "test_service", _AccountSwitch.BaseBinding, () => new AccountSwitch());
+        "AccountSwitch", "Change Account", "test_service", 
+        _AccountSwitch.BaseBinding, () => new AccountSwitch(),
+        IsConfirmation: true);
 
     ///<summary>Action ActionAccountGenerateRecovery.</summary> 
 	public GuiAction ActionAccountGenerateRecovery { get; } = new (
-        "AccountGenerateRecovery", "Create recovery", "share_nodes_solid", _AccountGenerateRecovery.BaseBinding, () => new AccountGenerateRecovery());
+        "AccountGenerateRecovery", "Create recovery", "share_nodes_solid", 
+        _AccountGenerateRecovery.BaseBinding, () => new AccountGenerateRecovery(),
+        IsConfirmation: true);
 
     ///<summary>Action ActionRequestConfirmation.</summary> 
 	public GuiAction ActionRequestConfirmation { get; } = new (
-        "RequestConfirmation", "Confirmation Request", "confirm", _RequestConfirmation.BaseBinding, () => new RequestConfirmation());
+        "RequestConfirmation", "Confirmation Request", "confirm", 
+        _RequestConfirmation.BaseBinding, () => new RequestConfirmation(),
+        IsConfirmation: true);
 
     ///<summary>Action ActionCreateMail.</summary> 
 	public GuiAction ActionCreateMail { get; } = new (
-        "CreateMail", "New Mail", "mail", _CreateMail.BaseBinding, () => new CreateMail());
+        "CreateMail", "New Mail", "mail", 
+        _CreateMail.BaseBinding, () => new CreateMail(),
+        IsConfirmation: true);
 
     ///<summary>Action ActionCreateChat.</summary> 
 	public GuiAction ActionCreateChat { get; } = new (
-        "CreateChat", "New Chat", "chat", _CreateChat.BaseBinding, () => new CreateChat());
+        "CreateChat", "New Chat", "chat", 
+        _CreateChat.BaseBinding, () => new CreateChat(),
+        IsConfirmation: false);
 
     ///<summary>Action ActionStartVoice.</summary> 
 	public GuiAction ActionStartVoice { get; } = new (
-        "StartVoice", "New Voice", "voice", _StartVoice.BaseBinding, () => new StartVoice());
+        "StartVoice", "New Voice", "voice", 
+        _StartVoice.BaseBinding, () => new StartVoice(),
+        IsConfirmation: false);
 
     ///<summary>Action ActionStartVideo.</summary> 
 	public GuiAction ActionStartVideo { get; } = new (
-        "StartVideo", "New Video", "video", _StartVideo.BaseBinding, () => new StartVideo());
+        "StartVideo", "New Video", "video", 
+        _StartVideo.BaseBinding, () => new StartVideo(),
+        IsConfirmation: false);
 
     ///<summary>Action ActionAddPerson.</summary> 
 	public GuiAction ActionAddPerson { get; } = new (
-        "AddPerson", "Add Person", "contact", _AddPerson.BaseBinding, () => new AddPerson());
+        "AddPerson", "Add Person", "contact", 
+        _AddPerson.BaseBinding, () => new AddPerson(),
+        IsConfirmation: false);
 
     ///<summary>Action ActionAddOrganization.</summary> 
 	public GuiAction ActionAddOrganization { get; } = new (
-        "AddOrganization", "Add Organization", "contact", _AddOrganization.BaseBinding, () => new AddOrganization());
+        "AddOrganization", "Add Organization", "contact", 
+        _AddOrganization.BaseBinding, () => new AddOrganization(),
+        IsConfirmation: false);
 
     ///<summary>Action ActionAddLocation.</summary> 
 	public GuiAction ActionAddLocation { get; } = new (
-        "AddLocation", "Add Location", "contact", _AddLocation.BaseBinding, () => new AddLocation());
+        "AddLocation", "Add Location", "contact", 
+        _AddLocation.BaseBinding, () => new AddLocation(),
+        IsConfirmation: false);
 
     ///<summary>Action ActionRequestContact.</summary> 
 	public GuiAction ActionRequestContact { get; } = new (
-        "RequestContact", "Request Contact", "contact", _RequestContact.BaseBinding, () => new RequestContact());
+        "RequestContact", "Request Contact", "contact", 
+        _RequestContact.BaseBinding, () => new RequestContact(),
+        IsConfirmation: true);
 
     ///<summary>Action ActionQrContact.</summary> 
 	public GuiAction ActionQrContact { get; } = new (
-        "QrContact", "Connect by QR", "contact", _QrContact.BaseBinding, () => new QrContact());
+        "QrContact", "Connect by QR", "contact", 
+        _QrContact.BaseBinding, () => new QrContact(),
+        IsConfirmation: true);
 
     ///<summary>Action ActionUploadDocument.</summary> 
 	public GuiAction ActionUploadDocument { get; } = new (
-        "UploadDocument", "Connect by QR", "contact", _UploadDocument.BaseBinding, () => new UploadDocument());
+        "UploadDocument", "Connect by QR", "contact", 
+        _UploadDocument.BaseBinding, () => new UploadDocument(),
+        IsConfirmation: true);
 
     ///<summary>Action ActionAddFeed.</summary> 
 	public GuiAction ActionAddFeed { get; } = new (
-        "AddFeed", "Add Feed", "account_group", _AddFeed.BaseBinding, () => new AddFeed());
+        "AddFeed", "Add Feed", "account_group", 
+        _AddFeed.BaseBinding, () => new AddFeed(),
+        IsConfirmation: true);
 
     ///<summary>Action ActionAddGroup.</summary> 
 	public GuiAction ActionAddGroup { get; } = new (
-        "AddGroup", "Create group", "account_group", _AddGroup.BaseBinding, () => new AddGroup());
+        "AddGroup", "Create group", "account_group", 
+        _AddGroup.BaseBinding, () => new AddGroup(),
+        IsConfirmation: true);
 
     ///<summary>Action ActionGroupInvite.</summary> 
 	public GuiAction ActionGroupInvite { get; } = new (
-        "GroupInvite", "Invite member", "account_group", _GroupInvite.BaseBinding, () => new GroupInvite());
+        "GroupInvite", "Invite member", "account_group", 
+        _GroupInvite.BaseBinding, () => new GroupInvite(),
+        IsConfirmation: true);
 
     ///<summary>Action ActionAddPassword.</summary> 
 	public GuiAction ActionAddPassword { get; } = new (
-        "AddPassword", "Create password", "credentials", _AddPassword.BaseBinding, () => new AddPassword());
+        "AddPassword", "Create password", "credentials", 
+        _AddPassword.BaseBinding, () => new AddPassword(),
+        IsConfirmation: true);
 
     ///<summary>Action ActionAddPasskey.</summary> 
 	public GuiAction ActionAddPasskey { get; } = new (
-        "AddPasskey", "Create password", "credentials", _AddPasskey.BaseBinding, () => new AddPasskey());
+        "AddPasskey", "Create password", "credentials", 
+        _AddPasskey.BaseBinding, () => new AddPasskey(),
+        IsConfirmation: false);
 
     ///<summary>Action ActionAddTask.</summary> 
 	public GuiAction ActionAddTask { get; } = new (
-        "AddTask", "Create password", "credentials", _AddTask.BaseBinding, () => new AddTask());
+        "AddTask", "Create password", "credentials", 
+        _AddTask.BaseBinding, () => new AddTask(),
+        IsConfirmation: true);
 
     ///<summary>Action ActionAddBookmark.</summary> 
 	public GuiAction ActionAddBookmark { get; } = new (
-        "AddBookmark", "Add Bookmark", "account_group", _AddBookmark.BaseBinding, () => new AddBookmark());
+        "AddBookmark", "Add Bookmark", "account_group", 
+        _AddBookmark.BaseBinding, () => new AddBookmark(),
+        IsConfirmation: true);
 
     ///<summary>Action ActionAddMailAccount.</summary> 
 	public GuiAction ActionAddMailAccount { get; } = new (
-        "AddMailAccount", "Add email account", "mail", _AddMailAccount.BaseBinding, () => new AddMailAccount());
+        "AddMailAccount", "Add email account", "mail", 
+        _AddMailAccount.BaseBinding, () => new AddMailAccount(),
+        IsConfirmation: true);
 
     ///<summary>Action ActionAddSshAccount.</summary> 
 	public GuiAction ActionAddSshAccount { get; } = new (
-        "AddSshAccount", "Create SSH credential", "credentials", _AddSshAccount.BaseBinding, () => new AddSshAccount());
+        "AddSshAccount", "Create SSH credential", "credentials", 
+        _AddSshAccount.BaseBinding, () => new AddSshAccount(),
+        IsConfirmation: true);
 
     ///<summary>Action ActionAddGitAccount.</summary> 
 	public GuiAction ActionAddGitAccount { get; } = new (
-        "AddGitAccount", "Create git credentials", "git", _AddGitAccount.BaseBinding, () => new AddGitAccount());
+        "AddGitAccount", "Create git credentials", "git", 
+        _AddGitAccount.BaseBinding, () => new AddGitAccount(),
+        IsConfirmation: true);
 
     ///<summary>Action ActionAddCodeSigningKey.</summary> 
 	public GuiAction ActionAddCodeSigningKey { get; } = new (
-        "AddCodeSigningKey", "Add Code Signing Key", "signature", _AddCodeSigningKey.BaseBinding, () => new AddCodeSigningKey());
+        "AddCodeSigningKey", "Add Code Signing Key", "signature", 
+        _AddCodeSigningKey.BaseBinding, () => new AddCodeSigningKey(),
+        IsConfirmation: true);
 
     ///<summary>Action ActionAccountGetPin.</summary> 
 	public GuiAction ActionAccountGetPin { get; } = new (
-        "AccountGetPin", "Create connection PIN", "recover", _AccountGetPin.BaseBinding, () => new AccountGetPin());
+        "AccountGetPin", "Create connection PIN", "recover", 
+        _AccountGetPin.BaseBinding, () => new AccountGetPin(),
+        IsConfirmation: true);
 
 #endregion
 #region // Actions

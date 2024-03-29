@@ -13,7 +13,7 @@ namespace Goedel.Guigen.Maui;
 
 
 
-public class GuigenFieldSet : IWidget {
+public class GuigenFieldSet : IWidget, IPresentation {
 
 
     ///<summary>The bound UI</summary> 
@@ -37,7 +37,7 @@ public class GuigenFieldSet : IWidget {
     public Layout ButtonBox { get; private set;  }
 
     public bool IsChooser { get; set; } = false;
-    GuiBinding FieldBinding { get; }
+    protected GuiBinding FieldBinding { get; }
 
 
     public bool IsSection { get; set; } = true;
@@ -86,11 +86,7 @@ public class GuigenFieldSet : IWidget {
                 IBindable? data = null) {
         Binding = binding;
         FieldBinding = fieldBinding;
-
-
-        //stack?.Add(FieldGrid);
-
-
+        FieldGrid = MakeFieldGrid();
         }
 
     private Grid MakeFieldGrid() {
@@ -101,7 +97,7 @@ public class GuigenFieldSet : IWidget {
         }
 
     protected void AddFields(GuiBinding fieldBinding, IBindable data) {
-        FieldGrid ??= MakeFieldGrid();
+
         foreach (var entry in fieldBinding.BoundProperties) {
             switch (entry) {
                 case GuiBoundPropertyBoolean bound: {
@@ -145,13 +141,8 @@ public class GuigenFieldSet : IWidget {
                 //    break;
                 //    }
                 case GuiBoundPropertyIcon bound: {
-                    if (fieldBinding.IsReadOnly) {
-                        }
-                    else {
-                        var field = new GuigenFieldIcon(this, bound, data);
-                        MauiFields.Add(field);
-                        break;
-                        }
+                    var field = new GuigenFieldIcon(this, bound, data);
+                    MauiFields.Add(field);
                     break;
                     }
                 //case GuiBoundPropertyChooser bound: {
@@ -171,7 +162,6 @@ public class GuigenFieldSet : IWidget {
                     }
 
                 }
-            IsReadOnly &= entry.IsReadOnly;
             }
         }
 
@@ -322,7 +312,9 @@ public class GuigenFieldSetSingle : GuigenFieldSet {
         GuiSection = guiSection;
 
         // Create the Action buttons
-        ActionMenu = new FlexLayout();
+        ActionMenu = new FlexLayout() { 
+            Wrap = FlexWrap.Wrap
+            };
         //AddButtons(ActionMenu);
         AddStaticButtons(guiSection?.Entries);
 
@@ -334,7 +326,9 @@ public class GuigenFieldSetSingle : GuigenFieldSet {
         UpdateButton = new GuigenButton(Binding, null, "Update", OnCancel);
         EditButton = new GuigenButton(Binding, null, "Edit", OnCancel);
         
-        ContextMenu = new FlexLayout();
+        ContextMenu = new FlexLayout() {
+            Wrap = FlexWrap.Wrap
+            };
         SetState();
 
         // Create the main layout
@@ -377,16 +371,57 @@ public class GuigenFieldSetSingle : GuigenFieldSet {
 
 public class GuigenFieldSetMultiple : GuigenFieldSet {
 
+    public override View View => MainLayout;
+    Layout MainLayout;
+
     ///<summary>The chooser section (if present)</summary> 
     public GuigenFieldChooser Chooser { get; set; }
 
     public GuigenFieldSetMultiple(
             GuigenBinding binding,
-            Layout? stack,
             GuiBindingMultiple fieldBinding = null,
+            GuiSection guiSection = null,
             IBindable? data = null) : base(binding, fieldBinding, data) {
+
+        ActionMenu = new FlexLayout() {
+            Wrap = FlexWrap.Wrap
+            };
+        AddStaticButtons(guiSection?.Entries);
+
+        Chooser = new GuigenFieldChooser(this, fieldBinding.Chooser, data);
+
+        ContextMenu = new FlexLayout() {
+            Wrap = FlexWrap.Wrap
+            };
+
         SetState();
+
+        // Create the main layout
+        MainLayout = new VerticalStackLayout {
+            ActionMenu,
+            Chooser.View,
+            FieldGrid,
+            ContextMenu
+            };
         }
+
+
+    public void ClearSelection() {
+        FieldGrid.IsVisible = false;
+        }
+
+    // An item has been selected 
+    public void OnItemSelected(IBindable item) {
+        FieldGrid?.Clear();
+        AddFields(item.Binding, item);
+        FieldGrid.IsVisible = true;
+        }
+
+
+
+
+
+
 
     void SetState() {
 
@@ -411,22 +446,20 @@ public class GuigenFieldSetMultiple : GuigenFieldSet {
     }
 
 
+
+
+
 /// <summary>
 /// Present field set for an action dialog.
 /// </summary>
 public class GuigenFieldSetAction : GuigenFieldSet {
 
+    GuiAction GuiAction { get; }
+
     public GuigenFieldSetAction(
             GuigenBinding binding,
-            Layout? stack,
-            GuiBindingSingle fieldBinding = null,
-            IBindable? data = null) : base(binding, fieldBinding, data) {
-
-
-        CancelButton = new GuigenButton(Binding, null, "Cancel", OnCancel);
-        ConfirmButton = new GuigenButton(Binding, null, "Confirm", OnCancel);
-
-        SetState();
+            GuiAction guiAction) : base(binding, guiAction.Binding) {
+        GuiAction = guiAction;
         }
 
     private void SetState() {
@@ -436,16 +469,60 @@ public class GuigenFieldSetAction : GuigenFieldSet {
         ContextMenu.Add(ConfirmButton.View);
         }
 
+    }
+
+
+public class GuigenFieldSetActionSingle : GuigenFieldSetAction {
+
+
+    public override View View => MainLayout;
+    Layout MainLayout;
+
+    public GuigenFieldSetActionSingle(
+                GuigenBinding binding,
+                GuiAction guiAction) : base (binding, guiAction) {
+
+        // Create the backing data
+        Data = guiAction.Factory();
+
+        // Create the fields 
+        AddFields(FieldBinding, Data);
+
+        ContextMenu = new FlexLayout() {
+            Wrap = FlexWrap.Wrap
+            };
+        CancelButton = new GuigenButton(Binding, null, "Cancel", OnCancel);
+        ConfirmButton = new GuigenButton(Binding, null, "Confirm", OnCancel);
+
+        // Create the main layout
+        MainLayout = new VerticalStackLayout {
+            ActionMenu,
+            FieldGrid,
+            ContextMenu
+            };
+        }
+
     private void OnCancel(object sender, EventArgs e) {
-        Binding.CancelActionDialog();
+        //Binding.CancelActionDialog();
         }
 
     private void OnConfirm(object sender, EventArgs e) {
-        Binding.AttemptActionCallback();
+        //Binding.AttemptActionCallback();
         }
+
 
     }
 
+public class GuigenFieldSetActionMultiple : GuigenFieldSetAction {
+
+    public override View View => MainLayout;
+    Layout MainLayout;
+
+    public GuigenFieldSetActionMultiple(
+            GuigenBinding binding,
+            GuiAction guiAction) : base(binding, guiAction) {
+        }
+    }
 
 public class GuigenFieldSetQr : GuigenFieldSet {
 
