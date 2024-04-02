@@ -517,6 +517,8 @@ public class GuigenFieldSetActionSingle : GuigenFieldSetAction {
             FieldGrid,
             ContextMenu
             };
+
+
         }
 
     private void OnCancel(object sender, EventArgs e) {
@@ -524,6 +526,14 @@ public class GuigenFieldSetActionSingle : GuigenFieldSetAction {
         }
 
     private void OnConfirm(object sender, EventArgs e) {
+        if (Data is IParameter parameter) {
+            var verify = parameter.Validate(Binding.Gui);
+            }
+
+
+
+
+
         //Binding.AttemptActionCallback();
         }
 
