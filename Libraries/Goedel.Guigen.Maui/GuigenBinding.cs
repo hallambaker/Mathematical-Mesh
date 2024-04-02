@@ -105,7 +105,7 @@ public class GuigenBinding {
 
     public IMainWindow MainWindow { get; set; }
 
-
+    Task<IResult>? PendingAction { get; set; } = null;
 
 
     //IMainWindow MainWindow => GuigenMainFlyout;
@@ -256,7 +256,24 @@ public class GuigenBinding {
         MainWindow.SetDetailWindow(section);
         }
 
-    public void CancelTask() {
+
+
+    public void BeginAction(GuiAction action, IBindable data) {
+        // here should probably check to see if we have a pending action already and ignore 
+        // duplicates.
+        PendingAction = BeginTask (action, data);
+        }
+
+    public void CancelAction() {
+
+        // If there is no pending action, just clear the action dialog.
+        if (PendingAction is null) {
+            GotoSection(Gui.CurrentSection);
+            return;
+            }
+
+        // Attempt to use a cancelation token to cancel the action.
+
         }
 
 
@@ -273,55 +290,27 @@ public class GuigenBinding {
     /// <param name="action">The action to perform.</param>
     /// <param name="data">The data parameters.</param>
     /// <returns>Task descriptor.</returns>
-    public async Task BeginTask(GuiAction action, IBindable data) {
+    public async Task<IResult> BeginTask(GuiAction action, IBindable data) {
 
         try {
             var result = await action.Callback(data);
             SetResult(result);
+
+            PendingAction = null;
+            return result;
             }
         catch (Exception e) {
+            PendingAction = null;
+            throw new NYI();
             }
         }
 
-
-
-    public void MakeSelection(IBindable Data) {
-        }
-
-
-
-    /*  The new way to handle everything */
-    public void PushActionDialog() {
-        }
-
-    public void CancelActionDialog() {
-        }
-
-
-    public void AttemptActionCallback() {
+    public void CancelTask() {
         }
 
 
 
 
-
-
-    public void BeginAction(GuiAction action, IBindable data) {
-        // Do we need parameters for this action?
-
-        // No, just begin the task.
-        }
-
-
-
-
-    public void EndAction(IResult result) {
-        // Is there a message to display
-
-
-        // return to the previous state
-
-        }
 
 
 

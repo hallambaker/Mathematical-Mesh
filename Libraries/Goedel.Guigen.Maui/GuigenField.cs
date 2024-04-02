@@ -75,8 +75,10 @@ public abstract class GuigenFieldSimple : GuigenField, IWidget {
 
     ///<inheritdoc/>
     public override void SetFeedback(IndexedMessage message) {
-        Feedback.IsVisible = true;
-        Feedback.Text = message.Text;
+        if (Feedback is not null) {
+            Feedback.IsVisible = true;
+            Feedback.Text = message.Text;
+            }
         }
 
     }

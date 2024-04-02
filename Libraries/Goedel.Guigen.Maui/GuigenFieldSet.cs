@@ -1,6 +1,7 @@
 ﻿using Microsoft.UI.Xaml.Documents;
 
 using System;
+using System.Reflection;
 using System.Security.Cryptography;
 
 using Windows.ApplicationModel.VoiceCommands;
@@ -217,12 +218,22 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
         }
 
 
-    public void Feedback(GuiResultInvalid feedback) {
+    protected void ClearFeedback() {
         foreach (var field in MauiFields) {
             field.ClearFeedback();
             }
+        }
+
+    public void Feedback(GuiResultInvalid feedback) {
+
+
+        ClearFeedback();
 
         foreach (var message in feedback.Messages) {
+            if (message.Index >= 0) {
+                MauiFields[message.Index].SetFeedback(message);
+                }
+
             //var index = FieldMap[message.Index];
             //if (index != -1) {
             //    MauiFields[index].SetFeedback(message);
@@ -310,6 +321,46 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
         }
 
     }
+
+
+
+public class GuigenFieldSetResult : GuigenFieldSet {
+
+    public override View View => MainLayout;
+    Layout MainLayout;
+
+    public GuigenFieldSetResult(
+            GuigenBinding binding,
+            IBindable data = null) : base(binding, data.Binding, data) {
+
+        // Create the fields 
+        AddFields(data.Binding, data);
+
+        SetEditable(false);
+        // Create the Context Menu for the Bottom
+        CancelButton = new GuigenButton(Binding, null, "Cancel", OnCancel);
+
+        ContextMenu = new FlexLayout() {
+            Wrap = FlexWrap.Wrap
+            };
+
+        // Create the main layout
+        MainLayout = new VerticalStackLayout {
+            FieldGrid,
+            ContextMenu
+            };
+        }
+
+
+    private void OnCancel(object sender, EventArgs e) {
+        // pass back to bindable to post completion.
+        }
+
+    }
+
+
+
+
 
 public class GuigenFieldSetSingle : GuigenFieldSet {
     
@@ -476,18 +527,12 @@ public class GuigenFieldSetAction : GuigenFieldSet {
         GuiAction = guiAction;
         }
 
-    private void SetState() {
-        ContextMenu.Clear();
-
-        ContextMenu.Add(CancelButton.View);
-        ContextMenu.Add(ConfirmButton.View);
-        }
 
     }
 
 
 public class GuigenFieldSetActionSingle : GuigenFieldSetAction {
-
+    GuiAction GuiAction { get; }
 
     public override View View => MainLayout;
     Layout MainLayout;
@@ -495,7 +540,7 @@ public class GuigenFieldSetActionSingle : GuigenFieldSetAction {
     public GuigenFieldSetActionSingle(
                 GuigenBinding binding,
                 GuiAction guiAction) : base (binding, guiAction) {
-
+        GuiAction = guiAction;
         // Create the backing data
         Data = guiAction.Factory();
 
@@ -522,19 +567,23 @@ public class GuigenFieldSetActionSingle : GuigenFieldSetAction {
         }
 
     private void OnCancel(object sender, EventArgs e) {
-        Binding.GotoSection(Binding.Gui.CurrentSection);
+        Binding.CancelAction();
         }
 
     private void OnConfirm(object sender, EventArgs e) {
+        GetFields(Data);
         if (Data is IParameter parameter) {
             var verify = parameter.Validate(Binding.Gui);
+
+            if (verify is GuiResultInvalid invalid) {
+                Feedback (invalid);
+                return;
+                }
             }
+        ClearFeedback();
+        ConfirmButton.SetState(ButtonState.Disabled);
 
-
-
-
-
-        //Binding.AttemptActionCallback();
+        Binding.BeginAction(GuiAction, Data);
         }
 
 
@@ -596,7 +645,7 @@ public class GuigenFieldSetActionMultiple : GuigenFieldSetAction, IBoundChooser 
         }
 
     private void OnCancel(object sender, EventArgs e) {
-        Binding.GotoSection(Binding.Gui.CurrentSection);
+        Binding.CancelAction();
         }
 
     private void OnConfirm(object sender, EventArgs e) {
@@ -611,8 +660,6 @@ public class GuigenFieldSetQr : GuigenFieldSet {
             Layout? stack,
             GuiBindingQr fieldBinding = null,
             IBindable? data = null) : base(binding, fieldBinding, data) {
-
-
 
         SetState();
         }
