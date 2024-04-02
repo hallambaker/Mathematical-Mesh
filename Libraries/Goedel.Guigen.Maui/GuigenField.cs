@@ -21,13 +21,13 @@ public partial record FieldIcon(string File) : IFieldIcon {
 
     }
 
-public abstract class GuigenField(GuigenFieldSet fieldsSet, GuiBoundProperty fieldBinding) {
+public abstract class GuigenField(IBound fieldsSet, GuiBoundProperty fieldBinding) {
 
     public IMainWindow MainWindow => Binding.MainWindow;
 
 
-    public GuigenFieldSet FieldSet { get; } = fieldsSet;
-    public GuigenBinding Binding { get; } = fieldsSet.Binding;
+    public IBound FieldSet { get; } = fieldsSet;
+    public GuigenBinding Binding => FieldSet.Binding;
     public GuiBoundProperty PropertyBinding { get; } = fieldBinding;
 
     public bool IsEditMode => FieldSet.IsEditMode;

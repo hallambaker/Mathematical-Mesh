@@ -45,29 +45,14 @@ public class GuigenFieldChooser : GuigenField {
     public HorizontalStackLayout ButtonBar = new();
 
     GuigenFieldSet SelectionDialog { get; set; }
-    GuigenFieldSetMultiple FieldSetMultiple => FieldSet as GuigenFieldSetMultiple;
+    IBoundChooser FieldSetMultiple => FieldSet as IBoundChooser;
 
 
     public GuigenFieldChooser(
-                GuigenFieldSet fieldSet,
+                IBoundChooser fieldSet,
                 GuiBoundPropertyChooser binding,
                 IBindable? data = null) : base (fieldSet, binding) {
 
-
-        //CommandButtons = new HorizontalStackLayout() {
-        //    FilterInput,
-        //    FilterButton
-        //    };
-
-        //FilterInput = new Entry() {
-        //    };
-        //FilterButton = new Button() {
-        //    Text = "Filter"
-        //    };
-        //FilterButton.Clicked += OnClickFilter;
-
-        //CommandButtons.Add(FilterInput);
-        //CommandButtons.Add(FilterButton);
 
         ListView.ItemTemplate = new BindableTemplate(this);
         ListView.ItemSelected += OnClickSelect;
@@ -82,10 +67,6 @@ public class GuigenFieldChooser : GuigenField {
             SetField(data);
             }
 
-        //var Layout = new VerticalStackLayout() { CommandButtons, MainLayout, EntryForm};
-
-
-        //RestoreView();
         }
 
     ///<inheritdoc/>
@@ -180,29 +161,11 @@ public class GuigenFieldChooser : GuigenField {
     public void OnClickFilter(object sender, EventArgs e) { 
         }
 
+
     public void OnClickSelect(object sender, EventArgs e) {
-
-        // Here we want to create a view dialog below the list box.
-        // Buttons are Update / Delete
-        // need a bound presentation of the 
-
         var selectEvent = e as SelectedItemChangedEventArgs;
-
-
         var bindable = selectEvent.SelectedItem as IBindable;
-
-
         FieldSetMultiple.OnItemSelected(bindable);
-
-        //EntryForm.Clear();
-        //SelectionDialog = new GuigenFieldSet(Binding, bindable.Binding);
-        ////ButtonBar.Clear();
-        ////SelectionDialog.AddButtons(ButtonBar);
-        //SelectionDialog.SetFields(bindable);
-        //FieldSet.ButtonBox.Clear();
-        //SelectionDialog.AddButtons(FieldSet.ButtonBox);
-
-
 
         }
 
