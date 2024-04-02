@@ -256,6 +256,11 @@ public class GuigenBinding {
         MainWindow.SetDetailWindow(section);
         }
 
+    public void CancelTask() {
+        }
+
+
+
     /// <summary>
     /// Dispatch the action <paramref name="action"/> on  data <paramref name="data"/>.
     /// All action callback dispatch should be directed through here after the parameters 
@@ -308,8 +313,7 @@ public class GuigenBinding {
         }
 
 
-    public void CancelTask () { 
-        }
+
 
     public void EndAction(IResult result) {
         // Is there a message to display

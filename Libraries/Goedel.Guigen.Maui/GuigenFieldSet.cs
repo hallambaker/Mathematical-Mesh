@@ -485,6 +485,7 @@ public class GuigenFieldSetActionSingle : GuigenFieldSetAction {
         // Create the backing data
         Data = guiAction.Factory();
 
+        IsEditMode = true;
         // Create the fields 
         AddFields(FieldBinding, Data);
 
@@ -494,6 +495,8 @@ public class GuigenFieldSetActionSingle : GuigenFieldSetAction {
         CancelButton = new GuigenButton(Binding, null, "Cancel", OnCancel);
         ConfirmButton = new GuigenButton(Binding, null, "Confirm", OnCancel);
 
+        ContextMenu.Add(CancelButton.View);
+        ContextMenu.Add(ConfirmButton.View);
         // Create the main layout
         MainLayout = new VerticalStackLayout {
             ActionMenu,
@@ -503,7 +506,7 @@ public class GuigenFieldSetActionSingle : GuigenFieldSetAction {
         }
 
     private void OnCancel(object sender, EventArgs e) {
-        //Binding.CancelActionDialog();
+        Binding.GotoSection(Binding.Gui.CurrentSection);
         }
 
     private void OnConfirm(object sender, EventArgs e) {
@@ -518,9 +521,37 @@ public class GuigenFieldSetActionMultiple : GuigenFieldSetAction {
     public override View View => MainLayout;
     Layout MainLayout;
 
+    public GuigenFieldChooser Chooser { get; set; }
+
     public GuigenFieldSetActionMultiple(
             GuigenBinding binding,
+
             GuiAction guiAction) : base(binding, guiAction) {
+
+        var fieldBinding = guiAction.Binding as GuiBindingMultiple;
+        // Create the backing data
+        var data = guiAction.Factory() as IParameter;
+        Data = data;
+        data.Initialize(Binding.Gui);
+
+        Chooser = new GuigenFieldChooser(this, fieldBinding.Chooser, Data);
+
+        ContextMenu = new FlexLayout() {
+            Wrap = FlexWrap.Wrap
+            };
+
+        // Create the main layout
+        MainLayout = new VerticalStackLayout {
+            Chooser.View,
+            FieldGrid,
+            ContextMenu
+            };
+
+        ContextMenu = new FlexLayout() {
+            Wrap = FlexWrap.Wrap
+            };
+
+
         }
     }
 
@@ -531,6 +562,9 @@ public class GuigenFieldSetQr : GuigenFieldSet {
             Layout? stack,
             GuiBindingQr fieldBinding = null,
             IBindable? data = null) : base(binding, fieldBinding, data) {
+
+
+
         SetState();
         }
 

@@ -49,7 +49,7 @@ public class GuigenFieldChooser : GuigenField {
 
 
     public GuigenFieldChooser(
-                GuigenFieldSetMultiple fieldSet,
+                GuigenFieldSet fieldSet,
                 GuiBoundPropertyChooser binding,
                 IBindable? data = null) : base (fieldSet, binding) {
 
