@@ -337,9 +337,12 @@ public class GuigenBinding {
 
         try {
             var result = await action.Callback(data);
-            SetResult(result);
-
             PendingAction = null;
+
+            MainThread.BeginInvokeOnMainThread(() => {
+                SetResult(result);
+                });
+
             return result;
             }
         catch (Exception e) {
@@ -350,14 +353,6 @@ public class GuigenBinding {
 
     public void CancelTask() {
         }
-
-
-
-
-
-
-
-
 
     public Layout GetSectionMenuLayout() => Display switch {
         DisplayMode.Desktop => new VerticalStackLayout(),
@@ -373,10 +368,6 @@ public class GuigenBinding {
 
 
     public Page GetMain() {
-
-        //MainWindow = new GuigenDesktop(this);
-
-
         MainWindow = new GuigenMainFlyout(this);
 
         return Page;
@@ -394,11 +385,6 @@ public class GuigenBinding {
     public void SetResult(IResult result) {
 
         MainWindow.SetResultWindow(result);
-
-        //if (result.ReturnResult == ReturnResult.Home) {
-        //    GotoSection(Gui.DefaultSection);
-        //    }
-
         }
 
     }

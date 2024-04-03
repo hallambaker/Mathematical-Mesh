@@ -584,7 +584,7 @@ public class GuigenFieldSetActionSingle : GuigenFieldSetAction {
                 }
             }
         ClearFeedback();
-        Binding.BeginAction(GuiAction, Data);
+        Binding.PerformActionAsync(GuiAction, Data);
         }
 
     public override void FieldChanged(GuigenField field) {
