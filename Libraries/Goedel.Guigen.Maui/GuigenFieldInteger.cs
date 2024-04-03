@@ -19,11 +19,14 @@ public class GuigenFieldInteger : GuigenFieldSimple, IWidget {
                 GuiBoundPropertyInteger binding,
                 IBindable? data = null) : base(fieldsSet, binding) {
 
-        ValueField = Binding.GetEntry();
+        ValueField = Binding.GetEntry(this);
+
         fieldsSet.AddField(FieldLabel, ValueField, Feedback);
         SetEditable();
         SetField(data);
         }
+
+
 
     ///<inheritdoc/>
     public override void SetEditable() {
@@ -57,7 +60,7 @@ public class GuigenFieldColor : GuigenFieldSimple, IWidget {
                 IBindable? data = null) : base(fieldsSet, binding) {
 
 
-        ValueField = Binding.GetEntry();
+        ValueField = Binding.GetEntry(this);
         fieldsSet.AddField(FieldLabel, ValueField, Feedback);
         SetEditable();
         SetField(data);
@@ -96,7 +99,7 @@ public class GuigenFieldSize : GuigenFieldSimple, IWidget {
                 IBindable? data = null) : base(fieldsSet, binding) {
 
 
-        ValueField = Binding.GetEntry();
+        ValueField = Binding.GetEntry(this);
         fieldsSet.AddField(FieldLabel, ValueField, Feedback);
         SetEditable();
         SetField(data);
@@ -136,7 +139,7 @@ public class GuigenFieldDecimal : GuigenFieldSimple, IWidget {
                 IBindable? data = null) : base(fieldsSet, binding) {
 
 
-        ValueField = Binding.GetEntry();
+        ValueField = Binding.GetEntry(this);
         fieldsSet.AddField(FieldLabel, ValueField, Feedback);
         SetEditable();
         SetField(data);

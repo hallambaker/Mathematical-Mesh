@@ -39,7 +39,7 @@ public class GuigenFieldString : GuigenFieldSimple, IWidget {
     ///<inheritdoc/>
     public override void SetEditable() {
         if (IsEditable ) {
-            FieldAsEntry ??= Binding.GetEntry();
+            FieldAsEntry ??= Binding.GetEntry(this);
             FieldSet.ReplaceField(FieldAsLabel, FieldAsEntry, GridRow);
             }
         else {

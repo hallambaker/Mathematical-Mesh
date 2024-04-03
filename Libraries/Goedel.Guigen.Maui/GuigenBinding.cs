@@ -198,19 +198,58 @@ public class GuigenBinding {
                 EventHandler callback) => new GuigenButton(this, icon, text, callback);
 
 
-    public Entry GetEntry() => new();
+    public Entry GetEntry(GuigenField fieldset) {
+        var result = new Entry();
+        result.TextChanged += fieldset.OnEntryTextChanged;
+        return result;
+        }
 
-    public Editor GetEditor() => new() {
-        AutoSize = EditorAutoSizeOption.TextChanges,
-        IsSpellCheckEnabled = true,
-        IsTextPredictionEnabled = false,
-        Keyboard = Keyboard.Text,
-        Placeholder = "Infinite monkeys with typewriters say"
-        };
+
+    public Editor GetEditor(GuigenField fieldset) {
+        var result = new Editor() {
+            AutoSize = EditorAutoSizeOption.TextChanges,
+            IsSpellCheckEnabled = true,
+            IsTextPredictionEnabled = false,
+            Keyboard = Keyboard.Text,
+            Placeholder = "Infinite monkeys with typewriters say",
+            };
+        result.TextChanged += fieldset.OnEntryTextChanged;
+        return result;
+        }
+
+
+
+    public Layout GetResultMessage(IResult result) {
+
+        var values = result.GetValues();
+        var format = Resolve(result.ResourceId) ?? result.Message;
+        var text = values.Length > 0 ? String.Format(format, values) : format;
+
+
+        var icon = new ImageButton() {
+            Source = result is IFail fail ? "warning.png" : "success.png",
+            WidthRequest = IconWidth,
+            HeightRequest = IconHeight
+            };
+
+        var label = new Label() { 
+            Text = text
+            };
+
+        return new HorizontalStackLayout() {
+            icon,
+            label
+            };
+
+        }
 
     public Label GetFeedback() => new() {
         IsVisible = false
         };
+
+
+
+
     public Label GetLabel() => new();
 
     public Label GetPrompt(string? prompt = null) => new() {
@@ -249,8 +288,6 @@ public class GuigenBinding {
     private void OnSectionClick(GuiSection section) =>
                 GotoSection (section);
      
-
-
     public void GotoSection(GuiSection section) {
         Gui.CurrentSection = section;
         MainWindow.SetDetailWindow(section);
@@ -261,14 +298,20 @@ public class GuigenBinding {
     public void BeginAction(GuiAction action, IBindable data) {
         // here should probably check to see if we have a pending action already and ignore 
         // duplicates.
-        PendingAction = BeginTask (action, data);
+        PendingAction = PerformActionAsync (action, data);
         }
+
+    public void CompleteAction() {
+        PendingAction = null;
+        GotoSection(Gui.CurrentSection);
+        }
+
 
     public void CancelAction() {
 
         // If there is no pending action, just clear the action dialog.
         if (PendingAction is null) {
-            GotoSection(Gui.CurrentSection);
+            CompleteAction();
             return;
             }
 
@@ -290,7 +333,7 @@ public class GuigenBinding {
     /// <param name="action">The action to perform.</param>
     /// <param name="data">The data parameters.</param>
     /// <returns>Task descriptor.</returns>
-    public async Task<IResult> BeginTask(GuiAction action, IBindable data) {
+    public async Task<IResult> PerformActionAsync(GuiAction action, IBindable data) {
 
         try {
             var result = await action.Callback(data);
@@ -350,9 +393,11 @@ public class GuigenBinding {
 
     public void SetResult(IResult result) {
 
-        if (result.ReturnResult == ReturnResult.Home) {
-            GotoSection(Gui.DefaultSection);
-            }
+        MainWindow.SetResultWindow(result);
+
+        //if (result.ReturnResult == ReturnResult.Home) {
+        //    GotoSection(Gui.DefaultSection);
+        //    }
 
         }
 

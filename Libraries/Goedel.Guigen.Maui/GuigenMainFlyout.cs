@@ -127,7 +127,8 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
     /// </summary>
     /// <param name="result">The result to present.</param>
     public void SetResultWindow(IResult result) {
-        FlyoutPage.Detail = new GuigenDetailResult(this.Binding, result);
+        FieldSet = new  GuigenFieldSetResult(Binding, result);
+        ContentPage.Content = FieldSet.View;
         }
 
 

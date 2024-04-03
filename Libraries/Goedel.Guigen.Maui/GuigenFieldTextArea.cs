@@ -16,7 +16,7 @@ public class GuigenFieldTextArea : GuigenFieldSimple, IWidget {
                 GuiBoundTextArea binding,
                 IBindable? data = null) : base(fieldsSet, binding) {
 
-        ValueField = Binding.GetEditor();
+        ValueField = Binding.GetEditor(this);
         fieldsSet.AddField(FieldLabel, ValueField, Feedback);
         SetEditable();
         SetField(data);

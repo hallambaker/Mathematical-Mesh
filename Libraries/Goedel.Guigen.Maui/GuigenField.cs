@@ -46,6 +46,10 @@ public abstract class GuigenField(IBound fieldsSet, GuiBoundProperty fieldBindin
 
     public virtual void SetFeedback(IndexedMessage message) {
         }
+
+    public virtual void OnEntryTextChanged(object sender, TextChangedEventArgs e) {
+        FieldSet.FieldChanged(this);
+        }
     }
 
 

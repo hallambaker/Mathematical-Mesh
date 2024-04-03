@@ -15,7 +15,9 @@ public interface IBound {
     public bool IsEditMode { get; }
 
     public GuigenBinding Binding { get; }
-    public  void ReplaceField(IView current, IView replacement, int gridRow);
+    public void ReplaceField(IView current, IView replacement, int gridRow);
+
+    public void FieldChanged(GuigenField field);
     }
 
 
@@ -305,19 +307,7 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
 
         }
 
-    IView AddButton(GuiButton button) {
-
-        switch (button.Target) {
-
-            case GuiSection section: {
-                return new GuigenSectionButton(Binding, section).View;
-                }
-            case GuiAction action: {
-                return new GuigenActionButton(Binding, action) {
-                    FieldSet = this}.View;
-                }
-            }
-        throw new NotImplementedException();
+    public virtual void FieldChanged(GuigenField field) {
         }
 
     }
@@ -329,23 +319,31 @@ public class GuigenFieldSetResult : GuigenFieldSet {
     public override View View => MainLayout;
     Layout MainLayout;
 
+    Layout MessageBox { get; }
+
     public GuigenFieldSetResult(
             GuigenBinding binding,
-            IBindable data = null) : base(binding, data.Binding, data) {
+            IResult result) : base(binding, result.Binding, result) {
+
+        MessageBox = Binding.GetResultMessage(result); 
+
 
         // Create the fields 
-        AddFields(data.Binding, data);
+        AddFields(result.Binding, result);
 
         SetEditable(false);
         // Create the Context Menu for the Bottom
-        CancelButton = new GuigenButton(Binding, null, "Cancel", OnCancel);
+        CancelButton = new GuigenButton(Binding, null, "OK", OnCancel);
 
         ContextMenu = new FlexLayout() {
             Wrap = FlexWrap.Wrap
             };
 
+        ContextMenu.Add(CancelButton.View);
+
         // Create the main layout
         MainLayout = new VerticalStackLayout {
+            MessageBox,
             FieldGrid,
             ContextMenu
             };
@@ -353,7 +351,7 @@ public class GuigenFieldSetResult : GuigenFieldSet {
 
 
     private void OnCancel(object sender, EventArgs e) {
-        // pass back to bindable to post completion.
+        Binding.CompleteAction();
         }
 
     }
@@ -428,6 +426,8 @@ public class GuigenFieldSetSingle : GuigenFieldSet {
 
         SetEditable(false);
         }
+
+
 
     }
 
@@ -571,22 +571,27 @@ public class GuigenFieldSetActionSingle : GuigenFieldSetAction {
         }
 
     private void OnConfirm(object sender, EventArgs e) {
+        ConfirmButton.SetState(ButtonState.Disabled);
+
         GetFields(Data);
         if (Data is IParameter parameter) {
             var verify = parameter.Validate(Binding.Gui);
 
             if (verify is GuiResultInvalid invalid) {
                 Feedback (invalid);
+
                 return;
                 }
             }
         ClearFeedback();
-        ConfirmButton.SetState(ButtonState.Disabled);
-
         Binding.BeginAction(GuiAction, Data);
         }
 
-
+    public override void FieldChanged(GuigenField field) {
+        if (IsEditMode) {
+            ConfirmButton.SetState(ButtonState.Enabled);
+            }
+        }
     }
 
 public class GuigenFieldSetActionMultiple : GuigenFieldSetAction, IBoundChooser {
