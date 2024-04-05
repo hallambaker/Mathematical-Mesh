@@ -5,13 +5,14 @@ public class GuigenFieldList : GuigenField, IWidget {
     GuiBoundPropertyList TypedBinding => PropertyBinding as GuiBoundPropertyList;
     GuigenBinding MainBinding => MainWindow.Binding;
 
-    public IView View { get; private set; }
+
+
 
     Label FieldLabel;
-    Microsoft.Maui.Controls.Grid InputField = new();
-    Microsoft.Maui.Controls.Grid ValueField = new();
-    ImageButton AddButton ;
+    Grid ValueField = new();
+    GuigenButton AddButton ;
 
+    Layout Layout { get; } 
 
     IBindable entryField;
     public ISelectCollection Collection {get; set;}
@@ -24,11 +25,24 @@ public class GuigenFieldList : GuigenField, IWidget {
         FieldLabel = new Label() {
             Text = binding.Prompt
             };
-        fieldsSet.AddField(FieldLabel, ValueField);
+
+        if (data != null) {
+            SetField(data);
+            }
+
+        AddButton = new GuigenButton(Binding, null, "Add", OnClickAdd);
+
+        Layout = new VerticalStackLayout() {
+            ValueField,
+            AddButton.View
+            };
+
+        fieldsSet.AddField(FieldLabel, Layout);
+
         }
 
     public void OnClickAdd(object sender, EventArgs e) {
-        InputField.IsVisible = true;
+        //InputField.IsVisible = true;
         // add row to grid
 
         // set row in edit mode

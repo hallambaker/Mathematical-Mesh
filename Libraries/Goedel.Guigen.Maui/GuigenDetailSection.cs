@@ -56,11 +56,11 @@ public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
 
         switch (section.Binding) {
             case GuiBindingSingle singleBinding : {
-                FieldSet = new GuigenFieldSetSingle(Binding, singleBinding, Section.Data, guiSection: section);
+                FieldSet = new GuigenFieldSetSectionSingle(Binding, singleBinding, Section.Data, guiSection: section);
                 break;
                 }
             case GuiBindingMultiple multipleBinding: {
-                FieldSet = new GuigenFieldSetMultiple(Binding, multipleBinding, guiSection: section, data: Section.Data);
+                FieldSet = new GuigenFieldSetSectionMultiple(Binding, multipleBinding, guiSection: section, data: Section.Data);
                 break;
                 }
             }

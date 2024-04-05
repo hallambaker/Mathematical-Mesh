@@ -202,7 +202,10 @@ public partial class EverythingMaui {
             }
         }
 
+    //public override  Task<IResult> AccountSwitch(AccountSwitch data) {
 
+
+    //    }
 
 
 

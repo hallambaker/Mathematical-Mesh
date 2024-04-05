@@ -336,7 +336,9 @@ public class GuigenBinding {
     public async Task<IResult> PerformActionAsync(GuiAction action, IBindable data) {
 
         try {
-            var result = await action.Callback(data);
+            //var result = await action.Callback(data);
+
+            var result = NullResult.Teardown;
             PendingAction = null;
 
             MainThread.BeginInvokeOnMainThread(() => {

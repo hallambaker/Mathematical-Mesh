@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Documents;
+﻿using Microsoft.UI.Xaml.Controls.Primitives;
+using Microsoft.UI.Xaml.Documents;
 
 using System;
 using System.Reflection;
@@ -284,9 +285,9 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
     /// Add context sensitive buttons to the Context Menu.
     /// </summary>
     /// <param name="layout">The context menu layout</param>
-    public void AddButtons(Layout layout) {
+    public void AddButtons(Layout layout, GuiBinding binding) {
 
-        foreach (var field in FieldBinding.BoundProperties) {
+        foreach (var field in binding.BoundProperties) {
             switch (field) {
                 case GuiBoundPropertyButton button1: {
                     if (MainWindow.Gui.Selections.TryGetValue(button1.Label, out var action)) {
@@ -360,12 +361,12 @@ public class GuigenFieldSetResult : GuigenFieldSet {
 
 
 
-public class GuigenFieldSetSingle : GuigenFieldSet {
+public class GuigenFieldSetSectionSingle : GuigenFieldSet {
     
     public override View View => MainLayout;
     Layout MainLayout;
     GuiSection? GuiSection;
-    public GuigenFieldSetSingle(
+    public GuigenFieldSetSectionSingle(
             GuigenBinding binding,
             GuiBindingSingle fieldBinding = null,
             IBindable? data = null,
@@ -432,7 +433,7 @@ public class GuigenFieldSetSingle : GuigenFieldSet {
     }
 
 
-public class GuigenFieldSetMultiple : GuigenFieldSet, IBoundChooser {
+public class GuigenFieldSetSectionMultiple : GuigenFieldSet, IBoundChooser {
 
     public override View View => MainLayout;
     Layout MainLayout;
@@ -440,7 +441,7 @@ public class GuigenFieldSetMultiple : GuigenFieldSet, IBoundChooser {
     ///<summary>The chooser section (if present)</summary> 
     public GuigenFieldChooser Chooser { get; set; }
 
-    public GuigenFieldSetMultiple(
+    public GuigenFieldSetSectionMultiple(
             GuigenBinding binding,
             GuiBindingMultiple fieldBinding = null,
             GuiSection guiSection = null,
@@ -452,6 +453,8 @@ public class GuigenFieldSetMultiple : GuigenFieldSet, IBoundChooser {
         AddStaticButtons(guiSection?.Entries);
 
         Chooser = new GuigenFieldChooser(this, fieldBinding.Chooser, data);
+
+        CancelButton = new GuigenButton(Binding, null, "Cancel", OnCancel);
 
         ContextMenu = new FlexLayout() {
             Wrap = FlexWrap.Wrap
@@ -478,6 +481,10 @@ public class GuigenFieldSetMultiple : GuigenFieldSet, IBoundChooser {
         FieldGrid?.Clear();
         AddFields(item.Binding, item);
         FieldGrid.IsVisible = true;
+
+        ContextMenu.Clear();
+        ContextMenu.Add(CancelButton.View);
+        AddButtons(ContextMenu, item.Binding);
         }
 
 
@@ -595,17 +602,19 @@ public class GuigenFieldSetActionSingle : GuigenFieldSetAction {
     }
 
 public class GuigenFieldSetActionMultiple : GuigenFieldSetAction, IBoundChooser {
-
+    GuiAction GuiAction { get; }
     public override View View => MainLayout;
     Layout MainLayout;
 
     public GuigenFieldChooser Chooser { get; set; }
 
+    IBindable SelectedItem;
+
     public GuigenFieldSetActionMultiple(
             GuigenBinding binding,
 
             GuiAction guiAction) : base(binding, guiAction) {
-
+        GuiAction = guiAction;
         var fieldBinding = guiAction.Binding as GuiBindingMultiple;
         // Create the backing data
         var data = guiAction.Factory() as IParameter;
@@ -619,13 +628,9 @@ public class GuigenFieldSetActionMultiple : GuigenFieldSetAction, IBoundChooser 
             };
 
         CancelButton = new GuigenButton(Binding, null, "Cancel", OnCancel);
-        ConfirmButton = new GuigenButton(Binding, null, "Confirm", OnConfirm);
-
 
         ContextMenu.Add(CancelButton.View);
-        ContextMenu.Add(ConfirmButton.View);
 
-        ConfirmButton.SetState(ButtonState.Disabled);
 
         // Create the main layout
         MainLayout = new VerticalStackLayout {
@@ -634,19 +639,26 @@ public class GuigenFieldSetActionMultiple : GuigenFieldSetAction, IBoundChooser 
             ContextMenu
             };
 
-        ContextMenu = new FlexLayout() {
-            Wrap = FlexWrap.Wrap
-            };
+
 
 
         }
 
     // An item has been selected 
     public void OnItemSelected(IBindable item) {
+        SelectedItem = item;
         FieldGrid?.Clear();
         AddFields(item.Binding, item);
         FieldGrid.IsVisible = true;
-        ConfirmButton.SetState(ButtonState.Enabled);
+
+        // nope, here have to fill in the confirm box with the data specific actions.
+
+        //ConfirmButton.SetState(ButtonState.Enabled);
+
+        ContextMenu.Clear();
+        ContextMenu.Add(CancelButton.View);
+        AddButtons(ContextMenu, item.Binding);
+
         }
 
     private void OnCancel(object sender, EventArgs e) {
@@ -654,6 +666,9 @@ public class GuigenFieldSetActionMultiple : GuigenFieldSetAction, IBoundChooser 
         }
 
     private void OnConfirm(object sender, EventArgs e) {
+        ConfirmButton.SetState(ButtonState.Disabled);
+        Binding.PerformActionAsync(GuiAction, SelectedItem);
+
         //Binding.AttemptActionCallback();
         }
     }

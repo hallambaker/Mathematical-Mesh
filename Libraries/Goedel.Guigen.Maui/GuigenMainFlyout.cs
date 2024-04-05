@@ -84,11 +84,11 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
         else { // create new field set and cache.
             switch (section.Binding) {
                 case GuiBindingSingle singleBinding: {
-                    FieldSet = new GuigenFieldSetSingle(Binding, singleBinding, section.Data, guiSection: section);
+                    FieldSet = new GuigenFieldSetSectionSingle(Binding, singleBinding, section.Data, guiSection: section);
                     break;
                     }
                 case GuiBindingMultiple multipleBinding: {
-                    FieldSet = new GuigenFieldSetMultiple(Binding, multipleBinding, guiSection: section, data: section.Data);
+                    FieldSet = new GuigenFieldSetSectionMultiple(Binding, multipleBinding, guiSection: section, data: section.Data);
                     break;
                     }
                 }
