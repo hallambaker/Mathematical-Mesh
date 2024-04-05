@@ -30,12 +30,18 @@ public class GuigenFieldList : GuigenField, IWidget {
             SetField(data);
             }
 
-        AddButton = new GuigenButton(Binding, null, "Add", OnClickAdd);
+        AddButton = new GuigenButton(Binding, "item_add", "Add", OnClickAdd);
+        if (!IsEditMode) {
+            AddButton.IsVisible = false;
+            }
+
 
         Layout = new VerticalStackLayout() {
             ValueField,
             AddButton.View
             };
+
+
 
         fieldsSet.AddField(FieldLabel, Layout);
 
@@ -76,8 +82,8 @@ public class GuigenFieldList : GuigenField, IWidget {
             MakeRow(row++, entry);
             }
 
-        entryField = TypedBinding.EntryBinding.Factory();
-        MakeRow(row++, entryField, true);
+        //entryField = TypedBinding.EntryBinding.Factory();
+        //MakeRow(row++, entryField, true);
         }
 
 
@@ -88,7 +94,7 @@ public class GuigenFieldList : GuigenField, IWidget {
                 var evalue = icon.Get(entry);
 
 
-                var cell = new Microsoft.Maui.Controls.Image() {
+                var cell = new Image() {
                     Source = evalue?.Source ?? "messages.png",
                     WidthRequest = MainBinding.IconWidth,
                     HeightRequest = MainBinding.IconHeight
@@ -98,18 +104,30 @@ public class GuigenFieldList : GuigenField, IWidget {
                 }
             if (property is GuiBoundPropertyString text) {
                 var evalue = text.Get(entry);
-                var cell = new Entry() {
-                    Text = evalue
-                    };
-                ValueField.Add(cell, col, row);
+
+                if (IsEditMode) {
+                    var cell = new Entry() {
+                        Text = evalue
+                        };
+                    ValueField.Add(cell, col, row);
+                    }
+                else {
+                    var cell = new Label() {
+                        Text = evalue
+                        };
+                    ValueField.Add(cell, col, row);
+                    }
+
                 col++;
                 }
             }
 
-        ImageButton delete_icon = isEntry ? new AddItemButton(MainBinding, this, entry, row) :
+        if (IsEditMode) {
+            ImageButton delete_icon = isEntry ? new AddItemButton(MainBinding, this, entry, row) :
                 new DeleteItemButton(MainBinding, this, row);
 
-        ValueField.Add(delete_icon, col, row);
+            ValueField.Add(delete_icon, col, row);
+            }
 
         return col;
         }
