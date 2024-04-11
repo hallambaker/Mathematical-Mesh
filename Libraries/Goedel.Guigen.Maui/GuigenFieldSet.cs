@@ -58,9 +58,10 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
 
     public bool IsSection { get; set; } = true;
 
-    public bool IsReadOnly { get; set; } = true;
-
     public bool IsEditMode { get; set; } = false;
+
+
+    public bool IsEditable { get; private set; } = false;
 
 
     /*
@@ -103,6 +104,8 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
         Binding = binding;
         FieldBinding = fieldBinding;
         FieldGrid = MakeFieldGrid();
+        IsEditable = false;
+        IsEditMode = false;
         }
 
     private Grid MakeFieldGrid() {
@@ -115,6 +118,7 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
     protected void AddFields(GuiBinding fieldBinding, IBindable data) {
 
         foreach (var entry in fieldBinding.BoundProperties) {
+            IsEditable |= !entry.IsReadOnly;
             switch (entry) {
                 case GuiBoundPropertyBoolean bound: {
                     var field = new GuigenFieldBoolean(this, bound, data);
@@ -151,23 +155,11 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
                     MauiFields.Add(field);
                     break;
                     }
-                //case GuiBoundPropertyQRScan bound: {
-                //    var field = new GuigenFieldQr(this, bound, data);
-                //    MauiFields.Add(field);
-                //    break;
-                //    }
                 case GuiBoundPropertyIcon bound: {
                     var field = new GuigenFieldIcon(this, bound, data);
                     MauiFields.Add(field);
                     break;
                     }
-                //case GuiBoundPropertyChooser bound: {
-                //    var field = new GuigenFieldChooser(this, bound, data);
-                //    MauiFields.Add(field);
-                //    ButtonBox = new HorizontalStackLayout();
-                //    IsChooser = true;
-                //    break;
-                //    }
                 case GuiBoundPropertyList bound: {
                     var field = new GuigenFieldList(this, bound, data);
                     MauiFields.Add(field);
@@ -188,9 +180,7 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
             }
     }
 
-    public void Update() {
-        GetFields(Data);
-        SetEditable(false);
+    public virtual void Reset() {
         }
 
 
@@ -385,8 +375,8 @@ public class GuigenFieldSetSectionSingle : GuigenFieldSet {
 
         // Create the Context Menu for the Bottom
         CancelButton = new GuigenButton(Binding, null, "Cancel", OnCancel);
-        UpdateButton = new GuigenButton(Binding, null, "Update", OnCancel);
-        EditButton = new GuigenButton(Binding, null, "Edit", OnCancel);
+        UpdateButton = new GuigenButton(Binding, null, "Update", OnUpdate);
+        EditButton = new GuigenButton(Binding, null, "Edit", OnEdit);
         
         ContextMenu = new FlexLayout() {
             Wrap = FlexWrap.Wrap
@@ -401,23 +391,36 @@ public class GuigenFieldSetSectionSingle : GuigenFieldSet {
             };
         }
 
+
+
+
+    public override void SetFields(IBindable data) {
+        SetEditable(false);
+        SetState();
+
+        base.SetFields(data);
+        }
     void SetState() {
         ContextMenu.Clear();
 
         if (!IsSection | IsEditMode) {
             ContextMenu.Add(CancelButton.View);
             }
-        else if (!IsReadOnly) {
+        if (IsEditable) {
             ContextMenu.Add(IsEditMode ? UpdateButton.View: EditButton.View);
             }
         }
 
     private void OnCancel(object sender, EventArgs e) {
+        // here we have to reinitialize the values to those of the data.
+
         SetEditable(false);
+        SetState();
         }
 
     private void OnEdit(object sender, EventArgs e) {
         SetEditable(true);
+        SetState();
         }
 
     private void OnUpdate(object sender, EventArgs e) {
@@ -426,6 +429,7 @@ public class GuigenFieldSetSectionSingle : GuigenFieldSet {
         // preform the commit action
 
         SetEditable(false);
+        SetState();
         }
 
 
@@ -441,6 +445,8 @@ public class GuigenFieldSetSectionMultiple : GuigenFieldSet, IBoundChooser {
     ///<summary>The chooser section (if present)</summary> 
     public GuigenFieldChooser Chooser { get; set; }
 
+    IBindable SelectedItem {get; set; }
+
     public GuigenFieldSetSectionMultiple(
             GuigenBinding binding,
             GuiBindingMultiple fieldBinding = null,
@@ -455,12 +461,16 @@ public class GuigenFieldSetSectionMultiple : GuigenFieldSet, IBoundChooser {
         Chooser = new GuigenFieldChooser(this, fieldBinding.Chooser, data);
 
         CancelButton = new GuigenButton(Binding, null, "Cancel", OnCancel);
+        UpdateButton = new GuigenButton(Binding, null, "Update", OnUpdate);
+        EditButton = new GuigenButton(Binding, null, "Edit", OnEdit);
+
 
         ContextMenu = new FlexLayout() {
             Wrap = FlexWrap.Wrap
             };
+        ContextMenu.IsVisible = false;
 
-        SetState();
+
 
         // Create the main layout
         MainLayout = new VerticalStackLayout {
@@ -472,47 +482,72 @@ public class GuigenFieldSetSectionMultiple : GuigenFieldSet, IBoundChooser {
         }
 
 
-    public void ClearSelection() {
-        FieldGrid.IsVisible = false;
-        }
 
     // An item has been selected 
     public void OnItemSelected(IBindable item) {
+        SelectedItem = item;
+
+        FieldGrid?.Clear();
+        if (item is null) {
+            FieldGrid.IsVisible = false;
+            ContextMenu.IsVisible = false;
+            return;
+            }
+
+        AddFields(item.Binding, item);
+        FieldGrid.IsVisible = true;
+
+        ContextMenu.Clear();
+        ContextMenu.Add(CancelButton.View);
+        ContextMenu.Add(EditButton.View);
+        AddButtons(ContextMenu, item.Binding);
+        ContextMenu.IsVisible = true;
+        }
+
+    public void OnItemEdit(IBindable item) {
+        //SetEditable(true);
+        IsEditMode = true;
         FieldGrid?.Clear();
         AddFields(item.Binding, item);
         FieldGrid.IsVisible = true;
 
         ContextMenu.Clear();
         ContextMenu.Add(CancelButton.View);
-        AddButtons(ContextMenu, item.Binding);
+        ContextMenu.Add(UpdateButton.View);
+        ContextMenu.IsVisible = true;
         }
+
 
 
     public override void SetFields(IBindable data) {
-        base.SetFields(data);
         FieldGrid.IsVisible = false;
+        ContextMenu.IsVisible = false;
+        Chooser.ClearSelection();
         }
 
-
-
-    void SetState() {
-
-        }
 
     private void OnCancel(object sender, EventArgs e) {
-        SetEditable(false);
+        FieldGrid.IsVisible = false;
+        ContextMenu.IsVisible = false;
+
+        // here reset the backer data of SelectedItem to the original
+
+
+        Chooser.ClearSelection();
         }
 
     private void OnEdit(object sender, EventArgs e) {
-        SetEditable(true);
+        OnItemEdit (SelectedItem);
+
         }
 
     private void OnUpdate(object sender, EventArgs e) {
+
         // pull data from the fields
 
         // preform the commit action
 
-        SetEditable(false);
+        OnItemSelected(SelectedItem);
         }
 
     }
@@ -577,7 +612,7 @@ public class GuigenFieldSetActionSingle : GuigenFieldSetAction {
         Binding.CancelAction();
         }
 
-    private void OnConfirm(object sender, EventArgs e) {
+    private async void OnConfirm(object sender, EventArgs e) {
         ConfirmButton.SetState(ButtonState.Disabled);
 
         GetFields(Data);
@@ -591,7 +626,7 @@ public class GuigenFieldSetActionSingle : GuigenFieldSetAction {
                 }
             }
         ClearFeedback();
-        Binding.PerformActionAsync(GuiAction, Data);
+        await Binding.PerformActionAsync(GuiAction, Data);
         }
 
     public override void FieldChanged(GuigenField field) {

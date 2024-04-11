@@ -48,12 +48,12 @@ public class GuigenFieldList : GuigenField, IWidget {
         }
 
     public void OnClickAdd(object sender, EventArgs e) {
-        //InputField.IsVisible = true;
-        // add row to grid
+        // here we add in a blank row to the list.
 
-        // set row in edit mode
+        var value = TypedBinding.EntryBinding.Factory();
+        Collection.Entries.Add(value);
+        SetField();
 
-        // 
         }
 
     ///<inheritdoc/>
@@ -66,7 +66,7 @@ public class GuigenFieldList : GuigenField, IWidget {
         }
 
     public override void SetField(IBindable data) {
-        Collection = TypedBinding.Get(data);
+        Collection = TypedBinding.Get(data) ?? new SelectList();
         SetField();
         }
 

@@ -329,6 +329,8 @@ public class GuigenBinding {
     /// If the action completes normally, the results are presented. Otherwise the exception 
     /// result is presented.
     /// </para>
+    /// <para>When used to respond to a callback, the callback MUST be declared as async
+    /// or else .NET will hang.</para>
     /// </summary>
     /// <param name="action">The action to perform.</param>
     /// <param name="data">The data parameters.</param>
@@ -336,9 +338,9 @@ public class GuigenBinding {
     public async Task<IResult> PerformActionAsync(GuiAction action, IBindable data) {
 
         try {
-            //var result = await action.Callback(data);
+            var result = await action.Callback(data);
 
-            var result = NullResult.Teardown;
+            //var result = NullResult.Teardown;
             PendingAction = null;
 
             MainThread.BeginInvokeOnMainThread(() => {

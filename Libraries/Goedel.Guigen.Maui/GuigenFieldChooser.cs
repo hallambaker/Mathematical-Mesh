@@ -69,6 +69,11 @@ public class GuigenFieldChooser : GuigenField {
 
         }
 
+    public void ClearSelection() {
+        ListView.SelectedItem = null;
+        }
+
+
     ///<inheritdoc/>
     public override void SetEditable() {
 

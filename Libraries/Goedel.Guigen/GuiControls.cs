@@ -196,7 +196,7 @@ public record GuiBinding(
                 Func<IBindable> Factory,
                 GuiBoundProperty[] BoundProperties
                 ) {
-    public bool IsReadOnly { get; } = false;
+
     }
 
 public record GuiBindingSingle(
