@@ -15,7 +15,7 @@ public class GuigenFieldList : GuigenField, IWidget {
     Layout Layout { get; } 
 
     IBindable entryField;
-    public ISelectCollection Collection {get; set;}
+    public ISelectList Collection {get; set;}
 
     public GuigenFieldList(
                 GuigenFieldSet fieldsSet,
@@ -135,7 +135,7 @@ public class GuigenFieldList : GuigenField, IWidget {
 
 public class DeleteItemButton : ImageButton {
     GuigenFieldList GuigenFieldList { get; }
-    ISelectCollection Collection => GuigenFieldList.Collection;
+    ISelectList Collection => GuigenFieldList.Collection;
     int Row { get; }
     public DeleteItemButton(GuigenBinding binding, GuigenFieldList guigenFieldList, int row) {
         GuigenFieldList = guigenFieldList;
@@ -157,7 +157,7 @@ public class DeleteItemButton : ImageButton {
 public class AddItemButton : ImageButton {
 
     GuigenFieldList GuigenFieldList { get; }
-    ISelectCollection Collection => GuigenFieldList.Collection;
+    ISelectList Collection => GuigenFieldList.Collection;
     int Row { get; }
 
     IBindable Entry { get; }

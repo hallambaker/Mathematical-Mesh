@@ -30,7 +30,7 @@ public partial class BookmarkSection : IHeadedSelection {
     public BookmarkSection(IAccountSelector? account =null) {
         Account = account;
         Catalog = ContextUser.GetStore(CatalogBookmark.Label, create: false) as GuigenCatalogBookmark;
-        BookmarkSelection = Catalog is null ? null : new BookmarkSelection(Catalog);
+        BookmarkSelection = Catalog is null ? null : new BookmarkSelection(ContextUser, Catalog);
         }
 
     public async Task AddAsync(CatalogedBookmark entry) {
@@ -198,7 +198,8 @@ public partial class BookmarkSelection : SelectionCatalog<GuigenCatalogBookmark,
     /// catalog <paramref name="catalog"/>.
     /// </summary>
     /// <param name="catalog"></param>
-    public BookmarkSelection(GuigenCatalogBookmark catalog) : base(catalog) {
+    public BookmarkSelection(ContextAccount contextAccount,
+                GuigenCatalogBookmark catalog) : base(contextAccount, catalog) {
         }
 
     #region // Conversion overrides

@@ -30,7 +30,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj" />
+	  <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
 	  <ProjectReference Include="..\Goedel.Guigen\Goedel.Guigen.csproj" />
+	  <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj" />
 	</ItemGroup>
 
 </Project>

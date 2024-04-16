@@ -184,6 +184,10 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
         }
 
 
+    protected void ClearFields () {
+        MauiFields?.Clear(); 
+        FieldGrid?.Clear();
+        }
 
 
 
@@ -430,6 +434,10 @@ public class GuigenFieldSetSectionSingle : GuigenFieldSet {
 
         SetEditable(false);
         SetState();
+
+        if (GuiSection?.UpdateData != null) {
+            GuiSection.UpdateData();
+            }
         }
 
 
@@ -486,8 +494,9 @@ public class GuigenFieldSetSectionMultiple : GuigenFieldSet, IBoundChooser {
     // An item has been selected 
     public void OnItemSelected(IBindable item) {
         SelectedItem = item;
+        IsEditMode = false;
 
-        FieldGrid?.Clear();
+        ClearFields();
         if (item is null) {
             FieldGrid.IsVisible = false;
             ContextMenu.IsVisible = false;
@@ -507,8 +516,8 @@ public class GuigenFieldSetSectionMultiple : GuigenFieldSet, IBoundChooser {
     public void OnItemEdit(IBindable item) {
         //SetEditable(true);
         IsEditMode = true;
-        FieldGrid?.Clear();
-        AddFields(item.Binding, item);
+        SetEditable(true);
+        //AddFields(item.Binding, item);
         FieldGrid.IsVisible = true;
 
         ContextMenu.Clear();
@@ -532,7 +541,7 @@ public class GuigenFieldSetSectionMultiple : GuigenFieldSet, IBoundChooser {
 
         // here reset the backer data of SelectedItem to the original
 
-
+        // ???. ResetBound (SelectedItem);
         Chooser.ClearSelection();
         }
 
@@ -541,12 +550,10 @@ public class GuigenFieldSetSectionMultiple : GuigenFieldSet, IBoundChooser {
 
         }
 
-    private void OnUpdate(object sender, EventArgs e) {
+    private async void OnUpdate(object sender, EventArgs e) {
 
-        // pull data from the fields
-
-        // preform the commit action
-
+        GetFields(SelectedItem);
+        await Chooser.SelectCollection.Update(SelectedItem as IBoundPresentation);
         OnItemSelected(SelectedItem);
         }
 
@@ -682,7 +689,7 @@ public class GuigenFieldSetActionMultiple : GuigenFieldSetAction, IBoundChooser 
     // An item has been selected 
     public void OnItemSelected(IBindable item) {
         SelectedItem = item;
-        FieldGrid?.Clear();
+        ClearFields();
         AddFields(item.Binding, item);
         FieldGrid.IsVisible = true;
 
@@ -700,11 +707,9 @@ public class GuigenFieldSetActionMultiple : GuigenFieldSetAction, IBoundChooser 
         Binding.CancelAction();
         }
 
-    private void OnConfirm(object sender, EventArgs e) {
+    private async void OnConfirm(object sender, EventArgs e) {
         ConfirmButton.SetState(ButtonState.Disabled);
-        Binding.PerformActionAsync(GuiAction, SelectedItem);
-
-        //Binding.AttemptActionCallback();
+        await Binding.PerformActionAsync(GuiAction, SelectedItem);
         }
     }
 

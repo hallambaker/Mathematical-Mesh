@@ -26,7 +26,7 @@ public partial class GroupSection {
     public GroupSection(IAccountSelector? account =null) {
         Account = account;
         Catalog = ContextUser.GetStore(CatalogApplication.Label, create: false) as GuigenCatalogApplication;
-        GroupSelection = new GroupSelection(Catalog);
+        GroupSelection = new GroupSelection(ContextUser, Catalog);
         }
 
 
@@ -70,7 +70,9 @@ public partial class GroupSelection : ApplicationSelection {
     /// catalog <paramref name="catalog"/>.
     /// </summary>
     /// <param name="catalog"></param>
-    public GroupSelection(GuigenCatalogApplication catalog) : base(catalog) {
+    public GroupSelection(
+                ContextAccount contextAccount, 
+                GuigenCatalogApplication catalog) : base(contextAccount, catalog) {
         }
 
 

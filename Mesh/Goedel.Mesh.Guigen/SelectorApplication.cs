@@ -9,7 +9,7 @@ namespace Goedel.Everything;
 public partial class ApplicationSection : IHeadedSelection {
 
     public IAccountSelector? Account { get; init; }
-    ContextUser ContextUser => Account.ContextUser;
+    ContextUser? ContextUser => Account?.ContextUser;
 
     ApplicationSelection? ApplicationSelection { get; }
 
@@ -28,7 +28,7 @@ public partial class ApplicationSection : IHeadedSelection {
     public ApplicationSection(IAccountSelector? account=null) {
         Account = account;
         Catalog = ContextUser.GetStore(CatalogApplication.Label, create: false) as GuigenCatalogApplication;
-        ApplicationSelection = Catalog is null ? null : new ApplicationSelection(Catalog);
+        ApplicationSelection = Catalog is null ? null : new ApplicationSelection(ContextUser, Catalog);
         }
 
     public async Task AddAsync(CatalogedApplication entry) {
@@ -347,7 +347,8 @@ public partial class ApplicationSelection : SelectionCatalog<GuigenCatalogApplic
     /// catalog <paramref name="catalog"/>.
     /// </summary>
     /// <param name="catalog"></param>
-    public ApplicationSelection(GuigenCatalogApplication catalog) : base(catalog) {
+    public ApplicationSelection(ContextAccount contextAccount,
+                GuigenCatalogApplication catalog) : base(contextAccount, catalog) {
         }
 
     #region // Conversion overrides

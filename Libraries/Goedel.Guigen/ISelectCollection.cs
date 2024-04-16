@@ -6,7 +6,7 @@ namespace Goedel.Guigen;
 
 public interface IBoundPresentation : IParameter {
 
-    object? Bound { get; set; }
+    Object? Bound { get; set; }
     
     }
 
@@ -27,29 +27,31 @@ public interface ISelectCollection : IEnumerable{
 
 
 
-    void Add(IBoundPresentation item);
+    Task Add(IBoundPresentation item);
 
-    void Remove(IBoundPresentation item);
+    Task Remove(IBoundPresentation item);
 
-    void Update(IBoundPresentation item);
+    Task Update(IBoundPresentation item);
 
 
     }
 
 
 
-
-public class SelectList : ISelectCollection{
+public class SelectList : ISelectList {
     public ObservableCollection<IBindable> Entries { get; } = new();
 
     public IEnumerator GetEnumerator() => Entries.GetEnumerator();
 
-    public void Add(IBoundPresentation item) => Entries.Add(item);
-
-    public void Remove(IBoundPresentation item) => Entries.Remove(item);
-
-    public void Update(IBoundPresentation item) {
+    public void Add(IBoundPresentation item) {
+        Entries.Add(item);
         }
+
+    public void Remove(IBoundPresentation item) {
+        Entries.Remove(item);
+        }
+
+
 
 
     }

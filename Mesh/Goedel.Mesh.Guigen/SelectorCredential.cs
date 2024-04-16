@@ -25,7 +25,7 @@ public partial class CredentialSection : IHeadedSelection {
     public CredentialSection(IAccountSelector? account =null) {
         Account = account;
         Catalog = ContextUser.GetStore(CatalogCredential.Label, create: false) as GuigenCatalogCredential;
-        CredentialSelection = new CredentialSelection(Catalog);
+        CredentialSelection = new CredentialSelection(ContextUser, Catalog);
         }
 
     public async Task AddAsync(CatalogedCredential entry) {
@@ -242,7 +242,8 @@ public partial class CredentialSelection : SelectionCatalog<GuigenCatalogCredent
     /// catalog <paramref name="catalog"/>.
     /// </summary>
     /// <param name="catalog"></param>
-    public CredentialSelection(GuigenCatalogCredential catalog) : base(catalog) {
+    public CredentialSelection(ContextAccount contextAccount,
+                GuigenCatalogCredential catalog) : base(contextAccount, catalog) {
         }
 
     #region // Conversion overrides

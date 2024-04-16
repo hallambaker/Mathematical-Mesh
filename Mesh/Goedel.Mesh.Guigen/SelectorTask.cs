@@ -12,12 +12,12 @@ namespace Goedel.Everything;
 // Documented in Guigen output
 public partial class TaskSection : IHeadedSelection {
 
-    IAccountSelector Account { get; }
-    ContextUser ContextUser => Account.ContextUser;
+    IAccountSelector? Account { get; }
+    ContextUser? ContextUser => Account?.ContextUser;
 
     TaskSelection TaskSelection { get; }
 
-    GuigenCatalogTasks Catalog { get; }
+    GuigenCatalogTasks? Catalog { get; }
 
     ///<inheritdoc/>
     public override ISelectCollection ChooseTask { get => TaskSelection; set { } }
@@ -32,7 +32,7 @@ public partial class TaskSection : IHeadedSelection {
     public TaskSection(IAccountSelector? account =null) {
         Account = account;
         Catalog = ContextUser.GetStore(CatalogTask.Label, create: false) as GuigenCatalogTasks;
-        TaskSelection = Catalog is null ? null : new TaskSelection(Catalog);
+        TaskSelection = Catalog is null ? null : new TaskSelection(ContextUser, Catalog);
         }
 
 
@@ -200,7 +200,8 @@ public partial class TaskSelection : SelectionCatalog<GuigenCatalogTasks,
     /// catalog <paramref name="catalog"/>.
     /// </summary>
     /// <param name="catalog"></param>
-    public TaskSelection(GuigenCatalogTasks catalog) : base(catalog) {
+    public TaskSelection(ContextAccount contextAccount, 
+                GuigenCatalogTasks catalog) : base(contextAccount, catalog) {
         }
 
     #region // Conversion overrides

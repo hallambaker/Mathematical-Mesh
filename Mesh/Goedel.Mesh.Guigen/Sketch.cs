@@ -1172,10 +1172,10 @@ public partial class _BoundContactPerson : BoundContact {
     public virtual string? Suffix { get; set;} 
 
     ///<summary></summary> 
-    public virtual ISelectCollection? NetworkAddresses { get; set;} 
+    public virtual ISelectList? NetworkAddresses { get; set;} 
 
     ///<summary></summary> 
-    public virtual ISelectCollection? PhysicalAddresses { get; set;} 
+    public virtual ISelectList? PhysicalAddresses { get; set;} 
 
 
     ///<inheritdoc/>
@@ -1203,9 +1203,9 @@ public partial class _BoundContactPerson : BoundContact {
             new GuiBoundPropertyString ("Suffix", "Suffix", (object data) => (data as _BoundContactPerson)?.Suffix , 
                 (object data,string? value) => { if (data is _BoundContactPerson datad) { datad.Suffix = value; }})  /* 9 */ , 
             new GuiBoundPropertyList ("NetworkAddresses", "Network Addresses", (object data) => (data as _BoundContactPerson)?.NetworkAddresses , 
-                (object data,ISelectCollection? value) => { if (data is _BoundContactPerson datad) { datad.NetworkAddresses = value; }}, _ContactNetworkAddress.BaseBinding)  /* 10 */ , 
+                (object data,ISelectList? value) => { if (data is _BoundContactPerson datad) { datad.NetworkAddresses = value; }}, _ContactNetworkAddress.BaseBinding)  /* 10 */ , 
             new GuiBoundPropertyList ("PhysicalAddresses", "Locations", (object data) => (data as _BoundContactPerson)?.PhysicalAddresses , 
-                (object data,ISelectCollection? value) => { if (data is _BoundContactPerson datad) { datad.PhysicalAddresses = value; }}, _ContactPhysicalAddress.BaseBinding)  /* 11 */ , 
+                (object data,ISelectList? value) => { if (data is _BoundContactPerson datad) { datad.PhysicalAddresses = value; }}, _ContactPhysicalAddress.BaseBinding)  /* 11 */ , 
             new GuiBoundPropertySelection ("ContactInteractMesh", "Mail")  /* 12 */ 
             ]);
     ///<summary>Validation</summary> 
@@ -1544,7 +1544,7 @@ public partial class _BoundGroup : IParameter {
     public virtual string? GroupAddress { get; set;} 
 
     ///<summary></summary> 
-    public virtual ISelectCollection? Members { get; set;} 
+    public virtual ISelectList? Members { get; set;} 
 
 
     ///<inheritdoc/>
@@ -1560,7 +1560,7 @@ public partial class _BoundGroup : IParameter {
             new GuiBoundPropertyString ("GroupAddress", "Address", (object data) => (data as _BoundGroup)?.GroupAddress , 
                 (object data,string? value) => { if (data is _BoundGroup datad) { datad.GroupAddress = value; }})  /* 1 */ , 
             new GuiBoundPropertyList ("Members", "Members", (object data) => (data as _BoundGroup)?.Members , 
-                (object data,ISelectCollection? value) => { if (data is _BoundGroup datad) { datad.Members = value; }}, _BoundGroupMember.BaseBinding)  /* 2 */ , 
+                (object data,ISelectList? value) => { if (data is _BoundGroup datad) { datad.Members = value; }}, _BoundGroupMember.BaseBinding)  /* 2 */ , 
             new GuiBoundPropertyButton ("GroupInvite")  /* 3 */ 
             ]);
     ///<summary>Validation</summary> 

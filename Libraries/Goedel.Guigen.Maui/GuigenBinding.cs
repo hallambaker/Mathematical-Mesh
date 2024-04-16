@@ -83,6 +83,8 @@ public record BoundFieldSet (
 public class GuigenBinding {
     public Gui Gui { get; }
 
+
+
     public DisplayMode Display { get; set; }
 
     public int IconHeight = 20;
@@ -318,7 +320,6 @@ public class GuigenBinding {
         // Attempt to use a cancelation token to cancel the action.
 
         }
-
 
 
     /// <summary>

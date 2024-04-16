@@ -24,7 +24,7 @@ public partial class FeedSection {
     public FeedSection(IAccountSelector? account = null) {
         Account = account;
         Catalog = ContextUser.GetStore(CatalogBookmark.Label, create: false) as GuigenCatalogBookmark;
-        FeedSelection = new FeedSelection(Catalog);
+        FeedSelection = new FeedSelection(ContextUser, Catalog);
         }
 
     public async Task AddAsync(CatalogedFeed entry) {
@@ -74,7 +74,8 @@ public partial class FeedSelection : BookmarkSelection {
     /// catalog <paramref name="catalog"/>.
     /// </summary>
     /// <param name="catalog"></param>
-    public FeedSelection(GuigenCatalogBookmark catalog) : base(catalog) {
+    public FeedSelection(ContextAccount contextAccount,
+                GuigenCatalogBookmark catalog) : base(contextAccount, catalog) {
         }
 
     #region // Conversion overrides

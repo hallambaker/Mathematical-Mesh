@@ -96,7 +96,10 @@ public partial class EverythingMaui {
         ChooseUser = new AccountSelection(this);
         SectionAccountSection.Data = AccountSection;
         SectionSettingSection.Data = Settings;
+        SectionSettingSection.UpdateData = UpdateSettings;
         //SetContext(MeshHost.GetContext(MeshHost.DefaultAccount) as ContextUser);
+
+
 
         SetContext(currentAccount);
         }
@@ -135,7 +138,8 @@ public partial class EverythingMaui {
         return bound;
         }
 
-
+    public void UpdateSettings() {
+        }
 
     public void SetDefaultAccount() {
         CurrentAccount = null;

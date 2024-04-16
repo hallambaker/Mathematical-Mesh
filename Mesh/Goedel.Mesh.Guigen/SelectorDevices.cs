@@ -12,15 +12,15 @@ public partial class DeviceSection : IHeadedSelection {
 
 
 
-    IAccountSelector Account { get; }
-    ContextUser ContextUser => Account.ContextUser;
+    IAccountSelector? Account { get; }
+    ContextUser? ContextUser => Account?.ContextUser;
 
-    public DeviceSelection DeviceSelection { get; }
+    public DeviceSelection? DeviceSelection { get; }
 
-    GuigenCatalogDevice Catalog { get; }
+    GuigenCatalogDevice? Catalog { get; }
 
     ///<inheritdoc/>
-    public override ISelectCollection ChooseDevice { get => DeviceSelection; set { } }
+    public override ISelectCollection? ChooseDevice { get => DeviceSelection; set { } }
 
     ///<inheritdoc/>
     public GuiBinding SelectionBinding => _BoundDevice.BaseBinding;
@@ -32,7 +32,7 @@ public partial class DeviceSection : IHeadedSelection {
     public DeviceSection(IAccountSelector? account =null) {
         Account = account;
         Catalog = ContextUser.GetStore(CatalogDevice.Label, create: false) as GuigenCatalogDevice;
-        DeviceSelection = Catalog is null ? null : new DeviceSelection(Catalog);
+        DeviceSelection = Catalog is null ? null : new DeviceSelection(ContextUser, Catalog);
         }
 
     public async Task AddAsync(CatalogedDevice entry) {
@@ -213,7 +213,8 @@ public partial class DeviceSelection : SelectionCatalog<GuigenCatalogDevice,
     /// catalog <paramref name="catalog"/>.
     /// </summary>
     /// <param name="catalog"></param>
-    public DeviceSelection(GuigenCatalogDevice catalog) : base(catalog) {
+    public DeviceSelection(ContextAccount contextAccount, 
+                GuigenCatalogDevice catalog) : base(contextAccount, catalog) {
         }
 
     #region // Conversion overrides

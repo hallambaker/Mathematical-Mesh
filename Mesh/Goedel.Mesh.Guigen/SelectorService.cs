@@ -16,7 +16,7 @@ public partial class ServiceSection {
     public ServiceSection(IAccountSelector? account = null) {
         Account = account;
         var catalog = ContextUser.GetStore(CatalogApplication.Label, create: false) as GuigenCatalogApplication;
-        ChooseService = new GroupSelection(catalog);
+        ChooseService = new ServiceSelection(ContextUser, catalog);
         }
 
     }
@@ -35,7 +35,8 @@ public partial class ServiceSelection : ApplicationSelection {
     /// catalog <paramref name="catalog"/>.
     /// </summary>
     /// <param name="catalog"></param>
-    public ServiceSelection(GuigenCatalogApplication catalog) : base(catalog) {
+    public ServiceSelection(ContextAccount contextAccount,
+                GuigenCatalogApplication catalog) : base(contextAccount,catalog) {
         }
 
     //#region // Conversion overrides

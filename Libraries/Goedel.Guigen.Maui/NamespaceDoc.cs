@@ -21,6 +21,9 @@
 #endregion
 
 global using Goedel.Utilities;
+global using Goedel.Protocol;
+global using Goedel.Mesh;
+global using Goedel.Mesh.Client;
 global using Microsoft.Extensions.Logging;
 global using System.Text;
 global using Microsoft.Maui.Layouts;

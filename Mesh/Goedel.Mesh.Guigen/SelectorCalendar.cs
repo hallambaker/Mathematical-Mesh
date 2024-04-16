@@ -26,7 +26,7 @@ public partial class CalendarSection : IHeadedSelection {
     public CalendarSection(IAccountSelector? account = null) {
         Account = account;
         Catalog = ContextUser.GetStore(CatalogTask.Label, create: false) as GuigenCatalogTasks;
-        CalendarSelection = Catalog is null ? null : new CalendarSelection(Catalog);
+        CalendarSelection = Catalog is null ? null : new CalendarSelection(ContextUser, Catalog);
         }
 
     public async Task AddAsync(CatalogedTask entry) {
@@ -71,7 +71,8 @@ public partial class CalendarSelection : TaskSelection  {
     /// catalog <paramref name="catalog"/>.
     /// </summary>
     /// <param name="catalog"></param>
-    public CalendarSelection(GuigenCatalogTasks catalog) : base(catalog) {
+    public CalendarSelection(ContextAccount contextAccount,
+                GuigenCatalogTasks catalog) : base(contextAccount, catalog) {
         }
 
     }

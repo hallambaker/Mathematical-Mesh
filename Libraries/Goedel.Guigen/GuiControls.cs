@@ -344,8 +344,8 @@ public record GuiBoundPropertyChooser(
 public record GuiBoundPropertyList(
                 string? Label,
                 string? Prompt,
-                Func<object, ISelectCollection?> Get,
-                Action<object, ISelectCollection?>? Set,
+                Func<object, ISelectList?> Get,
+                Action<object, ISelectList?>? Set,
                 GuiBinding EntryBinding,
                 List<GuiEntry>? Entries = null) : GuiBoundPropertyPrompted(Label, Prompt) {
     public override bool IsReadOnly => Set is null;
@@ -468,6 +468,8 @@ public record GuiSection (
             get => data ?? BindData().CacheValue(out data);
             set => data = value; }
     IBindable? data = null;
+
+    public Action UpdateData { get; set; }
 
 
     public Func<IBindable?> BindData { get; set; } = () => null! ;

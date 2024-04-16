@@ -28,7 +28,7 @@ public partial class DocumentSection : IHeadedSelection {
     public DocumentSection(IAccountSelector? account =null) {
         Account = account;
         Catalog = ContextUser.GetStore(CatalogDocument.Label, create: false) as GuigenCatalogDocument;
-        DocumentSelection = Catalog is null ? null : new DocumentSelection(Catalog);
+        DocumentSelection = Catalog is null ? null : new DocumentSelection(ContextUser, Catalog);
         }
 
     public async Task AddAsync(CatalogedDocument entry) {
@@ -248,7 +248,8 @@ public partial class DocumentSelection : SelectionCatalog<GuigenCatalogDocument,
     /// catalog <paramref name="catalog"/>.
     /// </summary>
     /// <param name="catalog"></param>
-    public DocumentSelection(GuigenCatalogDocument catalog) : base(catalog) {
+    public DocumentSelection(ContextAccount contextAccount, 
+                    GuigenCatalogDocument catalog) : base(contextAccount,catalog) {
         }
 
     #region // Conversion overrides

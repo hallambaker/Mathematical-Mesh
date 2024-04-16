@@ -166,15 +166,15 @@ public partial class AccountSelection : ISelectCollection{
         EverythingMaui = everythingMaui;
         }
 
-    public void Add(IBoundPresentation item) {
+    public Task Add(IBoundPresentation item) {
         throw new NotImplementedException();
         }
 
-    public void Remove(IBoundPresentation item) {
+    public Task Remove(IBoundPresentation item) {
         throw new NotImplementedException();
         }
 
-    public void Update(IBoundPresentation item) {
+    public Task Update(IBoundPresentation item) {
         throw new NotImplementedException();
         }
 

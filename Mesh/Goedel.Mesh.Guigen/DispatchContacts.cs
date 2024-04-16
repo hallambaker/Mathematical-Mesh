@@ -30,10 +30,14 @@ public partial class EverythingMaui {
         }
     ///<inheritdoc/>
     public override async Task<IResult> AddOrganization(AddOrganization data) {
+        CurrentAccount.AssertNotNull(NYI.Throw);
+
         var uid = Udf.Nonce();
         var entry = new CatalogedContact() {
             Uid = uid
             };
+
+
 
         await CurrentAccount.Contacts.AddAsync(entry);
 
@@ -42,6 +46,8 @@ public partial class EverythingMaui {
 
     ///<inheritdoc/>
     public override async Task<IResult> AddLocation(AddLocation data) {
+        CurrentAccount.AssertNotNull(NYI.Throw);
+
         var uid = Udf.Nonce();
         var entry = new CatalogedContact() {
             Uid = uid
@@ -54,6 +60,8 @@ public partial class EverythingMaui {
 
     ///<inheritdoc/>
     public override async Task<IResult> ContactUpdate(BoundContact entry) {
+        CurrentAccount.AssertNotNull(NYI.Throw);
+
         entry.SetBound();
 
         await CurrentAccount.Contacts.UpdateAsync(entry);
@@ -63,11 +71,11 @@ public partial class EverythingMaui {
 
     ///<inheritdoc/>
     public override async Task<IResult> ContactDelete(BoundContact entry) {
+        CurrentAccount.AssertNotNull(NYI.Throw);
 
         await CurrentAccount.Contacts.DeleteAsync(entry);
 
         return NullResult.Completed;
-
         }
 
     // Focus: 020 Engage QR code dialogs

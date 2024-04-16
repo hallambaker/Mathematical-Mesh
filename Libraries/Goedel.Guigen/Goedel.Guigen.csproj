@@ -12,6 +12,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj" />
 		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
 	</ItemGroup>
 

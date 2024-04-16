@@ -11,15 +11,12 @@ public partial class ContactSection : IHeadedSelection{
     IAccountSelector? Account { get; }
     ContextUser? ContextUser => Account?.ContextUser;
 
-
-    //public ButtonState ButtonState => Account is null ? ButtonState.Disabled : ButtonState.Enabled;
-
     public ContactSelection? ContactSelection { get; }
 
     GuigenCatalogContact? Catalog { get; }
 
     ///<inheritdoc/>
-    public override ISelectCollection ChooseContact { get => ContactSelection; set { } }
+    public override ISelectCollection? ChooseContact { get => ContactSelection; set { } }
 
     ///<inheritdoc/>
     public GuiBinding SelectionBinding => _BoundContact.BaseBinding;
@@ -30,38 +27,24 @@ public partial class ContactSection : IHeadedSelection{
     /// <param name="account">The account whose contacts are to be used.</param>
     public ContactSection(IAccountSelector? account = null) {
         Account = account;
-        Catalog = ContextUser.GetStore(CatalogContact.Label, create: false) as GuigenCatalogContact;
-        ContactSelection = Catalog is null ? null : new ContactSelection(Catalog);
+        Catalog = ContextUser?.GetStore(CatalogContact.Label, create: false) as GuigenCatalogContact;
+        ContactSelection = Catalog is null ? null : new ContactSelection(ContextUser, Catalog);
         }
 
     public async Task AddAsync(CatalogedContact entry) {
-
-        var transaction = ContextUser.TransactBegin();
-        transaction.CatalogUpdate(Catalog, entry);
-        await transaction.TransactAsync();
-
+        ContactSelection.AssertNotNull(NYI.Throw);
         var bound = BoundContact.Factory(entry);
-        ContactSelection.Add(bound);
+        await ContactSelection.AddAsync(bound);
         }
-
 
     public async Task UpdateAsync(BoundContact entry) {
-
-        var transaction = ContextUser.TransactBegin();
-        transaction.CatalogUpdate(Catalog, entry.CatalogedContact);
-        await transaction.TransactAsync();
-
-        ContactSelection.Update(entry);
+        ContactSelection.AssertNotNull(NYI.Throw);
+        await ContactSelection.UpdateAsync(entry);
         }
 
-
     public async Task DeleteAsync(BoundContact entry) {
-
-        var transaction = ContextUser.TransactBegin();
-        transaction.CatalogUpdate(Catalog, entry.CatalogedContact);
-        await transaction.TransactAsync();
-
-        ContactSelection.Remove(entry);
+        ContactSelection.AssertNotNull(NYI.Throw);
+        await ContactSelection.RemoveAsync(entry);
         }
 
     }
@@ -187,7 +170,7 @@ public partial class BoundContactPerson : IBoundPresentation, IDialog {
 
 
 
-    public static ISelectCollection Bind(IEnumerable<NetworkAddress>? input) {
+    public static ISelectList Bind(IEnumerable<NetworkAddress>? input) {
         if (input == null) { 
             return null!; 
             }
@@ -330,7 +313,8 @@ public partial class ContactSelection : SelectionCatalog<GuigenCatalogContact,
     /// catalog <paramref name="catalog"/>.
     /// </summary>
     /// <param name="catalog"></param>
-    public ContactSelection(GuigenCatalogContact catalog) : base(catalog) {
+    public ContactSelection(ContextAccount contextAccount,
+                GuigenCatalogContact catalog) : base(contextAccount,catalog) {
         }
 
     #region // Conversion overrides

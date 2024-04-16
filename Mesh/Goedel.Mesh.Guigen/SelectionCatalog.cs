@@ -56,20 +56,21 @@ public abstract class SelectionStore<TStore, TPersist, TEnum, TBindable> : ISele
     public abstract TBindable ConvertToBindable(TPersist cataloged);
 
 
+    public virtual void ResetBound(TBindable bound) { }
+
     //public virtual GuiDialog GetDialog(IBindable data) => null;
 
 
 
 
     ///<inheritdoc/>
-    public abstract void Add(IBoundPresentation item);
-
-
-    ///<inheritdoc/>
-    public abstract void Update(IBoundPresentation item);
+    public abstract Task Add(IBoundPresentation item);
 
     ///<inheritdoc/>
-    public abstract void Remove(IBoundPresentation item);
+    public abstract Task Update(IBoundPresentation item);
+
+    ///<inheritdoc/>
+    public abstract Task Remove(IBoundPresentation item);
 
 
 
@@ -79,13 +80,17 @@ public abstract class SelectionStore<TStore, TPersist, TEnum, TBindable> : ISele
 
 public abstract class SelectionCatalog<TCatalog,TPersist,TBindable> : SelectionStore<TCatalog, TPersist, TPersist, TBindable>,
                         ISelectCollection 
-                    where TCatalog : Catalog<TPersist>
+                    where TCatalog : Catalog<TPersist?>
                     where TPersist : CatalogedEntry
                     where TBindable : IBoundPresentation {
 
     public TCatalog Catalog => Store;
+    public ContextAccount ContextAccount { get; set; }
 
-    public SelectionCatalog(TCatalog store) : base (store){
+    public SelectionCatalog(
+                    ContextAccount contextAccount, 
+                    TCatalog store) : base (store){
+        ContextAccount = contextAccount;
         foreach (var item in store) {
             var bound = ConvertToBindable(item);
             bound.Bound = item;
@@ -93,16 +98,53 @@ public abstract class SelectionCatalog<TCatalog,TPersist,TBindable> : SelectionS
             }
         }
 
-    public override void Add(IBoundPresentation item) {
+    public override async Task Add(IBoundPresentation item) => await AddAsync(item);
+     
+
+    public override async Task Remove(IBoundPresentation item) => await RemoveAsync(item);
+
+
+    public override async Task Update(IBoundPresentation item) => await UpdateAsync(item);
+
+
+    public async Task<TransactResponse> AddAsync(IBoundPresentation item) {
+        var entry = item as TPersist;
+
+        var transaction = ContextAccount.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry);
+        var result = await transaction.TransactAsync();
+
         Entries.Add(item);
+        return result;
         }
 
-    public override void Remove(IBoundPresentation item) {
+    public async Task<TransactResponse> RemoveAsync(IBoundPresentation item) {
+        var entry = item as TPersist;
+
+        var transaction = ContextAccount.TransactBegin();
+        transaction.CatalogDelete(Catalog, entry);
+        var result = await transaction.TransactAsync();
+
         Entries.Remove(item);
+        return result;
         }
 
-    public override void Update(IBoundPresentation item) {
+
+    public  async Task<TransactResponse> UpdateAsync(IBoundPresentation item) {
+        var entry = item.Bound as TPersist;
+
+        var transaction = ContextAccount.TransactBegin();
+        transaction.CatalogUpdate(Catalog, entry);
+        var result = await transaction.TransactAsync();
+
+        return result;
         }
+
+    StoreUpdate StartTransaction() => new StoreUpdate() { 
+        Store = Catalog.StoreName,
+        Envelopes = new ()
+        };
+
 
     }
 
