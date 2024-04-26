@@ -3483,17 +3483,14 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="T:Goedel.Mesh.NetworkAddress">
-             <summary>
-            
-             Provides all means of contacting the individual according to a
-             particular network address
-             </summary>
+        <member name="T:Goedel.Mesh.NetworkProfile">
+            <summary>
+            </summary>
         </member>
-        <member name="M:Goedel.Mesh.NetworkAddress.#ctor">
+        <member name="M:Goedel.Mesh.NetworkProfile.#ctor">
             <summary>Serialization constructor</summary>
         </member>
-        <member name="M:Goedel.Mesh.NetworkAddress.#ctor(System.String,Goedel.Mesh.ProfileAccount)">
+        <member name="M:Goedel.Mesh.NetworkProfile.#ctor(System.String,Goedel.Mesh.ProfileAccount)">
             <summary>
             Constructor returning a network address instance for the address
             <paramref name="address"/> with keys populated from the Mesh profile
@@ -3502,74 +3499,103 @@
             <param name="address">The Mesh account address (account@domain)</param>
             <param name="profile">The Mesh profile to obtain public keys from.</param>
         </member>
-        <member name="P:Goedel.Mesh.NetworkAddress.Inactive">
-             <summary>
-            If true, the name is not in current use.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.NetworkAddress.Address">
-             <summary>
-            The network address, e.g. alice@example.com
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.NetworkAddress.NetworkCapability">
-             <summary>
-            The capabilities bound to this address.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.NetworkAddress.EnvelopedProfileAccount">
+        <member name="P:Goedel.Mesh.NetworkProfile.EnvelopedProfileAccount">
              <summary>
             The account profile
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.NetworkAddress.Protocols">
-             <summary>
-            Public keys associated with the network address
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.NetworkAddress.Capabilities">
-             <summary>
-            Cryptographic capabilities that may be claimed from this address
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.NetworkAddress._Binding">
+        <member name="P:Goedel.Mesh.NetworkProfile._Binding">
             <summary>Implement IBinding</summary> 
         </member>
-        <member name="F:Goedel.Mesh.NetworkAddress._binding">
+        <member name="F:Goedel.Mesh.NetworkProfile._binding">
             <summary>Binding</summary> 
         </member>
-        <member name="F:Goedel.Mesh.NetworkAddress._StaticProperties">
+        <member name="F:Goedel.Mesh.NetworkProfile._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="F:Goedel.Mesh.NetworkAddress._StaticAllProperties">
+        <member name="F:Goedel.Mesh.NetworkProfile._StaticAllProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="P:Goedel.Mesh.NetworkAddress._AllProperties">
+        <member name="P:Goedel.Mesh.NetworkProfile._AllProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.NetworkAddress._Properties">
+        <member name="P:Goedel.Mesh.NetworkProfile._Properties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.NetworkAddress._ParentProperties">
+        <member name="P:Goedel.Mesh.NetworkProfile._ParentProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.NetworkAddress._Tag">
+        <member name="P:Goedel.Mesh.NetworkProfile._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.NetworkAddress.__Tag">
+        <member name="F:Goedel.Mesh.NetworkProfile.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.NetworkAddress._Factory">
+        <member name="M:Goedel.Mesh.NetworkProfile._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Mesh.NetworkAddress.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.NetworkProfile.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.NetworkCapability">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkCapability.Capabilities">
+             <summary>
+            Cryptographic capabilities that may be claimed from this address
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkCapability._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.NetworkCapability._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.NetworkCapability._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.NetworkCapability._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.NetworkCapability._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkCapability._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkCapability._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkCapability._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.NetworkCapability.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.NetworkCapability._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.NetworkCapability.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -14958,6 +14984,132 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Mesh.OrganizationName.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.NetworkAddress">
+             <summary>
+            
+             Provides all means of contacting the individual according to a
+             particular network address
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkAddress.Inactive">
+             <summary>
+            If true, the name is not in current use.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkAddress.Address">
+             <summary>
+            The network address, e.g. alice@example.com
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkAddress.Protocols">
+             <summary>
+            Public keys associated with the network address
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkAddress._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.NetworkAddress._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.NetworkAddress._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.NetworkAddress._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.NetworkAddress._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkAddress._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkAddress._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkAddress._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.NetworkAddress.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.NetworkAddress._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.NetworkAddress.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.NetworkCredential">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkCredential.Type">
+             <summary>
+            The IANA credential type
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkCredential.Credential">
+             <summary>
+            The credential
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkCredential._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.NetworkCredential._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.NetworkCredential._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.NetworkCredential._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.NetworkCredential._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkCredential._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkCredential._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkCredential._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.NetworkCredential.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.NetworkCredential._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.NetworkCredential.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>

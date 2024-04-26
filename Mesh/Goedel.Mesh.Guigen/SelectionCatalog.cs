@@ -64,13 +64,13 @@ public abstract class SelectionStore<TStore, TPersist, TEnum, TBindable> : ISele
 
 
     ///<inheritdoc/>
-    public abstract Task Add(IBoundPresentation item);
+    public abstract Task<IResult> Add(IBoundPresentation item);
 
     ///<inheritdoc/>
-    public abstract Task Update(IBoundPresentation item);
+    public abstract Task<IResult> Update(IBoundPresentation item);
 
     ///<inheritdoc/>
-    public abstract Task Remove(IBoundPresentation item);
+    public abstract Task<IResult> Remove(IBoundPresentation item);
 
 
 
@@ -98,13 +98,39 @@ public abstract class SelectionCatalog<TCatalog,TPersist,TBindable> : SelectionS
             }
         }
 
-    public override async Task Add(IBoundPresentation item) => await AddAsync(item);
+    public override async Task<IResult> Add(IBoundPresentation item) {
+        try {
+            await AddAsync(item);
+            return NullResult.Completed;
+            }
+        catch (Exception e) {
+            return new ErrorResult(e);
+            }
+        }
+
      
 
-    public override async Task Remove(IBoundPresentation item) => await RemoveAsync(item);
+    public override async Task<IResult> Remove(IBoundPresentation item) {
+        try {
+            await RemoveAsync(item);
+            return NullResult.Completed;
+            }
+        catch (Exception e) {
+            return new ErrorResult(e);
+            }
+        }
 
 
-    public override async Task Update(IBoundPresentation item) => await UpdateAsync(item);
+    public override async Task<IResult> Update(IBoundPresentation item) {
+        try {
+            await UpdateAsync(item);
+            return NullResult.Completed;
+            }
+        catch (Exception e){
+            return new ErrorResult(e);
+            }
+        }
+
 
 
     public async Task<TransactResponse> AddAsync(IBoundPresentation item) {
@@ -131,6 +157,7 @@ public abstract class SelectionCatalog<TCatalog,TPersist,TBindable> : SelectionS
 
 
     public  async Task<TransactResponse> UpdateAsync(IBoundPresentation item) {
+        UpdateWithBindable(item);
         var entry = item.Bound as TPersist;
 
         var transaction = ContextAccount.TransactBegin();

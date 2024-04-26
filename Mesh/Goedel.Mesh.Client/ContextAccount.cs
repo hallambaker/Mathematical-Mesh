@@ -815,9 +815,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     public virtual Contact CreateContact(
             List<CryptographicCapability> capabilities = null) {
 
-        var address = new NetworkAddress(ServiceAddress, Profile as ProfileAccount) {
-            Capabilities = capabilities
-            };
+
 
         var anchorAccount = new Anchor() {
             Udf = Profile.UdfString,
@@ -826,9 +824,21 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         // ContextMesh.ProfileMesh.UDF 
 
         var contact = new ContactPerson() {
-            Anchors = new List<Anchor>() { anchorAccount },
-            NetworkAddresses = new List<NetworkAddress>() { address }
+            Anchors = new List<Anchor>() { anchorAccount }
+            
             };
+
+        if (capabilities is null) {
+            var address = new NetworkProfile(ServiceAddress, Profile as ProfileAccount);
+            contact.NetworkAddresses = new List<NetworkAddress>() { address };
+            }
+        else {
+            var address = new NetworkCapability(ServiceAddress, Profile as ProfileAccount) {
+                Capabilities = capabilities
+                };
+            contact.NetworkAddresses = new List<NetworkAddress>() { address };
+            }
+
 
         return contact;
         }

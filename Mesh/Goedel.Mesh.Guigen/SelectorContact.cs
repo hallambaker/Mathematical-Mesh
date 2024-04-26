@@ -62,6 +62,14 @@ public partial class ContactNetworkAddress : IBoundPresentation {
         Fingerprint = null;
         }
 
+    public NetworkAddress GetNetworkAddress() {
+        Bound ??= new NetworkAddress();
+
+        return Bound as NetworkAddress;
+
+        }
+
+
     }
 
 
@@ -203,13 +211,25 @@ public partial class BoundContactPerson : IBoundPresentation, IDialog {
 
         var contact = new ContactPerson() {
             CommonNames = new List<PersonName>() { personName },
-            NetworkAddresses = new()
+            NetworkAddresses = new(),
+                        Locations = new()
             };
 
         bound.Contact = contact;
         }
 
 
+    List<NetworkAddress> FillNetworkAddress(SelectList addresses) {
+        var result = new List<NetworkAddress>();
+
+        foreach (var entry in addresses.Entries) {
+            var address = entry as ContactNetworkAddress;
+
+            }
+
+        return result;
+
+        }
 
 
     }

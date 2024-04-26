@@ -121,8 +121,8 @@ public class CatalogContact : Catalog<CatalogedContact> {
             DictionaryByNetworkAddress.AddSafe(networkAddress.Address,
                 new NetworkProtocolEntry(catalogedContact, networkAddress));
 
-            if (networkAddress.Capabilities != null) {
-                    foreach (var capability in networkAddress.Capabilities) {
+            if (networkAddress is NetworkCapability networkCapability) {
+                    foreach (var capability in networkCapability.Capabilities) {
                         capability.KeyCollection = KeyCollection;
                         switch (capability) {
                             case CapabilityDecrypt capabilityDecrypt: {
@@ -445,10 +445,10 @@ public partial class ContactPerson {
         }
     }
 
-public partial class NetworkAddress {
+public partial class NetworkProfile {
 
     ///<summary>Serialization constructor</summary>
-    public NetworkAddress() {
+    public NetworkProfile() {
         }
 
     /// <summary>
@@ -458,7 +458,7 @@ public partial class NetworkAddress {
     /// </summary>
     /// <param name="address">The Mesh account address (account@domain)</param>
     /// <param name="profile">The Mesh profile to obtain public keys from.</param>
-    public NetworkAddress(string address, ProfileAccount profile) {
+    public NetworkProfile(string address, ProfileAccount profile) {
 
         List<CryptographicCapability> keyList = null;
 
@@ -466,15 +466,24 @@ public partial class NetworkAddress {
 
 
         Address = address;
-        Protocols = new List<NetworkProtocol>() {
-                    new NetworkProtocol() {
-                    Protocol = "mmm",
-                    Capabilities = keyList
-                    }
-                };
+        //Protocols = new List<NetworkProtocol>() {
+        //            new NetworkProtocol() {
+        //            Protocol = "mmm",
+        //            Capabilities = keyList
+        //            }
+        //        };
         }
 
     }
+public partial class NetworkCapability {
+    public NetworkCapability() {
+        }
+
+    public NetworkCapability(string address, ProfileAccount profile) : base(address, profile) {
+        }
+    }
+
+
 
 public partial class PersonName {
 
@@ -562,8 +571,8 @@ public class NetworkProtocolEntry {
         }
 
     CryptoKey SetKeys(ref CryptoKey keyPair) {
-        if (NetworkAddress.EnvelopedProfileAccount != null) {
-            var profileAccount = NetworkAddress.EnvelopedProfileAccount.Decode();
+        if (NetworkAddress is NetworkProfile networkProfile) {
+            var profileAccount = networkProfile.EnvelopedProfileAccount.Decode();
             meshKeyEncryption = profileAccount.CommonEncryption.CryptoKey;
             meshKeyAdministrator = profileAccount.ProfileSignature.CryptoKey;
             }

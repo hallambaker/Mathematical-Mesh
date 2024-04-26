@@ -276,10 +276,11 @@ public static IResolver GetResolver(
     /// <returns>The account profile.</returns>
     static ProfileAccount GetProfile(Contact contact, string address) {
         foreach (var entry in contact.NetworkAddresses) {
-            if (entry.Address == address) {
-                var profile = entry.EnvelopedProfileAccount.Decode();
-                return profile;
-
+            if (entry is NetworkProfile networkProfile) {
+                if (entry.Address == address) {
+                    var profile = networkProfile.EnvelopedProfileAccount.Decode();
+                    return profile;
+                    }
                 }
             }
 

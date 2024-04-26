@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/16/2024 6:23:51 PM
+//  This file was automatically generated at 4/25/2024 6:54:29 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -121,6 +121,9 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"OrganizationName", OrganizationName._Factory},
 	    {"PersonName", PersonName._Factory},
 	    {"NetworkAddress", NetworkAddress._Factory},
+	    {"NetworkCredential", NetworkCredential._Factory},
+	    {"NetworkProfile", NetworkProfile._Factory},
+	    {"NetworkCapability", NetworkCapability._Factory},
 	    {"NetworkProtocol", NetworkProtocol._Factory},
 	    {"Role", Role._Factory},
 	    {"Location", Location._Factory},
@@ -3712,7 +3715,8 @@ abstract public partial class Contact : Assertion {
 					false, ()=>new  List<Anchor>(), ()=>new Anchor())} ,
 			{ "NetworkAddresses", new PropertyListStruct ("NetworkAddresses", 
 					(IBinding data, object? value) => {(data as Contact).NetworkAddresses = value as List<NetworkAddress>;}, (IBinding data) => (data as Contact).NetworkAddresses,
-					false, ()=>new  List<NetworkAddress>(), ()=>new NetworkAddress())} ,
+					true, ()=>new List<NetworkAddress>()
+)} ,
 			{ "Locations", new PropertyListStruct ("Locations", 
 					(IBinding data, object? value) => {(data as Contact).Locations = value as List<Location>;}, (IBinding data) => (data as Contact).Locations,
 					false, ()=>new  List<Location>(), ()=>new Location())} ,
@@ -4474,26 +4478,10 @@ public partial class NetworkAddress : MeshItem {
 	public virtual string?						Address  {get; set;}
 
         /// <summary>
-        ///The capabilities bound to this address.
-        /// </summary>
-
-	public virtual List<string>?					NetworkCapability  {get; set;}
-        /// <summary>
-        ///The account profile
-        /// </summary>
-
-	public virtual Enveloped<ProfileAccount>?						EnvelopedProfileAccount  {get; set;}
-
-        /// <summary>
         ///Public keys associated with the network address
         /// </summary>
 
 	public virtual List<NetworkProtocol>?					Protocols  {get; set;}
-        /// <summary>
-        ///Cryptographic capabilities that may be claimed from this address
-        /// </summary>
-
-	public virtual List<CryptographicCapability>?					Capabilities  {get; set;}
 
 
     ///<summary>Implement IBinding</summary> 
@@ -4510,18 +4498,9 @@ public partial class NetworkAddress : MeshItem {
 					(IBinding data, bool? value) => {(data as NetworkAddress).Inactive = value;}, (IBinding data) => (data as NetworkAddress).Inactive )},
 			{ "Address", new PropertyString ("Address", 
 					(IBinding data, string? value) => {(data as NetworkAddress).Address = value;}, (IBinding data) => (data as NetworkAddress).Address )},
-			{ "NetworkCapability", new PropertyListString ("NetworkCapability", 
-					(IBinding data, List<string>? value) => {(data as NetworkAddress).NetworkCapability = value;}, (IBinding data) => (data as NetworkAddress).NetworkCapability )},
-			{ "EnvelopedProfileAccount", new PropertyStruct ("EnvelopedProfileAccount", 
-					(IBinding data, object? value) => {(data as NetworkAddress).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as NetworkAddress).EnvelopedProfileAccount,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())} ,
 			{ "Protocols", new PropertyListStruct ("Protocols", 
 					(IBinding data, object? value) => {(data as NetworkAddress).Protocols = value as List<NetworkProtocol>;}, (IBinding data) => (data as NetworkAddress).Protocols,
-					false, ()=>new  List<NetworkProtocol>(), ()=>new NetworkProtocol())} ,
-			{ "Capabilities", new PropertyListStruct ("Capabilities", 
-					(IBinding data, object? value) => {(data as NetworkAddress).Capabilities = value as List<CryptographicCapability>;}, (IBinding data) => (data as NetworkAddress).Capabilities,
-					true, ()=>new List<CryptographicCapability>()
-)} 
+					false, ()=>new  List<NetworkProtocol>(), ()=>new NetworkProtocol())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4571,6 +4550,259 @@ public partial class NetworkAddress : MeshItem {
 			return Out as NetworkAddress;
 			}
 		var Result = new NetworkAddress ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class NetworkCredential : NetworkAddress {
+        /// <summary>
+        ///The IANA credential type
+        /// </summary>
+
+	public virtual string?						Type  {get; set;}
+
+        /// <summary>
+        ///The credential
+        /// </summary>
+
+	public virtual byte[]?						Credential  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new NetworkCredential(), NetworkAddress._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Type", new PropertyString ("Type", 
+					(IBinding data, string? value) => {(data as NetworkCredential).Type = value;}, (IBinding data) => (data as NetworkCredential).Type )},
+			{ "Credential", new PropertyBinary ("Credential", 
+					(IBinding data, byte[]? value) => {(data as NetworkCredential).Credential = value;}, (IBinding data) => (data as NetworkCredential).Credential )}
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, NetworkAddress._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "NetworkCredential";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new NetworkCredential();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new NetworkCredential FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as NetworkCredential;
+			}
+		var Result = new NetworkCredential ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class NetworkProfile : NetworkAddress {
+        /// <summary>
+        ///The account profile
+        /// </summary>
+
+	public virtual Enveloped<ProfileAccount>?						EnvelopedProfileAccount  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new NetworkProfile(), NetworkAddress._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "EnvelopedProfileAccount", new PropertyStruct ("EnvelopedProfileAccount", 
+					(IBinding data, object? value) => {(data as NetworkProfile).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as NetworkProfile).EnvelopedProfileAccount,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, NetworkAddress._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "NetworkProfile";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new NetworkProfile();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new NetworkProfile FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as NetworkProfile;
+			}
+		var Result = new NetworkProfile ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class NetworkCapability : NetworkProfile {
+        /// <summary>
+        ///Cryptographic capabilities that may be claimed from this address
+        /// </summary>
+
+	public virtual List<CryptographicCapability>?					Capabilities  {get; set;}
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new NetworkCapability(), NetworkProfile._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Capabilities", new PropertyListStruct ("Capabilities", 
+					(IBinding data, object? value) => {(data as NetworkCapability).Capabilities = value as List<CryptographicCapability>;}, (IBinding data) => (data as NetworkCapability).Capabilities,
+					true, ()=>new List<CryptographicCapability>()
+)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, NetworkProfile._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "NetworkCapability";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new NetworkCapability();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new NetworkCapability FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as NetworkCapability;
+			}
+		var Result = new NetworkCapability ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

@@ -551,7 +551,7 @@
 			Multiple
 			Description
 				|Mesh fingerprints associated with the contact.
-		Struct NetworkAddress NetworkAddresses
+		TStruct NetworkAddress NetworkAddresses
 			Multiple
 			Description
 				|Network address entries
@@ -676,17 +676,33 @@
 		String Address	
 			Description
 				|The network address, e.g. alice@example.com
-		String NetworkCapability
-			Multiple
-			Description
-				|The capabilities bound to this address.
-		Struct Enveloped<ProfileAccount> EnvelopedProfileAccount
-			Description
-				|The account profile
 		Struct NetworkProtocol Protocols
 			Multiple
 			Description
 				|Public keys associated with the network address
+
+
+	Structure NetworkCredential
+		Inherits NetworkAddress
+		String Type
+			Description
+				|The IANA credential type
+		Binary Credential
+			Description
+				|The credential
+
+	Structure NetworkProfile
+		Inherits NetworkAddress
+		Struct Enveloped<ProfileAccount> EnvelopedProfileAccount
+			Description
+				|The account profile
+		//String NetworkCapability
+		//	Multiple
+		//	Description
+		//		|The capabilities bound to this address.
+
+	Structure NetworkCapability
+		Inherits NetworkProfile
 		TStruct CryptographicCapability Capabilities
 			Multiple
 			Description

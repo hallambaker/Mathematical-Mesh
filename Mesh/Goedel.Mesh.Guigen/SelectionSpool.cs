@@ -32,20 +32,20 @@ public abstract class SelectionSpool<TCatalog, TBindable> : SelectionStore<TCata
 
 
 
-    public override Task Add(IBoundPresentation item) {
+    public override Task<IResult> Add(IBoundPresentation item) {
         //var contact = CreateFromBindable(item);
         //Catalog.New(contact);
         //Entries.Add(item);
 
-        return Task.CompletedTask;
+        return new Task<IResult>(() =>NullResult.Completed);
         }
 
-    public override Task Remove(IBoundPresentation item) {
-        return Task.CompletedTask;
+    public override Task<IResult> Remove(IBoundPresentation item) {
+        return new Task<IResult>(() => NullResult.Completed);
         }
 
-    public override Task Update(IBoundPresentation item) {
-        return Task.CompletedTask;
+    public override Task<IResult> Update(IBoundPresentation item) {
+        return new Task<IResult>(() => NullResult.Completed);
         }
 
     }

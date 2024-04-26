@@ -27,11 +27,11 @@ public interface ISelectCollection : IEnumerable{
 
 
 
-    Task Add(IBoundPresentation item);
+    Task<IResult> Add(IBoundPresentation item);
 
-    Task Remove(IBoundPresentation item);
+    Task<IResult> Remove(IBoundPresentation item);
 
-    Task Update(IBoundPresentation item);
+    Task<IResult> Update(IBoundPresentation item);
 
 
     }

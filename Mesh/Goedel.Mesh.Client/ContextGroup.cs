@@ -233,10 +233,6 @@ public partial class ContextGroup : ContextAccount {
                 List<CryptographicCapability> capabilities = null) {
 
 
-        var address = new NetworkAddress(ServiceAddress, ProfileGroup) {
-            Capabilities = capabilities
-            };
-
         var anchorAccount = new Anchor() {
             Udf = ProfileGroup.UdfString,
             Validation = "Self"
@@ -244,9 +240,19 @@ public partial class ContextGroup : ContextAccount {
         // ContextMesh.ProfileMesh.UDF 
 
         var contact = new ContactPerson() {
-            Anchors = new List<Anchor>() { anchorAccount },
-            NetworkAddresses = new List<NetworkAddress>() { address }
+            Anchors = new List<Anchor>() { anchorAccount }
             };
+
+        if (capabilities is null) {
+            var address = new NetworkProfile(ServiceAddress, Profile as ProfileAccount);
+            contact.NetworkAddresses = new List<NetworkAddress>() { address };
+            }
+        else {
+            var address = new NetworkCapability(ServiceAddress, Profile as ProfileAccount) {
+                Capabilities = capabilities
+                };
+            contact.NetworkAddresses = new List<NetworkAddress>() { address };
+            }
 
         return contact;
         }
