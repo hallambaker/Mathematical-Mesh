@@ -289,6 +289,9 @@ Dialog ContactNetworkAddress "Network" "protocol_icon"
 		Description
 			|Connect to the contact
 
+
+
+
 Dialog ContactPhysicalAddress "Place" "location_pin"
 	Text Appartment		"Appartment"
 	Text Street			"Street"
