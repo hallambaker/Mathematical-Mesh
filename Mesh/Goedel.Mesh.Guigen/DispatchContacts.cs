@@ -94,8 +94,8 @@ public partial class EverythingMaui {
     ///<inheritdoc/>
     public override async Task<IResult> ContactInteractMesh(BoundContactPerson data) => await NotYetImplemented();
 
-    ///<inheritdoc/>
-    public override async Task<IResult> ContactInteractAddress(ContactNetworkAddress data) => await NotYetImplemented();
+    /////<inheritdoc/>
+    //public override async Task<IResult> ContactInteractAddress(ContactNetworkAddress data) => await NotYetImplemented();
 
 
     // Focus: 022 Engage handoff to other applications.

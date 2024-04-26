@@ -54,23 +54,34 @@ public partial class ContactSection : IHeadedSelection{
 
 public partial class ContactNetworkAddress : IBoundPresentation {
 
-    public ContactNetworkAddress () { }
-    public ContactNetworkAddress(NetworkAddress address) {
-        Bound = address;
-        Protocol = "TBS";
-        Address = address.Address;
-        Fingerprint = null;
+    public static ContactNetworkAddress Factory(NetworkAddress address) {
+        switch (address) {
+            case NetworkProfile networkProfile: {
+                return new ContactNetworkCredential() {
+                    Bound = address,
+                    Protocol = "TBS",
+                    Address = address.Address,
+                    Fingerprint = null
+                    };
+                }
+            default: {
+                return new ContactNetworkIdentifier() {
+                    Bound = address,
+                    Protocol = "TBS",
+                    Address = address.Address,
+                    Fingerprint = null
+                    };
+                }
+
+            }
+
+
         }
-
-    public NetworkAddress GetNetworkAddress() {
-        Bound ??= new NetworkAddress();
-
-        return Bound as NetworkAddress;
-
-        }
-
-
     }
+
+
+
+
 
 
 public partial class BoundContact : IBoundPresentation, IDialog {
@@ -186,7 +197,7 @@ public partial class BoundContactPerson : IBoundPresentation, IDialog {
         var result = new SelectList();
 
         foreach (var inputItem in input) {
-            var entry = new ContactNetworkAddress(inputItem) ;
+            var entry =  ContactNetworkAddress.Factory(inputItem) ;
             result.Add(entry);
             }
 

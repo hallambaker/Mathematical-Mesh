@@ -28,7 +28,7 @@ public partial class AccountSwitch :  IHeadedSelection {
 
 public partial class AccountSection: IAccountSelector {
 
-    public ContextUser ContextUser => BoundAccount.ContextUser;
+    public ContextUser ContextUser => BoundAccount?.ContextUser;
     public BoundAccount BoundAccount => EverythingMaui.CurrentAccount;
 
     public EverythingMaui EverythingMaui { get;  init; }
