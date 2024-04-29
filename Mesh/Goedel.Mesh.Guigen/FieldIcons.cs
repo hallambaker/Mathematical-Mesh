@@ -311,6 +311,9 @@ public static partial class FieldIcons  {
     #endregion
 
     #region // Address 
+    ///<summary>Icon for credential password</summary> 
+    public static FieldIcon MessageGeneric { get; } = new("message");
+
 
     ///<summary>Icon for credential password</summary> 
     public static FieldIcon AddressGeneric { get; } = new("applications");
@@ -320,6 +323,8 @@ public static partial class FieldIcons  {
 
     ///<summary>Icon for credential password</summary> 
     public static FieldIcon AddressSignal { get; } = new("brand_signal");
+
+
     ///<summary>Icon for credential password</summary> 
     public static FieldIcon AddressTelephone { get; } = new("voice");
     ///<summary>Icon for credential password</summary> 
@@ -332,6 +337,33 @@ public static partial class FieldIcons  {
     public static FieldIcon AddressFacebook { get; } = new("brand_facebook_messenger");
     ///<summary>Icon for credential password</summary> 
     public static FieldIcon Address(string uri) => AddressGeneric;
+
+
+    public static FieldIcon SiteFacebook { get; } = new("brand_facebook");
+    public static FieldIcon SiteTwitter { get; } = new("brand_twitter");
+    public static FieldIcon SiteMedium { get; } = new("brand_medium");
+
+    public static FieldIcon SiteWordpress { get; } = new("brand_medium");
+
+    public static FieldIcon SiteGithub{ get; } = new("brand_github");
+
+    public static FieldIcon ProtocolRss { get; } = new("feed_rss");
+
+
+    public static Dictionary<string, FieldIcon> ProtocolToImag = new Dictionary<string, FieldIcon>() {
+            { "smtp",MessageUnRead },
+            { "skype",AddressSkype },
+            { "twitter",AddressSignal },
+            { "tel",AddressTelephone },
+            { "facetime",AddressFacetime },
+            { "whatsapp",AddressWhatsapp },
+            { "telegram",AddressTelegram },
+            { "messenger",AddressFacebook }
+
+
+        };
+
+
 
     #endregion
 

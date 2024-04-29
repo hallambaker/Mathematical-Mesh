@@ -79,6 +79,27 @@ public partial class ContactNetworkAddress : IBoundPresentation {
         }
     }
 
+public partial class ContactNetworkIdentifier {
+
+    public override IFieldIcon? Type => GetFieldIcon();
+
+    IFieldIcon GetFieldIcon() {
+        if (Protocol is null) {
+            return FieldIcons.MessageGeneric;
+            }
+
+        if (FieldIcons.ProtocolToImag.TryGetValue(Protocol.ToLower(), out var icon)) 
+                    return icon;
+
+
+
+        return FieldIcons.MessageGeneric;
+
+        }
+    }
+
+
+
 public partial class ContactNetworkCredential {
 
     public override IFieldIcon? Type => FieldIcons.ContactMesh;

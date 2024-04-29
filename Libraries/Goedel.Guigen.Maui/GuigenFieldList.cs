@@ -108,7 +108,7 @@ public class GuigenFieldList : GuigenField, IWidget {
             if (property is GuiBoundPropertyString text) {
                 var evalue = text.Get(entry);
 
-                if (IsEditMode) {
+                if (IsEditMode & !property.IsReadOnly) {
                     var cell = new Entry() {
                         Text = evalue
                         };
