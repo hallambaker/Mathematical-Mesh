@@ -58,6 +58,7 @@ public class GuigenFieldList : GuigenField, IWidget {
 
     ///<inheritdoc/>
     public override void SetEditable() {
+        SetField();
         }
 
     public override void GetField(IBindable data) {
@@ -82,8 +83,10 @@ public class GuigenFieldList : GuigenField, IWidget {
             MakeRow(row++, entry);
             }
 
-        //entryField = TypedBinding.EntryBinding.Factory();
-        //MakeRow(row++, entryField, true);
+        if (IsEditMode) {
+            entryField = TypedBinding.EntryBinding.Factory();
+            MakeRow(row++, entryField, true);
+            }
         }
 
 

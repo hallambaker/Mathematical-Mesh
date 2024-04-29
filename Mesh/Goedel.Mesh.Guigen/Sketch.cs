@@ -1118,9 +1118,7 @@ public partial class _BoundContact : IParameter {
         () => new BoundContact(),
         [ 
             new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundContact)?.Type , null)  /* 0 */ , 
-            new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundContact)?.Display , null)  /* 1 */ , 
-            new GuiBoundPropertySelection ("ContactUpdate", "Update")  /* 2 */ , 
-            new GuiBoundPropertySelection ("ContactDelete", "Delete")  /* 3 */ 
+            new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundContact)?.Display , null)  /* 1 */ 
             ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
@@ -1188,25 +1186,23 @@ public partial class _BoundContactPerson : BoundContact {
         [ 
             new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundContactPerson)?.Type , null)  /* 0 */ , 
             new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundContactPerson)?.Display , null)  /* 1 */ , 
-            new GuiBoundPropertySelection ("ContactUpdate", "Update")  /* 2 */ , 
-            new GuiBoundPropertySelection ("ContactDelete", "Delete")  /* 3 */ , 
             new GuiBoundPropertyBoolean ("Self", "Self", (object data) => (data as _BoundContactPerson)?.Self , 
-                (object data,bool? value) => { if (data is _BoundContactPerson datad) { datad.Self = value; }})  /* 4 */ , 
+                (object data,bool? value) => { if (data is _BoundContactPerson datad) { datad.Self = value; }})  /* 2 */ , 
             new GuiBoundPropertyString ("Local", "Friendly name", (object data) => (data as _BoundContactPerson)?.Local , 
-                (object data,string? value) => { if (data is _BoundContactPerson datad) { datad.Local = value; }})  /* 5 */ , 
+                (object data,string? value) => { if (data is _BoundContactPerson datad) { datad.Local = value; }})  /* 3 */ , 
             new GuiBoundPropertyString ("First", "First name", (object data) => (data as _BoundContactPerson)?.First , 
-                (object data,string? value) => { if (data is _BoundContactPerson datad) { datad.First = value; }})  /* 6 */ , 
+                (object data,string? value) => { if (data is _BoundContactPerson datad) { datad.First = value; }})  /* 4 */ , 
             new GuiBoundPropertyString ("Last", "Last name", (object data) => (data as _BoundContactPerson)?.Last , 
-                (object data,string? value) => { if (data is _BoundContactPerson datad) { datad.Last = value; }})  /* 7 */ , 
+                (object data,string? value) => { if (data is _BoundContactPerson datad) { datad.Last = value; }})  /* 5 */ , 
             new GuiBoundPropertyString ("Prefix", "Prefix", (object data) => (data as _BoundContactPerson)?.Prefix , 
-                (object data,string? value) => { if (data is _BoundContactPerson datad) { datad.Prefix = value; }})  /* 8 */ , 
+                (object data,string? value) => { if (data is _BoundContactPerson datad) { datad.Prefix = value; }})  /* 6 */ , 
             new GuiBoundPropertyString ("Suffix", "Suffix", (object data) => (data as _BoundContactPerson)?.Suffix , 
-                (object data,string? value) => { if (data is _BoundContactPerson datad) { datad.Suffix = value; }})  /* 9 */ , 
+                (object data,string? value) => { if (data is _BoundContactPerson datad) { datad.Suffix = value; }})  /* 7 */ , 
             new GuiBoundPropertyList ("NetworkAddresses", "Network Addresses", (object data) => (data as _BoundContactPerson)?.NetworkAddresses , 
-                (object data,ISelectList? value) => { if (data is _BoundContactPerson datad) { datad.NetworkAddresses = value; }}, _ContactNetworkAddress.BaseBinding)  /* 10 */ , 
+                (object data,ISelectList? value) => { if (data is _BoundContactPerson datad) { datad.NetworkAddresses = value; }}, _ContactNetworkIdentifier.BaseBinding)  /* 8 */ , 
             new GuiBoundPropertyList ("PhysicalAddresses", "Locations", (object data) => (data as _BoundContactPerson)?.PhysicalAddresses , 
-                (object data,ISelectList? value) => { if (data is _BoundContactPerson datad) { datad.PhysicalAddresses = value; }}, _ContactPhysicalAddress.BaseBinding)  /* 11 */ , 
-            new GuiBoundPropertySelection ("ContactInteractMesh", "Mail")  /* 12 */ 
+                (object data,ISelectList? value) => { if (data is _BoundContactPerson datad) { datad.PhysicalAddresses = value; }}, _ContactPhysicalAddress.BaseBinding)  /* 9 */ , 
+            new GuiBoundPropertySelection ("ContactInteractMesh", "Mail")  /* 10 */ 
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -1249,9 +1245,7 @@ public partial class _BoundContactBusiness : BoundContact {
         () => new BoundContactBusiness(),
         [ 
             new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundContactBusiness)?.Type , null)  /* 0 */ , 
-            new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundContactBusiness)?.Display , null)  /* 1 */ , 
-            new GuiBoundPropertySelection ("ContactUpdate", "Update")  /* 2 */ , 
-            new GuiBoundPropertySelection ("ContactDelete", "Delete")  /* 3 */ 
+            new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundContactBusiness)?.Display , null)  /* 1 */ 
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -1294,9 +1288,7 @@ public partial class _BoundContactPlace : BoundContact {
         () => new BoundContactPlace(),
         [ 
             new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundContactPlace)?.Type , null)  /* 0 */ , 
-            new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundContactPlace)?.Display , null)  /* 1 */ , 
-            new GuiBoundPropertySelection ("ContactUpdate", "Update")  /* 2 */ , 
-            new GuiBoundPropertySelection ("ContactDelete", "Delete")  /* 3 */ 
+            new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundContactPlace)?.Display , null)  /* 1 */ 
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -1434,13 +1426,13 @@ public partial class _ContactNetworkCredential : ContactNetworkAddress {
 
 
     ///<summary></summary> 
-    public virtual string? Protocol { get; set;} 
+    public virtual string? Protocol { get;} 
 
     ///<summary></summary> 
-    public virtual string? Address { get; set;} 
+    public virtual string? Address { get;} 
 
     ///<summary></summary> 
-    public virtual string? Fingerprint { get; set;} 
+    public virtual string? Fingerprint { get;} 
 
 
     ///<inheritdoc/>
@@ -1452,12 +1444,9 @@ public partial class _ContactNetworkCredential : ContactNetworkAddress {
         () => new ContactNetworkCredential(),
         [ 
             new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _ContactNetworkCredential)?.Type , null)  /* 0 */ , 
-            new GuiBoundPropertyString ("Protocol", "Protocol", (object data) => (data as _ContactNetworkCredential)?.Protocol , 
-                (object data,string? value) => { if (data is _ContactNetworkCredential datad) { datad.Protocol = value; }})  /* 1 */ , 
-            new GuiBoundPropertyString ("Address", "Address", (object data) => (data as _ContactNetworkCredential)?.Address , 
-                (object data,string? value) => { if (data is _ContactNetworkCredential datad) { datad.Address = value; }})  /* 2 */ , 
-            new GuiBoundPropertyString ("Fingerprint", "Fingerprint", (object data) => (data as _ContactNetworkCredential)?.Fingerprint , 
-                (object data,string? value) => { if (data is _ContactNetworkCredential datad) { datad.Fingerprint = value; }})  /* 3 */ 
+            new GuiBoundPropertyString ("Protocol", "Protocol", (object data) => (data as _ContactNetworkCredential)?.Protocol , null)  /* 1 */ , 
+            new GuiBoundPropertyString ("Address", "Address", (object data) => (data as _ContactNetworkCredential)?.Address , null)  /* 2 */ , 
+            new GuiBoundPropertyString ("Fingerprint", "Fingerprint", (object data) => (data as _ContactNetworkCredential)?.Fingerprint , null)  /* 3 */ 
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -4388,84 +4377,6 @@ public partial class _ActionReject : IParameter {
 
 
 /// <summary>
-/// Callback parameters for action ContactUpdate 
-/// </summary>
-public partial class ContactUpdate : _ContactUpdate {
-    }
-
-
-/// <summary>
-/// Callback parameters for action ContactUpdate 
-/// </summary>
-public partial class _ContactUpdate : IParameter {
-
-
-    ///<inheritdoc/>
-    public virtual GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static  GuiBindingSingle BaseBinding  { get; } = new (
-        (object test) => test is _ContactUpdate,
-        () => new ContactUpdate(),
-        Array.Empty<GuiBoundProperty>());
-    ///<summary>Validation</summary> 
-    public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid? result = null;
-
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
-
-
-    ///<summary>Teardown.</summary> 
-    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
-
-
-    }
-
-
-/// <summary>
-/// Callback parameters for action ContactDelete 
-/// </summary>
-public partial class ContactDelete : _ContactDelete {
-    }
-
-
-/// <summary>
-/// Callback parameters for action ContactDelete 
-/// </summary>
-public partial class _ContactDelete : IParameter {
-
-
-    ///<inheritdoc/>
-    public virtual GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static  GuiBindingSingle BaseBinding  { get; } = new (
-        (object test) => test is _ContactDelete,
-        () => new ContactDelete(),
-        Array.Empty<GuiBoundProperty>());
-    ///<summary>Validation</summary> 
-    public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid? result = null;
-
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
-
-
-    ///<summary>Teardown.</summary> 
-    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
-
-
-    }
-
-
-/// <summary>
 /// Callback parameters for action ContactInteractMesh 
 /// </summary>
 public partial class ContactInteractMesh : _ContactInteractMesh {
@@ -6939,14 +6850,6 @@ public class _EverythingMaui : Gui {
 	public GuiAction SelectionActionReject { get; } = new (
         "ActionReject", "Reject", "circle_cross", _ActionReject.BaseBinding, () => new ActionReject(), IsSelect:true);
 
-    ///<summary>Selection SelectionContactUpdate.</summary> 
-	public GuiAction SelectionContactUpdate { get; } = new (
-        "ContactUpdate", "Update", "circle_cross", _ContactUpdate.BaseBinding, () => new ContactUpdate(), IsSelect:true);
-
-    ///<summary>Selection SelectionContactDelete.</summary> 
-	public GuiAction SelectionContactDelete { get; } = new (
-        "ContactDelete", "Delete", "circle_cross", _ContactDelete.BaseBinding, () => new ContactDelete(), IsSelect:true);
-
     ///<summary>Selection SelectionContactInteractMesh.</summary> 
 	public GuiAction SelectionContactInteractMesh { get; } = new (
         "ContactInteractMesh", "Mail", "circle_cross", _ContactInteractMesh.BaseBinding, () => new ContactInteractMesh(), IsSelect:true);
@@ -7676,20 +7579,6 @@ public class _EverythingMaui : Gui {
             throw new NYI();
             } ;
 
-        SelectionContactUpdate.Callback = (x) => {
-            if (x is BoundContact xx) {
-                return ContactUpdate (xx); 
-                }
-            throw new NYI();
-            } ;
-
-        SelectionContactDelete.Callback = (x) => {
-            if (x is BoundContact xx) {
-                return ContactDelete (xx); 
-                }
-            throw new NYI();
-            } ;
-
         SelectionContactInteractMesh.Callback = (x) => {
             if (x is BoundContactPerson xx) {
                 return ContactInteractMesh (xx); 
@@ -7814,8 +7703,6 @@ public class _EverythingMaui : Gui {
 		    {"AccountSelect", SelectionAccountSelect}, 
 		    {"ActionAccept", SelectionActionAccept}, 
 		    {"ActionReject", SelectionActionReject}, 
-		    {"ContactUpdate", SelectionContactUpdate}, 
-		    {"ContactDelete", SelectionContactDelete}, 
 		    {"ContactInteractMesh", SelectionContactInteractMesh}, 
 		    {"DocumentUpdate", SelectionDocumentUpdate}, 
 		    {"DocumentExport", SelectionDocumentExport}, 
@@ -8179,18 +8066,6 @@ public class _EverythingMaui : Gui {
     /// GUI action
     /// </summary>
     public virtual Task<IResult> ActionReject (BoundMessageActionRequest data) 
-                => throw new NYI();
-
-    /// <summary>
-    /// GUI action
-    /// </summary>
-    public virtual Task<IResult> ContactUpdate (BoundContact data) 
-                => throw new NYI();
-
-    /// <summary>
-    /// GUI action
-    /// </summary>
-    public virtual Task<IResult> ContactDelete (BoundContact data) 
                 => throw new NYI();
 
     /// <summary>

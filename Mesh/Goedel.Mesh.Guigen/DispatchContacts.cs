@@ -58,25 +58,27 @@ public partial class EverythingMaui {
         return NullResult.Completed;
         }
 
-    ///<inheritdoc/>
-    public override async Task<IResult> ContactUpdate(BoundContact entry) {
-        CurrentAccount.AssertNotNull(NYI.Throw);
 
-        entry.SetBound();
+    /////<inheritdoc/>
+    //public override async Task<IResult> ContactUpdate(BoundContact entry) {
+    //    CurrentAccount.AssertNotNull(NYI.Throw);
 
-        await CurrentAccount.Contacts.UpdateAsync(entry);
+    //    entry.SetBound();
 
-        return NullResult.Completed;
-        }
+    //    await CurrentAccount.Contacts.UpdateAsync(entry);
 
-    ///<inheritdoc/>
-    public override async Task<IResult> ContactDelete(BoundContact entry) {
-        CurrentAccount.AssertNotNull(NYI.Throw);
+    //    return NullResult.Completed;
+    //    }
 
-        await CurrentAccount.Contacts.DeleteAsync(entry);
+    /////<inheritdoc/>
+    //public override async Task<IResult> ContactDelete(BoundContact entry) {
+    //    CurrentAccount.AssertNotNull(NYI.Throw);
 
-        return NullResult.Completed;
-        }
+    //    await CurrentAccount.Contacts.DeleteAsync(entry);
+
+    //    return NullResult.Completed;
+    //    }
+
 
     // Focus: 020 Engage QR code dialogs
 

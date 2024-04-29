@@ -57,11 +57,11 @@ public partial class ContactNetworkAddress : IBoundPresentation {
     public static ContactNetworkAddress Factory(NetworkAddress address) {
         switch (address) {
             case NetworkProfile networkProfile: {
-                return new ContactNetworkCredential() {
+                return new ContactNetworkCredential(networkProfile) {
                     Bound = address,
-                    Protocol = "TBS",
-                    Address = address.Address,
-                    Fingerprint = null
+                    //Protocol = "TBS",
+                    //Address = networkProfile.Address,
+                    //Fingerprint = null
                     };
                 }
             default: {
@@ -79,9 +79,33 @@ public partial class ContactNetworkAddress : IBoundPresentation {
         }
     }
 
+public partial class ContactNetworkCredential {
+
+    public override IFieldIcon? Type => FieldIcons.ContactMesh;
 
 
+    public ContactNetworkCredential() {
+        }
 
+    public ContactNetworkCredential(NetworkProfile networkProfile) : base(networkProfile) {
+        }
+
+    }
+
+public partial class _ContactNetworkCredential {
+    public _ContactNetworkCredential() {
+        }
+
+    public _ContactNetworkCredential(NetworkProfile networkProfile) {
+        Bound = networkProfile;
+        Protocol = "mmm";
+        Address = networkProfile.Address;
+
+        var profile = networkProfile.EnvelopedProfileAccount?.EnvelopedObject;
+        Fingerprint = profile?.UdfString;
+
+        }
+    }
 
 
 public partial class BoundContact : IBoundPresentation, IDialog {

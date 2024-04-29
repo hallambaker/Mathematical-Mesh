@@ -221,6 +221,9 @@ public static partial class FieldIcons  {
     #region // Contact 
 
     ///<summary>Icon for credential password</summary> 
+    public static FieldIcon ContactMesh { get; } = new("brand_mesh");
+
+    ///<summary>Icon for credential password</summary> 
     public static FieldIcon ContactGeneric { get; } = new("contact");
 
     ///<summary>Icon for credential password</summary> 

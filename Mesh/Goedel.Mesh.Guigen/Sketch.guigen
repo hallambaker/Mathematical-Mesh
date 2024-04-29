@@ -250,12 +250,6 @@ Dialog BoundContact "Contact" "contacts"
 	Text Display "Display name"
 		Readonly
 		Primary
-	Selection ContactUpdate "Update" "circle_cross"
-		Description
-			|Update the contact
-	Selection ContactDelete "Delete" "circle_cross"
-		Description
-			|Delete the contact
 
 Dialog BoundContactPerson "Person" "contacts"
 	Inherit BoundContact
@@ -267,7 +261,7 @@ Dialog BoundContactPerson "Person" "contacts"
 	Text Prefix "Prefix"
 	Text Suffix "Suffix"
 
-	List NetworkAddresses ContactNetworkAddress "Network Addresses" "network" 
+	List NetworkAddresses ContactNetworkIdentifier "Network Addresses" "network" 
 	List PhysicalAddresses ContactPhysicalAddress "Locations" "location" 
 
 	Selection ContactInteractMesh "Mail" "circle_cross"
@@ -292,8 +286,11 @@ Dialog ContactNetworkIdentifier "Network" "protocol_icon"
 Dialog ContactNetworkCredential "Network" "protocol_icon"
 	Inherit ContactNetworkAddress
 	Text Protocol "Protocol"
+		Readonly
 	Text Address "Address"
+		Readonly
 	Text Fingerprint "Fingerprint"
+		Readonly
 
 Dialog ContactPhysicalAddress "Place" "location_pin"
 	Text Appartment		"Appartment"
