@@ -15008,9 +15008,10 @@
             The network address, e.g. alice@example.com
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.NetworkAddress.Protocols">
+        <member name="P:Goedel.Mesh.NetworkAddress.Protocol">
              <summary>
-            Public keys associated with the network address
+            The IANA protocol|identifier of the network protocols by which 
+            the contact may be reached using the specified Address. 
              </summary>
         </member>
         <member name="P:Goedel.Mesh.NetworkAddress._Binding">
@@ -15125,11 +15126,6 @@
              <summary>
             The IANA protocol|identifier of the network protocols by which 
             the contact may be reached using the specified Address. 
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.NetworkProtocol.Capabilities">
-             <summary>
-            Cryptographic keys representing capabilities.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.NetworkProtocol._Binding">

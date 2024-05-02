@@ -54,6 +54,8 @@ public partial class ContactSection : IHeadedSelection{
 
 public partial class ContactNetworkAddress : IBoundPresentation {
 
+    public NetworkAddress NetworkAddress => (Bound as NetworkAddress)!;
+
     public static ContactNetworkAddress Factory(NetworkAddress address) {
         switch (address) {
             case NetworkProfile networkProfile: {
@@ -77,6 +79,11 @@ public partial class ContactNetworkAddress : IBoundPresentation {
 
 
         }
+
+    public virtual void Fill() {
+        }
+
+
     }
 
 public partial class ContactNetworkIdentifier {
@@ -102,6 +109,8 @@ public partial class ContactNetworkIdentifier {
 
 public partial class ContactNetworkCredential {
 
+    NetworkProfile NetworkProfile => (Bound as NetworkProfile)!;
+
     public override IFieldIcon? Type => FieldIcons.ContactMesh;
 
 
@@ -109,6 +118,19 @@ public partial class ContactNetworkCredential {
         }
 
     public ContactNetworkCredential(NetworkProfile networkProfile) : base(networkProfile) {
+        }
+
+    public override void Fill() {
+        Bound ??= new NetworkProfile();
+
+        NetworkProfile.Address = Address;
+
+
+        NetworkProfile.Protocol = Protocol;
+
+
+        base.Fill();
+        
         }
 
     }
@@ -125,6 +147,11 @@ public partial class _ContactNetworkCredential {
         var profile = networkProfile.EnvelopedProfileAccount?.EnvelopedObject;
         Fingerprint = profile?.UdfString;
 
+        }
+    }
+
+public partial class ContactPhysicalAddress {
+    public virtual void Fill() {
         }
     }
 
@@ -265,21 +292,31 @@ public partial class BoundContactPerson : IBoundPresentation, IDialog {
             Last = Last
             };
 
+        var addresses = FillNetworkAddress(NetworkAddresses);
+        var locations = FillLocations(PhysicalAddresses);
+
         var contact = new ContactPerson() {
             CommonNames = new List<PersonName>() { personName },
-            NetworkAddresses = new(),
-                        Locations = new()
+            NetworkAddresses = addresses,
+            Locations = locations
             };
 
         bound.Contact = contact;
         }
 
 
-    List<NetworkAddress> FillNetworkAddress(SelectList addresses) {
+    List<NetworkAddress> FillNetworkAddress(ISelectList? addresses) {
+        if (addresses == null) { 
+            return null!; 
+            }
+
         var result = new List<NetworkAddress>();
 
         foreach (var entry in addresses.Entries) {
             var address = entry as ContactNetworkAddress;
+            // here we have to do the transmogrification.
+            address.Fill();
+            result.Add(address.Bound as NetworkAddress);
 
             }
 
@@ -287,7 +324,25 @@ public partial class BoundContactPerson : IBoundPresentation, IDialog {
 
         }
 
+    List<Location> FillLocations(ISelectList? locations) {
+        if (locations == null) {
+            return null!;
+            }
 
+        var result = new List<Location>();
+
+        foreach (var entry in locations.Entries) {
+            var address = entry as ContactPhysicalAddress;
+            address.Fill();
+            result.Add(address.Bound as Location);
+            // here we have to do the transmogrification.
+
+            }
+
+        return result;
+
+
+        }
     }
 
 

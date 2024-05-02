@@ -435,11 +435,12 @@ public partial class ContactPerson {
         personName.SetFullName();
         var networkAddress = new NetworkAddress {
             Address = email,
-            Protocols = new List<NetworkProtocol> {
-                    new NetworkProtocol() {
-                    Protocol = "SMTP" }
-                    }
+            Protocol = "SMTP"
+            //"SMTP"new NetworkProtocol() {
+            //    Protocol = "SMTP"
+            //    }
             };
+
         CommonNames = new List<PersonName> { personName };
         NetworkAddresses = new List<NetworkAddress> { networkAddress };
         }

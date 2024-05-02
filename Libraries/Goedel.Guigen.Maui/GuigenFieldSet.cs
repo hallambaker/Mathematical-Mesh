@@ -541,11 +541,12 @@ public class GuigenFieldSetSectionMultiple : GuigenFieldSet, IBoundChooser {
 
         // here reset the backer data of SelectedItem to the original
 
-        // ???. ResetBound (SelectedItem);
         Chooser.ClearSelection();
         }
 
     private void OnEdit(object sender, EventArgs e) {
+        
+        
         OnItemEdit (SelectedItem);
 
         }

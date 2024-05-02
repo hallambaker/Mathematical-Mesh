@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/29/2024 4:32:31 PM
+//  This file was automatically generated at 5/2/2024 3:49:03 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -4478,10 +4478,12 @@ public partial class NetworkAddress : MeshItem {
 	public virtual string?						Address  {get; set;}
 
         /// <summary>
-        ///Public keys associated with the network address
+        ///The IANA protocol|identifier of the network protocols by which 
+        ///the contact may be reached using the specified Address. 
         /// </summary>
 
-	public virtual List<NetworkProtocol>?					Protocols  {get; set;}
+	public virtual string?						Protocol  {get; set;}
+
 
 
     ///<summary>Implement IBinding</summary> 
@@ -4498,9 +4500,8 @@ public partial class NetworkAddress : MeshItem {
 					(IBinding data, bool? value) => {(data as NetworkAddress).Inactive = value;}, (IBinding data) => (data as NetworkAddress).Inactive )},
 			{ "Address", new PropertyString ("Address", 
 					(IBinding data, string? value) => {(data as NetworkAddress).Address = value;}, (IBinding data) => (data as NetworkAddress).Address )},
-			{ "Protocols", new PropertyListStruct ("Protocols", 
-					(IBinding data, object? value) => {(data as NetworkAddress).Protocols = value as List<NetworkProtocol>;}, (IBinding data) => (data as NetworkAddress).Protocols,
-					false, ()=>new  List<NetworkProtocol>(), ()=>new NetworkProtocol())} 
+			{ "Protocol", new PropertyString ("Protocol", 
+					(IBinding data, string? value) => {(data as NetworkAddress).Protocol = value;}, (IBinding data) => (data as NetworkAddress).Protocol )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4821,11 +4822,6 @@ public partial class NetworkProtocol : MeshItem {
 
 	public virtual string?						Protocol  {get; set;}
 
-        /// <summary>
-        ///Cryptographic keys representing capabilities.
-        /// </summary>
-
-	public virtual List<CryptographicCapability>?					Capabilities  {get; set;}
 
 
     ///<summary>Implement IBinding</summary> 
@@ -4839,11 +4835,7 @@ public partial class NetworkProtocol : MeshItem {
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
 			{ "Protocol", new PropertyString ("Protocol", 
-					(IBinding data, string? value) => {(data as NetworkProtocol).Protocol = value;}, (IBinding data) => (data as NetworkProtocol).Protocol )},
-			{ "Capabilities", new PropertyListStruct ("Capabilities", 
-					(IBinding data, object? value) => {(data as NetworkProtocol).Capabilities = value as List<CryptographicCapability>;}, (IBinding data) => (data as NetworkProtocol).Capabilities,
-					true, ()=>new List<CryptographicCapability>()
-)} 
+					(IBinding data, string? value) => {(data as NetworkProtocol).Protocol = value;}, (IBinding data) => (data as NetworkProtocol).Protocol )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

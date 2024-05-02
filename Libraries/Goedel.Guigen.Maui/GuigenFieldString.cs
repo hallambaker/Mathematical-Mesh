@@ -20,6 +20,9 @@ public class GuigenFieldString : GuigenFieldSimple, IWidget {
 
     IBindable Data;
 
+
+    string Value { get; set; }
+
     int GridRow { get; set; }
 
     /// <summary>
@@ -43,10 +46,13 @@ public class GuigenFieldString : GuigenFieldSimple, IWidget {
         if (IsEditable ) {
             if (FieldAsEntry == null) {
                 FieldAsEntry = Binding.GetEntry(this);
+                FieldAsEntry.Text = Value;
+
                 FieldSet.ReplaceField(FieldAsLabel, FieldAsEntry, GridRow);
                 return;
                 }
             if (!currentEditMode) {
+                FieldAsEntry.Text = Value;
                 FieldSet.ReplaceField(FieldAsLabel, FieldAsEntry, GridRow);
                 currentEditMode = true;
                 }
@@ -72,11 +78,12 @@ public class GuigenFieldString : GuigenFieldSimple, IWidget {
             return;
             }
 
+        Value = TypedBinding.Get(data);
         if (IsEditable) {
-            FieldAsEntry.Text = TypedBinding.Get(data);
+            FieldAsEntry.Text = Value;
             }
         else {
-            FieldAsLabel.Text = TypedBinding.Get(data);
+            FieldAsLabel.Text = Value;
             }
         }
 

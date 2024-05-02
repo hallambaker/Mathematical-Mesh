@@ -676,10 +676,14 @@
 		String Address	
 			Description
 				|The network address, e.g. alice@example.com
-		Struct NetworkProtocol Protocols
-			Multiple
+		String Protocol
 			Description
-				|Public keys associated with the network address
+				|The IANA protocol|identifier of the network protocols by which 
+				|the contact may be reached using the specified Address. 
+
+		//Struct NetworkProtocol Protocol
+		//	Description
+		//		|Public keys associated with the network address
 
 
 	Structure NetworkCredential
@@ -713,10 +717,10 @@
 			Description
 				|The IANA protocol|identifier of the network protocols by which 
 				|the contact may be reached using the specified Address. 
-		TStruct CryptographicCapability Capabilities
-			Multiple
-			Description
-				|Cryptographic keys representing capabilities.
+		//TStruct CryptographicCapability Capabilities
+		//	Multiple
+		//	Description
+		//		|Cryptographic keys representing capabilities.
 
 
 	Structure Role
