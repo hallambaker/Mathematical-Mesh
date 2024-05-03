@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Utilities;
+
 namespace Goedel.Protocol;
 
 /// <summary>
@@ -96,13 +98,16 @@ public class JsonWriter : Writer {
         outputCol = indentIn + 4 + tag.Length;
         }
 
-    /// <summary>Write 32 bit integer.</summary>
-    /// <param name="data">Elements to write</param>
+    ///<inheritdoc/>
+    public override void WriteNull() {
+        Output.Write("null");
+        }
+
+    ///<inheritdoc/>
     public override void WriteInteger32(int? data) => Output.Write(
             data == null ? "null" : data.ToString());
 
-    /// <summary>Write 64 bit integer</summary>
-    /// <param name="data">Elements to write</param>
+    ///<inheritdoc/>
     public override void WriteInteger64(long? data) => Output.Write(
             data == null ? "null" : data.ToString());
 

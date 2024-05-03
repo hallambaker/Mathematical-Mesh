@@ -546,8 +546,14 @@ public record PropertyListStruct(
             writer.WriteArrayStart();
             foreach (var entry in value) {
                 var typed = entry as JsonObject;
-                writer.WriteArraySeparator(ref first);
-                typed.Serialize(writer, Tagged);
+                if (typed is null) {
+                    writer.WriteNull();
+                    }
+                else {
+
+                    writer.WriteArraySeparator(ref first);
+                    typed.Serialize(writer, Tagged);
+                    }
                 }
             writer.WriteArrayEnd();
             }

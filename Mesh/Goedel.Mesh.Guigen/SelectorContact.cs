@@ -316,7 +316,7 @@ public partial class BoundContactPerson : IBoundPresentation, IDialog {
             var address = entry as ContactNetworkAddress;
             // here we have to do the transmogrification.
             address.Fill();
-            result.Add(address.Bound as NetworkAddress);
+            result.Add(address.NetworkAddress);
 
             }
 

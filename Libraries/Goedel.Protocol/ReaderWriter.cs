@@ -141,6 +141,10 @@ public abstract class Writer : Disposable {
     /// <param name="Data">Elements to write</param>
     abstract public void WriteBoolean(bool? Data);
 
+
+    /// <summary>Write integer values token</summary>
+    abstract public void WriteNull();
+
     /// <summary>Write integer values token</summary>
     /// <param name="Data">Elements to write</param>
     abstract public void WriteString(string Data);

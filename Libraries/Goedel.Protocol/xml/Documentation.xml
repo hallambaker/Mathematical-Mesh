@@ -3623,13 +3623,14 @@
             <param name="tag">Tag text.</param>
             <param name="indentIn">Current indent level.</param>
         </member>
+        <member name="M:Goedel.Protocol.JsonWriter.WriteNull">
+            <inheritdoc/>
+        </member>
         <member name="M:Goedel.Protocol.JsonWriter.WriteInteger32(System.Nullable{System.Int32})">
-            <summary>Write 32 bit integer.</summary>
-            <param name="data">Elements to write</param>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Protocol.JsonWriter.WriteInteger64(System.Nullable{System.Int64})">
-            <summary>Write 64 bit integer</summary>
-            <param name="data">Elements to write</param>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Protocol.JsonWriter.WriteFloat32(System.Nullable{System.Single})">
             <summary>Write float32</summary>
@@ -4490,6 +4491,9 @@
         <member name="M:Goedel.Protocol.Writer.WriteBoolean(System.Nullable{System.Boolean})">
             <summary>Write integer values token</summary>
             <param name="Data">Elements to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.Writer.WriteNull">
+            <summary>Write integer values token</summary>
         </member>
         <member name="M:Goedel.Protocol.Writer.WriteString(System.String)">
             <summary>Write integer values token</summary>

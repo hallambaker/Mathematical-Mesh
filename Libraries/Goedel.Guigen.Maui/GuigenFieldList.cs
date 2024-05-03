@@ -85,7 +85,8 @@ public class GuigenFieldList : GuigenField, IWidget {
 
         if (IsEditMode) {
             entryField = TypedBinding.EntryBinding.Factory();
-            MakeRow(row++, entryField, true);
+            var edit_button = new AddItemButton(MainBinding, this, entryField, row);
+            ValueField.Add(edit_button, 0, row);
             }
         }
 
@@ -126,14 +127,38 @@ public class GuigenFieldList : GuigenField, IWidget {
             }
 
         if (IsEditMode) {
-            ImageButton delete_icon = isEntry ? new AddItemButton(MainBinding, this, entry, row) :
-                new DeleteItemButton(MainBinding, this, row);
-
-            ValueField.Add(delete_icon, col, row);
+            //ImageButton delete_icon = isEntry ? 
+            //    new AddItemButton(MainBinding, this, entry, row) :
+            //    new DeleteItemButton(MainBinding, this, row);
+            ImageButton edit_icon = new EditItemButton(MainBinding, this, entry, row);
+            ValueField.Add(edit_icon, col++, row);
+            ImageButton delete_icon = new DeleteItemButton(MainBinding, this, row);
+            ValueField.Add(delete_icon, col++, row);
+            }
+        else {
+            ImageButton info_icon = new InformationItemButton(MainBinding, this, entry, row);
+            ValueField.Add(info_icon, col++, row);
             }
 
         return col;
         }
+
+
+    public void FillValue(IBindable entry, int row) {
+        foreach (var property in entry.Binding.BoundProperties) {
+            if (property is GuiBoundPropertyString text) {
+                if (!property.IsReadOnly) {
+
+
+
+                    }
+                }
+            }
+
+
+        }
+
+
     }
 
 public class DeleteItemButton : ImageButton {
@@ -176,6 +201,65 @@ public class AddItemButton : ImageButton {
         }
 
     public void OnClickAdd(object sender, EventArgs e) {
+        GuigenFieldList.FillValue(Entry, Row);
+
+        Collection.Entries.Add(Entry);
+        GuigenFieldList.SetField();
+        }
+
+
+    }
+
+
+public class InformationItemButton : ImageButton {
+
+    GuigenFieldList GuigenFieldList { get; }
+    ISelectList Collection => GuigenFieldList.Collection;
+    int Row { get; }
+
+    IBindable Entry { get; }
+    public InformationItemButton(GuigenBinding binding, GuigenFieldList guigenFieldList, IBindable entry, int row) {
+        GuigenFieldList = guigenFieldList;
+        Entry = entry;
+        Row = row;
+
+        Clicked += OnClickAdd;
+        Source = "info_question.png";
+        WidthRequest = binding.IconWidth;
+        HeightRequest = binding.IconHeight;
+        }
+
+    public void OnClickAdd(object sender, EventArgs e) {
+        GuigenFieldList.FillValue(Entry, Row);
+
+        Collection.Entries.Add(Entry);
+        GuigenFieldList.SetField();
+        }
+
+
+    }
+
+public class EditItemButton : ImageButton {
+
+    GuigenFieldList GuigenFieldList { get; }
+    ISelectList Collection => GuigenFieldList.Collection;
+    int Row { get; }
+
+    IBindable Entry { get; }
+    public EditItemButton(GuigenBinding binding, GuigenFieldList guigenFieldList, IBindable entry, int row) {
+        GuigenFieldList = guigenFieldList;
+        Entry = entry;
+        Row = row;
+
+        Clicked += OnClickAdd;
+        Source = "edit.png";
+        WidthRequest = binding.IconWidth;
+        HeightRequest = binding.IconHeight;
+        }
+
+    public void OnClickAdd(object sender, EventArgs e) {
+        GuigenFieldList.FillValue(Entry, Row);
+
         Collection.Entries.Add(Entry);
         GuigenFieldList.SetField();
         }
