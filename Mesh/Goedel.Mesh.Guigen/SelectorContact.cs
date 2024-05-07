@@ -83,10 +83,18 @@ public partial class ContactNetworkAddress : IBoundPresentation {
     public virtual void Fill() {
         }
 
-
+    public IDataActions GetActions(string? protocol) =>
+        protocol is null ? null : new DataActions(protocol);
     }
 
+public record DataActions(string? Protocol): IDataActions {
+    }
+
+
 public partial class ContactNetworkIdentifier {
+
+    public override IDataActions? Actions => GetActions(Protocol);
+
 
     public override IFieldIcon? Type => GetFieldIcon();
 
@@ -108,6 +116,9 @@ public partial class ContactNetworkIdentifier {
 
 
 public partial class ContactNetworkCredential {
+
+
+    public override IDataActions? Actions => GetActions(Protocol);
 
     NetworkProfile NetworkProfile => (Bound as NetworkProfile)!;
 

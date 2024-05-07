@@ -165,6 +165,11 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
                     MauiFields.Add(field);
                     break;
                     }
+                case GuiBoundPropertyDataActions bound: {
+                    var field = new GuigenFieldDataActions(this, bound, data);
+                    MauiFields.Add(field);
+                    break;
+                    }
                 default: {
                     break;
                     }
@@ -307,6 +312,42 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
 
     }
 
+public class GuigenFieldSetEntry : GuigenFieldSet {
+
+    public override View View => MainLayout;
+    Layout MainLayout;
+
+    public GuigenFieldSetEntry(
+                    GuigenBinding binding,
+        IBindable data) : base(binding, data.Binding, data) {
+
+
+        // Create the fields 
+        AddFields(data.Binding, data);
+
+        SetEditable(false);
+        // Create the Context Menu for the Bottom
+        CancelButton = new GuigenButton(Binding, null, "OK", OnCancel);
+
+        ContextMenu = new FlexLayout() {
+            Wrap = FlexWrap.Wrap
+            };
+
+        ContextMenu.Add(CancelButton.View);
+
+        // Create the main layout
+        MainLayout = new VerticalStackLayout {
+            FieldGrid,
+            ContextMenu
+            };
+
+        }
+
+    private void OnCancel(object sender, EventArgs e) {
+        Binding.CompleteAction();
+        }
+
+    }
 
 
 public class GuigenFieldSetResult : GuigenFieldSet {

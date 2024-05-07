@@ -1,4 +1,6 @@
-﻿using static System.Collections.Specialized.BitVector32;
+﻿using System;
+
+using static System.Collections.Specialized.BitVector32;
 
 namespace Goedel.Guigen.Maui;
 
@@ -128,6 +130,12 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
     /// <param name="result">The result to present.</param>
     public void SetResultWindow(IResult result) {
         FieldSet = new  GuigenFieldSetResult(Binding, result);
+        ContentPage.Content = FieldSet.View;
+        }
+
+
+    public void SetEntryWindow(IBindable data) {
+        FieldSet = new GuigenFieldSetEntry(Binding, data);
         ContentPage.Content = FieldSet.View;
         }
 

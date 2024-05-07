@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/3/2024 3:22:35 PM
+//  This file was automatically generated at 5/7/2024 5:31:52 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -80,7 +80,9 @@ public abstract partial class HostCatalogItem : global::Goedel.Protocol.JsonObje
 	    {"CatalogedService", CatalogedService._Factory},
 	    {"CatalogedStandard", CatalogedStandard._Factory},
 	    {"CatalogedPending", CatalogedPending._Factory},
-	    {"CatalogedPreconfigured", CatalogedPreconfigured._Factory}
+	    {"CatalogedPreconfigured", CatalogedPreconfigured._Factory},
+	    {"ShellDispatch", ShellDispatch._Factory},
+	    {"ShellAction", ShellAction._Factory}
 		};
 
     [ModuleInitializer]
@@ -595,7 +597,7 @@ public partial class CatalogedPreconfigured : CatalogedMachine {
 	public virtual string?						ServiceAuthenticator  {get; set;}
 
         /// <summary>
-        ///Authenticator key used to authenticate claim to the device.	
+        ///Authenticator key used to authenticate claim to the device.
         /// </summary>
 
 	public virtual string?						DeviceAuthenticator  {get; set;}
@@ -679,6 +681,206 @@ public partial class CatalogedPreconfigured : CatalogedMachine {
 			return Out as CatalogedPreconfigured;
 			}
 		var Result = new CatalogedPreconfigured ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class ShellDispatch : HostCatalogItem {
+        /// <summary>
+        ///The protocol to dispatch
+        /// </summary>
+
+	public virtual string?						Protocol  {get; set;}
+
+        /// <summary>
+        ///The Icon to display
+        /// </summary>
+
+	public virtual string?						Icon  {get; set;}
+
+        /// <summary>
+        ///The supported by the protocol
+        /// </summary>
+
+	public virtual List<ShellAction>?					Actions  {get; set;}
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ShellDispatch(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Protocol", new PropertyString ("Protocol", 
+					(IBinding data, string? value) => {(data as ShellDispatch).Protocol = value;}, (IBinding data) => (data as ShellDispatch).Protocol )},
+			{ "Icon", new PropertyString ("Icon", 
+					(IBinding data, string? value) => {(data as ShellDispatch).Icon = value;}, (IBinding data) => (data as ShellDispatch).Icon )},
+			{ "Actions", new PropertyListStruct ("Actions", 
+					(IBinding data, object? value) => {(data as ShellDispatch).Actions = value as List<ShellAction>;}, (IBinding data) => (data as ShellDispatch).Actions,
+					false, ()=>new  List<ShellAction>(), ()=>new ShellAction())} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ShellDispatch";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ShellDispatch();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ShellDispatch FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ShellDispatch;
+			}
+		var Result = new ShellDispatch ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class ShellAction : HostCatalogItem {
+        /// <summary>
+        ///The protocol to dispatch
+        /// </summary>
+
+	public virtual string?						Id  {get; set;}
+
+        /// <summary>
+        ///The Icon to display
+        /// </summary>
+
+	public virtual string?						Icon  {get; set;}
+
+        /// <summary>
+        ///The Action to perform
+        /// </summary>
+
+	public virtual string?						Mode  {get; set;}
+
+        /// <summary>
+        ///The Action to perform
+        /// </summary>
+
+	public virtual string?						Parameter  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ShellAction(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Id", new PropertyString ("Id", 
+					(IBinding data, string? value) => {(data as ShellAction).Id = value;}, (IBinding data) => (data as ShellAction).Id )},
+			{ "Icon", new PropertyString ("Icon", 
+					(IBinding data, string? value) => {(data as ShellAction).Icon = value;}, (IBinding data) => (data as ShellAction).Icon )},
+			{ "Mode", new PropertyString ("Mode", 
+					(IBinding data, string? value) => {(data as ShellAction).Mode = value;}, (IBinding data) => (data as ShellAction).Mode )},
+			{ "Parameter", new PropertyString ("Parameter", 
+					(IBinding data, string? value) => {(data as ShellAction).Parameter = value;}, (IBinding data) => (data as ShellAction).Parameter )}
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ShellAction";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ShellAction();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ShellAction FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ShellAction;
+			}
+		var Result = new ShellAction ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

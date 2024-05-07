@@ -307,7 +307,7 @@
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.DeviceAuthenticator">
              <summary>
-            Authenticator key used to authenticate claim to the device.	
+            Authenticator key used to authenticate claim to the device.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured._Binding">
@@ -3006,6 +3006,139 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.CatalogedService.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.Client.ShellDispatch">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ShellDispatch.Protocol">
+             <summary>
+            The protocol to dispatch
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ShellDispatch.Icon">
+             <summary>
+            The Icon to display
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ShellDispatch.Actions">
+             <summary>
+            The supported by the protocol
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ShellDispatch._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.ShellDispatch._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.ShellDispatch._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.ShellDispatch._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Client.ShellDispatch._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ShellDispatch._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ShellDispatch._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ShellDispatch._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.ShellDispatch.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ShellDispatch._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ShellDispatch.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.Client.ShellAction">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ShellAction.Id">
+             <summary>
+            The protocol to dispatch
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ShellAction.Icon">
+             <summary>
+            The Icon to display
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ShellAction.Mode">
+             <summary>
+            The Action to perform
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ShellAction.Parameter">
+             <summary>
+            The Action to perform
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ShellAction._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.ShellAction._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.ShellAction._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.ShellAction._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Client.ShellAction._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ShellAction._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ShellAction._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ShellAction._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.ShellAction.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ShellAction._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ShellAction.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>

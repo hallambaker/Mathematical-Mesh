@@ -1,0 +1,252 @@
+{
+  "mmm": {
+    "Icon": "brand_mesh",
+    "Actions": [
+      {
+        "Id": "Confirm",
+        "Icon": "confirm",
+        "Mode": "internal"
+      },
+      {
+        "Id": "Mail",
+        "Icon": "mail",
+        "Mode": "internal"
+      },
+      {
+        "Id": "Voicemail",
+        "Icon": "voicemail",
+        "Mode": "internal"
+      },
+      {
+        "Id": "Chat",
+        "Icon": "chat",
+        "Mode": "internal"
+      },
+      {
+        "Id": "Voice",
+        "Icon": "microphone",
+        "Mode": "internal"
+      },
+      {
+        "Id": "Video",
+        "Icon": "video",
+        "Mode": "internal"
+      }
+    ]
+  },
+
+  "smtp": {
+    "Protocol": "smtp",
+    "Icon": "mail",
+    "Actions": [
+      {
+        "Id": "Send",
+        "Icon": "mail",
+        "Parameter": ""
+      },
+      {
+        "Id": "PGP",
+        "Icon": "",
+        "Parameter": ""
+      },
+      {
+        "Id": "S/MIME",
+        "Icon": "",
+        "Parameter": ""
+      }
+    ]
+  },
+
+  "twitter": {
+    "Protocol": "twitter",
+    "Icon": "brand_twitter",
+    "Actions": [
+      {
+        "Id": "Web",
+        "Icon": "mail",
+        "Parameter": ""
+      },
+      {
+        "Id": "Chat",
+        "Icon": "",
+        "Parameter": ""
+      }
+    ]
+  },
+
+  "github": {
+    "Icon": "brand_github",
+    "Actions": [
+      {
+        "Id": "",
+        "Icon": "",
+        "Parameter": ""
+      },
+      {
+        "Id": "",
+        "Icon": "",
+        "Parameter": ""
+      }
+    ]
+  },
+
+  "http": {
+    "Icon": "web",
+    "Actions": [
+      {
+        "Id": "",
+        "Icon": "",
+        "Parameter": ""
+      },
+      {
+        "Id": "",
+        "Icon": "",
+        "Parameter": ""
+      }
+    ]
+  },
+
+  "facebook": {
+    "Icon": "brand_facebook",
+    "Actions": [
+      {
+        "Id": "",
+        "Icon": "",
+        "Parameter": ""
+      },
+      {
+        "Id": "",
+        "Icon": "",
+        "Parameter": ""
+      }
+    ]
+  },
+
+  "skype": {
+    "Icon": "brand_skype",
+    "Actions": [
+      {
+        "Id": "",
+        "Icon": "",
+        "Parameter": ""
+      },
+      {
+        "Id": "",
+        "Icon": "",
+        "Parameter": ""
+      }
+    ]
+  },
+
+  "signal": {
+    "Icon": "brand_signal",
+    "Actions": [
+      {
+        "Id": "",
+        "Icon": "",
+        "Parameter": ""
+      },
+      {
+        "Id": "",
+        "Icon": "",
+        "Parameter": ""
+      }
+    ]
+  },
+
+  "facetime": {
+    "Icon": "brand_facetime",
+    "Actions": [
+      {
+        "Id": "",
+        "Icon": "",
+        "Parameter": ""
+      },
+      {
+        "Id": "",
+        "Icon": "",
+        "Parameter": ""
+      }
+    ]
+  },
+
+  "linkedin": {
+    "Icon": "brand_linkedin",
+    "Actions": [
+      {
+        "Id": "",
+        "Icon": "",
+        "Parameter": ""
+      },
+      {
+        "Id": "",
+        "Icon": "",
+        "Parameter": ""
+      }
+    ]
+  },
+
+  "medium": {
+    "Icon": "brand_medium",
+    "Actions": [
+      {
+        "Id": "",
+        "Icon": "",
+        "Parameter": ""
+      },
+      {
+        "Id": "",
+        "Icon": "",
+        "Parameter": ""
+      }
+    ]
+  },
+
+  "telegram": {
+    "Icon": "brand_telegram",
+    "Actions": [
+      {
+        "Id": "",
+        "Icon": "",
+        "Parameter": ""
+      },
+      {
+        "Id": "",
+        "Icon": "",
+        "Parameter": ""
+      }
+    ]
+  },
+
+  "whatsapp": {
+    "Icon": "brand_whatsapp",
+    "Actions": [
+      {
+        "Id": "",
+        "Icon": "",
+        "Parameter": ""
+      },
+      {
+        "Id": "",
+        "Icon": "",
+        "Parameter": ""
+      }
+    ]
+  },
+
+  "wordpress": {
+    "Icon": "brand_wordpress",
+    "Actions": [
+      {
+        "Id": "",
+        "Icon": "",
+        "Parameter": ""
+      },
+      {
+        "Id": "",
+        "Icon": "",
+        "Parameter": ""
+      }
+    ]
+  }
+}

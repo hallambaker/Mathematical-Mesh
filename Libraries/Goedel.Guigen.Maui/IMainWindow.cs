@@ -37,6 +37,8 @@ public interface IMainWindow  {
     public void SetDetailWindow(GuiAction action);
 
 
+    public void SetEntryWindow(IBindable data);
+
     public void SetResultWindow(IResult result);
     /// <summary>
     /// Method called to style the action button <paramref name="view"/> according to the 

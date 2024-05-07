@@ -39,7 +39,7 @@ public class GuigenDetailAction : GuigenDetaiPage {
     IParameter Result { get; set; }
     //Gui Gui { get; }
 
-    public GuigenDetailAction(GuigenBinding binding, GuiAction action) : base (binding) {
+    public GuigenDetailAction(GuigenBinding binding, GuiAction action) : base(binding) {
         MainWindow.CurrentActionOld = this;
 
         Action = action;
@@ -155,7 +155,7 @@ public class GuigenDetailAction : GuigenDetaiPage {
                 });
                 break;
                 }
-        }
+            }
         return task;
         }
 

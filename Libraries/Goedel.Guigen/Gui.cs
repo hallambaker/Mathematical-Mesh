@@ -32,7 +32,9 @@ public abstract class Gui {
     public virtual string? GetPrompt(GuiPrompt guiPrompt) => guiPrompt.Prompt;
 
 
-
+    public abstract IEnumerable<GuiDataAction>? GetDataActions(IDataActions data);
 
 
     }
+
+

@@ -330,6 +330,14 @@ public record GuiBoundPropertyIcon(
     public override bool IsReadOnly => Set is null;
     }
 
+
+public record GuiBoundPropertyDataActions(
+                string? Label,
+                string? Prompt,
+                Func<object, IDataActions?> Get,
+                Action<object, IDataActions?>? Set) : GuiBoundPropertyPrompted(Label, Prompt) {
+    public override bool IsReadOnly => Set is null;
+    }
 public record GuiBoundPropertyChooser(
                 string? Label,
                 string? Prompt,
@@ -507,6 +515,13 @@ public record GuiAction(
     public ActionCallback Callback { get; set; } = null!;
     }
 
+public record GuiDataAction(
+            string? Prompt,
+            string? Icon,
+            DataActionCallback Callback) {
+    }
+
+public delegate Task<IResult> DataActionCallback(GuiDataAction action, object IBindable);
 
 public delegate Task<IResult> ActionCallback(object IBindable);
 public delegate IBindable FactoryCallback();
@@ -548,3 +563,9 @@ public interface IFieldIcon {
 
     public string Source { get; }
     }
+
+
+public interface IDataActions {
+    }
+
+

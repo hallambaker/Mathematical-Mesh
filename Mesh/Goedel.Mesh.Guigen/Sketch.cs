@@ -1377,6 +1377,9 @@ public partial class _ContactNetworkIdentifier : ContactNetworkAddress {
     ///<summary></summary> 
     public virtual string? Fingerprint { get; set;} 
 
+    ///<summary></summary> 
+    public virtual IDataActions? Actions { get;} 
+
 
     ///<inheritdoc/>
     public override GuiBinding Binding => BaseBinding;
@@ -1392,7 +1395,8 @@ public partial class _ContactNetworkIdentifier : ContactNetworkAddress {
             new GuiBoundPropertyString ("Address", "Address", (object data) => (data as _ContactNetworkIdentifier)?.Address , 
                 (object data,string? value) => { if (data is _ContactNetworkIdentifier datad) { datad.Address = value; }})  /* 2 */ , 
             new GuiBoundPropertyString ("Fingerprint", "Fingerprint", (object data) => (data as _ContactNetworkIdentifier)?.Fingerprint , 
-                (object data,string? value) => { if (data is _ContactNetworkIdentifier datad) { datad.Fingerprint = value; }})  /* 3 */ 
+                (object data,string? value) => { if (data is _ContactNetworkIdentifier datad) { datad.Fingerprint = value; }})  /* 3 */ , 
+            new GuiBoundPropertyDataActions ("Actions", "Actions", (object data) => (data as _ContactNetworkIdentifier)?.Actions , null)  /* 4 */ 
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -1434,6 +1438,9 @@ public partial class _ContactNetworkCredential : ContactNetworkAddress {
     ///<summary></summary> 
     public virtual string? Fingerprint { get;} 
 
+    ///<summary></summary> 
+    public virtual IDataActions? Actions { get;} 
+
 
     ///<inheritdoc/>
     public override GuiBinding Binding => BaseBinding;
@@ -1446,7 +1453,8 @@ public partial class _ContactNetworkCredential : ContactNetworkAddress {
             new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _ContactNetworkCredential)?.Type , null)  /* 0 */ , 
             new GuiBoundPropertyString ("Protocol", "Protocol", (object data) => (data as _ContactNetworkCredential)?.Protocol , null)  /* 1 */ , 
             new GuiBoundPropertyString ("Address", "Address", (object data) => (data as _ContactNetworkCredential)?.Address , null)  /* 2 */ , 
-            new GuiBoundPropertyString ("Fingerprint", "Fingerprint", (object data) => (data as _ContactNetworkCredential)?.Fingerprint , null)  /* 3 */ 
+            new GuiBoundPropertyString ("Fingerprint", "Fingerprint", (object data) => (data as _ContactNetworkCredential)?.Fingerprint , null)  /* 3 */ , 
+            new GuiBoundPropertyDataActions ("Actions", "Actions", (object data) => (data as _ContactNetworkCredential)?.Actions , null)  /* 4 */ 
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -1505,6 +1513,9 @@ public partial class _ContactPhysicalAddress : IParameter {
     ///<summary></summary> 
     public virtual decimal? Longitude { get; set;} 
 
+    ///<summary></summary> 
+    public virtual IDataActions? Actions { get;} 
+
 
     ///<inheritdoc/>
     public virtual GuiBinding Binding => BaseBinding;
@@ -1529,7 +1540,8 @@ public partial class _ContactPhysicalAddress : IParameter {
             new GuiBoundPropertyDecimal ("Latitude", "Latitude", (object data) => (data as _ContactPhysicalAddress)?.Latitude , 
                 (object data,decimal? value) => { if (data is _ContactPhysicalAddress datad) { datad.Latitude = value; }})  /* 6 */ , 
             new GuiBoundPropertyDecimal ("Longitude", "Longitude", (object data) => (data as _ContactPhysicalAddress)?.Longitude , 
-                (object data,decimal? value) => { if (data is _ContactPhysicalAddress datad) { datad.Longitude = value; }})  /* 7 */ 
+                (object data,decimal? value) => { if (data is _ContactPhysicalAddress datad) { datad.Longitude = value; }})  /* 7 */ , 
+            new GuiBoundPropertyDataActions ("Actions", "Actions", (object data) => (data as _ContactPhysicalAddress)?.Actions , null)  /* 8 */ 
             ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
@@ -6478,6 +6490,8 @@ public class _EverythingMaui : Gui {
     ///<inheritdoc/> 
     public override List<GuiResult> Results { get; }
 
+    ///<inheritdoc/> 
+   public override IEnumerable<GuiDataAction>? GetDataActions(IDataActions data) => null;
 
 	///<inheritdoc/>
 

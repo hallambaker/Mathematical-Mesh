@@ -1,13 +1,4 @@
-﻿using Goedel.Utilities;
-
-using Microsoft.Maui;
-
-using System;
-using System.Security.Cryptography.X509Certificates;
-
-using static System.Collections.Specialized.BitVector32;
-
-namespace Goedel.Guigen.Maui;
+﻿namespace Goedel.Guigen.Maui;
 
 
 
@@ -260,6 +251,8 @@ public class GuigenBinding {
     public CheckBox GetCheckBox() => new();
 
 
+
+
     /// <summary>
     /// Return a button whose callback either causes the section to change or initiates
     /// an action interaction.
@@ -392,6 +385,11 @@ public class GuigenBinding {
         MainWindow.SetResultWindow(result);
         }
 
+
+    public void SetEntry(IBindable result) {
+
+        MainWindow.SetEntryWindow(result);
+        }
     }
 
 

@@ -277,11 +277,13 @@ Dialog BoundContactPlace "Place" "contacts"
 Dialog ContactNetworkAddress "Network" "protocol_icon"
 	Icon Type "Type" "plug"
 
+
 Dialog ContactNetworkIdentifier "Network" "protocol_icon"
 	Inherit ContactNetworkAddress
 	Text Protocol "Protocol"
 	Text Address "Address"
 	Text Fingerprint "Fingerprint"
+	DataActions Actions "Actions"
 
 Dialog ContactNetworkCredential "Network" "protocol_icon"
 	Inherit ContactNetworkAddress
@@ -291,6 +293,9 @@ Dialog ContactNetworkCredential "Network" "protocol_icon"
 		Readonly
 	Text Fingerprint "Fingerprint"
 		Readonly
+	DataActions Actions "Actions"
+
+
 
 Dialog ContactPhysicalAddress "Place" "location_pin"
 	Text Appartment		"Appartment"
@@ -301,6 +306,7 @@ Dialog ContactPhysicalAddress "Place" "location_pin"
 	Text Country		"Country"
 	Decimal Latitude	"Latitude"
 	Decimal Longitude	"Longitude"
+	DataActions Actions "Actions"
 
 // **** Documents
 Section DocumentSection "Documents" "Documents"

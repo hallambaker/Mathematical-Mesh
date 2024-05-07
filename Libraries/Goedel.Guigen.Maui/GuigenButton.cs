@@ -16,6 +16,8 @@ public class GuigenButton {
 
     IGetState Backing;
 
+
+
     public bool IsVisible {
         get => ImageButton.IsVisible;
         set {
@@ -99,6 +101,30 @@ public class GuigenButton {
 
 
     }
+
+
+public class GuigenButtonDataAction : GuigenButton {
+
+    GuiDataAction Action { get; }
+    IBindable Data { get; }
+
+    public GuigenButtonDataAction(GuigenBinding binding, IBindable data, GuiDataAction action) : 
+                base (binding, action.Icon, action.Prompt) {
+        BindCallback(OnAction);
+        Action = action;
+        Data = data;
+        }
+
+    public async void OnAction(object? sender, EventArgs e) {
+        if (Action?.Callback is not null) {
+            await Action.Callback(Action, Data);
+            }
+
+
+        }
+
+    }
+
 
 public class GuigenButton<T> : GuigenButton where T : IButtonTarget {
 

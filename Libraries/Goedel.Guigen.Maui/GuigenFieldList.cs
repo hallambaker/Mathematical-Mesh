@@ -1,5 +1,4 @@
 ﻿namespace Goedel.Guigen.Maui;
-
 public class GuigenFieldList : GuigenField, IWidget {
 
     GuiBoundPropertyList TypedBinding => PropertyBinding as GuiBoundPropertyList;
@@ -218,22 +217,27 @@ public class InformationItemButton : ImageButton {
     int Row { get; }
 
     IBindable Entry { get; }
-    public InformationItemButton(GuigenBinding binding, GuigenFieldList guigenFieldList, IBindable entry, int row) {
+    public InformationItemButton(
+            GuigenBinding binding, 
+            GuigenFieldList guigenFieldList, 
+            IBindable entry, 
+            int row) {
         GuigenFieldList = guigenFieldList;
         Entry = entry;
         Row = row;
 
-        Clicked += OnClickAdd;
+        Clicked += OnClickAction;
         Source = "info_question.png";
         WidthRequest = binding.IconWidth;
         HeightRequest = binding.IconHeight;
         }
 
-    public void OnClickAdd(object sender, EventArgs e) {
-        GuigenFieldList.FillValue(Entry, Row);
+    public void OnClickAction(object sender, EventArgs e) {
+        // here we need to present a new dialog showing a list of all the actions
+        // supported by the bound item
+        GuigenFieldList.Binding.SetEntry(Entry);
 
-        Collection.Entries.Add(Entry);
-        GuigenFieldList.SetField();
+
         }
 
 

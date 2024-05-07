@@ -1,7 +1,11 @@
 ﻿
 using Goedel.Cryptography.Dare;
+using Goedel.IO;
 using Goedel.Mesh.Client;
+using Goedel.Protocol;
 
+using System.Formats.Asn1;
+using System;
 using System.Net.NetworkInformation;
 using System.Resources;
 
@@ -64,6 +68,9 @@ public partial class EverythingMaui {
     public ISelectCollection ChooseUser { get; }
     Func<DeviceDescription> GetDeviceDescription { get; }
 
+    public Dictionary <string, ShellDispatch> DispatchDictionary { get; } = new(); 
+
+
     public EverythingMaui(
                 ResourceManager resourceManager,
                 Func<DeviceDescription> getDeviceDescription
@@ -99,10 +106,61 @@ public partial class EverythingMaui {
         SectionSettingSection.UpdateData = UpdateSettings;
         //SetContext(MeshHost.GetContext(MeshHost.DefaultAccount) as ContextUser);
 
+        // ToDo: move this to the JSON reader 
+
+        using (var stream = "C:\\Users\\hallam\\source\\repos\\mmm\\Applications\\Everything\\AppDispatch.json".OpenFileReadShared()) {
+            var jsonReader = new JsonReader(stream);
+            var result = new List<ShellDispatch>();
+            bool going = jsonReader.StartObject();
+            while (going) {
+                var token = jsonReader.ReadToken();
+                //(jsonReader.TokenType == Token.String).AssertTrue(NYI.Throw);
+
+                //var token2 = jsonReader.ReadToken();
+                //(jsonReader.TokenType == Token.Colon).AssertTrue(NYI.Throw);
+
+                var entry = new ShellDispatch();
+                entry.Deserialize(jsonReader);
+
+                DispatchDictionary.Add(token, entry);
 
 
-        SetContext(currentAccount);
+                going = jsonReader.NextObject();
+                }
+
+            }
+
+            SetContext(currentAccount);
         }
+
+
+    public override IEnumerable<GuiDataAction>? GetDataActions(IDataActions data) {
+        var dataActions = data as DataActions;
+
+        var result = new List<GuiDataAction>();
+
+        if (DispatchDictionary.TryGetValue(dataActions.Protocol, out var dispatch)) {
+            foreach (var entry in dispatch.Actions) {
+                var item = Convert(entry);
+                result.Add(item);
+                }
+            
+            
+            }
+
+
+        return result;
+        }
+
+    GuiDataAction Convert(ShellAction entry) => 
+        new GuiDataAction(entry.Id, entry.Icon, DataActionCallback);
+
+
+    Task<IResult> DataActionCallback(GuiDataAction action, object IBindable) {
+
+        throw new NYI();
+        }
+
 
     BoundAccount? GetBoundAccount(CatalogedStandard catalogedStandard) {
         var contextUser = MeshHost.GetContext(catalogedStandard) as ContextUser;

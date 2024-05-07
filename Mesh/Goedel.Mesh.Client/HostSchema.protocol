@@ -113,4 +113,33 @@
 				|Authenticator key used to authenticate claim to the service.
 		String DeviceAuthenticator
 			Description
-				|Authenticator key used to authenticate claim to the device.	
+				|Authenticator key used to authenticate claim to the device.
+
+	Structure ShellDispatch
+
+		String Protocol
+			Description
+				|The protocol to dispatch
+		String Icon
+			Description
+				|The Icon to display
+	
+		Struct ShellAction Actions
+			Multiple
+			Description
+				|The supported by the protocol
+
+
+	Structure ShellAction
+		String Id
+			Description
+				|The protocol to dispatch
+		String Icon
+			Description
+				|The Icon to display
+		String Mode
+			Description
+				|The Action to perform
+		String Parameter
+			Description
+				|The Action to perform
