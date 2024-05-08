@@ -37,7 +37,7 @@ public interface IMainWindow  {
     public void SetDetailWindow(GuiAction action);
 
 
-    public void SetEntryWindow(IBindable data);
+    public void SetEntryWindow(IBindable data, bool editMode = false);
 
     public void SetResultWindow(IResult result);
     /// <summary>

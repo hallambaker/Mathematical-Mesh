@@ -1202,7 +1202,9 @@ public partial class _BoundContactPerson : BoundContact {
                 (object data,ISelectList? value) => { if (data is _BoundContactPerson datad) { datad.NetworkAddresses = value; }}, _ContactNetworkIdentifier.BaseBinding)  /* 8 */ , 
             new GuiBoundPropertyList ("PhysicalAddresses", "Locations", (object data) => (data as _BoundContactPerson)?.PhysicalAddresses , 
                 (object data,ISelectList? value) => { if (data is _BoundContactPerson datad) { datad.PhysicalAddresses = value; }}, _ContactPhysicalAddress.BaseBinding)  /* 9 */ , 
-            new GuiBoundPropertySelection ("ContactInteractMesh", "Mail")  /* 10 */ 
+            new GuiBoundPropertySelection ("ContactAddNetwork", "Add Id")  /* 10 */ , 
+            new GuiBoundPropertySelection ("ContactAddCredential", "Add Credential")  /* 11 */ , 
+            new GuiBoundPropertySelection ("ContactAddPostal", "Add Postal")  /* 12 */ 
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -4389,16 +4391,16 @@ public partial class _ActionReject : IParameter {
 
 
 /// <summary>
-/// Callback parameters for action ContactInteractMesh 
+/// Callback parameters for action ContactAddNetwork 
 /// </summary>
-public partial class ContactInteractMesh : _ContactInteractMesh {
+public partial class ContactAddNetwork : _ContactAddNetwork {
     }
 
 
 /// <summary>
-/// Callback parameters for action ContactInteractMesh 
+/// Callback parameters for action ContactAddNetwork 
 /// </summary>
-public partial class _ContactInteractMesh : IParameter {
+public partial class _ContactAddNetwork : IParameter {
 
 
     ///<inheritdoc/>
@@ -4406,8 +4408,86 @@ public partial class _ContactInteractMesh : IParameter {
 
     ///<summary>The binding for the data type.</summary> 
     public static  GuiBindingSingle BaseBinding  { get; } = new (
-        (object test) => test is _ContactInteractMesh,
-        () => new ContactInteractMesh(),
+        (object test) => test is _ContactAddNetwork,
+        () => new ContactAddNetwork(),
+        Array.Empty<GuiBoundProperty>());
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate(Gui gui) {
+        GuiResultInvalid? result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
+    }
+
+
+/// <summary>
+/// Callback parameters for action ContactAddCredential 
+/// </summary>
+public partial class ContactAddCredential : _ContactAddCredential {
+    }
+
+
+/// <summary>
+/// Callback parameters for action ContactAddCredential 
+/// </summary>
+public partial class _ContactAddCredential : IParameter {
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBindingSingle BaseBinding  { get; } = new (
+        (object test) => test is _ContactAddCredential,
+        () => new ContactAddCredential(),
+        Array.Empty<GuiBoundProperty>());
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate(Gui gui) {
+        GuiResultInvalid? result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
+    }
+
+
+/// <summary>
+/// Callback parameters for action ContactAddPostal 
+/// </summary>
+public partial class ContactAddPostal : _ContactAddPostal {
+    }
+
+
+/// <summary>
+/// Callback parameters for action ContactAddPostal 
+/// </summary>
+public partial class _ContactAddPostal : IParameter {
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBindingSingle BaseBinding  { get; } = new (
+        (object test) => test is _ContactAddPostal,
+        () => new ContactAddPostal(),
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
@@ -6864,9 +6944,17 @@ public class _EverythingMaui : Gui {
 	public GuiAction SelectionActionReject { get; } = new (
         "ActionReject", "Reject", "circle_cross", _ActionReject.BaseBinding, () => new ActionReject(), IsSelect:true);
 
-    ///<summary>Selection SelectionContactInteractMesh.</summary> 
-	public GuiAction SelectionContactInteractMesh { get; } = new (
-        "ContactInteractMesh", "Mail", "circle_cross", _ContactInteractMesh.BaseBinding, () => new ContactInteractMesh(), IsSelect:true);
+    ///<summary>Selection SelectionContactAddNetwork.</summary> 
+	public GuiAction SelectionContactAddNetwork { get; } = new (
+        "ContactAddNetwork", "Add Id", "circle_cross", _ContactAddNetwork.BaseBinding, () => new ContactAddNetwork(), IsSelect:true);
+
+    ///<summary>Selection SelectionContactAddCredential.</summary> 
+	public GuiAction SelectionContactAddCredential { get; } = new (
+        "ContactAddCredential", "Add Credential", "circle_cross", _ContactAddCredential.BaseBinding, () => new ContactAddCredential(), IsSelect:true);
+
+    ///<summary>Selection SelectionContactAddPostal.</summary> 
+	public GuiAction SelectionContactAddPostal { get; } = new (
+        "ContactAddPostal", "Add Postal", "circle_cross", _ContactAddPostal.BaseBinding, () => new ContactAddPostal(), IsSelect:true);
 
     ///<summary>Selection SelectionDocumentUpdate.</summary> 
 	public GuiAction SelectionDocumentUpdate { get; } = new (
@@ -7593,9 +7681,23 @@ public class _EverythingMaui : Gui {
             throw new NYI();
             } ;
 
-        SelectionContactInteractMesh.Callback = (x) => {
+        SelectionContactAddNetwork.Callback = (x) => {
             if (x is BoundContactPerson xx) {
-                return ContactInteractMesh (xx); 
+                return ContactAddNetwork (xx); 
+                }
+            throw new NYI();
+            } ;
+
+        SelectionContactAddCredential.Callback = (x) => {
+            if (x is BoundContactPerson xx) {
+                return ContactAddCredential (xx); 
+                }
+            throw new NYI();
+            } ;
+
+        SelectionContactAddPostal.Callback = (x) => {
+            if (x is BoundContactPerson xx) {
+                return ContactAddPostal (xx); 
                 }
             throw new NYI();
             } ;
@@ -7717,7 +7819,9 @@ public class _EverythingMaui : Gui {
 		    {"AccountSelect", SelectionAccountSelect}, 
 		    {"ActionAccept", SelectionActionAccept}, 
 		    {"ActionReject", SelectionActionReject}, 
-		    {"ContactInteractMesh", SelectionContactInteractMesh}, 
+		    {"ContactAddNetwork", SelectionContactAddNetwork}, 
+		    {"ContactAddCredential", SelectionContactAddCredential}, 
+		    {"ContactAddPostal", SelectionContactAddPostal}, 
 		    {"DocumentUpdate", SelectionDocumentUpdate}, 
 		    {"DocumentExport", SelectionDocumentExport}, 
 		    {"DocumentSend", SelectionDocumentSend}, 
@@ -8085,7 +8189,19 @@ public class _EverythingMaui : Gui {
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> ContactInteractMesh (BoundContactPerson data) 
+    public virtual Task<IResult> ContactAddNetwork (BoundContactPerson data) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> ContactAddCredential (BoundContactPerson data) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> ContactAddPostal (BoundContactPerson data) 
                 => throw new NYI();
 
     /// <summary>

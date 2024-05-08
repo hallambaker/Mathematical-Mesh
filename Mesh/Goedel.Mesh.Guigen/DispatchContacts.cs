@@ -94,7 +94,20 @@ public partial class EverythingMaui {
 
 
     ///<inheritdoc/>
-    public override async Task<IResult> ContactInteractMesh(BoundContactPerson data) => await NotYetImplemented();
+    public override async Task<IResult> ContactAddNetwork(BoundContactPerson data) {
+
+        return NullResult.Completed;
+            }
+    ///<inheritdoc/>
+    public override async Task<IResult> ContactAddCredential(BoundContactPerson data) {
+
+        return NullResult.Completed;
+        }
+    ///<inheritdoc/>
+    public override async Task<IResult> ContactAddPostal(BoundContactPerson data) {
+
+        return NullResult.Completed;
+        }
 
     /////<inheritdoc/>
     //public override async Task<IResult> ContactInteractAddress(ContactNetworkAddress data) => await NotYetImplemented();

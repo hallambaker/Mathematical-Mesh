@@ -130,7 +130,7 @@ public abstract record NullResult : IResult {
         ResourceId = resourceId;
         }
 
-    public GuiBinding Binding => throw new NotImplementedException();
+    public GuiBinding? Binding => null;
 
     ///<summary></summary> 
 

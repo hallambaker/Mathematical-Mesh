@@ -337,9 +337,12 @@ public class GuigenBinding {
             //var result = NullResult.Teardown;
             PendingAction = null;
 
-            MainThread.BeginInvokeOnMainThread(() => {
-                SetResult(result);
+
+            if (result.Binding is not null) {
+                MainThread.BeginInvokeOnMainThread(() => {
+                    SetResult(result);
                 });
+                }
 
             return result;
             }
@@ -386,9 +389,8 @@ public class GuigenBinding {
         }
 
 
-    public void SetEntry(IBindable result) {
-
-        MainWindow.SetEntryWindow(result);
+    public void SetEntry(IBindable result, bool editMode = false) {
+        MainWindow.SetEntryWindow(result, editMode);
         }
     }
 

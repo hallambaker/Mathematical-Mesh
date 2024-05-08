@@ -318,14 +318,15 @@ public class GuigenFieldSetEntry : GuigenFieldSet {
     Layout MainLayout;
 
     public GuigenFieldSetEntry(
-                    GuigenBinding binding,
-        IBindable data) : base(binding, data.Binding, data) {
+                GuigenBinding binding,
+                IBindable data, 
+                bool editMode = false) : base(binding, data.Binding, data) {
 
-
+        IsEditMode = editMode;
         // Create the fields 
         AddFields(data.Binding, data);
 
-        SetEditable(false);
+        SetEditable(editMode);
         // Create the Context Menu for the Bottom
         CancelButton = new GuigenButton(Binding, null, "OK", OnCancel);
 
@@ -536,6 +537,7 @@ public class GuigenFieldSetSectionMultiple : GuigenFieldSet, IBoundChooser {
     public void OnItemSelected(IBindable item) {
         SelectedItem = item;
         IsEditMode = false;
+        Data = item;
 
         ClearFields();
         if (item is null) {

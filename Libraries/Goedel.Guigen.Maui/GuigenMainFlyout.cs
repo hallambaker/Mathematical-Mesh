@@ -134,8 +134,8 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
         }
 
 
-    public void SetEntryWindow(IBindable data) {
-        FieldSet = new GuigenFieldSetEntry(Binding, data);
+    public void SetEntryWindow(IBindable data, bool editMode = false) {
+        FieldSet = new GuigenFieldSetEntry(Binding, data, editMode);
         ContentPage.Content = FieldSet.View;
         }
 

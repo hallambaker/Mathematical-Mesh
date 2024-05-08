@@ -157,8 +157,8 @@ public partial class EverythingMaui {
 
 
     Task<IResult> DataActionCallback(GuiDataAction action, object IBindable) {
-
-        throw new NYI();
+        return null;
+        //throw new NYI();
         }
 
 

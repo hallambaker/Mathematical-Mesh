@@ -184,10 +184,10 @@ public class GuigenSelectionButton : IWidget {
         }
 
 
-    private void OnClick(object sender, EventArgs e) {
+    private async void OnClick(object sender, EventArgs e) {
 
         if (Action.IsSelect) {
-            var _ = Binding.PerformActionAsync (Action, Data);
+            await Binding.PerformActionAsync (Action, Data);
             return;
             }
 

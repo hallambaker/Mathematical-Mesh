@@ -82,11 +82,11 @@ public class GuigenFieldList : GuigenField, IWidget {
             MakeRow(row++, entry);
             }
 
-        if (IsEditMode) {
-            entryField = TypedBinding.EntryBinding.Factory();
-            var edit_button = new AddItemButton(MainBinding, this, entryField, row);
-            ValueField.Add(edit_button, 0, row);
-            }
+        //if (IsEditMode) {
+        //    entryField = TypedBinding.EntryBinding.Factory();
+        //    var edit_button = new AddItemButton(MainBinding, this, entryField, row);
+        //    ValueField.Add(edit_button, 0, row);
+        //    }
         }
 
 
@@ -144,15 +144,19 @@ public class GuigenFieldList : GuigenField, IWidget {
 
 
     public void FillValue(IBindable entry, int row) {
-        foreach (var property in entry.Binding.BoundProperties) {
-            if (property is GuiBoundPropertyString text) {
-                if (!property.IsReadOnly) {
+
+
+        //GuigenFieldList.Binding.SetEntry(Entry, true);
+
+        //foreach (var property in entry.Binding.BoundProperties) {
+        //    if (property is GuiBoundPropertyString text) {
+        //        if (!property.IsReadOnly) {
 
 
 
-                    }
-                }
-            }
+        //            }
+        //        }
+        //    }
 
 
         }
@@ -262,10 +266,12 @@ public class EditItemButton : ImageButton {
         }
 
     public void OnClickAdd(object sender, EventArgs e) {
-        GuigenFieldList.FillValue(Entry, Row);
+        GuigenFieldList.Binding.SetEntry(Entry, true);
 
-        Collection.Entries.Add(Entry);
-        GuigenFieldList.SetField();
+        //GuigenFieldList.FillValue(Entry, Row);
+
+        //Collection.Entries.Add(Entry);
+        //GuigenFieldList.SetField();
         }
 
 

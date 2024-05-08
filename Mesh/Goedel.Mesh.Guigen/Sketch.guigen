@@ -264,9 +264,9 @@ Dialog BoundContactPerson "Person" "contacts"
 	List NetworkAddresses ContactNetworkIdentifier "Network Addresses" "network" 
 	List PhysicalAddresses ContactPhysicalAddress "Locations" "location" 
 
-	Selection ContactInteractMesh "Mail" "circle_cross"
-		Description
-			|Connect to the contact
+	Selection ContactAddNetwork "Add Id" "circle_cross"
+	Selection ContactAddCredential "Add Credential" "circle_cross"
+	Selection ContactAddPostal "Add Postal" "circle_cross"
 
 Dialog BoundContactBusiness "Organization" "contacts"
 	Inherit BoundContact
