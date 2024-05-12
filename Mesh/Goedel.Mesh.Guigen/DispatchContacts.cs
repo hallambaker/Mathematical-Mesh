@@ -94,10 +94,22 @@ public partial class EverythingMaui {
 
 
     ///<inheritdoc/>
-    public override async Task<IResult> ContactAddNetwork(BoundContactPerson data) {
+    public override Task<IResult> ContactAddNetwork(
+                ContactAddNetwork parameters)  {
 
-        return NullResult.Completed;
-            }
+            var entry = new ContactNetworkIdentifier() {
+                Protocol = parameters.Protocol,
+                Address = parameters.Address,
+                Fingerprint = parameters.Fingerprint
+                };
+
+            //parameters.Context.NetworkAddresses.Add(entry);
+
+            return Task.FromResult <IResult> (NullResult.Completed);
+        }
+       
+
+
     ///<inheritdoc/>
     public override async Task<IResult> ContactAddCredential(BoundContactPerson data) {
 

@@ -16,7 +16,7 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
     ContentPage ContentPage { get; }
 
 
-    GuigenFieldSet FieldSet { get; set; }
+    public GuigenFieldSet FieldSet { get; set; }
 
     ///<summary>The section menu.</summary> 
     public GuigenSectionMenu SectionMenu { get; }
@@ -46,12 +46,25 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
             Detail = ContentPage
             };
 
+        SetDetailWindow(Gui.DefaultSection);
+        }
+
+    public void GotoSection(GuiSection section) {
+        Gui.CurrentSection = section;
+        SetDetailWindow(section);
+        }
+
+
+    public void CompleteAction() {
+        if (FieldSet.Return is not null) {
+            FieldSet = FieldSet.Return;
+            ContentPage.Content = FieldSet.View;
+            return;
+            }
 
 
 
-
-        Binding.GotoSection(Gui.DefaultSection);
-
+        SetDetailWindow(Gui.CurrentSection);
 
         }
 
@@ -64,9 +77,10 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
 
 
     public void PresentActionDialog(
- 
                     GuigenFieldSetAction guigenFieldSetAction) {
         }
+
+
 
 
 
@@ -110,10 +124,10 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
     /// <param name="action">The action window to raise.</param>
     public void SetDetailWindow(GuiAction action) {
         if (action.Binding is GuiBindingSingle single) {
-            FieldSet = new GuigenFieldSetActionSingle(Binding, action);
+            FieldSet = new GuigenFieldSetActionSingle(Binding, action, FieldSet);
             }
         else if (action.Binding is GuiBindingMultiple multiple) {
-            FieldSet = new GuigenFieldSetActionMultiple(Binding, action);
+            FieldSet = new GuigenFieldSetActionMultiple(Binding, action, FieldSet);
             }
 
         ContentPage.Content = FieldSet.View;

@@ -264,9 +264,23 @@ Dialog BoundContactPerson "Person" "contacts"
 	List NetworkAddresses ContactNetworkIdentifier "Network Addresses" "network" 
 	List PhysicalAddresses ContactPhysicalAddress "Locations" "location" 
 
-	Selection ContactAddNetwork "Add Id" "circle_cross"
+	Button ContactAddNetwork "Add Id" "circle_cross"
 	Selection ContactAddCredential "Add Credential" "circle_cross"
 	Selection ContactAddPostal "Add Postal" "circle_cross"
+
+Dialog ContactNetworkIdentifier "Network" "protocol_icon"
+	Inherit ContactNetworkAddress
+	Text Protocol "Protocol"
+	Text Address "Address"
+	Text Fingerprint "Fingerprint"
+	DataActions Actions "Actions"
+
+Action ContactAddNetwork "Add Network" "contacts"
+	Context Context BoundContactPerson 
+	Text Protocol "Protocol"
+	Text Address "Address"
+	Text Fingerprint "Fingerprint"
+
 
 Dialog BoundContactBusiness "Organization" "contacts"
 	Inherit BoundContact
@@ -278,12 +292,7 @@ Dialog ContactNetworkAddress "Network" "protocol_icon"
 	Icon Type "Type" "plug"
 
 
-Dialog ContactNetworkIdentifier "Network" "protocol_icon"
-	Inherit ContactNetworkAddress
-	Text Protocol "Protocol"
-	Text Address "Address"
-	Text Fingerprint "Fingerprint"
-	DataActions Actions "Actions"
+
 
 Dialog ContactNetworkCredential "Network" "protocol_icon"
 	Inherit ContactNetworkAddress

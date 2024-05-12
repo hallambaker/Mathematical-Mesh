@@ -53,8 +53,7 @@ public interface IMainWindow  {
 
     public void FormatFeedback(Label view);
 
-
-
+    public void CompleteAction();
 
 
     }

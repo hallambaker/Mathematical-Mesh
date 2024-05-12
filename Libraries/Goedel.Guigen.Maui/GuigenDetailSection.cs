@@ -197,3 +197,52 @@ public class GuigenSelectionButton : IWidget {
 
         }
     }
+
+public class GuigenDataActionButton : IWidget {
+    public IMainWindow MainWindow { get; }
+    GuigenBinding Binding => MainWindow.Binding;
+    GuiAction Action { get; }
+
+    GuigenFieldSet Parent { get; }
+    Layout Stack { get; }
+
+    ImageButton ImageButton { get; }
+    Button TextButton { get; }
+    IBindable Data { get; }
+    public View View => Stack;
+    public GuigenDataActionButton(IMainWindow mainWindow, GuigenFieldSet parent, GuiAction action, IBindable data) {
+        MainWindow = mainWindow;
+        Action = action;
+        Data = data;
+        Parent = parent;
+
+        ImageButton = new ImageButton {
+            Source = action.Icon.GetFilename(),
+            WidthRequest = Binding.IconWidth,
+            HeightRequest = Binding.IconHeight,
+            };
+        ImageButton.Clicked += OnClick;
+
+        TextButton = new Button {
+            Text = action.Prompt,
+            HeightRequest = Binding.ButtonHeight
+            };
+        TextButton.Clicked += OnClick;
+
+        Stack = new HorizontalStackLayout() { ImageButton, TextButton };
+        }
+
+
+    private async void OnClick(object sender, EventArgs e) {
+
+        if (Action.IsSelect) {
+            await Binding.PerformActionAsync(Action, Data);
+            return;
+            }
+
+
+        MainWindow.SetDetailWindow(Action);
+
+
+        }
+    }

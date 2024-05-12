@@ -1202,9 +1202,70 @@ public partial class _BoundContactPerson : BoundContact {
                 (object data,ISelectList? value) => { if (data is _BoundContactPerson datad) { datad.NetworkAddresses = value; }}, _ContactNetworkIdentifier.BaseBinding)  /* 8 */ , 
             new GuiBoundPropertyList ("PhysicalAddresses", "Locations", (object data) => (data as _BoundContactPerson)?.PhysicalAddresses , 
                 (object data,ISelectList? value) => { if (data is _BoundContactPerson datad) { datad.PhysicalAddresses = value; }}, _ContactPhysicalAddress.BaseBinding)  /* 9 */ , 
-            new GuiBoundPropertySelection ("ContactAddNetwork", "Add Id")  /* 10 */ , 
+            new GuiBoundPropertyButton ("ContactAddNetwork")  /* 10 */ , 
             new GuiBoundPropertySelection ("ContactAddCredential", "Add Credential")  /* 11 */ , 
             new GuiBoundPropertySelection ("ContactAddPostal", "Add Postal")  /* 12 */ 
+            ]);
+    ///<summary>Validation</summary> 
+    public override IResult Validate(Gui gui) {
+        GuiResultInvalid? result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
+    }
+
+/// <summary>
+/// Callback parameters for dialog ContactNetworkIdentifier 
+/// </summary>
+public partial class ContactNetworkIdentifier : _ContactNetworkIdentifier {
+    // <summary>Type check verification.</summary>
+    // public static new Func<object, bool> IsBacker { get; set; } = (object _) => false; 
+    }
+
+/// <summary>
+/// Callback parameters for section ContactNetworkIdentifier 
+/// </summary>
+public partial class _ContactNetworkIdentifier : ContactNetworkAddress {
+
+
+    ///<summary></summary> 
+    public virtual string? Protocol { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string? Address { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string? Fingerprint { get; set;} 
+
+    ///<summary></summary> 
+    public virtual IDataActions? Actions { get;} 
+
+
+    ///<inheritdoc/>
+    public override GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static new GuiBindingSingle BaseBinding  { get; } = new (
+        (object test) => test is _ContactNetworkIdentifier,
+        () => new ContactNetworkIdentifier(),
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _ContactNetworkIdentifier)?.Type , null)  /* 0 */ , 
+            new GuiBoundPropertyString ("Protocol", "Protocol", (object data) => (data as _ContactNetworkIdentifier)?.Protocol , 
+                (object data,string? value) => { if (data is _ContactNetworkIdentifier datad) { datad.Protocol = value; }})  /* 1 */ , 
+            new GuiBoundPropertyString ("Address", "Address", (object data) => (data as _ContactNetworkIdentifier)?.Address , 
+                (object data,string? value) => { if (data is _ContactNetworkIdentifier datad) { datad.Address = value; }})  /* 2 */ , 
+            new GuiBoundPropertyString ("Fingerprint", "Fingerprint", (object data) => (data as _ContactNetworkIdentifier)?.Fingerprint , 
+                (object data,string? value) => { if (data is _ContactNetworkIdentifier datad) { datad.Fingerprint = value; }})  /* 3 */ , 
+            new GuiBoundPropertyDataActions ("Actions", "Actions", (object data) => (data as _ContactNetworkIdentifier)?.Actions , null)  /* 4 */ 
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -1352,67 +1413,6 @@ public partial class _ContactNetworkAddress : IParameter {
 
     ///<summary>Teardown.</summary> 
     public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
-
-
-    }
-
-/// <summary>
-/// Callback parameters for dialog ContactNetworkIdentifier 
-/// </summary>
-public partial class ContactNetworkIdentifier : _ContactNetworkIdentifier {
-    // <summary>Type check verification.</summary>
-    // public static new Func<object, bool> IsBacker { get; set; } = (object _) => false; 
-    }
-
-/// <summary>
-/// Callback parameters for section ContactNetworkIdentifier 
-/// </summary>
-public partial class _ContactNetworkIdentifier : ContactNetworkAddress {
-
-
-    ///<summary></summary> 
-    public virtual string? Protocol { get; set;} 
-
-    ///<summary></summary> 
-    public virtual string? Address { get; set;} 
-
-    ///<summary></summary> 
-    public virtual string? Fingerprint { get; set;} 
-
-    ///<summary></summary> 
-    public virtual IDataActions? Actions { get;} 
-
-
-    ///<inheritdoc/>
-    public override GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static new GuiBindingSingle BaseBinding  { get; } = new (
-        (object test) => test is _ContactNetworkIdentifier,
-        () => new ContactNetworkIdentifier(),
-        [ 
-            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _ContactNetworkIdentifier)?.Type , null)  /* 0 */ , 
-            new GuiBoundPropertyString ("Protocol", "Protocol", (object data) => (data as _ContactNetworkIdentifier)?.Protocol , 
-                (object data,string? value) => { if (data is _ContactNetworkIdentifier datad) { datad.Protocol = value; }})  /* 1 */ , 
-            new GuiBoundPropertyString ("Address", "Address", (object data) => (data as _ContactNetworkIdentifier)?.Address , 
-                (object data,string? value) => { if (data is _ContactNetworkIdentifier datad) { datad.Address = value; }})  /* 2 */ , 
-            new GuiBoundPropertyString ("Fingerprint", "Fingerprint", (object data) => (data as _ContactNetworkIdentifier)?.Fingerprint , 
-                (object data,string? value) => { if (data is _ContactNetworkIdentifier datad) { datad.Fingerprint = value; }})  /* 3 */ , 
-            new GuiBoundPropertyDataActions ("Actions", "Actions", (object data) => (data as _ContactNetworkIdentifier)?.Actions , null)  /* 4 */ 
-            ]);
-    ///<summary>Validation</summary> 
-    public override IResult Validate(Gui gui) {
-        GuiResultInvalid? result = null;
-
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public override IResult Initialize(Gui gui) => NullResult.Initialized;
-
-
-    ///<summary>Teardown.</summary> 
-    public override IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -3537,6 +3537,64 @@ public partial class _QrContact : IParameter {
 
 
 /// <summary>
+/// Callback parameters for action ContactAddNetwork 
+/// </summary>
+public partial class ContactAddNetwork : _ContactAddNetwork {
+    }
+
+
+/// <summary>
+/// Callback parameters for action ContactAddNetwork 
+/// </summary>
+public partial class _ContactAddNetwork : IParameter {
+
+    ///<summary></summary> 
+    public virtual BoundContactPerson Context { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string? Protocol { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string? Address { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string? Fingerprint { get; set;} 
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBindingSingle BaseBinding  { get; } = new (
+        (object test) => test is _ContactAddNetwork,
+        () => new ContactAddNetwork(),
+        [ 
+            new GuiBoundPropertyString ("Protocol", "Protocol", (object data) => (data as _ContactAddNetwork)?.Protocol , 
+                (object data,string? value) => { if (data is _ContactAddNetwork datad) { datad.Protocol = value; }})  /* 0 */ , 
+            new GuiBoundPropertyString ("Address", "Address", (object data) => (data as _ContactAddNetwork)?.Address , 
+                (object data,string? value) => { if (data is _ContactAddNetwork datad) { datad.Address = value; }})  /* 1 */ , 
+            new GuiBoundPropertyString ("Fingerprint", "Fingerprint", (object data) => (data as _ContactAddNetwork)?.Fingerprint , 
+                (object data,string? value) => { if (data is _ContactAddNetwork datad) { datad.Fingerprint = value; }})  /* 2 */ 
+            ]);
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate(Gui gui) {
+        GuiResultInvalid? result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
+    }
+
+
+/// <summary>
 /// Callback parameters for action UploadDocument 
 /// </summary>
 public partial class UploadDocument : _UploadDocument {
@@ -4371,45 +4429,6 @@ public partial class _ActionReject : IParameter {
     public static  GuiBindingSingle BaseBinding  { get; } = new (
         (object test) => test is _ActionReject,
         () => new ActionReject(),
-        Array.Empty<GuiBoundProperty>());
-    ///<summary>Validation</summary> 
-    public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid? result = null;
-
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
-
-
-    ///<summary>Teardown.</summary> 
-    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
-
-
-    }
-
-
-/// <summary>
-/// Callback parameters for action ContactAddNetwork 
-/// </summary>
-public partial class ContactAddNetwork : _ContactAddNetwork {
-    }
-
-
-/// <summary>
-/// Callback parameters for action ContactAddNetwork 
-/// </summary>
-public partial class _ContactAddNetwork : IParameter {
-
-
-    ///<inheritdoc/>
-    public virtual GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static  GuiBindingSingle BaseBinding  { get; } = new (
-        (object test) => test is _ContactAddNetwork,
-        () => new ContactAddNetwork(),
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
@@ -6851,6 +6870,12 @@ public class _EverythingMaui : Gui {
         _QrContact.BaseBinding, () => new QrContact(),
         IsConfirmation: true);
 
+    ///<summary>Action ActionContactAddNetwork.</summary> 
+	public GuiAction ActionContactAddNetwork { get; } = new (
+        "ContactAddNetwork", "Add Network", "contacts", 
+        _ContactAddNetwork.BaseBinding, () => new ContactAddNetwork(),
+        IsConfirmation: true);
+
     ///<summary>Action ActionUploadDocument.</summary> 
 	public GuiAction ActionUploadDocument { get; } = new (
         "UploadDocument", "Connect by QR", "contact", 
@@ -6943,10 +6968,6 @@ public class _EverythingMaui : Gui {
     ///<summary>Selection SelectionActionReject.</summary> 
 	public GuiAction SelectionActionReject { get; } = new (
         "ActionReject", "Reject", "circle_cross", _ActionReject.BaseBinding, () => new ActionReject(), IsSelect:true);
-
-    ///<summary>Selection SelectionContactAddNetwork.</summary> 
-	public GuiAction SelectionContactAddNetwork { get; } = new (
-        "ContactAddNetwork", "Add Id", "circle_cross", _ContactAddNetwork.BaseBinding, () => new ContactAddNetwork(), IsSelect:true);
 
     ///<summary>Selection SelectionContactAddCredential.</summary> 
 	public GuiAction SelectionContactAddCredential { get; } = new (
@@ -7101,6 +7122,12 @@ public class _EverythingMaui : Gui {
                 IsBoundType = (object data) => data is BoundContactPerson
                 };
 
+    ///<summary>Dialog DialogContactNetworkIdentifier.</summary> 
+	public GuiDialog DialogContactNetworkIdentifier { get; } = new (
+        "ContactNetworkIdentifier", "Network", "protocol_icon", _ContactNetworkIdentifier.BaseBinding, () => new ContactNetworkIdentifier()) {
+                IsBoundType = (object data) => data is ContactNetworkIdentifier
+                };
+
     ///<summary>Dialog DialogBoundContactBusiness.</summary> 
 	public GuiDialog DialogBoundContactBusiness { get; } = new (
         "BoundContactBusiness", "Organization", "contacts", _BoundContactBusiness.BaseBinding, () => new BoundContactBusiness()) {
@@ -7117,12 +7144,6 @@ public class _EverythingMaui : Gui {
 	public GuiDialog DialogContactNetworkAddress { get; } = new (
         "ContactNetworkAddress", "Network", "protocol_icon", _ContactNetworkAddress.BaseBinding, () => new ContactNetworkAddress()) {
                 IsBoundType = (object data) => data is ContactNetworkAddress
-                };
-
-    ///<summary>Dialog DialogContactNetworkIdentifier.</summary> 
-	public GuiDialog DialogContactNetworkIdentifier { get; } = new (
-        "ContactNetworkIdentifier", "Network", "protocol_icon", _ContactNetworkIdentifier.BaseBinding, () => new ContactNetworkIdentifier()) {
-                IsBoundType = (object data) => data is ContactNetworkIdentifier
                 };
 
     ///<summary>Dialog DialogContactNetworkCredential.</summary> 
@@ -7531,6 +7552,13 @@ public class _EverythingMaui : Gui {
             throw new NYI();
             } ;
 
+        ActionContactAddNetwork.Callback = (x) => {
+            if (x is ContactAddNetwork xx) {
+                return ContactAddNetwork (xx); 
+                }
+            throw new NYI();
+            } ;
+
         ActionUploadDocument.Callback = (x) => {
             if (x is UploadDocument xx) {
                 return UploadDocument (xx); 
@@ -7642,6 +7670,7 @@ public class _EverythingMaui : Gui {
 		    {"AddLocation", ActionAddLocation}, 
 		    {"RequestContact", ActionRequestContact}, 
 		    {"QrContact", ActionQrContact}, 
+		    {"ContactAddNetwork", ActionContactAddNetwork}, 
 		    {"UploadDocument", ActionUploadDocument}, 
 		    {"AddFeed", ActionAddFeed}, 
 		    {"AddGroup", ActionAddGroup}, 
@@ -7677,13 +7706,6 @@ public class _EverythingMaui : Gui {
         SelectionActionReject.Callback = (x) => {
             if (x is BoundMessageActionRequest xx) {
                 return ActionReject (xx); 
-                }
-            throw new NYI();
-            } ;
-
-        SelectionContactAddNetwork.Callback = (x) => {
-            if (x is BoundContactPerson xx) {
-                return ContactAddNetwork (xx); 
                 }
             throw new NYI();
             } ;
@@ -7819,7 +7841,6 @@ public class _EverythingMaui : Gui {
 		    {"AccountSelect", SelectionAccountSelect}, 
 		    {"ActionAccept", SelectionActionAccept}, 
 		    {"ActionReject", SelectionActionReject}, 
-		    {"ContactAddNetwork", SelectionContactAddNetwork}, 
 		    {"ContactAddCredential", SelectionContactAddCredential}, 
 		    {"ContactAddPostal", SelectionContactAddPostal}, 
 		    {"DocumentUpdate", SelectionDocumentUpdate}, 
@@ -7867,15 +7888,16 @@ public class _EverythingMaui : Gui {
 
 	    DialogBoundContact.Entries = [];
 
-	    DialogBoundContactPerson.Entries = [];
+	    DialogBoundContactPerson.Entries = [
+			new GuiButton ("ContactAddNetwork", ActionContactAddNetwork)];
+
+	    DialogContactNetworkIdentifier.Entries = [];
 
 	    DialogBoundContactBusiness.Entries = [];
 
 	    DialogBoundContactPlace.Entries = [];
 
 	    DialogContactNetworkAddress.Entries = [];
-
-	    DialogContactNetworkIdentifier.Entries = [];
 
 	    DialogContactNetworkCredential.Entries = [];
 
@@ -7935,10 +7957,10 @@ public class _EverythingMaui : Gui {
 		    DialogBoundMessageTaskRequest, 
 		    DialogBoundContact, 
 		    DialogBoundContactPerson, 
+		    DialogContactNetworkIdentifier, 
 		    DialogBoundContactBusiness, 
 		    DialogBoundContactPlace, 
 		    DialogContactNetworkAddress, 
-		    DialogContactNetworkIdentifier, 
 		    DialogContactNetworkCredential, 
 		    DialogContactPhysicalAddress, 
 		    DialogBoundDocument, 
@@ -8093,6 +8115,12 @@ public class _EverythingMaui : Gui {
     /// <summary>
     /// GUI action
     /// </summary>
+    public virtual Task<IResult> ContactAddNetwork (ContactAddNetwork data) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
     public virtual Task<IResult> UploadDocument (UploadDocument data) 
                 => throw new NYI();
 
@@ -8184,12 +8212,6 @@ public class _EverythingMaui : Gui {
     /// GUI action
     /// </summary>
     public virtual Task<IResult> ActionReject (BoundMessageActionRequest data) 
-                => throw new NYI();
-
-    /// <summary>
-    /// GUI action
-    /// </summary>
-    public virtual Task<IResult> ContactAddNetwork (BoundContactPerson data) 
                 => throw new NYI();
 
     /// <summary>

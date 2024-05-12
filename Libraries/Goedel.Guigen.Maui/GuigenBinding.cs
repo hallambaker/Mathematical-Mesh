@@ -281,12 +281,10 @@ public class GuigenBinding {
         }
 
     private void OnSectionClick(GuiSection section) =>
-                GotoSection (section);
+                MainWindow.SetDetailWindow(section);
      
-    public void GotoSection(GuiSection section) {
-        Gui.CurrentSection = section;
-        MainWindow.SetDetailWindow(section);
-        }
+    public void GotoSection (GuiSection section = null)
+            => MainWindow.SetDetailWindow(section);
 
 
 
@@ -298,7 +296,8 @@ public class GuigenBinding {
 
     public void CompleteAction() {
         PendingAction = null;
-        GotoSection(Gui.CurrentSection);
+
+        MainWindow.CompleteAction();
         }
 
 

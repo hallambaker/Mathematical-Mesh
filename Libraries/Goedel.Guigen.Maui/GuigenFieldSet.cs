@@ -94,18 +94,20 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
 
     public GuigenButton UpdateButton    { get; set; }
 
-
+    public GuigenFieldSet Return { get; set; }
 
 
     public GuigenFieldSet(
                 GuigenBinding binding,
                 GuiBinding fieldBinding = null,
-                IBindable? data = null) {
+                IBindable? data = null,
+                GuigenFieldSet fieldSet = null) {
         Binding = binding;
         FieldBinding = fieldBinding;
         FieldGrid = MakeFieldGrid();
         IsEditable = false;
         IsEditMode = false;
+        Return = fieldSet;
         }
 
     private Grid MakeFieldGrid() {
@@ -289,8 +291,8 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
         foreach (var field in binding.BoundProperties) {
             switch (field) {
                 case GuiBoundPropertyButton button1: {
-                    if (MainWindow.Gui.Selections.TryGetValue(button1.Label, out var action)) {
-                        var button = new GuigenSelectionButton(MainWindow, action, Data);
+                    if (MainWindow.Gui.Actions.TryGetValue(button1.Label, out var action)) {
+                        var button = new GuigenDataActionButton(MainWindow, this, action, Data);
                         layout.Add(button.View);
                         }
                     break;
@@ -614,10 +616,14 @@ public class GuigenFieldSetAction : GuigenFieldSet {
 
     GuiAction GuiAction { get; }
 
+
+
     public GuigenFieldSetAction(
             GuigenBinding binding,
-            GuiAction guiAction) : base(binding, guiAction.Binding) {
+            GuiAction guiAction,
+                GuigenFieldSet fieldSet= null) : base(binding, guiAction.Binding, fieldSet: fieldSet) {
         GuiAction = guiAction;
+
         }
 
 
@@ -632,7 +638,8 @@ public class GuigenFieldSetActionSingle : GuigenFieldSetAction {
 
     public GuigenFieldSetActionSingle(
                 GuigenBinding binding,
-                GuiAction guiAction) : base (binding, guiAction) {
+                GuiAction guiAction,
+                GuigenFieldSet fieldSet) : base (binding, guiAction, fieldSet) {
         GuiAction = guiAction;
         // Create the backing data
         Data = guiAction.Factory();
@@ -699,7 +706,8 @@ public class GuigenFieldSetActionMultiple : GuigenFieldSetAction, IBoundChooser 
     public GuigenFieldSetActionMultiple(
             GuigenBinding binding,
 
-            GuiAction guiAction) : base(binding, guiAction) {
+            GuiAction guiAction,
+                GuigenFieldSet fieldSet) : base(binding, guiAction, fieldSet) {
         GuiAction = guiAction;
         var fieldBinding = guiAction.Binding as GuiBindingMultiple;
         // Create the backing data
