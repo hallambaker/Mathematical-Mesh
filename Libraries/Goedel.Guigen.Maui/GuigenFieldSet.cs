@@ -292,7 +292,7 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
             switch (field) {
                 case GuiBoundPropertyButton button1: {
                     if (MainWindow.Gui.Actions.TryGetValue(button1.Label, out var action)) {
-                        var button = new GuigenDataActionButton(MainWindow, this, action, Data);
+                        var button = new GuigenDataActionButton(MainWindow, action, Data);
                         layout.Add(button.View);
                         }
                     break;
@@ -639,11 +639,14 @@ public class GuigenFieldSetActionSingle : GuigenFieldSetAction {
     public GuigenFieldSetActionSingle(
                 GuigenBinding binding,
                 GuiAction guiAction,
-                GuigenFieldSet fieldSet) : base (binding, guiAction, fieldSet) {
+                GuigenFieldSet fieldSet, 
+                IBindable context = null) : base (binding, guiAction, fieldSet) {
         GuiAction = guiAction;
         // Create the backing data
         Data = guiAction.Factory();
-
+        if (guiAction.setContext != null) {
+            guiAction.setContext(Data, context);
+            }
         IsEditMode = true;
         // Create the fields 
         AddFields(FieldBinding, Data);
@@ -707,7 +710,8 @@ public class GuigenFieldSetActionMultiple : GuigenFieldSetAction, IBoundChooser 
             GuigenBinding binding,
 
             GuiAction guiAction,
-                GuigenFieldSet fieldSet) : base(binding, guiAction, fieldSet) {
+                GuigenFieldSet fieldSet,
+                IBindable context = null) : base(binding, guiAction, fieldSet) {
         GuiAction = guiAction;
         var fieldBinding = guiAction.Binding as GuiBindingMultiple;
         // Create the backing data
@@ -732,10 +736,6 @@ public class GuigenFieldSetActionMultiple : GuigenFieldSetAction, IBoundChooser 
             FieldGrid,
             ContextMenu
             };
-
-
-
-
         }
 
     // An item has been selected 

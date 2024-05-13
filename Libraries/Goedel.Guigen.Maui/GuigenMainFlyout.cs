@@ -30,7 +30,7 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
 
     public Gui Gui => Binding.Gui;
 
-    public GuigenDetailAction CurrentActionOld { get; set; }
+    //public GuigenDetailAction CurrentActionOld { get; set; }
 
     public GuigenMainFlyout(GuigenBinding binding) {
 
@@ -122,12 +122,13 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
     /// if it exists, otherwise create a new detail window.
     /// </summary>
     /// <param name="action">The action window to raise.</param>
-    public void SetDetailWindow(GuiAction action) {
+    /// <param name="context"></param>
+    public void SetDetailWindow(GuiAction action, IBindable context = null) {
         if (action.Binding is GuiBindingSingle single) {
-            FieldSet = new GuigenFieldSetActionSingle(Binding, action, FieldSet);
+            FieldSet = new GuigenFieldSetActionSingle(Binding, action, FieldSet, context);
             }
         else if (action.Binding is GuiBindingMultiple multiple) {
-            FieldSet = new GuigenFieldSetActionMultiple(Binding, action, FieldSet);
+            FieldSet = new GuigenFieldSetActionMultiple(Binding, action, FieldSet, context);
             }
 
         ContentPage.Content = FieldSet.View;

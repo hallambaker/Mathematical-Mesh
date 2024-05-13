@@ -506,11 +506,10 @@ public record GuiAction(
             GuiBinding Binding,
             FactoryCallback Factory,
             bool IsSelect = false,
-            bool IsConfirmation = false
+            bool IsConfirmation = false,
+            Action<object, IBindable>? setContext = null
             ) : GuiFieldSet(Id, Prompt, Binding), IButtonTarget {
     public IPresentation? Presentation { get; set; } = null;
-
-    public List<IGuiEntry> Entries { get; set; } = null!;
 
     public ActionCallback Callback { get; set; } = null!;
     }

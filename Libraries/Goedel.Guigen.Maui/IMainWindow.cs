@@ -26,7 +26,7 @@ public interface IMainWindow  {
 
 
 
-    public GuigenDetailAction CurrentActionOld { get; set; }
+    //public GuigenDetailAction CurrentActionOld { get; set; }
 
 
     public int GetDetailWidth();
@@ -34,7 +34,7 @@ public interface IMainWindow  {
     public void Reformat();
     public void SetDetailWindow(GuiSection section = null);
 
-    public void SetDetailWindow(GuiAction action);
+    public void SetDetailWindow(GuiAction action, IBindable context = null);
 
 
     public void SetEntryWindow(IBindable data, bool editMode = false);

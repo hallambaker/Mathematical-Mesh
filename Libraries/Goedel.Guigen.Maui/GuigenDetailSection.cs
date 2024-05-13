@@ -203,18 +203,18 @@ public class GuigenDataActionButton : IWidget {
     GuigenBinding Binding => MainWindow.Binding;
     GuiAction Action { get; }
 
-    GuigenFieldSet Parent { get; }
     Layout Stack { get; }
 
     ImageButton ImageButton { get; }
     Button TextButton { get; }
     IBindable Data { get; }
     public View View => Stack;
-    public GuigenDataActionButton(IMainWindow mainWindow, GuigenFieldSet parent, GuiAction action, IBindable data) {
+    public GuigenDataActionButton(IMainWindow mainWindow, GuiAction action,
+                    IBindable data) {
         MainWindow = mainWindow;
         Action = action;
         Data = data;
-        Parent = parent;
+
 
         ImageButton = new ImageButton {
             Source = action.Icon.GetFilename(),
@@ -241,7 +241,7 @@ public class GuigenDataActionButton : IWidget {
             }
 
 
-        MainWindow.SetDetailWindow(Action);
+        MainWindow.SetDetailWindow(Action, Data);
 
 
         }

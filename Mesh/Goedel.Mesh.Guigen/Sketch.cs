@@ -6874,7 +6874,7 @@ public class _EverythingMaui : Gui {
 	public GuiAction ActionContactAddNetwork { get; } = new (
         "ContactAddNetwork", "Add Network", "contacts", 
         _ContactAddNetwork.BaseBinding, () => new ContactAddNetwork(),
-        IsConfirmation: true);
+        IsConfirmation: true, setContext: (object data, IBindable value) => { if (data is ContactAddNetwork datad) {datad.Context=(value as BoundContactPerson)!;}});
 
     ///<summary>Action ActionUploadDocument.</summary> 
 	public GuiAction ActionUploadDocument { get; } = new (
