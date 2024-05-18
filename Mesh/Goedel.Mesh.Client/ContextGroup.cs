@@ -230,7 +230,7 @@ public partial class ContextGroup : ContextAccount {
     /// </summary>
     /// <returns>The default contact.</returns>
     public override Contact CreateContact(
-                List<CryptographicCapability> capabilities = null) {
+                List<CryptographicCapability> capabilities = null, ContactPerson contact = null) {
 
 
         var anchorAccount = new Anchor() {
@@ -239,8 +239,8 @@ public partial class ContextGroup : ContextAccount {
             };
         // ContextMesh.ProfileMesh.UDF 
 
-        var contact = new ContactPerson() {
-            Anchors = new List<Anchor>() { anchorAccount }
+        contact ??= new ContactPerson() {
+            Anchors = [anchorAccount]
             };
 
         if (capabilities is null) {

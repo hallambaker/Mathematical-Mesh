@@ -66,8 +66,16 @@ public partial class EverythingMaui {
             var deviceDescription = GetDeviceDescription();
             var localName = data.LocalName.IsBlank() ? data.ServiceAddress.GetAccount() : data.LocalName;
 
-            var contextUser = await MeshHost.ConfigureMeshAsync(data.ServiceAddress, localName,
-                deviceDescription: deviceDescription);
+            PersonName? personName = null;
+            // lets pars person name here.
+            if (!data.ContactName.IsBlank()) {
+                personName = new PersonName(data.ContactName);
+                }
+
+            var contextUser = await MeshHost.ConfigureMeshAsync(
+                        data.ServiceAddress, localName,
+                        deviceDescription: deviceDescription,
+                        personName: personName);
 
             // Make this the current account!
             var bound = GetBoundAccount(contextUser);

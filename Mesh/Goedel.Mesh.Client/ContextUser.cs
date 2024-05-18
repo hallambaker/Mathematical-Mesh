@@ -302,8 +302,11 @@ public partial class ContextUser : ContextAccount {
     /// personal mesh. This method does not support transfer of the Mesh Service.
     /// </summary>
     /// <param name="accountAddress">The account address</param>
+    /// <param name="contact"></param>
     public async Task SetServiceAsync(
-            string accountAddress) {
+                string accountAddress, 
+                ContactPerson? contact = null) {
+        
         KeyProfile.AssertNotNull(NotSuperAdministrator.Throw);
 
         // Since the service does not know this account (yet)
@@ -325,8 +328,8 @@ public partial class ContextUser : ContextAccount {
         ActivationCommon.BindService(ProfileService);
 
         // Generate a contact and self-sign
-        var contact = CreateContact();
-        await SetContactSelfAsync(contact);
+        var contact2 = CreateContact(contact: contact);
+        await SetContactSelfAsync(contact2);
         }
 
 

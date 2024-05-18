@@ -813,9 +813,8 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// </summary>
     /// <returns>The default contact.</returns>
     public virtual Contact CreateContact(
-            List<CryptographicCapability> capabilities = null) {
-
-
+            List<CryptographicCapability> capabilities = null, 
+            ContactPerson? contact = null) {
 
         var anchorAccount = new Anchor() {
             Udf = Profile.UdfString,
@@ -823,10 +822,17 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             };
         // ContextMesh.ProfileMesh.UDF 
 
-        var contact = new ContactPerson() {
-            Anchors = new List<Anchor>() { anchorAccount }
-            
-            };
+        if (contact is null) {
+            contact = new ContactPerson() {
+                Anchors = new List<Anchor>() { anchorAccount }
+                };
+            }
+        else {
+            contact.Anchors ??= new();
+            contact.Anchors.Add (anchorAccount);
+            }
+
+
 
         if (capabilities is null) {
             var address = new NetworkProfile(ServiceAddress, Profile as ProfileAccount);

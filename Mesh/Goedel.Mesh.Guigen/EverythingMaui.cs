@@ -14,22 +14,24 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace Goedel.Everything;
 
 
-
-
-// Focus: 001 General callback async mechanism
-//    Freeze the UI
-//    Make the request asynchronously
-//    Await the result
-//    Process result [Home / Selection / Result value]
-// Focus: 002 Bug - missing commit buttons
-// Focus: 003 Actions on selected items
-
-// Focus: 010 Delete Account
-// Focus: 012 Device Request connect
-// Focus: 013 Device Accept connect
-// Focus: 014 Set default account
-// Focus: 015 Recover account
-
+// Focus 019: Server Admin fail on generate profile
+// Focus 003: Add network address to catalog
+// Focus 004: Add physical address
+// Focus 005: Tweak display names on physical address
+// Focus 006: QR Code dialog for connect / contact
+// Focus 007: Add device interactions
+// Focus 008: Passwords interactions
+// Focus 009: Developer app interactions
+// Focus 010: Message display - Contact request / Confirmation request
+// Focus 011: Automatic update
+// Focus 012: Chat interaction
+// Focus 013: MOQ handoff
+// Focus 014: Tweak desktop look and feel
+// Focus 015: Compact display for Mobile
+// Focus 016: Android
+// Focus 017: macOS
+// Focus 018: iOS
+// Focus 019: Server Admin fail on generate profile
 
 
 

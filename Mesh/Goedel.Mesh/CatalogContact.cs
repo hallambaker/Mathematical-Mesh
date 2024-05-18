@@ -433,16 +433,18 @@ public partial class ContactPerson {
             Suffix = suffix
             };
         personName.SetFullName();
-        var networkAddress = new NetworkAddress {
-            Address = email,
-            Protocol = "SMTP"
-            //"SMTP"new NetworkProtocol() {
-            //    Protocol = "SMTP"
-            //    }
-            };
-
         CommonNames = new List<PersonName> { personName };
-        NetworkAddresses = new List<NetworkAddress> { networkAddress };
+
+        if (email is not null) {
+            var networkAddress = new NetworkAddress {
+                Address = email,
+                Protocol = "SMTP"
+                //"SMTP"new NetworkProtocol() {
+                //    Protocol = "SMTP"
+                //    }
+                };
+            NetworkAddresses = new List<NetworkAddress> { networkAddress };
+            }
         }
     }
 
@@ -487,6 +489,37 @@ public partial class NetworkCapability {
 
 
 public partial class PersonName {
+
+    public PersonName() { 
+        }
+
+    public PersonName(string fullname) {
+        if (fullname is null) {
+            return;
+            }
+
+        FullName = fullname;
+        var items = fullname.Split(' ');
+        if (items.Length == 0) {
+            return;
+            }
+
+        First = items[0];
+        if (items.Length == 1) {
+            return;
+            }
+
+        Last = items[items.Length -1];
+        if (items.Length == 2) {
+            return;
+            }
+
+        Middle = new();
+        for (var i = 1; i < items.Length - 1; i++) {
+            Middle.Add( items[i]);
+            }
+        
+        }
 
     ///<summary>Set the full name.</summary>
     public void SetFullName() {

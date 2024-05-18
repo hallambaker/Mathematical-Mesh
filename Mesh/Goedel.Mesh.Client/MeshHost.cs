@@ -396,14 +396,20 @@ public class MeshHost : Disposable {
             ProfileDevice profileDevice = null,
             List<string> rights = null,
             bool create = true,
-                DeviceDescription deviceDescription = null) {
+                DeviceDescription deviceDescription = null, PersonName personName = null) {
 
 
         using var contextUser = InitializeAdminContext(accountAddress, localName,
             ref accountSeed, ref profileDevice, ref rights, // out var _,
                 deviceDescription: deviceDescription);
 
-        await contextUser.SetServiceAsync(accountAddress);
+        // here we create the prototype contact.
+        var contact = new ContactPerson {
+            Local = localName,
+            CommonNames = new List<PersonName> { personName }
+            };
+
+        await contextUser.SetServiceAsync(accountAddress, contact: contact);
 
 
         if (create) {
