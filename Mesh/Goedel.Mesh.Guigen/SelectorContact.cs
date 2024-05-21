@@ -13,7 +13,7 @@ public partial class ContactSection : IHeadedSelection{
 
     public ContactSelection? ContactSelection { get; }
 
-    GuigenCatalogContact? Catalog { get; }
+    public GuigenCatalogContact? Catalog { get; }
 
     ///<inheritdoc/>
     public override ISelectCollection? ChooseContact { get => ContactSelection; set { } }
@@ -93,6 +93,8 @@ public record DataActions(string? Protocol): IDataActions {
 
 public partial class ContactNetworkIdentifier {
 
+    NetworkAddress NetworkAddress => (Bound as NetworkAddress)!;
+
     public override IDataActions? Actions => GetActions(Protocol);
 
 
@@ -109,6 +111,17 @@ public partial class ContactNetworkIdentifier {
 
 
         return FieldIcons.MessageGeneric;
+
+        }
+
+    public override void Fill() {
+        Bound ??= new NetworkAddress();
+
+        NetworkAddress.Address = Address;
+        NetworkAddress.Protocol = Protocol;
+
+
+        base.Fill();
 
         }
     }
@@ -161,7 +174,7 @@ public partial class _ContactNetworkCredential {
         }
     }
 
-public partial class ContactPhysicalAddress {
+public partial class ContactPhysicalAddress : IBoundPresentation {
     public virtual void Fill() {
         }
     }

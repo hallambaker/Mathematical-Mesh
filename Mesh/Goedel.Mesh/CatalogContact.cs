@@ -118,9 +118,10 @@ public class CatalogContact : Catalog<CatalogedContact> {
 
         if (contact.NetworkAddresses != null) {
         foreach (var networkAddress in contact.NetworkAddresses) {
-            DictionaryByNetworkAddress.AddSafe(networkAddress.Address,
-                new NetworkProtocolEntry(catalogedContact, networkAddress));
-
+                if (networkAddress.Address is not null) {
+                    DictionaryByNetworkAddress.AddSafe(networkAddress.Address,
+                        new NetworkProtocolEntry(catalogedContact, networkAddress));
+                    }
             if (networkAddress is NetworkCapability networkCapability) {
                     foreach (var capability in networkCapability.Capabilities) {
                         capability.KeyCollection = KeyCollection;

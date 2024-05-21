@@ -1203,8 +1203,8 @@ public partial class _BoundContactPerson : BoundContact {
             new GuiBoundPropertyList ("PhysicalAddresses", "Locations", (object data) => (data as _BoundContactPerson)?.PhysicalAddresses , 
                 (object data,ISelectList? value) => { if (data is _BoundContactPerson datad) { datad.PhysicalAddresses = value; }}, _ContactPhysicalAddress.BaseBinding)  /* 9 */ , 
             new GuiBoundPropertyButton ("ContactAddNetwork")  /* 10 */ , 
-            new GuiBoundPropertySelection ("ContactAddCredential", "Add Credential")  /* 11 */ , 
-            new GuiBoundPropertySelection ("ContactAddPostal", "Add Postal")  /* 12 */ 
+            new GuiBoundPropertyButton ("ContactAddCredential")  /* 11 */ , 
+            new GuiBoundPropertyButton ("ContactAddPostal")  /* 12 */ 
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -1501,13 +1501,13 @@ public partial class _ContactPhysicalAddress : IParameter {
     public virtual string? District { get; set;} 
 
     ///<summary></summary> 
-    public virtual string? Region { get; set;} 
-
-    ///<summary></summary> 
-    public virtual string? Code { get; set;} 
+    public virtual string? Locality { get; set;} 
 
     ///<summary></summary> 
     public virtual string? Country { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string? Postcode { get; set;} 
 
     ///<summary></summary> 
     public virtual decimal? Latitude { get; set;} 
@@ -1533,12 +1533,12 @@ public partial class _ContactPhysicalAddress : IParameter {
                 (object data,string? value) => { if (data is _ContactPhysicalAddress datad) { datad.Street = value; }})  /* 1 */ , 
             new GuiBoundPropertyString ("District", "District", (object data) => (data as _ContactPhysicalAddress)?.District , 
                 (object data,string? value) => { if (data is _ContactPhysicalAddress datad) { datad.District = value; }})  /* 2 */ , 
-            new GuiBoundPropertyString ("Region", "Region", (object data) => (data as _ContactPhysicalAddress)?.Region , 
-                (object data,string? value) => { if (data is _ContactPhysicalAddress datad) { datad.Region = value; }})  /* 3 */ , 
-            new GuiBoundPropertyString ("Code", "Postcode", (object data) => (data as _ContactPhysicalAddress)?.Code , 
-                (object data,string? value) => { if (data is _ContactPhysicalAddress datad) { datad.Code = value; }})  /* 4 */ , 
+            new GuiBoundPropertyString ("Locality", "Locality", (object data) => (data as _ContactPhysicalAddress)?.Locality , 
+                (object data,string? value) => { if (data is _ContactPhysicalAddress datad) { datad.Locality = value; }})  /* 3 */ , 
             new GuiBoundPropertyString ("Country", "Country", (object data) => (data as _ContactPhysicalAddress)?.Country , 
-                (object data,string? value) => { if (data is _ContactPhysicalAddress datad) { datad.Country = value; }})  /* 5 */ , 
+                (object data,string? value) => { if (data is _ContactPhysicalAddress datad) { datad.Country = value; }})  /* 4 */ , 
+            new GuiBoundPropertyString ("Postcode", "Postcode", (object data) => (data as _ContactPhysicalAddress)?.Postcode , 
+                (object data,string? value) => { if (data is _ContactPhysicalAddress datad) { datad.Postcode = value; }})  /* 5 */ , 
             new GuiBoundPropertyDecimal ("Latitude", "Latitude", (object data) => (data as _ContactPhysicalAddress)?.Latitude , 
                 (object data,decimal? value) => { if (data is _ContactPhysicalAddress datad) { datad.Latitude = value; }})  /* 6 */ , 
             new GuiBoundPropertyDecimal ("Longitude", "Longitude", (object data) => (data as _ContactPhysicalAddress)?.Longitude , 
@@ -3595,6 +3595,142 @@ public partial class _ContactAddNetwork : IParameter {
 
 
 /// <summary>
+/// Callback parameters for action ContactAddCredential 
+/// </summary>
+public partial class ContactAddCredential : _ContactAddCredential {
+    }
+
+
+/// <summary>
+/// Callback parameters for action ContactAddCredential 
+/// </summary>
+public partial class _ContactAddCredential : IParameter {
+
+    ///<summary></summary> 
+    public virtual BoundContactPerson Context { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string? File { get; set;} 
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBindingSingle BaseBinding  { get; } = new (
+        (object test) => test is _ContactAddCredential,
+        () => new ContactAddCredential(),
+        [ 
+            new GuiBoundPropertyString ("File", "File name TBS", (object data) => (data as _ContactAddCredential)?.File , 
+                (object data,string? value) => { if (data is _ContactAddCredential datad) { datad.File = value; }})  /* 0 */ 
+            ]);
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate(Gui gui) {
+        GuiResultInvalid? result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
+    }
+
+
+/// <summary>
+/// Callback parameters for action ContactAddPostal 
+/// </summary>
+public partial class ContactAddPostal : _ContactAddPostal {
+    }
+
+
+/// <summary>
+/// Callback parameters for action ContactAddPostal 
+/// </summary>
+public partial class _ContactAddPostal : IParameter {
+
+    ///<summary></summary> 
+    public virtual BoundContactPerson Context { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string? Appartment { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string? Street { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string? District { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string? Locality { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string? County { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string? Postcode { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string? Country { get; set;} 
+
+    ///<summary></summary> 
+    public virtual decimal? Latitude { get; set;} 
+
+    ///<summary></summary> 
+    public virtual decimal? Longitude { get; set;} 
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBindingSingle BaseBinding  { get; } = new (
+        (object test) => test is _ContactAddPostal,
+        () => new ContactAddPostal(),
+        [ 
+            new GuiBoundPropertyString ("Appartment", "Appartment", (object data) => (data as _ContactAddPostal)?.Appartment , 
+                (object data,string? value) => { if (data is _ContactAddPostal datad) { datad.Appartment = value; }})  /* 0 */ , 
+            new GuiBoundPropertyString ("Street", "Street", (object data) => (data as _ContactAddPostal)?.Street , 
+                (object data,string? value) => { if (data is _ContactAddPostal datad) { datad.Street = value; }})  /* 1 */ , 
+            new GuiBoundPropertyString ("District", "District", (object data) => (data as _ContactAddPostal)?.District , 
+                (object data,string? value) => { if (data is _ContactAddPostal datad) { datad.District = value; }})  /* 2 */ , 
+            new GuiBoundPropertyString ("Locality", "Locality", (object data) => (data as _ContactAddPostal)?.Locality , 
+                (object data,string? value) => { if (data is _ContactAddPostal datad) { datad.Locality = value; }})  /* 3 */ , 
+            new GuiBoundPropertyString ("County", "County", (object data) => (data as _ContactAddPostal)?.County , 
+                (object data,string? value) => { if (data is _ContactAddPostal datad) { datad.County = value; }})  /* 4 */ , 
+            new GuiBoundPropertyString ("Postcode", "Postcode", (object data) => (data as _ContactAddPostal)?.Postcode , 
+                (object data,string? value) => { if (data is _ContactAddPostal datad) { datad.Postcode = value; }})  /* 5 */ , 
+            new GuiBoundPropertyString ("Country", "Country", (object data) => (data as _ContactAddPostal)?.Country , 
+                (object data,string? value) => { if (data is _ContactAddPostal datad) { datad.Country = value; }})  /* 6 */ , 
+            new GuiBoundPropertyDecimal ("Latitude", "Latitude", (object data) => (data as _ContactAddPostal)?.Latitude , 
+                (object data,decimal? value) => { if (data is _ContactAddPostal datad) { datad.Latitude = value; }})  /* 7 */ , 
+            new GuiBoundPropertyDecimal ("Longitude", "Longitude", (object data) => (data as _ContactAddPostal)?.Longitude , 
+                (object data,decimal? value) => { if (data is _ContactAddPostal datad) { datad.Longitude = value; }})  /* 8 */ 
+            ]);
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate(Gui gui) {
+        GuiResultInvalid? result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
+    }
+
+
+/// <summary>
 /// Callback parameters for action UploadDocument 
 /// </summary>
 public partial class UploadDocument : _UploadDocument {
@@ -4429,84 +4565,6 @@ public partial class _ActionReject : IParameter {
     public static  GuiBindingSingle BaseBinding  { get; } = new (
         (object test) => test is _ActionReject,
         () => new ActionReject(),
-        Array.Empty<GuiBoundProperty>());
-    ///<summary>Validation</summary> 
-    public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid? result = null;
-
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
-
-
-    ///<summary>Teardown.</summary> 
-    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
-
-
-    }
-
-
-/// <summary>
-/// Callback parameters for action ContactAddCredential 
-/// </summary>
-public partial class ContactAddCredential : _ContactAddCredential {
-    }
-
-
-/// <summary>
-/// Callback parameters for action ContactAddCredential 
-/// </summary>
-public partial class _ContactAddCredential : IParameter {
-
-
-    ///<inheritdoc/>
-    public virtual GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static  GuiBindingSingle BaseBinding  { get; } = new (
-        (object test) => test is _ContactAddCredential,
-        () => new ContactAddCredential(),
-        Array.Empty<GuiBoundProperty>());
-    ///<summary>Validation</summary> 
-    public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid? result = null;
-
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
-
-
-    ///<summary>Teardown.</summary> 
-    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
-
-
-    }
-
-
-/// <summary>
-/// Callback parameters for action ContactAddPostal 
-/// </summary>
-public partial class ContactAddPostal : _ContactAddPostal {
-    }
-
-
-/// <summary>
-/// Callback parameters for action ContactAddPostal 
-/// </summary>
-public partial class _ContactAddPostal : IParameter {
-
-
-    ///<inheritdoc/>
-    public virtual GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static  GuiBindingSingle BaseBinding  { get; } = new (
-        (object test) => test is _ContactAddPostal,
-        () => new ContactAddPostal(),
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
@@ -6876,6 +6934,18 @@ public class _EverythingMaui : Gui {
         _ContactAddNetwork.BaseBinding, () => new ContactAddNetwork(),
         IsConfirmation: true, setContext: (object data, IBindable value) => { if (data is ContactAddNetwork datad) {datad.Context=(value as BoundContactPerson)!;}});
 
+    ///<summary>Action ActionContactAddCredential.</summary> 
+	public GuiAction ActionContactAddCredential { get; } = new (
+        "ContactAddCredential", "Add Credential", "contacts", 
+        _ContactAddCredential.BaseBinding, () => new ContactAddCredential(),
+        IsConfirmation: true, setContext: (object data, IBindable value) => { if (data is ContactAddCredential datad) {datad.Context=(value as BoundContactPerson)!;}});
+
+    ///<summary>Action ActionContactAddPostal.</summary> 
+	public GuiAction ActionContactAddPostal { get; } = new (
+        "ContactAddPostal", "Add Postal", "contacts", 
+        _ContactAddPostal.BaseBinding, () => new ContactAddPostal(),
+        IsConfirmation: true, setContext: (object data, IBindable value) => { if (data is ContactAddPostal datad) {datad.Context=(value as BoundContactPerson)!;}});
+
     ///<summary>Action ActionUploadDocument.</summary> 
 	public GuiAction ActionUploadDocument { get; } = new (
         "UploadDocument", "Connect by QR", "contact", 
@@ -6968,14 +7038,6 @@ public class _EverythingMaui : Gui {
     ///<summary>Selection SelectionActionReject.</summary> 
 	public GuiAction SelectionActionReject { get; } = new (
         "ActionReject", "Reject", "circle_cross", _ActionReject.BaseBinding, () => new ActionReject(), IsSelect:true);
-
-    ///<summary>Selection SelectionContactAddCredential.</summary> 
-	public GuiAction SelectionContactAddCredential { get; } = new (
-        "ContactAddCredential", "Add Credential", "circle_cross", _ContactAddCredential.BaseBinding, () => new ContactAddCredential(), IsSelect:true);
-
-    ///<summary>Selection SelectionContactAddPostal.</summary> 
-	public GuiAction SelectionContactAddPostal { get; } = new (
-        "ContactAddPostal", "Add Postal", "circle_cross", _ContactAddPostal.BaseBinding, () => new ContactAddPostal(), IsSelect:true);
 
     ///<summary>Selection SelectionDocumentUpdate.</summary> 
 	public GuiAction SelectionDocumentUpdate { get; } = new (
@@ -7559,6 +7621,20 @@ public class _EverythingMaui : Gui {
             throw new NYI();
             } ;
 
+        ActionContactAddCredential.Callback = (x) => {
+            if (x is ContactAddCredential xx) {
+                return ContactAddCredential (xx); 
+                }
+            throw new NYI();
+            } ;
+
+        ActionContactAddPostal.Callback = (x) => {
+            if (x is ContactAddPostal xx) {
+                return ContactAddPostal (xx); 
+                }
+            throw new NYI();
+            } ;
+
         ActionUploadDocument.Callback = (x) => {
             if (x is UploadDocument xx) {
                 return UploadDocument (xx); 
@@ -7671,6 +7747,8 @@ public class _EverythingMaui : Gui {
 		    {"RequestContact", ActionRequestContact}, 
 		    {"QrContact", ActionQrContact}, 
 		    {"ContactAddNetwork", ActionContactAddNetwork}, 
+		    {"ContactAddCredential", ActionContactAddCredential}, 
+		    {"ContactAddPostal", ActionContactAddPostal}, 
 		    {"UploadDocument", ActionUploadDocument}, 
 		    {"AddFeed", ActionAddFeed}, 
 		    {"AddGroup", ActionAddGroup}, 
@@ -7706,20 +7784,6 @@ public class _EverythingMaui : Gui {
         SelectionActionReject.Callback = (x) => {
             if (x is BoundMessageActionRequest xx) {
                 return ActionReject (xx); 
-                }
-            throw new NYI();
-            } ;
-
-        SelectionContactAddCredential.Callback = (x) => {
-            if (x is BoundContactPerson xx) {
-                return ContactAddCredential (xx); 
-                }
-            throw new NYI();
-            } ;
-
-        SelectionContactAddPostal.Callback = (x) => {
-            if (x is BoundContactPerson xx) {
-                return ContactAddPostal (xx); 
                 }
             throw new NYI();
             } ;
@@ -7841,8 +7905,6 @@ public class _EverythingMaui : Gui {
 		    {"AccountSelect", SelectionAccountSelect}, 
 		    {"ActionAccept", SelectionActionAccept}, 
 		    {"ActionReject", SelectionActionReject}, 
-		    {"ContactAddCredential", SelectionContactAddCredential}, 
-		    {"ContactAddPostal", SelectionContactAddPostal}, 
 		    {"DocumentUpdate", SelectionDocumentUpdate}, 
 		    {"DocumentExport", SelectionDocumentExport}, 
 		    {"DocumentSend", SelectionDocumentSend}, 
@@ -7889,7 +7951,9 @@ public class _EverythingMaui : Gui {
 	    DialogBoundContact.Entries = [];
 
 	    DialogBoundContactPerson.Entries = [
-			new GuiButton ("ContactAddNetwork", ActionContactAddNetwork)];
+			new GuiButton ("ContactAddNetwork", ActionContactAddNetwork),
+			new GuiButton ("ContactAddCredential", ActionContactAddCredential),
+			new GuiButton ("ContactAddPostal", ActionContactAddPostal)];
 
 	    DialogContactNetworkIdentifier.Entries = [];
 
@@ -8121,6 +8185,18 @@ public class _EverythingMaui : Gui {
     /// <summary>
     /// GUI action
     /// </summary>
+    public virtual Task<IResult> ContactAddCredential (ContactAddCredential data) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> ContactAddPostal (ContactAddPostal data) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
     public virtual Task<IResult> UploadDocument (UploadDocument data) 
                 => throw new NYI();
 
@@ -8212,18 +8288,6 @@ public class _EverythingMaui : Gui {
     /// GUI action
     /// </summary>
     public virtual Task<IResult> ActionReject (BoundMessageActionRequest data) 
-                => throw new NYI();
-
-    /// <summary>
-    /// GUI action
-    /// </summary>
-    public virtual Task<IResult> ContactAddCredential (BoundContactPerson data) 
-                => throw new NYI();
-
-    /// <summary>
-    /// GUI action
-    /// </summary>
-    public virtual Task<IResult> ContactAddPostal (BoundContactPerson data) 
                 => throw new NYI();
 
     /// <summary>

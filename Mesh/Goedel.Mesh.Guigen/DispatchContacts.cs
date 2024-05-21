@@ -1,4 +1,5 @@
 ﻿using Goedel.Cryptography.Dare;
+using Goedel.Mesh;
 
 using System.Collections;
 using System.Collections.Specialized;
@@ -94,29 +95,71 @@ public partial class EverythingMaui {
 
 
     ///<inheritdoc/>
-    public override Task<IResult> ContactAddNetwork(
-                ContactAddNetwork parameters)  {
+    public override async Task<IResult> ContactAddNetwork(
+                ContactAddNetwork parameters) {
 
-            var entry = new ContactNetworkIdentifier() {
-                Protocol = parameters.Protocol,
-                Address = parameters.Address,
-                Fingerprint = parameters.Fingerprint
-                };
+        var entry = new ContactNetworkIdentifier() {
+            Protocol = parameters.Protocol,
+            Address = parameters.Address,
+            Fingerprint = parameters.Fingerprint
+            };
 
-            //parameters.Context.NetworkAddresses.Add(entry);
+        var data = SectionContactSection.Data as ContactSection;
+        var catalog = data?.Catalog;
+        var context = parameters.Context;
 
-            return Task.FromResult <IResult> (NullResult.Completed);
+        if (context is not null) {
+            context.NetworkAddresses.Add(entry);
+            context.Fill();
+            catalog.Update(context.Bound as CatalogedContact);
+            }
+
+
+        //UpdateWithBindable(item);
+        //var entry = item.Bound as TPersist;
+
+        //var transaction = ContextAccount.TransactBegin();
+        //transaction.CatalogUpdate(Catalog, entry);
+        //var result = await transaction.TransactAsync();
+
+
+        //         await Chooser.SelectCollection.Update(SelectedItem as IBoundPresentation);
+        //parameters.Context.NetworkAddresses.Add(entry);
+
+        return NullResult.Completed;
         }
        
 
 
     ///<inheritdoc/>
-    public override async Task<IResult> ContactAddCredential(BoundContactPerson data) {
+    public override async Task<IResult> ContactAddCredential(ContactAddCredential data) {
+
 
         return NullResult.Completed;
         }
     ///<inheritdoc/>
-    public override async Task<IResult> ContactAddPostal(BoundContactPerson data) {
+    public override async Task<IResult> ContactAddPostal(ContactAddPostal parameters) {
+
+        var entry = new ContactPhysicalAddress() {
+            Appartment = parameters.Appartment,
+            Street = parameters.Street,
+            District = parameters.District,
+            Locality = parameters.Locality,
+            Country = parameters.Country,
+            Postcode = parameters.Postcode,
+            };
+
+        var data = SectionContactSection.Data as ContactSection;
+        var catalog = data?.Catalog;
+        var context = parameters.Context;
+
+        if (context is not null) {
+            context.PhysicalAddresses ??= new SelectList();
+            context.PhysicalAddresses.Add(entry);
+            context.Fill();
+            catalog.Update(context.Bound as CatalogedContact);
+            }
+
 
         return NullResult.Completed;
         }

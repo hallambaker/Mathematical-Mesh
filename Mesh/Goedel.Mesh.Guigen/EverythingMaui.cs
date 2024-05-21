@@ -14,7 +14,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace Goedel.Everything;
 
 
-// Focus 019: Server Admin fail on generate profile
+
 // Focus 003: Add network address to catalog
 // Focus 004: Add physical address
 // Focus 005: Tweak display names on physical address
@@ -32,7 +32,7 @@ namespace Goedel.Everything;
 // Focus 017: macOS
 // Focus 018: iOS
 // Focus 019: Server Admin fail on generate profile
-
+// Focus 020: Contact local name handling
 
 
 public partial class EverythingMaui {
