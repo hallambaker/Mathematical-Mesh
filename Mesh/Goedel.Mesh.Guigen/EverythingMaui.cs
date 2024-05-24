@@ -14,15 +14,15 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace Goedel.Everything;
 
 
-
+// Focus 001: Message display - Contact request / Confirmation request
 // Focus 003: Add network address to catalog
 // Focus 004: Add physical address
 // Focus 005: Tweak display names on physical address
+
 // Focus 006: QR Code dialog for connect / contact
 // Focus 007: Add device interactions
 // Focus 008: Passwords interactions
 // Focus 009: Developer app interactions
-// Focus 010: Message display - Contact request / Confirmation request
 // Focus 011: Automatic update
 // Focus 012: Chat interaction
 // Focus 013: MOQ handoff

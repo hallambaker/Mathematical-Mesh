@@ -15,11 +15,7 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 namespace Goedel.Guigen.Maui;
 
 
-public partial record FieldIcon(string File) : IFieldIcon {
-    public string Source => File + ".png";
 
-
-    }
 
 public abstract class GuigenField(IBound fieldsSet, GuiBoundProperty fieldBinding) {
 

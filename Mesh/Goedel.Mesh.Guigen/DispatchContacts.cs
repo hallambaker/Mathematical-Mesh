@@ -99,32 +99,23 @@ public partial class EverythingMaui {
                 ContactAddNetwork parameters) {
 
         var entry = new ContactNetworkIdentifier() {
-            Protocol = parameters.Protocol,
+            Protocol = parameters.Protocol.ToLower(),
             Address = parameters.Address,
             Fingerprint = parameters.Fingerprint
             };
 
-        var data = SectionContactSection.Data as ContactSection;
-        var catalog = data?.Catalog;
         var context = parameters.Context;
 
-        if (context is not null) {
-            context.NetworkAddresses.Add(entry);
-            context.Fill();
-            catalog.Update(context.Bound as CatalogedContact);
+
+        if (SectionContactSection.Data is ContactSection data) {
+            if (context is not null) {
+                context.NetworkAddresses ??= new SelectList();
+                context.NetworkAddresses.Add(entry);
+                if (data.ContactSelection is not null) {
+                    await data.ContactSelection.UpdateAsync(context);
+                    }
+                }
             }
-
-
-        //UpdateWithBindable(item);
-        //var entry = item.Bound as TPersist;
-
-        //var transaction = ContextAccount.TransactBegin();
-        //transaction.CatalogUpdate(Catalog, entry);
-        //var result = await transaction.TransactAsync();
-
-
-        //         await Chooser.SelectCollection.Update(SelectedItem as IBoundPresentation);
-        //parameters.Context.NetworkAddresses.Add(entry);
 
         return NullResult.Completed;
         }
@@ -149,17 +140,17 @@ public partial class EverythingMaui {
             Postcode = parameters.Postcode,
             };
 
-        var data = SectionContactSection.Data as ContactSection;
-        var catalog = data?.Catalog;
         var context = parameters.Context;
 
-        if (context is not null) {
-            context.PhysicalAddresses ??= new SelectList();
-            context.PhysicalAddresses.Add(entry);
-            context.Fill();
-            catalog.Update(context.Bound as CatalogedContact);
+        if (SectionContactSection.Data is ContactSection data) {
+            if (context is not null) {
+                context.PhysicalAddresses ??= new SelectList();
+                context.PhysicalAddresses.Add(entry);
+                if (data.ContactSelection is not null) {
+                    await data.ContactSelection.UpdateAsync(context);
+                    }
+                }
             }
-
 
         return NullResult.Completed;
         }

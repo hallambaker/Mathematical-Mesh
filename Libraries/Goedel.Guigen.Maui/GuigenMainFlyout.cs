@@ -58,11 +58,10 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
     public void CompleteAction() {
         if (FieldSet.Return is not null) {
             FieldSet = FieldSet.Return;
+            FieldSet.SetFields(FieldSet.Data);
             ContentPage.Content = FieldSet.View;
             return;
             }
-
-
 
         SetDetailWindow(Gui.CurrentSection);
 

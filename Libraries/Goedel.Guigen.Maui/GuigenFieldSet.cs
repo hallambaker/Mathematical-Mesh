@@ -688,6 +688,9 @@ public class GuigenFieldSetActionSingle : GuigenFieldSetAction {
             }
         ClearFeedback();
         await Binding.PerformActionAsync(GuiAction, Data);
+        // here we need to force update to the parent
+
+        Binding.CompleteAction();
         }
 
     public override void FieldChanged(GuigenField field) {

@@ -61,15 +61,12 @@ public partial class ContactNetworkAddress : IBoundPresentation {
             case NetworkProfile networkProfile: {
                 return new ContactNetworkCredential(networkProfile) {
                     Bound = address,
-                    //Protocol = "TBS",
-                    //Address = networkProfile.Address,
-                    //Fingerprint = null
                     };
                 }
             default: {
                 return new ContactNetworkIdentifier() {
                     Bound = address,
-                    Protocol = "TBS",
+                    Protocol = address.Protocol,
                     Address = address.Address,
                     Fingerprint = null
                     };
@@ -175,7 +172,18 @@ public partial class _ContactNetworkCredential {
     }
 
 public partial class ContactPhysicalAddress : IBoundPresentation {
+
+    Location? Location => Bound as Location;
     public virtual void Fill() {
+        Bound ??= new Location();
+
+        Location.Appartment = Appartment;
+        Location.Street = Street;
+        Location.District = District;
+        Location.Locality = Locality;
+        Location.Country = Country;
+        Location.Postcode = Postcode;
+
         }
     }
 

@@ -353,7 +353,8 @@ public static partial class FieldIcons  {
     public static Dictionary<string, FieldIcon> ProtocolToImag = new Dictionary<string, FieldIcon>() {
             { "smtp",MessageUnRead },
             { "skype",AddressSkype },
-            { "twitter",AddressSignal },
+            { "signal",AddressSignal },
+            { "twitter",SiteTwitter },
             { "tel",AddressTelephone },
             { "facetime",AddressFacetime },
             { "whatsapp",AddressWhatsapp },
