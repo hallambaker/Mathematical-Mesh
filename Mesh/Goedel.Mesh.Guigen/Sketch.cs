@@ -576,6 +576,9 @@ public partial class _BoundMessage : IParameter {
     public virtual IFieldIcon? Type { get;} 
 
     ///<summary></summary> 
+    public virtual string? Category { get;} 
+
+    ///<summary></summary> 
     public virtual string? TimeSent { get; set;} 
 
     ///<summary></summary> 
@@ -594,12 +597,13 @@ public partial class _BoundMessage : IParameter {
         () => new BoundMessage(),
         [ 
             new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessage)?.Type , null)  /* 0 */ , 
+            new GuiBoundPropertyString ("Category", "Category", (object data) => (data as _BoundMessage)?.Category , null, Width: 100)  /* 1 */ , 
             new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessage)?.TimeSent , 
-                (object data,string? value) => { if (data is _BoundMessage datad) { datad.TimeSent = value; }}, Width: 100)  /* 1 */ , 
+                (object data,string? value) => { if (data is _BoundMessage datad) { datad.TimeSent = value; }}, Width: 100)  /* 2 */ , 
             new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessage)?.Sender , 
-                (object data,string? value) => { if (data is _BoundMessage datad) { datad.Sender = value; }}, Width: 150)  /* 2 */ , 
+                (object data,string? value) => { if (data is _BoundMessage datad) { datad.Sender = value; }}, Width: 150)  /* 3 */ , 
             new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessage)?.Subject , 
-                (object data,string? value) => { if (data is _BoundMessage datad) { datad.Subject = value; }}, Width: 300)  /* 3 */ 
+                (object data,string? value) => { if (data is _BoundMessage datad) { datad.Subject = value; }}, Width: 300)  /* 4 */ 
             ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
@@ -645,14 +649,15 @@ public partial class _BoundMailMail : BoundMessage {
         () => new BoundMailMail(),
         [ 
             new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMailMail)?.Type , null)  /* 0 */ , 
+            new GuiBoundPropertyString ("Category", "Category", (object data) => (data as _BoundMailMail)?.Category , null, Width: 100)  /* 1 */ , 
             new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMailMail)?.TimeSent , 
-                (object data,string? value) => { if (data is _BoundMailMail datad) { datad.TimeSent = value; }}, Width: 100)  /* 1 */ , 
+                (object data,string? value) => { if (data is _BoundMailMail datad) { datad.TimeSent = value; }}, Width: 100)  /* 2 */ , 
             new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMailMail)?.Sender , 
-                (object data,string? value) => { if (data is _BoundMailMail datad) { datad.Sender = value; }}, Width: 150)  /* 2 */ , 
+                (object data,string? value) => { if (data is _BoundMailMail datad) { datad.Sender = value; }}, Width: 150)  /* 3 */ , 
             new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMailMail)?.Subject , 
-                (object data,string? value) => { if (data is _BoundMailMail datad) { datad.Subject = value; }}, Width: 300)  /* 3 */ , 
+                (object data,string? value) => { if (data is _BoundMailMail datad) { datad.Subject = value; }}, Width: 300)  /* 4 */ , 
             new GuiBoundTextArea ("Message", "Message", (object data) => (data as _BoundMailMail)?.Message , 
-                (object data,string? value) => { if (data is _BoundMailMail datad) { datad.Message = value; }})  /* 4 */ 
+                (object data,string? value) => { if (data is _BoundMailMail datad) { datad.Message = value; }})  /* 5 */ 
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -698,16 +703,17 @@ public partial class _BoundMessageActionRequest : BoundMessage {
         () => new BoundMessageActionRequest(),
         [ 
             new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessageActionRequest)?.Type , null)  /* 0 */ , 
+            new GuiBoundPropertyString ("Category", "Category", (object data) => (data as _BoundMessageActionRequest)?.Category , null, Width: 100)  /* 1 */ , 
             new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessageActionRequest)?.TimeSent , 
-                (object data,string? value) => { if (data is _BoundMessageActionRequest datad) { datad.TimeSent = value; }}, Width: 100)  /* 1 */ , 
+                (object data,string? value) => { if (data is _BoundMessageActionRequest datad) { datad.TimeSent = value; }}, Width: 100)  /* 2 */ , 
             new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageActionRequest)?.Sender , 
-                (object data,string? value) => { if (data is _BoundMessageActionRequest datad) { datad.Sender = value; }}, Width: 150)  /* 2 */ , 
+                (object data,string? value) => { if (data is _BoundMessageActionRequest datad) { datad.Sender = value; }}, Width: 150)  /* 3 */ , 
             new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageActionRequest)?.Subject , 
-                (object data,string? value) => { if (data is _BoundMessageActionRequest datad) { datad.Subject = value; }}, Width: 300)  /* 3 */ , 
-            new GuiBoundPropertyString ("RequestMessage", "Request", (object data) => (data as _BoundMessageActionRequest)?.RequestMessage , 
-                (object data,string? value) => { if (data is _BoundMessageActionRequest datad) { datad.RequestMessage = value; }})  /* 4 */ , 
-            new GuiBoundPropertySelection ("ActionAccept", "Accept")  /* 5 */ , 
-            new GuiBoundPropertySelection ("ActionReject", "Reject")  /* 6 */ 
+                (object data,string? value) => { if (data is _BoundMessageActionRequest datad) { datad.Subject = value; }}, Width: 300)  /* 4 */ , 
+            new GuiBoundPropertyString ("RequestMessage", "Details", (object data) => (data as _BoundMessageActionRequest)?.RequestMessage , 
+                (object data,string? value) => { if (data is _BoundMessageActionRequest datad) { datad.RequestMessage = value; }})  /* 5 */ , 
+            new GuiBoundPropertySelection ("ActionAccept", "Accept")  /* 6 */ , 
+            new GuiBoundPropertySelection ("ActionReject", "Reject")  /* 7 */ 
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -750,16 +756,17 @@ public partial class _BoundMessageConfirmationRequest : BoundMessageActionReques
         () => new BoundMessageConfirmationRequest(),
         [ 
             new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessageConfirmationRequest)?.Type , null)  /* 0 */ , 
+            new GuiBoundPropertyString ("Category", "Category", (object data) => (data as _BoundMessageConfirmationRequest)?.Category , null, Width: 100)  /* 1 */ , 
             new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessageConfirmationRequest)?.TimeSent , 
-                (object data,string? value) => { if (data is _BoundMessageConfirmationRequest datad) { datad.TimeSent = value; }}, Width: 100)  /* 1 */ , 
+                (object data,string? value) => { if (data is _BoundMessageConfirmationRequest datad) { datad.TimeSent = value; }}, Width: 100)  /* 2 */ , 
             new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageConfirmationRequest)?.Sender , 
-                (object data,string? value) => { if (data is _BoundMessageConfirmationRequest datad) { datad.Sender = value; }}, Width: 150)  /* 2 */ , 
+                (object data,string? value) => { if (data is _BoundMessageConfirmationRequest datad) { datad.Sender = value; }}, Width: 150)  /* 3 */ , 
             new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageConfirmationRequest)?.Subject , 
-                (object data,string? value) => { if (data is _BoundMessageConfirmationRequest datad) { datad.Subject = value; }}, Width: 300)  /* 3 */ , 
-            new GuiBoundPropertyString ("RequestMessage", "Request", (object data) => (data as _BoundMessageConfirmationRequest)?.RequestMessage , 
-                (object data,string? value) => { if (data is _BoundMessageConfirmationRequest datad) { datad.RequestMessage = value; }})  /* 4 */ , 
-            new GuiBoundPropertySelection ("ActionAccept", "Accept")  /* 5 */ , 
-            new GuiBoundPropertySelection ("ActionReject", "Reject")  /* 6 */ 
+                (object data,string? value) => { if (data is _BoundMessageConfirmationRequest datad) { datad.Subject = value; }}, Width: 300)  /* 4 */ , 
+            new GuiBoundPropertyString ("RequestMessage", "Details", (object data) => (data as _BoundMessageConfirmationRequest)?.RequestMessage , 
+                (object data,string? value) => { if (data is _BoundMessageConfirmationRequest datad) { datad.RequestMessage = value; }})  /* 5 */ , 
+            new GuiBoundPropertySelection ("ActionAccept", "Accept")  /* 6 */ , 
+            new GuiBoundPropertySelection ("ActionReject", "Reject")  /* 7 */ 
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -802,12 +809,13 @@ public partial class _BoundMessageConfirmationResponse : BoundMessage {
         () => new BoundMessageConfirmationResponse(),
         [ 
             new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessageConfirmationResponse)?.Type , null)  /* 0 */ , 
+            new GuiBoundPropertyString ("Category", "Category", (object data) => (data as _BoundMessageConfirmationResponse)?.Category , null, Width: 100)  /* 1 */ , 
             new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessageConfirmationResponse)?.TimeSent , 
-                (object data,string? value) => { if (data is _BoundMessageConfirmationResponse datad) { datad.TimeSent = value; }}, Width: 100)  /* 1 */ , 
+                (object data,string? value) => { if (data is _BoundMessageConfirmationResponse datad) { datad.TimeSent = value; }}, Width: 100)  /* 2 */ , 
             new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageConfirmationResponse)?.Sender , 
-                (object data,string? value) => { if (data is _BoundMessageConfirmationResponse datad) { datad.Sender = value; }}, Width: 150)  /* 2 */ , 
+                (object data,string? value) => { if (data is _BoundMessageConfirmationResponse datad) { datad.Sender = value; }}, Width: 150)  /* 3 */ , 
             new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageConfirmationResponse)?.Subject , 
-                (object data,string? value) => { if (data is _BoundMessageConfirmationResponse datad) { datad.Subject = value; }}, Width: 300)  /* 3 */ 
+                (object data,string? value) => { if (data is _BoundMessageConfirmationResponse datad) { datad.Subject = value; }}, Width: 300)  /* 4 */ 
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -850,16 +858,17 @@ public partial class _BoundMessageContactRequest : BoundMessageActionRequest {
         () => new BoundMessageContactRequest(),
         [ 
             new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessageContactRequest)?.Type , null)  /* 0 */ , 
+            new GuiBoundPropertyString ("Category", "Category", (object data) => (data as _BoundMessageContactRequest)?.Category , null, Width: 100)  /* 1 */ , 
             new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessageContactRequest)?.TimeSent , 
-                (object data,string? value) => { if (data is _BoundMessageContactRequest datad) { datad.TimeSent = value; }}, Width: 100)  /* 1 */ , 
+                (object data,string? value) => { if (data is _BoundMessageContactRequest datad) { datad.TimeSent = value; }}, Width: 100)  /* 2 */ , 
             new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageContactRequest)?.Sender , 
-                (object data,string? value) => { if (data is _BoundMessageContactRequest datad) { datad.Sender = value; }}, Width: 150)  /* 2 */ , 
+                (object data,string? value) => { if (data is _BoundMessageContactRequest datad) { datad.Sender = value; }}, Width: 150)  /* 3 */ , 
             new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageContactRequest)?.Subject , 
-                (object data,string? value) => { if (data is _BoundMessageContactRequest datad) { datad.Subject = value; }}, Width: 300)  /* 3 */ , 
-            new GuiBoundPropertyString ("RequestMessage", "Request", (object data) => (data as _BoundMessageContactRequest)?.RequestMessage , 
-                (object data,string? value) => { if (data is _BoundMessageContactRequest datad) { datad.RequestMessage = value; }})  /* 4 */ , 
-            new GuiBoundPropertySelection ("ActionAccept", "Accept")  /* 5 */ , 
-            new GuiBoundPropertySelection ("ActionReject", "Reject")  /* 6 */ 
+                (object data,string? value) => { if (data is _BoundMessageContactRequest datad) { datad.Subject = value; }}, Width: 300)  /* 4 */ , 
+            new GuiBoundPropertyString ("RequestMessage", "Details", (object data) => (data as _BoundMessageContactRequest)?.RequestMessage , 
+                (object data,string? value) => { if (data is _BoundMessageContactRequest datad) { datad.RequestMessage = value; }})  /* 5 */ , 
+            new GuiBoundPropertySelection ("ActionAccept", "Accept")  /* 6 */ , 
+            new GuiBoundPropertySelection ("ActionReject", "Reject")  /* 7 */ 
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -902,16 +911,17 @@ public partial class _BoundMessageAcknowledgeConnection : BoundMessageActionRequ
         () => new BoundMessageAcknowledgeConnection(),
         [ 
             new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessageAcknowledgeConnection)?.Type , null)  /* 0 */ , 
+            new GuiBoundPropertyString ("Category", "Category", (object data) => (data as _BoundMessageAcknowledgeConnection)?.Category , null, Width: 100)  /* 1 */ , 
             new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessageAcknowledgeConnection)?.TimeSent , 
-                (object data,string? value) => { if (data is _BoundMessageAcknowledgeConnection datad) { datad.TimeSent = value; }}, Width: 100)  /* 1 */ , 
+                (object data,string? value) => { if (data is _BoundMessageAcknowledgeConnection datad) { datad.TimeSent = value; }}, Width: 100)  /* 2 */ , 
             new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageAcknowledgeConnection)?.Sender , 
-                (object data,string? value) => { if (data is _BoundMessageAcknowledgeConnection datad) { datad.Sender = value; }}, Width: 150)  /* 2 */ , 
+                (object data,string? value) => { if (data is _BoundMessageAcknowledgeConnection datad) { datad.Sender = value; }}, Width: 150)  /* 3 */ , 
             new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageAcknowledgeConnection)?.Subject , 
-                (object data,string? value) => { if (data is _BoundMessageAcknowledgeConnection datad) { datad.Subject = value; }}, Width: 300)  /* 3 */ , 
-            new GuiBoundPropertyString ("RequestMessage", "Request", (object data) => (data as _BoundMessageAcknowledgeConnection)?.RequestMessage , 
-                (object data,string? value) => { if (data is _BoundMessageAcknowledgeConnection datad) { datad.RequestMessage = value; }})  /* 4 */ , 
-            new GuiBoundPropertySelection ("ActionAccept", "Accept")  /* 5 */ , 
-            new GuiBoundPropertySelection ("ActionReject", "Reject")  /* 6 */ 
+                (object data,string? value) => { if (data is _BoundMessageAcknowledgeConnection datad) { datad.Subject = value; }}, Width: 300)  /* 4 */ , 
+            new GuiBoundPropertyString ("RequestMessage", "Details", (object data) => (data as _BoundMessageAcknowledgeConnection)?.RequestMessage , 
+                (object data,string? value) => { if (data is _BoundMessageAcknowledgeConnection datad) { datad.RequestMessage = value; }})  /* 5 */ , 
+            new GuiBoundPropertySelection ("ActionAccept", "Accept")  /* 6 */ , 
+            new GuiBoundPropertySelection ("ActionReject", "Reject")  /* 7 */ 
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -954,16 +964,17 @@ public partial class _BoundMessageConnectionRequest : BoundMessageActionRequest 
         () => new BoundMessageConnectionRequest(),
         [ 
             new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessageConnectionRequest)?.Type , null)  /* 0 */ , 
+            new GuiBoundPropertyString ("Category", "Category", (object data) => (data as _BoundMessageConnectionRequest)?.Category , null, Width: 100)  /* 1 */ , 
             new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessageConnectionRequest)?.TimeSent , 
-                (object data,string? value) => { if (data is _BoundMessageConnectionRequest datad) { datad.TimeSent = value; }}, Width: 100)  /* 1 */ , 
+                (object data,string? value) => { if (data is _BoundMessageConnectionRequest datad) { datad.TimeSent = value; }}, Width: 100)  /* 2 */ , 
             new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageConnectionRequest)?.Sender , 
-                (object data,string? value) => { if (data is _BoundMessageConnectionRequest datad) { datad.Sender = value; }}, Width: 150)  /* 2 */ , 
+                (object data,string? value) => { if (data is _BoundMessageConnectionRequest datad) { datad.Sender = value; }}, Width: 150)  /* 3 */ , 
             new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageConnectionRequest)?.Subject , 
-                (object data,string? value) => { if (data is _BoundMessageConnectionRequest datad) { datad.Subject = value; }}, Width: 300)  /* 3 */ , 
-            new GuiBoundPropertyString ("RequestMessage", "Request", (object data) => (data as _BoundMessageConnectionRequest)?.RequestMessage , 
-                (object data,string? value) => { if (data is _BoundMessageConnectionRequest datad) { datad.RequestMessage = value; }})  /* 4 */ , 
-            new GuiBoundPropertySelection ("ActionAccept", "Accept")  /* 5 */ , 
-            new GuiBoundPropertySelection ("ActionReject", "Reject")  /* 6 */ 
+                (object data,string? value) => { if (data is _BoundMessageConnectionRequest datad) { datad.Subject = value; }}, Width: 300)  /* 4 */ , 
+            new GuiBoundPropertyString ("RequestMessage", "Details", (object data) => (data as _BoundMessageConnectionRequest)?.RequestMessage , 
+                (object data,string? value) => { if (data is _BoundMessageConnectionRequest datad) { datad.RequestMessage = value; }})  /* 5 */ , 
+            new GuiBoundPropertySelection ("ActionAccept", "Accept")  /* 6 */ , 
+            new GuiBoundPropertySelection ("ActionReject", "Reject")  /* 7 */ 
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -1006,16 +1017,17 @@ public partial class _BoundMessageGroupInvitation : BoundMessageActionRequest {
         () => new BoundMessageGroupInvitation(),
         [ 
             new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessageGroupInvitation)?.Type , null)  /* 0 */ , 
+            new GuiBoundPropertyString ("Category", "Category", (object data) => (data as _BoundMessageGroupInvitation)?.Category , null, Width: 100)  /* 1 */ , 
             new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessageGroupInvitation)?.TimeSent , 
-                (object data,string? value) => { if (data is _BoundMessageGroupInvitation datad) { datad.TimeSent = value; }}, Width: 100)  /* 1 */ , 
+                (object data,string? value) => { if (data is _BoundMessageGroupInvitation datad) { datad.TimeSent = value; }}, Width: 100)  /* 2 */ , 
             new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageGroupInvitation)?.Sender , 
-                (object data,string? value) => { if (data is _BoundMessageGroupInvitation datad) { datad.Sender = value; }}, Width: 150)  /* 2 */ , 
+                (object data,string? value) => { if (data is _BoundMessageGroupInvitation datad) { datad.Sender = value; }}, Width: 150)  /* 3 */ , 
             new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageGroupInvitation)?.Subject , 
-                (object data,string? value) => { if (data is _BoundMessageGroupInvitation datad) { datad.Subject = value; }}, Width: 300)  /* 3 */ , 
-            new GuiBoundPropertyString ("RequestMessage", "Request", (object data) => (data as _BoundMessageGroupInvitation)?.RequestMessage , 
-                (object data,string? value) => { if (data is _BoundMessageGroupInvitation datad) { datad.RequestMessage = value; }})  /* 4 */ , 
-            new GuiBoundPropertySelection ("ActionAccept", "Accept")  /* 5 */ , 
-            new GuiBoundPropertySelection ("ActionReject", "Reject")  /* 6 */ 
+                (object data,string? value) => { if (data is _BoundMessageGroupInvitation datad) { datad.Subject = value; }}, Width: 300)  /* 4 */ , 
+            new GuiBoundPropertyString ("RequestMessage", "Details", (object data) => (data as _BoundMessageGroupInvitation)?.RequestMessage , 
+                (object data,string? value) => { if (data is _BoundMessageGroupInvitation datad) { datad.RequestMessage = value; }})  /* 5 */ , 
+            new GuiBoundPropertySelection ("ActionAccept", "Accept")  /* 6 */ , 
+            new GuiBoundPropertySelection ("ActionReject", "Reject")  /* 7 */ 
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -1058,16 +1070,17 @@ public partial class _BoundMessageTaskRequest : BoundMessageActionRequest {
         () => new BoundMessageTaskRequest(),
         [ 
             new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundMessageTaskRequest)?.Type , null)  /* 0 */ , 
+            new GuiBoundPropertyString ("Category", "Category", (object data) => (data as _BoundMessageTaskRequest)?.Category , null, Width: 100)  /* 1 */ , 
             new GuiBoundPropertyString ("TimeSent", "Sent", (object data) => (data as _BoundMessageTaskRequest)?.TimeSent , 
-                (object data,string? value) => { if (data is _BoundMessageTaskRequest datad) { datad.TimeSent = value; }}, Width: 100)  /* 1 */ , 
+                (object data,string? value) => { if (data is _BoundMessageTaskRequest datad) { datad.TimeSent = value; }}, Width: 100)  /* 2 */ , 
             new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageTaskRequest)?.Sender , 
-                (object data,string? value) => { if (data is _BoundMessageTaskRequest datad) { datad.Sender = value; }}, Width: 150)  /* 2 */ , 
+                (object data,string? value) => { if (data is _BoundMessageTaskRequest datad) { datad.Sender = value; }}, Width: 150)  /* 3 */ , 
             new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageTaskRequest)?.Subject , 
-                (object data,string? value) => { if (data is _BoundMessageTaskRequest datad) { datad.Subject = value; }}, Width: 300)  /* 3 */ , 
-            new GuiBoundPropertyString ("RequestMessage", "Request", (object data) => (data as _BoundMessageTaskRequest)?.RequestMessage , 
-                (object data,string? value) => { if (data is _BoundMessageTaskRequest datad) { datad.RequestMessage = value; }})  /* 4 */ , 
-            new GuiBoundPropertySelection ("ActionAccept", "Accept")  /* 5 */ , 
-            new GuiBoundPropertySelection ("ActionReject", "Reject")  /* 6 */ 
+                (object data,string? value) => { if (data is _BoundMessageTaskRequest datad) { datad.Subject = value; }}, Width: 300)  /* 4 */ , 
+            new GuiBoundPropertyString ("RequestMessage", "Details", (object data) => (data as _BoundMessageTaskRequest)?.RequestMessage , 
+                (object data,string? value) => { if (data is _BoundMessageTaskRequest datad) { datad.RequestMessage = value; }})  /* 5 */ , 
+            new GuiBoundPropertySelection ("ActionAccept", "Accept")  /* 6 */ , 
+            new GuiBoundPropertySelection ("ActionReject", "Reject")  /* 7 */ 
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -6637,6 +6650,65 @@ public class _EverythingMaui : Gui {
 
     ///<inheritdoc/> 
     public override List<GuiSection> Sections { get; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     ///<inheritdoc/> 
     public override Dictionary<string, GuiAction>Actions { get; }

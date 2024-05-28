@@ -78,7 +78,8 @@ public class TransactionUpdate<TEntry> : TransactionUpdate where TEntry : Catalo
     public DareEnvelope Update(TEntry catalogedEntry) {
 
         // ToDo: need to seriously revise this to get the interlock stuff right.
-        var envelope = Catalog.PersistenceStore.PrepareUpdate(out _, catalogedEntry, additionalRecipients: catalogedEntry.AdditionalRecipients);
+        var envelope = Catalog.PersistenceStore.PrepareUpdate(out _, catalogedEntry, 
+            additionalRecipients: catalogedEntry.AdditionalRecipients);
         envelope.JsonObject = catalogedEntry;
         Envelopes.Add(envelope);
 

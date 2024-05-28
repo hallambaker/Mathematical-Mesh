@@ -80,6 +80,7 @@ public partial class BoundMessage : IBoundPresentation, IDialog {
 public partial class BoundMessageConnectionRequest {
 
     public override IFieldIcon Type => FieldIcons.Connection(IsRead);
+    public override string Category => "Device Connect";
 
     public override Message Convert() {
         var result = new Message();
@@ -98,6 +99,8 @@ public partial class BoundMessageConnectionRequest {
 public partial class BoundMessageAcknowledgeConnection {
 
     public override IFieldIcon Type => FieldIcons.Connection(IsRead);
+
+    public override string Category => "Connection Request";
 
     public override Message Convert() {
         var result = new Message();
@@ -123,6 +126,8 @@ public partial class BoundMailMail {
 
     public override IFieldIcon Type  => FieldIcons.Mail(IsRead);
 
+    public override string Category => "Mail";
+
     public override Message Convert() {
         var result = new Message();
         return result;
@@ -143,7 +148,7 @@ public partial class BoundMessageConfirmationRequest {
 
     public override IFieldIcon Type  => FieldIcons.ConfirmationRequest(IsRead);
 
-
+    public override string Category => "Confirmation Request";
     public override Message Convert() {
         var result = new Message();
         return result;
@@ -160,7 +165,7 @@ public partial class BoundMessageConfirmationRequest {
 public partial class BoundMessageConfirmationResponse {
 
     public override IFieldIcon Type => FieldIcons.ConfirmationResponse(IsRead, Accepted);
-
+    public override string Category => "Confirmation Response";
     public bool Accepted => false;
 
 
@@ -182,6 +187,7 @@ public partial class BoundMessageContactRequest {
     public override GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundMessageContactRequest;
 
     public override IFieldIcon Type => FieldIcons.ContactRequest(IsRead);
+    public override string Category => "Contact Request";
 
     public override Message Convert() {
         var result = new Message();
@@ -203,7 +209,7 @@ public partial class BoundMessageContactRequest {
 public partial class BoundMessageGroupInvitation {
 
     public override IFieldIcon Type  => FieldIcons.GroupInvitation(IsRead);
-
+    public override string Category => "Group Invitation";
     public override Message Convert() {
         var result = new Message();
         return result;
@@ -221,7 +227,7 @@ public partial class BoundMessageTaskRequest {
 
     public override IFieldIcon Type => FieldIcons.TaskRequest(IsRead, Accepted);
 
-
+    public override string Category => "Task Request";
     public bool Accepted => false;
 
     public override Message Convert() {

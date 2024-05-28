@@ -36,7 +36,7 @@ public partial class EverythingMaui {
         var expire = (data.Expire ?? 24) * TimeSpan.TicksPerHour;
 
         var messageConnectionPIN = await ContextUser.GetPinAsync(MeshConstants.MessagePINActionDevice,
-                    validity: expire * TimeSpan.TicksPerHour, roles: rights, bits: bits);
+                    validity: expire, roles: rights, bits: bits);
 
         return new ReportPinValue() {
             Pin = messageConnectionPIN.Pin,

@@ -166,6 +166,9 @@ Action StartVideo "New Video" "video"
 
 Dialog BoundMessage "Message" "contacts"
 	Icon Type "Type" "message"
+	Text Category "Category"
+		Readonly
+		Width 100
 	Text TimeSent "Sent"
 		Width 100
 	Text Sender "Sender"
@@ -179,7 +182,7 @@ Dialog BoundMailMail "Mail" "messages"
 
 Dialog BoundMessageActionRequest "Message" "contacts"
 	Inherit BoundMessage
-	Text RequestMessage "Request"
+	Text RequestMessage "Details"
 	Selection ActionAccept "Accept" "circle_check"
 		Description
 			|Accept the request	
@@ -424,7 +427,7 @@ Section CredentialSection "Credentials" "credentials"
 	Button AddPasskey
 	Chooser ChooseCredential "Credentials" "credentials" 
 
-Action AddPassword "Create password" "credentials"
+Action AddPassword "Add password" "credentials"
 	Text Protocol "Protocol"
 	Text Service "Service"
 	Text Username "Username"
@@ -433,7 +436,7 @@ Action AddPassword "Create password" "credentials"
 	Description
 		|Add a password
 
-Action AddPasskey "Create password" "credentials"
+Action AddPasskey "Add Passkey" "credentials"
 	Description
 		|Add a password
 

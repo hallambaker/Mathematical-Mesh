@@ -14,11 +14,13 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace Goedel.Everything;
 
 
-// Focus 001: Message display - Contact request / Confirmation request
-// Focus 003: Add network address to catalog
-// Focus 004: Add physical address
-// Focus 005: Tweak display names on physical address
+// Focus 001: Device connection PIN - bug in dialog
+// Focus 002: Device connection QR
+// Focus 003: Device connection Complete outbound request
+// Focus 004: Device connection PIN result
 
+
+// Focus 005: Tweak display names on physical address
 // Focus 006: QR Code dialog for connect / contact
 // Focus 007: Add device interactions
 // Focus 008: Passwords interactions

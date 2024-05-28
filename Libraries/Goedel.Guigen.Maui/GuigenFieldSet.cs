@@ -694,7 +694,7 @@ public class GuigenFieldSetActionSingle : GuigenFieldSetAction {
         }
 
     public override void FieldChanged(GuigenField field) {
-        if (IsEditMode) {
+        if (IsEditMode & ConfirmButton is not null) {
             ConfirmButton.SetState(ButtonState.Enabled);
             }
         }
