@@ -190,11 +190,7 @@ public class GuigenSelectionButton : IWidget {
             await Binding.PerformActionAsync (Action, Data);
             return;
             }
-
-
         MainWindow.SetDetailWindow(Action);
-
-
         }
     }
 

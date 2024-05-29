@@ -14,10 +14,9 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace Goedel.Everything;
 
 
-// Focus 001: Device connection PIN - bug in dialog
+// Focus 001: Device connection PIN result
 // Focus 002: Device connection QR
 // Focus 003: Device connection Complete outbound request
-// Focus 004: Device connection PIN result
 
 
 // Focus 005: Tweak display names on physical address

@@ -287,13 +287,6 @@ public class GuigenBinding {
             => MainWindow.SetDetailWindow(section);
 
 
-
-    public void BeginAction(GuiAction action, IBindable data) {
-        // here should probably check to see if we have a pending action already and ignore 
-        // duplicates.
-        PendingAction = PerformActionAsync (action, data);
-        }
-
     public void CompleteAction() {
         PendingAction = null;
 
@@ -341,6 +334,9 @@ public class GuigenBinding {
                 MainThread.BeginInvokeOnMainThread(() => {
                     SetResult(result);
                 });
+                }
+            else {
+                CompleteAction();
                 }
 
             return result;

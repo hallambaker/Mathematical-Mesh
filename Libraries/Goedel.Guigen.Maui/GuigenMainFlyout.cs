@@ -106,6 +106,9 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
                     FieldSet = new GuigenFieldSetSectionMultiple(Binding, multipleBinding, guiSection: section, data: section.Data);
                     break;
                     }
+                default: {
+                    break;
+                    }
                 }
             section.Presentation = FieldSet;
             }
@@ -123,11 +126,19 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
     /// <param name="action">The action window to raise.</param>
     /// <param name="context"></param>
     public void SetDetailWindow(GuiAction action, IBindable context = null) {
-        if (action.Binding is GuiBindingSingle single) {
-            FieldSet = new GuigenFieldSetActionSingle(Binding, action, FieldSet, context);
-            }
-        else if (action.Binding is GuiBindingMultiple multiple) {
-            FieldSet = new GuigenFieldSetActionMultiple(Binding, action, FieldSet, context);
+        switch (action.Binding) {
+            case GuiBindingSingle singleBinding: {
+                FieldSet = new GuigenFieldSetActionSingle(Binding, action, FieldSet, context);
+                break;
+                }
+            case GuiBindingMultiple multipleBinding: {
+                FieldSet = new GuigenFieldSetActionMultiple(Binding, action, FieldSet, context);
+                break;
+                }
+            case GuiBindingQr qrBinding: {
+                FieldSet = new GuigenFieldSetQr(Binding, action, FieldSet, context);
+                break;
+                }
             }
 
         ContentPage.Content = FieldSet.View;

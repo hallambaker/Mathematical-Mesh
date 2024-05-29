@@ -2830,62 +2830,6 @@ public partial class _AccountRequestConnect : IParameter {
 
 
 /// <summary>
-/// Callback parameters for action DeviceConnectQR 
-/// </summary>
-public partial class DeviceConnectQR : _DeviceConnectQR {
-    }
-
-
-/// <summary>
-/// Callback parameters for action DeviceConnectQR 
-/// </summary>
-public partial class _DeviceConnectQR : IParameter {
-
-    ///<summary></summary> 
-    public virtual GuiQR? QrCode { get; set;} 
-
-    ///<summary></summary> 
-    public virtual string? LocalName { get; set;} 
-
-    ///<summary></summary> 
-    public virtual string? Rights { get; set;} 
-
-
-    ///<inheritdoc/>
-    public virtual GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static  GuiBindingQr BaseBinding  { get; } = new (
-        (object test) => test is _DeviceConnectQR,
-        () => new DeviceConnectQR(),
-        [ 
-            new GuiBoundPropertyQRScan ("QrCode", "Contact QR", (object data) => (data as _DeviceConnectQR)?.QrCode , 
-                (object data,GuiQR? value) => { if (data is _DeviceConnectQR datad) { datad.QrCode = value; }})  /* 0 */ , 
-            new GuiBoundPropertyString ("LocalName", "Friendly name (optional)", (object data) => (data as _DeviceConnectQR)?.LocalName , 
-                (object data,string? value) => { if (data is _DeviceConnectQR datad) { datad.LocalName = value; }})  /* 1 */ , 
-            new GuiBoundPropertyString ("Rights", "Assigned rights", (object data) => (data as _DeviceConnectQR)?.Rights , 
-                (object data,string? value) => { if (data is _DeviceConnectQR datad) { datad.Rights = value; }})  /* 2 */ 
-            ], 0
-);
-    ///<summary>Validation</summary> 
-    public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid? result = null;
-
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
-
-
-    ///<summary>Teardown.</summary> 
-    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
-
-
-    }
-
-
-/// <summary>
 /// Callback parameters for action AccountRecover 
 /// </summary>
 public partial class AccountRecover : _AccountRecover {
@@ -4404,6 +4348,62 @@ public partial class _AddCodeSigningKey : IParameter {
             new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _AddCodeSigningKey)?.Path , 
                 (object data,string? value) => { if (data is _AddCodeSigningKey datad) { datad.Path = value; }})  /* 3 */ 
             ]);
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate(Gui gui) {
+        GuiResultInvalid? result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
+    }
+
+
+/// <summary>
+/// Callback parameters for action DeviceConnectQR 
+/// </summary>
+public partial class DeviceConnectQR : _DeviceConnectQR {
+    }
+
+
+/// <summary>
+/// Callback parameters for action DeviceConnectQR 
+/// </summary>
+public partial class _DeviceConnectQR : IParameter {
+
+    ///<summary></summary> 
+    public virtual GuiQR? QrCode { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string? LocalName { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string? Rights { get; set;} 
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBindingQr BaseBinding  { get; } = new (
+        (object test) => test is _DeviceConnectQR,
+        () => new DeviceConnectQR(),
+        [ 
+            new GuiBoundPropertyQRScan ("QrCode", "Contact QR", (object data) => (data as _DeviceConnectQR)?.QrCode , 
+                (object data,GuiQR? value) => { if (data is _DeviceConnectQR datad) { datad.QrCode = value; }})  /* 0 */ , 
+            new GuiBoundPropertyString ("LocalName", "Friendly name (optional)", (object data) => (data as _DeviceConnectQR)?.LocalName , 
+                (object data,string? value) => { if (data is _DeviceConnectQR datad) { datad.LocalName = value; }})  /* 1 */ , 
+            new GuiBoundPropertyString ("Rights", "Assigned rights", (object data) => (data as _DeviceConnectQR)?.Rights , 
+                (object data,string? value) => { if (data is _DeviceConnectQR datad) { datad.Rights = value; }})  /* 2 */ 
+            ], 0
+);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
         GuiResultInvalid? result = null;
@@ -6910,12 +6910,6 @@ public class _EverythingMaui : Gui {
         _AccountRequestConnect.BaseBinding, () => new AccountRequestConnect(),
         IsConfirmation: true);
 
-    ///<summary>Action ActionDeviceConnectQR.</summary> 
-	public GuiAction ActionDeviceConnectQR { get; } = new (
-        "DeviceConnectQR", "Present QR", "present_qr", 
-        _DeviceConnectQR.BaseBinding, () => new DeviceConnectQR(),
-        IsConfirmation: true);
-
     ///<summary>Action ActionAccountRecover.</summary> 
 	public GuiAction ActionAccountRecover { get; } = new (
         "AccountRecover", "Recover Mesh Account", "recover_account", 
@@ -7044,13 +7038,13 @@ public class _EverythingMaui : Gui {
 
     ///<summary>Action ActionAddPassword.</summary> 
 	public GuiAction ActionAddPassword { get; } = new (
-        "AddPassword", "Create password", "credentials", 
+        "AddPassword", "Add password", "credentials", 
         _AddPassword.BaseBinding, () => new AddPassword(),
         IsConfirmation: true);
 
     ///<summary>Action ActionAddPasskey.</summary> 
 	public GuiAction ActionAddPasskey { get; } = new (
-        "AddPasskey", "Create password", "credentials", 
+        "AddPasskey", "Add Passkey", "credentials", 
         _AddPasskey.BaseBinding, () => new AddPasskey(),
         IsConfirmation: false);
 
@@ -7088,6 +7082,12 @@ public class _EverythingMaui : Gui {
 	public GuiAction ActionAddCodeSigningKey { get; } = new (
         "AddCodeSigningKey", "Add Code Signing Key", "signature", 
         _AddCodeSigningKey.BaseBinding, () => new AddCodeSigningKey(),
+        IsConfirmation: true);
+
+    ///<summary>Action ActionDeviceConnectQR.</summary> 
+	public GuiAction ActionDeviceConnectQR { get; } = new (
+        "DeviceConnectQR", "Present QR", "present_qr", 
+        _DeviceConnectQR.BaseBinding, () => new DeviceConnectQR(),
         IsConfirmation: true);
 
     ///<summary>Action ActionAccountGetPin.</summary> 
@@ -7581,13 +7581,6 @@ public class _EverythingMaui : Gui {
             throw new NYI();
             } ;
 
-        ActionDeviceConnectQR.Callback = (x) => {
-            if (x is DeviceConnectQR xx) {
-                return DeviceConnectQR (xx); 
-                }
-            throw new NYI();
-            } ;
-
         ActionAccountRecover.Callback = (x) => {
             if (x is AccountRecover xx) {
                 return AccountRecover (xx); 
@@ -7791,6 +7784,13 @@ public class _EverythingMaui : Gui {
             throw new NYI();
             } ;
 
+        ActionDeviceConnectQR.Callback = (x) => {
+            if (x is DeviceConnectQR xx) {
+                return DeviceConnectQR (xx); 
+                }
+            throw new NYI();
+            } ;
+
         ActionAccountGetPin.Callback = (x) => {
             if (x is AccountGetPin xx) {
                 return AccountGetPin (xx); 
@@ -7803,7 +7803,6 @@ public class _EverythingMaui : Gui {
 		    {"TestService", ActionTestService}, 
 		    {"AccountCreate", ActionAccountCreate}, 
 		    {"AccountRequestConnect", ActionAccountRequestConnect}, 
-		    {"DeviceConnectQR", ActionDeviceConnectQR}, 
 		    {"AccountRecover", ActionAccountRecover}, 
 		    {"AccountDelete", ActionAccountDelete}, 
 		    {"AccountSwitch", ActionAccountSwitch}, 
@@ -7833,6 +7832,7 @@ public class _EverythingMaui : Gui {
 		    {"AddSshAccount", ActionAddSshAccount}, 
 		    {"AddGitAccount", ActionAddGitAccount}, 
 		    {"AddCodeSigningKey", ActionAddCodeSigningKey}, 
+		    {"DeviceConnectQR", ActionDeviceConnectQR}, 
 		    {"AccountGetPin", ActionAccountGetPin}
 		    };
 
@@ -8161,12 +8161,6 @@ public class _EverythingMaui : Gui {
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> DeviceConnectQR (DeviceConnectQR data) 
-                => throw new NYI();
-
-    /// <summary>
-    /// GUI action
-    /// </summary>
     public virtual Task<IResult> AccountRecover (AccountRecover data) 
                 => throw new NYI();
 
@@ -8336,6 +8330,12 @@ public class _EverythingMaui : Gui {
     /// GUI action
     /// </summary>
     public virtual Task<IResult> AddCodeSigningKey (AddCodeSigningKey data) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> DeviceConnectQR (DeviceConnectQR data) 
                 => throw new NYI();
 
     /// <summary>

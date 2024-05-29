@@ -172,6 +172,11 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
                     MauiFields.Add(field);
                     break;
                     }
+                case GuiBoundPropertyQRScan bound: {
+                    var field = new GuigenFieldQr(this, bound, data);
+                    MauiFields.Add(field);
+                    break;
+                    }
                 default: {
                     break;
                     }
@@ -606,9 +611,6 @@ public class GuigenFieldSetSectionMultiple : GuigenFieldSet, IBoundChooser {
     }
 
 
-
-
-
 /// <summary>
 /// Present field set for an action dialog.
 /// </summary>
@@ -621,7 +623,7 @@ public class GuigenFieldSetAction : GuigenFieldSet {
     public GuigenFieldSetAction(
             GuigenBinding binding,
             GuiAction guiAction,
-                GuigenFieldSet fieldSet= null) : base(binding, guiAction.Binding, fieldSet: fieldSet) {
+                GuigenFieldSet fieldSet = null) : base(binding, guiAction.Binding, fieldSet: fieldSet) {
         GuiAction = guiAction;
 
         }
@@ -688,9 +690,11 @@ public class GuigenFieldSetActionSingle : GuigenFieldSetAction {
             }
         ClearFeedback();
         await Binding.PerformActionAsync(GuiAction, Data);
-        // here we need to force update to the parent
 
-        Binding.CompleteAction();
+        //// here we need to force update to the parent
+        //if (result.Binding is null) {
+        //    Binding.CompleteAction();
+        //    }
         }
 
     public override void FieldChanged(GuigenField field) {
@@ -768,19 +772,47 @@ public class GuigenFieldSetActionMultiple : GuigenFieldSetAction, IBoundChooser 
         }
     }
 
-public class GuigenFieldSetQr : GuigenFieldSet {
-
+public class GuigenFieldSetQr : GuigenFieldSetAction {
+    GuiAction GuiAction { get; }
+    public override View View => MainLayout;
+    Layout MainLayout;
     public GuigenFieldSetQr(
             GuigenBinding binding,
-            Layout? stack,
-            GuiBindingQr fieldBinding = null,
-            IBindable? data = null) : base(binding, fieldBinding, data) {
+            GuiAction guiAction,
+                GuigenFieldSet fieldSet,
+                IBindable context = null) : base(binding, guiAction, fieldSet) {
+        GuiAction = guiAction;
+        if (guiAction.setContext != null) {
+            guiAction.setContext(Data, context);
+            }
 
-        SetState();
+        IsEditMode = true;
+        // Create the fields 
+        AddFields(FieldBinding, Data);
+
+        ContextMenu = new FlexLayout() {
+            Wrap = FlexWrap.Wrap
+            };
+
+        CancelButton = new GuigenButton(Binding, null, "Cancel", OnCancel);
+        ConfirmButton = new GuigenButton(Binding, null, "Confirm", OnConfirm);
+
+        ContextMenu.Add(CancelButton.View);
+        ContextMenu.Add(ConfirmButton.View);
+
+        MainLayout = new VerticalStackLayout {
+            ActionMenu,
+            FieldGrid,
+            ContextMenu
+            };
         }
 
-    void SetState() {
 
+
+    private void OnCancel(object sender, EventArgs e) {
+        Binding.CancelAction();
+        }
+    private async void OnConfirm(object sender, EventArgs e) {
         }
 
     }

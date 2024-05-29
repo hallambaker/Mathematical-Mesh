@@ -55,19 +55,6 @@ Action AccountRequestConnect  "Connect by Address" "connect"
 	Text ConnectionPin "Activation code (if provided)"
 	Text Rights "Requested rights"
 
-Action DeviceConnectQR  "Present QR" "present_qr"
-	Description
-		|Presents a bidirectional scanning interface that presents a QR code to 
-		|be scanned and if a camera affordance is available, scans
-	Return ReportPending
-	QRScan QrCode "Contact QR"
-	Text LocalName "Friendly name (optional)"
-	Text Rights "Assigned rights"
-
-	//Integer Security "Security level"
-	//	Error SecurityRange "Must be an integer 0-5"
-	//		|(Security >= 0) & (Security <= 5)
-	//Integer Expire "Expiry in hours"
 
 
 
@@ -613,6 +600,15 @@ Dialog BoundDevice "Message" "plug"
 	Selection DeviceDelete "Delete" "circle_cross"
 		Description
 			|Delete the contact
+
+Action DeviceConnectQR  "Present QR" "present_qr"
+	Description
+		|Presents a bidirectional scanning interface that presents a QR code to 
+		|be scanned and if a camera affordance is available, scans
+	Return ReportPending
+	QRScan QrCode "Contact QR"
+	Text LocalName "Friendly name (optional)"
+	Text Rights "Assigned rights"
 
 Action AccountGetPin "Create connection PIN" "recover"
 	Description
