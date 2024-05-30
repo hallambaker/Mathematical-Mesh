@@ -781,24 +781,29 @@ public class GuigenFieldSetQr : GuigenFieldSetAction {
             GuiAction guiAction,
                 GuigenFieldSet fieldSet,
                 IBindable context = null) : base(binding, guiAction, fieldSet) {
-        GuiAction = guiAction;
-        if (guiAction.setContext != null) {
-            guiAction.setContext(Data, context);
-            }
 
+
+
+        GuiAction = guiAction;
+
+        var data = guiAction.Factory() as IParameter;
+        Data = data;
+        data.Initialize(Binding.Gui);
         IsEditMode = true;
         // Create the fields 
         AddFields(FieldBinding, Data);
+
+
 
         ContextMenu = new FlexLayout() {
             Wrap = FlexWrap.Wrap
             };
 
         CancelButton = new GuigenButton(Binding, null, "Cancel", OnCancel);
-        ConfirmButton = new GuigenButton(Binding, null, "Confirm", OnConfirm);
+        //ConfirmButton = new GuigenButton(Binding, null, "Confirm", OnConfirm);
 
         ContextMenu.Add(CancelButton.View);
-        ContextMenu.Add(ConfirmButton.View);
+        ////ContextMenu.Add(ConfirmButton.View);
 
         MainLayout = new VerticalStackLayout {
             ActionMenu,
