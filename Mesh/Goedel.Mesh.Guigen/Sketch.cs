@@ -799,6 +799,9 @@ public partial class BoundMessageConfirmationResponse : _BoundMessageConfirmatio
 public partial class _BoundMessageConfirmationResponse : BoundMessage {
 
 
+    ///<summary></summary> 
+    public virtual string? Result { get;} 
+
 
     ///<inheritdoc/>
     public override GuiBinding Binding => BaseBinding;
@@ -815,7 +818,8 @@ public partial class _BoundMessageConfirmationResponse : BoundMessage {
             new GuiBoundPropertyString ("Sender", "Sender", (object data) => (data as _BoundMessageConfirmationResponse)?.Sender , 
                 (object data,string? value) => { if (data is _BoundMessageConfirmationResponse datad) { datad.Sender = value; }}, Width: 150)  /* 3 */ , 
             new GuiBoundPropertyString ("Subject", "Subject", (object data) => (data as _BoundMessageConfirmationResponse)?.Subject , 
-                (object data,string? value) => { if (data is _BoundMessageConfirmationResponse datad) { datad.Subject = value; }}, Width: 300)  /* 4 */ 
+                (object data,string? value) => { if (data is _BoundMessageConfirmationResponse datad) { datad.Subject = value; }}, Width: 300)  /* 4 */ , 
+            new GuiBoundPropertyString ("Result", "Result", (object data) => (data as _BoundMessageConfirmationResponse)?.Result , null)  /* 5 */ 
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {

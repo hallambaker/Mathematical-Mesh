@@ -1676,6 +1676,7 @@ public partial class ContextUser : ContextAccount {
             Recipient = recipientAddress,
             Accept = response,
             Request = requestConfirmation.GetEnvelopedRequestConfirmation()
+
             };
 
         var transact = TransactBegin();

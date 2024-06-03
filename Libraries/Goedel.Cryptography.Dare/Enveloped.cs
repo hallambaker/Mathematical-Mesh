@@ -47,6 +47,20 @@ public enum EnvelopeValidation {
 /// <typeparam name="T">The type of the wrapped data item.</typeparam>
 public partial class Enveloped<T> : DareEnvelope where T : JsonObject {
 
+    DareEnvelope Untyped;
+
+    byte[] bodyValue;
+
+    ///<inheritdoc/>
+    public override byte[] Body {
+        get => GetBodyLazy();
+        set => bodyValue = value;
+        }
+
+    ///<inheritdoc/>
+    public override byte[] GetBodyLazy() => bodyValue ?? Untyped.GetBodyLazy();
+
+
     ///<summary>The enveloped object cast to the generic type.</summary> 
     public T EnvelopedObject => JsonObject as T;
 
@@ -62,8 +76,9 @@ public partial class Enveloped<T> : DareEnvelope where T : JsonObject {
     /// </summary>
     /// <param name="enveloped">The envelope to copy.</param>
     public Enveloped(DareEnvelope enveloped) {
+        Untyped = enveloped;
         Header = enveloped.Header;
-        Body = enveloped.Body;
+        //Body = enveloped.Body;
         Trailer = enveloped.Trailer;
         JsonObject = enveloped.JsonObject;
         }

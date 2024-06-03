@@ -13,17 +13,21 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Goedel.Everything;
 
+// Focus 001a: Result of confirmation glitch - display the actual result eh?
+// Focus 001b: Device connection Complete outbound request
 
-// Focus 001: Device connection PIN result
-// Focus 002: Device connection QR
-// Focus 003: Device connection Complete outbound request
+// Focus 002: Finish populating QR field with data
+// Focus 003: Group Membership - populate from apps
+// Focus 004: Feeds - populate from bookmarks
+// Focus 005: Passwords interactions
+
+// Focus 006: Developer app interactions
+// Focus 007: Tweak display names on physical address
+// Focus 008: Server Admin fail on generate profile
 
 
-// Focus 005: Tweak display names on physical address
-// Focus 006: QR Code dialog for connect / contact
-// Focus 007: Add device interactions
-// Focus 008: Passwords interactions
-// Focus 009: Developer app interactions
+
+
 // Focus 011: Automatic update
 // Focus 012: Chat interaction
 // Focus 013: MOQ handoff
@@ -32,8 +36,7 @@ namespace Goedel.Everything;
 // Focus 016: Android
 // Focus 017: macOS
 // Focus 018: iOS
-// Focus 019: Server Admin fail on generate profile
-// Focus 020: Contact local name handling
+
 
 
 public partial class EverythingMaui {

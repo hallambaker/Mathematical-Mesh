@@ -41,6 +41,8 @@ public partial class BoundMessage : IBoundPresentation, IDialog {
 
     public override IFieldIcon Type => FieldIcons.Message(IsRead);
 
+    protected SpoolIndexEntry? SpoolIndexEntry => Bound as SpoolIndexEntry;
+    protected Message? Message => SpoolIndexEntry?.Message;
 
     public bool IsRead => false;
 
@@ -56,7 +58,6 @@ public partial class BoundMessage : IBoundPresentation, IDialog {
             return null;
             }
 
-
         var result = new BoundMessage();
         result.Fill(input);
 
@@ -65,13 +66,16 @@ public partial class BoundMessage : IBoundPresentation, IDialog {
 
     protected virtual void Fill(SpoolIndexEntry input) {
         Bound = input;
-        var message = input.Message;
-        Sender = message.Sender;
-        var receiver = message?.EnvelopedMessage?.Header?.Received;
-        TimeSent = receiver.ToRFC3339();
+        Fill();
         }
 
     public virtual void Fill() {
+        var input = Bound as SpoolIndexEntry;
+        var message = input.Message;
+        Sender = message.Sender;
+
+        var receiver = message?.EnvelopedMessage?.Header?.Received;
+        TimeSent = receiver.ToRFC3339();
         }
 
     }
@@ -146,19 +150,24 @@ public partial class BoundMailMail {
 
 public partial class BoundMessageConfirmationRequest {
 
-    public override IFieldIcon Type  => FieldIcons.ConfirmationRequest(IsRead);
+    public override IFieldIcon Type => FieldIcons.ConfirmationRequest(IsRead);
 
     public override string Category => "Confirmation Request";
+
+    Mesh.RequestConfirmation? RequestConfirmation => (SpoolIndexEntry?.Message) as Mesh.RequestConfirmation;
     public override Message Convert() {
         var result = new Message();
         return result;
         }
     public static new BoundMessageConfirmationRequest Convert(SpoolIndexEntry input) {
-        var message = input.Message as Mesh.RequestConfirmation;
         var result = new BoundMessageConfirmationRequest();
         result.Fill(input);
 
         return result;
+        }
+    public override void Fill() {
+        base.Fill();
+        Subject = RequestConfirmation?.Text;
         }
     }
 
@@ -168,18 +177,33 @@ public partial class BoundMessageConfirmationResponse {
     public override string Category => "Confirmation Response";
     public bool Accepted => false;
 
+    Mesh.ResponseConfirmation? ResponseConfirmation => (SpoolIndexEntry?.Message) as Mesh.ResponseConfirmation;
+
+    public override string? Result => messageResult;
+    string? messageResult = null;
 
     public override Message Convert() {
         var result = new Message();
         return result;
         }
     public static new BoundMessageConfirmationResponse Convert(SpoolIndexEntry input) {
-        var message = input.Message as ResponseConfirmation;
+        //var message = input.Message as ResponseConfirmation;
+
         var result = new BoundMessageConfirmationResponse();
         result.Fill(input);
 
         return result;
         }
+
+    public override void Fill() {
+        base.Fill();
+
+        messageResult = ResponseConfirmation?.Accept == true ? "Accepted" : "Rejected";
+
+        var request = ResponseConfirmation?.Request;
+
+        }
+
     }
 
 public partial class BoundMessageContactRequest {

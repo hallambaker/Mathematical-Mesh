@@ -29,6 +29,21 @@ namespace Goedel.Cryptography.Dare;
 public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     #region // Properties and fields
 
+    byte[] bodyValue;
+
+    ///<inheritdoc/>
+    public override byte[] Body {
+        get => GetBodyLazy();
+        set => bodyValue = value;
+        }
+
+    /// <summary>
+    /// Get the body through lazy evaluation
+    /// </summary>
+    /// <returns></returns>
+    public virtual byte[] GetBodyLazy () => bodyValue;
+
+
     /// <summary>
     /// Dictionary mapping tags to factory methods
     /// </summary>
@@ -84,6 +99,9 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
 
     ///<summary>The length of the payload value</summary> 
     public long PayloadLength;
+
+
+
 
     /// <summary>
     /// Force loading of the payload body.

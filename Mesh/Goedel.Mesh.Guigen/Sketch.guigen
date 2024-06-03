@@ -182,6 +182,9 @@ Dialog BoundMessageConfirmationRequest "Mail" "circle_question"
 
 Dialog BoundMessageConfirmationResponse "Mail" "circle_check"
 	Inherit BoundMessage
+	Text Result "Result"
+		Readonly
+
 
 Dialog BoundMessageContactRequest "Mail" "contact"
 	Inherit BoundMessageActionRequest

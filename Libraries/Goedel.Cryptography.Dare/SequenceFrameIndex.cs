@@ -111,6 +111,9 @@ public delegate ItemResult FilterIndexDelegate(SequenceIndexEntry sequenceIndexE
 /// </summary>
 public partial class SequenceIndexEntry : DareEnvelope {
 
+    public override byte[] GetBodyLazy() => GetBody();
+
+
     ///<summary>The Sequence that is indexed.</summary> 
     public Sequence Sequence { get; set; }
 
