@@ -334,6 +334,8 @@ public partial class JsonReader : Reader {
 
     /// <summary>Get the next token.</summary>
     public virtual void PeekToken() {
+
+
         if (EOF) {
             return;
             }
@@ -344,6 +346,7 @@ public partial class JsonReader : Reader {
         if (Trace) {
             //Screen.WriteLine("Peek {0} \"{1}\"", TokenType, ResultString);
             }
+
         }
 
     /// <summary>
@@ -477,7 +480,7 @@ public partial class JsonReader : Reader {
     /// false</returns> 
     public override bool StartObject() {
         GetToken();
-        if ((TokenType == Token.EndRecord) | EOF) {
+        if ((TokenType == Token.EndRecord) | (TokenType == Token.Null) | EOF) {
             return false;
             }
 
@@ -696,6 +699,9 @@ public partial class JsonReader : Reader {
     /// false</returns>
     public override bool StartArray() {
         GetToken();
+        if ((TokenType == Token.EndRecord) | (TokenType == Token.Null) | EOF) {
+            return false;
+            }
         if (TokenType != Token.StartArray) {
             throw new InvalidInput("Expected [");
             }

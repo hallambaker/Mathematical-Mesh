@@ -99,6 +99,7 @@ Action AccountGenerateRecovery "Create recovery" "share_nodes_solid"
 
 
 Dialog BoundAccount "Account" "contacts"
+	Icon Type "Type" "account"
 	Text Display	"Display name"
 		Readonly
 	Boolean Default "Default"
@@ -110,6 +111,11 @@ Dialog BoundAccount "Account" "contacts"
 		Description
 			|Switch to the chosen account.	
 
+Dialog BoundAccountUser "Account" "contacts"
+	Inherit BoundAccount
+
+Dialog BoundAccountPending "Pending" "contacts"
+	Inherit BoundAccount
 
 
 // **** Messages

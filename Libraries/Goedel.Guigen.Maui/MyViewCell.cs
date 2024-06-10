@@ -86,8 +86,11 @@ public class MyViewCell : ViewCell {
                 case GuiBoundPropertyIcon icon: {
                     var value = icon.Get(BindingContext) ;
 
+                    var source = value is null ? "info_question" : value.Source;
+
+
                     var image = new Image() {
-                        Source = value.Source ,
+                        Source = source,
                         WidthRequest = Binding.IconWidth,
                         HeightRequest = Binding.IconHeight
                         };

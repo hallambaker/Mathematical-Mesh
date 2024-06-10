@@ -54,59 +54,46 @@ public partial class AccountSection: IAccountSelector {
 public partial class BoundAccount : IBoundPresentation, IDialog, IAccountSelector {
     public bool Synchronize { get; set; }
 
-    public int Polling { get; set; } = 60*1000;
+    public int Polling { get; set; } = 60 * 1000;
 
-    public ContextUser ContextUser  { get; }
+    public virtual ContextUser ContextUser => null!;
 
     #region // Set Contexts
 
     ///<summary>The messages section context.</summary> 
-    public MessageSection MessageSection => messages ?? new MessageSection(this).CacheValue(out messages);
-    MessageSection messages;
-
+    public virtual MessageSection? MessageSection => null;
     ///<summary>The contacts section context.</summary> 
-    public ContactSection Contacts => contacts ?? new ContactSection(this).CacheValue(out contacts);
-    ContactSection contacts;
+    public virtual ContactSection? Contacts => null;
 
     ///<summary>The documents section context.</summary> 
-    public DocumentSection Documents => documents ?? new DocumentSection(this).CacheValue(out documents);
-    DocumentSection documents;
+    public virtual DocumentSection? Documents => null;
 
     ///<summary>The feeds section context.</summary> 
-    public FeedSection Feeds => feeds ?? new FeedSection(this).CacheValue(out feeds);
-    FeedSection feeds;
+    public virtual FeedSection? Feeds => null;
 
     ///<summary>The groups section context.</summary> 
-    public GroupSection Groups => groups ?? new GroupSection(this).CacheValue(out groups);
-    GroupSection groups;
+    public virtual GroupSection? Groups => null;
 
     ///<summary>The credentials section context.</summary> 
-    public CredentialSection Credentials => credentials ?? new CredentialSection(this).CacheValue(out credentials);
-    CredentialSection credentials;
+    public virtual CredentialSection? Credentials => null;
 
     ///<summary>The tasks section context.</summary> 
-    public TaskSection Tasks => tasks ?? new TaskSection(this).CacheValue(out tasks);
-    TaskSection tasks;
+    public virtual TaskSection? Tasks => null;
 
     ///<summary>The calendar section context.</summary> 
-    public CalendarSection Calendar => calendar ?? new CalendarSection(this).CacheValue(out calendar);
-    CalendarSection calendar;
+    public virtual CalendarSection? Calendar => null;
 
     ///<summary>The applications section context.</summary> 
-    public BookmarkSection Bookmarks => bookmark ?? new BookmarkSection(this).CacheValue(out bookmark);
-    BookmarkSection bookmark;
+    public virtual BookmarkSection? Bookmarks => null;
 
     ///<summary>The applications section context.</summary> 
-    public ApplicationSection Applications => applications ?? new ApplicationSection(this).CacheValue(out applications);
-    ApplicationSection applications;
+    public virtual ApplicationSection? Applications => null;
 
     ///<summary>The devices section context.</summary> 
-    public DeviceSection Devices => devices ?? new DeviceSection(this).CacheValue(out devices);
-    DeviceSection devices;
+    public virtual DeviceSection? Devices => null;
 
     ///<summary>The services section context.</summary> 
-    public ServiceSection Services => services ?? new ServiceSection(this).CacheValue(out services);
-    ServiceSection services;
+    public virtual ServiceSection? Services => null;
 
     #endregion
 
@@ -125,12 +112,6 @@ public partial class BoundAccount : IBoundPresentation, IDialog, IAccountSelecto
 
 
 
-    public BoundAccount(ContextUser? contextUser =null) {
-        ContextUser = contextUser;
-        }
-
-
-
     public async Task StartSync() {
         while (Synchronize) {
             var result = await ContextUser.SyncPartialAsync();
@@ -141,8 +122,89 @@ public partial class BoundAccount : IBoundPresentation, IDialog, IAccountSelecto
                 }
             }
         }
+    }
 
+    
 
+public partial class BoundAccountUser  {
+
+    public override ContextUser ContextUser { get; } = null!;
+
+    #region // Set Contexts
+
+    ///<summary>The messages section context.</summary> 
+    public override MessageSection? MessageSection => messages ?? new MessageSection(this).CacheValue(out messages);
+    MessageSection? messages;
+
+    ///<summary>The contacts section context.</summary> 
+    public override ContactSection? Contacts => contacts ?? new ContactSection(this).CacheValue(out contacts);
+    ContactSection? contacts;
+
+    ///<summary>The documents section context.</summary> 
+    public override DocumentSection? Documents => documents ?? new DocumentSection(this).CacheValue(out documents);
+    DocumentSection? documents;
+
+    ///<summary>The feeds section context.</summary> 
+    public override FeedSection? Feeds => feeds ?? new FeedSection(this).CacheValue(out feeds);
+    FeedSection? feeds;
+
+    ///<summary>The groups section context.</summary> 
+    public override GroupSection? Groups => groups ?? new GroupSection(this).CacheValue(out groups);
+    GroupSection? groups;
+
+    ///<summary>The credentials section context.</summary> 
+    public override CredentialSection? Credentials => credentials ?? new CredentialSection(this).CacheValue(out credentials);
+    CredentialSection? credentials;
+
+    ///<summary>The tasks section context.</summary> 
+    public override TaskSection? Tasks => tasks ?? new TaskSection(this).CacheValue(out tasks);
+    TaskSection? tasks;
+
+    ///<summary>The calendar section context.</summary> 
+    public override CalendarSection? Calendar => calendar ?? new CalendarSection(this).CacheValue(out calendar);
+    CalendarSection? calendar;
+
+    ///<summary>The applications section context.</summary> 
+    public override BookmarkSection? Bookmarks => bookmark ?? new BookmarkSection(this).CacheValue(out bookmark);
+    BookmarkSection? bookmark;
+
+    ///<summary>The applications section context.</summary> 
+    public override ApplicationSection? Applications => applications ?? new ApplicationSection(this).CacheValue(out applications);
+    ApplicationSection? applications;
+
+    ///<summary>The devices section context.</summary> 
+    public override DeviceSection? Devices => devices ?? new DeviceSection(this).CacheValue(out devices);
+    DeviceSection? devices;
+
+    ///<summary>The services section context.</summary> 
+    public override ServiceSection? Services => services ?? new ServiceSection(this).CacheValue(out services);
+    ServiceSection? services;
+
+    #endregion
+
+    public BoundAccountUser() {
+        }
+
+    public BoundAccountUser(ContextUser contextUser = null) {
+        ContextUser = contextUser;
+        }
+    }
+
+public partial class BoundAccountPending  {
+
+    public override string Display => "Pending";
+
+    public override string Service => "Pending";
+
+    public override string UDF => "Pending";
+
+    public BoundAccountPending() {
+
+        }
+
+    public BoundAccountPending(CatalogedPending catalogedPending)  {
+
+        }
     }
 
 #endregion

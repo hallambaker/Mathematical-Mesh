@@ -512,6 +512,9 @@ public partial class _BoundAccount : IParameter {
 
 
     ///<summary></summary> 
+    public virtual IFieldIcon? Type { get;} 
+
+    ///<summary></summary> 
     public virtual string? Display { get;} 
 
     ///<summary></summary> 
@@ -532,12 +535,13 @@ public partial class _BoundAccount : IParameter {
         (object test) => test is _BoundAccount,
         () => new BoundAccount(),
         [ 
-            new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundAccount)?.Display , null)  /* 0 */ , 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundAccount)?.Type , null)  /* 0 */ , 
+            new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundAccount)?.Display , null)  /* 1 */ , 
             new GuiBoundPropertyBoolean ("Default", "Default", (object data) => (data as _BoundAccount)?.Default , 
-                (object data,bool? value) => { if (data is _BoundAccount datad) { datad.Default = value; }})  /* 1 */ , 
-            new GuiBoundPropertyString ("Service", "Service", (object data) => (data as _BoundAccount)?.Service , null)  /* 2 */ , 
-            new GuiBoundPropertyString ("UDF", "Fingerprint", (object data) => (data as _BoundAccount)?.UDF , null)  /* 3 */ , 
-            new GuiBoundPropertySelection ("AccountSelect", "Switch")  /* 4 */ 
+                (object data,bool? value) => { if (data is _BoundAccount datad) { datad.Default = value; }})  /* 2 */ , 
+            new GuiBoundPropertyString ("Service", "Service", (object data) => (data as _BoundAccount)?.Service , null)  /* 3 */ , 
+            new GuiBoundPropertyString ("UDF", "Fingerprint", (object data) => (data as _BoundAccount)?.UDF , null)  /* 4 */ , 
+            new GuiBoundPropertySelection ("AccountSelect", "Switch")  /* 5 */ 
             ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
@@ -552,6 +556,102 @@ public partial class _BoundAccount : IParameter {
 
     ///<summary>Teardown.</summary> 
     public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
+    }
+
+/// <summary>
+/// Callback parameters for dialog BoundAccountUser 
+/// </summary>
+public partial class BoundAccountUser : _BoundAccountUser {
+    // <summary>Type check verification.</summary>
+    // public static new Func<object, bool> IsBacker { get; set; } = (object _) => false; 
+    }
+
+/// <summary>
+/// Callback parameters for section BoundAccountUser 
+/// </summary>
+public partial class _BoundAccountUser : BoundAccount {
+
+
+
+    ///<inheritdoc/>
+    public override GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static new GuiBindingSingle BaseBinding  { get; } = new (
+        (object test) => test is _BoundAccountUser,
+        () => new BoundAccountUser(),
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundAccountUser)?.Type , null)  /* 0 */ , 
+            new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundAccountUser)?.Display , null)  /* 1 */ , 
+            new GuiBoundPropertyBoolean ("Default", "Default", (object data) => (data as _BoundAccountUser)?.Default , 
+                (object data,bool? value) => { if (data is _BoundAccountUser datad) { datad.Default = value; }})  /* 2 */ , 
+            new GuiBoundPropertyString ("Service", "Service", (object data) => (data as _BoundAccountUser)?.Service , null)  /* 3 */ , 
+            new GuiBoundPropertyString ("UDF", "Fingerprint", (object data) => (data as _BoundAccountUser)?.UDF , null)  /* 4 */ , 
+            new GuiBoundPropertySelection ("AccountSelect", "Switch")  /* 5 */ 
+            ]);
+    ///<summary>Validation</summary> 
+    public override IResult Validate(Gui gui) {
+        GuiResultInvalid? result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
+    }
+
+/// <summary>
+/// Callback parameters for dialog BoundAccountPending 
+/// </summary>
+public partial class BoundAccountPending : _BoundAccountPending {
+    // <summary>Type check verification.</summary>
+    // public static new Func<object, bool> IsBacker { get; set; } = (object _) => false; 
+    }
+
+/// <summary>
+/// Callback parameters for section BoundAccountPending 
+/// </summary>
+public partial class _BoundAccountPending : BoundAccount {
+
+
+
+    ///<inheritdoc/>
+    public override GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static new GuiBindingSingle BaseBinding  { get; } = new (
+        (object test) => test is _BoundAccountPending,
+        () => new BoundAccountPending(),
+        [ 
+            new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundAccountPending)?.Type , null)  /* 0 */ , 
+            new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundAccountPending)?.Display , null)  /* 1 */ , 
+            new GuiBoundPropertyBoolean ("Default", "Default", (object data) => (data as _BoundAccountPending)?.Default , 
+                (object data,bool? value) => { if (data is _BoundAccountPending datad) { datad.Default = value; }})  /* 2 */ , 
+            new GuiBoundPropertyString ("Service", "Service", (object data) => (data as _BoundAccountPending)?.Service , null)  /* 3 */ , 
+            new GuiBoundPropertyString ("UDF", "Fingerprint", (object data) => (data as _BoundAccountPending)?.UDF , null)  /* 4 */ , 
+            new GuiBoundPropertySelection ("AccountSelect", "Switch")  /* 5 */ 
+            ]);
+    ///<summary>Validation</summary> 
+    public override IResult Validate(Gui gui) {
+        GuiResultInvalid? result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -6730,6 +6830,7 @@ public class _EverythingMaui : Gui {
 
 	public override List<GuiImage> Icons => icons;
 	readonly List<GuiImage> icons = new () {  
+		new GuiImage ("account") , 
 		new GuiImage ("account_group") , 
 		new GuiImage ("application_callsign") , 
 		new GuiImage ("application_developer") , 
@@ -7186,6 +7287,18 @@ public class _EverythingMaui : Gui {
 	public GuiDialog DialogBoundAccount { get; } = new (
         "BoundAccount", "Account", "contacts", _BoundAccount.BaseBinding, () => new BoundAccount()) {
                 IsBoundType = (object data) => data is BoundAccount
+                };
+
+    ///<summary>Dialog DialogBoundAccountUser.</summary> 
+	public GuiDialog DialogBoundAccountUser { get; } = new (
+        "BoundAccountUser", "Account", "contacts", _BoundAccountUser.BaseBinding, () => new BoundAccountUser()) {
+                IsBoundType = (object data) => data is BoundAccountUser
+                };
+
+    ///<summary>Dialog DialogBoundAccountPending.</summary> 
+	public GuiDialog DialogBoundAccountPending { get; } = new (
+        "BoundAccountPending", "Pending", "contacts", _BoundAccountPending.BaseBinding, () => new BoundAccountPending()) {
+                IsBoundType = (object data) => data is BoundAccountPending
                 };
 
     ///<summary>Dialog DialogBoundMessage.</summary> 
@@ -8004,6 +8117,10 @@ public class _EverythingMaui : Gui {
 
 	    DialogBoundAccount.Entries = [];
 
+	    DialogBoundAccountUser.Entries = [];
+
+	    DialogBoundAccountPending.Entries = [];
+
 	    DialogBoundMessage.Entries = [];
 
 	    DialogBoundMailMail.Entries = [];
@@ -8085,6 +8202,8 @@ public class _EverythingMaui : Gui {
 
         Dialogs = new List<GuiDialog>() {  
 		    DialogBoundAccount, 
+		    DialogBoundAccountUser, 
+		    DialogBoundAccountPending, 
 		    DialogBoundMessage, 
 		    DialogBoundMailMail, 
 		    DialogBoundMessageActionRequest, 

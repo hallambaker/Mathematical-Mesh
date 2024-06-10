@@ -50,6 +50,8 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
     int GridColumn { get; set; } = 0;
 
     public IBindable Data { get; set; }
+
+    public virtual IBindable ActionData => Data;
     public Layout ButtonBox { get; private set;  }
 
     public bool IsChooser { get; set; } = false;
@@ -304,7 +306,7 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
                     }
                 case GuiBoundPropertySelection selection: {
                     if (MainWindow.Gui.Selections.TryGetValue(selection.Label, out var action)) {
-                        var button = new GuigenSelectionButton(MainWindow, action, Data);
+                        var button = new GuigenSelectionButton(MainWindow, action, ActionData);
                         layout.Add (button.View);
                         }
                     break;
@@ -706,6 +708,8 @@ public class GuigenFieldSetActionSingle : GuigenFieldSetAction {
 
 public class GuigenFieldSetActionMultiple : GuigenFieldSetAction, IBoundChooser {
     GuiAction GuiAction { get; }
+
+    public override IBindable ActionData => SelectedItem;
     public override View View => MainLayout;
     Layout MainLayout;
 

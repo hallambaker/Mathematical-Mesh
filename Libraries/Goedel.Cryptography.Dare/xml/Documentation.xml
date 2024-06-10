@@ -6368,6 +6368,9 @@
         <member name="P:Goedel.Cryptography.Dare.DareEnvelopeLazy.Body">
             <inheritdoc/>
         </member>
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelopeLazy.GetBodyLazy">
+            <inheritdoc/>
+        </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelopeLazy.LoadBody">
             <inheritdoc/>
         </member>

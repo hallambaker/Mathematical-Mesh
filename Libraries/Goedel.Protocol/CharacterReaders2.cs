@@ -479,6 +479,10 @@ public class CharacterStreamDataReader : BinaryStreamReader {
     /// <param name="Start">The first byte to be read.</param>
     /// <param name="Length">The maximum number of bytes to read.</param>
     public CharacterStreamDataReader(byte[] Input, int Start = 0, int Length = -1) {
+        if (Input == null) {
+            }
+
+
         this.Input = Input;
         Position = Start;
         Last = Input.GetLast(Start, Length);

@@ -64,12 +64,9 @@ partial class Program {
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
 
-
-        ShellTestsAdmin.Test().TestHello();
-
+        TestService.Test().MeshCreateAdmin();
 
 
-        ServiceDiscovery.Test().TestServiceAddressParse();
 
         //TestService.Test().MeshCatalogGroup();
         //TestService.Test().MeshDeviceDirectKey();
@@ -77,33 +74,30 @@ partial class Program {
 
 
 
-        CallsignDirect.Test().RegisterAlice();
+        //CallsignDirect.Test().RegisterAlice();
 
-        RegistrationTests.Test().CallsignBind();
-
-
-
-
-
-
-        Trace.WriteLine($"Trace enabled");
-        GoedelProtocol.Test().TestStruct();
+        //RegistrationTests.Test().CallsignBind();
 
 
 
 
 
 
-        TestService.Test().MeshDeviceDirectKey();
-        TestService.Test().MeshDeviceThresholdKey();
+        //Trace.WriteLine($"Trace enabled");
+        //GoedelProtocol.Test().TestStruct();
 
-        //TestService.Test().MeshDeviceSsh();
 
-        //TestPresence.Test().PresenceSessionRequest();
-        TestPresence.Test().PresenceHeartbeat();
 
-        RegistrationTests.Test().CallsignPresencePresent();
-        RegistrationTests.Test().CallsignPresenceAbsent();
+
+
+
+        //TestService.Test().MeshDeviceDirectKey();
+        //TestService.Test().MeshDeviceThresholdKey();
+
+        //TestPresence.Test().PresenceHeartbeat();
+
+        //RegistrationTests.Test().CallsignPresencePresent();
+        //RegistrationTests.Test().CallsignPresenceAbsent();
 
 
 
@@ -112,16 +106,16 @@ partial class Program {
 
         /* The presence stuff */
 
-        TestService.Test().MeshPresence();
+        //TestService.Test().MeshPresence();
 
 
 
         /* Callsigns But likely redundant */
-        TCallsign.Test().TestIssue();
-        TCallsign.Test().TestResolve();
-        TCallsign.Test().TestCallSignBadSignatureIssuer();
-        TCallsign.Test().TestCallSignBadSignatureRegistration();
-        TCallsign.Test().TestCallSignBadSignatureProfile();
+        //TCallsign.Test().TestIssue();
+        //TCallsign.Test().TestResolve();
+        //TCallsign.Test().TestCallSignBadSignatureIssuer();
+        //TCallsign.Test().TestCallSignBadSignatureRegistration();
+        //TCallsign.Test().TestCallSignBadSignatureProfile();
 
 
 
@@ -131,7 +125,7 @@ partial class Program {
         /* Save for later */
 
 
-        ShellTests.Test().NewFileTestOnce();
+        //ShellTests.Test().NewFileTestOnce();
 
 
 
@@ -139,32 +133,32 @@ partial class Program {
         /* Skipped tests */
 
         /* Notary functionality */
-        TestSequences.Test().TestProof();
-        TClaimProof.Test().TestProof();
-        TClaimProof.Test().TestNotaryToken();
-        TClaimProof.Test().TestEnrolledNotaryToken();
-        TClaimProof.Test().TestNotarizedSignature();
-        TClaimProof.Test().TestServiceNotarizedSignature();
-        TClaimProof.Test().TestMultiNotarizedSignature();
-        TClaimProof.Test().TestWebNotarizedSignature();
+        //TestSequences.Test().TestProof();
+        //TClaimProof.Test().TestProof();
+        //TClaimProof.Test().TestNotaryToken();
+        //TClaimProof.Test().TestEnrolledNotaryToken();
+        //TClaimProof.Test().TestNotarizedSignature();
+        //TClaimProof.Test().TestServiceNotarizedSignature();
+        //TClaimProof.Test().TestMultiNotarizedSignature();
+        //TClaimProof.Test().TestWebNotarizedSignature();
 
         /* Catalog etc read permissions */
-        TestService.Test().MalletCatalogReadFail();
+        //TestService.Test().MalletCatalogReadFail();
 
 
         /* Carnet */
-        TestService.Test().MeshCarnet(); 
-        TestService.Test().MeshRepository();
-        TCallsign.Test().TestPurchase();
-        TCallsign.Test().TestPurchaseIndirect();
-        RegistrationTests.Test().CallsignRegistrationPaid();
-        RegistrationTests.Test().CallsignRegistrationInsufficient();
+        //TestService.Test().MeshCarnet(); 
+        //TestService.Test().MeshRepository();
+        //TCallsign.Test().TestPurchase();
+        //TCallsign.Test().TestPurchaseIndirect();
+        //RegistrationTests.Test().CallsignRegistrationPaid();
+        //RegistrationTests.Test().CallsignRegistrationInsufficient();
 
         /* Signatures */
-        TSignatures.Test().TestSignatureProfile();
+        //TSignatures.Test().TestSignatureProfile();
 
         /* Documentation */
-        Goedel.XUnit.MakeSiteDocs.Test().FullTest();
+        //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
         Logger.LogInformation("End test {time}, Fail={Softfail}", System.DateTime.Now, TestCLI.CountSoftFail);
         //Screen.WriteLine($"Total Soft fail {TestCLI.CountSoftFail}");

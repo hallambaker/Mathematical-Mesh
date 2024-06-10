@@ -451,7 +451,7 @@ public partial class TestService {
         // Admin Device
         contextAccountAlice.SynchronizeAsync().Sync();
         var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
-        contextAccountAlice.ProcessAsync(connectRequest, roles: RightsDirect).Sync();
+        contextAccountAlice.ProcessAsync(connectRequest, roles: RightsDirect).Wait();
 
         // Check second device
         var contextOnboarded = TestCompletionSuccess(contextOnboardPending);

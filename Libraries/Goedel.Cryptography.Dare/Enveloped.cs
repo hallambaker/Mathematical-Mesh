@@ -51,6 +51,7 @@ public partial class Enveloped<T> : DareEnvelope where T : JsonObject {
 
     byte[] bodyValue;
 
+    bool wasFromEnvelope = false;
     ///<inheritdoc/>
     public override byte[] Body {
         get => GetBodyLazy();
@@ -76,6 +77,7 @@ public partial class Enveloped<T> : DareEnvelope where T : JsonObject {
     /// </summary>
     /// <param name="enveloped">The envelope to copy.</param>
     public Enveloped(DareEnvelope enveloped) {
+        wasFromEnvelope = true;
         Untyped = enveloped;
         Header = enveloped.Header;
         //Body = enveloped.Body;
@@ -145,6 +147,9 @@ public partial class Enveloped<T> : DareEnvelope where T : JsonObject {
         var plaintext = GetPlaintext(keyCollection);
         //var reader = new JsonBcdReader(plaintext);
         var result = DecodeJsonObject(keyCollection);
+        if (result is null) {
+            }
+
 
         result.KeyLocate = keyCollection;
 

@@ -13,8 +13,8 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Goedel.Everything;
 
-// Focus 001a: Result of confirmation glitch - display the actual result eh?
-// Focus 001b: Device connection Complete outbound request
+
+// Focus 001: Device connection Complete outbound request
 
 // Focus 002: Finish populating QR field with data
 // Focus 003: Group Membership - populate from apps
@@ -25,7 +25,8 @@ namespace Goedel.Everything;
 // Focus 007: Tweak display names on physical address
 // Focus 008: Server Admin fail on generate profile
 
-
+// Focus 009: Disable catalog sections with pending or no account
+// Focus 010: Color the buttons the same.
 
 
 // Focus 011: Automatic update
@@ -99,6 +100,12 @@ public partial class EverythingMaui {
                     currentAccount ??= bound;
                     break;
                     }
+                case CatalogedPending pendingEntry: {
+                    var bound = GetBoundAccount(pendingEntry);
+                    currentAccount ??= bound;
+
+                    break;
+                    }
                 }
             }
 
@@ -168,6 +175,21 @@ public partial class EverythingMaui {
         }
 
 
+    /// <summary>
+    /// Return a bound account for a Pending entry.
+    /// </summary>
+    /// <param name="catalogedPending"></param>
+    /// <returns></returns>
+    BoundAccount? GetBoundAccount(CatalogedPending catalogedPending) {
+        // here post async completion request.
+
+
+        var bound = new BoundAccountPending(null);
+        BoundAccounts.Add(bound);
+
+        return bound;
+        }
+
     BoundAccount? GetBoundAccount(CatalogedStandard catalogedStandard) {
         var contextUser = MeshHost.GetContext(catalogedStandard) as ContextUser;
         if (contextUser == null) {
@@ -176,6 +198,8 @@ public partial class EverythingMaui {
 
         return GetBoundAccount(contextUser);
         }
+
+
      BoundAccount GetBoundAccount(ContextUser contextUser) {
         //contextUser.StatusAsync().Sync();
 
@@ -194,7 +218,7 @@ public partial class EverythingMaui {
         contextUser.DictionarySpoolDelegates.Replace(SpoolOutbound.Label, GuigenSpoolOutbound.Factory);
         contextUser.DictionarySpoolDelegates.Replace(SpoolLocal.Label, GuigenSpoolLocal.Factory);
 
-        var bound = new BoundAccount(contextUser);
+        var bound = new BoundAccountUser(contextUser);
 
         BoundAccounts.Add(bound);
         //CurrentAccount ??= bound;
@@ -220,6 +244,10 @@ public partial class EverythingMaui {
         if (boundAccount is null) {
             return;
             }
+        if (boundAccount.ContextUser is null) {
+            return;
+            }
+
 
         CurrentAccount = boundAccount;
 

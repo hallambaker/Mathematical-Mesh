@@ -542,8 +542,13 @@ public class DareEnvelopeLazy : DareEnvelope {
     byte[] body = null;
 
     ///<inheritdoc/>
+    public override byte[] GetBodyLazy() {
+        return body ?? GetBodyDelegate().CacheValue(out body);
+        }
+
+    ///<inheritdoc/>
     public override void LoadBody() => body ??= GetBodyDelegate();
-      
+
 
     GetBodyDelegate GetBodyDelegate { get; }
 
