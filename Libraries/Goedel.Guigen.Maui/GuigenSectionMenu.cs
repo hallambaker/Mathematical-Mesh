@@ -34,6 +34,8 @@ public class GuigenSectionMenu : ContentPage, IReformat{
             MenuLayout.Add(button.View);
             }
 
+        Reformat();
+
         // The content page
         ContentPage = new ContentPage() {
             Content = MenuLayout,

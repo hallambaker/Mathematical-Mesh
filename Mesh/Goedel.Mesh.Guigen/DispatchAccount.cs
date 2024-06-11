@@ -210,13 +210,6 @@ public partial class EverythingMaui {
             }
         }
 
-    //public override  Task<IResult> AccountSwitch(AccountSwitch data) {
-
-
-    //    }
-
-
-
     public List<string> ParseRights(string text) => new List<string>() { text };
 
     }

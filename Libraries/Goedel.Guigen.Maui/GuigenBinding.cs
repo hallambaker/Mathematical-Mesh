@@ -88,7 +88,7 @@ public class GuigenBinding {
 
     public Color BorderColor = Colors.Purple;
     public Color ColorSelected = Colors.Purple;
-    public Color ColorEnabled = Colors.White;
+    public Color ColorEnabled = Colors.MediumPurple;
     public Color ColorInactive = Colors.Grey;
     public Color TextSelected = Colors.White;
     public Color TextEnabled = Colors.White;

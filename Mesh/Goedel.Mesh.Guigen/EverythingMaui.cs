@@ -75,7 +75,10 @@ public partial class EverythingMaui {
     public ISelectCollection ChooseUser { get; }
     Func<DeviceDescription> GetDeviceDescription { get; }
 
-    public Dictionary <string, ShellDispatch> DispatchDictionary { get; } = new(); 
+    public Dictionary <string, ShellDispatch> DispatchDictionary { get; } = new();
+
+
+    public bool HaveCatalogs => CurrentAccount is BoundAccountUser;
 
 
     public EverythingMaui(
@@ -184,7 +187,7 @@ public partial class EverythingMaui {
         // here post async completion request.
 
 
-        var bound = new BoundAccountPending(null);
+       var bound = new BoundAccountPending(catalogedPending);
         BoundAccounts.Add(bound);
 
         return bound;
@@ -235,19 +238,13 @@ public partial class EverythingMaui {
 
 
     public void SetContext(BoundAccount? boundAccount) {
+
         if (CurrentAccount == boundAccount) {
             return;
             }
         if (CurrentAccount is not null) {
             CurrentAccount.Synchronize = false;
             }
-        if (boundAccount is null) {
-            return;
-            }
-        if (boundAccount.ContextUser is null) {
-            return;
-            }
-
 
         CurrentAccount = boundAccount;
 
@@ -294,17 +291,25 @@ public partial class EverythingMaui {
         SectionServiceSection.Reset(() => CurrentAccount?.Services,
                 () => ButtonStateConditional(SectionServiceSection));
 
+        if (boundAccount?.ContextUser is null) {
+            return;
+            }
+
         boundAccount.Synchronize = true;
         SyncTask = boundAccount.StartSync();
 
         }
 
+
+
+
     ButtonState ButtonStateUnconditional (GuiSection section) =>
         CurrentSection == section ? ButtonState.Selected : ButtonState.Enabled;
 
     ButtonState ButtonStateConditional(GuiSection section) =>
-        CurrentSection == section ? ButtonState.Selected : 
-            (CurrentAccount is null ? ButtonState.Disabled : ButtonState.Enabled);
+        CurrentSection == section ? ButtonState.Selected :
+            (HaveCatalogs ? ButtonState.Enabled : ButtonState.Disabled);
+   
 
 
     public override string? GetPrompt(GuiPrompt guiPrompt) {

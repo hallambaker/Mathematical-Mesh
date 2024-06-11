@@ -46,7 +46,7 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
             Detail = ContentPage
             };
 
-        SetDetailWindow(Gui.DefaultSection);
+        GotoSection(Gui.DefaultSection);
         }
 
     public void GotoSection(GuiSection section) {
