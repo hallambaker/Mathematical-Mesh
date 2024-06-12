@@ -187,7 +187,7 @@ public partial class EverythingMaui {
         // here post async completion request.
 
 
-       var bound = new BoundAccountPending(catalogedPending);
+        var bound = new BoundAccountPending(catalogedPending);
         BoundAccounts.Add(bound);
 
         return bound;
@@ -300,7 +300,12 @@ public partial class EverythingMaui {
 
         }
 
+    async Task<IResult> AttemptCompletion(BoundAccountPending boundAccountPending) {
+        var accountAddress = boundAccountPending.Service;
 
+        var result = await MeshHost.CompleteAsync(accountAddress);
+        return NullResult.Completed;
+        }
 
 
     ButtonState ButtonStateUnconditional (GuiSection section) =>

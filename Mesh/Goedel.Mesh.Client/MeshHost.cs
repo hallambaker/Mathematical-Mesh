@@ -567,8 +567,13 @@ public class MeshHost : Disposable {
             foreach (var containerStoreEntry in ObjectIndex.Values) {
                 var catalogItem = containerStoreEntry.JsonObject as CatalogedMachine;
 
-                if (localName != null & catalogItem.Local == localName) {
+                if  (catalogItem.Local == localName){
                     return catalogItem;
+                    }
+                if (catalogItem is CatalogedPending pending) {
+                    if (pending.AccountAddress == localName) {
+                        return catalogItem;
+                        }
                     }
                 }
             return null;

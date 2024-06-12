@@ -191,19 +191,22 @@ public partial class BoundAccountUser  {
     }
 
 public partial class BoundAccountPending  {
+    CatalogedPending CatalogedPending;
 
-    public override string Display => "Pending";
 
-    public override string Service => "Pending";
+    public override string? Display { get; } = null;
 
-    public override string UDF => "Pending";
+    public override string? Service => CatalogedPending?.AccountAddress;
+
+    public override string? UDF => "Pending";
 
     public BoundAccountPending() {
 
         }
 
     public BoundAccountPending(CatalogedPending catalogedPending)  {
-
+        CatalogedPending = catalogedPending;
+        Display = "[" + Service + "]";
         }
     }
 

@@ -91,6 +91,7 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
     /// <param name="section"></param>
     public void SetDetailWindow(GuiSection section = null) {
         Gui.CurrentSection = section;
+        SectionMenu.Reformat();
 
         if (section.Presentation is GuigenFieldSet fieldSet) { // Attempt to use cached field set.
             FieldSet = fieldSet;

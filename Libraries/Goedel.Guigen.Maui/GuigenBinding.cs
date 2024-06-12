@@ -125,45 +125,46 @@ public class GuigenBinding {
             case ButtonState.Enabled: {
                 imageButton.IsEnabled = true;
                 imageButton.BorderColor = BorderColor;
-                imageButton.BackgroundColor = ColorSelected;
+                imageButton.Background = ColorEnabled;
                 break;
                 }
             case ButtonState.Selected: {
                 imageButton.IsEnabled = false;
                 imageButton.BorderColor = BorderColor;
-                imageButton.BackgroundColor = ColorSelected;
+                //imageButton.BackgroundColor = ColorSelected;
+                imageButton.Background = ColorSelected;
                 break;
                 }
             case ButtonState.Disabled: {
                 imageButton.IsEnabled = false;
                 imageButton.BorderColor = ColorInactive;
-                imageButton.BackgroundColor = ColorInactive;
+                imageButton.Background = ColorInactive;
                 break;
                 }
             }
         }
 
-    public void SetState(ButtonState state, Button imageButton) {
+    public void SetState(ButtonState state, Button button) {
         switch (state) {
             case ButtonState.Enabled: {
-                imageButton.IsEnabled = true;
-                imageButton.BorderColor = BorderColor;
-                imageButton.BackgroundColor = ColorSelected;
-                imageButton.TextColor = TextEnabled;
+                button.IsEnabled = true;
+                button.BorderColor = BorderColor;
+                button.Background = ColorEnabled;
+                button.TextColor = TextEnabled;
                 break;
                 }
             case ButtonState.Selected: {
-                imageButton.IsEnabled = false;
-                imageButton.BorderColor = BorderColor;
-                imageButton.BackgroundColor = ColorSelected;
-                imageButton.TextColor = TextSelected;
+                button.IsEnabled = false;
+                button.BorderColor = BorderColor;
+                button.Background = ColorSelected;
+                button.TextColor = TextSelected;
                 break;
                 }
             case ButtonState.Disabled: {
-                imageButton.IsEnabled = false;
-                imageButton.BorderColor = ColorInactive;
-                imageButton.BackgroundColor = ColorInactive;
-                imageButton.TextColor = ColorInactive;
+                button.IsEnabled = false;
+                button.BorderColor = ColorInactive;
+                button.Background = ColorInactive;
+                button.TextColor = ColorInactive;
                 break;
                 }
             }

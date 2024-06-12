@@ -199,6 +199,10 @@ public partial class EverythingMaui {
     public override async Task<IResult> AccountSelect(BoundAccount data) {
         try {
             SetContext(data);
+            if (data is BoundAccountPending pending) {
+                AttemptCompletion(pending);
+                }
+
 
             return NullResult.HomeResult;
             }
