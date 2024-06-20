@@ -774,7 +774,7 @@ public partial class ContextUser : ContextAccount {
         var groupClient = MeshMachine.GetMeshClient(credentialPrivate, groupAddress);
 
 
-        var createResponse = groupClient.BindAccount(createRequest);
+        var createResponse = await groupClient.BindAccountAsync(createRequest);
         createResponse.AssertSuccess();
 
         // create the group context

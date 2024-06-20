@@ -223,7 +223,7 @@ public class ContextMeshPending : ContextAccount {
         var meshClient = MeshHost.MeshMachine.GetMeshClient(
                 meshCredentialPrivate, ServiceAddress);
 
-        var completeResponse = meshClient.Complete(completeRequest);
+        var completeResponse = await meshClient.CompleteAsync(completeRequest);
         completeResponse.Success().AssertTrue(ConnectionAccountUnknown.Throw);
 
         //// OK so here we need to unpack the profile etc.
