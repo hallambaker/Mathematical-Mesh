@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 6/20/2024 12:41:48 PM
+//  This file was automatically generated at 6/25/2024 4:23:12 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -951,7 +951,7 @@ public partial class ConnectionAccessControlFail : ConnectionException {
 /// The connection request was refused
 /// </summary>
 [global::System.Serializable]
-public partial class ConnectionRefused : ConnectionException {
+public partial class ConnectionRefusedException : ConnectionException {
 
     ///<summary>The exception formatting delegate. May be overriden 
 	///locally or globally to implement different exception formatting.</summary>
@@ -973,7 +973,7 @@ public partial class ConnectionRefused : ConnectionException {
 	/// generated message.</param>	
 	/// <param name="inner">Inner Exception</param>	
 	/// <param name="args">Optional list of parameterized arguments.</param>
-	public ConnectionRefused  (string description=null, System.Exception inner=null,
+	public ConnectionRefusedException  (string description=null, System.Exception inner=null,
 		params object[] args) : 
 			base (ExceptionFormatDelegate(description, Templates,
 				null, args), inner) {
@@ -988,7 +988,7 @@ public partial class ConnectionRefused : ConnectionException {
     /// </summary>
     /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-    static System.Exception _Throw(object reasons) => new ConnectionRefused(args:reasons) ;
+    static System.Exception _Throw(object reasons) => new ConnectionRefusedException(args:reasons) ;
 		
 	/// <summary>
     /// The public fatory delegate
@@ -1003,7 +1003,7 @@ public partial class ConnectionRefused : ConnectionException {
 /// The connection request is still pending
 /// </summary>
 [global::System.Serializable]
-public partial class ConnectionPending : ConnectionException {
+public partial class ConnectionPendingException : ConnectionException {
 
     ///<summary>The exception formatting delegate. May be overriden 
 	///locally or globally to implement different exception formatting.</summary>
@@ -1025,7 +1025,7 @@ public partial class ConnectionPending : ConnectionException {
 	/// generated message.</param>	
 	/// <param name="inner">Inner Exception</param>	
 	/// <param name="args">Optional list of parameterized arguments.</param>
-	public ConnectionPending  (string description=null, System.Exception inner=null,
+	public ConnectionPendingException  (string description=null, System.Exception inner=null,
 		params object[] args) : 
 			base (ExceptionFormatDelegate(description, Templates,
 				null, args), inner) {
@@ -1040,7 +1040,7 @@ public partial class ConnectionPending : ConnectionException {
     /// </summary>
     /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-    static System.Exception _Throw(object reasons) => new ConnectionPending(args:reasons) ;
+    static System.Exception _Throw(object reasons) => new ConnectionPendingException(args:reasons) ;
 		
 	/// <summary>
     /// The public fatory delegate
@@ -1055,7 +1055,7 @@ public partial class ConnectionPending : ConnectionException {
 /// The connection request is still pending
 /// </summary>
 [global::System.Serializable]
-public partial class ConnectionExpired : ConnectionException {
+public partial class ConnectionExpiredException : ConnectionException {
 
     ///<summary>The exception formatting delegate. May be overriden 
 	///locally or globally to implement different exception formatting.</summary>
@@ -1077,7 +1077,7 @@ public partial class ConnectionExpired : ConnectionException {
 	/// generated message.</param>	
 	/// <param name="inner">Inner Exception</param>	
 	/// <param name="args">Optional list of parameterized arguments.</param>
-	public ConnectionExpired  (string description=null, System.Exception inner=null,
+	public ConnectionExpiredException  (string description=null, System.Exception inner=null,
 		params object[] args) : 
 			base (ExceptionFormatDelegate(description, Templates,
 				null, args), inner) {
@@ -1092,7 +1092,7 @@ public partial class ConnectionExpired : ConnectionException {
     /// </summary>
     /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-    static System.Exception _Throw(object reasons) => new ConnectionExpired(args:reasons) ;
+    static System.Exception _Throw(object reasons) => new ConnectionExpiredException(args:reasons) ;
 		
 	/// <summary>
     /// The public fatory delegate
@@ -1107,7 +1107,7 @@ public partial class ConnectionExpired : ConnectionException {
 /// The connection request is still pending
 /// </summary>
 [global::System.Serializable]
-public partial class ConnectionAccountUnknown : ConnectionException {
+public partial class ConnectionAccountUnknownException : ConnectionException {
 
     ///<summary>The exception formatting delegate. May be overriden 
 	///locally or globally to implement different exception formatting.</summary>
@@ -1129,7 +1129,7 @@ public partial class ConnectionAccountUnknown : ConnectionException {
 	/// generated message.</param>	
 	/// <param name="inner">Inner Exception</param>	
 	/// <param name="args">Optional list of parameterized arguments.</param>
-	public ConnectionAccountUnknown  (string description=null, System.Exception inner=null,
+	public ConnectionAccountUnknownException  (string description=null, System.Exception inner=null,
 		params object[] args) : 
 			base (ExceptionFormatDelegate(description, Templates,
 				null, args), inner) {
@@ -1144,7 +1144,7 @@ public partial class ConnectionAccountUnknown : ConnectionException {
     /// </summary>
     /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-    static System.Exception _Throw(object reasons) => new ConnectionAccountUnknown(args:reasons) ;
+    static System.Exception _Throw(object reasons) => new ConnectionAccountUnknownException(args:reasons) ;
 		
 	/// <summary>
     /// The public fatory delegate
@@ -1159,7 +1159,7 @@ public partial class ConnectionAccountUnknown : ConnectionException {
 /// The request was refused because the pin was invalid
 /// </summary>
 [global::System.Serializable]
-public partial class RefusedPINInvalid : ConnectionException {
+public partial class RefusedPinInvalidException : ConnectionException {
 
     ///<summary>The exception formatting delegate. May be overriden 
 	///locally or globally to implement different exception formatting.</summary>
@@ -1181,7 +1181,7 @@ public partial class RefusedPINInvalid : ConnectionException {
 	/// generated message.</param>	
 	/// <param name="inner">Inner Exception</param>	
 	/// <param name="args">Optional list of parameterized arguments.</param>
-	public RefusedPINInvalid  (string description=null, System.Exception inner=null,
+	public RefusedPinInvalidException  (string description=null, System.Exception inner=null,
 		params object[] args) : 
 			base (ExceptionFormatDelegate(description, Templates,
 				null, args), inner) {
@@ -1196,7 +1196,7 @@ public partial class RefusedPINInvalid : ConnectionException {
     /// </summary>
     /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-    static System.Exception _Throw(object reasons) => new RefusedPINInvalid(args:reasons) ;
+    static System.Exception _Throw(object reasons) => new RefusedPinInvalidException(args:reasons) ;
 		
 	/// <summary>
     /// The public fatory delegate

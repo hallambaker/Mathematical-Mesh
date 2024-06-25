@@ -98,7 +98,7 @@ public class ContextMeshPreconfigured : ContextAccount {
 
         messageClaim.Verify(
                 CatalogedPreconfigured.ServiceAuthenticator,
-                CatalogedPreconfigured.DeviceAuthenticator).AssertTrue(RefusedPINInvalid.Throw);
+                CatalogedPreconfigured.DeviceAuthenticator).AssertTrue(RefusedPinInvalidException.Throw);
 
         //Screen.WriteLine($"Have been claimed by {messageClaim.Sender}");
 

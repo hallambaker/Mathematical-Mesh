@@ -178,6 +178,8 @@ public class ContextMeshPending : ContextAccount {
 
         var connectResponse = await meshClient.ConnectAsync(connectRequest);
 
+        connectResponse.AssertSuccess(ConnectionAccountUnknownException.Throw);
+
         // create the pending connection here
 
         var catalogedPending = new CatalogedPending() {
@@ -224,7 +226,7 @@ public class ContextMeshPending : ContextAccount {
                 meshCredentialPrivate, ServiceAddress);
 
         var completeResponse = await meshClient.CompleteAsync(completeRequest);
-        completeResponse.Success().AssertTrue(ConnectionAccountUnknown.Throw);
+        completeResponse.Success().AssertTrue(ConnectionPendingException.Throw);
 
         //// OK so here we need to unpack the profile etc.
         var respondConnection = completeResponse.EnvelopedRespondConnection.Decode(KeyCollection);
@@ -232,9 +234,11 @@ public class ContextMeshPending : ContextAccount {
         respondConnection.Validate(profileDevice, KeyCollection);
 
         switch (respondConnection.Result) {
-            case MeshConstants.TransactionResultReject: throw new ConnectionRefused();
-            case MeshConstants.TransactionResultPending: throw new ConnectionPending();
-            case MeshConstants.TransactionResultExpired: throw new ConnectionExpired();
+            case MeshConstants.TransactionResultReject: throw new ConnectionRefusedException();
+            case MeshConstants.TransactionResultPending: throw new ConnectionPendingException();
+            case MeshConstants.TransactionResultExpired: throw new ConnectionExpiredException();
+            case MeshConstants.TransactionResultAccountUnknown: throw new ConnectionAccountUnknownException();
+            case MeshConstants.TransactionResultPinInvalid: throw new RefusedPinInvalidException();
             }
 
 

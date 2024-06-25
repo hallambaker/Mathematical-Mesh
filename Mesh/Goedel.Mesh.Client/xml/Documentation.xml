@@ -2568,19 +2568,19 @@
             The public fatory delegate
             </summary>
         </member>
-        <member name="T:Goedel.Mesh.Client.ConnectionRefused">
+        <member name="T:Goedel.Mesh.Client.ConnectionRefusedException">
             <summary>
             The connection request was refused
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ConnectionRefused.ExceptionFormatDelegate">
+        <member name="P:Goedel.Mesh.Client.ConnectionRefusedException.ExceptionFormatDelegate">
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ConnectionRefused.Templates">
+        <member name="P:Goedel.Mesh.Client.ConnectionRefusedException.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionRefused.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Mesh.Client.ConnectionRefusedException.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
             Construct instance for exception
             </summary>		
@@ -2589,30 +2589,30 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionRefused._Throw(System.Object)">
+        <member name="M:Goedel.Mesh.Client.ConnectionRefusedException._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="P:Goedel.Mesh.Client.ConnectionRefused.Throw">
+        <member name="P:Goedel.Mesh.Client.ConnectionRefusedException.Throw">
             <summary>
             The public fatory delegate
             </summary>
         </member>
-        <member name="T:Goedel.Mesh.Client.ConnectionPending">
+        <member name="T:Goedel.Mesh.Client.ConnectionPendingException">
             <summary>
             The connection request is still pending
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ConnectionPending.ExceptionFormatDelegate">
+        <member name="P:Goedel.Mesh.Client.ConnectionPendingException.ExceptionFormatDelegate">
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ConnectionPending.Templates">
+        <member name="P:Goedel.Mesh.Client.ConnectionPendingException.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionPending.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Mesh.Client.ConnectionPendingException.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
             Construct instance for exception
             </summary>		
@@ -2621,30 +2621,30 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionPending._Throw(System.Object)">
+        <member name="M:Goedel.Mesh.Client.ConnectionPendingException._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="P:Goedel.Mesh.Client.ConnectionPending.Throw">
+        <member name="P:Goedel.Mesh.Client.ConnectionPendingException.Throw">
             <summary>
             The public fatory delegate
             </summary>
         </member>
-        <member name="T:Goedel.Mesh.Client.ConnectionExpired">
+        <member name="T:Goedel.Mesh.Client.ConnectionExpiredException">
             <summary>
             The connection request is still pending
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ConnectionExpired.ExceptionFormatDelegate">
+        <member name="P:Goedel.Mesh.Client.ConnectionExpiredException.ExceptionFormatDelegate">
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ConnectionExpired.Templates">
+        <member name="P:Goedel.Mesh.Client.ConnectionExpiredException.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionExpired.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Mesh.Client.ConnectionExpiredException.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
             Construct instance for exception
             </summary>		
@@ -2653,30 +2653,30 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionExpired._Throw(System.Object)">
+        <member name="M:Goedel.Mesh.Client.ConnectionExpiredException._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="P:Goedel.Mesh.Client.ConnectionExpired.Throw">
+        <member name="P:Goedel.Mesh.Client.ConnectionExpiredException.Throw">
             <summary>
             The public fatory delegate
             </summary>
         </member>
-        <member name="T:Goedel.Mesh.Client.ConnectionAccountUnknown">
+        <member name="T:Goedel.Mesh.Client.ConnectionAccountUnknownException">
             <summary>
             The connection request is still pending
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ConnectionAccountUnknown.ExceptionFormatDelegate">
+        <member name="P:Goedel.Mesh.Client.ConnectionAccountUnknownException.ExceptionFormatDelegate">
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ConnectionAccountUnknown.Templates">
+        <member name="P:Goedel.Mesh.Client.ConnectionAccountUnknownException.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionAccountUnknown.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Mesh.Client.ConnectionAccountUnknownException.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
             Construct instance for exception
             </summary>		
@@ -2685,30 +2685,30 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionAccountUnknown._Throw(System.Object)">
+        <member name="M:Goedel.Mesh.Client.ConnectionAccountUnknownException._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="P:Goedel.Mesh.Client.ConnectionAccountUnknown.Throw">
+        <member name="P:Goedel.Mesh.Client.ConnectionAccountUnknownException.Throw">
             <summary>
             The public fatory delegate
             </summary>
         </member>
-        <member name="T:Goedel.Mesh.Client.RefusedPINInvalid">
+        <member name="T:Goedel.Mesh.Client.RefusedPinInvalidException">
             <summary>
             The request was refused because the pin was invalid
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.RefusedPINInvalid.ExceptionFormatDelegate">
+        <member name="P:Goedel.Mesh.Client.RefusedPinInvalidException.ExceptionFormatDelegate">
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.RefusedPINInvalid.Templates">
+        <member name="P:Goedel.Mesh.Client.RefusedPinInvalidException.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.RefusedPINInvalid.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Mesh.Client.RefusedPinInvalidException.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
             Construct instance for exception
             </summary>		
@@ -2717,13 +2717,13 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.RefusedPINInvalid._Throw(System.Object)">
+        <member name="M:Goedel.Mesh.Client.RefusedPinInvalidException._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="P:Goedel.Mesh.Client.RefusedPINInvalid.Throw">
+        <member name="P:Goedel.Mesh.Client.RefusedPinInvalidException.Throw">
             <summary>
             The public fatory delegate
             </summary>

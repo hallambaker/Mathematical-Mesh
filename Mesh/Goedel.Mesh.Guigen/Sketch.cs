@@ -540,8 +540,7 @@ public partial class _BoundAccount : IParameter {
             new GuiBoundPropertyBoolean ("Default", "Default", (object data) => (data as _BoundAccount)?.Default , 
                 (object data,bool? value) => { if (data is _BoundAccount datad) { datad.Default = value; }})  /* 2 */ , 
             new GuiBoundPropertyString ("Service", "Service", (object data) => (data as _BoundAccount)?.Service , null)  /* 3 */ , 
-            new GuiBoundPropertyString ("UDF", "Fingerprint", (object data) => (data as _BoundAccount)?.UDF , null)  /* 4 */ , 
-            new GuiBoundPropertySelection ("AccountSelect", "Switch")  /* 5 */ 
+            new GuiBoundPropertyString ("UDF", "Fingerprint", (object data) => (data as _BoundAccount)?.UDF , null)  /* 4 */ 
             ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
@@ -637,7 +636,7 @@ public partial class _BoundAccountPending : BoundAccount {
                 (object data,bool? value) => { if (data is _BoundAccountPending datad) { datad.Default = value; }})  /* 2 */ , 
             new GuiBoundPropertyString ("Service", "Service", (object data) => (data as _BoundAccountPending)?.Service , null)  /* 3 */ , 
             new GuiBoundPropertyString ("UDF", "Fingerprint", (object data) => (data as _BoundAccountPending)?.UDF , null)  /* 4 */ , 
-            new GuiBoundPropertySelection ("AccountSelect", "Switch")  /* 5 */ 
+            new GuiBoundPropertySelection ("AccountComplete", "Complete")  /* 5 */ 
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -2919,6 +2918,13 @@ public partial class _AccountRequestConnect : IParameter {
     public virtual IResult Validate(Gui gui) {
         GuiResultInvalid? result = null;
 
+        // error on ConnectionString
+        if (IsConnected (gui, ConnectionString)
+            ) {
+            result ??=new GuiResultInvalid(this);
+            result.SetError (0, "Already connected", "AccountAlreadyConnected");
+            }
+
         return (result as IResult) ?? NullResult.Valid;
         }
 
@@ -4624,6 +4630,45 @@ public partial class _AccountSelect : IParameter {
 
 
 /// <summary>
+/// Callback parameters for action AccountComplete 
+/// </summary>
+public partial class AccountComplete : _AccountComplete {
+    }
+
+
+/// <summary>
+/// Callback parameters for action AccountComplete 
+/// </summary>
+public partial class _AccountComplete : IParameter {
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBindingSingle BaseBinding  { get; } = new (
+        (object test) => test is _AccountComplete,
+        () => new AccountComplete(),
+        Array.Empty<GuiBoundProperty>());
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate(Gui gui) {
+        GuiResultInvalid? result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
+    }
+
+
+/// <summary>
 /// Callback parameters for action ActionAccept 
 /// </summary>
 public partial class ActionAccept : _ActionAccept {
@@ -5329,6 +5374,44 @@ public partial class _DeviceDelete : IParameter {
 
 
 /// <summary>
+/// Return parameters for result ConnectionCompleted 
+/// </summary>
+public partial record ConnectionCompleted : _ConnectionCompleted {
+    }
+
+
+/// <summary>
+/// Callback parameters for result ConnectionCompleted 
+/// </summary>
+public partial record _ConnectionCompleted : IResult {
+
+    ///<inheritdoc/>
+    public string Message => "Connection completed";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("ConnectionCompleted");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Report;
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBindingSingle BaseBinding  { get; } = new (
+        (object test) => test is ConnectionCompleted,
+        () => new ConnectionCompleted(),
+        Array.Empty<GuiBoundProperty>());
+
+    ///<inheritdoc/>
+    public object?[] GetValues() => Array.Empty<object>();
+
+    }
+
+
+/// <summary>
 /// Return parameters for result SuccessGroupCreate 
 /// </summary>
 public partial record SuccessGroupCreate : _SuccessGroupCreate {
@@ -5554,6 +5637,72 @@ public partial record _ReportAccountCreate : IResult {
                 (object data,string? value) => { if (data is ReportAccountCreate datad) { datad.ProfileUdf = value; }})  /* 2 */ , 
             new GuiBoundPropertyString ("ServiceUdf", "Service fingerprint", (object data) => (data as ReportAccountCreate)?.ServiceUdf , 
                 (object data,string? value) => { if (data is ReportAccountCreate datad) { datad.ServiceUdf = value; }})  /* 3 */ 
+            ]);
+
+    ///<inheritdoc/>
+    public object?[] GetValues() => new [] { 
+        ServiceName,
+        LocalName,
+        ServiceAddress,
+        ProfileUdf,
+        ServiceUdf};
+    }
+
+
+/// <summary>
+/// Return parameters for result ReportAccountCompleted 
+/// </summary>
+public partial record ReportAccountCompleted : _ReportAccountCompleted {
+    }
+
+
+/// <summary>
+/// Callback parameters for result ReportAccountCompleted 
+/// </summary>
+public partial record _ReportAccountCompleted : IResult {
+
+    ///<inheritdoc/>
+    public string Message => "Connected to account {0}.";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("ReportAccountCompleted");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Report;
+
+    ///<summary></summary> 
+    public virtual string? ServiceName { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string? LocalName { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string? ServiceAddress { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string? ProfileUdf { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string? ServiceUdf { get; set;} 
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBindingSingle BaseBinding  { get; } = new (
+        (object test) => test is ReportAccountCompleted,
+        () => new ReportAccountCompleted(),
+        [ 
+            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as ReportAccountCompleted)?.LocalName , 
+                (object data,string? value) => { if (data is ReportAccountCompleted datad) { datad.LocalName = value; }})  /* 0 */ , 
+            new GuiBoundPropertyString ("ServiceAddress", "DNS", (object data) => (data as ReportAccountCompleted)?.ServiceAddress , 
+                (object data,string? value) => { if (data is ReportAccountCompleted datad) { datad.ServiceAddress = value; }})  /* 1 */ , 
+            new GuiBoundPropertyString ("ProfileUdf", "Profile fingerprint", (object data) => (data as ReportAccountCompleted)?.ProfileUdf , 
+                (object data,string? value) => { if (data is ReportAccountCompleted datad) { datad.ProfileUdf = value; }})  /* 2 */ , 
+            new GuiBoundPropertyString ("ServiceUdf", "Service fingerprint", (object data) => (data as ReportAccountCompleted)?.ServiceUdf , 
+                (object data,string? value) => { if (data is ReportAccountCompleted datad) { datad.ServiceUdf = value; }})  /* 3 */ 
             ]);
 
     ///<inheritdoc/>
@@ -5937,6 +6086,211 @@ public partial record _BeginCommunication : IResult {
 
 #endregion
 #region // Failure Results
+
+
+/// <summary>
+/// Return parameters for failure result AccountUnknown 
+/// </summary>
+public partial record AccountUnknown : _AccountUnknown {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result AccountUnknown 
+/// </summary>
+public partial record _AccountUnknown : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "The account is not known";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("AccountUnknown");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBindingSingle BaseBinding  { get; } = new (
+        (object test) => test is AccountUnknown,
+        () => new AccountUnknown(),
+        Array.Empty<GuiBoundProperty>());
+
+    ///<inheritdoc/>
+    public object?[] GetValues() => Array.Empty<object>();
+
+
+    }
+
+
+
+
+/// <summary>
+/// Return parameters for failure result ConnectionRefused 
+/// </summary>
+public partial record ConnectionRefused : _ConnectionRefused {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result ConnectionRefused 
+/// </summary>
+public partial record _ConnectionRefused : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "The connection request was refused";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("ConnectionRefused");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBindingSingle BaseBinding  { get; } = new (
+        (object test) => test is ConnectionRefused,
+        () => new ConnectionRefused(),
+        Array.Empty<GuiBoundProperty>());
+
+    ///<inheritdoc/>
+    public object?[] GetValues() => Array.Empty<object>();
+
+
+    }
+
+
+
+
+/// <summary>
+/// Return parameters for failure result ConnectionPending 
+/// </summary>
+public partial record ConnectionPending : _ConnectionPending {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result ConnectionPending 
+/// </summary>
+public partial record _ConnectionPending : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "The connection request is still pending";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("ConnectionPending");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBindingSingle BaseBinding  { get; } = new (
+        (object test) => test is ConnectionPending,
+        () => new ConnectionPending(),
+        Array.Empty<GuiBoundProperty>());
+
+    ///<inheritdoc/>
+    public object?[] GetValues() => Array.Empty<object>();
+
+
+    }
+
+
+
+
+/// <summary>
+/// Return parameters for failure result ConnectionExpired 
+/// </summary>
+public partial record ConnectionExpired : _ConnectionExpired {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result ConnectionExpired 
+/// </summary>
+public partial record _ConnectionExpired : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "The connection request has expired";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("ConnectionExpired");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBindingSingle BaseBinding  { get; } = new (
+        (object test) => test is ConnectionExpired,
+        () => new ConnectionExpired(),
+        Array.Empty<GuiBoundProperty>());
+
+    ///<inheritdoc/>
+    public object?[] GetValues() => Array.Empty<object>();
+
+
+    }
+
+
+
+
+/// <summary>
+/// Return parameters for failure result ConnectionPinInvalid 
+/// </summary>
+public partial record ConnectionPinInvalid : _ConnectionPinInvalid {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result ConnectionPinInvalid 
+/// </summary>
+public partial record _ConnectionPinInvalid : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "The connection PIN was invalid";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("ConnectionPinInvalid");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBindingSingle BaseBinding  { get; } = new (
+        (object test) => test is ConnectionPinInvalid,
+        () => new ConnectionPinInvalid(),
+        Array.Empty<GuiBoundProperty>());
+
+    ///<inheritdoc/>
+    public object?[] GetValues() => Array.Empty<object>();
+
+
+    }
+
+
 
 
 /// <summary>
@@ -6755,65 +7109,6 @@ public class _EverythingMaui : Gui {
     ///<inheritdoc/> 
     public override List<GuiSection> Sections { get; }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     ///<inheritdoc/> 
     public override Dictionary<string, GuiAction>Actions { get; }
 
@@ -7208,6 +7503,10 @@ public class _EverythingMaui : Gui {
 	public GuiAction SelectionAccountSelect { get; } = new (
         "AccountSelect", "Switch", "circle_check", _AccountSelect.BaseBinding, () => new AccountSelect(), IsSelect:true);
 
+    ///<summary>Selection SelectionAccountComplete.</summary> 
+	public GuiAction SelectionAccountComplete { get; } = new (
+        "AccountComplete", "Complete", "circle_check", _AccountComplete.BaseBinding, () => new AccountComplete(), IsSelect:true);
+
     ///<summary>Selection SelectionActionAccept.</summary> 
 	public GuiAction SelectionActionAccept { get; } = new (
         "ActionAccept", "Accept", "circle_check", _ActionAccept.BaseBinding, () => new ActionAccept(), IsSelect:true);
@@ -7526,6 +7825,9 @@ public class _EverythingMaui : Gui {
 #endregion
 #region // Results
 
+    ///<summary>Result ResultConnectionCompleted.</summary> 
+	public GuiResult ResultConnectionCompleted { get; } = new (_ConnectionCompleted.BaseBinding);
+
     ///<summary>Result ResultSuccessGroupCreate.</summary> 
 	public GuiResult ResultSuccessGroupCreate { get; } = new (_SuccessGroupCreate.BaseBinding);
 
@@ -7537,6 +7839,9 @@ public class _EverythingMaui : Gui {
 
     ///<summary>Result ResultReportAccountCreate.</summary> 
 	public GuiResult ResultReportAccountCreate { get; } = new (_ReportAccountCreate.BaseBinding);
+
+    ///<summary>Result ResultReportAccountCompleted.</summary> 
+	public GuiResult ResultReportAccountCompleted { get; } = new (_ReportAccountCompleted.BaseBinding);
 
     ///<summary>Result ResultReportAccount.</summary> 
 	public GuiResult ResultReportAccount { get; } = new (_ReportAccount.BaseBinding);
@@ -7559,6 +7864,11 @@ public class _EverythingMaui : Gui {
     ///<summary>Dictionary resolving exception name to factory method.</summary> 
     public Dictionary<string, Func<IResult>> ExceptionDirectory =
         new() { 
+                { typeof(ConnectionAccountUnknownException)?.FullName!, () => new AccountUnknown() } , 
+                { typeof(ConnectionRefusedException)?.FullName!, () => new ConnectionRefused() } , 
+                { typeof(ConnectionPendingException)?.FullName!, () => new ConnectionPending() } , 
+                { typeof(ConnectionExpiredException)?.FullName!, () => new ConnectionExpired() } , 
+                { typeof(RefusedPinInvalidException)?.FullName!, () => new ConnectionPinInvalid() } , 
                 { typeof(HttpRequestException)?.FullName!, () => new HttpRequestFail() } , 
                 { typeof(ServerOperationFailed)?.FullName!, () => new ServiceRefused() }             };
 #endregion
@@ -7957,8 +8267,15 @@ public class _EverythingMaui : Gui {
 
 #region // Initialize Selections
         SelectionAccountSelect.Callback = (x) => {
-            if (x is BoundAccount xx) {
+            if (x is BoundAccountUser xx) {
                 return AccountSelect (xx); 
+                }
+            throw new NYI();
+            } ;
+
+        SelectionAccountComplete.Callback = (x) => {
+            if (x is BoundAccountPending xx) {
+                return AccountComplete (xx); 
                 }
             throw new NYI();
             } ;
@@ -8092,6 +8409,7 @@ public class _EverythingMaui : Gui {
 
         Selections = new Dictionary<string,GuiAction>() {  
 		    {"AccountSelect", SelectionAccountSelect}, 
+		    {"AccountComplete", SelectionAccountComplete}, 
 		    {"ActionAccept", SelectionActionAccept}, 
 		    {"ActionReject", SelectionActionReject}, 
 		    {"DocumentUpdate", SelectionDocumentUpdate}, 
@@ -8247,10 +8565,12 @@ public class _EverythingMaui : Gui {
 #region // Initialize Results
 
         Results = new List<GuiResult>() {  
+		    ResultConnectionCompleted, 
 		    ResultSuccessGroupCreate, 
 		    ResultReportPinValue, 
 		    ResultReportHost, 
 		    ResultReportAccountCreate, 
+		    ResultReportAccountCompleted, 
 		    ResultReportAccount, 
 		    ResultReportPending, 
 		    ResultReportShares, 
@@ -8470,7 +8790,13 @@ public class _EverythingMaui : Gui {
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> AccountSelect (BoundAccount data) 
+    public virtual Task<IResult> AccountSelect (BoundAccountUser data) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> AccountComplete (BoundAccountPending data) 
                 => throw new NYI();
 
     /// <summary>

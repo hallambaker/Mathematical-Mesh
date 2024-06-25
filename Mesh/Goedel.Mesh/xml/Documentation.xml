@@ -5848,6 +5848,16 @@
             Transaction result tag Expired
             </summary>
         </member>
+        <member name="F:Goedel.Mesh.MeshConstants.TransactionResultAccountUnknown">
+            <summary>
+            Transaction result tag Expired
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.TransactionResultPinInvalid">
+            <summary>
+            Transaction result tag Expired
+            </summary>
+        </member>
         <member name="F:Goedel.Mesh.MeshConstants.MeshPresenceService">
             <summary>
             To be requested IANA service name for Mesh presence service

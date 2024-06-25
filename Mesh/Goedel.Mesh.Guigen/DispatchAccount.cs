@@ -1,4 +1,7 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using Goedel.Mesh.Client;
+using Goedel.Protocol;
+
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Goedel.Everything;
 
@@ -112,8 +115,17 @@ public partial class EverythingMaui {
 
             var contextMeshPending = await MeshHost.ConnectAsync(accountAddress, pin: pin, rights: rights);
 
+
+            // here need to add a BoundAccountPending to BoundAccounts
+            var bound = new BoundAccountPending(contextMeshPending.CatalogedPending);
+            BoundAccounts.Add(bound);
+
+
             return new ReportPending() {
                 };
+            }
+        catch (ConnectionAccountUnknownException exception) {
+            return new ErrorResult(exception);
             }
         catch (Exception exception) {
             return ProcessException(exception, data);
@@ -196,14 +208,9 @@ public partial class EverythingMaui {
 
 
     ///<inheritdoc/>
-    public override async Task<IResult> AccountSelect(BoundAccount data) {
+    public override async Task<IResult> AccountSelect(BoundAccountUser data) {
         try {
             SetContext(data);
-            if (data is BoundAccountPending pending) {
-                AttemptCompletion(pending);
-                }
-
-
             return NullResult.HomeResult;
             }
         catch (Exception exception) {
@@ -214,7 +221,86 @@ public partial class EverythingMaui {
             }
         }
 
+    ///<inheritdoc/>
+    public override async Task<IResult> AccountComplete(BoundAccountPending boundAccountPending) {
+        try {
+            var accountAddress = boundAccountPending.Service;
+            var contextUser = await MeshHost.CompleteAsync(accountAddress);
+
+
+            // if successfull
+
+            // remove pending item from list
+            // create BoundAccountUser
+            // switch to BoundAccountUser
+            // SetContext(data);
+            var catalogued = contextUser.CatalogedMachine;
+            catalogued.AssertNotNull(NYI.Throw);
+            var bound = GetBoundAccount(contextUser);
+            SetContext(bound);
+
+            BoundAccounts.Remove(boundAccountPending);
+
+            return NullResult.Completed;
+            }
+        catch (ConnectionAccountUnknownException exception) {
+            return new ErrorResult(exception);
+            }
+        catch (ConnectionRefusedException exception) {
+            return new ConnectionRefused();
+            }
+        catch (ConnectionPendingException exception) {
+            return new ConnectionPending();
+            }
+        catch (ConnectionExpiredException exception) {
+            return new ErrorResult(exception);
+            }
+        catch (RefusedPinInvalidException exception) {
+            return new ErrorResult(exception);
+            }
+        catch (Exception exception) {
+            if (TryProcessException(exception, boundAccountPending, out var result)) {
+                return result;
+                }
+            return new ErrorResult(exception);
+            }
+        }
+
+
     public List<string> ParseRights(string text) => new List<string>() { text };
 
     }
 
+/// <summary>
+/// Callback parameters for action AccountRequestConnect 
+/// </summary>
+public partial class _AccountRequestConnect {
+
+    bool IsConnected(Gui gui, string? connectionString) {
+        if (connectionString is null) {
+            return false;
+            }
+
+        var everythingMaui = gui as EverythingMaui;
+        foreach (var account in everythingMaui.BoundAccounts) {
+            switch (account) {
+                case BoundAccountPending pending: {
+                    if (connectionString.ToLower() == pending.Service.ToLower()) {
+                        return true;
+                        }
+                    break;
+                    }
+                case BoundAccountUser user: {
+                    if (connectionString.ToLower() == user.Service.ToLower()) {
+                        return true;
+                        }
+                    break;
+                    }
+
+                }
+            }
+
+        return false;
+        }
+
+    }

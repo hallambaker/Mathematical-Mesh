@@ -52,10 +52,29 @@ Action AccountRequestConnect  "Connect by Address" "connect"
 		|
 	Return ReportPending
 	Text ConnectionString "Account address"
+		Error AccountAlreadyConnected "Already connected"
+			|IsConnected (gui, ConnectionString)
 	Text ConnectionPin "Activation code (if provided)"
 	Text Rights "Requested rights"
 
 
+Result ConnectionCompleted "Connection completed"
+
+
+Fail AccountUnknown "The account is not known"
+	Exception ConnectionAccountUnknownException
+
+Fail ConnectionRefused "The connection request was refused"
+	Exception ConnectionRefusedException
+
+Fail ConnectionPending		"The connection request is still pending"
+	Exception ConnectionPendingException
+
+Fail ConnectionExpired		"The connection request has expired"
+	Exception ConnectionExpiredException
+
+Fail ConnectionPinInvalid	"The connection PIN was invalid"
+	Exception RefusedPinInvalidException
 
 
 Action AccountRecover "Recover Mesh Account" "recover_account"
@@ -107,16 +126,19 @@ Dialog BoundAccount "Account" "contacts"
 		Readonly
 	Text UDF		"Fingerprint"
 		Readonly
+
+
+Dialog BoundAccountUser "Account" "contacts"
+	Inherit BoundAccount
 	Selection AccountSelect "Switch" "circle_check"
 		Description
 			|Switch to the chosen account.	
 
-Dialog BoundAccountUser "Account" "contacts"
-	Inherit BoundAccount
-
 Dialog BoundAccountPending "Pending" "contacts"
 	Inherit BoundAccount
-
+	Selection AccountComplete "Complete" "circle_check"
+		Description
+			|Switch to the chosen account.	
 
 // **** Messages
 Section MessageSection "Messages" "messages"
@@ -657,6 +679,13 @@ Result ReportHost "Host {0} acknowledged your request."
 	Text HostUdf			"Host fingerprint"
 
 Result ReportAccountCreate "Created account {0}."
+	Hidden ServiceName
+	Text LocalName			"Local"
+	Text ServiceAddress		"DNS"
+	Text ProfileUdf			"Profile fingerprint"
+	Text ServiceUdf			"Service fingerprint"
+
+Result ReportAccountCompleted "Connected to account {0}."
 	Hidden ServiceName
 	Text LocalName			"Local"
 	Text ServiceAddress		"DNS"

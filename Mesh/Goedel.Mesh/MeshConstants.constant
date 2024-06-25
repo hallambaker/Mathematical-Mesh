@@ -226,6 +226,13 @@ File MiscUnsorted
 	String TransactionResultExpired "Expired"
 		Description
 			|Transaction result tag Expired
+	String TransactionResultAccountUnknown "AccountUnknown"
+		Description
+			|Transaction result tag Expired
+
+	String TransactionResultPinInvalid "PinInvalid"
+		Description
+			|Transaction result tag Expired
 
 	String MeshPresenceService "mmm_presence"
 		Description

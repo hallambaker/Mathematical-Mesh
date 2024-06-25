@@ -130,6 +130,7 @@ public static class Extensions {
         var pathHost = GetHost(meshMachine, hostDns);
         var pathLog = GetHost(meshMachine, "Logs");
 
+
         var hostConfiguration = new GenericHostConfiguration {
             // HostUdf later
             // DeviceUdf later

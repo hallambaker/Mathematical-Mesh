@@ -178,6 +178,7 @@ public partial class EverythingMaui {
         }
 
 
+
     /// <summary>
     /// Return a bound account for a Pending entry.
     /// </summary>
@@ -298,13 +299,6 @@ public partial class EverythingMaui {
         boundAccount.Synchronize = true;
         SyncTask = boundAccount.StartSync();
 
-        }
-
-    async Task<IResult> AttemptCompletion(BoundAccountPending boundAccountPending) {
-        var accountAddress = boundAccountPending.Service;
-
-        var result = await MeshHost.CompleteAsync(accountAddress);
-        return NullResult.Completed;
         }
 
 

@@ -84,30 +84,30 @@ Namespace Goedel.Mesh.Client
 			Description
 				|Access control failed
 
-		Exception ConnectionRefused
+		Exception ConnectionRefusedException
 			Console "The connection request was refused"
 			Description
 				|The connection request was refused
 
-		Exception ConnectionPending
+		Exception ConnectionPendingException
 			Console "The connection request is still pending"
 			Description
 				|The connection request is still pending
 
-		Exception ConnectionExpired
-			Console "The connection request is still pending"
-			Description
-				|The connection request is still pending
-
-
-
-		Exception ConnectionAccountUnknown
+		Exception ConnectionExpiredException
 			Console "The connection request is still pending"
 			Description
 				|The connection request is still pending
 
 
-		Exception RefusedPINInvalid
+
+		Exception ConnectionAccountUnknownException
+			Console "The connection request is still pending"
+			Description
+				|The connection request is still pending
+
+
+		Exception RefusedPinInvalidException
 			Console "The request was refused because the pin was invalid"
 			Description
 				|The request was refused because the pin was invalid
