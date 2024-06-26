@@ -362,6 +362,10 @@ public class MeshHost : Disposable {
             }
         }
 
+    public void Update(HostCatalogItem catalogItem) {
+        PersistHost.Update(catalogItem, false);
+        }
+
 
     /// <summary>
     /// Delete <paramref name="key"/> from the host catalog.

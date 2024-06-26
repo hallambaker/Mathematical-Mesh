@@ -52,6 +52,11 @@ public partial class AccountSection: IAccountSelector {
 
 
 public partial class BoundAccount : IBoundPresentation, IDialog, IAccountSelector {
+
+
+    public override bool? Default => IsDefault;
+    public bool IsDefault { get; set; } = false;
+
     public bool Synchronize { get; set; }
 
     public int Polling { get; set; } = 60 * 1000;
@@ -127,6 +132,7 @@ public partial class BoundAccount : IBoundPresentation, IDialog, IAccountSelecto
     
 
 public partial class BoundAccountUser  {
+
 
     public override ContextUser ContextUser { get; } = null!;
 

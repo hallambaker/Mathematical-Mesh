@@ -122,6 +122,7 @@ Dialog BoundAccount "Account" "contacts"
 	Text Display	"Display name"
 		Readonly
 	Boolean Default "Default"
+		Readonly
 	Text Service	"Service"
 		Readonly
 	Text UDF		"Fingerprint"
@@ -133,6 +134,9 @@ Dialog BoundAccountUser "Account" "contacts"
 	Selection AccountSelect "Switch" "circle_check"
 		Description
 			|Switch to the chosen account.	
+	Selection AccountDefault "Make Default" "circle_check"
+		Description
+			|Make the chosen account the default account.
 
 Dialog BoundAccountPending "Pending" "contacts"
 	Inherit BoundAccount

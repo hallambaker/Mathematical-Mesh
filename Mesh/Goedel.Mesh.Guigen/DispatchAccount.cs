@@ -206,18 +206,44 @@ public partial class EverythingMaui {
 
         }
 
-
     ///<inheritdoc/>
-    public override async Task<IResult> AccountSelect(BoundAccountUser data) {
+    public override Task<IResult> AccountDefault(BoundAccountUser data) {
         try {
-            SetContext(data);
-            return NullResult.HomeResult;
+            if (data == DefaultAccount) {
+                return TaskResult(NullResult.HomeResult);
+                }
+            var bound = data.Bound as CatalogedStandard;
+            if (bound is not null) {
+                bound.Default = true;
+                MeshHost.Update(bound);
+                DefaultAccount.IsDefault = false;
+                DefaultAccount = data;
+                DefaultAccount.IsDefault = true;
+                }
+            // Here we have to change stuff
+            return TaskResult(NullResult.HomeResult);
             }
         catch (Exception exception) {
             if (TryProcessException(exception, data, out var result)) {
-                return result;
+                return TaskResult(result!);
                 }
-            return new ErrorResult(exception);
+            return TaskResult(new ErrorResult(exception));
+            }
+        }
+
+
+
+    ///<inheritdoc/>
+    public override  Task<IResult> AccountSelect(BoundAccountUser data) {
+        try {
+            SetContext(data);
+            return TaskResult(NullResult.HomeResult);
+            }
+        catch (Exception exception) {
+            if (TryProcessException(exception, data, out var result)) {
+                return TaskResult(result);
+                }
+            return TaskResult(new ErrorResult(exception));
             }
         }
 

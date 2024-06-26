@@ -56,6 +56,9 @@ public partial class EverythingMaui {
     ///<summary>The current account, null if the device is unbound.</summary> 
     public BoundAccount? CurrentAccount = null;
 
+    ///<summary>The current account, null if the device is unbound.</summary> 
+    public BoundAccount? DefaultAccount = null;
+
     ///<summary>The current account user context, null if the device is unbound.</summary> 
     public ContextUser? ContextUser => CurrentAccount?.ContextUser;
 
@@ -95,18 +98,30 @@ public partial class EverythingMaui {
         //accounts
 
         BoundAccount? currentAccount = null;
+        var defaultOpen = true;
+
         foreach (var entry in MeshHost.ObjectIndex) {
             var catalogedMachine = entry.Value.JsonObject as CatalogedMachine;
             switch (catalogedMachine) {
                 case CatalogedStandard standardEntry: {
                     var bound = GetBoundAccount(standardEntry);
                     currentAccount ??= bound;
+                    if (defaultOpen & standardEntry.Default == true & bound is not null) {
+                        currentAccount = bound;
+                        DefaultAccount = bound;
+                        defaultOpen = false;
+                        bound.IsDefault = true;
+                        }
                     break;
                     }
                 case CatalogedPending pendingEntry: {
                     var bound = GetBoundAccount(pendingEntry);
                     currentAccount ??= bound;
-
+                    //I don't think we want to allow a mere pending account to be the default.
+                    //if (defaultOpen & pendingEntry.Default == true) {
+                    //    currentAccount = bound;
+                    //    defaultOpen = false;
+                    //    }
                     break;
                     }
                 }
@@ -188,7 +203,9 @@ public partial class EverythingMaui {
         // here post async completion request.
 
 
-        var bound = new BoundAccountPending(catalogedPending);
+        var bound = new BoundAccountPending(catalogedPending) {
+            Bound = catalogedPending
+            };
         BoundAccounts.Add(bound);
 
         return bound;
@@ -200,7 +217,9 @@ public partial class EverythingMaui {
             return null;
             }
 
-        return GetBoundAccount(contextUser);
+        var bound = GetBoundAccount(contextUser);
+        bound.Bound = catalogedStandard;
+        return bound;
         }
 
 

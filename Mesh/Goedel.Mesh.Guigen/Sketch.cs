@@ -518,7 +518,7 @@ public partial class _BoundAccount : IParameter {
     public virtual string? Display { get;} 
 
     ///<summary></summary> 
-    public virtual bool? Default { get; set;} 
+    public virtual bool? Default { get;} 
 
     ///<summary></summary> 
     public virtual string? Service { get;} 
@@ -537,8 +537,7 @@ public partial class _BoundAccount : IParameter {
         [ 
             new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundAccount)?.Type , null)  /* 0 */ , 
             new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundAccount)?.Display , null)  /* 1 */ , 
-            new GuiBoundPropertyBoolean ("Default", "Default", (object data) => (data as _BoundAccount)?.Default , 
-                (object data,bool? value) => { if (data is _BoundAccount datad) { datad.Default = value; }})  /* 2 */ , 
+            new GuiBoundPropertyBoolean ("Default", "Default", (object data) => (data as _BoundAccount)?.Default , null)  /* 2 */ , 
             new GuiBoundPropertyString ("Service", "Service", (object data) => (data as _BoundAccount)?.Service , null)  /* 3 */ , 
             new GuiBoundPropertyString ("UDF", "Fingerprint", (object data) => (data as _BoundAccount)?.UDF , null)  /* 4 */ 
             ]);
@@ -584,11 +583,11 @@ public partial class _BoundAccountUser : BoundAccount {
         [ 
             new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundAccountUser)?.Type , null)  /* 0 */ , 
             new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundAccountUser)?.Display , null)  /* 1 */ , 
-            new GuiBoundPropertyBoolean ("Default", "Default", (object data) => (data as _BoundAccountUser)?.Default , 
-                (object data,bool? value) => { if (data is _BoundAccountUser datad) { datad.Default = value; }})  /* 2 */ , 
+            new GuiBoundPropertyBoolean ("Default", "Default", (object data) => (data as _BoundAccountUser)?.Default , null)  /* 2 */ , 
             new GuiBoundPropertyString ("Service", "Service", (object data) => (data as _BoundAccountUser)?.Service , null)  /* 3 */ , 
             new GuiBoundPropertyString ("UDF", "Fingerprint", (object data) => (data as _BoundAccountUser)?.UDF , null)  /* 4 */ , 
-            new GuiBoundPropertySelection ("AccountSelect", "Switch")  /* 5 */ 
+            new GuiBoundPropertySelection ("AccountSelect", "Switch")  /* 5 */ , 
+            new GuiBoundPropertySelection ("AccountDefault", "Make Default")  /* 6 */ 
             ]);
     ///<summary>Validation</summary> 
     public override IResult Validate(Gui gui) {
@@ -632,8 +631,7 @@ public partial class _BoundAccountPending : BoundAccount {
         [ 
             new GuiBoundPropertyIcon ("Type", "Type", (object data) => (data as _BoundAccountPending)?.Type , null)  /* 0 */ , 
             new GuiBoundPropertyString ("Display", "Display name", (object data) => (data as _BoundAccountPending)?.Display , null)  /* 1 */ , 
-            new GuiBoundPropertyBoolean ("Default", "Default", (object data) => (data as _BoundAccountPending)?.Default , 
-                (object data,bool? value) => { if (data is _BoundAccountPending datad) { datad.Default = value; }})  /* 2 */ , 
+            new GuiBoundPropertyBoolean ("Default", "Default", (object data) => (data as _BoundAccountPending)?.Default , null)  /* 2 */ , 
             new GuiBoundPropertyString ("Service", "Service", (object data) => (data as _BoundAccountPending)?.Service , null)  /* 3 */ , 
             new GuiBoundPropertyString ("UDF", "Fingerprint", (object data) => (data as _BoundAccountPending)?.UDF , null)  /* 4 */ , 
             new GuiBoundPropertySelection ("AccountComplete", "Complete")  /* 5 */ 
@@ -4630,6 +4628,45 @@ public partial class _AccountSelect : IParameter {
 
 
 /// <summary>
+/// Callback parameters for action AccountDefault 
+/// </summary>
+public partial class AccountDefault : _AccountDefault {
+    }
+
+
+/// <summary>
+/// Callback parameters for action AccountDefault 
+/// </summary>
+public partial class _AccountDefault : IParameter {
+
+
+    ///<inheritdoc/>
+    public virtual GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static  GuiBindingSingle BaseBinding  { get; } = new (
+        (object test) => test is _AccountDefault,
+        () => new AccountDefault(),
+        Array.Empty<GuiBoundProperty>());
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate(Gui gui) {
+        GuiResultInvalid? result = null;
+
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+
+
+    ///<summary>Teardown.</summary> 
+    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+
+
+    }
+
+
+/// <summary>
 /// Callback parameters for action AccountComplete 
 /// </summary>
 public partial class AccountComplete : _AccountComplete {
@@ -7503,6 +7540,10 @@ public class _EverythingMaui : Gui {
 	public GuiAction SelectionAccountSelect { get; } = new (
         "AccountSelect", "Switch", "circle_check", _AccountSelect.BaseBinding, () => new AccountSelect(), IsSelect:true);
 
+    ///<summary>Selection SelectionAccountDefault.</summary> 
+	public GuiAction SelectionAccountDefault { get; } = new (
+        "AccountDefault", "Make Default", "circle_check", _AccountDefault.BaseBinding, () => new AccountDefault(), IsSelect:true);
+
     ///<summary>Selection SelectionAccountComplete.</summary> 
 	public GuiAction SelectionAccountComplete { get; } = new (
         "AccountComplete", "Complete", "circle_check", _AccountComplete.BaseBinding, () => new AccountComplete(), IsSelect:true);
@@ -8273,6 +8314,13 @@ public class _EverythingMaui : Gui {
             throw new NYI();
             } ;
 
+        SelectionAccountDefault.Callback = (x) => {
+            if (x is BoundAccountUser xx) {
+                return AccountDefault (xx); 
+                }
+            throw new NYI();
+            } ;
+
         SelectionAccountComplete.Callback = (x) => {
             if (x is BoundAccountPending xx) {
                 return AccountComplete (xx); 
@@ -8409,6 +8457,7 @@ public class _EverythingMaui : Gui {
 
         Selections = new Dictionary<string,GuiAction>() {  
 		    {"AccountSelect", SelectionAccountSelect}, 
+		    {"AccountDefault", SelectionAccountDefault}, 
 		    {"AccountComplete", SelectionAccountComplete}, 
 		    {"ActionAccept", SelectionActionAccept}, 
 		    {"ActionReject", SelectionActionReject}, 
@@ -8791,6 +8840,12 @@ public class _EverythingMaui : Gui {
     /// GUI action
     /// </summary>
     public virtual Task<IResult> AccountSelect (BoundAccountUser data) 
+                => throw new NYI();
+
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> AccountDefault (BoundAccountUser data) 
                 => throw new NYI();
 
     /// <summary>
