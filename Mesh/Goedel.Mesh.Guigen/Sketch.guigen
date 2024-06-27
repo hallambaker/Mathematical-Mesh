@@ -404,8 +404,14 @@ Action AddFeed "Add Feed" "account_group"
 		|Create a new feed
 	Text Title "Title"
 	Text Site "Site"
+		Error MustSpecifySite "Must specify site for account"
+			|(Site is null) and (Account is not null)
 	Text Account "Account"
+		Error MustSpecifyAccount "Must specify account for site"
+			|(Site is not null) and (Account is null)
 	Text Uri "Uri"
+		Error MustSpecifyUri "Must specify URI or Site and Account"
+			|(Site is null) and (Account is null) and (Uri is null)
 
 	Text Path "Path"
 

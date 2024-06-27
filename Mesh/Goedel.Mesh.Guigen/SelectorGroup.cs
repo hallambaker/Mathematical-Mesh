@@ -7,7 +7,7 @@ namespace Goedel.Everything;
 #region // Bindings to classes specified through the Guigen schema.
 
 // Documented in Guigen output
-public partial class GroupSection {
+public partial class GroupSection : IHeadedSelection {
 
     IAccountSelector Account { get; }
     ContextUser ContextUser => Account.ContextUser;
@@ -15,6 +15,9 @@ public partial class GroupSection {
     public GroupSelection GroupSelection { get; }
 
     GuigenCatalogApplication Catalog { get; }
+
+    ///<inheritdoc/>
+    public GuiBinding SelectionBinding => _BoundGroup.BaseBinding;
 
     ///<inheritdoc/>
     public override ISelectCollection ChooseGroup { get => GroupSelection; set { } }

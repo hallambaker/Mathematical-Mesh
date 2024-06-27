@@ -140,7 +140,7 @@ public abstract class SelectionCatalog<TCatalog,TPersist,TBindable> : SelectionS
 
 
     public async Task<TransactResponse> AddAsync(IBoundPresentation item) {
-        var entry = item as TPersist;
+        var entry = item.Bound as TPersist;
 
         var transaction = ContextAccount.TransactBegin();
         transaction.CatalogUpdate(Catalog, entry);
@@ -151,7 +151,7 @@ public abstract class SelectionCatalog<TCatalog,TPersist,TBindable> : SelectionS
         }
 
     public async Task<TransactResponse> RemoveAsync(IBoundPresentation item) {
-        var entry = item as TPersist;
+        var entry = item.Bound as TPersist;
 
         var transaction = ContextAccount.TransactBegin();
         transaction.CatalogDelete(Catalog, entry);

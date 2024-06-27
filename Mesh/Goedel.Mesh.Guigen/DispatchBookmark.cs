@@ -1,12 +1,34 @@
 ﻿namespace Goedel.Everything;
+
+
+public partial class AddFeed {
+
+
+
+
+
+    //public override IResult Validate(Gui gui) {
+
+
+    //    return NullResult.Valid;
+    //    }
+
+    }
 public partial class EverythingMaui {
+
+ 
+
 
     ///<inheritdoc/>
     public override async Task<IResult> AddFeed(AddFeed data) {
         var uid = Udf.Nonce();
+
+        var uri = data.Uri ??= $"{data.Site}:{data.Account}";
+        var title = data.Title ?? uri;
+
         var entry = new CatalogedFeed() {
-            Uri = data.Uri,
-            Title = data.Title,
+            Uri = uri,
+            Title = title,
             LocalName = data.Path,
             Uid = uid
             };
