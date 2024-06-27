@@ -194,8 +194,9 @@ public partial class _FeedSection : IBindable {
         (object test) => test is _FeedSection,
         () => new FeedSection(),
         [ 
-            new GuiBoundPropertyChooser ("ChooseFeed", "Feeds", (object data) => (data as _FeedSection)?.ChooseFeed , null)  /* 0 */ 
-            ], 0
+            new GuiBoundPropertyButton ("AddFeed")  /* 0 */ , 
+            new GuiBoundPropertyChooser ("ChooseFeed", "Feeds", (object data) => (data as _FeedSection)?.ChooseFeed , null)  /* 1 */ 
+            ], 1
 );
 
     }
@@ -345,8 +346,9 @@ public partial class _BookmarkSection : IBindable {
         () => new BookmarkSection(),
         [ 
             new GuiBoundPropertyButton ("AddBookmark")  /* 0 */ , 
-            new GuiBoundPropertyChooser ("ChooseBookmark", "Bookmark", (object data) => (data as _BookmarkSection)?.ChooseBookmark , null)  /* 1 */ 
-            ], 1
+            new GuiBoundPropertyButton ("AddFeed")  /* 1 */ , 
+            new GuiBoundPropertyChooser ("ChooseBookmark", "Bookmark", (object data) => (data as _BookmarkSection)?.ChooseBookmark , null)  /* 2 */ 
+            ], 2
 );
 
     }
@@ -3871,6 +3873,12 @@ public partial class _AddFeed : IParameter {
     public virtual string? Title { get; set;} 
 
     ///<summary></summary> 
+    public virtual string? Site { get; set;} 
+
+    ///<summary></summary> 
+    public virtual string? Account { get; set;} 
+
+    ///<summary></summary> 
     public virtual string? Uri { get; set;} 
 
     ///<summary></summary> 
@@ -3887,10 +3895,14 @@ public partial class _AddFeed : IParameter {
         [ 
             new GuiBoundPropertyString ("Title", "Title", (object data) => (data as _AddFeed)?.Title , 
                 (object data,string? value) => { if (data is _AddFeed datad) { datad.Title = value; }})  /* 0 */ , 
+            new GuiBoundPropertyString ("Site", "Site", (object data) => (data as _AddFeed)?.Site , 
+                (object data,string? value) => { if (data is _AddFeed datad) { datad.Site = value; }})  /* 1 */ , 
+            new GuiBoundPropertyString ("Account", "Account", (object data) => (data as _AddFeed)?.Account , 
+                (object data,string? value) => { if (data is _AddFeed datad) { datad.Account = value; }})  /* 2 */ , 
             new GuiBoundPropertyString ("Uri", "Uri", (object data) => (data as _AddFeed)?.Uri , 
-                (object data,string? value) => { if (data is _AddFeed datad) { datad.Uri = value; }})  /* 1 */ , 
+                (object data,string? value) => { if (data is _AddFeed datad) { datad.Uri = value; }})  /* 3 */ , 
             new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _AddFeed)?.Path , 
-                (object data,string? value) => { if (data is _AddFeed datad) { datad.Path = value; }})  /* 2 */ 
+                (object data,string? value) => { if (data is _AddFeed datad) { datad.Path = value; }})  /* 4 */ 
             ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
@@ -7956,7 +7968,8 @@ public class _EverythingMaui : Gui {
 
 	    SectionFeedSection.Gui = this;
 	    SectionFeedSection.Active = () => StateDefault;
-	    SectionFeedSection.Entries = [];
+	    SectionFeedSection.Entries = [
+			new GuiButton ("AddFeed", ActionAddFeed)];
 
 	    SectionGroupSection.Gui = this;
 	    SectionGroupSection.Active = () => StateDefault;
@@ -7982,7 +7995,8 @@ public class _EverythingMaui : Gui {
 	    SectionBookmarkSection.Gui = this;
 	    SectionBookmarkSection.Active = () => StateDefault;
 	    SectionBookmarkSection.Entries = [
-			new GuiButton ("AddBookmark", ActionAddBookmark)];
+			new GuiButton ("AddBookmark", ActionAddBookmark),
+			new GuiButton ("AddFeed", ActionAddFeed)];
 
 	    SectionApplicationSection.Gui = this;
 	    SectionApplicationSection.Active = () => StateDefault;

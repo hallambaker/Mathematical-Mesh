@@ -396,13 +396,17 @@ Dialog BoundDocument "Document" "documents"
 
 // **** Feeds
 Section FeedSection "Feeds" "feeds"
+	Button AddFeed
 	Chooser ChooseFeed "Feeds" "feeds" 
 
 Action AddFeed "Add Feed" "account_group"
 	Description
 		|Create a new feed
 	Text Title "Title"
+	Text Site "Site"
+	Text Account "Account"
 	Text Uri "Uri"
+
 	Text Path "Path"
 
 
@@ -517,6 +521,7 @@ Section CalendarSection "Calendar" "calendar"
 // **** Bookmarks
 Section BookmarkSection "Bookmark" "bookmark"
 	Button AddBookmark
+	Button AddFeed
 	Chooser ChooseBookmark "Bookmark" "Bookmark" 
 
 Action AddBookmark "Add Bookmark" "account_group"

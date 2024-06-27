@@ -5050,11 +5050,11 @@
             Default constructor
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedTask.EnvelopedTask">
+        <member name="P:Goedel.Mesh.CatalogedTask.Title">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedTask.Title">
+        <member name="P:Goedel.Mesh.CatalogedTask.EnvelopedTask">
             <summary>
             </summary>
         </member>
@@ -15480,6 +15480,59 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Mesh.Engagement.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.WorkTask">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.WorkTask.Dependency">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.WorkTask._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.WorkTask._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.WorkTask._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.WorkTask._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.WorkTask._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.WorkTask._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.WorkTask._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.WorkTask._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.WorkTask.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.WorkTask._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.WorkTask.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>

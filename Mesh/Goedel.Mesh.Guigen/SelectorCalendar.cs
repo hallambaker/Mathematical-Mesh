@@ -75,6 +75,9 @@ public partial class CalendarSelection : TaskSelection  {
                 GuigenCatalogTasks catalog) : base(contextAccount, catalog) {
         }
 
+
+    public override bool Include(CatalogedTask? item) => 
+        item.EnvelopedTask.EnvelopedObject is WorkTask;
     }
 
 #endregion

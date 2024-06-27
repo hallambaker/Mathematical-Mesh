@@ -191,7 +191,9 @@ public class GuigenCatalogBookmark : CatalogBookmark {
 #region // Selection Catalog backing type.
 
 public partial class BookmarkSelection : SelectionCatalog<GuigenCatalogBookmark,
-            CatalogedBookmark, BoundBookmark> {
+            CatalogedBookmark, BoundBookmark>, IHeadedSelection {
+
+    public virtual GuiBinding SelectionBinding => _BoundBookmark.BaseBinding;
 
     /// <summary>
     /// Constructor returning an instance of the selection data backer bound to the 

@@ -785,6 +785,12 @@
 		String Repeat
 		Boolean Busy
 	
+	Structure WorkTask
+		Inherits Engagement
+		String Dependency
+			Multiple
+
+
 	Section 2 "Catalog Entries"
 
 	Structure CatalogedEntry
@@ -1122,10 +1128,9 @@
 
 	Structure CatalogedTask
 		Inherits CatalogedEntry
-		Struct Enveloped<Engagement> EnvelopedTask
 		String Title
+		Struct Enveloped<Engagement> EnvelopedTask
 
-		
 
 	Structure CatalogedApplication
 		// The application profile

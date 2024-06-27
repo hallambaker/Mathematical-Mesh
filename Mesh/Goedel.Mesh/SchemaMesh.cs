@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 6/26/2024 5:19:33 PM
+//  This file was automatically generated at 6/27/2024 1:56:26 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -130,6 +130,7 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"Bookmark", Bookmark._Factory},
 	    {"Reference", Reference._Factory},
 	    {"Engagement", Engagement._Factory},
+	    {"WorkTask", WorkTask._Factory},
 	    {"CatalogedEntry", CatalogedEntry._Factory},
 	    {"CatalogedDevice", CatalogedDevice._Factory},
 	    {"DeviceDescription", DeviceDescription._Factory},
@@ -5460,6 +5461,85 @@ public partial class Engagement : MeshItem {
 	}
 
 	/// <summary>
+	/// </summary>
+public partial class WorkTask : Engagement {
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					Dependency  {get; set;}
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new WorkTask(), Engagement._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Dependency", new PropertyListString ("Dependency", 
+					(IBinding data, List<string>? value) => {(data as WorkTask).Dependency = value;}, (IBinding data) => (data as WorkTask).Dependency )}
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, Engagement._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "WorkTask";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new WorkTask();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new WorkTask FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as WorkTask;
+			}
+		var Result = new WorkTask ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
 	///
 	/// Base class for cataloged Mesh data.
 	/// </summary>
@@ -7851,12 +7931,12 @@ public partial class CatalogedTask : CatalogedEntry {
         /// <summary>
         /// </summary>
 
-	public virtual Enveloped<Engagement>?						EnvelopedTask  {get; set;}
+	public virtual string?						Title  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Title  {get; set;}
+	public virtual Enveloped<Engagement>?						EnvelopedTask  {get; set;}
 
 
 
@@ -7870,11 +7950,11 @@ public partial class CatalogedTask : CatalogedEntry {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
+			{ "Title", new PropertyString ("Title", 
+					(IBinding data, string? value) => {(data as CatalogedTask).Title = value;}, (IBinding data) => (data as CatalogedTask).Title )},
 			{ "EnvelopedTask", new PropertyStruct ("EnvelopedTask", 
 					(IBinding data, object? value) => {(data as CatalogedTask).EnvelopedTask = value as Enveloped<Engagement>;}, (IBinding data) => (data as CatalogedTask).EnvelopedTask,
-					false, ()=>new  Enveloped<Engagement>(), ()=>new Enveloped<Engagement>())} ,
-			{ "Title", new PropertyString ("Title", 
-					(IBinding data, string? value) => {(data as CatalogedTask).Title = value;}, (IBinding data) => (data as CatalogedTask).Title )}
+					false, ()=>new  Enveloped<Engagement>(), ()=>new Enveloped<Engagement>())} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

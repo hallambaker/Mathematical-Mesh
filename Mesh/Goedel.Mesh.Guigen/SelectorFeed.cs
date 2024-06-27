@@ -4,7 +4,7 @@ namespace Goedel.Everything;
 #region // Bindings to classes specified through the Guigen schema.
 
 // Documented in Guigen output
-public partial class FeedSection {
+public partial class FeedSection : IHeadedSelection {
 
     IAccountSelector Account { get; }
     ContextUser ContextUser => Account.ContextUser;
@@ -12,6 +12,9 @@ public partial class FeedSection {
     public FeedSelection FeedSelection { get; }
 
     GuigenCatalogBookmark Catalog { get; }
+
+    ///<inheritdoc/>
+    public GuiBinding SelectionBinding => _BoundFeed.BaseBinding;
 
     ///<inheritdoc/>
     public override ISelectCollection ChooseFeed { get => FeedSelection; set { } }
@@ -28,33 +31,43 @@ public partial class FeedSection {
         }
 
     public async Task AddAsync(CatalogedFeed entry) {
-
-        var transaction = ContextUser.TransactBegin();
-        transaction.CatalogUpdate(Catalog, entry);
-        await transaction.TransactAsync();
-
+        FeedSelection.AssertNotNull(NYI.Throw);
         var bound = BoundFeed.Factory(entry);
-        FeedSelection.Add(bound);
+        await FeedSelection.AddAsync(bound);
+
+
+
+        //var transaction = ContextUser.TransactBegin();
+        //transaction.CatalogUpdate(Catalog, entry);
+        //await transaction.TransactAsync();
+
+        //var bound = BoundFeed.Factory(entry);
+        //FeedSelection.Add(bound);
         }
 
 
     public async Task UpdateAsync(BoundFeed entry) {
+        FeedSelection.AssertNotNull(NYI.Throw);
+        await FeedSelection.UpdateAsync(entry);
 
-        var transaction = ContextUser.TransactBegin();
-        transaction.CatalogUpdate(Catalog, entry.CatalogedFeed);
-        await transaction.TransactAsync();
 
-        FeedSelection.Update(entry);
+        //var transaction = ContextUser.TransactBegin();
+        //transaction.CatalogUpdate(Catalog, entry.CatalogedFeed);
+        //await transaction.TransactAsync();
+
+        //FeedSelection.Update(entry);
         }
 
 
     public async Task DeleteAsync(BoundFeed entry) {
+        FeedSelection.AssertNotNull(NYI.Throw);
+        await FeedSelection.RemoveAsync(entry);
 
-        var transaction = ContextUser.TransactBegin();
-        transaction.CatalogUpdate(Catalog, entry.CatalogedFeed);
-        await transaction.TransactAsync();
+        //var transaction = ContextUser.TransactBegin();
+        //transaction.CatalogUpdate(Catalog, entry.CatalogedFeed);
+        //await transaction.TransactAsync();
 
-        FeedSelection.Remove(entry);
+        //FeedSelection.Remove(entry);
         }
 
 
@@ -67,7 +80,10 @@ public partial class FeedSection {
 
 #region // Selection Catalog backing type.
 
-public partial class FeedSelection : BookmarkSelection {
+public partial class FeedSelection : BookmarkSelection{
+
+
+    public override GuiBinding SelectionBinding => _BoundFeed.BaseBinding;
 
     /// <summary>
     /// Constructor returning an instance of the selection data backer bound to the 
@@ -77,6 +93,9 @@ public partial class FeedSelection : BookmarkSelection {
     public FeedSelection(ContextAccount contextAccount,
                 GuigenCatalogBookmark catalog) : base(contextAccount, catalog) {
         }
+
+    public override bool Include(CatalogedBookmark? item) => item is CatalogedFeed;
+
 
     #region // Conversion overrides
     //public override CatalogedApplication ConvertFromBindable(IBindable contact) {

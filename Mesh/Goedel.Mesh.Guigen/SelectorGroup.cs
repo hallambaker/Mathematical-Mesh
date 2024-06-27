@@ -75,7 +75,7 @@ public partial class GroupSelection : ApplicationSelection {
                 GuigenCatalogApplication catalog) : base(contextAccount, catalog) {
         }
 
-
+    public override bool Include(CatalogedApplication? item) => item is CatalogedGroup;
     }
 
 

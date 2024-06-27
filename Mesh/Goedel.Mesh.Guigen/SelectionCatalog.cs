@@ -3,6 +3,7 @@
 
 
 using System.Collections;
+using System.Text.Json.Serialization;
 
 namespace Goedel.Everything;
 
@@ -92,11 +93,16 @@ public abstract class SelectionCatalog<TCatalog,TPersist,TBindable> : SelectionS
                     TCatalog store) : base (store){
         ContextAccount = contextAccount;
         foreach (var item in store) {
-            var bound = ConvertToBindable(item);
-            bound.Bound = item;
-            Entries.Add(bound);
+            if (Include(item)) {
+                var bound = ConvertToBindable(item);
+                bound.Bound = item;
+                Entries.Add(bound);
+                }
             }
         }
+
+
+    public virtual bool Include(TPersist? item) => true;
 
     public override async Task<IResult> Add(IBoundPresentation item) {
         try {
