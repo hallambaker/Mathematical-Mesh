@@ -122,7 +122,7 @@ public partial class ContextGroup : ContextAccount {
     /// <param name="activationAccount">The account activation.</param>
     /// <param name="client">The client to connect to the service with.</param>
     /// <returns>The group context.</returns>
-    public static ContextGroup CreateGroup(
+    public static async Task<ContextGroup> CreateGroup(
                 ContextUser contextAccount,
                 CatalogedGroup catalogedGroup,
                 ActivationCommon activationAccount,
@@ -135,7 +135,7 @@ public partial class ContextGroup : ContextAccount {
         Directory.CreateDirectory(result.StoresDirectory);
 
         result.LoadStores();
-        result.SyncProgressUpload();
+        await result.SyncProgressUploadAsync();
 
         return result;
         }

@@ -778,7 +778,7 @@ public partial class ContextUser : ContextAccount {
         createResponse.AssertSuccess();
 
         // create the group context
-        var contextGroup = ContextGroup.CreateGroup(this, catalogedGroup, activationGroup, groupClient);
+        var contextGroup = await ContextGroup.CreateGroup(this, catalogedGroup, activationGroup, groupClient);
         contextGroup.MeshClient = groupClient;
 
 
