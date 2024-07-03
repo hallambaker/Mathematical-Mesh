@@ -405,13 +405,13 @@ Action AddFeed "Add Feed" "account_group"
 	Text Title "Title"
 	Text Site "Site"
 		Error MustSpecifySite "Must specify site for account"
-			|(Site is null) and (Account is not null)
+			|(Site is null) & (Account is not null)
 	Text Account "Account"
 		Error MustSpecifyAccount "Must specify account for site"
-			|(Site is not null) and (Account is null)
+			|(Site is not null) & (Account is null)
 	Text Uri "Uri"
 		Error MustSpecifyUri "Must specify URI or Site and Account"
-			|(Site is null) and (Account is null) and (Uri is null)
+			|(Site is null) & (Account is null) & (Uri is null)
 
 	Text Path "Path"
 
@@ -433,7 +433,8 @@ Result SuccessGroupCreate "Group Created"
 	Text GroupName "Name"
 	Text GroupAddress "Address"
 
-Dialog BoundGroup "Group" "application_group"
+Dialog BoundApplicationGroup "Group" "application_group"
+	Inherit BoundApplication
 	Text GroupName "Display name"
 	Text GroupAddress "Address"
 	List Members BoundGroupMember "Members"  "contacts"
@@ -619,8 +620,8 @@ Dialog BoundApplicationDeveloper "Message" "application_developer"
 	Inherit BoundApplication
 Dialog BoundApplicationPkix "Message" "application_pkix"
 	Inherit BoundApplication
-Dialog BoundApplicationGroup "Message" "application_group"
-	Inherit BoundApplication
+//Dialog BoundApplicationGroup "Message" "application_group"
+//	Inherit BoundApplication
 Dialog BoundApplicationCallSign "Message" "application_callsign"
 	Inherit BoundApplication
 

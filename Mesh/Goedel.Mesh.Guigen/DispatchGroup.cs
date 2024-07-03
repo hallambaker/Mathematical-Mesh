@@ -11,7 +11,8 @@ public partial class EverythingMaui {
         var contextGroup = await ContextUser.CreateGroupAsync(
                 data.GroupAddress, data.GroupName, roles: rights);
 
-        var entry = BoundGroup.Factory(contextGroup);
+
+        var entry = new BoundApplicationGroup(contextGroup);
         CurrentAccount.Groups.Add(entry);
 
         return new SuccessGroupCreate(){
@@ -56,11 +57,11 @@ public partial class EverythingMaui {
 
 
 public partial class GroupInvite {
-    public BoundGroup BoundGroup { get; set; }
+    public BoundApplicationGroup BoundGroup { get; set; }
     }
 
 public partial class BoundGroupMember {
-    public BoundGroup BoundGroup { get; set; }
+    public BoundApplicationGroup BoundGroup { get; set; }
     public CatalogedMember CatalogedMember { get; set; }
     }
 

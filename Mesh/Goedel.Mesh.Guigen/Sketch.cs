@@ -1739,19 +1739,17 @@ public partial class _BoundDocument : IParameter {
     }
 
 /// <summary>
-/// Callback parameters for dialog BoundGroup 
+/// Callback parameters for dialog BoundApplicationGroup 
 /// </summary>
-public partial class BoundGroup : _BoundGroup {
+public partial class BoundApplicationGroup : _BoundApplicationGroup {
     // <summary>Type check verification.</summary>
-    // public static  Func<object, bool> IsBacker { get; set; } = (object _) => false; 
+    // public static new Func<object, bool> IsBacker { get; set; } = (object _) => false; 
     }
 
 /// <summary>
-/// Callback parameters for section BoundGroup 
+/// Callback parameters for section BoundApplicationGroup 
 /// </summary>
-public partial class _BoundGroup : IParameter {
-
-    public object? Bound { get; set; }
+public partial class _BoundApplicationGroup : BoundApplication {
 
 
     ///<summary></summary> 
@@ -1765,34 +1763,42 @@ public partial class _BoundGroup : IParameter {
 
 
     ///<inheritdoc/>
-    public virtual GuiBinding Binding => BaseBinding;
+    public override GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static  GuiBindingSingle BaseBinding  { get; } = new (
-        (object test) => test is _BoundGroup,
-        () => new BoundGroup(),
+    public static new GuiBindingSingle BaseBinding  { get; } = new (
+        (object test) => test is _BoundApplicationGroup,
+        () => new BoundApplicationGroup(),
         [ 
-            new GuiBoundPropertyString ("GroupName", "Display name", (object data) => (data as _BoundGroup)?.GroupName , 
-                (object data,string? value) => { if (data is _BoundGroup datad) { datad.GroupName = value; }})  /* 0 */ , 
-            new GuiBoundPropertyString ("GroupAddress", "Address", (object data) => (data as _BoundGroup)?.GroupAddress , 
-                (object data,string? value) => { if (data is _BoundGroup datad) { datad.GroupAddress = value; }})  /* 1 */ , 
-            new GuiBoundPropertyList ("Members", "Members", (object data) => (data as _BoundGroup)?.Members , 
-                (object data,ISelectList? value) => { if (data is _BoundGroup datad) { datad.Members = value; }}, _BoundGroupMember.BaseBinding)  /* 2 */ , 
-            new GuiBoundPropertyButton ("GroupInvite")  /* 3 */ 
+            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _BoundApplicationGroup)?.LocalName , 
+                (object data,string? value) => { if (data is _BoundApplicationGroup datad) { datad.LocalName = value; }})  /* 0 */ , 
+            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundApplicationGroup)?.Description , 
+                (object data,string? value) => { if (data is _BoundApplicationGroup datad) { datad.Description = value; }})  /* 1 */ , 
+            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundApplicationGroup)?.Path , 
+                (object data,string? value) => { if (data is _BoundApplicationGroup datad) { datad.Path = value; }})  /* 2 */ , 
+            new GuiBoundPropertySelection ("ApplicationUpdate", "Update")  /* 3 */ , 
+            new GuiBoundPropertySelection ("ApplicationDelete", "Delete")  /* 4 */ , 
+            new GuiBoundPropertyString ("GroupName", "Display name", (object data) => (data as _BoundApplicationGroup)?.GroupName , 
+                (object data,string? value) => { if (data is _BoundApplicationGroup datad) { datad.GroupName = value; }})  /* 5 */ , 
+            new GuiBoundPropertyString ("GroupAddress", "Address", (object data) => (data as _BoundApplicationGroup)?.GroupAddress , 
+                (object data,string? value) => { if (data is _BoundApplicationGroup datad) { datad.GroupAddress = value; }})  /* 6 */ , 
+            new GuiBoundPropertyList ("Members", "Members", (object data) => (data as _BoundApplicationGroup)?.Members , 
+                (object data,ISelectList? value) => { if (data is _BoundApplicationGroup datad) { datad.Members = value; }}, _BoundGroupMember.BaseBinding)  /* 7 */ , 
+            new GuiBoundPropertyButton ("GroupInvite")  /* 8 */ 
             ]);
     ///<summary>Validation</summary> 
-    public virtual IResult Validate(Gui gui) {
+    public override IResult Validate(Gui gui) {
         GuiResultInvalid? result = null;
 
         return (result as IResult) ?? NullResult.Valid;
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
+    public override IResult Initialize(Gui gui) => NullResult.Initialized;
 
 
     ///<summary>Teardown.</summary> 
-    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
+    public override IResult TearDown(Gui gui) => NullResult.Teardown;
 
 
     }
@@ -2544,55 +2550,6 @@ public partial class _BoundApplicationPkix : BoundApplication {
                 (object data,string? value) => { if (data is _BoundApplicationPkix datad) { datad.Description = value; }})  /* 1 */ , 
             new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundApplicationPkix)?.Path , 
                 (object data,string? value) => { if (data is _BoundApplicationPkix datad) { datad.Path = value; }})  /* 2 */ , 
-            new GuiBoundPropertySelection ("ApplicationUpdate", "Update")  /* 3 */ , 
-            new GuiBoundPropertySelection ("ApplicationDelete", "Delete")  /* 4 */ 
-            ]);
-    ///<summary>Validation</summary> 
-    public override IResult Validate(Gui gui) {
-        GuiResultInvalid? result = null;
-
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public override IResult Initialize(Gui gui) => NullResult.Initialized;
-
-
-    ///<summary>Teardown.</summary> 
-    public override IResult TearDown(Gui gui) => NullResult.Teardown;
-
-
-    }
-
-/// <summary>
-/// Callback parameters for dialog BoundApplicationGroup 
-/// </summary>
-public partial class BoundApplicationGroup : _BoundApplicationGroup {
-    // <summary>Type check verification.</summary>
-    // public static new Func<object, bool> IsBacker { get; set; } = (object _) => false; 
-    }
-
-/// <summary>
-/// Callback parameters for section BoundApplicationGroup 
-/// </summary>
-public partial class _BoundApplicationGroup : BoundApplication {
-
-
-
-    ///<inheritdoc/>
-    public override GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static new GuiBindingSingle BaseBinding  { get; } = new (
-        (object test) => test is _BoundApplicationGroup,
-        () => new BoundApplicationGroup(),
-        [ 
-            new GuiBoundPropertyString ("LocalName", "Local", (object data) => (data as _BoundApplicationGroup)?.LocalName , 
-                (object data,string? value) => { if (data is _BoundApplicationGroup datad) { datad.LocalName = value; }})  /* 0 */ , 
-            new GuiBoundPropertyString ("Description", "Description", (object data) => (data as _BoundApplicationGroup)?.Description , 
-                (object data,string? value) => { if (data is _BoundApplicationGroup datad) { datad.Description = value; }})  /* 1 */ , 
-            new GuiBoundPropertyString ("Path", "Path", (object data) => (data as _BoundApplicationGroup)?.Path , 
-                (object data,string? value) => { if (data is _BoundApplicationGroup datad) { datad.Path = value; }})  /* 2 */ , 
             new GuiBoundPropertySelection ("ApplicationUpdate", "Update")  /* 3 */ , 
             new GuiBoundPropertySelection ("ApplicationDelete", "Delete")  /* 4 */ 
             ]);
@@ -3907,6 +3864,27 @@ public partial class _AddFeed : IParameter {
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
         GuiResultInvalid? result = null;
+
+        // error on Site
+        if ((Site is null) & (Account is not null)
+            ) {
+            result ??=new GuiResultInvalid(this);
+            result.SetError (1, "Must specify site for account", "MustSpecifySite");
+            }
+
+        // error on Account
+        if ((Site is not null) & (Account is null)
+            ) {
+            result ??=new GuiResultInvalid(this);
+            result.SetError (2, "Must specify account for site", "MustSpecifyAccount");
+            }
+
+        // error on Uri
+        if ((Site is null) & (Account is null) & (Uri is null)
+            ) {
+            result ??=new GuiResultInvalid(this);
+            result.SetError (3, "Must specify URI or Site and Account", "MustSpecifyUri");
+            }
 
         return (result as IResult) ?? NullResult.Valid;
         }
@@ -7767,10 +7745,10 @@ public class _EverythingMaui : Gui {
                 IsBoundType = (object data) => data is BoundDocument
                 };
 
-    ///<summary>Dialog DialogBoundGroup.</summary> 
-	public GuiDialog DialogBoundGroup { get; } = new (
-        "BoundGroup", "Group", "application_group", _BoundGroup.BaseBinding, () => new BoundGroup()) {
-                IsBoundType = (object data) => data is BoundGroup
+    ///<summary>Dialog DialogBoundApplicationGroup.</summary> 
+	public GuiDialog DialogBoundApplicationGroup { get; } = new (
+        "BoundApplicationGroup", "Group", "application_group", _BoundApplicationGroup.BaseBinding, () => new BoundApplicationGroup()) {
+                IsBoundType = (object data) => data is BoundApplicationGroup
                 };
 
     ///<summary>Dialog DialogBoundGroupMember.</summary> 
@@ -7855,12 +7833,6 @@ public class _EverythingMaui : Gui {
 	public GuiDialog DialogBoundApplicationPkix { get; } = new (
         "BoundApplicationPkix", "Message", "application_pkix", _BoundApplicationPkix.BaseBinding, () => new BoundApplicationPkix()) {
                 IsBoundType = (object data) => data is BoundApplicationPkix
-                };
-
-    ///<summary>Dialog DialogBoundApplicationGroup.</summary> 
-	public GuiDialog DialogBoundApplicationGroup { get; } = new (
-        "BoundApplicationGroup", "Message", "application_group", _BoundApplicationGroup.BaseBinding, () => new BoundApplicationGroup()) {
-                IsBoundType = (object data) => data is BoundApplicationGroup
                 };
 
     ///<summary>Dialog DialogBoundApplicationCallSign.</summary> 
@@ -8543,7 +8515,7 @@ public class _EverythingMaui : Gui {
 
 	    DialogBoundDocument.Entries = [];
 
-	    DialogBoundGroup.Entries = [
+	    DialogBoundApplicationGroup.Entries = [
 			new GuiButton ("GroupInvite", ActionGroupInvite)];
 
 	    DialogBoundGroupMember.Entries = [];
@@ -8574,8 +8546,6 @@ public class _EverythingMaui : Gui {
 
 	    DialogBoundApplicationPkix.Entries = [];
 
-	    DialogBoundApplicationGroup.Entries = [];
-
 	    DialogBoundApplicationCallSign.Entries = [];
 
 	    DialogBoundDevice.Entries = [];
@@ -8604,7 +8574,7 @@ public class _EverythingMaui : Gui {
 		    DialogContactNetworkCredential, 
 		    DialogContactPhysicalAddress, 
 		    DialogBoundDocument, 
-		    DialogBoundGroup, 
+		    DialogBoundApplicationGroup, 
 		    DialogBoundGroupMember, 
 		    DialogBoundCredential, 
 		    DialogBoundPassword, 
@@ -8619,7 +8589,6 @@ public class _EverythingMaui : Gui {
 		    DialogBoundApplicationOpenPgp, 
 		    DialogBoundApplicationDeveloper, 
 		    DialogBoundApplicationPkix, 
-		    DialogBoundApplicationGroup, 
 		    DialogBoundApplicationCallSign, 
 		    DialogBoundDevice
 		    };

@@ -96,7 +96,8 @@ public partial class BoundApplication : IBoundPresentation, IDialog {
         }
 
     protected void Fill(CatalogedApplication application) {
-
+        Bound = application;
+        Fill();
         }
 
     public virtual void Fill() {
@@ -222,25 +223,25 @@ public partial class BoundApplicationPkix {
 
         }
     }
-public partial class BoundApplicationGroup {
+//public partial class BoundApplicationGroup {
 
-    public override string? IconValue => "application_group.png";
+//    public override string? IconValue => "application_group.png";
 
-    public override CatalogedApplication Convert() {
-        throw new NotImplementedException();
-        //var result = new CatalogedApplication();
+//    public override CatalogedApplication Convert() {
+//        throw new NotImplementedException();
+//        //var result = new CatalogedApplication();
 
-        //return result;
-        }
+//        //return result;
+//        }
 
-    public static BoundApplicationGroup Convert(CatalogedGroup application) {
-        var result = new BoundApplicationGroup();
-        result.Fill(application);
+//    public static BoundApplicationGroup Convert(CatalogedGroup application) {
+//        var result = new BoundApplicationGroup();
+//        result.Fill(application);
 
-        return result;
+//        return result;
 
-        }
-    }
+//        }
+//    }
 public partial class BoundApplicationCallSign {
 
     public override string? IconValue => "application_callsign.png";

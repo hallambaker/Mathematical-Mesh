@@ -17,7 +17,7 @@ public partial class GroupSection : IHeadedSelection {
     GuigenCatalogApplication Catalog { get; }
 
     ///<inheritdoc/>
-    public GuiBinding SelectionBinding => _BoundGroup.BaseBinding;
+    public GuiBinding SelectionBinding => _BoundApplicationGroup.BaseBinding;
 
     ///<inheritdoc/>
     public override ISelectCollection ChooseGroup { get => GroupSelection; set { } }
@@ -33,12 +33,12 @@ public partial class GroupSection : IHeadedSelection {
         }
 
 
-    public void Add(BoundGroup entry) {
+    public void Add(BoundApplicationGroup entry) {
         GroupSelection.Add(entry);
         }
 
 
-    public async Task UpdateAsync(BoundGroup entry) {
+    public async Task UpdateAsync(BoundApplicationGroup entry) {
 
         var transaction = ContextUser.TransactBegin();
         transaction.CatalogUpdate(Catalog, entry.CatalogedGroup);
@@ -48,7 +48,7 @@ public partial class GroupSection : IHeadedSelection {
         }
 
 
-    public async Task DeleteAsync(BoundGroup entry) {
+    public async Task DeleteAsync(BoundApplicationGroup entry) {
 
         var transaction = ContextUser.TransactBegin();
         transaction.CatalogUpdate(Catalog, entry.CatalogedGroup);
@@ -85,7 +85,9 @@ public partial class GroupSelection : ApplicationSelection {
 #endregion
 
 
-public partial class BoundGroup : IBoundPresentation {
+public partial class BoundApplicationGroup : IBoundPresentation {
+
+    public override string? IconValue => "application_group.png";
 
     public ContextGroup ContextGroup { get; set; }
 
@@ -95,10 +97,17 @@ public partial class BoundGroup : IBoundPresentation {
     public CatalogedGroup CatalogedGroup => Bound as CatalogedGroup;
 
 
+    public BoundApplicationGroup() {
+        }
 
-    public static BoundGroup Factory(ContextGroup contextGroup) {
-        var result = new BoundGroup();
-        result.Bound = contextGroup;
+    public BoundApplicationGroup(ContextGroup contextGroup) {
+        ContextGroup = contextGroup;
+        Bound = ContextGroup.CatalogedGroup;
+        }
+
+    public static BoundApplicationGroup Factory(CatalogedGroup catalogedGroup) {
+        var result = new BoundApplicationGroup();
+        result.Bound = catalogedGroup;
         result.ReadBound();
         return result;
         }
@@ -111,5 +120,24 @@ public partial class BoundGroup : IBoundPresentation {
 
 
     public ContextGroup GetContext() => throw new NYI();
+
+    public override CatalogedApplication Convert() {
+        throw new NotImplementedException();
+        //var result = new CatalogedApplication();
+
+        //return result;
+        }
+
+    public static BoundApplicationGroup Convert(CatalogedGroup application) {
+        var result = new BoundApplicationGroup();
+        result.Fill(application);
+
+        return result;
+
+        }
+
+    public override void Fill() {
+        base.Fill();
+        }
 
     }
