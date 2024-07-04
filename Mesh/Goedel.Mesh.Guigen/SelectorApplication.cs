@@ -102,6 +102,9 @@ public partial class BoundApplication : IBoundPresentation, IDialog {
 
     public virtual void Fill() {
         var bound = Bound as CatalogedApplication;
+        Path = bound?.Path;
+        LocalName = bound?.LocalName;
+        Description = bound?.Description;
         }
 
 

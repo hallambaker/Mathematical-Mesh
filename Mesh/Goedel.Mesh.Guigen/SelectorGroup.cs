@@ -91,6 +91,10 @@ public partial class BoundApplicationGroup : IBoundPresentation {
 
     public ContextGroup ContextGroup { get; set; }
 
+    public override ISelectList? Members { 
+            get => members ?? GetMembers().CacheValue (out members); 
+            set => members = value; }
+    ISelectList? members;
 
     public ContextUser ContextUser { get; set; }
 
@@ -119,6 +123,15 @@ public partial class BoundApplicationGroup : IBoundPresentation {
         }
 
 
+    ISelectList GetMembers() {
+        // get group context
+        // enumerate the list of members
+        // done!
+
+        return null;
+        }
+
+
     public ContextGroup GetContext() => throw new NYI();
 
     public override CatalogedApplication Convert() {
@@ -138,6 +151,8 @@ public partial class BoundApplicationGroup : IBoundPresentation {
 
     public override void Fill() {
         base.Fill();
+        LocalName ??= CatalogedGroup?.ProfileGroup?.AccountAddress;
+
         }
 
     }
