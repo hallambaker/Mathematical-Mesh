@@ -1838,8 +1838,7 @@ public partial class _BoundGroupMember : IParameter {
                 (object data,string? value) => { if (data is _BoundGroupMember datad) { datad.ContactName = value; }})  /* 0 */ , 
             new GuiBoundPropertyString ("Address", "Address", (object data) => (data as _BoundGroupMember)?.Address , 
                 (object data,string? value) => { if (data is _BoundGroupMember datad) { datad.Address = value; }})  /* 1 */ , 
-            new GuiBoundPropertySelection ("MemberDelete", "Delete")  /* 2 */ , 
-            new GuiBoundPropertySelection ("MemberReInvite", "Sesent Invitation")  /* 3 */ 
+            new GuiBoundPropertySelection ("MemberDelete", "Delete")  /* 2 */ 
             ]);
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
@@ -3963,6 +3962,9 @@ public partial class GroupInvite : _GroupInvite {
 public partial class _GroupInvite : IParameter {
 
     ///<summary></summary> 
+    public virtual BoundApplicationGroup Context { get; set;} 
+
+    ///<summary></summary> 
     public virtual string? Address { get; set;} 
 
     ///<summary></summary> 
@@ -4949,45 +4951,6 @@ public partial class _MemberDelete : IParameter {
     public static  GuiBindingSingle BaseBinding  { get; } = new (
         (object test) => test is _MemberDelete,
         () => new MemberDelete(),
-        Array.Empty<GuiBoundProperty>());
-    ///<summary>Validation</summary> 
-    public virtual IResult Validate(Gui gui) {
-        GuiResultInvalid? result = null;
-
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize(Gui gui) => NullResult.Initialized;
-
-
-    ///<summary>Teardown.</summary> 
-    public virtual IResult TearDown(Gui gui) => NullResult.Teardown;
-
-
-    }
-
-
-/// <summary>
-/// Callback parameters for action MemberReInvite 
-/// </summary>
-public partial class MemberReInvite : _MemberReInvite {
-    }
-
-
-/// <summary>
-/// Callback parameters for action MemberReInvite 
-/// </summary>
-public partial class _MemberReInvite : IParameter {
-
-
-    ///<inheritdoc/>
-    public virtual GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static  GuiBindingSingle BaseBinding  { get; } = new (
-        (object test) => test is _MemberReInvite,
-        () => new MemberReInvite(),
         Array.Empty<GuiBoundProperty>());
     ///<summary>Validation</summary> 
     public virtual IResult Validate(Gui gui) {
@@ -7461,7 +7424,7 @@ public class _EverythingMaui : Gui {
 	public GuiAction ActionGroupInvite { get; } = new (
         "GroupInvite", "Invite member", "account_group", 
         _GroupInvite.BaseBinding, () => new GroupInvite(),
-        IsConfirmation: true);
+        IsConfirmation: true, setContext: (object data, IBindable value) => { if (data is GroupInvite datad) {datad.Context=(value as BoundApplicationGroup)!;}});
 
     ///<summary>Action ActionAddPassword.</summary> 
 	public GuiAction ActionAddPassword { get; } = new (
@@ -7565,10 +7528,6 @@ public class _EverythingMaui : Gui {
     ///<summary>Selection SelectionMemberDelete.</summary> 
 	public GuiAction SelectionMemberDelete { get; } = new (
         "MemberDelete", "Delete", "circle_cross", _MemberDelete.BaseBinding, () => new MemberDelete(), IsSelect:true);
-
-    ///<summary>Selection SelectionMemberReInvite.</summary> 
-	public GuiAction SelectionMemberReInvite { get; } = new (
-        "MemberReInvite", "Sesent Invitation", "circle_cross", _MemberReInvite.BaseBinding, () => new MemberReInvite(), IsSelect:true);
 
     ///<summary>Selection SelectionCredentialUpdate.</summary> 
 	public GuiAction SelectionCredentialUpdate { get; } = new (
@@ -8363,13 +8322,6 @@ public class _EverythingMaui : Gui {
             throw new NYI();
             } ;
 
-        SelectionMemberReInvite.Callback = (x) => {
-            if (x is BoundGroupMember xx) {
-                return MemberReInvite (xx); 
-                }
-            throw new NYI();
-            } ;
-
         SelectionCredentialUpdate.Callback = (x) => {
             if (x is BoundCredential xx) {
                 return CredentialUpdate (xx); 
@@ -8452,7 +8404,6 @@ public class _EverythingMaui : Gui {
 		    {"DocumentSend", SelectionDocumentSend}, 
 		    {"DocumentDelete", SelectionDocumentDelete}, 
 		    {"MemberDelete", SelectionMemberDelete}, 
-		    {"MemberReInvite", SelectionMemberReInvite}, 
 		    {"CredentialUpdate", SelectionCredentialUpdate}, 
 		    {"CredentialDelete", SelectionCredentialDelete}, 
 		    {"TaskUpdate", SelectionTaskUpdate}, 
@@ -8877,12 +8828,6 @@ public class _EverythingMaui : Gui {
     /// GUI action
     /// </summary>
     public virtual Task<IResult> MemberDelete (BoundGroupMember data) 
-                => throw new NYI();
-
-    /// <summary>
-    /// GUI action
-    /// </summary>
-    public virtual Task<IResult> MemberReInvite (BoundGroupMember data) 
                 => throw new NYI();
 
     /// <summary>

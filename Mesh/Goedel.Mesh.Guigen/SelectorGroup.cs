@@ -85,7 +85,9 @@ public partial class GroupSelection : ApplicationSelection {
 #endregion
 
 
-public partial class BoundApplicationGroup : IBoundPresentation {
+public partial class BoundApplicationGroup : IBoundPresentation, IDialog {
+
+    public GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundApplicationGroup;
 
     public override string? IconValue => "application_group.png";
 
@@ -128,14 +130,17 @@ public partial class BoundApplicationGroup : IBoundPresentation {
     ISelectList GetMembers() {
         CatalogMember ??= ContextGroup.GetStore(CatalogMember.Label) as CatalogMember;
 
+        var list = new SelectList();
+
         foreach (var entry in CatalogMember) {
+            var item = new BoundGroupMember(entry);
+            list.Add(item);
+            // Got to add self to group
+
             }
 
-        // get group context
-        // enumerate the list of members
-        // done!
 
-        return null;
+        return list;
         }
 
 
@@ -161,5 +166,23 @@ public partial class BoundApplicationGroup : IBoundPresentation {
         LocalName ??= CatalogedGroup?.ProfileGroup?.AccountAddress;
 
         }
+
+    }
+
+public partial class BoundGroupMember : IBoundPresentation {
+    public BoundApplicationGroup BoundGroup { get; set; }
+    public CatalogedMember CatalogedMember { get; set; }
+
+    public BoundGroupMember() {
+        }
+
+    public BoundGroupMember(CatalogedMember member) {
+        Bound = member;
+        ContactName = member.LocalName;
+        Address = member.ContactAddress;
+
+
+        }
+
 
     }

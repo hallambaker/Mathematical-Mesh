@@ -25,7 +25,9 @@ public partial class EverythingMaui {
 
     ///<inheritdoc/>
     public override async Task<IResult> GroupInvite(GroupInvite data) {
-        var contextGroup = data.BoundGroup.ContextGroup;
+
+        //var context = data.Context;
+        var contextGroup = data.Context.ContextGroup;
         var member = await contextGroup.AddAsync(data.Address, data.Message);
 
         return NullResult.Completed;
@@ -33,15 +35,15 @@ public partial class EverythingMaui {
 
 
     ///<inheritdoc/>
-    public override async Task<IResult> MemberReInvite(BoundGroupMember data) {
-        return await NotYetImplemented();
+    //public override async Task<IResult> MemberReInvite(BoundGroupMember data) {
+    //    return await NotYetImplemented();
 
 
-        //var contextGroup = data.BoundGroup.GetContext();
-        //await contextGroup.DeleteAsync(data.CatalogedMember);
+    //    //var contextGroup = data.BoundGroup.GetContext();
+    //    //await contextGroup.DeleteAsync(data.CatalogedMember);
 
-        //return NullResult.Completed;
-        }
+    //    //return NullResult.Completed;
+    //    }
 
     ///<inheritdoc/>
     public override async Task<IResult> MemberDelete(BoundGroupMember data) {
@@ -60,8 +62,5 @@ public partial class GroupInvite {
     public BoundApplicationGroup BoundGroup { get; set; }
     }
 
-public partial class BoundGroupMember {
-    public BoundApplicationGroup BoundGroup { get; set; }
-    public CatalogedMember CatalogedMember { get; set; }
-    }
+
 

@@ -441,18 +441,20 @@ Dialog BoundApplicationGroup "Group" "application_group"
 	Button GroupInvite
 
 Action GroupInvite "Invite member" "account_group"
+	Context Context BoundApplicationGroup 
 	Text Address "Member Address"
 	Text Message "Message"
 
 Dialog BoundGroupMember "Member" "Group Member"
+
 	Text ContactName "Name"
 	Text Address "Address"
 	Selection MemberDelete "Delete" "circle_cross"
 		Description
 			|Delete the contact
-	Selection MemberReInvite "Sesent Invitation" "circle_cross"
-		Description
-			|Delete the contact
+	//Selection MemberReInvite "Resent Invitation" "circle_cross"
+	//	Description
+	//		|Delete the contact
 
 // **** Credentials
 Section CredentialSection "Credentials" "credentials"
