@@ -12,7 +12,7 @@ public partial class EverythingMaui {
                 data.GroupAddress, data.GroupName, roles: rights);
 
 
-        var entry = new BoundApplicationGroup(contextGroup);
+        var entry = new BoundApplicationGroup(contextGroup, ContextUser);
         CurrentAccount.Groups.Add(entry);
 
         return new SuccessGroupCreate(){
@@ -25,7 +25,7 @@ public partial class EverythingMaui {
 
     ///<inheritdoc/>
     public override async Task<IResult> GroupInvite(GroupInvite data) {
-        var contextGroup = data.BoundGroup.GetContext();
+        var contextGroup = data.BoundGroup.ContextGroup;
         var member = await contextGroup.AddAsync(data.Address, data.Message);
 
         return NullResult.Completed;
@@ -45,7 +45,7 @@ public partial class EverythingMaui {
 
     ///<inheritdoc/>
     public override async Task<IResult> MemberDelete(BoundGroupMember data) {
-        var contextGroup = data.BoundGroup.GetContext();
+        var contextGroup = data.BoundGroup.ContextGroup;
         await contextGroup.DeleteAsync(data.CatalogedMember);
 
         return NullResult.Completed;

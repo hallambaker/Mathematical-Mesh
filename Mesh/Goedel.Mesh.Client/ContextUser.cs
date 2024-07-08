@@ -831,6 +831,18 @@ public partial class ContextUser : ContextAccount {
         // read through the entries in CatalogApplication
         var catalog = GetStore(CatalogApplication.Label) as CatalogApplication;
         var entry = catalog.LocateGroup(groupAddress);
+        
+        return GetContextGroup (entry);
+        }
+
+    /// <summary>
+    /// Get a managment context for the group <paramref name="groupAddress"/>.
+    /// </summary>
+    /// <param name="groupAddress">The group to return the management context for.</param>
+    /// <returns>The created management context.</returns>
+    public ContextGroup GetContextGroup(CatalogedGroup entry) {
+        // BUG!!! Should be the UDF of the group.
+        var groupAddress = entry.ProfileGroup.AccountAddress;
 
         // get the Application entry here.
         var applicationEntry = GetApplicationEntryGroup(groupAddress);
@@ -843,8 +855,6 @@ public partial class ContextUser : ContextAccount {
         // We do not attempt to get admin privs here, we will do that if necessary.
         return new ContextGroup(this, entry, activationAccount);
         }
-
-
 
     #endregion
     #region // Device connection

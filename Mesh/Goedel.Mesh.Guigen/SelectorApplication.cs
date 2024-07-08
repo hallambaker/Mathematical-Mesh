@@ -378,7 +378,7 @@ public partial class ApplicationSelection : SelectionCatalog<GuigenCatalogApplic
                 return BoundApplicationPkix.Convert(application);
                 }
             case CatalogedGroup application: {
-                return BoundApplicationGroup.Convert(application);
+                return BoundApplicationGroup.Convert(application, ContextAccount);
                 }
             case CatalogedApplicationCallsign application: {
                 return BoundApplicationCallSign.Convert(application);

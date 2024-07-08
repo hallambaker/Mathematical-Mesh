@@ -89,23 +89,25 @@ public partial class BoundApplicationGroup : IBoundPresentation {
 
     public override string? IconValue => "application_group.png";
 
-    public ContextGroup ContextGroup { get; set; }
-
+    public ContextGroup ContextGroup => contextGroup ??
+        GetContext().CacheValue(out contextGroup);
+    ContextGroup contextGroup;
     public override ISelectList? Members { 
             get => members ?? GetMembers().CacheValue (out members); 
             set => members = value; }
     ISelectList? members;
 
-    public ContextUser ContextUser { get; set; }
+    public ContextUser ContextUser { get; init; }
 
     public CatalogedGroup CatalogedGroup => Bound as CatalogedGroup;
 
-
+    CatalogMember CatalogMember { get; set; } = null;
     public BoundApplicationGroup() {
         }
 
-    public BoundApplicationGroup(ContextGroup contextGroup) {
-        ContextGroup = contextGroup;
+    public BoundApplicationGroup(ContextGroup contextGroup, ContextUser contextUser) {
+        ContextUser = contextUser;
+        contextGroup = contextGroup;
         Bound = ContextGroup.CatalogedGroup;
         }
 
@@ -124,6 +126,11 @@ public partial class BoundApplicationGroup : IBoundPresentation {
 
 
     ISelectList GetMembers() {
+        CatalogMember ??= ContextGroup.GetStore(CatalogMember.Label) as CatalogMember;
+
+        foreach (var entry in CatalogMember) {
+            }
+
         // get group context
         // enumerate the list of members
         // done!
@@ -132,17 +139,17 @@ public partial class BoundApplicationGroup : IBoundPresentation {
         }
 
 
-    public ContextGroup GetContext() => throw new NYI();
+    ContextGroup GetContext() => ContextUser.GetContextGroup(CatalogedGroup);
 
-    public override CatalogedApplication Convert() {
-        throw new NotImplementedException();
-        //var result = new CatalogedApplication();
 
-        //return result;
-        }
+    public override CatalogedApplication Convert() => CatalogedGroup;
 
-    public static BoundApplicationGroup Convert(CatalogedGroup application) {
-        var result = new BoundApplicationGroup();
+    public static BoundApplicationGroup Convert(
+                CatalogedGroup application,
+                ContextAccount contextAccount) {
+        var result = new BoundApplicationGroup() {
+            ContextUser = contextAccount as ContextUser
+            };
         result.Fill(application);
 
         return result;

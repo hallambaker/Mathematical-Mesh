@@ -1454,6 +1454,13 @@
             <param name="groupAddress">The group to return the management context for.</param>
             <returns>The created management context.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetContextGroup(Goedel.Mesh.CatalogedGroup)">
+            <summary>
+            Get a managment context for the group <paramref name="groupAddress"/>.
+            </summary>
+            <param name="groupAddress">The group to return the management context for.</param>
+            <returns>The created management context.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.Preconfigure(System.String,System.Int32)">
             <summary>
             Convenience wrapper for <see cref="M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarlAsync(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32,System.Int32)"/>. Generates a device profile
