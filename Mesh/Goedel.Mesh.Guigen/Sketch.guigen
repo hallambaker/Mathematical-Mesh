@@ -466,7 +466,7 @@ Action AddPassword "Add password" "credentials"
 	Text Protocol "Protocol"
 	Text Service "Service"
 	Text Username "Username"
-	Text Password "Password"	
+https://pngimg.com/uploads/facebook_logos/facebook_logos_PNG19759.png	Text Password "Password"	
 
 	Description
 		|Add a password
