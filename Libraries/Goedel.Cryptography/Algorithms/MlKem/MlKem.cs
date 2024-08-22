@@ -81,6 +81,15 @@ public class Kyber {
     #region // Prefab parameter sets
 
     ///<summary>Parameter set for 512 bit key.</summary> 
+    public static Kyber MLKEM512 { get; }
+
+    ///<summary>Parameter set for 768 bit key.</summary> 
+    public static Kyber MLKEM768 { get; }
+
+    ///<summary>Parameter set for 1024 bit key.</summary> 
+    public static Kyber MLKEM1024 { get; }
+
+    ///<summary>Parameter set for 512 bit key.</summary> 
     public static Kyber Kyber512 { get; }
 
     ///<summary>Parameter set for 768 bit key.</summary> 
@@ -88,6 +97,10 @@ public class Kyber {
 
     ///<summary>Parameter set for 1024 bit key.</summary> 
     public static Kyber Kyber1024 { get; }
+
+
+    public bool Fips203 { get; set; } = true;
+
     #endregion 
     #endregion
     #region // Constructors
@@ -96,9 +109,13 @@ public class Kyber {
     /// Do a one time initialization of the parameter presets on assembly load.
     /// </summary>
     static Kyber() {
-        Kyber512 = new Kyber(512);
-        Kyber768 = new Kyber(768);
-        Kyber1024 = new Kyber(1024);
+        MLKEM512 = new Kyber(512);
+        MLKEM768 = new Kyber(768);
+        MLKEM1024 = new Kyber(1024);
+
+        Kyber512 = new Kyber(512) { Fips203 = false };
+        Kyber768 = new Kyber(768) { Fips203 = false };
+        Kyber1024 = new Kyber(1024) { Fips203 = false };
         }
 
 

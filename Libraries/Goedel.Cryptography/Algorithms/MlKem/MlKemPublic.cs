@@ -99,9 +99,12 @@ public class KyberPublic : Kyber {
         // call indcpa here
         var ct = IndCpaEncrypt(buf, coins);
 
-        /* overwrite coins in kr with H(c) */
-        var overwrite = SHA3Managed.Process256(ct);
-        Array.Copy(overwrite, 0, kr, Kyber.SymBytes, overwrite.Length);
+        // This step is no longer performed in ML-KEM
+        if (!Fips203) {
+            /* overwrite coins in kr with H(c) */
+            var overwrite = SHA3Managed.Process256(ct);
+            Array.Copy(overwrite, 0, kr, SymBytes, overwrite.Length);
+            } 
 
         /* hash concatenation of pre-k and H(c) to k */
         var ss = SHAKE256.Process(kr);

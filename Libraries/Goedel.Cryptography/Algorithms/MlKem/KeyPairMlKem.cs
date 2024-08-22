@@ -149,17 +149,17 @@ public class KeyPairMlKem : KeyPair, IOpaqueBinaryKey {
                 CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.NULL) {
 
         Kyber mlKem = cryptoAlgorithmID switch {
-            CryptoAlgorithmId.MLKEM512 => Kyber.Kyber512,
-            CryptoAlgorithmId.MLKEM768 => Kyber.Kyber768,
-            CryptoAlgorithmId.MLKEM1024 => Kyber.Kyber1024,
+            CryptoAlgorithmId.MLKEM512 => Kyber.MLKEM512,
+            CryptoAlgorithmId.MLKEM768 => Kyber.MLKEM768,
+            CryptoAlgorithmId.MLKEM1024 => Kyber.MLKEM1024,
             _ => null
             };
 
         mlKem ??= keySize switch {
-            0 => Kyber.Kyber1024,
-            512 => Kyber.Kyber512,
-            768 => Kyber.Kyber768,
-            1024 => Kyber.Kyber1024,
+            0 => Kyber.MLKEM1024,
+            512 => Kyber.MLKEM512,
+            768 => Kyber.MLKEM768,
+            1024 => Kyber.MLKEM1024,
             _ => throw new KeySizeNotSupported()
             };
 
@@ -195,15 +195,15 @@ public class KeyPairMlKem : KeyPair, IOpaqueBinaryKey {
         switch (algorithmID) {
             case CryptoAlgorithmId.MLKEM512: {
                 var binaryData = KeySeed(Kyber.SymBytes * 8, ikm, keySpecifier, keyName);
-                return Generate(Kyber.Kyber512, binaryData, keySecurity, keyUses);
+                return Generate(Kyber.MLKEM512, binaryData, keySecurity, keyUses);
                 }
             case CryptoAlgorithmId.MLKEM768: {
                 var binaryData = KeySeed(Kyber.SymBytes * 8, ikm, keySpecifier, keyName);
-                return Generate(Kyber.Kyber512, binaryData, keySecurity, keyUses);
+                return Generate(Kyber.MLKEM512, binaryData, keySecurity, keyUses);
                 }
             case CryptoAlgorithmId.MLKEM1024: {
                 var binaryData = KeySeed(Kyber.SymBytes * 8, ikm, keySpecifier, keyName);
-                return Generate(Kyber.Kyber512, binaryData, keySecurity, keyUses);
+                return Generate(Kyber.MLKEM512, binaryData, keySecurity, keyUses);
                 }
             };
         throw new NoProviderSpecified();

@@ -123,11 +123,6 @@ public class DilithiumPrivate : Dilithium, IDisposable {
 
         }
 
-
-
-
-
-
     /// <summary>
     /// Sign the message <paramref name="message"/> and return the signature 
     /// bytes.

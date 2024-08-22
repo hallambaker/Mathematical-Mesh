@@ -83,9 +83,13 @@ public class KyberPrivate : KyberPublic {
 
         var fail = Verify(ciphertext, cmp);
 
-        // overwrite coins in kr with H(c) 
-        var overwrite = SHA3Managed.Process256(ciphertext);
-        Array.Copy(overwrite, 0, kr, Kyber.SymBytes, overwrite.Length);
+
+        // This step is no longer performed in ML-KEM
+        if (!Fips203) {
+            /* overwrite coins in kr with H(c) */
+            var overwrite = SHA3Managed.Process256(ciphertext);
+            Array.Copy(overwrite, 0, kr, Kyber.SymBytes, overwrite.Length);
+            }
 
         // Overwrite pre-k with z on re-encryption failure
         if (fail) {
