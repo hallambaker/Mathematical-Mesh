@@ -161,7 +161,7 @@ public static class BigNumber {
     /// </summary>
     /// <param name="maximum">One more than the maximum value that may be returned.</param>
     /// <returns>The random value.</returns>
-    public static BigInteger Random(BigInteger maximum) {
+    public static BigInteger Random(this BigInteger maximum) {
         var bytes = CryptoCatalog.GetBytes(maximum.GetByteCount() + 16);
         return BigIntegerLittleEndian(bytes) % maximum;
         }
@@ -392,6 +392,19 @@ public static class BigNumber {
         Array.Reverse(buffer);
         return buffer;
         }
+
+
+    public static bool IsLessPower2(this BigInteger value, int power) =>
+            value < new BigInteger(1) << (power);
+
+    public static bool IsGreaterPower2(this BigInteger value, int power) =>
+            value > new BigInteger(1) << (power);
+
+
+    public static void Erase(this ref BigInteger value) {
+        value = 0;
+        }
+
 
     /// <summary>
     /// Miller-Rabin probabalistic primality test.

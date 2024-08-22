@@ -71,10 +71,10 @@ public partial class PublicKeyECDH {
 
 
         return Curve switch {
-            "Ed25519" => new KeyPairEd25519(Public, KeySecurity.Public, keyUses, CryptoAlgorithmId.Ed25519),
-            "Ed448" => new KeyPairEd448(Public, KeySecurity.Public, keyUses, CryptoAlgorithmId.Ed448),
-            "X25519" => new KeyPairX25519(Public, KeySecurity.Public, keyUses, CryptoAlgorithmId.X25519),
-            "X448" => new KeyPairX448(Public, KeySecurity.Public, keyUses, CryptoAlgorithmId.X448),
+            UDFConstants.UdfAlgorithmIdentifierEd25519Tag => new KeyPairEd25519(Public, KeySecurity.Public, keyUses, CryptoAlgorithmId.Ed25519),
+            UDFConstants.UdfAlgorithmIdentifierEd448Tag  => new KeyPairEd448(Public, KeySecurity.Public, keyUses, CryptoAlgorithmId.Ed448),
+            UDFConstants.UdfAlgorithmIdentifierX25519Tag => new KeyPairX25519(Public, KeySecurity.Public, keyUses, CryptoAlgorithmId.X25519),
+            UDFConstants.UdfAlgorithmIdentifierX448Tag => new KeyPairX448(Public, KeySecurity.Public, keyUses, CryptoAlgorithmId.X448),
             _ => throw new NotSupportedException(),
             };
         }

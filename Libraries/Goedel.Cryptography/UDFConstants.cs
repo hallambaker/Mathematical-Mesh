@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 7/8/2024 11:22:41 PM
+//  This file was automatically generated at 8/22/2024 6:23:51 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -89,6 +89,18 @@ public enum UdfAlgorithmIdentifier {
     RSA3072 = 9,
     ///<summary>4096 bit RSA keypair</summary>
     RSA4096 = 10,
+    ///<summary>ML-KEM 512 as described in FIPS 203</summary>
+    MLKEM512 = 11,
+    ///<summary>ML-KEM-768 as described in FIPS 203</summary>
+    MLKEM768 = 12,
+    ///<summary>ML-KEM-1024 as described in FIPS 203</summary>
+    MLKEM1024 = 13,
+    ///<summary>ML-DSA-44 as described in FIPS 204</summary>
+    MLDSA44 = 14,
+    ///<summary>ML-DSA-65 as described in FIPS 204</summary>
+    MLDSA65 = 15,
+    ///<summary>ML-DSA-87 as described in FIPS 204</summary>
+    MLDSA87 = 16,
     ///<summary>Mesh device profile</summary>
     MeshProfileDevice = 256,
     ///<summary>Mesh device activation</summary>
@@ -199,6 +211,30 @@ public static partial class UDFConstants {
     public const string  UdfAlgorithmIdentifierRSA4096Tag = "RSA4096";
     ///<summary>Description for UdfAlgorithmIdentifier.RSA4096</summary>
     public const string  UdfAlgorithmIdentifierRSA4096Title = "4096 bit RSA keypair";
+    ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.MLKEM512</summary>
+    public const string  UdfAlgorithmIdentifierMLKEM512Tag = "MLKEM512";
+    ///<summary>Description for UdfAlgorithmIdentifier.MLKEM512</summary>
+    public const string  UdfAlgorithmIdentifierMLKEM512Title = "ML-KEM 512 as described in FIPS 203";
+    ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.MLKEM768</summary>
+    public const string  UdfAlgorithmIdentifierMLKEM768Tag = "MLKEM768";
+    ///<summary>Description for UdfAlgorithmIdentifier.MLKEM768</summary>
+    public const string  UdfAlgorithmIdentifierMLKEM768Title = "ML-KEM-768 as described in FIPS 203";
+    ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.MLKEM1024</summary>
+    public const string  UdfAlgorithmIdentifierMLKEM1024Tag = "MLKEM1024";
+    ///<summary>Description for UdfAlgorithmIdentifier.MLKEM1024</summary>
+    public const string  UdfAlgorithmIdentifierMLKEM1024Title = "ML-KEM-1024 as described in FIPS 203";
+    ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.MLDSA44</summary>
+    public const string  UdfAlgorithmIdentifierMLDSA44Tag = "MLDSA44";
+    ///<summary>Description for UdfAlgorithmIdentifier.MLDSA44</summary>
+    public const string  UdfAlgorithmIdentifierMLDSA44Title = "ML-DSA-44 as described in FIPS 204";
+    ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.MLDSA65</summary>
+    public const string  UdfAlgorithmIdentifierMLDSA65Tag = "MLDSA65";
+    ///<summary>Description for UdfAlgorithmIdentifier.MLDSA65</summary>
+    public const string  UdfAlgorithmIdentifierMLDSA65Title = "ML-DSA-65 as described in FIPS 204";
+    ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.MLDSA87</summary>
+    public const string  UdfAlgorithmIdentifierMLDSA87Tag = "MLDSA87";
+    ///<summary>Description for UdfAlgorithmIdentifier.MLDSA87</summary>
+    public const string  UdfAlgorithmIdentifierMLDSA87Title = "ML-DSA-87 as described in FIPS 204";
     ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.ReservedIetf</summary>
     public const string  UdfAlgorithmIdentifierReservedIetfTag = "ReservedIetf";
     ///<summary>Description for UdfAlgorithmIdentifier.ReservedIetf</summary>

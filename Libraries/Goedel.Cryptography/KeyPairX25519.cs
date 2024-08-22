@@ -28,13 +28,15 @@ namespace Goedel.Cryptography;
 /// </summary>
 public class KeyPairX25519 : KeyPairECDH {
 
+
+    #region //Properties
     ///<summary>The public key value.</summary>
     public CurveX25519Public PublicKey { get; set; }
     ///<summary>The private key value</summary>
     public CurveX25519Private PrivateKey { get; set; }
 
 
-    #region //Properties
+
     ///<summary>The implementation public key value</summary>
     public override IKeyAdvancedPublic IKeyAdvancedPublic => PublicKey;
 
@@ -59,8 +61,7 @@ public class KeyPairX25519 : KeyPairECDH {
     /// </summary>
     public override byte[] PublicData => PublicKey.Encoding;
 
-    ///<summary>The length of a signature in bytes.</summary> 
-    public override int LengthSignature => 64;
+
     #endregion
 
 

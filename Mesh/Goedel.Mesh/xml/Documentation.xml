@@ -7312,16 +7312,13 @@
         <member name="P:Goedel.Mesh.KeyPairServiced.KeyUses">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.KeyPairServiced.LengthSignature">
-            <inheritdoc/>
-        </member>
         <member name="P:Goedel.Mesh.KeyPairServiced.KeyInfoData">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.KeyPairServiced.PKIXPrivateKey">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.KeyPairServiced.PkixPublicKey">
+        <member name="P:Goedel.Mesh.KeyPairServiced.PKIXPublicKey">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.KeyPairServiced.PublicOnly">

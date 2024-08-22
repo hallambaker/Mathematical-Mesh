@@ -1,0 +1,37 @@
+﻿Namespace Goedel.Cryptography.Jose JoseConstants
+	|Constants specified in hallambaker-mesh-udf
+
+
+File JoseIdentifier
+	
+	String AES "AES"
+	String AES128 "AES128"
+	String AES192 "AES192"
+	String AES256 "AES256"
+	String X25519 "X25519"
+	String X448 "X448"
+	String Ed25519 "Ed25519"
+	String Ed448 "Ed448"
+	String P256 "P256"
+	String P384 "P384"
+	String P521 "P521"
+	String RSA2048 "RSA2048"
+	String RSA3072 "RSA3072"
+	String RSA4096 "RSA4096"
+
+	String MLKEM512 "ML-KEM-512"
+	String MLKEM768 "ML-KEM-768"
+	String MLKEM1024 "ML-KEM-1024"
+
+	String MLDSA44 "ML-DSA-44"
+	String MLDSA65 "ML-DSA-65"
+	String MLDSA87 "ML-DSA-87"
+
+	String SHA2		"SHA2"
+	String SHA2_256 "S256"
+	String SHA2_512 "S512"
+
+	String SHA3		"SHA3"
+	String SHA3_256 "SHA3256"
+	String SHA3_512 "SHA3512"
+

@@ -116,7 +116,7 @@ public partial class Certificate {
     /// <summary>
     /// Subject Key Identifier
     /// </summary>
-    public byte[] SubjectKeyIdentifier => KeyPair.PkixPublicKey.SubjectPublicKeyInfo().DER();
+    public byte[] SubjectKeyIdentifier => KeyPair.PKIXPublicKey.SubjectPublicKeyInfo().DER();
 
 
     /// <summary>

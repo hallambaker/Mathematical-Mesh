@@ -1212,41 +1212,32 @@ public class Udf {
 
         var algorithm = (UdfAlgorithmIdentifier)(256 * ikm[0] + ikm[1]);
 
+        var defaultId = cryptoAlgorithmIdin.DefaultMeta(keyUses, CryptoAlgorithmId.X448,
+                        CryptoAlgorithmId.Ed448, CryptoAlgorithmId.X448);
+
 
         int keySize = 0;
-        CryptoAlgorithmId cryptoAlgorithmId;
-        switch (algorithm) {
-            case UdfAlgorithmIdentifier.Ed25519: {
-                    cryptoAlgorithmId = CryptoAlgorithmId.Ed25519;
-                    break;
-                    }
-            case UdfAlgorithmIdentifier.Ed448: {
-                    cryptoAlgorithmId = CryptoAlgorithmId.Ed448;
-                    break;
-                    }
-            case UdfAlgorithmIdentifier.X25519: {
-                    cryptoAlgorithmId = CryptoAlgorithmId.X25519;
-                    break;
-                    }
-            case UdfAlgorithmIdentifier.X448: {
-                    cryptoAlgorithmId = CryptoAlgorithmId.X448;
-                    break;
-                    }
-            case UdfAlgorithmIdentifier.Any:
-            case UdfAlgorithmIdentifier.MeshProfileDevice:
-            case UdfAlgorithmIdentifier.MeshActivationDevice:
-            case UdfAlgorithmIdentifier.MeshProfileAccount:
-            case UdfAlgorithmIdentifier.MeshActivationAccount:
-            case UdfAlgorithmIdentifier.MeshProfileService:
-            case UdfAlgorithmIdentifier.MeshActivationService: {
-                    cryptoAlgorithmId = cryptoAlgorithmIdin.DefaultMeta(keyUses, CryptoAlgorithmId.X448,
-                        CryptoAlgorithmId.Ed448, CryptoAlgorithmId.X448);
-                    break;
-                    }
-            default: {
-                    throw new NYI();
-                    }
-            }
+        CryptoAlgorithmId cryptoAlgorithmId = algorithm switch {
+            UdfAlgorithmIdentifier.Ed25519 => CryptoAlgorithmId.Ed25519,
+            UdfAlgorithmIdentifier.Ed448 => CryptoAlgorithmId.Ed448,
+            UdfAlgorithmIdentifier.X25519 => CryptoAlgorithmId.X25519,
+            UdfAlgorithmIdentifier.X448 => CryptoAlgorithmId.X448,
+            UdfAlgorithmIdentifier.Any => defaultId,
+            UdfAlgorithmIdentifier.MeshProfileDevice => defaultId,
+            UdfAlgorithmIdentifier.MeshActivationDevice => defaultId,
+            UdfAlgorithmIdentifier.MeshProfileAccount => defaultId,
+            UdfAlgorithmIdentifier.MeshActivationAccount => defaultId,
+            UdfAlgorithmIdentifier.MeshProfileService => defaultId,
+            UdfAlgorithmIdentifier.MeshActivationService => defaultId,
+            UdfAlgorithmIdentifier.MLDSA44 => CryptoAlgorithmId.MLDSA44,
+            UdfAlgorithmIdentifier.MLDSA65 => CryptoAlgorithmId.MLDSA65,
+            UdfAlgorithmIdentifier.MLDSA87 => CryptoAlgorithmId.MLDSA87,
+            UdfAlgorithmIdentifier.MLKEM512 => CryptoAlgorithmId.MLKEM512,
+            UdfAlgorithmIdentifier.MLKEM768 => CryptoAlgorithmId.MLKEM768,
+            UdfAlgorithmIdentifier.MLKEM1024 => CryptoAlgorithmId.MLKEM1024,
+            _ => throw new InvalidOperationException()
+            };
+
         var keySpecifier = KeySpecifier(algorithm);
         return KeyPair.Factory(cryptoAlgorithmId, keySecurity,
             ikm,

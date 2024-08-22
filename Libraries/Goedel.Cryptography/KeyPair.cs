@@ -70,8 +70,14 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
     public bool ForcePublicParameters { get; set; } = false;
 
 
-    ///<summary>The length of a signature in bytes.</summary> 
-    public abstract int LengthSignature { get; }
+    /////<summary>The length of a signature in bytes.</summary> 
+    //public abstract int LengthSignature { get; }
+
+
+    public KeyPair(
+            KeySecurity keySecurity = KeySecurity.Bound) {
+        KeySecurity = keySecurity;
+        }
 
     /// <summary>
     /// Sign a precomputed digest
@@ -151,6 +157,21 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
                     break;
                     }
 
+            case CryptoAlgorithmId.MLDSA44:
+            case CryptoAlgorithmId.MLDSA65:
+            case CryptoAlgorithmId.MLDSA87: {
+                keyPair = KeyPairFactoryMlDsa(keySize, keySecurity, keyUses, algorithmID);
+                break;
+                }
+
+
+            case CryptoAlgorithmId.MLKEM512:
+            case CryptoAlgorithmId.MLKEM768:
+            case CryptoAlgorithmId.MLKEM1024: {
+                keyPair = KeyPairFactoryMlKem(keySize, keySecurity, keyUses, algorithmID);
+                break;
+                }
+
             default:
                 break;
             }
@@ -227,61 +248,87 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
 
         switch (algorithmID) {
             case CryptoAlgorithmId.RSAExch: {
-                    var bits = keySize / 2;
-                    var seedp = KeySeed(bits, ikm, keySpecifier, keyName, "p");
-                    var seedq = KeySeed(bits, ikm, keySpecifier, keyName, "q");
-                    "Implement RSA generation from seed".TaskFunctionality(true);
+                var bits = keySize / 2;
+                var seedp = KeySeed(bits, ikm, keySpecifier, keyName, "p");
+                var seedq = KeySeed(bits, ikm, keySpecifier, keyName, "q");
+                "Implement RSA generation from seed".TaskFunctionality(true);
 
-                    keyPair = KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Encrypt, algorithmID);
-                    break;
-                    }
+                keyPair = KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Encrypt, algorithmID);
+                break;
+                }
             case CryptoAlgorithmId.RSASign: {
-                    var bits = keySize / 2;
-                    var seedp = KeySeed(bits, ikm, keySpecifier, keyName, "p");
-                    var seedq = KeySeed(bits, ikm, keySpecifier, keyName, "q");
-                    "Implement RSA generation from seed".TaskFunctionality(true);
+                var bits = keySize / 2;
+                var seedp = KeySeed(bits, ikm, keySpecifier, keyName, "p");
+                var seedq = KeySeed(bits, ikm, keySpecifier, keyName, "q");
+                "Implement RSA generation from seed".TaskFunctionality(true);
 
-                    keyPair = KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Sign, algorithmID);
-                    break;
-                    }
+                keyPair = KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Sign, algorithmID);
+                break;
+                }
             case CryptoAlgorithmId.DH: {
-                    var bits = keySize;
-                    var binaryData = KeySeed(bits, ikm, keySpecifier, keyName);
-                    "Implement DH generation from seed".TaskFunctionality(true);
+                var bits = keySize;
+                var binaryData = KeySeed(bits, ikm, keySpecifier, keyName);
+                "Implement DH generation from seed".TaskFunctionality(true);
 
-                    keyPair = KeyPairFactoryDH(keySize, keySecurity, keyUses, algorithmID);
-                    break;
-                    }
+                keyPair = KeyPairFactoryDH(keySize, keySecurity, keyUses, algorithmID);
+                break;
+                }
             case CryptoAlgorithmId.X25519: {
 
-                    var binaryData = KeySeed(256, ikm, keySpecifier, keyName);
-                    keyPair = new KeyPairX25519(binaryData, keySecurity, keyUses);
-                    break;
-                    }
+                var binaryData = KeySeed(256, ikm, keySpecifier, keyName);
+                keyPair = new KeyPairX25519(binaryData, keySecurity, keyUses);
+                break;
+                }
             case CryptoAlgorithmId.Ed25519: {
-                    var binaryData = KeySeed(256, ikm, keySpecifier, keyName);
-                    keyPair = new KeyPairEd25519(binaryData, keySecurity, keyUses);
-                    break;
-                    }
+                var binaryData = KeySeed(256, ikm, keySpecifier, keyName);
+                keyPair = new KeyPairEd25519(binaryData, keySecurity, keyUses);
+                break;
+                }
             case CryptoAlgorithmId.X448: {
-                    var binaryData = KeySeed(448, ikm, keySpecifier, keyName);
-                    keyPair = new KeyPairX448(binaryData, keySecurity, keyUses);
-                    break;
-                    }
+                var binaryData = KeySeed(448, ikm, keySpecifier, keyName);
+                keyPair = new KeyPairX448(binaryData, keySecurity, keyUses);
+                break;
+                }
             case CryptoAlgorithmId.Ed448: {
-                    var binaryData = KeySeed(448, ikm, keySpecifier, keyName);
-                    keyPair = new KeyPairEd448(binaryData, keySecurity, keyUses);
-                    break;
-                    }
+                var binaryData = KeySeed(448, ikm, keySpecifier, keyName);
+                keyPair = new KeyPairEd448(binaryData, keySecurity, keyUses);
+                break;
+                }
+            case CryptoAlgorithmId.MLKEM512:
+            case CryptoAlgorithmId.MLKEM768:
+            case CryptoAlgorithmId.MLKEM1024: {
+                keyPair = KeyPairMlKem.Factory(algorithmID, keySecurity,
+                        ikm, keySpecifier, keyName, keyCollection, keySize, keyUses);
+                break;
+                }
+            case CryptoAlgorithmId.MLDSA44:
+            case CryptoAlgorithmId.MLDSA65:
+            case CryptoAlgorithmId.MLDSA87: {
+                keyPair = KeyPairMlDsa.Factory(algorithmID, keySecurity, 
+                        ikm, keySpecifier, keyName, keyCollection, keySize, keyUses);
+                break;
+                }
             default: {
-                    throw new NYI();
-                    }
+                throw new NYI();
+                }
             }
         Register(keyPair, keySecurity, keyCollection);
         return keyPair;
         }
 
-    static byte[] KeySeed(
+
+    /// <summary>
+    /// Derive a key seed of <paramref name="bits"/> bits using the parameters
+    /// <paramref name="ikm"/>, <paramref name="keyName"/>, <paramref name="keySpecifier"/>
+    /// and <paramref name="parameter"/>.
+    /// </summary>
+    /// <param name="bits">The number of bits to return.</param>
+    /// <param name="ikm">The initial keying material.</param>
+    /// <param name="keySpecifier">The key specifier.</param>
+    /// <param name="keyName">Optional key name.</param>
+    /// <param name="parameter">Optional parameter.</param>
+    /// <returns></returns>
+    public static byte[] KeySeed(
             int bits,
             byte[] ikm,
             byte[] keySpecifier,
@@ -342,6 +389,18 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
     public static FactoryKeyPairDelegate KeyPairFactoryECDH { get; set; } = KeyPairECDH.KeyPairFactory;
 
 
+    /// <summary>
+    /// Generate a new keypair. Initialized by the cryptographic
+    /// platform provider.
+    /// </summary>
+    public static FactoryKeyPairDelegate KeyPairFactoryMlDsa { get; set; } = KeyPairMlDsa.KeyPairFactory;
+
+    /// <summary>
+    /// Generate a new keypair. Initialized by the cryptographic
+    /// platform provider.
+    /// </summary>
+    public static FactoryKeyPairDelegate KeyPairFactoryMlKem { get; set; } = KeyPairMlKem.KeyPairFactory;
+
 
     /// <summary>
     /// String presentation of the key pair
@@ -373,12 +432,12 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
     /// <summary>
     /// The private key data formatted as a PKIX KeyInfo data blob.
     /// </summary>
-    public abstract IPkixPublicKey PkixPublicKey { get; }
+    public abstract IPKIXPublicKey PKIXPublicKey { get; }
 
 
     ///<summary>The raw UDF fingerprint.</summary>
     public override byte[] UDFBytes => udfBytes ??
-            PkixPublicKey.UDFBytes(512).CacheValue(out udfBytes);
+            PKIXPublicKey.UDFBytes(512).CacheValue(out udfBytes);
     byte[] udfBytes = null;
 
 

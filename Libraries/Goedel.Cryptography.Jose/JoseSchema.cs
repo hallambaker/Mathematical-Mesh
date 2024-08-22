@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 7/8/2024 11:22:42 PM
+//  This file was automatically generated at 8/22/2024 6:23:53 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -93,7 +93,9 @@ public abstract partial class Jose : global::Goedel.Protocol.JsonObject {
 	    {"PrivateKeyUDF", PrivateKeyUDF._Factory},
 	    {"KeyAgreement", KeyAgreement._Factory},
 	    {"KeyAgreementDH", KeyAgreementDH._Factory},
-	    {"KeyAgreementECDH", KeyAgreementECDH._Factory}
+	    {"KeyAgreementECDH", KeyAgreementECDH._Factory},
+	    {"PublicKeyBinary", PublicKeyBinary._Factory},
+	    {"PrivateKeyBinary", PrivateKeyBinary._Factory}
 		};
 
     [ModuleInitializer]
@@ -2140,6 +2142,174 @@ public partial class KeyAgreementECDH : KeyAgreement {
 			return Out as KeyAgreementECDH;
 			}
 		var Result = new KeyAgreementECDH ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// A public key represented as a binary blob whose type is specified
+	/// by Kty.
+	/// </summary>
+public partial class PublicKeyBinary : Key {
+        /// <summary>
+        ///The public key value
+        /// </summary>
+
+	public virtual byte[]?						Public  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new PublicKeyBinary(), Key._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Public", new PropertyBinary ("Public", 
+					(IBinding data, byte[]? value) => {(data as PublicKeyBinary).Public = value;}, (IBinding data) => (data as PublicKeyBinary).Public )}
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, Key._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "PublicKeyBinary";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new PublicKeyBinary();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new PublicKeyBinary FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as PublicKeyBinary;
+			}
+		var Result = new PublicKeyBinary ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// A private key represented as a binary blob whose type is specified
+	/// by Kty.
+	/// </summary>
+public partial class PrivateKeyBinary : Key {
+        /// <summary>
+        ///The private key value
+        /// </summary>
+
+	public virtual byte[]?						Public  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new PrivateKeyBinary(), Key._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Public", new PropertyBinary ("Public", 
+					(IBinding data, byte[]? value) => {(data as PrivateKeyBinary).Public = value;}, (IBinding data) => (data as PrivateKeyBinary).Public )}
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, Key._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "PrivateKeyBinary";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new PrivateKeyBinary();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new PrivateKeyBinary FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as PrivateKeyBinary;
+			}
+		var Result = new PrivateKeyBinary ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

@@ -19,6 +19,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+using System.Security.Cryptography;
+
 namespace Goedel.Cryptography.PKIX;
 
 /// <summary>
@@ -51,7 +53,7 @@ public interface IPKIXData {
 /// Interface permitting Key classes to be managed as if they inherited from
 /// a common base class.
 /// </summary>
-public interface IPkixPublicKey : IPKIXData {
+public interface IPKIXPublicKey : IPKIXData {
 
     /// <summary>
     /// Construct a PKIX SubjectPublicKeyInfo block
@@ -63,7 +65,7 @@ public interface IPkixPublicKey : IPKIXData {
     /// <summary>
     /// Return the corresponding public parameters
     /// </summary>
-    IPkixPublicKey PublicParameters { get; }
+    IPKIXPublicKey PublicParameters { get; }
 
     }
 
@@ -72,7 +74,7 @@ public interface IPkixPublicKey : IPKIXData {
 /// Interface permitting Key classes to be managed as if they inherited from
 /// a common base class.
 /// </summary>
-public interface IPKIXPrivateKey : IPkixPublicKey {
+public interface IPKIXPrivateKey : IPKIXPublicKey {
 
     }
 
@@ -84,7 +86,7 @@ public interface IPKIXAgreement : IPKIXData {
     }
 
 
-public partial class PKIXPublicKeyDH : IPkixPublicKey, IKeyPublicDH {
+public partial class PKIXPublicKeyDH : IPKIXPublicKey, IKeyPublicDH {
 
     /// <summary>
     /// Construct a PKIX SubjectPublicKeyInfo block
@@ -105,7 +107,7 @@ public partial class PKIXPublicKeyDH : IPkixPublicKey, IKeyPublicDH {
     /// <summary>
     /// Return the corresponding public parameters
     /// </summary>
-    public IPkixPublicKey PublicParameters => this;
+    public IPKIXPublicKey PublicParameters => this;
 
     byte[] IKeyPublicDH.Shared { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
     byte[] IKeyPublicDH.Public { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
@@ -123,16 +125,14 @@ public partial class PKIXPrivateKeyDH : IPKIXPrivateKey, IKeyPrivateDH {
         return new SubjectPublicKeyInfo(OIDValue, DER());
         }
 
-    /// <summary>
-    /// Return the algorithm identifier that represents this key
-    /// </summary>
+    ///<inheritdoc/>
     public override int[] OID => Constants.OID__id_dh_private;
 
 
     /// <summary>
     /// Return the corresponding public parameters
     /// </summary>
-    public IPkixPublicKey PublicParameters => PKIXPublicKeyDH;
+    public IPKIXPublicKey PublicParameters => PKIXPublicKeyDH;
 
 
     /// <summary>
@@ -159,7 +159,7 @@ public partial class PKIXPrivateKeyDH : IPKIXPrivateKey, IKeyPrivateDH {
 
 
 
-public partial class PkixPublicKeyRsa : IPkixPublicKey {
+public partial class PkixPublicKeyRsa : IPKIXPublicKey {
 
     /// <summary>
     /// Construct a PKIX SubjectPublicKeyInfo block
@@ -180,7 +180,7 @@ public partial class PkixPublicKeyRsa : IPkixPublicKey {
     /// <summary>
     /// Return the corresponding public parameters
     /// </summary>
-    public IPkixPublicKey PublicParameters => this;
+    public IPKIXPublicKey PublicParameters => this;
 
     }
 
@@ -205,7 +205,7 @@ public partial class PkixPrivateKeyRsa : IPKIXPrivateKey {
     /// <summary>
     /// Return the corresponding public parameters
     /// </summary>
-    public IPkixPublicKey PublicParameters => PKIXPublicKeyRSA;
+    public IPKIXPublicKey PublicParameters => PKIXPublicKeyRSA;
 
 
     /// <summary>
@@ -223,4 +223,68 @@ public partial class PkixPrivateKeyRsa : IPKIXPrivateKey {
 
     PkixPublicKeyRsa _PKIXPublicKeyRSA = null;
 
+    }
+
+/// <summary>
+/// PKIX wrapper for opaque binary public key.
+/// </summary>
+public partial class PublicKeyInfo : IPKIXPublicKey {
+
+    ///<inheritdoc/>
+    public override int[] OID => Algorithm.Algorithm;
+
+    ///<inheritdoc/>
+    public IPKIXPublicKey PublicParameters => this;
+
+    /// <summary>
+    /// Default constructor for deserialization.
+    /// </summary>
+    public PublicKeyInfo() {
+        }
+
+    /// <summary>
+    /// Construtor returning an instance for the public key <paramref name="key"/>.
+    /// </summary>
+    /// <param name="key">The public key</param>
+    public PublicKeyInfo(IOpaqueBinaryKey key) {
+        Algorithm = new AlgorithmIdentifier(key.OID);
+        PublicKey = key.GetPublicBinary();
+        }
+
+    ///<inheritdoc/>
+    public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] OIDValue = null) {
+        OIDValue ??= OID;
+        return new SubjectPublicKeyInfo(OIDValue, PublicKey);
+        }
+    }
+
+/// <summary>
+/// PKIX wrapper for opaque binary private key.
+/// </summary>
+public partial class PrivateKeyInfo : IPKIXPrivateKey {
+
+    ///<inheritdoc/>
+    public override int[] OID => PrivateKeyAlgorithm.Algorithm;
+
+    ///<inheritdoc/>
+    public IPKIXPublicKey PublicParameters => new PublicKeyInfo() {
+        Algorithm = PrivateKeyAlgorithm,
+        PublicKey = PublicKey,
+        };
+
+    /// <summary>
+    /// Construtor returning an instance for the public key <paramref name="key"/>.
+    /// </summary>
+    /// <param name="key">The public key</param>
+    public PrivateKeyInfo(IOpaqueBinaryKey key) {
+        PrivateKeyAlgorithm = new AlgorithmIdentifier(key.OID);
+        PublicKey = key.GetPublicBinary();
+        PrivateKey = key.GetPrivateBinary();
+        }
+
+    ///<inheritdoc/>
+    public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] OIDValue = null) {
+        OIDValue ??= OID;
+        return new SubjectPublicKeyInfo(OIDValue, DER());
+        }
     }

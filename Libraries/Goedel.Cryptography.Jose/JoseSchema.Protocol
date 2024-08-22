@@ -366,3 +366,23 @@
 		Binary Result
 			Description
 				|The result
+
+	Structure PublicKeyBinary
+		Inherits Key
+		Description
+			|A public key represented as a binary blob whose type is specified
+			|by Kty.
+		Binary Public
+			Description
+				|The public key value
+
+	Structure PrivateKeyBinary
+		Inherits Key
+		Description
+			|A private key represented as a binary blob whose type is specified
+			|by Kty.
+		Binary Public
+			Description
+				|The private key value
+
+

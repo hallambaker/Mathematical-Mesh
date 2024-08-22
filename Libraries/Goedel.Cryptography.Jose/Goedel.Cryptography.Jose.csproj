@@ -27,6 +27,8 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+
+
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +41,7 @@
       <LastGenOutput>JoseSchema.cs</LastGenOutput>
       <Generator>ProtoGen</Generator>
     </None>
+
   </ItemGroup>
 
 </Project>

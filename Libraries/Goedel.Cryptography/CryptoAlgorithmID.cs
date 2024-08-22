@@ -251,7 +251,14 @@ public enum CryptoAlgorithmId {
     /// <summary>Elliptic Curve DSA with curve Ed448</summary>
     Ed448ph = Ed448 + 1,
 
+    ///<summary>ML-DSA (Dilithium) 44</summary> 
+    MLDSA44 = Ed448 + Meta,
 
+    ///<summary>ML-DSA (Dilithium) 65</summary> 
+    MLDSA65 = MLDSA44 + Meta,
+
+    ///<summary>ML-DSA (Dilithium) 87</summary> 
+    MLDSA87 = MLDSA65 + Meta,
 
     /// <summary>RSA Signature using PKCS#1.5 padding and SHA-2 256 digest</summary>
     RSASign_SHA_2_256 = RSASign | SHA_2_256,
@@ -293,13 +300,14 @@ public enum CryptoAlgorithmId {
     /// <summary>Elliptic Curve DH with curve Ed448 (Edwards)</summary>
     XEd448 = ECDH + Meta * 12,
 
+    /// <summary>ML-KEM with 512 bit key</summary>
+    MLKEM512 = ECDH + Meta * 13,
 
-    /////<summary>Default signature algorithm for the Mesh</summary>
-    //MeshDefaultSign = Ed448,
-    /////<summary>Default encryption algorithm for the Mesh (will change to X488)</summary>
-    //MeshDefaultEncrypt = X448,
+    /// <summary>ML-KEM with 768 bit key</summary>
+    MLKEM768 = ECDH + Meta * 14,
 
-
+    /// <summary>ML-KEM with 1024 bit key</summary>
+    MLKEM1024 = ECDH + Meta * 15,
     // Key Wrap
 
     ///<summary>Direct (no wrap)</summary>

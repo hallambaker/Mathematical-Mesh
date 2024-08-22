@@ -19,30 +19,42 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+namespace Goedel.Cryptography.Jose;
+public partial class PublicKeyBinary {
 
 
-//namespace Goedel.Cryptography.Algorithms;
-
-//internal static class Utilities {
-//    private static volatile RNGCryptoServiceProvider _rng = null;
-
-//    //[MethodImpl(MethodImplOptions.InternalCall)]
-//    //internal static extern bool _ProduceLegacyHmacValues();
-
-//    //internal static RNGCryptoServiceProvider StaticRandomNumberGenerator {
-//    //    get {
-//    //        if (_rng == null) {
-//    //            _rng = new RNGCryptoServiceProvider();
-//    //            }
-//    //        return _rng;
-//    //        }
-//    //    }
-
-//    //internal static byte[] GenerateRandom(int keySize) {
-//    //    byte[] data = new byte[keySize];
-//    //    StaticRandomNumberGenerator.GetBytes(data);
-//    //    return data;
-//    //    }
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    public PublicKeyBinary() { }
 
 
-//    }
+    /// <summary>
+    /// Construct a key
+    /// </summary>
+    /// <param name="keyPair"></param>
+    public PublicKeyBinary(IOpaqueBinaryKey keyPair) {
+        Public = keyPair.GetPublicBinary();
+        Kty = keyPair.JsonAlgorithmId;
+        }
+    }
+
+
+public partial class PrivateKeyBinary {
+
+
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    public PrivateKeyBinary() { }
+
+
+    /// <summary>
+    /// Construct a key
+    /// </summary>
+    /// <param name="keyPair"></param>
+    public PrivateKeyBinary(IOpaqueBinaryKey keyPair) {
+        Public = keyPair.GetPublicBinary();
+        Kty = keyPair.JsonAlgorithmId;
+        }
+    }

@@ -65,8 +65,15 @@ File AlgorithmIdentifier
         Integer RSA2048		8	"2048 bit RSA keypair"
         Integer RSA3072		9	"3072 bit RSA keypair"
         Integer RSA4096		10	"4096 bit RSA keypair"
-        Integer ReservedIetf 11  "Reserved for IETF recommended algorithms"
+		Integer MLKEM512	11  "ML-KEM 512 as described in FIPS 203"
+		Integer MLKEM768	12  "ML-KEM-768 as described in FIPS 203"
+		Integer MLKEM1024	13  "ML-KEM-1024 as described in FIPS 203"
+		Integer MLDSA44		14  "ML-DSA-44 as described in FIPS 204"
+		Integer MLDSA65		15  "ML-DSA-65 as described in FIPS 204"
+		Integer MLDSA87		16  "ML-DSA-87 as described in FIPS 204"
+        Integer ReservedIetf 17  "Reserved for IETF recommended algorithms"
 			Reserve 255
+
 		Integer MeshProfileDevice		256 "Mesh device profile"
 		Integer MeshActivationDevice	257 "Mesh device activation"
 		Integer MeshProfileAccount		258 "Mesh account account"

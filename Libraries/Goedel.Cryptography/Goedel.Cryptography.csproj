@@ -22,6 +22,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+	  <Compile Update="JoseConstants.cs">
+		  <DependentUpon>JoseConstants.Constant</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+	  </Compile>
     <Compile Update="UDFConstants.cs">
       <DependentUpon>UDFConstants.Constant</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -39,6 +44,10 @@
       <LastGenOutput>Exceptions.cs</LastGenOutput>
       <Generator>exceptional</Generator>
     </None>
+	  <None Update="JoseConstants.constant">
+		  <LastGenOutput>JoseConstants.cs</LastGenOutput>
+		  <Generator>Constant</Generator>
+	  </None>
     <None Update="PKIX\PKIX.asn2">
       <Generator>ASN2CS</Generator>
       <LastGenOutput>PKIX.cs</LastGenOutput>

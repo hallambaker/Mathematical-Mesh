@@ -2914,6 +2914,1752 @@
             Default constructor, not yet implemented
             </summary>
         </member>
+        <member name="T:Goedel.Cryptography.IOpaqueBinaryKey">
+            <summary>
+            Return public and private key data as opaque octet strings.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.IOpaqueBinaryKey.OID">
+            <summary>The algorithm identifier.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.IOpaqueBinaryKey.JsonAlgorithmId">
+            <summary>The JSON algorithm identifier.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.IOpaqueBinaryKey.GetPublicBinary">
+            <summary>
+            Return the public key as an opaque octet string.
+            </summary>
+            <returns>The public key.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.IOpaqueBinaryKey.GetPrivateBinary">
+            <summary>
+            Return the private key as an opaque octet string.
+            </summary>
+            <returns>The private key.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.PQC.KeyPairMlDsa">
+            <summary>
+            ML-DSA keypair implemented according to FIPS 204
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlDsa.PublicKey">
+            <summary>The public key value.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlDsa.PrivateKey">
+            <summary>The private key value</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlDsa.OID">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlDsa.JsonAlgorithmId">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsa.GetPublicBinary">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsa.GetPrivateBinary">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlDsa.PrivateKeyInfo">
+            <summary>
+            Return private key parameters in PKIX structure
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlDsa.PublicKeyInfo">
+            <summary>
+            Return public key parameters in PKIX structure
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlDsa.PKIXPrivateKey">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlDsa.PKIXPublicKey">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlDsa.KeyUses">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlDsa.KeyInfoData">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlDsa.PublicOnly">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsa.#ctor(System.Byte[],System.Byte[],Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses)">
+            <summary>
+            Constructore returning an instance from the binary key data
+            <paramref name="publicKey"/>, <paramref name="privateKey"/> with
+            security properties <paramref name="keySecurity"/> and uses
+            <paramref name="keyUses"/>.
+            </summary>
+            <param name="publicKey">The public key data.</param>
+            <param name="privateKey">The private key seed.</param>
+            <param name="keySecurity">The key security.</param>
+            <param name="keyUses">The key uses.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsa.KeyPairFactory(System.Int32,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Generate a key pair for the specified algorithm and key size.
+            </summary>
+            <param name="keySize">The Key size, must be 44, 65 or 87</param>
+            <param name="keySecurity">The key security model</param>
+            <param name="cryptoAlgorithmID">The cryptographic algorithm identifier</param>
+            <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
+            <returns>The generated key pair</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsa.Factory(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeySecurity,System.Byte[],System.Byte[],System.String,Goedel.Cryptography.IKeyLocate,System.Int32,Goedel.Cryptography.KeyUses)">
+            <summary>
+            Factory creating a key pair of the type specified by <paramref name="algorithmID"/>
+            using the data provided by a UDF identifier. 
+            </summary>
+            <param name="algorithmID">The type of key to create.</param>
+            <param name="keyCollection">The key collection to add the key to.</param>
+            <param name="keySecurity">The key security model.</param>
+            <param name="keyUses">The allowed key uses.</param>
+            <param name="ikm">Initial keying material for the key.</param>
+            <param name="keySpecifier">Key specifier material for the key.</param>
+            <param name="keyName">Optional key name used to specify generation of multiple keys from 
+            a single seed.</param>
+            <param name="keySize">The size of the key in bits.</param>
+            <returns>the derrived key.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsa.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsa.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
+            <exception cref="T:Goedel.Cryptography.OperationNotSupported">ML-KEM does not support signature operations.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsa.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
+            <exception cref="T:Goedel.Cryptography.OperationNotSupported">ML-KEM does not support signature operations.</exception>
+        </member>
+        <member name="T:Goedel.Cryptography.PQC.DilithiumMode">
+            <summary>
+            Dilithium modes.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.DilithiumMode.Mode2">
+            <summary>Mode 2, lowest work factor.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.DilithiumMode.Mode3">
+            <summary>Mode 3, improved work factor.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.DilithiumMode.Mode5">
+            <summary>Mode 5, highest work factor.</summary> 
+        </member>
+        <member name="T:Goedel.Cryptography.PQC.Dilithium">
+            <summary>
+            Base class for Dilithium implementations.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.Dilithium.Q">
+            <summary>The modulus for vector arithmetic. This is a fixed constant to allow compile
+            time optimization of the static methods here.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.Dilithium.qinv">
+            <summary>Inverse of Q</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.Dilithium.N">
+            <summary>Degree of the polynomial.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Dilithium.OMEGA">
+            <summary></summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.Dilithium.D">
+            <summary>Number of bits to left shift output.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Dilithium.Mode">
+            <summary>The mode identifier</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Dilithium.K">
+            <summary>Number of vectors in the matrix.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Dilithium.L">
+            <summary>Number of polynomials per vector.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Dilithium.Eta">
+            <summary>Eta value.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Dilithium.Tau">
+            <summary>Tau value.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Dilithium.Beta">
+            <summary>Beta value.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Dilithium.Gamma1">
+            <summary>Gamma1 value.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Dilithium.Gamma2">
+            <summary>Gamma 2 value.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.Dilithium.Gamma1_17">
+            <summary>The Gamma1 vale 2^17</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.Dilithium.Gamma1_19">
+            <summary>The Gamma1 vale 2^19</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.Dilithium.Gamma2_88">
+            <summary>The Gamma2 vale (Q - 1) / 88</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.Dilithium.Gamma2_32">
+            <summary>The Gamma2 vale (Q - 1) / 32</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.Dilithium.SeedBytes">
+            <summary>Minimum seed byte size.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.Dilithium.CrhBytes">
+            <summary>CHR Byte size.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Dilithium.PolyZPackedBytes">
+            <summary>Length of packed Z polynomial in bytes.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Dilithium.PolyW1PackedBytes">
+            <summary>Length of packed W1 polynomial in bytes.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Dilithium.PolyEtaPackedBytes">
+            <summary>Length of packed Eta polynomial in bytes.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.Dilithium.PolyT1PackedBytes">
+            <summary>Length of packed T1 polynomial in bytes.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.Dilithium.PolyT0PackedBytes">
+            <summary>Length of packed T0 polynomial in bytes.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Dilithium.PolyVecHPackedBytes">
+            <summary>Length of packed Hint Vector polynomial in bytes.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Dilithium.PublicKeyBytes">
+            <summary>Public key length in bytes.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Dilithium.PrivateKeyBytes">
+            <summary>Private key length in bytes.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Dilithium.SignatureBytes">
+            <summary>Number of bytes in the signature (excluding copied message)</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Dilithium.Mode2">
+            <summary>Parameter set for Mode 2.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Dilithium.Mode3">
+            <summary>Parameter set for Mode 3.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Dilithium.Mode5">
+            <summary>Parameter set for Mode 5.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Dilithium.#cctor">
+            <summary>
+            Do a one time initialization of the parameter presets on assembly load.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Dilithium.#ctor(Goedel.Cryptography.PQC.DilithiumMode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="mode">The Dilithium mode.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Dilithium.GenerateKeypair(Goedel.Cryptography.PQC.DilithiumMode,System.Byte[])">
+            <summary>
+            Generate public, private key pair
+            </summary>
+            <param name="mode">The dilithium mode to use.</param>
+            <param name="seed">Optional seed value for deterministic key generation.</param>
+            <returns>The (public, private) keys.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Dilithium.GenerateKeypair(Goedel.Cryptography.PQC.Dilithium,System.Byte[])">
+            <summary>
+            Generate public, private key pair
+            </summary>
+            <param name="parameters">The parameter set to use.</param>
+            <param name="seed">Optional seed value for deterministic key generation.</param>
+            <returns>The (public, private) keys.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Dilithium.GetVectorL(System.Boolean)">
+            <summary>
+            Create returning a <see cref="T:Goedel.Cryptography.PQC.PolynomialVectorInt32"/> of
+            length <see cref="P:Goedel.Cryptography.PQC.Dilithium.L"/>.
+            </summary>
+            <param name="wipe">If true, wipe vector parameters on dispose.</param>
+            <returns>The created vector.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Dilithium.GetVectorK(System.Boolean)">
+            <summary>
+            Create returning a <see cref="T:Goedel.Cryptography.PQC.PolynomialVectorInt32"/> of
+            length <see cref="P:Goedel.Cryptography.PQC.Dilithium.K"/>.
+            </summary>
+            <param name="wipe">If true, wipe vector parameters on dispose.</param>
+            <returns>The created vector.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Dilithium.MontgomeryReduce(System.Int64)">
+            <summary>
+            Montgomery reduction according to <see cref="F:Goedel.Cryptography.PQC.Dilithium.Q"/>. Changed return
+            type to int since this appears more consistent with use in the code.
+            </summary>
+            <param name="a">The value to reduce.</param>
+            <returns>The Montgomery reduction.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Dilithium.Reduce32(System.Int32)">
+            <summary>
+            For finite field element a with a &lt;= 2^{31} - 2^{22} - 1,
+            compute r \equiv a (mod Q) such that -6283009 &lt;= r &lt;= 6283007.
+            </summary>
+            <param name="a">Finite field element a</param>
+            <returns>Finite field element a</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Dilithium.Caddq(System.Int32)">
+            <summary>
+            Add Q if input coefficient is negative.
+            </summary>
+            <param name="a">finite field element a</param>
+            <returns>Finite field element a</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Dilithium.Freeze(System.Int32)">
+            <summary>
+            For finite field element a, compute standard
+            representative r = a mod^+ Q.
+            </summary>
+            <param name="a">Finite field element a</param>
+            <returns>Finite field element a</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Dilithium.Power2Round(System.Int32)">
+            <summary>
+            For finite field element a, compute a0, a1 such that
+            a mod^+ Q = a1*2^D + a0 with -2^{D-1} &lt; a0 &lt;= 2^{D-1}.
+            Assumes a to be standard representative.
+            </summary>
+            <param name="a">input element</param>
+            <returns>Output elements a0, a1</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Dilithium.Decompose(System.Int32)">
+            <summary>
+            For finite field element a, compute high and low bits a0, a1 such
+            that a mod^+ Q = a1*ALPHA + a0 with -ALPHA/2 &lt; a0 &lt;= ALPHA/2 except
+            if a1 = (Q-1)/ALPHA where we set a1 = 0 and
+            -ALPHA/2 &lt;= a0 = a mod^+ Q - Q &lt; 0. Assumes a to be standard
+            representative.
+            </summary>
+            <param name="a">input element</param>
+            <returns>Output elements a0, a1</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Dilithium.MakeHint(System.Int32,System.Int32)">
+            <summary>
+            Compute hint bit indicating whether the low bits of the
+            input element overflow into the high bits. Inputs assumed
+            to be standard representatives.
+            </summary>
+            <param name="a0">low bits of input element</param>
+            <param name="a1">high bits of input element</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Dilithium.UseHint(System.Int32,System.Int32)">
+            <summary>
+            Correct high bits according to hint.
+            </summary>
+            <param name="a">input element</param>
+            <param name="h">The hint bit</param>
+            <returns>corrected high bits.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Dilithium.PackPublicKey(System.Byte[],Goedel.Cryptography.PQC.PolynomialVectorInt32)">
+            <summary>
+            Pack public key parameters and return the result.
+            </summary>
+            <param name="rho">The value rho.</param>
+            <param name="t1">The value t1.</param>
+            <returns>The packed public key.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Dilithium.PackPrivateKey(System.Byte[],System.Byte[],System.Byte[],Goedel.Cryptography.PQC.PolynomialVectorInt32,Goedel.Cryptography.PQC.PolynomialVectorInt32,Goedel.Cryptography.PQC.PolynomialVectorInt32)">
+            <summary>
+            Pack private key parameters and return the result.
+            </summary>
+            <param name="rho">The value rho.</param>
+            <param name="tr">The value t1.</param>
+            <param name="key">The value t1.</param>
+            <param name="t0">The value t1.</param>
+            <param name="s1">The value t1.</param>
+            <param name="s2">The value t1.</param>
+            <returns>The packed private key.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.PQC.DilithiumPrivate">
+            <summary>
+            Dilithium private key.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.DilithiumPrivate.Dispose">
+            <summary>
+            Dispose method, frees all resources.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.DilithiumPrivate.Dispose(System.Boolean)">
+            <summary>
+            Dispose method, frees resources when disposing, 
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.DilithiumPrivate.Finalize">
+            <summary>
+            Destructor.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.DilithiumPrivate.Disposing">
+            <summary>
+            The class specific disposal routine.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.DilithiumPrivate.#ctor(System.Byte[])">
+            <summary>
+            Constructor, create instance from packed private key bytes
+            <paramref name="privateKey"/>.
+            </summary>
+            <param name="privateKey">The private key bytes.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.DilithiumPrivate.Sign(System.Byte[])">
+            <summary>
+            Sign the message <paramref name="message"/> and return the signature 
+            bytes.
+            </summary>
+            <param name="message">The message to sign.</param>
+            <returns>The signature bytes.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.DilithiumPrivate.PackSignature(System.Byte[],System.Byte[],Goedel.Cryptography.PQC.PolynomialVectorInt32,Goedel.Cryptography.PQC.PolynomialVectorInt32)">
+            <summary>
+            Pack the signature parameters and return the resulting byte array.
+            </summary>
+            <param name="sig">The signature.</param>
+            <param name="message">The message.</param>
+            <param name="z">The Z vector.</param>
+            <param name="h">The hints vector.</param>
+            <returns>The packed byte array.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.PQC.DilithiumPublic">
+            <summary>
+            Dilithium public key.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.DilithiumPublic.#ctor(System.Byte[])">
+            <summary>
+            Constructor, create instance from packed public key bytes
+            <paramref name="publicKey"/>.
+            </summary>
+            <param name="publicKey">The public key bytes.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.DilithiumPublic.Verify(System.Byte[],System.Byte[])">
+            <summary>
+            Verify the signature <paramref name="signature"/>.
+            </summary>
+            <param name="signature">The signature and message to verify.</param>
+            <param name="message">The signed message.</param>
+            <returns>True if signature isvalid, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.DilithiumPublic.UnpackSignature(System.Byte[],System.Byte[]@,Goedel.Cryptography.PQC.PolynomialVectorInt32@,Goedel.Cryptography.PQC.PolynomialVectorInt32@,System.Byte[]@)">
+            <summary>
+            Unpack the signature bytes <paramref name="signature"/> and return the 
+            corresponding parameters.
+            </summary>
+            <param name="signature">The signature bytes.</param>
+            <param name="sig">The sig parameter.</param>
+            <param name="v">The Z vector.</param>
+            <param name="h">The hints vector.</param>
+            <param name="message">The signed message.</param>
+            <returns>False if the signature parameters are invalid.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.PQC.PolynomialInt32">
+            <summary>
+            Operations on polynomials expressed as a list of coefficients for use in Dilithium.
+            Could be adapted to other applications if required.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.PolynomialInt32.Coefficients">
+            <summary>The polynomial coefficients.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.PolynomialInt32.N">
+            <summary>The number of polynomial coefficients.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.PolynomialInt32.Wipe">
+            <summary>If true, data is wiped on dispose.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.Disposing">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.#ctor(Goedel.Cryptography.PQC.Dilithium,System.Boolean)">
+            <summary>
+            Constructor, return polynomial according to parameters specified in
+            <paramref name="parameters"/>. If the parameter <paramref name="wipe"/>
+            is true, the coefficients will be cleared before memory is released.
+            </summary>
+            <param name="parameters">The Dilithium parameters.</param>
+            <param name="wipe">If true, contents wiped on dispose.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.Add(Goedel.Cryptography.PQC.PolynomialInt32)">
+            <summary>
+            Add the coefficients of the polynomial <paramref name="p"/> to this.
+            </summary>
+            <param name="p">The vector to add</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.Sub(Goedel.Cryptography.PQC.PolynomialInt32)">
+            <summary>
+            Subtract the coefficients of polynomial <paramref name="p"/> and return 
+            the result in place.
+            </summary>
+            <param name="p">The vector to add</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.SubFrom(Goedel.Cryptography.PQC.PolynomialInt32)">
+            <summary>
+            Subtract the coefficients of this from the polynomial <paramref name="p"/>
+            and return the result in place.
+            </summary>
+            <param name="p">The vector to add</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.Caddq">
+            <summary>
+            For all coefficients add Q if coefficient is negative
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.Reduce32">
+            <summary>
+            Inplace reduction of all coefficients of polynomial to
+            in [-6283009,6283007].
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.Freeze">
+            <summary>
+            Inplace reduction of all coefficients of polynomial to
+            standard representatives.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.ShiftLeft">
+            <summary>
+            Multiply polynomial by 2^D without modular reduction. Assumes
+            input coefficients to be less than 2^{31-D} in absolute value.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.Uniform(System.Byte[],System.Int32)">
+            <summary>
+            Compute uniformly distributed Q values from <paramref name="seed"/>, 
+            <paramref name="nonce"/> across.
+            </summary>
+            <param name="seed">The seed value.</param>
+            <param name="nonce">The nonce value.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.UniformEta(System.Byte[],System.Int32)">
+            <summary>
+            Compute uniformly distributed Eta values from <paramref name="seed"/>, 
+            <paramref name="nonce"/> across.
+            </summary>
+            <param name="seed">The seed value.</param>
+            <param name="nonce">The nonce value.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.UniformGamma1(System.Byte[],System.Int32)">
+            <summary>
+            Compute uniformly distributed Gamma1 values from <paramref name="seed"/>, 
+            <paramref name="nonce"/> across.
+            </summary>
+            <param name="seed">The seed value.</param>
+            <param name="nonce">The nonce value.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.Challenge(System.Byte[])">
+            <summary>
+            Return a challenge polynomial against <paramref name="seed"/>.
+            </summary>
+            <param name="seed">The seed value.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.RejectUniform(System.Byte[],System.Int32)">
+            <summary>
+            Fill coefficients from <paramref name="buffer"/> starting with coefficient
+            <paramref name="index"/> rejecting uniformly values outside <see cref="F:Goedel.Cryptography.PQC.PolynomialInt32.Q"/>.
+            </summary>
+            <param name="buffer">The buffer to sample.</param>
+            <param name="index">The first coefficient index to fill.</param>
+            <returns>The new index value.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.RejectETA(System.Byte[],System.Int32)">
+            <summary>
+            Fill coefficients from <paramref name="buffer"/> starting with coefficient
+            <paramref name="index"/> rejecting uniformly values outside <see cref="P:Goedel.Cryptography.PQC.PolynomialInt32.Eta"/>.
+            </summary>
+            <param name="buffer">The buffer to sample.</param>
+            <param name="index">The first coefficient index to fill.</param>
+            <returns>The new index value.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.NTT">
+            <summary>
+            Forward NTT, in-place. No modular reduction is performed after
+             additions or subtractions. Output vector is in bitreversed order.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.InvNTT2Mont">
+            <summary>
+            Inverse NTT, in-place with implicit Montgomery tranformation.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.PointwiseMontgomery(Goedel.Cryptography.PQC.PolynomialInt32,Goedel.Cryptography.PQC.PolynomialInt32)">
+            <summary>
+            Perform pointwise Montgomery operation on coefficients of
+            <paramref name="a"/> and <paramref name="b"/> and return result 
+            in place.
+            </summary>
+            <param name="a">First polynomial.</param>
+            <param name="b">Second polynomial.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.Chknorm(System.Int32)">
+            <summary>
+            Check infinity norm of polynomial against given bound.
+             Assumes input coefficients were reduced by reduce32().
+            </summary>
+            <param name="bound">norm bound</param>
+            <returns>Returns False if norm is strictly smaller than B &lt;= (Q-1)/8 and True otherwise.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.Power2Round(Goedel.Cryptography.PQC.PolynomialInt32)">
+            <summary>
+            Subtract the coefficients of this from the polynomial <paramref name="p"/>
+            and return the result in place.
+            </summary>
+            <param name="p">The vector to add</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.Decompose(Goedel.Cryptography.PQC.PolynomialInt32)">
+            <summary>
+            Subtract the coefficients of this from the polynomial <paramref name="p"/>.
+            </summary>
+            <param name="p">The vector to add</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.MakeHint(Goedel.Cryptography.PQC.PolynomialInt32,Goedel.Cryptography.PQC.PolynomialInt32)">
+            <summary>
+            Compute hint vector and return in place.
+            </summary>
+            <param name="w0">Low part of input vector</param>
+            <param name="w1">High part of input vector</param>
+            <returns>Number of high bits</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.UseHint(Goedel.Cryptography.PQC.PolynomialInt32)">
+            <summary>
+            Subtract the coefficients of this from the polynomial <paramref name="p"/>.
+            </summary>
+            <param name="p">The vector to add</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.PackEta(System.Byte[],System.Int32@)">
+            <summary>
+            Pack coefficients to <paramref name="buffer"/> as Z data, starting at 
+            <paramref name="offset"/> and updating <paramref name="offset"/> to point
+            to next unwritten byte.
+            </summary>
+            <param name="buffer">Buffer to write vector to.</param>
+            <param name="offset">Index of first byte to write on entry and index of
+            next byte to write to on exit.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.UnpackEta(System.Byte[],System.Int32@)">
+            <summary>
+            
+            </summary>
+            <param name="buffer"></param>
+            <param name="offset"></param>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.PackT1(System.Byte[],System.Int32@)">
+            <summary>
+            Pack coefficients to <paramref name="buffer"/> as Z data, starting at 
+            <paramref name="offset"/> and updating <paramref name="offset"/> to point
+            to next unwritten byte.
+            </summary>
+            <param name="buffer">Buffer to write vector to.</param>
+            <param name="offset">Index of first byte to write on entry and index of
+            next byte to write to on exit.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.UnpackT1(System.Byte[],System.Int32@)">
+            <summary>
+            
+            </summary>
+            <param name="buffer"></param>
+            <param name="offset"></param>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.PackT0(System.Byte[],System.Int32@)">
+            <summary>
+            Pack coefficients to <paramref name="buffer"/> as Z data, starting at 
+            <paramref name="offset"/> and updating <paramref name="offset"/> to point
+            to next unwritten byte.
+            </summary>
+            <param name="buffer">Buffer to write vector to.</param>
+            <param name="offset">Index of first byte to write on entry and index of
+            next byte to write to on exit.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.UnpackT0(System.Byte[],System.Int32@)">
+            <summary>
+            
+            </summary>
+            <param name="buffer"></param>
+            <param name="offset"></param>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.PackZ(System.Byte[],System.Int32@)">
+            <summary>
+            Pack coefficients to <paramref name="buffer"/> as Z data, starting at 
+            <paramref name="offset"/> and updating <paramref name="offset"/> to point
+            to next unwritten byte.
+            </summary>
+            <param name="buffer">Buffer to write vector to.</param>
+            <param name="offset">Index of first byte to write on entry and index of
+            next byte to write to on exit.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.UnpackZ(System.Byte[],System.Int32@)">
+            <summary>
+            Unack coefficients to <paramref name="buffer"/> as Z data, starting at 
+            <paramref name="offset"/> and updating <paramref name="offset"/> to point
+            to next unwritten byte.
+            </summary>
+            <param name="buffer">Buffer to read vector from.</param>
+            <param name="offset">Index of first byte to read on entry and index of
+            next byte to read to on exit.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.PackW1(System.Byte[],System.Int32@)">
+            <summary>
+            Bit-pack polynomial w1 with coefficients in [0,15] or [0,43].
+            Input coefficients are assumed to be standard representatives.
+            </summary>
+            <param name="buffer">Output buffer.</param>
+            <param name="offset">Index of first byte to be written.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.GetHash(System.String,System.IO.TextWriter)">
+            <summary>
+            Return a SHAKE128 fingerprint of the matrix coefficients. If <paramref name="tag"/>
+            is not null, writes the tag and fingerprint to the console.
+            </summary>
+            <param name="tag">Optional tag for identifying console output.</param>
+            <param name="output">Output to write the result to if <paramref name="tag"/> is
+            not null.</param>
+            <returns>String containing the base16 representation of the values.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.PQC.PolynomialMatrixInt32">
+            <summary>
+            Operations on matrix of polynomials expressed as a list of coefficients 
+            for use in Dilithium. Could be adapted to other applications if required.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.PolynomialMatrixInt32.Vectors">
+            <summary>The polynomial vectors.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialMatrixInt32.Disposing">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialMatrixInt32.#ctor(Goedel.Cryptography.PQC.Dilithium,System.Boolean)">
+            <summary>
+            Constructor, return matrix according to parameters specified in
+            <paramref name="parameters"/>. If the parameter <paramref name="wipe"/>
+            is true, the coefficients will be cleared before memory is released.
+            </summary>
+            <param name="parameters">The Dilithium parameters.</param>
+            <param name="wipe">If true, contents wiped on dispose.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialMatrixInt32.MatrixExpandFromSeed(Goedel.Cryptography.PQC.Dilithium,System.Byte[])">
+            <summary>
+            Create matrix according to parameters <paramref name="parameters"/> and
+            perform expansion from seed <paramref name="rho"/>
+            </summary>
+            <param name="parameters">The dilithium parameters.</param>
+            <param name="rho">The seed value.</param>
+            <returns>The matrrix created</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialMatrixInt32.MatrixPointwiseMontgomery(Goedel.Cryptography.PQC.PolynomialVectorInt32)">
+            <summary>
+            Perform montgomery operation against the vector
+            <paramref name="v"/> and return as a new vector.
+            </summary>
+            <param name="v">The vector.</param>
+            <returns>The result vector.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialMatrixInt32.MatrixPointwiseMontgomery(Goedel.Cryptography.PQC.PolynomialVectorInt32,Goedel.Cryptography.PQC.PolynomialVectorInt32)">
+            <summary>
+            Perform montgomery operation against the vector
+            <paramref name="v"/> and return result in <paramref name="t"/> in place.
+            </summary>
+            <param name="v">The vector.</param>
+            <param name="t">The result vector.</param>
+            <returns>The result vector.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialMatrixInt32.GetHash(System.String,System.IO.TextWriter)">
+            <summary>
+            Return a SHAKE128 fingerprint of the matrix coefficients. If <paramref name="tag"/>
+            is not null, writes the tag and fingerprint to the console.
+            </summary>
+            <param name="tag">Optional tag for identifying console output.</param>
+            <param name="output">Output to write the result to if <paramref name="tag"/> is
+            not null.</param>
+            <returns>String containing the base16 representation of the values.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.PQC.PolynomialVectorInt32">
+            <summary>
+            Operations on vectors of polynomials expressed as a list of coefficients for use in Dilithium. 
+            Could be adapted to other applications if required.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.PolynomialVectorInt32.Polynomials">
+            <summary>The polynomial vector</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.PolynomialVectorInt32.Parameters">
+            <summary>The Dilithium parameter set.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.PolynomialVectorInt32.K">
+            <summary>Convenience accessor for the vector length K</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.PolynomialVectorInt32.Length">
+            <summary>Convenience accessor for the polynomial degree N (always 256)</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.Disposing">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.#ctor(Goedel.Cryptography.PQC.Dilithium,System.Boolean,System.Boolean)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="parameters">The Dilithium parameter set.</param>
+            <param name="wipe">If set true, erase coefficients before releasing.</param>
+            <param name="lengthK">If true, vector is of length <paramref name="parameters.K.K"/>, 
+            otherwise vector is of length <paramref name="parameters.L.L"/></param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.Add(Goedel.Cryptography.PQC.PolynomialVectorInt32)">
+            <summary>
+            For each polynomial, for all coefficients, add corresponding coefficient of 
+            <paramref name="value"/> in place.
+            </summary>
+            <param name="value">The vector to add.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.Sub(Goedel.Cryptography.PQC.PolynomialVectorInt32)">
+            <summary>
+            For each polynomial, for all coefficients, subtract corresponding coefficient of 
+            <paramref name="value"/> in place.
+            </summary>
+            <param name="value">The vector to add.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.Caddq">
+            <summary>
+            For each polynomial, for all coefficients, in place, add Q if coefficient is negative
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.Reduce">
+            <summary>
+            For each polynomial, for all coefficients, in place,  reduction to
+            in [-6283009,6283007].
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.Freeze">
+            <summary>
+            For each polynomial, for all coefficients, in place, reduction to
+            standard representatives.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.ShiftLeft">
+            <summary>
+            For each polynomial, for all coefficients, in place, multiply 
+            coefficient by 2^D without modular reduction. Assumes
+            input coefficients to be less than 2^{31-D} in absolute value.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.Copy">
+            <summary>
+            Make a copy of the vector and return as a new instance.
+            </summary>
+            <returns>The copied vector.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.UniformEta(System.Byte[],System.Int32)">
+            <summary>
+            Compute uniformly distributed Eta values from <paramref name="seed"/>, 
+            <paramref name="nonce"/> across.
+            </summary>
+            <param name="seed">The seed value.</param>
+            <param name="nonce">The nonce value.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.UniformGamma1(System.Byte[],System.Int32)">
+            <summary>
+            Compute uniformly distributed Gamma1 values from <paramref name="seed"/>, 
+            <paramref name="nonce"/> across.
+            </summary>
+            <param name="seed">The seed value.</param>
+            <param name="nonce">The nonce value.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.NTT">
+            <summary>
+            Forward NTT, in-place. No modular reduction is performed after
+             additions or subtractions. Output vector is in bitreversed order.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.InvNTT2Mont">
+            <summary>
+            Inverse NTT, in-place with implicit Montgomery tranformation.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.PointwiseAccMontgomery(Goedel.Cryptography.PQC.PolynomialVectorInt32,Goedel.Cryptography.PQC.PolynomialInt32)">
+            <summary>
+            Perform PointwiseMontgomery against each member of <paramref name="v"/>
+            in turn and return the accumulated result in place.
+            </summary>
+            <param name="a">Polynomial</param>
+            <param name="v">Vector</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.PointwisePolyMontgomery(Goedel.Cryptography.PQC.PolynomialInt32,Goedel.Cryptography.PQC.PolynomialVectorInt32)">
+            <summary>
+            Perform pointwise montgomery operation and return the result in place.
+            </summary>
+            <param name="a">Polynomial</param>
+            <param name="v">Vector</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.Chknorm(System.Int32)">
+            <summary>
+            Check infinity norm of polynomials in vector of length L.
+            Assumes input polyvecl to be reduced by Reduce().
+            </summary>
+            <param name="bound">norm bound</param>
+            <returns>Returns false if norm of all polynomials is strictly smaller than B &lt;= (Q-1)/8
+            and true otherwise.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.Power2Round">
+            <summary>
+            Perform <see cref="M:Goedel.Cryptography.PQC.PolynomialInt32.Power2Round(Goedel.Cryptography.PQC.PolynomialInt32)"/> operation on each polynomial 
+            in the vector and return a1 in place and a0 in a new vector.
+            </summary>
+            <returns>Vector containing a0 values.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.Decompose">
+            <summary>
+            Perform <see cref="M:Goedel.Cryptography.PQC.PolynomialInt32.Decompose(Goedel.Cryptography.PQC.PolynomialInt32)"/> operation on each polynomial 
+            in the vector and return a1 in place and a0 in a new vector.
+            </summary>
+            <returns>Vector containing a0 values.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.MakeHint(Goedel.Cryptography.PQC.PolynomialVectorInt32,Goedel.Cryptography.PQC.PolynomialVectorInt32)">
+            <summary>
+            Compute hint vector and store in this instance.
+            </summary>
+            <param name="w0">low part of input vector</param>
+            <param name="w1">high part of input vector</param>
+            <returns>number of 1 bits.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.UseHint(Goedel.Cryptography.PQC.PolynomialVectorInt32)">
+            <summary>
+            Use hint vector to correct the high bits of input vector.
+            </summary>
+            <param name="hint">Hint vector</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.PackW1">
+            <summary>
+            Pack coefficients as Z data and return buffer containing
+            the result.
+            </summary>
+            <returns>The packed data.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.PackW1(System.Byte[],System.Int32@)">
+            <summary>
+            Pack vector coefficients to <paramref name="buffer"/> as W1 data, starting at 
+            <paramref name="offset"/> and updating <paramref name="offset"/> to point
+            to next unwritten byte.
+            </summary>
+            <param name="buffer">Buffer to write vector to.</param>
+            <param name="offset">Index of first byte to write on entry and index of
+            next byte to write to on exit.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.GetHash(System.String,System.IO.TextWriter)">
+            <summary>
+            Return a SHAKE128 fingerprint of the matrix coefficients. If <paramref name="tag"/>
+            is not null, writes the tag and fingerprint to the console.
+            </summary>
+            <param name="tag">Optional tag for identifying console output.</param>
+            <param name="output">Output to write the result to if <paramref name="tag"/> is
+            not null.</param>
+            <returns>String containing the base16 representation of the values.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.PQC.KeyPairMlKem">
+            <summary>
+            ML-KEM keypair implemented according to FIPS 203
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlKem.PublicKey">
+            <summary>The public key value.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlKem.PrivateKey">
+            <summary>The private key value</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlKem.OID">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlKem.JsonAlgorithmId">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlKem.GetPublicBinary">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlKem.GetPrivateBinary">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlKem.PrivateKeyInfo">
+            <summary>
+            Return private key parameters in PKIX structure
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlKem.PublicKeyInfo">
+            <summary>
+            Return public key parameters in PKIX structure
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlKem.PKIXPrivateKey">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlKem.PKIXPublicKey">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlKem.KeyUses">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlKem.KeyInfoData">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlKem.PublicOnly">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlKem.KeyPairFactory(System.Int32,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Generate a key pair for the specified algorithm and key size.
+            </summary>
+            <param name="keySize">The Key size, must be 255 or 448</param>
+            <param name="keySecurity">The key security model</param>
+            <param name="cryptoAlgorithmID">The cryptographic algorithm identifier</param>
+            <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
+            <returns>The generated key pair</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlKem.Factory(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeySecurity,System.Byte[],System.Byte[],System.String,Goedel.Cryptography.IKeyLocate,System.Int32,Goedel.Cryptography.KeyUses)">
+            <summary>
+            Factory creating a key pair of the type specified by <paramref name="algorithmID"/>
+            using the data provided by a UDF identifier. 
+            </summary>
+            <param name="algorithmID">The type of key to create.</param>
+            <param name="keyCollection">The key collection to add the key to.</param>
+            <param name="keySecurity">The key security model.</param>
+            <param name="keyUses">The allowed key uses.</param>
+            <param name="ikm">Initial keying material for the key.</param>
+            <param name="keySpecifier">Key specifier material for the key.</param>
+            <param name="keyName">Optional key name used to specify generation of multiple keys from 
+            a single seed.</param>
+            <param name="keySize">The size of the key in bits.</param>
+            <returns>the derrived key.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlKem.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlKem.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
+            <exception cref="T:Goedel.Cryptography.OperationNotSupported">ML-KEM does not support signature operations.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlKem.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
+            <exception cref="T:Goedel.Cryptography.OperationNotSupported">ML-KEM does not support signature operations.</exception>
+        </member>
+        <member name="T:Goedel.Cryptography.PQC.Kyber">
+            <summary>
+            Base class for Kyber implementations. Specifies parameters and constants
+            used in public and private key classes.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Kyber.KeySize">
+            <summary>The key size, MUST be 512, 768 or 1024.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Kyber.K">
+            <summary>The number of vectors.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Kyber.ETA1">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Kyber.ETA2">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Kyber.PolyCompressedBytes">
+            <summary>Number of bytes in compressed form polynomial.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.Kyber.N">
+            <suwmmary>The vector length.</suwmmary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.Kyber.Q">
+            <summary>The modulus.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.Kyber.QINV">
+            <summary>The value q^-1 mod 2^16</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.Kyber.SymBytes">
+            <summary>Size of hashes and seeds in bytes.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.Kyber.SharedSecretBytes">
+            <summary>Size in bytes of shared key.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.Kyber.PolynomialBytes">
+            <summary>Number of bytes in the polynomial representation.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Kyber.PolyVectorBytes">
+            <summary>Number of bytes in the vector polynomial representation.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Kyber.PolyvectorCompressedBytes">
+            <summary>Number of bytes in compressed form polynomial vector.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Kyber.IndCpaPublicKeyBytes">
+            <summary>Bytes in ind cpa public key.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Kyber.IndCpaPrivateKeyBytes">
+            <summary>Bytes in ind cpa private key.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Kyber.IndCpaBytes">
+            <summary>Bytes in ciphertext.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Kyber.PublicKeyBytes">
+            <summary>Bytes in public key.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Kyber.PrivateKeyBytes">
+            <summary>Bytes in private key.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Kyber.CiphertextBytes">
+            <summary>Bytes in ciphertext.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Kyber.Kyber512">
+            <summary>Parameter set for 512 bit key.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Kyber.Kyber768">
+            <summary>Parameter set for 768 bit key.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Kyber.Kyber1024">
+            <summary>Parameter set for 1024 bit key.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Kyber.#cctor">
+            <summary>
+            Do a one time initialization of the parameter presets on assembly load.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Kyber.#ctor(System.Int32)">
+            <summary>
+            Base constructor, sets parameters according to key size.
+            </summary>
+            <param name="keySize">The key size, 512, 768 or 1024 bytes.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Kyber.PackCiphertext(Goedel.Cryptography.PQC.PolynomialVectorInt16,Goedel.Cryptography.PQC.PolynomialInt16)">
+            <summary>
+            Pack ciphertext into a byte array and return the result.
+            </summary>
+            <param name="v">The vector parameter.</param>
+            <param name="p">The polynomial parameter.</param>
+            <returns>The packed ciphertext.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Kyber.UnPackCiphertext(System.Byte[])">
+            <summary>
+            Unpack ciphertext in <paramref name="data"/> and return the result.
+            </summary>
+            <param name="data">The ciphertext to unpack.</param>
+            <returns>The vector and polynomial components.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Kyber.KeyPair(System.Byte[])">
+            <summary>
+            Generates public and private key
+            for CCA-secure Kyber key encapsulation mechanism.
+            </summary>
+            <param name="seed">Optional seed value for deterministic generation
+            from seed.</param>
+            <returns>The public key and the private key.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Kyber.IndcpaKeypair(System.Byte[],System.Byte[],System.Byte[])">
+            <summary>
+            Generate a public, private key pair and the resulting vectors into the initial octets 
+            of <paramref name="publicKey"/> and <paramref name="privateKey"/>.
+            </summary>
+            <param name="publicKey">Buffer of <see cref="P:Goedel.Cryptography.PQC.Kyber.PublicKeyBytes"/> to 
+            receive the public key.</param>
+            <param name="privateKey">Buffer of <see cref="P:Goedel.Cryptography.PQC.Kyber.PrivateKeyBytes"/> to
+            receive the private key.</param>
+            <param name="seed">Optional seed to be used for deterministic key generation.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Kyber.PRF(System.Int32,System.Byte[],System.Byte)">
+            <summary>
+            Pseudo-random function using SHAKE256, concatenates secret <paramref name="seed"/>
+            and public input <paramref name="nonce"/>
+            and then returns a buffer of length <paramref name="length"/>with SHAKE256 output
+            </summary>
+            <param name="seed">The secret input.</param>
+            <param name="nonce">The public nonce.</param>
+            <param name="length">The number of bytes to return.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Kyber.GetNoiseEta1(System.Byte[],System.Byte)">
+            <summary>
+            Sample a polynomial deterministically from a seed and a nonce,
+            with output polynomial close to centered binomial distribution,
+            with parameter <see cref="P:Goedel.Cryptography.PQC.Kyber.ETA1"/>..
+            </summary>
+            <param name="seed">Input seed.</param>
+            <param name="nonce">Input nonce.</param>
+            <returns>Output polynomial.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Kyber.GetNoiseEta2(System.Byte[],System.Byte)">
+            <summary>
+            Sample a polynomial deterministically from a seed and a nonce,
+            with output polynomial close to centered binomial distribution,
+            with parameter <see cref="P:Goedel.Cryptography.PQC.Kyber.ETA2"/>.
+            </summary>
+            <param name="seed">Input seed.</param>
+            <param name="nonce">Input nonce.</param>
+            <returns>Output polynomial.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Kyber.CbdEta1(System.Byte[])">
+            <summary>
+            Given an array of uniformly random bytes, compute
+            polynomial with coefficients distributed according to
+            a centered binomial distribution with parameter eta=1
+            as specified by Kyber mode.
+            </summary>
+            <param name="input">input byte array</param>
+            <returns>output polynomial</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Kyber.MontgomeryReduce(System.Int32)">
+            <summary>
+            Montgomery reduction; given a 32-bit integer <paramref name="a"/>, computes
+            16-bit integer congruent to a * R^-1 mod q,
+            where R=2^16
+            </summary>
+            <param name="a">integer to be reduced  {-q2^15,...,q2^15-1}.</param>
+            <returns>integer in {-q+1,...,q-1} congruent to a * R^-1 modulo q.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Kyber.BarrettReduce(System.Int16)">
+            <summary>
+            Barrett reduction; given a 16-bit integer <paramref name="a"/>, computes
+            16-bit integer congruent to a mod q in {0,...,q}
+            </summary>
+            <param name="a">input integer to be reduced</param>
+            <returns> integer in {0,...,q} congruent to a modulo q.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Kyber.ConditionalSubtract(System.Int16)">
+            <summary>
+            Conditionallly subtract q
+            </summary>
+            <param name="a">input integer a</param>
+            <returns>a - q if a >= q, else a</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.PQC.KyberPrivate">
+            <summary>
+            Kyber private key.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.KyberPrivate.PrivateKeyBytes512">
+            <summary>Size of 512 bit private key in bytes.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.KyberPrivate.PrivateKeyBytes768">
+            <summary>Size of 512 bit private key in bytes.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.KyberPrivate.PrivateKeyBytes1024">
+            <summary>Size of 512 bit private key in bytes.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.KyberPrivate.PublicKeyOffset512">
+            <summary>Size of 512 bit public key in bytes.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.KyberPrivate.PublicKeyOffset768">
+            <summary>Size of 512 bit public key in bytes.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.KyberPrivate.PublicKeyOffset1024">
+            <summary>Size of 512 bit public key in bytes.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KyberPrivate.Skpv">
+            <summary>The Public key polynomial vector.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KyberPrivate.#ctor(System.Byte[])">
+            <summary>
+            Constructor, initialize a private key from the keyblob <paramref name="privateKey"/>.
+            The Kyber strength parameter is specified implicitly by the key size.
+            </summary>
+            <param name="privateKey">The private key.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KyberPrivate.Decrypt(System.Byte[])">
+            <summary>
+            Decrypt the ciphertext <paramref name="ciphertext"/> and return the plaintext.
+            </summary>
+            <param name="ciphertext">The ciphertext.</param>
+            <returns>The plaintext.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KyberPrivate.IndCpaDecrypt(System.Byte[])">
+            <summary>
+            Decrypt the ciphertext <paramref name="ciphertext"/> and return the plaintext.
+            </summary>
+            <param name="ciphertext">The ciphertext.</param>
+            <returns>The plaintext.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KyberPrivate.Verify(System.Byte[],System.Byte[])">
+            <summary>
+            Verify that <paramref name="first"/> matches <paramref name="second"/>
+            exactly in constant time.
+            </summary>
+            <param name="first">The first input.</param>
+            <param name="second">The second input.</param>
+            <returns>True if <paramref name="first"/> exactly matches <paramref name="second"/>,
+            otherwise false.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.PQC.KyberPublic">
+            <summary>
+            Kyber public key.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.KyberPublic.PolyVectorBytes512">
+            <summary>Length of a polyvector for 512 bit key in bytes.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.KyberPublic.PolyVectorBytes768">
+            <summary>Length of a polyvector for 768 bit key in bytes.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.KyberPublic.PolyVectorBytes1024">
+            <summary>Length of a polyvector for 1024 bit key in bytes.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.KyberPublic.PublicKeyBytes512">
+            <summary>Length of a public key for 512 bit key in bytes.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.KyberPublic.PublicKeyBytes768">
+            <summary>Length of a public key for 768 bit key in bytes.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.KyberPublic.PublicKeyBytes1024">
+            <summary>Length of a public key for 1024 bit key in bytes.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KyberPublic.Pkpv">
+            <summary>The Public key polynomial vector.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KyberPublic.Seed">
+            <summary>The seed value.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KyberPublic.#ctor(System.Byte[])">
+            <summary>
+            Constructor, initialize a public key from the keyblob <paramref name="publicKey"/>.
+            The Kyber strength parameter is specified implicitly by the key size.
+            </summary>
+            <param name="publicKey">The private key.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KyberPublic.#ctor(System.Byte[],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Protected constructor in which the key size is specified explicitly by 
+            <paramref name="strength"/>.
+            </summary>
+            <param name="publicKey">An octet sequence that includes the public key bytes
+            starting at byte <paramref name="offset"/>.</param>
+            <param name="strength">The strength parameter; 0 => 512, 1 => 768, 2 => 1024.</param>
+            <param name="offset">Offset at which the public key is located within 
+            <paramref name="publicKey"/></param>
+            <param name="length">The length of the public key data.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KyberPublic.Encrypt(System.Byte[])">
+            <summary>
+            Perform key agreement.
+            </summary>
+            <param name="seed">Optional seed value for deterministic testing.</param>
+            <returns>The ciphertext and shared secret.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KyberPublic.GetBufKr(System.Byte[])">
+            <summary>
+            Multitarget countermeasure for coins + contributory KEM
+            </summary>
+            <param name="hashSeed">The input</param>
+            <returns>The values buf and kr</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KyberPublic.IndCpaEncrypt(System.Byte[],System.Byte[])">
+            <summary>
+            Inner encryption primitive.
+            </summary>
+            <param name="message">The data to encrypt.</param>
+            <param name="coins">The coins to be used in the encryption.</param>
+            <returns>The ciphertext.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.PQC.PolynomialInt16">
+            <summary>
+            Polynomial coefficient vector of size Int16 used in Kyber.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.PolynomialInt16.q">
+            <summary>The Kyber modulus.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.PolynomialInt16.Coefficients">
+            <summary>
+            The coefficient vector.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.#ctor">
+            <summary>
+            Constructor, create a Kyber coefficient vector of length <see cref="F:Goedel.Cryptography.PQC.Kyber.N"/>.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.#ctor(System.Byte[],System.Int32)">
+            <summary>
+            Constructor, initialize polynomial using data from <paramref name="buffer"/>
+            at offset <paramref name="offset"/>.
+            </summary>
+            <param name="buffer">The serialized data.</param>
+            <param name="offset">The first byte to read.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.FromMessageBytes(System.Byte[])">
+            <summary>
+            Unpack <paramref name="message"/> to recover polynomial.
+            </summary>
+            <param name="message">The message to unpack.</param>
+            <returns>The unpacked polynomial.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.ToMessageBytes">
+            <summary>
+            Pack polynomial into byte array and return array.
+            </summary>
+            <returns>The packed polynomial.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.Compress160(System.Byte[],System.Int32)">
+            <summary>
+            Compress vector using 160 bytes per polynomial.
+            </summary>
+            <param name="buffer">The buffer to write to.</param>
+            <param name="offset">The first byte to write.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.Compress128(System.Byte[],System.Int32)">
+            <summary>
+            Compress vector using 128 bytes per polynomial.
+            </summary>
+            <param name="buffer">The buffer to write to.</param>
+            <param name="offset">The first byte to write.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.Decompress352(System.Byte[],System.Int32)">
+            <summary>
+            Compress vector using 352 bytes per polynomial.
+            </summary>
+            <param name="buffer">The buffer to write to.</param>
+            <param name="offset">The first byte to write.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.Decompress320(System.Byte[],System.Int32)">
+            <summary>
+            Compress vector using 320 bytes per polynomial.
+            </summary>
+            <param name="buffer">The buffer to write to.</param>
+            <param name="offset">The first byte to write.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.RejUniform(System.Byte[],System.Int32,System.UInt32)">
+            <summary>
+            Run rejection sampling on uniform random bytes to generate
+            uniform random integers mod q
+            </summary>
+            <param name="buffer">Input buffer.</param>
+            <param name="buflen">Length of input buffer to sample from.</param>
+            <param name="ctr">starting index to sample to.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.CBD2(System.Byte[])">
+            <summary>
+            Given an array of uniformly random bytes, compute
+            polynomial with coefficients distributed according to
+            a centered binomial distribution with parameter eta=2.
+            </summary>
+            <param name="input">input byte array</param>
+            <returns>output polynomial</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.CBD3(System.Byte[])">
+            <summary>
+            Given an array of uniformly random bytes, compute
+            polynomial with coefficients distributed according to
+            a centered binomial distribution with parameter eta=3.
+            This function is only needed for Kyber-512
+            </summary>
+            <param name="input">input byte array</param>
+            <returns>output polynomial</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.PolyNTT">
+            <summary>
+            Computes negacyclic number-theoretic transform (NTT) of
+            a polynomial in place.
+            Inputs assumed to be in normal order, output in bitreversed order
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.PolyInvNTT">
+            <summary>
+            Computes negacyclic number-theoretic transform (NTT) of
+            a polynomial in place.
+            Inputs assumed to be in bitreversed order, output in normal order
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.Reduce">
+            <summary>
+            Applies Barrett reduction to all coefficients of a polynomial.
+            For details of the Barrett reduction see <see cref="M:Goedel.Cryptography.PQC.Kyber.BarrettReduce(System.Int16)"/>.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.PolyToMont">
+            <summary>
+            Inplace conversion of all coefficients of a polynomial
+            from normal domain to Montgomery domain
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.PolyCSubQ">
+            <summary>
+            Applies conditional subtraction of q to each coefficient
+            of a polynomial. For details of conditional subtraction
+            of q see <see cref="M:Goedel.Cryptography.PQC.Kyber.ConditionalSubtract(System.Int16)"/>.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.Add(Goedel.Cryptography.PQC.PolynomialInt16)">
+            <summary>
+            Add the polynomial <paramref name="polynomial"/> to the value in place.
+            </summary>
+            <param name="polynomial">The polynomial to add.</param>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.SubNeg(Goedel.Cryptography.PQC.PolynomialInt16)">
+            <summary>
+            Add the polynomial <paramref name="polynomial"/> to the value in place.
+            </summary>
+            <param name="polynomial">The polynomial to add.</param>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.PolyBasemulMontgomery(Goedel.Cryptography.PQC.PolynomialInt16,Goedel.Cryptography.PQC.PolynomialInt16)">
+            <summary>
+            Multiplication of two polynomials in NTT domain storing the product in place.
+            </summary>
+            <param name="a">First input polynomial</param>
+            <param name="b">Second input polynomial</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.Basemul(Goedel.Cryptography.PQC.PolynomialInt16,Goedel.Cryptography.PQC.PolynomialInt16,System.Int32,System.Int16)">
+            <summary>
+            Multiplication of polynomials in Zq[X]/(X^2-zeta)
+            used for multiplication of elements in Rq in NTT domain
+            </summary>
+            <param name="a">First factor.</param>
+            <param name="b">Second factor.</param>
+            <param name="i">Index of array to operate at.</param>
+            <param name="zeta">Integer defining the reduction polynomial</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.ToBytes(System.Byte[],System.Int32)">
+            <summary>
+            Normalize the vector and serialize to <paramref name="output"/> starting at position 
+            <paramref name="offset"/>.
+            </summary>
+            <param name="offset">starting point at which to fill the <paramref name="output"/></param>
+            <param name="output">The buffer to which the output is to be written.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt16.GetHash(System.String,System.IO.TextWriter)">
+            <summary>
+            Return a SHAKE128 fingerprint of the polynomial coefficients.
+            </summary>
+            <param name="tag">Optional descriptive tag.</param>
+            <param name="output">Output to write the result to if <paramref name="tag"/> is
+            not null.</param>
+            <returns>String containing the base16 representation of the values.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.PQC.PolynomialMatrixInt16">
+            <summary>
+            Operations on matrix of polynomials expressed as a list of coefficients 
+            for use in Kyber. Could be adapted to other applications if required.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.PolynomialMatrixInt16.PolynomialVector">
+            <summary>The coeficients vectors.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.PolynomialMatrixInt16.GEN_MATRIX_BYTES">
+            <summary></summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.PolynomialMatrixInt16.GEN_MATRIX_NBLOCKS">
+            <summary></summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialMatrixInt16.#ctor(System.Int32)">
+            <summary>
+            Constructor, create a Kyber matrix of size 
+            <paramref name="k"/>.<paramref name="k"/>.<see cref="F:Goedel.Cryptography.PQC.Kyber.N"/>.
+            </summary>
+            <param name="k">The number of polynomials and coefficient vectors per polynomial.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialMatrixInt16.MatrixExpandFromSeed(System.Int32,System.Byte[],System.Boolean)">
+            <summary>
+            Generate a new matrix from the seed value <paramref name="seed"/>.
+            </summary>
+            <param name="kyberK">The number of polynomial vectors..</param>
+            <param name="seed">The seed value.</param>
+            <param name="transposed">If true, transpose the matrix when absorbing the seed.</param>
+            <returns>A matrix of short integers [K,K,N] initialized according to
+            the seed <paramref name="seed"/></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialMatrixInt16.GetHash(System.String,System.IO.TextWriter)">
+            <summary>
+            Return a SHAKE128 fingerprint of the matrix coefficients. If <paramref name="tag"/>
+            is not null, writes the tag and fingerprint to the console.
+            </summary>
+            <param name="tag">Optional tag for identifying console output.</param>
+            <param name="output">Output to write the result to if <paramref name="tag"/> is
+            not null.</param>
+            <returns>String containing the base16 representation of the values.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.PQC.PolynomialVectorInt16">
+            <summary>
+            Operations on vectors of polynomials expressed as a list of coefficients for use in Kyber. 
+            Could be adapted to other applications if required.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.PolynomialVectorInt16.PolyVectorBytes">
+            <summary>The number of bytes required to store the vector.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.PQC.PolynomialVectorInt16.Vector">
+            <summary>The coeficients vectors.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.#ctor(System.Int32)">
+            <summary>
+            Constructor, create a Kyber polynomial of size 
+            <paramref name="k"/>.<see cref="F:Goedel.Cryptography.PQC.Kyber.N"/>.
+            </summary>
+            <param name="k">The number coefficient vectors.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.#ctor(System.Int32,System.Byte[],System.Int32)">
+            <summary>
+            Constructor, create a Kyber vector of length <paramref name="k"/> from 
+            the data in <paramref name="input"/> beginning at byte <paramref name="offset"/>.
+            </summary>
+            <param name="k">Vector length.</param>
+            <param name="input">Input data.</param>
+            <param name="offset">First byte to read.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.NTT">
+            <summary>
+            Computes negacyclic number-theoretic transform (NTT) of
+            the polynomial vector elements in place.
+            Inputs assumed to be in normal order, output in bitreversed order
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.PolyInvNTT">
+            <summary>
+            Computes negacyclic number-theoretic transform (NTT) of
+            a polynomial in place.
+            Inputs assumed to be in normal order, output in bitreversed order
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.PointwiseAccMontgomery(Goedel.Cryptography.PQC.PolynomialVectorInt16)">
+            <summary>
+            Pointwise multiply elements of this vector with <paramref name="vector"/>, accumulate into result
+            and multiply by 2^-16.
+            </summary>
+            <param name="vector">Second input vector.</param>
+            <returns>The result.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.Add(Goedel.Cryptography.PQC.PolynomialVectorInt16)">
+            <summary>
+            Add the polynomial vector <paramref name="vector"/> to this in place.
+            </summary>
+            <param name="vector"></param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.Reduce">
+            <summary>
+            Applies Barrett reduction to each coefficient
+            of each element of a vector of polynomials.
+            For details of the Barrett reduction see <see cref="M:Goedel.Cryptography.PQC.Kyber.BarrettReduce(System.Int16)"/>.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.Pack(System.Byte[],System.Byte[])">
+            <summary>
+            Serialize the vector to produce the public or private key.
+            </summary>
+            <param name="seed">Optional additional seed value to be appended to the output.</param>
+            <param name="buffer">The buffer to write the result to.</param>
+            <returns>The packed polynomial vector.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.Compress352(System.Byte[],System.Int32)">
+            <summary>
+            Compress vector using 352 bytes per polynomial.
+            </summary>
+            <param name="buffer">The buffer to write to.</param>
+            <param name="offset">The first byte to write.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.Compress320(System.Byte[],System.Int32)">
+            <summary>
+            Compress vector using 320 bytes per polynomial.
+            </summary>
+            <param name="buffer">The buffer to write to.</param>
+            <param name="offset">The first byte to write.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.Decompress352(System.Int32,System.Byte[],System.Int32)">
+            <summary>
+            Deompress vector using 352 bytes per polynomial.
+            </summary>
+            <param name="k">The Kyber vector length.</param>
+            <param name="buffer">The buffer to read from.</param>
+            <param name="offset">The first byte to read.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.Decompress320(System.Int32,System.Byte[],System.Int32)">
+            <summary>
+            Deompress vector using 320 bytes per polynomial.
+            </summary>
+            <param name="buffer">The buffer to read from.</param>
+            <param name="offset">The first byte to read.</param>
+            <param name="k">Kyber vector length.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.PolyBasemulMontgomery(Goedel.Cryptography.PQC.PolynomialVectorInt16,Goedel.Cryptography.PQC.PolynomialVectorInt16)">
+            <summary>
+            Pointwise multiply elements of a and b, accumulate into result
+            and multiply by 2^-16.
+            </summary>
+            <param name="a">First input vector.</param>
+            <param name="b">Second input vector.</param>
+            <returns>The result.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.PolyAdd(Goedel.Cryptography.PQC.PolynomialVectorInt16,Goedel.Cryptography.PQC.PolynomialVectorInt16)">
+            <summary>
+            
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.PolySub(Goedel.Cryptography.PQC.PolynomialVectorInt16,Goedel.Cryptography.PQC.PolynomialVectorInt16)">
+            <summary>
+            
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.Compress">
+            <summary>
+            Compression and subsequent serialization of the polynomial
+            </summary>
+            <returns>Serialization of the polynomial.</returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.Decompress(System.Byte[])">
+            <summary>
+            De-serialization and subsequent decompression of a byte array returning a polynomial
+            </summary>
+            <returns>Serialization of the polynomial.</returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.ToBytes">
+            <summary>
+            Serialization of the polynomial
+            </summary>
+            <returns>Serialization of the polynomial.</returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.FromBytes(System.Byte[])">
+            <summary>
+            Decompression of a byte array returning a polynomial
+            </summary>
+            <returns>Serialization of the polynomial.</returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.ToMsg">
+            <summary>
+            Convert polynomial to 32-byte message
+            </summary>
+            <returns>Serialization of the polynomial.</returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.FromMsg(System.Byte[])">
+            <summary>
+            Convert 32-byte message to polynomial
+            </summary>
+            <returns>Serialization of the polynomial.</returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt16.GetHash(System.String,System.IO.TextWriter)">
+            <summary>
+            Return a SHAKE128 fingerprint of the polynomial coefficients.
+            </summary>
+             <param name="tag">Optional tag for identifying console output.</param>
+            <param name="output">Output to write the result to if <paramref name="tag"/> is
+            not null.</param>
+            <returns>String containing the base16 representation of the values.</returns>
+        </member>
         <member name="T:Goedel.Cryptography.BitIndex">
             <summary>
             Convert a BigInteger to a Bitfield and return successive bits
@@ -3802,6 +5548,15 @@
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed448ph">
             <summary>Elliptic Curve DSA with curve Ed448</summary>
         </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA44">
+            <summary>ML-DSA (Dilithium) 44</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA65">
+            <summary>ML-DSA (Dilithium) 65</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA87">
+            <summary>ML-DSA (Dilithium) 87</summary> 
+        </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.RSASign_SHA_2_256">
             <summary>RSA Signature using PKCS#1.5 padding and SHA-2 256 digest</summary>
         </member>
@@ -3837,6 +5592,15 @@
         </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.XEd448">
             <summary>Elliptic Curve DH with curve Ed448 (Edwards)</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLKEM512">
+            <summary>ML-KEM with 512 bit key</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLKEM768">
+            <summary>ML-KEM with 768 bit key</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLKEM1024">
+            <summary>ML-KEM with 1024 bit key</summary>
         </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Direct">
             <summary>Direct (no wrap)</summary>
@@ -6077,6 +7841,115 @@
             Initialization routine for cryptographic functions on the dotNet Core platform.
             </summary>
         </member>
+        <member name="T:Goedel.Cryptography.Jose.JoseConstants">
+            <summary>
+            Constants specified in hallambaker-mesh-udf
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.AES">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.AES128">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.AES192">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.AES256">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.X25519">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.X448">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.Ed25519">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.Ed448">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.P256">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.P384">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.P521">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.RSA2048">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.RSA3072">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.RSA4096">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.MLKEM512">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.MLKEM768">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.MLKEM1024">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.MLDSA44">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.MLDSA65">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.MLDSA87">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.SHA2">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.SHA2_256">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.SHA2_512">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.SHA3">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.SHA3_256">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseConstants.SHA3_512">
+            <summary>
+            </summary>
+        </member>
         <member name="T:Goedel.Cryptography.KeyCollection">
             <summary>
             Track a collection of keys from various sources allowing recall when required for recryption use.
@@ -6305,7 +8178,7 @@
             Extensions class for deriving UDF from key parameters
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.KeyExtensions.UDFBytes(Goedel.Cryptography.PKIX.IPkixPublicKey,System.Int32,Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Cryptography.KeyExtensions.UDFBytes(Goedel.Cryptography.PKIX.IPKIXPublicKey,System.Int32,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Calculate UDF data value for public key parameters
             </summary>
@@ -6314,7 +8187,7 @@
             <param name="cryptoAlgorithmID">The digest algorithm to use.</param>
             <returns>The binary fingerprint value</returns>
         </member>
-        <member name="M:Goedel.Cryptography.KeyExtensions.UDF(Goedel.Cryptography.PKIX.IPkixPublicKey)">
+        <member name="M:Goedel.Cryptography.KeyExtensions.UDF(Goedel.Cryptography.PKIX.IPKIXPublicKey)">
             <summary>
             Calculate UDF fingerprint presentation for public key parameters
             </summary>
@@ -6398,9 +8271,6 @@
             <summary>If true, a signature generated using this key will always include the
             full public key parameters.</summary>
         </member>
-        <member name="P:Goedel.Cryptography.KeyPair.LengthSignature">
-            <summary>The length of a signature in bytes.</summary> 
-        </member>
         <member name="M:Goedel.Cryptography.KeyPair.Sign(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
             Sign a precomputed digest
@@ -6478,6 +8348,19 @@
             <param name="keySize">The size of the key in bits.</param>
             <returns>the derrived key.</returns>
         </member>
+        <member name="M:Goedel.Cryptography.KeyPair.KeySeed(System.Int32,System.Byte[],System.Byte[],System.String,System.String)">
+            <summary>
+            Derive a key seed of <paramref name="bits"/> bits using the parameters
+            <paramref name="ikm"/>, <paramref name="keyName"/>, <paramref name="keySpecifier"/>
+            and <paramref name="parameter"/>.
+            </summary>
+            <param name="bits">The number of bits to return.</param>
+            <param name="ikm">The initial keying material.</param>
+            <param name="keySpecifier">The key specifier.</param>
+            <param name="keyName">Optional key name.</param>
+            <param name="parameter">Optional parameter.</param>
+            <returns></returns>
+        </member>
         <member name="M:Goedel.Cryptography.KeyPair.Register(Goedel.Cryptography.KeyPair,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Register the key pair <paramref name="keyPair"/> in the collection 
@@ -6506,6 +8389,18 @@
             platform provider.
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.KeyPair.KeyPairFactoryMlDsa">
+            <summary>
+            Generate a new keypair. Initialized by the cryptographic
+            platform provider.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyPair.KeyPairFactoryMlKem">
+            <summary>
+            Generate a new keypair. Initialized by the cryptographic
+            platform provider.
+            </summary>
+        </member>
         <member name="M:Goedel.Cryptography.KeyPair.ToString">
             <summary>
             String presentation of the key pair
@@ -6522,7 +8417,7 @@
             The private key data formatted as a PKIX KeyInfo data blob.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.KeyPair.PkixPublicKey">
+        <member name="P:Goedel.Cryptography.KeyPair.PKIXPublicKey">
             <summary>
             The private key data formatted as a PKIX KeyInfo data blob.
             </summary>
@@ -6753,6 +8648,9 @@
             <summary>
             Encrypt the bulk key.
             </summary>
+            <param name="ephemeral"></param>
+            <param name="key"></param>
+            <param name="salt"></param>
             <returns>The encoder</returns>
         </member>
         <member name="M:Goedel.Cryptography.KeyAgreementResult.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
@@ -6905,7 +8803,7 @@
             The private key data formatted as a PKIX KeyInfo data blob.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.KeyPairDH.PkixPublicKey">
+        <member name="P:Goedel.Cryptography.KeyPairDH.PKIXPublicKey">
             <summary>
             The private key data formatted as a PKIX KeyInfo data blob.
             </summary>
@@ -6920,9 +8818,6 @@
             <summary>
             Return private key parameters in PKIX structure
             </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.KeyPairDH.LengthSignature">
-            <summary>The length of a signature in bytes.</summary> 
         </member>
         <member name="P:Goedel.Cryptography.KeyPairDH.PKIXPrivateKeyDH">
             <summary>
@@ -7114,7 +9009,7 @@
             The private key data formatted as a PKIX KeyInfo data blob.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.KeyPairBaseECDH.PkixPublicKey">
+        <member name="P:Goedel.Cryptography.KeyPairBaseECDH.PKIXPublicKey">
             <summary>
             The private key data formatted as a PKIX KeyInfo data blob.
             </summary>
@@ -7440,9 +9335,6 @@
             The byte encoding of the public key
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.KeyPairEd25519.LengthSignature">
-            <summary>The length of a signature in bytes.</summary> 
-        </member>
         <member name="M:Goedel.Cryptography.KeyPairEd25519.#ctor(System.Byte[],Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Construct a KeyPairEd25519 instance for the specified key data in interchange 
@@ -7621,9 +9513,6 @@
             The byte encoding of the public key
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.KeyPairEd448.LengthSignature">
-            <summary>The length of a signature in bytes.</summary> 
-        </member>
         <member name="M:Goedel.Cryptography.KeyPairEd448.#ctor(System.Byte[],Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Construct a KeyPairEd25519 instance for the specified key data in interchange 
@@ -7781,7 +9670,7 @@
         <member name="P:Goedel.Cryptography.KeyPairRSA.PKIXPrivateKey">
             <summary>The private key parameters represented in PKIX form</summary>
         </member>
-        <member name="P:Goedel.Cryptography.KeyPairRSA.PkixPublicKey">
+        <member name="P:Goedel.Cryptography.KeyPairRSA.PKIXPublicKey">
             <summary>The public key parameters represented in PKIX form</summary>
         </member>
         <member name="P:Goedel.Cryptography.KeyPairRSA.PkixPrivateKeyRSA">
@@ -7799,9 +9688,6 @@
         </member>
         <member name="P:Goedel.Cryptography.KeyPairRSA.PublicOnly">
             <summary>If true, the key only has access to public key values.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.KeyPairRSA.LengthSignature">
-            <summary>The length of a signature in bytes.</summary> 
         </member>
         <member name="M:Goedel.Cryptography.KeyPairRSA.SignatureAlgorithmID(Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
@@ -8101,9 +9987,6 @@
             The byte encoding of the public key
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.KeyPairX25519.LengthSignature">
-            <summary>The length of a signature in bytes.</summary> 
-        </member>
         <member name="M:Goedel.Cryptography.KeyPairX25519.#ctor(System.Byte[],Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Construct a KeyPairX25519 instance for the specified key data in interchange 
@@ -8270,9 +10153,6 @@
             <summary>
             The byte encoding of the public key
             </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.KeyPairX448.LengthSignature">
-            <summary>The length of a signature in bytes.</summary> 
         </member>
         <member name="M:Goedel.Cryptography.KeyPairX448.#ctor(System.Byte[],Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
@@ -9303,9 +11183,7 @@
             <returns>The PKIX structure</returns>
         </member>
         <member name="P:Goedel.Cryptography.PKIX.PKIXPrivateKeyDH.OID">
-            <summary>
-            Return the algorithm identifier that represents this key
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.PKIX.PKIXPrivateKeyDH.PublicParameters">
             <summary>
@@ -10680,6 +12558,86 @@
             id_aes256_gcm = nist_aes (46) as string
             </summary>
         </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OID__sigAlgs">
+            <summary>
+            sigAlgs = nistalgorithm (3) as integer sequence
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OIDS__sigAlgs">
+            <summary>
+            sigAlgs = nistalgorithm (3) as string
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OID__id_ml_dsa_44">
+            <summary>
+            id_ml_dsa_44 = sigAlgs (17) as integer sequence
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OIDS__id_ml_dsa_44">
+            <summary>
+            id_ml_dsa_44 = sigAlgs (17) as string
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OID__id_ml_dsa_65">
+            <summary>
+            id_ml_dsa_65 = sigAlgs (18) as integer sequence
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OIDS__id_ml_dsa_65">
+            <summary>
+            id_ml_dsa_65 = sigAlgs (18) as string
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OID__id_ml_dsa_87">
+            <summary>
+            id_ml_dsa_87 = sigAlgs (19) as integer sequence
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OIDS__id_ml_dsa_87">
+            <summary>
+            id_ml_dsa_87 = sigAlgs (19) as string
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OID__kems">
+            <summary>
+            kems = nistalgorithm (4) as integer sequence
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OIDS__kems">
+            <summary>
+            kems = nistalgorithm (4) as string
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OID__id_alg_ml_kem_512">
+            <summary>
+            id_alg_ml_kem_512 = kems (1) as integer sequence
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OIDS__id_alg_ml_kem_512">
+            <summary>
+            id_alg_ml_kem_512 = kems (1) as string
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OID__id_alg_ml_kem_768">
+            <summary>
+            id_alg_ml_kem_768 = kems (2) as integer sequence
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OIDS__id_alg_ml_kem_768">
+            <summary>
+            id_alg_ml_kem_768 = kems (2) as string
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OID__id_alg_ml_kem_1024">
+            <summary>
+            id_alg_ml_kem_1024 = kems (3) as integer sequence
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OIDS__id_alg_ml_kem_1024">
+            <summary>
+            id_alg_ml_kem_1024 = kems (3) as string
+            </summary>
+        </member>
         <member name="F:Goedel.Cryptography.PKIX.Constants.OID__dod_arc">
             <summary>
             dod_arc as integer sequence
@@ -11710,6 +13668,9 @@
             PrivateKeyInfo 
             </summary>
             <summary>
+            PKIX wrapper for opaque binary private key.
+            </summary>
+            <summary>
             PrivateKeyInfo 
             </summary>
         </member>
@@ -11725,6 +13686,9 @@
         <member name="P:Goedel.Cryptography.PKIX.PrivateKeyInfo.Attributes">
             <summary> ASN.1 member Attributes </summary>
         </member>
+        <member name="P:Goedel.Cryptography.PKIX.PrivateKeyInfo.PublicKey">
+            <summary> ASN.1 member PublicKey </summary>
+        </member>
         <member name="M:Goedel.Cryptography.PKIX.PrivateKeyInfo.Encode(Goedel.ASN.Buffer)">
              <summary>
              Encode ASN.1 class members to specified buffer. 
@@ -11732,6 +13696,21 @@
              NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
              </summary>
              <param name="Buffer">Output buffer</param>
+        </member>
+        <member name="P:Goedel.Cryptography.PKIX.PrivateKeyInfo.OID">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.PKIX.PrivateKeyInfo.PublicParameters">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PKIX.PrivateKeyInfo.#ctor(Goedel.Cryptography.IOpaqueBinaryKey)">
+            <summary>
+            Construtor returning an instance for the public key <paramref name="key"/>.
+            </summary>
+            <param name="key">The public key</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PKIX.PrivateKeyInfo.SubjectPublicKeyInfo(System.Int32[])">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.PrivateKeyInfo.#ctor">
             <summary>
@@ -11751,6 +13730,48 @@
              This is done in the forward direction
              </summary>
              <param name="Buffer">The data to decode.</param>
+        </member>
+        <member name="T:Goedel.Cryptography.PKIX.PublicKeyInfo">
+            <summary>
+            PublicKeyInfo 
+            </summary>
+            <summary>
+            PKIX wrapper for opaque binary public key.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PKIX.PublicKeyInfo.Algorithm">
+            <summary> ASN.1 member Algorithm </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PKIX.PublicKeyInfo.PublicKey">
+            <summary> ASN.1 member PublicKey </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PKIX.PublicKeyInfo.Encode(Goedel.ASN.Buffer)">
+             <summary>
+             Encode ASN.1 class members to specified buffer. 
+            
+             NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
+             </summary>
+             <param name="Buffer">Output buffer</param>
+        </member>
+        <member name="P:Goedel.Cryptography.PKIX.PublicKeyInfo.OID">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.PKIX.PublicKeyInfo.PublicParameters">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PKIX.PublicKeyInfo.#ctor">
+            <summary>
+            Default constructor for deserialization.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PKIX.PublicKeyInfo.#ctor(Goedel.Cryptography.IOpaqueBinaryKey)">
+            <summary>
+            Construtor returning an instance for the public key <paramref name="key"/>.
+            </summary>
+            <param name="key">The public key</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PKIX.PublicKeyInfo.SubjectPublicKeyInfo(System.Int32[])">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.PKIX.PkixPublicKeyRsa">
             <summary>
@@ -11873,6 +13894,19 @@
             <summary>
             Debugging aid.
             </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.PKIX.PkixPrivateKeyOpaque">
+            <summary>
+            PkixPrivateKeyOpaque 
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PKIX.PkixPrivateKeyOpaque.Encode(Goedel.ASN.Buffer)">
+             <summary>
+             Encode ASN.1 class members to specified buffer. 
+            
+             NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
+             </summary>
+             <param name="Buffer">Output buffer</param>
         </member>
         <member name="T:Goedel.Cryptography.PKIX.AgreementDH">
             <summary>
@@ -12435,20 +14469,20 @@
             Return the algorithm identifier that represents this key
             </summary>
         </member>
-        <member name="T:Goedel.Cryptography.PKIX.IPkixPublicKey">
+        <member name="T:Goedel.Cryptography.PKIX.IPKIXPublicKey">
             <summary>
             Interface permitting Key classes to be managed as if they inherited from
             a common base class.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.PKIX.IPkixPublicKey.SubjectPublicKeyInfo(System.Int32[])">
+        <member name="M:Goedel.Cryptography.PKIX.IPKIXPublicKey.SubjectPublicKeyInfo(System.Int32[])">
             <summary>
             Construct a PKIX SubjectPublicKeyInfo block
             </summary>
             <param name="OID">The OID value</param>
             <returns>The PKIX structure</returns>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.IPkixPublicKey.PublicParameters">
+        <member name="P:Goedel.Cryptography.PKIX.IPKIXPublicKey.PublicParameters">
             <summary>
             Return the corresponding public parameters
             </summary>
@@ -14248,6 +16282,24 @@
         <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.RSA4096">
             <summary>4096 bit RSA keypair</summary>
         </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.MLKEM512">
+            <summary>ML-KEM 512 as described in FIPS 203</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.MLKEM768">
+            <summary>ML-KEM-768 as described in FIPS 203</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.MLKEM1024">
+            <summary>ML-KEM-1024 as described in FIPS 203</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.MLDSA44">
+            <summary>ML-DSA-44 as described in FIPS 204</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.MLDSA65">
+            <summary>ML-DSA-65 as described in FIPS 204</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.MLDSA87">
+            <summary>ML-DSA-87 as described in FIPS 204</summary>
+        </member>
         <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.MeshProfileDevice">
             <summary>Mesh device profile</summary>
         </member>
@@ -14376,6 +16428,42 @@
         </member>
         <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierRSA4096Title">
             <summary>Description for UdfAlgorithmIdentifier.RSA4096</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLKEM512Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MLKEM512</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLKEM512Title">
+            <summary>Description for UdfAlgorithmIdentifier.MLKEM512</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLKEM768Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MLKEM768</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLKEM768Title">
+            <summary>Description for UdfAlgorithmIdentifier.MLKEM768</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLKEM1024Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MLKEM1024</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLKEM1024Title">
+            <summary>Description for UdfAlgorithmIdentifier.MLKEM1024</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLDSA44Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MLDSA44</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLDSA44Title">
+            <summary>Description for UdfAlgorithmIdentifier.MLDSA44</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLDSA65Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MLDSA65</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLDSA65Title">
+            <summary>Description for UdfAlgorithmIdentifier.MLDSA65</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLDSA87Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MLDSA87</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLDSA87Title">
+            <summary>Description for UdfAlgorithmIdentifier.MLDSA87</summary>
         </member>
         <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierReservedIetfTag">
             <summary>Jose enumeration tag for UdfAlgorithmIdentifier.ReservedIetf</summary>

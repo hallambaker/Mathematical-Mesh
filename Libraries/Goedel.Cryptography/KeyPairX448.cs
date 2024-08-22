@@ -59,10 +59,6 @@ public class KeyPairX448 : KeyPairECDH {
     public override byte[] PublicData => PublicKey.Encoding;
 
 
-    ///<summary>The length of a signature in bytes.</summary> 
-    public override int LengthSignature => 114;
-
-
     #endregion
 
     readonly byte[] encodedPrivateKey = null;

@@ -20,6 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
+using System.Xml.Serialization;
+
 namespace Goedel.Cryptography.Jose;
 
 /// <summary>
@@ -32,21 +34,32 @@ public static class AlgorithmID {
     /// </summary>
     public static readonly Dictionary<string, CryptoAlgorithmId> UpperToID =
         new() {
-                { "AES", CryptoAlgorithmId.AES256 },
-                { "AES256", CryptoAlgorithmId.AES256 },
-                { "AES128", CryptoAlgorithmId.AES128 },
-                { "S512", CryptoAlgorithmId.SHA_2_512 },
-                { "S256", CryptoAlgorithmId.SHA_2_256 },
-                { "SHA2", CryptoAlgorithmId.SHA_2_512 },
-                { "SHA256", CryptoAlgorithmId.SHA_2_256 },
+                { JoseConstants.AES, CryptoAlgorithmId.AES256 },
+                { JoseConstants.AES128, CryptoAlgorithmId.AES128 },
+                { JoseConstants.AES256, CryptoAlgorithmId.AES256 },
+
+                { JoseConstants.SHA2, CryptoAlgorithmId.SHA_2_512 },
+                { JoseConstants.SHA2_512, CryptoAlgorithmId.SHA_2_512 },
+                { JoseConstants.SHA2_256, CryptoAlgorithmId.SHA_2_256 },
+
             //{"SHA128",  CryptoAlgorithmID.SHA_2_512T128 },
-                { "SHA512", CryptoAlgorithmId.SHA_2_512 },
-                { "SHA3", CryptoAlgorithmId.SHA_3_512 },
-                { "SHA3256", CryptoAlgorithmId.SHA_3_256 },
-                { "X448", CryptoAlgorithmId.X448 },
-                { "X25519", CryptoAlgorithmId.X25519 },
-                { "ED448", CryptoAlgorithmId.Ed448 },
-                { "ED25519", CryptoAlgorithmId.Ed25519 },
+                { JoseConstants.SHA3, CryptoAlgorithmId.SHA_3_512 },
+                { JoseConstants.SHA3_256, CryptoAlgorithmId.SHA_3_256 },
+                { JoseConstants.SHA3_512, CryptoAlgorithmId.SHA_3_256 },
+
+                { JoseConstants.X448, CryptoAlgorithmId.X448 },
+                { JoseConstants.X25519, CryptoAlgorithmId.X25519 },
+                { JoseConstants.Ed448.ToUpper(), CryptoAlgorithmId.Ed448 },
+                { JoseConstants.Ed25519.ToUpper(), CryptoAlgorithmId.Ed25519 },
+
+                { JoseConstants.MLKEM512, CryptoAlgorithmId.MLKEM512 },
+                { JoseConstants.MLKEM768, CryptoAlgorithmId.MLKEM768 },
+                { JoseConstants.MLKEM1024, CryptoAlgorithmId.MLKEM1024 },
+
+                { JoseConstants.MLDSA44, CryptoAlgorithmId.MLDSA44 },
+                { JoseConstants.MLDSA65, CryptoAlgorithmId.MLDSA65 },
+                { JoseConstants.MLDSA87, CryptoAlgorithmId.MLDSA87 },
+
             //{"", CryptoAlgorithmID }
             };
 
@@ -57,9 +70,9 @@ public static class AlgorithmID {
     public static readonly Dictionary<string, CryptoAlgorithmId> StringToID =
         new() {
             //SHA-256	alg (Private)
-                { "S256", CryptoAlgorithmId.SHA_2_256 },
+                { JoseConstants.SHA2_256, CryptoAlgorithmId.SHA_2_256 },
             //SHA-512	alg (Private)
-                { "S512", CryptoAlgorithmId.SHA_2_512 },
+                { JoseConstants.SHA2_512, CryptoAlgorithmId.SHA_2_512 },
 
             //HS256   HMAC using SHA-256	alg Required[IESG]  [RFC7518, Section 3.2]
                 { "HS256", CryptoAlgorithmId.HMAC_SHA_2_256 },

@@ -47,9 +47,6 @@ public class KeyPairServiced : KeyPair {
     public override KeyUses KeyUses => Share.KeyUses;
 
     ///<inheritdoc/>
-    public override int LengthSignature => Share.LengthSignature;
-
-    ///<inheritdoc/>
     public override SubjectPublicKeyInfo KeyInfoData => Primary.KeyInfoData;
 
     /////<inheritdoc/>
@@ -59,7 +56,7 @@ public class KeyPairServiced : KeyPair {
     public override IPKIXPrivateKey PKIXPrivateKey => Share.PKIXPrivateKey;
 
     ///<inheritdoc/>
-    public override IPkixPublicKey PkixPublicKey => Primary.PkixPublicKey;
+    public override IPKIXPublicKey PKIXPublicKey => Primary.PKIXPublicKey;
 
     ///<inheritdoc/>
     public override bool PublicOnly => Share.PublicOnly;

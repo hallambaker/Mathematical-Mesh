@@ -58,12 +58,11 @@ public class KeyPairEd25519 : KeyPairEdwards {
     public override byte[] PublicData => PublicKey.Encoding;
 
 
-    ///<summary>The length of a signature in bytes.</summary> 
-    public override int LengthSignature => 64;
+
     #endregion
 
 
-    readonly KeySecurity KeyType = KeySecurity.Public;
+    //readonly KeySecurity KeyType = KeySecurity.Public;
     readonly byte[] EncodedPrivateKey = null;
 
 
@@ -83,12 +82,12 @@ public class KeyPairEd25519 : KeyPairEdwards {
                 CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) {
 
         CryptoAlgorithmId = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmId.Ed25519);
-        KeyType = keyType;
+        KeySecurity = keyType;
         KeyUses = keyUses;
         if (keyType == KeySecurity.Public) {
             PublicKey = new CurveEdwards25519Public(key);
             PKIXPublicKeyECDH = new PKIXPublicKeyEd25519(PublicKey.Encoding);
-            KeyType = KeySecurity.Public;
+            KeySecurity = KeySecurity.Public;
             }
         else {
             EncodedPrivateKey = key;
@@ -140,7 +139,7 @@ public class KeyPairEd25519 : KeyPairEdwards {
         PrivateKey = privateKey ?? new CurveEdwards25519Private();
         PublicKey = PrivateKey.Public;
         PKIXPublicKeyECDH = new PKIXPublicKeyEd25519(PublicKey.Encoding);
-        KeyType = keySecurity;
+        KeySecurity = keySecurity;
         KeyUses = keyUses;
         if (keySecurity.IsExportable()) {
             PKIXPrivateKeyECDH = new PKIXPrivateKeyEd25519(privateKey.Secret, PKIXPublicKeyECDH) {
@@ -223,7 +222,7 @@ public class KeyPairEd25519 : KeyPairEdwards {
             KeyCollection keyCollection) {
         Assert.AssertTrue(PersistPending, CryptographicException.Throw);
         var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyEd25519(EncodedPrivateKey, PKIXPublicKeyECDH) { };
-        keyCollection.Persist(KeyIdentifier, pkix, KeyType.IsExportable());
+        keyCollection.Persist(KeyIdentifier, pkix, KeySecurity.IsExportable());
         }
 
 

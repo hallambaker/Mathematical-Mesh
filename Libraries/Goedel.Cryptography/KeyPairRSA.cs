@@ -21,7 +21,10 @@
 #endregion
 
 
+using System;
+
 namespace Goedel.Cryptography;
+
 
 
 /// <summary>
@@ -47,7 +50,7 @@ public partial class KeyPairRSA : KeyPairBaseRSA {
 
 
     ///<summary>The public key parameters represented in PKIX form</summary>
-    public override IPkixPublicKey PkixPublicKey => PkixPublicKeyRsa;
+    public override IPKIXPublicKey PKIXPublicKey => PkixPublicKeyRsa;
 
     /// <summary>
     /// Return private key parameters in PKIX structure
@@ -65,8 +68,7 @@ public partial class KeyPairRSA : KeyPairBaseRSA {
     ///<summary>If true, the key only has access to public key values.</summary>
     public override bool PublicOnly => provider.PublicOnly;
 
-    ///<summary>The length of a signature in bytes.</summary> 
-    public override int LengthSignature => publicParameters.Modulus.Length;
+
 
 
     #endregion
@@ -81,6 +83,8 @@ public partial class KeyPairRSA : KeyPairBaseRSA {
             CryptoAlgorithmId.RSASign | Base.Bulk();
 
 
+
+
     /// <summary>
     /// Return a PKIX SubjectPublicKeyInfo structure for the public key.
     /// </summary>
@@ -88,12 +92,6 @@ public partial class KeyPairRSA : KeyPairBaseRSA {
             new(CryptoConfig.MapNameToOID("RSA"),
                     PkixPublicKeyRsa.DER());
 
-    ///// <summary>
-    ///// Return a PKIX SubjectPublicKeyInfo structure for the private key.
-    ///// </summary>
-    //public override SubjectPublicKeyInfo PrivateKeyInfoData =>
-    //        new(CryptoConfig.MapNameToOID("RSA"),
-    //                PkixPrivateKeyRSA.DER());
 
     /// <summary>
     /// Generate an ephemeral RSA key with the specified key size.
@@ -211,37 +209,7 @@ public partial class KeyPairRSA : KeyPairBaseRSA {
         UDF.Future();
         keyPair = null;
         return false;
-        //"Get rid of the CSP stuff!".TaskFunctionality(true);
-
-        ////var cspParameters = new CspParameters() {
-        ////    Flags = CspProviderFlags.UseExistingKey,
-        ////    KeyContainerName = UDF
-        ////    };
-        //try {
-        //    var rsa = new RSACryptoServiceProvider();
-        //    keyPair = new KeyPairRSA(rsa);
-        //    return true;
-        //    }
-        //catch {
-        //    keyPair = null;
-        //    return false;
-        //    }
         }
-
-    ///// <summary>
-    ///// Factory method.
-    ///// </summary>
-    ///// <param name="keySecurity">The key security model</param>
-    ///// <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
-    ///// <param name="algorithmID">The type of keypair to create.</param>
-    ///// <param name="keySize">The key size</param>
-    ///// <returns>The created key pair</returns>
-    //public static KeyPair KeyPairFactory(
-    //            KeySecurity keySecurity = KeySecurity.Public,
-    //            KeyUses keyUses = KeyUses.Any,
-    //            CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
-    //            int keySize = 2048) =>
-    //            throw new NotImplementedException();
 
     /// <summary>
     /// Delegate to create a key pair base
@@ -262,12 +230,148 @@ public partial class KeyPairRSA : KeyPairBaseRSA {
     /// the value of <paramref name="keySecurity"/></param>/// <returns>The created key pair</returns>
     public static new KeyPair KeyPairPrivateFactory(
             PkixPrivateKeyRsa PKIXParameters,
-    KeySecurity keySecurity, IKeyLocate keyCollection) {
+            KeySecurity keySecurity, 
+            IKeyLocate keyCollection) {
 
         keyCollection.Keep();
-
         var RSAParameters = PKIXParameters.GetRsaParameters();
         return new KeyPairRSA(RSAParameters, keySecurity);
+        }
+
+
+    public static KeyPairRSA KeyPairFactory(
+            CryptoAlgorithmId algorithmID,
+            KeySecurity keySecurity,
+            byte[] ikm,
+            byte[] keySpecifier,
+            string keyName,
+            IKeyLocate keyCollection = null,
+            int keySize = 0,
+            KeyUses keyUses = KeyUses.Any) {
+
+        keySize = keySize == 0 ? 2048 : keySize;
+        var bits = keySize / 2;
+
+        var (primep, countp) = GetPrime(bits, ikm, keySpecifier, keyName, "p");
+
+        for (var i = countp; true;) {
+            BigInteger primeq;
+            (primeq, i) = GetPrime(bits, ikm, keySpecifier, keyName, "q", i);
+            var privateKey = GetRsa(bits, primep, primeq);
+
+            if (privateKey is not null) {
+                return new (privateKey);
+                }
+            }
+        }
+
+    /// <summary>
+    /// Return a prime with <paramref name="bits"/> significant bits
+    /// using the parameters <paramref name="ikm"/>, <paramref name="keyName"/>,
+    /// <paramref name="keySpecifier"/>, <paramref name="parameter"/>.
+    /// </summary>
+    /// <param name="bits"></param>
+    /// <param name="ikm"></param>
+    /// <param name="keySpecifier"></param>
+    /// <param name="keyName"></param>
+    /// <param name="parameter"></param>
+    /// <param name="index">Starting index for search</param>
+    /// <returns>The prime and the iteration count.</returns>
+    /// <exception cref="NYI"></exception>
+    static (BigInteger, int) GetPrime(
+                    int bits, 
+                    byte[] ikm,
+                    byte[] keySpecifier,
+                    string keyName,
+                    string parameter,
+                    int index = 0) {
+
+        for (var i = index; true; i++) {
+            var param = $"{parameter}{i}";
+            var seed = KeySeed(bits, ikm, keySpecifier, keyName, param);
+
+            // Make sure the candidate is odd and has <bits> significant bits.
+            seed[seed.Length - 1] |= 0x01;
+            seed[0] |= 0x80;
+
+            var c = seed.BigIntegerBigEndian();
+            if (c.IsProbablePrime(256)) {
+                return (c, i);
+                }
+            }
+
+        }
+
+    /// <summary>
+    /// Generate and validate the remaining RSA parameters in accordance with 
+    /// NIST.SP800-56Br2.
+    /// https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-56Br2.pdf
+    /// </summary>
+    /// <param name="bits">The number of bits in the prime values</param>
+    /// <param name="p">The prime p</param>
+    /// <param name="q">The prime q</param>
+    /// <returns>The private key parameters if valid, otherwise null</returns>
+    static PkixPrivateKeyRsa? GetRsa(
+                int bits,
+                BigInteger p,
+                BigInteger q) {
+
+        // We always use 2^16+1 as the public exponent.
+        var e = new BigInteger(65537);
+
+        // Ensure |p-q| > 2^ (bits - 100)
+        var v1 = p - q;
+        v1 = v1 > 0 ? v1 : -v1;
+        if (!v1.IsGreaterPower2(bits - 100) ) {
+            return null;
+            }
+
+        // Step 3, NYI
+        var d = new BigInteger(1);
+        if (!d.IsGreaterPower2(bits) {
+            return null;
+            }
+
+        // Step 4
+        var n = p * q;
+
+        // Step 5
+        var dp = d.Mod(p-1);
+        var dq = d.Mod(q-1);
+        var qInv = q.ModularInverse(p);
+
+        // Step 6, Perform a pair-wise consistency test
+        var m = n.Random();
+        var encrypt = BigInteger.ModPow(m, e, n);
+        var decrypt = BigInteger.ModPow(encrypt, d, n);
+        (m == decrypt).AssertTrue (CryptographicException.Throw);
+
+        // Step 7, output values
+        var keySize = bits / 4;
+        var primeSize = bits / 8;
+
+        var result = new PkixPrivateKeyRsa() {
+            Version = 1,
+            Modulus = n.ToByteArrayBigEndian(keySize),
+            PublicExponent = e.ToByteArrayBigEndian(keySize),
+            PrivateExponent = d.ToByteArrayBigEndian(keySize),
+            Coefficient = qInv.ToByteArrayBigEndian(keySize),
+            Exponent1 = dp.ToByteArrayBigEndian(keySize),
+            Exponent2 = dq.ToByteArrayBigEndian(keySize),
+            Prime1 = p.ToByteArrayBigEndian(primeSize),
+            Prime2 = q.ToByteArrayBigEndian(primeSize)
+            };
+
+        // Destroy all local copies of the variables
+        p.Erase();
+        q.Erase();
+        dp.Erase();
+        dq.Erase();
+        qInv.Erase();
+        d.Erase();
+
+        return result;
+
         }
 
 

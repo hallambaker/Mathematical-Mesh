@@ -4,6 +4,24 @@
         <name>Goedel.Cryptography.Kyber</name>
     </assembly>
     <members>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlKem.PublicKey">
+            <summary>The public key value.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlKem.PrivateKey">
+            <summary>The private key value</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlKem.LengthSignature">
+            <inheritdoc/>
+            <exception cref="T:Goedel.Cryptography.OperationNotSupported">ML-KEM does not support signature operations.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlKem.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
+            <exception cref="T:Goedel.Cryptography.OperationNotSupported">ML-KEM does not support signature operations.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlKem.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
+            <exception cref="T:Goedel.Cryptography.OperationNotSupported">ML-KEM does not support signature operations.</exception>
+        </member>
         <member name="T:Goedel.Cryptography.PQC.Kyber">
             <summary>
             Base class for Kyber implementations. Specifies parameters and constants

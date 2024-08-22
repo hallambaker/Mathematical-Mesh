@@ -1572,7 +1572,7 @@
             <param name="keyPair">The key pair.</param>
             <returns>The private data.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.Key.Factory(Goedel.Cryptography.PKIX.IPkixPublicKey)">
+        <member name="M:Goedel.Cryptography.Jose.Key.Factory(Goedel.Cryptography.PKIX.IPKIXPublicKey)">
             <summary>
             Convert PKIX parameters to JSON structure.
             </summary>
@@ -2239,6 +2239,142 @@
             Constructor from the specified Goedel.Cryptography result.
             </summary>
             <param name="result">The Goedel.Cryptography result.</param>
+        </member>
+        <member name="T:Goedel.Cryptography.Jose.PublicKeyBinary">
+             <summary>
+            
+             A public key represented as a binary blob whose type is specified
+             by Kty.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyBinary.Public">
+             <summary>
+            The public key value
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyBinary._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PublicKeyBinary._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PublicKeyBinary._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PublicKeyBinary._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyBinary._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyBinary._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyBinary._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyBinary._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PublicKeyBinary.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.PublicKeyBinary._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.PublicKeyBinary.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.PublicKeyBinary.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.PublicKeyBinary.#ctor(Goedel.Cryptography.IOpaqueBinaryKey)">
+            <summary>
+            Construct a key
+            </summary>
+            <param name="keyPair"></param>
+        </member>
+        <member name="T:Goedel.Cryptography.Jose.PrivateKeyBinary">
+             <summary>
+            
+             A private key represented as a binary blob whose type is specified
+             by Kty.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyBinary.Public">
+             <summary>
+            The private key value
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyBinary._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PrivateKeyBinary._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PrivateKeyBinary._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PrivateKeyBinary._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyBinary._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyBinary._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyBinary._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyBinary._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PrivateKeyBinary.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.PrivateKeyBinary._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.PrivateKeyBinary.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.PrivateKeyBinary.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.PrivateKeyBinary.#ctor(Goedel.Cryptography.IOpaqueBinaryKey)">
+            <summary>
+            Construct a key
+            </summary>
+            <param name="keyPair"></param>
         </member>
         <member name="T:Goedel.Cryptography.Jose.NamespaceDoc">
             <summary>

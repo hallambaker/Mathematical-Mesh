@@ -326,7 +326,8 @@ public abstract class KeyPairBaseRSA : KeyPair {
     /// Construct a KeyPair entry from PKIX parameters. Defaults to the built in
     /// provider.
     /// </summary>
-    public static FactoryRSAPublicKeyDelegate KeyPairPublicFactory { get; set; } = KeyPairRSA.KeyPairPublicFactory;
+    public static FactoryRSAPublicKeyDelegate KeyPairPublicFactory { get; set; } = 
+                KeyPairRSA.KeyPairPublicFactory;
 
     /// <summary>
     /// Construct a KeyPair entry from PKIX parameters. Initialized by the cryptographic
@@ -334,8 +335,6 @@ public abstract class KeyPairBaseRSA : KeyPair {
     /// </summary>
     public static FactoryRSAPrivateKeyDelegate KeyPairPrivateFactory { get; set; } =
                 KeyPairRSA.KeyPairPrivateFactory;
-
-
 
     /// <summary>
     /// Create a KeyPair for the specified parameters.

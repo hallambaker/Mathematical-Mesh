@@ -39,7 +39,9 @@ public class GuigenFieldQr : GuigenField {
 
 
         Layout = new VerticalStackLayout() { QrImage , QrLabel , QrEntry };
-
+        if (data is not null) {
+            SetField(data);
+            }
         fieldsSet.AddField(Layout);
         }
 

@@ -92,7 +92,7 @@ public abstract class KeyPairBaseECDH : KeyPairAdvanced {
     /// <summary>
     /// The private key data formatted as a PKIX KeyInfo data blob.
     /// </summary>
-    public override IPkixPublicKey PkixPublicKey => PKIXPublicKeyECDH;
+    public override IPKIXPublicKey PKIXPublicKey => PKIXPublicKeyECDH;
 
 
 
@@ -177,14 +177,6 @@ public abstract class KeyPairECDH : KeyPairBaseECDH {
         return null;
         }
 
-    ///// <summary>
-    ///// Perform an ECDH Key Agreement to a private key
-    ///// </summary>
-    ///// <param name="Public">Public key parameters</param>
-    ///// <param name="Carry">Carried result to add in to the agreement (for recryption)</param>
-    ///// <returns>The key agreement value ZZ</returns>
-    //public ResultECDH Agreement(KeyPairECDH Public, ResultECDH Carry = null) =>
-    //    throw new NotImplementedException();
 
     /// <summary>
     /// Generate a key pair for the specified algorithm and key size.
@@ -236,7 +228,7 @@ public abstract class KeyPairECDH : KeyPairBaseECDH {
                     break;
                 }
             }
-        Assert.AssertNotNull(keyPair, NoProviderSpecified.Throw);
+        Assert.AssertNotNull(keyPair, KeySizeNotSupported.Throw);
 
         return keyPair;
         }

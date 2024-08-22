@@ -169,7 +169,7 @@ public static class Extension {
             _ => throw new FileFormatAlgorithmNotImplemented(null, null, KeyFileFormat.PEMPublic, keyPair.CryptoAlgorithmId)
             };
 
-        var pkixData = keyPair.PkixPublicKey;
+        var pkixData = keyPair.PKIXPublicKey;
         var keyDER = pkixData.DER();
 
         var builder = new StringBuilder();

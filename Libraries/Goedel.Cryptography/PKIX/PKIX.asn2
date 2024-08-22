@@ -194,7 +194,15 @@ OID id_aes256_wrap	nist_aes 45
 OID id_aes256_gcm	nist_aes 46
 
 
+OID sigAlgs 	nistalgorithm	3
+OID kems 		nistalgorithm	4
 
+OID id_alg_ml_kem_512		kems 1
+OID id_alg_ml_kem_768		kems 2
+OID id_alg_ml_kem_1024		kems 3
+OID id_ml_dsa_44			sigAlgs 17
+OID id_ml_dsa_65			sigAlgs 18
+OID id_ml_dsa_87			sigAlgs 19
 
 ROOT dod_arc
 	iso							1 
@@ -478,6 +486,14 @@ Class PrivateKeyInfo
 	Attributes				Set AttributeTypeValues
 		Code 0
 		Implicit
+	PublicKey				Bits
+		Code 1
+		Optional
+
+Class PublicKeyInfo
+	Algorithm				AlgorithmIdentifier
+	PublicKey					Octets
+
 
 Class PkixPublicKeyRsa
 	Modulus					BigInteger
@@ -495,6 +511,12 @@ Class PkixPrivateKeyRsa
 	Exponent2				BigInteger
 	Coefficient				BigInteger
 
+
+
+
+
+
+Class PkixPrivateKeyOpaque
 
 Class DHDomain
 	Modulus					BigInteger
@@ -538,3 +560,5 @@ Class RFC2631OtherInfo
 Class KeySpecificInfo
 	Algorithm 				OIDRef
 	Counter					Octets
+
+

@@ -60,8 +60,6 @@ public class KeyPairEd448 : KeyPairEdwards {
     /// </summary>
     public override byte[] PublicData => PublicKey.Encoding;
 
-    ///<summary>The length of a signature in bytes.</summary> 
-    public override int LengthSignature => 114;
     #endregion
 
 
@@ -83,7 +81,7 @@ public class KeyPairEd448 : KeyPairEdwards {
                 CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) {
 
         CryptoAlgorithmId = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmId.Ed448);
-        base.KeySecurity = keySecurity;
+        KeySecurity = keySecurity;
         KeyUses = keyUses;
         if (keySecurity == KeySecurity.Public) {
             PublicKey = new CurveEdwards448Public(key);

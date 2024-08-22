@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 7/8/2024 11:22:41 PM
+//  This file was automatically generated at 8/22/2024 6:23:51 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1333,6 +1333,94 @@ namespace Goedel.Cryptography.PKIX {
 		/// id_aes256_gcm = nist_aes (46) as string
 		/// </summary>
 		public const string OIDS__id_aes256_gcm = "2.16.840.1.101.3.4.1.46";
+
+
+
+		/// <summary>
+		/// sigAlgs = nistalgorithm (3) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__sigAlgs = new int [] { 2, 16, 840, 1, 101, 3, 4, 3};
+		/// <summary>
+		/// sigAlgs = nistalgorithm (3) as string
+		/// </summary>
+		public const string OIDS__sigAlgs = "2.16.840.1.101.3.4.3";
+
+
+
+		/// <summary>
+		/// id_ml_dsa_44 = sigAlgs (17) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ml_dsa_44 = new int [] { 2, 16, 840, 1, 101, 3, 4, 3, 17};
+		/// <summary>
+		/// id_ml_dsa_44 = sigAlgs (17) as string
+		/// </summary>
+		public const string OIDS__id_ml_dsa_44 = "2.16.840.1.101.3.4.3.17";
+
+
+
+		/// <summary>
+		/// id_ml_dsa_65 = sigAlgs (18) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ml_dsa_65 = new int [] { 2, 16, 840, 1, 101, 3, 4, 3, 18};
+		/// <summary>
+		/// id_ml_dsa_65 = sigAlgs (18) as string
+		/// </summary>
+		public const string OIDS__id_ml_dsa_65 = "2.16.840.1.101.3.4.3.18";
+
+
+
+		/// <summary>
+		/// id_ml_dsa_87 = sigAlgs (19) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ml_dsa_87 = new int [] { 2, 16, 840, 1, 101, 3, 4, 3, 19};
+		/// <summary>
+		/// id_ml_dsa_87 = sigAlgs (19) as string
+		/// </summary>
+		public const string OIDS__id_ml_dsa_87 = "2.16.840.1.101.3.4.3.19";
+
+
+
+		/// <summary>
+		/// kems = nistalgorithm (4) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__kems = new int [] { 2, 16, 840, 1, 101, 3, 4, 4};
+		/// <summary>
+		/// kems = nistalgorithm (4) as string
+		/// </summary>
+		public const string OIDS__kems = "2.16.840.1.101.3.4.4";
+
+
+
+		/// <summary>
+		/// id_alg_ml_kem_512 = kems (1) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_alg_ml_kem_512 = new int [] { 2, 16, 840, 1, 101, 3, 4, 4, 1};
+		/// <summary>
+		/// id_alg_ml_kem_512 = kems (1) as string
+		/// </summary>
+		public const string OIDS__id_alg_ml_kem_512 = "2.16.840.1.101.3.4.4.1";
+
+
+
+		/// <summary>
+		/// id_alg_ml_kem_768 = kems (2) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_alg_ml_kem_768 = new int [] { 2, 16, 840, 1, 101, 3, 4, 4, 2};
+		/// <summary>
+		/// id_alg_ml_kem_768 = kems (2) as string
+		/// </summary>
+		public const string OIDS__id_alg_ml_kem_768 = "2.16.840.1.101.3.4.4.2";
+
+
+
+		/// <summary>
+		/// id_alg_ml_kem_1024 = kems (3) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_alg_ml_kem_1024 = new int [] { 2, 16, 840, 1, 101, 3, 4, 4, 3};
+		/// <summary>
+		/// id_alg_ml_kem_1024 = kems (3) as string
+		/// </summary>
+		public const string OIDS__id_alg_ml_kem_1024 = "2.16.840.1.101.3.4.4.3";
 
 
 		}
@@ -3762,6 +3850,9 @@ namespace Goedel.Cryptography.PKIX {
 		/// <summary> ASN.1 member Attributes </summary>
 		public List <Goedel.Cryptography.PKIX.AttributeTypeValues > Attributes  {get; set;}
 
+		/// <summary> ASN.1 member PublicKey </summary>
+		public byte []  PublicKey  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -3771,6 +3862,9 @@ namespace Goedel.Cryptography.PKIX {
 		/// <param name="Buffer">Output buffer</param>
         public override void Encode (Goedel.ASN.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
+
+			Buffer.Encode__Bits  (PublicKey, 4, 1);
+			Buffer.Debug ("PublicKey");
 
 			if (Attributes == null || Attributes.Count == 0) {
 				Buffer.Encode__Object (null, 1, 0);
@@ -3826,6 +3920,57 @@ namespace Goedel.Cryptography.PKIX {
 				Buffer.Decode__Set_End(XPosition, 1, 0);
 			}
 			Buffer.Debug ("Attributes");
+
+			Buffer.Decode__Bits  (PublicKey, 4, 1);
+			Buffer.Debug ("PublicKey");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
+		}
+    /// <summary>
+	/// PublicKeyInfo 
+    /// </summary>
+	public partial class PublicKeyInfo : Goedel.ASN.Root {
+
+		/// <summary> ASN.1 member Algorithm </summary>
+		public Goedel.Cryptography.PKIX.AlgorithmIdentifier Algorithm  {get; set;}
+
+		/// <summary> ASN.1 member PublicKey </summary>
+		public byte []  PublicKey  {get; set;}
+
+
+		/// <summary>
+		/// Encode ASN.1 class members to specified buffer. 
+		///
+		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
+		/// </summary>
+		/// <param name="Buffer">Output buffer</param>
+        public override void Encode (Goedel.ASN.Buffer Buffer) {
+			int Position = Buffer.Encode__Sequence_Start ();
+
+			Buffer.Encode__Octets  (PublicKey, 0, -1);
+			Buffer.Debug ("PublicKey");
+
+			Buffer.Encode__Object (Algorithm, 0, -1);
+			Buffer.Debug ("Algorithm");
+			Buffer.Encode__Sequence_End (Position);
+            }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__Object (Algorithm, 0, -1);
+			Buffer.Debug ("Algorithm");
+
+			Buffer.Decode__Octets  (PublicKey, 0, -1);
+			Buffer.Debug ("PublicKey");
 			Buffer.Decode__Sequence_End (Position);
             }
 			*/
@@ -3985,6 +4130,36 @@ namespace Goedel.Cryptography.PKIX {
 
 			Buffer.Decode__BigInteger  (Coefficient, 0, -1);
 			Buffer.Debug ("Coefficient");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
+		}
+    /// <summary>
+	/// PkixPrivateKeyOpaque 
+    /// </summary>
+	public partial class PkixPrivateKeyOpaque : Goedel.ASN.Root {
+
+
+		/// <summary>
+		/// Encode ASN.1 class members to specified buffer. 
+		///
+		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
+		/// </summary>
+		/// <param name="Buffer">Output buffer</param>
+        public override void Encode (Goedel.ASN.Buffer Buffer) {
+			int Position = Buffer.Encode__Sequence_Start ();
+			Buffer.Encode__Sequence_End (Position);
+            }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
 			Buffer.Decode__Sequence_End (Position);
             }
 			*/

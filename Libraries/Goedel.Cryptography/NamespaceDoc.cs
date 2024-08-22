@@ -29,6 +29,7 @@ global using System.Security.Cryptography;
 global using System.Text;
 global using Goedel.Cryptography.Algorithms;
 global using Goedel.Cryptography.PKIX;
+global using Goedel.Cryptography.PQC;
 global using Goedel.Utilities;
 
 #if !(_Github_)

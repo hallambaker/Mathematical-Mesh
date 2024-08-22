@@ -278,31 +278,6 @@ public class Kyber {
     #endregion
     #region // Randomness management
 
-    ///// <summary>
-    ///// Temporary random number generator... remove in final.
-    ///// </summary>
-    ///// <param name="buffer">The buffer to fill with data.</param>
-    ///// <param name="index">The index to fill from.</param>
-    ///// <param name="count">The number of bytes to add. If negative, 
-    ///// fill remainder of the buffer.</param>
-    //public void Randomize(byte[] buffer, int index = 0, int count = -1) {
-    //    count = count < 0 ? buffer.Length - index : count;
-
-    //    return;
-    //    }
-
-    ///// <summary>
-    ///// Obtain <paramref name="length"/> random bytes.
-    ///// </summary>
-    ///// <param name="length">The number of bytes to return.</param>
-    ///// <returns>The random bytes.</returns>
-    //public byte[] RandomBytes(int length) {
-    //    var result = new byte[length];
-    //    Randomize(result);
-    //    return result;
-
-    //    }
-
     /// <summary>
     /// Pseudo-random function using SHAKE256, concatenates secret <paramref name="seed"/>
     /// and public input <paramref name="nonce"/>
@@ -318,32 +293,6 @@ public class Kyber {
 
         return SHAKE256.Process(input, length * 8);
         }
-
-    ///// <summary>
-    ///// Fake random number generator for testing.
-    ///// </summary>
-    ///// <param name="len">Number of bytes to return.</param>
-    ///// <returns>The random data.</returns>
-    //public static byte[] FakeRand(int len) {
-    //    var result = new byte[len];
-    //    FakeRand(result);
-    //    return result;
-    //    }
-
-    ///// <summary>
-    ///// Fake random number generator for testing.
-    ///// </summary>
-    ///// <param name="buffer">The buffer to fill with data.</param>
-    ///// <param name="offset">First byte to fill.</param>
-    ///// <param name="len">Number of bytes to fill, if negative, fill rest of buffer.</param>
-    //public static void FakeRand(byte[] buffer, int offset = 0, int len = -1) {
-    //    len = len < 0 ? buffer.Length - offset : len;
-
-    //    for (int i = 0; i < len; i++) {
-    //        buffer[offset + i] = (byte)i;
-    //        }
-
-    //    }
 
     #endregion
     #region // Noise ETA 

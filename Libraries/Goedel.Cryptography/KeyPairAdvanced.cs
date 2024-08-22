@@ -278,6 +278,9 @@ public abstract partial class KeyAgreementResult : IPKIXAgreement {
     /// <summary>
     /// Encrypt the bulk key.
     /// </summary>
+    /// <param name="ephemeral"></param>
+    /// <param name="key"></param>
+    /// <param name="salt"></param>
     /// <returns>The encoder</returns>
     public virtual void Encrypt(byte[] key,
         out byte[] exchange, out KeyPair ephemeral, byte[] salt = null) {

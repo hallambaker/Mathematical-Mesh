@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Cryptography.PQC;
+
 namespace Goedel.Cryptography.Jose;
 
 
@@ -53,6 +55,7 @@ public partial class Key : IJson {
         KeyPairBaseRSA keyPairBaseRSA => new PublicKeyRSA(keyPairBaseRSA),
         KeyPairBaseDH keyPairBaseDH => new PublicKeyDH(keyPairBaseDH),
         KeyPairECDH keyPairECDH => new PublicKeyECDH(keyPairECDH),
+        IOpaqueBinaryKey keyPairBinary => new PublicKeyBinary(keyPairBinary),
         _ => throw new NYI(),
         };
 
@@ -65,6 +68,7 @@ public partial class Key : IJson {
         KeyPairBaseRSA keyPairBaseRSA => new PrivateKeyRSA(keyPairBaseRSA),
         KeyPairBaseDH keyPairBaseDH => new PrivateKeyDH(keyPairBaseDH),
         KeyPairECDH keyPairECDH => new PrivateKeyECDH(keyPairECDH),
+        IOpaqueBinaryKey keyPairBinary => new PrivateKeyBinary(keyPairBinary),
         _ => throw new NYI(),
         };
 
@@ -73,7 +77,7 @@ public partial class Key : IJson {
     /// </summary>
     /// <param name="pkixKey">The PKIX key parameters</param>
     /// <returns>The JOSE key</returns>
-    public static Key Factory(IPkixPublicKey pkixKey) => pkixKey switch {
+    public static Key Factory(IPKIXPublicKey pkixKey) => pkixKey switch {
         PkixPrivateKeyRsa PKIXPrivateKeyRSA => new PrivateKeyRSA(PKIXPrivateKeyRSA),
         PKIXPrivateKeyDH PKIXPrivateKeyDH => new PrivateKeyDH(PKIXPrivateKeyDH),
         PKIXPrivateKeyECDH PKIXPrivateKeyECDH => new PrivateKeyECDH(PKIXPrivateKeyECDH),
@@ -107,7 +111,7 @@ public partial class Key : IJson {
     /// <param name="keyPair">Key pair to convert</param>
     /// <returns>JOSE public Key value</returns>
     public static Key FactoryPublic(KeyPair keyPair) {
-        var PKIX = keyPair?.PkixPublicKey;
+        var PKIX = keyPair?.PKIXPublicKey;
         return Factory(PKIX);
         }
 

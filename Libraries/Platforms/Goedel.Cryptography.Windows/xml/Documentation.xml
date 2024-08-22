@@ -199,7 +199,7 @@
         <member name="P:Goedel.Cryptography.KeyPairRSA1.PKIXPrivateKey">
             <summary>The private key parameters represented in PKIX form</summary>
         </member>
-        <member name="P:Goedel.Cryptography.KeyPairRSA1.PkixPublicKey">
+        <member name="P:Goedel.Cryptography.KeyPairRSA1.PKIXPublicKey">
             <summary>The public key parameters represented in PKIX form</summary>
         </member>
         <member name="P:Goedel.Cryptography.KeyPairRSA1.PkixPrivateKeyRSA">
@@ -217,9 +217,6 @@
         </member>
         <member name="P:Goedel.Cryptography.KeyPairRSA1.PublicOnly">
             <summary>If true, the key only has access to public key values.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.KeyPairRSA1.LengthSignature">
-            <summary>The length of a signature in bytes.</summary> 
         </member>
         <member name="M:Goedel.Cryptography.KeyPairRSA1.SignatureAlgorithmID(Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>

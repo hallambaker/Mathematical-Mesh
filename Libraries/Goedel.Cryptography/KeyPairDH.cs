@@ -172,7 +172,7 @@ public class KeyPairDH : KeyPairBaseDH {
     /// <summary>
     /// The private key data formatted as a PKIX KeyInfo data blob.
     /// </summary>
-    public override IPkixPublicKey PkixPublicKey => PKIXPublicKeyDH;
+    public override IPKIXPublicKey PKIXPublicKey => PKIXPublicKeyDH;
 
     /// <summary>The supported key uses (e.g. signing, encryption)</summary>
     public override KeyUses KeyUses { get; } = KeyUses.Encrypt;
@@ -186,9 +186,6 @@ public class KeyPairDH : KeyPairBaseDH {
     /// Return private key parameters in PKIX structure
     /// </summary>
     public override DHDomain DHDomain => PublicKey.DHDomain;
-
-    ///<summary>The length of a signature in bytes.</summary> 
-    public override int LengthSignature => throw new NYI();
 
 
     #region // PKIX data formats

@@ -25,7 +25,9 @@ LinkFiles = \
 ToolTargets = \
 	Exceptions.cs\
 	PKIX\PKIX.cs\
-	UDFConstants.cs
+	UDFConstants.cs\
+	JoseConstants.cs 
+
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
@@ -35,6 +37,8 @@ PKIX\PKIX.cs : PKIX\PKIX.asn2
 UDFConstants.cs : UDFConstants.Constant 
 	constant UDFConstants.Constant  /cs  UDFConstants.cs
 
+JoseConstants.cs : JoseConstants.Constant 
+	constant JoseConstants.Constant  /cs  JoseConstants.cs
 
 
 prebuildRecurse : 

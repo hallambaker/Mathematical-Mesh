@@ -46,7 +46,7 @@ public partial class KeyPairRSA1 : KeyPairBaseRSA {
 
 
     ///<summary>The public key parameters represented in PKIX form</summary>
-    public override IPkixPublicKey PkixPublicKey => PkixPublicKeyRsa;
+    public override IPKIXPublicKey PKIXPublicKey => PkixPublicKeyRsa;
 
     /// <summary>
     /// Return private key parameters in PKIX structure
@@ -63,9 +63,6 @@ public partial class KeyPairRSA1 : KeyPairBaseRSA {
 
     ///<summary>If true, the key only has access to public key values.</summary>
     public override bool PublicOnly => provider.PublicOnly;
-
-    ///<summary>The length of a signature in bytes.</summary> 
-    public override int LengthSignature => publicParameters.Modulus.Length;
 
 
     #endregion
@@ -86,13 +83,6 @@ public partial class KeyPairRSA1 : KeyPairBaseRSA {
     public override SubjectPublicKeyInfo KeyInfoData =>
             new(CryptoConfig.MapNameToOID("RSA"),
                     PkixPublicKeyRsa.DER());
-
-    ///// <summary>
-    ///// Return a PKIX SubjectPublicKeyInfo structure for the private key.
-    ///// </summary>
-    //public override SubjectPublicKeyInfo PrivateKeyInfoData =>
-    //        new(CryptoConfig.MapNameToOID("RSA"),
-    //                PkixPrivateKeyRSA.DER());
 
     /// <summary>
     /// Generate an ephemeral RSA key with the specified key size.
