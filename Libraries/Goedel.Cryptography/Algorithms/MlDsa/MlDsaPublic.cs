@@ -7,7 +7,7 @@ namespace Goedel.Cryptography.PQC;
 /// <summary>
 /// Dilithium public key.
 /// </summary>
-public class DilithiumPublic : Dilithium {
+public class DilithiumPublic : MLDSA {
 
     byte[] rho { get; }
 
@@ -18,13 +18,13 @@ public class DilithiumPublic : Dilithium {
     public byte[] PublicKey { get; }
 
     static DilithiumMode GetMode(int length) {
-        if (length == Dilithium.Mode5.PublicKeyBytes) {
+        if (length == MLDSA.Mode5.PublicKeyBytes) {
             return DilithiumMode.Mode5;
             }
-        if (length == Dilithium.Mode3.PublicKeyBytes) {
+        if (length == MLDSA.Mode3.PublicKeyBytes) {
             return DilithiumMode.Mode3;
             }
-        if (length == Dilithium.Mode2.PublicKeyBytes) {
+        if (length == MLDSA.Mode2.PublicKeyBytes) {
             return DilithiumMode.Mode2;
             }
 
@@ -46,7 +46,7 @@ public class DilithiumPublic : Dilithium {
             T1.Polynomials[i].UnpackT1(publicKey, ref offset);
             }
 
-        muPK = SHAKE256.GetBytes(CrhBytes, publicKey);
+        muPK = SHAKE256.GetBytes(MrsBytes, publicKey);
         }
 
     /// <summary>
@@ -65,7 +65,7 @@ public class DilithiumPublic : Dilithium {
             }
 
         // Compute CRH(CRH(rho, t1), msg)
-        var mu = SHAKE256.GetBytes(CrhBytes, muPK, message);
+        var mu = SHAKE256.GetBytes(MrsBytes, muPK, message);
 
         // Matrix-vector multiplication; compute Az - c2^dt1
         var cp = new PolynomialInt32(this);

@@ -286,6 +286,8 @@ public partial class KeyPairRSA : KeyPairBaseRSA {
                     string parameter,
                     int index = 0) {
 
+        // This needs to be replaced with the method described in FIPS 186 B.10
+
         for (var i = index; true; i++) {
             var param = $"{parameter}{i}";
             var seed = KeySeed(bits, ikm, keySpecifier, keyName, param);
@@ -293,6 +295,7 @@ public partial class KeyPairRSA : KeyPairBaseRSA {
             // Make sure the candidate is odd and has <bits> significant bits.
             seed[seed.Length - 1] |= 0x01;
             seed[0] |= 0x80;
+
 
             var c = seed.BigIntegerBigEndian();
             if (c.IsProbablePrime(256)) {
@@ -316,62 +319,73 @@ public partial class KeyPairRSA : KeyPairBaseRSA {
                 BigInteger p,
                 BigInteger q) {
 
-        // We always use 2^16+1 as the public exponent.
-        var e = new BigInteger(65537);
+        // Declare all registers which may contain values leaking the secret
+        BigInteger e, n, d = BigInteger.Zero,
+            dp = BigInteger.Zero, dq = BigInteger.Zero, qInv = BigInteger.Zero;
+        // Create reduced versions of p and q. We do this so that we can
+        // force erasure at the end
+        var p1 = p - 1;
+        var q1 = q - 1;
 
-        // Ensure |p-q| > 2^ (bits - 100)
-        var v1 = p - q;
-        v1 = v1 > 0 ? v1 : -v1;
-        if (!v1.IsGreaterPower2(bits - 100) ) {
-            return null;
+        try {
+            // We always use 2^16+1 as the public exponent.
+            e = new BigInteger(65537);
+
+            // Ensure |p-q| > 2^ (bits - 100)
+            if (!BigInteger.Abs(p - q).IsGreaterPower2(bits - 100)) {
+                return null;
+                }
+
+            // Step 3, NYI
+            d = p1 * q1;
+            d = d / BigInteger.GreatestCommonDivisor(p1, q1);
+            if (!d.IsGreaterPower2(bits)) {
+                return null;
+                }
+
+            // Step 4
+            n = p * q;
+
+            // Step 5
+            dp = d.Mod(p1);
+            dq = d.Mod(q1);
+            qInv = q.ModularInverse(p);
+
+            // Step 6, Perform a pair-wise consistency test
+            var m = n.Random();
+            var encrypt = BigInteger.ModPow(m, e, n);
+            var decrypt = BigInteger.ModPow(encrypt, d, n);
+            (m == decrypt).AssertTrue(CryptographicException.Throw);
+
+            // Step 7, output values
+            var keySize = bits / 4;
+            var primeSize = bits / 8;
+
+            var result = new PkixPrivateKeyRsa() {
+                Version = 1,
+                Modulus = n.ToByteArrayBigEndian(keySize),
+                PublicExponent = e.ToByteArrayBigEndian(keySize),
+                PrivateExponent = d.ToByteArrayBigEndian(keySize),
+                Coefficient = qInv.ToByteArrayBigEndian(keySize),
+                Exponent1 = dp.ToByteArrayBigEndian(keySize),
+                Exponent2 = dq.ToByteArrayBigEndian(keySize),
+                Prime1 = p.ToByteArrayBigEndian(primeSize),
+                Prime2 = q.ToByteArrayBigEndian(primeSize)
+                };
+
+            return result;
             }
-
-        // Step 3, NYI
-        var d = new BigInteger(1);
-        if (!d.IsGreaterPower2(bits) {
-            return null;
+        finally {
+            // Destroy all local copies of the variables
+            p.Erase();
+            q.Erase();
+            p1.Erase();
+            q1.Erase();
+            dp.Erase();
+            dq.Erase();
+            qInv.Erase();
+            d.Erase();
             }
-
-        // Step 4
-        var n = p * q;
-
-        // Step 5
-        var dp = d.Mod(p-1);
-        var dq = d.Mod(q-1);
-        var qInv = q.ModularInverse(p);
-
-        // Step 6, Perform a pair-wise consistency test
-        var m = n.Random();
-        var encrypt = BigInteger.ModPow(m, e, n);
-        var decrypt = BigInteger.ModPow(encrypt, d, n);
-        (m == decrypt).AssertTrue (CryptographicException.Throw);
-
-        // Step 7, output values
-        var keySize = bits / 4;
-        var primeSize = bits / 8;
-
-        var result = new PkixPrivateKeyRsa() {
-            Version = 1,
-            Modulus = n.ToByteArrayBigEndian(keySize),
-            PublicExponent = e.ToByteArrayBigEndian(keySize),
-            PrivateExponent = d.ToByteArrayBigEndian(keySize),
-            Coefficient = qInv.ToByteArrayBigEndian(keySize),
-            Exponent1 = dp.ToByteArrayBigEndian(keySize),
-            Exponent2 = dq.ToByteArrayBigEndian(keySize),
-            Prime1 = p.ToByteArrayBigEndian(primeSize),
-            Prime2 = q.ToByteArrayBigEndian(primeSize)
-            };
-
-        // Destroy all local copies of the variables
-        p.Erase();
-        q.Erase();
-        dp.Erase();
-        dq.Erase();
-        qInv.Erase();
-        d.Erase();
-
-        return result;
-
         }
 
 

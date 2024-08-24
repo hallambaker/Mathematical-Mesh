@@ -61,10 +61,10 @@ public class TestPQC : Disposable {
         for (var i = 0; i < repeat; i++) {
             var random = TestRandom.GetRandom($"-{mode}-{i}");
 
-            var matseed = random.GetBytes(Cryptography.PQC.Dilithium.SeedBytes, "Keygen");
+            var matseed = random.GetBytes(Cryptography.PQC.MLDSA.SeedBytes, "Keygen");
             var sm = random.GetBytes(128, "Message");
 
-            var (pk, sk) = Cryptography.PQC.Dilithium.GenerateKeypair(mode, matseed);
+            var (pk, sk) = Cryptography.PQC.MLDSA.GenerateKeypair(mode, matseed);
 
 
             var privateKey = new DilithiumPrivate(sk);

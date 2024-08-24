@@ -153,6 +153,22 @@ public static class ArrayUtilities {
         return result;
         }
 
+    /// <summary>
+    /// Extract <paramref name="length"/> bytes starting at <paramref name="offset"/>
+    /// from <paramref name="source"/> and return as a new array.
+    /// </summary>
+    /// <param name="source">The source buffer</param>
+    /// <param name="offset">The first byte to read</param>
+    /// <param name="length">The number of bytes to read.</param>
+    /// <returns>The created buffer.</returns>
+    public static byte[] ExtractIndexed(this byte[] source, ref int offset, int length) {
+        var result = new byte[length];
+        Array.Copy(source, offset, result, 0, length);
+        offset += length;
+        return result;
+        }
+
+
 
     /// <summary>
     /// Append the bytes <paramref name="source"/> to <paramref name="target"/>

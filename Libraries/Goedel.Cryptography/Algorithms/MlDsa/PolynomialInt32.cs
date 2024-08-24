@@ -19,10 +19,10 @@ public class PolynomialInt32 : Disposable {
     int Eta => Parameters.Eta;
 
 
-    static int D => Dilithium.D;
-    const int Q = Dilithium.Q;
+    static int D => MLDSA.D;
+    const int Q = MLDSA.Q;
 
-    Dilithium Parameters { get; }
+    MLDSA Parameters { get; }
     
 
     //delegate int RejectDelegate (byte[] buf, int ctr);
@@ -96,12 +96,12 @@ public class PolynomialInt32 : Disposable {
     /// </summary>
     /// <param name="parameters">The Dilithium parameters.</param>
     /// <param name="wipe">If true, contents wiped on dispose.</param>
-    public PolynomialInt32(Dilithium parameters, bool wipe = true) {
+    public PolynomialInt32(MLDSA parameters, bool wipe = true) {
         Wipe = wipe;
         Parameters = parameters;
 
         // Fix N so the compiler knows that it cannot change inside a loop.
-        N = Dilithium.N;
+        N = MLDSA.N;
         Coefficients = new int[N];
 
         }
@@ -149,7 +149,7 @@ public class PolynomialInt32 : Disposable {
     /// </summary>
     public void Caddq() {
         for (var c = 0; c < N; c++) {
-            Coefficients[c] = Dilithium.Caddq(Coefficients[c]);
+            Coefficients[c] = MLDSA.Caddq(Coefficients[c]);
             }
         }
 
@@ -159,7 +159,7 @@ public class PolynomialInt32 : Disposable {
     /// </summary>
     public void Reduce32() {
         for (var c = 0; c < N; c++) {
-            Coefficients[c] = Dilithium.Reduce32(Coefficients[c]);
+            Coefficients[c] = MLDSA.Reduce32(Coefficients[c]);
             }
         }
 
@@ -169,7 +169,7 @@ public class PolynomialInt32 : Disposable {
     /// </summary>
     public void Freeze() {
         for (var c = 0; c < N; c++) {
-            Coefficients[c] = Dilithium.Freeze(Coefficients[c]);
+            Coefficients[c] = MLDSA.Freeze(Coefficients[c]);
             }
         }
 
@@ -179,7 +179,7 @@ public class PolynomialInt32 : Disposable {
     /// </summary>
     public void ShiftLeft() {
         for (var c = 0; c < N; c++) {
-            Coefficients[c] <<= Dilithium.D;
+            Coefficients[c] <<= MLDSA.D;
             }
         }
     #endregion
@@ -312,7 +312,7 @@ public class PolynomialInt32 : Disposable {
             t |= (uint)(buffer[pos++] << 16);
             t &= 0x7FFFFF;
 
-            if (t < Dilithium.Q) {
+            if (t < MLDSA.Q) {
                 Coefficients[index++] = (int)t;
                 }
             }
@@ -376,7 +376,7 @@ public class PolynomialInt32 : Disposable {
             for (var start = 0; start < N; start = j + len) {
                 zeta = Zetas[++k];
                 for (j = start; j < start + len; ++j) {
-                    var t = Dilithium.MontgomeryReduce((long)zeta * Coefficients[j + len]);
+                    var t = MLDSA.MontgomeryReduce((long)zeta * Coefficients[j + len]);
                     Coefficients[j + len] = Coefficients[j] - t;
                     Coefficients[j] = Coefficients[j] + t;
 
@@ -406,13 +406,13 @@ public class PolynomialInt32 : Disposable {
                     var t = Coefficients[j];
                     Coefficients[j] = t + Coefficients[j + len];
                     Coefficients[j + len] = t - Coefficients[j + len];
-                    Coefficients[j + len] = Dilithium.MontgomeryReduce((long)zeta * Coefficients[j + len]);
+                    Coefficients[j + len] = MLDSA.MontgomeryReduce((long)zeta * Coefficients[j + len]);
                     }
                 }
             }
 
         for (j = 0; j < N; ++j) {
-            Coefficients[j] = Dilithium.MontgomeryReduce((long)f * Coefficients[j]);
+            Coefficients[j] = MLDSA.MontgomeryReduce((long)f * Coefficients[j]);
             }
 
         }
@@ -429,7 +429,7 @@ public class PolynomialInt32 : Disposable {
     /// <param name="b">Second polynomial.</param>
     public void PointwiseMontgomery(PolynomialInt32 a, PolynomialInt32 b) {
         for (var i = 0; i < N; i++) {
-            Coefficients[i] = Dilithium.MontgomeryReduce((long)a.Coefficients[i] * (long)b.Coefficients[i]);
+            Coefficients[i] = MLDSA.MontgomeryReduce((long)a.Coefficients[i] * (long)b.Coefficients[i]);
             }
         }
 
@@ -470,7 +470,7 @@ public class PolynomialInt32 : Disposable {
     /// <param name="p">The vector to add</param>
     public void Power2Round(PolynomialInt32 p) {
         for (var c = 0; c < N; c++) {
-            (p.Coefficients[c], Coefficients[c]) = Dilithium.Power2Round(Coefficients[c]);
+            (p.Coefficients[c], Coefficients[c]) = MLDSA.Power2Round(Coefficients[c]);
             }
         }
 
@@ -763,7 +763,7 @@ public class PolynomialInt32 : Disposable {
     /// <param name="offset">Index of first byte to write on entry and index of
     /// next byte to write to on exit.</param>
     public void PackZ(byte[] buffer, ref int offset) {
-        if (Parameters.Gamma1 == Dilithium.Gamma1_19) {
+        if (Parameters.Gamma1 == MLDSA.Gamma1_19) {
             for (var i = 0; i < N / 2; i++) {
                 var t0 = (uint)(Parameters.Gamma1 - Coefficients[2 * i + 0]);
                 var t1 = (uint)(Parameters.Gamma1 - Coefficients[2 * i + 1]);
@@ -805,7 +805,7 @@ public class PolynomialInt32 : Disposable {
     /// <param name="offset">Index of first byte to read on entry and index of
     /// next byte to read to on exit.</param>
     public void UnpackZ(byte[] buffer, ref int offset) {
-        if (Parameters.Gamma1 == Dilithium.Gamma1_19) {
+        if (Parameters.Gamma1 == MLDSA.Gamma1_19) {
             for (var i = 0; i < N / 2; i++) {
                 var b0 = buffer[offset++];
                 var b1 = buffer[offset++];
@@ -817,8 +817,8 @@ public class PolynomialInt32 : Disposable {
                 var c0 = (b0 |( b1 << 8) | (b2<< 16))& 0xFFFFF;
                 var c1 = ((b2 >> 4) | (b3 << 4) | (b4 << 12)) & 0xFFFFF;
 
-                Coefficients[2 * i + 0] = (int)(Dilithium.Gamma1_19 - c0);
-                Coefficients[2 * i + 1] = (int)(Dilithium.Gamma1_19 - c1);
+                Coefficients[2 * i + 0] = (int)(MLDSA.Gamma1_19 - c0);
+                Coefficients[2 * i + 1] = (int)(MLDSA.Gamma1_19 - c1);
                 }
             }
         else {
@@ -838,10 +838,10 @@ public class PolynomialInt32 : Disposable {
                 var c2 = ((b4 >> 4) | (b5 << 4) | (b6 << 12)) & 0x3FFFF;
                 var c3 = ((b6 >> 6) | (b7 << 2) | (b8 << 10)) & 0x3FFFF;
 
-                Coefficients[2 * i + 0] = (int)(Dilithium.Gamma1_19 - c0);
-                Coefficients[2 * i + 1] = (int)(Dilithium.Gamma1_19 - c1);
-                Coefficients[2 * i + 2] = (int)(Dilithium.Gamma1_19 - c2);
-                Coefficients[2 * i + 3] = (int)(Dilithium.Gamma1_19 - c3);
+                Coefficients[2 * i + 0] = (int)(MLDSA.Gamma1_19 - c0);
+                Coefficients[2 * i + 1] = (int)(MLDSA.Gamma1_19 - c1);
+                Coefficients[2 * i + 2] = (int)(MLDSA.Gamma1_19 - c2);
+                Coefficients[2 * i + 3] = (int)(MLDSA.Gamma1_19 - c3);
                 }
             }
 
@@ -858,7 +858,7 @@ public class PolynomialInt32 : Disposable {
     /// <param name="offset">Index of first byte to be written.</param>
 
     public void PackW1(byte[] buffer, ref int offset) {
-        if (Parameters.Gamma2 == Dilithium.Gamma2_88) {
+        if (Parameters.Gamma2 == MLDSA.Gamma2_88) {
             for (var i = 0; i < N /4 ; i++) {
                 var t0 = Coefficients[8 * i + 0];
                 var t1 = Coefficients[8 * i + 1];

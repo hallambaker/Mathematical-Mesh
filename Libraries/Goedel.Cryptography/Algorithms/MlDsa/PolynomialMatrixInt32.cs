@@ -14,7 +14,7 @@ public class PolynomialMatrixInt32 : Disposable {
     ///<summary>The polynomial vectors.</summary> 
     public PolynomialVectorInt32[] Vectors;
 
-    Dilithium Parameters { get; } 
+    MLDSA Parameters { get; } 
 
     #endregion
 
@@ -40,7 +40,7 @@ public class PolynomialMatrixInt32 : Disposable {
     /// </summary>
     /// <param name="parameters">The Dilithium parameters.</param>
     /// <param name="wipe">If true, contents wiped on dispose.</param>
-    public PolynomialMatrixInt32(Dilithium parameters, bool wipe = true) {
+    public PolynomialMatrixInt32(MLDSA parameters, bool wipe = true) {
         Wipe = wipe;
         Parameters = parameters;
 
@@ -59,7 +59,7 @@ public class PolynomialMatrixInt32 : Disposable {
     /// <param name="parameters">The dilithium parameters.</param>
     /// <param name="rho">The seed value.</param>
     /// <returns>The matrrix created</returns>
-    public static PolynomialMatrixInt32 MatrixExpandFromSeed(Dilithium parameters, byte[] rho) {
+    public static PolynomialMatrixInt32 MatrixExpandFromSeed(MLDSA parameters, byte[] rho) {
 
         var result = new PolynomialMatrixInt32(parameters);
         for (var v = 0; v < parameters.K; v++) {
@@ -118,13 +118,13 @@ public class PolynomialMatrixInt32 : Disposable {
                     TextWriter output = null) {
 
         output ??= Console.Out;
-        int size = Parameters.K * Parameters.L * Dilithium.N * 4;
+        int size = Parameters.K * Parameters.L * MLDSA.N * 4;
         byte[] buffer = new byte[size];
 
         var offset = 0;
         for (var v = 0; v < Parameters.K; v++) {
             for (var p = 0; p < Parameters.L; p++) {
-                for (var c = 0; c < Dilithium.N; c++) {
+                for (var c = 0; c < MLDSA.N; c++) {
                     var data = Vectors[v].Polynomials[p].Coefficients[c];
                     buffer[offset++] = (byte)(data & 0xff);
                     buffer[offset++] = (byte)(data >> 8);

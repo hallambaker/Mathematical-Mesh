@@ -230,7 +230,7 @@ public class KeyPairMlDsa : KeyPair, IOpaqueBinaryKey {
                 KeyUses keyUses = KeyUses.Any) {
 
         seed = seed ?? Platform.GetRandomBytes(Kyber.SymBytes);
-        var (publicKey, privateKey) = Dilithium.GenerateKeypair(mode, seed);
+        var (publicKey, privateKey) = MLDSA.GenerateKeypair(mode, seed);
         return new KeyPairMlDsa(publicKey, privateKey, keySecurity, keyUses);
         }
 

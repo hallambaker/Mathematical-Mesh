@@ -25,7 +25,7 @@ public enum DilithiumMode {
 /// <summary>
 /// Base class for Dilithium implementations.
 /// </summary>
-public class Dilithium  {
+public class MLDSA  {
 
     #region // Field and constants
     #region // Common parameters, fixed for all modes.
@@ -95,11 +95,50 @@ public class Dilithium  {
     #endregion
     #region // Packed data sizes
 
+
     ///<summary>Minimum seed byte size.</summary> 
     public const int SeedBytes = 32;
-    
+
+    ///<summary>Message representative size.</summary> 
+    public virtual int RhoBytes => 32;
+
+    ///<summary>Message representative size.</summary> 
+    public virtual int RhoPrimeBytes => 64;
+
+    ///<summary>Message representative size.</summary> 
+    public virtual int PrivateRandomSeed => 32;
+
     ///<summary>CHR Byte size.</summary> 
-    public const int CrhBytes = 48;
+    public virtual int TrBytes => 64;
+
+
+
+
+    ///<summary>CHR Byte size.</summary> 
+    public int CrhBytes = 48;
+
+
+
+
+
+
+    ///<summary>Message representative size.</summary> 
+    public int MrsBytes { get; }
+
+    ///<summary>CHR Byte size.</summary> 
+    public int PrsBytes { get; }
+
+
+
+    ///<summary></summary> 
+    public int SigmaBytes { get; }
+
+    ///<summary></summary> 
+    public int CSquigleByles  { get; }
+
+    ///<summary></summary> 
+    public int SignatureSeedBytes { get; } = 0;
+
 
     ///<summary>Length of packed Z polynomial in bytes.</summary> 
     public int PolyZPackedBytes => Gamma1 switch {
@@ -142,13 +181,13 @@ public class Dilithium  {
     #region // Template parameter sets.
 
     ///<summary>Parameter set for Mode 2.</summary> 
-    public static Dilithium Mode2 { get; }
+    public static MLDSA Mode2 { get; }
 
     ///<summary>Parameter set for Mode 3.</summary> 
-    public static Dilithium Mode3 { get; }
+    public static MLDSA Mode3 { get; }
 
     ///<summary>Parameter set for Mode 5.</summary> 
-    public static Dilithium Mode5 { get; }
+    public static MLDSA Mode5 { get; }
     #endregion
     #endregion
 
@@ -157,18 +196,42 @@ public class Dilithium  {
     /// <summary>
     /// Do a one time initialization of the parameter presets on assembly load.
     /// </summary>
-    static Dilithium() {
-        Mode2 = new Dilithium(DilithiumMode.Mode2);
-        Mode3 = new Dilithium(DilithiumMode.Mode3);
-        Mode5 = new Dilithium(DilithiumMode.Mode5);
+    static MLDSA() {
+        Mode2 = new MLDSA(DilithiumMode.Mode2);
+        Mode3 = new MLDSA(DilithiumMode.Mode3);
+        Mode5 = new MLDSA(DilithiumMode.Mode5);
         }
 
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="mode">The Dilithium mode.</param>
-    public Dilithium(DilithiumMode mode) {
+    public MLDSA(DilithiumMode mode) {
         Mode = mode;
+
+
+        if (IsFips204) {
+            MrsBytes = 64;
+            PrsBytes = 64;
+            TrBytes = 64;
+            SigmaBytes = 64;
+            CSquigleByles = 64;
+            SignatureSeedBytes = 32;
+
+            //Mode switch {
+            //    DilithiumMode.Mode2 => 32,
+            //    DilithiumMode.Mode3 => 48,
+            //    DilithiumMode.Mode5 => 64,
+            //    _ => throw new CryptographicException()
+            //    };
+
+            }
+        else {
+
+
+            }
+
+
         var index = (int)mode;
         K = Ks[index];
         L = Ls[index];
@@ -181,6 +244,28 @@ public class Dilithium  {
         }
 
     #endregion
+
+    /// <summary>
+    /// FIPS 204 convenience function H
+    /// </summary>
+    /// <param name="str">Bytes to digest</param>
+    /// <param name="length">Number of bytes</param>
+    /// <returns>The SHAK256 digest value</returns>
+    public static byte[] H(byte[] str, int length) => SHAKE256.GetBytes(length*8, str);
+
+    /// <summary>
+    /// FIPS 204 convenience function G
+    /// </summary>
+    /// <param name="str">Bytes to digest</param>
+    /// <param name="length">Number of bytes</param>
+    /// <returns>The SHAK128 digest value</returns>
+    public static byte[] G(byte[] str, int length) => SHAKE256.GetBytes(length*8, str);
+
+
+
+
+
+
     #region // Generate Key Pair
 
     /// <summary>
@@ -190,45 +275,50 @@ public class Dilithium  {
     /// <param name="seed">Optional seed value for deterministic key generation.</param>
     /// <returns>The (public, private) keys.</returns>
     public static (byte[], byte[]) GenerateKeypair(DilithiumMode mode, byte[]? seed = null) => mode switch {
-        DilithiumMode.Mode2 => GenerateKeypair(Mode2, seed),
-        DilithiumMode.Mode3 => GenerateKeypair(Mode3, seed),
-        DilithiumMode.Mode5 => GenerateKeypair(Mode5, seed),
+        DilithiumMode.Mode2 => Mode2.GenerateKeypair(seed),
+        DilithiumMode.Mode3 => Mode3.GenerateKeypair(seed),
+        DilithiumMode.Mode5 => Mode5.GenerateKeypair(seed),
         _ => throw new NYI()
         };
 
     /// <summary>
     /// Generate public, private key pair
     /// </summary>
-    /// <param name="parameters">The parameter set to use.</param>
     /// <param name="seed">Optional seed value for deterministic key generation.</param>
+    /// 
     /// <returns>The (public, private) keys.</returns>
-    public static (byte[], byte[]) GenerateKeypair(Dilithium parameters, byte[]? seed = null) {
+    public (byte[], byte[]) GenerateKeypair(byte[]? seed = null) {
 
         //GetUnique randomness for rho, rhoprime and key
         seed ??= Platform.GetRandomBytes(SeedBytes);
-        //var seedbuff = SHAKE256.GetBytes(3 * SEEDBYTES, seed);
-        var seedbuff = SHAKE256.Process(seed, 3 * 8 * SeedBytes);
-        var rho = seedbuff.Extract(0, SeedBytes);
-        var rhoPrime = seedbuff.Extract(SeedBytes, SeedBytes);
-        var key = seedbuff.Extract(SeedBytes * 2, SeedBytes);
 
-        var mat = PolynomialMatrixInt32.MatrixExpandFromSeed(parameters, rho);
+        //  (𝜌, 𝜌′, 𝐾) ∈ 𝔹32 × 𝔹64 × 𝔹32 ← H(𝜉|| IntegerToBytes(𝑘, 1) || IntegerToBytes(ℓ, 1), 128)
+        var seedbuff = H(seed, RhoBytes + RhoPrimeBytes + PrivateRandomSeed);
 
-        var s1 = parameters.GetVectorL(true); 
+        var index = 0;
+        var rho = seedbuff.ExtractIndexed(ref index, RhoBytes);
+        var rhoPrime = seedbuff.ExtractIndexed(ref index, RhoPrimeBytes);
+        var key = seedbuff.ExtractIndexed(ref index, PrivateRandomSeed);
+
+        // 𝐀 ← ExpandA(𝜌)
+        var mat = PolynomialMatrixInt32.MatrixExpandFromSeed(this, rho);
+
+        //  (𝐬1, 𝐬2) ← ExpandS(𝜌′)
+        var s1 = GetVectorL(true); 
         s1.UniformEta(rhoPrime, 0);
-        var s2 = parameters.GetVectorK(true);
-        s2.UniformEta(rhoPrime, parameters.L);
+        var s2 = GetVectorK(true);
+        s2.UniformEta(rhoPrime, L);
 
         //mat.GetHash("Generate Keypair: Matrix  0696-9C1B-30B1");
         //s1.GetHash("Generate Keypair: S1      6871-6921-BD10");
         //s2.GetHash("Generate Keypair: S2      EFAD-D95F-F68C");
 
+        //  𝐭 ← NTT−1(𝐀 ∘̂ NTT(𝐬1)) + 𝐬2
         // Matrix-vector multiplication
         var s1hat = s1.Copy();
         s1hat.NTT();
 
         //s1hat.GetHash("Generate Keypair: S1hat      ");
-
 
         var t1 = mat.MatrixPointwiseMontgomery(s1hat);
         //t1.GetHash("MatrixPointwiseMontgomery      517D-9F33-F9CA");
@@ -238,12 +328,13 @@ public class Dilithium  {
 
         //t1.GetHash("InvNTT2Mont      CE5A-92EF-1DFC");
 
-
         // Add error vector s2
         t1.Add(s2);
 
         // Extract t1 and write public key
         t1.Caddq();
+
+        //  (𝐭1, 𝐭0) ← Power2Round(𝐭)
         var t0 = t1.Power2Round();
 
         //t0.GetHash("Generate Keypair: T0  D03F-7BE4-914D");
@@ -252,11 +343,11 @@ public class Dilithium  {
 
         //Test.DumpBufferHex(rho, "rho");
 
-        var pk = parameters.PackPublicKey(rho, t1);
+        var pk = PackPublicKey(rho, t1);
 
         // Compute CRH(rho, t1) and write secret key
-        var tr = SHAKE256.GetBytes(CrhBytes, pk);
-        var sk = parameters.PackPrivateKey(rho, tr, key, t0, s1, s2);
+        var tr = SHAKE256.GetBytes(TrBytes, pk);
+        var sk = PackPrivateKey(rho, tr, key, t0, s1, s2);
 
         // Ensure all arrays with woroking data are cleared on exit.
         Platform.Wipe(seedbuff, rho, rhoPrime, key);
@@ -493,4 +584,68 @@ public class Dilithium  {
 
     #endregion
 
+    }
+
+
+public class Dilithium : MLDSA {
+
+    /*
+    D.1 Differences Between Version 3.1 and the Round 3 Version of CRYSTALSDILITHIUM
+    The lengths of the variables 𝜌′ (private random seed) and 𝜇 (message representative) in the signing
+    algorithm were increased from 384 to 512 bits. The increase in the length of 𝜇 corrects a security flaw
+    that appeared in the third-round submission, where a collision attack against SHAKE256 with a 384-bit
+    output would make it so that parameters targeting NIST security strength category 5 could only meet
+    category 4 [32].
+    Additionally, the length of the variable 𝑡𝑟 (the hash of the public key) was reduced from 384 to 256 bits.
+    In key generation, the variable 𝜍 was relabeled as 𝜌′ and increased in size from 256 bits to 512 bits
+
+    D.2 Differences Between Version 3.1 of CRYSTALS-DILITHIUM and FIPS 204
+    Initial Public Draft
+    In order to ensure the properties noted in [14], ML-DSA increases the length of 𝑡𝑟 to 512 bits and increases
+    the length of 𝑐 ̃to 384 and 512 bits for the parameter sets ML-DSA-65 and ML-DSA-87, respectively. In
+    draft ML-DSA, only the first 256 bits of 𝑐 ̃are used in the generation of 𝑐.
+    In Version 3.1 of the CRYSTALS-DILITHIUM submission, the default version of the signing algorithm is
+    deterministic with 𝜌′ being generated pseudorandomly from the signer’s private key and the message,
+    and an optional version of the signing algorithm has 𝜌′ sampled instead as a 512-bit random string. In
+    ML-DSA, 𝜌′ is generated by a “hedged” procedure in which 𝜌′ is pseudorandomly derived from the signer’s
+    private key, the message, and a 256-bit string 𝑟𝑛𝑑, which should be generated by an Approved RBG by
+    default. The ML-DSA standard also allows for an optional deterministic version in which 𝑟𝑛𝑑 is a 256-bit
+    constant string.
+    The draft ML-DSA standard also included pseudocode that unintentionally omitted a check for malformed
+    input while unpacking the hint [33]. Failure to perform this check results in a signature scheme that is not
+    strongly existentially unforgeable [34].
+
+    D.3 Changes From FIPS 204 Initial Public Draf
+
+    In the final version of the ML-DSA standard, the omitted malformed input check was restored to the hint
+    unpacking algorithm (Algorithm 21). Additionally, in the final version of ML-DSA, all of the bits of 𝑐 ̃are
+    used in the generation of 𝑐 (Algorithm 29), and ExpandMask (Algorithm 34) is modified to take output
+    bits from the beginning of the output of H.
+    Based on commentsthat were submitted on the draft version, more details were provided for the pre-hash
+    version HashML-DSA in Section 5.4. These modifications include domain separation for the cases in which
+    the message is signed directly and cases in which a digest of the message is signed. The changes were
+    made by explicitly defining external functions for both versions of the signing and verification functions
+    that call an internal function corresponding to the signing or verification functions from the draft FIPS.
+    Domain separation is included in the input to the internal function (see Algorithms 2, 3, 4, 5, 7, and 8).
+    To simplify APIs and for testing purposes, this document also introduced a similar external/internal split
+    for key generation (see Algorithms 1 and 6), but this is a purely editorial change, as the external key
+    generation algorithm is functionally equivalent to the key-generation algorithm from the draft FIPS.
+    Finally, to offer misuse resistance against the possibility that keys for different parameter sets might be
+    expanded from the same seed [35], domain separation was added to line 1 of Algorithm 6
+
+     */
+    
+    ///<inheritdoc/>
+    public override int RhoPrimeBytes => 32;
+    
+    ///<inheritdoc/>
+    public override int TrBytes => 48;
+
+    public Dilithium(DilithiumMode mode) : base(mode) { 
+        }
+    //MrsBytes = 48;
+    //        PrsBytes = 48;
+    //        TrBytes = 48;
+    //        SigmaBytes = 32;
+    //        CSquigleByles = 48;
     }

@@ -4,7 +4,7 @@
 /// <summary>
 /// Dilithium private key.
 /// </summary>
-public class DilithiumPrivate : Dilithium, IDisposable {
+public class DilithiumPrivate : MLDSA, IDisposable {
 
     public byte[] PrivateKey { get; }
     byte[] rho { get; }
@@ -60,13 +60,13 @@ public class DilithiumPrivate : Dilithium, IDisposable {
     #endregion
 
     static DilithiumMode GetMode(int length) {
-        if (length == Dilithium.Mode5.PrivateKeyBytes) {
+        if (length == MLDSA.Mode5.PrivateKeyBytes) {
             return DilithiumMode.Mode5;
             }
-        if (length == Dilithium.Mode3.PrivateKeyBytes) {
+        if (length == MLDSA.Mode3.PrivateKeyBytes) {
             return DilithiumMode.Mode3;
             }
-        if (length == Dilithium.Mode2.PrivateKeyBytes) {
+        if (length == MLDSA.Mode2.PrivateKeyBytes) {
             return DilithiumMode.Mode2;
             }
 
@@ -80,16 +80,13 @@ public class DilithiumPrivate : Dilithium, IDisposable {
     /// <param name="privateKey">The private key bytes.</param>
     public DilithiumPrivate(byte[] privateKey) : base(GetMode(privateKey.Length)) {
         PrivateKey = privateKey;
-
-
         var offset = 0;
-
 
         // Unpack key here
         rho = privateKey.Extract(ref offset, SeedBytes);
 
         key = privateKey.Extract(ref offset, SeedBytes);
-        tr = privateKey.Extract(ref offset, CrhBytes);
+        tr = privateKey.Extract(ref offset, TrBytes);
 
         s1 = GetVectorL(true);
         for (var i = 0; i < s1.Polynomials.Length; i++) {
@@ -120,7 +117,6 @@ public class DilithiumPrivate : Dilithium, IDisposable {
         s2.NTT();
         t0.NTT();
 
-
         }
 
     /// <summary>
@@ -131,8 +127,8 @@ public class DilithiumPrivate : Dilithium, IDisposable {
     /// <returns>The signature bytes.</returns>
     public byte[] Sign(byte[] message) {
 
-        var mu = SHAKE256.GetBytes(CrhBytes, tr, message);
-        var rhoprime = SHAKE256.GetBytes(CrhBytes, key, mu);
+        var mu = SHAKE256.GetBytes(MrsBytes, tr, message);
+        var rhoprime = SHAKE256.GetBytes(PrsBytes, key, mu);
 
         var nonce = 0;
 

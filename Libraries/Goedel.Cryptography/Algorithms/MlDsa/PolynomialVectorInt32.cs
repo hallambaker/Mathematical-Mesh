@@ -14,7 +14,7 @@ public class PolynomialVectorInt32 : Disposable {
     public PolynomialInt32[] Polynomials { get; }
 
     ///<summary>The Dilithium parameter set.</summary> 
-    Dilithium Parameters { get; }
+    MLDSA Parameters { get; }
 
     ///<summary>Convenience accessor for the vector length K</summary> 
     int K => Parameters.K;
@@ -46,7 +46,7 @@ public class PolynomialVectorInt32 : Disposable {
     /// <param name="wipe">If set true, erase coefficients before releasing.</param>
     /// <param name="lengthK">If true, vector is of length <paramref name="parameters.K"/>, 
     /// otherwise vector is of length <paramref name="parameters.L"/></param>
-    public PolynomialVectorInt32(Dilithium parameters, bool wipe = true, bool lengthK = false) {
+    public PolynomialVectorInt32(MLDSA parameters, bool wipe = true, bool lengthK = false) {
         Wipe = wipe;
         Parameters = parameters;
 
@@ -140,7 +140,7 @@ public class PolynomialVectorInt32 : Disposable {
     public PolynomialVectorInt32 Copy() {
         var result = new PolynomialVectorInt32(Parameters, Wipe, Length==Parameters.K);
         for (var p = 0; p < Length; p++) {
-            for (var c = 0; c < Dilithium.N; c++) {
+            for (var c = 0; c < MLDSA.N; c++) {
                 result.Polynomials[p].Coefficients[c] = Polynomials[p].Coefficients[c];
                 }
             }
@@ -351,12 +351,12 @@ public class PolynomialVectorInt32 : Disposable {
     public string GetHash(string? tag = null,
                     TextWriter output = null) {
         output ??= Console.Out;
-        int size = Length * Dilithium.N * 4;
+        int size = Length * MLDSA.N * 4;
         byte[] buffer = new byte[size];
 
         var offset = 0;
         for (var p = 0; p < Length; p++) {
-            for (var c = 0; c < Dilithium.N; c++) {
+            for (var c = 0; c < MLDSA.N; c++) {
                 var data = Polynomials[p].Coefficients[c];
                 buffer[offset++] = (byte)(data & 0xff);
                 buffer[offset++] = (byte)(data >> 8);
