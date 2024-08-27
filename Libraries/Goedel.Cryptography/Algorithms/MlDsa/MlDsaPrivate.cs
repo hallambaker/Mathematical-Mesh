@@ -16,6 +16,8 @@ public class DilithiumPrivate : MLDSA, IDisposable {
     PolynomialVectorInt32 s2 { get; }
     PolynomialMatrixInt32 mat { get; }
 
+    byte[] DeterministicPrivateSeed => new byte[32];
+
     #region // Implement IDisposable
     /// <summary>
     /// Dispose method, frees all resources.
@@ -124,11 +126,13 @@ public class DilithiumPrivate : MLDSA, IDisposable {
     /// bytes.
     /// </summary>
     /// <param name="message">The message to sign.</param>
+    /// <param name="rnd">The additional random seed 𝜌″ required by FIPS 204 but not used
+    /// in Dilithium.</param>
     /// <returns>The signature bytes.</returns>
-    public byte[] Sign(byte[] message) {
+    public byte[] SignInternal(byte[] message, byte[]? rnd = null) {
 
-        var mu = SHAKE256.GetBytes(MrsBytes, tr, message);
-        var rhoprime = SHAKE256.GetBytes(PrsBytes, key, mu);
+        var mu = H(tr, message, MrsBytes);
+        var rhoprime = rnd is null ? H(key, mu, PrsBytes) : H(key, rnd, mu, PrsBytes);
 
         var nonce = 0;
 
@@ -138,8 +142,9 @@ public class DilithiumPrivate : MLDSA, IDisposable {
                 //Console.WriteLine($"*** Start {nonce}");
                 //Sample intermediate vector y 
 
+                // 𝐲 ∈ 𝑅𝑞ℓ ← ExpandMask(𝜌″, 𝜅)
                 var y = GetVectorL(true);
-                y.UniformGamma1(rhoprime, nonce++);
+                y.ExpandMask(rhoprime, nonce++);
                 var z = y.Copy();
                 z.NTT();
 
@@ -153,7 +158,8 @@ public class DilithiumPrivate : MLDSA, IDisposable {
                 var w0 = w1.Decompose();
                 var sig1 = w1.PackW1();
 
-                var sig = SHAKE256.GetBytes(SeedBytes, mu, sig1);
+                // 𝑐 ̃← H(𝜇||w1Encode(𝐰1), 𝜆/4)
+                var sig = H(mu, sig1, CommitmentHashBytes);
                 var cp = new PolynomialInt32(this);
                 cp.Challenge(sig);
                 cp.NTT();

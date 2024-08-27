@@ -180,38 +180,25 @@ public class KeyPairEd448 : KeyPairEdwards {
 
 
 
-    /// <summary>
-    /// Factory method to produce a key pair from key parameters.
-    /// </summary>
-    /// <param name="privateKey">The private key</param>
-    /// <param name="keySecurity">The key security model.</param>
-    /// <param name="keyUses">The permitted key uses.</param>
-    /// <returns>The key pair created.</returns>
+
+    ///<inheritdoc/>
     public override KeyPairAdvanced KeyPair(IKeyAdvancedPrivate privateKey,
                 KeySecurity keySecurity = KeySecurity.Bound,
                 KeyUses keyUses = KeyUses.Any) =>
         new KeyPairEd448((CurveEdwards448Private)privateKey, keySecurity, keyUses);
 
-    /// <summary>
-    /// Factory method to produce a key pair from implementation public key parameters
-    /// </summary>
-    /// <param name="publicKey">The public key</param>
-    /// <param name="keyUses">The permitted key uses.</param>
-    /// <returns>The key pair created.</returns>
+
+    ///<inheritdoc/>
     public override KeyPairAdvanced KeyPair(IKeyAdvancedPublic publicKey,
                 KeyUses keyUses = KeyUses.Any) =>
         new KeyPairEd448((CurveEdwards448Public)publicKey, keyUses: keyUses);
 
-    /// <summary>
-    /// Returns a new KeyPair instance which only has the public values.
-    /// </summary>
-    /// <returns>The new keypair that contains only the public values.</returns>
+
+    ///<inheritdoc/>
     public override KeyPair KeyPairPublic() => new KeyPairEd448(PublicKey, keyUses: KeyUses);
 
-    /// <summary>
-    /// Persist the key to a key collection.
-    /// </summary>
-    /// <param name="keyCollection"></param>
+
+    ///<inheritdoc/>
     public override void Persist(KeyCollection keyCollection) {
         Assert.AssertTrue(PersistPending, CryptographicException.Throw);
         var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyEd448(encodedPrivateKey, PKIXPublicKeyECDH) { };
@@ -238,30 +225,15 @@ public class KeyPairEd448 : KeyPairEdwards {
         return new CurveEdwards448Result() { AgreementEd448 = Agreement };
         }
 
-    /// <summary>
-    /// Encrypt a bulk key.
-    /// </summary>
-    /// <returns>The encoder</returns>
-    /// <param name="key">The key to encrypt.</param>
-    /// <param name="ephemeral">The ephemeral key to use for the exchange (if used)</param>
-    /// <param name="exchange">The private key to use for the exchange.</param>
-    /// <param name="salt">Optional salt value for use in key derivation.</param>
+    ///<inheritdoc/>
     public override void Encrypt(byte[] key,
         out byte[] exchange,
         out KeyPair ephemeral,
         byte[] salt = null) => PublicKey.Agreement().Encrypt(key, out exchange, out ephemeral, salt);
 
 
-    /// <summary>
-    /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
-    /// </summary>
-    /// <param name="encryptedKey">The encrypted session</param>
-    /// <param name="ephemeral">Ephemeral key input (required for DH)</param>
-    /// <param name="algorithmID">The algorithm to use.</param>
-    /// <param name="partial">Partial key agreement carry in (for recryption)</param>
-    /// <param name="salt">Optional salt value for use in key derivation. If specified
-    /// must match the salt used to encrypt.</param>        
-    /// <returns>The decoded data instance</returns>
+
+    ///<inheritdoc/>
     public override byte[] Decrypt(byte[] encryptedKey,
         KeyPair ephemeral = null,
         CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
@@ -274,16 +246,18 @@ public class KeyPairEd448 : KeyPairEdwards {
         return Agreementx.Decrypt(encryptedKey, ephemeral, partial, salt);
         }
 
+    ///<inheritdoc/>
+    public override byte[] Sign(byte[] data, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null) {
+        return base.Sign(data, algorithmID, context);
+        }
+
+    ///<inheritdoc/>
+    public override bool Verify(byte[] data, byte[] signature, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null) {
+        return base.Verify(data, signature, algorithmID, context);
+        }
 
 
-    /// <summary>
-    /// Sign a precomputed digest
-    /// </summary>
-    /// <param name="data">The data to sign.</param>
-    /// <param name="algorithmID">The algorithm to use.</param>
-    /// <param name="context">Additional data added to the signature scope
-    /// for protocol isolation.</param>
-    /// <returns>The signature data</returns>
+    ///<inheritdoc/>
     public override byte[] SignHash(
             byte[] data,
             CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
@@ -300,29 +274,15 @@ public class KeyPairEd448 : KeyPairEdwards {
         return PrivateKey.Sign(data, dom4);
         }
 
-    /// <summary>
-    /// Begin the process of signing the data <paramref name="data"/> according to the
-    /// algorithm specifier <paramref name="algorithmID"/> and optional context value
-    /// <paramref name="context"/>.
-    /// </summary>
-    /// <param name="data">The data to sign</param>
-    /// <param name="algorithmID">The specific signature algorithm variant.</param>
-    /// <param name="context">Optional context value.</param>
-    /// <returns>The signature context.</returns>
+
+    ///<inheritdoc/>
     public override ThresholdSignatureEdwards SignHashThreshold(byte[] data,
     CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
         byte[] context = null) => new ThresholdSignatureEdwards448(PrivateKey);
 
 
-    /// <summary>
-    /// Verify a signature over the purported data digest.
-    /// </summary>
-    /// <param name="signature">The signature blob value.</param>
-    /// <param name="algorithmID">The signature and hash algorithm to use.</param>
-    /// <param name="context">Additional data added to the signature scope
-    /// for protocol isolation.</param>
-    /// <param name="digest">The digest value to be verified.</param>
-    /// <returns>True if the signature is valid, otherwise false.</returns>
+
+    ///<inheritdoc/>
     public override bool VerifyHash(
         byte[] digest,
         byte[] signature,

@@ -235,11 +235,11 @@ public class PolynomialInt32 : Disposable {
 
     /// <summary>
     /// Compute uniformly distributed Gamma1 values from <paramref name="seed"/>, 
-    /// <paramref name="nonce"/> across.
+    /// <paramref name="nonce"/> across. This has been replaced in FIPS204 final.
     /// </summary>
     /// <param name="seed">The seed value.</param>
     /// <param name="nonce">The nonce value.</param>
-    public void UniformGamma1(byte[] seed, int nonce) {
+    public void ExpandMask(byte[] seed, int nonce) {
 
         var nblocks = Parameters.Gamma1 switch {
             (1 << 17) => (576 + stream256BlockBytes - 1) / stream256BlockBytes,
@@ -263,7 +263,9 @@ public class PolynomialInt32 : Disposable {
     /// <param name="seed">The seed value.</param>
     public void Challenge(byte[] seed) {
 
-        var buf = new byte[SHA3.HashRateShake256];
+        //var buf = new byte[SHA3.HashRateShake256];
+        var buf = new byte[1];
+
 
         using var shake = SHAKEExtended.Shake256();
         shake.Absorb(seed);
@@ -276,16 +278,21 @@ public class PolynomialInt32 : Disposable {
             signs |= (ulong)buf[i] << 8 * i;
         var pos = 8;
 
-        for (var i = 0; i < N; ++i)
+        for (var i = 0; i < N; ++i) {
             Coefficients[i] = 0;
+            }
         for (var i = N - Parameters.Tau; i < N; ++i) {
             do {
-                if (pos >= SHA3.HashRateShake256) {
-                    shake.Squeeze(buf, 1);
-                    pos = 0;
-                    }
-
-                b = buf[pos++];
+                
+                // Dilithium version of this
+                //if (pos >= SHA3.HashRateShake256) {
+                //    shake.Squeeze(buf, 1);
+                //    pos = 0;
+                //    }
+                //b = buf[pos++];
+                
+                shake.Squeeze(buf, 1);
+                b = buf[0];
                 } while (b > i);
 
             Coefficients[i] = Coefficients[b];

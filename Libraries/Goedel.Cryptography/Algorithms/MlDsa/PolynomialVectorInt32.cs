@@ -23,7 +23,7 @@ public class PolynomialVectorInt32 : Disposable {
     int Length { get; }
 
     #endregion
- 
+
     #region // Disposing
     bool Wipe { get; } = true;
 
@@ -169,10 +169,16 @@ public class PolynomialVectorInt32 : Disposable {
     /// </summary>
     /// <param name="seed">The seed value.</param>
     /// <param name="nonce">The nonce value.</param>
-    public void UniformGamma1(byte[] seed, int nonce) {
+    public void ExpandMask(byte[] seed, int nonce) {
+
         for (var p = 0; p < Length; p++) {
-            Polynomials[p].UniformGamma1(seed, (Length* nonce)+ p);
+            Polynomials[p].ExpandMask(seed, nonce + p);
             }
+
+        // Dilithium version and Fips204 pre
+        //for (var p = 0; p < Length; p++) {
+        //    Polynomials[p].UniformGamma1(seed, (Length * nonce) + p);
+        //    }
         }
 
 

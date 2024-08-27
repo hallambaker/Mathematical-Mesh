@@ -2939,7 +2939,7 @@
         </member>
         <member name="T:Goedel.Cryptography.PQC.KeyPairMlDsa">
             <summary>
-            ML-DSA keypair implemented according to FIPS 204
+            ML-DSA keypair implemented according to FIPS 204 https://csrc.nist.gov/pubs/fips/204/ipd
             </summary>
         </member>
         <member name="P:Goedel.Cryptography.PQC.KeyPairMlDsa.PublicKey">
@@ -2997,6 +2997,18 @@
             <param name="keySecurity">The key security.</param>
             <param name="keyUses">The key uses.</param>
         </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsa.#ctor(Goedel.Cryptography.PQC.DilithiumPublic,Goedel.Cryptography.PQC.DilithiumPrivate,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses)">
+            <summary>
+            Constructore returning an instance from the key data
+            <paramref name="publicKey"/>, <paramref name="privateKey"/> with
+            security properties <paramref name="keySecurity"/> and uses
+            <paramref name="keyUses"/>.
+            </summary>
+            <param name="publicKey">The public key data.</param>
+            <param name="privateKey">The private key seed.</param>
+            <param name="keySecurity">The key security.</param>
+            <param name="keyUses">The key uses.</param>
+        </member>
         <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsa.KeyPairFactory(System.Int32,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Generate a key pair for the specified algorithm and key size.
@@ -3023,16 +3035,31 @@
             <param name="keySize">The size of the key in bits.</param>
             <returns>the derrived key.</returns>
         </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsa.KeyPairPublic">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsa.Persist(Goedel.Cryptography.KeyCollection)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsa.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
+            <inheritdoc/>
+            <exception cref="T:Goedel.Cryptography.OperationNotSupported">ML-DSA does not support signature operations.</exception>
+        </member>
         <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsa.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[])">
+            <inheritdoc/>
+            <exception cref="T:Goedel.Cryptography.OperationNotSupported">ML-DSA does not support signature operations.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsa.Sign(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsa.Verify(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsa.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
-            <exception cref="T:Goedel.Cryptography.OperationNotSupported">ML-KEM does not support signature operations.</exception>
         </member>
         <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsa.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
-            <exception cref="T:Goedel.Cryptography.OperationNotSupported">ML-KEM does not support signature operations.</exception>
         </member>
         <member name="T:Goedel.Cryptography.PQC.DilithiumMode">
             <summary>
@@ -3048,117 +3075,191 @@
         <member name="F:Goedel.Cryptography.PQC.DilithiumMode.Mode5">
             <summary>Mode 5, highest work factor.</summary> 
         </member>
-        <member name="T:Goedel.Cryptography.PQC.Dilithium">
+        <member name="T:Goedel.Cryptography.PQC.MLDSA">
             <summary>
             Base class for Dilithium implementations.
             </summary>
         </member>
-        <member name="F:Goedel.Cryptography.PQC.Dilithium.Q">
+        <member name="F:Goedel.Cryptography.PQC.MLDSA.Q">
             <summary>The modulus for vector arithmetic. This is a fixed constant to allow compile
             time optimization of the static methods here.</summary> 
         </member>
-        <member name="F:Goedel.Cryptography.PQC.Dilithium.qinv">
+        <member name="F:Goedel.Cryptography.PQC.MLDSA.qinv">
             <summary>Inverse of Q</summary> 
         </member>
-        <member name="F:Goedel.Cryptography.PQC.Dilithium.N">
+        <member name="F:Goedel.Cryptography.PQC.MLDSA.N">
             <summary>Degree of the polynomial.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.PQC.Dilithium.OMEGA">
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.OMEGA">
             <summary></summary> 
         </member>
-        <member name="F:Goedel.Cryptography.PQC.Dilithium.D">
+        <member name="F:Goedel.Cryptography.PQC.MLDSA.D">
             <summary>Number of bits to left shift output.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.PQC.Dilithium.Mode">
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.Mode">
             <summary>The mode identifier</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.PQC.Dilithium.K">
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.K">
             <summary>Number of vectors in the matrix.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.PQC.Dilithium.L">
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.L">
             <summary>Number of polynomials per vector.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.PQC.Dilithium.Eta">
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.Eta">
             <summary>Eta value.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.PQC.Dilithium.Tau">
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.Tau">
             <summary>Tau value.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.PQC.Dilithium.Beta">
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.Beta">
             <summary>Beta value.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.PQC.Dilithium.Gamma1">
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.Gamma1">
             <summary>Gamma1 value.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.PQC.Dilithium.Gamma2">
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.Gamma2">
             <summary>Gamma 2 value.</summary> 
         </member>
-        <member name="F:Goedel.Cryptography.PQC.Dilithium.Gamma1_17">
+        <member name="F:Goedel.Cryptography.PQC.MLDSA.Gamma1_17">
             <summary>The Gamma1 vale 2^17</summary> 
         </member>
-        <member name="F:Goedel.Cryptography.PQC.Dilithium.Gamma1_19">
+        <member name="F:Goedel.Cryptography.PQC.MLDSA.Gamma1_19">
             <summary>The Gamma1 vale 2^19</summary> 
         </member>
-        <member name="F:Goedel.Cryptography.PQC.Dilithium.Gamma2_88">
+        <member name="F:Goedel.Cryptography.PQC.MLDSA.Gamma2_88">
             <summary>The Gamma2 vale (Q - 1) / 88</summary> 
         </member>
-        <member name="F:Goedel.Cryptography.PQC.Dilithium.Gamma2_32">
+        <member name="F:Goedel.Cryptography.PQC.MLDSA.Gamma2_32">
             <summary>The Gamma2 vale (Q - 1) / 32</summary> 
         </member>
-        <member name="F:Goedel.Cryptography.PQC.Dilithium.SeedBytes">
+        <member name="F:Goedel.Cryptography.PQC.MLDSA.SeedBytes">
             <summary>Minimum seed byte size.</summary> 
         </member>
-        <member name="F:Goedel.Cryptography.PQC.Dilithium.CrhBytes">
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.RhoBytes">
+            <summary>Message representative size.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.RhoPrimeBytes">
+            <summary>Message representative size.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.PrivateRandomSeed">
+            <summary>Message representative size.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.TrBytes">
             <summary>CHR Byte size.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.PQC.Dilithium.PolyZPackedBytes">
+        <member name="F:Goedel.Cryptography.PQC.MLDSA.CrhBytes">
+            <summary>CHR Byte size.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.MrsBytes">
+            <summary>Message representative size.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.PrsBytes">
+            <summary>CHR Byte size.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.CommitmentHashBytes">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.SigmaBytes">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.CSquigleByles">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.SignatureSeedBytes">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.PolyZPackedBytes">
             <summary>Length of packed Z polynomial in bytes.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.PQC.Dilithium.PolyW1PackedBytes">
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.PolyW1PackedBytes">
             <summary>Length of packed W1 polynomial in bytes.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.PQC.Dilithium.PolyEtaPackedBytes">
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.PolyEtaPackedBytes">
             <summary>Length of packed Eta polynomial in bytes.</summary> 
         </member>
-        <member name="F:Goedel.Cryptography.PQC.Dilithium.PolyT1PackedBytes">
+        <member name="F:Goedel.Cryptography.PQC.MLDSA.PolyT1PackedBytes">
             <summary>Length of packed T1 polynomial in bytes.</summary> 
         </member>
-        <member name="F:Goedel.Cryptography.PQC.Dilithium.PolyT0PackedBytes">
+        <member name="F:Goedel.Cryptography.PQC.MLDSA.PolyT0PackedBytes">
             <summary>Length of packed T0 polynomial in bytes.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.PQC.Dilithium.PolyVecHPackedBytes">
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.PolyVecHPackedBytes">
             <summary>Length of packed Hint Vector polynomial in bytes.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.PQC.Dilithium.PublicKeyBytes">
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.PublicKeyBytes">
             <summary>Public key length in bytes.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.PQC.Dilithium.PrivateKeyBytes">
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.PrivateKeyBytes">
             <summary>Private key length in bytes.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.PQC.Dilithium.SignatureBytes">
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.SignatureBytes">
             <summary>Number of bytes in the signature (excluding copied message)</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.PQC.Dilithium.Mode2">
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.Mode2">
             <summary>Parameter set for Mode 2.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.PQC.Dilithium.Mode3">
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.Mode3">
             <summary>Parameter set for Mode 3.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.PQC.Dilithium.Mode5">
+        <member name="P:Goedel.Cryptography.PQC.MLDSA.Mode5">
             <summary>Parameter set for Mode 5.</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.PQC.Dilithium.#cctor">
+        <member name="M:Goedel.Cryptography.PQC.MLDSA.#cctor">
             <summary>
             Do a one time initialization of the parameter presets on assembly load.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.Dilithium.#ctor(Goedel.Cryptography.PQC.DilithiumMode)">
+        <member name="M:Goedel.Cryptography.PQC.MLDSA.#ctor(Goedel.Cryptography.PQC.DilithiumMode)">
             <summary>
             Constructor.
             </summary>
             <param name="mode">The Dilithium mode.</param>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.Dilithium.GenerateKeypair(Goedel.Cryptography.PQC.DilithiumMode,System.Byte[])">
+        <member name="M:Goedel.Cryptography.PQC.MLDSA.H(System.Byte[],System.Int32)">
+            <summary>
+            FIPS 204 convenience function H
+            </summary>
+            <param name="str">Bytes to digest</param>
+            <param name="length">Number of bytes</param>
+            <returns>The SHAK256 digest value</returns> 
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.MLDSA.H(System.Byte[],System.Byte[],System.Int32)">
+            <summary>
+            FIPS 204 convenience function H
+            </summary>
+            <param name="str1">Bytes to digest 1</param>
+            <param name="str2">Bytes to digest 2</param>
+            <param name="length">Number of bytes</param>
+            <returns>The SHAK256 digest value</returns> 
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.MLDSA.H(System.Byte[],System.Byte[],System.Byte[],System.Int32)">
+            <summary>
+            FIPS 204 convenience function H
+            </summary>
+            <param name="str1">Bytes to digest 1</param>
+            <param name="str2">Bytes to digest 2</param>
+            <param name="str3">Bytes to digest 2</param>
+            <param name="length">Number of bytes</param>
+            <returns>The SHAK256 digest value</returns> 
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.MLDSA.G(System.Byte[],System.Int32)">
+            <summary>
+            FIPS 204 convenience function G
+            </summary>
+            <param name="str">Bytes to digest</param>
+            <param name="length">Number of bytes</param>
+            <returns>The SHAK128 digest value</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.MLDSA.G(System.Byte[],System.Byte[],System.Int32)">
+            <summary>
+            FIPS 204 convenience function G
+            </summary>
+            <param name="str1">Bytes to digest 1</param>
+            <param name="str2">Bytes to digest 2</param>
+            <param name="length">Number of bytes</param>
+            <returns>The SHAK128 digest value</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.MLDSA.GenerateKeypair(Goedel.Cryptography.PQC.DilithiumMode,System.Byte[])">
             <summary>
             Generate public, private key pair
             </summary>
@@ -3166,39 +3267,39 @@
             <param name="seed">Optional seed value for deterministic key generation.</param>
             <returns>The (public, private) keys.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.Dilithium.GenerateKeypair(Goedel.Cryptography.PQC.Dilithium,System.Byte[])">
+        <member name="M:Goedel.Cryptography.PQC.MLDSA.GenerateKeypair(System.Byte[])">
             <summary>
             Generate public, private key pair
             </summary>
-            <param name="parameters">The parameter set to use.</param>
             <param name="seed">Optional seed value for deterministic key generation.</param>
+            
             <returns>The (public, private) keys.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.Dilithium.GetVectorL(System.Boolean)">
+        <member name="M:Goedel.Cryptography.PQC.MLDSA.GetVectorL(System.Boolean)">
             <summary>
             Create returning a <see cref="T:Goedel.Cryptography.PQC.PolynomialVectorInt32"/> of
-            length <see cref="P:Goedel.Cryptography.PQC.Dilithium.L"/>.
+            length <see cref="P:Goedel.Cryptography.PQC.MLDSA.L"/>.
             </summary>
             <param name="wipe">If true, wipe vector parameters on dispose.</param>
             <returns>The created vector.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.Dilithium.GetVectorK(System.Boolean)">
+        <member name="M:Goedel.Cryptography.PQC.MLDSA.GetVectorK(System.Boolean)">
             <summary>
             Create returning a <see cref="T:Goedel.Cryptography.PQC.PolynomialVectorInt32"/> of
-            length <see cref="P:Goedel.Cryptography.PQC.Dilithium.K"/>.
+            length <see cref="P:Goedel.Cryptography.PQC.MLDSA.K"/>.
             </summary>
             <param name="wipe">If true, wipe vector parameters on dispose.</param>
             <returns>The created vector.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.Dilithium.MontgomeryReduce(System.Int64)">
+        <member name="M:Goedel.Cryptography.PQC.MLDSA.MontgomeryReduce(System.Int64)">
             <summary>
-            Montgomery reduction according to <see cref="F:Goedel.Cryptography.PQC.Dilithium.Q"/>. Changed return
+            Montgomery reduction according to <see cref="F:Goedel.Cryptography.PQC.MLDSA.Q"/>. Changed return
             type to int since this appears more consistent with use in the code.
             </summary>
             <param name="a">The value to reduce.</param>
             <returns>The Montgomery reduction.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.Dilithium.Reduce32(System.Int32)">
+        <member name="M:Goedel.Cryptography.PQC.MLDSA.Reduce32(System.Int32)">
             <summary>
             For finite field element a with a &lt;= 2^{31} - 2^{22} - 1,
             compute r \equiv a (mod Q) such that -6283009 &lt;= r &lt;= 6283007.
@@ -3206,14 +3307,14 @@
             <param name="a">Finite field element a</param>
             <returns>Finite field element a</returns>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.Dilithium.Caddq(System.Int32)">
+        <member name="M:Goedel.Cryptography.PQC.MLDSA.Caddq(System.Int32)">
             <summary>
             Add Q if input coefficient is negative.
             </summary>
             <param name="a">finite field element a</param>
             <returns>Finite field element a</returns>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.Dilithium.Freeze(System.Int32)">
+        <member name="M:Goedel.Cryptography.PQC.MLDSA.Freeze(System.Int32)">
             <summary>
             For finite field element a, compute standard
             representative r = a mod^+ Q.
@@ -3221,7 +3322,7 @@
             <param name="a">Finite field element a</param>
             <returns>Finite field element a</returns>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.Dilithium.Power2Round(System.Int32)">
+        <member name="M:Goedel.Cryptography.PQC.MLDSA.Power2Round(System.Int32)">
             <summary>
             For finite field element a, compute a0, a1 such that
             a mod^+ Q = a1*2^D + a0 with -2^{D-1} &lt; a0 &lt;= 2^{D-1}.
@@ -3230,7 +3331,7 @@
             <param name="a">input element</param>
             <returns>Output elements a0, a1</returns>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.Dilithium.Decompose(System.Int32)">
+        <member name="M:Goedel.Cryptography.PQC.MLDSA.Decompose(System.Int32)">
             <summary>
             For finite field element a, compute high and low bits a0, a1 such
             that a mod^+ Q = a1*ALPHA + a0 with -ALPHA/2 &lt; a0 &lt;= ALPHA/2 except
@@ -3241,7 +3342,7 @@
             <param name="a">input element</param>
             <returns>Output elements a0, a1</returns>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.Dilithium.MakeHint(System.Int32,System.Int32)">
+        <member name="M:Goedel.Cryptography.PQC.MLDSA.MakeHint(System.Int32,System.Int32)">
             <summary>
             Compute hint bit indicating whether the low bits of the
             input element overflow into the high bits. Inputs assumed
@@ -3251,7 +3352,7 @@
             <param name="a1">high bits of input element</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.Dilithium.UseHint(System.Int32,System.Int32)">
+        <member name="M:Goedel.Cryptography.PQC.MLDSA.UseHint(System.Int32,System.Int32)">
             <summary>
             Correct high bits according to hint.
             </summary>
@@ -3259,7 +3360,7 @@
             <param name="h">The hint bit</param>
             <returns>corrected high bits.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.Dilithium.PackPublicKey(System.Byte[],Goedel.Cryptography.PQC.PolynomialVectorInt32)">
+        <member name="M:Goedel.Cryptography.PQC.MLDSA.PackPublicKey(System.Byte[],Goedel.Cryptography.PQC.PolynomialVectorInt32)">
             <summary>
             Pack public key parameters and return the result.
             </summary>
@@ -3267,7 +3368,7 @@
             <param name="t1">The value t1.</param>
             <returns>The packed public key.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.Dilithium.PackPrivateKey(System.Byte[],System.Byte[],System.Byte[],Goedel.Cryptography.PQC.PolynomialVectorInt32,Goedel.Cryptography.PQC.PolynomialVectorInt32,Goedel.Cryptography.PQC.PolynomialVectorInt32)">
+        <member name="M:Goedel.Cryptography.PQC.MLDSA.PackPrivateKey(System.Byte[],System.Byte[],System.Byte[],Goedel.Cryptography.PQC.PolynomialVectorInt32,Goedel.Cryptography.PQC.PolynomialVectorInt32,Goedel.Cryptography.PQC.PolynomialVectorInt32)">
             <summary>
             Pack private key parameters and return the result.
             </summary>
@@ -3278,6 +3379,12 @@
             <param name="s1">The value t1.</param>
             <param name="s2">The value t1.</param>
             <returns>The packed private key.</returns>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Dilithium.RhoPrimeBytes">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Dilithium.TrBytes">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.PQC.DilithiumPrivate">
             <summary>
@@ -3312,12 +3419,14 @@
             </summary>
             <param name="privateKey">The private key bytes.</param>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.DilithiumPrivate.Sign(System.Byte[])">
+        <member name="M:Goedel.Cryptography.PQC.DilithiumPrivate.SignInternal(System.Byte[],System.Byte[])">
             <summary>
             Sign the message <paramref name="message"/> and return the signature 
             bytes.
             </summary>
             <param name="message">The message to sign.</param>
+            <param name="rnd">The additional random seed 𝜌″ required by FIPS 204 but not used
+            in Dilithium.</param>
             <returns>The signature bytes.</returns>
         </member>
         <member name="M:Goedel.Cryptography.PQC.DilithiumPrivate.PackSignature(System.Byte[],System.Byte[],Goedel.Cryptography.PQC.PolynomialVectorInt32,Goedel.Cryptography.PQC.PolynomialVectorInt32)">
@@ -3380,7 +3489,7 @@
         <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.Disposing">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.#ctor(Goedel.Cryptography.PQC.Dilithium,System.Boolean)">
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.#ctor(Goedel.Cryptography.PQC.MLDSA,System.Boolean)">
             <summary>
             Constructor, return polynomial according to parameters specified in
             <paramref name="parameters"/>. If the parameter <paramref name="wipe"/>
@@ -3448,10 +3557,10 @@
             <param name="seed">The seed value.</param>
             <param name="nonce">The nonce value.</param>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.UniformGamma1(System.Byte[],System.Int32)">
+        <member name="M:Goedel.Cryptography.PQC.PolynomialInt32.ExpandMask(System.Byte[],System.Int32)">
             <summary>
             Compute uniformly distributed Gamma1 values from <paramref name="seed"/>, 
-            <paramref name="nonce"/> across.
+            <paramref name="nonce"/> across. This has been replaced in FIPS204 final.
             </summary>
             <param name="seed">The seed value.</param>
             <param name="nonce">The nonce value.</param>
@@ -3639,7 +3748,7 @@
         <member name="M:Goedel.Cryptography.PQC.PolynomialMatrixInt32.Disposing">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.PolynomialMatrixInt32.#ctor(Goedel.Cryptography.PQC.Dilithium,System.Boolean)">
+        <member name="M:Goedel.Cryptography.PQC.PolynomialMatrixInt32.#ctor(Goedel.Cryptography.PQC.MLDSA,System.Boolean)">
             <summary>
             Constructor, return matrix according to parameters specified in
             <paramref name="parameters"/>. If the parameter <paramref name="wipe"/>
@@ -3648,7 +3757,7 @@
             <param name="parameters">The Dilithium parameters.</param>
             <param name="wipe">If true, contents wiped on dispose.</param>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.PolynomialMatrixInt32.MatrixExpandFromSeed(Goedel.Cryptography.PQC.Dilithium,System.Byte[])">
+        <member name="M:Goedel.Cryptography.PQC.PolynomialMatrixInt32.MatrixExpandFromSeed(Goedel.Cryptography.PQC.MLDSA,System.Byte[])">
             <summary>
             Create matrix according to parameters <paramref name="parameters"/> and
             perform expansion from seed <paramref name="rho"/>
@@ -3705,7 +3814,7 @@
         <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.Disposing">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.#ctor(Goedel.Cryptography.PQC.Dilithium,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.#ctor(Goedel.Cryptography.PQC.MLDSA,System.Boolean,System.Boolean)">
             <summary>
             Constructor
             </summary>
@@ -3766,7 +3875,7 @@
             <param name="seed">The seed value.</param>
             <param name="nonce">The nonce value.</param>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.UniformGamma1(System.Byte[],System.Int32)">
+        <member name="M:Goedel.Cryptography.PQC.PolynomialVectorInt32.ExpandMask(System.Byte[],System.Int32)">
             <summary>
             Compute uniformly distributed Gamma1 values from <paramref name="seed"/>, 
             <paramref name="nonce"/> across.
@@ -3866,7 +3975,7 @@
         </member>
         <member name="T:Goedel.Cryptography.PQC.KeyPairMlKem">
             <summary>
-            ML-KEM keypair implemented according to FIPS 203
+            ML-KEM keypair implemented according to FIPS 203 https://csrc.nist.gov/pubs/fips/203/final
             </summary>
         </member>
         <member name="P:Goedel.Cryptography.PQC.KeyPairMlKem.PublicKey">
@@ -3912,6 +4021,30 @@
         <member name="P:Goedel.Cryptography.PQC.KeyPairMlKem.PublicOnly">
             <inheritdoc/>
         </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlKem.#ctor(System.Byte[],System.Byte[],Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses)">
+            <summary>
+            Constructore returning an instance from the binary key data
+            <paramref name="publicKey"/>, <paramref name="privateKey"/> with
+            security properties <paramref name="keySecurity"/> and uses
+            <paramref name="keyUses"/>.
+            </summary>
+            <param name="publicKey">The public key data.</param>
+            <param name="privateKey">The private key seed.</param>
+            <param name="keySecurity">The key security.</param>
+            <param name="keyUses">The key uses.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlKem.#ctor(Goedel.Cryptography.PQC.KyberPublic,Goedel.Cryptography.PQC.KyberPrivate,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses)">
+            <summary>
+            Constructore returning an instance from the binary key data
+            <paramref name="publicKey"/>, <paramref name="privateKey"/> with
+            security properties <paramref name="keySecurity"/> and uses
+            <paramref name="keyUses"/>.
+            </summary>
+            <param name="publicKey">The public key data.</param>
+            <param name="privateKey">The private key seed.</param>
+            <param name="keySecurity">The key security.</param>
+            <param name="keyUses">The key uses.</param>
+        </member>
         <member name="M:Goedel.Cryptography.PQC.KeyPairMlKem.KeyPairFactory(System.Int32,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Generate a key pair for the specified algorithm and key size.
@@ -3937,6 +4070,15 @@
             a single seed.</param>
             <param name="keySize">The size of the key in bits.</param>
             <returns>the derrived key.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlKem.KeyPairPublic">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlKem.Persist(Goedel.Cryptography.KeyCollection)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlKem.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.PQC.KeyPairMlKem.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[])">
             <inheritdoc/>
@@ -4011,6 +4153,15 @@
         </member>
         <member name="P:Goedel.Cryptography.PQC.Kyber.CiphertextBytes">
             <summary>Bytes in ciphertext.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Kyber.MLKEM512">
+            <summary>Parameter set for 512 bit key.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Kyber.MLKEM768">
+            <summary>Parameter set for 768 bit key.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.Kyber.MLKEM1024">
+            <summary>Parameter set for 1024 bit key.</summary> 
         </member>
         <member name="P:Goedel.Cryptography.PQC.Kyber.Kyber512">
             <summary>Parameter set for 512 bit key.</summary> 
@@ -5419,6 +5570,9 @@
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MaxWrap">
             <summary>Max index for key wrap operations</summary>
         </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.DIRECT">
+            <summary>Direct mapping (used for Pure signature)</summary>
+        </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.SHA_1_DEPRECATED">
             <summary>SHA1 (Highly deprecated but often necessary)</summary>
         </member>
@@ -5530,33 +5684,6 @@
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.RSASign_PSS">
             <summary>RSA Signature using PSS padding.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.EdDSA">
-            <summary>Elliptic Curve DSA with curve 25519x</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed25519">
-            <summary>Elliptic Curve DSA with curve 25519x</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed25519ctx">
-            <summary>Elliptic Curve DSA with curve 25519x</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed25519ph">
-            <summary>Elliptic Curve DSA with curve 25519x</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed448">
-            <summary>Elliptic Curve DSA with curve Ed448</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed448ph">
-            <summary>Elliptic Curve DSA with curve Ed448</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA44">
-            <summary>ML-DSA (Dilithium) 44</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA65">
-            <summary>ML-DSA (Dilithium) 65</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA87">
-            <summary>ML-DSA (Dilithium) 87</summary> 
-        </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.RSASign_SHA_2_256">
             <summary>RSA Signature using PKCS#1.5 padding and SHA-2 256 digest</summary>
         </member>
@@ -5568,6 +5695,45 @@
         </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.RSASign_PSS_SHA_2_512">
             <summary>RSA Signature using PSS padding and SHA-2 512 digest</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.EdDSA">
+            <summary>Elliptic Curve DSA with curve 25519x pure</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed25519">
+            <summary>Elliptic Curve DSA with curve 25519x pure</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed25519pure">
+            <summary>Elliptic Curve DSA with curve 25519x pure</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed25519ph">
+            <summary>Elliptic Curve DSA with curve 25519x prehashed using SHA512</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed448">
+            <summary>Elliptic Curve DSA with curve Ed448</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed448pure">
+            <summary>Elliptic Curve DSA with curve Ed448</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed448ph">
+            <summary>Elliptic Curve DSA with curve Ed448</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA44">
+            <summary>ML-DSA (Dilithium) 44</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA44pure">
+            <summary>ML-DSA (Dilithium) 44 PURE</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA65">
+            <summary>ML-DSA (Dilithium) 65</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA65pure">
+            <summary>ML-DSA (Dilithium) 65</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA87">
+            <summary>ML-DSA (Dilithium) 87</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA87pure">
+            <summary>ML-DSA (Dilithium) 87</summary> 
         </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.RSAExch">
             <summary>RSA Encryption using OAEP padding.</summary>
@@ -9389,33 +9555,16 @@
             <returns>The created key pair.</returns>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd25519.KeyPair(Goedel.Cryptography.IKeyAdvancedPrivate,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses)">
-            <summary>
-            Factory method to produce a key pair from key parameters.
-            </summary>
-            <param name="privateKey">The private key</param>
-            <param name="keySecurity">The key security model.</param>
-            <param name="keyUses">The permitted key uses.</param>
-            <returns>The key pair created.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd25519.KeyPair(Goedel.Cryptography.IKeyAdvancedPublic,Goedel.Cryptography.KeyUses)">
-            <summary>
-            Factory method to produce a key pair from implementation public key parameters
-            </summary>
-            <param name="publicKey">The public key</param>
-            <param name="keyUses">The permitted key uses.</param>
-            <returns>The key pair created.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd25519.KeyPairPublic">
-            <summary>
-            Returns a new KeyPair instance which only has the public values.
-            </summary>
-            <returns>The new keypair that contains only the public values.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd25519.Persist(Goedel.Cryptography.KeyCollection)">
-            <summary>
-            Persist the key to a key collection. Note that it is only possible to store a 
-            </summary>
-            <param name="keyCollection"></param>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd25519.Agreement(Goedel.Cryptography.KeyPairEd25519,Goedel.Cryptography.Algorithms.CurveEdwards25519Result)">
             <summary>
@@ -9426,58 +9575,25 @@
             <returns>The key agreement value ZZ</returns>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd25519.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[])">
-            <summary>
-            Encrypt a bulk key.
-            </summary>
-            <returns>The encoder</returns>
-            <param name="key">The key to encrypt.</param>
-            <param name="ephemeral">The ephemeral key to use for the exchange (if used)</param>
-            <param name="exchange">The private key to use for the exchange.</param>
-            <param name="salt">Optional salt value for use in key derivation.</param> 
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd25519.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
-            <summary>
-            Perform a key exchange to encrypt a bulk or wrapped key under this one.
-            </summary>
-            <param name="encryptedKey">The encrypted session</param>
-            <param name="ephemeral">Ephemeral key input (required for DH)</param>
-            <param name="algorithmID">The algorithm to use.</param>
-            <param name="partial">Partial key agreement carry in (for recryption)</param>
-            <param name="salt">Optional salt value for use in key derivation. If specified
-            must match the salt used to encrypt.</param>        
-            <returns>The decoded data instance</returns>
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPairEd25519.Sign(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPairEd25519.Verify(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd25519.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
-            <summary>
-            Sign a precomputed digest
-            </summary>
-            <param name="data">The data to sign.</param>
-            <param name="algorithmID">The algorithm to use.</param>
-            <param name="context">Additional data added to the signature scope
-            for protocol isolation.</param>
-            <returns>The signature data</returns>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd25519.SignHashThreshold(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
-            <summary>
-            Begin the process of signing the data <paramref name="data"/> according to the
-            algorithm specifier <paramref name="algorithmID"/> and optional context value
-            <paramref name="context"/>.
-            </summary>
-            <param name="data">The data to sign</param>
-            <param name="algorithmID">The specific signature algorithm variant.</param>
-            <param name="context">Optional context value.</param>
-            <returns>The signature context.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd25519.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
-            <summary>
-            Verify a signature over the purported data digest.
-            </summary>
-            <param name="signature">The signature blob value.</param>
-            <param name="algorithmID">The signature and hash algorithm to use.</param>
-            <param name="context">Additional data added to the signature scope
-            for protocol isolation.</param>
-            <param name="data">The digest value to be verified.</param>
-            <returns>True if the signature is valid, otherwise false.</returns>
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.KeyPairEd448">
             <summary>
@@ -9567,33 +9683,16 @@
             <returns>The created key pair.</returns>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd448.KeyPair(Goedel.Cryptography.IKeyAdvancedPrivate,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses)">
-            <summary>
-            Factory method to produce a key pair from key parameters.
-            </summary>
-            <param name="privateKey">The private key</param>
-            <param name="keySecurity">The key security model.</param>
-            <param name="keyUses">The permitted key uses.</param>
-            <returns>The key pair created.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd448.KeyPair(Goedel.Cryptography.IKeyAdvancedPublic,Goedel.Cryptography.KeyUses)">
-            <summary>
-            Factory method to produce a key pair from implementation public key parameters
-            </summary>
-            <param name="publicKey">The public key</param>
-            <param name="keyUses">The permitted key uses.</param>
-            <returns>The key pair created.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd448.KeyPairPublic">
-            <summary>
-            Returns a new KeyPair instance which only has the public values.
-            </summary>
-            <returns>The new keypair that contains only the public values.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd448.Persist(Goedel.Cryptography.KeyCollection)">
-            <summary>
-            Persist the key to a key collection.
-            </summary>
-            <param name="keyCollection"></param>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd448.Agreement(Goedel.Cryptography.KeyPairEd448,Goedel.Cryptography.Algorithms.CurveEdwards448Result)">
             <summary>
@@ -9604,58 +9703,25 @@
             <returns>The key agreement value ZZ</returns>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd448.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[])">
-            <summary>
-            Encrypt a bulk key.
-            </summary>
-            <returns>The encoder</returns>
-            <param name="key">The key to encrypt.</param>
-            <param name="ephemeral">The ephemeral key to use for the exchange (if used)</param>
-            <param name="exchange">The private key to use for the exchange.</param>
-            <param name="salt">Optional salt value for use in key derivation.</param>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd448.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
-            <summary>
-            Perform a key exchange to encrypt a bulk or wrapped key under this one.
-            </summary>
-            <param name="encryptedKey">The encrypted session</param>
-            <param name="ephemeral">Ephemeral key input (required for DH)</param>
-            <param name="algorithmID">The algorithm to use.</param>
-            <param name="partial">Partial key agreement carry in (for recryption)</param>
-            <param name="salt">Optional salt value for use in key derivation. If specified
-            must match the salt used to encrypt.</param>        
-            <returns>The decoded data instance</returns>
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPairEd448.Sign(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPairEd448.Verify(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd448.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
-            <summary>
-            Sign a precomputed digest
-            </summary>
-            <param name="data">The data to sign.</param>
-            <param name="algorithmID">The algorithm to use.</param>
-            <param name="context">Additional data added to the signature scope
-            for protocol isolation.</param>
-            <returns>The signature data</returns>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd448.SignHashThreshold(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
-            <summary>
-            Begin the process of signing the data <paramref name="data"/> according to the
-            algorithm specifier <paramref name="algorithmID"/> and optional context value
-            <paramref name="context"/>.
-            </summary>
-            <param name="data">The data to sign</param>
-            <param name="algorithmID">The specific signature algorithm variant.</param>
-            <param name="context">Optional context value.</param>
-            <returns>The signature context.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd448.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
-            <summary>
-            Verify a signature over the purported data digest.
-            </summary>
-            <param name="signature">The signature blob value.</param>
-            <param name="algorithmID">The signature and hash algorithm to use.</param>
-            <param name="context">Additional data added to the signature scope
-            for protocol isolation.</param>
-            <param name="digest">The digest value to be verified.</param>
-            <returns>True if the signature is valid, otherwise false.</returns>
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.KeyPairRSA">
             <summary>
@@ -9774,6 +9840,32 @@
             <param name="keySecurity">The key security model</param>
             <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
             the value of <paramref name="keySecurity"/></param>/// <returns>The created key pair</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPairRSA.GetPrime(System.Int32,System.Byte[],System.Byte[],System.String,System.String,System.Int32)">
+            <summary>
+            Return a prime with <paramref name="bits"/> significant bits
+            using the parameters <paramref name="ikm"/>, <paramref name="keyName"/>,
+            <paramref name="keySpecifier"/>, <paramref name="parameter"/>.
+            </summary>
+            <param name="bits"></param>
+            <param name="ikm"></param>
+            <param name="keySpecifier"></param>
+            <param name="keyName"></param>
+            <param name="parameter"></param>
+            <param name="index">Starting index for search</param>
+            <returns>The prime and the iteration count.</returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPairRSA.GetRsa(System.Int32,System.Numerics.BigInteger,System.Numerics.BigInteger)">
+            <summary>
+            Generate and validate the remaining RSA parameters in accordance with 
+            NIST.SP800-56Br2.
+            https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-56Br2.pdf
+            </summary>
+            <param name="bits">The number of bits in the prime values</param>
+            <param name="p">The prime p</param>
+            <param name="q">The prime q</param>
+            <returns>The private key parameters if valid, otherwise null</returns>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairRSA.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[])">
             <summary>
@@ -10385,11 +10477,32 @@
             must match the salt used to encrypt.</param>        
             <returns>The decoded data instance</returns>
         </member>
+        <member name="M:Goedel.Cryptography.CryptoKey.Sign(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <summary>
+            Sign data directly.
+            </summary>
+            <param name="data">The data to sign.</param>
+            <param name="algorithmID">The algorithm to use.</param>
+            <param name="context">Additional data added to the signature scope
+            for protocol isolation.</param>
+            <returns>The signature data</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoKey.Verify(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <summary>
+            Verify a signature over the purported data digest.
+            </summary>
+            <param name="signature">The signature blob value.</param>
+            <param name="algorithmID">The signature and hash algorithm to use.</param>
+            <param name="context">Additional data added to the signature scope
+            for protocol isolation.</param>
+            <param name="data">The data value to be verified.</param>
+            <returns>True if the signature is valid, otherwise false.</returns>
+        </member>
         <member name="M:Goedel.Cryptography.CryptoKey.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
             Sign a precomputed digest
             </summary>
-            <param name="data">The data to sign.</param>
+            <param name="digest">The data to sign.</param>
             <param name="algorithmID">The algorithm to use.</param>
             <param name="context">Additional data added to the signature scope
             for protocol isolation.</param>

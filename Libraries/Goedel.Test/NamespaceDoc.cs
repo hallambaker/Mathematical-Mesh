@@ -26,6 +26,7 @@ global using System.IO;
 global using Goedel.Cryptography.PKIX;
 global using Goedel.IO;
 global using Goedel.Utilities;
+global using System.Text.Json;
 
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]

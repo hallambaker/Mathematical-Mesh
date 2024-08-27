@@ -112,21 +112,23 @@ public class MLDSA  {
     public virtual int TrBytes => 64;
 
 
-
-
     ///<summary>CHR Byte size.</summary> 
     public int CrhBytes = 48;
 
-
-
-
-
-
     ///<summary>Message representative size.</summary> 
-    public int MrsBytes { get; }
+    public virtual int MrsBytes => 64;
 
     ///<summary>CHR Byte size.</summary> 
-    public int PrsBytes { get; }
+    public int PrsBytes => 64;
+
+
+    ///<summary></summary> 
+    public int CommitmentHashBytes => Mode switch {
+        DilithiumMode.Mode2 => 128/4,
+        DilithiumMode.Mode3 => 192/4,
+        DilithiumMode.Mode5 => 256/4,
+        _ => throw new CryptographicException ()
+        };
 
 
 
@@ -210,37 +212,37 @@ public class MLDSA  {
         Mode = mode;
 
 
-        if (IsFips204) {
-            MrsBytes = 64;
-            PrsBytes = 64;
-            TrBytes = 64;
-            SigmaBytes = 64;
-            CSquigleByles = 64;
-            SignatureSeedBytes = 32;
+        //if (IsFips204) {
+        //    MrsBytes = 64;
+        //    PrsBytes = 64;
+        //    TrBytes = 64;
+        //    SigmaBytes = 64;
+        //    CSquigleByles = 64;
+        //    SignatureSeedBytes = 32;
 
-            //Mode switch {
-            //    DilithiumMode.Mode2 => 32,
-            //    DilithiumMode.Mode3 => 48,
-            //    DilithiumMode.Mode5 => 64,
-            //    _ => throw new CryptographicException()
-            //    };
+        //    //Mode switch {
+        //    //    DilithiumMode.Mode2 => 32, been her refu
+        //    //    DilithiumMode.Mode3 => 48,
+        //    //    DilithiumMode.Mode5 => 64,
+        //    //    _ => throw new CryptographicException()
+        //    //    };https://visualstudio.microsoft.com/vs/github-signed-in/
 
-            }
-        else {
-
-
-            }
+        //    }
+        //else {
 
 
-        var index = (int)mode;
-        K = Ks[index];
-        L = Ls[index];
-        Eta = ETAs[index];
-        Tau = TAUs[index];
-        Beta = BETAs[index];
-        Gamma1 = GAMMA1s[index];
-        Gamma2 = GAMMA2s[index];
-        OMEGA = OMEGAs[index];
+        //    }
+
+
+        //var index = (int)mode;
+        //K = Ks[index];
+        //L = Ls[index];
+        //Eta = ETAs[index];
+        //Tau = TAUs[index];
+        //Beta = BETAs[index];
+        //Gamma1 = GAMMA1s[index];
+        //Gamma2 = GAMMA2s[index];
+        //OMEGA = OMEGAs[index];
         }
 
     #endregion
@@ -250,8 +252,32 @@ public class MLDSA  {
     /// </summary>
     /// <param name="str">Bytes to digest</param>
     /// <param name="length">Number of bytes</param>
-    /// <returns>The SHAK256 digest value</returns>
+    /// <returns>The SHAK256 digest value</returns> 
     public static byte[] H(byte[] str, int length) => SHAKE256.GetBytes(length*8, str);
+
+
+    /// <summary>
+    /// FIPS 204 convenience function H
+    /// </summary>
+    /// <param name="str1">Bytes to digest 1</param>
+    /// <param name="str2">Bytes to digest 2</param>
+    /// <param name="length">Number of bytes</param>
+    /// <returns>The SHAK256 digest value</returns> 
+    public static byte[] H(byte[] str1, byte[] str2, int length) => 
+                SHAKE256.GetBytes(length * 8, str1, str2);
+
+
+    /// <summary>
+    /// FIPS 204 convenience function H
+    /// </summary>
+    /// <param name="str1">Bytes to digest 1</param>
+    /// <param name="str2">Bytes to digest 2</param>
+    /// <param name="str3">Bytes to digest 2</param>
+    /// <param name="length">Number of bytes</param>
+    /// <returns>The SHAK256 digest value</returns> 
+    public static byte[] H(byte[] str1, byte[] str2, byte[] str3, int length) =>
+                SHAKE256.GetBytes(length * 8, str1, str2, str3);
+
 
     /// <summary>
     /// FIPS 204 convenience function G
@@ -262,7 +288,15 @@ public class MLDSA  {
     public static byte[] G(byte[] str, int length) => SHAKE256.GetBytes(length*8, str);
 
 
-
+    /// <summary>
+    /// FIPS 204 convenience function G
+    /// </summary>
+    /// <param name="str1">Bytes to digest 1</param>
+    /// <param name="str2">Bytes to digest 2</param>
+    /// <param name="length">Number of bytes</param>
+    /// <returns>The SHAK128 digest value</returns>
+    public static byte[] G(byte[] str1, byte[] str2, int length) => 
+        SHAKE256.GetBytes(length * 8, str1, str2);
 
 
 

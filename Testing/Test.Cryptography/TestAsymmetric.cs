@@ -296,7 +296,7 @@ public class RFC8032 : IEnumerable<object[]> {
    3dca179c138ac17ad9bef1177331a704"
         };
     static readonly TestVectorAsymmetric TESTfoo = new() {
-        Algorithm = CryptoAlgorithmId.Ed25519ctx,
+        Algorithm = CryptoAlgorithmId.Ed25519,
         SecretKey = @"
    0305334e381af78f141cb666f6199f57
    bc3495335a256a95bd2a55bf546663f6",
@@ -314,7 +314,7 @@ public class RFC8032 : IEnumerable<object[]> {
    f6cca685a587b4b21f4b888e4e7edb0d"
         };
     static readonly TestVectorAsymmetric TESTbar = new() {
-        Algorithm = CryptoAlgorithmId.Ed25519ctx,
+        Algorithm = CryptoAlgorithmId.Ed25519,
         SecretKey = @"
    0305334e381af78f141cb666f6199f57
    bc3495335a256a95bd2a55bf546663f6",
@@ -332,7 +332,7 @@ public class RFC8032 : IEnumerable<object[]> {
    5a5ca2df6668346291c2043d4eb3e90d"
         };
     static readonly TestVectorAsymmetric TESTfoo2 = new() {
-        Algorithm = CryptoAlgorithmId.Ed25519ctx,
+        Algorithm = CryptoAlgorithmId.Ed25519,
         SecretKey = @"
    0305334e381af78f141cb666f6199f57
    bc3495335a256a95bd2a55bf546663f6",
@@ -350,7 +350,7 @@ public class RFC8032 : IEnumerable<object[]> {
    4085ae75890d02df26269d8945f84b0b"
         };
     static readonly TestVectorAsymmetric TESTfoo3 = new() {
-        Algorithm = CryptoAlgorithmId.Ed25519ctx,
+        Algorithm = CryptoAlgorithmId.Ed25519,
         SecretKey = @"
    ab9c2853ce297ddab85c993b3ae14bca
    d39b2c682beabc27d6d4eb20711d6560",

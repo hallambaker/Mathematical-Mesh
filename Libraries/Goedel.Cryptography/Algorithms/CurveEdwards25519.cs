@@ -291,17 +291,23 @@ public class CurveEdwards25519 : CurveEdwards {
         byte[] y) {
         byte x = 0;
         switch (cryptoAlgorithm) {
-            case CryptoAlgorithmId.Ed25519: return null;
-            case CryptoAlgorithmId.Ed25519ph: {
-                    x = 1;
-                    break;
+            case CryptoAlgorithmId.Ed25519: {
+                // If y is null or empty, algorithm is Ed25519, otherwise algorithm is Ed25519ctx
+                if (y == null ) {
+                    return null;
                     }
-            case CryptoAlgorithmId.Ed25519ctx: {
-                    x = 0;
-                    break;
+                if (y.Length == 0) {
+                    return null;
                     }
-            default:
+                x = 0;
                 break;
+                }
+            case CryptoAlgorithmId.Ed25519ph: {
+                x = 1;
+                break;
+                }
+            default:
+            break;
             }
 
         var Buffer = new MemoryStream();

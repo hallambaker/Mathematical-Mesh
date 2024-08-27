@@ -245,7 +245,7 @@ public abstract class KeyPairECDH : KeyPairBaseECDH {
         CryptoAlgorithmId CryptoAlgorithmID = CryptoAlgorithmId.NULL) {
         return CryptoAlgorithmID switch {
             CryptoAlgorithmId.Ed448 or CryptoAlgorithmId.Ed448ph => new KeyPairEd448(key, keyType),
-            CryptoAlgorithmId.Ed25519 or CryptoAlgorithmId.Ed25519ph or CryptoAlgorithmId.Ed25519ctx => new KeyPairEd25519(key, keyType),
+            CryptoAlgorithmId.Ed25519 or CryptoAlgorithmId.Ed25519ph => new KeyPairEd25519(key, keyType),
             CryptoAlgorithmId.X448 => new KeyPairX448(key, keyType),
             CryptoAlgorithmId.X25519 => new KeyPairX25519(key, keyType),
             _ => throw new NYI(),

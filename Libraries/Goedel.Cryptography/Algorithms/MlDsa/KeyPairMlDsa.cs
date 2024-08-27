@@ -248,35 +248,56 @@ public class KeyPairMlDsa : KeyPair, IOpaqueBinaryKey {
         }
 
     ///<inheritdoc/>
+    ///<exception cref="OperationNotSupported">ML-DSA does not support signature operations.</exception>
     public override byte[] Decrypt(byte[] encryptedKey, KeyPair ephemeral = null, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, KeyAgreementResult partial = null, byte[] salt = null) {
         throw new OperationNotSupported();
         }
 
 
     ///<inheritdoc/>
+    ///<exception cref="OperationNotSupported">ML-DSA does not support signature operations.</exception>
     public override void Encrypt(byte[] key, out byte[] exchange, out KeyPair ephemeral, byte[] salt = null) {
-
         throw new OperationNotSupported();
         }
 
     ///<inheritdoc/>
-    ///<exception cref="OperationNotSupported">ML-KEM does not support signature operations.</exception>
+    public override byte[] Sign(byte[] data, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null) {
+
+        // have to add in the wrappers for pre hash etc...
+
+        return base.Sign(data, algorithmID, context);
+        }
+
+    ///<inheritdoc/>
+    public override bool Verify(byte[] data, byte[] signature, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null) {
+
+        // have to add in the wrappers for pre hash etc...
+
+        return base.Verify(data, signature, algorithmID, context);
+        }
+
+
+    ///<inheritdoc/>
     public override byte[] SignHash(
                 byte[] data,
                 CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                 byte[] context = null) {
 
-        var sig = PrivateKey.Sign(data);
+
+        // have to add in the wrappers for pre hash etc...
+
+        var sig = PrivateKey.SignInternal(data);
         return sig;
         }
     
 
     ///<inheritdoc/>
-    ///<exception cref="OperationNotSupported">ML-KEM does not support signature operations.</exception>
     public override bool VerifyHash(
                 byte[] digest, byte[] signature,
                 CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                 byte[] context = null) {
+
+        // have to add in the wrappers for pre hash etc...
 
         var result = PublicKey.Verify(signature, digest);
 

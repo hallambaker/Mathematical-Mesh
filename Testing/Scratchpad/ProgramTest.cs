@@ -27,6 +27,7 @@ using ExampleGenerator;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.Dare;
+
 using Goedel.Debug;
 //using Goedel.Cryptography.PQC;
 using Goedel.Mesh;
@@ -62,9 +63,9 @@ partial class Program {
 
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
+        TestPQC.Test() .ML_DSA_KeyGen();
 
-
-        TestService.Test().MeshCreateAdmin();
+        //TestService.Test().MeshCreateAdmin();
 
 
 

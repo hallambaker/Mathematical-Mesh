@@ -109,8 +109,12 @@ public enum CryptoAlgorithmId {
 
     // Bulk algorithms
 
+
+    /// <summary>Direct mapping (used for Pure signature)</summary>
+    DIRECT = Digest + 0xff,
+
     /// <summary>SHA1 (Highly deprecated but often necessary)</summary>
-    SHA_1_DEPRECATED = Bulk,
+    SHA_1_DEPRECATED = Digest + 1,
 
     /// <summary>SHA2 256 bit</summary>
     SHA_2_256 = Digest + 2,
@@ -132,6 +136,8 @@ public enum CryptoAlgorithmId {
 
     /// <summary>SHA3 512 bit</summary>
     SHAKE_256 = Digest + 8,
+
+
 
 
 
@@ -232,33 +238,8 @@ public enum CryptoAlgorithmId {
     /// <summary>RSA Signature using PKCS#1.5 padding.</summary>
     RSASign = Signature,
 
-
     /// <summary>RSA Signature using PSS padding.</summary>
     RSASign_PSS = Signature + Meta,
-
-    /// <summary>Elliptic Curve DSA with curve 25519x</summary>
-    EdDSA = Signature + Meta * 8,
-
-    /// <summary>Elliptic Curve DSA with curve 25519x</summary>
-    Ed25519 = EdDSA,
-    /// <summary>Elliptic Curve DSA with curve 25519x</summary>
-    Ed25519ctx = Ed25519 + 1,
-    /// <summary>Elliptic Curve DSA with curve 25519x</summary>
-    Ed25519ph = Ed25519 + 2,
-
-    /// <summary>Elliptic Curve DSA with curve Ed448</summary>
-    Ed448 = EdDSA + Meta,
-    /// <summary>Elliptic Curve DSA with curve Ed448</summary>
-    Ed448ph = Ed448 + 1,
-
-    ///<summary>ML-DSA (Dilithium) 44</summary> 
-    MLDSA44 = Ed448 + Meta,
-
-    ///<summary>ML-DSA (Dilithium) 65</summary> 
-    MLDSA65 = MLDSA44 + Meta,
-
-    ///<summary>ML-DSA (Dilithium) 87</summary> 
-    MLDSA87 = MLDSA65 + Meta,
 
     /// <summary>RSA Signature using PKCS#1.5 padding and SHA-2 256 digest</summary>
     RSASign_SHA_2_256 = RSASign | SHA_2_256,
@@ -271,6 +252,47 @@ public enum CryptoAlgorithmId {
 
     /// <summary>RSA Signature using PSS padding and SHA-2 512 digest</summary>
     RSASign_PSS_SHA_2_512 = RSASign_PSS | SHA_2_512,
+
+
+    /// <summary>Elliptic Curve DSA with curve 25519x pure</summary>
+    EdDSA = Signature + Meta * 2 + DIRECT,
+    /// <summary>Elliptic Curve DSA with curve 25519x pure</summary>
+    Ed25519 = Signature + Meta * 3 + DIRECT,
+
+    /// <summary>Elliptic Curve DSA with curve 25519x pure</summary>
+    Ed25519pure = Ed25519 + DIRECT,
+
+    /// <summary>Elliptic Curve DSA with curve 25519x prehashed using SHA512</summary>
+    Ed25519ph = Signature + Meta * 4 + SHA_2_512,
+
+    /// <summary>Elliptic Curve DSA with curve Ed448</summary>
+    Ed448 = Signature + Meta * 5,
+
+    /// <summary>Elliptic Curve DSA with curve Ed448</summary>
+    Ed448pure = Ed448 + DIRECT,
+
+    /// <summary>Elliptic Curve DSA with curve Ed448</summary>
+    Ed448ph = Signature + Meta * 6 + SHAKE_256,
+
+    ///<summary>ML-DSA (Dilithium) 44</summary> 
+    MLDSA44 = Signature + Meta * 7,
+
+    ///<summary>ML-DSA (Dilithium) 44 PURE</summary> 
+    MLDSA44pure = MLDSA44 + DIRECT,
+
+    ///<summary>ML-DSA (Dilithium) 65</summary> 
+    MLDSA65 = Signature + Meta * 8,
+
+    ///<summary>ML-DSA (Dilithium) 65</summary> 
+    MLDSA65pure = MLDSA65 + DIRECT,
+
+    ///<summary>ML-DSA (Dilithium) 87</summary> 
+    MLDSA87 = Signature + Meta * 9,
+
+    ///<summary>ML-DSA (Dilithium) 87</summary> 
+    MLDSA87pure = MLDSA87 + DIRECT,
+
+
 
 
     // Public Key Exchange

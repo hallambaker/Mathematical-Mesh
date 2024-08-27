@@ -243,14 +243,52 @@ public abstract class CryptoKey : IKeyLocate, IKeyDecrypt, IKeySign {
 
 
     /// <summary>
-    /// Sign a precomputed digest
+    /// Sign data directly.
     /// </summary>
     /// <param name="data">The data to sign.</param>
     /// <param name="algorithmID">The algorithm to use.</param>
     /// <param name="context">Additional data added to the signature scope
     /// for protocol isolation.</param>
     /// <returns>The signature data</returns>
-    public abstract byte[] SignHash(byte[] data,
+    public virtual byte[] Sign (byte[] data,
+            CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+            byte[] context = null) {
+        var digestID = algorithmID.Digest();
+        var digestProvider = algorithmID.CreateDigest();
+        var digest = digestProvider.ComputeHash(data);
+
+        return SignHash(digest, CryptoAlgorithmId, context);
+        }
+
+    /// <summary>
+    /// Verify a signature over the purported data digest.
+    /// </summary>
+    /// <param name="signature">The signature blob value.</param>
+    /// <param name="algorithmID">The signature and hash algorithm to use.</param>
+    /// <param name="context">Additional data added to the signature scope
+    /// for protocol isolation.</param>
+    /// <param name="data">The data value to be verified.</param>
+    /// <returns>True if the signature is valid, otherwise false.</returns>
+    public virtual bool Verify(byte[] data, byte[] signature,
+        CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null) {
+        var digestID = algorithmID.Digest();
+        var digestProvider = algorithmID.CreateDigest();
+        var digest = digestProvider.ComputeHash(data);
+
+        return VerifyHash(digest, signature, CryptoAlgorithmId, context);
+        }
+
+
+
+    /// <summary>
+    /// Sign a precomputed digest
+    /// </summary>
+    /// <param name="digest">The data to sign.</param>
+    /// <param name="algorithmID">The algorithm to use.</param>
+    /// <param name="context">Additional data added to the signature scope
+    /// for protocol isolation.</param>
+    /// <returns>The signature data</returns>
+    public abstract byte[] SignHash(byte[] digest,
             CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
             byte[] context = null);
 
