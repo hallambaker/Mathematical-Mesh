@@ -13,7 +13,7 @@ public struct PolynomialMatrixInt16 {
     public PolynomialVectorInt16[] PolynomialVector;
 
     ///<summary></summary> 
-    public const int GEN_MATRIX_BYTES = 12 * Kyber.N / 8 * (1 << 12) / Kyber.Q + SHA3.HashRateShake128;
+    public const int GEN_MATRIX_BYTES = 12 * MlKem.N / 8 * (1 << 12) / MlKem.Q + SHA3.HashRateShake128;
 
     ///<summary></summary> 
     public const int GEN_MATRIX_NBLOCKS = GEN_MATRIX_BYTES / SHA3.HashRateShake128;
@@ -33,7 +33,7 @@ public struct PolynomialMatrixInt16 {
 
     /// <summary>
     /// Constructor, create a Kyber matrix of size 
-    /// <paramref name="k"/>.<paramref name="k"/>.<see cref="Kyber.N"/>.
+    /// <paramref name="k"/>.<paramref name="k"/>.<see cref="MlKem.N"/>.
     /// </summary>
     /// <param name="k">The number of polynomials and coefficient vectors per polynomial.</param>
     public PolynomialMatrixInt16(int k) {
@@ -86,7 +86,7 @@ public struct PolynomialMatrixInt16 {
                 //ctr -= 20; // NASTY HACK HERE
 
 
-                while (ctr < Kyber.N) {
+                while (ctr < MlKem.N) {
                     var off = buflen % 3;
 
                     for (var k = 0; k < off; k++) {
@@ -121,7 +121,7 @@ public struct PolynomialMatrixInt16 {
         output ??= Console.Out;
         var d0 = PolynomialVector.GetLength(0);
         var d1 = d0;
-        var d2 = Kyber.N;
+        var d2 = MlKem.N;
 
         int size = d0 * d1 * d2 * 2;
         byte[] buffer = new byte[size];

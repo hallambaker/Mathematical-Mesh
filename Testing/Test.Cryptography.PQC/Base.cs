@@ -18,7 +18,7 @@ namespace Goedel.XUnit;
 public class TestPQC : Disposable {
 
 
-    public string ACVP_Root => @"C:\Users\hallam\source\repos\mmm\Testing\Test.Cryptography.PQC";
+    public string ACVP_Root => @"..\Test.Cryptography.PQC";
     public  string KemKeyGen => Path.Combine(ACVP_Root, "ML-KEM-keyGen-FIPS203");
     public string KemEncapDecap => Path.Combine(ACVP_Root, "ML-KEM-encapDecap-FIPS203");
     public string DsaKeyGen => Path.Combine(ACVP_Root, "ML-DSA-keyGen-FIPS204");
@@ -42,20 +42,68 @@ public class TestPQC : Disposable {
     /// <returns>The instance</returns>
     public static TestPQC Test() => new();
 
-
-    public void ML_DSA_KeyGen() {
+    [Fact]
+    public void TestKemKeyGen() {
         
-        var testBinding1 = new TestBinding<KemKeyGenTest>(KemKeyGen);
-        var testBinding2 = new TestBinding<KemEncapDecapTest>(KemEncapDecap);
-        var testBinding3 = new TestBinding<DsaKeyGenTest>(DsaKeyGen);
-        var testBinding4 = new TestBinding<DsaSignTest>(DsaSign);
-        var testBinding5 = new TestBinding<DsaVerifyTest>(DsaVerify);
+        var testBinding = new AcvpTestBinding<KemKeyGenTest>(KemKeyGen);
+        foreach (var test in testBinding.Tests) {
+            test.Value.Test();
+            }
+
+        }
+
+    [Fact]
+    public void TestKemEncapDecap() {
+
+
+        var testBinding = new AcvpTestBinding<KemEncapDecapTest>(KemEncapDecap);
+        foreach (var test in testBinding.Tests) {
+            test.Value.Test();
+            }
+
 
 
         }
 
 
+    [Fact]
+    public void TestDsaKeyGen() {
 
+
+        var testBinding = new AcvpTestBinding<DsaKeyGenTest>(DsaKeyGen);
+        foreach (var test in testBinding.Tests) {
+            test.Value.Test();
+            }
+
+
+
+        }
+
+    [Fact]
+    public void TestDsaSign() {
+
+
+        var testBinding = new AcvpTestBinding<DsaSignTest>(DsaSign);
+        foreach (var test in testBinding.Tests) {
+            test.Value.Test();
+            }
+
+
+
+        }
+
+    [Fact]
+    public void TestDsaVerify() {
+
+
+        var testBinding = new AcvpTestBinding<DsaVerifyTest>(DsaVerify);
+        foreach (var test in testBinding.Tests) {
+            test.Value.Test();
+            }
+
+
+
+        }
 
     //[Theory]
     ////[InlineData(512)]

@@ -12,14 +12,14 @@ namespace Goedel.Cryptography.PQC;
 /// <summary>
 /// Dilithium modes.
 /// </summary>
-public enum DilithiumMode {
+public enum MlDsaMode {
     Unknown = -1,
     ///<summary>Mode 2, lowest work factor.</summary> 
-    Mode2 = 0,
+    Mode44 = 0,
     ///<summary>Mode 3, improved work factor.</summary> 
-    Mode3 = 1,
+    Mode65 = 1,
     ///<summary>Mode 5, highest work factor.</summary> 
-    Mode5 = 2
+    Mode87 = 2
     }
 
 /// <summary>
@@ -49,7 +49,7 @@ public class MLDSA  {
     #region // Mode dependent parameters.
 
     ///<summary>The mode identifier</summary> 
-    public DilithiumMode Mode { get; }
+    public MlDsaMode Mode { get; }
 
     ///<summary>Number of vectors in the matrix.</summary> 
     public int K { get; }
@@ -124,9 +124,9 @@ public class MLDSA  {
 
     ///<summary></summary> 
     public int CommitmentHashBytes => Mode switch {
-        DilithiumMode.Mode2 => 128/4,
-        DilithiumMode.Mode3 => 192/4,
-        DilithiumMode.Mode5 => 256/4,
+        MlDsaMode.Mode44 => 128/4,
+        MlDsaMode.Mode65 => 192/4,
+        MlDsaMode.Mode87 => 256/4,
         _ => throw new CryptographicException ()
         };
 
@@ -199,50 +199,17 @@ public class MLDSA  {
     /// Do a one time initialization of the parameter presets on assembly load.
     /// </summary>
     static MLDSA() {
-        Mode2 = new MLDSA(DilithiumMode.Mode2);
-        Mode3 = new MLDSA(DilithiumMode.Mode3);
-        Mode5 = new MLDSA(DilithiumMode.Mode5);
+        Mode2 = new MLDSA(MlDsaMode.Mode44);
+        Mode3 = new MLDSA(MlDsaMode.Mode65);
+        Mode5 = new MLDSA(MlDsaMode.Mode87);
         }
 
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="mode">The Dilithium mode.</param>
-    public MLDSA(DilithiumMode mode) {
+    public MLDSA(MlDsaMode mode) {
         Mode = mode;
-
-
-        //if (IsFips204) {
-        //    MrsBytes = 64;
-        //    PrsBytes = 64;
-        //    TrBytes = 64;
-        //    SigmaBytes = 64;
-        //    CSquigleByles = 64;
-        //    SignatureSeedBytes = 32;
-
-        //    //Mode switch {
-        //    //    DilithiumMode.Mode2 => 32, been her refu
-        //    //    DilithiumMode.Mode3 => 48,
-        //    //    DilithiumMode.Mode5 => 64,
-        //    //    _ => throw new CryptographicException()
-        //    //    };https://visualstudio.microsoft.com/vs/github-signed-in/
-
-        //    }
-        //else {
-
-
-        //    }
-
-
-        //var index = (int)mode;
-        //K = Ks[index];
-        //L = Ls[index];
-        //Eta = ETAs[index];
-        //Tau = TAUs[index];
-        //Beta = BETAs[index];
-        //Gamma1 = GAMMA1s[index];
-        //Gamma2 = GAMMA2s[index];
-        //OMEGA = OMEGAs[index];
         }
 
     #endregion
@@ -308,10 +275,10 @@ public class MLDSA  {
     /// <param name="mode">The dilithium mode to use.</param>
     /// <param name="seed">Optional seed value for deterministic key generation.</param>
     /// <returns>The (public, private) keys.</returns>
-    public static (byte[], byte[]) GenerateKeypair(DilithiumMode mode, byte[]? seed = null) => mode switch {
-        DilithiumMode.Mode2 => Mode2.GenerateKeypair(seed),
-        DilithiumMode.Mode3 => Mode3.GenerateKeypair(seed),
-        DilithiumMode.Mode5 => Mode5.GenerateKeypair(seed),
+    public static (byte[], byte[]) GenerateKeypair(MlDsaMode mode, byte[]? seed = null) => mode switch {
+        MlDsaMode.Mode44 => Mode2.GenerateKeypair(seed),
+        MlDsaMode.Mode65 => Mode3.GenerateKeypair(seed),
+        MlDsaMode.Mode87 => Mode5.GenerateKeypair(seed),
         _ => throw new NYI()
         };
 
@@ -675,7 +642,7 @@ public class Dilithium : MLDSA {
     ///<inheritdoc/>
     public override int TrBytes => 48;
 
-    public Dilithium(DilithiumMode mode) : base(mode) { 
+    public Dilithium(MlDsaMode mode) : base(mode) { 
         }
     //MrsBytes = 48;
     //        PrsBytes = 48;

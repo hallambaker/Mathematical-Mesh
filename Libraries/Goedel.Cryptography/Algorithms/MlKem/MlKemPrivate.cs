@@ -3,14 +3,14 @@
 /// <summary>
 /// Kyber private key.
 /// </summary>
-public class KyberPrivate : KyberPublic {
+public class MlKemPrivate : MlKemPublic {
 
     ///<summary>Size of 512 bit private key in bytes.</summary> 
-    public const int PrivateKeyBytes512 = PublicKeyBytes512 + PolyVectorBytes512 + 2* Kyber.SymBytes;
+    public const int PrivateKeyBytes512 = PublicKeyBytes512 + PolyVectorBytes512 + 2* MlKem.SymBytes;
     ///<summary>Size of 512 bit private key in bytes.</summary> 
-    public const int PrivateKeyBytes768 = PublicKeyBytes768 + PolyVectorBytes768 + 2 * Kyber.SymBytes;
+    public const int PrivateKeyBytes768 = PublicKeyBytes768 + PolyVectorBytes768 + 2 * MlKem.SymBytes;
     ///<summary>Size of 512 bit private key in bytes.</summary> 
-    public const int PrivateKeyBytes1024 = PublicKeyBytes1024 + PolyVectorBytes1024 + 2 * Kyber.SymBytes;
+    public const int PrivateKeyBytes1024 = PublicKeyBytes1024 + PolyVectorBytes1024 + 2 * MlKem.SymBytes;
 
     ///<summary>Size of 512 bit public key in bytes.</summary> 
     public const int PublicKeyOffset512 = PolyVectorBytes512;
@@ -37,10 +37,10 @@ public class KyberPrivate : KyberPublic {
     /// The Kyber strength parameter is specified implicitly by the key size.
     /// </summary>
     /// <param name="privateKey">The private key.</param>
-    public KyberPrivate(byte[] privateKey) : this (privateKey, GetStrength(privateKey.Length)){
+    public MlKemPrivate(byte[] privateKey) : this (privateKey, GetStrength(privateKey.Length)){
         }
 
-    KyberPrivate(byte[] privateKey, int strength) : 
+    MlKemPrivate(byte[] privateKey, int strength) : 
                 base(privateKey, strength, PublicKeyLength[strength], PublicKeyOffset[strength]) {
         PrivateKey = privateKey;
 
@@ -88,12 +88,12 @@ public class KyberPrivate : KyberPublic {
         if (!Fips203) {
             /* overwrite coins in kr with H(c) */
             var overwrite = SHA3Managed.Process256(ciphertext);
-            Array.Copy(overwrite, 0, kr, Kyber.SymBytes, overwrite.Length);
+            Array.Copy(overwrite, 0, kr, MlKem.SymBytes, overwrite.Length);
             }
 
         // Overwrite pre-k with z on re-encryption failure
         if (fail) {
-            Array.Copy(PrivateKey, EncryptFailOffset, kr, 0, Kyber.SymBytes);
+            Array.Copy(PrivateKey, EncryptFailOffset, kr, 0, MlKem.SymBytes);
             }
 
         // hash concatenation of pre-k and H(c) to k

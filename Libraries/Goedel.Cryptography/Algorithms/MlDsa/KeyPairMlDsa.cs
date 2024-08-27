@@ -45,23 +45,23 @@ public class KeyPairMlDsa : KeyPair, IOpaqueBinaryKey {
     #region //Properties
 
     ///<summary>The public key value.</summary>
-    public DilithiumPublic PublicKey { get; set; }
+    public MlDsaPublic PublicKey { get; set; }
     ///<summary>The private key value</summary>
-    public DilithiumPrivate PrivateKey { get; set; }
+    public MlDsaPrivate PrivateKey { get; set; }
 
     ///<inheritdoc/>
     public int[] OID => PublicKey.Mode switch {
-        DilithiumMode.Mode2 => Constants.OID__id_ml_dsa_44,
-        DilithiumMode.Mode3 => Constants.OID__id_ml_dsa_65,
-        DilithiumMode.Mode5 => Constants.OID__id_ml_dsa_87,
+        MlDsaMode.Mode44 => Constants.OID__id_ml_dsa_44,
+        MlDsaMode.Mode65 => Constants.OID__id_ml_dsa_65,
+        MlDsaMode.Mode87 => Constants.OID__id_ml_dsa_87,
         _ => throw new InternalCryptographicException()
         };
 
     ///<inheritdoc/>
     public string JsonAlgorithmId => PublicKey.Mode switch {
-        DilithiumMode.Mode2 => JoseConstants.MLDSA44,
-        DilithiumMode.Mode3 => JoseConstants.MLDSA65,
-        DilithiumMode.Mode5 => JoseConstants.MLDSA87,
+        MlDsaMode.Mode44 => JoseConstants.MLDSA44,
+        MlDsaMode.Mode65 => JoseConstants.MLDSA65,
+        MlDsaMode.Mode87 => JoseConstants.MLDSA87,
         _ => throw new InternalCryptographicException()
         };
 
@@ -112,8 +112,8 @@ public class KeyPairMlDsa : KeyPair, IOpaqueBinaryKey {
             byte[]? privateKey,
             KeySecurity keySecurity = KeySecurity.Bound,
             KeyUses keyUses = KeyUses.Any) : 
-                        this (new DilithiumPublic(publicKey),
-                        privateKey is null ? null : new DilithiumPrivate(privateKey), 
+                        this (new MlDsaPublic(publicKey),
+                        privateKey is null ? null : new MlDsaPrivate(privateKey), 
                         keySecurity, keyUses) {
         }
 
@@ -128,8 +128,8 @@ public class KeyPairMlDsa : KeyPair, IOpaqueBinaryKey {
     /// <param name="keySecurity">The key security.</param>
     /// <param name="keyUses">The key uses.</param>
     public KeyPairMlDsa (
-                DilithiumPublic publicKey, 
-                DilithiumPrivate privateKey = null,
+                MlDsaPublic publicKey, 
+                MlDsaPrivate privateKey = null,
                 KeySecurity keySecurity = KeySecurity.Bound,
                 KeyUses keyUses = KeyUses.Any) : base(keySecurity) {
         PublicKey = publicKey;
@@ -157,22 +157,22 @@ public class KeyPairMlDsa : KeyPair, IOpaqueBinaryKey {
                 KeyUses keyUses = KeyUses.Any,
                 CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.NULL) {
 
-        DilithiumMode mode = cryptoAlgorithmID switch {
-            CryptoAlgorithmId.MLDSA44 => DilithiumMode.Mode2,
-            CryptoAlgorithmId.MLDSA65 => DilithiumMode.Mode3,
-            CryptoAlgorithmId.MLDSA87 => DilithiumMode.Mode5,
-            _ => DilithiumMode.Unknown
+        MlDsaMode mode = cryptoAlgorithmID switch {
+            CryptoAlgorithmId.MLDSA44 => MlDsaMode.Mode44,
+            CryptoAlgorithmId.MLDSA65 => MlDsaMode.Mode65,
+            CryptoAlgorithmId.MLDSA87 => MlDsaMode.Mode87,
+            _ => MlDsaMode.Unknown
             };
 
-        mode =(mode != DilithiumMode.Unknown) ? mode : keySize switch {
-                0 => DilithiumMode.Mode5,
-                44 => DilithiumMode.Mode2,
-                65 => DilithiumMode.Mode3,
-                87 => DilithiumMode.Mode5,
-                _ => DilithiumMode.Unknown
+        mode =(mode != MlDsaMode.Unknown) ? mode : keySize switch {
+                0 => MlDsaMode.Mode87,
+                44 => MlDsaMode.Mode44,
+                65 => MlDsaMode.Mode65,
+                87 => MlDsaMode.Mode87,
+                _ => MlDsaMode.Unknown
                 };
 
-        (mode == DilithiumMode.Unknown).AssertFalse(KeySizeNotSupported.Throw);
+        (mode == MlDsaMode.Unknown).AssertFalse(KeySizeNotSupported.Throw);
 
         return Generate(mode, null, keySecurity, keyUses);
 
@@ -205,16 +205,16 @@ public class KeyPairMlDsa : KeyPair, IOpaqueBinaryKey {
 
         switch (algorithmID) {
             case CryptoAlgorithmId.MLDSA44: {
-                var binaryData = KeySeed(Kyber.SymBytes * 8, ikm, keySpecifier, keyName);
-                return Generate(DilithiumMode.Mode2, binaryData, keySecurity, keyUses);
+                var binaryData = KeySeed(MlKem.SymBytes * 8, ikm, keySpecifier, keyName);
+                return Generate(MlDsaMode.Mode44, binaryData, keySecurity, keyUses);
                 }
             case CryptoAlgorithmId.MLDSA65: {
-                var binaryData = KeySeed(Kyber.SymBytes * 8, ikm, keySpecifier, keyName);
-                return Generate(DilithiumMode.Mode3, binaryData, keySecurity, keyUses);
+                var binaryData = KeySeed(MlKem.SymBytes * 8, ikm, keySpecifier, keyName);
+                return Generate(MlDsaMode.Mode65, binaryData, keySecurity, keyUses);
                 }
             case CryptoAlgorithmId.MLDSA87: {
-                var binaryData = KeySeed(Kyber.SymBytes * 8, ikm, keySpecifier, keyName);
-                return Generate(DilithiumMode.Mode5, binaryData, keySecurity, keyUses);
+                var binaryData = KeySeed(MlKem.SymBytes * 8, ikm, keySpecifier, keyName);
+                return Generate(MlDsaMode.Mode87, binaryData, keySecurity, keyUses);
 
                 }
             };
@@ -224,12 +224,12 @@ public class KeyPairMlDsa : KeyPair, IOpaqueBinaryKey {
 
 
     static KeyPairMlDsa Generate(
-                DilithiumMode mode,
+                MlDsaMode mode,
                 byte[]? seed = null,
                 KeySecurity keySecurity = KeySecurity.Bound,
                 KeyUses keyUses = KeyUses.Any) {
 
-        seed = seed ?? Platform.GetRandomBytes(Kyber.SymBytes);
+        seed = seed ?? Platform.GetRandomBytes(MlKem.SymBytes);
         var (publicKey, privateKey) = MLDSA.GenerateKeypair(mode, seed);
         return new KeyPairMlDsa(publicKey, privateKey, keySecurity, keyUses);
         }

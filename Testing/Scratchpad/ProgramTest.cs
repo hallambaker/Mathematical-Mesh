@@ -63,8 +63,11 @@ partial class Program {
 
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
-        TestPQC.Test() .ML_DSA_KeyGen();
-
+        TestPQC.Test().TestKemKeyGen();
+        TestPQC.Test().TestKemEncapDecap();
+        TestPQC.Test().TestDsaKeyGen();
+        TestPQC.Test().TestDsaSign();
+        TestPQC.Test().TestDsaVerify();
         //TestService.Test().MeshCreateAdmin();
 
 

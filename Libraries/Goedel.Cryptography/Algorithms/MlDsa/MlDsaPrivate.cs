@@ -4,7 +4,7 @@
 /// <summary>
 /// Dilithium private key.
 /// </summary>
-public class DilithiumPrivate : MLDSA, IDisposable {
+public class MlDsaPrivate : MLDSA, IDisposable {
 
     public byte[] PrivateKey { get; }
     byte[] rho { get; }
@@ -47,7 +47,7 @@ public class DilithiumPrivate : MLDSA, IDisposable {
     /// <summary>
     /// Destructor.
     /// </summary>
-    ~DilithiumPrivate() {
+    ~MlDsaPrivate() {
         Dispose(false);
         }
 
@@ -61,26 +61,35 @@ public class DilithiumPrivate : MLDSA, IDisposable {
 
     #endregion
 
-    static DilithiumMode GetMode(int length) {
+    static MlDsaMode GetMode(int length) {
         if (length == MLDSA.Mode5.PrivateKeyBytes) {
-            return DilithiumMode.Mode5;
+            return MlDsaMode.Mode87;
             }
         if (length == MLDSA.Mode3.PrivateKeyBytes) {
-            return DilithiumMode.Mode3;
+            return MlDsaMode.Mode65;
             }
         if (length == MLDSA.Mode2.PrivateKeyBytes) {
-            return DilithiumMode.Mode2;
+            return MlDsaMode.Mode44;
             }
 
         throw new NYI();
         }
+
+    public MlDsaPrivate(MlDsaMode mode, byte[] seed) : base(mode){
+
+        // should pull the key generation code to here.
+
+        throw new NYI();
+        }
+
+
 
     /// <summary>
     /// Constructor, create instance from packed private key bytes
     /// <paramref name="privateKey"/>.
     /// </summary>
     /// <param name="privateKey">The private key bytes.</param>
-    public DilithiumPrivate(byte[] privateKey) : base(GetMode(privateKey.Length)) {
+    public MlDsaPrivate(byte[] privateKey) : base(GetMode(privateKey.Length)) {
         PrivateKey = privateKey;
         var offset = 0;
 

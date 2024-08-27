@@ -10,7 +10,7 @@ namespace Goedel.Cryptography.PQC;
 public struct PolynomialVectorInt16 {
 
     ///<summary>The number of bytes required to store the vector.</summary> 
-    public int PolyVectorBytes => Kyber.PolynomialBytes * Vector.Length;
+    public int PolyVectorBytes => MlKem.PolynomialBytes * Vector.Length;
 
     int K { get; }
 
@@ -19,7 +19,7 @@ public struct PolynomialVectorInt16 {
 
     /// <summary>
     /// Constructor, create a Kyber polynomial of size 
-    /// <paramref name="k"/>.<see cref="Kyber.N"/>.
+    /// <paramref name="k"/>.<see cref="MlKem.N"/>.
     /// </summary>
     /// <param name="k">The number coefficient vectors.</param>
     public PolynomialVectorInt16(int k) {
@@ -40,7 +40,7 @@ public struct PolynomialVectorInt16 {
         Vector = new PolynomialInt16[k];
         for (var i = 0; i < k; i++) {
             Vector[i] = new PolynomialInt16(input, offset);
-            offset += Kyber.PolynomialBytes;
+            offset += MlKem.PolynomialBytes;
             }
 
         }
@@ -103,7 +103,7 @@ public struct PolynomialVectorInt16 {
     /// <summary>
     /// Applies Barrett reduction to each coefficient
     /// of each element of a vector of polynomials.
-    /// For details of the Barrett reduction see <see cref="Kyber.BarrettReduce"/>.
+    /// For details of the Barrett reduction see <see cref="MlKem.BarrettReduce"/>.
     /// </summary>
     public void Reduce() {
         for (var i = 0; i < Vector.Length; i++) {
@@ -127,7 +127,7 @@ public struct PolynomialVectorInt16 {
 
 
         for (var i = 0; i < Vector.Length; i++) {
-            Vector[i].ToBytes(buffer, i* Kyber.PolynomialBytes);
+            Vector[i].ToBytes(buffer, i* MlKem.PolynomialBytes);
             }
 
         if (seed != null) {
@@ -147,9 +147,9 @@ public struct PolynomialVectorInt16 {
         var t = new short[8];
 
         for (var i = 0; i < K; i++) {
-            for (var j = 0; j < Kyber.N/8; j++) {
+            for (var j = 0; j < MlKem.N/8; j++) {
                 for (var k = 0; k < 8; k++) {
-                    t[k] = (short)(((((uint)Vector[i].Coefficients[8 * j + k] << 11) + Kyber.Q / 2) / Kyber.Q) & 0x7ff);
+                    t[k] = (short)(((((uint)Vector[i].Coefficients[8 * j + k] << 11) + MlKem.Q / 2) / MlKem.Q) & 0x7ff);
                     }
                 buffer[offset++] = (byte)(t[0] >> 0);               // 0
                 buffer[offset++] = (byte)(t[0] >> 8  | t[1] << 3);  // 1
@@ -176,9 +176,9 @@ public struct PolynomialVectorInt16 {
         var t = new short[4];
 
         for (var i = 0; i < K; i++) {
-            for (var j = 0; j < Kyber.N / 8; j++) {
+            for (var j = 0; j < MlKem.N / 8; j++) {
                 for (var k = 0; k < 8; k++) {
-                    t[k] = (short)(((((uint)Vector[i].Coefficients[4 * j + k] << 10) + Kyber.Q / 2) / Kyber.Q) & 0x3ff);
+                    t[k] = (short)(((((uint)Vector[i].Coefficients[4 * j + k] << 10) + MlKem.Q / 2) / MlKem.Q) & 0x3ff);
                     }
                 buffer[offset++] = (byte)(t[0] >> 0);               // 0
                 buffer[offset++] = (byte)(t[0] >> 8  | t[1] << 2);  // 1
@@ -203,7 +203,7 @@ public struct PolynomialVectorInt16 {
 
         for (var v = 0; v < k; v++) {
             vector.Vector[v] = new();
-            for (var j = 0; j < Kyber.N / 8; j++) {
+            for (var j = 0; j < MlKem.N / 8; j++) {
 
                 t[0] = (short)((buffer[offset + 0] >> 0) | (buffer[offset + 1] << 8));
                 t[1] = (short)((buffer[offset + 1] >> 3) | (buffer[offset + 2] << 5));
@@ -215,7 +215,7 @@ public struct PolynomialVectorInt16 {
                 t[7] = (short)((buffer[offset + 9] >> 5) | (buffer[offset +10] << 3));
 
                 for (var c = 0; c < 8; c++) {
-                    vector.Vector[v].Coefficients[8 * j + c] = (short)(((t[c] & 0x7FF) * Kyber.Q + 1024) >> 11);
+                    vector.Vector[v].Coefficients[8 * j + c] = (short)(((t[c] & 0x7FF) * MlKem.Q + 1024) >> 11);
                     }
                 
                 offset += 11;
@@ -238,7 +238,7 @@ public struct PolynomialVectorInt16 {
         var t = new short[8];
 
         for (var v = 0; v < k; v++) {
-            for (var j = 0; j < Kyber.N / 4; j++) {
+            for (var j = 0; j < MlKem.N / 4; j++) {
 
                 t[0] = (short)((buffer[offset + 0] >> 0) | (buffer[offset + 1] << 8));
                 t[1] = (short)((buffer[offset + 2] >> 2) | (buffer[offset + 2] << 6));
@@ -246,7 +246,7 @@ public struct PolynomialVectorInt16 {
                 t[3] = (short)((buffer[offset + 6] >> 6) | (buffer[offset + 4] << 2));
 
                 for (var c = 0; c < 4; c++) {
-                    vector.Vector[v].Coefficients[4 * j + c] = (short)(((t[c] & 0x3FF) * Kyber.Q + 512) >> 10);
+                    vector.Vector[v].Coefficients[4 * j + c] = (short)(((t[c] & 0x3FF) * MlKem.Q + 512) >> 10);
                     }
 
                 offset += 11;

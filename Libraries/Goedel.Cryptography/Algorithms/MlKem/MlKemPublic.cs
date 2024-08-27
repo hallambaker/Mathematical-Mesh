@@ -3,21 +3,21 @@
 /// <summary>
 /// Kyber public key.
 /// </summary>
-public class KyberPublic : Kyber {
+public class MlKemPublic : MlKem {
 
     ///<summary>Length of a polyvector for 512 bit key in bytes.</summary> 
-    public const int PolyVectorBytes512 = 2 * Kyber.PolynomialBytes;
+    public const int PolyVectorBytes512 = 2 * MlKem.PolynomialBytes;
     ///<summary>Length of a polyvector for 768 bit key in bytes.</summary> 
-    public const int PolyVectorBytes768 = 3 * Kyber.PolynomialBytes;
+    public const int PolyVectorBytes768 = 3 * MlKem.PolynomialBytes;
     ///<summary>Length of a polyvector for 1024 bit key in bytes.</summary> 
-    public const int PolyVectorBytes1024 = 4 * Kyber.PolynomialBytes;
+    public const int PolyVectorBytes1024 = 4 * MlKem.PolynomialBytes;
 
     ///<summary>Length of a public key for 512 bit key in bytes.</summary> 
-    public const int PublicKeyBytes512 = PolyVectorBytes512 + Kyber.SymBytes;
+    public const int PublicKeyBytes512 = PolyVectorBytes512 + MlKem.SymBytes;
     ///<summary>Length of a public key for 768 bit key in bytes.</summary>
-    public const int PublicKeyBytes768 = PolyVectorBytes768 + Kyber.SymBytes;
+    public const int PublicKeyBytes768 = PolyVectorBytes768 + MlKem.SymBytes;
     ///<summary>Length of a public key for 1024 bit key in bytes.</summary>
-    public const int PublicKeyBytes1024 = PolyVectorBytes1024 + Kyber.SymBytes;
+    public const int PublicKeyBytes1024 = PolyVectorBytes1024 + MlKem.SymBytes;
 
     public byte[] PublicKey { get; }
     byte[] HashPublicKey { get; }
@@ -38,7 +38,7 @@ public class KyberPublic : Kyber {
     /// The Kyber strength parameter is specified implicitly by the key size.
     /// </summary>
     /// <param name="publicKey">The private key.</param>
-    public KyberPublic(byte[] publicKey) : this (publicKey, GetStrength (publicKey.Length), publicKey.Length) {
+    public MlKemPublic(byte[] publicKey) : this (publicKey, GetStrength (publicKey.Length), publicKey.Length) {
         }
 
     /// <summary>
@@ -51,7 +51,7 @@ public class KyberPublic : Kyber {
     /// <param name="offset">Offset at which the public key is located within 
     /// <paramref name="publicKey"/></param>
     /// <param name="length">The length of the public key data.</param>
-    protected KyberPublic(byte[] publicKey, int strength, int length, int offset=0) : 
+    protected MlKemPublic(byte[] publicKey, int strength, int length, int offset=0) : 
                 base (KeySize[strength]) {
         PublicKey = publicKey.Extract(offset, length); ;
 
@@ -66,7 +66,7 @@ public class KyberPublic : Kyber {
         Pkpv = new PolynomialVectorInt16(K, publicKey, offset); //failing
         //Pkpv.GetHash("Pkpv: 8C43-E3D2-");
 
-        Seed = PublicKey.Extract(PolyVectorBytes, Kyber.SymBytes);
+        Seed = PublicKey.Extract(PolyVectorBytes, MlKem.SymBytes);
 
         at = PolynomialMatrixInt16.MatrixExpandFromSeed(K, Seed, true);
         }
@@ -94,7 +94,7 @@ public class KyberPublic : Kyber {
         var (buf, kr) = GetBufKr(hashSeed);
 
         // coins are in kr+KYBER_SYMBYTES 
-        var coins = kr.Extract(Kyber.SymBytes, Kyber.SymBytes);
+        var coins = kr.Extract(MlKem.SymBytes, MlKem.SymBytes);
 
         // call indcpa here
         var ct = IndCpaEncrypt(buf, coins);
@@ -112,13 +112,21 @@ public class KyberPublic : Kyber {
         return (ct, ss);
         }
 
+
+    public (byte[], byte[]) EncapsInternal(byte[]randomness) {
+        throw new NYI();
+        // return (sharedSecret, ciphertext);
+        }
+
+
+
     /// <summary>
     /// Multitarget countermeasure for coins + contributory KEM
     /// </summary>
     /// <param name="hashSeed">The input</param>
     /// <returns>The values buf and kr</returns>
     protected (byte[], byte[]) GetBufKr(byte[] hashSeed) {
-        var buf = new byte[2 * Kyber.SymBytes];
+        var buf = new byte[2 * MlKem.SymBytes];
         Array.Copy(hashSeed, 0, buf, 0, hashSeed.Length);
         Array.Copy(HashPublicKey, 0, buf, hashSeed.Length, hashSeed.Length);
         var kr = SHA3Managed.Process512(buf);

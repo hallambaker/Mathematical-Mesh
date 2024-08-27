@@ -35,9 +35,9 @@ public class KeyPairMlKem : KeyPair, IOpaqueBinaryKey {
     #region //Properties
 
     ///<summary>The public key value.</summary>
-    public KyberPublic PublicKey { get; set; }
+    public MlKemPublic PublicKey { get; set; }
     ///<summary>The private key value</summary>
-    public KyberPrivate PrivateKey { get; set; }
+    public MlKemPrivate PrivateKey { get; set; }
 
     ///<inheritdoc/>
     public int[] OID => PublicKey.KeySize switch {
@@ -104,8 +104,8 @@ public class KeyPairMlKem : KeyPair, IOpaqueBinaryKey {
             byte[]? privateKey,
             KeySecurity keySecurity = KeySecurity.Bound,
             KeyUses keyUses = KeyUses.Any) :
-                        this(new KyberPublic(publicKey),
-                        privateKey is null ? null : new KyberPrivate(privateKey),
+                        this(new MlKemPublic(publicKey),
+                        privateKey is null ? null : new MlKemPrivate(privateKey),
                         keySecurity, keyUses) {
         }
 
@@ -121,8 +121,8 @@ public class KeyPairMlKem : KeyPair, IOpaqueBinaryKey {
     /// <param name="keySecurity">The key security.</param>
     /// <param name="keyUses">The key uses.</param>
     public KeyPairMlKem(
-            KyberPublic publicKey,
-            KyberPrivate? privateKey = null,
+            MlKemPublic publicKey,
+            MlKemPrivate? privateKey = null,
             KeySecurity keySecurity = KeySecurity.Bound,
             KeyUses keyUses = KeyUses.Any) : base(keySecurity) {
 
@@ -148,18 +148,18 @@ public class KeyPairMlKem : KeyPair, IOpaqueBinaryKey {
                 KeyUses keyUses = KeyUses.Any,
                 CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.NULL) {
 
-        Kyber mlKem = cryptoAlgorithmID switch {
-            CryptoAlgorithmId.MLKEM512 => Kyber.MLKEM512,
-            CryptoAlgorithmId.MLKEM768 => Kyber.MLKEM768,
-            CryptoAlgorithmId.MLKEM1024 => Kyber.MLKEM1024,
+        MlKem mlKem = cryptoAlgorithmID switch {
+            CryptoAlgorithmId.MLKEM512 => MlKem.MLKEM512,
+            CryptoAlgorithmId.MLKEM768 => MlKem.MLKEM768,
+            CryptoAlgorithmId.MLKEM1024 => MlKem.MLKEM1024,
             _ => null
             };
 
         mlKem ??= keySize switch {
-            0 => Kyber.MLKEM1024,
-            512 => Kyber.MLKEM512,
-            768 => Kyber.MLKEM768,
-            1024 => Kyber.MLKEM1024,
+            0 => MlKem.MLKEM1024,
+            512 => MlKem.MLKEM512,
+            768 => MlKem.MLKEM768,
+            1024 => MlKem.MLKEM1024,
             _ => throw new KeySizeNotSupported()
             };
 
@@ -194,16 +194,16 @@ public class KeyPairMlKem : KeyPair, IOpaqueBinaryKey {
 
         switch (algorithmID) {
             case CryptoAlgorithmId.MLKEM512: {
-                var binaryData = KeySeed(Kyber.SymBytes * 8, ikm, keySpecifier, keyName);
-                return Generate(Kyber.MLKEM512, binaryData, keySecurity, keyUses);
+                var binaryData = KeySeed(MlKem.SymBytes * 8, ikm, keySpecifier, keyName);
+                return Generate(MlKem.MLKEM512, binaryData, keySecurity, keyUses);
                 }
             case CryptoAlgorithmId.MLKEM768: {
-                var binaryData = KeySeed(Kyber.SymBytes * 8, ikm, keySpecifier, keyName);
-                return Generate(Kyber.MLKEM512, binaryData, keySecurity, keyUses);
+                var binaryData = KeySeed(MlKem.SymBytes * 8, ikm, keySpecifier, keyName);
+                return Generate(MlKem.MLKEM512, binaryData, keySecurity, keyUses);
                 }
             case CryptoAlgorithmId.MLKEM1024: {
-                var binaryData = KeySeed(Kyber.SymBytes * 8, ikm, keySpecifier, keyName);
-                return Generate(Kyber.MLKEM512, binaryData, keySecurity, keyUses);
+                var binaryData = KeySeed(MlKem.SymBytes * 8, ikm, keySpecifier, keyName);
+                return Generate(MlKem.MLKEM512, binaryData, keySecurity, keyUses);
                 }
             };
         throw new NoProviderSpecified();
@@ -211,11 +211,11 @@ public class KeyPairMlKem : KeyPair, IOpaqueBinaryKey {
 
 
     static KeyPairMlKem Generate(
-                Kyber mlKem,
+                MlKem mlKem,
                 byte[]? seed=null,
                 KeySecurity keySecurity = KeySecurity.Bound,
                 KeyUses keyUses = KeyUses.Any) {
-        seed = seed ?? Platform.GetRandomBytes(Kyber.SymBytes);
+        seed = seed ?? Platform.GetRandomBytes(MlKem.SymBytes);
         var (publicKey, privateKey) = mlKem.KeyPair(seed);
         return new KeyPairMlKem (publicKey, privateKey, keySecurity, keyUses);
         }

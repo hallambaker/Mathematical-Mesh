@@ -11,7 +11,7 @@ public struct PolynomialInt16 {
 
     #region // Properties and fields.
     ///<summary>The Kyber modulus.</summary> 
-    public const int q = Kyber.Q;
+    public const int q = MlKem.Q;
 
     /// <summary>
     /// The coefficient vector.
@@ -23,10 +23,10 @@ public struct PolynomialInt16 {
     #region // Constructors
 
     /// <summary>
-    /// Constructor, create a Kyber coefficient vector of length <see cref="Kyber.N"/>.
+    /// Constructor, create a Kyber coefficient vector of length <see cref="MlKem.N"/>.
     /// </summary>
     public PolynomialInt16() {
-        Coefficients = new short[Kyber.N];
+        Coefficients = new short[MlKem.N];
         }
 
 
@@ -57,10 +57,10 @@ public struct PolynomialInt16 {
     /// <returns>The unpacked polynomial.</returns>
     public static PolynomialInt16 FromMessageBytes(byte[] message) {
         var result = new PolynomialInt16();
-        for (var i = 0; i < Kyber.N / 8; i++) {
+        for (var i = 0; i < MlKem.N / 8; i++) {
             for (var j = 0; j < 8; j++) {
                 short mask = (short)(-(short)((message[i] >> j) & 1));
-                result.Coefficients[8 * i + j] = (short)(mask & ((Kyber.Q + 1) / 2));
+                result.Coefficients[8 * i + j] = (short)(mask & ((MlKem.Q + 1) / 2));
                 }
             }
         return result;
@@ -71,18 +71,18 @@ public struct PolynomialInt16 {
     /// </summary>
     /// <returns>The packed polynomial.</returns>
     public byte[] ToMessageBytes() {
-        var result = new byte[Kyber.SymBytes]; 
+        var result = new byte[MlKem.SymBytes]; 
 
         // result is automatically initialized to zeros.
         
-        for (var i = 0; i < Kyber.N / 8; i++) {
+        for (var i = 0; i < MlKem.N / 8; i++) {
             for (var j = 0; j < 8; j++) {
 
 
                 //var t =((((ushort)Coefficients[8 * i + j] <<1)+ (Kyber.Q / 2) / Kyber.Q) & 1);
 
                 var t1 = (uint)Coefficients[8 * i + j] << 1;
-                var t = ((t1 + (Kyber.Q / 2)) / Kyber.Q) & 1;
+                var t = ((t1 + (MlKem.Q / 2)) / MlKem.Q) & 1;
 
 
                 //Console.WriteLine($"{Coefficients[8 * i + j]} -> {t}  [{t1}]");
@@ -102,9 +102,9 @@ public struct PolynomialInt16 {
     public void Compress160(byte[] buffer, int offset = 0) {
         var t = new short[8];
 
-        for (var j = 0; j < Kyber.N / 8; j++) {
+        for (var j = 0; j < MlKem.N / 8; j++) {
             for (var k = 0; k < 8; k++) {
-                t[k] = (short)(((((uint)Coefficients[8 * j + k] << 5) + Kyber.Q / 2) / Kyber.Q) & 31);
+                t[k] = (short)(((((uint)Coefficients[8 * j + k] << 5) + MlKem.Q / 2) / MlKem.Q) & 31);
                 }
 
             buffer[offset++] = (byte)(t[0] >> 0 | t[1] << 5);               // 0
@@ -125,9 +125,9 @@ public struct PolynomialInt16 {
         var t = new short[8];
 
 
-        for (var j = 0; j < Kyber.N / 8; j++) {
+        for (var j = 0; j < MlKem.N / 8; j++) {
             for (var k = 0; k < 8; k++) {
-                t[k] = (short)(((((uint)Coefficients[8 * j + k] << 11) + Kyber.Q / 2) / Kyber.Q) & 0x7ff);
+                t[k] = (short)(((((uint)Coefficients[8 * j + k] << 11) + MlKem.Q / 2) / MlKem.Q) & 0x7ff);
                 }
 
             buffer[offset++] = (byte)(t[0] | (short)(t[1] << 4));  // 0
@@ -148,7 +148,7 @@ public struct PolynomialInt16 {
         var result = new PolynomialInt16();
 
         var t = new byte[8];
-        for (var j = 0; j < Kyber.N / 8; j++) {
+        for (var j = 0; j < MlKem.N / 8; j++) {
 
             t[0] = (byte)((buffer[offset + 0] >> 0));
             t[1] = (byte)((buffer[offset + 0] >> 5) | (buffer[offset + 1] << 3));
@@ -160,7 +160,7 @@ public struct PolynomialInt16 {
             t[7] = (byte)((buffer[offset + 4] >> 3));
             
             for (var k = 0; k < 8; k++) {
-                result.Coefficients[8 * j + k] = (short)(((t[k] & 31) * Kyber.Q + 16) >> 5);
+                result.Coefficients[8 * j + k] = (short)(((t[k] & 31) * MlKem.Q + 16) >> 5);
                 }
             offset += 5;
             }
@@ -176,9 +176,9 @@ public struct PolynomialInt16 {
     public static PolynomialInt16 Decompress320(byte[] buffer, int offset = 0) {
         var result = new PolynomialInt16();
 
-        for (var j = 0; j < Kyber.N / 2; j++) {
-            result.Coefficients[8 * j + 0] = (short)((((buffer[offset + 0] & 15) * Kyber.Q) + 8) >> 4);
-            result.Coefficients[8 * j + 1] = (short)((((buffer[offset + 0] >> 4) * Kyber.Q) + 8) >> 4);
+        for (var j = 0; j < MlKem.N / 2; j++) {
+            result.Coefficients[8 * j + 0] = (short)((((buffer[offset + 0] & 15) * MlKem.Q) + 8) >> 4);
+            result.Coefficients[8 * j + 1] = (short)((((buffer[offset + 0] >> 4) * MlKem.Q) + 8) >> 4);
             }
 
         return result;
@@ -198,15 +198,15 @@ public struct PolynomialInt16 {
 
         short val0, val1;
 
-        while (ctr < Kyber.N && pos + 3 <= buflen) {
+        while (ctr < MlKem.N && pos + 3 <= buflen) {
             val0 = (short)(((buffer[pos + 0] >> 0) | ((short)buffer[pos + 1] << 8)) & 0xFFF);
             val1 = (short)(((buffer[pos + 1] >> 4) | ((short)buffer[pos + 2] << 4)) & 0xFFF);
             pos += 3;
 
-            if (val0 < Kyber.Q) {
+            if (val0 < MlKem.Q) {
                 Coefficients[ctr++] = val0;
                 }
-            if (ctr < Kyber.N && val1 < Kyber.Q)
+            if (ctr < MlKem.N && val1 < MlKem.Q)
                 Coefficients[ctr++] = val1;
 
             }
@@ -224,10 +224,10 @@ public struct PolynomialInt16 {
     /// <param name="input">input byte array</param>
     /// <returns>output polynomial</returns>
     public static PolynomialInt16 CBD2(byte[] input) {
-        (input.Length == (2 * Kyber.N) / 4).AssertTrue(NYI.Throw);
+        (input.Length == (2 * MlKem.N) / 4).AssertTrue(NYI.Throw);
         var result = new PolynomialInt16();
 
-        for (var i = 0; i < Kyber.N/8; i++) {
+        for (var i = 0; i < MlKem.N/8; i++) {
             var t = input.LittleEndian32(4 * i);
             uint d = (t & 0x55555555);
             d += ((t >> 1) & 0x55555555);
@@ -251,10 +251,10 @@ public struct PolynomialInt16 {
     /// <param name="input">input byte array</param>
     /// <returns>output polynomial</returns>
     public static PolynomialInt16 CBD3(byte[] input) {
-        (input.Length == (3 * Kyber.N) / 4).AssertTrue(NYI.Throw);
+        (input.Length == (3 * MlKem.N) / 4).AssertTrue(NYI.Throw);
         var result = new PolynomialInt16();
 
-        for (var i = 0; i < Kyber.N/4; i++) {
+        for (var i = 0; i < MlKem.N/4; i++) {
             var t = input.LittleEndian24(3 * i);
             var d = (short)(t & 0x00249249);
             d += (short)((t >> 1) & 0x00249249);
@@ -305,7 +305,7 @@ public struct PolynomialInt16 {
     public void PolyInvNTT() => InvNTT();
 
 
-    private static short Fqmul(short a, short b) => Kyber.MontgomeryReduce(a * b);
+    private static short Fqmul(short a, short b) => MlKem.MontgomeryReduce(a * b);
 
     private void NTT() {
         short zeta, t;
@@ -348,7 +348,7 @@ public struct PolynomialInt16 {
                 zeta = zetas_inv[k++];
                 for (j = start; j < start + len; ++j) {
                     t = Coefficients[j];
-                    Coefficients[j] = Kyber.BarrettReduce((short)(t + Coefficients[j + len]));
+                    Coefficients[j] = MlKem.BarrettReduce((short)(t + Coefficients[j + len]));
                     Coefficients[j + len] = (short)(t - Coefficients[j + len]);
                     Coefficients[j + len] = Fqmul(zeta, Coefficients[j + len]);
                     }
@@ -362,11 +362,11 @@ public struct PolynomialInt16 {
 
     /// <summary>
     /// Applies Barrett reduction to all coefficients of a polynomial.
-    /// For details of the Barrett reduction see <see cref="Kyber.BarrettReduce"/>.
+    /// For details of the Barrett reduction see <see cref="MlKem.BarrettReduce"/>.
     /// </summary>
     public void Reduce() {
-        for (var i = 0; i < Kyber.N; i++) {
-            Coefficients[i] = Kyber.BarrettReduce(Coefficients[i]);
+        for (var i = 0; i < MlKem.N; i++) {
+            Coefficients[i] = MlKem.BarrettReduce(Coefficients[i]);
             }
         }
 
@@ -376,10 +376,10 @@ public struct PolynomialInt16 {
     /// from normal domain to Montgomery domain
     /// </summary>
     public void PolyToMont() {
-        short f = (short)(((ulong)1 << 32) % Kyber.Q);
+        short f = (short)(((ulong)1 << 32) % MlKem.Q);
 
-        for (var i = 0; i < Kyber.N; i++) {
-            Coefficients[i] = Kyber.MontgomeryReduce(Coefficients[i]*f);
+        for (var i = 0; i < MlKem.N; i++) {
+            Coefficients[i] = MlKem.MontgomeryReduce(Coefficients[i]*f);
             }
         }
 
@@ -387,11 +387,11 @@ public struct PolynomialInt16 {
     /// <summary>
     /// Applies conditional subtraction of q to each coefficient
     /// of a polynomial. For details of conditional subtraction
-    /// of q see <see cref="Kyber.ConditionalSubtract"/>.
+    /// of q see <see cref="MlKem.ConditionalSubtract"/>.
     /// </summary>
     public void PolyCSubQ() {
-        for (var i = 0; i < Kyber.N; i++) {
-            Coefficients[i] = Kyber.ConditionalSubtract(Coefficients[i]);
+        for (var i = 0; i < MlKem.N; i++) {
+            Coefficients[i] = MlKem.ConditionalSubtract(Coefficients[i]);
             }
         }
 
@@ -402,7 +402,7 @@ public struct PolynomialInt16 {
     /// <param name="polynomial">The polynomial to add.</param>
     /// <exception cref="NYI"></exception>
     public void Add(PolynomialInt16 polynomial) {
-        for (var i = 0; i < Kyber.N; i++) {
+        for (var i = 0; i < MlKem.N; i++) {
             Coefficients[i] += polynomial.Coefficients[i];
             }
         }
@@ -414,7 +414,7 @@ public struct PolynomialInt16 {
     /// <param name="polynomial">The polynomial to add.</param>
     /// <exception cref="NYI"></exception>
     public void SubNeg(PolynomialInt16 polynomial) {
-        for (var i = 0; i < Kyber.N; i++) {
+        for (var i = 0; i < MlKem.N; i++) {
             Coefficients[i] = (short)(polynomial.Coefficients[i] - Coefficients[i]);
             }
         }
@@ -428,7 +428,7 @@ public struct PolynomialInt16 {
     /// <returns></returns>
     public void PolyBasemulMontgomery(PolynomialInt16 a, PolynomialInt16 b) {
 
-        for (var i = 0; i < Kyber.N / 4; i++) {
+        for (var i = 0; i < MlKem.N / 4; i++) {
             (Coefficients[4 * i], Coefficients[(4 * i)+1] ) = Basemul(a, b, 4*i, (short) zetas[64+i]);
             (Coefficients[(4 * i)+2], Coefficients[(4 * i) + 3]) = Basemul(a, b, (4*i)+2, (short) -zetas[64+i]);
             }

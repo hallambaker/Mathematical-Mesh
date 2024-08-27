@@ -13,7 +13,7 @@ namespace Goedel.Cryptography.PQC;
 /// Base class for Kyber implementations. Specifies parameters and constants
 /// used in public and private key classes.
 /// </summary>
-public class Kyber {
+public class MlKem {
 
     #region // Properties and fields
     #region // Parameters dependent on Kyber mode.
@@ -81,22 +81,22 @@ public class Kyber {
     #region // Prefab parameter sets
 
     ///<summary>Parameter set for 512 bit key.</summary> 
-    public static Kyber MLKEM512 { get; }
+    public static MlKem MLKEM512 { get; }
 
     ///<summary>Parameter set for 768 bit key.</summary> 
-    public static Kyber MLKEM768 { get; }
+    public static MlKem MLKEM768 { get; }
 
     ///<summary>Parameter set for 1024 bit key.</summary> 
-    public static Kyber MLKEM1024 { get; }
+    public static MlKem MLKEM1024 { get; }
 
     ///<summary>Parameter set for 512 bit key.</summary> 
-    public static Kyber Kyber512 { get; }
+    public static MlKem Kyber512 { get; }
 
     ///<summary>Parameter set for 768 bit key.</summary> 
-    public static Kyber Kyber768 { get; }
+    public static MlKem Kyber768 { get; }
 
     ///<summary>Parameter set for 1024 bit key.</summary> 
-    public static Kyber Kyber1024 { get; }
+    public static MlKem Kyber1024 { get; }
 
 
     public bool Fips203 { get; set; } = true;
@@ -108,14 +108,10 @@ public class Kyber {
     /// <summary>
     /// Do a one time initialization of the parameter presets on assembly load.
     /// </summary>
-    static Kyber() {
-        MLKEM512 = new Kyber(512);
-        MLKEM768 = new Kyber(768);
-        MLKEM1024 = new Kyber(1024);
-
-        Kyber512 = new Kyber(512) { Fips203 = false };
-        Kyber768 = new Kyber(768) { Fips203 = false };
-        Kyber1024 = new Kyber(1024) { Fips203 = false };
+    static MlKem() {
+        MLKEM512 = new MlKem(512);
+        MLKEM768 = new MlKem(768);
+        MLKEM1024 = new MlKem(1024);
         }
 
 
@@ -124,7 +120,7 @@ public class Kyber {
     /// </summary>
     /// <param name="keySize">The key size, 512, 768 or 1024 bytes.</param>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public Kyber(int keySize) {
+    public MlKem(int keySize) {
         KeySize = keySize;
         switch (keySize) {
             case 512: {
@@ -224,10 +220,15 @@ public class Kyber {
     /// from seed.</param>
     /// <returns>The public key and the private key.</returns>
     public (byte[], byte[]) KeyPair(byte[]? seed = null) {
-        var publicKey = new byte[PublicKeyBytes];
-        var privateKey = new byte[PrivateKeyBytes];
+        seed ??= Platform.GetRandomBytes(SymBytes);
+        var buf = SHA3Managed.Process512(seed);
 
-        IndcpaKeypair(publicKey, privateKey, seed);
+        var publicSeed = new byte[SymBytes];
+        var noiseSeed = new byte[SymBytes];
+        Array.Copy(buf, publicSeed, SymBytes);
+        Array.Copy(buf, SymBytes, noiseSeed, 0, SymBytes);
+
+        var (publicKey, privateKey) = MlKeyGen(publicSeed, noiseSeed);
         Array.Copy(publicKey, 0, privateKey, IndCpaPrivateKeyBytes,
                 IndCpaPublicKeyBytes);
 
@@ -245,26 +246,15 @@ public class Kyber {
         return (publicKey, privateKey);
         }
 
-    /// <summary>
-    /// Generate a public, private key pair and the resulting vectors into the initial octets 
-    /// of <paramref name="publicKey"/> and <paramref name="privateKey"/>.
-    /// </summary>
-    /// <param name="publicKey">Buffer of <see cref="PublicKeyBytes"/> to 
-    /// receive the public key.</param>
-    /// <param name="privateKey">Buffer of <see cref="PrivateKeyBytes"/> to
-    /// receive the private key.</param>
-    /// <param name="seed">Optional seed to be used for deterministic key generation.</param>
-    public void IndcpaKeypair(byte[] publicKey, byte[] privateKey, byte[]? seed = null) {
-        seed ??= Platform.GetRandomBytes(SymBytes);
-        var buf = SHA3Managed.Process512(seed);
+
+    public (byte[], byte[]) MlKeyGen(byte[] publicSeed, byte[] noiseSeed) {
+        var publicKey = new byte[PublicKeyBytes];
+        var privateKey = new byte[PrivateKeyBytes];
 
         //Test.DumpBufferFingerprint(buf);
 
         // Truncate the buffer since we only use the first 128 bits.
-        var publicSeed = new byte[SymBytes];
-        var noiseSeed = new byte[SymBytes];
-        Array.Copy(buf, publicSeed, SymBytes);
-        Array.Copy(buf, SymBytes, noiseSeed, 0, SymBytes);
+
 
         var matrix = PolynomialMatrixInt16.MatrixExpandFromSeed(K, publicSeed);
 
@@ -295,7 +285,7 @@ public class Kyber {
         skpv.Pack(privateKey);
         pkpv.Pack(publicKey, publicSeed);
 
-        return;
+        return (publicKey, privateKey);
         } 
     #endregion
     #region // Randomness management

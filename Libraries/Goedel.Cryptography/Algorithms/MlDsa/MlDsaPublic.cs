@@ -7,7 +7,7 @@ namespace Goedel.Cryptography.PQC;
 /// <summary>
 /// Dilithium public key.
 /// </summary>
-public class DilithiumPublic : MLDSA {
+public class MlDsaPublic : MLDSA {
 
     byte[] rho { get; }
 
@@ -17,15 +17,15 @@ public class DilithiumPublic : MLDSA {
 
     public byte[] PublicKey { get; }
 
-    static DilithiumMode GetMode(int length) {
+    static MlDsaMode GetMode(int length) {
         if (length == MLDSA.Mode5.PublicKeyBytes) {
-            return DilithiumMode.Mode5;
+            return MlDsaMode.Mode87;
             }
         if (length == MLDSA.Mode3.PublicKeyBytes) {
-            return DilithiumMode.Mode3;
+            return MlDsaMode.Mode65;
             }
         if (length == MLDSA.Mode2.PublicKeyBytes) {
-            return DilithiumMode.Mode2;
+            return MlDsaMode.Mode44;
             }
 
         throw new NYI();
@@ -36,7 +36,7 @@ public class DilithiumPublic : MLDSA {
     /// <paramref name="publicKey"/>.
     /// </summary>
     /// <param name="publicKey">The public key bytes.</param>
-    public DilithiumPublic(byte[] publicKey) : base(GetMode(publicKey.Length)) {
+    public MlDsaPublic(byte[] publicKey) : base(GetMode(publicKey.Length)) {
         PublicKey = publicKey;
         var offset = 0;
         rho = publicKey.Extract(ref offset, SeedBytes);
