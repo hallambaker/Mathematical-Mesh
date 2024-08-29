@@ -1,0 +1,1934 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Cryptography.Nist</name>
+    </assembly>
+    <members>
+        <member name="M:Goedel.Cryptography.Nist.BinaryCurve.FastMultiply(System.Numerics.BigInteger)">
+            <summary>
+            Based on the Fixed-base comb method (Algorithm 17 from https://link.springer.com/content/pdf/10.1007/3-540-44499-8_1.pdf)
+            </summary>
+            <param name="scalar"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.EccDomainParameters.CurveE">
+            <summary>
+            The polynomial representing the curve, contains a, b and the curve type
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.EccDomainParameters.SecretGeneration">
+            <summary>
+            How secrets are generated used by these <see cref="T:Goedel.Cryptography.Nist.EccDomainParameters"/>.
+            Generally this field doesn't matter but is needed for some group properties in gen/vals.
+            Theoretically it should factor into KeyGen, but our tests are agnostic to this property.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.EccDsa.#ctor(Goedel.Cryptography.Nist.ISha,Goedel.Cryptography.Nist.IEntropyProvider)">
+            <summary>
+            KAS constructor
+            </summary>
+            <param name="sha">The SHA instance.</param>
+            <param name="entropyProvider">An entropy provider.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.EccKeyPairGenerateResult.#ctor(Goedel.Cryptography.Nist.EccKeyPair)">
+            <summary>
+            No errors
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.EccKeyPairGenerateResult.#ctor(System.String)">
+            <summary>
+            Include error message
+            </summary>
+            <param name="errorMessage"></param>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.EccKeyPairValidateResult.Success">
+            <summary>
+            Was the validation successful?
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.EccKeyPairValidateResult.ErrorMessage">
+            <summary>
+            Message associated to validation attempt
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.EccKeyPairValidateResult.#ctor">
+            <summary>
+            No errors
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.EccKeyPairValidateResult.#ctor(System.String)">
+            <summary>
+            Include error message
+            </summary>
+            <param name="errorMessage"></param>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.EccPoint.X">
+            <summary>
+            X Coordinate of the point
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.EccPoint.Y">
+            <summary>
+            Y Coordinate of the point
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.EccVerificationResult.Success">
+            <summary>
+            Was the generation successful?
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.EccVerificationResult.ErrorMessage">
+            <summary>
+            Message associated to generation attempt
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.EccVerificationResult.#ctor">
+            <summary>
+            No errors
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.EccVerificationResult.#ctor(System.String)">
+            <summary>
+            Include error message
+            </summary>
+            <param name="errorMessage"></param>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.IDomainParametersGenerateRequest">
+            <summary>
+            Used as a request in <see cref="!:IDsa.GenerateDomainParameters"/>
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.IDomainParametersGenerateResult">
+            <summary>
+            The response to a <see cref="!:IDsa.GenerateDomainParameters"/> request
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.IDsa`11">
+            <summary>
+            Describes functionality for the DSA algorithm.
+            
+            http://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-4.pdf
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.IDsa`11.Sha">
+            <summary>
+            The Sha instance utilized for Dsa
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IDsa`11.GenerateDomainParameters(`0)">
+            <summary>
+            Generates a set of DSA Domain Parameters with state values included in response.
+            </summary>
+            <param name="generateRequest">The parameters used creation of the <see cref="!:TDsaDomainParameters"/></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IDsa`11.ValidateDomainParameters(`2)">
+            <summary>
+            Validates a set of DSA Domain Parameters based on the modes provided in the <see cref="!:TDomainParametersValidateRequest"/>
+            </summary>
+            <param name="domainParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IDsa`11.GenerateKeyPair(`4)">
+            <summary>
+            Generates a <see cref="T:Goedel.Cryptography.Nist.IDsaKeyPair"/> based on a set of <see cref="!:TDsaDomainParameters"/>
+            </summary>
+            <param name="domainParameters">The Domain parameters used to generate the key pair</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IDsa`11.ValidateKeyPair(`4,`6)">
+            <summary>
+            Validates a <see cref="!:TDsaKeyPair"/> based on a set of <see cref="!:TDsaDomainParameters"/>
+            </summary>
+            <param name="domainParameters">The Domain parameters used in generating the key pair</param>
+            <param name="keyPair">The DSA key pair</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IDsa`11.Sign(`4,`6,Goedel.Cryptography.Nist.BitString,System.Boolean)">
+            <summary>
+            Signs a message
+            </summary>
+            <param name="domainParameters"></param>
+            <param name="keyPair"></param>
+            <param name="message"></param>
+            <param name="skipHash"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IDsa`11.Verify(`4,`6,Goedel.Cryptography.Nist.BitString,`8,System.Boolean)">
+            <summary>
+            Verifies a signature
+            </summary>
+            <param name="domainParameters"></param>
+            <param name="keyPair"></param>
+            <param name="message"></param>
+            <param name="signature"></param>
+            <param name="skipHash"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.IDsaDomainParameters">
+            <summary>
+            Interface for DSA domain parameters
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.IDsaKeyPair">
+            <summary>
+            Used to describe a DSA Key Pair
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.IEccCurve.CurveType">
+            <summary>
+            Type of curve, prime or binary
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.IEccCurve.CurveName">
+            <summary>
+            Name of the curve as an enum
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.IEccCurve.FieldSizeQ">
+            <summary>
+            Field size, either a q = prime > 3, or q = 2^m where m is prime. Represents the total number of points
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.IEccCurve.CoefficientA">
+            <summary>
+            Coefficient a
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.IEccCurve.CoefficientB">
+            <summary>
+            Coefficient b
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.IEccCurve.BasePointG">
+            <summary>
+            Base point of the curve
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.IEccCurve.CofactorH">
+            <summary>
+            Cofactor of the curve, a curve has h * <see cref="P:Goedel.Cryptography.Nist.IEccCurve.OrderN"/> possible points. Value is usually 1, 2, or 4.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.IEccCurve.OrderN">
+            <summary>
+            Order of <see cref="P:Goedel.Cryptography.Nist.IEccCurve.BasePointG"/> which is a large prime
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IEccCurve.Multiply(Goedel.Cryptography.Nist.EccPoint,System.Numerics.BigInteger)">
+            <summary>
+            Multiply a point by a scalar value over a curve
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IEccCurve.Double(Goedel.Cryptography.Nist.EccPoint)">
+            <summary>
+            Double a point over a curve
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IEccCurve.Add(Goedel.Cryptography.Nist.EccPoint,Goedel.Cryptography.Nist.EccPoint)">
+            <summary>
+            Add two points together over a curve, a + b
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IEccCurve.Subtract(Goedel.Cryptography.Nist.EccPoint,Goedel.Cryptography.Nist.EccPoint)">
+            <summary>
+            Subtracts two points over a curve, a - b
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IEccCurve.Negate(Goedel.Cryptography.Nist.EccPoint)">
+            <summary>
+            Negates a point, a => -a
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IEccCurve.PointExistsOnCurve(Goedel.Cryptography.Nist.EccPoint)">
+            <summary>
+            Determines if a given point exists on the curve
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IEccCurve.PointExistsInField(Goedel.Cryptography.Nist.EccPoint)">
+            <summary>
+            Determines if a given point exists in the field
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.Dilithium._zeta">
+            <summary>
+            Precomputed zeta array with bitrev(k) already applied
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.GenerateKey(System.Collections.BitArray)">
+            <summary>
+            Generates a key pair (pk, sk)
+            </summary>
+            <param name="seed">Random 256-bit array</param>
+            <returns>Tuple (byte[] pk, byte[] sk) containing the public key and secret key</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.Sign(System.Byte[],System.Collections.BitArray,System.Boolean)">
+            <summary>
+            Signs a message with a given secret key
+            </summary>
+            <param name="sk">Secret key.</param>
+            <param name="message">Arbitrary set of bits.</param>
+            <param name="deterministic">Determines if the signature incorporates any randomness. Opposite is "hedged".</param>
+            <returns>Signature</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.Verify(System.Byte[],System.Byte[],System.Collections.BitArray)">
+            <summary>
+            Verify a signature
+            </summary>
+            <param name="pk">Public key.</param>
+            <param name="signature">Signature.</param>
+            <param name="m">Message.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.IntegerToBits(System.Int32,System.Int32)">
+            <summary>
+            Algorithm 9. NOTE: This wipes out the value of x.
+            </summary>
+            <param name="x">Integer value</param>
+            <param name="alpha">Number of bits to use to express x</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.BitsToInteger(System.Collections.BitArray,System.Int32)">
+            <summary>
+            Algorithm 10
+            </summary>
+            <param name="y">Array of bits</param>
+            <param name="alpha">Number of bits in y</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.IntegerToBytes(System.Int32,System.Int32)">
+            <summary>
+            Algorithm 11
+            </summary>
+            <param name="x">Nonnegative integer</param>
+            <param name="alpha">Number of bytes in x</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.BitsToBytes(System.Collections.BitArray)">
+            <summary>
+            Algorithm 12
+            </summary>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.BytesToBits(System.Byte[])">
+            <summary>
+            Algorithm 13. NOTE: This wipes out the value of z. 
+            </summary>
+            <param name="z"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.CoeffFromThreeBytes(System.Byte,System.Byte,System.Byte)">
+            <summary>
+            Algorithm 14
+            </summary>
+            <param name="b0"></param>
+            <param name="b1"></param>
+            <param name="b2"></param>
+            <returns>Generates a value from 0 to q-1</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.CoeffFromHalfByte(System.Byte)">
+            <summary>
+            Algorithm 15
+            </summary>
+            <param name="b">4-bit value, 0-15</param>
+            <returns>Generates a value from -eta to +eta</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.SimpleBitPack(System.Int32[],System.Int32)">
+            <summary>
+            Algorithm 16
+            </summary>
+            <param name="w">polynomial with coefficients in a 256-length array with values [0, b]</param>
+            <param name="b"></param>
+            <returns>byte string representing polynomial w</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.BitPack(System.Int32[],System.Int32,System.Int32)">
+            <summary>
+            Algorithm 17
+            </summary>
+            <param name="w">a polynomial with coefficients in a 256-length array with values [-a, b]</param>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.SimpleBitUnpack(System.Byte[],System.Int32)">
+            <summary>
+            Algorithm 18
+            </summary>
+            <param name="v"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.BitUnpack(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Algorithm 19
+            </summary>
+            <param name="v"></param>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.HintBitPack(System.Int32[][])">
+            <summary>
+            Algorithm 20
+            </summary>
+            <param name="h">A K x 256 vector of polynomials with binary coefficients and at most Omega coefficients set to 1</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.HintBitUnpack(System.Byte[])">
+            <summary>
+            Algorithm 21
+            </summary>
+            <param name="y"></param>
+            <returns>null or a K x 256 vector of polynomials with binary coefficients and at most Omega coefficients set to 1</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.PkEncode(System.Collections.BitArray,System.Int32[][])">
+            <summary>
+            Algorithm 22
+            </summary>
+            <param name="rho">Public key bits</param>
+            <param name="t1"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.PkDecode(System.Byte[])">
+            <summary>
+            Algorithm 23
+            </summary>
+            <param name="pk"></param>
+            <returns>(rho, t1) tuple containing the BitArray rho and vector of polynomials t1</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.SkEncode(System.Collections.BitArray,System.Collections.BitArray,System.Collections.BitArray,System.Int32[][],System.Int32[][],System.Int32[][])">
+            <summary>
+            Algorithm 24. There are a lot of concatenations here which may not be too fast, the relative size of the arrays
+            shouldn't make this a problem though.
+            </summary>
+            <param name="rho"></param>
+            <param name="k"></param>
+            <param name="tr"></param>
+            <param name="s1"></param>
+            <param name="s2"></param>
+            <param name="t0"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.SkDecode(System.Byte[])">
+            <summary>
+            Algorithm 25
+            </summary>
+            <param name="sk"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.SigEncode(System.Collections.BitArray,System.Int32[][],System.Int32[][])">
+            <summary>
+            Algorithm 26
+            </summary>
+            <param name="cTilde"></param>
+            <param name="z"></param>
+            <param name="h"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.SigDecode(System.Byte[])">
+            <summary>
+            Algorithm 27
+            </summary>
+            <param name="sigma"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.W1Encode(System.Int32[][])">
+            <summary>
+            Algorithm 28
+            </summary>
+            <param name="w1"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.SampleInBall(System.Byte[])">
+            <summary>
+            Algorithm 29
+            </summary>
+            <param name="rho">Random {256, 384, 512}-bit array</param>
+            <returns>A polynomial with coefficients in {-1, 0, 1}</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.RejNTTPoly(System.Collections.BitArray)">
+            <summary>
+            Algorithm 30
+            </summary>
+            <param name="rho">Random 272-bit array</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.RejBoundedPoly(System.Collections.BitArray)">
+            <summary>
+            Algorithm 31
+            </summary>
+            <param name="rho">Random 528-bit array</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.ExpandA(System.Collections.BitArray)">
+            <summary>
+            Algorithm 32
+            </summary>
+            <param name="rho">Random 256-bit array</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.ExpandS(System.Collections.BitArray)">
+            <summary>
+            Algorithm 33
+            </summary>
+            <param name="rho">Random 512-bit array</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.ExpandMask(System.Collections.BitArray,System.Int32)">
+            <summary>
+            Algorithm 34
+            </summary>
+            <param name="rho">Random 512-bit array</param>
+            <param name="mu">Nonnegative integer</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.Power2Round(System.Int32)">
+            <summary>
+            Algorithm 35
+            </summary>
+            <param name="r"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.Decompose(System.Int32)">
+            <summary>
+            Algorithm 36
+            </summary>
+            <param name="r"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.HighBits(System.Int32)">
+            <summary>
+            Algorithm 37
+            </summary>
+            <param name="r"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.LowBits(System.Int32)">
+            <summary>
+            Algorithm 38
+            </summary>
+            <param name="r"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.MakeHint(System.Int32,System.Int32)">
+            <summary>
+            Algorithm 39
+            </summary>
+            <param name="z"></param>
+            <param name="r"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.UseHint(System.Boolean,System.Int32)">
+            <summary>
+            Algorithm 40
+            </summary>
+            <param name="h"></param>
+            <param name="r"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.NTT(System.Int32[])">
+            <summary>
+            Algorithm 41
+            </summary>
+            <param name="w"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.NTTInverse(System.Int32[])">
+            <summary>
+            Algorithm 42
+            </summary>
+            <param name="wHat"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.DilithiumParameters.Q">
+            <summary>
+            Modulus.
+            Valid option is 8380417
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.DilithiumParameters.D">
+            <summary>
+            The number of dropped bits from t.
+            Valid option is 13
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.DilithiumParameters.Tau">
+            <summary>
+            Number of +- 1s in polynomial c.
+            Valid options are 39, 49, 60
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.DilithiumParameters.Lambda">
+            <summary>
+            The collision strength of cTilde.
+            Valid options are 128, 192, 256
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.DilithiumParameters.Gamma1">
+            <summary>
+            Coefficient range of y.
+            Valid options are 2^17 or 2^19
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.DilithiumParameters.Gamma2">
+            <summary>
+            Low order rounding range.
+            Valid options are based on Q, (Q - 1) / 88 or (Q - 1) / 32
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.DilithiumParameters.K">
+            <summary>
+            (K, L) are the dimensions of A.
+            Valid options are 4, 6, 8
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.DilithiumParameters.L">
+            <summary>
+            (K, L) are the dimensions of A.
+            Valid options are 4, 5, 7
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.DilithiumParameters.Eta">
+            <summary>
+            Private key range.
+            Valid options are 2 or 4
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.DilithiumParameters.Beta">
+            <summary>
+            Tau * Eta.
+            Valid options are 78, 196, 120
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.DilithiumParameters.Omega">
+            <summary>
+            The maximum number of 1s in hint h.
+            Valid options are 80, 55, 75
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.IMLKEM">
+            <summary>
+            Abstract interface for ML-KEM-Internal
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IMLKEM.GenerateKey(System.Byte[],System.Byte[])">
+            <summary>
+            Generate an encapsulation and decapsulation key pair
+            </summary>
+            <param name="z">Random concatenation on decapsulation key</param>
+            <param name="d">Random seed provided to K-PKE.KeyGen</param>
+            <returns>Tuple containing (encapsulation key ek, decapsulation key dk)</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IMLKEM.Encapsulate(System.Byte[],System.Byte[])">
+            <summary>
+            Derive and encapsulate a shared secret
+            </summary>
+            <param name="ek">Encapsulation key</param>
+            <param name="m">Random seed, 32 bytes</param>
+            <returns>Tuple containing (shared secret K, ciphertext c)</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IMLKEM.Decapsulate(System.Byte[],System.Byte[])">
+            <summary>
+            Decapsulate a shared secret
+            </summary>
+            <param name="dk">Decapsulation key</param>
+            <param name="c">Encapsulated shared secret</param>
+            <returns>Decapsulated shared secret</returns>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.KyberParameters.N">
+            <summary>
+            Constant. Only valid value is 256.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.KyberParameters.Q">
+            <summary>
+            Modulus. Only valid value is 3329.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.KyberParameters.K">
+            <summary>
+            Dimensions of A and vectors. Valid values are 2, 3, 4.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.KyberParameters.Eta1">
+            <summary>
+            Distribution for generating vectors. Valid values are 3, 2, 2.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.KyberParameters.Eta2">
+            <summary>
+            Distribution for generating vectors. Only valid value is 2.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.KyberParameters.Du">
+            <summary>
+            Parameters for functions. Valid values are 10, 10, 11.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.KyberParameters.Dv">
+            <summary>
+            Parameters for functions. Valid values are 4, 4, 5.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.KyberParameters.EncapsulationKeyLength">
+            <summary>
+            Length in bytes of encapsulation key
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.KyberParameters.DecapsulationKeyLength">
+            <summary>
+            Length in bytes of decapsulation key
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.KyberParameters.CiphertextLength">
+            <summary>
+            Length in bytes of ciphertext
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.MLKEMInternal">
+            <summary>
+            ML-KEM internal operation, does not perform wrapper operations specified by FIPS 203
+            </summary>
+            <remarks>
+            Constuctor, generate an instance from the parameters <paramref name="param"/> using
+            the SHA-3 implementation <paramref name="shaFactory"/>.
+            </remarks>
+            <param name="param">The parameters.</param>
+            <param name="shaFactory">Factory method returning a SHA-3 instance.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.#ctor(Goedel.Cryptography.Nist.KyberParameters,Goedel.Cryptography.Nist.IShaFactory)">
+            <summary>
+            ML-KEM internal operation, does not perform wrapper operations specified by FIPS 203
+            </summary>
+            <remarks>
+            Constuctor, generate an instance from the parameters <paramref name="param"/> using
+            the SHA-3 implementation <paramref name="shaFactory"/>.
+            </remarks>
+            <param name="param">The parameters.</param>
+            <param name="shaFactory">Factory method returning a SHA-3 instance.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.GenerateKey(System.Byte[],System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.Encapsulate(System.Byte[],System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.Decapsulate(System.Byte[],System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.Prf(System.Int32,System.Byte[],System.Byte)">
+            <summary>
+            PRF = SHAKE256(s || b, 64 * eta)
+            </summary>
+            <param name="eta">Output length modifier</param>
+            <param name="s">32 bytes</param>
+            <param name="b">Single byte</param>
+            <returns>byte[] with 64 * eta bytes</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.H(System.Byte[])">
+            <summary>
+            SHA3-256(s)
+            </summary>
+            <param name="s"></param>
+            <returns>32 bytes</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.J(System.Byte[])">
+            <summary>
+            SHAKE-256(s)
+            </summary>
+            <param name="s"></param>
+            <returns>32 bytes</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.G(System.Byte[])">
+            <summary>
+            a || b = SHA3-512(c) 
+            </summary>
+            <param name="c"></param>
+            <returns>(a, b) where both elements are 32 bytes</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.BitsToBytes(System.Collections.BitArray)">
+            <summary>
+            Algorithm 2
+            </summary>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.IntegerToBits(System.Int32,System.Int32)">
+            <summary>
+            Not specified but helpful for zeta computation
+            </summary>
+            <param name="x">Integer value</param>
+            <param name="alpha">Number of bits to use to express x</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.BitsToInteger(System.Collections.BitArray,System.Int32)">
+            <summary>
+            Not specified but helpful for zeta computation
+            </summary>
+            <param name="y">Array of bits</param>
+            <param name="alpha">Number of bits in y</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.IntegerToBytes(System.Int32,System.Int32)">
+            <summary>
+            Not specified but needed in K-PKE.KeyGen
+            </summary>
+            <param name="x">Nonnegative integer</param>
+            <param name="alpha">Number of bytes in x</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.BytesToBits(System.Byte[])">
+            <summary>
+            Algorithm 3
+            </summary>
+            <param name="z"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.ByteEncode(System.Int32,System.Int32[])">
+            <summary>
+            Algorithm 4
+            </summary>
+            <param name="d">d = [1, 12]</param>
+            <param name="F">Array of 256 integers modulo 2^d, or modulo q if d = 12</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.ByteDecode(System.Int32,System.Byte[])">
+            <summary>
+            Algorithm 5
+            </summary>
+            <param name="d">d = [1, 12]</param>
+            <param name="B">Encoded byte[] with 32 * d elements</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.SampleNTT(System.Byte[],System.Byte,System.Byte)">
+            <summary>
+            Algorithm 6
+            </summary>
+            <param name="seed"></param>
+            <param name="l"></param>
+            <param name="k"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.SamplePolyCBD(System.Int32,System.Byte[])">
+            <summary>
+            Algorithm 7
+            </summary>
+            <param name="eta"></param>
+            <param name="B"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.NTT(System.Int32[])">
+            <summary>
+            Algorithm 8
+            </summary>
+            <param name="f"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.NTTInverse(System.Int32[])">
+            <summary>
+            Algorithm 9
+            </summary>
+            <param name="fHat"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.MultiplyNTTs(System.Int32[],System.Int32[])">
+            <summary>
+            Algorithm 10
+            </summary>
+            <param name="fHat"></param>
+            <param name="gHat"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.BaseCaseMultiply(System.Int64,System.Int64,System.Int64,System.Int64,System.Int64)">
+            <summary>
+            Algorithm 11
+            </summary>
+            <param name="a0"></param>
+            <param name="a1"></param>
+            <param name="b0"></param>
+            <param name="b1"></param>
+            <param name="gamma"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.K_Pke_KeyGen(System.Byte[])">
+            <summary>
+            Algorithm 12
+            </summary>
+            <param name="d"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.ZetaFunction(System.Int32)">
+            <summary>
+            Helper function for NTTs that performs a bit-reversal on k and retrieves that index from the precomputed zeta array
+            </summary>
+            <param name="k"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.ZetaFunction2(System.Int32)">
+            <summary>
+            Helper function for NTT multiplication that performs 2 * bit-reversal(k) + 1 and retrieves that index from the precomputed zeta array
+            </summary>
+            <param name="i"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeGeneratorHelper.ProbablePrimeFactor(Goedel.Cryptography.Nist.PrimeTestModes,Goedel.Cryptography.Nist.IEntropyProvider,System.Int32,System.Int32,System.Numerics.BigInteger,System.Numerics.BigInteger,System.Int32,System.Numerics.BigInteger)">
+            <summary>
+            C.9 Compute a Probable Prime Factor Based on Auxiliary Primes
+            </summary>
+            <param name="r1"></param>
+            <param name="r2"></param>
+            <param name="nLen"></param>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeGeneratorHelper.ProvablePrimeConstruction(Goedel.Cryptography.Nist.ISha,System.Int32,System.Int32,System.Int32,System.Numerics.BigInteger,System.Numerics.BigInteger)">
+            <summary>
+            C.10 Provable Prime Construction
+            </summary>
+            <param name="L"></param>
+            <param name="N1"></param>
+            <param name="N2"></param>
+            <param name="firstSeed"></param>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeGeneratorHelper.MillerRabin(Goedel.Cryptography.Nist.PrimeTestModes,System.Int32,System.Numerics.BigInteger,System.Boolean)">
+            <summary>
+            Miller-Rabin driver to determine how to properly call underlying function
+            </summary>
+            <param name="nlen"></param>
+            <param name="val"></param>
+            <param name="factor"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.EntropyProviderFactory">
+            <summary>
+            Used for retrieving an instance of an <see cref="T:Goedel.Cryptography.Nist.IEntropyProvider"/>
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.EntropyProviderFactory.GetEntropyProvider(Goedel.Cryptography.Nist.EntropyProviderTypes)">
+            <summary>
+            Returns a new instance of an <see cref="T:Goedel.Cryptography.Nist.IEntropyProvider"/>
+            </summary>
+            <param name="providerType">The <see cref="T:Goedel.Cryptography.Nist.IEntropyProvider"/> type </param>
+            <exception cref="T:System.ArgumentException">Thrown when <see cref="!:providerType"/> is invalid</exception>
+            <returns></returns>
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.EntropyProviderTypes.Testable">
+            <summary>
+            Allows for the setting/injection of specific entropy for testing purposes
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.EntropyProviderTypes.Random">
+            <summary>
+            Uses a Random number generator for entropy retrieval.
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.IEntropyProvider">
+            <summary>
+            Provides an interface for getting entropy as <see cref="T:Goedel.Cryptography.Nist.BitString"/> with a specified number of bits
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IEntropyProvider.GetEntropy(System.Int32)">
+            <summary>
+            Get Entropy
+            </summary>
+            <param name="numberOfBits">The number of bits to receive</param>
+            <returns>Entropy as a <see cref="T:Goedel.Cryptography.Nist.BitString"/></returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.IEntropyProviderFactory">
+            <summary>
+            Interface for retrieving a <see cref="T:Goedel.Cryptography.Nist.IEntropyProvider"/> based on use case.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IEntropyProviderFactory.GetEntropyProvider(Goedel.Cryptography.Nist.EntropyProviderTypes)">
+            <summary>
+            Gets an <see cref="T:Goedel.Cryptography.Nist.IEntropyProvider"/>
+            </summary>
+            <param name="providerType">The type of provider to retrieve</param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.ITestableEntropyProvider">
+            <summary>
+            Allows for adding specific entropy to a provider
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.ITestableEntropyProvider.AddEntropy(Goedel.Cryptography.Nist.BitString)">
+            <summary>
+            Add entropy
+            </summary>
+            <param name="entropy">The <see cref="T:Goedel.Cryptography.Nist.BitString"/> to add</param>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.IEnumerableExtensions">
+            <summary>
+            Extension methods for <see cref="T:System.Collections.Generic.IEnumerable`1"/>
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IEnumerableExtensions.FirstOrNull``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})">
+            <summary>
+            returns first item found, or null if not found.
+            </summary>
+            <typeparam name="T">The type</typeparam>
+            <param name="items">The IEnumerable to iterate</param>
+            <param name="predicate">What to search for</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IEnumerableExtensions.TryFirst``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean},``0@)">
+            <summary>
+            Try to get an item from the <see cref="T:System.Collections.Generic.IEnumerable`1"/>
+            </summary>
+            <typeparam name="T">The type</typeparam>
+            <param name="items">The IEnumerable to iterate</param>
+            <param name="predicate"></param>
+            <param name="result">The type to return when found</param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.ListExtensions">
+            <summary>
+            Extension methods for <see cref="T:System.Collections.Generic.List`1"/>
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.ListExtensions.AddIfNotNullOrEmpty(System.Collections.Generic.List{System.String},System.String)">
+            <summary>
+            Adds a string to a <see cref="T:System.Collections.Generic.List`1"/> when the string is not null or empty, otherwise do nothing.
+            </summary>
+            <param name="list">The list to (potentially) add the <see cref="!:itemToAdd"/> too</param>
+            <param name="itemToAdd">The item that is evaluated for adding to <see cref="!:list"/></param>
+            <returns>True if item added, false otherwise.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.ListExtensions.AddIfNotNull``1(System.Collections.Generic.List{``0},``0)">
+            <summary>
+            Add an item to <see cref="T:System.Collections.Generic.List`1"/> if it is not null
+            </summary>
+            <typeparam name="T">The type contained within the list</typeparam>
+            <param name="list">The list</param>
+            <param name="itemToAdd">The item to (potentially) add to the list</param>
+            <returns>True if item added, false otherwise.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.ListExtensions.AddRangeIfNotNullOrEmpty``1(System.Collections.Generic.List{``0},System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Adds an <see cref="T:System.Collections.Generic.IEnumerable`1"/> to a <see cref="T:System.Collections.Generic.List`1"/> when the <see cref="!:itemsToAdd"/> has more than 0 elements.
+            </summary>
+            <param name="list">The list to (potentially) add the <see cref="!:itemsToAdd"/> too</param>
+            <param name="itemsToAdd">The object that is evaluated for adding to <see cref="!:list"/></param>
+            <returns>True if item added, false otherwise.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.ListExtensions.Add``1(System.Collections.Generic.List{``0},``0,System.Int32)">
+            <summary>
+            Adds an item to <see cref="T:System.Collections.Generic.List`1"/> <paramref name="numberOfTimesToAdd"/> times.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list"></param>
+            <param name="itemToAdd"></param>
+            <param name="numberOfTimesToAdd"></param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.ListExtensions.Shuffle``1(System.Collections.Generic.List{``0})">
+            <summary>
+            Shuffles a list.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list"></param>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.HashFunction.OutputLen">
+            <summary>
+            Output length in bits.
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.ISha">
+            <summary>
+            Provides a SHA implementation for hashing <see cref="!:message"/>s
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.ISha.HashFunction">
+            <summary>
+            The <see cref="P:Goedel.Cryptography.Nist.ISha.HashFunction"/> attributed to the <see cref="T:Goedel.Cryptography.Nist.ISha"/> instance
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.ISha.HashMessage(Goedel.Cryptography.Nist.BitString,System.Int32)">
+            <summary>
+            Given a <see cref="!:message"/>, return a <see cref="T:Goedel.Cryptography.Nist.BitString"/>
+            </summary>
+            <param name="message">The message to hash</param>
+            <param name="outLen"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.ISha.HashNumber(System.Numerics.BigInteger)">
+            <summary>
+            Given a <see cref="T:System.Numerics.BigInteger"/>, return a digest
+            </summary>
+            <param name="number"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.ISha.Init">
+            <summary>
+            Initializes the hash function
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.ISha.Update(System.Byte[],System.Int32)">
+            <summary>
+            Provides content to hash
+            </summary>
+            <param name="message"></param>
+            <param name="bitLength"></param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.ISha.Update(System.Int32,System.Int32)">
+            <summary>
+            Provides content to hash, MUST not have other updates of incomplete bytes
+            </summary>
+            <param name="message"></param>
+            <param name="bitLength">MUST be a multiple of 8 bits</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.ISha.Final(System.Byte[],System.Int32)">
+            <summary>
+            Get the hash result
+            </summary>
+            <param name="output"></param>
+            <param name="outputBitLength"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.IShaFactory">
+            <summary>
+            Provides a means of retrieving a <see cref="T:Goedel.Cryptography.Nist.ISha"/> instance.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IShaFactory.GetShaInstance(Goedel.Cryptography.Nist.HashFunction)">
+            <summary>
+            Gets an <see cref="T:Goedel.Cryptography.Nist.ISha"/> based on the <see cref="T:Goedel.Cryptography.Nist.HashFunction"/>
+            </summary>
+            <param name="hashFunction">Used to determine the <see cref="T:Goedel.Cryptography.Nist.ISha"/> instance to retrieve.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IShaFactory.GetShakeInstance(Goedel.Cryptography.Nist.HashFunction)">
+            <summary>
+            Gets an <see cref="T:Goedel.Cryptography.Nist.IShake"/> based on the <see cref="T:Goedel.Cryptography.Nist.HashFunction"/>
+            </summary>
+            <param name="hashFunction">Used to determine the <see cref="T:Goedel.Cryptography.Nist.IShake"/> instance to retrieve.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.ShaAttributes">
+            <summary>
+            Get SHA information
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BigIntegerExtensions.PosMod(System.Numerics.BigInteger,System.Numerics.BigInteger)">
+            <summary>
+            Takes the modulo of a value (or <see cref="T:System.Numerics.BigInteger"/> expression) and ensures it is between [0, <paramref name="modulo"/> - 1]
+            </summary>
+            <param name="value"></param>
+            <param name="modulo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BigIntegerExtensions.ExactBitLength(System.Numerics.BigInteger)">
+            <summary>
+            Determines the EXACT number of bits used in a <see cref="T:System.Numerics.BigInteger"/> by converting the value to a <see cref="T:Goedel.Cryptography.Nist.BitString"/> 
+            and such that the MSbit is a 1
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BigIntegerExtensions.ExactBitString(System.Numerics.BigInteger)">
+            <summary>
+            Returns the EXACT number of bits needed to represent the <see cref="T:System.Numerics.BigInteger"/> value. The MSbit is always a 1
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BigIntegerExtensions.GetBit(System.Numerics.BigInteger,System.Int32)">
+            <summary>
+            Gets a specific bit where 0 is the LSbit
+            </summary>
+            <param name="value"></param>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BigIntegerExtensions.ToHex(System.Numerics.BigInteger,System.Boolean)">
+            <summary>
+            returns the hex representation of a <see cref="T:System.Numerics.BigInteger"/>
+            </summary>
+            <param name="value">The value to return as hex</param>
+            <param name="zeroAsEmpty">Should <see cref="P:System.Numerics.BigInteger.Zero"/> be represented as 
+            an empty hex string (true) 
+            or "00" (false)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BigIntegerExtensions.CeilingDivide(System.Numerics.BigInteger,System.Numerics.BigInteger)">
+            <summary>
+            Rounds up after dividing a by b
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BigIntegerExtensions.ModularInverse(System.Numerics.BigInteger,System.Numerics.BigInteger)">
+            <summary>
+            Solve for b in the equation ab = 1 mod m
+            </summary>
+            <param name="a">value</param>
+            <param name="m">modulo</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.EnumHelpers.GetEnumDescriptionFromEnum(System.Enum)">
+            <summary>
+            Gets the description attribute from an enum.  
+            Returns the enum.ToString() when no description found.
+            </summary>
+            <param name="enumToGetDescriptionFrom">The enum to retrieve the description from.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.EnumHelpers.GetEnumFromEnumDescription``1(System.String,System.Boolean)">
+            <summary>
+            Gets the enum of type <see cref="!:T"/> matching the description.
+            </summary>
+            <typeparam name="T">The enum type to return/parse descriptions of.</typeparam>
+            <param name="enumDescription">The description to search the enum for.</param>
+            <param name="shouldThrow">Should the method throw if the enum is not found?</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.EnumHelpers.GetEnumDescriptions``1">
+            <summary>
+            Gets the description attributes from an enum type.
+            If a description is not found for any items in the enum, 
+            the ToString representation of that item is returned.
+            </summary>
+            <typeparam name="T">The enum type to get descriptions from</typeparam>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.ICryptoParameters">
+            <summary>
+            Represents the parameters passed into a crypto function
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.ICryptoResult">
+            <summary>
+            Represents the return of a Crypto invoke
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.IHmac">
+            <summary>
+            Interface for HMAC operations
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IMac.Generate(Goedel.Cryptography.Nist.BitString,Goedel.Cryptography.Nist.BitString,System.Int32)">
+            <summary>
+            Generates a MAC based on <see cref="!:key"/> and <see cref="!:message"/>
+            </summary>
+            <param name="key">The key</param>
+            <param name="message">The message</param>
+            <param name="macLength">Number of bits to return from the MSb of the MAC</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NumberTheory.MillerRabin(System.Numerics.BigInteger,System.Int32)">
+            <summary>
+            C.3.1 Probabilistic Primality Check, Miller-Rabin Algorithm
+            </summary>
+            <param name="n">Number</param>
+            <param name="k">Iterations</param>
+            <returns>True if probably prime. False if composite.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NumberTheory.GCD(System.Numerics.BigInteger,System.Numerics.BigInteger)">
+            <summary>
+            Find greatest common denominator of a and b, from page 606, Handbook of Applied Cryptography
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NumberTheory.LCM(System.Numerics.BigInteger,System.Numerics.BigInteger)">
+            <summary>
+            Find least common multiple of a and b
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NumberTheory.Pow2(System.Int32)">
+            <summary>
+            Calculates exponent 2^exp quickly
+            </summary>
+            <param name="exp"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeGen186_4.ShaweTaylorRandomPrime(System.Int32,System.Numerics.BigInteger,Goedel.Cryptography.Nist.ISha)">
+            <summary>
+            C.6 Makes small 32-bit prime numbers
+            </summary>
+            <param name="length"></param>
+            <param name="inputSeed"></param>
+            <param name="sha"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeGen186_4.TrialDivision(System.Numerics.BigInteger)">
+            <summary>
+            C.7 Determine if a 32-bit uint is prime
+            </summary>
+            <param name="c"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.BitString">
+            <summary>
+            Bit and Byte functions manipulation functions.
+            NOTE:
+                Input/Output of bits is always:
+                    LSb to MSb - least significant bit first (index 0), most significant bit last (last index)
+                Everything else (bytes, hex, etc):
+                    MSB to LSB - most significant Byte first (index 0), least significant Byte last (last index)
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.#ctor(System.Byte[])">
+            <summary>
+            Create <see cref="T:Goedel.Cryptography.Nist.BitString"/> expecting <see cref="!:byte[]"/> in Most Significant Byte (MSB) order.
+            </summary>
+            <param name="msBytes">The MSB bytes to use in the LSb <see cref="T:Goedel.Cryptography.Nist.BitString"/></param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.#ctor(System.Collections.BitArray)">
+            <summary>
+            Create <see cref="T:Goedel.Cryptography.Nist.BitString"/> expecting <see cref="T:System.Collections.BitArray"/> in Least Signficant bit (LSb) order.
+            </summary>
+            <param name="bits">The LSb bits to use in the <see cref="T:Goedel.Cryptography.Nist.BitString"/></param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.#ctor(System.Numerics.BigInteger,System.Int32,System.Boolean)">
+            <summary>
+            Converts BigInteger to BitString with proper byte orientation
+            </summary>
+            <param name="bigInt"></param>
+            <param name="bitLength"></param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.#ctor(System.String,System.Int32,System.Boolean)">
+            <summary>
+            Create a <see cref="T:Goedel.Cryptography.Nist.BitString"/> using MSB hex.
+            </summary>
+            <param name="hexMSB">The MSB hexadecimal string</param>
+            <param name="bitLength">The length of the resulting <see cref="T:Goedel.Cryptography.Nist.BitString"/> by taking that amount of MSBs</param>
+            <param name="truncateBitsFromEndOfLastByte">When the bitLength is not a multiple of 8, the hex needs to be truncated in the last byte. This parameter determines which side of the last byte is truncated</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.ToBytes(System.Boolean)">
+            <summary>
+            Returns bytes based on <see cref="P:Goedel.Cryptography.Nist.BitString.Bits"/> in MSB.
+            </summary>
+            <remarks>
+            Bytes are by default in Most Significant Byte order.  
+            If true is provided to function, returned in Least Significant Byte order.
+            </remarks>
+            <param name="reverseBytes">Should the bytes be reverse in the array?  (Changes from MSB to LSB)</param>
+            <returns><see cref="!:byte[]"/> of <see cref="P:Goedel.Cryptography.Nist.BitString.Bits"/></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.ToString">
+            <summary>
+            Returns <see cref="P:Goedel.Cryptography.Nist.BitString.Bits"/> as a string in MSb
+            </summary>
+            <returns>string representation of <see cref="P:Goedel.Cryptography.Nist.BitString.Bits"/></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.ToLittleEndianHex">
+            <summary>
+            Only for use in SHA3
+            </summary>
+            <returns>Normal hex, but the last byte is truncated to match little endian format</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.ToBool(System.Int32)">
+            <summary>
+            Returns the MSb (or index of the LSb array) as a boolean value
+            </summary>
+            <param name="index">Index of the LSb BitArray to retrieve</param>
+            <returns>Boolean of a specific bit.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.MSBRotate(Goedel.Cryptography.Nist.BitString,System.Int32)">
+            <summary>
+            Rotates bits in the MSB direction. Rotate puts the bits that 'fall off' onto the end.
+            </summary>
+            <param name="shiftBitString">BitString to rotate</param>
+            <param name="distance">Amount the bits to rotate.</param>
+            <returns>Rotated BitString</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.LSBRotate(Goedel.Cryptography.Nist.BitString,System.Int32)">
+            <summary>
+            Rotates bist in the LSB direction. Rotate puts the bits that 'fall off' onto the end.
+            </summary>
+            <param name="bStr"></param>
+            <param name="distance">Amount the bits to rotate.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.LSBShift(Goedel.Cryptography.Nist.BitString)">
+            <summary>
+            Shifts bits in the LSB direction. Shift adds 0s to the end.
+            </summary>
+            <remarks>Keeps output length same as input.</remarks>
+            <param name="bStr">THe bitstring to shift</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.BitStringAddition(Goedel.Cryptography.Nist.BitString,Goedel.Cryptography.Nist.BitString)">
+            <summary>
+            Adds two bit strings together - e.g. "11" (3) + 111 (7) = 1010 (10).
+            Similar to <see cref="!:AddWithModulo(NIST.CVP.ACVTS.Libraries.Math.BitString,NIST.CVP.ACVTS.Libraries.Math.BitString,int)"/>, but without truncation.
+            </summary>
+            <param name="left"></param>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.BitStringAddition(Goedel.Cryptography.Nist.BitString)">
+            <summary>
+            Adds two bit strings together - e.g. "11" (3) + 111 (7) = 1010 (10).
+            Similar to <see cref="!:AddWithModulo(NIST.CVP.ACVTS.Libraries.Math.BitString,NIST.CVP.ACVTS.Libraries.Math.BitString,int)"/>, but without truncation.
+            </summary>
+            <param name="left"></param>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.AddWithModulo(Goedel.Cryptography.Nist.BitString,Goedel.Cryptography.Nist.BitString,System.Int32)">
+            <summary>
+            Adds two BitStrings and truncates the result to fit within the limit.
+            </summary>
+            <param name="left"></param>
+            <param name="right"></param>
+            <param name="moduloPower">Amount of bits kept in the result.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.BitString.Bits">
+            <summary>
+            In LSb
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.BitString.Item(System.Int32)">
+            <summary>
+            Gets/Sets the byte at index specified.
+            Index 0 is the most significant byte.
+            </summary>
+            <param name="index">The index to get/set (index 0 is most significant byte)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.ConcatenateBits(Goedel.Cryptography.Nist.BitString,Goedel.Cryptography.Nist.BitString)">
+            <summary>
+            Concatenates two <see cref="T:Goedel.Cryptography.Nist.BitString"/>.
+            </summary>
+            <example>
+                mostSignificantBits = "0010" (4)
+                leastSignificantBits = "1000" (1)
+                result = 10000010 (65)
+            </example>
+            <param name="mostSignificantBits">The bits that will be most significant after concatenation.</param>
+            <param name="leastSignificantBits">The bits that will be least significant after concatenation.</param>
+            <returns>The concatenated <see cref="T:Goedel.Cryptography.Nist.BitString"/></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.Substring(Goedel.Cryptography.Nist.BitString,System.Int32,System.Int32)">
+            <summary>
+            Gets substring of a BitString from the LSB direction.
+            </summary>
+            <param name="bsToSub">BitString to pull bits from.</param>
+            <param name="startIndex">Least significant bit is 0 index.</param>
+            <param name="numberOfBits">Amount of bits to pull.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.MSBSubstring(Goedel.Cryptography.Nist.BitString,System.Int32,System.Int32)">
+            <summary>
+            Gets a substring of bits from the MSB direction. 
+            </summary>
+            <param name="bsToSub"></param>
+            <param name="startIndex">Start index from the MSB side. Most significant bit is index 0.</param>
+            <param name="numberOfBits"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.PadToNextByteBoundry(Goedel.Cryptography.Nist.BitString,System.Boolean)">
+            <summary>
+            Takes a BitString and adds LSbs to make the BitString hit a byte boundry.  
+            Returns the original BitString if already at a byte boundry.
+            </summary>
+            <param name="bs">The BitString to pad.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.PadToModulus(Goedel.Cryptography.Nist.BitString,System.Int32,System.Boolean)">
+            <summary>
+            Takes a BitString and adds LSBs (or MSBs when <see cref="!:padOntoLsb"/> is false) to make the BitString hit (BitString % modulus = 0)
+            </summary>
+            <param name="bs">The BitString to pad</param>
+            <param name="modulus">The modulus to pad the bitstring such that BitString % modulusToHit = 0</param>
+            <param name="padOntoLsb">When true bits are added on the least significant end, the most significant end otherwise.</param>
+            <returns>The padded BitString</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.Empty">
+            <summary>
+            Get an empty bitstring, useful as a starting point of concatenation and/or to avoid null.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.GetAtLeastZeroLengthBitString(Goedel.Cryptography.Nist.BitString)">
+            <summary>
+            Returns a zero length bitstring when passed a null, otherwise returns the bitstring
+            </summary>
+            <param name="bitString"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.MathDomain">
+             <summary>
+             A domain of values - literal values and/or a range of values.
+            
+             Note that if a <see cref="T:Goedel.Cryptography.Nist.MathDomain"/> is being passed in to multiple consumers that can all get values from the domain,
+             it should be DeepCopied rather than passing the same reference in.  Otherwise you'll run into some situations where
+             there are no more values available to be generated from a domain, because a domain of that reference has already exhausted them.
+             </summary>
+             
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MathDomain.AddSegment(Goedel.Cryptography.Nist.IDomainSegment)">
+            <summary>
+            Adds a domain segment to the <see cref="T:Goedel.Cryptography.Nist.MathDomain"/>
+            </summary>
+            <param name="domainSegment">The domain segment to add</param>
+            <returns>Returns itself for fluent API</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MathDomain.SetMaximumAllowedValue(System.Int32)">
+            <summary>
+            Allows for the setting of a new maximum allowed value, 
+            as to create a pseudo "subset" from a full range.
+            </summary>
+            <param name="value">The value to set as the maximum value.</param>
+            <returns>Returns itself for fluent API</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MathDomain.GetDomainMinMaxAsEnumerable">
+            <summary>
+            Gets the minimum and maximum for the entire <see cref="T:Goedel.Cryptography.Nist.MathDomain"/> as an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:System.Int32"/>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MathDomain.GetDomainMinMax">
+            <summary>
+            Gets the minimum and maximum for the entire <see cref="T:Goedel.Cryptography.Nist.MathDomain"/> as <see cref="T:Goedel.Cryptography.Nist.RangeMinMax"/>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MathDomain.GetMinMaxRanges">
+            <summary>
+            Get the <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Goedel.Cryptography.Nist.RangeMinMax"/> 
+            from each <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MathDomain.IsWithinDomain(System.Int32)">
+            <summary>
+            Checks that a value exists within any <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/>.
+            </summary>
+            <param name="value">The value to check for</param>
+            <returns>true/false</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MathDomain.ContainsValueOtherThan(System.Int32)">
+            <summary>
+            Checks if the domain contains any value other than the provided value
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MathDomain.GetSequentialValues(System.Int32)">
+            <summary>
+            Gets the number of values specified from each segment (or up to the upper limit of the segment)
+            </summary>
+            <param name="numberOfValuesPerSegment">Max number of values to get per <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/></param>
+            <param name="returnSequential">Return values will be sequential <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MathDomain.GetRandomValues(System.Int32)">
+            <summary>
+            Gets the number of values specified from each segment (or up to the upper limit of the segment)
+            </summary>
+            <param name="numberOfValuesPerSegment">Max number of values to get per <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/></param>
+            <param name="returnSequential">Return values will be sequential <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MathDomain.GetSequentialValues(System.Int32,System.Int32,System.Int32)">
+             <summary>
+             Gets the number of values specified from each <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/> - 
+             or up to the upper limit of the segment.
+            
+             Values are restricted to the <see cref="!:min"/> and <see cref="!:maxExclusive"/>
+             </summary>
+             <param name="min">The minimum value to return</param>
+             <param name="max">The maximum value to return</param>
+             <param name="numberOfValuesPerSegment">Max number of values to get per <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/></param>
+             <returns></returns>        
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MathDomain.GetRandomValues(System.Int32,System.Int32,System.Int32)">
+             <summary>
+             Gets the number of values specified from each <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/> - 
+             or up to the upper limit of the segment.
+            
+             Values are restricted to the <see cref="!:min"/> and <see cref="!:maxExclusive"/>
+             </summary>
+             <param name="min">The minimum value to return</param>
+             <param name="max">The maximum value to return</param>
+             <param name="numberOfValuesPerSegment">Max number of values to get per <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/></param>
+             <returns></returns>        
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.RangeDomainSegment">
+            <summary>
+            Domain segment that represents a range of values (a min and max and values in between based on step)
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.RangeDomainSegment.MaxNumberOfValuesInSegment">
+            <summary>
+            The maximum number of values belonging to the segment
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.RangeDomainSegment.RangeMinMax">
+            <summary>
+            The Minimum and Maximimum values for the domain segment.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.RangeDomainSegment.#ctor(Goedel.Cryptography.Nist.IRandom800_90,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Constructor - takes in the min and max values for the domain segment
+            </summary>
+            <param name="random">The random number generator implementation</param>
+            <param name="min">The minimum value for the segment</param>
+            <param name="max">The maximum value for the segment</param>
+            <param name="increment">The "increment" of the range, e.g. min: 2, max: 9, step: 2, return 2, 4, 6, 8</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.RangeDomainSegment.GetDeepCopy">
+            <summary>
+            Returns a deep copy of the segment
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.RangeDomainSegment.SetMaximumAllowedValue(System.Int32)">
+            <summary>
+            Changes the max allowed value - can only be done prior to number generation.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.RangeDomainSegment.IsWithinDomain(System.Int32)">
+            <summary>
+            Checks that a value occurs within the domain, taking into account the increment.
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.RangeDomainSegment.GetSequentialValues(System.Int32)">
+            <summary>
+            Gets values from the segment up to the quantity. 
+            If less than quantity exist in the segment, the maximum amount for the segment is returned..
+            </summary>
+            <param name="quantity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.RangeDomainSegment.GetRandomValues(System.Int32)">
+            <summary>
+            Gets values from the segment up to the quantity. 
+            If less than quantity exist in the segment, the maximum amount for the segment is returned..
+            </summary>
+            <param name="quantity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.RangeDomainSegment.GetSequentialValues(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Get values from the <see cref="T:Goedel.Cryptography.Nist.IDomainSegment" />, with a minimum of <see cref="!:min" />
+            and a maximum <see cref="!:max" />, up to the quantity
+            </summary>
+            <param name="min">The minimum value</param>
+            <param name="max">The maximum value</param>
+            <param name="quantity">The maximum number of values to return from the <see cref="T:Goedel.Cryptography.Nist.IDomainSegment" /></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.RangeDomainSegment.GetRandomValues(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Get values from the <see cref="T:Goedel.Cryptography.Nist.IDomainSegment" />, with a minimum of <see cref="!:min" />
+            and a maximum <see cref="!:max" />, up to the quantity
+            </summary>
+            <param name="min">The minimum value</param>
+            <param name="max">The maximum value</param>
+            <param name="quantity">The maximum number of values to return from the <see cref="T:Goedel.Cryptography.Nist.IDomainSegment" /></param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.RangeMinMax">
+            <summary>
+            Represents the minimum and maximum value to a <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/>
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.ValueDomainSegment">
+            <summary>
+            Domain segment that represents a single value
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.ValueDomainSegment.#ctor(System.Int32)">
+            <summary>
+            Constructor - takes in the value for the domain segment
+            </summary>
+            <param name="value">The single value belonging to the domain segment</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.ValueDomainSegment.GetDeepCopy">
+            <summary>
+            Returns a deep copy of the segment
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.ValueDomainSegment.IsWithinDomain(System.Int32)">
+            <summary>
+            Determines if the value is within the domain segment
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.ValueDomainSegment.GetSequentialValues(System.Int32)">
+            <summary>
+            Returns the values of the domain segment
+            </summary>
+            <param name="quantity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.ValueDomainSegment.GetRandomValues(System.Int32)">
+            <summary>
+            Returns the values of the domain segment
+            </summary>
+            <param name="quantity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.ValueDomainSegment.GetSequentialValues(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Get values from the <see cref="T:Goedel.Cryptography.Nist.IDomainSegment" />, with a minimum of <see cref="!:min" />
+            and a maximum <see cref="!:max" />, up to the quantity
+            </summary>
+            <param name="min">The minimum value</param>
+            <param name="max">The maximum value</param>
+            <param name="quantity">The maximum number of values to return from the <see cref="T:NIST.CVP.ACVTS.Libraries.Math.Domain.IDomainSegment" /></param>
+            <param name="randomizeReturn">Force the return values to be randomized <see cref="T:NIST.CVP.ACVTS.Libraries.Math.Domain.IDomainSegment" /></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.ValueDomainSegment.GetRandomValues(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Get values from the <see cref="T:Goedel.Cryptography.Nist.IDomainSegment" />, with a minimum of <see cref="!:min" />
+            and a maximum <see cref="!:max" />, up to the quantity
+            </summary>
+            <param name="min">The minimum value</param>
+            <param name="max">The maximum value</param>
+            <param name="quantity">The maximum number of values to return from the <see cref="T:NIST.CVP.ACVTS.Libraries.Math.Domain.IDomainSegment" /></param>
+            <param name="randomizeReturn">Force the return values to be randomized <see cref="T:NIST.CVP.ACVTS.Libraries.Math.Domain.IDomainSegment" /></param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.InvalidBitStringLengthException">
+            <summary>
+            Thrown when a <see cref="T:Goedel.Cryptography.Nist.BitString"/> as hex cannot be parsed due to invalid length.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitArrayExtensions.ToInt(System.Collections.BitArray)">
+            <summary>
+            Converts a <see cref="T:System.Collections.BitArray"/> to an int.
+            </summary>
+            <param name="bArray">The <see cref="T:System.Collections.BitArray"/> to convert.</param>
+            <returns>Integer representation of <see cref="!:bArray"/>.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when the <see cref="!:bArray"/> is greater than 32 bits.</exception>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.ByteArrayExtensions">
+            <summary>
+            bigInteger is little endian when dealing with byte-arrays, CAVS code thinks about byte array representations as big endian
+            The BigInteger structure expects the individual bytes in a byte array to appear in little-endian order 
+            (that is, the lower-order bytes of the value precede the higher-order bytes)
+            also always want to return an array of the size of bArrayA, which means we might need to pad 
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.ByteArrayExtensions.GetKeyBit(System.Byte[],System.Int32)">
+            <summary>
+            1-based
+            1-bit (bNum == 0) always returns 0 
+            </summary>
+            <param name="bArrayA"></param>
+            <param name="bnum"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.ByteArrayExtensions.SetEachByteToValue(System.Byte[],System.Byte)">
+            <summary>
+            Set each byte in the provided array to the value of byteValue
+            </summary>
+            <param name="byteArray">The byteArray to set values on.</param>
+            <param name="byteValue">The value to set within the byte array.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.ByteArrayExtensions.BitLength(System.Byte[])">
+            <summary>
+            Return the bit length of the <see cref="!:byteArray"/>.
+            </summary>
+            <param name="byteArray">The byte array to determine the bit length of.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the array is null.</exception>
+            <returns>The length in bits of the byte array (returned value always mod 8)</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IntExtensions.PosMod(System.Int32,System.Int32)">
+            <summary>
+            Takes the modulo of a value (or <see cref="T:System.Int32"/> expression) and ensures it is between [0, <paramref name="modulo"/> - 1]
+            </summary>
+            <param name="value"></param>
+            <param name="modulo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IntExtensions.PlusMinusMod(System.Int32,System.Int32)">
+            <summary>
+            Takes the modulo of a value (or <see cref="T:System.Int32"/> expression) and ensures it is between (- <paramref name="modulo"/> / 2, <paramref name="modulo"/> / 2]
+            </summary>
+            <param name="value"></param>
+            <param name="modulo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IntExtensions.ValueToMod(System.Int32,System.Int32)">
+            <summary>
+            Gets the next number meeting the modulo (or the number itself if evenly divisible).
+            </summary>
+            <param name="value">The number to return or add to.</param>
+            <param name="modulo">The desired modulo.</param>
+            <returns>The value, or value + remainder of the value mod modulo.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IntExtensions.GetBytes(System.Int32)">
+            <summary>
+            Get 4 bytes for int.
+            </summary>
+            <param name="value">The value to convert to bytes.</param>
+            <returns>The MSB 4 bytes.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IntExtensions.Get16Bits(System.Int32)">
+            <summary>
+            Gets an integer as two bytes or 16 bits.
+            </summary>
+            <param name="value">The value to convert to bytes.</param>
+            <returns>The MSB 2 bytes.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Throws when the integer cannot be represented in two bytes.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IntExtensions.Get8Bits(System.Int32)">
+            <summary>
+            Gets an integer as 1 byte or 8 bits.
+            </summary>
+            <param name="value">The value to convert to a byte.</param>
+            <returns>The MSB 1 byte.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Throws when the integer cannot be represented in a single byte.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.LongExtensions.PosMod(System.Int64,System.Int64)">
+            <summary>
+            Takes the modulo of a value (or <see cref="T:System.Int64"/> expression) and ensures it is between [0, <paramref name="modulo"/> - 1]
+            </summary>
+            <param name="value"></param>
+            <param name="modulo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.LongExtensions.PlusMinusMod(System.Int64,System.Int64)">
+            <summary>
+            Takes the modulo of a value (or <see cref="T:System.Int32"/> expression) and ensures it is between (- <paramref name="modulo"/> / 2, <paramref name="modulo"/> / 2]
+            </summary>
+            <param name="value"></param>
+            <param name="modulo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MsbLsbConversionHelpers.GetBitArrayFromStringOf1sAnd0s(System.String)">
+             <summary>
+             Gets a <see cref="T:System.Collections.BitArray"/> from a string of 1s and 0s.  The first bit in the string is the least significant.
+            
+             <example>
+                 "1000000" -> [true, false, false, false, false, false, false, false] -> 1
+                 "0000001" -> [false, false, false, false, false, false, false, true] -> 128
+             </example>
+             
+             </summary>
+             <param name="onesAndZeroes">The string to get a <see cref="T:System.Collections.BitArray"/> from.</param>
+             <returns><see cref="T:System.Collections.BitArray"/> representation of string where the first bit in the input string is the least significant.</returns>
+             <exception cref="T:System.ArgumentNullException">When input string is null.</exception>
+             <exception cref="T:System.ArgumentException">When input string has invalid characters.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MsbLsbConversionHelpers.GetBitArrayFromStringOf1sAnd0sReversed(System.String)">
+             <summary>
+             Gets a <see cref="T:System.Collections.BitArray"/> from a string of 1s and 0s.  The first bit in the string is the most significant.
+            
+             <example>
+                 "0000001" -> [true, false, false, false, false, false, false, false] -> 1
+                 "1000000" -> [false, false, false, false, false, false, false, true] -> 128
+             </example>
+             
+             </summary>
+             <param name="onesAndZeroes">The string to get a <see cref="T:System.Collections.BitArray"/> from.</param>
+             <returns><see cref="T:System.Collections.BitArray"/> representation of string where the first bit in the input string is the most significant.</returns>
+             <exception cref="T:System.ArgumentNullException">When input string is null.</exception>
+             <exception cref="T:System.ArgumentException">When input string has invalid characters.</exception>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.IDomainSegment">
+            <summary>
+            Describes a DomainSegment - a portion of a Domain.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.IDomainSegment.RangeMinMax">
+            <summary>
+            Get the min/max of the <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/>
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IDomainSegment.SetMaximumAllowedValue(System.Int32)">
+            <summary>
+            Allows for the setting of a new maximum allowed value, 
+            as to create a pseudo "subset" from a full range.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IDomainSegment.IsWithinDomain(System.Int32)">
+            <summary>
+            Does the provided value occur within the <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/>?
+            </summary>
+            <param name="value">The value to look for within the <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IDomainSegment.GetSequentialValues(System.Int32)">
+            <summary>
+            Get values from the <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/>, up to the quantity
+            </summary>
+            <param name="quantity">The maximum number of values to return from the <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IDomainSegment.GetRandomValues(System.Int32)">
+            <summary>
+            Get values from the <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/>, up to the quantity
+            </summary>
+            <param name="quantity">The maximum number of values to return from the <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IDomainSegment.GetSequentialValues(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Get values from the <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/>, with a minimum of <see cref="!:min"/>
+            and a maximum <see cref="!:max"/>, up to the quantity
+            </summary>
+            <param name="min">The minimum value</param>
+            <param name="max">The maximum value</param>
+            <param name="quantity">The maximum number of values to return from the <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IDomainSegment.GetRandomValues(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Get values from the <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/>, with a minimum of <see cref="!:min"/>
+            and a maximum <see cref="!:max"/>, up to the quantity
+            </summary>
+            <param name="min">The minimum value</param>
+            <param name="max">The maximum value</param>
+            <param name="quantity">The maximum number of values to return from the <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IDomainSegment.GetSequentialValues(System.Func{System.Int32,System.Boolean},System.Int32)">
+            <summary>
+            Get values from the <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/>, with a specific condition.
+            </summary>
+            <param name="condition"></param>
+            <param name="quantity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IDomainSegment.GetRandomValues(System.Func{System.Int32,System.Boolean},System.Int32)">
+            <summary>
+            Get values from the <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/>, with a specific condition.
+            </summary>
+            <param name="condition"></param>
+            <param name="quantity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IDomainSegment.GetDeepCopy">
+            <summary>
+            Returns a deep copy of the <see cref="T:Goedel.Cryptography.Nist.IDomainSegment"/>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.NonAdjacentBitString">
+            <summary>
+            Converts a <see cref="T:System.Numerics.BigInteger"/> into Non-Adjacent Form so that in {-1, 0, 1} there are no consecutive nonzero values. This reduces the number
+            of meaningful bits when applying multiplication over ECC.
+            </summary>
+            <param name="value"></param>
+            <returns>An array containing only {-1, 0, 1} values.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.NamespaceDoc">
+            <summary>
+            Additional cryptographic algorithms derived from the NIST reference code.
+            </summary>
+        </member>
+    </members>
+</doc>

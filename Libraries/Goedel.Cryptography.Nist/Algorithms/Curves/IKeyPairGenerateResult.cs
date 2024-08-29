@@ -1,3 +1,3 @@
 ﻿
-    public interface IKeyPairGenerateResult { }
-    
+public interface IKeyPairGenerateResult { }
+

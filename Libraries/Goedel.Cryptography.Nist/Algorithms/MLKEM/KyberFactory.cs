@@ -11,6 +11,6 @@ public class KyberFactory {
 
     public IMLKEM GetKyber(KyberParameterSet parameterSet) {
         var param = new KyberParameters(parameterSet);
-        return new Kyber(param, _shaFactory);
+        return new MLKEMInternal(param, _shaFactory);
         }
     }

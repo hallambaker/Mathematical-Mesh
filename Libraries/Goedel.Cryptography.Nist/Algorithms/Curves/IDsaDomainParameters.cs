@@ -3,4 +3,4 @@
 /// Interface for DSA domain parameters
 /// </summary>
 public interface IDsaDomainParameters { }
-    
+

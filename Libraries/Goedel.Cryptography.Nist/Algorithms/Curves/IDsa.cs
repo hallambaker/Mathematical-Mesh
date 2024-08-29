@@ -28,59 +28,59 @@ public interface IDsa<
         where TDsaSignature : IDsaSignature
         where TDsaSignatureResult : IDsaSignatureResult
         where TDsaVerificationResult : IDsaVerificationResult {
-        /// <summary>
-        /// The Sha instance utilized for Dsa
-        /// </summary>
-        ISha Sha { get; }
+    /// <summary>
+    /// The Sha instance utilized for Dsa
+    /// </summary>
+    ISha Sha { get; }
 
-        /// <summary>
-        /// Generates a set of DSA Domain Parameters with state values included in response.
-        /// </summary>
-        /// <param name="generateRequest">The parameters used creation of the <see cref="TDsaDomainParameters"/></param>
-        /// <returns></returns>
-        TDomainParametersGenerateResult GenerateDomainParameters(TDomainParametersGenerateRequest generateRequest);
+    /// <summary>
+    /// Generates a set of DSA Domain Parameters with state values included in response.
+    /// </summary>
+    /// <param name="generateRequest">The parameters used creation of the <see cref="TDsaDomainParameters"/></param>
+    /// <returns></returns>
+    TDomainParametersGenerateResult GenerateDomainParameters(TDomainParametersGenerateRequest generateRequest);
 
-        /// <summary>
-        /// Validates a set of DSA Domain Parameters based on the modes provided in the <see cref="TDomainParametersValidateRequest"/>
-        /// </summary>
-        /// <param name="domainParameters"></param>
-        /// <returns></returns>
-        TDomainParametersValidateResult ValidateDomainParameters(TDomainParametersValidateRequest domainParameters);
+    /// <summary>
+    /// Validates a set of DSA Domain Parameters based on the modes provided in the <see cref="TDomainParametersValidateRequest"/>
+    /// </summary>
+    /// <param name="domainParameters"></param>
+    /// <returns></returns>
+    TDomainParametersValidateResult ValidateDomainParameters(TDomainParametersValidateRequest domainParameters);
 
-        /// <summary>
-        /// Generates a <see cref="IDsaKeyPair"/> based on a set of <see cref="TDsaDomainParameters"/>
-        /// </summary>
-        /// <param name="domainParameters">The Domain parameters used to generate the key pair</param>
-        /// <returns></returns>
-        TKeyPairGenerateResult GenerateKeyPair(TDsaDomainParameters domainParameters);
+    /// <summary>
+    /// Generates a <see cref="IDsaKeyPair"/> based on a set of <see cref="TDsaDomainParameters"/>
+    /// </summary>
+    /// <param name="domainParameters">The Domain parameters used to generate the key pair</param>
+    /// <returns></returns>
+    TKeyPairGenerateResult GenerateKeyPair(TDsaDomainParameters domainParameters);
 
-        /// <summary>
-        /// Validates a <see cref="TDsaKeyPair"/> based on a set of <see cref="TDsaDomainParameters"/>
-        /// </summary>
-        /// <param name="domainParameters">The Domain parameters used in generating the key pair</param>
-        /// <param name="keyPair">The DSA key pair</param>
-        /// <returns></returns>
-        TDsaKeyPairValidationResult ValidateKeyPair(TDsaDomainParameters domainParameters, TDsaKeyPair keyPair);
+    /// <summary>
+    /// Validates a <see cref="TDsaKeyPair"/> based on a set of <see cref="TDsaDomainParameters"/>
+    /// </summary>
+    /// <param name="domainParameters">The Domain parameters used in generating the key pair</param>
+    /// <param name="keyPair">The DSA key pair</param>
+    /// <returns></returns>
+    TDsaKeyPairValidationResult ValidateKeyPair(TDsaDomainParameters domainParameters, TDsaKeyPair keyPair);
 
-        /// <summary>
-        /// Signs a message
-        /// </summary>
-        /// <param name="domainParameters"></param>
-        /// <param name="keyPair"></param>
-        /// <param name="message"></param>
-        /// <param name="skipHash"></param>
-        /// <returns></returns>
-        TDsaSignatureResult Sign(TDsaDomainParameters domainParameters, TDsaKeyPair keyPair, BitString message, bool skipHash = false);
+    /// <summary>
+    /// Signs a message
+    /// </summary>
+    /// <param name="domainParameters"></param>
+    /// <param name="keyPair"></param>
+    /// <param name="message"></param>
+    /// <param name="skipHash"></param>
+    /// <returns></returns>
+    TDsaSignatureResult Sign(TDsaDomainParameters domainParameters, TDsaKeyPair keyPair, BitString message, bool skipHash = false);
 
-        /// <summary>
-        /// Verifies a signature
-        /// </summary>
-        /// <param name="domainParameters"></param>
-        /// <param name="keyPair"></param>
-        /// <param name="message"></param>
-        /// <param name="signature"></param>
-        /// <param name="skipHash"></param>
-        /// <returns></returns>
-        TDsaVerificationResult Verify(TDsaDomainParameters domainParameters, TDsaKeyPair keyPair, BitString message, TDsaSignature signature, bool skipHash = false);
-        }
-    
+    /// <summary>
+    /// Verifies a signature
+    /// </summary>
+    /// <param name="domainParameters"></param>
+    /// <param name="keyPair"></param>
+    /// <param name="message"></param>
+    /// <param name="signature"></param>
+    /// <param name="skipHash"></param>
+    /// <returns></returns>
+    TDsaVerificationResult Verify(TDsaDomainParameters domainParameters, TDsaKeyPair keyPair, BitString message, TDsaSignature signature, bool skipHash = false);
+    }
+

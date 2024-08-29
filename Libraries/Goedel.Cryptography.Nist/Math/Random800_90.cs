@@ -1,5 +1,6 @@
 namespace Goedel.Cryptography.Nist;
 public class Random800_90 : IRandom800_90 {
+
     private static readonly RNGCryptoServiceProvider Global = new();
     [ThreadStatic] private static Random _local;
 

@@ -6,9 +6,6 @@
 		<Copyright>© 2024</Copyright>
 		<Title>Goedel.Cryptography.Nist</Title>
 	</PropertyGroup>
-	<ItemGroup>
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />

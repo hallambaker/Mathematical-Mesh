@@ -21,4 +21,4 @@ public class EccDomainParameters : IDsaDomainParameters {
         SecretGeneration = secretMode;
         }
     }
-    
+

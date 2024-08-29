@@ -25,9 +25,6 @@ global using Goedel.Test;
 global using Goedel.Utilities;
 
 global using System.IO;
-global using System.Runtime.Serialization;
-global using System.Collections;
-global using System.Text;
 
 
 global using Xunit;

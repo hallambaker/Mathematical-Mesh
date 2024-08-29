@@ -12,4 +12,4 @@ public interface IDsaEcc : IDsa<
         EccSignatureResult,
         EccVerificationResult
         > { }
-    
+

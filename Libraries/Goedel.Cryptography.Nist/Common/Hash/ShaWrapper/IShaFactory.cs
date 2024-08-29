@@ -11,7 +11,19 @@ public interface IShaFactory {
     /// <returns></returns>
     ISha GetShaInstance(HashFunction hashFunction);
 
+    /// <summary>
+    /// Gets an <see cref="IShake"/> based on the <see cref="HashFunction"/>
+    /// </summary>
+    /// <param name="hashFunction">Used to determine the <see cref="IShake"/> instance to retrieve.</param>
+    /// <returns></returns>
     IShake GetShakeInstance(HashFunction hashFunction);
-    IShaMct GetShaMctInstance(HashFunction hashFunction, bool oddLength = false);
+
+    ///// <summary>
+    ///// Gets an <see cref="IShaMct"/> based on the <see cref="HashFunction"/>
+    ///// </summary>
+    ///// <param name="hashFunction">Used to determine the <see cref="IShaMct"/> instance to retrieve.</param>
+    ///// <param name="oddLength">If true, allow use of odd length requests.</param>
+    ///// <returns></returns>
+    //IShaMct GetShaMctInstance(HashFunction hashFunction, bool oddLength = false);
     }
-    
+

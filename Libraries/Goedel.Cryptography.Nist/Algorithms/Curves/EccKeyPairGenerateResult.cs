@@ -1,22 +1,22 @@
 ﻿namespace Goedel.Cryptography.Nist;
 public class EccKeyPairGenerateResult : IKeyPairGenerateResult, ICryptoResult {
-        public EccKeyPair KeyPair { get; }
-        public bool Success => string.IsNullOrEmpty(ErrorMessage);
-        public string ErrorMessage { get; }
+    public EccKeyPair KeyPair { get; }
+    public bool Success => string.IsNullOrEmpty(ErrorMessage);
+    public string ErrorMessage { get; }
 
-        /// <summary>
-        /// No errors
-        /// </summary>
-        public EccKeyPairGenerateResult(EccKeyPair keyPair) {
-            KeyPair = keyPair;
-            }
-
-        /// <summary>
-        /// Include error message
-        /// </summary>
-        /// <param name="errorMessage"></param>
-        public EccKeyPairGenerateResult(string errorMessage) {
-            ErrorMessage = errorMessage;
-            }
+    /// <summary>
+    /// No errors
+    /// </summary>
+    public EccKeyPairGenerateResult(EccKeyPair keyPair) {
+        KeyPair = keyPair;
         }
-    
+
+    /// <summary>
+    /// Include error message
+    /// </summary>
+    /// <param name="errorMessage"></param>
+    public EccKeyPairGenerateResult(string errorMessage) {
+        ErrorMessage = errorMessage;
+        }
+    }
+

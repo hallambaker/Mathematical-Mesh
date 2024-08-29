@@ -3,4 +3,4 @@
 /// Used to describe a DSA Key Pair
 /// </summary>
 public interface IDsaKeyPair { }
-    
+

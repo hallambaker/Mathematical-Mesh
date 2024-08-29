@@ -1,4 +1,19 @@
+using Goedel.Cryptography.Nist;
+
 namespace Goedel.Test;
+
+
+public static class Extensions {
+
+    public static KyberParameterSet MlKem (this AcvpTestGroup GroupData)  => GroupData.ParameterSet switch {
+        "ML-KEM-512" => KyberParameterSet.ML_KEM_512,
+        "ML-KEM-768" => KyberParameterSet.ML_KEM_768,
+        "ML-KEM-1024" => KyberParameterSet.ML_KEM_1024,
+        _ => throw new NYI()
+        };
+
+    }
+
 
 public class DsaKeyGenTest : AcvpTest {
 

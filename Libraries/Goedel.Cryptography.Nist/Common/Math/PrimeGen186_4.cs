@@ -1,8 +1,8 @@
 ﻿namespace Goedel.Cryptography.Nist;
 public static class PrimeGen186_4 {
-        #region primes
-        private static readonly int[] _primes =
-        {
+    #region primes
+    private static readonly int[] _primes =
+    {
                 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101,
                 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211,
                 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337,
@@ -429,168 +429,168 @@ public static class PrimeGen186_4 {
                 65287, 65293, 65309, 65323, 65327, 65353, 65357, 65371, 65381, 65393, 65407, 65413, 65419, 65423, 65437,
                 65447, 65449, 65479, 65497, 65519, 65521
             };
-        #endregion primes
+    #endregion primes
 
-        #region structs
-        public struct STRandomPrimeResult {
-            public BigInteger Prime;
-            public BigInteger PrimeSeed;
-            public int PrimeGenCounter;
-            public string ErrorMessage;
+    #region structs
+    public struct STRandomPrimeResult {
+        public BigInteger Prime;
+        public BigInteger PrimeSeed;
+        public int PrimeGenCounter;
+        public string ErrorMessage;
 
-            public STRandomPrimeResult(BigInteger prime, BigInteger primeSeed, int primeGenCounter) {
-                Prime = prime;
-                PrimeSeed = primeSeed;
-                PrimeGenCounter = primeGenCounter;
-                ErrorMessage = "";
-                }
-
-            public STRandomPrimeResult(string fail) {
-                ErrorMessage = fail;
-                Prime = 0;
-                PrimeSeed = 0;
-                PrimeGenCounter = 0;
-                }
-
-            public bool Success => (Prime != 0) && (PrimeSeed != 0) && (PrimeGenCounter != 0);
+        public STRandomPrimeResult(BigInteger prime, BigInteger primeSeed, int primeGenCounter) {
+            Prime = prime;
+            PrimeSeed = primeSeed;
+            PrimeGenCounter = primeGenCounter;
+            ErrorMessage = "";
             }
-        #endregion structs
 
-        /// <summary>
-        /// C.6 Makes small 32-bit prime numbers
-        /// </summary>
-        /// <param name="length"></param>
-        /// <param name="inputSeed"></param>
-        /// <param name="sha"></param>
-        /// <returns></returns>
-        public static STRandomPrimeResult ShaweTaylorRandomPrime(int length, BigInteger inputSeed, ISha sha) {
-            BigInteger prime, primeSeed;
-            int primeGenCounter;
-            var outLen = sha.HashFunction.OutputLen;
+        public STRandomPrimeResult(string fail) {
+            ErrorMessage = fail;
+            Prime = 0;
+            PrimeSeed = 0;
+            PrimeGenCounter = 0;
+            }
 
-            // 1
-            if (length < 2) {
-                return new STRandomPrimeResult("fail");
-                }
+        public bool Success => (Prime != 0) && (PrimeSeed != 0) && (PrimeGenCounter != 0);
+        }
+    #endregion structs
 
-            // 2
-            if (length < 33) {
-                // 3, 4
-                primeSeed = inputSeed;
-                primeGenCounter = 0;
+    /// <summary>
+    /// C.6 Makes small 32-bit prime numbers
+    /// </summary>
+    /// <param name="length"></param>
+    /// <param name="inputSeed"></param>
+    /// <param name="sha"></param>
+    /// <returns></returns>
+    public static STRandomPrimeResult ShaweTaylorRandomPrime(int length, BigInteger inputSeed, ISha sha) {
+        BigInteger prime, primeSeed;
+        int primeGenCounter;
+        var outLen = sha.HashFunction.OutputLen;
 
-                while (true) {
-                    // 5, 6, 7
-                    prime = sha.HashNumber(primeSeed).ToBigInteger() ^ sha.HashNumber(primeSeed + 1).ToBigInteger();
-                    prime = NumberTheory.Pow2(length - 1) + prime % NumberTheory.Pow2(length - 1);
-                    prime = 2 * (prime / 2) + 1;
+        // 1
+        if (length < 2) {
+            return new STRandomPrimeResult("fail");
+            }
 
-                    // 8, 9
-                    primeGenCounter++;
-                    primeSeed += 2;
-
-                    // 10, 11
-                    if (TrialDivision(prime)) {
-                        // 11.1, 11.2
-                        return new STRandomPrimeResult(prime, primeSeed, primeGenCounter);
-                        }
-
-                    // 12
-                    if (primeGenCounter > 4 * length) {
-                        return new STRandomPrimeResult("fail");
-                        }
-
-                    // 13 (loop)
-                    }
-                }
-
-            // 14
-            var result = ShaweTaylorRandomPrime((int)System.Math.Ceiling(length / 2.0) + 1, inputSeed, sha);
-            var prime0 = result.Prime;
-            primeSeed = result.PrimeSeed;
-            primeGenCounter = result.PrimeGenCounter;
-
-            // 15
-            if (!result.Success) {
-                return new STRandomPrimeResult("fail");
-                }
-
-            // 16, 17
-            var iterations = length.CeilingDivide(outLen) - 1;
-            var oldCounter = primeGenCounter;
-
-            // 18, 19
-            BigInteger x = 0;
-            for (var i = 0; i <= iterations; i++) {
-                x += sha.HashNumber(primeSeed + i).ToBigInteger() * NumberTheory.Pow2(i * outLen);
-                }
-
-            // 20, 21, 22
-            primeSeed += iterations + 1;
-            x = NumberTheory.Pow2(length - 1) + x % NumberTheory.Pow2(length - 1);
-            var t = x.CeilingDivide(2 * prime0);
+        // 2
+        if (length < 33) {
+            // 3, 4
+            primeSeed = inputSeed;
+            primeGenCounter = 0;
 
             while (true) {
-                // 23
-                if (2 * t * prime0 + 1 > NumberTheory.Pow2(length)) {
-                    t = NumberTheory.Pow2(length - 1).CeilingDivide(2 * prime0);
-                    }
+                // 5, 6, 7
+                prime = sha.HashNumber(primeSeed).ToBigInteger() ^ sha.HashNumber(primeSeed + 1).ToBigInteger();
+                prime = NumberTheory.Pow2(length - 1) + prime % NumberTheory.Pow2(length - 1);
+                prime = 2 * (prime / 2) + 1;
 
-                // 24, 25
-                prime = 2 * t * prime0 + 1;
+                // 8, 9
                 primeGenCounter++;
+                primeSeed += 2;
 
-                // 26, 27
-                BigInteger a = 0;
-                for (var i = 0; i <= iterations; i++) {
-                    a += sha.HashNumber(primeSeed + i).ToBigInteger() * NumberTheory.Pow2(i * outLen);
-                    }
-
-                // 28, 29
-                primeSeed += iterations + 1;
-                a = 2 + a % (prime - 3);
-
-                // 30
-                var z = BigInteger.ModPow(a, 2 * t, prime);
-
-                // 31
-                if (NumberTheory.GCD(z - 1, prime) == 1 && BigInteger.ModPow(z, prime0, prime) == 1) {
-                    // 31.1, 31.2
+                // 10, 11
+                if (TrialDivision(prime)) {
+                    // 11.1, 11.2
                     return new STRandomPrimeResult(prime, primeSeed, primeGenCounter);
                     }
 
-                // 32
-                if (primeGenCounter >= 4 * length + oldCounter) {
+                // 12
+                if (primeGenCounter > 4 * length) {
                     return new STRandomPrimeResult("fail");
                     }
 
-                // 33
-                t++;
-
-                // 34 (loop)
+                // 13 (loop)
                 }
             }
 
-        /// <summary>
-        /// C.7 Determine if a 32-bit uint is prime
-        /// </summary>
-        /// <param name="c"></param>
-        /// <returns></returns>
-        public static bool TrialDivision(BigInteger c) {
-            // Safe to cast this as int/double. c value shouldn't be over the size of an uint
-            var cap = System.Math.Ceiling(System.Math.Sqrt((uint)c));
+        // 14
+        var result = ShaweTaylorRandomPrime((int)System.Math.Ceiling(length / 2.0) + 1, inputSeed, sha);
+        var prime0 = result.Prime;
+        primeSeed = result.PrimeSeed;
+        primeGenCounter = result.PrimeGenCounter;
 
-            foreach (var prime in _primes) {
-                if (c % prime == 0) {
-                    return false;
-                    }
+        // 15
+        if (!result.Success) {
+            return new STRandomPrimeResult("fail");
+            }
 
-                if (prime > cap) {
-                    return true;
-                    }
+        // 16, 17
+        var iterations = length.CeilingDivide(outLen) - 1;
+        var oldCounter = primeGenCounter;
+
+        // 18, 19
+        BigInteger x = 0;
+        for (var i = 0; i <= iterations; i++) {
+            x += sha.HashNumber(primeSeed + i).ToBigInteger() * NumberTheory.Pow2(i * outLen);
+            }
+
+        // 20, 21, 22
+        primeSeed += iterations + 1;
+        x = NumberTheory.Pow2(length - 1) + x % NumberTheory.Pow2(length - 1);
+        var t = x.CeilingDivide(2 * prime0);
+
+        while (true) {
+            // 23
+            if (2 * t * prime0 + 1 > NumberTheory.Pow2(length)) {
+                t = NumberTheory.Pow2(length - 1).CeilingDivide(2 * prime0);
                 }
 
-            return true;
+            // 24, 25
+            prime = 2 * t * prime0 + 1;
+            primeGenCounter++;
+
+            // 26, 27
+            BigInteger a = 0;
+            for (var i = 0; i <= iterations; i++) {
+                a += sha.HashNumber(primeSeed + i).ToBigInteger() * NumberTheory.Pow2(i * outLen);
+                }
+
+            // 28, 29
+            primeSeed += iterations + 1;
+            a = 2 + a % (prime - 3);
+
+            // 30
+            var z = BigInteger.ModPow(a, 2 * t, prime);
+
+            // 31
+            if (NumberTheory.GCD(z - 1, prime) == 1 && BigInteger.ModPow(z, prime0, prime) == 1) {
+                // 31.1, 31.2
+                return new STRandomPrimeResult(prime, primeSeed, primeGenCounter);
+                }
+
+            // 32
+            if (primeGenCounter >= 4 * length + oldCounter) {
+                return new STRandomPrimeResult("fail");
+                }
+
+            // 33
+            t++;
+
+            // 34 (loop)
             }
         }
-    
+
+    /// <summary>
+    /// C.7 Determine if a 32-bit uint is prime
+    /// </summary>
+    /// <param name="c"></param>
+    /// <returns></returns>
+    public static bool TrialDivision(BigInteger c) {
+        // Safe to cast this as int/double. c value shouldn't be over the size of an uint
+        var cap = System.Math.Ceiling(System.Math.Sqrt((uint)c));
+
+        foreach (var prime in _primes) {
+            if (c % prime == 0) {
+                return false;
+                }
+
+            if (prime > cap) {
+                return true;
+                }
+            }
+
+        return true;
+        }
+    }
+
