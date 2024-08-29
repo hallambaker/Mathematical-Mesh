@@ -1,6 +1,4 @@
-﻿using Goedel.Mesh;
-
-namespace Goedel.Everything;
+﻿namespace Goedel.Everything;
 public partial class EverythingMaui {
 
     ///<inheritdoc/>
@@ -15,7 +13,7 @@ public partial class EverythingMaui {
         var entry = new BoundApplicationGroup(contextGroup, ContextUser);
         CurrentAccount.Groups.Add(entry);
 
-        return new SuccessGroupCreate(){
+        return new SuccessGroupCreate() {
             GroupName = entry.GroupName,
             GroupAddress = entry.GroupAddress
             };

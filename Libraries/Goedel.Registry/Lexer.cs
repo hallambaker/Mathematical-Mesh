@@ -392,33 +392,33 @@ public class Lexer {
                         else {
                             switch (ActionTable[NextState]) {
                                 case ActionType.Add: {
-                                        TokenText += c;
-                                        break;
-                                        }
+                                    TokenText += c;
+                                    break;
+                                    }
                                 case ActionType.Escape: {
-                                        if (State == 8) {
-                                            TokenText += c;
-                                            }
-                                        else if (State == 10) {
-                                            TokenText += c switch {
-                                                'n' => '\n',
-                                                'r' => '\r',
-                                                'v' => '\v',
-                                                't' => '\t',
-                                                '\"' => '\"',
-                                                '\'' => '\'',
-                                                '\\' => '\\',
-                                                '0' => '\0',
-                                                _ => throw new Exception("Unknown Character Escape Sequence"),
-                                                };
-                                            }
-                                        break;
+                                    if (State == 8) {
+                                        TokenText += c;
                                         }
+                                    else if (State == 10) {
+                                        TokenText += c switch {
+                                            'n' => '\n',
+                                            'r' => '\r',
+                                            'v' => '\v',
+                                            't' => '\t',
+                                            '\"' => '\"',
+                                            '\'' => '\'',
+                                            '\\' => '\\',
+                                            '0' => '\0',
+                                            _ => throw new Exception("Unknown Character Escape Sequence"),
+                                            };
+                                        }
+                                    break;
+                                    }
 
                                 case ActionType.Null:
-                                    break;
+                                break;
                                 default:
-                                    break;
+                                break;
                                 }
 
                             State = NextState;

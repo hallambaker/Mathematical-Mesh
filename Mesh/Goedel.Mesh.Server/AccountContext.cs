@@ -64,7 +64,7 @@ public class AccountContext : Disposable {
 
     ///<inheritdoc/>
     protected override void Disposing() {
-        LockedAccountEntry ?.Dispose();
+        LockedAccountEntry?.Dispose();
         catalogAccess?.Dispose();
         }
 
@@ -121,11 +121,11 @@ public class AccountContext : Disposable {
                 AccountPrivilege accountPrivilege) {
         switch (session.Credential) {
             case MeshCredentialPublic meshCredential: {
-                    return Authenticate(meshCredential, accountPrivilege);
-                    }
+                return Authenticate(meshCredential, accountPrivilege);
+                }
             case KeyCredentialPublic keyCredentialPublic: {
-                    return Authenticate(keyCredentialPublic, accountPrivilege);
-                    }
+                return Authenticate(keyCredentialPublic, accountPrivilege);
+                }
 
             }
         return false;
@@ -145,13 +145,13 @@ public class AccountContext : Disposable {
         switch (accountPrivilege) {
             case AccountPrivilege.Post:
             case AccountPrivilege.Device: {
-                    break;
-                    }
+                break;
+                }
             default: {
-                    (ProfileAccount.AccountAuthenticationKey.MatchKeyIdentifier(
-                            credential.AuthenticationKeyId)).AssertTrue(NotAuthorized.Throw);
-                    break;
-                    }
+                (ProfileAccount.AccountAuthenticationKey.MatchKeyIdentifier(
+                        credential.AuthenticationKeyId)).AssertTrue(NotAuthorized.Throw);
+                break;
+                }
             }
 
 
@@ -177,13 +177,13 @@ public class AccountContext : Disposable {
         switch (accountPrivilege) {
             case AccountPrivilege.Post:
             case AccountPrivilege.Device: {
-                    break;
-                    }
+                break;
+                }
 
             default: {
-                    (AccessCapability?.Active == true).AssertTrue(NotAuthorized.Throw);
-                    break;
-                    }
+                (AccessCapability?.Active == true).AssertTrue(NotAuthorized.Throw);
+                break;
+                }
             }
 
         return true;

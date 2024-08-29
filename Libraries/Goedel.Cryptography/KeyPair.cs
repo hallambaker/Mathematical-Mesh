@@ -137,25 +137,25 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
 
         switch (algorithmID) {
             case CryptoAlgorithmId.RSAExch: {
-                    keyPair = KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Encrypt, algorithmID);
-                    break;
-                    }
+                keyPair = KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Encrypt, algorithmID);
+                break;
+                }
 
             case CryptoAlgorithmId.RSASign: {
-                    keyPair = KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Sign, algorithmID);
-                    break;
-                    }
+                keyPair = KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Sign, algorithmID);
+                break;
+                }
             case CryptoAlgorithmId.DH: {
-                    keyPair = KeyPairFactoryDH(keySize, keySecurity, keyUses, algorithmID);
-                    break;
-                    }
+                keyPair = KeyPairFactoryDH(keySize, keySecurity, keyUses, algorithmID);
+                break;
+                }
             case CryptoAlgorithmId.X25519:
             case CryptoAlgorithmId.Ed25519:
             case CryptoAlgorithmId.X448:
             case CryptoAlgorithmId.Ed448: {
-                    keyPair = KeyPairFactoryECDH(keySize, keySecurity, keyUses, algorithmID);
-                    break;
-                    }
+                keyPair = KeyPairFactoryECDH(keySize, keySecurity, keyUses, algorithmID);
+                break;
+                }
 
             case CryptoAlgorithmId.MLDSA44:
             case CryptoAlgorithmId.MLDSA65:
@@ -173,7 +173,7 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
                 }
 
             default:
-                break;
+            break;
             }
 
 
@@ -304,7 +304,7 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
             case CryptoAlgorithmId.MLDSA44:
             case CryptoAlgorithmId.MLDSA65:
             case CryptoAlgorithmId.MLDSA87: {
-                keyPair = KeyPairMlDsa.Factory(algorithmID, keySecurity, 
+                keyPair = KeyPairMlDsa.Factory(algorithmID, keySecurity,
                         ikm, keySpecifier, keyName, keyCollection, keySize, keyUses);
                 break;
                 }

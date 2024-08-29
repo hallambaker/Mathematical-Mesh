@@ -21,10 +21,6 @@
 #endregion
 
 
-using Goedel.Guigen;
-
-using System.Text;
-
 namespace Goedel.Mesh;
 
 
@@ -84,7 +80,7 @@ public class CatalogDocument : Catalog<CatalogedDocument> {
                 bool create = true,
                 byte[] bitmask = null) {
         meshClient?.Future();
-        return new CatalogDocument(directory, storeId, policy, 
+        return new CatalogDocument(directory, storeId, policy,
             cryptoParameters, keyCollection, decrypt, create, bitmask: bitmask);
         }
 
@@ -111,7 +107,7 @@ public class CatalogDocument : Catalog<CatalogedDocument> {
                 bool create = true,
                 byte[] bitmask = null) :
         base(directory, storeName ?? Label,
-                    policy, cryptoParameters, keyCollection, 
+                    policy, cryptoParameters, keyCollection,
                     decrypt: decrypt, create: create, bitmask: bitmask) {
         }
 

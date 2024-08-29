@@ -7,7 +7,7 @@ namespace Goedel.Guigen;
 public interface IBoundPresentation : IParameter {
 
     Object? Bound { get; set; }
-    
+
     }
 
 public interface ISelectSummary {
@@ -15,11 +15,11 @@ public interface ISelectSummary {
     string? LabelValue { get; }
 
     string? SecondaryValue { get; }
-    string? IconValue { get;}
+    string? IconValue { get; }
     }
 
 
-public interface ISelectCollection : IEnumerable{
+public interface ISelectCollection : IEnumerable {
 
     ObservableCollection<IBindable> Entries { get; }
 

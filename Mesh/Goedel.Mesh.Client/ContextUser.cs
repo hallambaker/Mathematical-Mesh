@@ -21,10 +21,6 @@
 #endregion
 
 
-using Goedel.Cryptography.Jose;
-using Goedel.Protocol;
-using Goedel.Utilities;
-
 namespace Goedel.Mesh.Client;
 
 
@@ -38,7 +34,7 @@ namespace Goedel.Mesh.Client;
 /// <param name="roles">Roles to be assigned to devices/applications create
 /// in response to the message.</param>
 /// <returns>The result of processing the message.</returns>
-public delegate Task<ProcessResult> ProcessMessageDelegate (
+public delegate Task<ProcessResult> ProcessMessageDelegate(
                 ContextUser contextUser,
                 Message meshMessage, bool accept = true, bool reciprocate = true,
                 List<string> roles = null);
@@ -130,7 +126,7 @@ public partial class ContextUser : ContextAccount {
     /// Create a new ICredential.
     /// </summary>
     /// <returns>The credential</returns>
-    public override MeshCredentialPrivate GetMeshCredentialPrivate() => 
+    public override MeshCredentialPrivate GetMeshCredentialPrivate() =>
         new(ProfileDevice, ConnectionService, null,
             AccountAuthentication ?? BaseAuthenticate);
 
@@ -304,9 +300,9 @@ public partial class ContextUser : ContextAccount {
     /// <param name="accountAddress">The account address</param>
     /// <param name="contact"></param>
     public async Task SetServiceAsync(
-                string accountAddress, 
+                string accountAddress,
                 ContactPerson? contact = null) {
-        
+
         KeyProfile.AssertNotNull(NotSuperAdministrator.Throw);
 
         // Since the service does not know this account (yet)
@@ -350,7 +346,7 @@ public partial class ContextUser : ContextAccount {
             };
 
         // Attempt to register with service in question
-        var response = await MeshClient.BindAccountAsync (createRequest);
+        var response = await MeshClient.BindAccountAsync(createRequest);
         response.AssertSuccess(ServerOperationFailed.Throw);
 
         // Create the Access catalog here with policy allowing the service access
@@ -454,7 +450,7 @@ public partial class ContextUser : ContextAccount {
     /// </summary>
     /// <param name="contact">The contact parameters.</param>
     /// <param name="localname">Short name to apply to the signed contact info</param>
-    public async Task <CatalogedContact> SetContactSelfAsync(Contact contact, string localname = null) {
+    public async Task<CatalogedContact> SetContactSelfAsync(Contact contact, string localname = null) {
         KeyCommonSignature.AssertNotNull(NotAdministrator.Throw);
         contact.Envelope(KeyCommonSignature);
 
@@ -583,7 +579,7 @@ public partial class ContextUser : ContextAccount {
     public async Task SendMessageAsync(string recipientAddress, Message message) {
         var transact = TransactBegin();
         transact.OutboundMessage(recipientAddress, message);
-        await TransactAsync (transact);
+        await TransactAsync(transact);
 
         }
 
@@ -697,10 +693,10 @@ public partial class ContextUser : ContextAccount {
     /// <returns>True if found, otherwise false.</returns>
     public bool TryGetMessageByMessageId(
                 string messageID, out SpoolIndexEntry index,
-                DateTime? notBefore=null) {
+                DateTime? notBefore = null) {
         notBefore.Future();
         var inbound = GetSpoolInbound();
-        index = inbound.GetByMessageId(messageID) ;
+        index = inbound.GetByMessageId(messageID);
         return index != null;
         }
 
@@ -727,7 +723,7 @@ public partial class ContextUser : ContextAccount {
                     string groupName,
                     PrivateKeyUDF accountSeed = null,
                     List<string> roles = null,
-                    byte[]cover=null
+                    byte[] cover = null
                     ) {
 
         // create the cataloged group
@@ -831,8 +827,8 @@ public partial class ContextUser : ContextAccount {
         // read through the entries in CatalogApplication
         var catalog = GetStore(CatalogApplication.Label) as CatalogApplication;
         var entry = catalog.LocateGroup(groupAddress);
-        
-        return GetContextGroup (entry);
+
+        return GetContextGroup(entry);
         }
 
     /// <summary>
@@ -964,7 +960,7 @@ public partial class ContextUser : ContextAccount {
         transactPublication.CatalogUpdate(catalogPublication, catalogedPublication);
         await transactPublication.TransactAsync();
 
-        return new DevicePreconfiguration (
+        return new DevicePreconfiguration(
             secretSeed, profileDevice, connectionService, connectionDevice, pin, connectURI);
         }
 
@@ -1126,19 +1122,19 @@ public partial class ContextUser : ContextAccount {
             if (spoolEntry.IsOpen) {
                 switch (meshMessage) {
                     case AcknowledgeConnection acknowledgeConnection: {
-                            if (acknowledgeConnection.MessageConnectionRequest.PinId != null) {
-                                 results.Add(await ProcessAutomaticAsync(acknowledgeConnection));
-                                }
-                            break;
+                        if (acknowledgeConnection.MessageConnectionRequest.PinId != null) {
+                            results.Add(await ProcessAutomaticAsync(acknowledgeConnection));
                             }
+                        break;
+                        }
                     case MessageContact replyContact: {
-                            results.Add(await ProcessAutomaticAsync(replyContact));
-                            break;
-                            }
+                        results.Add(await ProcessAutomaticAsync(replyContact));
+                        break;
+                        }
                     case GroupInvitation groupInvitation: {
-                            results.Add(await ProcessAutomaticAsync(groupInvitation));
-                            break;
-                            }
+                        results.Add(await ProcessAutomaticAsync(groupInvitation));
+                        break;
+                        }
                     default: {
 
                         // need to add in a mechanism to hook this so that we can process the message type.
@@ -1198,25 +1194,25 @@ public partial class ContextUser : ContextAccount {
     /// <returns>The result of requesting the connection.</returns>
     public async Task<ProcessResult> ProcessAutomaticAsync(AcknowledgeConnection request) {
         if (!IsAdministrator || !Privileges.Contains(CatalogDevice.Label)) {
-                return new InsufficientAuthorization(request);
-                }
+            return new InsufficientAuthorization(request);
+            }
 
-            var messageConnectionRequest = request.MessageConnectionRequest;
+        var messageConnectionRequest = request.MessageConnectionRequest;
 
-            // get the pin value here
-            var messagePin = GetMessagePIN(messageConnectionRequest.PinId);
+        // get the pin value here
+        var messagePin = GetMessagePIN(messageConnectionRequest.PinId);
 
-            var pinStatus = MessagePin.ValidatePin(messagePin,
-                    ServiceAddress,
-                    messageConnectionRequest.AuthenticatedData,
-                    messageConnectionRequest.ClientNonce,
-                    messageConnectionRequest.PinWitness);
+        var pinStatus = MessagePin.ValidatePin(messagePin,
+                ServiceAddress,
+                messageConnectionRequest.AuthenticatedData,
+                messageConnectionRequest.ClientNonce,
+                messageConnectionRequest.PinWitness);
 
-            if (pinStatus != ProcessingResult.Success) {
-                return new ProcessResultError(request, pinStatus, messagePin);
-                }
+        if (pinStatus != ProcessingResult.Success) {
+            return new ProcessResultError(request, pinStatus, messagePin);
+            }
 
-            return await ProcessAsync(request, true, messagePin);
+        return await ProcessAsync(request, true, messagePin);
         }
 
     /// <summary>
@@ -1290,7 +1286,7 @@ public partial class ContextUser : ContextAccount {
     /// <param name="transactRequest">The transaction under which catalog updates are to be added.</param>
     /// <param name="catalogedDevice">The device entry.</param>
     /// <returns>The list of application entries.</returns>
-    public  List<ApplicationEntry> MakeApplicationEntries(
+    public List<ApplicationEntry> MakeApplicationEntries(
         List<string> roles,
         TransactUser transactRequest,
         CatalogedDevice catalogedDevice
@@ -1351,27 +1347,27 @@ public partial class ContextUser : ContextAccount {
 
         switch (meshMessage) {
             case AcknowledgeConnection connection: {
-                    return await ProcessAsync(connection, accept, rights: roles);
-                    }
+                return await ProcessAsync(connection, accept, rights: roles);
+                }
             case MessageContact requestContact: {
-                    return await ContactReplyAsync(requestContact, accept);
-                    }
+                return await ContactReplyAsync(requestContact, accept);
+                }
 
             case RequestConfirmation requestConfirmation: {
-                    return await ConfirmationResponseAsync(requestConfirmation, accept);
-                    }
+                return await ConfirmationResponseAsync(requestConfirmation, accept);
+                }
             case ResponseConfirmation responseConfirmation: {
-                    responseConfirmation.Future();
-                    break;
-                    }
+                responseConfirmation.Future();
+                break;
+                }
             case RequestTask requestTask: {
-                    requestTask.Future();
-                    break;
-                    }
+                requestTask.Future();
+                break;
+                }
             case GroupInvitation groupInvitation: {
-                    groupInvitation.Future();
-                    break;
-                    }
+                groupInvitation.Future();
+                break;
+                }
 
             default: {
                 if (ProcessDictionary.TryGetValue(meshMessage.GetType(), out var messageDelegate)) {
@@ -1421,14 +1417,14 @@ public partial class ContextUser : ContextAccount {
 
             using var transaction = TransactBegin();
             var catalog = transaction.GetCatalogContact();
-            
+
             transaction.CatalogUpdate(catalog, cataloged);
             transaction.InboundComplete(StateSpoolMessage.Closed, requestContact);
             await transaction.TransactAsync();
             }
 
         // Get the reply (if required)
-        var reply = requestContact.Reply==true ?
+        var reply = requestContact.Reply == true ?
             await ContactRequestAsync(requestContact.Sender, requestContact.PIN, localname, false) : null;
 
         return new ResultMessageContact(requestContact, reply);
@@ -1678,7 +1674,7 @@ public partial class ContextUser : ContextAccount {
 
         var recipientAddress = requestConfirmation.Sender;
         //Console.WriteLine(
-            //$"Message is {requestConfirmation.MessageId}, response will be {requestConfirmation.GetResponseId()}");
+        //$"Message is {requestConfirmation.MessageId}, response will be {requestConfirmation.GetResponseId()}");
 
 
         var message = new ResponseConfirmation() {
@@ -1819,7 +1815,7 @@ public partial class ContextUser : ContextAccount {
     /// <param name="applicationId">The name of the specific SSH application.</param>
     /// <returns>The application iff found, otherwise null.</returns>
     public CatalogedApplicationSsh GetApplicationSsh(
-            string applicationId) => 
+            string applicationId) =>
         GetApplication<CatalogedApplicationSsh>(applicationId) as CatalogedApplicationSsh;
 
     /// <summary>

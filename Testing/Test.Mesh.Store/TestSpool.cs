@@ -20,17 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Collections.Generic;
-using System;
-
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
 using Goedel.Mesh;
-using Goedel.Mesh.Test;
-using Goedel.Test;
-using Goedel.Utilities;
-
-using Xunit;
 
 namespace Goedel.XUnit;
 
@@ -59,7 +49,7 @@ public partial class StoreTests {
     public void TestAppendDirect(
         int batches = 10,
         int items = 5,
-        bool direct= true) {
+        bool direct = true) {
 
         // Create store
         var directory = TestEnvironment.DirectoryPath;
@@ -93,7 +83,7 @@ public partial class StoreTests {
 
 
             var j = 0;
-            foreach (var entry in store.GetMessages(start: spoolEntry.Next(), reverse:false)) {
+            foreach (var entry in store.GetMessages(start: spoolEntry.Next(), reverse: false)) {
                 j++;
                 //Console.WriteLine($"Got {j}/{items} ${entry.Index}");
                 }
@@ -157,7 +147,7 @@ public partial class StoreTests {
 
         }
 
-    static DareEnvelope MakeMessage(string id, KeyPair signingKey=null) {
+    static DareEnvelope MakeMessage(string id, KeyPair signingKey = null) {
         var message = new Message() {
             Sender = id,
             MessageId = id

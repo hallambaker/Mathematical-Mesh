@@ -75,7 +75,7 @@ public class MlDsaPrivate : MLDSA, IDisposable {
         throw new NYI();
         }
 
-    public MlDsaPrivate(MlDsaMode mode, byte[] seed) : base(mode){
+    public MlDsaPrivate(MlDsaMode mode, byte[] seed) : base(mode) {
 
         // should pull the key generation code to here.
 
@@ -226,7 +226,7 @@ public class MlDsaPrivate : MLDSA, IDisposable {
     /// <param name="z">The Z vector.</param>
     /// <param name="h">The hints vector.</param>
     /// <returns>The packed byte array.</returns>
-    public byte[] PackSignature(byte[]sig, byte[] message, PolynomialVectorInt32 z, PolynomialVectorInt32 h) {
+    public byte[] PackSignature(byte[] sig, byte[] message, PolynomialVectorInt32 z, PolynomialVectorInt32 h) {
         //var result = new byte[SignatureBytes+ message.Length];
         var result = new byte[SignatureBytes];
         var offset = 0;
@@ -241,7 +241,7 @@ public class MlDsaPrivate : MLDSA, IDisposable {
         for (var p = 0; p < h.Polynomials.Length; p++) {
             for (var c = 0; c < N; c++) {
                 if (h.Polynomials[p].Coefficients[c] != 0) {
-                    result[offset+ k++] = (byte)c;
+                    result[offset + k++] = (byte)c;
                     }
                 }
             result[offset + OMEGA + p] = (byte)k;

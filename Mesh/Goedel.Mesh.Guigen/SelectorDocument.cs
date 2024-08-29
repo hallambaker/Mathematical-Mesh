@@ -1,8 +1,5 @@
 ﻿using Goedel.Cryptography.Dare;
 
-
-using System.Threading;
-
 namespace Goedel.Everything;
 
 #region // Bindings to classes specified through the Guigen schema.
@@ -25,7 +22,7 @@ public partial class DocumentSection : IHeadedSelection {
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public DocumentSection(IAccountSelector? account =null) {
+    public DocumentSection(IAccountSelector? account = null) {
         Account = account;
         Catalog = ContextUser.GetStore(CatalogDocument.Label, create: false) as GuigenCatalogDocument;
         DocumentSelection = Catalog is null ? null : new DocumentSelection(ContextUser, Catalog);
@@ -37,7 +34,7 @@ public partial class DocumentSection : IHeadedSelection {
         transaction.CatalogUpdate(Catalog, entry);
         await transaction.TransactAsync();
 
-        var bound =  BoundDocument.Factory(entry);
+        var bound = BoundDocument.Factory(entry);
         DocumentSelection.Add(bound);
         }
 
@@ -94,9 +91,9 @@ public partial class BoundDocument : IBoundPresentation, IDialog {
             };
 
 
-    public override IFieldIcon Type  => FieldIcons.Document(Filename, ContentType);
+    public override IFieldIcon Type => FieldIcons.Document(Filename, ContentType);
 
-    public string ContentType {get; set;}
+    public string ContentType { get; set; }
 
 
     public static BoundDocument Factory(CatalogedDocument contact) {
@@ -248,8 +245,8 @@ public partial class DocumentSelection : SelectionCatalog<GuigenCatalogDocument,
     /// catalog <paramref name="catalog"/>.
     /// </summary>
     /// <param name="catalog"></param>
-    public DocumentSelection(ContextAccount contextAccount, 
-                    GuigenCatalogDocument catalog) : base(contextAccount,catalog) {
+    public DocumentSelection(ContextAccount contextAccount,
+                    GuigenCatalogDocument catalog) : base(contextAccount, catalog) {
         }
 
     #region // Conversion overrides

@@ -1,8 +1,10 @@
 ﻿using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
+
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
+
 using System.Collections.Concurrent;
 using System.Runtime.Versioning;
 
@@ -20,7 +22,7 @@ public sealed class DareLoggerProvider : ILoggerProvider {
     private DareLoggerConfiguration _currentConfig;
     private readonly ConcurrentDictionary<string, DareLogger> _loggers =
         new(StringComparer.OrdinalIgnoreCase);
-    
+
 
     Sequence? LogSequence { get; } = null;
 
@@ -79,7 +81,7 @@ public class DareLoggerConfiguration : IConfigurationEntry {
     public ConfigurationEntry GetConfigurationEntry() => ConfigurationEntry;
 
     ///<summary>List of recipients for which decryption blocks are to be created in the log.</summary> 
-    public List<string> Recipients { get; set; } = new ();
+    public List<string> Recipients { get; set; } = new();
 
     ///<summary>Log rotation period</summary> 
     public string? Rotate { get; set; } = null;
@@ -123,7 +125,7 @@ public sealed class DareLogger : ILogger {
         // open the sequence here.
 
 
-       }
+        }
     //public static DareLogger Factory(
     //        string name, 
     //        DareLoggerConfiguration? config = null) {
@@ -165,7 +167,7 @@ public sealed class DareLogger : ILogger {
             builder.AppendLine($"    \"Exception\" = \"{exception}\",");
             }
         if (state is IReadOnlyList<KeyValuePair<string, object>> list) {
-            for (var i = 0; i < list.Count-1; i++) {
+            for (var i = 0; i < list.Count - 1; i++) {
                 builder.AppendLine($"    \"{list[i].Key}\" = \"{list[i].Value}\",");
                 }
             }

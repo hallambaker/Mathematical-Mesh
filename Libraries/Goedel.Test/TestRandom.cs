@@ -20,7 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 using Goedel.Cryptography.Algorithms;
-using System.Security.Principal;
 
 namespace Goedel.Test;
 
@@ -59,7 +58,7 @@ public class TestRandom {
 
 
 
-    public byte[] GetBytes(int length, string tag=null) {
+    public byte[] GetBytes(int length, string tag = null) {
         var seed = Seed + tag ?? (Count.ToString());
         Count++;
 

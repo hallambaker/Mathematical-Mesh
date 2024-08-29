@@ -38,7 +38,7 @@ public partial class Shell {
 
 
         using (var log = new DareLogWriter(
-                outputFile, policy:policy, fileStatus: FileStatus.Overwrite)) {
+                outputFile, policy: policy, fileStatus: FileStatus.Overwrite)) {
             }
 
         return new ResultFile() {

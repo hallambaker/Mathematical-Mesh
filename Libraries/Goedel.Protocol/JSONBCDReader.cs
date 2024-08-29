@@ -100,110 +100,110 @@ public class JsonBcdReader : JsonReader {
                 }
             switch (b & 0xFC) {
                 case JSONBCD.PositiveInteger: {
-                        return LexerInteger(b, true);
-                        }
+                    return LexerInteger(b, true);
+                    }
                 case JSONBCD.NegativeInteger: {
-                        return LexerInteger(b, false);
-                        }
+                    return LexerInteger(b, false);
+                    }
                 case JSONBCD.TagString: {
-                        return LexerTag(b, true);
-                        }
+                    return LexerTag(b, true);
+                    }
                 case JSONBCD.StringTerm: {
-                        return LexerString(b, true);
-                        }
+                    return LexerString(b, true);
+                    }
                 case JSONBCD.StringChunk: {
-                        return LexerString(b, false);
-                        }
+                    return LexerString(b, false);
+                    }
                 case JSONBCD.DataTerm: {
-                        return LexerBinary(b, true);
-                        }
+                    return LexerBinary(b, true);
+                    }
                 case JSONBCD.DataChunk: {
-                        return LexerBinary(b, false);
-                        }
+                    return LexerBinary(b, false);
+                    }
 
                 default:
-                    break;
+                break;
                 }
 
             switch (b) {
 
                 case JSONBCD.True: {
-                        return Token.True;
-                        }
+                    return Token.True;
+                    }
                 case JSONBCD.False: {
-                        return Token.False;
-                        }
+                    return Token.False;
+                    }
                 case JSONBCD.Null: {
-                        return Token.Null;
-                        }
+                    return Token.Null;
+                    }
                 case JSONBCD.PositiveBigInteger: {
-                        return LexerBigInteger(true);
-                        }
+                    return LexerBigInteger(true);
+                    }
                 case JSONBCD.NegativeBigInteger: {
-                        return LexerBigInteger(false);
-                        }
+                    return LexerBigInteger(false);
+                    }
 
                 default:
-                    break;
+                break;
                 }
 
 
             switch (b & 0xF4) {
                 case JSONBCD.TagCode: {
-                        return LexerTagCode(b);
-                        }
+                    return LexerTagCode(b);
+                    }
                 case JSONBCD.TagDefinition: {
-                        Dictionary = true;
-                        LexerTagDefinition(b);
-                        break;
-                        }
+                    Dictionary = true;
+                    LexerTagDefinition(b);
+                    break;
+                    }
                 case JSONBCD.TagCodeDefinition: {
-                        return LexerTagCodeDefinition(b);
-                        }
+                    return LexerTagCodeDefinition(b);
+                    }
                 case JSONBCD.TagDictionaryDefinition: {
-                        Dictionary = true;
-                        LexerDictionaryDefinition(b);
-                        break;
-                        }
+                    Dictionary = true;
+                    LexerDictionaryDefinition(b);
+                    break;
+                    }
                 case JSONBCD.DictionaryHash: {
-                        ReadDictionary();
-                        Dictionary = true;
-                        break;
-                        }
+                    ReadDictionary();
+                    Dictionary = true;
+                    break;
+                    }
 
                 default:
-                    break;
+                break;
                 }
 
 
             switch (b) {
                 case JSONBCD.BinaryFloat16: {
-                        return LexerRealOther(2);
-                        }
+                    return LexerRealOther(2);
+                    }
                 case JSONBCD.BinaryFloat32: {
-                        return LexerReal32();
-                        }
+                    return LexerReal32();
+                    }
                 case JSONBCD.BinaryFloat64: {
-                        return LexerReal64();
-                        }
+                    return LexerReal64();
+                    }
                 case JSONBCD.BinaryFloat128: {
-                        return LexerRealOther(16);
-                        }
+                    return LexerRealOther(16);
+                    }
                 case JSONBCD.Intel80: {
-                        return LexerRealOther(10);
-                        }
+                    return LexerRealOther(10);
+                    }
                 case JSONBCD.DecimalFloat32: {
-                        return LexerRealOther(4);
-                        }
+                    return LexerRealOther(4);
+                    }
                 case JSONBCD.DecimalFloat64: {
-                        return LexerRealOther(8);
-                        }
+                    return LexerRealOther(8);
+                    }
                 case JSONBCD.DecimalFloat128: {
-                        return LexerRealOther(16);
-                        }
+                    return LexerRealOther(16);
+                    }
 
                 default:
-                    break;
+                break;
                 }
             } while (Dictionary);
         throw new UnknownTag();
@@ -270,13 +270,13 @@ public class JsonBcdReader : JsonReader {
 
         switch (TokenType) {
             case Token.String: {
-                    binaryBuffer = 0;
-                    return true;
-                    }
+                binaryBuffer = 0;
+                return true;
+                }
             case Token.Binary: {
-                    binaryBuffer = -1;
-                    return Terminal;
-                    }
+                binaryBuffer = -1;
+                return Terminal;
+                }
             }
 
         return Terminal;
@@ -355,17 +355,17 @@ public class JsonBcdReader : JsonReader {
     /// </summary>
     /// <returns>True if there is a next object.</returns>
     public override bool NextObject() {
-        
+
         PeekToken();
         switch (TokenType) {
             case Token.Comma: {
-                    GetToken();
-                    return true; // another tag to come
-                    }
+                GetToken();
+                return true; // another tag to come
+                }
             case Token.EndObject: {
-                    GetToken();
-                    return false; // end of object reached
-                    }
+                GetToken();
+                return false; // end of object reached
+                }
             }
         return true;
         }
@@ -379,13 +379,13 @@ public class JsonBcdReader : JsonReader {
         PeekToken();
         switch (TokenType) {
             case Token.Comma: {
-                    GetToken();
-                    return true; // another tag to come
-                    }
+                GetToken();
+                return true; // another tag to come
+                }
             case Token.EndArray: {
-                    GetToken();
-                    return false; // end of object reached
-                    }
+                GetToken();
+                return false; // end of object reached
+                }
 
             }
         return true;

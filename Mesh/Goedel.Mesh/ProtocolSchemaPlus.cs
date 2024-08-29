@@ -69,27 +69,27 @@ public partial class MeshResponse {
 
         switch (exception) {
             case ObjectIdentifierNotUnique e: {
-                    StatusDescriptionCode = MeshConstants.MeshServerStatusAccountRegisteredTag;
-                    StatusExtended = (int)MeshServerStatus.AccountRegistered;
-                    return;
-                    }
+                StatusDescriptionCode = MeshConstants.MeshServerStatusAccountRegisteredTag;
+                StatusExtended = (int)MeshServerStatus.AccountRegistered;
+                return;
+                }
             case NotAuthenticated e: {
-                    StatusDescriptionCode = MeshConstants.MeshServerStatusNotAuthorizedTag;
-                    StatusExtended = (int)MeshServerStatus.NotAuthorized;
-                    return;
-                    }
+                StatusDescriptionCode = MeshConstants.MeshServerStatusNotAuthorizedTag;
+                StatusExtended = (int)MeshServerStatus.NotAuthorized;
+                return;
+                }
             case NotAdministrator e: {
-                    StatusDescriptionCode = MeshConstants.MeshServerStatusNotAdministratorTag;
-                    StatusExtended = (int)MeshServerStatus.NotAdministrator;
-                    return;
-                    }
+                StatusDescriptionCode = MeshConstants.MeshServerStatusNotAdministratorTag;
+                StatusExtended = (int)MeshServerStatus.NotAdministrator;
+                return;
+                }
             case NotAuthorized e: {
-                    StatusDescriptionCode = MeshConstants.MeshServerStatusNotAuthorizedTag;
-                    StatusExtended = (int)MeshServerStatus.NotAuthorized;
-                    return;
-                    }
+                StatusDescriptionCode = MeshConstants.MeshServerStatusNotAuthorizedTag;
+                StatusExtended = (int)MeshServerStatus.NotAuthorized;
+                return;
+                }
             default:
-                break;
+            break;
             }
 
         }
@@ -149,7 +149,7 @@ public partial class MeshRequest {
 
 
 public partial class MeshHelloResponse : IReport {
-    
+
     ///<inheritdoc/>
     public void Report(StringBuilder output, LogLevelSeverity reportMode) {
 
@@ -323,8 +323,8 @@ public partial class DownloadResponse {
             }
 
         foreach (var update in Updates) {
-            if (update.Store == store) { 
-                return update; 
+            if (update.Store == store) {
+                return update;
                 }
             }
 

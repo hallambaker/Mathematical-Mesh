@@ -209,7 +209,7 @@ public static partial class Extension {
                 case '®': Result.Append("(R)"); break;
                 case '©': Result.Append("(C)"); break;
                 case '\u2011':
-                    Result.Append('-'); break;
+                Result.Append('-'); break;
                 case '<': Result.Append("&lt;"); break;
                 case '>': Result.Append("&gt;"); break;
                 case '&': Result.Append("&amp;"); break;
@@ -239,7 +239,7 @@ public static partial class Extension {
                 case '®': Result.Append("(R)"); break;
                 case '©': Result.Append("(C)"); break;
                 case '\u2011':
-                    Result.Append('-'); break;
+                Result.Append('-'); break;
 
                 //case '<': Result.Append("&lt;"); break;
                 //case '>': Result.Append("&gt;"); break;
@@ -277,17 +277,17 @@ public static partial class Extension {
     public static string ToHTMLEntity(this char c) {
         switch (c) {
             case '&': {
-                    return "&amp;";
-                    }
+                return "&amp;";
+                }
             case '<': {
-                    return "&lt;";
-                    }
+                return "&lt;";
+                }
             case '>': {
-                    return "&gt;";
-                    }
+                return "&gt;";
+                }
             default: {
-                    return c.ToString();
-                    }
+                return c.ToString();
+                }
             }
         }
 

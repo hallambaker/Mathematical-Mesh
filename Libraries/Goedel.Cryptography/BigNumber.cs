@@ -20,8 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Runtime.CompilerServices;
-
 namespace Goedel.Cryptography;
 
 /// <summary>
@@ -286,7 +284,7 @@ public static class BigNumber {
     public static BigInteger SqrtMinus1(this BigInteger p) => BigInteger.ModPow(2, (p - 1) / 4, p);
 
 
-    public static (BigInteger, BigInteger) Sort (this BigInteger a, BigInteger b) =>
+    public static (BigInteger, BigInteger) Sort(this BigInteger a, BigInteger b) =>
         a > b ? (b, a) : (a, b);
 
 

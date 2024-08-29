@@ -1,9 +1,4 @@
-﻿using Microsoft.Maui;
-
-using static System.Collections.Specialized.BitVector32;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace Goedel.Guigen.Maui;
+﻿namespace Goedel.Guigen.Maui;
 
 public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
     ///<summary>The bound UI</summary> 
@@ -55,7 +50,7 @@ public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
             }
 
         switch (section.Binding) {
-            case GuiBindingSingle singleBinding : {
+            case GuiBindingSingle singleBinding: {
                 FieldSet = new GuigenFieldSetSectionSingle(Binding, singleBinding, Section.Data, guiSection: section);
                 break;
                 }
@@ -81,7 +76,7 @@ public class GuigenDetailSection : ContentPage, IPresentation, IWidget {
         switch (button.Target) {
 
             case GuiSection section: {
-                return new GuigenSectionButton (Binding, section).View;
+                return new GuigenSectionButton(Binding, section).View;
                 }
             case GuiAction action: {
                 return new GuigenActionButton(Binding, action).View;
@@ -122,8 +117,8 @@ public class GuigenActionButton : IWidget {
 
         ImageButton = new ImageButton {
             Source = action.Icon.GetFilename(),
-            WidthRequest = Binding.IconWidth ,
-            HeightRequest = Binding.IconHeight ,
+            WidthRequest = Binding.IconWidth,
+            HeightRequest = Binding.IconHeight,
             };
         ImageButton.Clicked += OnClick;
 
@@ -187,7 +182,7 @@ public class GuigenSelectionButton : IWidget {
     private async void OnClick(object sender, EventArgs e) {
 
         if (Action.IsSelect) {
-            await Binding.PerformActionAsync (Action, Data);
+            await Binding.PerformActionAsync(Action, Data);
             return;
             }
         MainWindow.SetDetailWindow(Action);

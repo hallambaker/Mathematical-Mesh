@@ -24,7 +24,6 @@ using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.Protocol;
-using Xunit.Abstractions;
 
 namespace Goedel.Test.Core;
 
@@ -58,7 +57,7 @@ public static class Extension {
     static byte[] CorruptCharacter = new byte[256];
 
     static Extension() {
-        for (var i= 0; i< 256 ; i++) {
+        for (var i = 0; i < 256; i++) {
             CorruptCharacter[i] = (byte)i;
             }
         CorruptCharacters('0', 10);
@@ -73,7 +72,7 @@ public static class Extension {
     static void CorruptCharacters(char start, int count) {
         var count2 = count / 2;
         for (var i = 0; i < count; i++) {
-            CorruptCharacter[start + i] = (byte)(start + ((i+ count2) % count) );
+            CorruptCharacter[start + i] = (byte)(start + ((i + count2) % count));
             }
 
         }
@@ -104,26 +103,26 @@ public static class Extension {
 
         switch (dataValidity) {
             case DataValidity.CorruptPayload: {
-                    envelope.Body = envelope.Body.Corrupt();
-                    return;
-                    }
+                envelope.Body = envelope.Body.Corrupt();
+                return;
+                }
             case DataValidity.CorruptMissing: {
-                    envelope.Trailer.Signatures = null;
-                    return;
-                    }
+                envelope.Trailer.Signatures = null;
+                return;
+                }
             case DataValidity.CorruptDigest: {
-                    envelope.Trailer.PayloadDigest = envelope.Trailer.PayloadDigest.Corrupt();
-                    return;
-                    }
+                envelope.Trailer.PayloadDigest = envelope.Trailer.PayloadDigest.Corrupt();
+                return;
+                }
             case DataValidity.CorruptSignature: {
-                    var signature = envelope.Trailer.Signatures[0];
-                    signature.SignatureValue = signature.SignatureValue.Corrupt();
-                    return;
-                    }
+                var signature = envelope.Trailer.Signatures[0];
+                signature.SignatureValue = signature.SignatureValue.Corrupt();
+                return;
+                }
             case DataValidity.CorruptSigner: {
-                    envelope.Trailer.Signatures = alternative.Trailer.Signatures;
-                    return;
-                    }
+                envelope.Trailer.Signatures = alternative.Trailer.Signatures;
+                return;
+                }
 
             }
         }
@@ -188,7 +187,7 @@ public static class Extension {
 
     public static void CorruptDigestAlg(this Stream file, JcbdEnvelope envelope) {
 
-        var digest = envelope.Header.GetProperty("dig") ;
+        var digest = envelope.Header.GetProperty("dig");
         digest.AssertNotNull(NYI.Throw);
 
         Corrupt(digest.Value as JbcdValueString, file);
@@ -218,7 +217,7 @@ public static class Extension {
         }
 
     public static void CorruptPayloadValue(this Stream file, JcbdEnvelope envelope) {
-        CorruptBinary (envelope.Body, file);
+        CorruptBinary(envelope.Body, file);
         }
 
     public static void Corrupt(this JbcdValueString jbcdValue, Stream file) {

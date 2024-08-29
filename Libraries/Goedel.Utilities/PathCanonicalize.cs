@@ -46,51 +46,51 @@ public static partial class Extension {
 
             switch (c) {
                 case '~': {
-                        if (state == State.initial) {
-                            return false; // have encountered illegal combination.
-                            }
-                        state = State.segment;
-                        break;
+                    if (state == State.initial) {
+                        return false; // have encountered illegal combination.
                         }
+                    state = State.segment;
+                    break;
+                    }
                 case '/':
                 case '\\': {
-                        if ((state == State.dot2) | (state == State.initial)) {
-                            return false; // have encountered illegal combination.
-                            }
-                        state = State.start;
-                        break;
+                    if ((state == State.dot2) | (state == State.initial)) {
+                        return false; // have encountered illegal combination.
                         }
+                    state = State.start;
+                    break;
+                    }
                 case '.': {
-                        switch (state) {
-                            case State.start: {
-                                    state = State.dot1;
-                                    break;
-                                    }
-                            case State.dot1: {
-                                    state = State.dot2;
-                                    break;
-                                    }
-                            case State.dot2: {
-                                    state = State.segment;
-                                    break;
-                                    }
+                    switch (state) {
+                        case State.start: {
+                            state = State.dot1;
+                            break;
                             }
-
-                        break;
-                        }
-                case ':': {
-                        return false; // Illegal Windows drive path.
-                        }
-                default: {
-                        var cl = Char.ToLower(c);
-                        if (state == State.initial & cl >= 'a' & cl <= 'z') {
-                            state = State.drive;
+                        case State.dot1: {
+                            state = State.dot2;
+                            break;
                             }
-                        else {
+                        case State.dot2: {
                             state = State.segment;
+                            break;
                             }
-                        break;
                         }
+
+                    break;
+                    }
+                case ':': {
+                    return false; // Illegal Windows drive path.
+                    }
+                default: {
+                    var cl = Char.ToLower(c);
+                    if (state == State.initial & cl >= 'a' & cl <= 'z') {
+                        state = State.drive;
+                        }
+                    else {
+                        state = State.segment;
+                        }
+                    break;
+                    }
                 }
             }
 

@@ -1,6 +1,4 @@
-﻿using static System.Net.Mime.MediaTypeNames;
-
-namespace Goedel.Guigen.Maui;
+﻿namespace Goedel.Guigen.Maui;
 
 public class GuigenFieldIcon : GuigenField, IWidget {
 

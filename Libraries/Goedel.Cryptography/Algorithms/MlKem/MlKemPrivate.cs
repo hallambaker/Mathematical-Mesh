@@ -6,7 +6,7 @@
 public class MlKemPrivate : MlKemPublic {
 
     ///<summary>Size of 512 bit private key in bytes.</summary> 
-    public const int PrivateKeyBytes512 = PublicKeyBytes512 + PolyVectorBytes512 + 2* MlKem.SymBytes;
+    public const int PrivateKeyBytes512 = PublicKeyBytes512 + PolyVectorBytes512 + 2 * MlKem.SymBytes;
     ///<summary>Size of 512 bit private key in bytes.</summary> 
     public const int PrivateKeyBytes768 = PublicKeyBytes768 + PolyVectorBytes768 + 2 * MlKem.SymBytes;
     ///<summary>Size of 512 bit private key in bytes.</summary> 
@@ -21,12 +21,12 @@ public class MlKemPrivate : MlKemPublic {
 
     int EncryptFailOffset => PrivateKeyBytes - SymBytes;
 
-    readonly static int[] PublicKeyLength = 
+    readonly static int[] PublicKeyLength =
         new int[] { PublicKeyBytes512, PublicKeyBytes768, PublicKeyBytes1024 };
-    readonly static int[] PublicKeyOffset = 
+    readonly static int[] PublicKeyOffset =
         new int[] { PublicKeyOffset512, PublicKeyOffset768, PublicKeyOffset1024 };
 
-    public byte[] PrivateKey {get;}
+    public byte[] PrivateKey { get; }
 
     ///<summary>The Public key polynomial vector.</summary> 
     PolynomialVectorInt16 Skpv { get; }
@@ -37,10 +37,10 @@ public class MlKemPrivate : MlKemPublic {
     /// The Kyber strength parameter is specified implicitly by the key size.
     /// </summary>
     /// <param name="privateKey">The private key.</param>
-    public MlKemPrivate(byte[] privateKey) : this (privateKey, GetStrength(privateKey.Length)){
+    public MlKemPrivate(byte[] privateKey) : this(privateKey, GetStrength(privateKey.Length)) {
         }
 
-    MlKemPrivate(byte[] privateKey, int strength) : 
+    MlKemPrivate(byte[] privateKey, int strength) :
                 base(privateKey, strength, PublicKeyLength[strength], PublicKeyOffset[strength]) {
         PrivateKey = privateKey;
 
@@ -57,7 +57,7 @@ public class MlKemPrivate : MlKemPublic {
 
     //static byte[] GetPublic(byte[] privateKey, int strength) =>
     //    privateKey.Extract(PublicKeyOffset[strength], PublicKeyLength[strength]);
-    
+
 
 
     /// <summary>
@@ -67,7 +67,7 @@ public class MlKemPrivate : MlKemPublic {
     /// <returns>The plaintext.</returns>
     public byte[] Decrypt(byte[] ciphertext) {
 
-        var hashSeed = IndCpaDecrypt (ciphertext);
+        var hashSeed = IndCpaDecrypt(ciphertext);
         //Test.DumpBufferHex(hashSeed, "Hashseed = 050A-4873-");
 
 
@@ -116,7 +116,7 @@ public class MlKemPrivate : MlKemPublic {
 
         bp.NTT();
 
-        var mp = Skpv.PointwiseAccMontgomery (bp);
+        var mp = Skpv.PointwiseAccMontgomery(bp);
 
         mp.PolyInvNTT();
 

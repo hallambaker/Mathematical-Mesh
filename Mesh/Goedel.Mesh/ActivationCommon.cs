@@ -90,19 +90,19 @@ public partial class ActivationCommon {
     public KeyPair ProfileSignatureKey { get; set; }
 
     ///<summary>The account administrator signature key bound to an administrator device.</summary>
-    public KeyPair AdministratorSignatureKey { get;  set; }
+    public KeyPair AdministratorSignatureKey { get; set; }
 
     ///<summary>The account administrator signature key bound to an administrator device.</summary>
     public KeyPair AdministratorEncryptionKey { get; set; }
 
     ///<summary>The account common encryption key under which inbound messages are encrypted.</summary>
-    public KeyPair CommonEncryptionKey { get;  set; }
+    public KeyPair CommonEncryptionKey { get; set; }
 
     ///<summary>The account common authentication key used to authenticate under the account.</summary>
-    public KeyPair CommonAuthenticationKey { get;  set; }
+    public KeyPair CommonAuthenticationKey { get; set; }
 
     ///<summary>The account common signature key under which outbound messages are signed.</summary>
-    public KeyPair CommonSignatureKey { get;  set; }
+    public KeyPair CommonSignatureKey { get; set; }
 
 
     ///<summary>The account escrow key.</summary>
@@ -292,7 +292,7 @@ public partial class ActivationCommon {
                 ActivationAccount activationDevice,
                 ActivationCommon activationAccount,
                 KeyPair signature,
-                List<ApplicationEntry> applicationEntries = null, 
+                List<ApplicationEntry> applicationEntries = null,
                 DeviceDescription deviceDescription = null) {
 
         //PrivateAccountOnlineSignature.AssertNotNull(NotAdministrator.Throw);
@@ -437,39 +437,39 @@ public partial class ActivationCommon {
 
         switch (right.Resource) {
             case Resource.ProfileRoot: {
-                    Component.Logger.GrantRoot();
-                    newActivation.ProfileSignature = catalog.MakeKeyData(right,
-                        ProfileSignatureKey as KeyPairAdvanced, keyIdentifier, transactContextAccount);
+                Component.Logger.GrantRoot();
+                newActivation.ProfileSignature = catalog.MakeKeyData(right,
+                    ProfileSignatureKey as KeyPairAdvanced, keyIdentifier, transactContextAccount);
 
-                    break;
-                    }
+                break;
+                }
             case Resource.ProfileAdmin: {
-                    Component.Logger.GrantAdmin();
-                    newActivation.AdministratorSignature = catalog.MakeKeyData(right,
-                        AdministratorSignatureKey as KeyPairAdvanced, keyIdentifier, transactContextAccount);
-                    newActivation.DefaultActive = true;
-                    break;
-                    }
+                Component.Logger.GrantAdmin();
+                newActivation.AdministratorSignature = catalog.MakeKeyData(right,
+                    AdministratorSignatureKey as KeyPairAdvanced, keyIdentifier, transactContextAccount);
+                newActivation.DefaultActive = true;
+                break;
+                }
             case Resource.Store: {
-                    GrantStore(newActivation, right, keyIdentifier, transactContextAccount);
-                    break;
-                    }
+                GrantStore(newActivation, right, keyIdentifier, transactContextAccount);
+                break;
+                }
             case Resource.Account: {
-                    Component.Logger.GrantAccount(right.Decrypt, right.Authenticate, right.Sign);
-                    if (right.Decrypt) {
-                        newActivation.Encryption = catalog.MakeKeyData(right,
-                                CommonEncryptionKey as KeyPairAdvanced, keyIdentifier, transactContextAccount);
-                        }
-                    if (right.Authenticate) {
-                        newActivation.Authentication = catalog.MakeKeyData(right,
-                                CommonAuthenticationKey as KeyPairAdvanced, keyIdentifier, transactContextAccount);
-                        }
-                    if (right.Sign) {
-                        newActivation.Signature = catalog.MakeKeyData(right,
-                                CommonSignatureKey as KeyPairAdvanced, keyIdentifier, transactContextAccount);
-                        }
-                    break;
+                Component.Logger.GrantAccount(right.Decrypt, right.Authenticate, right.Sign);
+                if (right.Decrypt) {
+                    newActivation.Encryption = catalog.MakeKeyData(right,
+                            CommonEncryptionKey as KeyPairAdvanced, keyIdentifier, transactContextAccount);
                     }
+                if (right.Authenticate) {
+                    newActivation.Authentication = catalog.MakeKeyData(right,
+                            CommonAuthenticationKey as KeyPairAdvanced, keyIdentifier, transactContextAccount);
+                    }
+                if (right.Sign) {
+                    newActivation.Signature = catalog.MakeKeyData(right,
+                            CommonSignatureKey as KeyPairAdvanced, keyIdentifier, transactContextAccount);
+                    }
+                break;
+                }
             }
 
         }

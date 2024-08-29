@@ -1,8 +1,4 @@
-﻿using Goedel.Cryptography.Dare;
-using Goedel.Mesh.Client;
-
-using System.Collections;
-using System.Collections.Specialized;
+﻿using System.Collections;
 
 
 
@@ -13,7 +9,7 @@ public interface IAccountSelector {
     }
 
 
-public partial class AccountSwitch :  IHeadedSelection {
+public partial class AccountSwitch : IHeadedSelection {
 
     ///<inheritdoc/>
     public GuiBinding SelectionBinding => _BoundAccount.BaseBinding;
@@ -26,12 +22,12 @@ public partial class AccountSwitch :  IHeadedSelection {
 
     }
 
-public partial class AccountSection: IAccountSelector {
+public partial class AccountSection : IAccountSelector {
 
     public ContextUser ContextUser => BoundAccount?.ContextUser;
     public BoundAccount BoundAccount => EverythingMaui.CurrentAccount;
 
-    public EverythingMaui EverythingMaui { get;  init; }
+    public EverythingMaui EverythingMaui { get; init; }
 
     public override string ServiceAddress => ContextUser?.ServiceAddress;
 
@@ -129,9 +125,9 @@ public partial class BoundAccount : IBoundPresentation, IDialog, IAccountSelecto
         }
     }
 
-    
 
-public partial class BoundAccountUser  {
+
+public partial class BoundAccountUser {
 
 
     public override ContextUser ContextUser { get; } = null!;
@@ -196,7 +192,7 @@ public partial class BoundAccountUser  {
         }
     }
 
-public partial class BoundAccountPending  {
+public partial class BoundAccountPending {
     CatalogedPending CatalogedPending;
 
 
@@ -210,7 +206,7 @@ public partial class BoundAccountPending  {
 
         }
 
-    public BoundAccountPending(CatalogedPending catalogedPending)  {
+    public BoundAccountPending(CatalogedPending catalogedPending) {
         CatalogedPending = catalogedPending;
         Display = "[" + Service + "]";
         }
@@ -221,8 +217,8 @@ public partial class BoundAccountPending  {
 #region // Selection Catalog backing type.
 
 // ToDo: move this to store / enumerate the Context User entries...
-public partial class AccountSelection : ISelectCollection{
-    
+public partial class AccountSelection : ISelectCollection {
+
     EverythingMaui EverythingMaui;
     public ObservableCollection<IBindable> Entries => EverythingMaui.BoundAccounts;
 
@@ -233,7 +229,7 @@ public partial class AccountSelection : ISelectCollection{
     /// catalog <paramref name="catalog"/>.
     /// </summary>
     /// <param name="catalog"></param>
-    public AccountSelection(EverythingMaui everythingMaui)  {
+    public AccountSelection(EverythingMaui everythingMaui) {
         EverythingMaui = everythingMaui;
         }
 

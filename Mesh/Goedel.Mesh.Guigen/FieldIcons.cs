@@ -11,7 +11,7 @@ public partial record FieldIcon(string File) : IFieldIcon {
 /// <summary>
 /// Static class returning handlers for standard icons.
 /// </summary>
-public static partial class FieldIcons  {
+public static partial class FieldIcons {
 
     ///<summary>Icon for generic message that has been read.</summary> 
     public static FieldIcon MessageRead { get; } = new("mail_read");
@@ -24,14 +24,14 @@ public static partial class FieldIcons  {
     /// </summary>
     /// <param name="read">True if the message was read, otherwise false.</param>
     /// <returns>The icon descriptor.</returns>
-    public static FieldIcon Message (bool read) => read ? MessageRead : MessageUnRead;
+    public static FieldIcon Message(bool read) => read ? MessageRead : MessageUnRead;
 
     /// <summary>
     /// Return an icon for a mail message according to the value of <paramref name="read"/>.
     /// </summary>
     /// <param name="read">True if the message was read, otherwise false.</param>
     /// <returns>The icon descriptor.</returns>
-    public static FieldIcon Mail (bool read) => Message(read);
+    public static FieldIcon Mail(bool read) => Message(read);
 
     #region // Connection
     ///<summary>Icon for generic message that has been read.</summary> 
@@ -65,10 +65,10 @@ public static partial class FieldIcons  {
 
     #region // ContactRequest
     ///<summary>Icon for generic message that has been read.</summary> 
-    public static FieldIcon ContactRequestRead  { get; } = new("contact_read");
+    public static FieldIcon ContactRequestRead { get; } = new("contact_read");
 
     ///<summary>Icon for generic message that has not been read.</summary> 
-    public static FieldIcon ContactRequestUnRead { get; } =  new("contact_unread");
+    public static FieldIcon ContactRequestUnRead { get; } = new("contact_unread");
 
     /// <summary>
     /// Return an icon for a generic message according to the value of <paramref name="read"/>.
@@ -101,7 +101,7 @@ public static partial class FieldIcons  {
     public static FieldIcon ConfirmationResponseUnreadAccept { get; } = new("confirm_accept_unread");
 
     ///<summary>Icon for generic message that has been read.</summary> 
-    public static FieldIcon ConfirmationResponseReadReject { get; } =  new("confirm_reject_read");
+    public static FieldIcon ConfirmationResponseReadReject { get; } = new("confirm_reject_read");
 
     ///<summary>Icon for generic message that has not been read.</summary> 
     public static FieldIcon ConfirmationResponseUnreadReject { get; } = new("confirm_reject_unread");
@@ -112,7 +112,7 @@ public static partial class FieldIcons  {
     /// <param name="read">True if the message was read, otherwise false.</param>
     /// <returns>The icon descriptor.</returns>
     public static FieldIcon ConfirmationResponse(bool read, bool accepted) => accepted ?
-        (read ? ConfirmationResponseReadAccept : ConfirmationResponseUnreadAccept) : 
+        (read ? ConfirmationResponseReadAccept : ConfirmationResponseUnreadAccept) :
         (read ? ConfirmationResponseReadReject : ConfirmationResponseUnreadReject);
     #endregion
 
@@ -179,7 +179,7 @@ public static partial class FieldIcons  {
     /// <param name="filename"></param>
     /// <param name="contentType"></param>
     /// <returns></returns>
-    public static FieldIcon Document (string filename, string contentType) => DocumentType;
+    public static FieldIcon Document(string filename, string contentType) => DocumentType;
 
     #endregion
 
@@ -214,7 +214,7 @@ public static partial class FieldIcons  {
     public static FieldIcon BookmarkGeneric { get; } = new("bookmark");
 
     ///<summary>Icon for credential password</summary> 
-    public static FieldIcon Bookmark( string uri) => BookmarkGeneric;
+    public static FieldIcon Bookmark(string uri) => BookmarkGeneric;
 
     #endregion
 
@@ -345,7 +345,7 @@ public static partial class FieldIcons  {
 
     public static FieldIcon SiteWordpress { get; } = new("brand_medium");
 
-    public static FieldIcon SiteGithub{ get; } = new("brand_github");
+    public static FieldIcon SiteGithub { get; } = new("brand_github");
 
     public static FieldIcon ProtocolRss { get; } = new("feed_rss");
 

@@ -8,5 +8,5 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Performance", "CA1822:Mark members as static",
       Justification = "Test code",
     Scope = "module")]
-[assembly: SuppressMessage("Usage", "xUnit1026:Theory methods should use all of their parameters", 
+[assembly: SuppressMessage("Usage", "xUnit1026:Theory methods should use all of their parameters",
     Justification = "Draft tests", Scope = "module")]

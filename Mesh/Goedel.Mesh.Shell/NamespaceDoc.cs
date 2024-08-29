@@ -20,22 +20,21 @@
 //  THE SOFTWARE.
 #endregion
 
-global using System;
-global using System.Collections.Generic;
-global using System.IO;
-global using System.Text;
-global using Goedel.Cryptography;
-global using Goedel.Command;
 global using Goedel.Callsign;
-global using Goedel.Callsign.Registry;
-global using Goedel.Callsign.Resolver;
+global using Goedel.Command;
+global using Goedel.Command.Json;
+global using Goedel.Cryptography;
 global using Goedel.Cryptography.Dare;
 global using Goedel.Cryptography.Jose;
 global using Goedel.IO;
 global using Goedel.Mesh.Client;
 global using Goedel.Protocol;
 global using Goedel.Utilities;
-global using Goedel.Command.Json;
+
+global using System;
+global using System.Collections.Generic;
+global using System.IO;
+global using System.Text;
 
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]

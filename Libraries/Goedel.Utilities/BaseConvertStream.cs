@@ -201,35 +201,35 @@ public static partial class BaseConvert {
             // Set the output method according to the format option selected.
             switch (format & (ConversionFormat)0xfe) {
                 case ConversionFormat.Draft: {
-                        formatChar = FormatCharDraft;
-                        this.outputMax = outputMax > 0 ? outputMax : 72;
-                        this.outputCol = outputCol > 0 ? outputCol : 0;
-                        break;
-                        }
+                    formatChar = FormatCharDraft;
+                    this.outputMax = outputMax > 0 ? outputMax : 72;
+                    this.outputCol = outputCol > 0 ? outputCol : 0;
+                    break;
+                    }
                 case ConversionFormat.PEM64: {
-                        formatChar = FormatCharPEM;
-                        this.outputMax = 64;
-                        this.outputCol = 0;
-                        break;
-                        }
+                    formatChar = FormatCharPEM;
+                    this.outputMax = 64;
+                    this.outputCol = 0;
+                    break;
+                    }
                 case ConversionFormat.Hex: {
-                        formatChar = FormatCharHex;
-                        break;
-                        }
+                    formatChar = FormatCharHex;
+                    break;
+                    }
                 case ConversionFormat.Dash4: {
-                        formatChar = FormatCharDash;
-                        dash = 4;
-                        break;
-                        }
+                    formatChar = FormatCharDash;
+                    dash = 4;
+                    break;
+                    }
                 case ConversionFormat.Dash5: {
-                        formatChar = FormatCharDash;
-                        dash = 5;
-                        break;
-                        }
+                    formatChar = FormatCharDash;
+                    dash = 5;
+                    break;
+                    }
                 default: {
-                        formatChar = FormatCharDirect;
-                        break;
-                        }
+                    formatChar = FormatCharDirect;
+                    break;
+                    }
                 }
 
             offset = 0;

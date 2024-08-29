@@ -86,13 +86,13 @@ public partial class AccountUser {
 
         switch (profile) {
             case ProfileUser profileUser: {
-                    meshVerifiedAccount.Validate(profileUser);
-                    break;
-                    }
+                meshVerifiedAccount.Validate(profileUser);
+                break;
+                }
             case ProfileGroup profileGroup: {
-                    meshVerifiedAccount.Validate(profileGroup);
-                    break;
-                    }
+                meshVerifiedAccount.Validate(profileGroup);
+                break;
+                }
             }
         }
     }

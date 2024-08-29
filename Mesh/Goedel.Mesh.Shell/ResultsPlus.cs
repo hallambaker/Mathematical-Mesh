@@ -21,8 +21,6 @@
 #endregion
 
 
-using System.Reflection.Metadata;
-
 namespace Goedel.Mesh.Shell;
 
 
@@ -72,13 +70,13 @@ public partial class ResultReceived {
 
         switch (Message) {
             case null: {
-                    builder.AppendLine("Pending");
-                    break;
-                    }
+                builder.AppendLine("Pending");
+                break;
+                }
             case ResponseConfirmation responseConfirmation: {
-                    builder.AppendLine(responseConfirmation.Accept==true ? "Accept" : "Reject");
-                    break;
-                    }
+                builder.AppendLine(responseConfirmation.Accept == true ? "Accept" : "Reject");
+                break;
+                }
 
 
             }
@@ -135,29 +133,29 @@ public partial class ResultConnect {
         switch (CatalogedMachine) {
 
             case CatalogedPending catalogedPending: {
-                    var acknowledgeConnection =
-                            catalogedPending.EnvelopedAcknowledgeConnection.Decode();
-                    builder.AppendLine($"   Device UDF = {catalogedPending.DeviceUDF}");
-                    builder.AppendLine($"   Witness value = {acknowledgeConnection.Witness}");
+                var acknowledgeConnection =
+                        catalogedPending.EnvelopedAcknowledgeConnection.Decode();
+                builder.AppendLine($"   Device UDF = {catalogedPending.DeviceUDF}");
+                builder.AppendLine($"   Witness value = {acknowledgeConnection.Witness}");
 
-                    break;
-                    }
+                break;
+                }
             case CatalogedStandard catalogedStandard: {
-                    builder.AppendLine($"   Device UDF = {catalogedStandard.ProfileDevice.UdfString}");
+                builder.AppendLine($"   Device UDF = {catalogedStandard.ProfileDevice.UdfString}");
 
-                    if (Profile is ProfileUser profileUser) {
-                        builder.AppendLine($"   Account = {profileUser.AccountAddress}");
-                        }
-                    builder.AppendLine($"   Account UDF = {Profile.UdfString}");
-
-                    break;
+                if (Profile is ProfileUser profileUser) {
+                    builder.AppendLine($"   Account = {profileUser.AccountAddress}");
                     }
+                builder.AppendLine($"   Account UDF = {Profile.UdfString}");
+
+                break;
+                }
             //case CatalogedAdmin catalogedAdmin: {
             //    break;
             //    }
 
             default:
-                break;
+            break;
             }
 
         }
@@ -172,15 +170,15 @@ public partial class ResultProcess {
 
         switch (ProcessResult) {
             case RespondConnection respondConnection: {
-                    builder.AppendLine($"Result: {respondConnection.Result}");
-                    if (respondConnection.Result == MeshConstants.TransactionResultAccept) {
-                        builder.AppendLine($"Added device: {respondConnection.CatalogedDevice.DeviceUdf}");
-                        }
-                    break;
+                builder.AppendLine($"Result: {respondConnection.Result}");
+                if (respondConnection.Result == MeshConstants.TransactionResultAccept) {
+                    builder.AppendLine($"Added device: {respondConnection.CatalogedDevice.DeviceUdf}");
                     }
+                break;
+                }
 
             default:
-                break;
+            break;
             }
 
         }
@@ -241,27 +239,27 @@ public partial class ResultPending {
 
             switch (message) {
                 case AcknowledgeConnection acknowledgeConnection: {
-                        ToBuilder(builder, message, $"    Connection Request:");
-                        builder.AppendLine($"        Device:  {acknowledgeConnection.MessageConnectionRequest.ProfileDevice.UdfString}");
-                        builder.AppendLine($"        Witness: {acknowledgeConnection.Witness}");
-                        break;
-                        }
+                    ToBuilder(builder, message, $"    Connection Request:");
+                    builder.AppendLine($"        Device:  {acknowledgeConnection.MessageConnectionRequest.ProfileDevice.UdfString}");
+                    builder.AppendLine($"        Witness: {acknowledgeConnection.Witness}");
+                    break;
+                    }
                 case RequestConfirmation requestConfirmation: {
-                        ToBuilder(builder, message, $"    Confirmation Request:");
-                        builder.AppendLine($"        Text: {requestConfirmation.Text}");
-                        break;
-                        }
+                    ToBuilder(builder, message, $"    Confirmation Request:");
+                    builder.AppendLine($"        Text: {requestConfirmation.Text}");
+                    break;
+                    }
                 case ResponseConfirmation responseConfirmation: {
-                        ToBuilder(builder, message, $"    Confirmation Reply:");
-                        builder.AppendLine($"        RequestID: {responseConfirmation.Request.Header.EnvelopeId}");
-                        builder.AppendLine($"        Accept: {responseConfirmation.Accept}");
-                        break;
-                        }
+                    ToBuilder(builder, message, $"    Confirmation Reply:");
+                    builder.AppendLine($"        RequestID: {responseConfirmation.Request.Header.EnvelopeId}");
+                    builder.AppendLine($"        Accept: {responseConfirmation.Accept}");
+                    break;
+                    }
                 case RequestTask requestTask: {
-                        ToBuilder(builder, message, $"    Task Request:");
-                        requestTask.Future();
-                        break;
-                        }
+                    ToBuilder(builder, message, $"    Task Request:");
+                    requestTask.Future();
+                    break;
+                    }
                 //case ReplyContact replyContact: {
                 //        ToBuilder(builder, message, $"    Contact Reply:");
                 //    builder.AppendLine($"        Witness: {replyContact.PinWitness}->{replyContact.PinId}");
@@ -269,18 +267,18 @@ public partial class ResultPending {
                 //    break;
                 //    }
                 case Mesh.MessageContact requestContact: {
-                        ToBuilder(builder, message, $"    Contact Request:");
-                        builder.AppendLine($"        PIN: {requestContact.PIN}");
-                        break;
-                        }
+                    ToBuilder(builder, message, $"    Contact Request:");
+                    builder.AppendLine($"        PIN: {requestContact.PIN}");
+                    break;
+                    }
                 case GroupInvitation groupInvitation: {
-                        ToBuilder(builder, message, $"    Group invitation:");
-                        groupInvitation.Future();
-                        break;
-                        }
+                    ToBuilder(builder, message, $"    Group invitation:");
+                    groupInvitation.Future();
+                    break;
+                    }
 
                 default:
-                    break;
+                break;
                 }
             }
 

@@ -21,8 +21,8 @@ global using Goedel.Cryptography;
 global using Goedel.Cryptography.Dare;
 global using Goedel.Mesh;
 global using Goedel.Mesh.Client;
-global using Goedel.Protocol.Service;
 global using Goedel.Utilities;
+
 global using System.Text;
 
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]

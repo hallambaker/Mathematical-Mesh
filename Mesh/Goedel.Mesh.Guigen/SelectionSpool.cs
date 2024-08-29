@@ -37,7 +37,7 @@ public abstract class SelectionSpool<TCatalog, TBindable> : SelectionStore<TCata
         //Catalog.New(contact);
         //Entries.Add(item);
 
-        return new Task<IResult>(() =>NullResult.Completed);
+        return new Task<IResult>(() => NullResult.Completed);
         }
 
     public override Task<IResult> Remove(IBoundPresentation item) {

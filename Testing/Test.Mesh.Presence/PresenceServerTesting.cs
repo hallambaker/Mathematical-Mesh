@@ -20,14 +20,13 @@
 //  THE SOFTWARE.
 #endregion
 
-using Goedel.Presence.Server;
-using Goedel.Protocol;
-using System.Net.Sockets;
-using System.Net;
-using System;
 using Goedel.Mesh;
+using Goedel.Presence.Server;
 using Goedel.Protocol.GenericHost;
+
 using Microsoft.Extensions.Logging;
+
+using System.Net;
 //using Goedel.Mesh.Shell.ServiceAdmin;
 
 
@@ -51,7 +50,7 @@ public class PresenceServerTesting : PresenceServer {
             PresenceServiceConfiguration presenceServiceConfiguration,
             CommunicationConditions communicationConditions,
             ILogger<ManagedListener> logger) :
-                base(meshMachine,hostConfiguration, presenceServiceConfiguration, logger) {
+                base(meshMachine, hostConfiguration, presenceServiceConfiguration, logger) {
         CommunicationConditions = communicationConditions ??
                 CommunicationConditions.Normal;
         }

@@ -32,7 +32,7 @@ public class KeyPairX448 : KeyPairECDH {
     public virtual CurveX448Public PublicKey { get; }
 
     ///<inheritdoc/>
-    public virtual CurveX448Private PrivateKey { get;  }
+    public virtual CurveX448Private PrivateKey { get; }
 
     ///<inheritdoc/>
     public override IKeyAdvancedPublic IKeyAdvancedPublic => PublicKey;

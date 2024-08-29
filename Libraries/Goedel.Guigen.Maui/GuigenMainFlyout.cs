@@ -1,11 +1,7 @@
-﻿using System;
-
-using static System.Collections.Specialized.BitVector32;
-
-namespace Goedel.Guigen.Maui;
+﻿namespace Goedel.Guigen.Maui;
 
 public class GuigenMainFlyout : IReformat, IMainWindow {
-    
+
     public StyleSheet StyleSheet => StyleSheet.DefaultStyleSheet;
     public GuigenBinding Binding { get; }
 
@@ -72,7 +68,7 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
         //SectionMenu.Reformat();
         }
 
-    public int GetDetailWidth() => (int) FlyoutPage.Window.Width;
+    public int GetDetailWidth() => (int)FlyoutPage.Window.Width;
 
 
     public void PresentActionDialog(
@@ -155,7 +151,7 @@ public class GuigenMainFlyout : IReformat, IMainWindow {
     /// </summary>
     /// <param name="result">The result to present.</param>
     public void SetResultWindow(IResult result) {
-        FieldSet = new  GuigenFieldSetResult(Binding, result);
+        FieldSet = new GuigenFieldSetResult(Binding, result);
         ContentPage.Content = FieldSet.View;
         }
 

@@ -73,7 +73,7 @@ public class StoreEnumerateEnvelope : IEnumerator<DareEnvelope>, IEnumerable<Dar
     public void Reset() => SequenceEnumeratorIndex.Reset();
 
     ///<inheritdoc/>
-    public void Dispose() => SequenceEnumeratorIndex.Dispose(); 
+    public void Dispose() => SequenceEnumeratorIndex.Dispose();
     #endregion
     }
 
@@ -134,7 +134,7 @@ public class CatalogEnumerateItem<T> : IEnumerator<T>, IEnumerable<T> where T : 
     public void Reset() => SequenceEnumeratorIndex.Reset();
 
     ///<inheritdoc/>
-    public void Dispose() => SequenceEnumeratorIndex.Dispose(); 
+    public void Dispose() => SequenceEnumeratorIndex.Dispose();
     #endregion
     }
 
@@ -256,6 +256,6 @@ public class SpoolEnumerateMessage : IEnumerator<Message>, IEnumerable<Message> 
     public void Reset() => SequenceEnumeratorIndex.Reset();
 
     ///<inheritdoc/>
-    public void Dispose() => SequenceEnumeratorIndex.Dispose(); 
+    public void Dispose() => SequenceEnumeratorIndex.Dispose();
     #endregion
     }

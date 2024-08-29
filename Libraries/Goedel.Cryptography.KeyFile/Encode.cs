@@ -69,24 +69,24 @@ public static class Extension {
 
         switch (keyFileFormat) {
             case KeyFileFormat.PEMPrivate: {
-                    return ToPEMPrivate(keyPair, passphrase);
-                    }
+                return ToPEMPrivate(keyPair, passphrase);
+                }
             case KeyFileFormat.PEMPublic: {
-                    return ToPEMPublic(keyPair);
-                    }
+                return ToPEMPublic(keyPair);
+                }
             case KeyFileFormat.PuTTY: {
-                    return ToPuTTY(keyPair);
-                    }
+                return ToPuTTY(keyPair);
+                }
             case KeyFileFormat.OpenSSH: {
-                    return ToOpenSSH(keyPair);
-                    }
+                return ToOpenSSH(keyPair);
+                }
 
             case KeyFileFormat.Default:
             case KeyFileFormat.X509DER:
             case KeyFileFormat.PKCS12:
             case KeyFileFormat.PKCS7:
             default:
-                throw new FileFormatNotImplemented(null, null, keyFileFormat.ToString());
+            throw new FileFormatNotImplemented(null, null, keyFileFormat.ToString());
             }
 
         }
@@ -97,7 +97,7 @@ public static class Extension {
     /// <param name="keyPair">Key pair to convert</param>
     /// <param name="tag">Descriptive tag to add to the file.</param>
     /// <returns>The keyfile data</returns>
-    public static string ToOpenSSH(this KeyPair keyPair, string tag=null) {
+    public static string ToOpenSSH(this KeyPair keyPair, string tag = null) {
         SSHData sshData = keyPair switch {
             KeyPairBaseRSA rsaKeyPair => new SSH_RSA(rsaKeyPair),
             //KeyPairBaseECDH ecdhKeyPair => "RSA PRIVATE KEY",
@@ -139,15 +139,15 @@ public static class Extension {
     public static string ToPEMPrivate(this KeyPair keyPair, string passphrase = null) {
         passphrase.AssertNull(NYI.Throw);
         string tag = keyPair switch {
-            KeyPairBaseRSA  => "RSA PRIVATE KEY",
-            KeyPairBaseECDH  => "RSA PRIVATE KEY",
+            KeyPairBaseRSA => "RSA PRIVATE KEY",
+            KeyPairBaseECDH => "RSA PRIVATE KEY",
             _ => throw new FileFormatAlgorithmNotImplemented(null, null, KeyFileFormat.PEMPrivate, keyPair.CryptoAlgorithmId)
             };
 
         passphrase.AssertNull(NYI.Throw);
         var pkixData = keyPair.PKIXPrivateKey;
         var keyDER = pkixData.DER();
-        
+
         var builder = new StringBuilder();
         ToPEM(builder, tag, keyDER);
         return builder.ToString();
@@ -164,8 +164,8 @@ public static class Extension {
     /// <returns>The keyfile data</returns>
     public static string ToPEMPublic(this KeyPair keyPair) {
         string tag = keyPair switch {
-            KeyPairBaseRSA  => "RSA PUBLIC KEY",
-            KeyPairBaseECDH  => "RSA PUBLIC KEY",
+            KeyPairBaseRSA => "RSA PUBLIC KEY",
+            KeyPairBaseECDH => "RSA PUBLIC KEY",
             _ => throw new FileFormatAlgorithmNotImplemented(null, null, KeyFileFormat.PEMPublic, keyPair.CryptoAlgorithmId)
             };
 
@@ -199,7 +199,7 @@ public static class Extension {
                 throw new FileFormatAlgorithmNotImplemented(null, null, KeyFileFormat.PuTTY, rsaKeyPair.CryptoAlgorithmId);
 
 
- 
+
 
 
 

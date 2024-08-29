@@ -20,22 +20,14 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Collections.Generic;
-using System.Threading;
-
+using Goedel.Callsign;
+using Goedel.Callsign.Registry;
+using Goedel.Callsign.Resolver;
 using Goedel.Mesh;
 using Goedel.Mesh.Server;
 using Goedel.Mesh.ServiceAdmin;
 using Goedel.Mesh.Shell;
-using Goedel.Mesh.Test;
 using Goedel.Protocol.Service;
-using Goedel.Test;
-using Goedel.Test.Core;
-using Goedel.Callsign.Registry;
-
-using Xunit;
-using Goedel.Callsign;
-using Goedel.Callsign.Resolver;
 
 #pragma warning disable IDE0059
 #pragma warning disable IDE0060
@@ -222,7 +214,7 @@ public partial class RegistrationTests {
 
         //var contextRegistry = contextAccountQ.CreateRegistry(AccountRegistry);
 
-        TestEnvironment.EnvelopedProfileRegistry = new Enveloped<ProfileAccount> (ContextRegistry.Profile.DareEnvelope);
+        TestEnvironment.EnvelopedProfileRegistry = new Enveloped<ProfileAccount>(ContextRegistry.Profile.DareEnvelope);
 
         //// Bind to the callsign @callsign
         var meshService = TestEnvironment.GetMeshService();

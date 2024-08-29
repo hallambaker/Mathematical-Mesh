@@ -291,16 +291,16 @@ public class CurveEdwards448 : CurveEdwards {
         byte x = 0;
         switch (cryptoAlgorithm) {
             case CryptoAlgorithmId.Ed448: {
-                    x = 0;
-                    break;
-                    }
+                x = 0;
+                break;
+                }
             case CryptoAlgorithmId.Ed448ph: {
-                    x = 1;
-                    break;
-                    }
+                x = 1;
+                break;
+                }
 
             default:
-                break;
+            break;
             }
 
         var Buffer = new MemoryStream();

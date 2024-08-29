@@ -250,7 +250,7 @@ public abstract class CryptoKey : IKeyLocate, IKeyDecrypt, IKeySign {
     /// <param name="context">Additional data added to the signature scope
     /// for protocol isolation.</param>
     /// <returns>The signature data</returns>
-    public virtual byte[] Sign (byte[] data,
+    public virtual byte[] Sign(byte[] data,
             CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
             byte[] context = null) {
         var digestID = algorithmID.Digest();
@@ -364,7 +364,7 @@ public abstract class KeyPairBaseRSA : KeyPair {
     /// Construct a KeyPair entry from PKIX parameters. Defaults to the built in
     /// provider.
     /// </summary>
-    public static FactoryRSAPublicKeyDelegate KeyPairPublicFactory { get; set; } = 
+    public static FactoryRSAPublicKeyDelegate KeyPairPublicFactory { get; set; } =
                 KeyPairRSA.KeyPairPublicFactory;
 
     /// <summary>

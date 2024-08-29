@@ -20,12 +20,12 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Numerics;
-
 using Goedel.Cryptography;
 using Goedel.Mesh.Shell;
 using Goedel.Test;
 using Goedel.Utilities;
+
+using System.Numerics;
 
 using GC = Goedel.Cryptography;
 
@@ -168,23 +168,23 @@ public partial class DerivedKeyEC : DerivedKey {
 
         switch (AlgorithmID) {
             case UdfAlgorithmIdentifier.X25519: {
-                    OKM = HKDF.Derive(null, 256);
-                    break;
-                    }
-            case UdfAlgorithmIdentifier.X448: {
-                    OKM = HKDF.Derive(null, 448);
-                    break;
-                    }
-            case UdfAlgorithmIdentifier.Ed25519: {
-                    OKM = HKDF.Derive(null, 256);
-                    break;
-                    }
-            case UdfAlgorithmIdentifier.Ed448: {
-                    OKM = HKDF.Derive(null, 448);
-                    break;
-                    }
-            default:
+                OKM = HKDF.Derive(null, 256);
                 break;
+                }
+            case UdfAlgorithmIdentifier.X448: {
+                OKM = HKDF.Derive(null, 448);
+                break;
+                }
+            case UdfAlgorithmIdentifier.Ed25519: {
+                OKM = HKDF.Derive(null, 256);
+                break;
+                }
+            case UdfAlgorithmIdentifier.Ed448: {
+                OKM = HKDF.Derive(null, 448);
+                break;
+                }
+            default:
+            break;
             }
 
         Key = OKM;
@@ -218,24 +218,24 @@ public partial class DerivedKeyNIST : DerivedKey {
 
         switch (AlgorithmID) {
             case UdfAlgorithmIdentifier.P256: {
-                    OKM = HKDF.Derive(null, 320);
-                    prime = p256;
-                    break;
-                    }
+                OKM = HKDF.Derive(null, 320);
+                prime = p256;
+                break;
+                }
             case UdfAlgorithmIdentifier.P384: {
-                    OKM = HKDF.Derive(null, 448);
-                    prime = p384;
-                    break;
-                    }
+                OKM = HKDF.Derive(null, 448);
+                prime = p384;
+                break;
+                }
             case UdfAlgorithmIdentifier.P521: {
-                    OKM = HKDF.Derive(null, 592);
-                    prime = p521;
-                    break;
-                    }
+                OKM = HKDF.Derive(null, 592);
+                prime = p521;
+                break;
+                }
 
 
             default:
-                break;
+            break;
             }
         Key = ModConvert(OKM, prime);
         }
@@ -268,20 +268,20 @@ public partial class DerivedKeyRSA : DerivedKey {
         switch (AlgorithmID) {
 
             case UdfAlgorithmIdentifier.P256: {
-                    bits = 1024;
-                    break;
-                    }
+                bits = 1024;
+                break;
+                }
             case UdfAlgorithmIdentifier.P384: {
-                    bits = 1536;
-                    break;
-                    }
+                bits = 1536;
+                break;
+                }
             case UdfAlgorithmIdentifier.P521: {
-                    bits = 2048;
-                    break;
-                    }
+                bits = 2048;
+                break;
+                }
 
             default:
-                break;
+            break;
             }
 
         OKM_P = HKDF.Derive(Info_P, bits);

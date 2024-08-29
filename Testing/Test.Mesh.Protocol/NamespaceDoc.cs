@@ -21,27 +21,17 @@
 
 
 
+global using Goedel.Carnet;
+global using Goedel.Carnet.Server;
 global using Goedel.Cryptography;
 global using Goedel.Cryptography.Jose;
 global using Goedel.Mesh;
 global using Goedel.Mesh.Client;
 global using Goedel.Mesh.Test;
 global using Goedel.Protocol;
+global using Goedel.Repository.Server;
 global using Goedel.Test;
 global using Goedel.Utilities;
-
-global using Goedel.Callsign;
-global using Goedel.Callsign.Registry;
-global using Goedel.Callsign.Resolver;
-
-global using Goedel.Carnet;
-global using Goedel.Carnet.Server;
-
-global using Goedel.Presence;
-global using Goedel.Presence.Server;
-
-global using Goedel.Repository;
-global using Goedel.Repository.Server;
 
 global using Xunit;
 

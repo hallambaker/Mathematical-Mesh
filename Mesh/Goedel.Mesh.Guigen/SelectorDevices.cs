@@ -1,8 +1,5 @@
 ﻿using Goedel.Cryptography.Dare;
 
-
-using System.Xml.Linq;
-
 namespace Goedel.Everything;
 
 #region // Bindings to classes specified through the Guigen schema.
@@ -29,7 +26,7 @@ public partial class DeviceSection : IHeadedSelection {
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public DeviceSection(IAccountSelector? account =null) {
+    public DeviceSection(IAccountSelector? account = null) {
         Account = account;
         Catalog = ContextUser.GetStore(CatalogDevice.Label, create: false) as GuigenCatalogDevice;
         DeviceSelection = Catalog is null ? null : new DeviceSelection(ContextUser, Catalog);
@@ -99,7 +96,7 @@ public partial class BoundDevice : IBoundPresentation, IDialog {
         var result = new BoundDevice() {
             Bound = entry,
             LocalName = entry.LocalName ?? description?.Name ?? "A Device",
-            DeviceType = description ?.Platform,
+            DeviceType = description?.Platform,
             Rights = "Admin"
             };
         return result;
@@ -213,7 +210,7 @@ public partial class DeviceSelection : SelectionCatalog<GuigenCatalogDevice,
     /// catalog <paramref name="catalog"/>.
     /// </summary>
     /// <param name="catalog"></param>
-    public DeviceSelection(ContextAccount contextAccount, 
+    public DeviceSelection(ContextAccount contextAccount,
                 GuigenCatalogDevice catalog) : base(contextAccount, catalog) {
         }
 

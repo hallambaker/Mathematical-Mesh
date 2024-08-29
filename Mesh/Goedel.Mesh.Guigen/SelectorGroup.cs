@@ -1,8 +1,4 @@
-﻿using Goedel.Cryptography.Dare;
-
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using Goedel.Mesh;
-namespace Goedel.Everything;
+﻿namespace Goedel.Everything;
 
 #region // Bindings to classes specified through the Guigen schema.
 
@@ -26,7 +22,7 @@ public partial class GroupSection : IHeadedSelection {
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public GroupSection(IAccountSelector? account =null) {
+    public GroupSection(IAccountSelector? account = null) {
         Account = account;
         Catalog = ContextUser.GetStore(CatalogApplication.Label, create: false) as GuigenCatalogApplication;
         GroupSelection = new GroupSelection(ContextUser, Catalog);
@@ -74,7 +70,7 @@ public partial class GroupSelection : ApplicationSelection {
     /// </summary>
     /// <param name="catalog"></param>
     public GroupSelection(
-                ContextAccount contextAccount, 
+                ContextAccount contextAccount,
                 GuigenCatalogApplication catalog) : base(contextAccount, catalog) {
         }
 
@@ -94,9 +90,10 @@ public partial class BoundApplicationGroup : IBoundPresentation, IDialog {
     public ContextGroup ContextGroup => contextGroup ??
         GetContext().CacheValue(out contextGroup);
     ContextGroup contextGroup;
-    public override ISelectList? Members { 
-            get => members ?? GetMembers().CacheValue (out members); 
-            set => members = value; }
+    public override ISelectList? Members {
+        get => members ?? GetMembers().CacheValue(out members);
+        set => members = value;
+        }
     ISelectList? members;
 
     public ContextUser ContextUser { get; init; }

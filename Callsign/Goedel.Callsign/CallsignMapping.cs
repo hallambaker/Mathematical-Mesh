@@ -18,16 +18,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Utilities;
-
-using System;
-using System.Text;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Net.NetworkInformation;
-
 namespace Goedel.Callsign;
 
 
@@ -45,8 +35,8 @@ public partial class CallsignMapping {
     public Dictionary<string, Page> PageDictionary = new();
 
     ///<summary>The default callsign mapping.</summary> 
-    public static CallsignMapping Default => defaultMapping ?? 
-            new CallsignMapping(true).CacheValue (out defaultMapping);
+    public static CallsignMapping Default => defaultMapping ??
+            new CallsignMapping(true).CacheValue(out defaultMapping);
     static CallsignMapping defaultMapping = null;
 
 
@@ -149,7 +139,7 @@ public partial class CallsignMapping {
             switch (characterSpan) {
 
                 case MapChar mapChar: {
-                    builder.Append((char) (c + mapChar.Target - mapChar.First));
+                    builder.Append((char)(c + mapChar.Target - mapChar.First));
 
                     break;
                     }

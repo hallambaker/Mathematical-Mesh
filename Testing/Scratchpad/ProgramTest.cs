@@ -21,25 +21,20 @@
 #endregion
 
 
-using System;
-using System.Diagnostics;
-using ExampleGenerator;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
-using Goedel.Cryptography.Dare;
-
 using Goedel.Debug;
 //using Goedel.Cryptography.PQC;
 using Goedel.Mesh;
-using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
 using Goedel.Test;
-using Goedel.Test.Core;
 using Goedel.Utilities;
 using Goedel.XUnit;
+
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
-using Microsoft.VisualStudio.TestPlatform.Utilities;
+
+using System;
+using System.Diagnostics;
 
 namespace Scratchpad;
 
@@ -63,11 +58,11 @@ partial class Program {
 
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
-        TestPQC.Test().TestKemKeyGen();
-        TestPQC.Test().TestKemEncapDecap();
-        TestPQC.Test().TestDsaKeyGen();
-        TestPQC.Test().TestDsaSign();
-        TestPQC.Test().TestDsaVerify();
+        TestNist.Test().TestKemKeyGen();
+        TestNist.Test().TestKemEncapDecap();
+        TestNist.Test().TestDsaKeyGen();
+        TestNist.Test().TestDsaSign();
+        TestNist.Test().TestDsaVerify();
         //TestService.Test().MeshCreateAdmin();
 
 

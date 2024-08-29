@@ -18,18 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Utilities;
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-
-
-namespace Goedel.Callsign.Registry; 
+namespace Goedel.Callsign.Registry;
 //public class RegistryServer: CallsignServer {
 //    #region // Properties
 //    #endregion

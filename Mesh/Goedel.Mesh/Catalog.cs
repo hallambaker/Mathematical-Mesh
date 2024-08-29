@@ -22,9 +22,6 @@
 
 
 
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
-using System.Collections;
 using System.Collections.Specialized;
 
 namespace Goedel.Mesh;
@@ -40,14 +37,14 @@ public abstract class Catalog<T> : Store, IEnumerable<T>, INotifyCollectionChang
     public IMeshClient MeshClient;
 
     ///<summary>The event notifier</summary> 
-    public event NotifyCollectionChangedEventHandler? CollectionChanged  = null;
+    public event NotifyCollectionChangedEventHandler? CollectionChanged = null;
 
     ///<summary>The persistence store.</summary>
     public PersistenceStore PersistenceStore { get; set; } = null;
 
 
     ///<summary>Return an enumeration over the object collection.</summary> 
-    public IEnumerable<T> GetEntries => 
+    public IEnumerable<T> GetEntries =>
             new PersistenceStoreEnumerateObject<T>(PersistenceStore.ObjectIndex);
 
     bool InternEntry { get; } = false;
@@ -57,7 +54,7 @@ public abstract class Catalog<T> : Store, IEnumerable<T>, INotifyCollectionChang
     /// enumerators as an alternative.
     /// </summary>
     /// <returns>The enumerator.</returns>
-    public IEnumerator<T> GetEnumerator() => 
+    public IEnumerator<T> GetEnumerator() =>
                 new PersistenceStoreEnumerateObject<T>(PersistenceStore.ObjectIndex);
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
@@ -103,7 +100,7 @@ public abstract class Catalog<T> : Store, IEnumerable<T>, INotifyCollectionChang
                 bool decrypt = true,
                 bool create = true,
                 byte[] bitmask = null) :
-            base(directory, containerName, policy, cryptoParameters, keyCollection, 
+            base(directory, containerName, policy, cryptoParameters, keyCollection,
                 decrypt: decrypt, create: create, bitmask: bitmask) {
 
         if (!create & Sequence == null) {
@@ -113,7 +110,7 @@ public abstract class Catalog<T> : Store, IEnumerable<T>, INotifyCollectionChang
 
         PersistenceStore = new PersistenceStore(Sequence, keyCollection, read);
         Intern(Sequence.SequenceIndexEntryFirst);
-        if (Sequence.SequenceIndexEntryFirst !=  Sequence.SequenceIndexEntryLast) {
+        if (Sequence.SequenceIndexEntryFirst != Sequence.SequenceIndexEntryLast) {
             Intern(Sequence.SequenceIndexEntryLast);
             }
 
@@ -123,7 +120,7 @@ public abstract class Catalog<T> : Store, IEnumerable<T>, INotifyCollectionChang
 
         Complete();
         InternEntry = true;
-       }
+        }
 
     #region // Update entries in the catalog
     ///<inheritdoc/>

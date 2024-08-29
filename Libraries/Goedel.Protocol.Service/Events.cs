@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Extensions.Logging;
-
-namespace Goedel.Protocol.Service;
+﻿namespace Goedel.Protocol.Service;
 
 
 /// <summary>
@@ -28,7 +22,7 @@ public readonly struct FatEvent {
     /// <param name="id">The event identifier (should be unique for a given application)</param>
     /// <param name="name">The event name (written to the log)</param>
     /// <param name="message">The event message.</param>
-    public FatEvent(LogLevel logLevel, int id, string name, string? message=null) {
+    public FatEvent(LogLevel logLevel, int id, string name, string? message = null) {
         LogLevel = logLevel;
         EventId = new EventId(id, name);
         Message = message ?? name;
@@ -54,29 +48,29 @@ public static class Extensions {
         switch (logEvent.LogLevel) {
 
             case LogLevel.Trace: {
-                    logger.LogTrace(logEvent.EventId, logEvent.Message, args);
-                    break;
-                    }
+                logger.LogTrace(logEvent.EventId, logEvent.Message, args);
+                break;
+                }
             case LogLevel.Debug: {
-                    logger.LogDebug(logEvent.EventId, logEvent.Message, args);
-                    break;
-                    }
+                logger.LogDebug(logEvent.EventId, logEvent.Message, args);
+                break;
+                }
             case LogLevel.Information: {
-                    logger.LogInformation(logEvent.EventId, logEvent.Message, args);
-                    break;
-                    }
+                logger.LogInformation(logEvent.EventId, logEvent.Message, args);
+                break;
+                }
             case LogLevel.Warning: {
-                    logger.LogWarning(logEvent.EventId, logEvent.Message, args);
-                    break;
-                    }
+                logger.LogWarning(logEvent.EventId, logEvent.Message, args);
+                break;
+                }
             case LogLevel.Error: {
-                    logger.LogError(logEvent.EventId, logEvent.Message, args);
-                    break;
-                    }
+                logger.LogError(logEvent.EventId, logEvent.Message, args);
+                break;
+                }
             case LogLevel.Critical: {
-                    logger.LogCritical(logEvent.EventId, logEvent.Message, args);
-                    break;
-                    }
+                logger.LogCritical(logEvent.EventId, logEvent.Message, args);
+                break;
+                }
             }
         }
 
@@ -92,29 +86,29 @@ public static class Extensions {
         switch (logEvent.LogLevel) {
 
             case LogLevel.Trace: {
-                    logger.LogTrace(logEvent.EventId, logEvent.Message, args);
-                    break;
-                    }
+                logger.LogTrace(logEvent.EventId, logEvent.Message, args);
+                break;
+                }
             case LogLevel.Debug: {
-                    logger.LogDebug(logEvent.EventId, logEvent.Message, args);
-                    break;
-                    }
+                logger.LogDebug(logEvent.EventId, logEvent.Message, args);
+                break;
+                }
             case LogLevel.Information: {
-                    logger.LogInformation(logEvent.EventId, logEvent.Message, args);
-                    break;
-                    }
+                logger.LogInformation(logEvent.EventId, logEvent.Message, args);
+                break;
+                }
             case LogLevel.Warning: {
-                    logger.LogWarning(logEvent.EventId, logEvent.Message, args);
-                    break;
-                    }
+                logger.LogWarning(logEvent.EventId, logEvent.Message, args);
+                break;
+                }
             case LogLevel.Error: {
-                    logger.LogError(logEvent.EventId, logEvent.Message, args);
-                    break;
-                    }
+                logger.LogError(logEvent.EventId, logEvent.Message, args);
+                break;
+                }
             case LogLevel.Critical: {
-                    logger.LogCritical(logEvent.EventId, logEvent.Message, args);
-                    break;
-                    }
+                logger.LogCritical(logEvent.EventId, logEvent.Message, args);
+                break;
+                }
             }
         }
     }

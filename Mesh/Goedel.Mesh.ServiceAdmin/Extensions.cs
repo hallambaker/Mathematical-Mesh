@@ -1,19 +1,10 @@
-﻿using Goedel.Mesh.Client;
-using Goedel.Protocol.GenericHost;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Net;
-using Goedel.Discovery;
-using Goedel.Protocol.Service;
-using Goedel.Callsign.Registry;
-using Goedel.Callsign;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Configuration;
+﻿using Goedel.Discovery;
+using Goedel.Mesh.Client;
 using Goedel.Mesh.Core;
-using Goedel.Protocol;
+
+using Microsoft.Extensions.Logging;
+
+using System.Net;
 
 namespace Goedel.Mesh.ServiceAdmin;
 
@@ -56,7 +47,7 @@ public static class Extensions {
         // Phase 2: create the administration account and add layered application admin controls.
         if (admin != null) {
             using var contextUser = service.AddAdministratorDirect(directMachine,
-                admin, configuration.MeshService, 
+                admin, configuration.MeshService,
                 configuration.DareLogger);
 
             if (configuration.CallsignRegistry != null) {
@@ -121,7 +112,7 @@ public static class Extensions {
         if (hostIp is null) {
             foreach (var localEndpoint in localEndPoints) {
                 ip.Add(localEndpoint.ToString());
-            }
+                }
             }
         else {
             ip.Add(hostIp);
@@ -139,7 +130,7 @@ public static class Extensions {
             IP = ip,
             RunAs = hostAccount,
             HostPath = pathHost
-        };
+            };
 
         var dareLogger = new DareLoggerConfiguration {
             Path = pathLog,
@@ -253,7 +244,7 @@ public static class Extensions {
         using var service = PublicMeshService.Create(meshMachine, serviceConfiguration, hostConfiguration);
 
         if (admin != null) {
-            ContextUser contextUser = service.AddAdministrator(meshMachine, 
+            ContextUser contextUser = service.AddAdministrator(meshMachine,
                 admin, serviceConfiguration, dareLogger);
             }
 

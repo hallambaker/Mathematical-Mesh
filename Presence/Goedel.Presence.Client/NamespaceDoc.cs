@@ -19,12 +19,13 @@
 //  THE SOFTWARE.
 
 global using Goedel.Mesh.Client;
+global using Goedel.Utilities;
+
 global using System.Net;
 global using System.Net.Sockets;
-global using Goedel.Utilities;
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 
-namespace Goedel.Presence.Client; 
+namespace Goedel.Presence.Client;
 /// <summary>
 /// Desctiption of the 
 /// </summary>

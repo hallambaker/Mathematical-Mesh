@@ -20,10 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using Goedel.Callsign;
-using Goedel.Cryptography.Jose;
-using System.Runtime.CompilerServices;
-
 namespace Goedel.Mesh.Shell;
 
 public partial class Shell {

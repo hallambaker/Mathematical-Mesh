@@ -20,8 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using Goedel.Utilities;
-
 namespace Goedel.Protocol;
 
 /// <summary>
@@ -36,7 +34,7 @@ public interface IJcbdDocument {
     public byte Overwrite { get; }
 
 
-    
+
 
 
 
@@ -120,7 +118,7 @@ public interface IJcbdDocument {
 /// Interface for memory saving lazy evaluation result inmplementations.
 /// </summary>
 public interface ICachable {
-    
+
     /// <summary>
     /// Load the cahced values.
     /// </summary>
@@ -241,7 +239,7 @@ public record JbcdElement {
 /// <summary>
 /// Record describing a parsed Jbcd values result.
 /// </summary>
-public abstract record JbcdValue  {
+public abstract record JbcdValue {
 
     ///<summary></summary> 
     public long DataStartPosition { get; set; }
@@ -313,7 +311,7 @@ public record JbcdValueObject : JbcdValue {
 public record JbcdValueArray : JbcdValue {
 
     ///<summary>The array of elements.</summary> 
-    public virtual IList<JbcdValue> Values { get; } = new List<JbcdValue> ();
+    public virtual IList<JbcdValue> Values { get; } = new List<JbcdValue>();
 
     ///<inheritdoc/>
     public override JbcdElement GetProperty(object name) => throw new NYI();
@@ -334,14 +332,14 @@ public record JbcdValueArray : JbcdValue {
 /// Record describing a parsed Jbcd string result.
 /// </summary>
 public record JbcdValueString : JbcdValue {
-    
+
     ///<summary>The string values</summary> 
     public virtual string? Value { get; }
 
     /// <summary>
     /// Constructor for use by derrived records.
     /// </summary>
-    protected JbcdValueString () { 
+    protected JbcdValueString() {
         }
 
     /// <summary>
@@ -411,7 +409,7 @@ public record JbcdValueBinary : JbcdValue {
 public record JbcdValueNumber : JbcdValue {
 
     ///<summary>The integer value</summary> 
-    public long Integer {get; init; }
+    public long Integer { get; init; }
 
     ///<summary>The number values</summary> 
     public virtual string Value { get; init; }

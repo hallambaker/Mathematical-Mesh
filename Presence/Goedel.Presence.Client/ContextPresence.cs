@@ -21,13 +21,9 @@
 #endregion
 
 
-using Goedel.Cryptography.Dare;
 using Goedel.Discovery;
 using Goedel.Mesh;
-using Goedel.Protocol;
-using System.Diagnostics;
-using System.Net;
-using System.Security.Principal;
+
 using System.Threading.Tasks.Dataflow;
 
 namespace Goedel.Presence.Client;
@@ -44,7 +40,7 @@ public record MessageId {
 /// Presence listener state.
 /// </summary>
 public enum PresenceListenerState {
-    
+
     ///<summary>Listener has yet to receive contact from the service.</summary> 
     Initial,
 
@@ -257,7 +253,7 @@ public class ContextPresence : Disposable {
                     Timeout();
                     wakeup = GetDateTime().Subtract(DateTime.Now);
                     }
-                
+
                 var waitTask = UdpReceiveBuffer.ReceiveAsync(wakeup, ListenerCancel.Token);
                 await waitTask;
 
@@ -291,7 +287,7 @@ public class ContextPresence : Disposable {
                 Process(errorInvalidSerial);
                 break;
                 }
-            case PresenceStatus status : {
+            case PresenceStatus status: {
                 Process(status);
                 break;
                 }
@@ -321,7 +317,7 @@ public class ContextPresence : Disposable {
 
 
         if (presenceConnectResponse.EndPoint != null) {
-            
+
             var address = new IPAddress(presenceConnectResponse.EndPoint.IpAddress);
             var port = presenceConnectResponse.EndPoint.Port ?? 0;
 
@@ -349,7 +345,7 @@ public class ContextPresence : Disposable {
         }
 
     void ProcessStatus(PresenceFromService message) {
-        if ((message.Acknowledge ??0)  < AcknowledgmentSerial) {
+        if ((message.Acknowledge ?? 0) < AcknowledgmentSerial) {
             return;
             }
         PresenceListenerState = PresenceListenerState.Connected;
@@ -446,7 +442,7 @@ public class ContextPresence : Disposable {
     void SendHeartbeat() {
         var heartbeat = new PresenceHeartbeat() {
             };
-        
+
         WakeupUnacknowledged = DateTime.Now.AddMilliseconds(RetransmitOrReconnect);
         SendData(heartbeat, ServiceAccessToken.Token);
         //Trace.WriteLine($"Send Heartbeat: {heartbeat.ToString()}");
@@ -465,7 +461,7 @@ public class ContextPresence : Disposable {
         catch {
             return;
             }
-        
+
         }
 
     /// <summary>
@@ -499,9 +495,9 @@ public class ContextPresence : Disposable {
         lock (WaitPoll) {
             waitPollWaiting++;
             }
-        
+
         WaitPoll.Wait();
-        
+
         lock (WaitPoll) {
             waitPollWaiting--;
             if (waitPollWaiting <= 0) {
@@ -575,7 +571,7 @@ public class ContextPresence : Disposable {
     /// <param name="outBoxCount">The starting point for the count, ignore messages 
     /// earlier than this.</param>
     /// <returns>The message received.</returns>
-    public Message MessageWait (Type messageType, long outBoxCount) {
+    public Message MessageWait(Type messageType, long outBoxCount) {
 
         var inbound = ContextUser.GetSpoolInbound();
         // wait on notification of an update.
@@ -693,7 +689,7 @@ public class ContextPresence : Disposable {
         // Send response
         var sessionResponse = new SessionResponse() {
             Inbound = externalEndpoint
-        };
+            };
 
 
         ContextUser.SendMessageAsync(sessionRequest.Sender, sessionResponse).Sync();

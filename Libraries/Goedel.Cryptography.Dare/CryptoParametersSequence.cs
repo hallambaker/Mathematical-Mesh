@@ -55,13 +55,13 @@ public partial class CryptoParametersSequence : CryptoParameters {
             case SequenceType.Digest:
             case SequenceType.Chain:
             case SequenceType.Merkle: {
-                    DigestId = digest.FromJoseIDDigest(true);
-                    break;
-                    }
+                DigestId = digest.FromJoseIDDigest(true);
+                break;
+                }
             default: {
-                    DigestId = digest.FromJoseIDDigest(false);
-                    break;
-                    }
+                DigestId = digest.FromJoseIDDigest(false);
+                break;
+                }
             }
 
         if (policy == null) {
@@ -136,19 +136,19 @@ public partial class CryptoParametersSequence : CryptoParameters {
 
         switch (PolicyEncryption) {
             case PolicyEncryption.Isolated: {
-                    previousFrame = currentFrame;
-                    return false;
-                    }
+                previousFrame = currentFrame;
+                return false;
+                }
             case PolicyEncryption.Once:
             case PolicyEncryption.Session: {
-                    if (keyExchangeFrame == -1) {
-                        previousFrame = currentFrame;
-                        keyExchangeFrame = currentFrame;
-                        return false;
-                        }
-                    previousFrame = keyExchangeFrame;
-                    return true;
+                if (keyExchangeFrame == -1) {
+                    previousFrame = currentFrame;
+                    keyExchangeFrame = currentFrame;
+                    return false;
                     }
+                previousFrame = keyExchangeFrame;
+                return true;
+                }
             }
 
         throw new NYI();

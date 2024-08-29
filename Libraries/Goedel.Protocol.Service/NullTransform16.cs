@@ -21,10 +21,6 @@
 #endregion
 
 
-
-
-using System.Security.Cryptography;
-
 namespace Goedel.Protocol.Service;
 
 /// <summary>
@@ -50,7 +46,7 @@ public class NullTransform16 : ICryptoTransform {
         }
 
     ///<inheritdoc/>
-    public int TransformBlock(byte[] inputBuffer, int inputOffset, int inputCount, 
+    public int TransformBlock(byte[] inputBuffer, int inputOffset, int inputCount,
             byte[] outputBuffer, int outputOffset) {
         Array.Copy(inputBuffer, inputOffset, outputBuffer, outputOffset, inputCount);
         return inputCount;

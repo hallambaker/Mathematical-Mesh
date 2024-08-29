@@ -43,7 +43,7 @@ public class CatalogIndexEntry<T> : PersistentIndexEntry where T : CatalogedEntr
     /// Constructor, returns a catalog index entry in the sequence <paramref name="sequence"/>.
     /// </summary>
     /// <param name="sequence">The sequence to which the entry is bound.</param>
-    public CatalogIndexEntry(Sequence sequence): base() {
+    public CatalogIndexEntry(Sequence sequence) : base() {
         (sequence?.InternDelegate as Catalog<T>).AssertNotNull(NYI.Throw);
         Sequence = sequence;
         }

@@ -35,7 +35,7 @@ public class PresenceBindingAccount : IPresenceAccount {
     /// <summary>
     /// The presence serial value.
     /// </summary>
-    public int Serial { get; set;  } =0;
+    public int Serial { get; set; } = 0;
 
     ///<summary>The account identifier.</summary> 
     public string AccountId;
@@ -44,10 +44,10 @@ public class PresenceBindingAccount : IPresenceAccount {
     public System.DateTime FirstContact { get; } = System.DateTime.Now;
 
     ///<summary>Time at which the binding was last used.</summary> 
-    public System.DateTime LastContact { get; set;  } = System.DateTime.Now;
+    public System.DateTime LastContact { get; set; } = System.DateTime.Now;
 
     ///<summary>Dictionary of connected devices.</summary> 
-    public Dictionary<ulong, PresenceBindingDevice> ConnectedDevices { get;  }  = new();
+    public Dictionary<ulong, PresenceBindingDevice> ConnectedDevices { get; } = new();
 
     }
 

@@ -1,10 +1,4 @@
-﻿using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Goedel.Cryptography.Jose;
 
 namespace Goedel.Callsign.Registry;
 
@@ -23,7 +17,7 @@ public static class Extensions {
     /// <param name="callsignMapping">Optional callsign mapping specifier.</param>
     /// <returns>The registry account context.</returns>
     public static ContextRegistry CreateRegistry(
-                        this ContextUser contextUser, 
+                        this ContextUser contextUser,
                         string accountAddress,
                     PrivateKeyUDF accountSeed = null,
                     CallsignMapping callsignMapping = null) =>
@@ -48,12 +42,12 @@ public static class Extensions {
                 if (key == null | key == catalogedRegistry.Key) {
 
                     catalogedRegistry.Activate(
-                                contextUser.ApplicationEntries, contextUser.ProfileDevice, 
+                                contextUser.ApplicationEntries, contextUser.ProfileDevice,
                                 contextUser
                                 );
 
 
-                    return new ContextRegistry(contextUser, catalogedRegistry, 
+                    return new ContextRegistry(contextUser, catalogedRegistry,
                         catalogedRegistry.ActivationApplicationRegistry);
 
                     }

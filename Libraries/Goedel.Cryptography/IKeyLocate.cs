@@ -75,7 +75,7 @@ public interface IKeyLocate {
     /// </summary>
     /// <param name="keyPair">The key pair to add.</param>
     /// <param name="accounts">Accounts to which the key is bound.</param>
-    void Add(KeyPair keyPair, List<string> accounts=null);
+    void Add(KeyPair keyPair, List<string> accounts = null);
 
     /// <summary>
     /// Persist a private key if permitted by the KeySecurity model of the key.

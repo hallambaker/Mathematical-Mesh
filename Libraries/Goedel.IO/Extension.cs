@@ -135,25 +135,25 @@ public static partial class Extension {
     public static FileMode FileMode(this FileStatus fileStatus) {
         switch (fileStatus) {
             case FileStatus.Append: {
-                    return System.IO.FileMode.Append;
-                    }
+                return System.IO.FileMode.Append;
+                }
             case FileStatus.New: {
-                    return System.IO.FileMode.CreateNew;
-                    }
+                return System.IO.FileMode.CreateNew;
+                }
             case FileStatus.Overwrite: {
-                    return System.IO.FileMode.Create;
-                    }
+                return System.IO.FileMode.Create;
+                }
             case FileStatus.OpenOrCreate:
             case FileStatus.ConcurrentLocked: {
-                    return System.IO.FileMode.OpenOrCreate;
-                    }
+                return System.IO.FileMode.OpenOrCreate;
+                }
 
             case FileStatus.Read:
-                break;
+            break;
             case FileStatus.Existing:
-                break;
+            break;
             default:
-                break;
+            break;
             }
         return System.IO.FileMode.Open;
         }
@@ -166,24 +166,24 @@ public static partial class Extension {
     public static FileAccess FileAccess(this FileStatus fileStatus) {
         switch (fileStatus) {
             case FileStatus.Read: {
-                    return System.IO.FileAccess.Read;
-                    }
+                return System.IO.FileAccess.Read;
+                }
             case FileStatus.Append: {
-                    return System.IO.FileAccess.Write;
-                    }
+                return System.IO.FileAccess.Write;
+                }
 
             case FileStatus.New:
-                break;
+            break;
             case FileStatus.Overwrite:
-                break;
+            break;
             case FileStatus.Existing:
-                break;
+            break;
             case FileStatus.OpenOrCreate:
-                break;
+            break;
             case FileStatus.ConcurrentLocked:
-                break;
+            break;
             default:
-                break;
+            break;
             }
         return System.IO.FileAccess.ReadWrite;
         }
@@ -198,21 +198,21 @@ public static partial class Extension {
         switch (fileStatus) {
             case FileStatus.Read:
             case FileStatus.ConcurrentLocked: {
-                    return System.IO.FileShare.ReadWrite;
-                    }
+                return System.IO.FileShare.ReadWrite;
+                }
 
             case FileStatus.Append:
-                break;
+            break;
             case FileStatus.New:
-                break;
+            break;
             case FileStatus.Overwrite:
-                break;
+            break;
             case FileStatus.Existing:
-                break;
+            break;
             case FileStatus.OpenOrCreate:
-                break;
+            break;
             default:
-                break;
+            break;
             }
         return System.IO.FileShare.Read;
         }

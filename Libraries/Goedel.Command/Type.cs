@@ -24,8 +24,6 @@
 // naming to avoid collisions with user written code.
 #pragma warning disable IDE1006
 
-using System.IO;
-
 namespace Goedel.Command;
 
 /// <summary>Base class for Command line parser types. This could do with
@@ -113,19 +111,19 @@ public abstract class _Flag : Goedel.Command.Type {
         switch (text.ToLower()) {
             case "true":
             case "1": {
-                    Value = true;
-                    break;
-                    }
+                Value = true;
+                break;
+                }
             case "false":
             case "0": {
-                    Value = false;
-                    break;
-                    }
+                Value = false;
+                break;
+                }
             case "": {
-                    break;
-                    }
+                break;
+                }
             default:
-                throw new System.Exception("Flag value not recognized" + text);
+            throw new System.Exception("Flag value not recognized" + text);
             }
         }
 

@@ -21,8 +21,6 @@
 #endregion
 
 
-using Goedel.Cryptography.PQC;
-
 namespace Goedel.Cryptography.Jose;
 
 
@@ -169,14 +167,14 @@ public partial class KeyAgreement {
     public static KeyAgreement Factory(KeyAgreementResult keyAgreementResult) {
         switch (keyAgreementResult) {
             case ResultDiffieHellman result: {
-                    return new KeyAgreementDH(result);
-                    }
+                return new KeyAgreementDH(result);
+                }
             case ResultECDH result: {
-                    return new KeyAgreementECDH(result);
-                    }
+                return new KeyAgreementECDH(result);
+                }
 
             default:
-                break;
+            break;
             }
         return null;
         }

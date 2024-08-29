@@ -168,12 +168,12 @@ public static class CharacterStreamRead {
 
             switch (Next) {
                 case '\"':
-                    return Length;
+                return Length;
                 case '\\':
-                    ReadJSONEscaped(Stream);
-                    break;
+                ReadJSONEscaped(Stream);
+                break;
                 default:
-                    break;
+                break;
                 }
             }
 
@@ -197,13 +197,13 @@ public static class CharacterStreamRead {
 
             switch (Next) {
                 case '\"':
-                    return StringBuilder.ToString();
+                return StringBuilder.ToString();
                 case '\\':
-                    StringBuilder.Append(ReadJSONEscaped(Stream));
-                    break;
+                StringBuilder.Append(ReadJSONEscaped(Stream));
+                break;
                 default:
-                    StringBuilder.Append(Next);
-                    break;
+                StringBuilder.Append(Next);
+                break;
                 }
             }
 

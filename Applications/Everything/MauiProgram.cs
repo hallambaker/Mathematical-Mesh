@@ -5,8 +5,6 @@
 
 using Everything.Resources;
 
-using System.Globalization;
-
 namespace Everything;
 
 
@@ -23,7 +21,7 @@ public static class MauiProgram {
     /// </summary>
     /// <returns></returns>
     public static MauiApp CreateMauiApp() {
-        ThreadPool.SetMinThreads (100, 100);
+        ThreadPool.SetMinThreads(100, 100);
 
         ResourceResolver.SetResourceManager(Sketch_resources.ResourceManager, Sketch_resources.Culture);
 
@@ -47,7 +45,7 @@ public static class MauiProgram {
             });
 
 #if DEBUG
-		builder.Logging.AddDebug();
+        builder.Logging.AddDebug();
 #endif
 
         return builder.Build();

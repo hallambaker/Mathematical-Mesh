@@ -20,14 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Collections.Generic;
-
-using Goedel.Mesh;
 using Goedel.Mesh.Shell;
-using Goedel.Mesh.Test;
-using Goedel.Test;
-
-using Xunit;
 
 #pragma warning disable IDE0059
 //#pragma warning disable CA1822
@@ -36,7 +29,7 @@ namespace Goedel.XUnit;
 
 
 public partial class RegistrationTests {
-   
+
 
     [Fact]
     public void CallsignBind() {

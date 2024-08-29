@@ -22,9 +22,6 @@
 
 using Goedel.Mesh;
 using Goedel.Mesh.Shell;
-using Goedel.Command.Json;
-
-using Xunit;
 
 #pragma warning disable IDE0059
 
@@ -90,7 +87,7 @@ public partial class ShellTests {
         var device2 = GetTestCLI("Device2");
         var device3 = GetTestCLI("Device3");
 
-        var fileA = Seed.GetFilename("AliceAccount"); 
+        var fileA = Seed.GetFilename("AliceAccount");
         var fileB = Seed.GetFilename("AccountB");
         var fileC = Seed.GetFilename("AliceAccount");
 

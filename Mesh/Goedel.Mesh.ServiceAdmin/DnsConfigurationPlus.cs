@@ -110,11 +110,11 @@ public partial class DnsConfiguration {
         if (IPEndPoint.TryParse(address, out var endpoint)) {
             switch (endpoint.Address.AddressFamily) {
                 case System.Net.Sockets.AddressFamily.InterNetworkV6: {
-                        return $"AAAA {endpoint.Address}";
-                        }
+                    return $"AAAA {endpoint.Address}";
+                    }
                 case System.Net.Sockets.AddressFamily.InterNetwork: {
-                        return $"A {endpoint.Address}";
-                        }
+                    return $"A {endpoint.Address}";
+                    }
                 }
 
             return endpoint.Address.ToString();

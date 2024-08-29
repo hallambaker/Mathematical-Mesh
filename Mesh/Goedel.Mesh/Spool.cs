@@ -21,10 +21,6 @@
 #endregion
 
 
-using Goedel.Cryptography.Dare;
-using Goedel.Utilities;
-using static System.Net.Mime.MediaTypeNames;
-
 namespace Goedel.Mesh;
 
 /// <summary>
@@ -65,7 +61,7 @@ public class Spool : Store {
                 bool decrypt = true,
                 bool create = true,
                 byte[] bitmask = null) :
-            base(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, 
+            base(directory, storeId, policy, cryptoParameters, keyCollection, meshClient,
                 decrypt, create, bitmask) {
         }
 
@@ -111,7 +107,7 @@ public class Spool : Store {
                     }
                 else {
                     var placeholder = new SpoolPlaceholder(reference) {
-                        MessageStatus= reference.MessageStatus
+                        MessageStatus = reference.MessageStatus
                         };
                     SequenceIndexEntryByEnvelopeId.Add(envelopeID, placeholder);
                     }
@@ -123,7 +119,7 @@ public class Spool : Store {
         }
 
 
-      
+
 
 
 
@@ -183,7 +179,7 @@ public class Spool : Store {
                 bool reverse = true,
                 bool open = true,
                 FilterIndexDelegate evaluateIndex = null) =>
-            new SpoolEnumerator(Sequence, start?.Index?? -1, reverse, evaluateIndex ?? FilterSequenceIndex.GetOpen);
+            new SpoolEnumerator(Sequence, start?.Index ?? -1, reverse, evaluateIndex ?? FilterSequenceIndex.GetOpen);
 
 
 

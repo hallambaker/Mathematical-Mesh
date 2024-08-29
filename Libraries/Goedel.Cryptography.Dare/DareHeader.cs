@@ -19,8 +19,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-using System.Threading;
-
 namespace Goedel.Cryptography.Dare;
 
 // Feature: Support encryption algorithms other than AES256 by including the algorithmID in the header

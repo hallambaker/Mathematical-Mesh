@@ -20,9 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Net;
-using System.Net.Sockets;
-
 using Goedel.Protocol.Presentation;
 
 namespace Goedel.Protocol.Service;
@@ -82,7 +79,7 @@ public class RudService : Disposable {
     /// <summary>
     /// Disposal routine, perform clean termination of all active threads.
     /// </summary>
-    protected override  void Disposing() {
+    protected override void Disposing() {
 
         Logger.LogInformation("Closing RUD Listener");
 
@@ -132,7 +129,7 @@ public class RudService : Disposable {
             int maxCores = 0) {
         Monitor = hostMonitor;
         Logger = Monitor.Logger ?? new AssemblyLogger();
-        
+
         Logger.LogInformation("Starting RUD Listener");
         Logger.LogTrace("T Starting RUD Listener");
         Listener = rdpListener ?? new RudListener(credential, providers);
@@ -191,7 +188,7 @@ public class RudService : Disposable {
                 }
             }
 
-        serviceTasks = new Task<ServiceRequest>[ListenerCount+1];
+        serviceTasks = new Task<ServiceRequest>[ListenerCount + 1];
         serviceTasks[ListenerCount] = WaitCancellationToken();
 
         httpListener.Start();
@@ -281,7 +278,7 @@ public class RudService : Disposable {
         finally {
             Canceled();
             }
-        } 
+        }
 
     /// <summary>
     /// Null task, simply runs to completion. This is used to allow gracefull shutdown of the

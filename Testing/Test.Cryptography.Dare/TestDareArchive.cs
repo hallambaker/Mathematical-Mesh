@@ -21,9 +21,6 @@
 #endregion
 
 
-using Goedel.Cryptography;
-using Goedel.Test.Core;
-
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
 
 
@@ -65,7 +62,7 @@ public partial class TestDareArchive {
         }
 
     static void AttemptAddRelativeDirectory(DareArchive archive, string sourceDir) {
-        var directory = "../CommonDate" ;
+        var directory = "../CommonDate";
         archive.AddDirectory(sourceDir, directory);
         }
 
@@ -166,7 +163,7 @@ public partial class TestDareArchive {
             Encrypt = encrypt,
             Sign = sign,
             Notarize = notarize,
-            Seed= seed
+            Seed = seed
             };
 
         var archive = new DareArchive(archiveFile);
@@ -221,7 +218,7 @@ public partial class TestDareArchive {
         }
 
 
-    static DareArchive CheckArchive(DareArchive archive, TestArchive shaddow, bool every =true) {
+    static DareArchive CheckArchive(DareArchive archive, TestArchive shaddow, bool every = true) {
         if (!every) {
             return archive;
             }

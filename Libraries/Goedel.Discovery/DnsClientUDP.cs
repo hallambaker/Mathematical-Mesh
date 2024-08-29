@@ -312,7 +312,7 @@ public partial class DNSContextUDP : DNSContext {
         var ipEndpoint = IPEndpoints[index % IPEndpoints.Length];
         //Console.WriteLine($"DNS request {ipEndpoint}");
 
-        UdpClient.Send(request.Buffer.Buffer, request.Buffer.Length,                                                                
+        UdpClient.Send(request.Buffer.Buffer, request.Buffer.Length,
             ipEndpoint);
 
         }

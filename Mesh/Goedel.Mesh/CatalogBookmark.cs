@@ -62,7 +62,7 @@ public class CatalogBookmark : Catalog<CatalogedBookmark> {
                 bool decrypt = true,
                 bool create = true,
                 byte[] bitmask = null) =>
-        new CatalogBookmark(directory, storeId, policy, cryptoParameters, keyCollection, 
+        new CatalogBookmark(directory, storeId, policy, cryptoParameters, keyCollection,
             meshClient, decrypt, create, bitmask: bitmask);
 
     /// <summary>
@@ -90,7 +90,7 @@ public class CatalogBookmark : Catalog<CatalogedBookmark> {
                 bool create = true,
                 byte[] bitmask = null) :
         base(directory, storeName ?? Label,
-                    policy, cryptoParameters, keyCollection, 
+                    policy, cryptoParameters, keyCollection,
                     decrypt: decrypt, create: create, bitmask: bitmask) {
         }
 

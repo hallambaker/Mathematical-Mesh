@@ -20,15 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
-using Goedel.Mesh;
-using Goedel.Mesh.Client;
 using Goedel.Mesh.Shell;
-using Goedel.Mesh.Test;
-using Goedel.Test;
-using Goedel.Utilities;
-
-
-using Xunit;
 //using Goedel.Mesh.Shell.ServiceAdmin;
 
 
@@ -72,17 +64,18 @@ public partial class ShellTestBase : Disposable {
 
     #region // The test environment specific calls
 
-    public DeterministicSeed Seed { 
-            get => seed ?? DeterministicSeed.AutoClean(Mode).CacheValue (out seed); 
-            set => seed = value; }
+    public DeterministicSeed Seed {
+        get => seed ?? DeterministicSeed.AutoClean(Mode).CacheValue(out seed);
+        set => seed = value;
+        }
     DeterministicSeed seed;
 
     ///<summary>The test environment, base for all </summary>
     public TestEnvironmentBase TestEnvironment => testEnvironment ??
-        GetTestEnvironment(Seed ).CacheValue(out testEnvironment);
+        GetTestEnvironment(Seed).CacheValue(out testEnvironment);
     TestEnvironmentBase testEnvironment;
 
-    public virtual TestEnvironmentBase GetTestEnvironment(DeterministicSeed seed) => 
+    public virtual TestEnvironmentBase GetTestEnvironment(DeterministicSeed seed) =>
                 new TestEnvironmentCommon(seed);
 
     public virtual TestCLI GetTestCLI(string machineName = null) =>

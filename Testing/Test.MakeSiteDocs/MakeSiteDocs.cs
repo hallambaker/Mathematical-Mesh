@@ -22,9 +22,7 @@
 
 
 using ExampleGenerator;
-using Goedel.Test;
-using Goedel.Mesh.Test;
-using Xunit;
+
 using Goedel.Utilities;
 
 namespace Goedel.XUnit;

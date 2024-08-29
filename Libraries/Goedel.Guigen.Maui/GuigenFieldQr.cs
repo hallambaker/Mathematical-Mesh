@@ -38,7 +38,7 @@ public class GuigenFieldQr : GuigenField {
         QrEntry = new();
 
 
-        Layout = new VerticalStackLayout() { QrImage , QrLabel , QrEntry };
+        Layout = new VerticalStackLayout() { QrImage, QrLabel, QrEntry };
         if (data is not null) {
             SetField(data);
             }

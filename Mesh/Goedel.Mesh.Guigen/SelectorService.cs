@@ -1,5 +1,4 @@
-﻿using Goedel.Cryptography.Dare;
-namespace Goedel.Everything;
+﻿namespace Goedel.Everything;
 
 #region // Bindings to classes specified through the Guigen schema.
 
@@ -36,7 +35,7 @@ public partial class ServiceSelection : ApplicationSelection {
     /// </summary>
     /// <param name="catalog"></param>
     public ServiceSelection(ContextAccount contextAccount,
-                GuigenCatalogApplication catalog) : base(contextAccount,catalog) {
+                GuigenCatalogApplication catalog) : base(contextAccount, catalog) {
         }
 
     //#region // Conversion overrides

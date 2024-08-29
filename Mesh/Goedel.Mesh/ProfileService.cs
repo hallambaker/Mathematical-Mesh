@@ -119,7 +119,7 @@ public partial class ProfileService {
         // Create the service profile
         profileService = ProfileService.Generate(meshMachine.KeyCollection);
 
-        CreateService (meshMachine, profileService, out profileHost, out activationDevice,  
+        CreateService(meshMachine, profileService, out profileHost, out activationDevice,
             out connectionDevice);
         }
 

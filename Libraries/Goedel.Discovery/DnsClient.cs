@@ -19,8 +19,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-using System.Threading;
-
 
 namespace Goedel.Discovery;
 
@@ -196,7 +194,7 @@ public abstract class DNSContext : Disposable {
     /// <param name="index">The number of times the request has been 
     /// repeated.</param>
     /// <returns>Task instance.</returns>
-    public abstract void SendRequest(DNSRequest request, int index=0);
+    public abstract void SendRequest(DNSRequest request, int index = 0);
 
 
     /// <summary>
@@ -260,7 +258,7 @@ public abstract class DNSContext : Disposable {
                     index++;
                     SendRequest(request, index);
                     }
-                
+
                 taskRetry = Task.Delay(retry);
                 }
             }

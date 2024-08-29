@@ -154,7 +154,7 @@
 //    #region // Inbound packet management
 //    ///<summary>The next packet serial number expected</summary> 
 //    public ulong PacketExpecting { get; private set; } = 0;
-    
+
 //    ///<summary>The serial number of the latest inbound packet. We only 
 //    ///process acknowledgements on the very latest packet received.</summary> 
 //    public ulong PacketInboundLatest { get; private set; } = 0;

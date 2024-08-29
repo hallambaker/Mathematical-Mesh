@@ -13,6 +13,9 @@
 		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
 		<ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
 		<ProjectReference Include="..\Test.Cryptography.Dare\Test.Cryptography.Dare.csproj" />
+		<ProjectReference Include="..\Test.Cryptography.Jose\Test.Cryptography.Jose.csproj" />
+		<ProjectReference Include="..\Test.Cryptography.Keyfile\Test.Cryptography.Keyfile.csproj" />
+		<ProjectReference Include="..\Test.Cryptography.Nist\Test.Cryptography.Nist.csproj" />
 		<ProjectReference Include="..\Test.Cryptography.Platform\Test.Cryptography.Platform.csproj" />
 		<ProjectReference Include="..\Test.Cryptography.PQC\Test.Cryptography.PQC.csproj" />
 		<ProjectReference Include="..\Test.Cryptography\Test.Cryptography.csproj" />
@@ -24,6 +27,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Test.Mesh.Presence\Test.Mesh.Presence.csproj" />
 		<ProjectReference Include="..\Test.Mesh.Protocol\Test.Mesh.Protocol.csproj" />
+		<ProjectReference Include="..\Test.Mesh.Shell\Test.Mesh.Shell.csproj" />
 		<ProjectReference Include="..\Test.Mesh.Store\Test.Mesh.Store.csproj" />
 		<ProjectReference Include="..\Test.NotaryCallsign\Test.NotaryCallsign.csproj" />
 		<ProjectReference Include="..\Test.Protocol\Test.Protocol.csproj" />

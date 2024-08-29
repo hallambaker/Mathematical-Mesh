@@ -1,6 +1,4 @@
-﻿using Goedel.Mesh.Client;
-
-namespace Goedel.Everything;
+﻿namespace Goedel.Everything;
 public partial class EverythingMaui {
 
     ///<inheritdoc/>

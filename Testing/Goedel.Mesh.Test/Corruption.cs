@@ -41,14 +41,14 @@ public static class Extension {
 
         switch (jsonReader.TokenType) {
             case Token.Binary: {
-                    CorruptBinaryJSON(inputStream); 
-                    return;
-                    }
+                CorruptBinaryJSON(inputStream);
+                return;
+                }
 
             case Token.String: {
-                    CorruptStringJSON(inputStream);
-                    return;
-                    }
+                CorruptStringJSON(inputStream);
+                return;
+                }
             }
         }
 

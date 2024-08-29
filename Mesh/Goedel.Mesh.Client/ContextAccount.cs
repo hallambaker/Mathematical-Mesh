@@ -21,10 +21,6 @@
 #endregion
 
 
-using Goedel.Cryptography.Jose;
-using Goedel.Protocol;
-using System.Net;
-
 namespace Goedel.Mesh.Client;
 
 ///<summary>Track the synchronization status of an upload or download operation.</summary>
@@ -80,7 +76,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     public string AccountCallsign { get; set; }
 
     ///<summary>The service to which the account is bound.</summary> 
-    public abstract string ServiceDns { get; } 
+    public abstract string ServiceDns { get; }
 
 
 
@@ -111,13 +107,14 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <summary>
     /// The Callsign Registry Profile.
     /// </summary>
-    public ProfileAccount ProfileRegistryCallsign { 
-                get => profileRegistryCallsign ?? GetProfileRegistryCallsign();
-                set {
-                    profileRegistryCallsign = value;
-                    var accounts = new List<string> { value.AccountAddress };
-                    KeyCollection.Add(value.AccountEncryptionKey, accounts);
-                    } }
+    public ProfileAccount ProfileRegistryCallsign {
+        get => profileRegistryCallsign ?? GetProfileRegistryCallsign();
+        set {
+            profileRegistryCallsign = value;
+            var accounts = new List<string> { value.AccountAddress };
+            KeyCollection.Add(value.AccountEncryptionKey, accounts);
+            }
+        }
 
 
     ProfileAccount profileRegistryCallsign;
@@ -250,7 +247,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     public SpoolInbound GetSpoolInbound() => GetStore(SpoolInbound.Label) as SpoolInbound;
 
     ///<summary>The callsign resolver.</summary> 
-    public IResolver CallsignResolver => callsignResolver??
+    public IResolver CallsignResolver => callsignResolver ??
         MeshMachine.GetResolver(GetMeshCredentialPrivate()).CacheValue(out callsignResolver);
     IResolver callsignResolver;
 
@@ -441,9 +438,9 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="catalogedDeviceDigest">The payload digest of the Cataloged device</param>
     /// <returns>True if the synchronization completed, otherwise false.</returns>
     public async Task<PartialOperationResult> SyncPartialAsync(
-            IEnumerable< string> stores,
+            IEnumerable<string> stores,
             int maxResuts = -1,
-            string catalogedDeviceDigest=null) {
+            string catalogedDeviceDigest = null) {
 
         var constraintsSelects = new List<ConstraintsSelect>();
 
@@ -471,10 +468,10 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <returns>True if the synchronization completed, otherwise false.</returns>
     public async Task<PartialOperationResult> SyncPartialAsync(
             int maxResuts = -1,
-            MeshServiceClient? meshClient=null,
+            MeshServiceClient? meshClient = null,
             string catalogedDeviceDigest = null,
-            bool full=true) {
-        
+            bool full = true) {
+
         var constraintsSelects = new List<ConstraintsSelect>();
 
         if (full) {
@@ -494,13 +491,13 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
                 }
             }
 
-        return await SyncPartialAsync(meshClient?? MeshClient, constraintsSelects, maxResuts, catalogedDeviceDigest);
+        return await SyncPartialAsync(meshClient ?? MeshClient, constraintsSelects, maxResuts, catalogedDeviceDigest);
         }
 
 
     ConstraintsSelect GetConstraint(
             string storeName) {
-        
+
         if (DictionaryStores.TryGetValue(storeName, out var syncStatus)) {
             var store = syncStatus.Store;
             // Request the next envelope after the envelope we already have.
@@ -530,7 +527,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
                 string catalogedDeviceDigest = null) {
 
         var downloadRequest = new DownloadRequest() {
-            DeviceUDF = catalogedDeviceDigest==null ? null : ProfileDevice.UdfString,
+            DeviceUDF = catalogedDeviceDigest == null ? null : ProfileDevice.UdfString,
             CatalogedDeviceDigest = catalogedDeviceDigest,
             MaxResults = maxResuts,
             Select = constraintsSelects
@@ -556,7 +553,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             }
 
 
-        return new PartialOperationResult (!partial, count);
+        return new PartialOperationResult(!partial, count);
         }
 
     /// <summary>
@@ -605,7 +602,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="meshClient">If not-null specifies a client to override the account
     /// client (used to synchronize against other accounts).</param>
     /// <returns>The number of items synchronized</returns>
-    public StatusResponse Sync (StatusRequest statusRequest, MeshServiceClient meshClient =null) {
+    public StatusResponse Sync(StatusRequest statusRequest, MeshServiceClient meshClient = null) {
         throw new NYI();
 
 
@@ -680,7 +677,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     //            }
     //        }
 
- 
+
     //    if (downloadRequest.CatalogedDeviceDigest != null & download.EnvelopedCatalogedDevice != null) {
     //        var catalogedDevice = download.EnvelopedCatalogedDevice.Decode(this);
     //        UpdateCatalogedMachine(catalogedDevice, download.CatalogedDeviceDigest, true);
@@ -813,7 +810,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// </summary>
     /// <returns>The default contact.</returns>
     public virtual Contact CreateContact(
-            List<CryptographicCapability> capabilities = null, 
+            List<CryptographicCapability> capabilities = null,
             ContactPerson? contact = null) {
 
         var anchorAccount = new Anchor() {
@@ -829,7 +826,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             }
         else {
             contact.Anchors ??= new();
-            contact.Anchors.Add (anchorAccount);
+            contact.Anchors.Add(anchorAccount);
             }
 
 
@@ -921,7 +918,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
                 store.AppendDirect(entry, true);
                 }
             //Console.WriteLine($"Update index {preIndex}->{store.Sequence.SequenceIndexEntryLast.Index} (+{containerUpdate.Envelopes.Count})");
-            
+
             //Screen.Write($"Finished update {syncStore.Store.FrameCount}");
 
             // need to set the store end frame!!!
@@ -952,8 +949,8 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="decrypt">If true, decrypt the store contents on access.</param>
     /// <param name="create">Create store if it does not exist</param>
     /// <returns>The <see cref="Store"/> instance.</returns>
-    public Store GetStore(string name, 
-                bool blind = false, 
+    public Store GetStore(string name,
+                bool blind = false,
                 bool decrypt = true,
                 bool create = true) {
 
@@ -984,7 +981,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
         //Console.WriteLine($"Open store {name} on {MeshMachine.DirectoryMesh}");
 
-        var store = blind ? new CatalogBlind(StoresDirectory, name) : 
+        var store = blind ? new CatalogBlind(StoresDirectory, name) :
                     MakeStore(name, decrypt: decrypt, create: create);
         syncStore = new SyncStatus(store);
 
@@ -1000,10 +997,10 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <returns>The store instance.</returns>
     /// <param name="decrypt">If true, attempt decryption of payload contents.</param>
     /// <param name="create">Create store if it does not exist</param>
-    protected Store MakeStore(string name, 
+    protected Store MakeStore(string name,
                 DarePolicy? darePolicy = null,
-                bool decrypt=true,
-                bool create=true) {
+                bool decrypt = true,
+                bool create = true) {
 
         // Set up the bitmask.
         // We intentionally skip the first bit so as to allow for later use as a Bloom filter
@@ -1015,11 +1012,11 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
         if (DictionaryCatalogDelegates.TryGetValue(name, out var factory)) {
             darePolicy ??= ActivationCommon.GetDarePolicy(name);
-            return factory(StoresDirectory, name, this, darePolicy, null, this, 
+            return factory(StoresDirectory, name, this, darePolicy, null, this,
                 decrypt: decrypt, create: create);
             }
         if (DictionarySpoolDelegates.TryGetValue(name, out factory)) {
-            return factory(StoresDirectory, name, this, null, null, this, 
+            return factory(StoresDirectory, name, this, null, null, this,
                 decrypt: decrypt, create: create);
             }
 
@@ -1095,7 +1092,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="keyPair">The key pair to add.</param>
     /// <param name="accounts">Accounts for which the key may be used for encryption
     /// or signature.</param>
-    public void Add(KeyPair keyPair, List<string> accounts = null) => 
+    public void Add(KeyPair keyPair, List<string> accounts = null) =>
         KeyCollection.Add(keyPair, accounts);
 
     /// <summary>
@@ -1259,7 +1256,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
         }
 
- 
+
     /// <summary>
     /// Make bindings of the profile <paramref name="profile"/> to the account address
     /// <paramref name="accountAddress"/>.

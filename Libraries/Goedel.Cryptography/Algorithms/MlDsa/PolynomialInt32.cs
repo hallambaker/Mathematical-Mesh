@@ -23,7 +23,7 @@ public class PolynomialInt32 : Disposable {
     const int Q = MLDSA.Q;
 
     MLDSA Parameters { get; }
-    
+
 
     //delegate int RejectDelegate (byte[] buf, int ctr);
 
@@ -74,7 +74,7 @@ public class PolynomialInt32 : Disposable {
 
     #region // Disposing
     ///<summary>If true, data is wiped on dispose.</summary> 
-    public bool Wipe { get;  } = true;
+    public bool Wipe { get; } = true;
 
     ///<inheritdoc/>
     protected override void Disposing() {
@@ -107,9 +107,9 @@ public class PolynomialInt32 : Disposable {
         }
 
     #endregion
-    
+
     #region // Basic vector operations - Add, Sub, SubFrom, Copy, ShiftLeft
-    
+
     /// <summary>
     /// Add the coefficients of the polynomial <paramref name="p"/> to this.
     /// </summary>
@@ -217,11 +217,11 @@ public class PolynomialInt32 : Disposable {
         using var shake = new SHAKEExtended();
 
         var nblocks = Parameters.Eta switch {
-            2 => (136 + stream128BlockBytes -1) / stream128BlockBytes,
+            2 => (136 + stream128BlockBytes - 1) / stream128BlockBytes,
             4 => (227 + stream128BlockBytes - 1) / stream128BlockBytes,
             _ => throw new Exception()
             };
-        var buf = new byte[nblocks* stream128BlockBytes];
+        var buf = new byte[nblocks * stream128BlockBytes];
 
         shake.AbsorbD(seed, nonce);
         shake.Squeeze(buf, nblocks);
@@ -283,14 +283,14 @@ public class PolynomialInt32 : Disposable {
             }
         for (var i = N - Parameters.Tau; i < N; ++i) {
             do {
-                
+
                 // Dilithium version of this
                 //if (pos >= SHA3.HashRateShake256) {
                 //    shake.Squeeze(buf, 1);
                 //    pos = 0;
                 //    }
                 //b = buf[pos++];
-                
+
                 shake.Squeeze(buf, 1);
                 b = buf[0];
                 } while (b > i);
@@ -314,7 +314,7 @@ public class PolynomialInt32 : Disposable {
 
         var pos = 0;
         while (index < N & pos < buffer.Length) {
-            var t = (uint) buffer[pos++];
+            var t = (uint)buffer[pos++];
             t |= (uint)(buffer[pos++] << 8);
             t |= (uint)(buffer[pos++] << 16);
             t &= 0x7FFFFF;
@@ -338,17 +338,17 @@ public class PolynomialInt32 : Disposable {
         var pos = 0;
         while (index < N & pos < buffer.Length) {
             var t0 = (uint)(buffer[pos] & 0xF);
-            var t1 = (uint)(buffer[pos++] >>4);
+            var t1 = (uint)(buffer[pos++] >> 4);
 
             switch (Parameters.Eta) {
                 case 2: {
                     if (t0 < 15) {
                         t0 -= (205 * t0 >> 10) * 5;
-                        Coefficients[index++] = (int) (2 - t0);
+                        Coefficients[index++] = (int)(2 - t0);
                         }
                     if (t1 < 15 & index < N) {
                         t1 -= (205 * t1 >> 10) * 5;
-                        Coefficients[index++] = (int) (2 - t1);
+                        Coefficients[index++] = (int)(2 - t1);
                         }
                     break;
                     }
@@ -589,15 +589,15 @@ public class PolynomialInt32 : Disposable {
                 }
             }
         else {
-            for (var i = 0; i < N/2; i++) {
+            for (var i = 0; i < N / 2; i++) {
                 var t0 = (byte)(Eta - Coefficients[2 * i + 0]);
                 var t1 = (byte)(Eta - Coefficients[2 * i + 1]);
 
-                buffer[offset++] = (byte)(t0  | (t1 << 4));
+                buffer[offset++] = (byte)(t0 | (t1 << 4));
                 }
             }
 
-        } 
+        }
 
     /// <summary>
     /// 
@@ -607,23 +607,23 @@ public class PolynomialInt32 : Disposable {
     /// <exception cref="NYI"></exception>
     public void UnpackEta(byte[] buffer, ref int offset) {
         if (Parameters.Eta == 2) {
-            for (var i = 0; i < N/8; i++) {
+            for (var i = 0; i < N / 8; i++) {
                 var b0 = buffer[offset++];
                 var b1 = buffer[offset++];
                 var b2 = buffer[offset++];
-                
-                Coefficients[8 * i + 0] = Eta -  ((b0 >> 0) & 7);
-                Coefficients[8 * i + 1] = Eta -  ((b0 >> 3) & 7);
-                Coefficients[8 * i + 2] = Eta - (((b0 >> 6) & 7) | ((b1 <<2) & 7));
-                Coefficients[8 * i + 3] = Eta -  ((b1 >> 1) & 7);
-                Coefficients[8 * i + 4] = Eta -  ((b1 >> 4) & 7);
+
+                Coefficients[8 * i + 0] = Eta - ((b0 >> 0) & 7);
+                Coefficients[8 * i + 1] = Eta - ((b0 >> 3) & 7);
+                Coefficients[8 * i + 2] = Eta - (((b0 >> 6) & 7) | ((b1 << 2) & 7));
+                Coefficients[8 * i + 3] = Eta - ((b1 >> 1) & 7);
+                Coefficients[8 * i + 4] = Eta - ((b1 >> 4) & 7);
                 Coefficients[8 * i + 5] = Eta - (((b1 >> 7) & 7) | ((b2 << 1) & 7));
-                Coefficients[8 * i + 6] = Eta -  ((b2 >> 2) & 7);
-                Coefficients[8 * i + 7] = Eta -  ((b2 >> 5) & 7);
+                Coefficients[8 * i + 6] = Eta - ((b2 >> 2) & 7);
+                Coefficients[8 * i + 7] = Eta - ((b2 >> 5) & 7);
                 }
             }
         else {
-            for (var i = 0; i < N/2; i++) {
+            for (var i = 0; i < N / 2; i++) {
                 var b0 = buffer[offset++];
                 var b1 = buffer[offset++];
 
@@ -647,17 +647,17 @@ public class PolynomialInt32 : Disposable {
     /// <param name="offset">Index of first byte to write on entry and index of
     /// next byte to write to on exit.</param>
     public void PackT1(byte[] buffer, ref int offset) {
-        for (var i = 0; i < N/4; i++) {
+        for (var i = 0; i < N / 4; i++) {
             var t0 = Coefficients[4 * i + 0];
             var t1 = Coefficients[4 * i + 1];
             var t2 = Coefficients[4 * i + 2];
             var t3 = Coefficients[4 * i + 3];
 
-            buffer[offset++] = (byte) (t0 >> 0);
+            buffer[offset++] = (byte)(t0 >> 0);
             buffer[offset++] = (byte)((t0 >> 8) | (t1 << 2));
             buffer[offset++] = (byte)((t1 >> 6) | (t2 << 4));
             buffer[offset++] = (byte)((t2 >> 4) | (t3 << 6));
-            buffer[offset++] = (byte) (t3 >> 2);
+            buffer[offset++] = (byte)(t3 >> 2);
             }
         }
 
@@ -668,7 +668,7 @@ public class PolynomialInt32 : Disposable {
     /// <param name="offset"></param>
     /// <exception cref="NYI"></exception>
     public void UnpackT1(byte[] buffer, ref int offset) {
-        for (var i = 0; i < N/4; i++) {
+        for (var i = 0; i < N / 4; i++) {
             var b0 = buffer[offset++];
             var b1 = buffer[offset++];
             var b2 = buffer[offset++];
@@ -695,7 +695,7 @@ public class PolynomialInt32 : Disposable {
     public void PackT0(byte[] buffer, ref int offset) {
 
         var d = 1 << (D - 1);
-        for (var i = 0; i < N/8; i++) {
+        for (var i = 0; i < N / 8; i++) {
             var t0 = (d - Coefficients[8 * i + 0]);
             var t1 = (d - Coefficients[8 * i + 1]);
             var t2 = (d - Coefficients[8 * i + 2]);
@@ -705,19 +705,19 @@ public class PolynomialInt32 : Disposable {
             var t6 = (d - Coefficients[8 * i + 6]);
             var t7 = (d - Coefficients[8 * i + 7]);
 
-            buffer[offset++] = (byte)  t0;                           //  0
-            buffer[offset++] = (byte)((t0 >> 8)  | (t1 << 5));       //  1
-            buffer[offset++] = (byte) (t1 >> 3) ;                    //  2
+            buffer[offset++] = (byte)t0;                           //  0
+            buffer[offset++] = (byte)((t0 >> 8) | (t1 << 5));       //  1
+            buffer[offset++] = (byte)(t1 >> 3);                    //  2
             buffer[offset++] = (byte)((t1 >> 11) | (t2 << 2));       //  3
-            buffer[offset++] = (byte)((t2 >> 6)  | (t3 << 7));       //  4
-            buffer[offset++] = (byte) (t3 >> 1);                     //  5
-            buffer[offset++] = (byte)((t3 >> 9)  | (t4 << 4));       //  6
-            buffer[offset++] = (byte) (t4 >> 4);                     //  7
+            buffer[offset++] = (byte)((t2 >> 6) | (t3 << 7));       //  4
+            buffer[offset++] = (byte)(t3 >> 1);                     //  5
+            buffer[offset++] = (byte)((t3 >> 9) | (t4 << 4));       //  6
+            buffer[offset++] = (byte)(t4 >> 4);                     //  7
             buffer[offset++] = (byte)((t4 >> 12) | (t5 << 1));       //  8
-            buffer[offset++] = (byte)((t5 >> 7)  | (t6 << 6));       //  9
-            buffer[offset++] = (byte) (t6 >> 2);                     // 10
+            buffer[offset++] = (byte)((t5 >> 7) | (t6 << 6));       //  9
+            buffer[offset++] = (byte)(t6 >> 2);                     // 10
             buffer[offset++] = (byte)((t6 >> 10) | (t7 << 3));       // 11
-            buffer[offset++] = (byte) (t7 >> 5);                     // 12
+            buffer[offset++] = (byte)(t7 >> 5);                     // 12
             }
         }
 
@@ -731,7 +731,7 @@ public class PolynomialInt32 : Disposable {
     public void UnpackT0(byte[] buffer, ref int offset) {
         var d = 1 << (D - 1);
 
-        for (var i = 0; i < N/8; i++) {
+        for (var i = 0; i < N / 8; i++) {
             var b0 = buffer[offset++];
             var b1 = buffer[offset++];
             var b2 = buffer[offset++];
@@ -777,7 +777,7 @@ public class PolynomialInt32 : Disposable {
 
                 buffer[offset++] = (byte)t0;
                 buffer[offset++] = (byte)(t0 >> 8);
-                buffer[offset++] = (byte)((t0 >> 16)| (byte)(t1 << 4));
+                buffer[offset++] = (byte)((t0 >> 16) | (byte)(t1 << 4));
                 buffer[offset++] = (byte)(t1 >> 4);
                 buffer[offset++] = (byte)(t1 >> 12);
                 }
@@ -792,7 +792,7 @@ public class PolynomialInt32 : Disposable {
 
                 buffer[offset++] = (byte)t0;
                 buffer[offset++] = (byte)(t0 >> 8);
-                buffer[offset++] = (byte)((t0 >> 16)| (byte)(t1 << 2));
+                buffer[offset++] = (byte)((t0 >> 16) | (byte)(t1 << 2));
                 buffer[offset++] = (byte)(t1 >> 6);
                 buffer[offset++] = (byte)((t1 >> 14) | (byte)(t2 << 4));
                 buffer[offset++] = (byte)(t2 >> 4);
@@ -821,7 +821,7 @@ public class PolynomialInt32 : Disposable {
                 var b4 = buffer[offset++];
 
 
-                var c0 = (b0 |( b1 << 8) | (b2<< 16))& 0xFFFFF;
+                var c0 = (b0 | (b1 << 8) | (b2 << 16)) & 0xFFFFF;
                 var c1 = ((b2 >> 4) | (b3 << 4) | (b4 << 12)) & 0xFFFFF;
 
                 Coefficients[2 * i + 0] = (int)(MLDSA.Gamma1_19 - c0);
@@ -866,7 +866,7 @@ public class PolynomialInt32 : Disposable {
 
     public void PackW1(byte[] buffer, ref int offset) {
         if (Parameters.Gamma2 == MLDSA.Gamma2_88) {
-            for (var i = 0; i < N /4 ; i++) {
+            for (var i = 0; i < N / 4; i++) {
                 var t0 = Coefficients[8 * i + 0];
                 var t1 = Coefficients[8 * i + 1];
                 var t2 = Coefficients[8 * i + 2];

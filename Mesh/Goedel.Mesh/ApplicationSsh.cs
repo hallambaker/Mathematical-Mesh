@@ -117,7 +117,7 @@ public partial class CatalogedApplicationSsh {
     ///<inheritdoc/>
     public override void Activate(List<ApplicationEntry> applicationEntries, ProfileDevice profileDevice, IKeyCollection keyCollection) {
 
-        var applicationEntrySsh = GetApplicationEntry(applicationEntries) ;
+        var applicationEntrySsh = GetApplicationEntry(applicationEntries);
         applicationEntrySsh.AssertNotNull(NYI.Throw);
 
         if (applicationEntrySsh.Activation == null) {
@@ -130,7 +130,7 @@ public partial class CatalogedApplicationSsh {
 
     ///<inheritdoc/>
     public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
-        
+
         // To: work out proper way to handle this.
         ClientKeyPrivate.AssertNotNull(NYI.Throw);
 

@@ -21,8 +21,6 @@
 #endregion
 
 
-using Microsoft.Extensions.Logging;
-
 namespace Goedel.Mesh.Server;
 
 /// <summary>
@@ -298,7 +296,7 @@ public class AccountHandleLocked : Disposable {
     /// <param name="catalogs">The named catalogs to return the status of. If
     /// null, the default set of catalogs is returned.</param>
     /// <returns>The list of container status entries.</returns>
-    public List<StoreStatus> GetContainerStatuses(List <string> catalogs) {
+    public List<StoreStatus> GetContainerStatuses(List<string> catalogs) {
         try {
             var result = new List<StoreStatus>();
             if (catalogs != null) {
@@ -322,15 +320,15 @@ public class AccountHandleLocked : Disposable {
                 //    }
 
                 case Goedel.Mesh.Server.AccountUser _: {
-                        AddStatusStore(result, CatalogCredential.Label);
-                        AddStatusStore(result, CatalogDevice.Label);
-                        AddStatusStore(result, CatalogContact.Label);
-                        AddStatusStore(result, CatalogApplication.Label);
-                        AddStatusStore(result, CatalogPublication.Label);
-                        AddStatusStore(result, CatalogBookmark.Label);
-                        AddStatusStore(result, CatalogTask.Label);
-                        break;
-                        }
+                    AddStatusStore(result, CatalogCredential.Label);
+                    AddStatusStore(result, CatalogDevice.Label);
+                    AddStatusStore(result, CatalogContact.Label);
+                    AddStatusStore(result, CatalogApplication.Label);
+                    AddStatusStore(result, CatalogPublication.Label);
+                    AddStatusStore(result, CatalogBookmark.Label);
+                    AddStatusStore(result, CatalogTask.Label);
+                    break;
+                    }
                 }
 
             return result;

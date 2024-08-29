@@ -20,18 +20,10 @@
 //  THE SOFTWARE.
 #endregion
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
-using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
-using Goedel.Cryptography.Jose;
 using Goedel.Mesh;
-using Goedel.Test;
-using Goedel.Utilities;
 
-using Xunit;
+using System.Collections;
 
 namespace Goedel.XUnit;
 
@@ -77,13 +69,13 @@ public partial class TestGoedelCryptography {
 
         switch (keytype) {
             case MeshKeyType.Complete: {
-                    // test splitting the key and recombing it
-                    return TestBase(primeKey as KeyPairAdvanced, activationKey as KeyPairAdvanced, activationUDF, actor, operation);
-                    }
+                // test splitting the key and recombing it
+                return TestBase(primeKey as KeyPairAdvanced, activationKey as KeyPairAdvanced, activationUDF, actor, operation);
+                }
             case MeshKeyType.Base: {
-                    // test activating the key and recombing it
-                    return TestComplete(primeKey as KeyPairAdvanced, activationKey as KeyPairAdvanced, activationUDF, actor, operation);
-                    }
+                // test activating the key and recombing it
+                return TestComplete(primeKey as KeyPairAdvanced, activationKey as KeyPairAdvanced, activationUDF, actor, operation);
+                }
             }
 
         throw new NYI();

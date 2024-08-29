@@ -20,8 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Xml.Serialization;
-
 namespace Goedel.Cryptography.Jose;
 
 /// <summary>

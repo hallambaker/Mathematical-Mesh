@@ -20,8 +20,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 // DEALINGS IN THE SOFTWARE.
 
-using Goedel.IO;
-using System;
 using System.Runtime.InteropServices;
 
 namespace Goedel.Cryptography.Algorithms;
@@ -169,7 +167,7 @@ public class SHAKE256 : SHA3 {
     /// the result.</returns>
     public static byte[] GetBytes(int length, params byte[][] input) {
 
-        using var provider = new SHAKE256(length*8);
+        using var provider = new SHAKE256(length * 8);
 
         foreach (var inputItem in input) {
             if (inputItem != null) {
@@ -306,7 +304,7 @@ public class SHAKEExtended : SHA3 {
             extSeed[i] = seed[i];
             }
         extSeed[seed.Length] = (byte)x;
-        extSeed[seed.Length+1] = (byte)(x >>8);
+        extSeed[seed.Length + 1] = (byte)(x >> 8);
 
         var state = Absorb(extSeed);
         return state;
@@ -321,11 +319,11 @@ public class SHAKEExtended : SHA3 {
     /// <param name="buffer">The output buffer.</param>
     /// <param name="nblocks">The number of output blocks to generate.</param>
     /// <param name="index">The first byte to write.</param>
-    public void Squeeze(byte[] buffer, int nblocks, int index =0) {
+    public void Squeeze(byte[] buffer, int nblocks, int index = 0) {
         while (nblocks > 0) {
             KeccakF();
             for (var i = 0; i < HashRate / 8; i++) {
-                buffer.LittleEndianStore(state[i], index + (i*8));
+                buffer.LittleEndianStore(state[i], index + (i * 8));
                 }
             index += HashRate;
             nblocks--;
@@ -357,7 +355,7 @@ public static class Extensions {
     /// <param name="tag">Optional descriptive tag.</param>
     /// <param name="output">Output to write the result to.</param>
     public static void DumpBufferFingerprint(
-                    this byte[] buffer, 
+                    this byte[] buffer,
                     string? tag = null,
                     TextWriter output = null) {
 
@@ -378,10 +376,10 @@ public static class Extensions {
     /// <param name="first">First byte to be written</param>
     /// <param name="output">Output to write the result to.</param>
     public static void DumpBufferHex(
-                    this byte[] buffer, 
-                    string? tag = null, 
-                    int length = -1, 
-                    int first = 0, 
+                    this byte[] buffer,
+                    string? tag = null,
+                    int length = -1,
+                    int first = 0,
                     TextWriter output = null) {
 
         output ??= Console.Out;

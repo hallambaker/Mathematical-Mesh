@@ -26,10 +26,10 @@ public static class PresenceServiceExtensions {
             var serviceConfig = hostContext.Configuration.GetSection(PresenceServiceConfiguration.ConfigurationEntry.Name);
             services.AddSingleton<IPresenceProvider, PresenceConfiguredService>();
             var configurationService = services.Configure<PresenceServiceConfiguration>(serviceConfig);
-                //var configurationHost = services.Configure<GenericHostConfiguration>(
-                //    hostContext.Configuration.GetSection(GenericHostConfiguration.ConfigurationEntry.Name));
+            //var configurationHost = services.Configure<GenericHostConfiguration>(
+            //    hostContext.Configuration.GetSection(GenericHostConfiguration.ConfigurationEntry.Name));
 
-            });
+        });
 
         return host;
         }
@@ -67,7 +67,7 @@ public class PresenceConfiguredService : IPresenceProvider {
     //public List<Endpoint> Endpoints { get; }
 
     ///<inheritdoc/>
-    public void Dispose () => PresenceServer?.Dispose ();
+    public void Dispose() => PresenceServer?.Dispose();
 
     /// <summary>
     /// Mesh service provider instance configured with options specifie in 

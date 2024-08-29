@@ -21,9 +21,6 @@
 #endregion
 
 
-using Goedel.Cryptography.Dare;
-using System.Security.Cryptography.X509Certificates;
-
 namespace Goedel.Mesh;
 
 
@@ -201,7 +198,7 @@ public class Store : Disposable, IInternSequenceIndexEntry {
         SequenceIndexEntryFactoryDelegate = SequenceIndexEntry.Factory
         };
 
-    
+
     /// <summary>
     /// Return a selection constraint for the store <paramref name="storeName"/> in the
     /// directory <paramref name="directory"/>.
@@ -219,7 +216,7 @@ public class Store : Disposable, IInternSequenceIndexEntry {
         if (!File.Exists(path)) {
             return new ConstraintsSelect() {
                 Store = storeName,
-                IndexMin =  0
+                IndexMin = 0
                 };
             }
 
@@ -229,7 +226,7 @@ public class Store : Disposable, IInternSequenceIndexEntry {
 
         return new ConstraintsSelect() {
             Store = storeName,
-            IndexMin = sequenceIndexEntryLast?.Index +1 ?? 0
+            IndexMin = sequenceIndexEntryLast?.Index + 1 ?? 0
             };
         }
 

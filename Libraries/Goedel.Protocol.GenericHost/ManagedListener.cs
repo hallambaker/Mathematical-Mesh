@@ -1,12 +1,7 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Goedel.Protocol.Service;
+
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using Goedel.Protocol.Service;
-using System.Text;
-using Goedel.Mesh;
-using Goedel.Utilities;
-using Microsoft.Extensions.Options;
 
 namespace Goedel.Protocol.GenericHost;
 
@@ -54,8 +49,8 @@ public class ManagedListener : IHostedService {
                 finally {
                     AppLifetime.StopApplication();
                     }
-                });
             });
+        });
 
         AppLifetime.ApplicationStopped.Register(() => {
             Logger.ListenerEnd();

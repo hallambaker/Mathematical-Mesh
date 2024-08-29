@@ -1,10 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
+
 using System.Collections.Concurrent;
 
 // Crib: https://andrewlock.net/defining-custom-logging-messages-with-loggermessage-define-in-asp-net-core/
 
-using System.Collections.Generic;
 using System.Runtime.Versioning;
 
 namespace Goedel.Utilities;
@@ -20,7 +19,7 @@ public interface IConfigurationEntry {
     /// Return a configuration entry describing the configuration data.
     /// </summary>
     /// <returns>The configuration entry.</returns>
-    public  ConfigurationEntry GetConfigurationEntry();
+    public ConfigurationEntry GetConfigurationEntry();
     }
 
 /// <summary>
@@ -90,10 +89,10 @@ public class ConsoleLoggerConfiguration {
     public int EventId { get; set; }
 
     ///<summary>The default log level.</summary> 
-    public LogLevel Default {get; set; }
+    public LogLevel Default { get; set; }
 
     ///<summary>Specify log levels for specific log categories.</summary> 
-    public Dictionary<string,string> LogLevel { get; set; }
+    public Dictionary<string, string> LogLevel { get; set; }
 
 
     ///<summary>Dictionary specifying mapping of log levels to colors.</summary> 
@@ -139,7 +138,7 @@ public sealed class ConsoleLogger : ILogger {
     /// <param name="config">The configureation</param>
     /// <param name="logLevel">The minimum logging level to display.</param>
     /// <returns></returns>
-    public static ConsoleLogger Factory(string name, 
+    public static ConsoleLogger Factory(string name,
             ConsoleLoggerConfiguration? config = null, LogLevel logLevel = LogLevel.Trace) {
 
         config ??= new() {
@@ -191,5 +190,5 @@ public sealed class ConsoleLogger : ILogger {
             Console.WriteLine();
             }
         }
-    } 
+    }
 #endregion

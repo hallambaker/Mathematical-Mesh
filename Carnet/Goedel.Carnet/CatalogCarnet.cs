@@ -21,9 +21,6 @@
 #endregion
 
 
-using Goedel.Cryptography.Jose;
-using Goedel.Mesh;
-
 namespace Goedel.Carnet;
 
 
@@ -69,7 +66,7 @@ public class CatalogCarnet : Catalog<CatalogedCarnet> {
                 bool decrypt = true,
                 bool create = true,
                 byte[] bitmask = null) =>
-        new CatalogCarnet(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, 
+        new CatalogCarnet(directory, storeId, policy, cryptoParameters, keyCollection, meshClient,
             decrypt, create, bitmask: bitmask);
 
     /// <summary>

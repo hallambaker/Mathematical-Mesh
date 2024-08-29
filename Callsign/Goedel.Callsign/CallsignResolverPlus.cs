@@ -1,13 +1,4 @@
-﻿using Goedel.Cryptography.Dare;
-using Goedel.Mesh;
-using Goedel.Protocol;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Goedel.Callsign;
+﻿namespace Goedel.Callsign;
 
 
 /// <summary>
@@ -16,7 +7,7 @@ namespace Goedel.Callsign;
 public class ResolveClient : IResolver {
 
     ResolverServiceClient Client;
-    
+
     /// <summary>
     /// Constructor, returning an instance using the client <paramref name="client"/>.
     /// </summary>
@@ -71,14 +62,14 @@ public partial class QueryResponse {
     /// </summary>
     /// <param name="result">The enveloped registration value.</param>
     public QueryResponse(Enveloped<Registration> result) {
-        
+
         Result = result;
         Status = result == null ? 404 : 201;
         if (result != null) {
             Status = 200;
             }
         else {
-            Status = 400 ;
+            Status = 400;
             StatusDescriptionCode = MeshConstants.MeshServerStatusNotFoundTag;
             StatusExtended = (int)MeshServerStatus.NotFound;
             }

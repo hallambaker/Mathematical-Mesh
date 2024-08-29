@@ -208,7 +208,7 @@ public abstract class SHA3 : HashAlgorithm {
     /// <summary>
     /// Perform the core Keccak sponge function on the state vector
     /// </summary>
-    protected void KeccakF () {
+    protected void KeccakF() {
         ulong Aba, Abe, Abi, Abo, Abu;
         ulong Aga, Age, Agi, Ago, Agu;
         ulong Aka, Ake, Aki, Ako, Aku;

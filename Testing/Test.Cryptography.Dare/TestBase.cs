@@ -20,10 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
-using Goedel.Cryptography.Dare;
 using Goedel.Mesh;
-using Goedel.Test;
-using System.IO;
 
 namespace Goedel.XUnit;
 
@@ -38,7 +35,7 @@ public abstract record TestBase {
 
 
 
-public abstract record TestBaseStore: TestBase {
+public abstract record TestBaseStore : TestBase {
 
 
     public TestStoreParams TestParams { get; }
@@ -48,7 +45,7 @@ public abstract record TestBaseStore: TestBase {
     public string Directory { get; }
 
     public TestBaseStore(TestContext context,
-                TestStoreParams testParams = null) : base (context) {
+                TestStoreParams testParams = null) : base(context) {
 
         TestParams = testParams ?? new();
         ReferenceStore = new ReferenceStore(this) {

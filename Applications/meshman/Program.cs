@@ -21,7 +21,6 @@
 #endregion
 
 
-using Goedel.Cryptography.Core;
 using Goedel.Mesh.Shell;
 
 
@@ -59,7 +58,7 @@ public class Program {
         using var lifecycle = new LifeCycle(components);
 
 
-        Shell shell = new (
+        Shell shell = new(
             ) {
 #if DEBUG
             NoCatch = true,

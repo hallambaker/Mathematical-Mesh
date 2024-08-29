@@ -21,12 +21,7 @@
 #endregion
 
 
-using Goedel.Cryptography.Dare;
-using Goedel.Test;
 using Goedel.Mesh;
-using System.Diagnostics;
-using Xunit;
-using System.Drawing;
 
 namespace Goedel.XUnit;
 
@@ -41,10 +36,10 @@ public enum TestStoreType {
 
 
 public record TestStoreParams(
-            int Records = 1, 
-            int Length = 100, 
+            int Records = 1,
+            int Length = 100,
             bool Randomsize = true,
-            int RandomChecks = 0, 
+            int RandomChecks = 0,
             int AdditionalChunks = 0,
             int Updates = 0,
             bool MakeCopy = false) {
@@ -154,6 +149,6 @@ public partial class TestStores {
             testStore.AddItem(store);
             }
         testStore.Verify(store);
-        } 
+        }
     #endregion
     }

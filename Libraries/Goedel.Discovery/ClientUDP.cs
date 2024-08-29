@@ -21,7 +21,6 @@
 #endregion
 using System.Net;
 using System.Net.Sockets;
-using System.Threading;
 
 namespace Goedel.Discovery;
 

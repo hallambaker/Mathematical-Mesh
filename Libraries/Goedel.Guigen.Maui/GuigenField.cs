@@ -1,16 +1,4 @@
-﻿using System;
-
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Collections.ObjectModel;
-using static System.Net.Mime.MediaTypeNames;
-using System.Collections;
-using Goedel.Utilities;
-using static System.Collections.Specialized.BitVector32;
-using System.Collections.Generic;
-
-
-using Image = Microsoft.Maui.Controls.Image;
-using Microsoft.UI.Xaml.Controls.Primitives;
+﻿using Image = Microsoft.Maui.Controls.Image;
 
 namespace Goedel.Guigen.Maui;
 
@@ -106,7 +94,7 @@ public class SummaryView : HorizontalStackLayout {
     }
 
 
-public class BindableTemplate(GuigenFieldChooser fieldChooser) : DataTemplate( () => new MyViewCell (fieldChooser)) {
+public class BindableTemplate(GuigenFieldChooser fieldChooser) : DataTemplate(() => new MyViewCell(fieldChooser)) {
     GuigenFieldChooser FieldChooser { get; } = fieldChooser;
     }
 

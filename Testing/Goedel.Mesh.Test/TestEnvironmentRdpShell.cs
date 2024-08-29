@@ -20,14 +20,9 @@
 //  THE SOFTWARE.
 #endregion
 
-using Goedel.Callsign;
 using Goedel.Callsign.Resolver;
 using Goedel.Carnet.Server;
 using Goedel.Presence.Server;
-using Goedel.Mesh.Core;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System.Net;
 
 namespace Goedel.Mesh.Test;
 
@@ -35,19 +30,19 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
 
 
 
-    public const string ServiceDnsMesh          = "example.com";
-    public const string ServiceDnsRegistry      = "registry.example.com";
-    public const string ServiceDnsCallsign      = "example.com";
-    public const string ServiceDnsPresence      = "example.com";
-    public const string ServiceDnsRepository    = "example.com";
-    public const string ServiceDnsCarnet        = "example.com";
+    public const string ServiceDnsMesh = "example.com";
+    public const string ServiceDnsRegistry = "registry.example.com";
+    public const string ServiceDnsCallsign = "example.com";
+    public const string ServiceDnsPresence = "example.com";
+    public const string ServiceDnsRepository = "example.com";
+    public const string ServiceDnsCarnet = "example.com";
 
-    public const string ServiceIpMesh           = "127.0.0.1:15099";
-    public const string ServiceIpRegistry       = "127.0.0.1:15098";
-    public const string ServiceIpCallsign       = "127.0.0.1:15097";
-    public const string ServiceIpPresence       = "127.0.0.1:15096";
-    public const string ServiceIpRepository     = "127.0.0.1:15095";
-    public const string ServiceIpCarnet         = "127.0.0.1:15094";
+    public const string ServiceIpMesh = "127.0.0.1:15099";
+    public const string ServiceIpRegistry = "127.0.0.1:15098";
+    public const string ServiceIpCallsign = "127.0.0.1:15097";
+    public const string ServiceIpPresence = "127.0.0.1:15096";
+    public const string ServiceIpRepository = "127.0.0.1:15095";
+    public const string ServiceIpCarnet = "127.0.0.1:15094";
 
     public MeshMachineTest HostMachineMesh { get; set; }
 
@@ -68,11 +63,11 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
 
     //public override string ServiceDns { get; }
 
-    public TestEnvironmentRdpShell(DeterministicSeed seed = null) : base(seed) { 
+    public TestEnvironmentRdpShell(DeterministicSeed seed = null) : base(seed) {
         }
 
 
-    public bool InitializeResolver {get; init;} = false;
+    public bool InitializeResolver { get; init; } = false;
 
     public bool InitializeCarnet { get; init; } = false;
 

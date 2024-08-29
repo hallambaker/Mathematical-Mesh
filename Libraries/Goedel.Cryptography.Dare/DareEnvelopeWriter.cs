@@ -120,7 +120,7 @@ internal class DareEnvelopeWriter : Stream {
         byte[] cover = null) {
         this.outputStream = outputStream;
 
-        dareHeader = new DareHeader() { 
+        dareHeader = new DareHeader() {
             Cover = cover
             };
         dareHeader.BindEncoder(cryptoParameters, cloaked, dataSequences);

@@ -20,7 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
 
 namespace ExampleGenerator;
@@ -61,7 +60,7 @@ public partial class CreateExamples {
 
     public ShellMail ShellMail;
     public ShellSSH ShellSSH;
-    
+
     public ShellPassword ShellPassword;
     public ShellBookmark ShellBookmark;
     public ShellCalendar ShellCalendar;

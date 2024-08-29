@@ -22,24 +22,18 @@
 
 //global using Goedel.Mesh;
 //global using Goedel.Protocol;
-global using Goedel.Utilities;
+global using Camera.MAUI;
+
 global using Goedel.Everything;
 global using Goedel.Guigen;
 global using Goedel.Guigen.Maui;
 global using Goedel.Mesh;
-global using Goedel.Cryptography;
-global using Goedel.Protocol;
-global using Goedel.Mesh.Client;
+global using Goedel.Utilities;
+
 global using Microsoft.Extensions.Logging;
-global using Camera.MAUI;
+global using Microsoft.Maui.Controls;
 
 global using System.Resources;
-global using System.Net.Http;
-global using System.Collections.ObjectModel;
-
-global using Goedel.Discovery;
-
-global using Microsoft.Maui.Controls;
 
 
 #if !(_Github_)

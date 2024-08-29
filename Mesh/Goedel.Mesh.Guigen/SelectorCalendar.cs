@@ -1,5 +1,4 @@
-﻿using Goedel.Cryptography.Dare;
-namespace Goedel.Everything;
+﻿namespace Goedel.Everything;
 
 #region // Bindings to classes specified through the Guigen schema.
 
@@ -64,7 +63,7 @@ public partial class CalendarSection : IHeadedSelection {
 #endregion
 #region // Selection Catalog backing type.
 
-public partial class CalendarSelection : TaskSelection  {
+public partial class CalendarSelection : TaskSelection {
 
     /// <summary>
     /// Constructor returning an instance of the selection data backer bound to the 
@@ -76,7 +75,7 @@ public partial class CalendarSelection : TaskSelection  {
         }
 
 
-    public override bool Include(CatalogedTask? item) => 
+    public override bool Include(CatalogedTask? item) =>
         item.EnvelopedTask.EnvelopedObject is WorkTask;
     }
 

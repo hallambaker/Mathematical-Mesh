@@ -66,7 +66,7 @@ public class CatalogApplication : Catalog<CatalogedApplication> {
                 bool decrypt = true,
                 bool create = true,
                 byte[] bitmask = null) =>
-        new CatalogApplication(directory, storeId, policy, cryptoParameters, keyCollection, 
+        new CatalogApplication(directory, storeId, policy, cryptoParameters, keyCollection,
             meshClient, decrypt, create, bitmask: bitmask);
 
 
@@ -93,7 +93,7 @@ public class CatalogApplication : Catalog<CatalogedApplication> {
                 IMeshClient meshClient = null,
                 bool decrypt = true, bool create = true,
                 byte[] bitmask = null) :
-        base(directory, storeName, policy, cryptoParameters, keyCollection, 
+        base(directory, storeName, policy, cryptoParameters, keyCollection,
             decrypt: decrypt, create: create, bitmask: bitmask) {
         }
 

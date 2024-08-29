@@ -1,12 +1,4 @@
-﻿using Goedel.Cryptography.Algorithms;
-using Goedel.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Goedel.Cryptography.PQC;
+﻿namespace Goedel.Cryptography.PQC;
 
 
 /// <summary>
@@ -25,7 +17,7 @@ public enum MlDsaMode {
 /// <summary>
 /// Base class for Dilithium implementations.
 /// </summary>
-public class MLDSA  {
+public class MLDSA {
 
     #region // Field and constants
     #region // Common parameters, fixed for all modes.
@@ -124,10 +116,10 @@ public class MLDSA  {
 
     ///<summary></summary> 
     public int CommitmentHashBytes => Mode switch {
-        MlDsaMode.Mode44 => 128/4,
-        MlDsaMode.Mode65 => 192/4,
-        MlDsaMode.Mode87 => 256/4,
-        _ => throw new CryptographicException ()
+        MlDsaMode.Mode44 => 128 / 4,
+        MlDsaMode.Mode65 => 192 / 4,
+        MlDsaMode.Mode87 => 256 / 4,
+        _ => throw new CryptographicException()
         };
 
 
@@ -136,7 +128,7 @@ public class MLDSA  {
     public int SigmaBytes { get; }
 
     ///<summary></summary> 
-    public int CSquigleByles  { get; }
+    public int CSquigleByles { get; }
 
     ///<summary></summary> 
     public int SignatureSeedBytes { get; } = 0;
@@ -220,7 +212,7 @@ public class MLDSA  {
     /// <param name="str">Bytes to digest</param>
     /// <param name="length">Number of bytes</param>
     /// <returns>The SHAK256 digest value</returns> 
-    public static byte[] H(byte[] str, int length) => SHAKE256.GetBytes(length*8, str);
+    public static byte[] H(byte[] str, int length) => SHAKE256.GetBytes(length * 8, str);
 
 
     /// <summary>
@@ -230,7 +222,7 @@ public class MLDSA  {
     /// <param name="str2">Bytes to digest 2</param>
     /// <param name="length">Number of bytes</param>
     /// <returns>The SHAK256 digest value</returns> 
-    public static byte[] H(byte[] str1, byte[] str2, int length) => 
+    public static byte[] H(byte[] str1, byte[] str2, int length) =>
                 SHAKE256.GetBytes(length * 8, str1, str2);
 
 
@@ -252,7 +244,7 @@ public class MLDSA  {
     /// <param name="str">Bytes to digest</param>
     /// <param name="length">Number of bytes</param>
     /// <returns>The SHAK128 digest value</returns>
-    public static byte[] G(byte[] str, int length) => SHAKE256.GetBytes(length*8, str);
+    public static byte[] G(byte[] str, int length) => SHAKE256.GetBytes(length * 8, str);
 
 
     /// <summary>
@@ -262,7 +254,7 @@ public class MLDSA  {
     /// <param name="str2">Bytes to digest 2</param>
     /// <param name="length">Number of bytes</param>
     /// <returns>The SHAK128 digest value</returns>
-    public static byte[] G(byte[] str1, byte[] str2, int length) => 
+    public static byte[] G(byte[] str1, byte[] str2, int length) =>
         SHAKE256.GetBytes(length * 8, str1, str2);
 
 
@@ -305,7 +297,7 @@ public class MLDSA  {
         var mat = PolynomialMatrixInt32.MatrixExpandFromSeed(this, rho);
 
         //  (𝐬1, 𝐬2) ← ExpandS(𝜌′)
-        var s1 = GetVectorL(true); 
+        var s1 = GetVectorL(true);
         s1.UniformEta(rhoPrime, 0);
         var s2 = GetVectorK(true);
         s2.UniformEta(rhoPrime, L);
@@ -376,7 +368,7 @@ public class MLDSA  {
     /// <param name="wipe">If true, wipe vector parameters on dispose.</param>
     /// <returns>The created vector.</returns>
     public PolynomialVectorInt32 GetVectorK(bool wipe = true)
-        => new (this, wipe, true);
+        => new(this, wipe, true);
 
     #endregion
     #region // Reductions etc. on finite field elements.
@@ -635,14 +627,14 @@ public class Dilithium : MLDSA {
     expanded from the same seed [35], domain separation was added to line 1 of Algorithm 6
 
      */
-    
+
     ///<inheritdoc/>
     public override int RhoPrimeBytes => 32;
-    
+
     ///<inheritdoc/>
     public override int TrBytes => 48;
 
-    public Dilithium(MlDsaMode mode) : base(mode) { 
+    public Dilithium(MlDsaMode mode) : base(mode) {
         }
     //MrsBytes = 48;
     //        PrsBytes = 48;

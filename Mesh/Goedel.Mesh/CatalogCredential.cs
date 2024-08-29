@@ -21,10 +21,6 @@
 #endregion
 
 
-using Goedel.Guigen;
-
-using System.Text;
-
 namespace Goedel.Mesh;
 
 
@@ -73,7 +69,7 @@ public class CatalogCredential : Catalog<CatalogedCredential> {
                 bool create = true,
                 byte[] bitmask = null) {
         meshClient?.Future();
-        return new CatalogCredential(directory, storeId, policy, 
+        return new CatalogCredential(directory, storeId, policy,
             cryptoParameters, keyCollection, decrypt, create, bitmask: bitmask);
         }
 
@@ -100,7 +96,7 @@ public class CatalogCredential : Catalog<CatalogedCredential> {
                 bool create = true,
                 byte[] bitmask = null) :
         base(directory, storeName ?? Label,
-                    policy, cryptoParameters, keyCollection, 
+                    policy, cryptoParameters, keyCollection,
                     decrypt: decrypt, create: create, bitmask: bitmask) {
         }
 
@@ -134,7 +130,7 @@ public class CatalogCredential : Catalog<CatalogedCredential> {
     }
 
 
-public partial class CatalogedCredential  {
+public partial class CatalogedCredential {
     #region // Properties
 
     ///<summary>The primary key is protocol:site </summary>

@@ -21,9 +21,6 @@
 #endregion
 
 
-using System.Threading;
-
-
 namespace Goedel.Protocol.Presentation;
 
 /// <summary>

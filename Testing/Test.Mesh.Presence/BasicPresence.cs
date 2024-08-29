@@ -2,7 +2,7 @@
 namespace Goedel.XUnit;
 
 
-public partial class TestPresence  {
+public partial class TestPresence {
 
 
     /// <summary>
@@ -53,7 +53,7 @@ public partial class TestPresence  {
     /// Alice attempts to establish connection to Bob by placing a request at
     /// Bob's MSP. Bob receives notification via update.
     /// </summary>
-    [Fact (Skip ="Not terminating reliably")]
+    [Fact(Skip = "Not terminating reliably")]
     public void PresenceSessionRequest() {
 
 

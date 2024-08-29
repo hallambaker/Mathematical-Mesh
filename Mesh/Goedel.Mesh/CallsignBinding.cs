@@ -42,40 +42,40 @@ namespace Goedel.Mesh;
 
 /// <summary>
 /// </summary>
-public partial class CallsignBinding  {
+public partial class CallsignBinding {
 
-	/// <summary>
-	/// Validate the binding value against the specified root of trust.
-	/// </summary>
-	/// <returns>True if the binding is valid, otherwise false.</returns>
-	public bool Validate(IEnumerable<Enveloped<Profile>> profiles) =>
-		ValidateAll(profiles, ProfileUdf);
+    /// <summary>
+    /// Validate the binding value against the specified root of trust.
+    /// </summary>
+    /// <returns>True if the binding is valid, otherwise false.</returns>
+    public bool Validate(IEnumerable<Enveloped<Profile>> profiles) =>
+        ValidateAll(profiles, ProfileUdf);
 
 
 
-	/// <summary>
-	/// Return the mesh account service address associated with the binding.
-	/// </summary>
-	/// <returns>The mesh service address.</returns>
-	/// <exception cref="NYI"></exception>
-	public string GetMeshAccount() {
-		if (ServiceAddress != null) {
-			return ServiceAddress;
-			}
-		foreach (var service in Services) {
-			if (service.Prefix == MeshService.WellKnown) {
-				return ProfileUdf + "@" + service.Endpoints[0];
-				}
-			}
-		return null;
-		}
+    /// <summary>
+    /// Return the mesh account service address associated with the binding.
+    /// </summary>
+    /// <returns>The mesh service address.</returns>
+    /// <exception cref="NYI"></exception>
+    public string GetMeshAccount() {
+        if (ServiceAddress != null) {
+            return ServiceAddress;
+            }
+        foreach (var service in Services) {
+            if (service.Prefix == MeshService.WellKnown) {
+                return ProfileUdf + "@" + service.Endpoints[0];
+                }
+            }
+        return null;
+        }
 
-	/// <summary>
-	/// Return the mesh encryption key associated with the binding.
-	/// </summary>
-	/// <returns>The mesh encryption key.</returns>
-	/// <exception cref="NYI"></exception>
-	public CryptoKey GetEncryptionKey() => CommonEncryption?.CryptoKey;
+    /// <summary>
+    /// Return the mesh encryption key associated with the binding.
+    /// </summary>
+    /// <returns>The mesh encryption key.</returns>
+    /// <exception cref="NYI"></exception>
+    public CryptoKey GetEncryptionKey() => CommonEncryption?.CryptoKey;
 
     }
 

@@ -1,13 +1,4 @@
-﻿using Goedel.ASN;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Goedel.Cryptography.PQC;
+﻿namespace Goedel.Cryptography.PQC;
 
 /// <summary>
 /// Base class for Kyber implementations. Specifies parameters and constants
@@ -240,7 +231,7 @@ public class MlKem {
             }
         else {
             var fill = SHAKE256.GetBytes(SymBytes, seed, publicKey);
-            Array.Copy (fill, 0, privateKey, PrivateKeyBytes - SymBytes, SymBytes);
+            Array.Copy(fill, 0, privateKey, PrivateKeyBytes - SymBytes, SymBytes);
             }
 
         return (publicKey, privateKey);
@@ -252,10 +243,7 @@ public class MlKem {
         var privateKey = new byte[PrivateKeyBytes];
 
         //Test.DumpBufferFingerprint(buf);
-
         // Truncate the buffer since we only use the first 128 bits.
-
-
         var matrix = PolynomialMatrixInt16.MatrixExpandFromSeed(K, publicSeed);
 
         //Console.WriteLine(matrix.GetHash());
@@ -286,7 +274,7 @@ public class MlKem {
         pkpv.Pack(publicKey, publicSeed);
 
         return (publicKey, privateKey);
-        } 
+        }
     #endregion
     #region // Randomness management
 
@@ -402,6 +390,6 @@ public class MlKem {
         a += (short)((a >> 15) & Q);
 
         return a;
-        } 
+        }
     #endregion
     }

@@ -20,17 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System;
-using System.Collections.Generic;
-
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.IO;
-using Goedel.Mesh.Test;
-using Goedel.Test;
-using Goedel.Utilities;
-
-using Xunit;
 #pragma warning disable IDE0060
 namespace Goedel.XUnit;
 
@@ -124,25 +113,25 @@ public partial class TestSequences {
 
         switch (darePolicy.Encryption) {
             case DareConstants.PolicyEncryptionOnceTag: {
-                    keyExchange = (header.Index == 0);
-                    break;
-                    }
+                keyExchange = (header.Index == 0);
+                break;
+                }
             case DareConstants.PolicyEncryptionIsolatedTag: {
-                    keyExchange = true;
-                    break;
-                    }
+                keyExchange = true;
+                break;
+                }
 
             case DareConstants.PolicyEncryptionNoneTag: {
-                    encrypt = false;
-                    break;
-                    }
+                encrypt = false;
+                break;
+                }
             case DareConstants.PolicyEncryptionSessionTag: {
-                    keyExchange = null;
-                    break;
-                    }
+                keyExchange = null;
+                break;
+                }
             default: {
-                    throw new NYI();
-                    }
+                throw new NYI();
+                }
             }
 
         // Check policy is applied correctly

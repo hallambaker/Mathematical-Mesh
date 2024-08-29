@@ -20,16 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
-using System;
-using System.Collections.Generic;
-
-using Goedel.IO;
-using Goedel.Mesh.Client;
 using Goedel.Mesh.Shell;
-using Goedel.Protocol;
-using Goedel.Test;
-using Goedel.Test.Core;
-using Goedel.Utilities;
 
 #pragma warning disable IDE0059
 
@@ -38,7 +29,7 @@ namespace Goedel.Mesh.Test;
 public partial class TestShell : Goedel.Mesh.Shell.Shell {
 
 
-    
+
     public string MachineName = "Test";
 
 
@@ -129,7 +120,7 @@ public partial class ResultDirect : Result {
 
 public partial class TestCLI : CommandLineInterpreter {
 
-///<summary>Convenience accessor returning the account context for direct access.</summary> 
+    ///<summary>Convenience accessor returning the account context for direct access.</summary> 
     public ContextUser ContextUser => Shell.MeshHost.GetContextMesh() as ContextUser;
 
     public string Account;
@@ -193,7 +184,7 @@ public partial class TestCLI : CommandLineInterpreter {
                 CountSoftFail++;
                 }
 
-            var cmd = (expectFail| softFail) ? cmdx[1..] : cmdx;
+            var cmd = (expectFail | softFail) ? cmdx[1..] : cmdx;
             try {
                 Shell.MeshMachineTest.MeshProtocolMessages.Clear();
 
@@ -408,7 +399,7 @@ public partial class TestCLI : CommandLineInterpreter {
     /// <exception cref="NYI"></exception>
     public TestCLI AddDevice(string device) {
         throw new NYI();
-        
+
         }
-    
+
     }

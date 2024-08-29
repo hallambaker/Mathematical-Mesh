@@ -92,7 +92,7 @@
 //        // Write out the callsign registration to the first item in the sequence.
 
 
-        
+
 //        var witness = new Witness() {
 //            Id = Callsign.Id,
 //            Issuer = Callsign.Id,
@@ -118,7 +118,7 @@
 //    public void EnterNotarization(
 //                Notarization notarization) {
 
-        
+
 //        var envelopedNotarization = Enveloped<Notarization>.Envelope(notarization, KeySign);
 
 //        Sequence.Append(envelopedNotarization);

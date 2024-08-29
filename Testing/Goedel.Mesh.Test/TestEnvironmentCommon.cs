@@ -46,7 +46,7 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
 
     public virtual PublicMeshService MeshService => meshService ?? GetPublicMeshService().CacheValue(out meshService);
     PublicMeshService meshService;
-    
+
     public virtual TestServiceRud TestServiceRud => testServiceRud ??
     new TestServiceRud(MeshService, null).CacheValue(out testServiceRud);
     TestServiceRud testServiceRud;
@@ -58,7 +58,7 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
 
 
     protected string HostFile = "whatev";
-    public TestEnvironmentCommon(DeterministicSeed seed = null) : base (seed){
+    public TestEnvironmentCommon(DeterministicSeed seed = null) : base(seed) {
 
         }
 
@@ -76,7 +76,7 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
         MeshMachineHost = new MeshMachineTest(this, "host1");
 
         HostFile = System.IO.Path.Combine(MeshMachineHost.DirectoryMesh, "mmmconfiguration.json");
-        Configuration = MeshMachineHost.CreatePublicMeshService( HostFile, ServiceDns);
+        Configuration = MeshMachineHost.CreatePublicMeshService(HostFile, ServiceDns);
 
         Logger = new LogService(Configuration.GenericHost, Configuration.MeshService, null);
 
@@ -90,7 +90,7 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
 
 
         var pathHost = System.IO.Path.Combine(
-                MeshMachineHost.DirectoryMesh, CallsignResolver.__Tag) ; ;
+                MeshMachineHost.DirectoryMesh, CallsignResolver.__Tag); ;
 
         var callsignResolver = new CallsignResolverConfiguration() {
             RegistryServiceAddress = AccountRegistry,

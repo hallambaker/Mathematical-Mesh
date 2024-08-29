@@ -18,14 +18,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Mesh;
-using Goedel.Mesh.Client;
-using Goedel.Cryptography.Jose;
-using Goedel.Cryptography.PKIX;
-using System.Xml.Linq;
-
 namespace Goedel.Callsign.Resolver;
 
 
@@ -37,7 +29,7 @@ public class ContextResolver : ContextAccount {
     #region Properties
 
     ///<summary>Client used to connect to the regitry.</summary> 
-    public  MeshServiceClient MeshClientRegistry { get; set; }
+    public MeshServiceClient MeshClientRegistry { get; set; }
 
     ///<inheritdoc/>
     public override MeshServiceClient MeshClient { get; set; }
@@ -105,10 +97,10 @@ public class ContextResolver : ContextAccount {
         MeshClient = MeshMachine.GetMeshClient(keyCredential, ProfileRegistry.AccountAddress);
 
         var storesDirectory = GetStoresDirectory(meshHost, ProfileResolver);
- 
+
         Update();
-        CatalogRegistration = CatalogRegistration.Factory (storesDirectory, CatalogRegistration.Label, this,
-                create:false) as CatalogRegistration;
+        CatalogRegistration = CatalogRegistration.Factory(storesDirectory, CatalogRegistration.Label, this,
+                create: false) as CatalogRegistration;
 
         var syncStore = new SyncStatus(CatalogRegistration);
 

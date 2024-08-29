@@ -60,7 +60,7 @@ public class SequenceList : Sequence {
 
         // check to see if we are trying to read past the end of the sequence.
         if (index > SequenceIndexEntryLast.Index) {
-            return null; 
+            return null;
             }
 
 
@@ -156,8 +156,8 @@ public class SequenceList : Sequence {
     //public override void CommitHeader(DareHeader containerHeader, SequenceWriter contextWrite) =>
     //            throw new NYI();
 
-        //FrameIndexToPositionDictionary.Add(containerHeader.SequenceInfo.LIndex,
-        //        contextWrite.FrameStart);
+    //FrameIndexToPositionDictionary.Add(containerHeader.SequenceInfo.LIndex,
+    //        contextWrite.FrameStart);
 
 
     /// <summary>

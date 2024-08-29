@@ -1,10 +1,6 @@
-﻿using Goedel.Utilities;
+﻿namespace Goedel.Guigen;
 
-using System.Reflection.Metadata;
-
-namespace Goedel.Guigen;
-
-public record GuiResult (GuiBinding Binding) {
+public record GuiResult(GuiBinding Binding) {
 
     public List<IGuiEntry> Entries { get; set; } = null!;
 
@@ -13,9 +9,9 @@ public record GuiResult (GuiBinding Binding) {
     }
 
 
-public record IndexedMessage (
+public record IndexedMessage(
         int Index,
-        string Text){
+        string Text) {
     }
 
 public record GuiResultInvalid : IResult {
@@ -50,13 +46,13 @@ public record GuiResultInvalid : IResult {
         //Invalid = new bool[Binding.BoundProperties.Length];
         //Feedback = new string[Binding.BoundProperties.Length];
 
-        for (var i = 0; i+1 < parameters.Length; i += 2) {
+        for (var i = 0; i + 1 < parameters.Length; i += 2) {
             var field = parameters[i];
-            var message = parameters[i+1];
+            var message = parameters[i + 1];
             SetError(field, message);
             }
 
-        
+
         }
 
     /// <summary>
@@ -69,7 +65,7 @@ public record GuiResultInvalid : IResult {
     public void SetError(
                 string field,
                 string error,
-                string? id=null) {
+                string? id = null) {
 
         //for (var i= 0; i < Binding.BoundProperties.Length; i++) {
         //    var binding = Binding.BoundProperties[i];
@@ -83,7 +79,7 @@ public record GuiResultInvalid : IResult {
         }
 
     public void SetError(
-                int index, 
+                int index,
                 string message,
                 string? id = null) {
 

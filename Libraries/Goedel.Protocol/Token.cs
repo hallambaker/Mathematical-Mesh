@@ -62,7 +62,7 @@ public record Binding(
 public abstract record Property(
             string Tag,
             bool Multiple,
-            bool Tagged=false) {
+            bool Tagged = false) {
 
 
     /// <summary>
@@ -114,7 +114,7 @@ public record PropertyBoolean(
 public record PropertyListBoolean(
             string Tag,
             Action<IBinding, List<bool>?> Set,
-            Func<IBinding, List<bool>?> Get) :  Property(Tag, true) {
+            Func<IBinding, List<bool>?> Get) : Property(Tag, true) {
 
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
@@ -141,10 +141,10 @@ public record PropertyListBoolean(
 /// <param name="Tag">Tag identifying this property in JSON serialization</param>
 /// <param name="Set">Set the property to the specified value.</param>
 /// <param name="Get">Return the value of the property.</param>
-public record PropertyString (
+public record PropertyString(
             string Tag,
             Action<IBinding, string?> Set,
-            Func<IBinding, string?> Get): Property(Tag, false) {
+            Func<IBinding, string?> Get) : Property(Tag, false) {
 
 
     ///<inheritdoc/>

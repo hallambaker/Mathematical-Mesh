@@ -20,7 +20,7 @@ public enum Disruption {
 public class CommunicationConditions {
 
     ///<summary>Disruption to packets sent by the service</summary> 
-    public CommunicationDisruptor Service { get; init; } = 
+    public CommunicationDisruptor Service { get; init; } =
             CommunicationDisruptor.None;
 
     ///<summary>Disruption to packets sent by Alice</summary> 
@@ -32,13 +32,13 @@ public class CommunicationConditions {
             CommunicationDisruptor.None;
 
     ///<summary>No disruption to communications.</summary> 
-    public static CommunicationConditions Normal => new ();
+    public static CommunicationConditions Normal => new();
 
 
     ///<summary>No disruption to communications.</summary> 
     public static CommunicationConditions Fast => new() {
-        Alice= CommunicationDisruptor.Fast,
-        Bob= CommunicationDisruptor.Fast,
+        Alice = CommunicationDisruptor.Fast,
+        Bob = CommunicationDisruptor.Fast,
         };
 
     }
@@ -59,7 +59,7 @@ public class CommunicationDisruptor {
         RetransmitHeartbeatMilliSeconds = 200,
         };
 
-    public static CommunicationDisruptor None => new ();
+    public static CommunicationDisruptor None => new();
 
     public static CommunicationDisruptor Connected => new() {
         Skip = 1,

@@ -28,7 +28,7 @@ namespace Goedel.Protocol.Service;
 /// </summary>
 public abstract class ServiceConfiguration : IConfigurationEntry {
 
-     
+
     ///<summary>Returns the configuration entry.</summary> 
     public abstract ConfigurationEntry GetConfigurationEntry();
 

@@ -360,213 +360,213 @@ public abstract partial class DNSRecord {
 
         switch ((int)RType) {
             case (1): {
-                    DNSRecord = DNSRecord_A.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_A.Decode(Index, RDLength);
+                break;
+                }
             case (2): {
-                    DNSRecord = DNSRecord_NS.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_NS.Decode(Index, RDLength);
+                break;
+                }
             case (3): {
-                    DNSRecord = DNSRecord_MD.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_MD.Decode(Index, RDLength);
+                break;
+                }
             case (4): {
-                    DNSRecord = DNSRecord_MF.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_MF.Decode(Index, RDLength);
+                break;
+                }
             case (5): {
-                    DNSRecord = DNSRecord_CNAME.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_CNAME.Decode(Index, RDLength);
+                break;
+                }
             case (6): {
-                    DNSRecord = DNSRecord_SOA.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_SOA.Decode(Index, RDLength);
+                break;
+                }
             case (7): {
-                    DNSRecord = DNSRecord_MB.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_MB.Decode(Index, RDLength);
+                break;
+                }
             case (8): {
-                    DNSRecord = DNSRecord_MG.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_MG.Decode(Index, RDLength);
+                break;
+                }
             case (9): {
-                    DNSRecord = DNSRecord_MR.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_MR.Decode(Index, RDLength);
+                break;
+                }
             case (10): {
-                    DNSRecord = DNSRecord_NULL.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_NULL.Decode(Index, RDLength);
+                break;
+                }
             case (11): {
-                    DNSRecord = DNSRecord_WKS.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_WKS.Decode(Index, RDLength);
+                break;
+                }
             case (12): {
-                    DNSRecord = DNSRecord_PTR.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_PTR.Decode(Index, RDLength);
+                break;
+                }
             case (13): {
-                    DNSRecord = DNSRecord_HINFO.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_HINFO.Decode(Index, RDLength);
+                break;
+                }
             case (14): {
-                    DNSRecord = DNSRecord_MINFO.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_MINFO.Decode(Index, RDLength);
+                break;
+                }
             case (15): {
-                    DNSRecord = DNSRecord_MX.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_MX.Decode(Index, RDLength);
+                break;
+                }
             case (16): {
-                    DNSRecord = DNSRecord_TXT.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_TXT.Decode(Index, RDLength);
+                break;
+                }
             case (17): {
-                    DNSRecord = DNSRecord_RP.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_RP.Decode(Index, RDLength);
+                break;
+                }
             case (18): {
-                    DNSRecord = DNSRecord_AFSDB.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_AFSDB.Decode(Index, RDLength);
+                break;
+                }
             case (19): {
-                    DNSRecord = DNSRecord_X25.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_X25.Decode(Index, RDLength);
+                break;
+                }
             case (20): {
-                    DNSRecord = DNSRecord_ISDN.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_ISDN.Decode(Index, RDLength);
+                break;
+                }
             case (21): {
-                    DNSRecord = DNSRecord_RT.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_RT.Decode(Index, RDLength);
+                break;
+                }
             case (24): {
-                    DNSRecord = DNSRecord_SIG.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_SIG.Decode(Index, RDLength);
+                break;
+                }
             case (25): {
-                    DNSRecord = DNSRecord_KEY.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_KEY.Decode(Index, RDLength);
+                break;
+                }
             case (28): {
-                    DNSRecord = DNSRecord_AAAA.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_AAAA.Decode(Index, RDLength);
+                break;
+                }
             case (33): {
-                    DNSRecord = DNSRecord_SRV.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_SRV.Decode(Index, RDLength);
+                break;
+                }
             case (35): {
-                    DNSRecord = DNSRecord_NAPTR.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_NAPTR.Decode(Index, RDLength);
+                break;
+                }
             case (36): {
-                    DNSRecord = DNSRecord_KX.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_KX.Decode(Index, RDLength);
+                break;
+                }
             case (37): {
-                    DNSRecord = DNSRecord_CERT.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_CERT.Decode(Index, RDLength);
+                break;
+                }
             case (39): {
-                    DNSRecord = DNSRecord_DNAME.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_DNAME.Decode(Index, RDLength);
+                break;
+                }
             case (41): {
-                    DNSRecord = DNSRecord_OPT.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_OPT.Decode(Index, RDLength);
+                break;
+                }
             case (43): {
-                    DNSRecord = DNSRecord_DS.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_DS.Decode(Index, RDLength);
+                break;
+                }
             case (44): {
-                    DNSRecord = DNSRecord_SSHFP.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_SSHFP.Decode(Index, RDLength);
+                break;
+                }
             case (45): {
-                    DNSRecord = DNSRecord_IPSECKEY.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_IPSECKEY.Decode(Index, RDLength);
+                break;
+                }
             case (46): {
-                    DNSRecord = DNSRecord_RRSIG.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_RRSIG.Decode(Index, RDLength);
+                break;
+                }
             case (47): {
-                    DNSRecord = DNSRecord_NSEC.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_NSEC.Decode(Index, RDLength);
+                break;
+                }
             case (48): {
-                    DNSRecord = DNSRecord_DNSKEY.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_DNSKEY.Decode(Index, RDLength);
+                break;
+                }
             case (49): {
-                    DNSRecord = DNSRecord_DHCID.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_DHCID.Decode(Index, RDLength);
+                break;
+                }
             case (50): {
-                    DNSRecord = DNSRecord_NSEC3.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_NSEC3.Decode(Index, RDLength);
+                break;
+                }
             case (51): {
-                    DNSRecord = DNSRecord_NSEC3PARAM.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_NSEC3PARAM.Decode(Index, RDLength);
+                break;
+                }
             case (52): {
-                    DNSRecord = DNSRecord_TLSA.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_TLSA.Decode(Index, RDLength);
+                break;
+                }
             case (99): {
-                    DNSRecord = DNSRecord_SPF.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_SPF.Decode(Index, RDLength);
+                break;
+                }
             case (104): {
-                    DNSRecord = DNSRecord_NID.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_NID.Decode(Index, RDLength);
+                break;
+                }
             case (105): {
-                    DNSRecord = DNSRecord_L32.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_L32.Decode(Index, RDLength);
+                break;
+                }
             case (106): {
-                    DNSRecord = DNSRecord_L64.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_L64.Decode(Index, RDLength);
+                break;
+                }
             case (107): {
-                    DNSRecord = DNSRecord_LP.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_LP.Decode(Index, RDLength);
+                break;
+                }
             case (249): {
-                    DNSRecord = DNSRecord_TKEY.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_TKEY.Decode(Index, RDLength);
+                break;
+                }
             case (250): {
-                    DNSRecord = DNSRecord_TSIG.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_TSIG.Decode(Index, RDLength);
+                break;
+                }
             case (256): {
-                    DNSRecord = DNSRecord_URI.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_URI.Decode(Index, RDLength);
+                break;
+                }
             case (257): {
-                    DNSRecord = DNSRecord_CAA.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_CAA.Decode(Index, RDLength);
+                break;
+                }
             case (32768): {
-                    DNSRecord = DNSRecord_TA.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_TA.Decode(Index, RDLength);
+                break;
+                }
             case (32769): {
-                    DNSRecord = DNSRecord_DLV.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_DLV.Decode(Index, RDLength);
+                break;
+                }
             default: {
-                    DNSRecord = DNSRecord_Unknown.Decode(Index, RDLength);
-                    break;
-                    }
+                DNSRecord = DNSRecord_Unknown.Decode(Index, RDLength);
+                break;
+                }
             }
         DNSRecord.Domain = Domain;
         DNSRecord.RType = RType;
@@ -585,162 +585,162 @@ public abstract partial class DNSRecord {
         switch (Tag) {
 
             case ("A"): {
-                    return DNSRecord_A.Parse(Parse);
-                    }
+                return DNSRecord_A.Parse(Parse);
+                }
             case ("NS"): {
-                    return DNSRecord_NS.Parse(Parse);
-                    }
+                return DNSRecord_NS.Parse(Parse);
+                }
             case ("MD"): {
-                    return DNSRecord_MD.Parse(Parse);
-                    }
+                return DNSRecord_MD.Parse(Parse);
+                }
             case ("MF"): {
-                    return DNSRecord_MF.Parse(Parse);
-                    }
+                return DNSRecord_MF.Parse(Parse);
+                }
             case ("CNAME"): {
-                    return DNSRecord_CNAME.Parse(Parse);
-                    }
+                return DNSRecord_CNAME.Parse(Parse);
+                }
             case ("SOA"): {
-                    return DNSRecord_SOA.Parse(Parse);
-                    }
+                return DNSRecord_SOA.Parse(Parse);
+                }
             case ("MB"): {
-                    return DNSRecord_MB.Parse(Parse);
-                    }
+                return DNSRecord_MB.Parse(Parse);
+                }
             case ("MG"): {
-                    return DNSRecord_MG.Parse(Parse);
-                    }
+                return DNSRecord_MG.Parse(Parse);
+                }
             case ("MR"): {
-                    return DNSRecord_MR.Parse(Parse);
-                    }
+                return DNSRecord_MR.Parse(Parse);
+                }
             case ("NULL"): {
-                    return DNSRecord_NULL.Parse(Parse);
-                    }
+                return DNSRecord_NULL.Parse(Parse);
+                }
             case ("WKS"): {
-                    return DNSRecord_WKS.Parse(Parse);
-                    }
+                return DNSRecord_WKS.Parse(Parse);
+                }
             case ("PTR"): {
-                    return DNSRecord_PTR.Parse(Parse);
-                    }
+                return DNSRecord_PTR.Parse(Parse);
+                }
             case ("HINFO"): {
-                    return DNSRecord_HINFO.Parse(Parse);
-                    }
+                return DNSRecord_HINFO.Parse(Parse);
+                }
             case ("MINFO"): {
-                    return DNSRecord_MINFO.Parse(Parse);
-                    }
+                return DNSRecord_MINFO.Parse(Parse);
+                }
             case ("MX"): {
-                    return DNSRecord_MX.Parse(Parse);
-                    }
+                return DNSRecord_MX.Parse(Parse);
+                }
             case ("TXT"): {
-                    return DNSRecord_TXT.Parse(Parse);
-                    }
+                return DNSRecord_TXT.Parse(Parse);
+                }
             case ("RP"): {
-                    return DNSRecord_RP.Parse(Parse);
-                    }
+                return DNSRecord_RP.Parse(Parse);
+                }
             case ("AFSDB"): {
-                    return DNSRecord_AFSDB.Parse(Parse);
-                    }
+                return DNSRecord_AFSDB.Parse(Parse);
+                }
             case ("X25"): {
-                    return DNSRecord_X25.Parse(Parse);
-                    }
+                return DNSRecord_X25.Parse(Parse);
+                }
             case ("ISDN"): {
-                    return DNSRecord_ISDN.Parse(Parse);
-                    }
+                return DNSRecord_ISDN.Parse(Parse);
+                }
             case ("RT"): {
-                    return DNSRecord_RT.Parse(Parse);
-                    }
+                return DNSRecord_RT.Parse(Parse);
+                }
             case ("SIG"): {
-                    return DNSRecord_SIG.Parse(Parse);
-                    }
+                return DNSRecord_SIG.Parse(Parse);
+                }
             case ("KEY"): {
-                    return DNSRecord_KEY.Parse(Parse);
-                    }
+                return DNSRecord_KEY.Parse(Parse);
+                }
             case ("AAAA"): {
-                    return DNSRecord_AAAA.Parse(Parse);
-                    }
+                return DNSRecord_AAAA.Parse(Parse);
+                }
             case ("SRV"): {
-                    return DNSRecord_SRV.Parse(Parse);
-                    }
+                return DNSRecord_SRV.Parse(Parse);
+                }
             case ("NAPTR"): {
-                    return DNSRecord_NAPTR.Parse(Parse);
-                    }
+                return DNSRecord_NAPTR.Parse(Parse);
+                }
             case ("KX"): {
-                    return DNSRecord_KX.Parse(Parse);
-                    }
+                return DNSRecord_KX.Parse(Parse);
+                }
             case ("CERT"): {
-                    return DNSRecord_CERT.Parse(Parse);
-                    }
+                return DNSRecord_CERT.Parse(Parse);
+                }
             case ("DNAME"): {
-                    return DNSRecord_DNAME.Parse(Parse);
-                    }
+                return DNSRecord_DNAME.Parse(Parse);
+                }
             case ("OPT"): {
-                    return DNSRecord_OPT.Parse(Parse);
-                    }
+                return DNSRecord_OPT.Parse(Parse);
+                }
             case ("DS"): {
-                    return DNSRecord_DS.Parse(Parse);
-                    }
+                return DNSRecord_DS.Parse(Parse);
+                }
             case ("SSHFP"): {
-                    return DNSRecord_SSHFP.Parse(Parse);
-                    }
+                return DNSRecord_SSHFP.Parse(Parse);
+                }
             case ("IPSECKEY"): {
-                    return DNSRecord_IPSECKEY.Parse(Parse);
-                    }
+                return DNSRecord_IPSECKEY.Parse(Parse);
+                }
             case ("RRSIG"): {
-                    return DNSRecord_RRSIG.Parse(Parse);
-                    }
+                return DNSRecord_RRSIG.Parse(Parse);
+                }
             case ("NSEC"): {
-                    return DNSRecord_NSEC.Parse(Parse);
-                    }
+                return DNSRecord_NSEC.Parse(Parse);
+                }
             case ("DNSKEY"): {
-                    return DNSRecord_DNSKEY.Parse(Parse);
-                    }
+                return DNSRecord_DNSKEY.Parse(Parse);
+                }
             case ("DHCID"): {
-                    return DNSRecord_DHCID.Parse(Parse);
-                    }
+                return DNSRecord_DHCID.Parse(Parse);
+                }
             case ("NSEC3"): {
-                    return DNSRecord_NSEC3.Parse(Parse);
-                    }
+                return DNSRecord_NSEC3.Parse(Parse);
+                }
             case ("NSEC3PARAM"): {
-                    return DNSRecord_NSEC3PARAM.Parse(Parse);
-                    }
+                return DNSRecord_NSEC3PARAM.Parse(Parse);
+                }
             case ("TLSA"): {
-                    return DNSRecord_TLSA.Parse(Parse);
-                    }
+                return DNSRecord_TLSA.Parse(Parse);
+                }
             case ("SPF"): {
-                    return DNSRecord_SPF.Parse(Parse);
-                    }
+                return DNSRecord_SPF.Parse(Parse);
+                }
             case ("NID"): {
-                    return DNSRecord_NID.Parse(Parse);
-                    }
+                return DNSRecord_NID.Parse(Parse);
+                }
             case ("L32"): {
-                    return DNSRecord_L32.Parse(Parse);
-                    }
+                return DNSRecord_L32.Parse(Parse);
+                }
             case ("L64"): {
-                    return DNSRecord_L64.Parse(Parse);
-                    }
+                return DNSRecord_L64.Parse(Parse);
+                }
             case ("LP"): {
-                    return DNSRecord_LP.Parse(Parse);
-                    }
+                return DNSRecord_LP.Parse(Parse);
+                }
             case ("TKEY"): {
-                    return DNSRecord_TKEY.Parse(Parse);
-                    }
+                return DNSRecord_TKEY.Parse(Parse);
+                }
             case ("TSIG"): {
-                    return DNSRecord_TSIG.Parse(Parse);
-                    }
+                return DNSRecord_TSIG.Parse(Parse);
+                }
             case ("URI"): {
-                    return DNSRecord_URI.Parse(Parse);
-                    }
+                return DNSRecord_URI.Parse(Parse);
+                }
             case ("CAA"): {
-                    return DNSRecord_CAA.Parse(Parse);
-                    }
+                return DNSRecord_CAA.Parse(Parse);
+                }
             case ("TA"): {
-                    return DNSRecord_TA.Parse(Parse);
-                    }
+                return DNSRecord_TA.Parse(Parse);
+                }
             case ("DLV"): {
-                    return DNSRecord_DLV.Parse(Parse);
-                    }
+                return DNSRecord_DLV.Parse(Parse);
+                }
 
             default: {
-                    return null;
-                    }
+                return null;
+                }
             }
         }
 

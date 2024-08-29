@@ -18,10 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using System.Net;
-using Goedel.Mesh;
 using Goedel.Mesh.Server;
 using Goedel.Protocol.Presentation;
+
+using System.Net;
 
 namespace Goedel.Presence.Server;
 
@@ -29,9 +29,9 @@ namespace Goedel.Presence.Server;
 /// Tracks a device connected to the service.
 /// </summary>
 public record PresenceBindingDevice : IQueuableTask, IPresenceDevice {
-    
+
     ///<summary>State of the device connection</summary> 
-    public DeviceState DeviceState {get; set; } = DeviceState.Initial;
+    public DeviceState DeviceState { get; set; } = DeviceState.Initial;
 
     ///<summary>The unique connection ID assigned by the service.</summary> 
     public ulong ConnectionId;
@@ -92,14 +92,14 @@ public record PresenceBindingDevice : IQueuableTask, IPresenceDevice {
         var other = obj as PresenceBindingDevice;
 
         if (other == null) {
-            throw new ArgumentException ($"Argument not of type {nameof(PresenceBindingDevice)}");
+            throw new ArgumentException($"Argument not of type {nameof(PresenceBindingDevice)}");
             }
 
-        var compare = WakeAt.CompareTo( other.WakeAt );
+        var compare = WakeAt.CompareTo(other.WakeAt);
         return compare != 0 ? compare : ConnectionId.CompareTo(other.ConnectionId);
 
 
-        } 
+        }
     #endregion
 
 

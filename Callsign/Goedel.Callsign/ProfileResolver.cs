@@ -19,7 +19,6 @@
 //  THE SOFTWARE.
 
 using Goedel.Cryptography.Jose;
-using Goedel.Mesh;
 
 namespace Goedel.Callsign;
 

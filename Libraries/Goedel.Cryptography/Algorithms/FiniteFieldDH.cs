@@ -19,9 +19,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-using System.Diagnostics.Contracts;
-
 using Goedel.ASN;
+
+using System.Diagnostics.Contracts;
 
 namespace Goedel.Cryptography.Algorithms;
 
@@ -59,16 +59,16 @@ public class DiffeHellmanPublic : IKeyAdvancedPublic {
         switch (Bits) {
             case 0:
             case 2048: {
-                    DHDomain = DHDomain.DHDomain2048;
-                    break;
-                    }
+                DHDomain = DHDomain.DHDomain2048;
+                break;
+                }
             case 4096: {
-                    DHDomain = DHDomain.DHDomain4096;
-                    break;
-                    }
+                DHDomain = DHDomain.DHDomain4096;
+                break;
+                }
             default: {
-                    throw new KeySizeNotSupported();
-                    }
+                throw new KeySizeNotSupported();
+                }
             }
         Modulus = DHDomain.BigIntegerP;
         Generator = DHDomain.BigIntegerG;

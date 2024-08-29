@@ -21,8 +21,6 @@
 #endregion
 
 
-using Goedel.Cryptography.Dare;
-
 namespace Goedel.Mesh.Client;
 
 
@@ -78,7 +76,7 @@ public class TransactionUpdate<TEntry> : TransactionUpdate where TEntry : Catalo
     public DareEnvelope Update(TEntry catalogedEntry) {
 
         // ToDo: need to seriously revise this to get the interlock stuff right.
-        var envelope = Catalog.PersistenceStore.PrepareUpdate(out _, catalogedEntry, 
+        var envelope = Catalog.PersistenceStore.PrepareUpdate(out _, catalogedEntry,
             additionalRecipients: catalogedEntry.AdditionalRecipients);
         envelope.JsonObject = catalogedEntry;
         Envelopes.Add(envelope);
@@ -283,7 +281,7 @@ public abstract class Transaction<TAccount> : Disposable
 
     ///<summary>Returns the capability catalog for the account</summary>
     public CatalogAccess GetCatalogAccess() =>
-        ContextAccount.GetStore(CatalogAccess.Label, decrypt:true) as CatalogAccess;
+        ContextAccount.GetStore(CatalogAccess.Label, decrypt: true) as CatalogAccess;
 
 
     /////<summary>Returns the capability catalog for the account</summary>

@@ -1,6 +1,4 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace Goedel.Guigen.Maui;
+﻿namespace Goedel.Guigen.Maui;
 
 /// <summary>
 /// Backing class for a checkbox entry field.

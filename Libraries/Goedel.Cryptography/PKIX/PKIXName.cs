@@ -121,28 +121,28 @@ public partial class AnyString {
     public AnyString(string Value, StringType StringType) {
         switch (StringType) {
             case StringType.IA5: {
-                    IA5String = Value;
-                    break;
-                    }
+                IA5String = Value;
+                break;
+                }
             case StringType.BMP: {
-                    BMPString = Value;
-                    break;
-                    }
+                BMPString = Value;
+                break;
+                }
             case StringType.UTF8: {
-                    UTF8String = Value;
-                    break;
-                    }
+                UTF8String = Value;
+                break;
+                }
             case StringType.Printable: {
-                    PrintableString = Value;
-                    break;
-                    }
+                PrintableString = Value;
+                break;
+                }
 
             case StringType.Teletex:
-                break;
+            break;
             case StringType.Universal:
-                break;
+            break;
             default:
-                break;
+            break;
             }
         }
     }

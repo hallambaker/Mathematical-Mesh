@@ -22,7 +22,6 @@
 
 
 
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 namespace Goedel.Protocol.Service;
 
@@ -43,9 +42,9 @@ public class LogService {
 
     ///<summary>The host monitor tracking start and end of host requests.</summary> 
     public HostMonitor HostMonitor { get; }
-    
+
     ///<summary>The logger instance</summary> 
-    public ILogger Logger { get; set; } 
+    public ILogger Logger { get; set; }
 
 
 

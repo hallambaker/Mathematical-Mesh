@@ -21,8 +21,6 @@
 #endregion
 
 
-using Goedel.Command;
-using Goedel.Mesh.Client;
 using Goedel.Registry;
 
 namespace Goedel.Mesh.Shell;
@@ -43,7 +41,7 @@ public partial class Shell {
             Success = true,
             DirectoryKeys = MeshMachine.DirectoryKeys,
             DirectoryMesh = MeshMachine.DirectoryMesh,
-            AssemblyTitle= Script.AssemblyTitle,
+            AssemblyTitle = Script.AssemblyTitle,
             AssemblyDescription = Script.AssemblyDescription,
             AssemblyCopyright = Script.AssemblyCopyright,
             AssemblyCompany = Script.AssemblyCompany,

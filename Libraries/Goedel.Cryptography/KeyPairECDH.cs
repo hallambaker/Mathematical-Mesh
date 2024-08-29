@@ -156,22 +156,22 @@ public abstract class KeyPairECDH : KeyPairBaseECDH {
 
         switch (cryptoAlgorithmID) {
             case CryptoAlgorithmId.Ed448: {
-                    return new KeyPairEd448(new CurveEdwards448Private(privateScalar),
-                        keySecurity, keyUses, cryptoAlgorithmID);
-                    }
+                return new KeyPairEd448(new CurveEdwards448Private(privateScalar),
+                    keySecurity, keyUses, cryptoAlgorithmID);
+                }
 
             case CryptoAlgorithmId.Ed25519: {
-                    return new KeyPairEd25519(new CurveEdwards25519Private(privateScalar),
-                        keySecurity, keyUses, cryptoAlgorithmID);
-                    }
+                return new KeyPairEd25519(new CurveEdwards25519Private(privateScalar),
+                    keySecurity, keyUses, cryptoAlgorithmID);
+                }
             case CryptoAlgorithmId.X448: {
-                    return new KeyPairX448(new CurveX448Private(privateScalar),
-                        keySecurity, keyUses, cryptoAlgorithmID);
-                    }
+                return new KeyPairX448(new CurveX448Private(privateScalar),
+                    keySecurity, keyUses, cryptoAlgorithmID);
+                }
             case CryptoAlgorithmId.X25519: {
-                    return new KeyPairX25519(new CurveX25519Private(privateScalar),
-                        keySecurity, keyUses, cryptoAlgorithmID);
-                    }
+                return new KeyPairX25519(new CurveX25519Private(privateScalar),
+                    keySecurity, keyUses, cryptoAlgorithmID);
+                }
             }
 
         return null;
@@ -198,21 +198,21 @@ public abstract class KeyPairECDH : KeyPairBaseECDH {
 
         switch (cryptoAlgorithmID) {
             case CryptoAlgorithmId.Ed448: {
-                    keyPair = KeyPairEd448.Generate(keySecurity, keyUses, cryptoAlgorithmID);
-                    break;
-                    }
+                keyPair = KeyPairEd448.Generate(keySecurity, keyUses, cryptoAlgorithmID);
+                break;
+                }
             case CryptoAlgorithmId.Ed25519: {
-                    keyPair = KeyPairEd25519.Generate(keySecurity, keyUses, cryptoAlgorithmID);
-                    break;
-                    }
+                keyPair = KeyPairEd25519.Generate(keySecurity, keyUses, cryptoAlgorithmID);
+                break;
+                }
             case CryptoAlgorithmId.X448: {
-                    keyPair = KeyPairX448.Generate(keySecurity, keyUses, cryptoAlgorithmID);
-                    break;
-                    }
+                keyPair = KeyPairX448.Generate(keySecurity, keyUses, cryptoAlgorithmID);
+                break;
+                }
             case CryptoAlgorithmId.X25519: {
-                    keyPair = KeyPairX25519.Generate(keySecurity, keyUses, cryptoAlgorithmID);
-                    break;
-                    }
+                keyPair = KeyPairX25519.Generate(keySecurity, keyUses, cryptoAlgorithmID);
+                break;
+                }
 
 
             }
@@ -221,11 +221,11 @@ public abstract class KeyPairECDH : KeyPairBaseECDH {
             keySize = keySize == 0 ? 448 : keySize;
             switch (keySize) {
                 case 448:
-                    keyPair = KeyPairEd448.Generate(keySecurity, keyUses, cryptoAlgorithmID); break;
+                keyPair = KeyPairEd448.Generate(keySecurity, keyUses, cryptoAlgorithmID); break;
                 case 25519:
-                    keyPair = KeyPairEd25519.Generate(keySecurity, keyUses, cryptoAlgorithmID); break;
+                keyPair = KeyPairEd25519.Generate(keySecurity, keyUses, cryptoAlgorithmID); break;
                 default:
-                    break;
+                break;
                 }
             }
         Assert.AssertNotNull(keyPair, KeySizeNotSupported.Throw);

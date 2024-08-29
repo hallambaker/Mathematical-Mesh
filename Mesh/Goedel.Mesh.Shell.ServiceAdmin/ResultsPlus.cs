@@ -21,8 +21,6 @@
 #endregion
 
 
-using System.Reflection.Metadata;
-
 namespace Goedel.Mesh.Shell.ServiceAdmin;
 
 public partial class ResultAbout {
@@ -53,11 +51,11 @@ public partial class ResultServiceConfiguration {
         var host = Configuration.GenericHost;
 
         builder.AppendLine($"Created Service");
-        builder.AppendLine($"  Service { service.ServiceUdf}");
-        builder.AppendLine($"  Host { host.HostUdf}");
+        builder.AppendLine($"  Service {service.ServiceUdf}");
+        builder.AppendLine($"  Host {host.HostUdf}");
         if (service.ServiceDNS != null) {
             foreach (var dns in service.ServiceDNS) {
-                builder.AppendLine($"  DNS { dns}");
+                builder.AppendLine($"  DNS {dns}");
                 }
 
             }

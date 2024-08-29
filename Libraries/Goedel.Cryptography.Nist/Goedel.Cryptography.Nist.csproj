@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
+	<PropertyGroup>
+		<Product>Goedel.Cryptography.Nist</Product>
+		<Description>Cryptographic support libraries.</Description>
+		<Copyright>© 2024</Copyright>
+		<Title>Goedel.Cryptography.Nist</Title>
+	</PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Algorithms\ECDH\X448\" />
+    <Folder Include="Algorithms\ECDH\X25519\" />
+    <Folder Include="Algorithms\EdDSA\Ed25519\" />
+    <Folder Include="Algorithms\EdDSA\Ed448\" />
+  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+	</ItemGroup>
+	
+	
+</Project>

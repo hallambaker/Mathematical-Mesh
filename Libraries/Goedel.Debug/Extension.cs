@@ -20,10 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
-using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography;
-using Goedel.Utilities;
-using Goedel.Cryptography.PKIX;
+using Goedel.Cryptography.Algorithms;
 
 namespace Goedel.Debug;
 
@@ -44,14 +42,14 @@ public static partial class Extension {
         KeyPair result;
         switch (keyPair) {
             case KeyPairX448 keyPairX448: {
-                result = new KeyPairX448Corrupt (keyPairX448);
+                result = new KeyPairX448Corrupt(keyPairX448);
                 break;
                 }
             case KeyPairEd448 keyPairEd448: {
                 result = new KeyPairEd448Corrupt(keyPairEd448);
                 break;
                 }
-            default : throw new ArgumentException($"Keypair type {nameof(keyPair)}");
+            default: throw new ArgumentException($"Keypair type {nameof(keyPair)}");
             }
 
         keyCollection.Add(result);
@@ -66,7 +64,7 @@ public static partial class Extension {
 /// <summary>
 /// Corruptable form of <see cref="KeyPairX448"/>
 /// </summary>
-public class KeyPairX448Corrupt: KeyPairX448 {
+public class KeyPairX448Corrupt : KeyPairX448 {
 
 
 
@@ -74,7 +72,7 @@ public class KeyPairX448Corrupt: KeyPairX448 {
     /// Constructor returning a corrupted version of 
     /// </summary>
     /// <param name="keyPair"></param>
-    public KeyPairX448Corrupt(KeyPairX448 keyPair) : 
+    public KeyPairX448Corrupt(KeyPairX448 keyPair) :
             base(Corrupt(keyPair.PrivateKey)) {
 
         }

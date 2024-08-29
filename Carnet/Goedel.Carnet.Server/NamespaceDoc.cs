@@ -17,12 +17,12 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-global using Goedel.Utilities;
 global using Goedel.Protocol.Service;
+global using Goedel.Utilities;
 
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 
-namespace Goedel.Caarnet.Server; 
+namespace Goedel.Caarnet.Server;
 /// <summary>
 /// Desctiption of the 
 /// </summary>

@@ -95,7 +95,7 @@ public class JsonBWriter : JsonWriter {
         else {
             var ddata = (long)data;
             if (data >= 0) {
-                WriteTag(JSONBCD.PositiveInteger, ddata );
+                WriteTag(JSONBCD.PositiveInteger, ddata);
                 }
             else {
                 WriteTag(JSONBCD.NegativeInteger, -ddata);

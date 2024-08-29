@@ -21,9 +21,6 @@
 #endregion
 
 using Goedel.Mesh.Shell;
-using Goedel.Test;
-
-using Xunit;
 
 
 namespace Goedel.XUnit;

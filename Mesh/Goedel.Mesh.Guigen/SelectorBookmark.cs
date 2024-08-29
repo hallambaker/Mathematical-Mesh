@@ -1,7 +1,4 @@
 ﻿using Goedel.Cryptography.Dare;
-using Goedel.Mesh;
-
-using System.Xml.Linq;
 
 namespace Goedel.Everything;
 
@@ -27,7 +24,7 @@ public partial class BookmarkSection : IHeadedSelection {
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public BookmarkSection(IAccountSelector? account =null) {
+    public BookmarkSection(IAccountSelector? account = null) {
         Account = account;
         Catalog = ContextUser.GetStore(CatalogBookmark.Label, create: false) as GuigenCatalogBookmark;
         BookmarkSelection = Catalog is null ? null : new BookmarkSelection(ContextUser, Catalog);
@@ -39,7 +36,7 @@ public partial class BookmarkSection : IHeadedSelection {
         transaction.CatalogUpdate(Catalog, entry);
         await transaction.TransactAsync();
 
-        var bound =  BoundBookmark.Factory(entry);
+        var bound = BoundBookmark.Factory(entry);
         BookmarkSelection.Add(bound);
         }
 

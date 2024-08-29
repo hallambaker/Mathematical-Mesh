@@ -127,7 +127,7 @@ public class PublicMeshService : MeshService {
             GenericHostConfiguration hostConfiguration,
             MeshServiceConfiguration meshServiceConfiguration,
             LogService logService,
-            IPresenceProvider presenceServiceProvider =null) {
+            IPresenceProvider presenceServiceProvider = null) {
         LogService = logService;
         MeshMachine = meshMachine;
         GenericHostConfiguration = hostConfiguration;
@@ -135,7 +135,7 @@ public class PublicMeshService : MeshService {
         KeyCollection = MeshMachine.KeyCollection;
         PresenceService = presenceServiceProvider?.GetPresenceProvider();
 
-        Logger.ServiceStart(PublicMeshService.WellKnown, 
+        Logger.ServiceStart(PublicMeshService.WellKnown,
             meshServiceConfiguration.ServiceUdf, GenericHostConfiguration.HostUdf);
 
         // Load the Mesh persistence base
@@ -178,7 +178,7 @@ public class PublicMeshService : MeshService {
         AddEndpoints(hostConfiguration, meshMachine.Instance);
 
 
-  
+
         }
 
     #endregion
@@ -210,7 +210,7 @@ public class PublicMeshService : MeshService {
     /// <param name="fileSpec">The service description specifier.</param>
     /// <returns>The file path.</returns>
     public static string GetService(
-        IMeshMachineClient meshMachine, string fileSpec=null) => GetFilePath(
+        IMeshMachineClient meshMachine, string fileSpec = null) => GetFilePath(
             meshMachine, fileSpec ?? DefaultConfiguration, "Service");
 
 
@@ -227,9 +227,9 @@ public class PublicMeshService : MeshService {
     /// <param name="dareLogger">Logger configuration.</param>
     /// <returns></returns>
     public virtual ContextUser AddAdministrator(
-                IMeshMachineClient meshMachine, 
-                string admin, 
-                MeshServiceConfiguration serviceConfiguration, 
+                IMeshMachineClient meshMachine,
+                string admin,
+                MeshServiceConfiguration serviceConfiguration,
                 DareLoggerConfiguration dareLogger) {
         serviceConfiguration.Administrators.Add(admin);
         dareLogger.Recipients.Add(admin);
@@ -295,7 +295,7 @@ public class PublicMeshService : MeshService {
         ActivationHost activationDevice;
         ConnectionService connectionDevice;
 
-        ProfileService.CreateService(meshMachine, 
+        ProfileService.CreateService(meshMachine,
             out profileService, out profileHost, out activationDevice, out connectionDevice);
 
         var catalogedService = new CatalogedService() {
@@ -365,7 +365,7 @@ public class PublicMeshService : MeshService {
     ///<inheritdoc/>
     public override JsonObject Dispatch(IJpcSession session,
                             JsonReader jsonReader) {
-        string token="???";
+        string token = "???";
         JsonObject request;
 
         LogService.Logger.DispatchBegin();
@@ -393,7 +393,7 @@ public class PublicMeshService : MeshService {
             log.Fail(exception, result as IReport);
             return result;
             }
-        
+
         }
     #region // Transaction dispatch methods
 
@@ -564,10 +564,10 @@ public class PublicMeshService : MeshService {
     /// <param name="jpcSession">The connection authentication context.</param>
     /// <returns>The response object from the service</returns>
     public override StatusResponse Status(
-                StatusRequest request, 
+                StatusRequest request,
                 IJpcSession jpcSession) {
         try {
-            return MeshPersist.AccountStatus(jpcSession, 
+            return MeshPersist.AccountStatus(jpcSession,
                     request.CatalogedDeviceDigest,
                     request.Catalogs,
                     request.Services,
@@ -588,7 +588,7 @@ public class PublicMeshService : MeshService {
     /// <param name="jpcSession">The connection authentication context.</param>
     /// <returns>The response object from the service</returns>
     public override DownloadResponse Download(
-                DownloadRequest request, 
+                DownloadRequest request,
                 IJpcSession jpcSession) {
         try {
             return MeshPersist.AccountDownload(jpcSession, request);

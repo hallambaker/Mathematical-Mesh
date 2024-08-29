@@ -66,7 +66,7 @@ public class CatalogTask : Catalog<CatalogedTask> {
                 bool decrypt = true,
                 bool create = true,
                 byte[] bitmask = null) =>
-        new CatalogTask(directory, storeId, policy, cryptoParameters, 
+        new CatalogTask(directory, storeId, policy, cryptoParameters,
             keyCollection, decrypt, create, bitmask: bitmask);
 
 
@@ -93,7 +93,7 @@ public class CatalogTask : Catalog<CatalogedTask> {
                 bool create = true,
                 byte[] bitmask = null) :
         base(directory, storeName ?? Label,
-                    policy, cryptoParameters, keyCollection, 
+                    policy, cryptoParameters, keyCollection,
                     decrypt: decrypt, create: create, bitmask: bitmask) {
         }
     #endregion

@@ -20,9 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Net;
-using System.Net.Sockets;
-
 using Goedel.Protocol.Presentation;
 
 namespace Goedel.Protocol.Service;
@@ -127,13 +124,13 @@ public abstract class ServiceRequest {
 
             switch (messageType) {
                 case InitiatorMessageType.InitiatorHello: {
-                        stream = ProcessClientInitial(offset);
-                        break;
-                        }
+                    stream = ProcessClientInitial(offset);
+                    break;
+                    }
                 case InitiatorMessageType.InitiatorComplete: {
-                        stream = ProcessClientComplete(offset);
-                        break;
-                        }
+                    stream = ProcessClientComplete(offset);
+                    break;
+                    }
                 }
 
             }
@@ -176,43 +173,43 @@ public abstract class ServiceRequest {
         switch (responsePacket) {
             case ResponderMessageType.ResponderChallenge: {
 
-                    var challenge = Listener.MakeChallenge(packetClient, responseBytes);
+                var challenge = Listener.MakeChallenge(packetClient, responseBytes);
 
-                    //var buffer = new byte[Constants.MinimumPacketSize];
+                //var buffer = new byte[Constants.MinimumPacketSize];
 
-                    var responsePacket = sessionResponder.SerializeResponderChallenge(
-                                Presentation.StreamId.GetClientCompleteDeferred(), packetClient.SourceId,
-                                responseBytes, challenge);
+                var responsePacket = sessionResponder.SerializeResponderChallenge(
+                            Presentation.StreamId.GetClientCompleteDeferred(), packetClient.SourceId,
+                            responseBytes, challenge);
 
-                    ReturnResponse(responsePacket);
+                ReturnResponse(responsePacket);
 
 
-                    break;
-                    }
+                break;
+                }
             case ResponderMessageType.Data: {
-                    List<PacketExtension> packetExtensions = null;
+                List<PacketExtension> packetExtensions = null;
 
-                    if (stream.StreamState != StreamState.Data) {
-                        var returnExtension = new PacketExtension() {
-                            Tag = Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsStreamIdTag,
-                            Value = stream.RemoteStreamId
-                            };
-                        packetExtensions = new List<PacketExtension> { returnExtension };
-
-
-                        stream.StreamState = StreamState.Data;
-                        }
+                if (stream.StreamState != StreamState.Data) {
+                    var returnExtension = new PacketExtension() {
+                        Tag = Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsStreamIdTag,
+                        Value = stream.RemoteStreamId
+                        };
+                    packetExtensions = new List<PacketExtension> { returnExtension };
 
 
-                    var responsePacket1 = sessionResponder.SerializePacketData(
-                        stream.RemoteStreamId, payload: responseBytes, ciphertextExtensions: packetExtensions);
-                    ReturnResponse(responsePacket1);
-
-                    break;
+                    stream.StreamState = StreamState.Data;
                     }
+
+
+                var responsePacket1 = sessionResponder.SerializePacketData(
+                    stream.RemoteStreamId, payload: responseBytes, ciphertextExtensions: packetExtensions);
+                ReturnResponse(responsePacket1);
+
+                break;
+                }
             default: {
-                    throw new NYI();
-                    }
+                throw new NYI();
+                }
 
             }
 
@@ -267,16 +264,16 @@ public abstract class ServiceRequest {
                 switch (extension.Tag) {
                     case Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsRollTag: {
 
-                            break;
-                            }
+                        break;
+                        }
                     case Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsCloseStreamTag: {
 
-                            break;
-                            }
+                        break;
+                        }
                     case Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsCloseConnectionTag: {
 
-                            break;
-                            }
+                        break;
+                        }
                     }
 
                 }

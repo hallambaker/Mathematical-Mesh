@@ -20,13 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Collections.Generic;
-using System.Drawing;
-using Goedel.Cryptography.Dare;
-using Goedel.Mesh;
-using Goedel.Test;
-using Microsoft.VisualBasic;
-
 namespace Goedel.XUnit;
 
 public record ReferenceStore {
@@ -40,7 +33,7 @@ public record ReferenceStore {
 
     public Dictionary<string, ReferenceEnvelope> DictionaryData { get; } = new();
 
-    public List<ReferenceEnvelope> ListContents { get; }  = new();
+    public List<ReferenceEnvelope> ListContents { get; } = new();
 
 
     public int Serial => ListContents.Count;
@@ -49,7 +42,7 @@ public record ReferenceStore {
 
     public int Length { get; init; } = 100;
 
-    public bool RandomSize { get; init; } = false ;
+    public bool RandomSize { get; init; } = false;
 
 
     public ReferenceStore(TestBase testBase) {
@@ -100,7 +93,7 @@ public record ReferenceStore {
         }
 
 
-    public DareEnvelope AddMessage(int? length = null, bool? randomSize= null) {
+    public DareEnvelope AddMessage(int? length = null, bool? randomSize = null) {
 
         var envelope = new ReferenceEnvelope(this, Serial, length ?? Length, randomSize ?? RandomSize);
 
@@ -135,8 +128,8 @@ public record ReferenceStore {
 
 
     public void SetStatus(int serial, string status) {
-        
-        
+
+
         }
 
 
@@ -174,7 +167,7 @@ public record ReferenceEnvelope {
     public ReferenceEnvelope(
                 ReferenceStore referenceStore,
                 int serial,
-                int length, 
+                int length,
                 bool randomSize
                 ) {
         ReferenceStore = referenceStore;
@@ -185,10 +178,10 @@ public record ReferenceEnvelope {
         UniqueId = Seed.GetNonce("Data", Serial);
         }
 
-    public MessageTest GetMessageTest() => 
+    public MessageTest GetMessageTest() =>
                     ReferenceStore.GetMessageTest(Serial, Version, Length, RandomSize);
 
-    public CatalogEntryTest GetCatalogEntryTest() => 
+    public CatalogEntryTest GetCatalogEntryTest() =>
                     ReferenceStore.GetCatalogEntryTest(Serial, Version, Length, RandomSize);
 
 

@@ -1,12 +1,9 @@
 ﻿using Goedel.Cryptography.Dare;
 
-using System.Collections;
-using System.Threading;
-
 namespace Goedel.Everything;
 #region // Bindings to classes specified through the Guigen schema.
 
-public partial class ContactSection : IHeadedSelection{
+public partial class ContactSection : IHeadedSelection {
 
     IAccountSelector? Account { get; }
     ContextUser? ContextUser => Account?.ContextUser;
@@ -84,7 +81,7 @@ public partial class ContactNetworkAddress : IBoundPresentation {
         protocol is null ? null : new DataActions(protocol);
     }
 
-public record DataActions(string? Protocol): IDataActions {
+public record DataActions(string? Protocol) : IDataActions {
     }
 
 
@@ -102,8 +99,8 @@ public partial class ContactNetworkIdentifier {
             return FieldIcons.MessageGeneric;
             }
 
-        if (FieldIcons.ProtocolToImag.TryGetValue(Protocol.ToLower(), out var icon)) 
-                    return icon;
+        if (FieldIcons.ProtocolToImag.TryGetValue(Protocol.ToLower(), out var icon))
+            return icon;
 
 
 
@@ -151,7 +148,7 @@ public partial class ContactNetworkCredential {
 
 
         base.Fill();
-        
+
         }
 
     }
@@ -284,7 +281,7 @@ public partial class BoundContactPerson : IBoundPresentation, IDialog {
             }
 
         var address = contact.NetworkAddresses?.FirstOrDefault();
-        return  new BoundContactPerson() {
+        return new BoundContactPerson() {
             Local = address?.Address,
             NetworkAddresses = Bind(contact.NetworkAddresses)
             };
@@ -294,14 +291,14 @@ public partial class BoundContactPerson : IBoundPresentation, IDialog {
 
 
     public static ISelectList Bind(IEnumerable<NetworkAddress>? input) {
-        if (input == null) { 
-            return null!; 
+        if (input == null) {
+            return null!;
             }
 
         var result = new SelectList();
 
         foreach (var inputItem in input) {
-            var entry =  ContactNetworkAddress.Factory(inputItem) ;
+            var entry = ContactNetworkAddress.Factory(inputItem);
             result.Add(entry);
             }
 
@@ -338,8 +335,8 @@ public partial class BoundContactPerson : IBoundPresentation, IDialog {
 
 
     List<NetworkAddress> FillNetworkAddress(ISelectList? addresses) {
-        if (addresses == null) { 
-            return null!; 
+        if (addresses == null) {
+            return null!;
             }
 
         var result = new List<NetworkAddress>();
@@ -477,7 +474,7 @@ public partial class ContactSelection : SelectionCatalog<GuigenCatalogContact,
     /// </summary>
     /// <param name="catalog"></param>
     public ContactSelection(ContextAccount contextAccount,
-                GuigenCatalogContact catalog) : base(contextAccount,catalog) {
+                GuigenCatalogContact catalog) : base(contextAccount, catalog) {
         }
 
     #region // Conversion overrides

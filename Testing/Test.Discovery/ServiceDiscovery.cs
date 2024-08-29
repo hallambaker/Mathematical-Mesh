@@ -21,10 +21,8 @@
 #endregion
 
 using Goedel.Discovery;
-using Goedel.Utilities;
 using Goedel.Test;
-
-using Xunit;
+using Goedel.Utilities;
 
 #pragma warning disable IDE0059
 
@@ -75,7 +73,7 @@ public partial class ServiceDiscovery {
         TestServiceAddress("alice.0.mm--", ParsedAddressType.Callsign, account: "alice", version: 0);
 
         //Doubleton, same
-        TestServiceAddress("@toaster.alice", ParsedAddressType.Callsign, account:"toaster.alice");
+        TestServiceAddress("@toaster.alice", ParsedAddressType.Callsign, account: "toaster.alice");
 
         // Callsign at specified callsign service
         TestServiceAddress("@alice@example", ParsedAddressType.CallsignCallsign, "example", "alice");
@@ -120,8 +118,8 @@ public partial class ServiceDiscovery {
         int? port = null,
         int? version = null,
         bool valid = true) {
-        
-        var result = ServiceAddress.TryParse (address, out var addressValue);
+
+        var result = ServiceAddress.TryParse(address, out var addressValue);
         (valid == result).TestTrue();
 
         if (!result) {

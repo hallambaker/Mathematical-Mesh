@@ -1,7 +1,4 @@
-﻿using Goedel.Mesh.Client;
-using Goedel.Protocol;
-
-namespace Goedel.Presence.Server;
+﻿namespace Goedel.Presence.Server;
 
 /// <summary>
 /// The Mesh service configuration.

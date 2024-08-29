@@ -1,16 +1,4 @@
-﻿using Goedel.Cryptography.Dare;
-using Goedel.Mesh;
-
-using System.Collections;
-using System.Collections.Specialized;
-using System.Runtime.CompilerServices;
-using System.Xml.Linq;
-
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-using Contact = Goedel.Mesh.Contact;
-
-namespace Goedel.Everything;
+﻿namespace Goedel.Everything;
 
 
 
@@ -119,7 +107,7 @@ public partial class EverythingMaui {
 
         return NullResult.Completed;
         }
-       
+
 
 
     ///<inheritdoc/>
@@ -173,7 +161,7 @@ public partial class EverythingMaui {
     ///<inheritdoc/>
     public override async Task<IResult> StartVideo(StartVideo data) => await NotYetImplemented();
 
-    async Task<IResult>NotYetImplemented() {
+    async Task<IResult> NotYetImplemented() {
         try {
             await Task.Delay(0);
             return new NotYetImplemented() {

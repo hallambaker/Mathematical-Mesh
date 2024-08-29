@@ -23,7 +23,6 @@
 //  
 
 using System.Net;
-using System.Threading.Tasks;
 namespace Goedel.Protocol;
 
 
@@ -42,7 +41,7 @@ public class GenericHostConfiguration : IConfigurationEntry {
 
     ///<summary>The configuration entry.</summary> 
     public readonly static ConfigurationEntry ConfigurationEntry =
-            new ("Host", typeof(GenericHostConfiguration));
+            new("Host", typeof(GenericHostConfiguration));
 
     ///<inheritdoc/>
     public ConfigurationEntry GetConfigurationEntry() => ConfigurationEntry;

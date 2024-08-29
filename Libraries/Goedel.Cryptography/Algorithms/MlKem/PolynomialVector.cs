@@ -1,7 +1,4 @@
-﻿using System;
-using System.Numerics;
-
-namespace Goedel.Cryptography.PQC;
+﻿namespace Goedel.Cryptography.PQC;
 
 /// <summary>
 /// Operations on vectors of polynomials expressed as a list of coefficients for use in Kyber. 
@@ -119,19 +116,19 @@ public struct PolynomialVectorInt16 {
     /// <param name="buffer">The buffer to write the result to.</param>
     /// <returns>The packed polynomial vector.</returns>
 
-    public void Pack(byte[]buffer, byte[]? seed = null) {
-        var length = PolyVectorBytes ;
+    public void Pack(byte[] buffer, byte[]? seed = null) {
+        var length = PolyVectorBytes;
         if (seed != null) {
             length += seed.Length;
             }
 
 
         for (var i = 0; i < Vector.Length; i++) {
-            Vector[i].ToBytes(buffer, i* MlKem.PolynomialBytes);
+            Vector[i].ToBytes(buffer, i * MlKem.PolynomialBytes);
             }
 
         if (seed != null) {
-            Array.Copy (seed, 0, buffer, PolyVectorBytes, seed.Length);
+            Array.Copy(seed, 0, buffer, PolyVectorBytes, seed.Length);
             }
 
         }
@@ -147,20 +144,20 @@ public struct PolynomialVectorInt16 {
         var t = new short[8];
 
         for (var i = 0; i < K; i++) {
-            for (var j = 0; j < MlKem.N/8; j++) {
+            for (var j = 0; j < MlKem.N / 8; j++) {
                 for (var k = 0; k < 8; k++) {
                     t[k] = (short)(((((uint)Vector[i].Coefficients[8 * j + k] << 11) + MlKem.Q / 2) / MlKem.Q) & 0x7ff);
                     }
                 buffer[offset++] = (byte)(t[0] >> 0);               // 0
-                buffer[offset++] = (byte)(t[0] >> 8  | t[1] << 3);  // 1
-                buffer[offset++] = (byte)(t[1] >> 5  | t[2] << 6);  // 2
+                buffer[offset++] = (byte)(t[0] >> 8 | t[1] << 3);  // 1
+                buffer[offset++] = (byte)(t[1] >> 5 | t[2] << 6);  // 2
                 buffer[offset++] = (byte)(t[2] >> 2);               // 3
                 buffer[offset++] = (byte)(t[2] >> 10 | t[3] << 1);  // 4
-                buffer[offset++] = (byte)(t[3] >> 7  | t[4] << 4);  // 5
-                buffer[offset++] = (byte)(t[4] >> 4  | t[5] << 7);  // 6
+                buffer[offset++] = (byte)(t[3] >> 7 | t[4] << 4);  // 5
+                buffer[offset++] = (byte)(t[4] >> 4 | t[5] << 7);  // 6
                 buffer[offset++] = (byte)(t[5] >> 1);               // 7
-                buffer[offset++] = (byte)(t[5] >> 9  | t[6] << 2);  // 8
-                buffer[offset++] = (byte)(t[6] >> 6  | t[7] << 5);  // 9
+                buffer[offset++] = (byte)(t[5] >> 9 | t[6] << 2);  // 8
+                buffer[offset++] = (byte)(t[6] >> 6 | t[7] << 5);  // 9
                 buffer[offset++] = (byte)(t[7] >> 3);               // 10
                 }
             }
@@ -181,9 +178,9 @@ public struct PolynomialVectorInt16 {
                     t[k] = (short)(((((uint)Vector[i].Coefficients[4 * j + k] << 10) + MlKem.Q / 2) / MlKem.Q) & 0x3ff);
                     }
                 buffer[offset++] = (byte)(t[0] >> 0);               // 0
-                buffer[offset++] = (byte)(t[0] >> 8  | t[1] << 2);  // 1
-                buffer[offset++] = (byte)(t[1] >> 6  | t[2] << 4);  // 2
-                buffer[offset++] = (byte)(t[2] >> 4  | t[3] << 6);  // 3
+                buffer[offset++] = (byte)(t[0] >> 8 | t[1] << 2);  // 1
+                buffer[offset++] = (byte)(t[1] >> 6 | t[2] << 4);  // 2
+                buffer[offset++] = (byte)(t[2] >> 4 | t[3] << 6);  // 3
                 buffer[offset++] = (byte)(t[3] >> 2);               // 4
                 }
             }
@@ -212,12 +209,12 @@ public struct PolynomialVectorInt16 {
                 t[4] = (short)((buffer[offset + 5] >> 4) | (buffer[offset + 6] << 4));
                 t[5] = (short)((buffer[offset + 6] >> 7) | (buffer[offset + 7] << 1) | (buffer[offset + 8] << 9));
                 t[6] = (short)((buffer[offset + 8] >> 2) | (buffer[offset + 9] << 6));
-                t[7] = (short)((buffer[offset + 9] >> 5) | (buffer[offset +10] << 3));
+                t[7] = (short)((buffer[offset + 9] >> 5) | (buffer[offset + 10] << 3));
 
                 for (var c = 0; c < 8; c++) {
                     vector.Vector[v].Coefficients[8 * j + c] = (short)(((t[c] & 0x7FF) * MlKem.Q + 1024) >> 11);
                     }
-                
+
                 offset += 11;
                 }
             }
@@ -385,7 +382,7 @@ public struct PolynomialVectorInt16 {
     /// <param name="output">Output to write the result to if <paramref name="tag"/> is
     /// not null.</param>
     /// <returns>String containing the base16 representation of the values.</returns>
-    public string GetHash(string tag=null,
+    public string GetHash(string tag = null,
                     TextWriter output = null) {
 
         output ??= Console.Out;
@@ -404,7 +401,7 @@ public struct PolynomialVectorInt16 {
                 }
             }
 
-        var v= buffer.GetBufferFingerprint();
+        var v = buffer.GetBufferFingerprint();
 
         if (tag != null) {
             output.WriteLine(tag);

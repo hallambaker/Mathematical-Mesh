@@ -20,9 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Collections.Generic;
-using static System.Net.Mime.MediaTypeNames;
-
 namespace Goedel.Cryptography.Dare;
 
 
@@ -110,7 +107,7 @@ public class SequenceEnumeratorIndex : IEnumerator<SequenceIndexEntry>, IEnumera
                 bool reverse = true,
                 long count = -1,
                 FilterIndexDelegate filter = null,
-                bool skip = false) : this (sequence, GetStart (sequence, reverse, start, skip),
+                bool skip = false) : this(sequence, GetStart(sequence, reverse, start, skip),
                     reverse, count, filter) {
         }
 
@@ -136,7 +133,7 @@ public class SequenceEnumeratorIndex : IEnumerator<SequenceIndexEntry>, IEnumera
     /// <returns><code>true</code> if the enumerator was successfully advanced to the next element; 
     /// <code>false</code> if the enumerator has passed the end of the collection.</returns>
     public bool MoveNext() {
-        if (Next is null | ((Count > 0) & (Items >= Count)) ) {
+        if (Next is null | ((Count > 0) & (Items >= Count))) {
             Current = null;
             return false;
             }
@@ -160,7 +157,7 @@ public class SequenceEnumeratorIndex : IEnumerator<SequenceIndexEntry>, IEnumera
 
             // Check to see if we have exceeded the search interval.
             if ((Reverse && (filter & ItemResult.Earlier) == ItemResult.Earlier) |
-                    (!Reverse && (filter & ItemResult.Later) == ItemResult.Later) ){
+                    (!Reverse && (filter & ItemResult.Later) == ItemResult.Later)) {
                 return false;
                 }
 

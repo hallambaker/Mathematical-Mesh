@@ -1,9 +1,4 @@
-﻿using Microsoft.Extensions.Logging.Console;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 
 namespace Goedel.Utilities;
 
@@ -11,10 +6,10 @@ namespace Goedel.Utilities;
 /// Caching logger class. C
 /// </summary>
 public class AssemblyLogger : ILogger {
-    
+
     ///<summary>Category name used for filtering logs</summary> 
     string CategoryName { get; }
-    
+
     ///<summary>The default log level</summary> 
     public LogLevel LogLevel { get; set; }
 
@@ -30,7 +25,7 @@ public class AssemblyLogger : ILogger {
     /// itself is not created unless needed.
     /// </summary>
     /// <param name="categoryName">Category name used for filtering logs</param>
-    public AssemblyLogger(string? categoryName=null) {
+    public AssemblyLogger(string? categoryName = null) {
         CategoryName = categoryName ?? Assembly.GetCallingAssembly().FullName;
         }
 
@@ -48,10 +43,10 @@ public class AssemblyLogger : ILogger {
 
     ///<inheritdoc/>
     public void Log<TState>(
-            LogLevel logLevel, 
-            EventId eventId, 
-            TState state, 
-            Exception exception, 
+            LogLevel logLevel,
+            EventId eventId,
+            TState state,
+            Exception exception,
             Func<TState, Exception, string> formatter) =>
         CachedLogger?.Log(logLevel, eventId, state, exception, formatter);
 

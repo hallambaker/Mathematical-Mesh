@@ -38,7 +38,7 @@ public class MlKemPublic : MlKem {
     /// The Kyber strength parameter is specified implicitly by the key size.
     /// </summary>
     /// <param name="publicKey">The private key.</param>
-    public MlKemPublic(byte[] publicKey) : this (publicKey, GetStrength (publicKey.Length), publicKey.Length) {
+    public MlKemPublic(byte[] publicKey) : this(publicKey, GetStrength(publicKey.Length), publicKey.Length) {
         }
 
     /// <summary>
@@ -51,8 +51,8 @@ public class MlKemPublic : MlKem {
     /// <param name="offset">Offset at which the public key is located within 
     /// <paramref name="publicKey"/></param>
     /// <param name="length">The length of the public key data.</param>
-    protected MlKemPublic(byte[] publicKey, int strength, int length, int offset=0) : 
-                base (KeySize[strength]) {
+    protected MlKemPublic(byte[] publicKey, int strength, int length, int offset = 0) :
+                base(KeySize[strength]) {
         PublicKey = publicKey.Extract(offset, length); ;
 
         //Console.WriteLine($"Public key bytes {length}");
@@ -84,7 +84,7 @@ public class MlKemPublic : MlKem {
     /// </summary>
     /// <param name="seed">Optional seed value for deterministic testing.</param>
     /// <returns>The ciphertext and shared secret.</returns>
-    public (byte[],byte[]) Encrypt(byte[]? seed=null) {
+    public (byte[], byte[]) Encrypt(byte[]? seed = null) {
         seed ??= Platform.GetRandomBytes(SharedSecretBytes);
 
         // SHA3-256 seed to mask the system seed
@@ -104,7 +104,7 @@ public class MlKemPublic : MlKem {
             /* overwrite coins in kr with H(c) */
             var overwrite = SHA3Managed.Process256(ct);
             Array.Copy(overwrite, 0, kr, SymBytes, overwrite.Length);
-            } 
+            }
 
         /* hash concatenation of pre-k and H(c) to k */
         var ss = SHAKE256.Process(kr);
@@ -113,7 +113,7 @@ public class MlKemPublic : MlKem {
         }
 
 
-    public (byte[], byte[]) EncapsInternal(byte[]randomness) {
+    public (byte[], byte[]) EncapsInternal(byte[] randomness) {
         throw new NYI();
         // return (sharedSecret, ciphertext);
         }

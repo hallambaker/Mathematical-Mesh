@@ -33,7 +33,7 @@ namespace Goedel.Mesh;
 /// <param name="ConnectionDevice">The computed device connection.</param>
 /// <param name="ConnectKey">The computed PIN code.</param>
 /// <param name="ConnectUri">The connection URI to be used for pickup.</param>
-public record DevicePreconfiguration (
+public record DevicePreconfiguration(
                 PrivateKeyUDF SecretSeed,
                 ProfileDevice ProfileDevice,
                 ConnectionService ConnectionService,

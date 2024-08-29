@@ -21,8 +21,6 @@
 #endregion
 
 
-using System.Net.NetworkInformation;
-
 namespace Goedel.Cryptography.Core;
 
 
@@ -58,7 +56,7 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
             case PlatformID.Win32NT: {
                 var appsRoot = GetWindowsAppRoot();
 
-                MeshConfigurationDirectory =  Path.Combine(appsRoot, WindowsMeshDirectory);
+                MeshConfigurationDirectory = Path.Combine(appsRoot, WindowsMeshDirectory);
                 directoryKeys = Path.Combine(MeshConfigurationDirectory, KeysDirectory);
                 break;
                 }

@@ -86,11 +86,11 @@ public class RudListener : Listener {
 
         switch (packetRequest) {
             case PacketInitiatorComplete packetClientCompleteDeferred: {
-                    responder.CompleteInitiatorComplete(packetClientCompleteDeferred);
+                responder.CompleteInitiatorComplete(packetClientCompleteDeferred);
 
-                    return AcceptStream(packetClientCompleteDeferred.CiphertextExtensions, responder,
-                        null);
-                    }
+                return AcceptStream(packetClientCompleteDeferred.CiphertextExtensions, responder,
+                    null);
+                }
             }
         Console.WriteLine("Service connection rejected");
 
@@ -121,37 +121,37 @@ public class RudListener : Listener {
             switch (extension.Tag) {
                 case PresentationConstants.ExtensionTagsStreamReceiverTag:
                 case PresentationConstants.ExtensionTagsStreamClientTag: {
-                        streamType = extension.Tag;
-                        protocol = extension.Value.ToUTF8();
-                        break;
-                        }
+                    streamType = extension.Tag;
+                    protocol = extension.Value.ToUTF8();
+                    break;
+                    }
                 case PresentationConstants.ExtensionTagsStreamIdTag: {
-                        streamId = extension.Value;
-                        break;
-                        }
+                    streamId = extension.Value;
+                    break;
+                    }
                 case PresentationConstants.ExtensionTagsEncryptTag: {
-                        streamId = extension.Value;
-                        break;
-                        }
-                    //case Constants.ExtensionTagsClaimIdTag: {
-                    //    account = extension.Elements.ToUTF8();
-                    //    break;
-                    //    }
+                    streamId = extension.Value;
+                    break;
+                    }
+                //case Constants.ExtensionTagsClaimIdTag: {
+                //    account = extension.Elements.ToUTF8();
+                //    break;
+                //    }
                 }
             }
 
         switch (streamType) {
             case PresentationConstants.ExtensionTagsStreamClientTag: {
-                    child = new RudStreamService(stream, protocol, accountAddress: account, rudConnection: rudConnection);
-                    break;
-                    }
+                child = new RudStreamService(stream, protocol, accountAddress: account, rudConnection: rudConnection);
+                break;
+                }
             case PresentationConstants.ExtensionTagsStreamReceiverTag: {
-                    child = new RudStreamReceiver(stream, protocol, accountAddress: account);
-                    break;
-                    }
+                child = new RudStreamReceiver(stream, protocol, accountAddress: account);
+                break;
+                }
             default: {
-                    return null;
-                    }
+                return null;
+                }
             }
 
 

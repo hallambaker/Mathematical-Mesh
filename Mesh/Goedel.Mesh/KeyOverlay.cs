@@ -21,9 +21,6 @@
 #endregion
 
 
-using Microsoft.Extensions.Logging;
-using System.ComponentModel;
-
 namespace Goedel.Mesh;
 
 

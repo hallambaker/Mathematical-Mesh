@@ -18,26 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Utilities;
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Protocol;
-using Goedel.Mesh.Server;
-using System.Net.Sockets;
 using Goedel.Discovery;
-using System.Net;
+using Goedel.Mesh.Server;
 using Goedel.Protocol.Presentation;
+
+using System.Net;
+using System.Net.Sockets;
 using System.Threading.Tasks.Dataflow;
-using Goedel.IO;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using Goedel.Mesh;
-using System.Security.Principal;
 
 namespace Goedel.Presence.Server;
 
@@ -54,7 +41,7 @@ public class PresenceServer : PresenceService, IPresence {
     #region // Properties and fields
 
     ///<summary>Client for IPv4 traffic.</summary> 
-    protected UdpClient UdpServiceIpv4 {get; set; }
+    protected UdpClient UdpServiceIpv4 { get; set; }
 
     ///<summary>Client for IPv6 traffic.</summary> 
     protected UdpClient UdpServiceIpv6 { get; set; }
@@ -74,7 +61,7 @@ public class PresenceServer : PresenceService, IPresence {
 
     Dictionary<string, PresenceBindingAccount> Accounts { get; } = new();
 
-    Dictionary <ulong, PresenceBindingDevice>Devices { get; } = new();
+    Dictionary<ulong, PresenceBindingDevice> Devices { get; } = new();
     ulong ConnectionID = 0;
 
     ///<summary>Time to wait before cancelling connection request.</summary> 
@@ -82,7 +69,7 @@ public class PresenceServer : PresenceService, IPresence {
 
     ///<summary>Time to wait before the first heartbeat overdue notice is 
     ///sent in milliseconds.</summary> 
-    public int TimeOutHeartbeatMilliSeconds { get; set; } = (int) 60_000;
+    public int TimeOutHeartbeatMilliSeconds { get; set; } = (int)60_000;
 
     ///<summary>Time to wait before the second overdue notice is sent in 
     ///milliseconds.</summary> 
@@ -101,7 +88,7 @@ public class PresenceServer : PresenceService, IPresence {
     BufferBlock<PresenceFromService> ImmediateQueue { get; }
 
     bool active = true;
-    CancellationTokenSource CancellationTokenSource= new CancellationTokenSource();
+    CancellationTokenSource CancellationTokenSource = new CancellationTokenSource();
 
     Thread SenderThread { get; }
     Thread ReceiverThread { get; }
@@ -148,7 +135,7 @@ public class PresenceServer : PresenceService, IPresence {
             }
 
         // Do NOT use the host service IP addresses, these should only be for the Mesh host
-        IP = presenceServiceConfiguration?.IP ?? new ();
+        IP = presenceServiceConfiguration?.IP ?? new();
 
         if (IP.Count == 0) {
             var localEndPoints = HostNetwork.GetLocalEndpoints();
@@ -248,7 +235,7 @@ public class PresenceServer : PresenceService, IPresence {
     /// <param name="packet"></param>
     /// <param name="bytes"></param>
     /// <param name="endPoint"></param>
-    protected virtual void Send (UdpClient client, byte[]packet, int bytes, IPEndPoint endPoint) =>
+    protected virtual void Send(UdpClient client, byte[] packet, int bytes, IPEndPoint endPoint) =>
         client.Send(packet, packet.Length, endPoint);
 
 
@@ -445,10 +432,10 @@ public class PresenceServer : PresenceService, IPresence {
     ///<inheritdoc/>
     public void Notify(string accountId, byte[] bitmask) {
         Screen.WriteLine();
-        lock (Accounts){
+        lock (Accounts) {
             if (!Accounts.TryGetValue(accountId, out var accountBinding)) {
                 return;
-            }
+                }
             accountBinding.Bitmask = bitmask;
             var notification = new PresenceNotify() {
                 Bitmask = accountBinding.Bitmask,

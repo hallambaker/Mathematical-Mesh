@@ -20,9 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
-using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.KeyFile;
-using Goedel.Registry;
 
 namespace Goedel.Mesh.Shell;
 
@@ -77,7 +75,7 @@ public partial class Shell {
 
         var applicationSsh = contextUser.GetApplicationSsh(id);
 
-        
+
 
         if (!options.Private.Value) {
             var publicformat = GetKeyFileFormat(options, KeyFileFormat.OpenSSH);
@@ -92,10 +90,10 @@ public partial class Shell {
             );
             }
 
-        
 
 
-       var applicationEntrySsh = contextUser.GetApplicationEntrySsh(applicationSsh.Key);
+
+        var applicationEntrySsh = contextUser.GetApplicationEntrySsh(applicationSsh.Key);
         applicationEntrySsh.AssertNotNull(NYI.Throw);
 
         var keyData = applicationEntrySsh.Activation.ClientKey;
@@ -232,7 +230,7 @@ public partial class Shell {
                 }
             }
         else {
-            var key = CatalogedCredential.GetKey ("ssh", id);
+            var key = CatalogedCredential.GetKey("ssh", id);
 
             var entry = contextUser.GetCredential(key);
             entry.AssertNotNull(NYI.Throw);

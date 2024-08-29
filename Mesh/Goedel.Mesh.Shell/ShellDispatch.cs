@@ -21,10 +21,6 @@
 #endregion
 
 
-
-using Goedel.Utilities;
-using System.Net;
-
 namespace Goedel.Mesh.Shell;
 
 /// <summary>
@@ -145,17 +141,17 @@ public partial class Shell : _Shell {
 
         switch (Verbosity) {
             case Command.Verbosity.Json: {
-                    Output.Write(shellResult.GetJson(false));
+                Output.Write(shellResult.GetJson(false));
 
-                    break;
-                    }
+                break;
+                }
             default: {
-                    var builder = new StringBuilder();
-                    shellResult.ToBuilder(builder, Verbosity);
+                var builder = new StringBuilder();
+                shellResult.ToBuilder(builder, Verbosity);
 
-                    Output.Write(builder.ToString());
-                    break;
-                    }
+                Output.Write(builder.ToString());
+                break;
+                }
             }
         }
 
@@ -186,31 +182,31 @@ public partial class Shell : _Shell {
 
         switch (algClass) {
             case CryptoAlgorithmClasses.Digest: {
-                    AlgorithmDigest = algID;
-                    return;
-                    }
+                AlgorithmDigest = algID;
+                return;
+                }
             case CryptoAlgorithmClasses.Encryption: {
-                    AlgorithmEncrypt = algID;
-                    return;
-                    }
+                AlgorithmEncrypt = algID;
+                return;
+                }
             case CryptoAlgorithmClasses.MAC: {
-                    AlgorithmMAC = algID;
-                    return;
-                    }
+                AlgorithmMAC = algID;
+                return;
+                }
             case CryptoAlgorithmClasses.Signature: {
-                    AlgorithmSign = algID;
-                    return;
-                    }
+                AlgorithmSign = algID;
+                return;
+                }
             case CryptoAlgorithmClasses.Exchange: {
-                    AlgorithmExchange = algID;
-                    AlgorithmAuthenticate = algID;
-                    return;
-                    }
+                AlgorithmExchange = algID;
+                AlgorithmAuthenticate = algID;
+                return;
+                }
 
             case CryptoAlgorithmClasses.NULL:
-                break;
+            break;
             default:
-                break;
+            break;
             }
 
         }
@@ -221,7 +217,7 @@ public partial class Shell : _Shell {
     /// <param name="options">Options specifying the Mesh account id to bind to.</param>
     /// <param name="address">Specify the account address byh fully qualified or local name.</param>
     /// <returns>The Mesh Client.</returns>
-    public virtual MeshServiceClient GetMeshClient(IAccountOptions options, string address=null) {
+    public virtual MeshServiceClient GetMeshClient(IAccountOptions options, string address = null) {
         var context = MeshHost.GetContextMesh(options.AccountAddress.Value);
         if (context != null) {
             return context.MeshClient;

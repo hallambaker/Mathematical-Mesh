@@ -21,8 +21,6 @@
 #endregion
 
 using Goedel.Utilities;
-
-using System.Net;
 namespace Goedel.IO;
 
 /// <summary>

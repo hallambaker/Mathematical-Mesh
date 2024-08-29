@@ -51,8 +51,8 @@ public enum DeviceState {
 /// Presence account interface.
 /// </summary>
 public interface IPresenceAccount {
-    
-    
+
+
     }
 
 /// <summary>

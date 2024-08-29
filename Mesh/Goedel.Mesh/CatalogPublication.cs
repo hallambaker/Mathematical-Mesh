@@ -62,7 +62,7 @@ public class CatalogPublication : Catalog<CatalogedPublication> {
                 bool create = true,
                 byte[] bitmask = null) :
         base(directory, storeName ?? Label,
-                    policy, cryptoParameters, keyCollection, decrypt: decrypt, 
+                    policy, cryptoParameters, keyCollection, decrypt: decrypt,
                     create: create, bitmask: bitmask) {
         }
 
@@ -90,7 +90,7 @@ public class CatalogPublication : Catalog<CatalogedPublication> {
                 bool decrypt = true,
                 bool create = true,
                 byte[] bitmask = null) =>
-        new CatalogPublication(directory, storeId, policy, cryptoParameters, keyCollection, 
+        new CatalogPublication(directory, storeId, policy, cryptoParameters, keyCollection,
             decrypt: decrypt, create: create, bitmask: bitmask);
 
 

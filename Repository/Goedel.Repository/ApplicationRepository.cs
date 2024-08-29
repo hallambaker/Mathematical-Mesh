@@ -21,8 +21,6 @@
 #endregion
 
 
-using Goedel.Cryptography.Dare;
-
 namespace Goedel.Repository;
 
 #region // ActivationApplicationRepository
@@ -68,7 +66,7 @@ public partial class ApplicationEntryRepository {
     }
 #endregion
 
-public partial class CatalogedRepository{
+public partial class CatalogedRepository {
     #region // Properties
     ///<summary>Return the catalog identifier for the group <paramref name="groupAddress"/>.</summary>
     public static string GetGroupID(string groupAddress) => MeshConstants.PrefixCatalogedGroup + groupAddress;
@@ -118,8 +116,8 @@ public partial class CatalogedRepository{
                     ProfileRepository profileGroup,
                     ActivationCommon activationAccount,
                     CryptoKey encryptionKey
-        //,
-        //            ConnectionStripped connectionAddress
+                    //,
+                    //            ConnectionStripped connectionAddress
                     ) {
         encryptionKey.Future();
         //connectionAddress.Future();

@@ -129,7 +129,7 @@ public class RudStream {
 
     ///<summary>If false, stream requires asynchronous initialization (e.g. DNS/Callsign resolution) 
     ///before use. The stream MAY be set to uininitialized after certain types of failure.</summary> 
-    public bool Initialized { get; protected set; }=true;
+    public bool Initialized { get; protected set; } = true;
 
     #endregion
     #region // Constructors
@@ -156,7 +156,7 @@ public class RudStream {
 
         RdpStreamParent = parent;
         parent?.AddChild(this);
-        
+
         RudConnection = rudConnection ?? parent?.RudConnection;
         RudConnection.AssertNotNull(NYI.Throw);
 
@@ -305,22 +305,22 @@ public class RudStream {
         if (RudConnection.Connected) {
             switch (StreamState) {
                 case StreamState.Initial: {
-                        return await PostWebChild(span, extensions);
-                        }
+                    return await PostWebChild(span, extensions);
+                    }
                 case StreamState.Data: {
-                        return await PostWebData(span, extensions);
-                        }
+                    return await PostWebData(span, extensions);
+                    }
                 }
 
             }
         else {
             switch (StreamState) {
                 case StreamState.Initial: {
-                        return await PostWebHello(span, extensions);
-                        }
+                    return await PostWebHello(span, extensions);
+                    }
                 case StreamState.Challenged: {
-                        return await PostWebComplete(span, extensions);
-                        }
+                    return await PostWebComplete(span, extensions);
+                    }
                 }
             }
 
@@ -349,11 +349,11 @@ public class RudStream {
         switch (code) {
 
             case ResponderMessageType.ResponderChallenge: {
-                    StreamState = StreamState.Challenged;
-                    var packet = ConnectionInitiator.ParseResponderChallenge(responsepacketData, position);
-                    Process(packet);
-                    return packet;
-                    }
+                StreamState = StreamState.Challenged;
+                var packet = ConnectionInitiator.ParseResponderChallenge(responsepacketData, position);
+                Process(packet);
+                return packet;
+                }
 
             }
         throw new NYI(); // state change not valid.
@@ -428,17 +428,17 @@ public class RudStream {
             foreach (var extension in packetResponderChallenge.PlaintextExtensions) {
                 switch (extension.Tag) {
                     case PresentationConstants.ExtensionTagsChallengeTag: {
-                            ChallengeNonce = extension.Value;
-                            break;
-                            }
+                        ChallengeNonce = extension.Value;
+                        break;
+                        }
                     case PresentationConstants.ExtensionTagsChallengeProofOfWorkTag: {
-                            ChallengePoW = extension.Value;
-                            break;
-                            }
-                        //case Constants.ExtensionTagsMeshConnectionTag: {
+                        ChallengePoW = extension.Value;
+                        break;
+                        }
+                    //case Constants.ExtensionTagsMeshConnectionTag: {
 
-                        //    break;
-                        //}
+                    //    break;
+                    //}
                     }
                 }
             }

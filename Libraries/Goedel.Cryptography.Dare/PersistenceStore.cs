@@ -20,10 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using Goedel.Cryptography.Jose;
-using Goedel.IO;
-using System.Net.Mime;
-
 namespace Goedel.Cryptography.Dare;
 
 
@@ -112,8 +108,8 @@ public class PersistenceStoreEphemeral : PersistenceStore {
                 DarePolicy policy = null,
                 DataEncoding dataEncoding = DataEncoding.JSON,
                 IKeyLocate keyLocate = null,
-                bool decrypt = true) : base (fileName, contentType, fileStatus, sequenceType,
-                    policy, dataEncoding, keyLocate, true, decrypt){
+                bool decrypt = true) : base(fileName, contentType, fileStatus, sequenceType,
+                    policy, dataEncoding, keyLocate, true, decrypt) {
         Unload();
         }
 
@@ -135,7 +131,7 @@ public class PersistenceStoreEphemeral : PersistenceStore {
         }
 
     ///<inheritdoc/>
-    public override bool Delete(string uniqueID, Transaction transaction = null, bool erase=false) {
+    public override bool Delete(string uniqueID, Transaction transaction = null, bool erase = false) {
         Reload();
         var result = base.Delete(uniqueID, transaction, erase);
         Unload();
@@ -312,13 +308,13 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
     public int Read(SequenceIntegrity integrity = SequenceIntegrity.None) {
         // todo: check if can 
         var count = 0;
-        foreach (var frameIndex in Sequence.Select(1,false)) {
+        foreach (var frameIndex in Sequence.Select(1, false)) {
             count++;
             if (integrity != SequenceIntegrity.None) {
                 // Todo: implement checks here.
                 throw new NYI();
                 }
-            Intern (frameIndex);
+            Intern(frameIndex);
 
             }
         return count;

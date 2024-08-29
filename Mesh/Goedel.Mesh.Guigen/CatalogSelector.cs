@@ -1,6 +1,4 @@
-﻿using System.Collections;
-
-namespace Goedel.Everything;
+﻿namespace Goedel.Everything;
 
 
 

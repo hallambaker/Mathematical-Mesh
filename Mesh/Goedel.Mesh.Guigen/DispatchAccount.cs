@@ -1,9 +1,4 @@
-﻿using Goedel.Mesh.Client;
-using Goedel.Protocol;
-
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace Goedel.Everything;
+﻿namespace Goedel.Everything;
 
 
 
@@ -181,7 +176,7 @@ public partial class EverythingMaui {
                 }
 
             var result = new ReportShares() {
-                Share1 = GetIndexOr(shares,0),
+                Share1 = GetIndexOr(shares, 0),
                 Share2 = GetIndexOr(shares, 1),
                 Share3 = GetIndexOr(shares, 2),
                 Share4 = GetIndexOr(shares, 3),
@@ -189,7 +184,7 @@ public partial class EverythingMaui {
                 Share6 = GetIndexOr(shares, 5),
                 Share7 = GetIndexOr(shares, 6),
                 Share8 = GetIndexOr(shares, 7)
-                };  
+                };
             return TaskResult(result);
             }
         catch (Exception exception) {
@@ -234,7 +229,7 @@ public partial class EverythingMaui {
 
 
     ///<inheritdoc/>
-    public override  Task<IResult> AccountSelect(BoundAccountUser data) {
+    public override Task<IResult> AccountSelect(BoundAccountUser data) {
         try {
             SetContext(data);
             return TaskResult(NullResult.HomeResult);

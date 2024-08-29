@@ -19,8 +19,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-using System.Threading;
-
 namespace Goedel.Cryptography.Dare;
 
 
@@ -238,7 +236,7 @@ public partial class JbcdStream {
     /// <param name="FrameData2">Second data record, contains protected metadata.</param>
     /// <param name="flush">If true, flush the frame data value to the file.</param>
     /// <returns>The total size of the frame.</returns>
-    public long WriteWrappedFrame (
+    public long WriteWrappedFrame(
                 byte[] FrameHeader,
                 byte[] FrameData1 = null,
                 byte[] FrameData2 = null,
@@ -690,9 +688,9 @@ public partial class JbcdStream {
             StreamRead.Seek(framerFrameStart, System.IO.SeekOrigin.Begin);
             success = ReadTag(out framerCode, out framerFrameLength);
             framerRecordsEnd = StreamRead.Position + framerFrameLength;
-            
+
             var tagLength = PositionRead - framerFrameStart;
-            framerFrameNext = PositionRead + tagLength + framerFrameLength; 
+            framerFrameNext = PositionRead + tagLength + framerFrameLength;
             }
         else {
             framerFrameNext = position;
@@ -705,7 +703,7 @@ public partial class JbcdStream {
             //Console.WriteLine($"Frame is [ {framerFrameStart}-{framerFrameNext}] ");
 
             // sanity check, cannot read past the start of the file.
-            (framerFrameStart >=0).AssertTrue(InvalidFileFormatException.Throw);
+            (framerFrameStart >= 0).AssertTrue(InvalidFileFormatException.Throw);
 
             PositionRead = framerFrameStart;
 

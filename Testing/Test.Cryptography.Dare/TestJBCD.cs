@@ -20,15 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Text;
-
-using Goedel.Cryptography.Dare;
-using Goedel.IO;
-using Goedel.Test;
-using Goedel.Utilities;
-
-using Xunit;
-
 namespace Goedel.XUnit;
 
 public class TestJBCD : UnitTestSet {

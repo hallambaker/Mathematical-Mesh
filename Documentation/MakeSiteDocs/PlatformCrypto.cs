@@ -20,16 +20,16 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Collections.Generic;
-using System.IO;
-using System.Numerics;
-
 using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.Test;
 using Goedel.Utilities;
+
+using System.Collections.Generic;
+using System.IO;
+using System.Numerics;
 
 namespace ExampleGenerator;
 
@@ -38,16 +38,16 @@ public static class Extension {
         switch (curve) {
 
             case CurveMontgomery curveMontgomery: {
-                    return (curveMontgomery.U,
-                        curveMontgomery.V);
-                    }
+                return (curveMontgomery.U,
+                    curveMontgomery.V);
+                }
             case CurveEdwards curveEdwards: {
-                    return (curveEdwards.X,
-                        curveEdwards.Y);
-                    }
+                return (curveEdwards.X,
+                    curveEdwards.Y);
+                }
 
             default:
-                break;
+            break;
             }
 
         throw new NYI();
@@ -458,16 +458,16 @@ public partial class CurveResult {
         CurveMontgomery curve;
         switch (Point.IKeyAdvancedPublic) {
             case CurveX25519Public point: {
-                    curve = point.Public;
-                    break;
-                    }
+                curve = point.Public;
+                break;
+                }
             case CurveX448Public point: {
-                    curve = point.Public;
-                    break;
-                    }
+                curve = point.Public;
+                break;
+                }
             default: {
-                    throw new NYI();
-                    }
+                throw new NYI();
+                }
             }
 
         CurvePoint = curve;
@@ -538,24 +538,24 @@ public partial class CurveKey {
     void SetParameters(KeyPair keyPair, bool extended) {
         switch (keyPair) {
             case KeyPairX25519 keyPairX25519: {
-                    SetParameters(keyPairX25519, extended);
-                    break;
-                    }
+                SetParameters(keyPairX25519, extended);
+                break;
+                }
             case KeyPairX448 keyPairX448: {
-                    SetParameters(keyPairX448, extended);
-                    break;
-                    }
+                SetParameters(keyPairX448, extended);
+                break;
+                }
             case KeyPairEd25519 keyPairEd25519: {
-                    SetParameters(keyPairEd25519);
-                    break;
-                    }
+                SetParameters(keyPairEd25519);
+                break;
+                }
             case KeyPairEd448 keyPairEd448: {
-                    SetParameters(keyPairEd448);
-                    break;
-                    }
+                SetParameters(keyPairEd448);
+                break;
+                }
 
             default:
-                break;
+            break;
             }
         Private ??= Dummy;
         Public ??= Dummy;

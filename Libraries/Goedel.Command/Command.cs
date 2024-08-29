@@ -19,8 +19,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-using System.IO;
-
 namespace Goedel.Command;
 
 
@@ -94,51 +92,51 @@ public abstract class CommandLineInterpreterBase {
 
             switch (Token) {
                 case CommandLex.Token.Empty: {
-                        break;
-                        }
+                    break;
+                    }
                 case CommandLex.Token.Flag: {
-                        var Entry = Match(Describe.Entries, CommandLex.Flag) as DescribeEntryValue;
-                        Assert.AssertNotNull(Entry, UnknownOption.Throw);
-                        var Data = Options._Data[Entry.Index];
-                        if ((i + 1 < Args.Length) && !IsFlagged(Args[i + 1])) {
-                            i++;
-                            Arg = Args[i];
+                    var Entry = Match(Describe.Entries, CommandLex.Flag) as DescribeEntryValue;
+                    Assert.AssertNotNull(Entry, UnknownOption.Throw);
+                    var Data = Options._Data[Entry.Index];
+                    if ((i + 1 < Args.Length) && !IsFlagged(Args[i + 1])) {
+                        i++;
+                        Arg = Args[i];
 
-                            SetValue(Data, Args[i]);
-                            }
-                        Data.SetFlag(CommandLex.Not);
-
-                        if (Data as _Flag != null) {
-                            (Data as _Flag).Value = !CommandLex.Not;
-                            Data.ByDefault = false;
-                            }
-                        break;
+                        SetValue(Data, Args[i]);
                         }
+                    Data.SetFlag(CommandLex.Not);
+
+                    if (Data as _Flag != null) {
+                        (Data as _Flag).Value = !CommandLex.Not;
+                        Data.ByDefault = false;
+                        }
+                    break;
+                    }
                 case CommandLex.Token.FlagValue: {
-                        var Entry = Match(Describe.Entries, CommandLex.Flag) as DescribeEntryValue; ;
-                        Assert.AssertNotNull(Entry, UnknownOption.Throw);
+                    var Entry = Match(Describe.Entries, CommandLex.Flag) as DescribeEntryValue; ;
+                    Assert.AssertNotNull(Entry, UnknownOption.Throw);
 
-                        SetValue(Options._Data[Entry.Index], CommandLex.Value);
+                    SetValue(Options._Data[Entry.Index], CommandLex.Value);
 
-                        break;
-                        }
+                    break;
+                    }
                 case CommandLex.Token.Value: {
-                        var Search = true;
-                        for (var j = Parameter; Search & j < Describe.Entries.Count; j++) {
-                            if (Describe.Entries[j] is DescribeEntryParameter) {
-                                DescribeEntryParameter Entry = Describe.Entries[j] as DescribeEntryParameter;
-                                SetValue(Options._Data[Entry.Index], CommandLex.Value);
-                                Parameter = j + 1;
-                                Search = false;
-                                }
+                    var Search = true;
+                    for (var j = Parameter; Search & j < Describe.Entries.Count; j++) {
+                        if (Describe.Entries[j] is DescribeEntryParameter) {
+                            DescribeEntryParameter Entry = Describe.Entries[j] as DescribeEntryParameter;
+                            SetValue(Options._Data[Entry.Index], CommandLex.Value);
+                            Parameter = j + 1;
+                            Search = false;
                             }
-                        break;
                         }
+                    break;
+                    }
 
                 case CommandLex.Token.INVALID:
-                    break;
+                break;
                 default:
-                    break;
+                break;
                 }
             }
         foreach (var Entry in Options._Data) {
@@ -331,23 +329,23 @@ public class DescribeCommandEntry : DescribeCommand {
             foreach (var Entry in Entries) {
                 switch (Entry) {
                     case DescribeCommandEntry SubCommand: {
-                            Output.WriteLine("    {0}{1}  {2}", prefixCommand, Entry.Key, SubCommand.Brief);
-                            break;
-                            }
+                        Output.WriteLine("    {0}{1}  {2}", prefixCommand, Entry.Key, SubCommand.Brief);
+                        break;
+                        }
 
                     default:
-                        break;
+                    break;
                     }
                 }
             foreach (var Entry in Entries) {
                 switch (Entry) {
                     case DescribeEntryParameter Parameter: {
-                            Output.WriteLine("    {0}   {1}", Entry.Key, Parameter.Brief);
-                            break;
-                            }
+                        Output.WriteLine("    {0}   {1}", Entry.Key, Parameter.Brief);
+                        break;
+                        }
 
                     default:
-                        break;
+                    break;
                     }
                 }
             }
@@ -355,12 +353,12 @@ public class DescribeCommandEntry : DescribeCommand {
             foreach (var Entry in Entries) {
                 switch (Entry) {
                     case DescribeEntryOption Option: {
-                            Output.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, Option.Brief);
-                            break;
-                            }
+                        Output.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, Option.Brief);
+                        break;
+                        }
 
                     default:
-                        break;
+                    break;
                     }
                 }
             }
@@ -396,24 +394,24 @@ public class DescribeCommandSet : DescribeCommand {
             foreach (var Entry in Entries) {
                 switch (Entry.Value) {
                     case DescribeCommandSet describeCommandSet: {
-                            Output.WriteLine("    {0}{1}", Entry.Key, describeCommandSet.Brief);
-                            break;
-                            }
+                        Output.WriteLine("    {0}{1}", Entry.Key, describeCommandSet.Brief);
+                        break;
+                        }
 
                     default:
-                        break;
+                    break;
                     }
 
                 }
             foreach (var Entry in Entries) {
                 switch (Entry.Value) {
                     case DescribeCommandEntry describeCommandEntry: {
-                            Output.WriteLine("    {0}{1}   {2}", prefixCommand, Entry.Key, describeCommandEntry.Brief);
-                            break;
-                            }
+                        Output.WriteLine("    {0}{1}   {2}", prefixCommand, Entry.Key, describeCommandEntry.Brief);
+                        break;
+                        }
 
                     default:
-                        break;
+                    break;
                     }
 
                 }

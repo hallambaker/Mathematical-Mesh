@@ -65,7 +65,7 @@ public partial class Shell {
         var file = options.File.Value;
         var id = options.Identifier.Value;
 
-        var entry = contextUser.AddNetworkFromFileAsync(file, localName:id).Sync();
+        var entry = contextUser.AddNetworkFromFileAsync(file, localName: id).Sync();
 
         return new ResultEntry() {
             Success = true,

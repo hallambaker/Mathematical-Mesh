@@ -20,20 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
-using Goedel.IO;
-using Goedel.Test;
-using Goedel.Utilities;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace Goedel.XUnit;
 
 
@@ -74,11 +60,11 @@ public record TestSequence : TestBase {
                     bool randomsize = true,
                     int additionalChunks = 1,
                     bool checkSignatures = false,
-                    string file = "sequence") : base (context){
+                    string file = "sequence") : base(context) {
 
         Records = records;
         Size = size;
-        Randomsize = randomsize; 
+        Randomsize = randomsize;
         SequenceType = sequenceType;
 
         Filename = Seed.GetFilename(file);
@@ -118,7 +104,7 @@ public record TestSequence : TestBase {
         using (var sequence = Sequence.OpenExisting(Filename, fileStatus: FileStatus.Append)) {
             var frameCount = sequence.FrameCount;
             for (var i = 0; i < additionalRecords; i++) {
-                (sequence.FrameCount == frameCount +i ).TestTrue();
+                (sequence.FrameCount == frameCount + i).TestTrue();
 
                 var header = new DareHeader() {
                     };
@@ -144,7 +130,7 @@ public record TestSequence : TestBase {
         using var stream = Filename.OpenFileRead();
         foreach (var entry in Entries) {
 
-            var payload = GetPlaintext( entry.Index);
+            var payload = GetPlaintext(entry.Index);
             Validate(stream, entry, payload);
             }
 
@@ -162,11 +148,11 @@ public record TestSequence : TestBase {
 
 
 
-     void Validate(
-                FileStream stream,
-                SequenceIndexEntry entry,
-                byte[] data
-                ) {
+    void Validate(
+               FileStream stream,
+               SequenceIndexEntry entry,
+               byte[] data
+               ) {
 
         // check frame boundaries
         (entry.FramePosition < entry.DataPosition).TestTrue();
@@ -333,7 +319,7 @@ public record TestSequence : TestBase {
         }
 
 
-    Sequence OpenSequence(IKeyLocate keyCollection = null) => 
+    Sequence OpenSequence(IKeyLocate keyCollection = null) =>
             Sequence.OpenExisting(Filename, keyCollection: keyCollection);
 
     public void ValidateCiphertext() {

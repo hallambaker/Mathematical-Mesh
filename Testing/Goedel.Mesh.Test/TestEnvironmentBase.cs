@@ -22,7 +22,6 @@
 
 
 using Goedel.Callsign.Resolver;
-using Goedel.Carnet;
 using Goedel.Carnet.Server;
 
 namespace Goedel.Mesh.Test;
@@ -42,7 +41,7 @@ public abstract class TestEnvironmentBase : UnitTestSet {
 
     public string Test => Seed.Seed;
     public static string CommonData => System.IO.Path.Combine(TestRoot, "CommonData");
-    public  string WorkingDirectory => System.IO.Path.Combine(DirectoryPath, "Working");
+    public string WorkingDirectory => System.IO.Path.Combine(DirectoryPath, "Working");
 
     public string DirectoryPath => Seed.Directory;
     //public virtual string ServiceDirectory => System.IO.Path.Combine(Path, "ServiceDirectory");
@@ -85,8 +84,9 @@ public abstract class TestEnvironmentBase : UnitTestSet {
     protected virtual CarnetServer GetCarnetServer() => throw new NYI();
 
     public TestCLI GetTestCLI(string machineName = null) {
-        var testShell = new TestShell(this, machineName) { 
-            NoCatch=true};
+        var testShell = new TestShell(this, machineName) {
+            NoCatch = true
+            };
         var result = new TestCLI(testShell);
         testCLIs.Add(result);
         return result;
@@ -161,7 +161,7 @@ public abstract class TestEnvironmentBase : UnitTestSet {
                     KeySecurity.Exportable, keyCollection, keyUses: KeyUses.Sign);
             }
 
-        return new CryptoParameters(keyCollection, signer: signKey, recipient:encryptKey);
+        return new CryptoParameters(keyCollection, signer: signKey, recipient: encryptKey);
         }
 
 

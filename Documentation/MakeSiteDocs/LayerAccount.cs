@@ -20,12 +20,12 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Collections.Generic;
-
 using Goedel.Cryptography.Dare;
 using Goedel.Mesh;
 using Goedel.Mesh.Test;
 using Goedel.Test.Core;
+
+using System.Collections.Generic;
 
 namespace ExampleGenerator;
 

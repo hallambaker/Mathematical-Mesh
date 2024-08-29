@@ -20,15 +20,10 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Collections.Generic;
-using Goedel.Cryptography;
 using Goedel.Cryptography.KeyFile;
-using Goedel.Mesh;
-using Goedel.Mesh.Client;
-using Goedel.Mesh.Test;
-using Goedel.Test;
 using Goedel.Test.Core;
-using Xunit;
+
+using System.Collections.Generic;
 
 //#pragma warning disable CA1822
 
@@ -131,7 +126,7 @@ public partial class TestService {
         var transaction1 = contextAccountAlice.TransactBegin();
         transaction1.ApplicationCreate(applicationSSH);
         var result1 = transaction1.TransactAsync().Sync();
-        
+
 
         // Connect a third device
         var contextOnboardPending2 = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3, AccountAlice);

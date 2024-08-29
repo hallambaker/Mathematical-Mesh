@@ -21,7 +21,6 @@
 #endregion
 
 using Goedel.Cryptography.Core;
-using System.IO;
 
 namespace Goedel.Mesh;
 
@@ -91,16 +90,16 @@ public class MeshMachineCoreServer : Disposable, IMeshMachine {
 
 
 
-#region // Disposing (Currently null)
-//protected override void Disposing() {
-//    //CatalogHost.Dispose();
-//    }
-#endregion
-/// <summary>
-/// Return a new key collection.
-/// </summary>
-/// <returns>The key collection created.</returns>
-    public virtual IKeyCollection GetKeyCollection(string? directory=null) 
+    #region // Disposing (Currently null)
+    //protected override void Disposing() {
+    //    //CatalogHost.Dispose();
+    //    }
+    #endregion
+    /// <summary>
+    /// Return a new key collection.
+    /// </summary>
+    /// <returns>The key collection created.</returns>
+    public virtual IKeyCollection GetKeyCollection(string? directory = null)
             => new KeyCollectionCore(directory);
 
 
@@ -136,16 +135,16 @@ public class MeshMachineCoreServer : Disposable, IMeshMachine {
     ///<inheritdoc cref="IMeshMachine"/>
     public virtual MeshServiceClient GetMeshClient(
                     ICredentialPrivate credential,
-                    string accountAddress) => 
+                    string accountAddress) =>
                 GetClient<MeshServiceClient>(MeshServiceClient.WellKnown, credential, accountAddress);
-        
-        //{
-        //var service = accountAddress.GetService();
-        //var meshServiceBinding = new ConnectionInitiator(
-        //credential, service, null, TransportType.Http, MeshServiceClient.WellKnown);
 
-        //return meshServiceBinding.GetClient<MeshServiceClient>();
-        //}
+    //{
+    //var service = accountAddress.GetService();
+    //var meshServiceBinding = new ConnectionInitiator(
+    //credential, service, null, TransportType.Http, MeshServiceClient.WellKnown);
+
+    //return meshServiceBinding.GetClient<MeshServiceClient>();
+    //}
 
 
     ///<inheritdoc cref="IMeshMachine"/>

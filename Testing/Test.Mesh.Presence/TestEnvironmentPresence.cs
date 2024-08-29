@@ -1,26 +1,11 @@
-﻿
-using Goedel.Test;
-using Goedel.Mesh.Test;
-using Goedel.Utilities;
-using Goedel.Presence.Client;
-using Goedel.Mesh.Client;
-using Goedel.Mesh.Shell;
-using System;
-using Goedel.Mesh.Server;
-using Goedel.Mesh.ServiceAdmin;
-using Goedel.Protocol.Service;
-using Goedel.Presence.Server;
-using Goedel.Test.Core;
-using Microsoft.Extensions.Logging;
-
-namespace Goedel.XUnit;
+﻿namespace Goedel.XUnit;
 
 
 //public class TestMini : Disposable{
 //    public string CallerMethod { get; }
 //    public TestRandom Random { get; }
 
-    
+
 //    public TestMini(string parameters = null, int count = 0) {
 //        CallerMethod = AssemblyStack.GetMethodCallingConstructorName();
 //        Random = new(CallerMethod, parameters, count);

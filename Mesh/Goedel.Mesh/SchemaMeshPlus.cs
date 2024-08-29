@@ -73,7 +73,7 @@ public partial class MeshItem {
             Created = System.DateTime.Now,
             ContentType = MeshConstants.IanaTypeMeshObject,
             MessageType = _Tag
-        };
+            };
 
         Enveloped = new Enveloped<MeshItem>(this,
                     signingKey: signingKey, encryptionKey: encryptionKey, contentMeta: contentMeta,

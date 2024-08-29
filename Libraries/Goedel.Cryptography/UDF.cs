@@ -108,19 +108,19 @@ public class Udf {
             int minBits = 100) {
 
         var parsed = BaseConvert.FromBase32(presentation);
-        if ((parsed.Length < minBits / 8) || (parsed.Length > Value.Length)){
+        if ((parsed.Length < minBits / 8) || (parsed.Length > Value.Length)) {
             return false;
             }
 
-        for (var i= 0; i< parsed.Length; i++) {
+        for (var i = 0; i < parsed.Length; i++) {
             if (parsed[i] != Value[i]) {
-                return false; 
+                return false;
                 }
             }
         return true;
         }
 
-    
+
     #region // Conversions to binary UDF value
     /// <summary>
     /// Calculate a UDF fingerprint from the content data with specified precision.
@@ -140,16 +140,16 @@ public class Udf {
             string key = null) {
         switch (cryptoAlgorithmId) {
             case CryptoAlgorithmId.SHA_2_512: {
-                    return DigestToUDFBinary(Platform.SHA2_512.Process(data),
-                        contentType, bits, cryptoAlgorithmId, key);
-                    }
+                return DigestToUDFBinary(Platform.SHA2_512.Process(data),
+                    contentType, bits, cryptoAlgorithmId, key);
+                }
             case CryptoAlgorithmId.SHA_3_512: {
-                    return DigestToUDFBinary(Platform.SHA3_512.Process(data),
-                        contentType, bits, cryptoAlgorithmId, key);
-                    }
+                return DigestToUDFBinary(Platform.SHA3_512.Process(data),
+                    contentType, bits, cryptoAlgorithmId, key);
+                }
 
             default:
-                break;
+            break;
             }
         throw new InvalidAlgorithm();
         }
@@ -194,16 +194,16 @@ public class Udf {
         UdfTypeIdentifier versionID;
         switch (cryptoAlgorithmId) {
             case CryptoAlgorithmId.SHA_2_512: {
-                    versionID = UdfTypeIdentifier.Digest_SHA_2_512;
-                    break;
-                    }
+                versionID = UdfTypeIdentifier.Digest_SHA_2_512;
+                break;
+                }
             case CryptoAlgorithmId.SHA_3_512: {
-                    versionID = UdfTypeIdentifier.Digest_SHA_3_512;
-                    break;
-                    }
+                versionID = UdfTypeIdentifier.Digest_SHA_3_512;
+                break;
+                }
             default: {
-                    throw new InvalidAlgorithm();
-                    }
+                throw new InvalidAlgorithm();
+                }
             }
 
         var compress = GetCompression(UDFData);
@@ -263,14 +263,14 @@ public class Udf {
 
         switch (cryptoAlgorithmId) {
             case CryptoAlgorithmId.SHA_2_512: {
-                    var macKey = KeyStringToKey(key, 512);
-                    UDFData = buffer.GetMAC(macKey, CryptoAlgorithmId.HMAC_SHA_2_512);
-                    versionID = UdfTypeIdentifier.Authenticator_HMAC_SHA_2_512;
-                    return TypeBDSToBinary(versionID, UDFData, bits);
-                    }
+                var macKey = KeyStringToKey(key, 512);
+                UDFData = buffer.GetMAC(macKey, CryptoAlgorithmId.HMAC_SHA_2_512);
+                versionID = UdfTypeIdentifier.Authenticator_HMAC_SHA_2_512;
+                return TypeBDSToBinary(versionID, UDFData, bits);
+                }
             default: {
-                    throw new InvalidAlgorithm();
-                    }
+                throw new InvalidAlgorithm();
+                }
             }
 
         }

@@ -175,7 +175,7 @@ public class CryptoProviderSHA2_256 : CryptoProviderDigest {
     /// Hash algorithm provider.
     /// </summary>
     public override HashAlgorithm HashAlgorithm() => SHA256.Create();
-        //new SHA256CryptoServiceProvider();
+    //new SHA256CryptoServiceProvider();
 
     /// <summary>
     /// Register this provider in the specified crypto catalog. A provider may 
@@ -226,7 +226,7 @@ public class CryptoProviderSHA2_512 : CryptoProviderDigest {
     /// Hash algorithm provider.
     /// </summary>
     public override HashAlgorithm HashAlgorithm() => SHA512.Create();
-            //new SHA512CryptoServiceProvider();
+    //new SHA512CryptoServiceProvider();
 
 
     /// <summary>
@@ -296,7 +296,7 @@ public class CryptoProviderSHA1 : CryptoProviderDigest {
     /// Hash algorithm provider.
     /// </summary>
     public override HashAlgorithm HashAlgorithm() => SHA1.Create();
-            //new SHA1CryptoServiceProvider();
+    //new SHA1CryptoServiceProvider();
 
 
     /// <summary>

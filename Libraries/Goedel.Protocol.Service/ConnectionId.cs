@@ -31,7 +31,7 @@ namespace Goedel.Protocol.Service;
 /// The connection identifier.
 /// </summary>
 public record ConnectionId {
-    
+
     ///<summary>Unique serial number.</summary> 
     public ulong Serial { get; private set; }
 
@@ -97,14 +97,14 @@ public record ConnectionId {
     /// <param name="packet">Packet buffer to write the connection token to.</param>
     /// <param name="packetOffset">Offset within the buffer.</param>
     public void WriteConnectionToken(
-                ICryptoTransform encryptor, 
+                ICryptoTransform encryptor,
                 ulong counter,
                 byte[] packet,
                 ref int packetOffset) {
         var plaintext = new byte[encryptor.InputBlockSize];
         plaintext.LittleEndianStore(Serial, 0);
         plaintext.LittleEndianStore(counter, 8);
-        encryptor.TransformBlock (plaintext, 0, encryptor.InputBlockSize, 
+        encryptor.TransformBlock(plaintext, 0, encryptor.InputBlockSize,
                 packet, packetOffset);
         packetOffset += encryptor.OutputBlockSize;
         }

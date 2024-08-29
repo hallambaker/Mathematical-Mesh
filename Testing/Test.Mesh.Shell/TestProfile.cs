@@ -20,16 +20,11 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Threading;
-
 using Goedel.Mesh;
 using Goedel.Mesh.Shell;
-using Goedel.Mesh.Test;
-using Goedel.Test;
 using Goedel.Test.Core;
-using Goedel.Utilities;
 
-using Xunit;
+using System.Threading;
 
 #pragma warning disable IDE0059
 #pragma warning disable IDE0060
@@ -41,7 +36,7 @@ namespace Goedel.XUnit;
 
 
 
-public partial class ShellTests  {
+public partial class ShellTests {
 
 
     //public void TestHello1() {
@@ -73,7 +68,7 @@ public partial class ShellTests  {
 
         var testCLI = GetTestCLI();
 
-        var result = testCLI.Dispatch("account hello", fail:true);
+        var result = testCLI.Dispatch("account hello", fail: true);
 
         EndTest();
 

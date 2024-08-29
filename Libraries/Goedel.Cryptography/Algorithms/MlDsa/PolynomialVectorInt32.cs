@@ -1,6 +1,4 @@
-﻿using Goedel.Utilities;
-
-namespace Goedel.Cryptography.PQC;
+﻿namespace Goedel.Cryptography.PQC;
 
 
 /// <summary>
@@ -138,7 +136,7 @@ public class PolynomialVectorInt32 : Disposable {
     /// </summary>
     /// <returns>The copied vector.</returns>
     public PolynomialVectorInt32 Copy() {
-        var result = new PolynomialVectorInt32(Parameters, Wipe, Length==Parameters.K);
+        var result = new PolynomialVectorInt32(Parameters, Wipe, Length == Parameters.K);
         for (var p = 0; p < Length; p++) {
             for (var c = 0; c < MLDSA.N; c++) {
                 result.Polynomials[p].Coefficients[c] = Polynomials[p].Coefficients[c];
@@ -217,7 +215,7 @@ public class PolynomialVectorInt32 : Disposable {
         a.PointwiseMontgomery(Polynomials[0], v.Polynomials[0]);
         var t = new PolynomialInt32(Parameters);
         for (var i = 1; i < Length; i++) {
-            t.PointwiseMontgomery(Polynomials[i],v.Polynomials[i]);
+            t.PointwiseMontgomery(Polynomials[i], v.Polynomials[i]);
             a.Add(t);
             }
         }
@@ -378,6 +376,6 @@ public class PolynomialVectorInt32 : Disposable {
             }
 
         return v;
-        } 
+        }
     #endregion
     }

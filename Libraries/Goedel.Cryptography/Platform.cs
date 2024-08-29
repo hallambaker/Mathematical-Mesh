@@ -20,7 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 using Goedel.Cryptography.Standard;
-using System.Runtime.InteropServices;
 
 namespace Goedel.Cryptography;
 

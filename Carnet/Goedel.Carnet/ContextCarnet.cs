@@ -16,7 +16,7 @@ public class ContextCarnet : ContextAccount {
 
     ///<inheritdoc/>
     public override Profile Profile => ProfileCarnet;
-    ProfileCarnet ProfileCarnet { get;  }
+    ProfileCarnet ProfileCarnet { get; }
     ///<inheritdoc/>
     public override Connection Connection => throw new NotImplementedException();
 
@@ -123,7 +123,7 @@ public class ContextCarnet : ContextAccount {
         this.Future();
         recipient.Future();
         tokens.Future();
-        } 
+        }
     #endregion
 
 

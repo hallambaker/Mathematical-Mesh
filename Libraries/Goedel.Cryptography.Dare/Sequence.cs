@@ -20,9 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using Goedel.Cryptography.Standard;
-using Goedel.IO;
-
 namespace Goedel.Cryptography.Dare;
 
 #region // enumerations
@@ -433,7 +430,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         if (jbcdStream.Length == 0) {
             return new SequenceNull();
             }
-        var sequence = OpenExisting(jbcdStream, keyCollection, decrypt: decrypt, store:store);
+        var sequence = OpenExisting(jbcdStream, keyCollection, decrypt: decrypt, store: store);
         sequence.DisposeJBCDStream = jbcdStream;
 
         return sequence;
@@ -457,7 +454,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// <returns>The sequence created</returns>
     public static Sequence OpenExisting(
                     JbcdStream jbcdStream,
-                    IKeyLocate? keyCollection = null, 
+                    IKeyLocate? keyCollection = null,
                     bool decrypt = true,
                     IInternSequenceIndexEntry store = null) {
         var sequenceIndexEntryFactoryDelegate = store?.SequenceIndexEntryFactory ?? SequenceIndexEntry.Factory;
@@ -480,15 +477,15 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             new CryptoParametersSequence(sequenceType, sequenceHeaderFirst, true, keyCollection);
 
         // Create the Sequence.
-        var sequence = MakeNewSequence(jbcdStream, decrypt, 
+        var sequence = MakeNewSequence(jbcdStream, decrypt,
                      sequenceIndexEntryFactoryDelegate,
                      sequenceType: sequenceType);
         sequence.InternDelegate = store;
 
         // Common initialization
-        sequenceIndexEntryFirst.Sequence= sequence;
+        sequenceIndexEntryFirst.Sequence = sequence;
 
-        sequence.SequenceIndexEntryFirst = SequenceIndexEntry.Bind (sequenceIndexEntryFirst,
+        sequence.SequenceIndexEntryFirst = SequenceIndexEntry.Bind(sequenceIndexEntryFirst,
                     sequenceIndexEntryFactoryDelegate);
 
         if (sequenceIndexEntryLast is not null) {
@@ -536,7 +533,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                     DataEncoding dataEncoding = DataEncoding.JSON,
                     byte[]? cloaked = null,
                     List<byte[]>? dataSequences = null,
-                    bool decrypt=true,
+                    bool decrypt = true,
                     byte[] bitmask = null
                     ) {
 
@@ -545,7 +542,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
 
         var jbcdStream = new JbcdStream(filename, fileStatus);
         var sequence = NewSequence(
-            jbcdStream, decrypt:decrypt, sequenceType: sequenceType, policy: policy, payload: payload, contentType: contentType, dataEncoding: dataEncoding,
+            jbcdStream, decrypt: decrypt, sequenceType: sequenceType, policy: policy, payload: payload, contentType: contentType, dataEncoding: dataEncoding,
             cloaked: cloaked, dataSequences: dataSequences);
 
         sequence.DisposeJBCDStream = jbcdStream;
@@ -587,10 +584,10 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                     DataEncoding dataEncoding = DataEncoding.JSON,
                     byte[]? cloaked = null,
                     List<byte[]>? dataSequences = null,
-                    bool decrypt=true,
+                    bool decrypt = true,
                     byte[] bitmask = null,
                     JsonObject jsonObject = null,
-                    IInternSequenceIndexEntry store =null) {
+                    IInternSequenceIndexEntry store = null) {
         var sequenceIndexEntryFactoryDelegate = store?.SequenceIndexEntryFactory ?? SequenceIndexEntry.Factory;
         dataEncoding = dataEncoding.Default();
 
@@ -611,7 +608,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             };
 
         // Initialize the sequence
-        var sequence = MakeNewSequence(jbcdStream, decrypt, 
+        var sequence = MakeNewSequence(jbcdStream, decrypt,
                      sequenceIndexEntryFactoryDelegate,
                      sequenceType: sequenceType);
 
@@ -658,7 +655,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     public static Sequence MakeNewSequence(
                     JbcdStream jbcdStream,
                     bool decrypt,
-                    SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate 
+                    SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate
 ,
                     SequenceType sequenceType = SequenceType.Merkle) =>
         sequenceType switch {
@@ -690,9 +687,9 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                 },
             _ => throw new InvalidContainerTypeException()
             };
-        
-        
-        
+
+
+
 
 
     /// <summary>
@@ -873,14 +870,14 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         var frameLength = JbcdStream.Length - framePosition;
 
         var result = SequenceIndexEntryFactoryDelegate(
-                sequence : this,
-                framePosition : framePosition,
-                frameLength : frameLength,
-                dataPosition : dataPosition,
-                dataLength : payload?.Length ?? 0,
-                header : header,
-                trailer : trailer,
-                jsonObject : jsonObject
+                sequence: this,
+                framePosition: framePosition,
+                frameLength: frameLength,
+                dataPosition: dataPosition,
+                dataLength: payload?.Length ?? 0,
+                header: header,
+                trailer: trailer,
+                jsonObject: jsonObject
                 );
 
         SequenceIndexEntryLast = result;
@@ -1080,7 +1077,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         var trailerData = trailer?.GetBytes(false);
         JbcdStream.WriteWrappedFrameEnd(trailerData);
 
-        IncrementalAppendIndex.Trailer= trailer;
+        IncrementalAppendIndex.Trailer = trailer;
         SequenceIndexEntryLast = IncrementalAppendIndex;
         Intern(IncrementalAppendIndex);
 
@@ -1159,7 +1156,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         using var InputStream = new MemoryStream(data) {
             Position = 0
             };
-        
+
         var ContentLength = InputStream.Length;
 
         return AppendFromStream(InputStream, ContentLength, contentMeta, //cryptoParameters,
@@ -1344,26 +1341,26 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
 
         switch (darePolicy?.Encryption) {
             case DareConstants.PolicyEncryptionOnceTag: {
-                    keyExchange = (header.Index == 0);
-                    break;
-                    }
+                keyExchange = (header.Index == 0);
+                break;
+                }
             case DareConstants.PolicyEncryptionIsolatedTag: {
-                    keyExchange = true;
-                    break;
-                    }
+                keyExchange = true;
+                break;
+                }
 
             case DareConstants.PolicyEncryptionNoneTag: {
-                    encrypt = false;
-                    break;
-                    }
+                encrypt = false;
+                break;
+                }
             case DareConstants.PolicyEncryptionSessionTag: {
-                    keyExchange = null;
-                    break;
-                    }
+                keyExchange = null;
+                break;
+                }
             default: {
-                    encrypt = false;
-                    break;
-                    }
+                encrypt = false;
+                break;
+                }
             }
 
         // check frame data
@@ -1421,7 +1418,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             return entry;
             }
         if (indexEntry.FramePosition <= 0) {
-            return null; 
+            return null;
             }
 
         return ReadAtPosition(indexEntry.FramePosition, true);
@@ -1435,7 +1432,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// <param name="skip">If true, search process may skip entries to 
     /// locate faster (this may cause entry status to be missed).</param>
     /// <returns>The Frame index.</returns>
-    public abstract SequenceIndexEntry Frame(long Index, bool skip=true);
+    public abstract SequenceIndexEntry Frame(long Index, bool skip = true);
 
     /// <summary>
     /// Return a <see cref="SequenceIndexEntry"/> for the last frame in the sequence.

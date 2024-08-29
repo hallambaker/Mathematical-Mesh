@@ -21,11 +21,8 @@
 #endregion
 
 
-using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
-using Goedel.Mesh;
 using Goedel.Protocol;
-using System.Reflection.Emit;
 
 namespace Goedel.Callsign.Registry;
 
@@ -85,7 +82,7 @@ public partial class ApplicationEntryRegistry {
             };
 
         return result;
-        
+
         }
 
     #endregion
@@ -110,7 +107,7 @@ public partial class ApplicationEntryRegistry {
     }
 #endregion
 
-public partial class CatalogedRegistry{
+public partial class CatalogedRegistry {
     #region // Properties
     ///<summary>Return the catalog identifier for the group <paramref name="groupAddress"/>.</summary>
     public static string GetGroupID(string groupAddress) => "CatalogedRegistry:" + groupAddress;
@@ -128,7 +125,7 @@ public partial class CatalogedRegistry{
     ProfileRegistry? profileRegistry;
 
     ///<summary>The connection used to authenticate the client to the service.</summary> 
-    public ConnectionService ConnectionService {get; set;}
+    public ConnectionService ConnectionService { get; set; }
 
     ///<summary>The activation record.</summary> 
     public ActivationApplicationRegistry ActivationApplicationRegistry { get; set; }
@@ -190,8 +187,8 @@ public partial class CatalogedRegistry{
 
     ///<inheritdoc/>
     public override void Activate(
-                List<ApplicationEntry> activationEntries, 
-                ProfileDevice profileDevice, 
+                List<ApplicationEntry> activationEntries,
+                ProfileDevice profileDevice,
                 IKeyCollection keyCollection) {
 
         foreach (var entry in activationEntries) {
@@ -208,8 +205,8 @@ public partial class CatalogedRegistry{
 
 
     void Activate(
-                ApplicationEntryRegistry applicationEntry, 
-                ProfileDevice profileDevice, 
+                ApplicationEntryRegistry applicationEntry,
+                ProfileDevice profileDevice,
                 IKeyCollection keyCollection) {
         profileDevice.Activate(keyCollection);
 

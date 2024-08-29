@@ -21,10 +21,6 @@
 #endregion
 
 using Goedel.Mesh.Shell;
-using Goedel.Mesh.Test;
-using Goedel.Utilities;
-
-using Xunit;
 //using Goedel.Mesh.Shell.ServiceAdmin;
 
 
@@ -55,10 +51,10 @@ public partial class RegistrationTests : Disposable {
         };
     public virtual TestCLI GetTestCLI(string machineName = null) => TestEnvironment.GetTestCLI(machineName);
 
-        //{
-        //var testShell = new TestShell(TestEnvironment, MachineName);
-        //return new TestCLI(testShell);
-        //}
+    //{
+    //var testShell = new TestShell(TestEnvironment, MachineName);
+    //return new TestCLI(testShell);
+    //}
     #endregion
 
 

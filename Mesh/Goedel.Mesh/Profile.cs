@@ -232,8 +232,8 @@ public partial class Profile {
     /// </summary>
     /// <returns>True if the binding is valid, otherwise false.</returns>
     public static bool ValidateAny(
-                    DareEnvelope dareEnvelope, 
-                    IEnumerable<Enveloped<Profile>> profiles, 
+                    DareEnvelope dareEnvelope,
+                    IEnumerable<Enveloped<Profile>> profiles,
                     string profileUdf) {
 
         var signatures = dareEnvelope?.Header?.Signatures ??

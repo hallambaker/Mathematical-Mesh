@@ -21,8 +21,6 @@
 #endregion
 
 
-using System;
-
 namespace Goedel.Cryptography;
 
 
@@ -230,7 +228,7 @@ public partial class KeyPairRSA : KeyPairBaseRSA {
     /// the value of <paramref name="keySecurity"/></param>/// <returns>The created key pair</returns>
     public static new KeyPair KeyPairPrivateFactory(
             PkixPrivateKeyRsa PKIXParameters,
-            KeySecurity keySecurity, 
+            KeySecurity keySecurity,
             IKeyLocate keyCollection) {
 
         keyCollection.Keep();
@@ -260,7 +258,7 @@ public partial class KeyPairRSA : KeyPairBaseRSA {
             var privateKey = GetRsa(bits, primep, primeq);
 
             if (privateKey is not null) {
-                return new (privateKey);
+                return new(privateKey);
                 }
             }
         }
@@ -279,7 +277,7 @@ public partial class KeyPairRSA : KeyPairBaseRSA {
     /// <returns>The prime and the iteration count.</returns>
     /// <exception cref="NYI"></exception>
     static (BigInteger, int) GetPrime(
-                    int bits, 
+                    int bits,
                     byte[] ikm,
                     byte[] keySpecifier,
                     string keyName,

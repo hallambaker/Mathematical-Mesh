@@ -20,18 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System;
-
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.IO;
-using Goedel.Mesh.Shell;
-using Goedel.Mesh.Test;
-using Goedel.Test;
-using Goedel.Utilities;
-
-using Xunit;
-
 namespace Goedel.XUnit;
 
 [Collection("Our Test Collection #1")]
@@ -64,7 +52,8 @@ public partial class TestDareLog {
         ReadWriteEnvelope(0);
 
         int length = 1;
-        for (var i = 1; i < 16; i++) {            ReadWriteEnvelope(length, null);
+        for (var i = 1; i < 16; i++) {
+            ReadWriteEnvelope(length, null);
             length *= 2;
             }
         }
@@ -221,16 +210,16 @@ public partial class TestDareLog {
 
         var filename = seed.GetFilename("Sequence");
 
-    //    ReadWriteArchive(fileName, entries, policy, independent);
-    //    }
+        //    ReadWriteArchive(fileName, entries, policy, independent);
+        //    }
 
 
 
-    //static void ReadWriteArchive(
-    //            string filename, 
-    //            int entries,
-    //            DarePolicy policy = null, 
-    //            bool independent = false) {
+        //static void ReadWriteArchive(
+        //            string filename, 
+        //            int entries,
+        //            DarePolicy policy = null, 
+        //            bool independent = false) {
 
 
         var testData = new byte[entries][];
@@ -244,7 +233,7 @@ public partial class TestDareLog {
 
 
         using (var writer = new DareLogWriter(
-                filename, fileStatus: FileStatus.Overwrite, policy:policy)) {
+                filename, fileStatus: FileStatus.Overwrite, policy: policy)) {
             for (var i = 0; i < entries; i++) {
                 writer.AddData(testData[i]);
                 }
@@ -252,7 +241,7 @@ public partial class TestDareLog {
 
         // Test retrieval by index number. Note that since record 0 has the 
         // container header data, the data items run through [1..Entries]
-        using (var reader = new DareLogReader(filename, keyLocate:policy.KeyLocation)) {
+        using (var reader = new DareLogReader(filename, keyLocate: policy.KeyLocation)) {
             for (var i = 0; i < entries; i++) {
 
 

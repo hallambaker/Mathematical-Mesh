@@ -11,7 +11,7 @@ public interface IWidget {
 
 
 
-public interface IMainWindow  {
+public interface IMainWindow {
 
     Page Page { get; }
 

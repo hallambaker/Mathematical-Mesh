@@ -341,51 +341,51 @@ public class CryptoProviderEncryptAES : CryptoProviderEncryption {
                         CryptoAlgorithmId Bulk = CryptoAlgorithmId.Default) {
         switch (Bulk) {
             case CryptoAlgorithmId.Default: {
-                    return new CryptoProviderEncryptAES(KeySize);
-                    }
+                return new CryptoProviderEncryptAES(KeySize);
+                }
             case CryptoAlgorithmId.AES128: {
-                    return new CryptoProviderEncryptAES(128);
-                    }
+                return new CryptoProviderEncryptAES(128);
+                }
             case CryptoAlgorithmId.AES128CBC: {
-                    return new CryptoProviderEncryptAES(128,
-                            CipherMode.CBC, PaddingMode.PKCS7);
-                    }
+                return new CryptoProviderEncryptAES(128,
+                        CipherMode.CBC, PaddingMode.PKCS7);
+                }
             case CryptoAlgorithmId.AES128CTS: {
-                    return new CryptoProviderEncryptAES(128,
-                            CipherMode.CTS, PaddingMode.PKCS7);
-                    }
+                return new CryptoProviderEncryptAES(128,
+                        CipherMode.CTS, PaddingMode.PKCS7);
+                }
             case CryptoAlgorithmId.AES128CBCNone: {
-                    return new CryptoProviderEncryptAES(128,
-                            CipherMode.CBC, PaddingMode.None);
-                    }
+                return new CryptoProviderEncryptAES(128,
+                        CipherMode.CBC, PaddingMode.None);
+                }
             case CryptoAlgorithmId.AES128ECB: {
-                    return new CryptoProviderEncryptAES(128,
-                            CipherMode.ECB, PaddingMode.None);
-                    }
+                return new CryptoProviderEncryptAES(128,
+                        CipherMode.ECB, PaddingMode.None);
+                }
             case CryptoAlgorithmId.AES256: {
-                    return new CryptoProviderEncryptAES(256);
-                    }
+                return new CryptoProviderEncryptAES(256);
+                }
             case CryptoAlgorithmId.AES256CBC: {
-                    return new CryptoProviderEncryptAES(256,
-                            CipherMode.CBC, PaddingMode.PKCS7);
-                    }
+                return new CryptoProviderEncryptAES(256,
+                        CipherMode.CBC, PaddingMode.PKCS7);
+                }
             case CryptoAlgorithmId.AES256CTS: {
-                    return new CryptoProviderEncryptAES(256,
-                            CipherMode.CTS, PaddingMode.PKCS7);
-                    }
+                return new CryptoProviderEncryptAES(256,
+                        CipherMode.CTS, PaddingMode.PKCS7);
+                }
             case CryptoAlgorithmId.AES256CBCNone: {
-                    return new CryptoProviderEncryptAES(256,
-                            CipherMode.CBC, PaddingMode.None);
-                    }
+                return new CryptoProviderEncryptAES(256,
+                        CipherMode.CBC, PaddingMode.None);
+                }
             case CryptoAlgorithmId.AES256ECB: {
-                    return new CryptoProviderEncryptAES(256,
-                            CipherMode.ECB, PaddingMode.None);
-                    }
+                return new CryptoProviderEncryptAES(256,
+                        CipherMode.ECB, PaddingMode.None);
+                }
 
 
             default: {
-                    throw new CipherModeNotSupported();
-                    }
+                throw new CipherModeNotSupported();
+                }
             }
 
         }

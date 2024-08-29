@@ -1,6 +1,4 @@
-﻿using System.Data;
-
-namespace Goedel.Guigen.Maui;
+﻿namespace Goedel.Guigen.Maui;
 
 /// <summary>
 /// Backing class for a string entry field.
@@ -13,7 +11,7 @@ public class GuigenFieldString : GuigenFieldSimple, IWidget {
     public override bool IsEditable => IsEditMode & (TypedBinding.Set is not null);
 
 
-    Entry FieldAsEntry { get; set; } 
+    Entry FieldAsEntry { get; set; }
     Label FieldAsLabel { get; set; }
 
     bool currentEditMode;
@@ -43,7 +41,7 @@ public class GuigenFieldString : GuigenFieldSimple, IWidget {
 
     ///<inheritdoc/>
     public override void SetEditable() {
-        if (IsEditable ) {
+        if (IsEditable) {
             if (FieldAsEntry == null) {
                 FieldAsEntry = Binding.GetEntry(this);
                 FieldAsEntry.Text = Value;

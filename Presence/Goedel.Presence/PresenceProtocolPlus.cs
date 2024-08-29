@@ -18,14 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Utilities;
-
 using Goedel.Protocol;
 
-using System;
-using System.Collections.Generic;
 using System.Net;
-using Goedel.Mesh;
 
 namespace Goedel.Presence;
 
@@ -71,11 +66,11 @@ public partial class PresenceFromClient : Request {
         //Array.Copy (token, result, token.Length);
 
 
-        var stream = new MemoryStream (result);
+        var stream = new MemoryStream(result);
         var writer = new JsonBWriter(stream);
 
         // Write the initial token to the stream
-        stream.Write (token, 0, token.Length);
+        stream.Write(token, 0, token.Length);
 
         Serialize(writer, true);
 
@@ -88,10 +83,10 @@ public partial class PresenceFromClient : Request {
     /// </summary>
     /// <returns>The parsed message.</returns>
     public static PresenceFromClient FromBytes(byte[] data, int offset) {
-        var stream = new MemoryStream (data, offset, data.Length-offset);
+        var stream = new MemoryStream(data, offset, data.Length - offset);
         var reader = new JsonBcdReader(stream);
 
-        var result = PresenceFromClient.FromJson (reader, true);
+        var result = PresenceFromClient.FromJson(reader, true);
         return result;
         }
 

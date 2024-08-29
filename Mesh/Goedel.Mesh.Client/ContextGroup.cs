@@ -149,8 +149,8 @@ public partial class ContextGroup : ContextAccount {
     /// <param name="memberAddress">The member to add.</param>
     /// <param name="text">Invitation text.</param>
     /// <returns>The catalog entry for the member created.</returns>
-    public CatalogedMember Add(string memberAddress, string text = null) => 
-        AddAsync (memberAddress, text).Sync();
+    public CatalogedMember Add(string memberAddress, string text = null) =>
+        AddAsync(memberAddress, text).Sync();
 
     /// <summary>
     /// Add a member to the group.
@@ -180,7 +180,7 @@ public partial class ContextGroup : ContextAccount {
         var capabilityMember = new CapabilityDecryptPartial() {
             Id = ProfileGroup.CommonEncryption.Udf,
             EnvelopedKeyShare = keyData.GetEnvelopedKeyData(),
-            Issued = (int) catalogMember.FrameCount
+            Issued = (int)catalogMember.FrameCount
             };
 
         // Create and send the invitation

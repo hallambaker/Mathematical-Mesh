@@ -293,7 +293,7 @@ public class CurveEdwards25519 : CurveEdwards {
         switch (cryptoAlgorithm) {
             case CryptoAlgorithmId.Ed25519: {
                 // If y is null or empty, algorithm is Ed25519, otherwise algorithm is Ed25519ctx
-                if (y == null ) {
+                if (y == null) {
                     return null;
                     }
                 if (y.Length == 0) {

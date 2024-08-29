@@ -19,7 +19,7 @@ public static class ConsoleLoggerExtensions {
         host.ConfigureServices((hostContext, services) => {
             var configurationHost = services.Configure<GenericHostConfiguration>(
                 hostContext.Configuration.GetSection(GenericHostConfiguration.ConfigurationEntry.Name));
-            });
+        });
 
         return host;
         }
@@ -37,7 +37,7 @@ public static class ConsoleLoggerExtensions {
             var serviceConfig = hostContext.Configuration.GetSection(MeshServiceConfiguration.ConfigurationEntry.Name);
             services.AddSingleton<IConfguredService, MeshConfiguredService>();
             var configurationService = services.Configure<MeshServiceConfiguration>(serviceConfig);
-            });
+        });
 
         return host;
         }
@@ -73,7 +73,7 @@ public class MeshConfiguredService : IConfguredService {
     public List<Endpoint> Endpoints { get; }
 
     ///<inheritdoc/>
-    public void Dispose () => PublicMeshService?.Dispose ();
+    public void Dispose() => PublicMeshService?.Dispose();
 
     /// <summary>
     /// Mesh service provider instance configured with options specifie in 
@@ -114,7 +114,7 @@ public class MeshConfiguredService : IConfguredService {
         var transactionLogger = new LogService
             (GenericHostConfiguration, MeshHostConfiguration, hostMonitor);
 
-        PublicMeshService = new PublicMeshService(MeshMachine, 
+        PublicMeshService = new PublicMeshService(MeshMachine,
             GenericHostConfiguration, MeshHostConfiguration, transactionLogger, presenceServiceProvider);
         Endpoints = PublicMeshService.Endpoints;
 

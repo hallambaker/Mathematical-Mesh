@@ -83,7 +83,7 @@ public enum CatalogedEntryFormat {
 public partial class CatalogedEntry {
 
     ///<summary>The sequence entry.</summary> 
-    public SequenceIndexEntry SequenceIndexEntry {get; set; }
+    public SequenceIndexEntry SequenceIndexEntry { get; set; }
 
     ///<summary>Additional encryption keys to which the encrypted catalog entry is to be written.</summary> 
     public List<KeyPair> AdditionalRecipients;
@@ -96,13 +96,13 @@ public partial class CatalogedEntry {
     /// <param name="detail">If true, provide a detailed description.</param>
     public virtual void Describe(StringBuilder builder, bool detail = false) => builder.AppendLine(_Tag);
 
-            /// <summary>
+    /// <summary>
     /// Converts the value of this instance to a <see langword="String"/>.
     /// </summary>
     /// <returns>The current string.</returns>
     public override string ToString() {
         var stringBuilder = new StringBuilder();
-        ItemToBuilder (stringBuilder);
+        ItemToBuilder(stringBuilder);
 
         return stringBuilder.ToString();
 
@@ -120,10 +120,10 @@ public partial class CatalogedEntry {
 
         switch (format) {
             case CatalogedEntryFormat.Default: {
-                    var writer = new JsonWriter(stream);
-                    Serialize(writer, true);
-                    return;
-                    }
+                var writer = new JsonWriter(stream);
+                Serialize(writer, true);
+                return;
+                }
             }
 
         throw new InvalidFormat(args: format);

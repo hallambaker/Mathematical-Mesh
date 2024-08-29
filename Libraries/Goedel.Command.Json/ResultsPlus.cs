@@ -21,8 +21,6 @@
 #endregion
 
 
-using System.Reflection.Metadata;
-
 namespace Goedel.Command.Json;
 
 public partial class ShellResult {

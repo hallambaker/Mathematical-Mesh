@@ -32,6 +32,7 @@ global using Goedel.Presence.Server;
 global using Goedel.Protocol;
 global using Goedel.Registry;
 global using Goedel.Repository.Server;
+
 global using System;
 global using System.Collections.Generic;
 global using System.Net;

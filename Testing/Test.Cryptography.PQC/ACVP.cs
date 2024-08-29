@@ -1,6 +1,6 @@
 namespace Goedel.Test;
 
-public class DsaKeyGenTest : AcvpTest { 
+public class DsaKeyGenTest : AcvpTest {
 
     public byte[] Seed { get; set; }
 
@@ -83,7 +83,7 @@ public class DsaVerifyTest : DsaKeyGenTest {
     public override void Test() {
         var publicKey = new MlDsaPublic(PublicKey);
         var test = publicKey.Verify(Signature, Message);
-        test.TestEqual(TestPassed==true);
+        test.TestEqual(TestPassed == true);
 
         // not currently using the reason codes.
 

@@ -24,10 +24,10 @@ public static class CallsignResolverExtensions {
             var serviceConfig = hostContext.Configuration.GetSection(CallsignResolverConfiguration.ConfigurationEntry.Name);
             services.AddSingleton<IConfguredService, ResolverConfiguredService>();
             var configurationService = services.Configure<CallsignResolverConfiguration>(serviceConfig);
-                //var configurationHost = services.Configure<GenericHostConfiguration>(
-                //    hostContext.Configuration.GetSection(GenericHostConfiguration.ConfigurationEntry.Name));
+            //var configurationHost = services.Configure<GenericHostConfiguration>(
+            //    hostContext.Configuration.GetSection(GenericHostConfiguration.ConfigurationEntry.Name));
 
-            });
+        });
 
         return host;
         }
@@ -65,7 +65,7 @@ public class ResolverConfiguredService : IConfguredService {
     public List<Endpoint> Endpoints { get; }
 
     ///<inheritdoc/>
-    public void Dispose () => ResolverService?.Dispose ();
+    public void Dispose() => ResolverService?.Dispose();
 
     /// <summary>
     /// Mesh service provider instance configured with options specifie in 

@@ -1,7 +1,4 @@
-﻿using System.Reflection.Metadata;
-using System.Security.Cryptography;
-using Goedel.Utilities;
-namespace Goedel.Cryptography.PQC;
+﻿namespace Goedel.Cryptography.PQC;
 
 /// <summary>
 /// Operations on matrix of polynomials expressed as a list of coefficients 
@@ -10,11 +7,11 @@ namespace Goedel.Cryptography.PQC;
 public class PolynomialMatrixInt32 : Disposable {
 
     #region // Properties and fields
-    
+
     ///<summary>The polynomial vectors.</summary> 
     public PolynomialVectorInt32[] Vectors;
 
-    MLDSA Parameters { get; } 
+    MLDSA Parameters { get; }
 
     #endregion
 
@@ -114,7 +111,7 @@ public class PolynomialMatrixInt32 : Disposable {
     /// not null.</param>
     /// <returns>String containing the base16 representation of the values.</returns>
     public string GetHash(
-                    string? tag=null,
+                    string? tag = null,
                     TextWriter output = null) {
 
         output ??= Console.Out;

@@ -18,15 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-
-using Goedel.Protocol;
-using Goedel.Presence;
-using Goedel.Protocol.Presentation;
-using Goedel.Utilities;
-
-
-using System.Collections.Generic;
-namespace Goedel.Presence.Server; 
+namespace Goedel.Presence.Server;
 
 
 

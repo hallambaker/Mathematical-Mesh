@@ -1,12 +1,4 @@
-﻿
-
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
-using Goedel.Cryptography;
-using Microsoft.Extensions.Logging;
-using Goedel.Mesh;
-using System.Data.SqlTypes;
-using Goedel.Cryptography.PKIX;
+﻿using Goedel.Cryptography.Jose;
 
 namespace Goedel.Callsign.Registry;
 
@@ -20,7 +12,7 @@ public class ContextRegistry : ContextAccount {
     public ContextUser ContextUser;
 
     ///<inheritdoc/>
-    public override ProfileDevice ProfileDevice => ContextUser.ProfileDevice; 
+    public override ProfileDevice ProfileDevice => ContextUser.ProfileDevice;
 
     ///<inheritdoc/>
     public override Profile Profile => CatalogedRegistry.ProfileRegistry;
@@ -42,7 +34,7 @@ public class ContextRegistry : ContextAccount {
     public CallsignMapping CallsignMapping { get; }
 
     ///<summary>The default page to be assumed if none is specified in a binding request.</summary> 
-    public  string DefaultPage => "CharacterPageLatin";
+    public string DefaultPage => "CharacterPageLatin";
 
     ///<inheritdoc/>
     public override string ServiceAddress { get; }
@@ -74,13 +66,13 @@ public class ContextRegistry : ContextAccount {
 
     ///<inheritdoc/>
     public KeyPair AccountAuthentication =>
-        ActivationApplicationRegistry?.AccountAuthentication ;
+        ActivationApplicationRegistry?.AccountAuthentication;
 
 
     ///<inheritdoc/>
     public override MeshCredentialPrivate GetMeshCredentialPrivate() {
         ProfileDevice.Activate(KeyCollection);
-        return new(ProfileDevice, CatalogedRegistry.ConnectionService, 
+        return new(ProfileDevice, CatalogedRegistry.ConnectionService,
                 null, AccountAuthentication as KeyPairAdvanced);
         }
 
@@ -318,7 +310,7 @@ public class ContextRegistry : ContextAccount {
                 Id = id,
                 Entry = registrationRequest.EnvelopedCallsignBinding,
                 Reason = previous == null ?
-                    CallsignConstants.RegistrationReasonInitialTag : 
+                    CallsignConstants.RegistrationReasonInitialTag :
                         CallsignConstants.RegistrationReasonUpdateTag,
                 PriorId = previous?.Id
                 };
@@ -360,7 +352,7 @@ public class ContextRegistry : ContextAccount {
     public ProcessResult RefuseRequest(
             CallsignRegistrationRequest registrationRequest,
             CallsignBinding? binding,
-            Exception exception) => RefuseRequestAsync (registrationRequest, binding, exception).Sync();
+            Exception exception) => RefuseRequestAsync(registrationRequest, binding, exception).Sync();
 
 
     /// <summary>
@@ -372,7 +364,7 @@ public class ContextRegistry : ContextAccount {
     /// <param name="exception">The exception raised.</param>
     /// <param name="binding">The callsign binding.</param>
     /// <returns>Processing result with <see cref="ProcessResult.Success"/> set false.</returns>
-    public async Task<ProcessResult> RefuseRequestAsync (
+    public async Task<ProcessResult> RefuseRequestAsync(
                 CallsignRegistrationRequest registrationRequest,
                 CallsignBinding? binding,
                 Exception exception) {
@@ -503,7 +495,7 @@ public class ContextRegistry : ContextAccount {
 
     string StripAt(string callsign) {
         if (callsign[0] != '@') {
-            return callsign; 
+            return callsign;
             }
         return callsign.Substring(1);
         }

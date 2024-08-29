@@ -51,7 +51,7 @@ public class HostMonitor {
     private MonitorResult current;
     private System.DateTime[] dispatcherStart;
     System.DateTime busyStart;
-    
+
     ///<summary>The system logger.</summary> 
     public ILogger Logger { get; }
 
@@ -65,8 +65,8 @@ public class HostMonitor {
     /// <param name="logger">The system logger output.</param>
     /// <param name="hostConfiguration">The host configuration</param>
     public HostMonitor(ILogger<HostMonitor> logger,
-                IOptionsMonitor<GenericHostConfiguration> hostConfiguration=null) {
-        
+                IOptionsMonitor<GenericHostConfiguration> hostConfiguration = null) {
+
         Logger = logger;
         }
 

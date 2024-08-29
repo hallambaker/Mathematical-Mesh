@@ -4,14 +4,14 @@
 /// <summary>
 /// Message content type identifiers.
 /// </summary>
-public enum MessageContentType  {
+public enum MessageContentType {
 
     ///<summary>Raw binary data.</summary> 
     Binary = 0,
-    
+
     ///<summary>Plaintext message without formatting.</summary> 
     Plaintext = 1,
-    
+
     ///<summary>Message with limited formatting.</summary> 
     Richtext = 2,
 
@@ -24,7 +24,7 @@ public enum MessageContentType  {
 /// <param name="Payload">The message payload.</param>
 public record MessageContent(
             MessageContentType ContentType,
-            byte[] Payload)  {
+            byte[] Payload) {
 
 
 

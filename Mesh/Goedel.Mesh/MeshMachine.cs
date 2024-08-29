@@ -82,7 +82,7 @@ public interface IMeshMachine {
     /// </summary>
     /// <param name="service">The subdirectory for the service data</param>
     /// <returns>The fully qualified path.</returns>
-    string GetServiceDirectory (string service);
+    string GetServiceDirectory(string service);
 
 
     /// <summary>

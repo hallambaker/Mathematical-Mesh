@@ -22,12 +22,6 @@
 
 using Goedel.FSR;
 
-using Microsoft.Extensions.Primitives;
-
-using System;
-using System.Diagnostics.Metrics;
-using System.Runtime.CompilerServices;
-
 namespace Goedel.Discovery;
 
 /// <summary>
@@ -177,7 +171,7 @@ public partial class ServiceAddressSplitLex {
             return ParsedAddress.Invalid;
             }
 
-        var end = start + count-1;
+        var end = start + count - 1;
         if (tokens[end].Token == Token.Label) {
             if (tokens[end].Value == ServiceAddress.MeshTopLevelDirectory) {
                 if (count < 3) {
@@ -206,7 +200,7 @@ public partial class ServiceAddressSplitLex {
                 return ParsedAddress.Invalid;
                 }
             version = pversion;
-            count -= 2; 
+            count -= 2;
 
             addressType = ParsedAddressType.Callsign;
             }
@@ -214,14 +208,14 @@ public partial class ServiceAddressSplitLex {
         end = start + count - 1;
         var state = 0;
         var builder = new StringBuilder();
-        for (var i=start; i <= end; i++) {
+        for (var i = start; i <= end; i++) {
             var token = tokens[i].Token;
             var value = tokens[i].Value;
             switch (state) {
                 case 0: {
                     if (token == Token.Label) {
                         builder.Append(value);
-                        state = 1; 
+                        state = 1;
                         break;
                         }
                     return ParsedAddress.Invalid;
@@ -236,7 +230,7 @@ public partial class ServiceAddressSplitLex {
                         }
                     return ParsedAddress.Invalid;
                     }
-                } 
+                }
             }
         if (state != 1) {
             return ParsedAddress.Invalid;
@@ -252,26 +246,26 @@ public partial class ServiceAddressSplitLex {
             }
 
 
-            //switch (serviceType) {
-            //case ParsedAddressType.Callsign: {
-            //    addressType = ParsedAddressType.Callsign;
-            //    break;
-            //    }
-            //case ParsedAddressType.Dns: {
-            //    if (addressType == ParsedAddressType.Empty) {
-            //        // alice@example.com is a DNS Account
-            //        addressType = ParsedAddressType.Dns;
-            //        }
-            //    break;
-            //    }
-            //default: {
-            //    if (addressType == ParsedAddressType.Empty) {
-            //        // example.com is a DNS Service
-            //        addressType = ParsedAddressType.Callsign;
-            //        }
-            //    break;
-            //    }
-            //}
+        //switch (serviceType) {
+        //case ParsedAddressType.Callsign: {
+        //    addressType = ParsedAddressType.Callsign;
+        //    break;
+        //    }
+        //case ParsedAddressType.Dns: {
+        //    if (addressType == ParsedAddressType.Empty) {
+        //        // alice@example.com is a DNS Account
+        //        addressType = ParsedAddressType.Dns;
+        //        }
+        //    break;
+        //    }
+        //default: {
+        //    if (addressType == ParsedAddressType.Empty) {
+        //        // example.com is a DNS Service
+        //        addressType = ParsedAddressType.Callsign;
+        //        }
+        //    break;
+        //    }
+        //}
 
 
         return new ParsedAddress() {
@@ -320,8 +314,8 @@ public partial class ServiceAddressSplitLex {
         if (!int.TryParse(tokens[8].Value, out var port)) {
             return false;
             }
-        serviceAddress = new ServiceAddress(service) { 
-            Port = port 
+        serviceAddress = new ServiceAddress(service) {
+            Port = port
             };
 
 
@@ -334,7 +328,7 @@ public partial class ServiceAddressSplitLex {
         var count = tokens.Count;
 
         if (tokens[0].Token == Token.Left) {
-            if (tokens[count-1].Token == Token.Numeric) {
+            if (tokens[count - 1].Token == Token.Numeric) {
                 if (count < 5) {
                     return false;
                     }
@@ -349,7 +343,7 @@ public partial class ServiceAddressSplitLex {
                     return false;
                     }
 
-                return TryIPv6(tokens, ref serviceAddress, 1, count-4, port);  // [1:2:3]:wev
+                return TryIPv6(tokens, ref serviceAddress, 1, count - 4, port);  // [1:2:3]:wev
                 }
             if (tokens[count - 1].Token != Token.Right) {
                 return false;
@@ -465,7 +459,7 @@ public partial class ServiceAddressSplitLex {
         if (token.Value.Length > 4) {
             return true;
             }
-        
+
         // If the token is correctly parsed, it MUST be within range.
         return false;
         }

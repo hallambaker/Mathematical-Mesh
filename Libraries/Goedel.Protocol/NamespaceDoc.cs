@@ -20,12 +20,13 @@
 //  THE SOFTWARE.
 #endregion
 
+global using Goedel.IO;
+global using Goedel.Utilities;
+
 global using System;
 global using System.Collections.Generic;
 global using System.IO;
 global using System.Text;
-global using Goedel.IO;
-global using Goedel.Utilities;
 
 
 #if !(_Github_)

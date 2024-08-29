@@ -20,11 +20,11 @@ public class MyViewCell : ViewCell {
     SummaryView? SummaryView;
 
 
-    SelectGrid SelectGrid {get; set; }
+    SelectGrid SelectGrid { get; set; }
     //ArrayGrid ArrayGrid { get; set; }
     public Grid GridCell { get; } = new();
 
-    public MyViewCell(GuigenFieldChooser chooser) { 
+    public MyViewCell(GuigenFieldChooser chooser) {
         Chooser = chooser;
         BindingContextChanged += OnBindingChanged;
         //PropertyChanged += OnPropertyChanged;
@@ -84,7 +84,7 @@ public class MyViewCell : ViewCell {
                     break;
                     }
                 case GuiBoundPropertyIcon icon: {
-                    var value = icon.Get(BindingContext) ;
+                    var value = icon.Get(BindingContext);
 
                     var source = value is null ? "info_question" : value.Source;
 
@@ -171,7 +171,7 @@ class ArrayGrid {
     List<GridLength> Widths { get; }
     public Grid Grid { get; set; } = new();
 
-    
+
 
     public ArrayGrid(List<GridLength> widths) {
         Widths = widths;

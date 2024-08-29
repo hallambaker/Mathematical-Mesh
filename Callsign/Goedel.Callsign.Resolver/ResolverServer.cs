@@ -18,32 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
-using Goedel.Mesh;
-using Goedel.Mesh.Client;
-using Goedel.Protocol;
-using Goedel.Protocol.Service;
-using Goedel.Utilities;
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.IO;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace Goedel.Callsign.Resolver;
 
 
 /// <summary>
 /// Reference implementation of a callsign resolver.
 /// </summary>
-public class PublicCallsignResolver : ResolverService, IDisposable{
+public class PublicCallsignResolver : ResolverService, IDisposable {
 
 
 
@@ -84,7 +65,7 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
 
     ///<summary>The registry service address.</summary> 
     public string RegistryServiceAddress => CallsignResolverConfiguration.RegistryServiceAddress;
-    
+
     ///<summary>The registation catalog.</summary> 
     public CatalogRegistration CatalogRegistration = null;
 
@@ -94,7 +75,7 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
     ///<summary>The key collection.</summary> 
     public IKeyCollection KeyCollection { get; }
 
-    MeshServiceClient MeshClient => meshClient ?? 
+    MeshServiceClient MeshClient => meshClient ??
             MeshMachine.GetMeshClient(MeshKeyCredentialPrivate, RegistryServiceAddress).CacheValue(out meshClient);
     MeshServiceClient meshClient;
     LogService LogService { get; }
@@ -156,7 +137,7 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
             ActivationDevice.Activate(ProfileHost.SecretSeed);
             }
 
-        MeshKeyCredentialPrivate = 
+        MeshKeyCredentialPrivate =
             new MeshKeyCredentialPrivate(ActivationDevice.AccountAuthentication as KeyPairAdvanced, "anonymous");
 
         AddEndpoints(hostConfiguration, meshMachine.Instance);
@@ -251,7 +232,7 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
                 IMeshMachine meshMachine,
                 KeyPairAdvanced authenticationKey,
                 string registry,
-                string directory, 
+                string directory,
                 string label) {
 
         var fileName = Store.FileName(directory, label);
@@ -277,7 +258,7 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
             Select = new() {
                 registrySelect, notarySelect
                 }
-            
+
             };
 
 
@@ -287,7 +268,7 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
 
         var update = response.GetUpdate(label);
         update.AssertNotNull(NYI.Throw);
-        Directory.CreateDirectory (directory);
+        Directory.CreateDirectory(directory);
 
         using var sequence = Sequence.MakeNewSequence(fileName, meshMachine.KeyCollection, update.Envelopes);
         }
@@ -320,7 +301,7 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
     public void SyncToRegistry() {
         var registrySelect = new ConstraintsSelect() {
             Store = CatalogRegistration.Label,
-            IndexMin= (int) CatalogRegistration.FrameCount
+            IndexMin = (int)CatalogRegistration.FrameCount
             };
 
         var notarySelect = new ConstraintsSelect() {
@@ -350,8 +331,8 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
                 }
             }
         }
-    
-    
+
+
     ///<inheritdoc/>
     public override QueryResponse Query(QueryRequest request, IJpcSession session) {
         TryResolveCallsign(request.CallSign, out var envelopedRegistration);
@@ -374,7 +355,7 @@ public class PublicCallsignResolver : ResolverService, IDisposable{
 /// <summary>
 /// The resolver server.
 /// </summary>
-public class ResolverServer  {
+public class ResolverServer {
     #region // Properties
 
     ///<summary>The resolver client context.</summary> 
@@ -392,7 +373,7 @@ public class ResolverServer  {
     /// </summary>
     /// <param name="meshHost">The Mesh host.</param>
     /// <param name="catalogedMachine">The resolver client description.</param>
-    public ResolverServer  (
+    public ResolverServer(
                 MeshHost meshHost,
                 CatalogedService catalogedMachine) {
 
@@ -426,10 +407,10 @@ public class ResolverServer  {
     /// <param name="callsign">The callsign to resolve.</param>
     /// <returns>The resolution result.</returns>
     public Enveloped<Registration> Resolve(string callsign) {
-        
+
         // Get callsign data and return.
-        
-        return ContextResolver.Resolve (callsign);
+
+        return ContextResolver.Resolve(callsign);
         }
 
 

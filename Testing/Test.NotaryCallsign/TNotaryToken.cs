@@ -21,18 +21,11 @@
 #endregion
 
 
-
-
-
-using Goedel.Cryptography.Dare;
-using Goedel.Test;
-using Microsoft.VisualBasic;
-
 namespace Goedel.XUnit;
 
 
 
-public record ParametersClaim  {
+public record ParametersClaim {
     public int SequenceLength { get; }
     public int Claims { get; }
     public int Iteration { get; }
@@ -43,7 +36,7 @@ public record ParametersClaim  {
             int sequenceLength = 10,
             int claims = 2,
             int iteration = 0) {
-        SequenceLength = sequenceLength; 
+        SequenceLength = sequenceLength;
         Claims = claims;
         Iteration = iteration;
 
@@ -67,15 +60,15 @@ public record ParametersClaim  {
     public DareEnvelope[] GetFrames(long[] frames) => throw new NYI();
 
 
-    public IntervalSignature MakeCorrupted (IntervalSignature original) => throw new NYI();
+    public IntervalSignature MakeCorrupted(IntervalSignature original) => throw new NYI();
 
 
     public DareEnvelope[] MakeCorrupted(DareEnvelope[] frames) => throw new NYI();
 
 
-    public long[] GetCheckFrames() { 
-            throw new NYI(); 
-            }
+    public long[] GetCheckFrames() {
+        throw new NYI();
+        }
 
 
     public override string ToString() => $"{SequenceLength}-{Claims}-{Iteration}";
@@ -108,7 +101,7 @@ public partial class TClaimProof {
             }
 
         // Check verification of the proof succeeds.
-        proof.Verify().TestTrue() ;
+        proof.Verify().TestTrue();
 
         // Check verification of the proof envelopes succeeds.
         var frames = parameters.GetFrames(checkFrames);
@@ -156,7 +149,7 @@ public partial class TClaimProof {
     /// <param name="parameters"></param>
     [Theory(Skip = "Proof chain not yet implemented")]
     [InlineData()]
-    public void TestEnrolledNotaryToken (ParametersClaim parameters = null) => throw new NYI();
+    public void TestEnrolledNotaryToken(ParametersClaim parameters = null) => throw new NYI();
 
     /// <summary>
     /// Create a notary spool, enroll documents in spool, at intervals create notary tokens and

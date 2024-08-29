@@ -404,7 +404,7 @@ public class CharacterStreamSeekReader : CharacterStreamReader, IBufferedStream 
         EOF = false;
         MarkedPosition = -1;
         }
-     
+
 
     #region // methods
 
@@ -431,12 +431,12 @@ public class CharacterStreamSeekBoundedReader : CharacterStreamSeekReader {
     /// <param name="input">The input stream.</param>
     /// <param name="start">The first byte to return.</param>
     /// <param name="length">The number of bytes to return (defaults to remainder of the stream.</param>
-    public CharacterStreamSeekBoundedReader (Stream input,
+    public CharacterStreamSeekBoundedReader(Stream input,
                 long start = 0,
                 long length = -1) : base(input) {
         Start = start;
         Position = input.Position;
-        length = length < 0 ? input.Length: length;
+        length = length < 0 ? input.Length : length;
         Last = Start + length;
 
         IsValid.AssertTrue(NYI.Throw);

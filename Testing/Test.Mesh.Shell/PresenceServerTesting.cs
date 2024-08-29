@@ -43,8 +43,8 @@
 //        GenericHostConfiguration hostConfiguration,
 //        PresenceServiceConfiguration presenceServiceConfiguration) : 
 //                base (hostConfiguration, presenceServiceConfiguration) {
-        
-        
+
+
 //        }
 
 //    /// <summary>
@@ -67,7 +67,7 @@
 //        Console.WriteLine("Skip server");
 //        if (Count > Skip + Stride) {
 //            Count = 0;
-            
+
 //            }
 //        }
 

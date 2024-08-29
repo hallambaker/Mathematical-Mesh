@@ -22,8 +22,8 @@
 
 
 using Goedel.Registry;
+
 using Microsoft.Extensions.Configuration;
-using System.Threading;
 
 namespace Goedel.Mesh.Shell.Host;
 
@@ -131,16 +131,16 @@ public partial class Shell : _Shell {
 
         switch (Verbosity) {
             case Command.Verbosity.Json: {
-                    Output.Write(shellResult.GetJson(false));
-                    break;
-                    }
+                Output.Write(shellResult.GetJson(false));
+                break;
+                }
             default: {
-                    var builder = new StringBuilder();
-                    shellResult.ToBuilder(builder, Verbosity);
+                var builder = new StringBuilder();
+                shellResult.ToBuilder(builder, Verbosity);
 
-                    Output.Write(builder.ToString());
-                    break;
-                    }
+                Output.Write(builder.ToString());
+                break;
+                }
             }
         }
 
@@ -156,7 +156,7 @@ public partial class Shell : _Shell {
         PublicMeshService.GetService(MeshMachine, file.Value);
 
     ///<summary>Delegate to set platform services</summary> 
-    public Func<HostBuilderContext, IServiceCollection, HostBuilderContext> 
+    public Func<HostBuilderContext, IServiceCollection, HostBuilderContext>
         AddPlatformServices { get; set; } = DefaultPlatformServices;
 
     static HostBuilderContext DefaultPlatformServices(

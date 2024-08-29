@@ -49,11 +49,11 @@ public static partial class ExtensionMethods {
     public static string Label(this object text) {
         switch (Target) {
             case "CS": {
-                    return text.CS();
-                    }
+                return text.CS();
+                }
 
             default:
-                break;
+            break;
             }
         return text.CS();
         }
@@ -113,7 +113,7 @@ public static partial class ExtensionMethods {
         }
 
 
-    public static string ValueOrNull (this string value) => value == null ? "null" : value;
+    public static string ValueOrNull(this string value) => value == null ? "null" : value;
 
     public static string NotNullTagged(this string value, string? tag) => value == null ? "" :
         (tag == null ? "" : tag) + value;

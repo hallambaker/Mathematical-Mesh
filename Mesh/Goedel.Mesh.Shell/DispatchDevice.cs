@@ -21,8 +21,6 @@
 #endregion
 
 
-using Goedel.Utilities;
-
 namespace Goedel.Mesh.Shell;
 
 public partial class Shell {
@@ -120,7 +118,7 @@ public partial class Shell {
         var contextAccount = GetContextUser(options);
         contextAccount.SynchronizeAsync().Sync();
 
-         var messages = contextAccount.GetOpenMessages(AcknowledgeConnection.__Tag);
+        var messages = contextAccount.GetOpenMessages(AcknowledgeConnection.__Tag);
 
         var result = new ResultPending() {
             Success = true,

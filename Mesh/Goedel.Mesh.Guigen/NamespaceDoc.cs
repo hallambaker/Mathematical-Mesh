@@ -22,21 +22,17 @@
 
 //global using Goedel.Mesh;
 //global using Goedel.Protocol;
-global using Goedel.Utilities;
-global using Goedel.Everything;
+global using Goedel.Cryptography;
+global using Goedel.Discovery;
 global using Goedel.Guigen;
 global using Goedel.Mesh;
-global using Goedel.Cryptography;
-global using Goedel.Protocol;
 global using Goedel.Mesh.Client;
-global using Microsoft.Extensions.Logging;
+global using Goedel.Protocol;
+global using Goedel.Utilities;
 
-
-global using System.Resources;
-global using System.Net.Http;
 global using System.Collections.ObjectModel;
-
-global using Goedel.Discovery;
+global using System.Net.Http;
+global using System.Resources;
 
 
 #if !(_Github_)

@@ -1,7 +1,4 @@
-﻿
-using System.Threading.Tasks;
-
-namespace Goedel.Utilities;
+﻿namespace Goedel.Utilities;
 
 
 
@@ -25,7 +22,7 @@ public interface IComponent {
 /// Application lifecycle management class. Automates initialization and graceful 
 /// termination.
 /// </summary>
-public class LifeCycle : Disposable{
+public class LifeCycle : Disposable {
 
     IEnumerable<IComponent> Components { get; }
 

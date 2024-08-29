@@ -41,10 +41,10 @@ public static class CryptoStreamFromID {
                 ) {
 
         return cryptoAlgorithmID switch {
-            CryptoAlgorithmId.AES128 or CryptoAlgorithmId.AES128GCM or CryptoAlgorithmId.AES128CTS or 
+            CryptoAlgorithmId.AES128 or CryptoAlgorithmId.AES128GCM or CryptoAlgorithmId.AES128CTS or
             CryptoAlgorithmId.AES128HMAC or CryptoAlgorithmId.AES128CBCNone or CryptoAlgorithmId.AES128ECB => (128, 128),
-            CryptoAlgorithmId.Default or CryptoAlgorithmId.AES256 or CryptoAlgorithmId.AES256CBC or 
-            CryptoAlgorithmId.AES256GCM or CryptoAlgorithmId.AES256CTS or CryptoAlgorithmId.AES256HMAC or 
+            CryptoAlgorithmId.Default or CryptoAlgorithmId.AES256 or CryptoAlgorithmId.AES256CBC or
+            CryptoAlgorithmId.AES256GCM or CryptoAlgorithmId.AES256CTS or CryptoAlgorithmId.AES256HMAC or
             CryptoAlgorithmId.AES256CBCNone or CryptoAlgorithmId.AES256ECB => (256, 128),
             CryptoAlgorithmId.HMAC_SHA_2_256 => (128, 0),
             CryptoAlgorithmId.HMAC_SHA_2_512 or CryptoAlgorithmId.HMAC_SHA_2_512T128 => (256, 0),
@@ -80,10 +80,10 @@ public static class CryptoStreamFromID {
 
             case CryptoAlgorithmId.AES128HMAC:
             case CryptoAlgorithmId.AES256HMAC: {
-                    return Aes.CreateEncryptor(key, iv);
-                    }
+                return Aes.CreateEncryptor(key, iv);
+                }
             default:
-                return null;
+            return null;
             }
         }
 
@@ -115,8 +115,8 @@ public static class CryptoStreamFromID {
 
             case CryptoAlgorithmId.AES128HMAC:
             case CryptoAlgorithmId.AES256HMAC: {
-                    return Aes.CreateDecryptor(key, iV);
-                    }
+                return Aes.CreateDecryptor(key, iV);
+                }
 
 
             }

@@ -21,9 +21,6 @@
 #endregion
 
 
-using System;
-using System.Collections;
-
 namespace Goedel.Mesh;
 
 /// <summary>
@@ -31,10 +28,10 @@ namespace Goedel.Mesh;
 /// </summary>
 public interface ISpoolItem {
     ///<summary>The message status value.</summary>
-    public StateSpoolMessage MessageStatus { get;  }
+    public StateSpoolMessage MessageStatus { get; }
 
     ///<summary>The list of references to the message, most recently added first.</summary>
-    List<Reference> References { get; } 
+    List<Reference> References { get; }
 
     ///<summary>Add a reference entry.</summary> 
     void AddReference(Reference reference, long index);
@@ -79,10 +76,10 @@ public class SpoolPlaceholder : ISpoolItem {
 
 
 
-    /// <summary>
-    /// Index entry for a spool element.
-    /// </summary>
-    public class SpoolIndexEntry : SequenceIndexEntry, ISpoolItem {
+/// <summary>
+/// Index entry for a spool element.
+/// </summary>
+public class SpoolIndexEntry : SequenceIndexEntry, ISpoolItem {
 
 
     ///<summary>The underlying spool.</summary> 

@@ -21,8 +21,6 @@
 #endregion
 
 
-using Goedel.Mesh;
-
 namespace Goedel.Callsign;
 
 /// <summary>
@@ -68,7 +66,7 @@ public class CatalogRegistration : Catalog<CatalogedRegistration> {
                 bool decrypt = true,
                 bool create = true,
                 byte[] bitmask = null) =>
-        new CatalogRegistration(directory, storeId, policy, cryptoParameters, keyCollection, 
+        new CatalogRegistration(directory, storeId, policy, cryptoParameters, keyCollection,
             meshClient, decrypt, create, bitmask: bitmask);
 
     /// <summary>
@@ -96,7 +94,7 @@ public class CatalogRegistration : Catalog<CatalogedRegistration> {
                 bool create = true,
                 byte[] bitmask = null) :
         base(directory, storeName ?? Label,
-                    policy, cryptoParameters, keyCollection, 
+                    policy, cryptoParameters, keyCollection,
                     decrypt: decrypt, create: create, bitmask: bitmask) {
         }
 
@@ -172,7 +170,7 @@ public partial class CatalogedRegistration {
     public override string _PrimaryKey => Canonical;
 
     ///<summary>The unpacked value of <see cref="EnvelopedRegistration"/></summary> 
-    public Registration Registration => registration ?? 
+    public Registration Registration => registration ??
         EnvelopedRegistration.Decode().CacheValue(out registration);
     Registration registration;
 

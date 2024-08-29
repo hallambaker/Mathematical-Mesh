@@ -1,5 +1,4 @@
-﻿using Goedel.Cryptography.Dare;
-namespace Goedel.Everything;
+﻿namespace Goedel.Everything;
 
 #region // Bindings to classes specified through the Guigen schema.
 
@@ -80,7 +79,7 @@ public partial class FeedSection : IHeadedSelection {
 
 #region // Selection Catalog backing type.
 
-public partial class FeedSelection : BookmarkSelection{
+public partial class FeedSelection : BookmarkSelection {
 
 
     public override GuiBinding SelectionBinding => _BoundFeed.BaseBinding;

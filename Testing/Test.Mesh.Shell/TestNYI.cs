@@ -20,13 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using Goedel.Mesh.Shell;
-using Goedel.Mesh.Test;
-using Goedel.Test;
-using Goedel.Utilities;
-
-using Xunit;
-
 
 namespace Goedel.XUnit;
 
@@ -42,10 +35,10 @@ public partial class ShellTests {
         throw new NYI();
         }
 
-    [Fact (Skip ="Additional checks on Shell")]
+    [Fact(Skip = "Additional checks on Shell")]
     public void NYI_RecoverApps() {
         "Check that SSH and Email applications work after recovery".TaskTest();
-        
+
         TestEnvironment.Dispose();
         EndTest();
         }

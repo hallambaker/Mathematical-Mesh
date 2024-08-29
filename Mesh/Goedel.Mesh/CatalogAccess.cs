@@ -83,7 +83,7 @@ public class CatalogAccess : Catalog<CatalogedAccess> {
                 bool decrypt = true,
                 bool create = true,
                 byte[] bitmask = null) =>
-        new CatalogAccess(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, 
+        new CatalogAccess(directory, storeId, policy, cryptoParameters, keyCollection, meshClient,
             decrypt: decrypt, create: create, bitmask: bitmask);
 
 
@@ -112,7 +112,7 @@ public class CatalogAccess : Catalog<CatalogedAccess> {
                 bool create = true,
                 byte[] bitmask = null) :
                 base(directory, storeName ?? Label,
-                    policy, cryptoParameters, keyCollection, meshClient: meshClient, 
+                    policy, cryptoParameters, keyCollection, meshClient: meshClient,
                     decrypt: decrypt, create: create, bitmask: bitmask) {
         //Screen.WriteLine($"*** Create Access {countStores++}");
         // Hack: likely to have issues here because the CatalogAccess needs to be readable by the service
@@ -190,30 +190,30 @@ public class CatalogAccess : Catalog<CatalogedAccess> {
         var catalogedCapability = catalogedEntry as CatalogedAccess;
         switch (catalogedCapability?.Capability) {
             case CapabilityDecrypt capabilityDecryption: {
-                    DictionaryDecryptByKeyId.Add(capabilityDecryption.Id,
-                        capabilityDecryption);
+                DictionaryDecryptByKeyId.Add(capabilityDecryption.Id,
+                    capabilityDecryption);
 
-                    if (capabilityDecryption is ICapabilityPartial meshClientCapability) {
-                        meshClientCapability.KeyCollection = KeyCollection;
-                        }
-
-                    break;
+                if (capabilityDecryption is ICapabilityPartial meshClientCapability) {
+                    meshClientCapability.KeyCollection = KeyCollection;
                     }
+
+                break;
+                }
             case CapabilitySign capabilityAdministrator: {
-                    DictionarySignByAccountAddress.Add(capabilityAdministrator.SubjectAddress,
-                        capabilityAdministrator);
-                    break;
-                    }
+                DictionarySignByAccountAddress.Add(capabilityAdministrator.SubjectAddress,
+                    capabilityAdministrator);
+                break;
+                }
             case CapabilityKeyGenerate capabilityKeyGenerate: {
-                    DictionaryKeyGenerate.Add(capabilityKeyGenerate.SubjectId,
-                        capabilityKeyGenerate);
-                    break;
-                    }
+                DictionaryKeyGenerate.Add(capabilityKeyGenerate.SubjectId,
+                    capabilityKeyGenerate);
+                break;
+                }
             case CapabilityFairExchange capabilityFairExchange: {
-                    DictionaryFairExchange.Add(capabilityFairExchange.SubjectAddress,
-                        capabilityFairExchange);
-                    break;
-                    }
+                DictionaryFairExchange.Add(capabilityFairExchange.SubjectAddress,
+                    capabilityFairExchange);
+                break;
+                }
             }
         }
 
@@ -252,21 +252,21 @@ public class CatalogAccess : Catalog<CatalogedAccess> {
                 string keyIdentifier, ITransactContextAccount transactContextAccount = null) {
         switch (right.Degree) {
             case Degree.Direct: {
-                    return new KeyData(keyPair, true);
-                    }
+                return new KeyData(keyPair, true);
+                }
             case Degree.Service: {
-                    transactContextAccount.AssertNotNull(NYI.Throw);
-                    var (keyData, capabilityDecryptServiced) = MakeShare(keyPair,
-                        transactContextAccount.AccountId,
-                        transactContextAccount.HostEncryptAccount,
-                        keyIdentifier);
-                    var catalogedCapability = new CatalogedAccess(capabilityDecryptServiced);
-                    transactContextAccount.CatalogUpdate(this, catalogedCapability);
-                    return keyData;
-                    }
+                transactContextAccount.AssertNotNull(NYI.Throw);
+                var (keyData, capabilityDecryptServiced) = MakeShare(keyPair,
+                    transactContextAccount.AccountId,
+                    transactContextAccount.HostEncryptAccount,
+                    keyIdentifier);
+                var catalogedCapability = new CatalogedAccess(capabilityDecryptServiced);
+                transactContextAccount.CatalogUpdate(this, catalogedCapability);
+                return keyData;
+                }
             default: {
-                    throw new NYI();
-                    }
+                throw new NYI();
+                }
             }
         }
 

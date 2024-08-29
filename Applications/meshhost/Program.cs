@@ -19,7 +19,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-using Goedel.IO;
 using Goedel.Mesh.Shell.Host;
 
 internal sealed class Program {
@@ -31,9 +30,9 @@ internal sealed class Program {
 
         shell.Dispatch(args, Console.Out);
         }
-    
+
     public static HostBuilderContext AddPlatformServices(
-            HostBuilderContext host, 
+            HostBuilderContext host,
             IServiceCollection services) {
 
 #if USE_PLATFORM_WINDOWS

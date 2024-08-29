@@ -1,10 +1,5 @@
-﻿using Goedel.Presence.Client;
-using Goedel.Mesh;
+﻿using Goedel.Mesh;
 using Goedel.Presence;
-using System.Net.Sockets;
-using Goedel.Protocol.Presentation;
-using System;
-using Goedel.Mesh.Client;
 
 namespace Goedel.XUnit;
 
@@ -18,8 +13,8 @@ public class ContextPresenceTest : ContextPresence {
 
 
     public ContextPresenceTest(
-            
-            ContextUser contextUser, 
+
+            ContextUser contextUser,
             ServiceAccessToken serviceAccessToken,
             CommunicationDisruptor communicationDisruptor) :
         base(contextUser, serviceAccessToken) {

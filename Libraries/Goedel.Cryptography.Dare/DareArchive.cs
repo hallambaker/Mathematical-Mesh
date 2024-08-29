@@ -20,11 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using Goedel.IO;
-using System.IO;
-using System.Runtime;
-using System.Runtime.InteropServices;
-
 namespace Goedel.Cryptography.Dare;
 
 
@@ -34,7 +29,7 @@ namespace Goedel.Cryptography.Dare;
 public class ArchiveIndexEntry : PersistentIndexEntry {
 
     ///<summary>The content metadata.</summary> 
-    public ContentMeta ContentMeta  => Header?.ContentMeta;
+    public ContentMeta ContentMeta => Header?.ContentMeta;
 
     ///<summary>The file entry data.</summary> 
     public FileEntry FileEntry => ContentMeta?.FileEntry;
@@ -166,10 +161,10 @@ public class DareArchive : PersistenceStore {
         contentMeta.Filename = fileInfo.Name;
         contentMeta.FileEntry = new FileEntry() {
             Path = directoryPath,
-            CreationTime= fileInfo.CreationTime,
-            LastAccessTime= fileInfo.LastAccessTime,
-            LastWriteTime= fileInfo.LastWriteTime,
-            Attributes = (int) fileInfo.Attributes
+            CreationTime = fileInfo.CreationTime,
+            LastAccessTime = fileInfo.LastAccessTime,
+            LastWriteTime = fileInfo.LastWriteTime,
+            Attributes = (int)fileInfo.Attributes
             };
         contentMeta.UniqueId = Path.Combine(directoryPath, fileInfo.Name);
         contentMeta.Event = DareConstants.SequenceEventNewTag;
@@ -219,7 +214,7 @@ public class DareArchive : PersistenceStore {
                         string diskPath,
                         string directoryPath) {
         var path = Path.Combine(diskPath, directoryPath);
-        var directoryInfo = new DirectoryInfo (path);
+        var directoryInfo = new DirectoryInfo(path);
 
 
         AddDirectory(directoryPath, directoryInfo);
@@ -281,7 +276,7 @@ public class DareArchive : PersistenceStore {
     public Stream GetStream(
                 string archivePath
                 ) {
-        ObjectIndex.TryGetValue( archivePath, out var entry ).AssertTrue(NYI.Throw);
+        ObjectIndex.TryGetValue(archivePath, out var entry).AssertTrue(NYI.Throw);
 
         var stream = entry.GetPayloadStreamn(Sequence, KeyLocate);
 
@@ -398,12 +393,12 @@ public class DareArchive : PersistenceStore {
 
         CheckPathIsValid(index.UniqueID);
 
-        var targetDir = directory == null? Directory.GetCurrentDirectory() : directory;
-        targetDir = fileEntry.Path.IsBlank() ? targetDir: Path.Combine(targetDir, fileEntry.Path);
+        var targetDir = directory == null ? Directory.GetCurrentDirectory() : directory;
+        targetDir = fileEntry.Path.IsBlank() ? targetDir : Path.Combine(targetDir, fileEntry.Path);
         Directory.CreateDirectory(targetDir);
 
-        var destination = Path.Combine (targetDir, contentMeta.Filename);
-        
+        var destination = Path.Combine(targetDir, contentMeta.Filename);
+
 
         using var stream = index.GetPayloadStreamn(Sequence, KeyLocate);
         stream.CopyToFile(destination);
@@ -434,9 +429,9 @@ public class DareArchive : PersistenceStore {
     /// <param name="archiveName">Archive filename.</param>
     /// <param name="keyLocate">The key collection to use for decryption of the contents.</param>
     /// <param name="directory">Directory to extract the archive to.</param>
-    public static void UnpackArchive (
+    public static void UnpackArchive(
                     string archiveName,
-                    IKeyLocate keyLocate=null,
+                    IKeyLocate keyLocate = null,
                     string directory = null) {
         using var reader = new DareArchive(archiveName);
 

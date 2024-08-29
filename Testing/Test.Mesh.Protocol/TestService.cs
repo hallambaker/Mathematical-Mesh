@@ -22,17 +22,6 @@
 
 using System.Collections.Generic;
 
-using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
-using Goedel.Mesh;
-using Goedel.Mesh.Client;
-using Goedel.Mesh.Test;
-using Goedel.Protocol;
-using Goedel.Test;
-using Goedel.Utilities;
-
-using Xunit;
-
 //#pragma warning disable IDE0059
 //#pragma warning disable CA1822
 
@@ -632,7 +621,7 @@ public partial class TestService {
         var decrypt6 = contextAccountBob.DareDecode(envelope, verify: true);
         decrypt6.IsEqualTo(plaintext).TestTrue();
         }
- 
+
 
     static void CheckPinMessageSignedEncrypted(ContextUser contextUser) {
 

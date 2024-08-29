@@ -20,12 +20,10 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Collections.Generic;
-
-using Goedel.Mesh.Test;
 using Goedel.Mesh;
-using Goedel.Mesh.Client;
-using Goedel.Utilities;
+using Goedel.Mesh.Test;
+
+using System.Collections.Generic;
 namespace ExampleGenerator;
 
 public class ShellNetwork : ExampleSet {
@@ -54,7 +52,7 @@ public class ShellNetwork : ExampleSet {
             Service = "ssid",
             Password = "Password"
             };
-        network2.ToFile(NetworkFile2, tagged:true);
+        network2.ToFile(NetworkFile2, tagged: true);
 
 
 

@@ -18,17 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Utilities;
-
-using System;
-using System.Text;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Goedel.Cryptography.Dare;
-
-namespace Goedel.Callsign; 
+namespace Goedel.Callsign;
 
 public partial class Notarization {
     #region // Properties

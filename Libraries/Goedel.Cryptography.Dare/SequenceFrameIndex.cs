@@ -20,9 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using Goedel.Cryptography.Standard;
-using System.Security.Cryptography;
-
 namespace Goedel.Cryptography.Dare;
 
 ///<summary>Describe the integrity checking to be applied when reading a Sequence.</summary>
@@ -88,10 +85,10 @@ public enum ItemResult {
 /// <returns></returns>
 public delegate SequenceIndexEntry SequenceIndexEntryFactoryDelegate(
             Sequence sequence,
-            long  framePosition,
-            long  frameLength,
-            long  dataPosition,
-            long  dataLength,
+            long framePosition,
+            long frameLength,
+            long dataPosition,
+            long dataLength,
             DareHeader header,
             DareTrailer trailer = null,
             JsonObject jsonObject = null);
@@ -141,7 +138,8 @@ public partial class SequenceIndexEntry : DareEnvelope {
     ///<summary>The decoded JSONObject</summary>
     public override JsonObject JsonObject {
         get => jsonObject;
-        set => jsonObject = value; }
+        set => jsonObject = value;
+        }
     JsonObject jsonObject = null;
 
     ///<summary>The sequenced envelope is unread in the case of a message in a spool or
@@ -307,7 +305,7 @@ public partial class SequenceIndexEntry : DareEnvelope {
             }
 
         return sequence.SequenceIndexEntryFactoryDelegate(
-                    sequence,   
+                    sequence,
                     framePosition: previous ? position - frameLength : position,
                     frameLength: frameLength,
                     dataPosition: dataPosition,
@@ -403,7 +401,7 @@ public partial class SequenceIndexEntry : DareEnvelope {
             return PayloadDigestComputed;
             }
         var payload = GetBody();
-        var digestAlgorithm = Header.DigestAlgorithm.ToCryptoAlgorithmID() ;
+        var digestAlgorithm = Header.DigestAlgorithm.ToCryptoAlgorithmID();
         var digestProvider = CryptoCatalog.Default.Get(digestAlgorithm);
 
         var result = digestProvider.Encode(payload);
@@ -538,7 +536,8 @@ public class DareEnvelopeLazy : DareEnvelope {
     ///<inheritdoc/>
     public override byte[] Body {
         get => body ?? GetBodyDelegate().CacheValue(out body);
-        set => throw new NYI(); }
+        set => throw new NYI();
+        }
     byte[] body = null;
 
     ///<inheritdoc/>

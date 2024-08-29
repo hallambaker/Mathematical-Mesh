@@ -23,9 +23,6 @@
 
 #pragma warning disable IDE0060
 
-using Goedel.Cryptography;
-using Goedel.Cryptography.Algorithms;
-
 namespace Goedel.Mesh.Test;
 public record TestDareFile {
 
@@ -82,7 +79,7 @@ public record TestArchive : TestDareFile {
             Directory = directory,
             Deleted = false,
             Erased = false,
-            Digest= digest
+            Digest = digest
             };
         Files.Add(id, entry);
         }
@@ -114,20 +111,20 @@ public record TestArchive : TestDareFile {
 
 
     public void UnpackDirect(string source, string directory) {
-        
-        
+
+
         }
 
 
     public void CheckFile(
                     string file) {
-        Files.TryGetValue (file, out var entry).TestTrue();
+        Files.TryGetValue(file, out var entry).TestTrue();
         CheckFile(entry);
         }
 
     public virtual void CheckFile(
                     TestArchiveEntry entry,
-                    string directory=null) {
+                    string directory = null) {
         var filename = directory == null ? entry.FullFilename :
             Path.Combine(directory, entry.FullFilename);
 
@@ -135,7 +132,7 @@ public record TestArchive : TestDareFile {
         digest.TestEqual(entry.Digest);
         }
 
-    public virtual void CheckArchive(IKeyLocate keyLocate= null, bool self = false) {
+    public virtual void CheckArchive(IKeyLocate keyLocate = null, bool self = false) {
         var directory = Directory.GetCurrentDirectory();
 
         // create temporary directory
@@ -143,7 +140,7 @@ public record TestArchive : TestDareFile {
         Directory.CreateDirectory(tempDirectory);
 
         // unpack the archive
-        DareArchive.UnpackArchive(Filename, keyLocate, directory:tempDirectory);
+        DareArchive.UnpackArchive(Filename, keyLocate, directory: tempDirectory);
 
         // check each file.
         foreach (var entry in Files) {
@@ -254,7 +251,7 @@ public record TestArchiveShell : TestArchive {
         }
 
 
-    public override void CheckArchive(IKeyLocate keyLocate = null, 
+    public override void CheckArchive(IKeyLocate keyLocate = null,
                     bool self = false) {
         //var current = Directory.GetCurrentDirectory();
 

@@ -18,23 +18,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Utilities;
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
 using Goedel.Protocol;
 
-namespace Goedel.Repository.Server; 
+namespace Goedel.Repository.Server;
 
 /// <summary>
 /// The Repository service implementation.
 /// </summary>
-public class RepositoryServer  : RepositoryService {
+public class RepositoryServer : RepositoryService {
     #region // Properties
 
     #endregion
@@ -44,7 +35,7 @@ public class RepositoryServer  : RepositoryService {
     /// <summary>
     /// Default constructor, returns an empty instance.
     /// </summary>
-    public RepositoryServer  () {
+    public RepositoryServer() {
         }
 
 
@@ -60,7 +51,7 @@ public class RepositoryServer  : RepositoryService {
     /// Publish the content <paramref name="data"/>.
     /// </summary>
     /// <param name="data">The content to publish.</param>
-    public void Publish(byte [] data) {
+    public void Publish(byte[] data) {
 
         }
 

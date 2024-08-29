@@ -1,17 +1,17 @@
-﻿global using System;
-
+﻿global using Goedel.Mesh.Client;
+global using Goedel.Mesh.Shell;
+global using Goedel.Mesh.Test;
+global using Goedel.Presence.Client;
 global using Goedel.Test;
 global using Goedel.Utilities;
-global using Xunit;
-global using Goedel.Presence.Client;
-global using Goedel.Protocol.Service;
-global using System.Threading.Tasks;
-global using System.Threading;
-global using System.Net.Sockets;
-global using Goedel.Mesh.Client;
-global using Goedel.Mesh.Test;
+
+global using System;
 global using System.Collections.Generic;
-global using Goedel.Mesh.Shell;
+global using System.Net.Sockets;
+global using System.Threading;
+global using System.Threading.Tasks;
+
+global using Xunit;
 
 namespace Goedel.XUnit;
 
@@ -22,7 +22,7 @@ namespace Goedel.XUnit;
 public partial class TestPresence : ShellTestBase {
 
 
-    List<IDisposable> Disposables= new List<IDisposable>();
+    List<IDisposable> Disposables = new List<IDisposable>();
 
     protected override void Disposing() {
         base.Disposing();
@@ -81,7 +81,7 @@ public partial class TestPresence : ShellTestBase {
                 out ContextUser contextAccount,
                 out ContextPresence contextPresence,
                 CommunicationConditions communicationConditions = null) =>
-                MakeAccount(AliceAccount, out contextAccount, 
+                MakeAccount(AliceAccount, out contextAccount,
                     out contextPresence, communicationConditions?.Alice);
 
     /// <summary>
@@ -93,7 +93,7 @@ public partial class TestPresence : ShellTestBase {
                 out ContextUser contextAccount,
                 out ContextPresence contextPresence,
                 CommunicationConditions communicationConditions = null) =>
-                MakeAccount(AccountB, out contextAccount, 
+                MakeAccount(AccountB, out contextAccount,
                     out contextPresence, communicationConditions?.Bob);
 
 
@@ -148,10 +148,10 @@ public partial class TestPresence : ShellTestBase {
     public static TestPresence Test() => new();
 
 
-    MessageContent GenerateMessage (int index) => throw new NYI();
+    MessageContent GenerateMessage(int index) => throw new NYI();
 
 
-    bool VerifyMessage (int index, MessageContent messageContent) => throw new NYI();
+    bool VerifyMessage(int index, MessageContent messageContent) => throw new NYI();
 
     }
 

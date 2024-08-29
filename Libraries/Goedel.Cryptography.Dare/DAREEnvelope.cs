@@ -41,7 +41,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     /// Get the body through lazy evaluation
     /// </summary>
     /// <returns></returns>
-    public virtual byte[] GetBodyLazy () => bodyValue;
+    public virtual byte[] GetBodyLazy() => bodyValue;
 
 
     /// <summary>
@@ -321,7 +321,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
 
     ///<inheritdoc/>
     public override void Serialize(Writer writer,
-                bool tagged=false) {
+                bool tagged = false) {
         var first = false;
         if (tagged) {
             writer.WriteObjectStart();
@@ -418,7 +418,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     /// <param name="key">The signature key.</param>
     /// <param name="digest">The payload digest value if known.</param>
     /// <returns>True, if the signature is valid.</returns>
-    public bool Verify(KeyPair key, byte[] digest=null) {
+    public bool Verify(KeyPair key, byte[] digest = null) {
 
         var signature = FindSignature(key);
         if (signature == null) {
@@ -682,7 +682,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         byte[] cloaked = null,
         List<byte[]> dataSequences = null,
         int chunk = -1,
-        byte[] cover=null) {
+        byte[] cover = null) {
         using var dareEnvelopeWriter = new DareEnvelopeWriter(
             cryptoParameters,
             outputStream, contentMeta, contentLength, cloaked, dataSequences, cover);
@@ -729,7 +729,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
             bool verify = false) {
         using var input = inputFile.OpenFileRead();
 
-        var tempFile = verify ? outputFile+".tmp" : outputFile;
+        var tempFile = verify ? outputFile + ".tmp" : outputFile;
 
         var length = Decode(input, null, tempFile, keyCollection, verify);
 
@@ -781,7 +781,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         decoder.Close();
 
         if (verify) {
-        // read in the trailer
+            // read in the trailer
             if (jsonBcdReader.NextArray()) {
                 message.Trailer = DareTrailer.FromJson(jsonBcdReader, false);
                 }

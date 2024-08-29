@@ -14,7 +14,7 @@ public class DataButton : Button {
     /// Constructor, create a new button bound to callback data <paramref name="data"/>.
     /// </summary>
     /// <param name="data">The callback data to be bound to <see cref="Data"/></param>
-    public DataButton( object data) {
+    public DataButton(object data) {
         Data = data;
         }
 

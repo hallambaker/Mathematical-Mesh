@@ -1,15 +1,4 @@
-﻿
-using Goedel.Cryptography.Dare;
-using Goedel.IO;
-using Goedel.Mesh.Client;
-using Goedel.Protocol;
-
-using System.Formats.Asn1;
-using System;
-using System.Net.NetworkInformation;
-using System.Resources;
-
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using Goedel.IO;
 
 namespace Goedel.Everything;
 
@@ -78,7 +67,7 @@ public partial class EverythingMaui {
     public ISelectCollection ChooseUser { get; }
     Func<DeviceDescription> GetDeviceDescription { get; }
 
-    public Dictionary <string, ShellDispatch> DispatchDictionary { get; } = new();
+    public Dictionary<string, ShellDispatch> DispatchDictionary { get; } = new();
 
 
     public bool HaveCatalogs => CurrentAccount is BoundAccountUser;
@@ -161,7 +150,7 @@ public partial class EverythingMaui {
 
             }
 
-            SetContext(currentAccount);
+        SetContext(currentAccount);
         }
 
 
@@ -175,15 +164,15 @@ public partial class EverythingMaui {
                 var item = Convert(entry);
                 result.Add(item);
                 }
-            
-            
+
+
             }
 
 
         return result;
         }
 
-    GuiDataAction Convert(ShellAction entry) => 
+    GuiDataAction Convert(ShellAction entry) =>
         new GuiDataAction(entry.Id, entry.Icon, DataActionCallback);
 
 
@@ -223,7 +212,7 @@ public partial class EverythingMaui {
         }
 
 
-     BoundAccount GetBoundAccount(ContextUser contextUser) {
+    BoundAccount GetBoundAccount(ContextUser contextUser) {
         //contextUser.StatusAsync().Sync();
 
         contextUser.DictionaryCatalogDelegates.Replace(CatalogContact.Label, GuigenCatalogContact.Factory);
@@ -321,13 +310,13 @@ public partial class EverythingMaui {
         }
 
 
-    ButtonState ButtonStateUnconditional (GuiSection section) =>
+    ButtonState ButtonStateUnconditional(GuiSection section) =>
         CurrentSection == section ? ButtonState.Selected : ButtonState.Enabled;
 
     ButtonState ButtonStateConditional(GuiSection section) =>
         CurrentSection == section ? ButtonState.Selected :
             (HaveCatalogs ? ButtonState.Enabled : ButtonState.Disabled);
-   
+
 
 
     public override string? GetPrompt(GuiPrompt guiPrompt) {
@@ -399,7 +388,7 @@ public partial class EverythingMaui {
     // QR code thingies will be subscribed on the message spool, as will messages.
 
     // Most other stuff will be subscribed on the relevant catalog.
-    public async Task<long> Poll (){
+    public async Task<long> Poll() {
 
         // we would typically only need to poll on the inbound spool.
         // set up a delay and retry.

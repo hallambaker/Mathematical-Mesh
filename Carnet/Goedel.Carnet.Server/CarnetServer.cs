@@ -18,23 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Utilities;
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-
-namespace Goedel.Carnet.Server; 
+namespace Goedel.Carnet.Server;
 
 
 /// <summary>
 /// Carnet Service.
 /// </summary>
-public class CarnetServer  {
+public class CarnetServer {
     #region // Properties
 
     #endregion

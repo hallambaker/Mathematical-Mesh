@@ -39,8 +39,8 @@ public abstract record MetaData {
 /// </summary>
 /// <param name="Setter">Set accessor</param>
 /// <param name="Getter">Get accessor</param>
-public record MetaDataBoolean (
-        Action<bool?> Setter, 
+public record MetaDataBoolean(
+        Action<bool?> Setter,
         Func<bool?> Getter) : MetaData {
     }
 
@@ -103,10 +103,10 @@ public record MetaDataDateTime(
 /// <param name="Type">The type name</param>
 /// <param name="Tagged">If true, the structure is a tagged structure</param>
 public record MetaDataStruct(
-        Action<object> Setter, 
+        Action<object> Setter,
         Func<object> Getter,
         string Type,
-        bool Tagged=false) : MetaData {
+        bool Tagged = false) : MetaData {
     }
 
 

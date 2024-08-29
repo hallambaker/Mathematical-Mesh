@@ -21,11 +21,6 @@
 #endregion
 
 
-using Microsoft.Extensions.Logging;
-using System.ComponentModel;
-using System.Net.Sockets;
-using System.Security.Principal;
-
 namespace Goedel.Mesh.Server;
 
 
@@ -33,7 +28,7 @@ namespace Goedel.Mesh.Server;
 /// Wrapper providing a locked accessor to a CatalogedEntry of type <typeparamref name="T"/>.
 /// </summary>
 /// <typeparam name="T">The locked entry</typeparam>
-public class LockedCatalogedEntry<T> : Disposable where T: AccountEntry {
+public class LockedCatalogedEntry<T> : Disposable where T : AccountEntry {
 
     private bool locked;
 
@@ -54,7 +49,7 @@ public class LockedCatalogedEntry<T> : Disposable where T: AccountEntry {
     /// <param name="accountEntry">the entry to lock</param>
     /// <param name="millisecondsTimeout">The number of milliseconds to wait for the lock.</param>
     /// <param name="logger">Loger to output context to.</param>
-    public LockedCatalogedEntry(T accountEntry, ILogger logger, int millisecondsTimeout=Timeout.Infinite) {
+    public LockedCatalogedEntry(T accountEntry, ILogger logger, int millisecondsTimeout = Timeout.Infinite) {
 
         Logger = logger ?? Component.Logger;
         CatalogItem = accountEntry;
@@ -127,8 +122,8 @@ public class MeshPersist : Disposable {
     /// <param name="logger">Output logger.</param>
     /// <param name="presenceService">Optional presence service.</param>
     public MeshPersist(
-                IKeyCollection keyCollection, 
-                string directory, 
+                IKeyCollection keyCollection,
+                string directory,
                 FileStatus fileStatus,
                 ILogger logger,
                 IPresence presenceService = null) {
@@ -339,7 +334,7 @@ public class MeshPersist : Disposable {
                     var serviceAccessToken = PresenceService.GetEndPoint(accountHandle);
 
 
-                    statusResponse.Services.Add (serviceAccessToken);
+                    statusResponse.Services.Add(serviceAccessToken);
 
                     // add the connectionId to the locked account handle here.
                     }
@@ -375,7 +370,7 @@ public class MeshPersist : Disposable {
 
         if (accountHandle.EnvelopedCatalogedDevice != null) {
             if (accountHandle.CatalogedDeviceDigest != request.CatalogedDeviceDigest) {
-                result.EnvelopedCatalogedDevice = accountHandle.EnvelopedCatalogedDevice; 
+                result.EnvelopedCatalogedDevice = accountHandle.EnvelopedCatalogedDevice;
                 result.CatalogedDeviceDigest = accountHandle.CatalogedDeviceDigest;
                 }
             }
@@ -531,7 +526,7 @@ public class MeshPersist : Disposable {
         PresenceService?.Notify(accountHandle.AccountAddress, bitmask);
 
         }
-    
+
 
     #endregion
     #region // Post
@@ -661,8 +656,8 @@ public class MeshPersist : Disposable {
 
         switch (cryptographicOperation) {
             case CryptographicOperationKeyAgreement operationKeyAgreement: {
-                    return Operate(catalogCapability, operationKeyAgreement, accountAddress);
-                    }
+                return Operate(catalogCapability, operationKeyAgreement, accountAddress);
+                }
             }
 
 
@@ -800,7 +795,7 @@ public class MeshPersist : Disposable {
 
         lock (CatalogAccount) {
 
-            result = CatalogAccount.Get(key) ;
+            result = CatalogAccount.Get(key);
             result.AssertNotNull(MeshUnknownAccount.Throw);
 
             return new LockedCatalogedEntry<AccountEntry>(result, Logger);

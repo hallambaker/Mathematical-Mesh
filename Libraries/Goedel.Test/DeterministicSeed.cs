@@ -21,16 +21,12 @@
 #endregion
 
 using Goedel.Cryptography;
-using Goedel.Cryptography.Algorithms;
-using Goedel.Utilities;
+
 using System.Diagnostics;
 using System.Reflection;
-using System.Reflection.Emit;
-using System.Reflection.Metadata;
 using System.Security.Cryptography;
 
 using System.Text;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Goedel.Test;
 
@@ -66,7 +62,7 @@ public class UnitTestSet : Disposable {
     ///<summary>The deterministic seed to be used by the test, may be set explictly
     ///or generated automatically through use in a test method.</summary> 
     public virtual DeterministicSeed Seed {
-        get => seed ?? DeterministicSeed.AutoClean ().CacheValue(out seed);
+        get => seed ?? DeterministicSeed.AutoClean().CacheValue(out seed);
         set => seed = value;
         }
 
@@ -87,19 +83,19 @@ public class DeterministicSeed {
 
     public static string TestRoot { get; }
 
-    public int TempCount { get; set;}= 0;
+    public int TempCount { get; set; } = 0;
 
     static DeterministicSeed() {
         TestRoot = Environment.GetEnvironmentVariable(TestPath);
         }
 
 
-    DeterministicSeed (string name, bool delete=false) {
+    DeterministicSeed(string name, bool delete = false) {
         Seed = name;
-        SeedBytes = Seed.ToBytes ();
+        SeedBytes = Seed.ToBytes();
 
         TestRoot.AssertNotNull(EnvironmentVariableRequired.Throw, TestPath);
-        
+
 
         Directory = System.IO.Path.Combine(TestRoot, WorkingDirectory, Seed);
         if (delete && System.IO.Directory.Exists(Directory)) {
@@ -143,7 +139,7 @@ public class DeterministicSeed {
 
 
         for (var i = 0; i < stack.FrameCount; i++) {
-            var frame = stack.GetFrame(stack.FrameCount - i -1);
+            var frame = stack.GetFrame(stack.FrameCount - i - 1);
             var method = frame.GetMethod();
             if (HasTest(method)) {
                 return new DeterministicSeed(Format(method.Name, parameters));
@@ -185,7 +181,7 @@ public class DeterministicSeed {
         var frame = stack.GetFrame(1);
         var method = frame.GetMethod();
 
-        return new DeterministicSeed (Format(method.Name, parameters));
+        return new DeterministicSeed(Format(method.Name, parameters));
         }
 
     public static DeterministicSeed CreateParent(params object[] parameters) {
@@ -206,7 +202,7 @@ public class DeterministicSeed {
 
     public string GetDirectory(string label) =>
         Path.Combine(Directory, label);
-        
+
     public string GetFilename(string label) =>
          Path.Combine(Directory, label);
 
@@ -246,9 +242,9 @@ public class DeterministicSeed {
         if (total <= 0) {
             return -1;
             }
-        var index = GetInt32 (total, parameters);
+        var index = GetInt32(total, parameters);
         var task = 0;
-        for(var i = 0; i<tasks.Count; i++) {
+        for (var i = 0; i < tasks.Count; i++) {
             if (index < tasks[i]) {
                 tasks[i]--;
                 return task;
@@ -258,11 +254,11 @@ public class DeterministicSeed {
         return -1;
         }
 
-    public int GetRandomInt(int ceiling, int info = 0, string label="") {
+    public int GetRandomInt(int ceiling, int info = 0, string label = "") {
         var bytes = KeyDeriveHKDF.Derive(Seed.ToBytes(),
                     info: $"Number {info} {label}".ToBytes(), length: 32);
         var number = bytes.LittleEndian32() % ceiling;
-        return (int) number;
+        return (int)number;
         }
 
 
@@ -276,7 +272,7 @@ public class DeterministicSeed {
 
 
 
-    public void MakeTestFile(string filename, int length, string info="") {
+    public void MakeTestFile(string filename, int length, string info = "") {
 
         var bytes = GetTestBytes(length, info);
         using (var stream = filename.OpenFileNew()) {
@@ -284,16 +280,16 @@ public class DeterministicSeed {
             }
         }
 
-    public void CheckTestFile(string filename, int length, string info="") {
+    public void CheckTestFile(string filename, int length, string info = "") {
         var bytes = GetTestBytes(length, info);
         using (var stream = filename.OpenFileRead()) {
             (stream.Length == length).TestTrue();
 
             var read = new byte[length];
-            
+
             stream.Read(read, 0, length);
 
-            read.TestEqual (bytes);
+            read.TestEqual(bytes);
             }
         }
 
@@ -345,7 +341,7 @@ public class DeterministicSeed {
         var key = KeyDeriveHKDF.Derive(tag, info: info, length: 128);
 
 
-        var aes = new AesGcm(key,16);
+        var aes = new AesGcm(key, 16);
         var nonce = new byte[AesGcm.NonceByteSizes.MinSize];
         var discard = new byte[16];
 

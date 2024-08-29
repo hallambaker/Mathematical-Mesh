@@ -1,15 +1,4 @@
-﻿using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Documents;
-
-using System;
-using System.Reflection;
-using System.Security.Cryptography;
-
-using Windows.ApplicationModel.VoiceCommands;
-
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace Goedel.Guigen.Maui;
+﻿namespace Goedel.Guigen.Maui;
 
 
 public interface IBound {
@@ -52,7 +41,7 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
     public IBindable Data { get; set; }
 
     public virtual IBindable ActionData => Data;
-    public Layout ButtonBox { get; private set;  }
+    public Layout ButtonBox { get; private set; }
 
     public bool IsChooser { get; set; } = false;
     protected GuiBinding FieldBinding { get; }
@@ -79,22 +68,22 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
      */
 
     ///<summary>Container for the action section</summary> 
-    public Layout ActionMenu            { get; set; }
+    public Layout ActionMenu { get; set; }
 
     ///<summary>Container for the fields section</summary> 
-    public Grid FieldGrid               { get; private set; }
+    public Grid FieldGrid { get; private set; }
 
     ///<summary>Container for the confirm/cancel/context section</summary> 
-    public Layout ContextMenu           { get; set; }
+    public Layout ContextMenu { get; set; }
 
 
-    public GuigenButton ConfirmButton   { get; set; }
+    public GuigenButton ConfirmButton { get; set; }
 
-    public GuigenButton CancelButton    { get; set; }
+    public GuigenButton CancelButton { get; set; }
 
-    public GuigenButton EditButton      { get; set; }
+    public GuigenButton EditButton { get; set; }
 
-    public GuigenButton UpdateButton    { get; set; }
+    public GuigenButton UpdateButton { get; set; }
 
     public GuigenFieldSet Return { get; set; }
 
@@ -192,14 +181,14 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
         foreach (var field in MauiFields) {
             field.SetEditable();
             }
-    }
+        }
 
     public virtual void Reset() {
         }
 
 
-    protected void ClearFields () {
-        MauiFields?.Clear(); 
+    protected void ClearFields() {
+        MauiFields?.Clear();
         FieldGrid?.Clear();
         }
 
@@ -253,7 +242,7 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
         }
 
 
-    public virtual int AddField(IView label, IView child, IView? feedback=null) {
+    public virtual int AddField(IView label, IView child, IView? feedback = null) {
 
         FieldGrid.Add(label, 0, GridRow);
         if (child != null) {
@@ -307,7 +296,7 @@ public class GuigenFieldSet : IWidget, IPresentation, IBound {
                 case GuiBoundPropertySelection selection: {
                     if (MainWindow.Gui.Selections.TryGetValue(selection.Label, out var action)) {
                         var button = new GuigenSelectionButton(MainWindow, action, ActionData);
-                        layout.Add (button.View);
+                        layout.Add(button.View);
                         }
                     break;
                     }
@@ -328,7 +317,7 @@ public class GuigenFieldSetEntry : GuigenFieldSet {
 
     public GuigenFieldSetEntry(
                 GuigenBinding binding,
-                IBindable data, 
+                IBindable data,
                 bool editMode = false) : base(binding, data.Binding, data) {
 
         IsEditMode = editMode;
@@ -371,7 +360,7 @@ public class GuigenFieldSetResult : GuigenFieldSet {
             GuigenBinding binding,
             IResult result) : base(binding, result.Binding, result) {
 
-        MessageBox = Binding.GetResultMessage(result); 
+        MessageBox = Binding.GetResultMessage(result);
 
 
         // Create the fields 
@@ -407,7 +396,7 @@ public class GuigenFieldSetResult : GuigenFieldSet {
 
 
 public class GuigenFieldSetSectionSingle : GuigenFieldSet {
-    
+
     public override View View => MainLayout;
     Layout MainLayout;
     GuiSection? GuiSection;
@@ -415,11 +404,11 @@ public class GuigenFieldSetSectionSingle : GuigenFieldSet {
             GuigenBinding binding,
             GuiBindingSingle fieldBinding = null,
             IBindable? data = null,
-            GuiSection? guiSection=null) : base(binding, fieldBinding, data) {
+            GuiSection? guiSection = null) : base(binding, fieldBinding, data) {
         GuiSection = guiSection;
 
         // Create the Action buttons
-        ActionMenu = new FlexLayout() { 
+        ActionMenu = new FlexLayout() {
             Wrap = FlexWrap.Wrap
             };
         //AddButtons(ActionMenu);
@@ -432,7 +421,7 @@ public class GuigenFieldSetSectionSingle : GuigenFieldSet {
         CancelButton = new GuigenButton(Binding, null, "Cancel", OnCancel);
         UpdateButton = new GuigenButton(Binding, null, "Update", OnUpdate);
         EditButton = new GuigenButton(Binding, null, "Edit", OnEdit);
-        
+
         ContextMenu = new FlexLayout() {
             Wrap = FlexWrap.Wrap
             };
@@ -462,7 +451,7 @@ public class GuigenFieldSetSectionSingle : GuigenFieldSet {
             ContextMenu.Add(CancelButton.View);
             }
         if (IsEditable) {
-            ContextMenu.Add(IsEditMode ? UpdateButton.View: EditButton.View);
+            ContextMenu.Add(IsEditMode ? UpdateButton.View : EditButton.View);
             }
         }
 
@@ -504,7 +493,7 @@ public class GuigenFieldSetSectionMultiple : GuigenFieldSet, IBoundChooser {
     ///<summary>The chooser section (if present)</summary> 
     public GuigenFieldChooser Chooser { get; set; }
 
-    IBindable SelectedItem {get; set; }
+    IBindable SelectedItem { get; set; }
 
     public GuigenFieldSetSectionMultiple(
             GuigenBinding binding,
@@ -597,9 +586,9 @@ public class GuigenFieldSetSectionMultiple : GuigenFieldSet, IBoundChooser {
         }
 
     private void OnEdit(object sender, EventArgs e) {
-        
-        
-        OnItemEdit (SelectedItem);
+
+
+        OnItemEdit(SelectedItem);
 
         }
 
@@ -643,8 +632,8 @@ public class GuigenFieldSetActionSingle : GuigenFieldSetAction {
     public GuigenFieldSetActionSingle(
                 GuigenBinding binding,
                 GuiAction guiAction,
-                GuigenFieldSet fieldSet, 
-                IBindable context = null) : base (binding, guiAction, fieldSet) {
+                GuigenFieldSet fieldSet,
+                IBindable context = null) : base(binding, guiAction, fieldSet) {
         GuiAction = guiAction;
         // Create the backing data
         Data = guiAction.Factory();
@@ -685,7 +674,7 @@ public class GuigenFieldSetActionSingle : GuigenFieldSetAction {
             var verify = parameter.Validate(Binding.Gui);
 
             if (verify is GuiResultInvalid invalid) {
-                Feedback (invalid);
+                Feedback(invalid);
 
                 return;
                 }

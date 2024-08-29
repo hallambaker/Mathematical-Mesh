@@ -1,9 +1,5 @@
 ﻿using Goedel.Cryptography.Dare;
 
-
-
-using System.Xml.Linq;
-
 namespace Goedel.Everything;
 
 #region // Bindings to classes specified through the Guigen schema.
@@ -11,7 +7,7 @@ namespace Goedel.Everything;
 
 
 // Documented in Guigen output
-public partial class MessageSection : IHeadedSelection{
+public partial class MessageSection : IHeadedSelection {
 
     IAccountSelector Account { get; }
     ContextUser ContextUser => Account.ContextUser;
@@ -128,7 +124,7 @@ public partial class BoundMessageAcknowledgeConnection {
 
 public partial class BoundMailMail {
 
-    public override IFieldIcon Type  => FieldIcons.Mail(IsRead);
+    public override IFieldIcon Type => FieldIcons.Mail(IsRead);
 
     public override string Category => "Mail";
 
@@ -232,7 +228,7 @@ public partial class BoundMessageContactRequest {
 
 public partial class BoundMessageGroupInvitation {
 
-    public override IFieldIcon Type  => FieldIcons.GroupInvitation(IsRead);
+    public override IFieldIcon Type => FieldIcons.GroupInvitation(IsRead);
     public override string Category => "Group Invitation";
     public override Message Convert() {
         var result = new Message();
@@ -547,7 +543,7 @@ public partial class MessageSelection : SelectionSpool<GuigenSpoolInbound, Bound
         binding.Fill();
         return binding.Bound as SpoolIndexEntry;
         }
-    
+
     #endregion
 
 

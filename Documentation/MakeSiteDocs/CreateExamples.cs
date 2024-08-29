@@ -20,8 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Collections.Generic;
-
+using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using Goedel.Mesh;
@@ -29,11 +28,9 @@ using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
 using Goedel.Test;
 using Goedel.Utilities;
+
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.Net.NetworkInformation;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
-using System.Data;
 
 namespace ExampleGenerator;
 
@@ -101,7 +98,7 @@ public partial class CreateExamples {
         CountMissing++;
 
         var stackTrace = new StackTrace();
-        Screen.WriteInfo($"Missing example! {GetModule() }");
+        Screen.WriteInfo($"Missing example! {GetModule()}");
 
         _Output.Write("\n{0}", _Indent);
         _Output.Write("~~~~\n{0}", _Indent);

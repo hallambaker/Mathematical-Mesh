@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="$(SolutionDir)Settings/CommonSettingsTest.xml" />
+	<ItemGroup>
+	  <Compile Remove="DSAKeyGen\**" />
+	  <Compile Remove="DSASigGen\**" />
+	  <Compile Remove="DSASigVer\**" />
+	  <Compile Remove="KemKeyGen\**" />
+	  <Compile Remove="KeyEncapDecap\**" />
+	  <EmbeddedResource Remove="DSAKeyGen\**" />
+	  <EmbeddedResource Remove="DSASigGen\**" />
+	  <EmbeddedResource Remove="DSASigVer\**" />
+	  <EmbeddedResource Remove="KemKeyGen\**" />
+	  <EmbeddedResource Remove="KeyEncapDecap\**" />
+	  <None Remove="DSAKeyGen\**" />
+	  <None Remove="DSASigGen\**" />
+	  <None Remove="DSASigVer\**" />
+	  <None Remove="KemKeyGen\**" />
+	  <None Remove="KeyEncapDecap\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Nist\Goedel.Cryptography.Nist.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Test.Core\Goedel.Test.Core.csproj" />
+		<ProjectReference Include="..\Goedel.Mesh.Test\Goedel.Mesh.Test.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="coverlet.collector" Version="6.0.0">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	  <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.6.0" />
+	  <PackageReference Update="xunit" Version="2.4.2" />
+	  <PackageReference Update="xunit.runner.visualstudio" Version="2.4.5">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	</ItemGroup>
+	
+</Project>

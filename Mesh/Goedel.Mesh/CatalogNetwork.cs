@@ -21,8 +21,6 @@
 #endregion
 
 
-using System.Text;
-
 namespace Goedel.Mesh;
 
 #region // The data classes CatalogNetwork, CatalogedNetwork
@@ -67,7 +65,7 @@ public class CatalogNetwork : Catalog<CatalogedNetwork> {
                 bool decrypt = true,
                 bool create = true,
                 byte[] bitmask = null) =>
-        new CatalogNetwork(directory, storeId, policy, cryptoParameters, 
+        new CatalogNetwork(directory, storeId, policy, cryptoParameters,
             keyCollection, decrypt, create, bitmask: bitmask);
 
     /// <summary>
@@ -93,7 +91,7 @@ public class CatalogNetwork : Catalog<CatalogedNetwork> {
                 bool create = true,
                 byte[] bitmask = null) :
         base(directory, storeName ?? Label,
-                    policy, cryptoParameters, keyCollection, 
+                    policy, cryptoParameters, keyCollection,
                     decrypt: decrypt, create: create, bitmask: bitmask) {
         }
 

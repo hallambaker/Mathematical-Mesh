@@ -71,7 +71,7 @@ public class MeshKeyCredentialPrivate : KeyCredentialPrivate, ICredentialPrivate
     /// </summary>
     /// <returns></returns>
     public MeshKeyCredentialPublic GetMeshKeyCredentialPublic() =>
-        new(    AuthenticationPrivate.KeyPairPublic() as KeyPairAdvanced) {
+        new(AuthenticationPrivate.KeyPairPublic() as KeyPairAdvanced) {
             Account = Account
             };
 
@@ -92,38 +92,38 @@ public class MeshKeyCredentialPrivate : KeyCredentialPrivate, ICredentialPrivate
         foreach (var extension in extensions) {
             switch (extension.Tag) {
                 case Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsDirectX25519Tag: {
-                        keyDirect = new KeyPairX25519(extension.Value);
-                        break;
-                        }
+                    keyDirect = new KeyPairX25519(extension.Value);
+                    break;
+                    }
                 case Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsDirectX448Tag: {
-                        keyDirect = new KeyPairX448(extension.Value);
-                        break;
-                        }
+                    keyDirect = new KeyPairX448(extension.Value);
+                    break;
+                    }
                 case Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsClaimIdTag: {
-                        account = extension.Value.ToUTF8();
-                        break;
-                        }
+                    account = extension.Value.ToUTF8();
+                    break;
+                    }
 
                 case Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsMeshProfileDeviceTag: {
-                        // convert the enveloped ConnectionDevice
-                        var envelope = DareEnvelope.FromJSON(extension.Value, false);
-                        profileDevice = envelope.DecodeJsonObject() as ProfileDevice;
-                        keyAuthentication ??= profileDevice.Authentication.GetKeyPairAdvanced();
-                        break;
-                        }
+                    // convert the enveloped ConnectionDevice
+                    var envelope = DareEnvelope.FromJSON(extension.Value, false);
+                    profileDevice = envelope.DecodeJsonObject() as ProfileDevice;
+                    keyAuthentication ??= profileDevice.Authentication.GetKeyPairAdvanced();
+                    break;
+                    }
                 case Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsMeshConnectionDeviceTag: {
-                        // convert the enveloped ConnectionDevice
-                        var envelope = DareEnvelope.FromJSON(extension.Value, false);
-                        connectionDevice = envelope.DecodeJsonObject() as ConnectionService;
-                        keyAuthentication = connectionDevice.AuthenticationPublic;
-                        break;
-                        }
+                    // convert the enveloped ConnectionDevice
+                    var envelope = DareEnvelope.FromJSON(extension.Value, false);
+                    connectionDevice = envelope.DecodeJsonObject() as ConnectionService;
+                    keyAuthentication = connectionDevice.AuthenticationPublic;
+                    break;
+                    }
                 case Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsMeshConnectionAddressTag: {
-                        // convert the enveloped ConnectionDevice
-                        var envelope = DareEnvelope.FromJSON(extension.Value, false);
-                        connectionAddress = envelope.DecodeJsonObject() as ConnectionStripped;
-                        break;
-                        }
+                    // convert the enveloped ConnectionDevice
+                    var envelope = DareEnvelope.FromJSON(extension.Value, false);
+                    connectionAddress = envelope.DecodeJsonObject() as ConnectionStripped;
+                    break;
+                    }
                 }
             }
 

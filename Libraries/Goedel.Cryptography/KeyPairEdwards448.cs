@@ -32,7 +32,7 @@ public class KeyPairEd448 : KeyPairEdwards {
 
     #region // Properties and fields 
     ///<summary>The implementation public key value</summary>
-    public virtual CurveEdwards448Public PublicKey { get;  }
+    public virtual CurveEdwards448Public PublicKey { get; }
 
     ///<summary>The implementation private key value (if exportable)</summary>
     public virtual CurveEdwards448Private PrivateKey { get; }

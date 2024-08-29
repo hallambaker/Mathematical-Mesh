@@ -1,6 +1,4 @@
-﻿using Goedel.Cryptography.Core;
-
-namespace Goedel.Mesh.Server;
+﻿namespace Goedel.Mesh.Server;
 
 /// <summary>
 /// The Mesh service configuration.
@@ -49,9 +47,9 @@ public class MeshServiceConfiguration : ServiceConfiguration {
     /// <param name="profileAccount">The callsign registry profile.</param>
     /// <param name="filename">The file to save the profile to.</param>
     public void AddProfileRegistryCallsign(
-                DareEnvelope profileAccount, 
+                DareEnvelope profileAccount,
                 string filename = "CallsignRegistryProfile.dare") {
-        var path = Path.Combine (ServicePath, filename);
+        var path = Path.Combine(ServicePath, filename);
         profileAccount.ToFile(path);
         ProfileRegistryCallsign = path;
         }

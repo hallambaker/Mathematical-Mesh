@@ -12,7 +12,7 @@ namespace Goedel.Utilities;
 /// Provide a means of strongly typing a resource identifier.
 /// </summary>
 /// <param name="Id">The resource identifier.</param>
-public record ResourceId (
+public record ResourceId(
             string Id) {
     }
 

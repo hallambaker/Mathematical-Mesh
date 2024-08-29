@@ -1,6 +1,4 @@
-﻿using Goedel.Utilities;
-
-namespace Goedel.Cryptography.PQC;
+﻿namespace Goedel.Cryptography.PQC;
 
 /// <summary>
 /// Operations on matrix of polynomials expressed as a list of coefficients 

@@ -20,16 +20,16 @@
 //  THE SOFTWARE.
 #endregion
 
+global using Goedel.Discovery;
+global using Goedel.IO;
+global using Goedel.Utilities;
+
 global using System;
 global using System.Collections.Generic;
 global using System.IO;
 global using System.Net;
-global using System.Net.Http;
 global using System.Security.Cryptography;
 global using System.Threading.Tasks;
-global using Goedel.Utilities;
-global using Goedel.Discovery;
-global using  Goedel.IO;
 
 
 

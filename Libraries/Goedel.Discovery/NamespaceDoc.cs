@@ -20,13 +20,15 @@
 //  THE SOFTWARE.
 #endregion
 
+global using Goedel.Utilities;
+
+global using Microsoft.Extensions.Logging;
+
 global using System;
 global using System.Collections.Generic;
 global using System.Diagnostics;
 global using System.Text;
 global using System.Threading.Tasks;
-global using Goedel.Utilities;
-global using Microsoft.Extensions.Logging;
 
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
@@ -43,7 +45,7 @@ class NamespaceDoc {
     }
 
 
-internal class Component: IComponent {
+internal class Component : IComponent {
 
     ///<summary> default logger for the assembly</summary> 
     public static ILogger Logger = new AssemblyLogger() {

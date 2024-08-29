@@ -32,7 +32,7 @@ namespace Goedel.Protocol;
 public abstract class JpcInterface : Disposable {
 
     ///<summary>The network endpoints to which the interface is bound.</summary> 
-    public virtual List<Endpoint> Endpoints { get; }  = new List<Endpoint>();
+    public virtual List<Endpoint> Endpoints { get; } = new List<Endpoint>();
 
     /// <summary>
     /// The WellKnown service name for HTTP and DNS prefix use.
@@ -231,7 +231,7 @@ public abstract class JpcClientInterface {
 
 
     ///<inheritdoc cref="IJpcSession"/>
-    public Task<JsonObject> RequestAsync(string tag, JsonObject request) => 
+    public Task<JsonObject> RequestAsync(string tag, JsonObject request) =>
             JpcSession.PostAsync(tag, request);
 
 

@@ -56,7 +56,7 @@ public static class NumberSplit {
     /// </summary>
     /// <param name="value">The value to bound.</param>
     /// <returns>The bounded value.</returns>
-    public static long BoundInt32 (this long value) => 
+    public static long BoundInt32(this long value) =>
         value >= Int32.MaxValue ? value : Int32.MaxValue;
 
 
@@ -378,7 +378,7 @@ public static class NumberSplit {
         ulong result = 0;
 
         for (int i = 7; i >= 0; i--) {
-            result = (result <<8) | data[index + i];
+            result = (result << 8) | data[index + i];
             }
 
         return result;
@@ -456,7 +456,7 @@ public static class NumberSplit {
     public static ulong BigEndian64(this byte[] data, int index = 0) {
         ulong result = 0;
 
-        for (int i = 0; i <8; i++) {
+        for (int i = 0; i < 8; i++) {
             result = (result << 8) | data[index + i];
             }
 

@@ -392,7 +392,7 @@ public partial class JsonReader : Reader {
 
         //string In = "";
         while (Going & !EOF) {
-            
+
             var c = (char)CharacterInput.PeekByte();
             //In = In + c;
 
@@ -443,28 +443,28 @@ public partial class JsonReader : Reader {
             CharacterInput.ReadByte(); // Consume character
             switch (Actions[State]) {
                 case Action.Add: {
-                        stringBuilder.Append(c);
-                        break;
-                        }
+                    stringBuilder.Append(c);
+                    break;
+                    }
                 case Action.AddComplete: {
-                        Complete = true;
-                        stringBuilder.Append(c);
-                        break;
-                        }
+                    Complete = true;
+                    stringBuilder.Append(c);
+                    break;
+                    }
                 case Action.Complete: {
-                        Complete = true;
-                        break;
-                        }
+                    Complete = true;
+                    break;
+                    }
                 case Action.Incomplete: {
-                        Complete = true;
-                        Incomplete = true;
-                        break;
-                        }
+                    Complete = true;
+                    Incomplete = true;
+                    break;
+                    }
 
                 case Action.Ignore:
-                    break;
+                break;
                 default:
-                    break;
+                break;
                 }
             }
         return Token;
@@ -516,54 +516,54 @@ public partial class JsonReader : Reader {
         PeekToken();
         switch (TokenType) {
             case Token.Comma: {
-                    GetToken();
-                    return true; // another tag to come
-                    }
+                GetToken();
+                return true; // another tag to come
+                }
             case Token.EndObject: {
-                    GetToken();
-                    return false; // end of object reached
-                    }
+                GetToken();
+                return false; // end of object reached
+                }
 
             case Token.Invalid:
-                break;
+            break;
             case Token.StartObject:
-                break;
+            break;
             case Token.StartArray:
-                break;
+            break;
             case Token.EndArray:
-                break;
+            break;
             case Token.Colon:
-                break;
+            break;
             case Token.String:
-                break;
+            break;
             case Token.Tag:
-                break;
+            break;
             case Token.Number:
-                break;
+            break;
             case Token.Integer:
-                break;
+            break;
             case Token.Real32:
-                break;
+            break;
             case Token.Real64:
-                break;
+            break;
             case Token.Litteral:
-                break;
+            break;
             case Token.True:
-                break;
+            break;
             case Token.False:
-                break;
+            break;
             case Token.Null:
-                break;
+            break;
             case Token.EndRecord:
-                break;
+            break;
             case Token.Binary:
-                break;
+            break;
             case Token.JSONBCD:
-                break;
+            break;
             case Token.Empty:
-                break;
+            break;
             default:
-                break;
+            break;
             }
         throw new InvalidInput("Expected , or }");
         }
@@ -576,19 +576,19 @@ public partial class JsonReader : Reader {
         GetToken();
         switch (TokenType) {
             case Token.EndObject:
-                return null;
+            return null;
             case Token.Tag:
-                return ResultString;
+            return ResultString;
             case Token.String: {
-                    var Result = ResultString;
-                    GetToken();
-                    if (TokenType != Token.Colon) {
-                        throw new InvalidInput("Expected :");
-                        }
-                    return Result;
+                var Result = ResultString;
+                GetToken();
+                if (TokenType != Token.Colon) {
+                    throw new InvalidInput("Expected :");
                     }
+                return Result;
+                }
             default:
-                break;
+            break;
             }
         throw new InvalidInput("Expected \"Tag\"");
         }
@@ -775,7 +775,7 @@ public partial class JsonReader : Reader {
     /// <param name="file"></param>
     /// <param name="tagged"></param>
     /// <returns></returns>
-    public static T ReadFile<T>(string file, bool tagged= false) where T : JsonObject, new() {
+    public static T ReadFile<T>(string file, bool tagged = false) where T : JsonObject, new() {
         var result = new T();
         using var stream = file.OpenFileReadShared();
         var countedStream = new CountedUtf8StreamReader(stream);

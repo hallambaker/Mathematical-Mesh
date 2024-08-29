@@ -1,9 +1,4 @@
-﻿using Goedel.Utilities;
-
-using System;
-using System.Threading.Tasks;
-
-namespace Goedel.Guigen;
+﻿namespace Goedel.Guigen;
 
 
 public interface IPresentation {
@@ -16,7 +11,7 @@ public interface IDialog {
     }
 
 public interface IBindable {
-    
+
     ///<summary>Returns the binding for the data type</summary> 
     public GuiBinding Binding { get; }
 
@@ -44,7 +39,7 @@ public interface IMessageable {
 
 public interface ISelectable : IParameter {
 
-    GuiBinding SelectionBinding { get; } 
+    GuiBinding SelectionBinding { get; }
 
     }
 
@@ -106,10 +101,10 @@ public interface IResult : IBindable {
     }
 
 
-public interface IFail : IResult { 
-    
+public interface IFail : IResult {
 
-    
+
+
     }
 
 
@@ -125,7 +120,7 @@ public abstract record NullResult : IResult {
 
     //public virtual string Error { get; }
 
-    public NullResult( ResourceId? resourceId=null) {
+    public NullResult(ResourceId? resourceId = null) {
         //Error = error;
         ResourceId = resourceId;
         }
@@ -136,7 +131,7 @@ public abstract record NullResult : IResult {
 
     public static NullResult Teardown { get; } = new TeardownResult() { };
 
-    public static NullResult Initialized { get; }  = new InitializedResult() { };
+    public static NullResult Initialized { get; } = new InitializedResult() { };
 
     public static NullResult Valid { get; } = new ValidResult();
 
@@ -175,16 +170,16 @@ public record ValidResult : NullResult {
 
 public record ErrorResult : NullResult, IFail {
 
-    public  string? Error { get; }
+    public string? Error { get; }
     Exception? Exception { get; }
-    public ErrorResult(string error ) {
+    public ErrorResult(string error) {
         Error = error;
         }
 
     public ErrorResult(Exception exception) {
         Exception = exception;
         }
-    public ErrorResult(ResourceId resourceId) : base(resourceId){
+    public ErrorResult(ResourceId resourceId) : base(resourceId) {
 
         }
 
@@ -225,7 +220,7 @@ public record GuiBindingQr(
     }
 
 
-public record GuiBoundProperty (
+public record GuiBoundProperty(
                 string? Label) {
     public virtual bool IsReadOnly => true;
 
@@ -246,7 +241,7 @@ public record GuiBoundPropertySelection(
 
 public record GuiBoundPropertyPrompted(
                 string? Label,
-                string? Prompt) : GuiBoundProperty (Label){
+                string? Prompt) : GuiBoundProperty(Label) {
     }
 
 public record GuiBoundPropertyBoolean(
@@ -390,9 +385,9 @@ public class GuiQR {
 
 
 ///<summary></summary> 
-public record GuiImage (
+public record GuiImage(
             string Icon
-            ){
+            ) {
     }
 
 
@@ -422,11 +417,11 @@ public record GuiPrompt(
 /// <param name="Id"></param>
 /// <param name="Prompt"></param>
 /// <param name="Binding"></param>
-public record GuiFieldSet (
+public record GuiFieldSet(
             string Id,
             string Prompt,
             GuiBinding Binding
-            ) : GuiPrompt(Id, Prompt){
+            ) : GuiPrompt(Id, Prompt) {
     }
 
 
@@ -458,7 +453,7 @@ public interface IGetState {
     }
 
 
-public record GuiSection (
+public record GuiSection(
             string Id,
             string Prompt,
             string Icon,
@@ -473,14 +468,15 @@ public record GuiSection (
 
 
     public IBindable? Data {
-            get => data ?? BindData().CacheValue(out data);
-            set => data = value; }
+        get => data ?? BindData().CacheValue(out data);
+        set => data = value;
+        }
     IBindable? data = null;
 
     public Action UpdateData { get; set; }
 
 
-    public Func<IBindable?> BindData { get; set; } = () => null! ;
+    public Func<IBindable?> BindData { get; set; } = () => null!;
 
 
     ///<summary>The action entries</summary> 

@@ -67,7 +67,7 @@ public class CatalogDevice : Catalog<CatalogedDevice> {
                 bool decrypt = true,
                 bool create = true,
                 byte[] bitmask = null) =>
-        new CatalogDevice(directory, storeId, meshClient, policy, cryptoParameters, 
+        new CatalogDevice(directory, storeId, meshClient, policy, cryptoParameters,
             keyCollection, decrypt, create, bitmask: bitmask);
 
     //string directory;
@@ -102,7 +102,7 @@ public class CatalogDevice : Catalog<CatalogedDevice> {
                 bool create = true,
                 byte[] bitmask = null) :
         base(directory, storeName ?? Label,
-                    policy, cryptoParameters, keyCollection, meshClient, 
+                    policy, cryptoParameters, keyCollection, meshClient,
                     decrypt: decrypt, create: create, bitmask: bitmask) {
         //this.directory = directory;
         //Screen.WriteLine($"^^^^^^^^Create Device Catalog {this.directory}");

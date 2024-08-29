@@ -21,7 +21,6 @@
 #endregion
 
 using Goedel.Cryptography.KeyFile;
-using Microsoft.Extensions.Options;
 
 namespace Goedel.Mesh.Shell;
 
@@ -67,7 +66,7 @@ public partial class Shell {
     /// <returns>Mesh result instance</returns>
     public override ShellResult MailGet(MailGet options) {
         var contextUser = GetContextUser(options);
-        
+
         var identifier = options.Address.Value;
         //var catalog = contextUser.GetStore(CatalogApplication.Label) as CatalogApplication;
 
@@ -242,12 +241,12 @@ public partial class Shell {
             var applicationEntryMail = contextUser.GetApplicationEntryMail(address);
             var keyData = applicationEntryMail.Activation.SmimeEncrypt;
             keyPair = keyData.GetKeyPair(KeySecurity.Exportable);
-            keyFileFormat = GetKeyFileFormat(options, KeyFileFormat.PEMPrivate); 
+            keyFileFormat = GetKeyFileFormat(options, KeyFileFormat.PEMPrivate);
             }
         else {
             var applicationMail = contextUser.GetApplicationMail(address);
             keyPair = applicationMail.SmimeEncrypt.GetKeyPair();
-            keyFileFormat = GetKeyFileFormat(options, KeyFileFormat.PEMPublic); 
+            keyFileFormat = GetKeyFileFormat(options, KeyFileFormat.PEMPublic);
             }
 
 

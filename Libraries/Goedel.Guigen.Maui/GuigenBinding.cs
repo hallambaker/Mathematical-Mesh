@@ -21,7 +21,7 @@ public record StyleSheet {
             };
 
 
-    public static StyleSheet MonochromeStyleSheet { get; } = 
+    public static StyleSheet MonochromeStyleSheet { get; } =
             new StyleSheet() {
                 TextColor = Colors.Black,
                 InactiveTextColor = Colors.Grey,
@@ -56,7 +56,7 @@ public enum DisplayMode {
 
     }
 
-public interface IReformat{
+public interface IReformat {
 
     void Reformat() {
         }
@@ -64,9 +64,9 @@ public interface IReformat{
     }
 
 
-public record BoundFieldSet (
+public record BoundFieldSet(
             GuiFieldSet FieldSet,
-            IBindable   Data){
+            IBindable Data) {
 
     }
 
@@ -226,7 +226,7 @@ public class GuigenBinding {
             HeightRequest = IconHeight
             };
 
-        var label = new Label() { 
+        var label = new Label() {
             Text = text
             };
 
@@ -283,8 +283,8 @@ public class GuigenBinding {
 
     private void OnSectionClick(GuiSection section) =>
                 MainWindow.SetDetailWindow(section);
-     
-    public void GotoSection (GuiSection section = null)
+
+    public void GotoSection(GuiSection section = null)
             => MainWindow.SetDetailWindow(section);
 
 

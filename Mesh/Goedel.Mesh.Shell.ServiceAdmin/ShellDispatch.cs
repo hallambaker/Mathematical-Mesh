@@ -22,7 +22,6 @@
 
 
 using Goedel.Callsign.Registry;
-using Goedel.Mesh.ServiceAdmin;
 
 namespace Goedel.Mesh.Shell.ServiceAdmin;
 
@@ -41,7 +40,7 @@ public partial class Shell : _Shell {
     /// <param name="console">Error output stream.</param>
     public void Dispatch(string[] args, TextWriter console) {
         var commandLineInterpreter = new CommandLineInterpreter();
-        Output=console;
+        Output = console;
 
         if (NoCatch) {
             commandLineInterpreter.MainMethod(this, args);
@@ -51,10 +50,10 @@ public partial class Shell : _Shell {
                 commandLineInterpreter.MainMethod(this, args);
                 }
             catch (Goedel.Command.ParserException) {
-                    CommandLineInterpreterBase.Brief(
-                    CommandLineInterpreter.Description,
-                    CommandLineInterpreter.DefaultCommand,
-                    CommandLineInterpreter.Entries);
+                CommandLineInterpreterBase.Brief(
+                CommandLineInterpreter.Description,
+                CommandLineInterpreter.DefaultCommand,
+                CommandLineInterpreter.Entries);
                 }
             catch (System.Exception Exception) {
                 console.WriteLine("Application: {0}", Exception.Message);
@@ -90,15 +89,15 @@ public partial class Shell : _Shell {
 
         switch (Verbosity) {
             case Command.Verbosity.Json: {
-                    Output.Write(shellResult.GetJson(false));
-                    break;
-                    }
+                Output.Write(shellResult.GetJson(false));
+                break;
+                }
             default: {
-                    var builder = new StringBuilder();
-                    shellResult.ToBuilder(builder, Verbosity);
-                    Output.Write(builder.ToString());
-                    break;
-                    }
+                var builder = new StringBuilder();
+                shellResult.ToBuilder(builder, Verbosity);
+                Output.Write(builder.ToString());
+                break;
+                }
             }
 
         }
@@ -114,7 +113,7 @@ public partial class Shell : _Shell {
             }
 
         var compilationDate = Script.AssemblyBuildTime;
-        
+
         return new ResultAbout() {
             Success = true,
             DirectoryKeys = MeshMachine.DirectoryKeys,
@@ -164,8 +163,8 @@ public partial class Shell : _Shell {
         var configuration = MeshMachine.CreateConfig(
                 serviceDns, hostIp, hostDns, runAs);
         Console.WriteLine($" Description is {configuration.GenericHost.Description}");
-       if (true) {
-            configuration.Add (
+        if (true) {
+            configuration.Add(
                 MeshServiceConfiguration.Create(
                             MeshMachine,
                             configuration.GenericHost,

@@ -32,7 +32,7 @@ public class RudStreamClient : RudStream, IJpcSession {
     ///<inheritdoc/>
     public virtual string TargetAccount => throw new NYI();
 
-    SemaphoreSlim SemaphoreSlim { get; } = new (1,1);
+    SemaphoreSlim SemaphoreSlim { get; } = new(1, 1);
 
     #endregion
     #region // Constructors

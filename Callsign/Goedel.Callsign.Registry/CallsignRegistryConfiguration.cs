@@ -3,7 +3,7 @@
 /// <summary>
 /// The Mesh service configuration.
 /// </summary>
-public class CallsignRegistryConfiguration  : IConfigurationEntry {
+public class CallsignRegistryConfiguration : IConfigurationEntry {
 
     ///<summary>The configuration entry.</summary> 
     public static readonly ConfigurationEntry ConfigurationEntry =

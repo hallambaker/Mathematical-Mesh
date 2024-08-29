@@ -20,8 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System;
-
 namespace Goedel.Cryptography.Dare;
 
 /// <summary>
@@ -149,7 +147,7 @@ public class SequenceTree : SequenceList {
     /// </summary>
     /// <param name="frame">The frame index</param>
     /// <returns>The frame position.</returns>
-    public  long GetFramePosition(long frame) {
+    public long GetFramePosition(long frame) {
         var Found = FrameIndexToEntry.TryGetValue(frame, out var entry);
         var position = entry.FramePosition;
 

@@ -1,13 +1,4 @@
-﻿using Goedel.Utilities;
-
-using Microsoft.Maui.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-
-using System.Runtime.CompilerServices;
-
-using static System.Collections.Specialized.BitVector32;
-
-namespace Goedel.Guigen.Maui;
+﻿namespace Goedel.Guigen.Maui;
 
 /// <summary>
 /// Instance class for chooser and associated add/update/delete interactions.
@@ -25,7 +16,7 @@ public class GuigenFieldChooser : GuigenField {
     public View View => Layout;
     public Layout Layout { get; }
 
-    public ListView ListView { get; } = new ();
+    public ListView ListView { get; } = new();
     RefreshView RefreshView { get; } = new();
 
     public Button AddButton;
@@ -51,7 +42,7 @@ public class GuigenFieldChooser : GuigenField {
     public GuigenFieldChooser(
                 IBoundChooser fieldSet,
                 GuiBoundPropertyChooser binding,
-                IBindable? data = null) : base (fieldSet, binding) {
+                IBindable? data = null) : base(fieldSet, binding) {
 
 
         ListView.ItemTemplate = new BindableTemplate(this);
@@ -128,10 +119,10 @@ public class GuigenFieldChooser : GuigenField {
         var col = 0;
         foreach (var item in SelectionBinding.BoundProperties) {
             switch (item) {
-                case GuiBoundPropertyString propertyString : {
+                case GuiBoundPropertyString propertyString: {
                     var width = new GridLength(colWidth);
                     //width = GridLength.Auto;
-                    Widths.Add (width);
+                    Widths.Add(width);
                     var label = new Label() {
                         Text = propertyString.Label,
 
@@ -141,7 +132,7 @@ public class GuigenFieldChooser : GuigenField {
 
                     break;
                     }
-                case GuiBoundPropertyIcon icon : {
+                case GuiBoundPropertyIcon icon: {
                     var width = MainWindow.Binding.IconWidth;
                     var image = new Image() {
                         Source = "messages",
@@ -163,7 +154,7 @@ public class GuigenFieldChooser : GuigenField {
         }
 
 
-    public void OnClickFilter(object sender, EventArgs e) { 
+    public void OnClickFilter(object sender, EventArgs e) {
         }
 
 

@@ -1,16 +1,4 @@
-﻿using System;
-
-using Goedel.Test;
-using Goedel.Mesh.Test;
-using Goedel.Utilities;
-using Xunit;
-using Goedel.Cryptography.PQC;
-using System.Runtime.Intrinsics.X86;
-using Goedel.Cryptography.PQC;
-using System.Text.Json;
-using System.IO;
-
-namespace Goedel.XUnit;
+﻿namespace Goedel.XUnit;
 
 /// <summary>
 /// Test library for PQC algorithms.
@@ -18,12 +6,12 @@ namespace Goedel.XUnit;
 public class TestPQC : Disposable {
 
 
-    public string ACVP_Root => @"..\Test.Cryptography.PQC";
-    public  string KemKeyGen => Path.Combine(ACVP_Root, "ML-KEM-keyGen-FIPS203");
+    public string ACVP_Root => @"..\NIST.Test.Vectors";
+    public string KemKeyGen => Path.Combine(ACVP_Root, "ML-KEM-keyGen-FIPS203");
     public string KemEncapDecap => Path.Combine(ACVP_Root, "ML-KEM-encapDecap-FIPS203");
     public string DsaKeyGen => Path.Combine(ACVP_Root, "ML-DSA-keyGen-FIPS204");
     public string DsaSign => Path.Combine(ACVP_Root, "ML-DSA-sigGen-FIPS204");
-    public string DsaVerify=> Path.Combine(ACVP_Root, "ML-DSA-sigVer-FIPS204");
+    public string DsaVerify => Path.Combine(ACVP_Root, "ML-DSA-sigVer-FIPS204");
 
 
 
@@ -44,7 +32,7 @@ public class TestPQC : Disposable {
 
     [Fact]
     public void TestKemKeyGen() {
-        
+
         var testBinding = new AcvpTestBinding<KemKeyGenTest>(KemKeyGen);
         foreach (var test in testBinding.Tests) {
             test.Value.Test();

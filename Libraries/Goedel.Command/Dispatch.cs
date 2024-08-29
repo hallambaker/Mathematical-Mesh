@@ -20,8 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using Goedel.Registry;
-
 namespace Goedel.Command;
 
 /// <summary>
@@ -44,7 +42,7 @@ public enum Verbosity {
 
 
 /// <summary>Track start and end time of parse.</summary>
-public abstract class Dispatch{
+public abstract class Dispatch {
     /// <summary>Record start time.</summary>
     public System.DateTime Started = System.DateTime.Now;
 

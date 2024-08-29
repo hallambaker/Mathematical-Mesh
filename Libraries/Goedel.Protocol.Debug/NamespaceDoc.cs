@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 #endregion
 
-global using System;
+global using Goedel.Utilities;
+
 global using System.Collections.Generic;
 global using System.IO;
 global using System.Text;
-global using Goedel.Utilities;
 
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]

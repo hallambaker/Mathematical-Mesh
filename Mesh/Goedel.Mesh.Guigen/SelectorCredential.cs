@@ -22,7 +22,7 @@ public partial class CredentialSection : IHeadedSelection {
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public CredentialSection(IAccountSelector? account =null) {
+    public CredentialSection(IAccountSelector? account = null) {
         Account = account;
         Catalog = ContextUser.GetStore(CatalogCredential.Label, create: false) as GuigenCatalogCredential;
         CredentialSelection = new CredentialSelection(ContextUser, Catalog);
@@ -127,7 +127,7 @@ public partial class BoundPassword : IBoundPresentation, IDialog {
 
     }
 
-public partial class BoundPasskey: IBoundPresentation, IDialog {
+public partial class BoundPasskey : IBoundPresentation, IDialog {
 
 
     public override IFieldIcon Type => FieldIcons.CredentialPasskey;

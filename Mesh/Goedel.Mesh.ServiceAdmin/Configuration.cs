@@ -1,10 +1,4 @@
-﻿
-
-
-
-using Goedel.Repository;
-
-namespace Goedel.Mesh.ServiceAdmin;
+﻿namespace Goedel.Mesh.ServiceAdmin;
 
 /// <summary>
 /// Service/Host configuration.
@@ -15,30 +9,30 @@ public class Configuration : Disposable {
     public Dictionary<string, object> Dictionary = new();
 
     ///<summary>The logger service configuration.</summary> 
-    public DareLoggerConfiguration DareLogger { get;  set; }
+    public DareLoggerConfiguration DareLogger { get; set; }
 
     ///<summary>The host configuration.</summary> 
-    public GenericHostConfiguration GenericHost { get;  set; }
+    public GenericHostConfiguration GenericHost { get; set; }
 
     ///<summary>The Mesh service configuration.</summary> 
-    public MeshServiceConfiguration MeshService { get;  set; }
+    public MeshServiceConfiguration MeshService { get; set; }
 
     ///<summary>The Mesh service configuration.</summary> 
-    public CallsignRegistryConfiguration CallsignRegistry { get;  set; }
+    public CallsignRegistryConfiguration CallsignRegistry { get; set; }
 
     ///<summary>The Mesh service configuration.</summary> 
-    public CallsignResolverConfiguration CallsignResolver { get;  set; }
+    public CallsignResolverConfiguration CallsignResolver { get; set; }
 
     ///<summary>The Mesh service configuration.</summary> 
-    public CarnetServiceConfiguration CarnetService { get;  set; }
+    public CarnetServiceConfiguration CarnetService { get; set; }
     ///<summary>The Mesh service configuration.</summary> 
-    public RepositoryServiceConfiguration RepositoryService { get;  set; }
+    public RepositoryServiceConfiguration RepositoryService { get; set; }
 
     ///<summary>The Mesh service configuration.</summary> 
-    public PresenceServiceConfiguration PresenceService { get;  set; }
+    public PresenceServiceConfiguration PresenceService { get; set; }
 
 
-    JsonDocument JsonDocument { get;  init; }
+    JsonDocument JsonDocument { get; init; }
 
     /// <summary>
     /// Default constructor.
@@ -115,7 +109,7 @@ public class Configuration : Disposable {
                 GenericHost = genericHost;
                 break;
                 }
-            case MeshServiceConfiguration meshService : {
+            case MeshServiceConfiguration meshService: {
                 MeshService = meshService;
                 break;
                 }
@@ -158,7 +152,7 @@ public class Configuration : Disposable {
             };
 
         ////Console.WriteLine(JsonSerializer.Serialize<Dictionary<string, object>>(Dictionary, jsonOptions));
-        JsonSerializer.Serialize (stream, Dictionary, jsonOptions);
+        JsonSerializer.Serialize(stream, Dictionary, jsonOptions);
         }
 
 

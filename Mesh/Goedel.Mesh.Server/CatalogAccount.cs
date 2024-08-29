@@ -119,5 +119,5 @@ public class CatalogAccount : Catalog<AccountEntry> {
     /// <returns>True if successful, otherwise false.</returns>
     public bool TryGetAccount(string identifier, out AccountEntry account) =>
         AccountByAddress.TryGetValue(identifier, out account);
-    
+
     }

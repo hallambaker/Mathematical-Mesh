@@ -5,7 +5,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Style", "IDE0060:Remove unused parameter", 
+[assembly: SuppressMessage("Style", "IDE0060:Remove unused parameter",
     Justification = "Automatically generated code",
     Scope = "module")]
 [assembly: SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression",

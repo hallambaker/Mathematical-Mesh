@@ -345,7 +345,7 @@ public static class ArrayUtilities {
 
 
     //public static T? GetFirst<T>(this List<T> list) {
-        
+
     //    }
 
 

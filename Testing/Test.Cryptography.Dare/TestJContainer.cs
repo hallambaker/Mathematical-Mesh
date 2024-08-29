@@ -20,22 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Text;
-
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
-using Goedel.Discovery;
-using Goedel.IO;
-using Goedel.Mesh.Shell;
-using Goedel.Test;
-using Goedel.Utilities;
-
-using Xunit;
 namespace Goedel.XUnit;
 
 
@@ -62,7 +46,7 @@ public partial class TestSequences {
         //    SequenceType.List, SequenceType.Digest, SequenceType.Chain, SequenceType.Tree, SequenceType.Merkle};
         var basicParams = new List<TestBasicParams> {
             new TestBasicParams (0),
-            new TestBasicParams (1), 
+            new TestBasicParams (1),
             new TestBasicParams (10),
             new TestBasicParams (1000),
             new TestBasicParams (40, 5000, true, 10, 5),
@@ -107,7 +91,7 @@ public partial class TestSequences {
         sequence.ValidatePayload();
 
         for (var i = 0; i < randomChecks; i++) {
-            var frame = 1+ seed.GetRandomInt(sequence.Records, i, "randomAccess");
+            var frame = 1 + seed.GetRandomInt(sequence.Records, i, "randomAccess");
             sequence.RandomCheck(frame);
             }
 
@@ -130,8 +114,8 @@ public partial class TestSequences {
     [InlineData(SequenceType.Tree)]
     [InlineData(SequenceType.Merkle)]
     public void TestEncrypt(SequenceType sequenceType,
-            ModeEnhance encrypt = ModeEnhance.Record, 
-            ModeCorruption corruption = ModeCorruption.None, 
+            ModeEnhance encrypt = ModeEnhance.Record,
+            ModeCorruption corruption = ModeCorruption.None,
             int records = 50,
             int size = 5000,
             bool randomsize = true,
@@ -249,7 +233,7 @@ public partial class TestSequences {
                     randomChecks, additionalChunks);
         var TestContext = new TestContext(seed, sign: sign, encrypt: encrypt, corruption: corruption);
         var sequence = new TestSequence(TestContext, SequenceType.Merkle, records, size, randomsize,
-            additionalChunks,  checkSignatures: true);
+            additionalChunks, checkSignatures: true);
 
         sequence.ValidateCiphertext(); // Check we did encrypt!
         sequence.ValidatePlaintext(); // Check we can decrypt
@@ -453,8 +437,8 @@ public partial class TestSequences {
         DarePolicy policy = null,
         CryptoParameters CryptoParametersEntry = null) {
 
-         ZTestContainer($"Container-List-{FileName}", SequenceType.List, Records, MaxSize, ReOpen, MoveStep,
-            policy, CryptoParametersEntry);
+        ZTestContainer($"Container-List-{FileName}", SequenceType.List, Records, MaxSize, ReOpen, MoveStep,
+           policy, CryptoParametersEntry);
         ZTestContainer($"Container-Digest-{FileName}", SequenceType.Digest, Records, MaxSize, ReOpen, MoveStep,
             policy, CryptoParametersEntry);
         ZTestContainer($"Container-Chain-{FileName}", SequenceType.Chain, Records, MaxSize, ReOpen, MoveStep,

@@ -58,7 +58,7 @@ public partial class ApplicationEntryGroup {
     public ActivationCommon GetActivationAccount() => new() {
         CommonAuthenticationKey = Activation.AccountAuthentication.GetKeyPair(),
         CommonEncryptionKey = Activation.AccountEncryption.GetKeyPair(),
-        AdministratorSignatureKey = Activation.AdministratorSignature.GetKeyPair()    
+        AdministratorSignatureKey = Activation.AdministratorSignature.GetKeyPair()
         };
 
 
@@ -117,8 +117,8 @@ public partial class CatalogedGroup {
                     ProfileGroup profileGroup,
                     ActivationCommon activationAccount,
                     CryptoKey encryptionKey
-        //,
-        //            ConnectionStripped connectionAddress
+                    //,
+                    //            ConnectionStripped connectionAddress
                     ) {
         encryptionKey.Future();
         //connectionAddress.Future();

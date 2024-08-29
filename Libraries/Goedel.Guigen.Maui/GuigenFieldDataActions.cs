@@ -1,6 +1,4 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace Goedel.Guigen.Maui;
+﻿namespace Goedel.Guigen.Maui;
 
 public class GuigenFieldDataActions : GuigenField, IWidget {
     GuiBoundPropertyDataActions TypedBinding => PropertyBinding as GuiBoundPropertyDataActions;

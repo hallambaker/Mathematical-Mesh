@@ -1,9 +1,4 @@
-﻿
-using System.Net.NetworkInformation;
-
-
-
-namespace Goedel.Everything;
+﻿namespace Goedel.Everything;
 
 
 

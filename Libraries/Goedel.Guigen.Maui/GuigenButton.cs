@@ -1,7 +1,4 @@
-﻿using static System.Collections.Specialized.BitVector32;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace Goedel.Guigen.Maui;
+﻿namespace Goedel.Guigen.Maui;
 
 
 
@@ -23,14 +20,14 @@ public class GuigenButton {
         set {
             ImageButton.IsVisible = value;
             TextButton.IsVisible = value;
-            } 
+            }
         }
 
     public GuigenButton(
                 GuigenBinding binding,
                 string icon,
                 string text,
-                EventHandler? callback=null) {
+                EventHandler? callback = null) {
 
         Binding = binding;
 
@@ -90,7 +87,7 @@ public class GuigenButton {
         }
 
 
-    public void SetState (ButtonState state) {
+    public void SetState(ButtonState state) {
         if (TextButton != null) {
             Binding.SetState(state, TextButton);
             }
@@ -108,8 +105,8 @@ public class GuigenButtonDataAction : GuigenButton {
     GuiDataAction Action { get; }
     IBindable Data { get; }
 
-    public GuigenButtonDataAction(GuigenBinding binding, IBindable data, GuiDataAction action) : 
-                base (binding, action.Icon, action.Prompt) {
+    public GuigenButtonDataAction(GuigenBinding binding, IBindable data, GuiDataAction action) :
+                base(binding, action.Icon, action.Prompt) {
         BindCallback(OnAction);
         Action = action;
         Data = data;

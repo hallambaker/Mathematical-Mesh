@@ -1,5 +1,4 @@
-﻿
-//  Copyright (c) 2023 by Threshold Secrets
+﻿//  Copyright (c) 2023 by Threshold Secrets
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -20,8 +19,6 @@
 //  THE SOFTWARE.
 //  
 //  
-
-using Goedel.FSR;
 
 namespace Goedel.Discovery;
 
@@ -65,7 +62,7 @@ public record ParsedAddress {
     public int? Version { get; init; } = 0;
 
     ///<summary>Convenience value for invalid address.</summary> 
-    public static ParsedAddress Invalid { get; } = new () {
+    public static ParsedAddress Invalid { get; } = new() {
         AddressType = ParsedAddressType.Invalid,
         };
     }
@@ -80,7 +77,7 @@ public record ServiceAddress {
     public const string MeshTopLevelDirectory = "mm--";
 
     ///<summary>The composite address type.</summary> 
-    public ParsedAddressType AddressType { get; } 
+    public ParsedAddressType AddressType { get; }
     //=> GetAddressType();
 
     /// <summary> The service address </summary>

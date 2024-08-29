@@ -74,7 +74,7 @@ public class CatalogContact : Catalog<CatalogedContact> {
                 bool decrypt = true,
                 bool create = true,
                 byte[] bitmask = null) =>
-        new CatalogContact(directory, storeId, policy, cryptoParameters, keyCollection, 
+        new CatalogContact(directory, storeId, policy, cryptoParameters, keyCollection,
             decrypt, create, bitmask: bitmask);
 
     /// <summary>
@@ -100,7 +100,7 @@ public class CatalogContact : Catalog<CatalogedContact> {
                 bool create = true,
                 byte[] bitmask = null) :
         base(directory, storeName ?? Label,
-                    policy, cryptoParameters, keyCollection, 
+                    policy, cryptoParameters, keyCollection,
                     decrypt: decrypt, create: create, bitmask: bitmask) {
         }
     #endregion
@@ -117,12 +117,12 @@ public class CatalogContact : Catalog<CatalogedContact> {
         var contact = catalogedContact.Contact;
 
         if (contact.NetworkAddresses != null) {
-        foreach (var networkAddress in contact.NetworkAddresses) {
+            foreach (var networkAddress in contact.NetworkAddresses) {
                 if (networkAddress.Address is not null) {
                     DictionaryByNetworkAddress.AddSafe(networkAddress.Address,
                         new NetworkProtocolEntry(catalogedContact, networkAddress));
                     }
-            if (networkAddress is NetworkCapability networkCapability) {
+                if (networkAddress is NetworkCapability networkCapability) {
                     foreach (var capability in networkCapability.Capabilities) {
                         capability.KeyCollection = KeyCollection;
                         switch (capability) {
@@ -292,7 +292,7 @@ public class CatalogContact : Catalog<CatalogedContact> {
 public partial class CatalogedContact {
 
     #region // Properties
-    
+
     ///<inheritdoc/>
     public override string _PrimaryKey => Key;
 
@@ -350,17 +350,17 @@ public partial class CatalogedContact {
 
         switch (Contact) {
             case ContactPerson contactPerson: {
-                    builder.AppendLine($"  Person {contactPerson.Id}");
-                    break;
-                    }
+                builder.AppendLine($"  Person {contactPerson.Id}");
+                break;
+                }
             case ContactOrganization contactOrganization: {
-                    builder.AppendLine($"  Organization {contactOrganization.Id}");
-                    break;
-                    }
+                builder.AppendLine($"  Organization {contactOrganization.Id}");
+                break;
+                }
             case ContactGroup ContactGroup: {
-                    builder.AppendLine($"  Group {ContactGroup.Id}");
-                    break;
-                    }
+                builder.AppendLine($"  Group {ContactGroup.Id}");
+                break;
+                }
             }
         foreach (var anchor in Contact.Anchors) {
             builder.AppendLine($"  Anchor {anchor.Udf}");
@@ -491,7 +491,7 @@ public partial class NetworkCapability {
 
 public partial class PersonName {
 
-    public PersonName() { 
+    public PersonName() {
         }
 
     public PersonName(string fullname) {
@@ -510,16 +510,16 @@ public partial class PersonName {
             return;
             }
 
-        Last = items[items.Length -1];
+        Last = items[items.Length - 1];
         if (items.Length == 2) {
             return;
             }
 
         Middle = new();
         for (var i = 1; i < items.Length - 1; i++) {
-            Middle.Add( items[i]);
+            Middle.Add(items[i]);
             }
-        
+
         }
 
     ///<summary>Set the full name.</summary>

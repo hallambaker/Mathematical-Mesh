@@ -55,7 +55,7 @@ public static partial class Extensions {
     /// <param name="defaultEncoding">The default encoding to be used.</param>
     /// <returns></returns>
     public static DataEncoding Default(this DataEncoding encoding, DataEncoding defaultEncoding = DataEncoding.JSON) =>
-        encoding == DataEncoding.Default? defaultEncoding : encoding;
+        encoding == DataEncoding.Default ? defaultEncoding : encoding;
 
     /// <summary>
     /// Report if a protocol status cude indicates success.
@@ -83,27 +83,27 @@ public static partial class Extensions {
         switch (dataEncoding) {
             case DataEncoding.Default:
             case DataEncoding.JSON: {
-                    return GetJson(jsonObject, tagged);
-                    }
+                return GetJson(jsonObject, tagged);
+                }
             case DataEncoding.JSON_A: {
-                    return GetJsonA(jsonObject, tagged);
-                    }
+                return GetJsonA(jsonObject, tagged);
+                }
             case DataEncoding.JSON_B: {
-                    return GetJsonB(jsonObject, tagged);
-                    }
+                return GetJsonB(jsonObject, tagged);
+                }
             case DataEncoding.JSON_C: {
-                    return GetJsonC(jsonObject, tagged);
-                    }
+                return GetJsonC(jsonObject, tagged);
+                }
             case DataEncoding.JSON_D: {
-                    return GetJsonD(jsonObject, tagged);
-                    }
+                return GetJsonD(jsonObject, tagged);
+                }
 
             case DataEncoding.ASN_1:
-                break;
+            break;
             case DataEncoding.RFC822:
-                break;
+            break;
             default:
-                break;
+            break;
             }
 
         throw new NYI();
@@ -118,27 +118,27 @@ public static partial class Extensions {
     public static JsonWriter GetWriter(this DataEncoding dataEncoding, Stream stream) {
         switch (dataEncoding) {
             case DataEncoding.JSON: {
-                    return new JsonWriter(stream);
-                    }
+                return new JsonWriter(stream);
+                }
             case DataEncoding.JSON_A: {
-                    return new JSONAWriter(stream);
-                    }
+                return new JSONAWriter(stream);
+                }
             case DataEncoding.JSON_B: {
-                    return new JsonBWriter(stream);
-                    }
+                return new JsonBWriter(stream);
+                }
             case DataEncoding.JSON_C: {
-                    return new JSONCWriter(stream);
-                    }
+                return new JSONCWriter(stream);
+                }
             case DataEncoding.JSON_D: {
-                    return new JSONCWriter(stream);
-                    }
+                return new JSONCWriter(stream);
+                }
 
             case DataEncoding.ASN_1:
-                break;
+            break;
             case DataEncoding.RFC822:
-                break;
+            break;
             default:
-                break;
+            break;
             }
         throw new NYI();
         }

@@ -1,13 +1,4 @@
-﻿using Goedel.Cryptography.Dare;
-using Goedel.Mesh;
-using Goedel.Protocol;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.CompilerServices;
 
 namespace Goedel.Callsign;
 
@@ -41,7 +32,7 @@ public class ContextResolver : IResolver {
     ContextAccount ContextAccount { get; }
 
     ///<summary></summary> 
-    public  ResolverServiceClient ResolverServiceClient { get; set; }
+    public ResolverServiceClient ResolverServiceClient { get; set; }
 
     /// <summary>
     /// Constructor returning an instance bound to the account context <paramref name="contextAccount"/>.
@@ -81,14 +72,14 @@ public static class Extensions {
 
 
 
-/// <summary>
-/// Return the callsign resolver for the account context <paramref name="contextAccount"/>.
-/// </summary>
-/// <param name="contextAccount">Account context.</param>
-/// <returns>The resolver.</returns>
-/// <exception cref="ArgumentNullException"></exception>
-public static IResolver GetResolver(
-                this ContextAccount contextAccount) {
+    /// <summary>
+    /// Return the callsign resolver for the account context <paramref name="contextAccount"/>.
+    /// </summary>
+    /// <param name="contextAccount">Account context.</param>
+    /// <returns>The resolver.</returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public static IResolver GetResolver(
+                    this ContextAccount contextAccount) {
         if (contextAccount == null) {
             throw new ArgumentNullException(paramName: nameof(contextAccount));
             }
@@ -129,7 +120,7 @@ public static IResolver GetResolver(
                 this ContextUser contextAccount,
                 string callsign,
                 string display = null,
-                bool bind = false, 
+                bool bind = false,
                 ProfileAccount transfer = null,
                 string transferUdf = null) {
 
@@ -171,11 +162,11 @@ public static IResolver GetResolver(
             }
         var envelopedBinding = callsignBinding.Envelope(signingKey: contextAccount.KeyAdministratorSign);
 
-        var envelopedProfile = new Enveloped<Profile> (contextAccount.Profile.DareEnvelope);
+        var envelopedProfile = new Enveloped<Profile>(contextAccount.Profile.DareEnvelope);
 
         var message = new CallsignRegistrationRequest() {
             EnvelopedCallsignBinding = new Enveloped<CallsignBinding>(envelopedBinding),
-            Profiles = new List<Enveloped<Profile>> () { envelopedProfile }
+            Profiles = new List<Enveloped<Profile>>() { envelopedProfile }
             };
 
 
@@ -258,11 +249,11 @@ public static IResolver GetResolver(
             string recipient) {
 
         // pull the contact entry for the recipient
-        var contact = contextAccount.GetContact (recipient);
+        var contact = contextAccount.GetContact(recipient);
 
-        var profile = GetProfile (contact.Contact, recipient);
+        var profile = GetProfile(contact.Contact, recipient);
         // create the transfer request
-        return await contextAccount.CallsignRequestAsync(callsign, bind:false, transfer: profile );
+        return await contextAccount.CallsignRequestAsync(callsign, bind: false, transfer: profile);
 
         }
 

@@ -19,9 +19,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-using System.Net.Sockets;
-
 using Goedel.Discovery;
+
+using System.Net.Sockets;
 
 namespace Goedel.Protocol;
 
@@ -61,7 +61,7 @@ public enum TransportType {
 public record Endpoint(
          string? Protocol,
          string? Instance = null,
-         JpcInterface JpcInterface =null) {
+         JpcInterface JpcInterface = null) {
 
 
 

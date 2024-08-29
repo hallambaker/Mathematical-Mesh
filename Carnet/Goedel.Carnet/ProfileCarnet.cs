@@ -19,7 +19,6 @@
 //  THE SOFTWARE.
 
 using Goedel.Cryptography.Jose;
-using Goedel.Mesh;
 
 namespace Goedel.Carnet;
 
@@ -111,7 +110,7 @@ public partial class ProfileCarnet {
         secretSeed ??= new PrivateKeyUDF(
             udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount, secret: null, algorithmEncrypt: algorithmEncrypt,
             algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate, bits: bits);
-        return new ProfileCarnet(serviceAddress, 
+        return new ProfileCarnet(serviceAddress,
                     secretSeed, keyCollection, persist);
         }
 

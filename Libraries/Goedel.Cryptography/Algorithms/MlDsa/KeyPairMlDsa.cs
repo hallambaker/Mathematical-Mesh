@@ -32,8 +32,6 @@
 
 using Goedel.Cryptography.Jose;
 
-using System.Security.Cryptography.X509Certificates;
-
 namespace Goedel.Cryptography.PQC;
 
 
@@ -111,9 +109,9 @@ public class KeyPairMlDsa : KeyPair, IOpaqueBinaryKey {
             byte[] publicKey,
             byte[]? privateKey,
             KeySecurity keySecurity = KeySecurity.Bound,
-            KeyUses keyUses = KeyUses.Any) : 
-                        this (new MlDsaPublic(publicKey),
-                        privateKey is null ? null : new MlDsaPrivate(privateKey), 
+            KeyUses keyUses = KeyUses.Any) :
+                        this(new MlDsaPublic(publicKey),
+                        privateKey is null ? null : new MlDsaPrivate(privateKey),
                         keySecurity, keyUses) {
         }
 
@@ -127,8 +125,8 @@ public class KeyPairMlDsa : KeyPair, IOpaqueBinaryKey {
     /// <param name="privateKey">The private key seed.</param>
     /// <param name="keySecurity">The key security.</param>
     /// <param name="keyUses">The key uses.</param>
-    public KeyPairMlDsa (
-                MlDsaPublic publicKey, 
+    public KeyPairMlDsa(
+                MlDsaPublic publicKey,
                 MlDsaPrivate privateKey = null,
                 KeySecurity keySecurity = KeySecurity.Bound,
                 KeyUses keyUses = KeyUses.Any) : base(keySecurity) {
@@ -164,13 +162,13 @@ public class KeyPairMlDsa : KeyPair, IOpaqueBinaryKey {
             _ => MlDsaMode.Unknown
             };
 
-        mode =(mode != MlDsaMode.Unknown) ? mode : keySize switch {
-                0 => MlDsaMode.Mode87,
-                44 => MlDsaMode.Mode44,
-                65 => MlDsaMode.Mode65,
-                87 => MlDsaMode.Mode87,
-                _ => MlDsaMode.Unknown
-                };
+        mode = (mode != MlDsaMode.Unknown) ? mode : keySize switch {
+            0 => MlDsaMode.Mode87,
+            44 => MlDsaMode.Mode44,
+            65 => MlDsaMode.Mode65,
+            87 => MlDsaMode.Mode87,
+            _ => MlDsaMode.Unknown
+            };
 
         (mode == MlDsaMode.Unknown).AssertFalse(KeySizeNotSupported.Throw);
 
@@ -289,7 +287,7 @@ public class KeyPairMlDsa : KeyPair, IOpaqueBinaryKey {
         var sig = PrivateKey.SignInternal(data);
         return sig;
         }
-    
+
 
     ///<inheritdoc/>
     public override bool VerifyHash(

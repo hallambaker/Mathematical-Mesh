@@ -21,9 +21,6 @@
 #endregion
 
 
-using Goedel.Cryptography;
-using Goedel.Mesh.Client;
-
 namespace Goedel.Mesh.Shell;
 
 public partial class Shell {
@@ -79,7 +76,7 @@ public partial class Shell {
 
         if (inputFile == null) {
             _ = new DareArchive(
-                archiveFile, fileStatus: FileStatus.New, keyLocate: keyLocate, policy:policy);
+                archiveFile, fileStatus: FileStatus.New, keyLocate: keyLocate, policy: policy);
             }
         else {
             var sourceDirectory = Path.GetFileName(inputFile);
@@ -143,7 +140,7 @@ public partial class Shell {
 
         using (var archive = new DareArchive(
                 archiveFile, fileStatus: FileStatus.Existing, keyLocate: keyLocate)) {
-            archive.Delete(inputFile, erase:erase);
+            archive.Delete(inputFile, erase: erase);
             }
 
         return new ResultFile() {
@@ -185,7 +182,7 @@ public partial class Shell {
             var result = new ResultArchive() {
                 Entries = new List<FileEntry>(),
                 Frames = (int)archive.FrameCount,
-                IndexFrame = (int) archive.Sequence.FrameCount,
+                IndexFrame = (int)archive.Sequence.FrameCount,
                 };
 
             foreach (var entry in archive.ObjectIndex) {

@@ -56,7 +56,7 @@ public class MeshMachineTest : MeshMachineCore {
     //List<Trace> meshProtocolMessages;
 
 
-     TestEnvironmentBase TestEnvironmentCommon { get; }
+    TestEnvironmentBase TestEnvironmentCommon { get; }
 
 
 
@@ -217,7 +217,7 @@ public class KeyCollectionTest : KeyCollectionCore {
     public override string DirectoryKeys => directoryKeys;
     string directoryKeys;
 
-    public KeyCollectionTest(MeshMachineTest meshMachine) { 
+    public KeyCollectionTest(MeshMachineTest meshMachine) {
         this.meshMachine = meshMachine;
         directoryKeys = meshMachine.DirectoryKeys;
         }

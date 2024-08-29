@@ -1,9 +1,4 @@
-﻿using Goedel.Mesh;
-
-
-
-using System.Collections;
-using System.Text.Json.Serialization;
+﻿using System.Collections;
 
 namespace Goedel.Everything;
 
@@ -14,7 +9,7 @@ public static class Extensions {
     public static string ParseComments(this List<string> texts) =>
         texts.First();
 
-    public static string? NullifyIfEmpty (this string text) => text == "" ? null : text;
+    public static string? NullifyIfEmpty(this string text) => text == "" ? null : text;
     }
 
 
@@ -79,8 +74,8 @@ public abstract class SelectionStore<TStore, TPersist, TEnum, TBindable> : ISele
 
 
 
-public abstract class SelectionCatalog<TCatalog,TPersist,TBindable> : SelectionStore<TCatalog, TPersist, TPersist, TBindable>,
-                        ISelectCollection 
+public abstract class SelectionCatalog<TCatalog, TPersist, TBindable> : SelectionStore<TCatalog, TPersist, TPersist, TBindable>,
+                        ISelectCollection
                     where TCatalog : Catalog<TPersist?>
                     where TPersist : CatalogedEntry
                     where TBindable : IBoundPresentation {
@@ -89,8 +84,8 @@ public abstract class SelectionCatalog<TCatalog,TPersist,TBindable> : SelectionS
     public ContextAccount ContextAccount { get; set; }
 
     public SelectionCatalog(
-                    ContextAccount contextAccount, 
-                    TCatalog store) : base (store){
+                    ContextAccount contextAccount,
+                    TCatalog store) : base(store) {
         ContextAccount = contextAccount;
         foreach (var item in store) {
             if (Include(item)) {
@@ -114,7 +109,7 @@ public abstract class SelectionCatalog<TCatalog,TPersist,TBindable> : SelectionS
             }
         }
 
-     
+
 
     public override async Task<IResult> Remove(IBoundPresentation item) {
         try {
@@ -132,7 +127,7 @@ public abstract class SelectionCatalog<TCatalog,TPersist,TBindable> : SelectionS
             await UpdateAsync(item);
             return NullResult.Completed;
             }
-        catch (Exception e){
+        catch (Exception e) {
             return new ErrorResult(e);
             }
         }
@@ -162,7 +157,7 @@ public abstract class SelectionCatalog<TCatalog,TPersist,TBindable> : SelectionS
         }
 
 
-    public  async Task<TransactResponse> UpdateAsync(IBoundPresentation item) {
+    public async Task<TransactResponse> UpdateAsync(IBoundPresentation item) {
         UpdateWithBindable(item);
         var entry = item.Bound as TPersist;
 
@@ -173,9 +168,9 @@ public abstract class SelectionCatalog<TCatalog,TPersist,TBindable> : SelectionS
         return result;
         }
 
-    StoreUpdate StartTransaction() => new StoreUpdate() { 
+    StoreUpdate StartTransaction() => new StoreUpdate() {
         Store = Catalog.StoreName,
-        Envelopes = new ()
+        Envelopes = new()
         };
 
 

@@ -423,7 +423,7 @@ public static partial class BaseConvert {
                 byte[] data,
                 int first = 0,
                 int length = -1,
-                ConversionFormat format = ConversionFormat.None) => 
+                ConversionFormat format = ConversionFormat.None) =>
         StringBuilderConvertBits.Append(data, BASE64, 6, format, stringBuilder, first, length);
 
     #endregion

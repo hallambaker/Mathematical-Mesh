@@ -22,8 +22,6 @@
 
 
 using Goedel.Callsign;
-using Goedel.Test;
-using System.Security.Claims;
 
 namespace Goedel.XUnit;
 
@@ -44,7 +42,7 @@ public record ParametersCallsign {
         Iteration = iteration;
 
         Seed = DeterministicSeed.CreateDeep(2, ToString());
-    }
+        }
 
     public override string ToString() => $"{Iteration}";
 
@@ -177,7 +175,7 @@ public partial class TCallsign {
         var tasks = new int[] { parameters.Issue, parameters.Updates };
 
         // Note that this loop is set up so we always register a callsign.= before updating one.
-        for (var task =0;  task >= 0; task = parameters.Seed.GetTask(tasks)) {
+        for (var task = 0; task >= 0; task = parameters.Seed.GetTask(tasks)) {
 
             switch (task) {
                 case 0: {
@@ -196,7 +194,7 @@ public partial class TCallsign {
 
 
     [Fact(Skip = "Callsign not yet implemented")]
-    public void TestCallSignBadSignatureIssuer ()=> throw new NYI();
+    public void TestCallSignBadSignatureIssuer() => throw new NYI();
 
     [Fact(Skip = "Callsign not yet implemented")]
     public void TestCallSignBadSignatureRegistration() => throw new NYI();

@@ -128,8 +128,8 @@ public class KeyPairMlKem : KeyPair, IOpaqueBinaryKey {
 
         PublicKey = publicKey;
         PrivateKey = privateKey;
-        PrivateKeyInfo = new (this);
-        PublicKeyInfo = new (this);
+        PrivateKeyInfo = new(this);
+        PublicKeyInfo = new(this);
 
         }
 
@@ -212,12 +212,12 @@ public class KeyPairMlKem : KeyPair, IOpaqueBinaryKey {
 
     static KeyPairMlKem Generate(
                 MlKem mlKem,
-                byte[]? seed=null,
+                byte[]? seed = null,
                 KeySecurity keySecurity = KeySecurity.Bound,
                 KeyUses keyUses = KeyUses.Any) {
         seed = seed ?? Platform.GetRandomBytes(MlKem.SymBytes);
         var (publicKey, privateKey) = mlKem.KeyPair(seed);
-        return new KeyPairMlKem (publicKey, privateKey, keySecurity, keyUses);
+        return new KeyPairMlKem(publicKey, privateKey, keySecurity, keyUses);
         }
 
     ///<inheritdoc/>

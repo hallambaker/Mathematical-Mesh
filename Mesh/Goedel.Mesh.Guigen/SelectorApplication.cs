@@ -1,6 +1,5 @@
 ﻿using Goedel.Callsign;
 using Goedel.Cryptography.Dare;
-using Goedel.Mesh;
 namespace Goedel.Everything;
 
 #region // Bindings to classes specified through the Guigen schema.
@@ -25,7 +24,7 @@ public partial class ApplicationSection : IHeadedSelection {
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public ApplicationSection(IAccountSelector? account=null) {
+    public ApplicationSection(IAccountSelector? account = null) {
         Account = account;
         Catalog = ContextUser.GetStore(CatalogApplication.Label, create: false) as GuigenCatalogApplication;
         ApplicationSelection = Catalog is null ? null : new ApplicationSelection(ContextUser, Catalog);
@@ -74,7 +73,7 @@ public partial class BoundApplication : IBoundPresentation, IDialog {
     public virtual string? IconValue => "account.png";
 
     public virtual CatalogedApplication Convert() {
-        throw new NotImplementedException();    
+        throw new NotImplementedException();
         //var result = new CatalogedApplication();
 
         //return result;

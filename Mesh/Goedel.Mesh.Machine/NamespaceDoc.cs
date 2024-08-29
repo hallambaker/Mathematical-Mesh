@@ -18,16 +18,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-global using Goedel.Cryptography;
-global using Goedel.Cryptography.Dare;
-global using Goedel.Mesh;
-global using Goedel.Mesh.Server;
-global using Goedel.Callsign;
-global using Goedel.Callsign.Resolver;
-global using Goedel.Utilities;
-global using System.Text;
-
-
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 
 

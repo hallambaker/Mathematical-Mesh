@@ -86,8 +86,8 @@ public abstract class JbcdDocument : IJcbdDocument {
                 long length = -1,
                 bool lazy = false) {
         var result = new JbcdDocumentFile(file) {
-            Start= start,
-            Length= length
+            Start = start,
+            Length = length
             };
         result.Parse(lazy);
         return result;
@@ -104,8 +104,8 @@ public abstract class JbcdDocument : IJcbdDocument {
     /// <param name="lazy">If true, lazy evaluation should be used.</param>
     /// <returns>The parsed data.</returns>
     public static JbcdDocument Parse(
-                byte[] data, 
-                long start = 0, 
+                byte[] data,
+                long start = 0,
                 long length = -1,
                 bool lazy = false) {
         var result = new JbcdDocumentMemory(data) {
@@ -146,7 +146,7 @@ public abstract class JbcdDocument : IJcbdDocument {
 
 
     JbcdValueObject GetObject() {
-        var result = new JbcdValueObject() { 
+        var result = new JbcdValueObject() {
             DataStartPosition = Position
             };
         var token = GetToken();
@@ -161,7 +161,7 @@ public abstract class JbcdDocument : IJcbdDocument {
             token = GetToken();
             switch (token) {
                 case Token.EndObject: {
-                    result.DataLength = (int) (Position - result.DataStartPosition);
+                    result.DataLength = (int)(Position - result.DataStartPosition);
                     return result;
                     }
                 case Token.Comma: {
@@ -211,7 +211,7 @@ public abstract class JbcdDocument : IJcbdDocument {
     JbcdElement GetElement(Token token) {
 
         switch (token) {
-            case Token.Tag: 
+            case Token.Tag:
             case Token.String: {
 
                 var start = positionStart;
@@ -224,11 +224,12 @@ public abstract class JbcdDocument : IJcbdDocument {
                 token = GetToken();
                 var value = GetValue(token);
 
-                return new JbcdElement() { 
+                return new JbcdElement() {
                     Name = tag,
                     Value = value,
                     ElementStartPosition = start,
-                    ElementLength = Position - start};
+                    ElementLength = Position - start
+                    };
                 }
             default: {
                 throw new NYI();
@@ -426,7 +427,7 @@ public class JcbdEnvelope {
 
         var array = document.Root as JbcdValueArray;
         array.AssertNotNull(NYI.Throw);
-        (array.Values.Count >=2).AssertTrue(NYI.Throw);
+        (array.Values.Count >= 2).AssertTrue(NYI.Throw);
 
         Header = array.Values[0] as JbcdValueObject;
         Body = array.Values[1] as JbcdValueBinary;

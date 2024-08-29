@@ -18,18 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Utilities;
-
-using System;
-using System.Text;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
 using Goedel.Protocol;
-using System.Net.WebSockets;
 
 namespace Goedel.Callsign;
 
@@ -47,7 +36,7 @@ public partial class Page {
             pages.TryGetValue(allow, out var page).AssertTrue(NYI.Throw);
 
 
-            SubPages.Add (allow, page);
+            SubPages.Add(allow, page);
             Expand(pages, page);
 
             }
@@ -150,9 +139,9 @@ public partial class Registration {
     /// <param name="registrationReason">The registration reason. This is ignored if 
     /// <paramref name="registration"/> is null.</param>
     public Registration(
-            CallsignBinding callsign, 
-            Registration? registration=null, 
-            RegistrationReason registrationReason= RegistrationReason.Update) {
+            CallsignBinding callsign,
+            Registration? registration = null,
+            RegistrationReason registrationReason = RegistrationReason.Update) {
         Id = Udf.Nonce();
         Entry = callsign.Enveloped as Enveloped<CallsignBinding>;
         Submitted = System.DateTime.Now;

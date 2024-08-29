@@ -60,7 +60,7 @@ public class JSONAWriter : JsonWriter {
     /// <summary>Write 32 bit integer.</summary>
     /// <param name="Data">Elements to write</param>
     public override void WriteInteger32(int? Data) => Output.Write(
-            Data== null ? "null" : Data.ToString());
+            Data == null ? "null" : Data.ToString());
 
     /// <summary>Write 64 bit integer</summary>
     /// <param name="Data">Elements to write</param>

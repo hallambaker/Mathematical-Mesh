@@ -34,12 +34,12 @@ public partial class Shell {
         var rights = GetRights(options);
         var groupID = options.GroupID.Value;
         var groupName = options.GroupName.Value;
-        rights ??= new List<string> {"super", "admin" };
+        rights ??= new List<string> { "super", "admin" };
         var contextAccount = GetContextUser(options);
 
         byte[] cover = null;
         if (options.Cover.Value != null) {
-             options.Cover.Value.OpenReadToEnd(out cover);
+            options.Cover.Value.OpenReadToEnd(out cover);
             }
 
 

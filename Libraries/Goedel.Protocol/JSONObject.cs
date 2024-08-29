@@ -24,8 +24,6 @@
 
 #pragma warning disable IDE1006
 
-using System.Formats.Asn1;
-
 namespace Goedel.Protocol;
 
 
@@ -98,7 +96,7 @@ public abstract partial class JsonObject : IBinding {
 
 
     ///<summary>The parser data binding.</summary> 
-    public JbcdValueObject JbcdElementObject { get; set; }    
+    public JbcdValueObject JbcdElementObject { get; set; }
 
     /// <summary>
     /// Secondary keys describing the object
@@ -175,7 +173,7 @@ public abstract partial class JsonObject : IBinding {
 
     ///<inheritdoc/>
     public virtual Binding _Binding => _binding;
-    
+
     ///<summary>Binding specification.</summary> 
     protected static Binding _binding = null;
 
@@ -421,7 +419,7 @@ public abstract partial class JsonObject : IBinding {
                 }
             else {
                 DeserializeToken3(jsonReader, Token);
-                
+
                 going = jsonReader.NextObject();
                 }
             }

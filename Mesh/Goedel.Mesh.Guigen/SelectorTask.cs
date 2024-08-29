@@ -1,10 +1,5 @@
 ﻿using Goedel.Cryptography.Dare;
 
-using System.Threading;
-using System.Xml.Linq;
-
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
 namespace Goedel.Everything;
 
 #region // Bindings to classes specified through the Guigen schema.
@@ -29,7 +24,7 @@ public partial class TaskSection : IHeadedSelection {
     /// Return an instance bound to the Contacts catalog of the account <paramref name="account"/>.
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
-    public TaskSection(IAccountSelector? account =null) {
+    public TaskSection(IAccountSelector? account = null) {
         Account = account;
         Catalog = ContextUser.GetStore(CatalogTask.Label, create: false) as GuigenCatalogTasks;
         TaskSelection = Catalog is null ? null : new TaskSelection(ContextUser, Catalog);
@@ -200,7 +195,7 @@ public partial class TaskSelection : SelectionCatalog<GuigenCatalogTasks,
     /// catalog <paramref name="catalog"/>.
     /// </summary>
     /// <param name="catalog"></param>
-    public TaskSelection(ContextAccount contextAccount, 
+    public TaskSelection(ContextAccount contextAccount,
                 GuigenCatalogTasks catalog) : base(contextAccount, catalog) {
         }
 
@@ -209,7 +204,7 @@ public partial class TaskSelection : SelectionCatalog<GuigenCatalogTasks,
     //    (input as BoundTask)?.Convert();
 
     public override BoundTask ConvertToBindable(CatalogedTask input) =>
-        new BoundTask (input);
+        new BoundTask(input);
 
     public override CatalogedTask UpdateWithBindable(IBindable entry) {
         var binding = entry as BoundTask;

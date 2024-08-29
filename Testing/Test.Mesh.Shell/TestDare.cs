@@ -20,21 +20,9 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Collections.Generic;
-using System.IO;
-
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.IO;
 using Goedel.Mesh.Shell;
-using Goedel.Mesh.Test;
 using Goedel.Protocol;
-using Goedel.Test;
 using Goedel.Test.Core;
-using Goedel.Utilities;
-
-using Xunit;
-using Xunit.Sdk;
 
 #pragma warning disable IDE0060
 
@@ -258,7 +246,7 @@ public partial class ShellTests {
     [Theory]
     [InlineData(true, false, false)]
     public void NewFileTestOnce(
-                    bool encrypt=false,
+                    bool encrypt = false,
                     bool sign = false,
                     bool notarize = false) {
         StartTest(Mode, encrypt, sign, notarize);
@@ -313,9 +301,9 @@ public partial class ShellTests {
             }
 
         if (sign | notarize) {
-            var corruptedFile = CorruptFile(fileEncoded, encrypt, sign); 
+            var corruptedFile = CorruptFile(fileEncoded, encrypt, sign);
             var aliceDecoded2 = seed.GetTempFilePath();
-            alice.Dispatch($"dare decode {corruptedFile} {aliceDecoded2} /verify", fail:true);
+            alice.Dispatch($"dare decode {corruptedFile} {aliceDecoded2} /verify", fail: true);
             seed.CheckTestFileNotExist(aliceDecoded2);
             }
 
@@ -330,7 +318,7 @@ public partial class ShellTests {
         inputStream.Position = 0;
         using var outputStream = result.OpenFileNewRW();
 
-        inputStream.CopyTo( outputStream );
+        inputStream.CopyTo(outputStream);
 
         outputStream.CorruptDigestAlg(envelope);
         outputStream.CorruptDigestValue(envelope);
@@ -432,8 +420,8 @@ public partial class ShellTests {
             Notarize = notarize,
             Alice = alice,
             Bob = bob,
-            Mallet= mallet,
-            Seed= seed
+            Mallet = mallet,
+            Seed = seed
             };
 
         var options = encrypt ? $" /encrypt={bob.ContextUser.ServiceAddress} " : "";
@@ -658,7 +646,7 @@ public partial class ShellTests {
                 string sign = null
         ) {
 
-        Seed = DeterministicSeed.AutoClean(Mode, encrypt, sign );
+        Seed = DeterministicSeed.AutoClean(Mode, encrypt, sign);
         // create Alice account
         var accountAlice = AliceAccount;
         CreateAccount(accountAlice);
@@ -672,7 +660,7 @@ public partial class ShellTests {
             ct += $"-{count}";
             }
 
-        var filename = Seed.GetFilename(ct) ;
+        var filename = Seed.GetFilename(ct);
 
         var options = encrypt == null ? "" : $" /encrypt={encrypt}" +
                     sign == null ? "" : $" /sign={sign}";
@@ -707,7 +695,7 @@ public partial class ShellTests {
         var listArchive = Dispatch($"log list {filename} {output}") as ResultListLog;
 
         listArchive.Count.TestEqual(entries.Count);
-        
+
         using (var reader = output.OpenTextReader()) {
             foreach (var entry in entries) {
                 var line = reader.ReadLine();

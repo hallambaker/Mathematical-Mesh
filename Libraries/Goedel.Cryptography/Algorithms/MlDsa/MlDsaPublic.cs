@@ -1,8 +1,4 @@
-﻿
-
-using System.Security.Cryptography.X509Certificates;
-
-namespace Goedel.Cryptography.PQC;
+﻿namespace Goedel.Cryptography.PQC;
 
 /// <summary>
 /// Dilithium public key.
@@ -55,7 +51,7 @@ public class MlDsaPublic : MLDSA {
     /// <param name="signature">The signature and message to verify.</param>
     /// <param name="message">The signed message.</param>
     /// <returns>True if signature isvalid, otherwise false.</returns>
-    public bool Verify(byte[] signature, byte[]message) {
+    public bool Verify(byte[] signature, byte[] message) {
 
         if (!UnpackSignature(signature, out var c, out var z, out var h, out byte[] messageSig)) {
             return false;
@@ -71,7 +67,7 @@ public class MlDsaPublic : MLDSA {
         var cp = new PolynomialInt32(this);
         cp.Challenge(c);
         var mat = PolynomialMatrixInt32.MatrixExpandFromSeed(this, rho);
-        
+
         z.NTT();
         var w1 = mat.MatrixPointwiseMontgomery(z);
 
@@ -93,7 +89,7 @@ public class MlDsaPublic : MLDSA {
 
         // Call random oracle and verify challenge
         var c2 = SHAKE256.GetBytes(SeedBytes, mu, buf);
-        return (c.IsEqualTo (c2));
+        return (c.IsEqualTo(c2));
         }
 
     /// <summary>
@@ -135,7 +131,7 @@ public class MlDsaPublic : MLDSA {
             for (var j = k; j < omegaP; j++) {
                 var ind = offset + j;
                 var s1 = signature[ind];
-                var s0 = signature[ind-1];
+                var s0 = signature[ind - 1];
 
                 if ((j > k) && s1 <= s0) {
                     return false;

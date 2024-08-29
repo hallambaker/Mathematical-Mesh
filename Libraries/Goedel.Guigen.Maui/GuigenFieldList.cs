@@ -9,12 +9,12 @@ public class GuigenFieldList : GuigenField, IWidget {
 
     Label FieldLabel;
     Grid ValueField = new();
-    GuigenButton AddButton ;
+    GuigenButton AddButton;
 
-    Layout Layout { get; } 
+    Layout Layout { get; }
 
     IBindable entryField;
-    public ISelectList Collection {get; set;}
+    public ISelectList Collection { get; set; }
 
     public GuigenFieldList(
                 GuigenFieldSet fieldsSet,
@@ -90,7 +90,7 @@ public class GuigenFieldList : GuigenField, IWidget {
         }
 
 
-    private int MakeRow(int row, IBindable entry, bool isEntry=false) {
+    private int MakeRow(int row, IBindable entry, bool isEntry = false) {
         var col = 0;
         foreach (var property in entry.Binding.BoundProperties) {
             if (property is GuiBoundPropertyIcon icon) {
@@ -222,9 +222,9 @@ public class InformationItemButton : ImageButton {
 
     IBindable Entry { get; }
     public InformationItemButton(
-            GuigenBinding binding, 
-            GuigenFieldList guigenFieldList, 
-            IBindable entry, 
+            GuigenBinding binding,
+            GuigenFieldList guigenFieldList,
+            IBindable entry,
             int row) {
         GuigenFieldList = guigenFieldList;
         Entry = entry;
@@ -283,7 +283,7 @@ public class BoundEntry : Entry {
     GuiBoundPropertyString Property { get; }
     IBindable Entry { get; }
 
-    public BoundEntry(GuiBoundPropertyString property, IBindable entry) { 
+    public BoundEntry(GuiBoundPropertyString property, IBindable entry) {
         Property = property;
         Entry = entry;
         }

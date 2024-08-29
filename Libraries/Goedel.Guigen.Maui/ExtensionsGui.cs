@@ -1,12 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-using Goedel.Guigen;
-
-using Microsoft.Maui.Controls;
-
-using static System.Collections.Specialized.BitVector32;
-
-namespace Goedel.Guigen.Maui;
+﻿namespace Goedel.Guigen.Maui;
 
 // All the code in this file is included in all platforms.
 public static class Extensions {
@@ -16,7 +8,7 @@ public static class Extensions {
 
 
 
-    public static string AsToken (this DeviceIdiom deviceIdiom) => deviceIdiom.ToString();
+    public static string AsToken(this DeviceIdiom deviceIdiom) => deviceIdiom.ToString();
 
     public static string AsToken(this DevicePlatform devicePlatform) {
         if (devicePlatform == DevicePlatform.WinUI) {

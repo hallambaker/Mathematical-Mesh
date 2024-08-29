@@ -71,7 +71,7 @@ public class TestClient {
 
             var content = new ByteArrayContent(requestData);
 
-            var response =  client.PostAsync(uri, content);
+            var response = client.PostAsync(uri, content);
             response.Wait();
             var responseData = response.Result.Content;
 

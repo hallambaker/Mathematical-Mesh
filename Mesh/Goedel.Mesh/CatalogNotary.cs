@@ -61,7 +61,7 @@ public class CatalogNotary : Catalog<CatalogedSignature> {
                 bool decrypt = true,
                 bool create = true,
                 byte[] bitmask = null) =>
-        new CatalogNotary(directory, storeId, policy, cryptoParameters, keyCollection, 
+        new CatalogNotary(directory, storeId, policy, cryptoParameters, keyCollection,
             meshClient, decrypt, create, bitmask);
 
     /// <summary>
@@ -86,11 +86,11 @@ public class CatalogNotary : Catalog<CatalogedSignature> {
                 IKeyCollection keyCollection = null,
                 IMeshClient meshClient = null,
                 bool decrypt = true,
-                bool create = true, 
+                bool create = true,
                 byte[] bitmask = null) :
         base(directory, storeName ?? Label,
-                    policy, cryptoParameters, keyCollection, 
-                    decrypt: decrypt, create: create, bitmask:bitmask) {
+                    policy, cryptoParameters, keyCollection,
+                    decrypt: decrypt, create: create, bitmask: bitmask) {
         }
 
     #endregion

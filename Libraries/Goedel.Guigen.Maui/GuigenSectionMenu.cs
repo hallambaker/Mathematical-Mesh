@@ -1,8 +1,6 @@
-﻿using static System.Collections.Specialized.BitVector32;
+﻿namespace Goedel.Guigen.Maui;
 
-namespace Goedel.Guigen.Maui;
-
-public class GuigenSectionMenu : ContentPage, IReformat{
+public class GuigenSectionMenu : ContentPage, IReformat {
 
     GuigenBinding Binding { get; }
     Gui Gui => Binding.Gui;
@@ -24,8 +22,8 @@ public class GuigenSectionMenu : ContentPage, IReformat{
 
         foreach (var section in Gui.Sections) {
 
-            void callback(object sender, EventArgs e) { 
-                Binding.GotoSection(section); 
+            void callback(object sender, EventArgs e) {
+                Binding.GotoSection(section);
                 }
 
             var button = new GuigenButton(Binding, section, callback);
@@ -75,18 +73,18 @@ public class GuigenSectionButton {
 
         ImageButton = new ImageButton {
             Source = section.Icon.GetFilename(),
-            WidthRequest = Binding.IconWidth ,
+            WidthRequest = Binding.IconWidth,
             HeightRequest = Binding.IconHeight,
             };
         ImageButton.Clicked += OnClick;
 
         TextButton = new Button {
             Text = section.Prompt,
-            HeightRequest = Binding.ButtonHeight 
+            HeightRequest = Binding.ButtonHeight
             };
         TextButton.Clicked += OnClick;
 
-        Stack = new HorizontalStackLayout() { ImageButton , TextButton};
+        Stack = new HorizontalStackLayout() { ImageButton, TextButton };
 
 
         }

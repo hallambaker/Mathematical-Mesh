@@ -20,8 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Collections.Generic;
-
 using Goedel.Mesh.Shell;
 
 namespace Goedel.Mesh.Test;

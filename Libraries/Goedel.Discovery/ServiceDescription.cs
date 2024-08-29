@@ -194,7 +194,7 @@ public class ServiceDescription {
     /// <param name="instance">Optional instance specifier.</param>
     /// <returns>The URI value.</returns>
     public string GetUri(string instance = "") =>
-        (Entries.Count > 0 ? Entries[0].HTTPEndpoint : Default.HTTPEndpoint) + (instance ?? "") ;
+        (Entries.Count > 0 ? Entries[0].HTTPEndpoint : Default.HTTPEndpoint) + (instance ?? "");
 
 
     }

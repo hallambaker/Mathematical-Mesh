@@ -126,7 +126,7 @@
 //        var length = first & IntegerMask;
 //        var result = (ulong) first & IntegerFirst;
 
-        
+
 //        var lengthTag = length switch {
 //            Integer1 => 1,
 //            Integer2 => 2,

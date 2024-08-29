@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Goedel.Cryptography.PQC;
+﻿namespace Goedel.Cryptography.PQC;
 
 
 /// <summary>
@@ -71,10 +68,10 @@ public struct PolynomialInt16 {
     /// </summary>
     /// <returns>The packed polynomial.</returns>
     public byte[] ToMessageBytes() {
-        var result = new byte[MlKem.SymBytes]; 
+        var result = new byte[MlKem.SymBytes];
 
         // result is automatically initialized to zeros.
-        
+
         for (var i = 0; i < MlKem.N / 8; i++) {
             for (var j = 0; j < 8; j++) {
 
@@ -87,8 +84,8 @@ public struct PolynomialInt16 {
 
                 //Console.WriteLine($"{Coefficients[8 * i + j]} -> {t}  [{t1}]");
 
-                result[i] |= (byte) (t << j);
-                } 
+                result[i] |= (byte)(t << j);
+                }
             }
 
         return result;
@@ -158,7 +155,7 @@ public struct PolynomialInt16 {
             t[5] = (byte)((buffer[offset + 3] >> 1));
             t[6] = (byte)((buffer[offset + 3] >> 6) | (buffer[offset + 4] << 2));
             t[7] = (byte)((buffer[offset + 4] >> 3));
-            
+
             for (var k = 0; k < 8; k++) {
                 result.Coefficients[8 * j + k] = (short)(((t[k] & 31) * MlKem.Q + 16) >> 5);
                 }
@@ -227,7 +224,7 @@ public struct PolynomialInt16 {
         (input.Length == (2 * MlKem.N) / 4).AssertTrue(NYI.Throw);
         var result = new PolynomialInt16();
 
-        for (var i = 0; i < MlKem.N/8; i++) {
+        for (var i = 0; i < MlKem.N / 8; i++) {
             var t = input.LittleEndian32(4 * i);
             uint d = (t & 0x55555555);
             d += ((t >> 1) & 0x55555555);
@@ -254,7 +251,7 @@ public struct PolynomialInt16 {
         (input.Length == (3 * MlKem.N) / 4).AssertTrue(NYI.Throw);
         var result = new PolynomialInt16();
 
-        for (var i = 0; i < MlKem.N/4; i++) {
+        for (var i = 0; i < MlKem.N / 4; i++) {
             var t = input.LittleEndian24(3 * i);
             var d = (short)(t & 0x00249249);
             d += (short)((t >> 1) & 0x00249249);
@@ -278,7 +275,7 @@ public struct PolynomialInt16 {
     /// a polynomial in place.
     /// Inputs assumed to be in normal order, output in bitreversed order
     /// </summary>
-    public  void PolyNTT() {
+    public void PolyNTT() {
         NTT();
         Reduce();
         }
@@ -317,7 +314,7 @@ public struct PolynomialInt16 {
                 zeta = zetas[k++];
                 for (j = start; j < start + len; ++j) {
                     t = Fqmul(zeta, Coefficients[j + len]);
-                    Coefficients[j + len] = (short) (Coefficients[j] - t);
+                    Coefficients[j + len] = (short)(Coefficients[j] - t);
                     Coefficients[j] = (short)(Coefficients[j] + t);
                     }
                 }
@@ -379,7 +376,7 @@ public struct PolynomialInt16 {
         short f = (short)(((ulong)1 << 32) % MlKem.Q);
 
         for (var i = 0; i < MlKem.N; i++) {
-            Coefficients[i] = MlKem.MontgomeryReduce(Coefficients[i]*f);
+            Coefficients[i] = MlKem.MontgomeryReduce(Coefficients[i] * f);
             }
         }
 
@@ -429,8 +426,8 @@ public struct PolynomialInt16 {
     public void PolyBasemulMontgomery(PolynomialInt16 a, PolynomialInt16 b) {
 
         for (var i = 0; i < MlKem.N / 4; i++) {
-            (Coefficients[4 * i], Coefficients[(4 * i)+1] ) = Basemul(a, b, 4*i, (short) zetas[64+i]);
-            (Coefficients[(4 * i)+2], Coefficients[(4 * i) + 3]) = Basemul(a, b, (4*i)+2, (short) -zetas[64+i]);
+            (Coefficients[4 * i], Coefficients[(4 * i) + 1]) = Basemul(a, b, 4 * i, (short)zetas[64 + i]);
+            (Coefficients[(4 * i) + 2], Coefficients[(4 * i) + 3]) = Basemul(a, b, (4 * i) + 2, (short)-zetas[64 + i]);
             }
         }
 
@@ -444,13 +441,13 @@ public struct PolynomialInt16 {
     /// <param name="i">Index of array to operate at.</param>
     /// <param name="zeta">Integer defining the reduction polynomial</param>
     /// <returns></returns>
-    public static (short, short)  Basemul(PolynomialInt16 a, PolynomialInt16 b, int i, short zeta) {
-        var r0 = Fqmul(a.Coefficients[i+1], b.Coefficients[i + 1]);
+    public static (short, short) Basemul(PolynomialInt16 a, PolynomialInt16 b, int i, short zeta) {
+        var r0 = Fqmul(a.Coefficients[i + 1], b.Coefficients[i + 1]);
         r0 = Fqmul(r0, zeta);
         r0 += Fqmul(a.Coefficients[i], b.Coefficients[i]);
 
-        var r1 = Fqmul(a.Coefficients[i ], b.Coefficients[i + 1]);
-        r1 += Fqmul(a.Coefficients[i+1], b.Coefficients[i]);
+        var r1 = Fqmul(a.Coefficients[i], b.Coefficients[i + 1]);
+        r1 += Fqmul(a.Coefficients[i + 1], b.Coefficients[i]);
 
         return (r0, r1);
         }
@@ -464,16 +461,16 @@ public struct PolynomialInt16 {
     /// <param name="output">The buffer to which the output is to be written.</param>
     public void ToBytes(byte[] output, int offset) {
 
-        
+
         PolyCSubQ();
 
-        for (var i = 0; i < Coefficients.Length/2; i++) {
-            var t0 = (short) Coefficients[i*2];
-            var t1 = (short)Coefficients[i * 2+1];
+        for (var i = 0; i < Coefficients.Length / 2; i++) {
+            var t0 = (short)Coefficients[i * 2];
+            var t1 = (short)Coefficients[i * 2 + 1];
 
             output[offset++] = (byte)t0;
-            output[offset++] = (byte)((t0>>8) |(t1<<4));
-            output[offset++] = (byte)(t1>>4);
+            output[offset++] = (byte)((t0 >> 8) | (t1 << 4));
+            output[offset++] = (byte)(t1 >> 4);
             }
 
         }

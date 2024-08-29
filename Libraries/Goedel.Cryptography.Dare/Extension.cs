@@ -43,7 +43,7 @@ public static partial class Extension {
                 CryptoKey encryptionKey = null,
                 ContentMeta contentMeta = null,
                 ObjectEncoding objectEncoding = ObjectEncoding.JSON) where T : JsonObject =>
-        new Enveloped<T> (data, signingKey, encryptionKey, contentMeta, objectEncoding);
+        new Enveloped<T>(data, signingKey, encryptionKey, contentMeta, objectEncoding);
 
 
     /// <summary>
