@@ -18,8 +18,6 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Cryptography.Dilithium.dll\
-    Goedel.Cryptography.Kyber.dll\
     Goedel.Utilities.dll\
     Goedel.Test.Core.dll\
     Goedel.Mesh.Test.dll\

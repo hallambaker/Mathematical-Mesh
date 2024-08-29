@@ -1,7 +1,7 @@
-﻿using NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Enums;
+﻿
+namespace Goedel.Cryptography.Nist;
 
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Keys {
-    public interface IKeyComposerFactory {
+public interface IKeyComposerFactory {
         IRsaKeyComposer GetKeyComposer(PrivateKeyModes privateKeyModes);
         }
-    }
+    

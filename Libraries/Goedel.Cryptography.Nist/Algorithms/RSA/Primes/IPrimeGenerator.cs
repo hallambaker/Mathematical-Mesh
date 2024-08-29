@@ -1,3 +1,5 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.PrimeGenerators {
-    public interface IPrimeGenerator { }
-    }
+﻿
+namespace Goedel.Cryptography.Nist;
+
+public interface IPrimeGenerator { }
+    

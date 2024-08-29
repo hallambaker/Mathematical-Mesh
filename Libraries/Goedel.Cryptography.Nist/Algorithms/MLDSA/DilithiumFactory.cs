@@ -1,8 +1,6 @@
-using NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash.ShaWrapper;
-using NIST.CVP.ACVTS.Libraries.Crypto.Common.PQC.Dilithium;
-using NIST.CVP.ACVTS.Libraries.Math.Entropy;
 
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Dilithium;
+namespace Goedel.Cryptography.Nist;
+
 
 public class DilithiumFactory : IDilithiumFactory {
     private readonly IShaFactory _shaFactory;

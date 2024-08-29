@@ -1,13 +1,5 @@
-﻿using NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC;
-using NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash.ShaWrapper;
-using NIST.CVP.ACVTS.Libraries.Math;
-using NIST.CVP.ACVTS.Libraries.Math.Entropy;
-using NIST.CVP.ACVTS.Libraries.Math.Helpers;
-
-using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.DSA.ECC {
-    public class EccDsa : IDsaEcc {
+﻿namespace Goedel.Cryptography.Nist;
+public class EccDsa : IDsaEcc {
         public ISha Sha { get; }
 
         private readonly IEccNonceProvider _nonceProvider;
@@ -189,4 +181,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.DSA.ECC {
             return d;
             }
         }
-    }
+    

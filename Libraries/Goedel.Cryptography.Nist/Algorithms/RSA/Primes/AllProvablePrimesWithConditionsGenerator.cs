@@ -1,11 +1,7 @@
-﻿using NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.PrimeGenerators;
-using NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash.ShaWrapper;
-using NIST.CVP.ACVTS.Libraries.Crypto.Common.Math;
+﻿
+namespace Goedel.Cryptography.Nist;
 
-using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.RSA.PrimeGenerators {
-    public class AllProvablePrimesWithConditionsGenerator : IFips186_4PrimeGenerator, IFips186_5PrimeGenerator {
+public class AllProvablePrimesWithConditionsGenerator : IFips186_4PrimeGenerator, IFips186_5PrimeGenerator {
         private readonly ISha _sha;
 
         public AllProvablePrimesWithConditionsGenerator(ISha sha) {
@@ -71,4 +67,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.RSA.PrimeGenerators {
             return new PrimeGeneratorResult(primePair, auxValues);
             }
         }
-    }
+    

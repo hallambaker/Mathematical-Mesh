@@ -18,7 +18,10 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Guigen.dll
+    Goedel.Mesh.Client.dll\
+    Goedel.Mesh.dll\
+    Goedel.Guigen.dll\
+    Goedel.Protocol.dll
 
 ToolTargets = 
 

@@ -1,4 +1,4 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash.ShaWrapper;
+﻿namespace Goedel.Cryptography.Nist;
 
 public interface IShake : ISha {
     void Absorb(byte[] message, int bitLength);

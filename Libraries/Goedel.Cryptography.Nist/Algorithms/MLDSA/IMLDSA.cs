@@ -1,6 +1,6 @@
-using System.Collections;
 
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.PQC.Dilithium;
+namespace Goedel.Cryptography.Nist;
+
 
 public interface IMLDSA {
     public (byte[] pk, byte[] sk) GenerateKey(BitArray seed);

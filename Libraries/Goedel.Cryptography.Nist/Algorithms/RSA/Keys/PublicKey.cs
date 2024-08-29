@@ -1,8 +1,8 @@
-﻿using System.Numerics;
+﻿
+namespace Goedel.Cryptography.Nist;
 
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Keys {
-    public class PublicKey {
+public class PublicKey {
         public BigInteger E { get; set; }
         public BigInteger N { get; set; }
         }
-    }
+    

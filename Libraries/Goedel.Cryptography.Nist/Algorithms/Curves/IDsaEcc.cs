@@ -1,5 +1,5 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC {
-    public interface IDsaEcc : IDsa<
+﻿namespace Goedel.Cryptography.Nist;
+public interface IDsaEcc : IDsa<
         EccDomainParametersGenerateRequest,
         EccDomainParametersGenerateResult,
         EccDomainParametersValidateRequest,
@@ -12,4 +12,4 @@
         EccSignatureResult,
         EccVerificationResult
         > { }
-    }
+    

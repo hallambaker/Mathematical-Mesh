@@ -1,4 +1,6 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.PQC.Dilithium;
+﻿
+namespace Goedel.Cryptography.Nist;
+
 
 public class DilithiumParameters {
     public DilithiumParameterSet ParameterSet { get; }

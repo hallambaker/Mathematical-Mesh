@@ -1,3 +1,3 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC {
-    public class EccDomainParametersValidateRequest : IDomainParametersValidateRequest { }
-    }
+﻿namespace Goedel.Cryptography.Nist;
+public class EccDomainParametersValidateRequest : IDomainParametersValidateRequest { }
+    

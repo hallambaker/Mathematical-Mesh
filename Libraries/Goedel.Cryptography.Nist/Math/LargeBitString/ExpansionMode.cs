@@ -1,8 +1,6 @@
-﻿using System.Runtime.Serialization;
-
-namespace NIST.CVP.ACVTS.Libraries.Math.LargeBitString {
-    public enum ExpansionMode {
+﻿namespace Goedel.Cryptography.Nist;
+public enum ExpansionMode {
         [EnumMember(Value = "repeating")]
         Repeating,
         }
-    }
+    

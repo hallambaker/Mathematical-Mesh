@@ -1,4 +1,6 @@
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.PQC.Dilithium;
+
+namespace Goedel.Cryptography.Nist;
+
 
 public interface IDilithiumFactory {
     IMLDSA GetDilithium(DilithiumParameterSet parameterSet);

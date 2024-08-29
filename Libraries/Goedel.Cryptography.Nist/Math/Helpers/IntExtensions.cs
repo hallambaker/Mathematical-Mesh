@@ -1,5 +1,5 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Math.Helpers {
-    public static class IntExtensions {
+﻿namespace Goedel.Cryptography.Nist;
+public static class IntExtensions {
         public static int CeilingDivide(this int a, int b) {
             // Modulo is slow, avoid it
             var result = a / b;
@@ -119,4 +119,4 @@
             return BitConverter.GetBytes(value).Take(1).Reverse().ToArray();
             }
         }
-    }
+    

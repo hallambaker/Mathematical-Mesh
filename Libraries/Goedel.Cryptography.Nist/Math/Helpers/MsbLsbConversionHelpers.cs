@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Text.RegularExpressions;
-
-namespace NIST.CVP.ACVTS.Libraries.Math.Helpers {
-    public static class MsbLsbConversionHelpers {
+﻿
+namespace Goedel.Cryptography.Nist;
+public static class MsbLsbConversionHelpers {
         public static byte[] ReverseByteOrder(byte[] bytes) {
             return bytes.Reverse().ToArray();
             }
@@ -103,4 +101,4 @@ namespace NIST.CVP.ACVTS.Libraries.Math.Helpers {
             return ReverseBitArrayBits(GetBitArrayFromStringOf1sAnd0s(onesAndZeroes));
             }
         }
-    }
+    

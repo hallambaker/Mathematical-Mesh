@@ -1,12 +1,5 @@
-﻿using Newtonsoft.Json;
-
-using NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash.ShaWrapper.Helpers;
-
-using System.Numerics;
-using System.Runtime.Serialization;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash.ShaWrapper {
-    public class HashFunction {
+﻿namespace Goedel.Cryptography.Nist;
+public class HashFunction {
         public ModeValues Mode { get; }
         public DigestSizes DigestSize { get; }
 
@@ -93,4 +86,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash.ShaWrapper {
         [EnumMember(Value = "NONE")]
         NONE
         }
-    }
+    

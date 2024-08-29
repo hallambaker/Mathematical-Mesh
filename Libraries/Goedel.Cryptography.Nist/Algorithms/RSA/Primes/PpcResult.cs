@@ -1,7 +1,7 @@
-﻿using System.Numerics;
+﻿
+namespace Goedel.Cryptography.Nist;
 
-namespace NIST.CVP.ACVTS.Libraries.Crypto.RSA.PrimeGenerators {
-    public class PpcResult {
+public class PpcResult {
         public BigInteger Prime { get; }
         public BigInteger Prime1 { get; }
         public BigInteger Prime2 { get; }
@@ -21,4 +21,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.RSA.PrimeGenerators {
             PrimeSeed = pSeed;
             }
         }
-    }
+    

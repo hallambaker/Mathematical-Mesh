@@ -1,10 +1,8 @@
-﻿using NIST.CVP.ACVTS.Libraries.Common.ExtensionMethods;
-
-namespace NIST.CVP.ACVTS.Libraries.Math.Domain {
-    /// <summary>
-    /// Domain segment that represents a single value
-    /// </summary>
-    public class ValueDomainSegment : IDomainSegment {
+﻿namespace Goedel.Cryptography.Nist;
+/// <summary>
+/// Domain segment that represents a single value
+/// </summary>
+public class ValueDomainSegment : IDomainSegment {
         private int _value;
 
         public RangeMinMax RangeMinMax => new RangeMinMax() {
@@ -108,4 +106,4 @@ namespace NIST.CVP.ACVTS.Libraries.Math.Domain {
             return values.Shuffle();
             }
         }
-    }
+    

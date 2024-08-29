@@ -1,7 +1,7 @@
-﻿using System.Runtime.Serialization;
+﻿
+namespace Goedel.Cryptography.Nist;
 
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Enums {
-    public enum Fips186Standard {
+public enum Fips186Standard {
         [EnumMember(Value = "none")]
         None,
 
@@ -14,4 +14,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Enums {
         [EnumMember(Value = "FIPS186-5")]
         Fips186_5
         }
-    }
+    

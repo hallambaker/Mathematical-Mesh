@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC {
+﻿
     public interface IFieldOperator {
         BigInteger Add(BigInteger a, BigInteger b);
         //BigInteger Subtract(BigInteger a, BigInteger b);
@@ -10,4 +8,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC {
         BigInteger Modulo(BigInteger a);
         BigInteger Inverse(BigInteger a);
         }
-    }
+    

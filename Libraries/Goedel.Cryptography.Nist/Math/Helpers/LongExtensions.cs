@@ -1,5 +1,5 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Math.Helpers {
-    public static class LongExtensions {
+﻿namespace Goedel.Cryptography.Nist;
+public static class LongExtensions {
         public static long CeilingDivide(this long a, long b) {
             // Modulo is slow, avoid it
             var result = a / b;
@@ -36,4 +36,4 @@
                 }
             }
         }
-    }
+    

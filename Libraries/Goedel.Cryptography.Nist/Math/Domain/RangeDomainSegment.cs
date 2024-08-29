@@ -1,10 +1,8 @@
-﻿using System.Data;
-
-namespace NIST.CVP.ACVTS.Libraries.Math.Domain {
-    /// <summary>
-    /// Domain segment that represents a range of values (a min and max and values in between based on step)
-    /// </summary>
-    public class RangeDomainSegment : IDomainSegment {
+﻿namespace Goedel.Cryptography.Nist;
+/// <summary>
+/// Domain segment that represents a range of values (a min and max and values in between based on step)
+/// </summary>
+public class RangeDomainSegment : IDomainSegment {
         private int _min;
         private int _max;
         private readonly int _increment;
@@ -289,4 +287,4 @@ namespace NIST.CVP.ACVTS.Libraries.Math.Domain {
             throw new ConstraintException("Requested condition for values from domain will never be satisfied.");
             }
         }
-    }
+    

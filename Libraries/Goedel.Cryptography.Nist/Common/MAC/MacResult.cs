@@ -1,7 +1,5 @@
-﻿using NIST.CVP.ACVTS.Libraries.Math;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.MAC {
-    public class MacResult : ICryptoResult {
+﻿namespace Goedel.Cryptography.Nist;
+public class MacResult : ICryptoResult {
         public BitString Mac { get; }
         public string ErrorMessage { get; }
         public bool Success => string.IsNullOrEmpty(ErrorMessage);
@@ -14,4 +12,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.MAC {
             ErrorMessage = errorMessage;
             }
         }
-    }
+    

@@ -1,3 +1,3 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA {
-    public interface IDomainParametersValidateRequest { }
-    }
+﻿namespace Goedel.Cryptography.Nist;
+public interface IDomainParametersValidateRequest { }
+    

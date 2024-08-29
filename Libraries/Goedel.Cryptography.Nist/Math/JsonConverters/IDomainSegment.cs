@@ -1,8 +1,8 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Math.Domain {
-    /// <summary>
-    /// Describes a DomainSegment - a portion of a Domain.
-    /// </summary>
-    public interface IDomainSegment {
+﻿namespace Goedel.Cryptography.Nist;
+/// <summary>
+/// Describes a DomainSegment - a portion of a Domain.
+/// </summary>
+public interface IDomainSegment {
         /// <summary>
         /// Get the min/max of the <see cref="IDomainSegment"/>
         /// </summary>
@@ -69,4 +69,4 @@
         /// <returns></returns>
         IDomainSegment GetDeepCopy();
         }
-    }
+    

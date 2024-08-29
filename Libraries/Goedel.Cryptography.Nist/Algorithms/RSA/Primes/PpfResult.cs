@@ -1,7 +1,7 @@
-﻿using System.Numerics;
+﻿
+namespace Goedel.Cryptography.Nist;
 
-namespace NIST.CVP.ACVTS.Libraries.Crypto.RSA.PrimeGenerators {
-    public class PpfResult {
+public class PpfResult {
         public BigInteger Prime { get; }
         public BigInteger XPrime { get; }
         public string ErrorMessage { get; }
@@ -16,4 +16,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.RSA.PrimeGenerators {
             XPrime = xp;
             }
         }
-    }
+    

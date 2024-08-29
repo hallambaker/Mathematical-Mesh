@@ -1,13 +1,11 @@
-﻿using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Math.Helpers {
-    /// <summary>
-    /// bigInteger is little endian when dealing with byte-arrays, CAVS code thinks about byte array representations as big endian
-    /// The BigInteger structure expects the individual bytes in a byte array to appear in little-endian order 
-    /// (that is, the lower-order bytes of the value precede the higher-order bytes)
-    /// also always want to return an array of the size of bArrayA, which means we might need to pad 
-    /// </summary>
-    public static class ByteArrayExtensions {
+﻿namespace Goedel.Cryptography.Nist;
+/// <summary>
+/// bigInteger is little endian when dealing with byte-arrays, CAVS code thinks about byte array representations as big endian
+/// The BigInteger structure expects the individual bytes in a byte array to appear in little-endian order 
+/// (that is, the lower-order bytes of the value precede the higher-order bytes)
+/// also always want to return an array of the size of bArrayA, which means we might need to pad 
+/// </summary>
+public static class ByteArrayExtensions {
         public const byte MSBIT = 0x80;
 
         public static byte[] Add(this byte[] bArrayA, byte[] bArrayB) {
@@ -149,4 +147,4 @@ namespace NIST.CVP.ACVTS.Libraries.Math.Helpers {
             return byteArray.Length * BitString.BITSINBYTE;
             }
         }
-    }
+    

@@ -1,7 +1,5 @@
-﻿using NIST.CVP.ACVTS.Libraries.Math;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.MAC {
-    public interface IMac {
+﻿namespace Goedel.Cryptography.Nist;
+public interface IMac {
         /// <summary>
         /// Generates a MAC based on <see cref="key"/> and <see cref="message"/>
         /// </summary>
@@ -13,4 +11,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.MAC {
 
         int OutputLength { get; }
         }
-    }
+    

@@ -1,12 +1,7 @@
-﻿using NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Enums;
-using NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash.ShaWrapper;
-using NIST.CVP.ACVTS.Libraries.Math;
-using NIST.CVP.ACVTS.Libraries.Math.Entropy;
+﻿
+namespace Goedel.Cryptography.Nist;
 
-using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Keys {
-    public interface IKeyBuilder {
+public interface IKeyBuilder {
         KeyResult Build();
         IKeyBuilder WithBitlens(int[] bitlens);
         IKeyBuilder WithEntropyProvider(IEntropyProvider entropyProvider);
@@ -22,4 +17,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Keys {
         IKeyBuilder WithPMod8(int a);
         IKeyBuilder WithQMod8(int b);
         }
-    }
+    

@@ -1,5 +1,5 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC {
-    public class EccKeyPairValidateResult : IKeyPairValidateResult {
+﻿namespace Goedel.Cryptography.Nist;
+public class EccKeyPairValidateResult : IKeyPairValidateResult {
         /// <summary>
         /// Was the validation successful?
         /// </summary>
@@ -23,4 +23,4 @@
             ErrorMessage = errorMessage;
             }
         }
-    }
+    

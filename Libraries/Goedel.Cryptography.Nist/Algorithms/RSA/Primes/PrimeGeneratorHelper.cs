@@ -1,16 +1,7 @@
-﻿using NIST.CVP.ACVTS.Libraries.Common.ExtensionMethods;
-using NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Enums;
-using NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash.ShaWrapper;
-using NIST.CVP.ACVTS.Libraries.Crypto.Common.Math;
-using NIST.CVP.ACVTS.Libraries.Crypto.Math;
-using NIST.CVP.ACVTS.Libraries.Math;
-using NIST.CVP.ACVTS.Libraries.Math.Entropy;
-using NIST.CVP.ACVTS.Libraries.Math.Helpers;
+﻿
+namespace Goedel.Cryptography.Nist;
 
-using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.RSA.PrimeGenerators {
-    public static class PrimeGeneratorHelper {
+public static class PrimeGeneratorHelper {
         public static readonly BigInteger Root2Mult2Pow512Minus1 = new BitString("B504F333F9DE6484597D89B3754ABE9F1D6F60BA893BA84CED17AC85833399154AFC83043AB8A2C3A8B1FE6FDC83DB390F74A85E439C7B4A780487363DFA2768").ToPositiveBigInteger();
         public static readonly BigInteger Root2Mult2Pow768Minus1 = new BitString("B504F333F9DE6484597D89B3754ABE9F1D6F60BA893BA84CED17AC85833399154AFC83043AB8A2C3A8B1FE6FDC83DB390F74A85E439C7B4A780487363DFA2768D2202E8742AF1F4E53059C6011BC337BCAB1BC911688458A460ABC722F7C4E33").ToPositiveBigInteger();
         public static readonly BigInteger Root2Mult2Pow1024Minus1 = new BitString("B504F333F9DE6484597D89B3754ABE9F1D6F60BA893BA84CED17AC85833399154AFC83043AB8A2C3A8B1FE6FDC83DB390F74A85E439C7B4A780487363DFA2768D2202E8742AF1F4E53059C6011BC337BCAB1BC911688458A460ABC722F7C4E33C6D5A8A38BB7E9DCCB2A634331F3C84DF52F120F836E582EEAA4A0899040CA4A").ToPositiveBigInteger();
@@ -355,4 +346,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.RSA.PrimeGenerators {
             throw new ArgumentException($"Invalid parameters provided, unable to find iterations for MR");
             }
         }
-    }
+    

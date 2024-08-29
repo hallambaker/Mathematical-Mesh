@@ -1,5 +1,5 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC {
-    public class EccSignatureResult : IDsaSignatureResult {
+﻿namespace Goedel.Cryptography.Nist;
+public class EccSignatureResult : IDsaSignatureResult {
         public EccSignature Signature { get; }
         public string ErrorMessage { get; }
 
@@ -13,4 +13,4 @@
 
         public bool Success => string.IsNullOrEmpty(ErrorMessage);
         }
-    }
+    

@@ -1,4 +1,4 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC {
-    public class EccDomainParametersGenerateRequest : IDomainParametersGenerateRequest {
+﻿namespace Goedel.Cryptography.Nist;
+public class EccDomainParametersGenerateRequest : IDomainParametersGenerateRequest {
         }
-    }
+    

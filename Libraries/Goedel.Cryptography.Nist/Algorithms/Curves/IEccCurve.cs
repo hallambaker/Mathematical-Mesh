@@ -1,9 +1,5 @@
-﻿using NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC.Enums;
-
-using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC {
-    public interface IEccCurve {
+﻿namespace Goedel.Cryptography.Nist;
+public interface IEccCurve {
         /// <summary>
         /// Type of curve, prime or binary
         /// </summary>
@@ -79,4 +75,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC {
         /// </summary>
         bool PointExistsInField(EccPoint point);
         }
-    }
+    

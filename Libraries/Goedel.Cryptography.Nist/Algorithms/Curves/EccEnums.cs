@@ -1,7 +1,6 @@
-﻿using System.Runtime.Serialization;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC.Enums {
-    public enum Curve {
+﻿
+namespace Goedel.Cryptography.Nist;
+public enum Curve {
         [EnumMember(Value = "P-192")]
         P192,
         [EnumMember(Value = "P-224")]
@@ -51,4 +50,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC.Enums {
         Random,
         Deterministic
         }
-    }
+    

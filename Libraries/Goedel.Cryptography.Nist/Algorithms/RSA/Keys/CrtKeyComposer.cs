@@ -1,11 +1,7 @@
-﻿using NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.PrimeGenerators;
-using NIST.CVP.ACVTS.Libraries.Crypto.Common.Math;
-using NIST.CVP.ACVTS.Libraries.Math.Helpers;
+﻿
+namespace Goedel.Cryptography.Nist;
 
-using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Keys {
-    public class CrtKeyComposer : IRsaKeyComposer {
+public class CrtKeyComposer : IRsaKeyComposer {
         public KeyPair ComposeKey(BigInteger e, PrimePair primes) {
             var n = primes.P * primes.Q;
 
@@ -37,4 +33,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Keys {
                 };
             }
         }
-    }
+    

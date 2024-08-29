@@ -1,11 +1,5 @@
-﻿using Newtonsoft.Json;
-
-using NIST.CVP.ACVTS.Libraries.Math.JsonConverters;
-
-using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Math.Helpers {
-    [JsonConverter(typeof(BigIntegerConverter))]
+﻿namespace Goedel.Cryptography.Nist;
+[JsonConverter(typeof(BigIntegerConverter))]
     public static class BigIntegerExtensions {
         /// <summary>
         /// Takes the modulo of a value (or <see cref="BigInteger"/> expression) and ensures it is between [0, <paramref name="modulo"/> - 1]
@@ -128,4 +122,4 @@ namespace NIST.CVP.ACVTS.Libraries.Math.Helpers {
             return t;
             }
         }
-    }
+    

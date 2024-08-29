@@ -1,13 +1,11 @@
-﻿using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Math {
-    /// <summary>
-    /// Converts a <see cref="BigInteger"/> into Non-Adjacent Form so that in {-1, 0, 1} there are no consecutive nonzero values. This reduces the number
-    /// of meaningful bits when applying multiplication over ECC.
-    /// </summary>
-    /// <param name="value"></param>
-    /// <returns>An array containing only {-1, 0, 1} values.</returns>
-    public class NonAdjacentBitString {
+﻿namespace Goedel.Cryptography.Nist;
+/// <summary>
+/// Converts a <see cref="BigInteger"/> into Non-Adjacent Form so that in {-1, 0, 1} there are no consecutive nonzero values. This reduces the number
+/// of meaningful bits when applying multiplication over ECC.
+/// </summary>
+/// <param name="value"></param>
+/// <returns>An array containing only {-1, 0, 1} values.</returns>
+public class NonAdjacentBitString {
         public int[] Bits { get { return _listBits.ToArray(); } }
         public int BitLength { get { return _listBits.Count; } }
 
@@ -32,4 +30,4 @@ namespace NIST.CVP.ACVTS.Libraries.Math {
                 }
             }
         }
-    }
+     

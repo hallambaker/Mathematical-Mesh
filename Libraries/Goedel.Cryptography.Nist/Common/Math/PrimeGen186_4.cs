@@ -1,12 +1,5 @@
-﻿using NIST.CVP.ACVTS.Libraries.Crypto.Common.Math;
-using NIST.CVP.ACVTS.Libraries.Math.Helpers;
-
-using System.Numerics;
-
-using ISha = NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash.ShaWrapper.ISha;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Math {
-    public static class PrimeGen186_4 {
+﻿namespace Goedel.Cryptography.Nist;
+public static class PrimeGen186_4 {
         #region primes
         private static readonly int[] _primes =
         {
@@ -600,4 +593,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Math {
             return true;
             }
         }
-    }
+    

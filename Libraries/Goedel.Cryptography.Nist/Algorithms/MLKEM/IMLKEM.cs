@@ -1,4 +1,5 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.PQC.Kyber;
+﻿
+namespace Goedel.Cryptography.Nist;
 
 public interface IMLKEM {
     public (byte[] ek, byte[] dk) GenerateKey(byte[] z, byte[] d);

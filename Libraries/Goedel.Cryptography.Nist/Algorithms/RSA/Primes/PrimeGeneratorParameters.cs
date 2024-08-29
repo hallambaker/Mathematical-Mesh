@@ -1,9 +1,7 @@
-﻿using NIST.CVP.ACVTS.Libraries.Math;
+﻿
+namespace Goedel.Cryptography.Nist;
 
-using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.PrimeGenerators {
-    public class PrimeGeneratorParameters {
+public class PrimeGeneratorParameters {
         // Required
         public int Modulus { get; set; }
         public BitString Seed { get; set; }
@@ -16,4 +14,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.PrimeGenerators 
         public int A { get; set; }                // Opt for any with probable primes
         public int B { get; set; }                // Opt for any with probable primes
         }
-    }
+    

@@ -1,9 +1,5 @@
-﻿using NIST.CVP.ACVTS.Libraries.Math;
-
-using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash {
-    public class HashResult {
+﻿namespace Goedel.Cryptography.Nist;
+public class HashResult {
         public BitString Digest {
             get {
                 if (_digest != null) return _digest;
@@ -49,4 +45,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash {
             return $"Digest: {Digest.ToHex()}";
             }
         }
-    }
+    

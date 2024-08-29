@@ -1,7 +1,7 @@
-﻿using System.Numerics;
+﻿
+namespace Goedel.Cryptography.Nist;
 
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Keys {
-    public abstract class PrivateKeyBase : IRsaVisitable, IRsaPrivateKey {
+public abstract class PrivateKeyBase : IRsaVisitable, IRsaPrivateKey {
         public BigInteger P { get; set; }
         public BigInteger Q { get; set; }
         public BigInteger D { get; set; }
@@ -11,4 +11,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Keys {
 
         public abstract BigInteger AcceptDecrypt(IRsaVisitor visitor, BigInteger cipherText, PublicKey pubKey);
         }
-    }
+    

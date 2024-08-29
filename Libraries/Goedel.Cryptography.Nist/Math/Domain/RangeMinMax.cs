@@ -1,8 +1,8 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Math.Domain {
-    /// <summary>
-    /// Represents the minimum and maximum value to a <see cref="IDomainSegment"/>
-    /// </summary>
-    public class RangeMinMax {
+﻿namespace Goedel.Cryptography.Nist;
+/// <summary>
+/// Represents the minimum and maximum value to a <see cref="IDomainSegment"/>
+/// </summary>
+public class RangeMinMax {
         public int Minimum { get; set; }
 
         public int Maximum { get; set; }
@@ -17,4 +17,4 @@
             return $"{{Min: {Minimum}, Max: {Maximum}, Increment {Increment}}}";
             }
         }
-    }
+    

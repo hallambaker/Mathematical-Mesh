@@ -1,9 +1,7 @@
-﻿using NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.PrimeGenerators;
+﻿
+namespace Goedel.Cryptography.Nist;
 
-using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Keys {
-    public interface IRsaKeyComposer {
+public interface IRsaKeyComposer {
         KeyPair ComposeKey(BigInteger e, PrimePair primes);
         }
-    }
+    

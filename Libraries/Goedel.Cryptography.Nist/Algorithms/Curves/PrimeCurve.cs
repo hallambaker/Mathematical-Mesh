@@ -1,12 +1,5 @@
-﻿using NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC;
-using NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC.Enums;
-using NIST.CVP.ACVTS.Libraries.Crypto.Math;
-using NIST.CVP.ACVTS.Libraries.Math;
-
-using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.DSA.ECC {
-    public class PrimeCurve : IEccCurve {
+﻿namespace Goedel.Cryptography.Nist;
+public class PrimeCurve : IEccCurve {
         private readonly PrimeFieldOperator _operator;
 
         // A = -3 (mod p) for prime curves
@@ -148,4 +141,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.DSA.ECC {
             return true;
             }
         }
-    }
+    

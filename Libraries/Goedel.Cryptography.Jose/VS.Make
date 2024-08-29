@@ -25,7 +25,6 @@ LinkFiles = \
 ToolTargets = \
 	Exceptions.cs\
 	JoseSchema.cs
-
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 

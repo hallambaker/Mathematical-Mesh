@@ -35,11 +35,15 @@
 
 
 global using System.Numerics;
+global using System.Runtime.Serialization;
+global using System.Collections;
+global using System.Text;
 
+global using Newtonsoft.Json;
+global using Newtonsoft.Json.Linq;
+global using System.Data;
 
-
-
-
+global using System.Reflection;
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif

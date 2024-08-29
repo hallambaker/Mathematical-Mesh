@@ -1,3 +1,3 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA {
-    public interface IDsaSignatureResult { }
-    }
+﻿namespace Goedel.Cryptography.Nist;
+public interface IDsaSignatureResult { }
+    

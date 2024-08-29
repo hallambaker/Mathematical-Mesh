@@ -1,7 +1,5 @@
-﻿using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC {
-    public class EccPoint {
+﻿namespace Goedel.Cryptography.Nist;
+public class EccPoint {
         public bool Infinity { get; } = false;
 
         /// <summary>
@@ -46,4 +44,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC {
             return false;
             }
         }
-    }
+    

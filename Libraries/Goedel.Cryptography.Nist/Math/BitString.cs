@@ -1,22 +1,15 @@
-﻿using NIST.CVP.ACVTS.Libraries.Math.Exceptions;
-using NIST.CVP.ACVTS.Libraries.Math.Helpers;
+﻿using Helper = Goedel.Cryptography.Nist.MsbLsbConversionHelpers;
 
-using System.Collections;
-using System.Numerics;
-using System.Text;
-
-using Helper = NIST.CVP.ACVTS.Libraries.Math.Helpers.MsbLsbConversionHelpers;
-
-namespace NIST.CVP.ACVTS.Libraries.Math {
-    /// <summary>
-    /// Bit and Byte functions manipulation functions.
-    /// NOTE:
-    ///     Input/Output of bits is always:
-    ///         LSb to MSb - least significant bit first (index 0), most significant bit last (last index)
-    ///     Everything else (bytes, hex, etc):
-    ///         MSB to LSB - most significant Byte first (index 0), least significant Byte last (last index)
-    /// </summary>
-    public class BitString {
+namespace Goedel.Cryptography.Nist;
+/// <summary>
+/// Bit and Byte functions manipulation functions.
+/// NOTE:
+///     Input/Output of bits is always:
+///         LSb to MSb - least significant bit first (index 0), most significant bit last (last index)
+///     Everything else (bytes, hex, etc):
+///         MSB to LSB - most significant Byte first (index 0), least significant Byte last (last index)
+/// </summary>
+public class BitString {
         public const int BYTESPERDIGIT = 4;
         public const int BITSINBYTE = 8;
         private readonly BitArray _bits;
@@ -889,4 +882,4 @@ namespace NIST.CVP.ACVTS.Libraries.Math {
             }
         #endregion Private methods
         }
-    }
+    

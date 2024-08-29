@@ -1,5 +1,7 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.PrimeGenerators {
-    public class PrimeGeneratorResult {
+﻿
+namespace Goedel.Cryptography.Nist;
+
+public class PrimeGeneratorResult {
         public PrimePair Primes { get; }
         public AuxiliaryResult AuxValues { get; }
         public string ErrorMessage { get; }
@@ -15,4 +17,4 @@
             ErrorMessage = error;
             }
         }
-    }
+    

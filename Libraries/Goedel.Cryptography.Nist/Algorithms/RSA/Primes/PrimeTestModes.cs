@@ -1,7 +1,7 @@
-﻿using System.Runtime.Serialization;
+﻿
+namespace Goedel.Cryptography.Nist;
 
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Enums {
-    public enum PrimeTestModes {
+public enum PrimeTestModes {
         [EnumMember(Value = "invalid")]
         Invalid,
 
@@ -11,4 +11,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Enums {
         [EnumMember(Value = "2powSecStr")]
         TwoPowSecurityStrengthErrorBound
         }
-    }
+    

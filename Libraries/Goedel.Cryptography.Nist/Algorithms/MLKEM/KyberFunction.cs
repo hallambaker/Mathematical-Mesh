@@ -1,6 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿
+namespace Goedel.Cryptography.Nist;
 
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.PQC.Kyber;
 
 public enum KyberFunction {
     None,

@@ -1,6 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿
+namespace Goedel.Cryptography.Nist;
 
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.PQC.Dilithium;
 
 public enum DilithiumParameterSet {
     None,

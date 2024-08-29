@@ -1,6 +1,6 @@
-using System.Runtime.Serialization;
 
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.PQC.Kyber;
+namespace Goedel.Cryptography.Nist;
+
 
 public enum KyberParameterSet {
     None,

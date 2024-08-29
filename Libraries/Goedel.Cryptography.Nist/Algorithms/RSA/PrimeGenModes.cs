@@ -1,7 +1,7 @@
-﻿using System.Runtime.Serialization;
+﻿
+namespace Goedel.Cryptography.Nist;
 
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Enums {
-    public enum PrimeGenModes {
+public enum PrimeGenModes {
         [EnumMember(Value = "invalid")]
         Invalid,
 
@@ -20,4 +20,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Enums {
         [EnumMember(Value = "probableWithProbableAux")]
         RandomProbablePrimesWithAuxiliaryProbablePrimes
         }
-    }
+    

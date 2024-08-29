@@ -1,4 +1,4 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.PQC.Helpers;
+﻿namespace Goedel.Cryptography.Nist;
 
 public static class IntermediateValueHelper {
     public static string Print(byte[] ba) {
@@ -31,4 +31,5 @@ public static class IntermediateValueHelper {
 
         return str;
         }
+
     }

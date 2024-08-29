@@ -1,12 +1,7 @@
-﻿using NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Enums;
-using NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.PrimeGenerators;
-using NIST.CVP.ACVTS.Libraries.Crypto.Common.Math;
-using NIST.CVP.ACVTS.Libraries.Math.Entropy;
+﻿
+namespace Goedel.Cryptography.Nist;
 
-using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.RSA.PrimeGenerators {
-    public class AllProbablePrimesWithConditionsGenerator : IFips186_4PrimeGenerator, IFips186_5PrimeGenerator {
+public class AllProbablePrimesWithConditionsGenerator : IFips186_4PrimeGenerator, IFips186_5PrimeGenerator {
         private readonly IEntropyProvider _entropyProvider;
         private readonly PrimeTestModes _primeTestMode;
 
@@ -112,4 +107,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.RSA.PrimeGenerators {
             return new PrimeGeneratorResult(primePair, auxValues);
             }
         }
-    }
+    

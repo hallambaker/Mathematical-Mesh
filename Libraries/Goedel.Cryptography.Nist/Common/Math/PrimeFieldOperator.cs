@@ -1,10 +1,5 @@
-﻿using NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC;
-using NIST.CVP.ACVTS.Libraries.Math.Helpers;
-
-using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Math {
-    public class PrimeFieldOperator : IFieldOperator {
+﻿namespace Goedel.Cryptography.Nist;
+public class PrimeFieldOperator : IFieldOperator {
         private readonly BigInteger _m;
 
         public PrimeFieldOperator(BigInteger modulo) {
@@ -39,4 +34,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Math {
             return Modulo(a - b);
             }
         }
-    }
+    

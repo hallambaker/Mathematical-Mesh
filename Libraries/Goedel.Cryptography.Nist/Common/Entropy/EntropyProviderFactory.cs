@@ -1,8 +1,8 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Math.Entropy {
-    /// <summary>
-    /// Used for retrieving an instance of an <see cref="IEntropyProvider"/>
-    /// </summary>
-    public class EntropyProviderFactory : IEntropyProviderFactory {
+﻿namespace Goedel.Cryptography.Nist;
+/// <summary>
+/// Used for retrieving an instance of an <see cref="IEntropyProvider"/>
+/// </summary>
+public class EntropyProviderFactory : IEntropyProviderFactory {
         /// <summary>
         /// Returns a new instance of an <see cref="IEntropyProvider"/>
         /// </summary>
@@ -20,4 +20,4 @@
                 }
             }
         }
-    }
+    

@@ -28,6 +28,7 @@ LinkFiles = \
     Goedel.Utilities.dll\
     Goedel.Mesh.Client.dll\
     Goedel.Mesh.Core.dll\
+    Goedel.Mesh.Guigen.dll\
     Goedel.Mesh.dll
 
 ToolTargets = 

@@ -1,10 +1,8 @@
-﻿using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Math.Entropy {
-    /// <summary>
-    /// Provides an interface for getting entropy as <see cref="BitString"/> with a specified number of bits
-    /// </summary>
-    public interface IEntropyProvider {
+﻿namespace Goedel.Cryptography.Nist;
+/// <summary>
+/// Provides an interface for getting entropy as <see cref="BitString"/> with a specified number of bits
+/// </summary>
+public interface IEntropyProvider {
         /// <summary>
         /// Get Entropy
         /// </summary>
@@ -17,4 +15,4 @@ namespace NIST.CVP.ACVTS.Libraries.Math.Entropy {
         void AddEntropy(BitString entropy);
         void AddEntropy(BigInteger entropy);
         }
-    }
+    

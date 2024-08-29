@@ -1,10 +1,7 @@
-﻿using NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Enums;
-using NIST.CVP.ACVTS.Libraries.Math;
+﻿
+namespace Goedel.Cryptography.Nist;
 
-using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Keys {
-    public static class KeyGenHelper {
+public static class KeyGenHelper {
         public static int CalculateEstimatedSecurityStrength(int modulo) {
             // a = 1/3
             var a = (double)1 / 3;
@@ -135,4 +132,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Keys {
             return bs.ToPositiveBigInteger();
             }
         }
-    }
+    

@@ -1,4 +1,6 @@
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.PQC.Kyber;
+
+namespace Goedel.Cryptography.Nist;
+
 
 public class KyberParameters {
     public KyberParameterSet ParameterSet { get; }

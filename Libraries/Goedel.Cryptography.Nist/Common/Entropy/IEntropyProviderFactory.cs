@@ -1,8 +1,8 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Math.Entropy {
-    /// <summary>
-    /// Interface for retrieving a <see cref="IEntropyProvider"/> based on use case.
-    /// </summary>
-    public interface IEntropyProviderFactory {
+﻿namespace Goedel.Cryptography.Nist;
+/// <summary>
+/// Interface for retrieving a <see cref="IEntropyProvider"/> based on use case.
+/// </summary>
+public interface IEntropyProviderFactory {
         /// <summary>
         /// Gets an <see cref="IEntropyProvider"/>
         /// </summary>
@@ -10,4 +10,4 @@
         /// <returns></returns>
         IEntropyProvider GetEntropyProvider(EntropyProviderTypes providerType);
         }
-    }
+    

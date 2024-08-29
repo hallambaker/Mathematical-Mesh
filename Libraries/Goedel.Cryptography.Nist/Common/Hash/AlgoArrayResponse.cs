@@ -1,9 +1,5 @@
-﻿using Newtonsoft.Json;
-
-using NIST.CVP.ACVTS.Libraries.Math;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash {
-    public class AlgoArrayResponse {
+﻿namespace Goedel.Cryptography.Nist;
+public class AlgoArrayResponse {
         [JsonIgnore]
         public BitString Message { get; set; }
         [JsonProperty(PropertyName = "md")]
@@ -13,4 +9,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash {
 
         [JsonIgnore] public bool ShouldPrintOutputLength { get; set; } = false;
         }
-    }
+    

@@ -1,7 +1,6 @@
-﻿using NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash.ShaWrapper;
-using NIST.CVP.ACVTS.Libraries.Crypto.Common.PQC.Kyber;
+﻿
+namespace Goedel.Cryptography.Nist;
 
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Kyber;
 
 public class KyberFactory {
     private readonly IShaFactory _shaFactory;

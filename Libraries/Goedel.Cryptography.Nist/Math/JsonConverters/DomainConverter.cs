@@ -1,13 +1,8 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
-using NIST.CVP.ACVTS.Libraries.Math.Domain;
-
-namespace NIST.CVP.ACVTS.Libraries.Math.JsonConverters {
-    /// <summary>
-    /// Used to properly serialize/deserialize the <see cref="MathDomain"/> object.
-    /// </summary>
-    public class DomainConverter : JsonConverter {
+﻿namespace Goedel.Cryptography.Nist;
+/// <summary>
+/// Used to properly serialize/deserialize the <see cref="MathDomain"/> object.
+/// </summary>
+public class DomainConverter : JsonConverter {
         private readonly IRandom800_90 _random = new Random800_90();
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
@@ -83,4 +78,4 @@ namespace NIST.CVP.ACVTS.Libraries.Math.JsonConverters {
             return domain;
             }
         }
-    }
+    

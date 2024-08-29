@@ -1,7 +1,5 @@
-﻿using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC {
-    public class EccKeyPair : IDsaKeyPair {
+﻿namespace Goedel.Cryptography.Nist;
+public class EccKeyPair : IDsaKeyPair {
         public EccPoint PublicQ { get; set; } = new EccPoint();
         public BigInteger PrivateD { get; set; }
 
@@ -22,4 +20,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC {
             PrivateD = d;
             }
         }
-    }
+    

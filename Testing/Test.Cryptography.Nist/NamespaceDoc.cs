@@ -26,6 +26,11 @@ global using Goedel.Utilities;
 
 global using System.IO;
 
+global using System.Numerics;
+global using System.Runtime.Serialization;
+global using System.Collections;
+global using System.Text;
+
 global using Xunit;
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]

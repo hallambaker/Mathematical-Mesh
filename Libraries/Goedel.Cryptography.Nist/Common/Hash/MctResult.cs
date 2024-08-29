@@ -1,5 +1,5 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash {
-    public class MctResult<T> {
+﻿namespace Goedel.Cryptography.Nist;
+public class MctResult<T> {
         public List<T> Response { get; set; }
         public string ErrorMessage { get; set; }
         public bool Success => string.IsNullOrEmpty(ErrorMessage);
@@ -12,4 +12,4 @@
             ErrorMessage = errorMessage;
             }
         }
-    }
+    

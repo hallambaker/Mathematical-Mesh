@@ -1,13 +1,8 @@
-﻿using NIST.CVP.ACVTS.Libraries.Math;
-using NIST.CVP.ACVTS.Libraries.Math.LargeBitString;
-
-using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash.ShaWrapper {
-    /// <summary>
-    /// Provides a SHA implementation for hashing <see cref="message"/>s
-    /// </summary>
-    public interface ISha {
+﻿namespace Goedel.Cryptography.Nist;
+/// <summary>
+/// Provides a SHA implementation for hashing <see cref="message"/>s
+/// </summary>
+public interface ISha {
         /// <summary>
         /// The <see cref="HashFunction"/> attributed to the <see cref="ISha"/> instance
         /// </summary>
@@ -62,4 +57,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash.ShaWrapper {
         /// <returns></returns>
         HashResult HashLargeMessage(LargeBitString message);
         }
-    }
+    

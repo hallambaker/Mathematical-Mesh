@@ -1,9 +1,5 @@
-﻿using NIST.CVP.ACVTS.Libraries.Math;
-
-using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Math {
-    public static class NumberTheory {
+﻿namespace Goedel.Cryptography.Nist;
+public static class NumberTheory {
         /// <summary>
         /// C.3.1 Probabilistic Primality Check, Miller-Rabin Algorithm
         /// </summary>
@@ -69,4 +65,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Math {
             return BigInteger.One << exp;
             }
         }
-    }
+    

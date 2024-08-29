@@ -1,9 +1,5 @@
-﻿using System.Reflection;
-using System.Runtime.Serialization;
-//using NLog;
-
-namespace NIST.CVP.ACVTS.Libraries.Common.Helpers {
-    public static class EnumHelpers {
+﻿namespace Goedel.Cryptography.Nist;
+public static class EnumHelpers {
         /// <summary>
         /// Gets the description attribute from an enum.  
         /// Returns the enum.ToString() when no description found.
@@ -125,4 +121,4 @@ namespace NIST.CVP.ACVTS.Libraries.Common.Helpers {
 
         //private static Logger ThisLogger = LogManager.GetCurrentClassLogger();
         }
-    }
+    

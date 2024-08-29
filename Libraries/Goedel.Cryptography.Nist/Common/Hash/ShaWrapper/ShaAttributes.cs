@@ -1,10 +1,4 @@
-﻿using NIST.CVP.ACVTS.Libraries.Common.ExtensionMethods;
-using NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash.ShaWrapper.Enums;
-using NIST.CVP.ACVTS.Libraries.Math;
-
-using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash.ShaWrapper.Helpers;
+﻿namespace Goedel.Cryptography.Nist;
 
 /// <summary>
 /// Get SHA information

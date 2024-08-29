@@ -1,17 +1,12 @@
-﻿using Newtonsoft.Json;
-
-using NIST.CVP.ACVTS.Libraries.Common.ExtensionMethods;
-using NIST.CVP.ACVTS.Libraries.Math.JsonConverters;
-
-namespace NIST.CVP.ACVTS.Libraries.Math.Domain {
-    /// <summary>
-    /// A domain of values - literal values and/or a range of values.
-    ///
-    /// Note that if a <see cref="MathDomain"/> is being passed in to multiple consumers that can all get values from the domain,
-    /// it should be DeepCopied rather than passing the same reference in.  Otherwise you'll run into some situations where
-    /// there are no more values available to be generated from a domain, because a domain of that reference has already exhausted them.
-    /// </summary>
-    [JsonConverter(typeof(DomainConverter))]
+﻿namespace Goedel.Cryptography.Nist;
+/// <summary>
+/// A domain of values - literal values and/or a range of values.
+///
+/// Note that if a <see cref="MathDomain"/> is being passed in to multiple consumers that can all get values from the domain,
+/// it should be DeepCopied rather than passing the same reference in.  Otherwise you'll run into some situations where
+/// there are no more values available to be generated from a domain, because a domain of that reference has already exhausted them.
+/// </summary>
+[JsonConverter(typeof(DomainConverter))]
     public class MathDomain {
         private readonly List<IDomainSegment> _domainSegments = new List<IDomainSegment>();
         public IEnumerable<IDomainSegment> DomainSegments => _domainSegments.AsReadOnly();
@@ -250,4 +245,4 @@ namespace NIST.CVP.ACVTS.Libraries.Math.Domain {
             return domain;
             }
         }
-    }
+    

@@ -1,5 +1,5 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC {
-    public class EccDomainParametersValidateResult : IDomainParametersValidateResult {
+﻿namespace Goedel.Cryptography.Nist;
+public class EccDomainParametersValidateResult : IDomainParametersValidateResult {
         public string ErrorMessage { get; }
 
         public EccDomainParametersValidateResult() { }
@@ -10,4 +10,4 @@
 
         public bool Success => string.IsNullOrEmpty(ErrorMessage);
         }
-    }
+    

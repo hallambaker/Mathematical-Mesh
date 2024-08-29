@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Text;
-
-namespace NIST.CVP.ACVTS.Libraries.Math.Helpers {
-    public static class BitArrayExtensions {
+﻿namespace Goedel.Cryptography.Nist;
+public static class BitArrayExtensions {
         public const int BITSINBYTE = 8;
 
         /* DEF (1/10/2017) -- 
@@ -80,4 +77,4 @@ namespace NIST.CVP.ACVTS.Libraries.Math.Helpers {
             return value;
             }
         }
-    }
+    

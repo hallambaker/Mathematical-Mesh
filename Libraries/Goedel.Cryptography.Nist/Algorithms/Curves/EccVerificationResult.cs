@@ -1,5 +1,5 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC {
-    public class EccVerificationResult : IDsaVerificationResult, ICryptoResult {
+﻿namespace Goedel.Cryptography.Nist;
+public class EccVerificationResult : IDsaVerificationResult, ICryptoResult {
         /// <summary>
         /// Was the generation successful?
         /// </summary>
@@ -23,4 +23,4 @@
             ErrorMessage = errorMessage;
             }
         }
-    }
+    

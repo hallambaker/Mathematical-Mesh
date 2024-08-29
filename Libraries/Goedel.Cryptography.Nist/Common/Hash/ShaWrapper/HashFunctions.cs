@@ -1,7 +1,5 @@
-﻿using System.Runtime.Serialization;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash.ShaWrapper.Enums {
-    public enum HashFunctions {
+﻿namespace Goedel.Cryptography.Nist;
+public enum HashFunctions {
         [EnumMember(Value = "none")]
         None,
         [EnumMember(Value = "SHA-1")]
@@ -27,4 +25,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash.ShaWrapper.Enums {
         [EnumMember(Value = "SHA3-512")]
         Sha3_d512,
         }
-    }
+    

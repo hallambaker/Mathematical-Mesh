@@ -25,12 +25,17 @@ LinkFiles = \
     Goedel.Cryptography.Jose.dll\
     Goedel.Mesh.dll\
     Test.Cryptography.Dare.dll\
+    Test.Cryptography.Jose.dll\
+    Test.Cryptography.Keyfile.dll\
+    Test.Cryptography.Nist.dll\
     Test.Cryptography.Platform.dll\
+    Test.Cryptography.PQC.dll\
     Test.Cryptography.dll\
     Test.Discovery.dll\
     Test.MakeSiteDocs.dll\
     Test.Mesh.Presence.dll\
     Test.Mesh.Protocol.dll\
+    Test.Mesh.Shell.dll\
     Test.Mesh.Store.dll\
     Test.NotaryCallsign.dll\
     Test.Protocol.dll

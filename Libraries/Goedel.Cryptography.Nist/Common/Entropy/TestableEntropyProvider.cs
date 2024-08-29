@@ -1,7 +1,5 @@
-﻿using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Math.Entropy {
-    public class TestableEntropyProvider : IEntropyProvider {
+﻿namespace Goedel.Cryptography.Nist;
+public class TestableEntropyProvider : IEntropyProvider {
         private readonly bool _throwWhenRequestingMoreBitsThanAvailable;
         private readonly List<BitString> _entropyBitStrings = new List<BitString>();
         private readonly List<BigInteger> _entropyBigIntegers = new List<BigInteger>();
@@ -56,4 +54,4 @@ namespace NIST.CVP.ACVTS.Libraries.Math.Entropy {
             return entropy;
             }
         }
-    }
+    

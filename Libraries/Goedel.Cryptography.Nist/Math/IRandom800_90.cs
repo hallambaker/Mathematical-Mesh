@@ -1,7 +1,5 @@
-﻿using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Math {
-    public interface IRandom800_90 {
+﻿namespace Goedel.Cryptography.Nist;
+public interface IRandom800_90 {
         BitString GetRandomBitString(int length);
         BitString GetDifferentBitStringOfSameSize(BitString original);
         int GetRandomInt(int minInclusive, int maxExclusive);
@@ -13,4 +11,4 @@ namespace NIST.CVP.ACVTS.Libraries.Math {
         int Next();
         void NextBytes(byte[] buffer);
         }
-    }
+    

@@ -1,7 +1,5 @@
-﻿using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC {
-    public class EccSignature : IDsaSignature {
+﻿namespace Goedel.Cryptography.Nist;
+public class EccSignature : IDsaSignature {
         public BigInteger R { get; set; }
         public BigInteger S { get; set; }
 
@@ -14,4 +12,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC {
             S = s;
             }
         }
-    }
+    

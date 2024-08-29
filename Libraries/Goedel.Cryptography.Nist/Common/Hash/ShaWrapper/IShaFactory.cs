@@ -1,4 +1,4 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash.ShaWrapper;
+﻿namespace Goedel.Cryptography.Nist;
 
 /// <summary>
 /// Provides a means of retrieving a <see cref="ISha"/> instance.
@@ -14,3 +14,4 @@ public interface IShaFactory {
     IShake GetShakeInstance(HashFunction hashFunction);
     IShaMct GetShaMctInstance(HashFunction hashFunction, bool oddLength = false);
     }
+    

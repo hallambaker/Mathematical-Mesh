@@ -1,5 +1,5 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC {
-    public class EccKeyPairGenerateResult : IKeyPairGenerateResult, ICryptoResult {
+﻿namespace Goedel.Cryptography.Nist;
+public class EccKeyPairGenerateResult : IKeyPairGenerateResult, ICryptoResult {
         public EccKeyPair KeyPair { get; }
         public bool Success => string.IsNullOrEmpty(ErrorMessage);
         public string ErrorMessage { get; }
@@ -19,4 +19,4 @@
             ErrorMessage = errorMessage;
             }
         }
-    }
+    

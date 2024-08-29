@@ -6,12 +6,6 @@
 		<Copyright>© 2024</Copyright>
 		<Title>Goedel.Cryptography.Nist</Title>
 	</PropertyGroup>
-  <ItemGroup>
-    <Folder Include="Algorithms\ECDH\X448\" />
-    <Folder Include="Algorithms\ECDH\X25519\" />
-    <Folder Include="Algorithms\EdDSA\Ed25519\" />
-    <Folder Include="Algorithms\EdDSA\Ed448\" />
-  </ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>

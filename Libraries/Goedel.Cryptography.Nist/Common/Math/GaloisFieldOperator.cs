@@ -1,11 +1,5 @@
-﻿using NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA.ECC;
-using NIST.CVP.ACVTS.Libraries.Math;
-using NIST.CVP.ACVTS.Libraries.Math.Helpers;
-
-using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Math {
-    public class GaloisFieldOperator : IFieldOperator {
+﻿namespace Goedel.Cryptography.Nist;
+public class GaloisFieldOperator : IFieldOperator {
         private readonly BigInteger _m;
 
         public GaloisFieldOperator(BigInteger modulo) {
@@ -152,4 +146,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Math {
             return a;
             }
         }
-    }
+    

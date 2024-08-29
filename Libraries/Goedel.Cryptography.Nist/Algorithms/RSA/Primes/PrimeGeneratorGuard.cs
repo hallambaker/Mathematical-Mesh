@@ -1,11 +1,7 @@
-﻿using NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Keys;
-using NIST.CVP.ACVTS.Libraries.Crypto.Common.Math;
-using NIST.CVP.ACVTS.Libraries.Math;
+﻿
+namespace Goedel.Cryptography.Nist;
 
-using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.PrimeGenerators {
-    public static class PrimeGeneratorGuard {
+public static class PrimeGeneratorGuard {
         public static int[] ValidModulusFips186_2 = { 1024, 1536, 2048, 3072, 4096 };
         public static int[] ValidModulusFips186_4 = { 1024, 2048, 3072, 4096 }; // Allowing 1024 modulo for key gen for sigver
         public static int[] ValidModulusFips186_5 = { 2048, 3072, 4096, 6144, 8192 };
@@ -78,4 +74,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.PrimeGenerators 
                 }
             }
         }
-    }
+    

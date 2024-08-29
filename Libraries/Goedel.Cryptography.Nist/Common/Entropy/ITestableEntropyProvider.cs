@@ -1,10 +1,8 @@
-﻿using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Math.Entropy {
-    /// <summary>
-    /// Allows for adding specific entropy to a provider
-    /// </summary>
-    public interface ITestableEntropyProvider {
+﻿namespace Goedel.Cryptography.Nist;
+/// <summary>
+/// Allows for adding specific entropy to a provider
+/// </summary>
+public interface ITestableEntropyProvider {
         /// <summary>
         /// Add entropy
         /// </summary>
@@ -13,4 +11,4 @@ namespace NIST.CVP.ACVTS.Libraries.Math.Entropy {
 
         void AddEntropy(BigInteger entropy);
         }
-    }
+    

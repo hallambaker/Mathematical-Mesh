@@ -1,13 +1,10 @@
-﻿using NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash.ShaWrapper;
-using NIST.CVP.ACVTS.Libraries.Math;
-
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA {
-    /// <summary>
-    /// Describes functionality for the DSA algorithm.
-    /// 
-    /// http://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-4.pdf
-    /// </summary>
-    public interface IDsa<
+﻿namespace Goedel.Cryptography.Nist;
+/// <summary>
+/// Describes functionality for the DSA algorithm.
+/// 
+/// http://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-4.pdf
+/// </summary>
+public interface IDsa<
         in TDomainParametersGenerateRequest,
         out TDomainParametersGenerateResult,
         in TDomainParametersValidateRequest,
@@ -86,4 +83,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.DSA {
         /// <returns></returns>
         TDsaVerificationResult Verify(TDsaDomainParameters domainParameters, TDsaKeyPair keyPair, BitString message, TDsaSignature signature, bool skipHash = false);
         }
-    }
+    

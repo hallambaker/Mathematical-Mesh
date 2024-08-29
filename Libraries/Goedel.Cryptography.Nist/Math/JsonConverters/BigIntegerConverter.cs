@@ -1,9 +1,5 @@
-﻿using Newtonsoft.Json;
-
-using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Math.JsonConverters {
-    public class BigIntegerConverter : JsonConverter {
+﻿namespace Goedel.Cryptography.Nist;
+public class BigIntegerConverter : JsonConverter {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
             var bigint = (BigInteger)value;
 
@@ -19,4 +15,4 @@ namespace NIST.CVP.ACVTS.Libraries.Math.JsonConverters {
             return objectType == typeof(BigInteger);
             }
         }
-    }
+    

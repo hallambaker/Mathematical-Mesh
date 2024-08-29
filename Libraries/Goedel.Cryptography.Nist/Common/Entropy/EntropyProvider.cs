@@ -1,7 +1,5 @@
-﻿using System.Numerics;
-
-namespace NIST.CVP.ACVTS.Libraries.Math.Entropy {
-    public class EntropyProvider : IEntropyProvider {
+﻿namespace Goedel.Cryptography.Nist;
+public class EntropyProvider : IEntropyProvider {
         private readonly IRandom800_90 _random;
 
         public EntropyProvider(IRandom800_90 random) {
@@ -19,4 +17,4 @@ namespace NIST.CVP.ACVTS.Libraries.Math.Entropy {
         public void AddEntropy(BitString entropy) { }
         public void AddEntropy(BigInteger entropy) { }
         }
-    }
+    

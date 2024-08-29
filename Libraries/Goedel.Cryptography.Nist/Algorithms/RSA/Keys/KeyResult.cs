@@ -1,7 +1,7 @@
-﻿using NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.PrimeGenerators;
+﻿
+namespace Goedel.Cryptography.Nist;
 
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Keys {
-    public class KeyResult : ICryptoResult {
+public class KeyResult : ICryptoResult {
         public KeyPair Key { get; }
         public AuxiliaryResult AuxValues { get; }
         public string ErrorMessage { get; }
@@ -17,4 +17,4 @@ namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Asymmetric.RSA.Keys {
             ErrorMessage = error;
             }
         }
-    }
+    

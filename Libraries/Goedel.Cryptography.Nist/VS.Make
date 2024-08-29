@@ -18,11 +18,7 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Cryptography.Nist.dll\
-    Goedel.Utilities.dll\
-    Goedel.Test.Core.dll\
-    Goedel.Mesh.Test.dll\
-    Goedel.Cryptography.dll
+    Goedel.Utilities.dll
 
 ToolTargets = 
 
@@ -40,5 +36,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Test.Cryptography.Nist.dll
+	powershell publishtarget Goedel.Cryptography.Nist.dll
 

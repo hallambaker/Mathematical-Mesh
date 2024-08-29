@@ -1,8 +1,8 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Common.ExtensionMethods {
-    /// <summary>
-    /// Extension methods for <see cref="List{T}"/>
-    /// </summary>
-    public static class ListExtensions {
+﻿namespace Goedel.Cryptography.Nist;
+/// <summary>
+/// Extension methods for <see cref="List{T}"/>
+/// </summary>
+public static class ListExtensions {
         /// <summary>
         /// Adds a string to a <see cref="List{T}"/> when the string is not null or empty, otherwise do nothing.
         /// </summary>
@@ -72,4 +72,4 @@
             return list.OrderBy(a => Guid.NewGuid()).ToList();
             }
         }
-    }
+    

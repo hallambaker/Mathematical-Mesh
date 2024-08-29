@@ -1,11 +1,7 @@
-﻿using NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash.ShaWrapper;
-using NIST.CVP.ACVTS.Libraries.Crypto.Common.PQC.Dilithium;
-using NIST.CVP.ACVTS.Libraries.Math.Entropy;
-using NIST.CVP.ACVTS.Libraries.Math.Helpers;
+﻿
+namespace Goedel.Cryptography.Nist;
 
-using System.Collections;
 
-namespace NIST.CVP.ACVTS.Libraries.Crypto.Dilithium;
 
 public class Dilithium : IMLDSA {
     private readonly DilithiumParameters _param;

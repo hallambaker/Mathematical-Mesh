@@ -1,8 +1,8 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Common.ExtensionMethods {
-    /// <summary>
-    /// Extension methods for <see cref="IEnumerable{T}"/>
-    /// </summary>
-    public static class IEnumerableExtensions {
+﻿namespace Goedel.Cryptography.Nist;
+/// <summary>
+/// Extension methods for <see cref="IEnumerable{T}"/>
+/// </summary>
+public static class IEnumerableExtensions {
         /// <summary>
         /// returns first item found, or null if not found.
         /// </summary>
@@ -47,4 +47,4 @@
             return false;
             }
         }
-    }
+    
