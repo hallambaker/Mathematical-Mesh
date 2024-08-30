@@ -128,7 +128,7 @@ public class Dilithium : IMLDSA {
     /// <param name="message">Arbitrary set of bits.</param>
     /// <param name="deterministic">Determines if the signature incorporates any randomness. Opposite is "hedged".</param>
     /// <returns>Signature</returns>
-    public byte[] Sign(byte[] sk, BitArray m, bool deterministic) {
+    public byte[] Sign(byte[] sk, BitArray m, bool deterministic, BitArray rnd = null) {
         var message = BitsToBytes(m).Reverse().ToArray();
 
         var (rho, k, tr, s1, s2, t0) = SkDecode(sk);
@@ -145,10 +145,10 @@ public class Dilithium : IMLDSA {
         _h.Final(mu, 512);
 
         // rnd is either 256 random bits, or 256 0-bits. 
-        var rnd = new BitArray(256);
-        if (!deterministic) {
-            rnd = _entropyProvider.GetEntropy(256).Bits;
-            }
+        rnd ??= new BitArray(256);
+        //if (!deterministic) {
+        //    rnd = _entropyProvider.GetEntropy(256).Bits;
+        //    }
 
         // Console.WriteLine($"Signature Generation -- {EnumHelpers.GetEnumDescriptionFromEnum(_param.ParameterSet)}");
         // Console.WriteLine("message: " + IntermediateValueHelper.Print(message));

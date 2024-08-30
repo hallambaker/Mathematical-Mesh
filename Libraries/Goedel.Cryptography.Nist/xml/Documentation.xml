@@ -262,7 +262,7 @@
             <param name="seed">Random 256-bit array</param>
             <returns>Tuple (byte[] pk, byte[] sk) containing the public key and secret key</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.Sign(System.Byte[],System.Collections.BitArray,System.Boolean)">
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.Sign(System.Byte[],System.Collections.BitArray,System.Boolean,System.Collections.BitArray)">
             <summary>
             Signs a message with a given secret key
             </summary>
@@ -901,6 +901,11 @@
             <param name="val"></param>
             <param name="factor"></param>
             <returns></returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.NativeShaFactory">
+            <summary>
+            Digest factory using the NIST code.
+            </summary>
         </member>
         <member name="T:Goedel.Cryptography.Nist.EntropyProviderFactory">
             <summary>

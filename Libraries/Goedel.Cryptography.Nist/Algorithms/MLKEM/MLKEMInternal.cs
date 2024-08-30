@@ -66,19 +66,19 @@ public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLK
 
     ///<inheritdoc/>
     public (byte[] K, byte[] c) Encapsulate(byte[] ek, byte[] m) {
-        Console.WriteLine($"Encapsulation -- {EnumHelpers.GetEnumDescriptionFromEnum(parameters.ParameterSet)}");
-        Console.WriteLine("ek: " + IntermediateValueHelper.Print(ek));
-        Console.WriteLine("m: " + IntermediateValueHelper.Print(m));
-        Console.WriteLine();
+        //Console.WriteLine($"Encapsulation -- {EnumHelpers.GetEnumDescriptionFromEnum(parameters.ParameterSet)}");
+        //Console.WriteLine("ek: " + IntermediateValueHelper.Print(ek));
+        //Console.WriteLine("m: " + IntermediateValueHelper.Print(m));
+        //Console.WriteLine();
 
         var (K, r) = G(m.Concatenate(H(ek)));
 
-        Console.WriteLine("K: " + IntermediateValueHelper.Print(K));
-        Console.WriteLine("r: " + IntermediateValueHelper.Print(r));
+        //Console.WriteLine("K: " + IntermediateValueHelper.Print(K));
+        //Console.WriteLine("r: " + IntermediateValueHelper.Print(r));
 
         var c = K_Pke_Encrypt(ek, m, r);
 
-        Console.WriteLine("c: " + IntermediateValueHelper.Print(c));
+        //Console.WriteLine("c: " + IntermediateValueHelper.Print(c));
 
         return (K, c);
         }

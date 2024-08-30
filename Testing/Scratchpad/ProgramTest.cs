@@ -55,8 +55,6 @@ partial class Program {
     static void Main() {
         Trace.Listeners.Add(new GoedelTraceListener());
 
-
-
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
         TestNist.Test().TestKemKeyGen();
         TestNist.Test().TestKemEncapDecap();
@@ -64,32 +62,13 @@ partial class Program {
         TestNist.Test().TestDsaSign();
         TestNist.Test().TestDsaVerify();
         //TestService.Test().MeshCreateAdmin();
-
-
-
         //TestService.Test().MeshCatalogGroup();
         //TestService.Test().MeshDeviceDirectKey();
-
-
-
-
         //CallsignDirect.Test().RegisterAlice();
 
         //RegistrationTests.Test().CallsignBind();
-
-
-
-
-
-
         //Trace.WriteLine($"Trace enabled");
         //GoedelProtocol.Test().TestStruct();
-
-
-
-
-
-
         //TestService.Test().MeshDeviceDirectKey();
         //TestService.Test().MeshDeviceThresholdKey();
 
@@ -97,11 +76,6 @@ partial class Program {
 
         //RegistrationTests.Test().CallsignPresencePresent();
         //RegistrationTests.Test().CallsignPresenceAbsent();
-
-
-
-
-
 
         /* The presence stuff */
 

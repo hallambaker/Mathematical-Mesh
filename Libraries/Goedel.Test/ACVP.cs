@@ -170,6 +170,10 @@ public abstract class AcvpTest {
     /// <param name="key">The key to locate</param>
     /// <returns>The result of decoding the field as hexadecimal data.</returns>
     protected byte[] BindBinary(IExtensionData test, string key) {
+        if (test.ExtensionData is null) {
+            return null;
+            }
+
         if (test.ExtensionData.TryGetValue(key, out var jsonElement)) {
             var value = jsonElement.GetString();
             var result = value.FromBase16();
