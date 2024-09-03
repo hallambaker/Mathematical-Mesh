@@ -1,19 +1,18 @@
-﻿
-namespace Goedel.Cryptography.Nist;
+﻿namespace Goedel.Cryptography.Nist;
 
-
-
-public class Dilithium : IMLDSA {
-    private readonly DilithiumParameters _param;
-    private readonly IShake _h;
-    private readonly IShake _h128;
-    private readonly IEntropyProvider _entropyProvider;
+/// <summary>
+/// ML-DSA internal functions implementation derrived from the NIST ACVP reference 
+/// implementation..
+/// </summary>
+public class DilithiumNist : IMLDSA {
+    private readonly DilithiumParameters parameters;
+    private readonly IShake h;
+    private readonly IShake h128;
 
     /// <summary>
     /// Precomputed zeta array with bitrev(k) already applied
     /// </summary>
-    private readonly int[] _zeta =
-    {
+    private readonly int[] _zeta = [
         0, -3572223, 3765607, 3761513, -3201494, -2883726, -3145678, -3201430, -601683, 3542485, 2682288, 2129892,
         3764867, -1005239, 557458, -1221177, -3370349, -4063053, 2663378, -1674615, -3524442, -434125, 676590, -1335936,
         -3227876, 1714295, 2453983, 1460718, -642628, -3585098, 2815639, 2283733, 3602218, 3182878, 2740543, -3586446,
@@ -36,29 +35,30 @@ public class Dilithium : IMLDSA {
         -1370517, 3020393, 3363542, 214880, 545376, -770441, 3105558, -1103344, 508145, -553718, 860144, 3430436,
         140244, -1514152, -2185084, 3123762, 2358373, -2193087, -3014420, -1716814, 2926054, -392707, -303005, 3531229,
         -3974485, -3773731, 1900052, -781875, 1054478, -731434
-    };
-
-    public Dilithium(DilithiumParameters param, IShaFactory shaFactory, IEntropyProvider entropyProvider) {
-        _param = param;
-        _h = shaFactory.GetShakeInstance(new HashFunction(ModeValues.SHAKE, DigestSizes.d256));
-        _h128 = shaFactory.GetShakeInstance(new HashFunction(ModeValues.SHAKE, DigestSizes.d128));
-        _entropyProvider = entropyProvider;
-        }
+        ];
 
     /// <summary>
-    /// Generates a key pair (pk, sk)
+    /// Constructor, return a new instance of the Dilithium class with parameters instantiated by
+    /// <paramref name="param"/> and hash factory <paramref name="shaFactory"/>.
     /// </summary>
-    /// <param name="seed">Random 256-bit array</param>
-    /// <returns>Tuple (byte[] pk, byte[] sk) containing the public key and secret key</returns>
-    public (byte[] pk, byte[] sk) GenerateKey(BitArray seed) {
-        var seedBytes = BitsToBytes(seed).Reverse().ToArray();
+    /// <param name="param"></param>
+    /// <param name="shaFactory"></param>
+    /// 
+    public DilithiumNist(DilithiumParameters param, IShaFactory shaFactory) {
+        parameters = param;
+        h = shaFactory.GetShakeInstance(new HashFunction(ModeValues.SHAKE, DigestSizes.d256));
+        h128 = shaFactory.GetShakeInstance(new HashFunction(ModeValues.SHAKE, DigestSizes.d128));
+        }
+
+    ///<inheritdoc/>
+    public (byte[] pk, byte[] sk) GenerateKey(byte[] seedBytes) {
         var seedMaterial = new byte[128];
 
-        _h.Init();
-        _h.Update(seedBytes, 256);
-        _h.Update(IntegerToBytes(_param.K, 1), 8);      // Safe to call IntegerToBytes() which wipes out the integer value because DilithiumParameters uses get only.
-        _h.Update(IntegerToBytes(_param.L, 1), 8);
-        _h.Final(seedMaterial, 1024);
+        h.Init();
+        h.Update(seedBytes, 256);
+        h.Update(IntegerToBytes(parameters.K, 1), 8);      // Safe to call IntegerToBytes() which wipes out the integer value because DilithiumParameters uses get only.
+        h.Update(IntegerToBytes(parameters.L, 1), 8);
+        h.Final(seedMaterial, 1024);
 
         var rho = BytesToBits(seedMaterial[..32]);
         var rhoPrime = BytesToBits(seedMaterial[32..96]);
@@ -88,10 +88,10 @@ public class Dilithium : IMLDSA {
                                                                                             // Console.WriteLine();
 
         // Run Power2Round on each element of the ring of polynomials t and decompose the resulting array of arrays tuples into two arrays of arrays of ints
-        var t0 = new int[_param.K][];
-        var t1 = new int[_param.K][];
+        var t0 = new int[parameters.K][];
+        var t1 = new int[parameters.K][];
 
-        for (var i = 0; i < _param.K; i++) {
+        for (var i = 0; i < parameters.K; i++) {
             t0[i] = new int[256];
             t1[i] = new int[256];
 
@@ -109,9 +109,9 @@ public class Dilithium : IMLDSA {
         var pk = PkEncode(rho, t1);
 
         var tr = new byte[64];
-        _h.Init();
-        _h.Update(pk, pk.Length * 8);
-        _h.Final(tr, 512);
+        h.Init();
+        h.Update(pk, pk.Length * 8);
+        h.Final(tr, 512);
         // Console.WriteLine("tr: " + IntermediateValueHelper.Print(tr));
 
         var sk = SkEncode(rho, k, BytesToBits(tr), s1, s2, t0);
@@ -121,15 +121,9 @@ public class Dilithium : IMLDSA {
         return (pk, sk);
         }
 
-    /// <summary>
-    /// Signs a message with a given secret key
-    /// </summary>
-    /// <param name="sk">Secret key.</param>
-    /// <param name="message">Arbitrary set of bits.</param>
-    /// <param name="deterministic">Determines if the signature incorporates any randomness. Opposite is "hedged".</param>
-    /// <returns>Signature</returns>
-    public byte[] Sign(byte[] sk, BitArray m, bool deterministic, BitArray rnd = null) {
-        var message = BitsToBytes(m).Reverse().ToArray();
+    ///<inheritdoc/>
+    public byte[] Sign(byte[] sk, byte[] message, byte[] rnd = null) {
+        //var message = BitsToBytes(m).Reverse().ToArray();
 
         var (rho, k, tr, s1, s2, t0) = SkDecode(sk);
         var s1Hat = s1.Select(NTT).ToArray();
@@ -139,13 +133,17 @@ public class Dilithium : IMLDSA {
 
         // Set up message representative
         var mu = new byte[64];
-        _h.Init();
-        _h.Update(BitsToBytes(tr), tr.Length);
-        _h.Update(message, message.Length * 8);
-        _h.Final(mu, 512);
+        this.h.Init();
+        this.h.Update(BitsToBytes(tr), tr.Length);
+        this.h.Update(message, message.Length * 8);
+        this.h.Final(mu, 512);
 
         // rnd is either 256 random bits, or 256 0-bits. 
-        rnd ??= new BitArray(256);
+        rnd ??= new byte[32];
+
+
+
+
         //if (!deterministic) {
         //    rnd = _entropyProvider.GetEntropy(256).Bits;
         //    }
@@ -167,16 +165,16 @@ public class Dilithium : IMLDSA {
         // Console.WriteLine();
 
         var rhoPrime = new byte[64];
-        _h.Init();
-        _h.Update(BitsToBytes(k), k.Length);
-        _h.Update(BitsToBytes(rnd).Reverse().ToArray(), rnd.Length);
-        _h.Update(mu, mu.Length * 8);
-        _h.Final(rhoPrime, 512);
+        this.h.Init();
+        this.h.Update(BitsToBytes(k), k.Length);
+        this.h.Update(rnd, rnd.Length * 8);
+        this.h.Update(mu, mu.Length * 8);
+        this.h.Final(rhoPrime, 512);
         var rhoPrimeBits = BytesToBits(rhoPrime);
         // Console.WriteLine("rhoPrime: " + IntermediateValueHelper.Print(rhoPrimeBits.ToBytes()));
 
         var kappa = 0;
-        var cTilde = new byte[(2 * _param.Lambda) / 8];
+        var cTilde = new byte[(2 * parameters.Lambda) / 8];
         int[][] z;
         int[][] h;
 
@@ -196,10 +194,10 @@ public class Dilithium : IMLDSA {
             // Console.WriteLine("w1Encode: " + IntermediateValueHelper.Print(w1Encode.ToBytes()));
             // Console.WriteLine();
 
-            _h.Init();
-            _h.Update(mu, mu.Length * 8);
-            _h.Update(BitsToBytes(w1Encode), w1Encode.Length);
-            _h.Final(cTilde, 2 * _param.Lambda);
+            this.h.Init();
+            this.h.Update(mu, mu.Length * 8);
+            this.h.Update(BitsToBytes(w1Encode), w1Encode.Length);
+            this.h.Final(cTilde, 2 * parameters.Lambda);
             // Console.WriteLine("cTilde: " + IntermediateValueHelper.Print(cTilde));
 
             var c = SampleInBall(cTilde);
@@ -220,7 +218,7 @@ public class Dilithium : IMLDSA {
             // Console.WriteLine("r0: " + IntermediateValueHelper.Print2dArray(r0));
             // Console.WriteLine("||r0||" + InfinityNorm(r0) + ", " + (InfinityNorm(r0) >= _param.Gamma2 - _param.Beta ? "||r0|| too large" : "||r0|| check passed"));
 
-            if (InfinityNorm(z) >= _param.Gamma1 - _param.Beta || InfinityNorm(r0) >= _param.Gamma2 - _param.Beta) {
+            if (InfinityNorm(z) >= parameters.Gamma1 - parameters.Beta || InfinityNorm(r0) >= parameters.Gamma2 - parameters.Beta) {
                 z = null;
                 h = null;
                 // Console.WriteLine("Need new candidate round. ||z|| too large or ||r0|| too large.");
@@ -256,7 +254,7 @@ public class Dilithium : IMLDSA {
                 // Console.WriteLine("||ct0||: " + InfinityNorm(ct0) + ", " + (InfinityNorm(ct0) >= _param.Gamma2 ? "||ct0|| too large" : "||ct0|| check passed"));
                 // Console.WriteLine();
 
-                if (InfinityNorm(ct0) >= _param.Gamma2 || sumH > _param.Omega) {
+                if (InfinityNorm(ct0) >= parameters.Gamma2 || sumH > parameters.Omega) {
                     z = null;
                     h = null;
                     // Console.WriteLine("Need new candidate round. ||ct0|| too large, or too many hints required.");
@@ -264,7 +262,7 @@ public class Dilithium : IMLDSA {
                     }
                 }
 
-            kappa += _param.L;
+            kappa += parameters.L;
 
             } while (z == null && h == null);
 
@@ -275,15 +273,9 @@ public class Dilithium : IMLDSA {
         return sig;
         }
 
-    /// <summary>
-    /// Verify a signature
-    /// </summary>
-    /// <param name="pk">Public key.</param>
-    /// <param name="signature">Signature.</param>
-    /// <param name="m">Message.</param>
-    /// <returns></returns>
-    public bool Verify(byte[] pk, byte[] signature, BitArray m) {
-        var message = BitsToBytes(m).Reverse().ToArray();
+    ///<inheritdoc/>
+    public bool Verify(byte[] pk, byte[] signature, byte[] message) {
+        //var message = BitsToBytes(m).Reverse().ToArray();
 
         var (rho, t1) = PkDecode(pk);
         var (cTilde, z, h) = SigDecode(signature);
@@ -305,7 +297,7 @@ public class Dilithium : IMLDSA {
             }
 
         var hintsProvided = h.Sum(valueArr => valueArr.Count(value => value == 1));
-        if (hintsProvided > _param.Omega) {
+        if (hintsProvided > parameters.Omega) {
             // Console.WriteLine("Too many hints provided. Provided: " + hintsProvided + ", expected: <=" + _param.Omega);
             return false;
             }
@@ -314,7 +306,7 @@ public class Dilithium : IMLDSA {
             }
 
         // Console.WriteLine("||z||: " + InfinityNorm(z) + ", " + (InfinityNorm(z) >= _param.Gamma1 - _param.Beta ? "||z|| too large" : "||z|| check passed"));
-        if (InfinityNorm(z) >= _param.Gamma1 - _param.Beta) {
+        if (InfinityNorm(z) >= parameters.Gamma1 - parameters.Beta) {
             return false;
             }
 
@@ -322,16 +314,16 @@ public class Dilithium : IMLDSA {
         // Console.WriteLine("aHat: " + IntermediateValueHelper.Print3dArray(aHat));
 
         var tr = new byte[64];
-        _h.Init();
-        _h.Update(pk, pk.Length * 8);
-        _h.Final(tr, 512);
+        this.h.Init();
+        this.h.Update(pk, pk.Length * 8);
+        this.h.Final(tr, 512);
         // Console.WriteLine("trCandidate: " + IntermediateValueHelper.Print(tr));
 
         var mu = new byte[64];
-        _h.Init();
-        _h.Update(tr, 512);
-        _h.Update(message, message.Length * 8);
-        _h.Final(mu, 512);
+        this.h.Init();
+        this.h.Update(tr, 512);
+        this.h.Update(message, message.Length * 8);
+        this.h.Final(mu, 512);
         // Console.WriteLine("muCandidate: " + IntermediateValueHelper.Print(mu));
         // Console.WriteLine();
 
@@ -344,7 +336,7 @@ public class Dilithium : IMLDSA {
         // Console.WriteLine("NTT(z): " + IntermediateValueHelper.Print2dArray(z.Select(NTT).ToArray()));
         // Console.WriteLine("aHat * NTT(z): " + IntermediateValueHelper.Print2dArray(aHatDotNttZ));
 
-        var nttT1TwoD = ScalarMultiply(t1, 1 << _param.D).Select(NTT).ToArray();
+        var nttT1TwoD = ScalarMultiply(t1, 1 << parameters.D).Select(NTT).ToArray();
         // Console.WriteLine("NTT(t1): " + IntermediateValueHelper.Print2dArray(t1.Select(NTT).ToArray()));
         // Console.WriteLine("NTT(t1) * 2^d: " + IntermediateValueHelper.Print2dArray(nttT1TwoD));
 
@@ -365,14 +357,14 @@ public class Dilithium : IMLDSA {
 
         // Console.WriteLine("w1Prime: " + IntermediateValueHelper.Print2dArray(w1Prime));
 
-        var cTildePrime = new byte[2 * _param.Lambda / 8];
+        var cTildePrime = new byte[2 * parameters.Lambda / 8];
         var w1EncodeTemp = W1Encode(w1Prime);
         // Console.WriteLine("w1EncodeTemp: " + IntermediateValueHelper.Print(w1EncodeTemp.ToBytes()));
 
-        _h.Init();
-        _h.Update(mu, mu.Length * 8);
-        _h.Update(BitsToBytes(w1EncodeTemp), w1EncodeTemp.Length);
-        _h.Final(cTildePrime, 2 * _param.Lambda);
+        this.h.Init();
+        this.h.Update(mu, mu.Length * 8);
+        this.h.Update(BitsToBytes(w1EncodeTemp), w1EncodeTemp.Length);
+        this.h.Final(cTildePrime, 2 * parameters.Lambda);
 
         // Console.WriteLine("cTilde: " + IntermediateValueHelper.Print(cTilde.ToBytes()));
         // Console.WriteLine("cTildePrime: " + IntermediateValueHelper.Print(cTildePrime));
@@ -478,7 +470,7 @@ public class Dilithium : IMLDSA {
     public int? CoeffFromThreeBytes(byte b0, byte b1, byte b2) {
         int z = ((b2 & 127) << 16) | (b1 << 8) | b0;
 
-        if (z < _param.Q) {
+        if (z < parameters.Q) {
             return z;
             }
 
@@ -491,11 +483,11 @@ public class Dilithium : IMLDSA {
     /// <param name="b">4-bit value, 0-15</param>
     /// <returns>Generates a value from -eta to +eta</returns>
     public int? CoeffFromHalfByte(byte b) {
-        if (_param.Eta == 2 && b < 15) {
+        if (parameters.Eta == 2 && b < 15) {
             return 2 - (b % 5);
             }
 
-        if (_param.Eta == 4 && b < 9) {
+        if (parameters.Eta == 4 && b < 9) {
             return 4 - b;
             }
 
@@ -576,9 +568,9 @@ public class Dilithium : IMLDSA {
     /// <param name="h">A K x 256 vector of polynomials with binary coefficients and at most Omega coefficients set to 1</param>
     /// <returns></returns>
     public byte[] HintBitPack(int[][] h) {
-        var y = new byte[_param.Omega + _param.K];
+        var y = new byte[parameters.Omega + parameters.K];
         var index = 0;
-        for (var i = 0; i < _param.K; i++) {
+        for (var i = 0; i < parameters.K; i++) {
             for (var j = 0; j < 256; j++) {
                 if (h[i][j] != 0) {
                     y[index] = (byte)j;
@@ -586,7 +578,7 @@ public class Dilithium : IMLDSA {
                     }
                 }
 
-            y[_param.Omega + i] = (byte)index; // safe because of an assumption on the structure of h
+            y[parameters.Omega + i] = (byte)index; // safe because of an assumption on the structure of h
             }
 
         return y;
@@ -598,17 +590,17 @@ public class Dilithium : IMLDSA {
     /// <param name="y"></param>
     /// <returns>null or a K x 256 vector of polynomials with binary coefficients and at most Omega coefficients set to 1</returns>
     public int[][] HintBitUnpack(byte[] y) {
-        var h = new int[_param.K][];
+        var h = new int[parameters.K][];
         var index = 0;
 
-        for (var i = 0; i < _param.K; i++) {
+        for (var i = 0; i < parameters.K; i++) {
             h[i] = new int[256];
-            if (y[_param.Omega + i] < index || y[_param.Omega + i] > _param.Omega) {
+            if (y[parameters.Omega + i] < index || y[parameters.Omega + i] > parameters.Omega) {
                 return null;
                 }
 
             var first = index;
-            while (index < y[_param.Omega + i]) {
+            while (index < y[parameters.Omega + i]) {
                 if (index > first && y[index - 1] >= y[index]) {
                     return null;
                     }
@@ -619,7 +611,7 @@ public class Dilithium : IMLDSA {
             }
 
         // Count the remaining unused elements of y to ensure exactly Omega - 1 coefficients
-        while (index < _param.Omega) {
+        while (index < parameters.Omega) {
             if (y[index] != 0) {
                 return null;
                 }
@@ -638,8 +630,8 @@ public class Dilithium : IMLDSA {
     /// <returns></returns>
     public byte[] PkEncode(BitArray rho, int[][] t1) {
         var pk = BitsToBytes(rho);
-        var bitlen = (_param.Q - 1).GetExactBitLength() - _param.D;
-        for (var i = 0; i < _param.K; i++) {
+        var bitlen = (parameters.Q - 1).GetExactBitLength() - parameters.D;
+        for (var i = 0; i < parameters.K; i++) {
             pk = pk.Concatenate(SimpleBitPack(t1[i], bitlen.Exp2() - 1));
             }
 
@@ -657,10 +649,10 @@ public class Dilithium : IMLDSA {
         var rho = BytesToBits(y);
 
         // Remainder form t1
-        var t1 = new int[_param.K][];
-        var bitlen = (_param.Q - 1).GetExactBitLength() - _param.D;
+        var t1 = new int[parameters.K][];
+        var bitlen = (parameters.Q - 1).GetExactBitLength() - parameters.D;
         var bitsToUnpack = bitlen * 32;
-        for (var i = 0; i < _param.K; i++) {
+        for (var i = 0; i < parameters.K; i++) {
             // Grab the next bitlen * 32 bits at a time and unpack them
             var startIndex = 32 + (i * bitsToUnpack);
             var endIndex = startIndex + bitsToUnpack;
@@ -684,16 +676,16 @@ public class Dilithium : IMLDSA {
     public byte[] SkEncode(BitArray rho, BitArray k, BitArray tr, int[][] s1, int[][] s2, int[][] t0) {
         var sk = BitsToBytes(rho).Concatenate(BitsToBytes(k)).Concatenate(BitsToBytes(tr));
 
-        for (var i = 0; i < _param.L; i++) {
-            sk = sk.Concatenate(BitPack(s1[i], _param.Eta, _param.Eta));
+        for (var i = 0; i < parameters.L; i++) {
+            sk = sk.Concatenate(BitPack(s1[i], parameters.Eta, parameters.Eta));
             }
 
-        for (var i = 0; i < _param.K; i++) {
-            sk = sk.Concatenate(BitPack(s2[i], _param.Eta, _param.Eta));
+        for (var i = 0; i < parameters.K; i++) {
+            sk = sk.Concatenate(BitPack(s2[i], parameters.Eta, parameters.Eta));
             }
 
-        for (var i = 0; i < _param.K; i++) {
-            sk = sk.Concatenate(BitPack(t0[i], (_param.D - 1).Exp2() - 1, (_param.D - 1).Exp2()));
+        for (var i = 0; i < parameters.K; i++) {
+            sk = sk.Concatenate(BitPack(t0[i], (parameters.D - 1).Exp2() - 1, (parameters.D - 1).Exp2()));
             }
 
         return sk;
@@ -709,24 +701,24 @@ public class Dilithium : IMLDSA {
         var k = BytesToBits(sk[32..64]);
         var tr = BytesToBits(sk[64..128]);
 
-        var bitlen = 32 * (2 * _param.Eta).GetExactBitLength();
-        var yEndIndex = bitlen * _param.L + 128;
-        var zEndIndex = yEndIndex + bitlen * _param.K;
+        var bitlen = 32 * (2 * parameters.Eta).GetExactBitLength();
+        var yEndIndex = bitlen * parameters.L + 128;
+        var zEndIndex = yEndIndex + bitlen * parameters.K;
 
         var y = sk[128..yEndIndex].Partition(bitlen);
         var z = sk[yEndIndex..zEndIndex].Partition(bitlen);
-        var w = sk[zEndIndex..].Partition(32 * _param.D);
+        var w = sk[zEndIndex..].Partition(32 * parameters.D);
 
-        var s1 = new int[_param.L][];
-        for (var i = 0; i < _param.L; i++) {
-            s1[i] = BitUnpack(y[i], _param.Eta, _param.Eta);
+        var s1 = new int[parameters.L][];
+        for (var i = 0; i < parameters.L; i++) {
+            s1[i] = BitUnpack(y[i], parameters.Eta, parameters.Eta);
             }
 
-        var s2 = new int[_param.K][];
-        var t0 = new int[_param.K][];
-        for (var i = 0; i < _param.K; i++) {
-            s2[i] = BitUnpack(z[i], _param.Eta, _param.Eta);
-            t0[i] = BitUnpack(w[i], (_param.D - 1).Exp2() - 1, (_param.D - 1).Exp2());
+        var s2 = new int[parameters.K][];
+        var t0 = new int[parameters.K][];
+        for (var i = 0; i < parameters.K; i++) {
+            s2[i] = BitUnpack(z[i], parameters.Eta, parameters.Eta);
+            t0[i] = BitUnpack(w[i], (parameters.D - 1).Exp2() - 1, (parameters.D - 1).Exp2());
             }
 
         return (rho, k, tr, s1, s2, t0);
@@ -742,8 +734,8 @@ public class Dilithium : IMLDSA {
     public byte[] SigEncode(BitArray cTilde, int[][] z, int[][] h) {
         var sigma = BitsToBytes(cTilde);
 
-        for (var i = 0; i < _param.L; i++) {
-            sigma = sigma.Concatenate(BitPack(z[i].Select(value => value.PlusMinusMod(_param.Q)).ToArray(), _param.Gamma1 - 1, _param.Gamma1));
+        for (var i = 0; i < parameters.L; i++) {
+            sigma = sigma.Concatenate(BitPack(z[i].Select(value => value.PlusMinusMod(parameters.Q)).ToArray(), parameters.Gamma1 - 1, parameters.Gamma1));
             }
 
         sigma = sigma.Concatenate(HintBitPack(h));
@@ -757,9 +749,9 @@ public class Dilithium : IMLDSA {
     /// <param name="sigma"></param>
     /// <returns></returns>
     public (BitArray cTilde, int[][] z, int[][] h) SigDecode(byte[] sigma) {
-        var bitlen = 32 * (1 + _param.Gamma1 - 1).GetExactBitLength();
-        var wEndIndex = _param.Lambda / 4;
-        var xEndIndex = wEndIndex + _param.L * bitlen;
+        var bitlen = 32 * (1 + parameters.Gamma1 - 1).GetExactBitLength();
+        var wEndIndex = parameters.Lambda / 4;
+        var xEndIndex = wEndIndex + parameters.L * bitlen;
 
         var w = sigma[..wEndIndex];
         var x = sigma[wEndIndex..xEndIndex].Partition(bitlen);
@@ -767,9 +759,9 @@ public class Dilithium : IMLDSA {
 
         var cTilde = BytesToBits(w);
 
-        var z = new int[_param.L][];
-        for (var i = 0; i < _param.L; i++) {
-            z[i] = BitUnpack(x[i], _param.Gamma1 - 1, _param.Gamma1);
+        var z = new int[parameters.L][];
+        for (var i = 0; i < parameters.L; i++) {
+            z[i] = BitUnpack(x[i], parameters.Gamma1 - 1, parameters.Gamma1);
             }
 
         var h = HintBitUnpack(y);
@@ -784,11 +776,11 @@ public class Dilithium : IMLDSA {
     /// <returns></returns>
     public BitArray W1Encode(int[][] w1) {
         // We know that SimpleBitPack will produce 'bitlen' bits for each run, so to avoid repeated concatenations, allocate all at once
-        var upperBound = ((_param.Q - 1) / (2 * _param.Gamma2)) - 1;
+        var upperBound = ((parameters.Q - 1) / (2 * parameters.Gamma2)) - 1;
         var bitlen = 32 * upperBound.GetExactBitLength();
-        var w1Tilde = new BitArray(8 * _param.K * bitlen);
+        var w1Tilde = new BitArray(8 * parameters.K * bitlen);
 
-        for (var i = 0; i < _param.K; i++) {
+        for (var i = 0; i < parameters.K; i++) {
             var packedBits = BytesToBits(SimpleBitPack(w1[i], upperBound));
             for (var j = 0; j < packedBits.Length; j++) {
                 w1Tilde[(i * 8 * bitlen) + j] = packedBits[j];
@@ -808,23 +800,23 @@ public class Dilithium : IMLDSA {
         var samplingBytes = new byte[8];
         var k = 8;
 
-        _h.Init();
-        _h.Absorb(rho, rho.Length * 8);
-        _h.Squeeze(samplingBytes, 64);
+        h.Init();
+        h.Absorb(rho, rho.Length * 8);
+        h.Squeeze(samplingBytes, 64);
         var samplingBits = BytesToBits(samplingBytes);  // These bits don't change despite extending the length of the Squeeze
 
-        for (var i = 256 - _param.Tau; i < 256; i++) {
+        for (var i = 256 - parameters.Tau; i < 256; i++) {
             byte[] candidateBytes;
 
             do {
                 k++;
                 candidateBytes = new byte[k];
-                _h.Squeeze(candidateBytes, k * 8);
+                h.Squeeze(candidateBytes, k * 8);
                 } while (candidateBytes[k - 1] > i);
 
             var j = candidateBytes[k - 1];
             c[i] = c[j];
-            c[j] = samplingBits[i + _param.Tau - 256] ? -1 : 1;
+            c[j] = samplingBits[i + parameters.Tau - 256] ? -1 : 1;
             }
 
         return c;
@@ -841,12 +833,12 @@ public class Dilithium : IMLDSA {
         var aHat = new int[256];
         var rhoBytes = BitsToBytes(rho);
 
-        _h128.Init();
-        _h128.Absorb(rhoBytes, 272);
+        h128.Init();
+        h128.Absorb(rhoBytes, 272);
 
         do {
             var candidateBytes = new byte[c + 3];
-            _h128.Squeeze(candidateBytes, (c + 3) * 8);
+            h128.Squeeze(candidateBytes, (c + 3) * 8);
 
             var retVal = CoeffFromThreeBytes(candidateBytes[c], candidateBytes[c + 1], candidateBytes[c + 2]);
             c += 3;
@@ -874,9 +866,9 @@ public class Dilithium : IMLDSA {
         var zCandidates = new byte[256];
         var a = new int[256];
 
-        _h.Init();
-        _h.Absorb(rhoBytes, 528);
-        _h.Squeeze(zCandidates, 256 * 8);
+        h.Init();
+        h.Absorb(rhoBytes, 528);
+        h.Squeeze(zCandidates, 256 * 8);
 
         do {
             // If we miss enough checks, we need to squeeze more bits, more efficient to do in a batch than per-byte
@@ -885,7 +877,7 @@ public class Dilithium : IMLDSA {
                 squeezeFactor++;
                 var tempZ = new byte[256 * squeezeFactor];
 
-                _h.Squeeze(tempZ, 256 * 8 * squeezeFactor);
+                h.Squeeze(tempZ, 256 * 8 * squeezeFactor);
                 zCandidates = tempZ[(256 * (squeezeFactor - 1))..];
                 }
 
@@ -916,12 +908,12 @@ public class Dilithium : IMLDSA {
     /// <param name="rho">Random 256-bit array</param>
     /// <returns></returns>
     public int[][][] ExpandA(BitArray rho) {
-        var A = new int[_param.K][][];
+        var A = new int[parameters.K][][];
 
-        for (var r = 0; r < _param.K; r++) {
-            A[r] = new int[_param.L][];
+        for (var r = 0; r < parameters.K; r++) {
+            A[r] = new int[parameters.L][];
 
-            for (var s = 0; s < _param.L; s++) {
+            for (var s = 0; s < parameters.L; s++) {
                 A[r][s] = RejNTTPoly(rho.Concatenate(IntegerToBits(s, 8)).Concatenate(IntegerToBits(r, 8)));
                 }
             }
@@ -935,15 +927,15 @@ public class Dilithium : IMLDSA {
     /// <param name="rho">Random 512-bit array</param>
     /// <returns></returns>
     public (int[][] s1, int[][] s2) ExpandS(BitArray rho) {
-        var s1 = new int[_param.L][];
-        var s2 = new int[_param.K][];
+        var s1 = new int[parameters.L][];
+        var s2 = new int[parameters.K][];
 
-        for (var r = 0; r < _param.L; r++) {
+        for (var r = 0; r < parameters.L; r++) {
             s1[r] = RejBoundedPoly(rho.Concatenate(IntegerToBits(r, 16)));
             }
 
-        for (var r = 0; r < _param.K; r++) {
-            s2[r] = RejBoundedPoly(rho.Concatenate(IntegerToBits(r + _param.L, 16)));
+        for (var r = 0; r < parameters.K; r++) {
+            s2[r] = RejBoundedPoly(rho.Concatenate(IntegerToBits(r + parameters.L, 16)));
             }
 
         return (s1, s2);
@@ -956,20 +948,20 @@ public class Dilithium : IMLDSA {
     /// <param name="mu">Nonnegative integer</param>
     /// <returns></returns>
     public int[][] ExpandMask(BitArray rho, int mu) {
-        var c = 1 + (_param.Gamma1 - 1).GetExactBitLength();
+        var c = 1 + (parameters.Gamma1 - 1).GetExactBitLength();
         var rhoBytes = BitsToBytes(rho);
-        var y = new int[_param.L][];
+        var y = new int[parameters.L][];
 
-        for (var r = 0; r < _param.L; r++) {
+        for (var r = 0; r < parameters.L; r++) {
             var hashBitLength = 32 * c * 8;
             var v = new byte[hashBitLength / 8];
 
-            _h.Init();
-            _h.Update(rhoBytes, 512);
-            _h.Update(IntegerToBytes(mu + r, 2), 2 * 8);
-            _h.Final(v, hashBitLength);
+            h.Init();
+            h.Update(rhoBytes, 512);
+            h.Update(IntegerToBytes(mu + r, 2), 2 * 8);
+            h.Final(v, hashBitLength);
 
-            y[r] = BitUnpack(v, _param.Gamma1 - 1, _param.Gamma1);
+            y[r] = BitUnpack(v, parameters.Gamma1 - 1, parameters.Gamma1);
             }
 
         return y;
@@ -981,9 +973,9 @@ public class Dilithium : IMLDSA {
     /// <param name="r"></param>
     /// <returns></returns>
     public (int r1, int r0) Power2Round(int r) {
-        var twoPowD = 1 << _param.D;
+        var twoPowD = 1 << parameters.D;
 
-        var rPlus = r % _param.Q;
+        var rPlus = r % parameters.Q;
         var r0 = rPlus.PlusMinusMod(twoPowD);
 
         return ((rPlus - r0) / twoPowD, r0);
@@ -995,16 +987,16 @@ public class Dilithium : IMLDSA {
     /// <param name="r"></param>
     /// <returns></returns>
     public (int r1, int r0) Decompose(int r) {
-        var rPlus = r % _param.Q;
-        var r0 = rPlus.PlusMinusMod(2 * _param.Gamma2);
+        var rPlus = r % parameters.Q;
+        var r0 = rPlus.PlusMinusMod(2 * parameters.Gamma2);
         int r1;
 
-        if (rPlus - r0 == _param.Q - 1) {
+        if (rPlus - r0 == parameters.Q - 1) {
             r1 = 0;
             r0--;
             }
         else {
-            r1 = (rPlus - r0) / (2 * _param.Gamma2);
+            r1 = (rPlus - r0) / (2 * parameters.Gamma2);
             }
 
         return (r1, r0);
@@ -1047,7 +1039,7 @@ public class Dilithium : IMLDSA {
     /// <param name="r"></param>
     /// <returns></returns>
     public int UseHint(bool h, int r) {
-        var m = (_param.Q - 1) / (2 * _param.Gamma2);
+        var m = (parameters.Q - 1) / (2 * parameters.Gamma2);
         var (r1, r0) = Decompose(r);
 
         if (h) {
@@ -1080,9 +1072,9 @@ public class Dilithium : IMLDSA {
                 k++;
                 for (var j = start; j < start + len; j++) {
                     // Need some weird casting to avoid overflow on a 32-bit integer when multiplying
-                    var t = (int)((long)_zeta[k] * wHat[j + len]).PosMod(_param.Q);
-                    wHat[j + len] = (wHat[j] - t).PosMod(_param.Q);
-                    wHat[j] = (wHat[j] + t).PosMod(_param.Q);
+                    var t = (int)((long)_zeta[k] * wHat[j + len]).PosMod(parameters.Q);
+                    wHat[j + len] = (wHat[j] - t).PosMod(parameters.Q);
+                    wHat[j] = (wHat[j] + t).PosMod(parameters.Q);
                     }
 
                 start += (2 * len);
@@ -1112,9 +1104,9 @@ public class Dilithium : IMLDSA {
                 for (var j = start; j < start + len; j++) {
                     // Need some weird casting to avoid overflow on a 32-bit integer when multiplying
                     var t = w[j];
-                    w[j] = (t + w[j + len]).PosMod(_param.Q);
-                    w[j + len] = (t - w[j + len]).PosMod(_param.Q);
-                    w[j + len] = (int)((long)w[j + len] * (-_zeta[k])).PosMod(_param.Q);
+                    w[j] = (t + w[j + len]).PosMod(parameters.Q);
+                    w[j + len] = (t - w[j + len]).PosMod(parameters.Q);
+                    w[j + len] = (int)((long)w[j + len] * (-_zeta[k])).PosMod(parameters.Q);
                     }
 
                 start += (2 * len);
@@ -1124,7 +1116,7 @@ public class Dilithium : IMLDSA {
             }
 
         // Multiply all values by 256^-1 mod q
-        return w.Select(value => (int)(((long)value * 8347681).PosMod(_param.Q))).ToArray();
+        return w.Select(value => (int)(((long)value * 8347681).PosMod(parameters.Q))).ToArray();
         }
 
     private int[][] ScalarMultiply(int[][] a, int b) {
@@ -1132,7 +1124,7 @@ public class Dilithium : IMLDSA {
         for (var i = 0; i < a.Length; i++) {
             product[i] = new int[a[0].Length];
             for (var j = 0; j < a[0].Length; j++) {
-                product[i][j] = (int)((long)a[i][j] * b).PosMod(_param.Q);
+                product[i][j] = (int)((long)a[i][j] * b).PosMod(parameters.Q);
                 }
             }
 
@@ -1144,7 +1136,7 @@ public class Dilithium : IMLDSA {
         for (var i = 0; i < b.Length; i++) {
             product[i] = new int[a.Length];
             for (var j = 0; j < a.Length; j++) {
-                product[i][j] = (int)((long)a[j] * b[i][j]).PosMod(_param.Q);
+                product[i][j] = (int)((long)a[j] * b[i][j]).PosMod(parameters.Q);
                 }
             }
 
@@ -1162,7 +1154,7 @@ public class Dilithium : IMLDSA {
 
             for (var j = 0; j < aCols; j++) {
                 for (var k = 0; k < 256; k++) {
-                    product[i][k] = (int)(product[i][k] + (long)a[i][j][k] * b[j][k]).PosMod(_param.Q);
+                    product[i][k] = (int)(product[i][k] + (long)a[i][j][k] * b[j][k]).PosMod(parameters.Q);
                     }
                 }
             }
@@ -1179,7 +1171,7 @@ public class Dilithium : IMLDSA {
         for (var i = 0; i < rows; i++) {
             sum[i] = new int[cols];
             for (var j = 0; j < cols; j++) {
-                sum[i][j] = (a[i][j] + b[i][j]).PosMod(_param.Q);
+                sum[i][j] = (a[i][j] + b[i][j]).PosMod(parameters.Q);
                 }
             }
 
@@ -1195,7 +1187,7 @@ public class Dilithium : IMLDSA {
         for (var i = 0; i < rows; i++) {
             difference[i] = new int[cols];
             for (var j = 0; j < cols; j++) {
-                difference[i][j] = (a[i][j] - b[i][j]).PosMod(_param.Q);
+                difference[i][j] = (a[i][j] - b[i][j]).PosMod(parameters.Q);
                 }
             }
 
@@ -1208,7 +1200,7 @@ public class Dilithium : IMLDSA {
         for (var i = 0; i < a.Length; i++) {
             negated[i] = new int[a[i].Length];
             for (var j = 0; j < a[i].Length; j++) {
-                negated[i][j] = _param.Q - a[i][j];
+                negated[i][j] = parameters.Q - a[i][j];
                 }
             }
 
@@ -1216,6 +1208,9 @@ public class Dilithium : IMLDSA {
         }
 
     private int InfinityNorm(int[][] a) {
-        return a.Max(polynomial => polynomial.Max(value => System.Math.Abs(value.PlusMinusMod(_param.Q))));
+        Func<int, int> f = value => System.Math.Abs(value.PlusMinusMod(parameters.Q));
+
+
+        return a.Max(polynomial => polynomial.Max(value => System.Math.Abs(value.PlusMinusMod(parameters.Q))));
         }
     }

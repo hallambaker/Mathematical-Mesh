@@ -1,6 +1,7 @@
 using Goedel.Cryptography.Nist;
 using Goedel.Cryptography.PQC;
 
+using System;
 using System.Collections;
 
 namespace Goedel.Test;
@@ -35,15 +36,11 @@ public static class Extensions {
 
     public static IMLDSA GetDsa(this AcvpTestGroup GroupData) {
         var shaFactory = new NativeShaFactory();
-        var random = new Random800_90();
-        var entropy = new EntropyProvider(random);
+        var parameterSet = GroupData.Mode();
+        var parameters = new DilithiumParameters(parameterSet);
+        var dilithium = new DilithiumNist(parameters, shaFactory);
 
-        var KyberFactory = new DilithiumFactory(shaFactory, entropy);
-
-        var parameters = GroupData.Mode();
-        var kyber = KyberFactory.GetDilithium(parameters);
-
-        return kyber;
+        return dilithium;
         }
 
 
@@ -80,8 +77,10 @@ public class DsaKeyGenTest : AcvpTest {
 
         var dilithium = GroupData.GetDsa();
 
-        var seed = MsbLsbConversionHelpers.MostSignificantByteArrayToLeastSignificantBitArray(Seed);
-        var (publicKey, secretKey) = dilithium.GenerateKey(seed);
+        //Console.WriteLine($"Sk {Seed.ToStringBase16FormatHex()}");
+
+        //var seed = MsbLsbConversionHelpers.MostSignificantByteArrayToLeastSignificantBitArray(Seed);
+        var (publicKey, secretKey) = dilithium.GenerateKey(Seed);
         publicKey.TestEqual(PublicKey);
         secretKey.TestEqual(SecretKey);
         }
@@ -112,18 +111,18 @@ public class DsaSignTest : DsaKeyGenTest {
 
 
 
-        var message = MsbLsbConversionHelpers.MostSignificantByteArrayToLeastSignificantBitArray(Message);
+        //var message = MsbLsbConversionHelpers.MostSignificantByteArrayToLeastSignificantBitArray(Message);
 
         if (Deterministic == true) {
-            var signature = dilithium.Sign(SecretKey, message, true);
+            var signature = dilithium.Sign(SecretKey, Message);
 
             signature.TestEqual(Signature);
             }
 
         else {
-            var rnd = MsbLsbConversionHelpers.MostSignificantByteArrayToLeastSignificantBitArray(Rnd);
+            //var rnd = MsbLsbConversionHelpers.MostSignificantByteArrayToLeastSignificantBitArray(Rnd);
 
-            var signature = dilithium.Sign(SecretKey, message, false, rnd);
+            var signature = dilithium.Sign(SecretKey, Message, Rnd);
 
             signature.TestEqual(Signature);
 
@@ -161,8 +160,8 @@ public class DsaVerifyTest : DsaKeyGenTest {
     public override void Test() {
         var dilithium = GroupData.GetDsa();
 
-        var message = MsbLsbConversionHelpers.MostSignificantByteArrayToLeastSignificantBitArray(Message);
-        var test = dilithium.Verify(PublicKey, Signature, message);
+        //var message = MsbLsbConversionHelpers.MostSignificantByteArrayToLeastSignificantBitArray(Message);
+        var test = dilithium.Verify(PublicKey, Signature, Message);
 
         test.TestEqual(TestPassed == true);
         }

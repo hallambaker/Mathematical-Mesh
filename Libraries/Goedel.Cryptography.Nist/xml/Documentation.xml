@@ -250,35 +250,34 @@
             Determines if a given point exists in the field
             </summary>
         </member>
+        <member name="T:Goedel.Cryptography.Nist.Dilithium">
+            <summary>
+            ML-DSA internal functions implementation derrived from the NIST ACVP reference 
+            implementation..
+            </summary>
+        </member>
         <member name="F:Goedel.Cryptography.Nist.Dilithium._zeta">
             <summary>
             Precomputed zeta array with bitrev(k) already applied
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.GenerateKey(System.Collections.BitArray)">
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.#ctor(Goedel.Cryptography.Nist.DilithiumParameters,Goedel.Cryptography.Nist.IShaFactory,Goedel.Cryptography.Nist.IEntropyProvider)">
             <summary>
-            Generates a key pair (pk, sk)
+            Constructor, return a new instance of the Dilithium class with parameters instantiated by
+            <paramref name="param"/> and hash factory <paramref name="shaFactory"/>.
             </summary>
-            <param name="seed">Random 256-bit array</param>
-            <returns>Tuple (byte[] pk, byte[] sk) containing the public key and secret key</returns>
+            <param name="param"></param>
+            <param name="shaFactory"></param>
+            <param name="entropyProvider"></param>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.Sign(System.Byte[],System.Collections.BitArray,System.Boolean,System.Collections.BitArray)">
-            <summary>
-            Signs a message with a given secret key
-            </summary>
-            <param name="sk">Secret key.</param>
-            <param name="message">Arbitrary set of bits.</param>
-            <param name="deterministic">Determines if the signature incorporates any randomness. Opposite is "hedged".</param>
-            <returns>Signature</returns>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.GenerateKey(System.Byte[])">
+            <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.Verify(System.Byte[],System.Byte[],System.Collections.BitArray)">
-            <summary>
-            Verify a signature
-            </summary>
-            <param name="pk">Public key.</param>
-            <param name="signature">Signature.</param>
-            <param name="m">Message.</param>
-            <returns></returns>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.Sign(System.Byte[],System.Byte[],System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Dilithium.Verify(System.Byte[],System.Byte[],System.Byte[])">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.Nist.Dilithium.IntegerToBits(System.Int32,System.Int32)">
             <summary>
@@ -606,6 +605,41 @@
             The maximum number of 1s in hint h.
             Valid options are 80, 55, 75
             </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.IMLDSA">
+            <summary>
+            ML-DSA internal functions interface.
+            <para>
+            The interfaces have been modified to use bytes instead of the bit arrays
+            used in the reference code.
+            </para>
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IMLDSA.GenerateKey(System.Byte[])">
+            <summary>
+            Generates a key pair (pk, sk)
+            </summary>
+            <param name="seed">Random 256-bit array</param>
+            <returns>Tuple (byte[] pk, byte[] sk) containing the public key 
+            and secret key</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IMLDSA.Sign(System.Byte[],System.Byte[],System.Byte[])">
+            <summary>
+            Signs a message with a given secret key
+            </summary>
+            <param name="sk">Secret key.</param>
+            <param name="message">Arbitrary set of bits.</param>
+            <param name="rnd">The deterministic seed value.</param>
+            <returns>Signature</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IMLDSA.Verify(System.Byte[],System.Byte[],System.Byte[])">
+            <summary>
+            Verify a signature
+            </summary>
+            <param name="pk">Public key.</param>
+            <param name="signature">Signature.</param>
+            <param name="message">Message.</param>
+            <returns>True if validation succeeds, otherwise false.</returns>
         </member>
         <member name="T:Goedel.Cryptography.Nist.IMLKEM">
             <summary>
