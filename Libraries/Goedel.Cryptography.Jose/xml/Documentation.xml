@@ -1670,7 +1670,7 @@
             Default Constructor
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.Recipient.#ctor(System.Byte[],Goedel.Cryptography.KeyPair,Goedel.Cryptography.KeyPair,System.String)">
+        <member name="M:Goedel.Cryptography.Jose.Recipient.#ctor(System.Byte[],Goedel.Cryptography.KeyPair,Goedel.Cryptography.KeyPair,System.Byte[],System.String)">
             <summary>
             Encrypt to the specified key of the specified profile.
             </summary>

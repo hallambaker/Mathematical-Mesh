@@ -1,20 +1,23 @@
-﻿namespace Goedel.XUnit;
+﻿using Goedel.Cryptography;
+using Goedel.Cryptography.Algorithms;
+
+using System.Net.NetworkInformation;
+using System.Security.Cryptography;
+
+namespace Goedel.XUnit;
 
 /// <summary>
 /// Test library for PQC algorithms.
 /// </summary>
 public class TestNist : Disposable {
 
-
     public string ACVP_Root => @"..\NIST.Test.Vectors";
+
     public string KemKeyGen => Path.Combine(ACVP_Root, "ML-KEM-keyGen-FIPS203");
     public string KemEncapDecap => Path.Combine(ACVP_Root, "ML-KEM-encapDecap-FIPS203");
     public string DsaKeyGen => Path.Combine(ACVP_Root, "ML-DSA-keyGen-FIPS204");
     public string DsaSign => Path.Combine(ACVP_Root, "ML-DSA-sigGen-FIPS204");
     public string DsaVerify => Path.Combine(ACVP_Root, "ML-DSA-sigVer-FIPS204");
-
-
-
 
 
     /// <summary>
@@ -29,6 +32,47 @@ public class TestNist : Disposable {
     /// </summary>
     /// <returns>The instance</returns>
     public static TestNist Test() => new();
+
+
+    [Fact]
+    public void TestUdf() {
+        var data = "This is a common test seed".ToBytes();
+
+        var (udfMlDsa44, keyMlDsa44) = UdfSignatureTrial(UdfAlgorithmIdentifier.MLDSA44, 0);
+        var (udfMlDsa65, keyMlDsa65) = UdfSignatureTrial(UdfAlgorithmIdentifier.MLDSA65, 0);
+        var (udfMlDsa87, keyMlDsa87) = UdfSignatureTrial(UdfAlgorithmIdentifier.MLDSA87, 0);
+
+        var (udfMlKem512, keyMlKem512) = UdfEncryptionTrial(UdfAlgorithmIdentifier.MLKEM512, 0);
+        var (udfMlKem768, keyMlKem768) = UdfEncryptionTrial(UdfAlgorithmIdentifier.MLKEM768, 0);
+        var (udfMlKem1024, keyMlKem1024) = UdfEncryptionTrial(UdfAlgorithmIdentifier.MLKEM1024, 0);
+        }
+
+
+    (string, KeyPair) UdfEncryptionTrial(UdfAlgorithmIdentifier id, int count) =>
+        UdfTrial(id, count);
+
+    (string, KeyPair) UdfSignatureTrial(UdfAlgorithmIdentifier id, int count) =>
+        UdfTrial(id, count);
+
+
+
+
+
+
+
+
+
+(string, KeyPair) UdfTrial(UdfAlgorithmIdentifier id, int count) {
+        var data = SHAKE256.Process ($"This is a common test seed of {id}-{count}".ToBytes(), 256);
+
+        var udf = Udf.DerivedKey(id, data);
+        var keypair = Udf.DeriveKey(udf);
+
+
+        return (udf, keypair);
+        }
+
+
 
     [Fact]
     public void TestKemKeyGen() {

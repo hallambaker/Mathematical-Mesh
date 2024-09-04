@@ -1859,17 +1859,18 @@
             <summary>The cached <see cref="T:Goedel.Cryptography.KeyPairAdvanced"/> instance corresponding
             to <see cref="T:Goedel.Mesh.KeyData"/></summary>
         </member>
-        <member name="M:Goedel.Mesh.CapabilityDecrypt.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
+        <member name="M:Goedel.Mesh.CapabilityDecrypt.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
             <summary>
             Perform a key exchange to encrypt a bulk or wrapped key under this one.
             </summary>
             <param name="encryptedKey">The encrypted session</param>
             <param name="ephemeral">Ephemeral key input (required for DH)</param>
+            <param name="ciphertext"></param>
             <param name="algorithmID">The algorithm to use (redundant?)</param>
-            <param name="partial">Partial key agreement carry in (for recryption)</param>
-            <param name="salt">Optional salt value for use in key derivation. If specified
-            must match the salt used to encrypt.</param>        
+            <param name="partial">Partial key agreement carry in (for recryption)</param>        
             <returns>The decoded data instance</returns>
+            <param name="salt">Optional salt value for use in key derivation. If specified
+            must match the salt used to encrypt.</param>
         </member>
         <member name="M:Goedel.Mesh.CapabilityDecrypt.Agreement(Goedel.Cryptography.KeyPair)">
             <summary>
@@ -1929,17 +1930,18 @@
              The corresponding key is an encryption key
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.CapabilityDecryptPartial.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
+        <member name="M:Goedel.Mesh.CapabilityDecryptPartial.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
             <summary>
             Perform a key exchange to encrypt a bulk or wrapped key under this one.
             </summary>
             <param name="encryptedKey">The encrypted session</param>
             <param name="ephemeral">Ephemeral key input (required for DH)</param>
+            <param name="ciphertext"></param>
             <param name="algorithmID">The algorithm to use (redundant?)</param>
-            <param name="partial">Partial key agreement carry in (for recryption)</param>
-            <param name="salt">Optional salt value for use in key derivation. If specified
-            must match the salt used to encrypt.</param>        
+            <param name="partial">Partial key agreement carry in (for recryption)</param>        
             <returns>The decoded data instance</returns>
+            <param name="salt">Optional salt value for use in key derivation. If specified
+            must match the salt used to encrypt.</param>
         </member>
         <member name="P:Goedel.Mesh.CapabilityDecryptPartial._Binding">
             <summary>Implement IBinding</summary> 
@@ -7343,7 +7345,7 @@
             <param name="serviceAddress">The service account to which requests should be directed.</param>
             <param name="keyCollection">The key collection to be used to obtain the client.</param>
         </member>
-        <member name="M:Goedel.Mesh.KeyPairServiced.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[])">
+        <member name="M:Goedel.Mesh.KeyPairServiced.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[]@,System.Byte[])">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.KeyPairServiced.KeyPairPublic">
@@ -7352,7 +7354,7 @@
         <member name="M:Goedel.Mesh.KeyPairServiced.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.KeyPairServiced.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
+        <member name="M:Goedel.Mesh.KeyPairServiced.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.KeyPairServiced.Agreement(Goedel.Cryptography.KeyPair)">

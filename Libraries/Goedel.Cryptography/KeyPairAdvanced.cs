@@ -276,14 +276,14 @@ public abstract partial class KeyAgreementResult : IPKIXAgreement {
     public abstract KeyPair EphemeralKeyPair { get; }
 
     /// <summary>
-    /// Encrypt the bulk key.
+    /// Encrypt the bulk key.   z   
     /// </summary>
     /// <param name="ephemeral"></param>
     /// <param name="key"></param>
     /// <param name="salt"></param>
     /// <returns>The encoder</returns>
     public virtual void Encrypt(byte[] key,
-        out byte[] exchange, out KeyPair ephemeral, byte[] salt = null) {
+        out byte[] exchange, out KeyPair ephemeral, out byte[] ciphertext, byte[] salt = null) {
 
         //Screen.WriteLine($"PRK Encrypt is {IKM.ToStringBase16()}");
 
@@ -291,7 +291,7 @@ public abstract partial class KeyAgreementResult : IPKIXAgreement {
 
         exchange = Platform.KeyWrapRFC3394.Wrap(EncryptionKey, key);
         ephemeral = EphemeralKeyPair;
-
+        ciphertext = null;
         //Screen.WriteLine($"Ephemeral {ephemeral.KeyIdentifier}");
         //Screen.WriteLine($"    IKM {IKM.ToStringBase16FormatHex()}");
         //Screen.WriteLine($"    EncryptionKey Encrypt is {EncryptionKey.ToStringBase16()}");

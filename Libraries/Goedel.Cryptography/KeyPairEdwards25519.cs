@@ -227,15 +227,15 @@ public class KeyPairEd25519 : KeyPairEdwards {
     public override void Encrypt(byte[] key,
             out byte[] exchange,
             out KeyPair ephemeral,
-            byte[] salt = null) => PublicKey.Agreement().Encrypt(key, out exchange, out ephemeral, salt);
+            out byte[] ciphertext, byte[] salt = null) => PublicKey.Agreement().Encrypt(key, out exchange, out ephemeral, out ciphertext, salt);
 
 
     ///<inheritdoc/>
     public override byte[] Decrypt(byte[] encryptedKey,
             KeyPair ephemeral = null,
+            byte[] ciphertext = null,
             CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
-            KeyAgreementResult partial = null,
-            byte[] salt = null) {
+            KeyAgreementResult partial = null, byte[] salt = null) {
 
         var KeyPairEd25519 = ephemeral as KeyPairEd25519;
         Assert.AssertNotNull(KeyPairEd25519, KeyTypeMismatch.Throw);

@@ -1165,14 +1165,7 @@
             Default constructor. Used for serializatrion.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareRecipient.#ctor(System.Byte[],Goedel.Cryptography.CryptoKey)">
-            <summary>
-            Create a DARERecipient using the specified cryptographic parameters.
-            </summary>
-            <param name="masterKey">The master key</param>
-            <param name="encryptionKey">The recipient encryption key.</param>
-            <returns>The recipient informatin object.</returns>
-        </member>
+        <!-- Badly formed XML comment ignored for member "M:Goedel.Cryptography.Dare.DareRecipient.#ctor(System.Byte[],Goedel.Cryptography.CryptoKey)" -->
         <member name="M:Goedel.Cryptography.Dare.DareRecipient.#ctor(System.Byte[])">
             <summary>
             Create a DARERecipient using the specified cryptographic parameters.
@@ -1203,7 +1196,7 @@
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareRecipient.RecipientKeyData">
              <summary>
-            The per-recipient key exchange data.
+            The per-recipient key exchange data (if required).
              </summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareRecipient._Binding">

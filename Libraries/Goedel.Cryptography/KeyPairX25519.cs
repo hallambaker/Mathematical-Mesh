@@ -239,34 +239,18 @@ public class KeyPairX25519 : KeyPairECDH {
         return new CurveX25519Result() { AgreementX25519 = Agreement };
         }
 
-    /// <summary>
-    /// Encrypt a bulk key.
-    /// </summary>
-    /// <returns>The encoder</returns>
-    /// <param name="Key">The key to encrypt.</param>
-    /// <param name="Ephemeral">The ephemeral key to use for the exchange (if used)</param>
-    /// <param name="Exchange">The private key to use for the exchange.</param>
-    /// <param name="Salt">Optional salt value for use in key derivation.</param> 
+    ///<inheritdoc/>
     public override void Encrypt(byte[] Key,
         out byte[] Exchange,
         out KeyPair Ephemeral,
-        byte[] Salt = null) => PublicKey.Agreement().Encrypt(Key, out Exchange, out Ephemeral, Salt);
+        out byte[] ciphertext, byte[] Salt = null) => PublicKey.Agreement().Encrypt(Key, out Exchange, out Ephemeral, out ciphertext, Salt);
 
 
-    /// <summary>
-    /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
-    /// </summary>
-    /// <param name="EncryptedKey">The encrypted session</param>
-    /// <param name="Ephemeral">Ephemeral key input (required for DH)</param>
-    /// <param name="AlgorithmID">The algorithm to use.</param>
-    /// <param name="Partial">Partial key agreement carry in (for recryption)</param>
-    /// <param name="Salt">Optional salt value for use in key derivation. If specified
-    /// must match the salt used to encrypt.</param>        
-    /// <returns>The decoded data instance</returns>
+    ///<inheritdoc/>
     public override byte[] Decrypt(byte[] EncryptedKey,
         KeyPair Ephemeral = null,
-        CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
-        KeyAgreementResult Partial = null, byte[] Salt = null) {
+        byte[] ciphertext = null,
+        CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default, KeyAgreementResult Partial = null, byte[] Salt = null) {
 
         var keyPairX25519 = Ephemeral as KeyPairX25519;
         Assert.AssertNotNull(keyPairX25519, KeyTypeMismatch.Throw);
@@ -276,28 +260,13 @@ public class KeyPairX25519 : KeyPairECDH {
         }
 
 
-    /// <summary>
-    /// Sign a precomputed digest
-    /// </summary>
-    /// <param name="Data">The data to sign.</param>
-    /// <param name="AlgorithmID">The algorithm to use.</param>
-    /// <param name="Context">Additional data added to the signature scope
-    /// for protocol isolation.</param>
-    /// <returns>The signature data</returns>
+    ///<inheritdoc/>
     public override byte[] SignHash(
         byte[] Data,
         CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
         byte[] Context = null) => throw new InvalidOperation();
 
-    /// <summary>
-    /// Verify a signature over the purported data digest.
-    /// </summary>
-    /// <param name="Signature">The signature blob value.</param>
-    /// <param name="AlgorithmID">The signature and hash algorithm to use.</param>
-    /// <param name="Context">Additional data added to the signature scope
-    /// for protocol isolation.</param>
-    /// <param name="Data">The digest value to be verified.</param>
-    /// <returns>True if the signature is valid, otherwise false.</returns>
+    ///<inheritdoc/>
     public override bool VerifyHash(
         byte[] Data,
         byte[] Signature,

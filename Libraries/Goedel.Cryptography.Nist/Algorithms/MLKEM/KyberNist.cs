@@ -1,4 +1,6 @@
 
+using Goedel.Utilities;
+
 namespace Goedel.Cryptography.Nist;
 
 /// <summary>
@@ -10,13 +12,95 @@ namespace Goedel.Cryptography.Nist;
 /// </remarks>
 /// <param name="param">The parameters.</param>
 /// <param name="shaFactory">Factory method returning a SHA-3 instance.</param>
-public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLKEM {
+public class KyberNist(KyberParameters param, IShaFactory shaFactory=null)  {
 
-    private readonly KyberParameters parameters = param;
-    private readonly IShake shake256 = shaFactory.GetShakeInstance(new HashFunction(ModeValues.SHAKE, DigestSizes.d256));
-    private readonly IShake shake128 = shaFactory.GetShakeInstance(new HashFunction(ModeValues.SHAKE, DigestSizes.d128));
-    private readonly ISha sha3_512 = shaFactory.GetShaInstance(new HashFunction(ModeValues.SHA3, DigestSizes.d512));
-    private readonly ISha sha3_256 = shaFactory.GetShaInstance(new HashFunction(ModeValues.SHA3, DigestSizes.d256));
+    ///<summary>The parameter set</summary> 
+    public KyberParameters Parameters { get; } = param;
+    // ToDo: merge KyberParameters into KyberNist
+
+    ///<summary>The number of seed bytes, is always 64.</summary> 
+    public static int SeedBytes => 64;
+
+    ///<summary>Cached operation class for Kyber 512 strength.</summary> 
+    public static KyberNist Kyber512 => kyber512 ??
+       new KyberNist(KyberParameters.Kyber512)
+                .CacheValue(out kyber512);
+    static KyberNist? kyber512 = null;
+
+    ///<summary>Cached operation class for Kyber 768 strength.</summary> 
+    public static KyberNist Kyber768 => kyber768 ??
+       new KyberNist(KyberParameters.Kyber768)
+                .CacheValue(out kyber768);
+    static KyberNist? kyber768 = null;
+
+    ///<summary>Cached operation class for Kyber 1024 strength.</summary> 
+    public static KyberNist Kyber1024 => kyber1024 ??
+       new KyberNist(KyberParameters.Kyber1024)
+                .CacheValue(out kyber1024);
+    static KyberNist? kyber1024 = null;
+
+    /// <summary>
+    /// Return a static Kyber instance that matches the specified private key length
+    /// </summary>
+    /// <param name="length">The length of the private key in bytes.</param>
+    /// <returns>The dilithium ionstance.</returns>
+    /// <exception cref="CryptographicException">The length does not correspond to a valid ML-DSA
+    /// private key length.</exception>
+    public static KyberNist GetByPrivateKeyLength(int length) =>
+        length switch {
+            KyberParameters.DecapsulationKeyLength512 => Kyber512,
+            KyberParameters.DecapsulationKeyLength768 => Kyber768,
+            KyberParameters.DecapsulationKeyLength1024 => Kyber1024,
+            _ => throw new CryptographicException()
+            };
+
+    /// <summary>
+    /// Return a static Kyber instance that matches the specified public key length
+    /// </summary>
+    /// <param name="length">The length of the public key in bytes.</param>
+    /// <returns>The dilithium ionstance.</returns>
+    /// <exception cref="CryptographicException">The length does not correspond to a valid ML-Kem
+    /// private key length.</exception>
+    public static KyberNist GetByPublicKeyLength(int length) =>
+        length switch {
+            KyberParameters.EncapsulationKeyLength512 => Kyber512,
+            KyberParameters.EncapsulationKeyLength768 => Kyber768,
+            KyberParameters.EncapsulationKeyLength1024 => Kyber1024,
+            _ => throw new CryptographicException()
+            };
+
+
+    /// <summary>
+    /// Return a static Kyber instance that matches the parameter set
+    /// <paramref name="parameterSet"/>
+    /// </summary>
+    /// <param name="parameterSet">The parameter set.</param>
+    /// <returns>The dilithium ionstance.</returns>
+    /// <exception cref="CryptographicException">The length does not correspond to a valid ML-DSA
+    /// private key length.</exception>
+    public static KyberNist GetKyberNist(
+                    KyberParameterSet parameterSet) => parameterSet switch {
+                        KyberParameterSet.ML_KEM_512 => Kyber512,
+                        KyberParameterSet.ML_KEM_768 => Kyber768,
+                        KyberParameterSet.ML_KEM_1024 => Kyber1024,
+                        _ => throw new CryptographicException()
+                        };
+
+
+
+
+    private readonly IShake shake256 = 
+        (shaFactory ?? NativeShaFactory.Factory).GetShakeInstance(
+            new HashFunction(ModeValues.SHAKE, DigestSizes.d256));
+    private readonly IShake shake128 = 
+        (shaFactory ?? NativeShaFactory.Factory).GetShakeInstance(
+            new HashFunction(ModeValues.SHAKE, DigestSizes.d128));
+    private readonly ISha sha3_512 = 
+        (shaFactory ?? NativeShaFactory.Factory).GetShaInstance(
+            new HashFunction(ModeValues.SHA3, DigestSizes.d512));
+    private readonly ISha sha3_256 = 
+        (shaFactory ?? NativeShaFactory.Factory).GetShaInstance(
+            new HashFunction(ModeValues.SHA3, DigestSizes.d256));
 
     private readonly int[] _zeta =
     {
@@ -48,7 +132,15 @@ public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLK
         1583, 279, 1414, 735, 2508, 2688, 2419, 1175
     };
 
-    ///<inheritdoc/>
+
+
+
+    /// <summary>
+    /// Generate an encapsulation and decapsulation key pair
+    /// </summary>
+    /// <param name="z">Random concatenation on decapsulation key</param>
+    /// <param name="d">Random seed provided to K-PKE.KeyGen</param>
+    /// <returns>Tuple containing (encapsulation key ek, decapsulation key dk)</returns>
     public (byte[] ek, byte[] dk) GenerateKey(byte[] z, byte[] d) {
         // Console.WriteLine($"Key Generation -- {EnumHelpers.GetEnumDescriptionFromEnum(_param.ParameterSet)}");
         // Console.WriteLine("z: " + IntermediateValueHelper.Print(z));
@@ -63,6 +155,16 @@ public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLK
 
         return (ek_pke, dk);
         }
+
+    /// <summary>
+    /// Derive and encapsulate a shared secret
+    /// </summary>
+    /// <param name="ek">Encapsulation key</param>
+    /// <param name="m">Random seed, 32 bytes</param>
+    /// <returns>Tuple containing (shared secret K, ciphertext c)</returns>
+    public (byte[] K, byte[] c) Encapsulate(KyberPublic ek, byte[] m) =>
+        Encapsulate (ek.PublicKey, m);
+
 
     ///<inheritdoc/>
     public (byte[] K, byte[] c) Encapsulate(byte[] ek, byte[] m) {
@@ -83,9 +185,18 @@ public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLK
         return (K, c);
         }
 
+    /// <summary>
+    /// Decapsulate a shared secret
+    /// </summary>
+    /// <param name="dk">Decapsulation key</param>
+    /// <param name="c">Encapsulated shared secret</param>
+    /// <returns>Decapsulated shared secret</returns>
+    public (byte[] sharedKey, bool implicitRejection) Decapsulate(KyberPrivate dk, byte[] c) =>
+        Decapsulate (dk.SecretKey, c);
+
     ///<inheritdoc/>
     public (byte[] sharedKey, bool implicitRejection) Decapsulate(byte[] dk, byte[] c) {
-        var k384 = 384 * parameters.K;
+        var k384 = 384 * Parameters.K;
 
         // Console.WriteLine($"Decapsulation -- {EnumHelpers.GetEnumDescriptionFromEnum(_param.ParameterSet)}");
         // Console.WriteLine("dk: " + IntermediateValueHelper.Print(dk));
@@ -280,11 +391,11 @@ public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLK
         }
 
     public int Compress(int d, int x) {
-        return ((x * d.Exp2() + (parameters.Q / 2)) / parameters.Q);
+        return ((x * d.Exp2() + (Parameters.Q / 2)) / Parameters.Q);
         }
 
     public int Decompress(int d, int y) {
-        return ((y * parameters.Q + (d.Exp2() / 2)) / d.Exp2());
+        return ((y * Parameters.Q + (d.Exp2() / 2)) / d.Exp2());
         }
 
     /// <summary>
@@ -316,7 +427,7 @@ public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLK
     public int[] ByteDecode(int d, byte[] B) {
         var b = BytesToBits(B);
         var F = new int[256];
-        var m = d == 12 ? parameters.Q : d.Exp2();
+        var m = d == 12 ? Parameters.Q : d.Exp2();
 
         for (var i = 0; i < 256; i++) {
             for (var j = 0; j < d; j++) {
@@ -359,12 +470,12 @@ public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLK
             var d1 = B[i] + (256 * (B[i + 1] % 16));
             var d2 = (B[i + 1] / 16) + (16 * B[i + 2]);
 
-            if (d1 < parameters.Q) {
+            if (d1 < Parameters.Q) {
                 aHat[j] = d1;
                 j++;
                 }
 
-            if (d2 < parameters.Q && j < 256) {
+            if (d2 < Parameters.Q && j < 256) {
                 aHat[j] = d2;
                 j++;
                 }
@@ -394,7 +505,7 @@ public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLK
                 y += b[(i * eta * 2) + eta + j] ? 1 : 0;
                 }
 
-            f[i] = (x - y).PosMod(parameters.Q);
+            f[i] = (x - y).PosMod(Parameters.Q);
             }
 
         return f;
@@ -415,9 +526,9 @@ public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLK
                 var zeta = ZetaFunction(k); // zeta = Z( bit-reverse(k) ) mod Q
                 k++;
                 for (var j = start; j < start + len; j++) {
-                    var t = (zeta * fHat[j + len]).PosMod(parameters.Q);
-                    fHat[j + len] = (fHat[j] - t).PosMod(parameters.Q);
-                    fHat[j] = (fHat[j] + t).PosMod(parameters.Q);
+                    var t = (zeta * fHat[j + len]).PosMod(Parameters.Q);
+                    fHat[j + len] = (fHat[j] - t).PosMod(Parameters.Q);
+                    fHat[j] = (fHat[j] + t).PosMod(Parameters.Q);
                     }
                 }
             }
@@ -441,14 +552,14 @@ public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLK
                 k--;
                 for (var j = start; j < start + len; j++) {
                     var t = f[j];
-                    f[j] = (t + f[j + len]).PosMod(parameters.Q);
-                    f[j + len] = ((f[j + len] - t) * zeta).PosMod(parameters.Q);
+                    f[j] = (t + f[j + len]).PosMod(Parameters.Q);
+                    f[j + len] = ((f[j + len] - t) * zeta).PosMod(Parameters.Q);
                     }
                 }
             }
 
         // Multiply all values by 128^-1 mod q
-        return f.Select(value => ((value * 3303).PosMod(parameters.Q))).ToArray();
+        return f.Select(value => ((value * 3303).PosMod(Parameters.Q))).ToArray();
         }
 
     /// <summary>
@@ -478,8 +589,8 @@ public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLK
     /// <returns></returns>
     public (int c0, int c1) BaseCaseMultiply(long a0, long a1, long b0, long b1, long gamma) {
         // long casting in parameters needed because 3300 * 3300 * 3300 exceeds a 32-bit integer
-        var c0 = ((a0 * b0) + (a1 * b1 * gamma)).PosMod(parameters.Q);
-        var c1 = ((a0 * b1) + (a1 * b0)).PosMod(parameters.Q);
+        var c0 = ((a0 * b0) + (a1 * b1 * gamma)).PosMod(Parameters.Q);
+        var c1 = ((a0 * b1) + (a1 * b0)).PosMod(Parameters.Q);
         return ((int)c0, (int)c1);
         }
 
@@ -489,18 +600,18 @@ public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLK
     /// <param name="d"></param>
     /// <returns></returns>
     public (byte[] ek, byte[] dk) K_Pke_KeyGen(byte[] d) {
-        var (rho, sigma) = G(d.Concatenate(IntegerToBytes(parameters.K, 1)));   // This is safe even though IntegerToBytes wipes out the int value because KyberParameters is readonly
+        var (rho, sigma) = G(d.Concatenate(IntegerToBytes(Parameters.K, 1)));   // This is safe even though IntegerToBytes wipes out the int value because KyberParameters is readonly
         byte n = 0;
-        var aHat = new int[parameters.K][][];
+        var aHat = new int[Parameters.K][][];
 
         // Console.WriteLine("rho: " + IntermediateValueHelper.Print(rho));
         // Console.WriteLine("sigma: " + IntermediateValueHelper.Print(sigma));
         // Console.WriteLine();
 
-        for (var i = 0; i < parameters.K; i++) {
-            aHat[i] = new int[parameters.K][];
+        for (var i = 0; i < Parameters.K; i++) {
+            aHat[i] = new int[Parameters.K][];
 
-            for (var j = 0; j < parameters.K; j++) {
+            for (var j = 0; j < Parameters.K; j++) {
                 aHat[i][j] = SampleNTT(rho, (byte)j, (byte)i);
                 }
             }
@@ -508,18 +619,18 @@ public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLK
         // Console.WriteLine("aHat: " + IntermediateValueHelper.Print3dArray(aHat));
         // Console.WriteLine();
 
-        var s = new int[parameters.K][];
-        for (var i = 0; i < parameters.K; i++) {
-            s[i] = SamplePolyCBD(parameters.Eta1, Prf(parameters.Eta1, sigma, n));
+        var s = new int[Parameters.K][];
+        for (var i = 0; i < Parameters.K; i++) {
+            s[i] = SamplePolyCBD(Parameters.Eta1, Prf(Parameters.Eta1, sigma, n));
             n++;
             }
 
         // Console.WriteLine("s: " + IntermediateValueHelper.Print2dArray(s));
         // Console.WriteLine();
 
-        var e = new int[parameters.K][];
-        for (var i = 0; i < parameters.K; i++) {
-            e[i] = SamplePolyCBD(parameters.Eta1, Prf(parameters.Eta1, sigma, n));
+        var e = new int[Parameters.K][];
+        for (var i = 0; i < Parameters.K; i++) {
+            e[i] = SamplePolyCBD(Parameters.Eta1, Prf(Parameters.Eta1, sigma, n));
             n++;
             }
 
@@ -539,13 +650,13 @@ public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLK
         // Console.WriteLine();
 
         var ek = Array.Empty<byte>();
-        for (var i = 0; i < parameters.K; i++) {
+        for (var i = 0; i < Parameters.K; i++) {
             ek = ek.Concatenate(ByteEncode(12, tHat[i]));
             }
         ek = ek.Concatenate(rho);
 
         var dk = Array.Empty<byte>();
-        for (var i = 0; i < parameters.K; i++) {
+        for (var i = 0; i < Parameters.K; i++) {
             dk = dk.Concatenate(ByteEncode(12, sHat[i]));
             }
 
@@ -554,21 +665,21 @@ public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLK
 
     public byte[] K_Pke_Encrypt(byte[] ek, byte[] m, byte[] rand) {
         byte n = 0;
-        var tHat = new int[parameters.K][];
-        for (var i = 0; i < parameters.K; i++) {
+        var tHat = new int[Parameters.K][];
+        for (var i = 0; i < Parameters.K; i++) {
             tHat[i] = ByteDecode(12, ek[(i * 384)..(i * 384 + 384)]);
             }
 
         // Console.WriteLine("tHat: " + IntermediateValueHelper.Print2dArray(tHat));
         // Console.WriteLine();
 
-        var rho = ek[(parameters.K * 384)..];
+        var rho = ek[(Parameters.K * 384)..];
 
-        var aHat = new int[parameters.K][][];
-        for (var i = 0; i < parameters.K; i++) {
-            aHat[i] = new int[parameters.K][];
+        var aHat = new int[Parameters.K][][];
+        for (var i = 0; i < Parameters.K; i++) {
+            aHat[i] = new int[Parameters.K][];
 
-            for (var j = 0; j < parameters.K; j++) {
+            for (var j = 0; j < Parameters.K; j++) {
                 aHat[i][j] = SampleNTT(rho, (byte)j, (byte)i);
                 }
             }
@@ -576,25 +687,25 @@ public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLK
         // Console.WriteLine("aHat: " + IntermediateValueHelper.Print3dArray(aHat));
         // Console.WriteLine();
 
-        var y = new int[parameters.K][];
-        for (var i = 0; i < parameters.K; i++) {
-            y[i] = SamplePolyCBD(parameters.Eta1, Prf(parameters.Eta1, rand, n));
+        var y = new int[Parameters.K][];
+        for (var i = 0; i < Parameters.K; i++) {
+            y[i] = SamplePolyCBD(Parameters.Eta1, Prf(Parameters.Eta1, rand, n));
             n++;
             }
 
         // Console.WriteLine("r: " + IntermediateValueHelper.Print2dArray(r));
         // Console.WriteLine();
 
-        var e1 = new int[parameters.K][];
-        for (var i = 0; i < parameters.K; i++) {
-            e1[i] = SamplePolyCBD(parameters.Eta2, Prf(parameters.Eta2, rand, n));
+        var e1 = new int[Parameters.K][];
+        for (var i = 0; i < Parameters.K; i++) {
+            e1[i] = SamplePolyCBD(Parameters.Eta2, Prf(Parameters.Eta2, rand, n));
             n++;
             }
 
         // Console.WriteLine("e1: " + IntermediateValueHelper.Print2dArray(e1));
         // Console.WriteLine();
 
-        var e2 = SamplePolyCBD(parameters.Eta2, Prf(parameters.Eta2, rand, n));
+        var e2 = SamplePolyCBD(Parameters.Eta2, Prf(Parameters.Eta2, rand, n));
         var yHat = y.Select(NTT).ToArray();
         // Console.WriteLine("e2: " + IntermediateValueHelper.PrintArray(e2));
         // Console.WriteLine("rHat: " + IntermediateValueHelper.Print2dArray(rHat));
@@ -618,33 +729,33 @@ public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLK
 
         var c = Array.Empty<byte>();
         for (var i = 0; i < u.Length; i++) {
-            c = c.Concatenate(ByteEncode(parameters.Du, u[i].Select(val => Compress(parameters.Du, val)).ToArray()));
+            c = c.Concatenate(ByteEncode(Parameters.Du, u[i].Select(val => Compress(Parameters.Du, val)).ToArray()));
             }
 
-        c = c.Concatenate(ByteEncode(parameters.Dv, v.Select(val => Compress(parameters.Dv, val)).ToArray()));
+        c = c.Concatenate(ByteEncode(Parameters.Dv, v.Select(val => Compress(Parameters.Dv, val)).ToArray()));
 
         return c;
         }
 
     public byte[] K_Pke_Decrypt(byte[] dk, byte[] c) {
-        var c1 = c[..(32 * parameters.Du * parameters.K)];
-        var c2 = c[(32 * parameters.Du * parameters.K)..];
+        var c1 = c[..(32 * Parameters.Du * Parameters.K)];
+        var c2 = c[(32 * Parameters.Du * Parameters.K)..];
         // Console.WriteLine("c1: " + IntermediateValueHelper.Print(c1));
         // Console.WriteLine("c2: " + IntermediateValueHelper.Print(c2));
 
-        var u = new int[parameters.K][];
-        for (var i = 0; i < parameters.K; i++) {
+        var u = new int[Parameters.K][];
+        for (var i = 0; i < Parameters.K; i++) {
             // u[i] = Decompress_du(ByteDecode( each set of 32 * du values in u )
-            u[i] = ByteDecode(parameters.Du, c1[(i * 32 * parameters.Du)..((i * 32 * parameters.Du) + (32 * parameters.Du))]).Select(b => Decompress(parameters.Du, b)).ToArray();
+            u[i] = ByteDecode(Parameters.Du, c1[(i * 32 * Parameters.Du)..((i * 32 * Parameters.Du) + (32 * Parameters.Du))]).Select(b => Decompress(Parameters.Du, b)).ToArray();
             }
 
         // Console.WriteLine("u: " + IntermediateValueHelper.Print2dArray(u));
 
-        var v = ByteDecode(parameters.Dv, c2).Select(b => Decompress(parameters.Dv, b)).ToArray();
+        var v = ByteDecode(Parameters.Dv, c2).Select(b => Decompress(Parameters.Dv, b)).ToArray();
         // Console.WriteLine("v: " + IntermediateValueHelper.PrintArray(v));
 
-        var sHat = new int[parameters.K][];
-        for (var i = 0; i < parameters.K; i++) {
+        var sHat = new int[Parameters.K][];
+        for (var i = 0; i < Parameters.K; i++) {
             sHat[i] = ByteDecode(12, dk[(i * 384)..((i * 384) + 384)]);
             }
 
@@ -685,7 +796,7 @@ public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLK
         for (var i = 0; i < a.Length; i++) {
             var nttProduct = MultiplyNTTs(a[i], b[i]);
             for (var j = 0; j < 256; j++) {
-                product[j] = (product[j] + nttProduct[j]) % parameters.Q;
+                product[j] = (product[j] + nttProduct[j]) % Parameters.Q;
                 }
             }
 
@@ -705,7 +816,7 @@ public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLK
             for (var j = 0; j < aCols; j++) {
                 var nttProduct = MultiplyNTTs(a[i][j], b[j]);
                 for (var k = 0; k < 256; k++) {
-                    product[i][k] = (product[i][k] + nttProduct[k]) % parameters.Q;
+                    product[i][k] = (product[i][k] + nttProduct[k]) % Parameters.Q;
                     }
                 }
             }
@@ -716,7 +827,7 @@ public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLK
     private int[] ArrayAdd(int[] a, int[] b) {
         var sum = new int[a.Length];
         for (var i = 0; i < a.Length; i++) {
-            sum[i] = (a[i] + b[i]) % parameters.Q;
+            sum[i] = (a[i] + b[i]) % Parameters.Q;
             }
 
         return sum;
@@ -725,7 +836,7 @@ public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLK
     private int[] ArraySubtract(int[] a, int[] b) {
         var sum = new int[a.Length];
         for (var i = 0; i < a.Length; i++) {
-            sum[i] = (a[i] - b[i]).PosMod(parameters.Q);
+            sum[i] = (a[i] - b[i]).PosMod(Parameters.Q);
             }
 
         return sum;
@@ -740,7 +851,7 @@ public class MLKEMInternal(KyberParameters param, IShaFactory shaFactory) : IMLK
         for (var i = 0; i < rows; i++) {
             sum[i] = new int[cols];
             for (var j = 0; j < cols; j++) {
-                sum[i][j] = (a[i][j] + b[i][j]) % parameters.Q;
+                sum[i][j] = (a[i][j] + b[i][j]) % Parameters.Q;
                 }
             }
 

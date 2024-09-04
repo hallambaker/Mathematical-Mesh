@@ -275,11 +275,11 @@ public class TestVectorUDFKeyGen {
         var plaintext = Platform.GetRandomBits(256);
 
         // sign a message with the private
-        publicKey.Encrypt(plaintext, out var exchange, out var ephemeral);
+        publicKey.Encrypt(plaintext, out var exchange, out var ephemeral, out var ciphertext);
 
         // check the signature with the public
 
-        var decrypt = privateKey.Decrypt(exchange, ephemeral);
+        var decrypt = privateKey.Decrypt(exchange, ephemeral, ciphertext: ciphertext);
         decrypt.TestEqual(plaintext);
 
         return true;

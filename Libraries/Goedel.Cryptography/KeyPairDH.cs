@@ -378,28 +378,32 @@ public class KeyPairDH : KeyPairBaseDH {
     /// <param name="key"></param>
     /// <param name="exchange"></param>
     /// <param name="ephemeral"></param>
+    /// <param name="ciphertext"></param>
     /// <param name="salt"></param>
     public override void Encrypt(byte[] key,
             out byte[] exchange,
             out KeyPair ephemeral,
-            byte[] salt = null) => PublicKey.Agreement().Encrypt(key, out exchange, out ephemeral, salt);
+            out byte[] ciphertext, 
+            byte[] salt = null) => PublicKey.Agreement().Encrypt(
+                        key, out exchange, out ephemeral, out ciphertext, salt);
 
     /// <summary>
     /// Perform a key exchange to decrypt a bulk or wrapped key under this one.
     /// </summary>
     /// <param name="EncryptedKey">The encrypted session key</param>
     /// <param name="Ephemeral">Ephemeral key input (required for DH)</param>
+    /// <param name="ciphertext"></param>
     /// <param name="AlgorithmID">The algorithm to use.</param>
     /// <param name="Partial">Partial key agreement value (for recryption)</param>
+    /// <returns>The decoded data instance</returns>
     /// <param name="Salt">Optional salt value for use in key derivation. If specified
     /// must match the salt used to encrypt.</param>
-    /// <returns>The decoded data instance</returns>
     public override byte[] Decrypt(
                 byte[] EncryptedKey,
                 KeyPair Ephemeral,
+                byte[] ciphertext = null,
                 CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
-                KeyAgreementResult Partial = null,
-                byte[] Salt = null) {
+                KeyAgreementResult Partial = null, byte[] Salt = null) {
 
         var DHPublic = Ephemeral as KeyPairDH;
         Assert.AssertNotNull(DHPublic, KeyTypeMismatch.Throw);

@@ -22,7 +22,7 @@
 
 
 
-using Goedel.Cryptography.Jose;
+
 
 namespace Goedel.Cryptography.PQC;
 
@@ -235,17 +235,23 @@ public class KeyPairMlKem : KeyPair, IOpaqueBinaryKey {
         }
 
     ///<inheritdoc/>
-    public override byte[] Decrypt(byte[] encryptedKey, KeyPair ephemeral = null, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, KeyAgreementResult partial = null, byte[] salt = null) {
+    public override byte[] Decrypt(byte[] encryptedKey, KeyPair ephemeral = null, byte[] ciphertext = null, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, KeyAgreementResult partial = null, byte[] salt = null) {
         return PrivateKey.Decrypt(encryptedKey);
         }
 
 
     ///<inheritdoc/>
-    public override void Encrypt(byte[] key, out byte[] exchange, out KeyPair ephemeral, byte[] salt = null) {
-        var (ciphertext, sharedSecret) = PublicKey.Encrypt();
+    public override void Encrypt(byte[] key, out byte[] exchange, out KeyPair ephemeral, out byte[] ciphertext, byte[] salt = null) {
+         (ciphertext, exchange) = PublicKey.Encrypt();
 
         ephemeral = null;
-        exchange = ciphertext;
+
+        // Nope have to do
+        //var EncryptionKey = KeyDerive.Derive(salt, length: 256);
+        //exchange = Platform.KeyWrapRFC3394.Wrap(EncryptionKey, key);
+
+        throw new NotImplementedException();
+
         }
 
 

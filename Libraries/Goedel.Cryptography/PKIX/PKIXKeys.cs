@@ -275,9 +275,10 @@ public partial class PrivateKeyInfo : IPKIXPrivateKey {
     /// </summary>
     /// <param name="key">The public key</param>
     public PrivateKeyInfo(IOpaqueBinaryKey key) {
-        PrivateKeyAlgorithm = new AlgorithmIdentifier(key.OID);
         PublicKey = key.GetPublicBinary();
         PrivateKey = key.GetPrivateBinary();
+
+        PrivateKeyAlgorithm = new AlgorithmIdentifier(key.OID);
         }
 
     ///<inheritdoc/>

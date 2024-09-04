@@ -6,11 +6,11 @@ namespace Goedel.Test;
 /// </summary>
 /// <typeparam name="T">The type of the test specific data.</typeparam>
 public class AcvpTestBinding<T> where T : AcvpTest, new() {
-    public static string RegistrationFile => "registration";
-    public static string PromptFile => "prompt";
+    //public static string RegistrationFile => "registration";
+    //public static string PromptFile => "prompt";
     public static string InternalProjectionFile => "internalProjection";
-    public static string ExpectedResultsFile => "expectedResults";
-    public static string ValidationFile => "validation";
+    //public static string ExpectedResultsFile => "expectedResults";
+    //public static string ValidationFile => "validation";
 
     public Dictionary<int, T> Tests { get; } = new();
 
@@ -38,7 +38,7 @@ public class AcvpTestBinding<T> where T : AcvpTest, new() {
             }
         }
 
-    string GetText(string directory, string file) {
+    public string GetText(string directory, string file) {
         var regFile = Path.Combine(directory, file + ".json");
         return File.ReadAllText(regFile);
         }
@@ -73,11 +73,21 @@ public class AcvpTestFile : IExtensionData {
     public bool? IsSample { get; set; }
 
     ///<summary>The test groups.</summary> 
-    public AcvpTestGroup[]? TestGroups { get; set; }
+    public List<AcvpTestGroup>? TestGroups { get; set; }
 
     [JsonExtensionData]
     ///<summary>Additional data.</summary> 
     public Dictionary<string, JsonElement>? ExtensionData { get; set; }
+
+
+    public void Add(AcvpTestGroup? group) {
+        if (group is null) {
+            return;
+            }
+
+        TestGroups ??= new List<AcvpTestGroup>();
+        TestGroups.Add(group);
+        }
     }
 
 
@@ -104,11 +114,21 @@ public class AcvpTestGroup : IExtensionData {
     public string? Function { get; set; }
 
     ///<summary>The tests.</summary> 
-    public AcvpTestItem[]? Tests { get; set; }
+    public List<AcvpTestItem>? Tests { get; set; }
 
     [JsonExtensionData]
     ///<summary>Additional data.</summary> 
     public Dictionary<string, JsonElement>? ExtensionData { get; set; }
+
+
+    public void Add(AcvpTestItem? item) {
+        if (item is null) {
+            return;
+            }
+
+        Tests ??= new List<AcvpTestItem>();
+        Tests.Add(item);
+        }
 
     }
 
@@ -124,6 +144,10 @@ public class AcvpTestItem : IExtensionData {
     [JsonExtensionData]
     public Dictionary<string, JsonElement>? ExtensionData { get; set; }
     }
+
+
+
+
 
 /// <summary>
 /// The test item, this should be implemented for each specific test type, 
@@ -161,6 +185,14 @@ public abstract class AcvpTest {
     /// Test method, is called to perform the test.
     /// </summary>
     public abstract void Test();
+
+
+    ///// <summary>
+    ///// Generate method maps test results to <see cref="ExtensionData"/>.
+    ///// </summary>
+    //public virtual AcvpTestItem Generate(int testId) {
+    //    return null;
+    //    }
 
     /// <summary>
     /// Convenience method binding data from the field named  <paramref name="key"/>  in
@@ -213,6 +245,40 @@ public abstract class AcvpTest {
             }
 
         return null;
+        }
+
+
+
+    protected void Bind(IExtensionData test, string key, string? data) {
+        if (data is null) {
+            return;
+            }
+
+        var element = JsonSerializer.SerializeToElement(data);
+        test.ExtensionData ??= [];
+        test.ExtensionData.Add (key, element);
+        }
+
+
+    protected void Bind(IExtensionData test, string key, byte[]? data) {
+        if (data is null) {
+            return;
+            }
+
+        var hexData = data.ToStringBase16();
+        var element = JsonSerializer.SerializeToElement(hexData);
+        test.ExtensionData ??= [];
+        test.ExtensionData.Add(key, element);
+        }
+
+    protected void Bind(IExtensionData test, string key, bool? data) {
+        if (data is null) {
+            return;
+            }
+
+        var element = JsonSerializer.SerializeToElement(data);
+        test.ExtensionData ??= [];
+        test.ExtensionData.Add(key, element);
         }
 
 

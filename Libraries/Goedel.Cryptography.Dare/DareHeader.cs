@@ -313,7 +313,7 @@ public static class Extensions {
 
                 return decryptionKey.Decrypt(
                         recipient.WrappedBaseSeed, recipient.Epk?.KeyPair,
-                        algorithmID: algorithmID, null);
+                        algorithmID: algorithmID, partial: null);
                 }
             }
 

@@ -33,17 +33,18 @@ public interface IKeyDecrypt {
     /// </summary>
     /// <param name="encryptedKey">The encrypted session</param>
     /// <param name="ephemeral">Ephemeral key input (required for DH)</param>
+    /// <param name="ciphertext"></param>
     /// <param name="algorithmID">The algorithm to use (redundant?)</param>
-    /// <param name="partial">Partial key agreement carry in (for recryption)</param>
-    /// <param name="salt">Optional salt value for use in key derivation. If specified
-    /// must match the salt used to encrypt.</param>        
+    /// <param name="partial">Partial key agreement carry in (for recryption)</param>        
     /// <returns>The decoded data instance</returns>
+    /// <param name="salt">Optional salt value for use in key derivation. If specified
+    /// must match the salt used to encrypt.</param>
     byte[] Decrypt(
                 byte[] encryptedKey,
                 KeyPair ephemeral = null,
-                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, // hack: redundant?
-                KeyAgreementResult partial = null,
-                byte[] salt = null);
+                byte[] ciphertext = null, // hack: redundant?
+                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+                KeyAgreementResult partial = null, byte[] salt = null);
 
     /// <summary>
     /// Perform a partial key agreement.
@@ -220,26 +221,28 @@ public abstract class CryptoKey : IKeyLocate, IKeyDecrypt, IKeySign {
     /// <param name="key">The key to encrypt.</param>
     /// <param name="ephemeral">The ephemeral key to use for the exchange (if used)</param>
     /// <param name="exchange">The private key to use for the exchange.</param>
+    /// <param name="ciphertext">Ciphertext value (for use in KEM)</param>
     /// <param name="salt">Optional salt value for use in key derivation.</param>
     public abstract void Encrypt(byte[] key,
-        out byte[] exchange, out KeyPair ephemeral, byte[] salt = null);
+        out byte[] exchange, out KeyPair ephemeral, out byte[]? ciphertext, byte[] salt = null);
 
     /// <summary>
     /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
     /// </summary>
     /// <param name="encryptedKey">The encrypted session</param>
     /// <param name="ephemeral">Ephemeral key input (required for DH)</param>
+    /// <param name="ciphertext"></param>
     /// <param name="algorithmID">The algorithm to use (redundant?)</param>
-    /// <param name="partial">Partial key agreement carry in (for recryption)</param>
-    /// <param name="salt">Optional salt value for use in key derivation. If specified
-    /// must match the salt used to encrypt.</param>        
+    /// <param name="partial">Partial key agreement carry in (for recryption)</param>        
     /// <returns>The decoded data instance</returns>
+    /// <param name="salt">Optional salt value for use in key derivation. If specified
+    /// must match the salt used to encrypt.</param>
     public abstract byte[] Decrypt(
                 byte[] encryptedKey,
                 KeyPair ephemeral = null,
-                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, // hack: redundant?
-                KeyAgreementResult partial = null,
-                byte[] salt = null);
+                byte[] ciphertext = null, // hack: redundant?
+                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+                KeyAgreementResult partial = null, byte[] salt = null);
 
 
     /// <summary>

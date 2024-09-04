@@ -1,3 +1,8 @@
+
+
+
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Nist;
 using Goedel.Cryptography.PQC;
 
@@ -9,22 +14,13 @@ namespace Goedel.Test;
 
 public static class Extensions {
 
-    public static KyberParameterSet MlKem (this AcvpTestGroup GroupData)  => GroupData.ParameterSet switch {
+    public static KyberParameterSet MlKem(this AcvpTestGroup GroupData) => GroupData.ParameterSet switch {
         "ML-KEM-512" => KyberParameterSet.ML_KEM_512,
         "ML-KEM-768" => KyberParameterSet.ML_KEM_768,
         "ML-KEM-1024" => KyberParameterSet.ML_KEM_1024,
         _ => throw new NYI()
         };
 
-    public static IMLKEM GetKem(this AcvpTestGroup GroupData) {
-        var shaFactory = new NativeShaFactory();
-        var KyberFactory = new KyberFactory(shaFactory);
-
-        var parameters = GroupData.MlKem();
-        var kyber = KyberFactory.GetKyber(parameters);
-
-        return kyber;
-        }
 
     public static DilithiumParameterSet Mode(this AcvpTestGroup GroupData) => GroupData.ParameterSet switch {
         "ML-DSA-44" => DilithiumParameterSet.ML_DSA_44,
@@ -34,7 +30,7 @@ public static class Extensions {
         };
 
 
-    public static IMLDSA GetDsa(this AcvpTestGroup GroupData) {
+    public static DilithiumNist GetDsa(this AcvpTestGroup GroupData) {
         var shaFactory = new NativeShaFactory();
         var parameterSet = GroupData.Mode();
         var parameters = new DilithiumParameters(parameterSet);
@@ -47,6 +43,8 @@ public static class Extensions {
     }
 
 
+
+
 public class DsaKeyGenTest : AcvpTest {
 
     public byte[] Seed { get; set; }
@@ -55,14 +53,6 @@ public class DsaKeyGenTest : AcvpTest {
 
     public byte[] SecretKey { get; set; }
 
-    //public byte[] Z { get; set; }
-
-    //public MlDsaMode Mode => GroupData.ParameterSet switch {
-    //    "ML-DSA-44" => MlDsaMode.Mode44,
-    //    "ML-DSA-65" => MlDsaMode.Mode65,
-    //    "ML-DSA-87" => MlDsaMode.Mode87,
-    //    _ => throw new NYI()
-    //    };
 
     public override void Populate(AcvpTestGroup group, AcvpTestItem test) {
         base.Populate(group, test);
@@ -75,14 +65,19 @@ public class DsaKeyGenTest : AcvpTest {
 
     public override void Test() {
 
-        var dilithium = GroupData.GetDsa();
+        //var dilithium = GroupData.GetDsa();
 
-        //Console.WriteLine($"Sk {Seed.ToStringBase16FormatHex()}");
+        //var (publicKey, secretKey) = dilithium.GenerateKey(Seed);
+        //publicKey.TestEqual(PublicKey);
+        //secretKey.TestEqual(SecretKey);
 
-        //var seed = MsbLsbConversionHelpers.MostSignificantByteArrayToLeastSignificantBitArray(Seed);
-        var (publicKey, secretKey) = dilithium.GenerateKey(Seed);
-        publicKey.TestEqual(PublicKey);
-        secretKey.TestEqual(SecretKey);
+
+        var parameterSet = GroupData.Mode();
+        var privateKey = DilithiumPrivate.FromSeed(Seed, parameterSet);
+        privateKey.PublicKey.TestEqual(PublicKey);
+        privateKey.SecretKey.TestEqual(SecretKey);
+
+
         }
 
     }
@@ -106,32 +101,17 @@ public class DsaSignTest : DsaKeyGenTest {
         }
 
     public override void Test() {
-
-        var dilithium = GroupData.GetDsa();
-
-
-
-        //var message = MsbLsbConversionHelpers.MostSignificantByteArrayToLeastSignificantBitArray(Message);
+        var privateKey = DilithiumPrivate.FromSecretKey(SecretKey);
 
         if (Deterministic == true) {
-            var signature = dilithium.Sign(SecretKey, Message);
-
+            var signature = privateKey.SignInternal(Message);
             signature.TestEqual(Signature);
             }
 
         else {
-            //var rnd = MsbLsbConversionHelpers.MostSignificantByteArrayToLeastSignificantBitArray(Rnd);
-
-            var signature = dilithium.Sign(SecretKey, Message, Rnd);
-
+            var signature = privateKey.SignInternal(Message, Rnd);
             signature.TestEqual(Signature);
-
-            //var test = dilithium.Verify(SecretKey, Signature, message);
-
-
             }
-
-
 
         }
 
@@ -158,10 +138,11 @@ public class DsaVerifyTest : DsaKeyGenTest {
         }
 
     public override void Test() {
-        var dilithium = GroupData.GetDsa();
+
+        var publicKey = DilithiumPublic.FromPublicKey(PublicKey);
 
         //var message = MsbLsbConversionHelpers.MostSignificantByteArrayToLeastSignificantBitArray(Message);
-        var test = dilithium.Verify(PublicKey, Signature, Message);
+        var test = publicKey.Verify(Signature, Message);
 
         test.TestEqual(TestPassed == true);
         }
@@ -190,13 +171,11 @@ public class KemKeyGenTest : AcvpTest {
         }
 
     public override void Test() {
+        var parameterSet = GroupData.MlKem();
 
-        var kyber = GroupData.GetKem();
-
-        var (publicKey, secretKey) = kyber.GenerateKey(Z, D);
-
-        EncryptionKey.TestEqual(publicKey);
-        DecryptionKey.TestEqual(secretKey);
+        var privateKey = KyberPrivate.FromZD(Z, D, parameterSet);
+        EncryptionKey.TestEqual(privateKey.PublicKey);
+        DecryptionKey.TestEqual(privateKey.SecretKey);
         }
 
     }
@@ -215,23 +194,27 @@ public class KemEncapDecapTest : KemKeyGenTest {
         }
 
     public override void Test() {
-        var kyber = GroupData.GetKem();
+        //var kyber = GroupData.GetKem();
 
         switch (GroupData.Function) {
             case "encapsulation": {
-                var (sharedSecret, ciphertext) = kyber.Encapsulate(EncryptionKey, Message);
+                var publicKey = KyberPublic.FromPublicKey(EncryptionKey);
+                var (sharedSecret, ciphertext) = publicKey.Encapsulate(Message);
 
                 sharedSecret.TestEqual(SharedSecret);
                 ciphertext.TestEqual(Ciphertext);
 
                 // for completeness, check we can deencapsulate
-                var (recoveredMessage, implicitRejection) = kyber.Decapsulate(DecryptionKey, ciphertext);
+                var secretKey = KyberPrivate.FromSecretKey(DecryptionKey);
+
+                var (recoveredMessage, implicitRejection) = secretKey.Decapsulate(ciphertext);
                 recoveredMessage.TestEqual(SharedSecret);
                 break;
                 }
 
             case "decapsulation": {
-                var (recoveredMessage, implicitRejection) = kyber.Decapsulate(DecryptionKey, Ciphertext);
+                var secretKey = KyberPrivate.FromSecretKey(DecryptionKey);
+                var (recoveredMessage, implicitRejection) = secretKey.Decapsulate(Ciphertext);
 
                 recoveredMessage.TestEqual(SharedSecret);
                 var reason = implicitRejection ? "modify ciphertext" : "no modification";

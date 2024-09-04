@@ -44,17 +44,19 @@ public partial class DareRecipient {
     /// </summary>
     /// <param name="masterKey">The master key</param>
     /// <param name="encryptionKey">The recipient encryption key.</param>
+    /// <
     /// <returns>The recipient informatin object.</returns>
     public DareRecipient(byte[] masterKey, CryptoKey encryptionKey) {
         //var ExchangeProvider = PublicKey.ExchangeProvider();
         //ExchangeProvider.Encrypt(MasterKey, out var Exchange, out var Ephemeral, Salt: KDFSalt);
 
 
-        encryptionKey.Encrypt(masterKey, out var exchange, out var ephemeral);
+        encryptionKey.Encrypt(masterKey, out var exchange, out var ephemeral, out byte[]? ciphertext);
 
         if (ephemeral != null) {
             Epk = Key.GetPublic(ephemeral);
             }
+        RecipientKeyData = ciphertext;
         KeyIdentifier = encryptionKey.KeyIdentifier;
         WrappedBaseSeed = exchange;
 

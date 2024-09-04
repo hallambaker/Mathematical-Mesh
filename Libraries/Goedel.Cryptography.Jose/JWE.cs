@@ -290,8 +290,8 @@ public partial class JoseWebEncryption {
     public Recipient AddRecipient(KeyPair EncryptionKey, string KID = null,
             CryptoAlgorithmId ProviderAlgorithm = CryptoAlgorithmId.Default) {
 
-        EncryptionKey.Encrypt(CryptoDataEncrypt.Key, out var Exchange, out var Ephemeral);
-        var Recipient = new Recipient(Exchange, EncryptionKey, Ephemeral, KID);
+        EncryptionKey.Encrypt(CryptoDataEncrypt.Key, out var Exchange, out var Ephemeral, out var ciphertext);
+        var Recipient = new Recipient(Exchange, EncryptionKey, Ephemeral, ciphertext, KID);
 
         Recipients ??= new List<Recipient>();
         Recipients.Add(Recipient);
@@ -589,15 +589,26 @@ public partial class Recipient {
     /// <param name="ExchangeData">The key to be exchanged.</param>
     /// <param name="Ephemeral">The ephemeral key (if required by the algorithm)</param>
     /// <param name="KID">Recipient Key ID.</param>
-    public Recipient(byte[] ExchangeData, KeyPair RecipientKey, KeyPair Ephemeral, string KID = null) {
+    public Recipient(
+                    byte[] ExchangeData,
+                    KeyPair RecipientKey,
+                    KeyPair Ephemeral,
+                    byte[]? ciphertext, 
+                    string KID = null) {
+
+
         Header = new Header() {
             Alg = RecipientKey?.CryptoAlgorithmId.Meta().ToJoseID(),
-            Kid = KID ?? RecipientKey?.KeyIdentifier
+            Kid = KID ?? RecipientKey?.KeyIdentifier,
+
             };
         if (Ephemeral != null) {
             Header.Epk = Key.GetPublic(Ephemeral);
             }
         EncryptedKey = ExchangeData;
+
+        ciphertext.AssertNull (NYI.Throw, "Need to refactor the creation of the content key data!!!");
+
         }
 
 

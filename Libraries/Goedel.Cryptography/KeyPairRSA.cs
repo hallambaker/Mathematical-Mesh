@@ -36,9 +36,8 @@ public partial class KeyPairRSA : KeyPairBaseRSA {
     private readonly RSACryptoServiceProvider provider;
     private RSAParameters publicParameters;
 
-
     #region //Properties
-    ///<summary>The private key parameters represented in PKIX form</summary>
+    ///<inheritdoc/>
     public override IPKIXPrivateKey PKIXPrivateKey {
         get {
             Assert.AssertNotNull(PkixPrivateKeyRSA, NotExportable.Throw);
@@ -46,24 +45,19 @@ public partial class KeyPairRSA : KeyPairBaseRSA {
             }
         }
 
-
-    ///<summary>The public key parameters represented in PKIX form</summary>
+    ///<inheritdoc/>
     public override IPKIXPublicKey PKIXPublicKey => PkixPublicKeyRsa;
 
-    /// <summary>
-    /// Return private key parameters in PKIX structure
-    /// </summary>
+    ///<inheritdoc/>
     public override PkixPrivateKeyRsa PkixPrivateKeyRSA { get; }
 
-    /// <summary>
-    /// Return public key parameters in PKIX structure
-    /// </summary>
+    ///<inheritdoc/>
     public override PkixPublicKeyRsa PkixPublicKeyRsa => publicParameters.GetPkixPublicKeyRsa();
 
-    /// <summary>The supported key uses (e.g. signing, encryption)</summary>
+    ///<inheritdoc/>
     public override KeyUses KeyUses { get; } = Cryptography.KeyUses.Any;
 
-    ///<summary>If true, the key only has access to public key values.</summary>
+    ///<inheritdoc/>
     public override bool PublicOnly => provider.PublicOnly;
 
 
@@ -72,11 +66,7 @@ public partial class KeyPairRSA : KeyPairBaseRSA {
     #endregion
 
 
-    /// <summary>
-    /// Return the CryptoAlgorithmID that would be used with the specified base parameters.
-    /// </summary>
-    /// <param name="Base">The base algorithm</param>
-    /// <returns>The computed CryptoAlgorithmID</returns>
+    ///<inheritdoc/>
     public override CryptoAlgorithmId SignatureAlgorithmID(CryptoAlgorithmId Base) =>
             CryptoAlgorithmId.RSASign | Base.Bulk();
 
@@ -176,10 +166,7 @@ public partial class KeyPairRSA : KeyPairBaseRSA {
         }
 
 
-    /// <summary>
-    /// Persist key to <paramref name="keyCollection"/>.
-    /// </summary>
-    /// <param name="keyCollection">Key Collection the key is to be persisted to.</param>
+    ///<inheritdoc/>
     public override void Persist(KeyCollection keyCollection) {
         Assert.AssertTrue(PersistPending, CryptographicException.Throw);
         var privateParameters = provider.ExportParameters(true);
@@ -389,58 +376,33 @@ public partial class KeyPairRSA : KeyPairBaseRSA {
 
     #region // operations
 
-    /// <summary>
-    /// Encrypt a bulk key.
-    /// </summary>
-    /// <returns>The encoder</returns>
-    /// <param name="Key">The key to encrypt.</param>
-    /// <param name="Ephemeral">The ephemeral key to use for the exchange (if used)</param>
-    /// <param name="Exchange">The private key to use for the exchange.</param>
-    /// <param name="Salt">Optional salt value for use in key derivation.</param>
-    public override void Encrypt(byte[] Key, out byte[] Exchange, out KeyPair Ephemeral, byte[] Salt = null) {
+    ///<inheritdoc/>
+    public override void Encrypt(
+                byte[] Key, 
+                out byte[] Exchange, 
+                out KeyPair Ephemeral, 
+                out byte[] ciphertext, 
+                byte[] Salt = null) {
         Ephemeral = null;
         Exchange = provider.Encrypt(Key, RSAEncryptionPadding.Pkcs1);
+        ciphertext = null;
         }
 
-    /// <summary>
-    /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
-    /// </summary>
-    /// <param name="EncryptedKey">The encrypted session</param>
-    /// <param name="Ephemeral">Ephemeral key input (required for DH)</param>
-    /// <param name="AlgorithmID">The algorithm to use.</param>
-    /// <param name="Partial">Partial key agreement carry in (for recryption)</param>
-    /// <param name="Salt">Optional salt value for use in key derivation. If specified
-    /// must match the salt used to encrypt.</param>        
-    /// <returns>The decoded data instance</returns>
+    ///<inheritdoc/>
     public override byte[] Decrypt(
             byte[] EncryptedKey,
             KeyPair Ephemeral = null,
+            byte[] ciphertext = null,
             CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
-            KeyAgreementResult Partial = null,
-            byte[] Salt = null) => provider.Decrypt(EncryptedKey, RSAEncryptionPadding.Pkcs1);
+            KeyAgreementResult Partial = null, byte[] Salt = null) => provider.Decrypt(EncryptedKey, RSAEncryptionPadding.Pkcs1);
 
-    /// <summary>
-    /// Sign a precomputed digest
-    /// </summary>
-    /// <param name="Data">The data to sign.</param>
-    /// <param name="AlgorithmID">The algorithm to use.</param>
-    /// <param name="Context">Additional data added to the signature scope
-    /// for protocol isolation.</param>
-    /// <returns>The signature data</returns>
+    ///<inheritdoc/>
     public override byte[] SignHash(
             byte[] Data,
             CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
             byte[] Context = null) => provider.SignHash(Data, AlgorithmID.ToHashAlgorithmName(), RSASignaturePadding.Pkcs1);
 
-    /// <summary>
-    /// Verify a signature over the purported data digest.
-    /// </summary>
-    /// <param name="Signature">The signature blob value.</param>
-    /// <param name="AlgorithmID">The signature and hash algorithm to use.</param>
-    /// <param name="Context">Additional data added to the signature scope
-    /// for protocol isolation.</param>
-    /// <param name="Digest">The digest value to be verified.</param>
-    /// <returns>True if the signature is valid, otherwise false.</returns>
+    ///<inheritdoc/>
     public override bool VerifyHash(byte[] Digest, byte[] Signature,
             CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default, byte[] Context = null) => provider.VerifyHash(Digest, Signature, AlgorithmID.ToHashAlgorithmName(), RSASignaturePadding.Pkcs1);
     #endregion

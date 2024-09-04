@@ -297,14 +297,14 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
             case CryptoAlgorithmId.MLKEM512:
             case CryptoAlgorithmId.MLKEM768:
             case CryptoAlgorithmId.MLKEM1024: {
-                keyPair = KeyPairMlKem.Factory(algorithmID, keySecurity,
+                keyPair = KeyPairMlKemNist.Factory(algorithmID, keySecurity,
                         ikm, keySpecifier, keyName, keyCollection, keySize, keyUses);
                 break;
                 }
             case CryptoAlgorithmId.MLDSA44:
             case CryptoAlgorithmId.MLDSA65:
             case CryptoAlgorithmId.MLDSA87: {
-                keyPair = KeyPairMlDsa.Factory(algorithmID, keySecurity,
+                keyPair = KeyPairMlDsaNist.Factory(algorithmID, keySecurity,
                         ikm, keySpecifier, keyName, keyCollection, keySize, keyUses);
                 break;
                 }
@@ -362,12 +362,12 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
             return;
             }
         keyCollection ??= Cryptography.KeyCollection.Default;
-        keyCollection.Add(keyPair);
+        keyCollection?.Add(keyPair);
 
         if ((keySecurity & KeySecurity.Persistable) != KeySecurity.Persistable) {
             return;
             }
-        keyCollection.Persist(keyPair);
+        keyCollection?.Persist(keyPair);
         }
 
     /// <summary>
@@ -393,7 +393,7 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
     /// Generate a new keypair. Initialized by the cryptographic
     /// platform provider.
     /// </summary>
-    public static FactoryKeyPairDelegate KeyPairFactoryMlDsa { get; set; } = KeyPairMlDsa.KeyPairFactory;
+    public static FactoryKeyPairDelegate KeyPairFactoryMlDsa { get; set; } = KeyPairMlDsaNist.KeyPairFactory;
 
     /// <summary>
     /// Generate a new keypair. Initialized by the cryptographic

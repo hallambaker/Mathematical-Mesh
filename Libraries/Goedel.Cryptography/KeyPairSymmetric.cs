@@ -80,6 +80,7 @@ public class CryptoKeySymmetric : CryptoKey {
         byte[] key,
         out byte[] exchange,
         out KeyPair ephemeral,
+        out byte[] ciphertext, 
         byte[] info = null) {
 
         var keyDerive = new KeyDeriveHKDF(SecretValue, (byte[])null);
@@ -90,6 +91,7 @@ public class CryptoKeySymmetric : CryptoKey {
         //Console.WriteLine($"Encryption Key = {encryptionKey.ToStringBase16FormatHex()}");
 
         ephemeral = null;
+        ciphertext = null;
         }
 
 
@@ -106,9 +108,9 @@ public class CryptoKeySymmetric : CryptoKey {
     public override byte[] Decrypt(
                 byte[] encryptedKey,
                 KeyPair ephemeral = null,
+                byte[] ciphertext = null,
                 CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
-                KeyAgreementResult partial = null,
-                byte[] info = null) {
+                KeyAgreementResult partial = null, byte[] info = null) {
 
         var keyDerive = new KeyDeriveHKDF(SecretValue, (byte[])null);
         var encryptionKey = keyDerive.Derive(info, 256);

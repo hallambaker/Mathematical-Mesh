@@ -250,36 +250,89 @@
             Determines if a given point exists in the field
             </summary>
         </member>
-        <member name="T:Goedel.Cryptography.Nist.Dilithium">
+        <member name="T:Goedel.Cryptography.Nist.DilithiumNist">
             <summary>
             ML-DSA internal functions implementation derrived from the NIST ACVP reference 
             implementation..
             </summary>
+            <remarks>
+            Constructor, return a new instance of the Dilithium class with parameters instantiated by
+            <paramref name="param"/> and hash factory <paramref name="shaFactory"/>.
+            </remarks>
+            <param name="param"></param>
+            <param name="shaFactory"></param>
+            
         </member>
-        <member name="F:Goedel.Cryptography.Nist.Dilithium._zeta">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.#ctor(Goedel.Cryptography.Nist.DilithiumParameters,Goedel.Cryptography.Nist.IShaFactory)">
+            <summary>
+            ML-DSA internal functions implementation derrived from the NIST ACVP reference 
+            implementation..
+            </summary>
+            <remarks>
+            Constructor, return a new instance of the Dilithium class with parameters instantiated by
+            <paramref name="param"/> and hash factory <paramref name="shaFactory"/>.
+            </remarks>
+            <param name="param"></param>
+            <param name="shaFactory"></param>
+            
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.GetByPrivateKeyLength(System.Int32)">
+            <summary>
+            Return a static Dilithium instance that matches the specified private key length
+            </summary>
+            <param name="length">The length of the private key in bytes.</param>
+            <returns>The dilithium ionstance.</returns>
+            <exception cref="T:System.Security.Cryptography.CryptographicException">The length does not correspond to a valid ML-DSA
+            private key length.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.GetByPublicKeyLength(System.Int32)">
+            <summary>
+            Return a static Dilithium instance that matches the specified private key length
+            </summary>
+            <param name="length">The length of the private key in bytes.</param>
+            <returns>The dilithium ionstance.</returns>
+            <exception cref="T:System.Security.Cryptography.CryptographicException">The length does not correspond to a valid ML-DSA
+            private key length.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.GetDilithiumNist(Goedel.Cryptography.Nist.DilithiumParameterSet)">
+            <summary>
+            Return a static Dilithium instance that matches the parameter set
+            <paramref name="parameterSet"/>
+            </summary>
+            <param name="parameterSet">The parameter set.</param>
+            <returns>The dilithium ionstance.</returns>
+            <exception cref="T:System.Security.Cryptography.CryptographicException">The length does not correspond to a valid ML-DSA
+            private key length.</exception>
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.DilithiumNist._zeta">
             <summary>
             Precomputed zeta array with bitrev(k) already applied
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.#ctor(Goedel.Cryptography.Nist.DilithiumParameters,Goedel.Cryptography.Nist.IShaFactory,Goedel.Cryptography.Nist.IEntropyProvider)">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.GenerateKey(System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.Sign(Goedel.Cryptography.Nist.DilithiumPrivate,System.Byte[],System.Byte[])">
             <summary>
-            Constructor, return a new instance of the Dilithium class with parameters instantiated by
-            <paramref name="param"/> and hash factory <paramref name="shaFactory"/>.
+            Signs a message with a given secret key
             </summary>
-            <param name="param"></param>
-            <param name="shaFactory"></param>
-            <param name="entropyProvider"></param>
+            <param name="secretKey">Secret key.</param>
+            <param name="message">Arbitrary set of bits.</param>
+            <param name="rnd">The deterministic seed value.</param>
+            <returns>Signature</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.GenerateKey(System.Byte[])">
-            <inheritdoc/>
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.Verify(Goedel.Cryptography.Nist.DilithiumPublic,System.Byte[],System.Byte[])">
+            <summary>
+            Verify the signature <paramref name="signature"/> over message
+            <paramref name="message"/> returning true if and only if the 
+            signature is valid.
+            </summary>
+            <param name="publicKey">The public key.</param>
+            <param name="signature">The signature to verify.</param>
+            <param name="message">The message signed.</param>
+            <returns>True if the signature is valid, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.Sign(System.Byte[],System.Byte[],System.Byte[])">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.Verify(System.Byte[],System.Byte[],System.Byte[])">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.IntegerToBits(System.Int32,System.Int32)">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.IntegerToBits(System.Int32,System.Int32)">
             <summary>
             Algorithm 9. NOTE: This wipes out the value of x.
             </summary>
@@ -287,7 +340,7 @@
             <param name="alpha">Number of bits to use to express x</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.BitsToInteger(System.Collections.BitArray,System.Int32)">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.BitsToInteger(System.Collections.BitArray,System.Int32)">
             <summary>
             Algorithm 10
             </summary>
@@ -295,7 +348,7 @@
             <param name="alpha">Number of bits in y</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.IntegerToBytes(System.Int32,System.Int32)">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.IntegerToBytes(System.Int32,System.Int32)">
             <summary>
             Algorithm 11
             </summary>
@@ -303,21 +356,21 @@
             <param name="alpha">Number of bytes in x</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.BitsToBytes(System.Collections.BitArray)">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.BitsToBytes(System.Collections.BitArray)">
             <summary>
             Algorithm 12
             </summary>
             <param name="y"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.BytesToBits(System.Byte[])">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.BytesToBits(System.Byte[])">
             <summary>
             Algorithm 13. NOTE: This wipes out the value of z. 
             </summary>
             <param name="z"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.CoeffFromThreeBytes(System.Byte,System.Byte,System.Byte)">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.CoeffFromThreeBytes(System.Byte,System.Byte,System.Byte)">
             <summary>
             Algorithm 14
             </summary>
@@ -326,14 +379,14 @@
             <param name="b2"></param>
             <returns>Generates a value from 0 to q-1</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.CoeffFromHalfByte(System.Byte)">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.CoeffFromHalfByte(System.Byte)">
             <summary>
             Algorithm 15
             </summary>
             <param name="b">4-bit value, 0-15</param>
             <returns>Generates a value from -eta to +eta</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.SimpleBitPack(System.Int32[],System.Int32)">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.SimpleBitPack(System.Int32[],System.Int32)">
             <summary>
             Algorithm 16
             </summary>
@@ -341,7 +394,7 @@
             <param name="b"></param>
             <returns>byte string representing polynomial w</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.BitPack(System.Int32[],System.Int32,System.Int32)">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.BitPack(System.Int32[],System.Int32,System.Int32)">
             <summary>
             Algorithm 17
             </summary>
@@ -350,7 +403,7 @@
             <param name="b"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.SimpleBitUnpack(System.Byte[],System.Int32)">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.SimpleBitUnpack(System.Byte[],System.Int32)">
             <summary>
             Algorithm 18
             </summary>
@@ -358,7 +411,7 @@
             <param name="b"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.BitUnpack(System.Byte[],System.Int32,System.Int32)">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.BitUnpack(System.Byte[],System.Int32,System.Int32)">
             <summary>
             Algorithm 19
             </summary>
@@ -367,21 +420,21 @@
             <param name="b"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.HintBitPack(System.Int32[][])">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.HintBitPack(System.Int32[][])">
             <summary>
             Algorithm 20
             </summary>
             <param name="h">A K x 256 vector of polynomials with binary coefficients and at most Omega coefficients set to 1</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.HintBitUnpack(System.Byte[])">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.HintBitUnpack(System.Byte[])">
             <summary>
             Algorithm 21
             </summary>
             <param name="y"></param>
             <returns>null or a K x 256 vector of polynomials with binary coefficients and at most Omega coefficients set to 1</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.PkEncode(System.Collections.BitArray,System.Int32[][])">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.PkEncode(System.Collections.BitArray,System.Int32[][])">
             <summary>
             Algorithm 22
             </summary>
@@ -389,14 +442,14 @@
             <param name="t1"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.PkDecode(System.Byte[])">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.PkDecode(System.Byte[])">
             <summary>
             Algorithm 23
             </summary>
             <param name="pk"></param>
             <returns>(rho, t1) tuple containing the BitArray rho and vector of polynomials t1</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.SkEncode(System.Collections.BitArray,System.Collections.BitArray,System.Collections.BitArray,System.Int32[][],System.Int32[][],System.Int32[][])">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.SkEncode(System.Collections.BitArray,System.Collections.BitArray,System.Collections.BitArray,System.Int32[][],System.Int32[][],System.Int32[][])">
             <summary>
             Algorithm 24. There are a lot of concatenations here which may not be too fast, the relative size of the arrays
             shouldn't make this a problem though.
@@ -409,14 +462,14 @@
             <param name="t0"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.SkDecode(System.Byte[])">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.SkDecode(System.Byte[])">
             <summary>
             Algorithm 25
             </summary>
             <param name="sk"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.SigEncode(System.Collections.BitArray,System.Int32[][],System.Int32[][])">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.SigEncode(System.Collections.BitArray,System.Int32[][],System.Int32[][])">
             <summary>
             Algorithm 26
             </summary>
@@ -425,56 +478,56 @@
             <param name="h"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.SigDecode(System.Byte[])">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.SigDecode(System.Byte[])">
             <summary>
             Algorithm 27
             </summary>
             <param name="sigma"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.W1Encode(System.Int32[][])">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.W1Encode(System.Int32[][])">
             <summary>
             Algorithm 28
             </summary>
             <param name="w1"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.SampleInBall(System.Byte[])">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.SampleInBall(System.Byte[])">
             <summary>
             Algorithm 29
             </summary>
             <param name="rho">Random {256, 384, 512}-bit array</param>
             <returns>A polynomial with coefficients in {-1, 0, 1}</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.RejNTTPoly(System.Collections.BitArray)">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.RejNTTPoly(System.Collections.BitArray)">
             <summary>
             Algorithm 30
             </summary>
             <param name="rho">Random 272-bit array</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.RejBoundedPoly(System.Collections.BitArray)">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.RejBoundedPoly(System.Collections.BitArray)">
             <summary>
             Algorithm 31
             </summary>
             <param name="rho">Random 528-bit array</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.ExpandA(System.Collections.BitArray)">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.ExpandA(System.Collections.BitArray)">
             <summary>
             Algorithm 32
             </summary>
             <param name="rho">Random 256-bit array</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.ExpandS(System.Collections.BitArray)">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.ExpandS(System.Collections.BitArray)">
             <summary>
             Algorithm 33
             </summary>
             <param name="rho">Random 512-bit array</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.ExpandMask(System.Collections.BitArray,System.Int32)">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.ExpandMask(System.Collections.BitArray,System.Int32)">
             <summary>
             Algorithm 34
             </summary>
@@ -482,35 +535,35 @@
             <param name="mu">Nonnegative integer</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.Power2Round(System.Int32)">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.Power2Round(System.Int32)">
             <summary>
             Algorithm 35
             </summary>
             <param name="r"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.Decompose(System.Int32)">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.Decompose(System.Int32)">
             <summary>
             Algorithm 36
             </summary>
             <param name="r"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.HighBits(System.Int32)">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.HighBits(System.Int32)">
             <summary>
             Algorithm 37
             </summary>
             <param name="r"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.LowBits(System.Int32)">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.LowBits(System.Int32)">
             <summary>
             Algorithm 38
             </summary>
             <param name="r"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.MakeHint(System.Int32,System.Int32)">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.MakeHint(System.Int32,System.Int32)">
             <summary>
             Algorithm 39
             </summary>
@@ -518,7 +571,7 @@
             <param name="r"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.UseHint(System.Boolean,System.Int32)">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.UseHint(System.Boolean,System.Int32)">
             <summary>
             Algorithm 40
             </summary>
@@ -526,19 +579,27 @@
             <param name="r"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.NTT(System.Int32[])">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.NTT(System.Int32[])">
             <summary>
             Algorithm 41
             </summary>
             <param name="w"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.Dilithium.NTTInverse(System.Int32[])">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.NTTInverse(System.Int32[])">
             <summary>
             Algorithm 42
             </summary>
             <param name="wHat"></param>
             <returns></returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.DilithiumParameters">
+            <summary>
+            Parameters used in ML-DSA
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.DilithiumParameters.ParameterSet">
+            <summary>The parameter set.</summary> 
         </member>
         <member name="P:Goedel.Cryptography.Nist.DilithiumParameters.Q">
             <summary>
@@ -606,47 +667,159 @@
             Valid options are 80, 55, 75
             </summary>
         </member>
-        <member name="T:Goedel.Cryptography.Nist.IMLDSA">
+        <member name="P:Goedel.Cryptography.Nist.DilithiumParameters.PrivateKeyLength">
+            <summary>The private key length.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.DilithiumParameters.PublicKeyLength">
+            <summary>The public key length.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.DilithiumParameters.SignatureLength">
+            <summary>The length of a computed signature.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.DilithiumParameters.#ctor(Goedel.Cryptography.Nist.DilithiumParameterSet)">
             <summary>
-            ML-DSA internal functions interface.
-            <para>
-            The interfaces have been modified to use bytes instead of the bit arrays
-            used in the reference code.
-            </para>
+            Default constructor, create an instance for the parameters 
+            <paramref name="param"/>.
+            </summary>
+            <param name="param">Specify the security level.</param>
+            <exception cref="T:System.ArgumentException">Invalid parameter set specified.</exception>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.DilithiumParameterSet">
+            <summary>
+            ML-DSA algorithm strength identifiers.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.IMLDSA.GenerateKey(System.Byte[])">
-            <summary>
-            Generates a key pair (pk, sk)
-            </summary>
-            <param name="seed">Random 256-bit array</param>
-            <returns>Tuple (byte[] pk, byte[] sk) containing the public key 
-            and secret key</returns>
+        <member name="F:Goedel.Cryptography.Nist.DilithiumParameterSet.None">
+            <summary>Unspecified, use default.</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Nist.IMLDSA.Sign(System.Byte[],System.Byte[],System.Byte[])">
+        <member name="F:Goedel.Cryptography.Nist.DilithiumParameterSet.ML_DSA_44">
+            <summary>Security level 2.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.DilithiumParameterSet.ML_DSA_65">
+            <summary>Security level 3.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.DilithiumParameterSet.ML_DSA_87">
+            <summary>Security level 5.</summary> 
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.DilithiumPrivate">
             <summary>
-            Signs a message with a given secret key
+            Private key backing class, holds the expanded private key values.
             </summary>
-            <param name="sk">Secret key.</param>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.DilithiumPrivate.Seed">
+            <summary>The seed key. Note that this may not be available if the
+            private keyt was reconstructed from the expanded FIPS 204 private key.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.DilithiumPrivate.PublicKey">
+            <summary>The encoded Public Key value</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.DilithiumPrivate.SecretKey">
+            <summary>The encoded Secret Key value</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.DilithiumPrivate.FromSeed(System.Byte[],Goedel.Cryptography.Nist.DilithiumParameterSet)">
+            <summary>
+            Factory method returning an instance generated from the seed
+            <paramref name="seed"/> with strength <paramref name="parameterSet"/>.
+            </summary>
+            <param name="seed">The 32 byte seed.</param>
+            <param name="parameterSet">The parameter set</param>
+            <returns>The private key.</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Goedel.Cryptography.Nist.DilithiumPrivate.FromSecretKey(System.Byte[])" -->
+        <member name="M:Goedel.Cryptography.Nist.DilithiumPrivate.SignInternal(System.Byte[],System.Byte[])">
+            <summary>
+            Signs a message with this secret key
+            </summary>
             <param name="message">Arbitrary set of bits.</param>
             <param name="rnd">The deterministic seed value.</param>
             <returns>Signature</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.IMLDSA.Verify(System.Byte[],System.Byte[],System.Byte[])">
-            <summary>
-            Verify a signature
-            </summary>
-            <param name="pk">Public key.</param>
-            <param name="signature">Signature.</param>
-            <param name="message">Message.</param>
-            <returns>True if validation succeeds, otherwise false.</returns>
+        <member name="P:Goedel.Cryptography.Nist.DilithiumPublic.PublicKey">
+            <swummary>The encoded Public Key value</swummary> 
         </member>
-        <member name="T:Goedel.Cryptography.Nist.IMLKEM">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumPublic.FromPublicKey(System.Byte[])">
             <summary>
-            Abstract interface for ML-KEM-Internal
+            Factory method returning an instance generated from the public key value
+            <paramref name="publicKey"/>.
             </summary>
+            <returns>The private key.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.IMLKEM.GenerateKey(System.Byte[],System.Byte[])">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumPublic.Verify(System.Byte[],System.Byte[])">
+            <summary>
+            Verify the signature <paramref name="signature"/> over message
+            <paramref name="message"/> returning true if and only if the 
+            signature is valid.
+            </summary>
+            <param name="signature">The signature to verify.</param>
+            <param name="message">The message signed.</param>
+            <returns>True if the signature is valid, otherwise false.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.KyberNist">
+            <summary>
+            ML-KEM internal operation, does not perform wrapper operations specified by FIPS 203
+            </summary>
+            <remarks>
+            Constuctor, generate an instance from the parameters <paramref name="param"/> using
+            the SHA-3 implementation <paramref name="shaFactory"/>.
+            </remarks>
+            <param name="param">The parameters.</param>
+            <param name="shaFactory">Factory method returning a SHA-3 instance.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.#ctor(Goedel.Cryptography.Nist.KyberParameters,Goedel.Cryptography.Nist.IShaFactory)">
+            <summary>
+            ML-KEM internal operation, does not perform wrapper operations specified by FIPS 203
+            </summary>
+            <remarks>
+            Constuctor, generate an instance from the parameters <paramref name="param"/> using
+            the SHA-3 implementation <paramref name="shaFactory"/>.
+            </remarks>
+            <param name="param">The parameters.</param>
+            <param name="shaFactory">Factory method returning a SHA-3 instance.</param>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.KyberNist.Parameters">
+            <summary>The parameter set</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.KyberNist.SeedBytes">
+            <summary>The number of seed bytes, is always 64.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.KyberNist.Kyber512">
+            <summary>Cached operation class for Kyber 512 strength.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.KyberNist.Kyber768">
+            <summary>Cached operation class for Kyber 768 strength.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.KyberNist.Kyber1024">
+            <summary>Cached operation class for Kyber 1024 strength.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.GetByPrivateKeyLength(System.Int32)">
+            <summary>
+            Return a static Kyber instance that matches the specified private key length
+            </summary>
+            <param name="length">The length of the private key in bytes.</param>
+            <returns>The dilithium ionstance.</returns>
+            <exception cref="T:System.Security.Cryptography.CryptographicException">The length does not correspond to a valid ML-DSA
+            private key length.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.GetByPublicKeyLength(System.Int32)">
+            <summary>
+            Return a static Kyber instance that matches the specified public key length
+            </summary>
+            <param name="length">The length of the public key in bytes.</param>
+            <returns>The dilithium ionstance.</returns>
+            <exception cref="T:System.Security.Cryptography.CryptographicException">The length does not correspond to a valid ML-Kem
+            private key length.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.GetKyberNist(Goedel.Cryptography.Nist.KyberParameterSet)">
+            <summary>
+            Return a static Kyber instance that matches the parameter set
+            <paramref name="parameterSet"/>
+            </summary>
+            <param name="parameterSet">The parameter set.</param>
+            <returns>The dilithium ionstance.</returns>
+            <exception cref="T:System.Security.Cryptography.CryptographicException">The length does not correspond to a valid ML-DSA
+            private key length.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.GenerateKey(System.Byte[],System.Byte[])">
             <summary>
             Generate an encapsulation and decapsulation key pair
             </summary>
@@ -654,7 +827,7 @@
             <param name="d">Random seed provided to K-PKE.KeyGen</param>
             <returns>Tuple containing (encapsulation key ek, decapsulation key dk)</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.IMLKEM.Encapsulate(System.Byte[],System.Byte[])">
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.Encapsulate(Goedel.Cryptography.Nist.KyberPublic,System.Byte[])">
             <summary>
             Derive and encapsulate a shared secret
             </summary>
@@ -662,13 +835,182 @@
             <param name="m">Random seed, 32 bytes</param>
             <returns>Tuple containing (shared secret K, ciphertext c)</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.IMLKEM.Decapsulate(System.Byte[],System.Byte[])">
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.Encapsulate(System.Byte[],System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.Decapsulate(Goedel.Cryptography.Nist.KyberPrivate,System.Byte[])">
             <summary>
             Decapsulate a shared secret
             </summary>
             <param name="dk">Decapsulation key</param>
             <param name="c">Encapsulated shared secret</param>
             <returns>Decapsulated shared secret</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.Decapsulate(System.Byte[],System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.Prf(System.Int32,System.Byte[],System.Byte)">
+            <summary>
+            PRF = SHAKE256(s || b, 64 * eta)
+            </summary>
+            <param name="eta">Output length modifier</param>
+            <param name="s">32 bytes</param>
+            <param name="b">Single byte</param>
+            <returns>byte[] with 64 * eta bytes</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.H(System.Byte[])">
+            <summary>
+            SHA3-256(s)
+            </summary>
+            <param name="s"></param>
+            <returns>32 bytes</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.J(System.Byte[])">
+            <summary>
+            SHAKE-256(s)
+            </summary>
+            <param name="s"></param>
+            <returns>32 bytes</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.G(System.Byte[])">
+            <summary>
+            a || b = SHA3-512(c) 
+            </summary>
+            <param name="c"></param>
+            <returns>(a, b) where both elements are 32 bytes</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.BitsToBytes(System.Collections.BitArray)">
+            <summary>
+            Algorithm 2
+            </summary>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.IntegerToBits(System.Int32,System.Int32)">
+            <summary>
+            Not specified but helpful for zeta computation
+            </summary>
+            <param name="x">Integer value</param>
+            <param name="alpha">Number of bits to use to express x</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.BitsToInteger(System.Collections.BitArray,System.Int32)">
+            <summary>
+            Not specified but helpful for zeta computation
+            </summary>
+            <param name="y">Array of bits</param>
+            <param name="alpha">Number of bits in y</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.IntegerToBytes(System.Int32,System.Int32)">
+            <summary>
+            Not specified but needed in K-PKE.KeyGen
+            </summary>
+            <param name="x">Nonnegative integer</param>
+            <param name="alpha">Number of bytes in x</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.BytesToBits(System.Byte[])">
+            <summary>
+            Algorithm 3
+            </summary>
+            <param name="z"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.ByteEncode(System.Int32,System.Int32[])">
+            <summary>
+            Algorithm 4
+            </summary>
+            <param name="d">d = [1, 12]</param>
+            <param name="F">Array of 256 integers modulo 2^d, or modulo q if d = 12</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.ByteDecode(System.Int32,System.Byte[])">
+            <summary>
+            Algorithm 5
+            </summary>
+            <param name="d">d = [1, 12]</param>
+            <param name="B">Encoded byte[] with 32 * d elements</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.SampleNTT(System.Byte[],System.Byte,System.Byte)">
+            <summary>
+            Algorithm 6
+            </summary>
+            <param name="seed"></param>
+            <param name="l"></param>
+            <param name="k"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.SamplePolyCBD(System.Int32,System.Byte[])">
+            <summary>
+            Algorithm 7
+            </summary>
+            <param name="eta"></param>
+            <param name="B"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.NTT(System.Int32[])">
+            <summary>
+            Algorithm 8
+            </summary>
+            <param name="f"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.NTTInverse(System.Int32[])">
+            <summary>
+            Algorithm 9
+            </summary>
+            <param name="fHat"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.MultiplyNTTs(System.Int32[],System.Int32[])">
+            <summary>
+            Algorithm 10
+            </summary>
+            <param name="fHat"></param>
+            <param name="gHat"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.BaseCaseMultiply(System.Int64,System.Int64,System.Int64,System.Int64,System.Int64)">
+            <summary>
+            Algorithm 11
+            </summary>
+            <param name="a0"></param>
+            <param name="a1"></param>
+            <param name="b0"></param>
+            <param name="b1"></param>
+            <param name="gamma"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.K_Pke_KeyGen(System.Byte[])">
+            <summary>
+            Algorithm 12
+            </summary>
+            <param name="d"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.ZetaFunction(System.Int32)">
+            <summary>
+            Helper function for NTTs that performs a bit-reversal on k and retrieves that index from the precomputed zeta array
+            </summary>
+            <param name="k"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.ZetaFunction2(System.Int32)">
+            <summary>
+            Helper function for NTT multiplication that performs 2 * bit-reversal(k) + 1 and retrieves that index from the precomputed zeta array
+            </summary>
+            <param name="i"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.KyberParameters">
+            <summary>
+            Parameters used in ML-KEM
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.KyberParameters.ParameterSet">
+            <summary>The parameter set.</summary> 
         </member>
         <member name="P:Goedel.Cryptography.Nist.KyberParameters.N">
             <summary>
@@ -720,191 +1062,76 @@
             Length in bytes of ciphertext
             </summary>
         </member>
-        <member name="T:Goedel.Cryptography.Nist.MLKEMInternal">
+        <member name="M:Goedel.Cryptography.Nist.KyberParameters.#ctor(Goedel.Cryptography.Nist.KyberParameterSet)">
             <summary>
-            ML-KEM internal operation, does not perform wrapper operations specified by FIPS 203
+            Default constructor, create an instance for the parameters 
+            <paramref name="param"/>.
             </summary>
-            <remarks>
-            Constuctor, generate an instance from the parameters <paramref name="param"/> using
-            the SHA-3 implementation <paramref name="shaFactory"/>.
-            </remarks>
-            <param name="param">The parameters.</param>
-            <param name="shaFactory">Factory method returning a SHA-3 instance.</param>
+            <param name="param">Specify the security level.</param>
+            <exception cref="T:System.ArgumentException">Invalid parameter set specified.</exception>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.#ctor(Goedel.Cryptography.Nist.KyberParameters,Goedel.Cryptography.Nist.IShaFactory)">
+        <member name="P:Goedel.Cryptography.Nist.KyberPrivate.Seed">
+            <summary>The seed key. Note that this may not be available if the
+            private keyt was reconstructed from the expanded FIPS 204 private key.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.KyberPrivate.PublicKey">
+            <summary>The encoded Public Key value</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.KyberPrivate.SecretKey">
+            <summary>The encoded Secret Key value</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberPrivate.FromSeed(System.Byte[],Goedel.Cryptography.Nist.KyberParameterSet)">
             <summary>
-            ML-KEM internal operation, does not perform wrapper operations specified by FIPS 203
+            Factory method returning an instance generated from the seed
+            <paramref name="seed"/> with strength <paramref name="parameterSet"/>.
             </summary>
-            <remarks>
-            Constuctor, generate an instance from the parameters <paramref name="param"/> using
-            the SHA-3 implementation <paramref name="shaFactory"/>.
-            </remarks>
-            <param name="param">The parameters.</param>
-            <param name="shaFactory">Factory method returning a SHA-3 instance.</param>
+            <param name="seed">The 64 byte seed.</param>
+            <param name="parameterSet">The parameter set</param>
+            <returns>The private key.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.GenerateKey(System.Byte[],System.Byte[])">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.Encapsulate(System.Byte[],System.Byte[])">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.Decapsulate(System.Byte[],System.Byte[])">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.Prf(System.Int32,System.Byte[],System.Byte)">
+        <member name="M:Goedel.Cryptography.Nist.KyberPrivate.FromSeed(System.Byte[],Goedel.Cryptography.Nist.KyberNist)">
             <summary>
-            PRF = SHAKE256(s || b, 64 * eta)
+            Factory method returning an instance generated from the seed
+            <paramref name="seed"/> with strength <paramref name="parameterSet"/>.
             </summary>
-            <param name="eta">Output length modifier</param>
-            <param name="s">32 bytes</param>
-            <param name="b">Single byte</param>
-            <returns>byte[] with 64 * eta bytes</returns>
+            <param name="seed">The 64 byte seed.</param>
+            <param name="kyber">The parameter set</param>
+            <returns>The private key.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.H(System.Byte[])">
+        <member name="M:Goedel.Cryptography.Nist.KyberPrivate.FromZD(System.Byte[],System.Byte[],Goedel.Cryptography.Nist.KyberParameterSet)">
             <summary>
-            SHA3-256(s)
+            Factory method returning an instance generated from the seed
+            <paramref name="z"/> , <paramref name="d"/> with strength <paramref name="parameterSet"/>.
             </summary>
-            <param name="s"></param>
-            <returns>32 bytes</returns>
+            <param name="z">A 32 byte seed.</param>
+            <param name="d">A 32 byte seed.</param>
+            <param name="parameterSet">The parameter set</param>
+            <returns>The private key.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.J(System.Byte[])">
+        <!-- Badly formed XML comment ignored for member "M:Goedel.Cryptography.Nist.KyberPrivate.FromSecretKey(System.Byte[])" -->
+        <member name="M:Goedel.Cryptography.Nist.KyberPrivate.Decapsulate(System.Byte[])">
             <summary>
-            SHAKE-256(s)
+            Decapsulate a shared secret
             </summary>
-            <param name="s"></param>
-            <returns>32 bytes</returns>
+            <param name="c">Encapsulated shared secret</param>
+            <returns>Decapsulated shared secret</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.G(System.Byte[])">
-            <summary>
-            a || b = SHA3-512(c) 
-            </summary>
-            <param name="c"></param>
-            <returns>(a, b) where both elements are 32 bytes</returns>
+        <member name="P:Goedel.Cryptography.Nist.KyberPublic.PublicKey">
+            <swummary>The encoded Public Key value</swummary> 
         </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.BitsToBytes(System.Collections.BitArray)">
+        <member name="M:Goedel.Cryptography.Nist.KyberPublic.FromPublicKey(System.Byte[])">
             <summary>
-            Algorithm 2
+            Factory method returning an instance generated from the public key value
+            <paramref name="publicKey"/>.
             </summary>
-            <param name="y"></param>
-            <returns></returns>
+            <returns>The private key.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.IntegerToBits(System.Int32,System.Int32)">
+        <member name="M:Goedel.Cryptography.Nist.KyberPublic.Encapsulate(System.Byte[])">
             <summary>
-            Not specified but helpful for zeta computation
+            Derive and encapsulate a shared secret
             </summary>
-            <param name="x">Integer value</param>
-            <param name="alpha">Number of bits to use to express x</param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.BitsToInteger(System.Collections.BitArray,System.Int32)">
-            <summary>
-            Not specified but helpful for zeta computation
-            </summary>
-            <param name="y">Array of bits</param>
-            <param name="alpha">Number of bits in y</param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.IntegerToBytes(System.Int32,System.Int32)">
-            <summary>
-            Not specified but needed in K-PKE.KeyGen
-            </summary>
-            <param name="x">Nonnegative integer</param>
-            <param name="alpha">Number of bytes in x</param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.BytesToBits(System.Byte[])">
-            <summary>
-            Algorithm 3
-            </summary>
-            <param name="z"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.ByteEncode(System.Int32,System.Int32[])">
-            <summary>
-            Algorithm 4
-            </summary>
-            <param name="d">d = [1, 12]</param>
-            <param name="F">Array of 256 integers modulo 2^d, or modulo q if d = 12</param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.ByteDecode(System.Int32,System.Byte[])">
-            <summary>
-            Algorithm 5
-            </summary>
-            <param name="d">d = [1, 12]</param>
-            <param name="B">Encoded byte[] with 32 * d elements</param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.SampleNTT(System.Byte[],System.Byte,System.Byte)">
-            <summary>
-            Algorithm 6
-            </summary>
-            <param name="seed"></param>
-            <param name="l"></param>
-            <param name="k"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.SamplePolyCBD(System.Int32,System.Byte[])">
-            <summary>
-            Algorithm 7
-            </summary>
-            <param name="eta"></param>
-            <param name="B"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.NTT(System.Int32[])">
-            <summary>
-            Algorithm 8
-            </summary>
-            <param name="f"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.NTTInverse(System.Int32[])">
-            <summary>
-            Algorithm 9
-            </summary>
-            <param name="fHat"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.MultiplyNTTs(System.Int32[],System.Int32[])">
-            <summary>
-            Algorithm 10
-            </summary>
-            <param name="fHat"></param>
-            <param name="gHat"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.BaseCaseMultiply(System.Int64,System.Int64,System.Int64,System.Int64,System.Int64)">
-            <summary>
-            Algorithm 11
-            </summary>
-            <param name="a0"></param>
-            <param name="a1"></param>
-            <param name="b0"></param>
-            <param name="b1"></param>
-            <param name="gamma"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.K_Pke_KeyGen(System.Byte[])">
-            <summary>
-            Algorithm 12
-            </summary>
-            <param name="d"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.ZetaFunction(System.Int32)">
-            <summary>
-            Helper function for NTTs that performs a bit-reversal on k and retrieves that index from the precomputed zeta array
-            </summary>
-            <param name="k"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.MLKEMInternal.ZetaFunction2(System.Int32)">
-            <summary>
-            Helper function for NTT multiplication that performs 2 * bit-reversal(k) + 1 and retrieves that index from the precomputed zeta array
-            </summary>
-            <param name="i"></param>
-            <returns></returns>
+            <param name="m">Random seed, 32 bytes</param>
+            <returns>Tuple containing (shared secret K, ciphertext c)</returns>
         </member>
         <member name="M:Goedel.Cryptography.Nist.PrimeGeneratorHelper.ProbablePrimeFactor(Goedel.Cryptography.Nist.PrimeTestModes,Goedel.Cryptography.Nist.IEntropyProvider,System.Int32,System.Int32,System.Numerics.BigInteger,System.Numerics.BigInteger,System.Int32,System.Numerics.BigInteger)">
             <summary>
@@ -940,6 +1167,15 @@
             <summary>
             Digest factory using the NIST code.
             </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.NativeShaFactory.Factory">
+            <summary>Static instance of this class.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeShaFactory.GetShaInstance(Goedel.Cryptography.Nist.HashFunction)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeShaFactory.GetShakeInstance(Goedel.Cryptography.Nist.HashFunction)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.Nist.EntropyProviderFactory">
             <summary>

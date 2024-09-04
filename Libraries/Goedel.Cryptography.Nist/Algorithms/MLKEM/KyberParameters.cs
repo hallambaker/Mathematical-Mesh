@@ -1,8 +1,12 @@
 
 namespace Goedel.Cryptography.Nist;
 
-
+/// <summary>
+/// Parameters used in ML-KEM
+/// </summary>
 public class KyberParameters {
+
+    ///<summary>The parameter set.</summary> 
     public KyberParameterSet ParameterSet { get; }
 
     /// <summary>
@@ -55,6 +59,37 @@ public class KyberParameters {
     /// </summary>
     public int CiphertextLength { get; }
 
+
+    public static KyberParameters Kyber512 { get; } =
+        new KyberParameters(KyberParameterSet.ML_KEM_512);
+
+    public static KyberParameters Kyber768 { get; } =
+        new KyberParameters(KyberParameterSet.ML_KEM_768);
+
+    public static KyberParameters Kyber1024 { get; } =
+        new KyberParameters(KyberParameterSet.ML_KEM_1024);
+
+
+    public const int EncapsulationKeyLength512 = 800;
+    public const int DecapsulationKeyLength512 = 1632;
+    public const int CiphertextLength512 = 768;
+
+    public const int EncapsulationKeyLength768 = 1184;
+    public const int DecapsulationKeyLength768 = 2400;
+    public const int CiphertextLength768 = 1088;
+
+    public const int EncapsulationKeyLength1024 = 1568;
+    public const int DecapsulationKeyLength1024 = 3168;
+    public const int CiphertextLength1024 = 1568;
+
+
+
+    /// <summary>
+    /// Default constructor, create an instance for the parameters 
+    /// <paramref name="param"/>.
+    /// </summary>
+    /// <param name="param">Specify the security level.</param>
+    /// <exception cref="ArgumentException">Invalid parameter set specified.</exception>
     public KyberParameters(KyberParameterSet param) {
         ParameterSet = param;
 
@@ -67,9 +102,9 @@ public class KyberParameters {
             Eta2 = 2;
             Du = 10;
             Dv = 4;
-            EncapsulationKeyLength = 800;
-            DecapsulationKeyLength = 1632;
-            CiphertextLength = 768;
+            EncapsulationKeyLength = EncapsulationKeyLength512;
+            DecapsulationKeyLength = DecapsulationKeyLength512;
+            CiphertextLength = CiphertextLength512;
             break;
 
             case KyberParameterSet.ML_KEM_768:
@@ -80,9 +115,9 @@ public class KyberParameters {
             Eta2 = 2;
             Du = 10;
             Dv = 4;
-            EncapsulationKeyLength = 1184;
-            DecapsulationKeyLength = 2400;
-            CiphertextLength = 1088;
+            EncapsulationKeyLength = EncapsulationKeyLength768;
+            DecapsulationKeyLength = DecapsulationKeyLength768;
+            CiphertextLength = CiphertextLength768;
             break;
 
             case KyberParameterSet.ML_KEM_1024:
@@ -93,9 +128,9 @@ public class KyberParameters {
             Eta2 = 2;
             Du = 11;
             Dv = 5;
-            EncapsulationKeyLength = 1568;
-            DecapsulationKeyLength = 3168;
-            CiphertextLength = 1568;
+            EncapsulationKeyLength = EncapsulationKeyLength1024;
+            DecapsulationKeyLength = DecapsulationKeyLength1024;
+            CiphertextLength = CiphertextLength1024;
             break;
 
             default:

@@ -18,6 +18,7 @@
 		<ProjectReference Include="..\Test.Cryptography.Nist\Test.Cryptography.Nist.csproj" />
 		<ProjectReference Include="..\Test.Cryptography.Platform\Test.Cryptography.Platform.csproj" />
 		<ProjectReference Include="..\Test.Cryptography.PQC\Test.Cryptography.PQC.csproj" />
+		<ProjectReference Include="..\Test.Cryptography.Udf\Test.Cryptography.Udf.csproj" />
 		<ProjectReference Include="..\Test.Cryptography\Test.Cryptography.csproj" />
 		<ProjectReference Include="..\Test.Discovery\Test.Discovery.csproj" />
 		<ProjectReference Include="..\Test.MakeSiteDocs\Test.MakeSiteDocs.csproj" />

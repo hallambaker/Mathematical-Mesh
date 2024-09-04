@@ -30,7 +30,7 @@
 //OID id_ml_dsa_65			sigAlgs 18
 //OID id_ml_dsa_87			sigAlgs 19
 
-using Goedel.Cryptography.Jose;
+
 
 namespace Goedel.Cryptography.PQC;
 
@@ -247,14 +247,14 @@ public class KeyPairMlDsa : KeyPair, IOpaqueBinaryKey {
 
     ///<inheritdoc/>
     ///<exception cref="OperationNotSupported">ML-DSA does not support signature operations.</exception>
-    public override byte[] Decrypt(byte[] encryptedKey, KeyPair ephemeral = null, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, KeyAgreementResult partial = null, byte[] salt = null) {
+    public override byte[] Decrypt(byte[] encryptedKey, KeyPair ephemeral = null, byte[] ciphertext = null, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, KeyAgreementResult partial = null, byte[] salt = null) {
         throw new OperationNotSupported();
         }
 
 
     ///<inheritdoc/>
     ///<exception cref="OperationNotSupported">ML-DSA does not support signature operations.</exception>
-    public override void Encrypt(byte[] key, out byte[] exchange, out KeyPair ephemeral, byte[] salt = null) {
+    public override void Encrypt(byte[] key, out byte[] exchange, out KeyPair ephemeral, out byte[] ciphertext, byte[] salt = null) {
         throw new OperationNotSupported();
         }
 

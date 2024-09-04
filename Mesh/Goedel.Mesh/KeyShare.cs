@@ -104,7 +104,7 @@ public class KeyPairServiced : KeyPair {
         byte[] key,
         out byte[] exchange,
         out KeyPair ephemeral,
-        byte[] salt = null) => Share.Encrypt(key, out exchange, out ephemeral, salt);
+        out byte[] ciphertext, byte[] salt = null) => Share.Encrypt(key, out exchange, out ephemeral, out ciphertext, salt);
 
     ///<inheritdoc/>
     public override KeyPair KeyPairPublic() => Share.KeyPairPublic();
@@ -124,16 +124,16 @@ public class KeyPairServiced : KeyPair {
     public override byte[] Decrypt(
             byte[] encryptedKey,
             KeyPair ephemeral = null,
+            byte[] ciphertext = null,
             CryptoAlgorithmId algorithmID =
             CryptoAlgorithmId.Default,
-            KeyAgreementResult partial = null,
-            byte[] salt = null) {
+            KeyAgreementResult partial = null, byte[] salt = null) {
 
         var partial1 = KeyCollection.RemoteAgreement(ServiceAddress,
             ephemeral as KeyPairAdvanced, Share.KeyIdentifier);
 
 
-        return Share.Decrypt(encryptedKey, ephemeral, algorithmID, partial1, salt);
+        return Share.Decrypt(encryptedKey, ephemeral, algorithmID: algorithmID, partial: partial1, salt: salt);
 
         }
 

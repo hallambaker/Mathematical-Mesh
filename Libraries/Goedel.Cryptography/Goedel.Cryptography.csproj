@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Goedel.ASN\Goedel.ASN.csproj" />
+    <ProjectReference Include="..\Goedel.Cryptography.Nist\Goedel.Cryptography.Nist.csproj" />
     <ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>

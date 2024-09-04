@@ -324,10 +324,10 @@
 			Tag "wmk"
 			Description
 				|The wrapped base seed. The base seed is encrypted under the result of the key exchange.
-		String RecipientKeyData
+		Binary RecipientKeyData
 			Tag "rkd"
 			Description
-				|The per-recipient key exchange data.
+				|The per-recipient key exchange data (if required).
 
 
 	Structure DarePolicy

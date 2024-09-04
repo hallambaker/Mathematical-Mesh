@@ -70,8 +70,8 @@ public class TestVectorAsymmetric {
     public static void EncryptTest(KeyPair KeyPublic, KeyPair KeyPrivate) {
         var TestKey = Platform.GetRandomBits(256);
 
-        KeyPublic.Encrypt(TestKey, out var Exchange, out var Ephemeral);
-        var DecryptResult = KeyPrivate.Decrypt(Exchange, Ephemeral);
+        KeyPublic.Encrypt(TestKey, out var Exchange, out var Ephemeral, out var ciphertext);
+        var DecryptResult = KeyPrivate.Decrypt(Exchange, Ephemeral, ciphertext: ciphertext);
 
         Xunit.Assert.True(TestKey.IsEqualTo(DecryptResult));
         }

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 9/3/2024 1:25:57 PM
+//  This file was automatically generated at 9/4/2024 7:18:00 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1201,10 +1201,10 @@ public partial class DareRecipient : Dare {
 	public virtual byte[]?						WrappedBaseSeed  {get; set;}
 
         /// <summary>
-        ///The per-recipient key exchange data.
+        ///The per-recipient key exchange data (if required).
         /// </summary>
 
-	public virtual string?						RecipientKeyData  {get; set;}
+	public virtual byte[]?						RecipientKeyData  {get; set;}
 
 
 
@@ -1227,8 +1227,8 @@ public partial class DareRecipient : Dare {
 					true)} ,
 			{ "wmk", new PropertyBinary ("wmk", 
 					(IBinding data, byte[]? value) => {(data as DareRecipient).WrappedBaseSeed = value;}, (IBinding data) => (data as DareRecipient).WrappedBaseSeed )},
-			{ "rkd", new PropertyString ("rkd", 
-					(IBinding data, string? value) => {(data as DareRecipient).RecipientKeyData = value;}, (IBinding data) => (data as DareRecipient).RecipientKeyData )}
+			{ "rkd", new PropertyBinary ("rkd", 
+					(IBinding data, byte[]? value) => {(data as DareRecipient).RecipientKeyData = value;}, (IBinding data) => (data as DareRecipient).RecipientKeyData )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

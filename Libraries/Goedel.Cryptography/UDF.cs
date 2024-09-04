@@ -1185,7 +1185,7 @@ public class Udf {
     /// <param name="keyUses"></param>
     /// <returns></returns>
     public static KeyPair DeriveKey(string udf,
-                KeySecurity keySecurity = KeySecurity.Public,
+                KeySecurity keySecurity = KeySecurity.Persistable,
                 KeyUses keyUses = KeyUses.Any) => DeriveKey(udf, null, keySecurity, keyUses);
 
     /// <summary>
@@ -1202,7 +1202,7 @@ public class Udf {
     /// <returns>The derrived key pair.</returns>
     public static KeyPair DeriveKey(string udf,
                 IKeyLocate keyCollection,
-                KeySecurity keySecurity = KeySecurity.Public,
+                KeySecurity keySecurity = KeySecurity.Persistable,
                 KeyUses keyUses = KeyUses.Any,
                 CryptoAlgorithmId cryptoAlgorithmIdin = CryptoAlgorithmId.Default,
                 string keyName = null) {
