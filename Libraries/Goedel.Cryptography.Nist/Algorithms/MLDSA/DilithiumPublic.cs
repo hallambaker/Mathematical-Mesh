@@ -1,7 +1,13 @@
 ﻿namespace Goedel.Cryptography.Nist;
 
+
+
+/// <summary>
+/// FIPS 204-Final implementation of ML-DSA from the Dilithium competition submission.
+/// </summary>
 public class DilithiumPublic {
 
+    ///<summary>The parameter and operations set.</summary> 
     public DilithiumNist Dilithium { get; }
 
     ///<swummary>The encoded Public Key value</swummary> 

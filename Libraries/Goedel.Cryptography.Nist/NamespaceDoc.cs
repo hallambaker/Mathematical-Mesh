@@ -30,6 +30,8 @@ global using System.Text;
 global using System.Security.Cryptography;
 global using System.Text.RegularExpressions;
 
+global using Goedel.Cryptography;
+
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif

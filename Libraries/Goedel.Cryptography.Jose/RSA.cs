@@ -115,6 +115,7 @@ public partial class PrivateKeyRSA {
     public PrivateKeyRSA(PkixPrivateKeyRsa RSAPrivateKey) {
         N = RSAPrivateKey.Modulus;
         E = RSAPrivateKey.PublicExponent;
+
         D = RSAPrivateKey.PrivateExponent;
         P = RSAPrivateKey.Prime1;
         Q = RSAPrivateKey.Prime2;

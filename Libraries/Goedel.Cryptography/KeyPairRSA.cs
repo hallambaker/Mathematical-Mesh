@@ -24,7 +24,6 @@
 namespace Goedel.Cryptography;
 
 
-
 /// <summary>
 /// RSA Key Pair
 /// </summary>
@@ -223,7 +222,6 @@ public partial class KeyPairRSA : KeyPairBaseRSA {
         return new KeyPairRSA(RSAParameters, keySecurity);
         }
 
-
     public static KeyPairRSA KeyPairFactory(
             CryptoAlgorithmId algorithmID,
             KeySecurity keySecurity,
@@ -234,144 +232,147 @@ public partial class KeyPairRSA : KeyPairBaseRSA {
             int keySize = 0,
             KeyUses keyUses = KeyUses.Any) {
 
-        keySize = keySize == 0 ? 2048 : keySize;
-        var bits = keySize / 2;
+        var privateKey = KeyFactoryRsa.Generate(ikm, keySpecifier, keyName, keySize);
+        return new(privateKey);
 
-        var (primep, countp) = GetPrime(bits, ikm, keySpecifier, keyName, "p");
+        //keySize = keySize == 0 ? 2048 : keySize;
+        //var bits = keySize / 2;
 
-        for (var i = countp; true;) {
-            BigInteger primeq;
-            (primeq, i) = GetPrime(bits, ikm, keySpecifier, keyName, "q", i);
-            var privateKey = GetRsa(bits, primep, primeq);
+        //var (primep, countp) = GetPrime(bits, ikm, keySpecifier, keyName, "p");
 
-            if (privateKey is not null) {
-                return new(privateKey);
-                }
-            }
+        //for (var i = countp; true;) {
+        //    BigInteger primeq;
+        //    (primeq, i) = GetPrime(bits, ikm, keySpecifier, keyName, "q", i);
+        //    var privateKey = GetRsa(bits, primep, primeq);
+
+        //    if (privateKey is not null) {
+        //        return new(privateKey);
+        //        }
+        //    }
         }
 
-    /// <summary>
-    /// Return a prime with <paramref name="bits"/> significant bits
-    /// using the parameters <paramref name="ikm"/>, <paramref name="keyName"/>,
-    /// <paramref name="keySpecifier"/>, <paramref name="parameter"/>.
-    /// </summary>
-    /// <param name="bits"></param>
-    /// <param name="ikm"></param>
-    /// <param name="keySpecifier"></param>
-    /// <param name="keyName"></param>
-    /// <param name="parameter"></param>
-    /// <param name="index">Starting index for search</param>
-    /// <returns>The prime and the iteration count.</returns>
-    /// <exception cref="NYI"></exception>
-    static (BigInteger, int) GetPrime(
-                    int bits,
-                    byte[] ikm,
-                    byte[] keySpecifier,
-                    string keyName,
-                    string parameter,
-                    int index = 0) {
+    ///// <summary>
+    ///// Return a prime with <paramref name="bits"/> significant bits
+    ///// using the parameters <paramref name="ikm"/>, <paramref name="keyName"/>,
+    ///// <paramref name="keySpecifier"/>, <paramref name="parameter"/>.
+    ///// </summary>
+    ///// <param name="bits"></param>
+    ///// <param name="ikm"></param>
+    ///// <param name="keySpecifier"></param>
+    ///// <param name="keyName"></param>
+    ///// <param name="parameter"></param>
+    ///// <param name="index">Starting index for search</param>
+    ///// <returns>The prime and the iteration count.</returns>
+    ///// <exception cref="NYI"></exception>
+    //static (BigInteger, int) GetPrime(
+    //                int bits,
+    //                byte[] ikm,
+    //                byte[] keySpecifier,
+    //                string keyName,
+    //                string parameter,
+    //                int index = 0) {
 
-        // This needs to be replaced with the method described in FIPS 186 B.10
+    //    // This needs to be replaced with the method described in FIPS 186 B.10
 
-        for (var i = index; true; i++) {
-            var param = $"{parameter}{i}";
-            var seed = KeySeed(bits, ikm, keySpecifier, keyName, param);
+    //    for (var i = index; true; i++) {
+    //        var param = $"{parameter}{i}";
+    //        var seed = KeySeed(bits, ikm, keySpecifier, keyName, param);
 
-            // Make sure the candidate is odd and has <bits> significant bits.
-            seed[seed.Length - 1] |= 0x01;
-            seed[0] |= 0x80;
+    //        // Make sure the candidate is odd and has <bits> significant bits.
+    //        seed[seed.Length - 1] |= 0x01;
+    //        seed[0] |= 0x80;
 
 
-            var c = seed.BigIntegerBigEndian();
-            if (c.IsProbablePrime(256)) {
-                return (c, i);
-                }
-            }
+    //        var c = seed.BigIntegerBigEndian();
+    //        if (c.IsProbablePrime(256)) {
+    //            return (c, i);
+    //            }
+    //        }
 
-        }
+    //    }
 
-    /// <summary>
-    /// Generate and validate the remaining RSA parameters in accordance with 
-    /// NIST.SP800-56Br2.
-    /// https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-56Br2.pdf
-    /// </summary>
-    /// <param name="bits">The number of bits in the prime values</param>
-    /// <param name="p">The prime p</param>
-    /// <param name="q">The prime q</param>
-    /// <returns>The private key parameters if valid, otherwise null</returns>
-    static PkixPrivateKeyRsa? GetRsa(
-                int bits,
-                BigInteger p,
-                BigInteger q) {
+    ///// <summary>
+    ///// Generate and validate the remaining RSA parameters in accordance with 
+    ///// NIST.SP800-56Br2.
+    ///// https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-56Br2.pdf
+    ///// </summary>
+    ///// <param name="bits">The number of bits in the prime values</param>
+    ///// <param name="p">The prime p</param>
+    ///// <param name="q">The prime q</param>
+    ///// <returns>The private key parameters if valid, otherwise null</returns>
+    //static PkixPrivateKeyRsa? GetRsa(
+    //            int bits,
+    //            BigInteger p,
+    //            BigInteger q) {
 
-        // Declare all registers which may contain values leaking the secret
-        BigInteger e, n, d = BigInteger.Zero,
-            dp = BigInteger.Zero, dq = BigInteger.Zero, qInv = BigInteger.Zero;
-        // Create reduced versions of p and q. We do this so that we can
-        // force erasure at the end
-        var p1 = p - 1;
-        var q1 = q - 1;
+    //    // Declare all registers which may contain values leaking the secret
+    //    BigInteger e, n, d = BigInteger.Zero,
+    //        dp = BigInteger.Zero, dq = BigInteger.Zero, qInv = BigInteger.Zero;
+    //    // Create reduced versions of p and q. We do this so that we can
+    //    // force erasure at the end
+    //    var p1 = p - 1;
+    //    var q1 = q - 1;
 
-        try {
-            // We always use 2^16+1 as the public exponent.
-            e = new BigInteger(65537);
+    //    try {
+    //        // We always use 2^16+1 as the public exponent.
+    //        e = new BigInteger(65537);
 
-            // Ensure |p-q| > 2^ (bits - 100)
-            if (!BigInteger.Abs(p - q).IsGreaterPower2(bits - 100)) {
-                return null;
-                }
+    //        // Ensure |p-q| > 2^ (bits - 100)
+    //        if (!BigInteger.Abs(p - q).IsGreaterPower2(bits - 100)) {
+    //            return null;
+    //            }
 
-            // Step 3, NYI
-            d = p1 * q1;
-            d = d / BigInteger.GreatestCommonDivisor(p1, q1);
-            if (!d.IsGreaterPower2(bits)) {
-                return null;
-                }
+    //        // Step 3, NYI
+    //        d = p1 * q1;
+    //        d = d / BigInteger.GreatestCommonDivisor(p1, q1);
+    //        if (!d.IsGreaterPower2(bits)) {
+    //            return null;
+    //            }
 
-            // Step 4
-            n = p * q;
+    //        // Step 4
+    //        n = p * q;
 
-            // Step 5
-            dp = d.Mod(p1);
-            dq = d.Mod(q1);
-            qInv = q.ModularInverse(p);
+    //        // Step 5
+    //        dp = d.Mod(p1);
+    //        dq = d.Mod(q1);
+    //        qInv = q.ModularInverse(p);
 
-            // Step 6, Perform a pair-wise consistency test
-            var m = n.Random();
-            var encrypt = BigInteger.ModPow(m, e, n);
-            var decrypt = BigInteger.ModPow(encrypt, d, n);
-            (m == decrypt).AssertTrue(CryptographicException.Throw);
+    //        // Step 6, Perform a pair-wise consistency test
+    //        var m = n.Random();
+    //        var encrypt = BigInteger.ModPow(m, e, n);
+    //        var decrypt = BigInteger.ModPow(encrypt, d, n);
+    //        (m == decrypt).AssertTrue(CryptographicException.Throw);
 
-            // Step 7, output values
-            var keySize = bits / 4;
-            var primeSize = bits / 8;
+    //        // Step 7, output values
+    //        var keySize = bits / 4;
+    //        var primeSize = bits / 8;
 
-            var result = new PkixPrivateKeyRsa() {
-                Version = 1,
-                Modulus = n.ToByteArrayBigEndian(keySize),
-                PublicExponent = e.ToByteArrayBigEndian(keySize),
-                PrivateExponent = d.ToByteArrayBigEndian(keySize),
-                Coefficient = qInv.ToByteArrayBigEndian(keySize),
-                Exponent1 = dp.ToByteArrayBigEndian(keySize),
-                Exponent2 = dq.ToByteArrayBigEndian(keySize),
-                Prime1 = p.ToByteArrayBigEndian(primeSize),
-                Prime2 = q.ToByteArrayBigEndian(primeSize)
-                };
+    //        var result = new PkixPrivateKeyRsa() {
+    //            Version = 1,
+    //            Modulus = n.ToByteArrayBigEndian(keySize),
+    //            PublicExponent = e.ToByteArrayBigEndian(keySize),
+    //            PrivateExponent = d.ToByteArrayBigEndian(keySize),
+    //            Coefficient = qInv.ToByteArrayBigEndian(keySize),
+    //            Exponent1 = dp.ToByteArrayBigEndian(keySize),
+    //            Exponent2 = dq.ToByteArrayBigEndian(keySize),
+    //            Prime1 = p.ToByteArrayBigEndian(primeSize),
+    //            Prime2 = q.ToByteArrayBigEndian(primeSize)
+    //            };
 
-            return result;
-            }
-        finally {
-            // Destroy all local copies of the variables
-            p.Erase();
-            q.Erase();
-            p1.Erase();
-            q1.Erase();
-            dp.Erase();
-            dq.Erase();
-            qInv.Erase();
-            d.Erase();
-            }
-        }
+    //        return result;
+    //        }
+    //    finally {
+    //        // Destroy all local copies of the variables
+    //        p.Erase();
+    //        q.Erase();
+    //        p1.Erase();
+    //        q1.Erase();
+    //        dp.Erase();
+    //        dq.Erase();
+    //        qInv.Erase();
+    //        d.Erase();
+    //        }
+    //    }
 
 
     #region // operations

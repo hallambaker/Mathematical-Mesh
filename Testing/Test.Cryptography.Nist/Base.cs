@@ -2,6 +2,7 @@
 using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.Nist;
 
+using System;
 using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 
@@ -74,28 +75,38 @@ public class TestNist : Disposable {
     //    }
     public static void GetRSA() {
 
-        var random = new Random800_90();
-        var entropyProvider = new EntropyProvider(random);
+        var primeGenerator = new PrimeGenerator();
+        var composer = new CrtKeyComposer(primeGenerator);
+
+        for (var i = 0; i < 100; i++) {
+            Console.WriteLine($"Pass {i}");
+
+            var keypair1 = composer.GenerateKeyPair(2048);
+            var keypair2 = composer.GenerateKeyPair(3072);
+            var keypair3 = composer.GenerateKeyPair(4096);
+            }
+        //var random = new Random800_90();
+        //var entropyProvider = new EntropyProvider(random);
 
 
-        //var generatorFactory = new PrimeGeneratorFactory();
+        ////var generatorFactory = new PrimeGeneratorFactory();
 
 
 
-        var generator = new AllProbablePrimesWithConditionsGenerator(
-            entropyProvider, PrimeTestModes.TwoPow100ErrorBound);
+        //var generator = new AllProbablePrimesWithConditionsGenerator(
+        //    entropyProvider, PrimeTestModes.TwoPow100ErrorBound);
 
 
 
 
-        var params1 = new PrimeGeneratorParameters() {
-            Modulus = 2048,
-            PublicE = 65537,
-            BitLens = [140, 140, 140, 140]
-            };
+        //var params1 = new PrimeGeneratorParameters() {
+        //    Modulus = 2048,
+        //    PublicE = 65537,
+        //    BitLens = [140, 140, 140, 140]
+        //    };
 
 
-        var primes = generator.GeneratePrimesFips186_5(params1);
+        //var primes = generator.GeneratePrimesFips186_5(params1);
         }
 
 

@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="RSA\" />
+  </ItemGroup>
+
 </Project>

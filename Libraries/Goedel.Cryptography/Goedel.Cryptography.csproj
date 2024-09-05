@@ -12,52 +12,24 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Goedel.ASN\Goedel.ASN.csproj" />
+    <ProjectReference Include="..\Goedel.Cryptography.Identifiers\Goedel.Cryptography.Identifiers.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography.Nist\Goedel.Cryptography.Nist.csproj" />
     <ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Exceptions.cs">
-      <DependentUpon>Exceptions.exceptional</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-	  <Compile Update="JoseConstants.cs">
-		  <DependentUpon>JoseConstants.Constant</DependentUpon>
-		  <DesignTime>True</DesignTime>
-		  <AutoGen>True</AutoGen>
-	  </Compile>
-    <Compile Update="UDFConstants.cs">
-      <DependentUpon>UDFConstants.Constant</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Update="PKIX\PKIX.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
       <DependentUpon>PKIX.asn2</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Exceptions.exceptional">
-      <LastGenOutput>Exceptions.cs</LastGenOutput>
-      <Generator>exceptional</Generator>
-    </None>
-	  <None Update="JoseConstants.constant">
-		  <LastGenOutput>JoseConstants.cs</LastGenOutput>
-		  <Generator>Constant</Generator>
+	  <None Update="PKIX\PKIX.asn2">
+		  <Generator>ASN2CS</Generator>
+		  <LastGenOutput>PKIX.cs</LastGenOutput>
 	  </None>
-    <None Update="PKIX\PKIX.asn2">
-      <Generator>ASN2CS</Generator>
-      <LastGenOutput>PKIX.cs</LastGenOutput>
-    </None>
-      <None Update="UDFConstants.Constant">
-      <Generator>Constant</Generator>
-        <LastGenOutput>UDFConstants.cs</LastGenOutput>
-    </None>  
-</ItemGroup>
+  </ItemGroup>
 
 
 </Project>

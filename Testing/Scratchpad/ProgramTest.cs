@@ -64,14 +64,14 @@ partial class Program {
         TestNist.GetRSA();
 
 
-        TestUdf.Test().TestUdfKeygen();
+        //TestUdf.Test().TestUdfKeygen();
         
 
-        TestNist.Test().TestKemKeyGen();
-        TestNist.Test().TestKemEncapDecap();
-        TestNist.Test().TestDsaKeyGen();
-        TestNist.Test().TestDsaSign();
-        TestNist.Test().TestDsaVerify();
+        //TestNist.Test().TestKemKeyGen();
+        //TestNist.Test().TestKemEncapDecap();
+        //TestNist.Test().TestDsaKeyGen();
+        //TestNist.Test().TestDsaSign();
+        //TestNist.Test().TestDsaVerify();
 
 
 

@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
+  <PropertyGroup>
+
+    <Product>Goedel.Cryptography</Product>
+    <Description>Cryptographic support libraries.</Description>
+    <Copyright>© 2020</Copyright>
+    <Title>Goedel.Cryptography</Title>
+
+  </PropertyGroup>	
+	
+
+  <ItemGroup>
+    <ProjectReference Include="..\Goedel.ASN\Goedel.ASN.csproj" />
+    <ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
+    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+  </ItemGroup>
+
+
+	
+	  <ItemGroup>
+    <Compile Update="Exceptions.cs">
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+	  <Compile Update="JoseConstants.cs">
+		  <DependentUpon>JoseConstants.Constant</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+	  </Compile>
+    <Compile Update="UDFConstants.cs">
+      <DependentUpon>UDFConstants.Constant</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Exceptions.exceptional">
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+      <Generator>exceptional</Generator>
+    </None>
+	  <None Update="JoseConstants.constant">
+		  <LastGenOutput>JoseConstants.cs</LastGenOutput>
+		  <Generator>Constant</Generator>
+	  </None>
+
+      <None Update="UDFConstants.Constant">
+      <Generator>Constant</Generator>
+        <LastGenOutput>UDFConstants.cs</LastGenOutput>
+    </None>  
+</ItemGroup>
+
+
+</Project>

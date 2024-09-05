@@ -282,7 +282,7 @@
             </summary>
             <param name="length">The length of the private key in bytes.</param>
             <returns>The dilithium ionstance.</returns>
-            <exception cref="T:System.Security.Cryptography.CryptographicException">The length does not correspond to a valid ML-DSA
+            <exception cref="T:Goedel.Cryptography.CryptographicException">The length does not correspond to a valid ML-DSA
             private key length.</exception>
         </member>
         <member name="M:Goedel.Cryptography.Nist.DilithiumNist.GetByPublicKeyLength(System.Int32)">
@@ -291,7 +291,7 @@
             </summary>
             <param name="length">The length of the private key in bytes.</param>
             <returns>The dilithium ionstance.</returns>
-            <exception cref="T:System.Security.Cryptography.CryptographicException">The length does not correspond to a valid ML-DSA
+            <exception cref="T:Goedel.Cryptography.CryptographicException">The length does not correspond to a valid ML-DSA
             private key length.</exception>
         </member>
         <member name="M:Goedel.Cryptography.Nist.DilithiumNist.GetDilithiumNist(Goedel.Cryptography.Nist.DilithiumParameterSet)">
@@ -301,7 +301,7 @@
             </summary>
             <param name="parameterSet">The parameter set.</param>
             <returns>The dilithium ionstance.</returns>
-            <exception cref="T:System.Security.Cryptography.CryptographicException">The length does not correspond to a valid ML-DSA
+            <exception cref="T:Goedel.Cryptography.CryptographicException">The length does not correspond to a valid ML-DSA
             private key length.</exception>
         </member>
         <member name="F:Goedel.Cryptography.Nist.DilithiumNist._zeta">
@@ -734,6 +734,14 @@
             <param name="rnd">The deterministic seed value.</param>
             <returns>Signature</returns>
         </member>
+        <member name="T:Goedel.Cryptography.Nist.DilithiumPublic">
+            <summary>
+            FIPS 204-Final implementation of ML-DSA from the Dilithium competition submission.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.DilithiumPublic.Dilithium">
+            <summary>The parameter and operations set.</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Nist.DilithiumPublic.PublicKey">
             <swummary>The encoded Public Key value</swummary> 
         </member>
@@ -797,7 +805,7 @@
             </summary>
             <param name="length">The length of the private key in bytes.</param>
             <returns>The dilithium ionstance.</returns>
-            <exception cref="T:System.Security.Cryptography.CryptographicException">The length does not correspond to a valid ML-DSA
+            <exception cref="T:Goedel.Cryptography.CryptographicException">The length does not correspond to a valid ML-DSA
             private key length.</exception>
         </member>
         <member name="M:Goedel.Cryptography.Nist.KyberNist.GetByPublicKeyLength(System.Int32)">
@@ -806,7 +814,7 @@
             </summary>
             <param name="length">The length of the public key in bytes.</param>
             <returns>The dilithium ionstance.</returns>
-            <exception cref="T:System.Security.Cryptography.CryptographicException">The length does not correspond to a valid ML-Kem
+            <exception cref="T:Goedel.Cryptography.CryptographicException">The length does not correspond to a valid ML-Kem
             private key length.</exception>
         </member>
         <member name="M:Goedel.Cryptography.Nist.KyberNist.GetKyberNist(Goedel.Cryptography.Nist.KyberParameterSet)">
@@ -816,7 +824,7 @@
             </summary>
             <param name="parameterSet">The parameter set.</param>
             <returns>The dilithium ionstance.</returns>
-            <exception cref="T:System.Security.Cryptography.CryptographicException">The length does not correspond to a valid ML-DSA
+            <exception cref="T:Goedel.Cryptography.CryptographicException">The length does not correspond to a valid ML-DSA
             private key length.</exception>
         </member>
         <member name="M:Goedel.Cryptography.Nist.KyberNist.GenerateKey(System.Byte[],System.Byte[])">
@@ -1133,7 +1141,12 @@
             <param name="m">Random seed, 32 bytes</param>
             <returns>Tuple containing (shared secret K, ciphertext c)</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.PrimeGeneratorHelper.ProbablePrimeFactor(Goedel.Cryptography.Nist.PrimeTestModes,Goedel.Cryptography.Nist.IEntropyProvider,System.Int32,System.Int32,System.Numerics.BigInteger,System.Numerics.BigInteger,System.Int32,System.Numerics.BigInteger)">
+        <member name="T:Goedel.Cryptography.Nist.PrivateKeyRsaCrt">
+            <summary>
+            RSA private key in CRT form.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeGeneratorHelper.ProbablePrimeFactor(Goedel.Cryptography.Nist.IPrimeGenerator,System.Int32,System.Int32,System.Numerics.BigInteger,System.Numerics.BigInteger,System.Int32,System.Numerics.BigInteger)">
             <summary>
             C.9 Compute a Probable Prime Factor Based on Auxiliary Primes
             </summary>
@@ -1143,25 +1156,32 @@
             <param name="e"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.PrimeGeneratorHelper.ProvablePrimeConstruction(Goedel.Cryptography.Nist.ISha,System.Int32,System.Int32,System.Int32,System.Numerics.BigInteger,System.Numerics.BigInteger)">
-            <summary>
-            C.10 Provable Prime Construction
-            </summary>
-            <param name="L"></param>
-            <param name="N1"></param>
-            <param name="N2"></param>
-            <param name="firstSeed"></param>
-            <param name="e"></param>
-            <returns></returns>
+        <member name="P:Goedel.Cryptography.Nist.PrimeGeneratorParameters.RSA2048">
+            <summary>Static parameter set for 2048 bit keys</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Nist.PrimeGeneratorHelper.MillerRabin(Goedel.Cryptography.Nist.PrimeTestModes,System.Int32,System.Numerics.BigInteger,System.Boolean)">
-            <summary>
-            Miller-Rabin driver to determine how to properly call underlying function
-            </summary>
-            <param name="nlen"></param>
-            <param name="val"></param>
-            <param name="factor"></param>
-            <returns></returns>
+        <member name="P:Goedel.Cryptography.Nist.PrimeGeneratorParameters.RSA3072">
+            <summary>Static parameter set for 3072 bit keys</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeGeneratorParameters.RSA4096">
+            <summary>Static parameter set for 4096 bit keys</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeGeneratorParameters.Modulus">
+            <summary>RSA modulus.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeGeneratorParameters.PublicE">
+            <summary>The public exponent, almost always 65537</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeGeneratorParameters.Seed">
+            <summary>To be deleted</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeGeneratorParameters.BitLens">
+            <summary>Specify the minimum length of probable auxiliary primes p1, p2 etc.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeGeneratorParameters.A">
+            <summary>Optional filter for probable primes</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeGeneratorParameters.B">
+            <summary>Optional filter for probable primes</summary> 
         </member>
         <member name="T:Goedel.Cryptography.Nist.NativeShaFactory">
             <summary>

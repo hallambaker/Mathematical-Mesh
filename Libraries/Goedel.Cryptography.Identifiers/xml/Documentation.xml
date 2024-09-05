@@ -1,0 +1,2479 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Cryptography.Identifiers</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Cryptography.CryptoAlgorithmId">
+            <summary>
+            <para>
+            Numeric identifiers for Cryptographic Algorithms and suites. The identifier 
+            space is divided up into bulk and key exchange identifiers as follows:</para>
+            <para>0x00000000-0x0000FFFF: Bulk algorithms (digest, encryption, etc)</para>
+            <para>0x00010000-0x7FFF0000: Asymmetric algorithms and Key Wrap.</para>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Unknown">
+            <summary>Unknown/unsupported</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.NULL">
+            <summary>Null algorithm</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Default">
+            <summary>Default algorithm</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Bulk">
+            <summary>Multiplier for Bulk algorithms</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.BulkMask">
+            <summary>Mask for Bulk Algorithms</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.BulkTagMask">
+            <summary>Mask for Algorithm Type</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Digest">
+            <summary>Flag multiplier</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MAC">
+            <summary>Flag multiplier</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Encryption">
+            <summary>Flag multiplier</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MaxDigest">
+            <summary>Flag multiplier</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MaxMAC">
+            <summary>Flag multiplier</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MaxEncryption">
+            <summary>Flag multiplier</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.BaseMask">
+            <summary>Extract the base algorithm version</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Meta">
+            <summary>Multiplier for key management operations</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MetaMask">
+            <summary>Mask for key management operations</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MetaTagMask">
+            <summary>Mask for Algorithm Type</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Signature">
+            <summary>Index for signature operations</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Exchange">
+            <summary>Index for key exchange operations</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Wrap">
+            <summary>Index for key wrap operations</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MaxSignature">
+            <summary>Max index for signature operations</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MaxExchange">
+            <summary>Max index for key exchange operations</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MaxWrap">
+            <summary>Max index for key wrap operations</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.DIRECT">
+            <summary>Direct mapping (used for Pure signature)</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.SHA_1_DEPRECATED">
+            <summary>SHA1 (Highly deprecated but often necessary)</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.SHA_2_256">
+            <summary>SHA2 256 bit</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.SHA_2_512">
+            <summary>SHA2 512 bit</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.SHA_2_512T128">
+            <summary>SHA2 512 bit</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.SHA_3_256">
+            <summary>SHA3 256 bit</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.SHA_3_512">
+            <summary>SHA3 512 bit</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.SHAKE_128">
+            <summary>SHA3 512 bit</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.SHAKE_256">
+            <summary>SHA3 512 bit</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.ModeCBC">
+            <summary>Flag for CBC mode with PKCS#7 padding</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.ModeCTS">
+            <summary>Flag for Cipher Text Stealing Mode</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.ModeGCM">
+            <summary>Flag for Galois Counter Mode</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.ModeHMAC">
+            <summary>Flag for HMAC SHA-2 Mode</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.ModeCBCNone">
+            <summary>Flag for CBC mode with no padding</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.ModeECB">
+            <summary>Flag for Electronic Code Book Mode</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES128">
+            <summary>AES 128 bit key</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES256">
+            <summary>AES 256 bit key</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES128CBC">
+            <summary>AES 128 bit in CBC mode</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES128GCM">
+            <summary>AES 128 bit in GCM Mode</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES128CTS">
+            <summary>AES 128 bit in Cipher Text Stealing (CTS) mode</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES128HMAC">
+            <summary>AES 128 bit with HMAC</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES128CBCNone">
+            <summary>AES 128 bit CBC mode with no padding</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES128ECB">
+            <summary>AES 128 bit ECB mode with zeros padding</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES256CBC">
+            <summary>AES 256 bit in CBC mode</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES256GCM">
+            <summary>AES 256 bit in GCM mode</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES256CTS">
+            <summary>AES 256 bit in Cipher Text Stealing (CTS) mode</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES256HMAC">
+            <summary>AES 256 Bit with HMAC</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES256CBCNone">
+            <summary>AES 256 bit CBC mode with no padding</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES256ECB">
+            <summary>AES 128 bit ECB mode with zeros padding</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.HMAC_SHA_2_256">
+            <summary>HMAC SHA 2 with 256 bit key.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.HMAC_SHA_2_512">
+            <summary>HMAC SHA 2 with 512 bit key.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.HMAC_SHA_2_512T128">
+            <summary>HMAC SHA 2 with 512 bit key.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.HMAC_SHA_3_512">
+            <summary>HMAC SHA 2 with 512 bit key.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Level_Any">
+            <summary>Flag for CBC mode</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Level_Low">
+            <summary>Flag for Cipher Text Stealing Mode</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Level_High">
+            <summary>Flag for Galois Counter Mode</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.RSASign">
+            <summary>RSA Signature using PKCS#1.5 padding.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.RSASign_PSS">
+            <summary>RSA Signature using PSS padding.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.RSASign_SHA_2_256">
+            <summary>RSA Signature using PKCS#1.5 padding and SHA-2 256 digest</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.RSASign_SHA_2_512">
+            <summary>RSA Signature using PKCS#1.5 padding and SHA-2 512 digest</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.RSASign_PSS_SHA_2_256">
+            <summary>RSA Signature using PSS padding and SHA-2 256 digest</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.RSASign_PSS_SHA_2_512">
+            <summary>RSA Signature using PSS padding and SHA-2 512 digest</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.EdDSA">
+            <summary>Elliptic Curve DSA with curve 25519x pure</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed25519">
+            <summary>Elliptic Curve DSA with curve 25519x pure</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed25519pure">
+            <summary>Elliptic Curve DSA with curve 25519x pure</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed25519ph">
+            <summary>Elliptic Curve DSA with curve 25519x prehashed using SHA512</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed448">
+            <summary>Elliptic Curve DSA with curve Ed448</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed448pure">
+            <summary>Elliptic Curve DSA with curve Ed448</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed448ph">
+            <summary>Elliptic Curve DSA with curve Ed448</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA44">
+            <summary>ML-DSA (Dilithium) 44</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA44pure">
+            <summary>ML-DSA (Dilithium) 44 PURE</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA65">
+            <summary>ML-DSA (Dilithium) 65</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA65pure">
+            <summary>ML-DSA (Dilithium) 65</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA87">
+            <summary>ML-DSA (Dilithium) 87</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA87pure">
+            <summary>ML-DSA (Dilithium) 87</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.RSAExch">
+            <summary>RSA Encryption using OAEP padding.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.RSAExch_P15">
+            <summary>RSA Encryption using PKCS#1.5 padding</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.DH">
+            <summary>Diffie Hellman 2048 bit</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.ECDH">
+            <summary>Elliptic Curve DH with curve P256</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.X25519">
+            <summary>Elliptic Curve DH with curve X25519 (Montgomery)</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.X448">
+            <summary>Elliptic Curve DH with curve X448 (Montgomery)</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.XEd25519">
+            <summary>Elliptic Curve DH with curve Ed25519 (Edwards)</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.XEd448">
+            <summary>Elliptic Curve DH with curve Ed448 (Edwards)</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLKEM512">
+            <summary>ML-KEM with 512 bit key</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLKEM768">
+            <summary>ML-KEM with 768 bit key</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLKEM1024">
+            <summary>ML-KEM with 1024 bit key</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Direct">
+            <summary>Direct (no wrap)</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.KW3394_AES128">
+            <summary>RFC 3394 / NIST with AES and 128 bit key</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.KW3394_AES256">
+            <summary>RFC 3394 / NIST with AES and 192 bit key</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES128_GCM_KW">
+            <summary>RFC 3394 / NIST with AES and 128 bit key</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES256_GCM_KW">
+            <summary>RFC 3394 / NIST with AES and 192 bit key</summary>
+        </member>
+        <member name="T:Goedel.Cryptography.KeySecurity">
+            <summary>Enumeration specifying whether the key is public or private and if private,
+            the storage model.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.Null">
+            <summary>Null Flags.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.Persisted">
+            <summary>Flag indicating that the private key has been persisted to the local machine</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.Persistable">
+            <summary>Flag indicating that the private key may be persisted to the local machine.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.Session">
+            <summary>Flag indicating that the private key may be stored in an in-memory
+            structure (e.g. key collection) but not persisted.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.Exportable">
+            <summary>Flag indicating that the private key may be exported.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.Ephemeral">
+            <summary>Private key that cannot be exported or persisted.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.Bound">
+            <summary>Private key that is stored on the local machine and cannot be exported.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.ExportableStored">
+            <summary>Flag indicating that the private key has been store and may be exported.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.Public">
+            <summary>Key is public only.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.Master">
+            <summary>
+            Key is a Mesh master key and will be stored in a key container marked 
+            as archivable and user protected. Master keys SHOULD be deleted after 
+            being escrowed and recovery verified.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.Admin">
+            <summary>
+            Key is a Mesh administration key and will be  stored in a key container marked as non 
+            exportable and user protected.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.Device">
+            <summary>
+            Key is Mesh a device key and will be  stored in a key container bound to 
+            the current machine that cannot be exported or archived.
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.KeyUses">
+            <summary>
+            Combined Key Uses. This is a conjunction of the JOSE and PKIX key uses.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.DigitalSignature">
+            <summary>PKIX Sign</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.Sign">
+            <summary>Jose Sign (alias for the PKIX bitmask)</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.NonRepudiation">
+            <summary>If clear, signatures may be repudiated</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.KeyEncipherment">
+            <summary>PKIX Encryption</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.Encrypt">
+            <summary>Jose Encryption (alias for the PKIX bitmask)</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.DataEncipherment">
+            <summary>PKIX Flag, should not be used.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.KeyAgreement">
+            <summary>PKIX Key agreement (used for client, server authentication).</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.KeyCertSign">
+            <summary>PKIX Sign certificates</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.CRLSign">
+            <summary>
+            Sign CRLs
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.EncipherOnly">
+            <summary>
+            Don't use
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.DecipherOnly">
+            <summary>
+            Don't Use.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.Any">
+            <summary>Jose Sign or Encryption (alias for the PKIX bitmask)</summary>
+        </member>
+        <member name="T:Goedel.Cryptography.CryptoAlgorithmClasses">
+            <summary>
+            Algorithm classes.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmClasses.NULL">
+            <summary>Unspecified.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmClasses.Digest">
+            <summary>Digest algorithm.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmClasses.MAC">
+            <summary>Message Authentication Code</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmClasses.Encryption">
+            <summary>Symmetric Encryption.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmClasses.Signature">
+            <summary>Digital Signature</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmClasses.Exchange">
+            <summary>Asymmetric Encryption.</summary>
+        </member>
+        <member name="T:Goedel.Cryptography.CryptoID">
+            <summary>
+            Extension methods to extract algorithm sub types
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.CryptoID.DefaultSignatureId">
+            <summary>The default signature algorithm</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.CryptoID.DefaultExchangeId">
+            <summary>The default public encryption algorithm</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.CryptoID.DefaultEncryptionId">
+            <summary>The default digest algorithm</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.CryptoID.DefaultDigestId">
+            <summary>The default digest algorithm</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.CryptoID.DefaultMACId">
+            <summary>The default digest algorithm</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoID.DefaultExchange(Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Apply the default signature algorithm specified in <see cref="P:Goedel.Cryptography.CryptoID.DefaultExchangeId"/> 
+            if required.
+            </summary>
+            <param name="algorithmId">The algorithm identifier to be defaulted.</param>
+            <returns>If <paramref name="algorithmId"/> is <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.Default"/>
+            returns the value <see cref="P:Goedel.Cryptography.CryptoID.DefaultExchangeId"/>, 
+            otherwise returns <paramref name="algorithmId"/>.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoID.DefaultSignature(Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Apply the default signature algorithm specified in <see cref="P:Goedel.Cryptography.CryptoID.DefaultSignatureId"/> 
+            if required.
+            </summary>
+            <param name="algorithmId">The algorithm identifier to be defaulted.</param>
+            <returns>If <paramref name="algorithmId"/> is <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.Default"/>
+            returns the value <see cref="P:Goedel.Cryptography.CryptoID.DefaultSignatureId"/>, 
+            otherwise returns <paramref name="algorithmId"/>.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoID.DefaultMac(Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Apply the default digest algorithm specified in <see cref="P:Goedel.Cryptography.CryptoID.DefaultMACId"/> 
+            if required.
+            </summary>
+            <param name="algorithmId">The algorithm identifier to be defaulted.</param>
+            <returns>If <paramref name="algorithmId"/> is <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.Default"/>
+            returns the value <see cref="P:Goedel.Cryptography.CryptoID.DefaultMACId"/>, 
+            otherwise returns <paramref name="algorithmId"/>.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoID.DefaultEncryption(Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Apply the default digest algorithm specified in <see cref="P:Goedel.Cryptography.CryptoID.DefaultEncryptionId"/> 
+            if required.
+            </summary>
+            <param name="algorithmId">The algorithm identifier to be defaulted.</param>
+            <returns>If <paramref name="algorithmId"/> is <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.Default"/>
+            returns the value <see cref="P:Goedel.Cryptography.CryptoID.DefaultEncryptionId"/>, 
+            otherwise returns <paramref name="algorithmId"/>.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoID.DefaultDigest(Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Apply the default digest algorithm specified in <see cref="P:Goedel.Cryptography.CryptoID.DefaultDigestId"/> 
+            if required.
+            </summary>
+            <param name="algorithmId">The algorithm identifier to be defaulted.</param>
+            <returns>If <paramref name="algorithmId"/> is <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.Default"/>
+            returns the value <see cref="P:Goedel.Cryptography.CryptoID.DefaultDigestId"/>, 
+            otherwise returns <paramref name="algorithmId"/>.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoID.ForceExchange(Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Apply the default signature algorithm specified in <see cref="P:Goedel.Cryptography.CryptoID.DefaultExchangeId"/> 
+            if required.
+            </summary>
+            <param name="algorithmId">The algorithm identifier to be defaulted.</param>
+            <returns>If <paramref name="algorithmId"/> is <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.Default"/>
+            returns the value <see cref="P:Goedel.Cryptography.CryptoID.DefaultExchangeId"/>, 
+            otherwise returns <paramref name="algorithmId"/>.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoID.ExtractMAC(Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Return the MAC algorithm from a possibly composite ID
+            </summary>
+            <param name="id"></param>
+            <returns>The digest algorithm</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoID.ExtractEncryption(Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Return the encryption algorithm from a possibly composite ID
+            </summary>
+            <param name="id"></param>
+            <returns>The encryption algorithm</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoID.Bulk(Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Get the bulk algorithm
+            </summary>
+            <param name="id">Composite identifier</param>
+            <returns>The bulk component.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoID.Meta(Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Get the Meta algorithm
+            </summary>
+            <param name="id">Composite identifier</param>
+            <returns>The meta component.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoID.Default(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Set algorithm defaults
+            </summary>
+            <param name="id">The specified algorithm</param>
+            <param name="bulkDefault">The default bulk algorithm to apply</param>
+            <param name="metaDefault">The default meta algorithm to apply</param>
+            <returns>The defaulted algorithm</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoID.DefaultMeta(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Set algorithm defaults
+            </summary>
+            <param name="id">The specified algorithm</param>
+            <param name="keyUses"></param>
+            <param name="defaultEncrypt"></param>
+            <param name="defaultSign"></param>
+            <param name="defaultAny"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoID.DefaultMeta(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Set algorithm defaults for key exchange / public algorithm.
+            </summary>
+            <param name="id">The specified algorithm</param>
+            <param name="default">The default to apply</param>
+            <returns>The defaulted algorithm</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoID.DefaultBulk(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Set algorithm defaults for bulk algorithm
+            </summary>
+            <param name="id">The specified algorithm</param>
+            <param name="default">The default to apply</param>
+            <returns>The defaulted algorithm</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoID.Base(Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Get the base part of an algorithm
+            </summary>
+            <param name="id">The identifier to process.</param>
+            <returns>The base part.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoID.Digest(Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Get the bulk algorithm
+            </summary>
+            <param name="id">Composite identifier</param>
+            <returns>The bulk component.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoID.MAC(Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Get the bulk algorithm
+            </summary>
+            <param name="id">Composite identifier</param>
+            <returns>The bulk component.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoID.Encryption(Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Get the bulk algorithm
+            </summary>
+            <param name="id">Composite identifier</param>
+            <returns>The bulk component.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoID.Mode(Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Get the bulk algorithm
+            </summary>
+            <param name="id">Composite identifier</param>
+            <returns>The bulk component.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoID.Signature(Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Get the bulk algorithm
+            </summary>
+            <param name="id">Composite identifier</param>
+            <returns>The bulk component.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoID.Exchange(Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Get the bulk algorithm
+            </summary>
+            <param name="id">Composite identifier</param>
+            <returns>The bulk component.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoID.Wrap(Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Get the bulk algorithm
+            </summary>
+            <param name="id">Composite identifier</param>
+            <returns>The bulk component.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.CryptographicException">
+            <summary>
+            Base class for cryptographic exceptions.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.CryptographicException.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.CryptographicException.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptographicException.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptographicException._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.CryptographicException.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.InvalidFrameIndex">
+            <summary>
+            The container specified a reference to an invalid frame"		
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidFrameIndex.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidFrameIndex.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidFrameIndex.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidFrameIndex._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidFrameIndex.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.InternalCryptographicException">
+            <summary>
+            An internal assertion check failed."
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InternalCryptographicException.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InternalCryptographicException.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.InternalCryptographicException.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.InternalCryptographicException._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.InternalCryptographicException.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.KeyNotFound">
+            <summary>
+            Key could not be found."
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyNotFound.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyNotFound.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyNotFound._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.KeyNotFound.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.MismatchedCurves">
+            <summary>
+            An internal assertion check failed."
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.MismatchedCurves.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.MismatchedCurves.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.MismatchedCurves.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.MismatchedCurves._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.MismatchedCurves.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.CatalogNotInitialized">
+            <summary>
+            The operation requires cryptographic catalog initialization"
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.CatalogNotInitialized.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.CatalogNotInitialized.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.CatalogNotInitialized.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.CatalogNotInitialized._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.CatalogNotInitialized.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.PlatformNotInitialized">
+            <summary>
+            The operation requires platform initialization
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PlatformNotInitialized.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PlatformNotInitialized.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PlatformNotInitialized.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PlatformNotInitialized._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.PlatformNotInitialized.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.OperationNotSupported">
+            <summary>
+            The requested cryptographic operation is not supported
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.OperationNotSupported.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.OperationNotSupported.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.OperationNotSupported.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.OperationNotSupported._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.OperationNotSupported.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.NoAvailableEncryptionKey">
+            <summary>
+            No encryption key is available
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.NoAvailableEncryptionKey.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.NoAvailableEncryptionKey.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.NoAvailableEncryptionKey.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.NoAvailableEncryptionKey._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.NoAvailableEncryptionKey.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.NoAvailableDecryptionKey">
+            <summary>
+            No decryption key is available
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.NoAvailableDecryptionKey.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.NoAvailableDecryptionKey.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.NoAvailableDecryptionKey.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.NoAvailableDecryptionKey._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.NoAvailableDecryptionKey.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.ImplementationLimit">
+            <summary>
+            Placeholder exception to be thrown as a placeholder to mark
+            code needing improvement.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.ImplementationLimit.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.ImplementationLimit.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.ImplementationLimit.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.ImplementationLimit._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.ImplementationLimit.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.InvalidQuorum">
+            <summary>
+            Some or all of the quorum parameters are incorrect.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidQuorum.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidQuorum.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidQuorum.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidQuorum._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidQuorum.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.InsufficientShares">
+            <summary>
+            The recovery attempt failed because there weren't enough shares
+            to recover the key.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InsufficientShares.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InsufficientShares.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.InsufficientShares.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.InsufficientShares._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.InsufficientShares.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.QuorumExceedsShares">
+            <summary>
+            The number of shares required to create a quorum must be 
+            equal to or smaller than the number of shares
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.QuorumExceedsShares.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.QuorumExceedsShares.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.QuorumExceedsShares.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.QuorumExceedsShares._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.QuorumExceedsShares.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.QuorumInsufficient">
+            <summary>
+            The quorum must require at least 2 shares.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.QuorumInsufficient.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.QuorumInsufficient.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.QuorumInsufficient.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.QuorumInsufficient._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.QuorumInsufficient.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.SharesInsufficient">
+            <summary>
+            There must be at least two key shares.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.SharesInsufficient.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.SharesInsufficient.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.SharesInsufficient.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.SharesInsufficient._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.SharesInsufficient.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.QuorumExceeded">
+            <summary>
+            This implementation does not support the number of shares
+            that were requested.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.QuorumExceeded.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.QuorumExceeded.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.QuorumExceeded.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.QuorumExceeded._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.QuorumExceeded.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.QuorumDegreeExceeded">
+            <summary>
+            The number of shares required to create a quorum exceeds the maximum
+            permitted polynomial degree.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.QuorumDegreeExceeded.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.QuorumDegreeExceeded.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.QuorumDegreeExceeded.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.QuorumDegreeExceeded._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.QuorumDegreeExceeded.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.MismatchedShares">
+            <summary>
+            The shares presented are not from the same set of shares.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.MismatchedShares.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.MismatchedShares.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.MismatchedShares.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.MismatchedShares._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.MismatchedShares.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.InsufficientResults">
+            <summary>
+            A recryption attempt failed because there were no result values to combine.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InsufficientResults.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InsufficientResults.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.InsufficientResults.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.InsufficientResults._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.InsufficientResults.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.FingerprintMatchFailed">
+            <summary>
+            Thje data presented did not match the expected fingerprint
+            value.			
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.FingerprintMatchFailed.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.FingerprintMatchFailed.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.FingerprintMatchFailed.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.FingerprintMatchFailed._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.FingerprintMatchFailed.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.CipherModeNotSupported">
+            <summary>
+            A request was made for a cipher mode that the registered provider 
+            does not support.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.CipherModeNotSupported.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.CipherModeNotSupported.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.CipherModeNotSupported.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.CipherModeNotSupported._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.CipherModeNotSupported.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.CryptographicOperationNotSupported">
+            <summary>
+            A request was made for a cipher mode that the registered provider 
+            does not support.			
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.CryptographicOperationNotSupported.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.CryptographicOperationNotSupported.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptographicOperationNotSupported.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptographicOperationNotSupported._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.CryptographicOperationNotSupported.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.KeyTypeMismatch">
+            <summary>
+            The encryption key type does not match the recryption key type
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyTypeMismatch.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyTypeMismatch.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyTypeMismatch.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyTypeMismatch._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.KeyTypeMismatch.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.NoProviderSpecified">
+            <summary>
+            The specified key did not have a valid cryptographic
+            provider. This may be because the key algorithm is 
+            not supported or the key parameters were found to be invalid.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.NoProviderSpecified.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.NoProviderSpecified.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.NoProviderSpecified.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.NoProviderSpecified._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.NoProviderSpecified.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.NullKeyValue">
+            <summary>
+            The key value must not be null
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.NullKeyValue.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.NullKeyValue.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.NullKeyValue.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.NullKeyValue._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.NullKeyValue.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.NullParameter">
+            <summary>
+            The parameter value must not be null
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.NullParameter.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.NullParameter.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.NullParameter.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.NullParameter._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.NullParameter.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.KeySizeNotSupported">
+            <summary>
+            The implementation does not support the requested key size
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeySizeNotSupported.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeySizeNotSupported.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.KeySizeNotSupported.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.KeySizeNotSupported._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.KeySizeNotSupported.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.InitializationFailed">
+            <summary>
+            Initialization of the cryptographic support library failed.
+            This is a fatal error that cannot be recovered from.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InitializationFailed.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InitializationFailed.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.InitializationFailed.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.InitializationFailed._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.InitializationFailed.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.InsufficientKeySize">
+            <summary>
+            The specified key size presents an insufficient work factor
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InsufficientKeySize.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InsufficientKeySize.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.InsufficientKeySize.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.InsufficientKeySize._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.InsufficientKeySize.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.InvalidKeyPairType">
+            <summary>
+            The keypair presented was not of the expected type.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidKeyPairType.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidKeyPairType.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidKeyPairType.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidKeyPairType._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidKeyPairType.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.RecryptionShareLimitExceeded">
+            <summary>
+            An attempt was made to create more recryption shares than the implementation supports.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.RecryptionShareLimitExceeded.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.RecryptionShareLimitExceeded.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.RecryptionShareLimitExceeded.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.RecryptionShareLimitExceeded._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.RecryptionShareLimitExceeded.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.InvalidRecoveredData">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidRecoveredData.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidRecoveredData.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidRecoveredData.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidRecoveredData._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidRecoveredData.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.KeyErasureFailed">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyErasureFailed.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyErasureFailed.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyErasureFailed.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyErasureFailed._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.KeyErasureFailed.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.InvalidOperation">
+            <summary>
+            The cryptographic provider does not support the requested operation
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidOperation.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidOperation.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidOperation.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidOperation._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidOperation.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.InvalidAlgorithm">
+            <summary>
+            The specified algorithm is not valid for the operation attempted
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidAlgorithm.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidAlgorithm.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidAlgorithm.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidAlgorithm._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidAlgorithm.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.InvalidPoint">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidPoint.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidPoint.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidPoint.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidPoint._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidPoint.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.PrivateKeyNotFound">
+            <summary>
+            The operation requested requires a private key that could not be found
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PrivateKeyNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PrivateKeyNotFound.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.PrivateKeyNotFound.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PrivateKeyNotFound._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.PrivateKeyNotFound.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.UnwrapFailed">
+            <summary>
+            The key unwrap operation returned an invalid value.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.UnwrapFailed.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.UnwrapFailed.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.UnwrapFailed.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.UnwrapFailed._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.UnwrapFailed.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.UnknownNamedParameters">
+            <summary>
+            The named parameters specified in an operation are not known
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.UnknownNamedParameters.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.UnknownNamedParameters.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.UnknownNamedParameters.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.UnknownNamedParameters._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.UnknownNamedParameters.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.NotExportable">
+            <summary>
+            The cryptographic provider does not permit export of the private key parameters
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.NotExportable.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.NotExportable.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.NotExportable.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.NotExportable._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.NotExportable.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.EventExtensions">
+            <summary>
+            Extensions class defining logging events and convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.EventExtensions.#cctor">
+            <summary>
+            Static initializer, is called once when the module loads.
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.JoseConstants">
+            <summary>
+            Constants specified in hallambaker-mesh-udf
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.AES">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.AES128">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.AES192">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.AES256">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.X25519">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.X448">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.Ed25519">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.Ed448">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.P256">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.P384">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.P521">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.RSA2048">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.RSA3072">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.RSA4096">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.MLKEM512">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.MLKEM768">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.MLKEM1024">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.MLDSA44">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.MLDSA65">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.MLDSA87">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.SHA2">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.SHA2_256">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.SHA2_512">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.SHA3">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.SHA3_256">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.SHA3_512">
+            <summary>
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.UdfTypeIdentifier">
+            <summary>UDF type identifier codes</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.Authenticator_HMAC_SHA_2_512">
+            <summary>Authenticator HMAC_SHA_2_512</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.Authenticator_HMAC_SHA_3_512">
+            <summary>Authenticator HMAC_SHA_3_512</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.Encryption_HKDF_AES_512">
+            <summary>Encryption HKDF_AES_512</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512">
+            <summary>EncryptionSignature HKDF_AES_512</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.Digest_SHA_3_512">
+            <summary>Digest SHA_3_512</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.Digest_SHA_3_512_20">
+            <summary>Digest SHA_3_512 (20 bits compressed)</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.Digest_SHA_3_512_30">
+            <summary>Digest SHA_3_512 (30 bits compressed)</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.Digest_SHA_3_512_40">
+            <summary>Digest SHA_3_512 (40 bits compressed)</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.Digest_SHA_3_512_50">
+            <summary>Digest SHA_3_512 (50 bits compressed)</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.Digest_SHA_2_512">
+            <summary>Digest SHA_2_512</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.Digest_SHA_2_512_20">
+            <summary>Digest SHA_2_512 (20 bits compressed)</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.Digest_SHA_2_512_30">
+            <summary>Digest SHA_2_512 (30 bits compressed)</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.Digest_SHA_2_512_40">
+            <summary>Digest SHA_2_512 (40 bits compressed)</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.Digest_SHA_2_512_50">
+            <summary>Digest SHA_2_512 (50 bits compressed)</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.Nonce">
+            <summary>Nonce Data</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.OID">
+            <summary>OID distinguished sequence (DER encoded)</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.ShamirSecret">
+            <summary>Shamir Secret Share</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.DerivedKey">
+            <summary>Secret seed</summary>
+        </member>
+        <member name="T:Goedel.Cryptography.UdfAlgorithmIdentifier">
+            <summary>UDF key derevation algorithm identifier codes</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.Any">
+            <summary>Seed MAY be used to generate keypairs for any algorithm</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.X25519">
+            <summary>X25519 keypair as described in RFC7748</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.X448">
+            <summary>X448 keypair as described in RFC7748</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.Ed25519">
+            <summary>Ed25519 keypair as described in RFC8032</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.Ed448">
+            <summary>Ed448 keypair as described in RFC8032</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.P256">
+            <summary>NIST curve P-256</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.P384">
+            <summary>NIST curve P-384</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.P521">
+            <summary>NIST curve P-521</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.RSA2048">
+            <summary>2048 bit RSA keypair</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.RSA3072">
+            <summary>3072 bit RSA keypair</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.RSA4096">
+            <summary>4096 bit RSA keypair</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.MLKEM512">
+            <summary>ML-KEM 512 as described in FIPS 203</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.MLKEM768">
+            <summary>ML-KEM-768 as described in FIPS 203</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.MLKEM1024">
+            <summary>ML-KEM-1024 as described in FIPS 203</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.MLDSA44">
+            <summary>ML-DSA-44 as described in FIPS 204</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.MLDSA65">
+            <summary>ML-DSA-65 as described in FIPS 204</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.MLDSA87">
+            <summary>ML-DSA-87 as described in FIPS 204</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.MeshProfileDevice">
+            <summary>Mesh device profile</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.MeshActivationDevice">
+            <summary>Mesh device activation</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.MeshProfileAccount">
+            <summary>Mesh account account</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.MeshActivationAccount">
+            <summary>Mesh account activation</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.MeshProfileService">
+            <summary>Mesh service profile</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.MeshActivationService">
+            <summary>Mesh host activation</summary>
+        </member>
+        <member name="T:Goedel.Cryptography.DerivedKeyUdfDerrivedKeyUses">
+            <summary>Udf derrived key uses</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.DerivedKeyUdfDerrivedKeyUses.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.DerivedKeyUdfDerrivedKeyUses.Any">
+            <summary>Any</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.DerivedKeyUdfDerrivedKeyUses.Encryption">
+            <summary>Encryption</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.DerivedKeyUdfDerrivedKeyUses.Signature">
+            <summary>Signature</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.DerivedKeyUdfDerrivedKeyUses.Authentication">
+            <summary>Authentication</summary>
+        </member>
+        <member name="T:Goedel.Cryptography.DerivedKeyRSATags">
+            <summary>UDF type identifier codes</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.DerivedKeyRSATags.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="T:Goedel.Cryptography.UDFConstants">
+            <summary>
+            Constants specified in hallambaker-mesh-udf
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.UDFConstants.ToUdfTypeIdentifier(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.UDFConstants.ToLabel(Goedel.Cryptography.UdfTypeIdentifier)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierAnyTag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.Any</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierAnyTitle">
+            <summary>Description for UdfAlgorithmIdentifier.Any</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierX25519Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.X25519</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierX25519Title">
+            <summary>Description for UdfAlgorithmIdentifier.X25519</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierX448Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.X448</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierX448Title">
+            <summary>Description for UdfAlgorithmIdentifier.X448</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierEd25519Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.Ed25519</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierEd25519Title">
+            <summary>Description for UdfAlgorithmIdentifier.Ed25519</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierEd448Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.Ed448</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierEd448Title">
+            <summary>Description for UdfAlgorithmIdentifier.Ed448</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierP256Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.P256</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierP256Title">
+            <summary>Description for UdfAlgorithmIdentifier.P256</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierP384Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.P384</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierP384Title">
+            <summary>Description for UdfAlgorithmIdentifier.P384</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierP521Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.P521</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierP521Title">
+            <summary>Description for UdfAlgorithmIdentifier.P521</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierRSA2048Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.RSA2048</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierRSA2048Title">
+            <summary>Description for UdfAlgorithmIdentifier.RSA2048</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierRSA3072Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.RSA3072</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierRSA3072Title">
+            <summary>Description for UdfAlgorithmIdentifier.RSA3072</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierRSA4096Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.RSA4096</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierRSA4096Title">
+            <summary>Description for UdfAlgorithmIdentifier.RSA4096</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLKEM512Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MLKEM512</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLKEM512Title">
+            <summary>Description for UdfAlgorithmIdentifier.MLKEM512</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLKEM768Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MLKEM768</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLKEM768Title">
+            <summary>Description for UdfAlgorithmIdentifier.MLKEM768</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLKEM1024Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MLKEM1024</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLKEM1024Title">
+            <summary>Description for UdfAlgorithmIdentifier.MLKEM1024</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLDSA44Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MLDSA44</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLDSA44Title">
+            <summary>Description for UdfAlgorithmIdentifier.MLDSA44</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLDSA65Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MLDSA65</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLDSA65Title">
+            <summary>Description for UdfAlgorithmIdentifier.MLDSA65</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLDSA87Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MLDSA87</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLDSA87Title">
+            <summary>Description for UdfAlgorithmIdentifier.MLDSA87</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierReservedIetfTag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.ReservedIetf</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierReservedIetfTitle">
+            <summary>Description for UdfAlgorithmIdentifier.ReservedIetf</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshProfileDeviceTag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MeshProfileDevice</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshProfileDeviceTitle">
+            <summary>Description for UdfAlgorithmIdentifier.MeshProfileDevice</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshActivationDeviceTag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MeshActivationDevice</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshActivationDeviceTitle">
+            <summary>Description for UdfAlgorithmIdentifier.MeshActivationDevice</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshProfileAccountTag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MeshProfileAccount</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshProfileAccountTitle">
+            <summary>Description for UdfAlgorithmIdentifier.MeshProfileAccount</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshActivationAccountTag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MeshActivationAccount</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshActivationAccountTitle">
+            <summary>Description for UdfAlgorithmIdentifier.MeshActivationAccount</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshProfileServiceTag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MeshProfileService</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshProfileServiceTitle">
+            <summary>Description for UdfAlgorithmIdentifier.MeshProfileService</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshActivationServiceTag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MeshActivationService</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshActivationServiceTitle">
+            <summary>Description for UdfAlgorithmIdentifier.MeshActivationService</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierReservedMeshTag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.ReservedMesh</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierReservedMeshTitle">
+            <summary>Description for UdfAlgorithmIdentifier.ReservedMesh</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.UDFConstants.ToUdfAlgorithmIdentifier(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.UDFConstants.ToLabel(Goedel.Cryptography.UdfAlgorithmIdentifier)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.PKIXCert">
+            <summary>application/pkix-cert</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.PKIXCRL">
+            <summary>application/pkix-crl</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.PKIXKey">
+            <summary>application/pkix-keyinfo</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.OpenPGPKey">
+            <summary>application/pgp-keys</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.DNS">
+            <summary>application/dns</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UDFEncryption">
+            <summary>application/udf-encryption</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UDFLock">
+            <summary>application/udf-lock</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.DerivedKeyUdfDerrivedKeyUsesAnyTag">
+            <summary>Jose enumeration tag for DerivedKeyUdfDerrivedKeyUses.Any</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.DerivedKeyUdfDerrivedKeyUsesAnyTitle">
+            <summary>Description for DerivedKeyUdfDerrivedKeyUses.Any</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.DerivedKeyUdfDerrivedKeyUsesEncryptionTag">
+            <summary>Jose enumeration tag for DerivedKeyUdfDerrivedKeyUses.Encryption</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.DerivedKeyUdfDerrivedKeyUsesEncryptionTitle">
+            <summary>Description for DerivedKeyUdfDerrivedKeyUses.Encryption</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.DerivedKeyUdfDerrivedKeyUsesSignatureTag">
+            <summary>Jose enumeration tag for DerivedKeyUdfDerrivedKeyUses.Signature</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.DerivedKeyUdfDerrivedKeyUsesSignatureTitle">
+            <summary>Description for DerivedKeyUdfDerrivedKeyUses.Signature</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.DerivedKeyUdfDerrivedKeyUsesAuthenticationTag">
+            <summary>Jose enumeration tag for DerivedKeyUdfDerrivedKeyUses.Authentication</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.DerivedKeyUdfDerrivedKeyUsesAuthenticationTitle">
+            <summary>Description for DerivedKeyUdfDerrivedKeyUses.Authentication</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.UDFConstants.ToDerivedKeyUdfDerrivedKeyUses(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.UDFConstants.ToLabel(Goedel.Cryptography.DerivedKeyUdfDerrivedKeyUses)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.UDFConstants.ToDerivedKeyRSATags(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.UDFConstants.ToLabel(Goedel.Cryptography.DerivedKeyRSATags)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
+        </member>
+    </members>
+</doc>

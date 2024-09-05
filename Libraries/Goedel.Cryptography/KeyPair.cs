@@ -399,7 +399,7 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
     /// Generate a new keypair. Initialized by the cryptographic
     /// platform provider.
     /// </summary>
-    public static FactoryKeyPairDelegate KeyPairFactoryMlKem { get; set; } = KeyPairMlKem.KeyPairFactory;
+    public static FactoryKeyPairDelegate KeyPairFactoryMlKem { get; set; } = KeyPairMlKemNist.KeyPairFactory;
 
 
     /// <summary>

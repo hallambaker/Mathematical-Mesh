@@ -1,102 +1,60 @@
 ﻿
 namespace Goedel.Cryptography.Nist;
 
-public class AllProbablePrimesWithConditionsGenerator : IFips186_4PrimeGenerator, IFips186_5PrimeGenerator {
-    private readonly IEntropyProvider _entropyProvider;
-    private readonly PrimeTestModes _primeTestMode;
 
+
+
+
+public class AllProbablePrimesWithConditionsGenerator : IFips186_5PrimeGenerator {
+    private readonly IEntropyProvider _entropyProvider;
+    private readonly IPrimeGenerator _primeGenerator;
     private int _pBound = 5;
 
-    public AllProbablePrimesWithConditionsGenerator(IEntropyProvider entropyProvider, PrimeTestModes primeTestMode) {
-        _entropyProvider = entropyProvider;
-        _primeTestMode = primeTestMode;
-        }
-
-    public PrimeGeneratorResult GeneratePrimesFips186_4(PrimeGeneratorParameters param) {
-        // Ensure these are not used
-        param.A = 0;
-        param.B = 0;
-
-        // Rethrow on exception
-        PrimeGeneratorGuard.AgainstInvalidModulusFips186_4(param.Modulus);
-        PrimeGeneratorGuard.AgainstInvalidPublicExponent(param.PublicE);
-        PrimeGeneratorGuard.AgainstInvalidBitlens(param.Modulus, param.BitLens);
-
-        return GeneratePrimes(param);
+    public AllProbablePrimesWithConditionsGenerator(
+                    IPrimeGenerator primeGenerator) {
+        _primeGenerator = primeGenerator;
         }
 
     public PrimeGeneratorResult GeneratePrimesFips186_5(PrimeGeneratorParameters param) {
         _pBound = 20;
 
-        // Rethrow on exception
-        PrimeGeneratorGuard.AgainstInvalidModulusFips186_5(param.Modulus);
-        PrimeGeneratorGuard.AgainstInvalidPublicExponent(param.PublicE);
-        PrimeGeneratorGuard.AgainstInvalidBitlens(param.Modulus, param.BitLens);
+
+        // Don't need the guards as we have declared this an internal class.
+        //// Rethrow on exception
+        //PrimeGeneratorGuard.AgainstInvalidModulusFips186_5(param.Modulus);
+        //PrimeGeneratorGuard.AgainstInvalidPublicExponent(param.PublicE);
+        //PrimeGeneratorGuard.AgainstInvalidBitlens(param.Modulus, param.BitLens);
 
         return GeneratePrimes(param);
         }
 
-    private PrimeGeneratorResult GeneratePrimes(PrimeGeneratorParameters param) {
-        BigInteger p, p1, p2, q, q1, q2, xp, xq, xp1, xp2, xq1, xq2;
+    private (BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger) GetQualifiedPrime(
+                    int bitlens, int modulus, int a, BigInteger exponent) {
 
-        // 1, 2, 3 covered by guards
+        BigInteger p, p1, p2, xp, xp1, xp2;
 
-        // 4
-        xp1 = _entropyProvider.GetEntropy(param.BitLens[0]).ToPositiveBigInteger();
-        if (xp1.IsEven) {
-            xp1++;
-            }
 
-        xp2 = _entropyProvider.GetEntropy(param.BitLens[1]).ToPositiveBigInteger();
-        if (xp2.IsEven) {
-            xp2++;
-            }
+        (xp1, p1) = _primeGenerator.GetPrime(bitlens, modulus);
+        (xp2, p2) = _primeGenerator.GetPrime(bitlens, modulus);
 
-        p1 = xp1;
-        while (!PrimeGeneratorHelper.MillerRabin(_primeTestMode, param.Modulus, p1, true)) {
-            p1 += 2;
-            }
-
-        p2 = xp2;
-        while (!PrimeGeneratorHelper.MillerRabin(_primeTestMode, param.Modulus, p2, true)) {
-            p2 += 2;
-            }
-
-        var pResult = PrimeGeneratorHelper.ProbablePrimeFactor(_primeTestMode, _entropyProvider, _pBound, param.A, p1, p2, param.Modulus, param.PublicE);
+        var pResult = PrimeGeneratorHelper.ProbablePrimeFactor(_primeGenerator, _pBound, a, p1, p2, modulus, exponent);
         if (!pResult.Success) {
-            return new PrimeGeneratorResult($"Failed to generate p, FIPS 186-5 A.1.6/FIPS 186-4 B.3.6 Step 4.3: {pResult.ErrorMessage}");
+            throw new CryptographicException();
             }
         p = pResult.Prime;
         xp = pResult.XPrime;
 
-        // 5
+        return (p, xp, xp1, xp2, p1, p2);
+        }
+
+
+    private PrimeGeneratorResult GeneratePrimes(PrimeGeneratorParameters param) {
+        BigInteger p, p1, p2, q, q1, q2, xp, xq, xp1, xp2, xq1, xq2;
+
+        (p, xp, xp1, xp2, p1, p2) = GetQualifiedPrime(param.BitLens[0], param.Modulus, param.A, param.PublicE);
+
         do {
-            xq1 = _entropyProvider.GetEntropy(param.BitLens[2]).ToPositiveBigInteger();
-            if (xq1.IsEven) {
-                xq1++;
-                }
-
-            xq2 = _entropyProvider.GetEntropy(param.BitLens[3]).ToPositiveBigInteger();
-            if (xq2.IsEven) {
-                xq2++;
-                }
-
-            q1 = xq1;
-            while (!PrimeGeneratorHelper.MillerRabin(_primeTestMode, param.Modulus, q1, true)) {
-                q1 += 2;
-                }
-
-            q2 = xq2;
-            while (!PrimeGeneratorHelper.MillerRabin(_primeTestMode, param.Modulus, q2, true)) {
-                q2 += 2;
-                }
-
-            var qResult = PrimeGeneratorHelper.ProbablePrimeFactor(_primeTestMode, _entropyProvider, _pBound, param.B, q1, q2, param.Modulus, param.PublicE);
-            if (!qResult.Success) {
-                return new PrimeGeneratorResult($"Failed to generate q: {qResult.ErrorMessage}");
-                }
-            q = qResult.Prime;
-            xq = qResult.XPrime;
+            (q, xq, xq1, xq2, q1, q2) = GetQualifiedPrime(param.BitLens[0], param.Modulus, param.A, param.PublicE);
 
             // 6
             } while (BigInteger.Abs(xp - xq) <= NumberTheory.Pow2(param.Modulus / 2 - 100) ||

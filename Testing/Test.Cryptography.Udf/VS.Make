@@ -40,5 +40,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Test.Cryptography.Nist.dll
+	powershell publishtarget Test.Cryptography.Udf.dll
 

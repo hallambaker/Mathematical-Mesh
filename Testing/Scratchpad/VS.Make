@@ -29,7 +29,7 @@ LinkFiles = \
     Test.Cryptography.Keyfile.dll\
     Test.Cryptography.Nist.dll\
     Test.Cryptography.Platform.dll\
-    Test.Cryptography.PQC.dll\
+    Test.Cryptography.Udf.dll\
     Test.Cryptography.dll\
     Test.Discovery.dll\
     Test.MakeSiteDocs.dll\

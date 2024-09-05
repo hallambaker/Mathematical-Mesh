@@ -203,15 +203,15 @@ public class KeyPairMlDsaNist : KeyPair, IOpaqueBinaryKey {
 
         switch (algorithmID) {
             case CryptoAlgorithmId.MLDSA44: {
-                var binaryData = KeySeed(MlKem.SymBytes * 8, ikm, keySpecifier, keyName);
+                var binaryData = KeySeed(256, ikm, keySpecifier, keyName);
                 return Generate(DilithiumParameterSet.ML_DSA_44, binaryData, keySecurity, keyUses);
                 }
             case CryptoAlgorithmId.MLDSA65: {
-                var binaryData = KeySeed(MlKem.SymBytes * 8, ikm, keySpecifier, keyName);
+                var binaryData = KeySeed(256, ikm, keySpecifier, keyName);
                 return Generate(DilithiumParameterSet.ML_DSA_65, binaryData, keySecurity, keyUses);
                 }
             case CryptoAlgorithmId.MLDSA87: {
-                var binaryData = KeySeed(MlKem.SymBytes * 8, ikm, keySpecifier, keyName);
+                var binaryData = KeySeed(256, ikm, keySpecifier, keyName);
                 return Generate(DilithiumParameterSet.ML_DSA_87, binaryData, keySecurity, keyUses);
 
                 }
@@ -226,7 +226,7 @@ public class KeyPairMlDsaNist : KeyPair, IOpaqueBinaryKey {
                 KeySecurity keySecurity = KeySecurity.Bound,
                 KeyUses keyUses = KeyUses.Any) {
 
-        seed = seed ?? Platform.GetRandomBytes(MlKem.SymBytes);
+        seed = seed ?? Platform.GetRandomBytes(32);
         var privateKey = DilithiumPrivate.FromSeed(seed, mode);
         var publicKey = DilithiumPublic.FromPublicKey(privateKey.PublicKey);
 

@@ -20,7 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
-global using Goedel.Cryptography.PQC;
+global using Goedel.Cryptography.Nist;
+global using Goedel.Cryptography.Nist;
 global using Goedel.Test;
 global using Goedel.Utilities;
 

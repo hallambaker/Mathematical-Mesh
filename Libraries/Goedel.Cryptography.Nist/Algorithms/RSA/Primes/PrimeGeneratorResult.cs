@@ -6,7 +6,6 @@ public class PrimeGeneratorResult {
     public AuxiliaryResult AuxValues { get; }
     public string ErrorMessage { get; }
 
-    public bool Success => string.IsNullOrEmpty(ErrorMessage);
 
     public PrimeGeneratorResult(PrimePair primes, AuxiliaryResult aux) {
         Primes = primes;
