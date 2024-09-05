@@ -31,7 +31,15 @@ public class TestUdf : Disposable {
 
 
 
+    [Fact]
+    public void TestUdfKeygen() {
 
+        var testBinding = new AcvpTestBinding<UdfKeyGenTest>(UdfDirectory);
+        foreach (var test in testBinding.Tests) {
+            test.Value.Test();
+            }
+
+        }
 
 
 
@@ -44,23 +52,24 @@ public class TestUdf : Disposable {
     public void GenerateTests() {
 
         var algIds = new UdfAlgorithmIdentifier[] {
-            UdfAlgorithmIdentifier.X25519,
-            UdfAlgorithmIdentifier.X448,
-            UdfAlgorithmIdentifier.Ed25519,
-            UdfAlgorithmIdentifier.Ed448,
-            UdfAlgorithmIdentifier.MLDSA44,
-            UdfAlgorithmIdentifier.MLDSA65,
-            UdfAlgorithmIdentifier.MLDSA87,
-            UdfAlgorithmIdentifier.MLKEM512,
-            UdfAlgorithmIdentifier.MLKEM768,
-            UdfAlgorithmIdentifier.MLKEM1024
-            //,
+
             //UdfAlgorithmIdentifier.P256,
             //UdfAlgorithmIdentifier.P384,
             //UdfAlgorithmIdentifier.P521,
             //UdfAlgorithmIdentifier.RSA2048,
             //UdfAlgorithmIdentifier.RSA3072,
-            //UdfAlgorithmIdentifier.RSA4096
+            //UdfAlgorithmIdentifier.RSA4096,
+            UdfAlgorithmIdentifier.MLDSA44,
+            UdfAlgorithmIdentifier.MLDSA65,
+            UdfAlgorithmIdentifier.MLDSA87,
+            UdfAlgorithmIdentifier.MLKEM512,
+            UdfAlgorithmIdentifier.MLKEM768,
+            UdfAlgorithmIdentifier.MLKEM1024,
+            UdfAlgorithmIdentifier.X25519,
+            UdfAlgorithmIdentifier.X448,
+            UdfAlgorithmIdentifier.Ed25519,
+            UdfAlgorithmIdentifier.Ed448
+
             };
 
         var keySizes = new int[] { 128, 192, 256 };

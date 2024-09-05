@@ -65,7 +65,11 @@ public class UdfKeyGenTest : AcvpTest {
 
 
     public override void Test() {
+        var keypair = Udf.DeriveKey(SeedUdf);
 
+        keypair.UDFBytes.TestEqual(KeyUdf);
+        keypair.UDFValue.TestEqual(KeyUdfString);
+        keypair.CryptoAlgorithmId.ToJoseID().TestEqual(KeyAlgorithm);
         }
 
 

@@ -128,6 +128,13 @@ public class KeyPairMlDsaNist : KeyPair, IOpaqueBinaryKey {
         PrivateKeyInfo = new(this);
         PublicKeyInfo = new(this);
         KeyUses = keyUses;
+
+        CryptoAlgorithmId = PublicKey.Dilithium.Parameters.ParameterSet switch {
+            DilithiumParameterSet.ML_DSA_44 => CryptoAlgorithmId.MLKEM512,
+            DilithiumParameterSet.ML_DSA_65 => CryptoAlgorithmId.MLKEM768,
+            DilithiumParameterSet.ML_DSA_87 => CryptoAlgorithmId.MLKEM1024,
+            _ => throw new InternalCryptographicException()
+            };
         }
 
 

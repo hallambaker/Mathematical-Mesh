@@ -218,6 +218,11 @@ public static class CryptoID {
         var DefaultedID = id.Meta();
         DefaultedID = DefaultedID == CryptoAlgorithmId.Default ?
             @default.Meta() : DefaultedID;
+
+
+        var x = CryptoAlgorithmId.X25519.Meta();
+        var y = CryptoAlgorithmId.X25519.Meta();
+
         return DefaultedID;
         }
 

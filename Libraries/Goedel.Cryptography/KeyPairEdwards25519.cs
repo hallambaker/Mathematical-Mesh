@@ -81,7 +81,9 @@ public class KeyPairEd25519 : KeyPairEdwards {
                 KeyUses keyUses = KeyUses.Any,
                 CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) {
 
-        CryptoAlgorithmId = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmId.Ed25519);
+        CryptoAlgorithmId = cryptoAlgorithmID == CryptoAlgorithmId.Default ? 
+                        CryptoAlgorithmId.Ed25519 : cryptoAlgorithmID;
+
         KeySecurity = keyType;
         KeyUses = keyUses;
         if (keyType == KeySecurity.Public) {

@@ -23,6 +23,7 @@
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
+//using Goedel.Cryptography.Nist;
 using Goedel.Debug;
 //using Goedel.Cryptography.PQC;
 using Goedel.Mesh;
@@ -57,11 +58,13 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
-        TestUdf.Test().GenerateTests();
+        //TestUdf.Test().GenerateTests();
 
 
+        TestNist.GetRSA();
 
-        TestNist.Test().TestUdf();
+
+        TestUdf.Test().TestUdfKeygen();
         
 
         TestNist.Test().TestKemKeyGen();
@@ -148,6 +151,10 @@ partial class Program {
         Logger.LogInformation("End test {time}, Fail={Softfail}", System.DateTime.Now, TestCLI.CountSoftFail);
         //Screen.WriteLine($"Total Soft fail {TestCLI.CountSoftFail}");
         }
+
+
+
+
 
     public static void Debug() {
         var testEnvironmentCommon = new TestEnvironmentCommon(DeterministicSeed.Create());

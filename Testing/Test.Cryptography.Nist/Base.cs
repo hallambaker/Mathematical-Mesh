@@ -1,5 +1,6 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
+using Goedel.Cryptography.Nist;
 
 using System.Net.NetworkInformation;
 using System.Security.Cryptography;
@@ -34,44 +35,68 @@ public class TestNist : Disposable {
     public static TestNist Test() => new();
 
 
-    [Fact]
-    public void TestUdf() {
-        var data = "This is a common test seed".ToBytes();
+    //[Fact]
+    //public void TestUdf() {
+    //    var data = "This is a common test seed".ToBytes();
 
-        var (udfMlDsa44, keyMlDsa44) = UdfSignatureTrial(UdfAlgorithmIdentifier.MLDSA44, 0);
-        var (udfMlDsa65, keyMlDsa65) = UdfSignatureTrial(UdfAlgorithmIdentifier.MLDSA65, 0);
-        var (udfMlDsa87, keyMlDsa87) = UdfSignatureTrial(UdfAlgorithmIdentifier.MLDSA87, 0);
+    //    var (udfMlDsa44, keyMlDsa44) = UdfSignatureTrial(UdfAlgorithmIdentifier.MLDSA44, 0);
+    //    var (udfMlDsa65, keyMlDsa65) = UdfSignatureTrial(UdfAlgorithmIdentifier.MLDSA65, 0);
+    //    var (udfMlDsa87, keyMlDsa87) = UdfSignatureTrial(UdfAlgorithmIdentifier.MLDSA87, 0);
 
-        var (udfMlKem512, keyMlKem512) = UdfEncryptionTrial(UdfAlgorithmIdentifier.MLKEM512, 0);
-        var (udfMlKem768, keyMlKem768) = UdfEncryptionTrial(UdfAlgorithmIdentifier.MLKEM768, 0);
-        var (udfMlKem1024, keyMlKem1024) = UdfEncryptionTrial(UdfAlgorithmIdentifier.MLKEM1024, 0);
+    //    var (udfMlKem512, keyMlKem512) = UdfEncryptionTrial(UdfAlgorithmIdentifier.MLKEM512, 0);
+    //    var (udfMlKem768, keyMlKem768) = UdfEncryptionTrial(UdfAlgorithmIdentifier.MLKEM768, 0);
+    //    var (udfMlKem1024, keyMlKem1024) = UdfEncryptionTrial(UdfAlgorithmIdentifier.MLKEM1024, 0);
+    //    }
+
+
+    //(string, KeyPair) UdfEncryptionTrial(UdfAlgorithmIdentifier id, int count) =>
+    //    UdfTrial(id, count);
+
+    //(string, KeyPair) UdfSignatureTrial(UdfAlgorithmIdentifier id, int count) =>
+    //    UdfTrial(id, count);
+
+
+
+
+
+
+
+
+
+    //(string, KeyPair) UdfTrial(UdfAlgorithmIdentifier id, int count) {
+    //    var data = SHAKE256.Process($"This is a common test seed of {id}-{count}".ToBytes(), 256);
+
+    //    var udf = Udf.DerivedKey(id, data);
+    //    var keypair = Udf.DeriveKey(udf);
+
+
+    //    return (udf, keypair);
+    //    }
+    public static void GetRSA() {
+
+        var random = new Random800_90();
+        var entropyProvider = new EntropyProvider(random);
+
+
+        //var generatorFactory = new PrimeGeneratorFactory();
+
+
+
+        var generator = new AllProbablePrimesWithConditionsGenerator(
+            entropyProvider, PrimeTestModes.TwoPow100ErrorBound);
+
+
+
+
+        var params1 = new PrimeGeneratorParameters() {
+            Modulus = 2048,
+            PublicE = 65537,
+            BitLens = [140, 140, 140, 140]
+            };
+
+
+        var primes = generator.GeneratePrimesFips186_5(params1);
         }
-
-
-    (string, KeyPair) UdfEncryptionTrial(UdfAlgorithmIdentifier id, int count) =>
-        UdfTrial(id, count);
-
-    (string, KeyPair) UdfSignatureTrial(UdfAlgorithmIdentifier id, int count) =>
-        UdfTrial(id, count);
-
-
-
-
-
-
-
-
-
-(string, KeyPair) UdfTrial(UdfAlgorithmIdentifier id, int count) {
-        var data = SHAKE256.Process ($"This is a common test seed of {id}-{count}".ToBytes(), 256);
-
-        var udf = Udf.DerivedKey(id, data);
-        var keypair = Udf.DeriveKey(udf);
-
-
-        return (udf, keypair);
-        }
-
 
 
     [Fact]

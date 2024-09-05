@@ -130,7 +130,14 @@ public class KeyPairMlKemNist : KeyPair, IOpaqueBinaryKey {
         PrivateKey = privateKey;
         PrivateKeyInfo = new(this);
         PublicKeyInfo = new(this);
+        KeyUses = keyUses;
 
+        CryptoAlgorithmId = PublicKey.Kyber.Parameters.ParameterSet switch {
+            KyberParameterSet.ML_KEM_512 => CryptoAlgorithmId.MLKEM512,
+            KyberParameterSet.ML_KEM_768 => CryptoAlgorithmId.MLKEM768,
+            KyberParameterSet.ML_KEM_1024 => CryptoAlgorithmId.MLKEM1024,
+            _ => throw new InternalCryptographicException()
+            };
         }
 
 
