@@ -251,16 +251,19 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
                 var bits = keySize / 2;
                 var seedp = KeySeed(bits, ikm, keySpecifier, keyName, "p");
                 var seedq = KeySeed(bits, ikm, keySpecifier, keyName, "q");
-                "Implement RSA generation from seed".TaskFunctionality(true);
 
-                keyPair = KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Encrypt, algorithmID);
+
+                keyPair = KeyPairRSA.KeyPairFactory (CryptoAlgorithmId.RSAExch,
+                    keySecurity, ikm, keySpecifier, keyName, keyCollection, keySize, keyUses);
+
+                    //KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Encrypt, algorithmID);
                 break;
                 }
             case CryptoAlgorithmId.RSASign: {
                 var bits = keySize / 2;
                 var seedp = KeySeed(bits, ikm, keySpecifier, keyName, "p");
                 var seedq = KeySeed(bits, ikm, keySpecifier, keyName, "q");
-                "Implement RSA generation from seed".TaskFunctionality(true);
+
 
                 keyPair = KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Sign, algorithmID);
                 break;

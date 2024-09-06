@@ -56,19 +56,19 @@ public class TestUdf : Disposable {
             //UdfAlgorithmIdentifier.P256,
             //UdfAlgorithmIdentifier.P384,
             //UdfAlgorithmIdentifier.P521,
-            //UdfAlgorithmIdentifier.RSA2048,
-            //UdfAlgorithmIdentifier.RSA3072,
-            //UdfAlgorithmIdentifier.RSA4096,
-            UdfAlgorithmIdentifier.MLDSA44,
-            UdfAlgorithmIdentifier.MLDSA65,
-            UdfAlgorithmIdentifier.MLDSA87,
-            UdfAlgorithmIdentifier.MLKEM512,
-            UdfAlgorithmIdentifier.MLKEM768,
-            UdfAlgorithmIdentifier.MLKEM1024,
-            UdfAlgorithmIdentifier.X25519,
-            UdfAlgorithmIdentifier.X448,
-            UdfAlgorithmIdentifier.Ed25519,
-            UdfAlgorithmIdentifier.Ed448
+            UdfAlgorithmIdentifier.RSA2048,
+            UdfAlgorithmIdentifier.RSA3072,
+            UdfAlgorithmIdentifier.RSA4096,
+            //UdfAlgorithmIdentifier.MLDSA44,
+            //UdfAlgorithmIdentifier.MLDSA65,
+            //UdfAlgorithmIdentifier.MLDSA87,
+            //UdfAlgorithmIdentifier.MLKEM512,
+            //UdfAlgorithmIdentifier.MLKEM768,
+            //UdfAlgorithmIdentifier.MLKEM1024,
+            //UdfAlgorithmIdentifier.X25519,
+            //UdfAlgorithmIdentifier.X448,
+            //UdfAlgorithmIdentifier.Ed25519,
+            //UdfAlgorithmIdentifier.Ed448
 
             };
 
@@ -92,6 +92,8 @@ public class TestUdf : Disposable {
 
             foreach (var keySize in keySizes) {
                 for (var i = 0; i < testsPer; i++) {
+
+                    System.Console.WriteLine($"Test {testId}  {algId}, {keySize}");
 
                     var test = new UdfKeyGenTest(testId++, algId, keySize);
                     group.Add(test.TestData);

@@ -1215,9 +1215,10 @@ public class Udf {
         var defaultId = cryptoAlgorithmIdin.DefaultMeta(keyUses, CryptoAlgorithmId.X448,
                         CryptoAlgorithmId.Ed448, CryptoAlgorithmId.X448);
 
-
-        int keySize = 0;
         CryptoAlgorithmId cryptoAlgorithmId = algorithm switch {
+            UdfAlgorithmIdentifier.RSA2048 => CryptoAlgorithmId.RSAExch,
+            UdfAlgorithmIdentifier.RSA3072 => CryptoAlgorithmId.RSAExch,
+            UdfAlgorithmIdentifier.RSA4096 => CryptoAlgorithmId.RSAExch,
             UdfAlgorithmIdentifier.Ed25519 => CryptoAlgorithmId.Ed25519,
             UdfAlgorithmIdentifier.Ed448 => CryptoAlgorithmId.Ed448,
             UdfAlgorithmIdentifier.X25519 => CryptoAlgorithmId.X25519,
@@ -1237,6 +1238,14 @@ public class Udf {
             UdfAlgorithmIdentifier.MLKEM1024 => CryptoAlgorithmId.MLKEM1024,
             _ => throw new InvalidOperationException()
             };
+
+        var keySize = algorithm switch {
+            UdfAlgorithmIdentifier.RSA2048 => 2048,
+            UdfAlgorithmIdentifier.RSA3072 => 3072,
+            UdfAlgorithmIdentifier.RSA4096 => 4096,
+            _ => 0
+            };
+
 
         var keySpecifier = KeySpecifier(algorithm);
         return KeyPair.Factory(cryptoAlgorithmId, keySecurity,

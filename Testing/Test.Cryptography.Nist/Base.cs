@@ -75,16 +75,46 @@ public class TestNist : Disposable {
     //    }
     public static void GetRSA() {
 
-        var primeGenerator = new PrimeGenerator();
-        var composer = new CrtKeyComposer(primeGenerator);
 
-        for (var i = 0; i < 100; i++) {
-            Console.WriteLine($"Pass {i}");
 
-            var keypair1 = composer.GenerateKeyPair(2048);
-            var keypair2 = composer.GenerateKeyPair(3072);
-            var keypair3 = composer.GenerateKeyPair(4096);
-            }
+
+        //var primeGenerator = new PrimeGenerator();
+        //var composer = new CrtKeyComposer(primeGenerator);
+        //var keypair1 = composer.GenerateKeyPair(2048);
+
+
+        var keypair1 =  KeyFactoryRsa.Generate(null, null, "fred", 2048);
+
+
+        var rsaKeyPair = KeyPairRSA.Generate(2048, KeySecurity.Exportable);
+
+        var pkix = rsaKeyPair.PkixPrivateKeyRSA;
+
+        var p = pkix.Prime1.BigIntegerBigEndian();
+        var q = pkix.Prime2.BigIntegerBigEndian();
+        var m = pkix.Modulus.BigIntegerBigEndian();
+
+        var modulus = p * q;
+        var test = modulus - m;
+
+        Console.WriteLine($"Test {test}");
+
+
+        var key2 = new KeyPairRSA(pkix);
+
+        var key3 = new KeyPairRSA(keypair1);
+
+        Console.WriteLine($"UDFs {rsaKeyPair.UDFValue}");
+        Console.WriteLine($"\nUDFs {key2.UDFValue}");
+        //var PkixPrivateKeyRsa = rsaKeyPair.PkixPrivateKeyRsa;
+
+        //for (var i = 0; i < 100; i++) {
+        //    Console.WriteLine($"Pass {i}");
+
+        //    var keypair1 = composer.GenerateKeyPair(2048);
+        //    var keypair2 = composer.GenerateKeyPair(3072);
+        //    var keypair3 = composer.GenerateKeyPair(4096);
+        //    }
         //var random = new Random800_90();
         //var entropyProvider = new EntropyProvider(random);
 

@@ -1146,6 +1146,24 @@
             RSA private key in CRT form.
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Nist.PrivateKeyRsaCrt.P">
+            <summary>Prime1</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrivateKeyRsaCrt.Q">
+            <summary>Prime2</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrivateKeyRsaCrt.D">
+            <summary>PrivateExponent</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrivateKeyRsaCrt.DMP1">
+            <summary>Exponent1</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrivateKeyRsaCrt.DMQ1">
+            <summary>Exponent2</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrivateKeyRsaCrt.IQMP">
+            <summary>Coefficient</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.Nist.PrimeGeneratorHelper.ProbablePrimeFactor(Goedel.Cryptography.Nist.IPrimeGenerator,System.Int32,System.Int32,System.Numerics.BigInteger,System.Numerics.BigInteger,System.Int32,System.Numerics.BigInteger)">
             <summary>
             C.9 Compute a Probable Prime Factor Based on Auxiliary Primes

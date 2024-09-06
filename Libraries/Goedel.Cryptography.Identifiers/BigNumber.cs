@@ -145,26 +145,9 @@ public static class BigNumber {
         return Result;
         }
 
-    /// <summary>
-    /// Return a positive random BigInteger that is strictly less than 2^bits.
-    /// </summary>
-    /// <param name="Bits">The number of bits in the output</param>
-    /// <returns>The random value.</returns>
-    public static BigInteger Random(int Bits) {
-        var bytes = CryptoCatalog.GetBytes(Bits / 8);
-        return BigIntegerLittleEndian(bytes);
-        }
 
 
-    /// <summary>
-    /// Return a positive random BigInteger that is strictly less than 2^bits.
-    /// </summary>
-    /// <param name="maximum">One more than the maximum value that may be returned.</param>
-    /// <returns>The random value.</returns>
-    public static BigInteger Random(this BigInteger maximum) {
-        var bytes = CryptoCatalog.GetBytes(maximum.GetByteCount() + 16);
-        return BigIntegerLittleEndian(bytes) % maximum;
-        }
+
 
 
     /// <summary>
@@ -406,62 +389,6 @@ public static class BigNumber {
         }
 
 
-    /// <summary>
-    /// Miller-Rabin probabalistic primality test.
-    /// https://rosettacode.org/wiki/Miller%E2%80%93Rabin_primality_test#C.23
-    /// </summary>
-    /// <param name="source">The integer to test</param>
-    /// <param name="certainty">The degree of certainty.</param>
-    /// <returns>If the value <paramref name="source"/> is found to not be prime,
-    /// returns false. Otherwise, returns true.</returns>
-    public static bool IsProbablePrime(this BigInteger source, int certainty = 128) {
-        if (source == 2 || source == 3) {
-            return true;
-            }
-        if (source < 2 || source.IsEven) {
-            return false;
-            }
 
-        BigInteger d = source - 1;
-        int s = 0;
-
-        while (d % 2 == 0) {
-            d /= 2;
-            s += 1;
-            }
-
-        byte[] bytes = new byte[source.ToByteArray().LongLength];
-        BigInteger a;
-
-        for (int i = 0; i < certainty; i++) {
-            do {
-                Platform.FillRandom(bytes, 0, bytes.Length);
-                a = new BigInteger(bytes);
-                } while (a < 2 || a >= source - 2);
-
-            var x = BigInteger.ModPow(a, d, source);
-            if (x == 1 || x == source - 1) {
-                continue;
-                }
-
-            for (int r = 1; r < s; r++) {
-                x = BigInteger.ModPow(x, 2, source);
-                if (x == 1) {
-                    return false;
-                    }
-
-                if (x == source - 1) {
-                    break;
-                    }
-                }
-
-            if (x != source - 1) {
-                return false;
-                }
-            }
-
-        return true;
-
-        }
 
     }

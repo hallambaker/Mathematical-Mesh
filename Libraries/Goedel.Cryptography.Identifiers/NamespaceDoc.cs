@@ -20,27 +20,20 @@
 //  THE SOFTWARE.
 #endregion
 
-
-global using System.Collections;
-global using System.Data;
-global using System.Numerics;
-global using System.Reflection;
-global using System.Runtime.Serialization;
-global using System.Text;
-global using System.Security.Cryptography;
-global using System.Text.RegularExpressions;
-global using Goedel.Cryptography;
-
 global using Goedel.Utilities;
+global using System.Numerics;
+global using System.Text;
 
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif
 
-namespace Goedel.Cryptography.Nist;
+namespace Goedel.Cryptography;
 
 /// <summary>
-/// Additional cryptographic algorithms derived from the NIST reference code.
+/// Core class for cryptographic algorithm handling. Although .NET provides classes
+/// to do some of this, the implementations are inconsistent across algorithm types
+/// and do not support many of the algorithms that we wish to use. 
 /// </summary>
 
 [System.Runtime.CompilerServices.CompilerGenerated]

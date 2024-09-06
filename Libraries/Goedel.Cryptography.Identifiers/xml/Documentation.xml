@@ -4,6 +4,196 @@
         <name>Goedel.Cryptography.Identifiers</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Cryptography.BitIndex">
+            <summary>
+            Convert a BigInteger to a Bitfield and return successive bits
+            beginning with the most significant and ending with the least.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.BitIndex.GoingDown">
+            <summary>
+            Returns true if there is further work to be completed, otherwise false.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.BitIndex.GoingUp">
+            <summary>
+            Returns true if there is further work to be completed, otherwise false.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.BitIndex.#ctor(System.Numerics.BigInteger,System.Int32,System.Boolean)">
+            <summary>
+            Construct from a big integte
+            </summary>
+            <param name="Value">The bit field value</param>
+            <param name="Bits">The number of bits to process</param>
+            <param name="Up">If true, count is performed in ascending order</param>
+        </member>
+        <member name="M:Goedel.Cryptography.BitIndex.Down">
+            <summary>
+            Return the value of the next bit as boolean value and advance the indicies
+            </summary>
+            <returns>True iff the next bit to be read is 1.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.BitIndex.Up">
+            <summary>
+            Return the value of the next bit as boolean value and advance the indicies
+            </summary>
+            <returns>True iff the next bit to be read is 1.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.BigNumber">
+            <summary>
+            Extension methods for manipulating BigIntegers
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.BigNumber.Duplicate(System.Byte[])">
+            <summary>
+            Duplicate the values in the array
+            </summary>
+            <param name="Source">The source array</param>
+            <returns>A new array containing a copy of the elements in the source.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.BigNumber.Duplicate(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Duplicate the values in the array
+            </summary>
+            <param name="Source">The source array</param>
+            <param name="Index">The starting index for the copy</param>
+            <param name="Length">The number of items to copy</param>
+            <returns>A new array containing a copy of a selected range of the elements in the source.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.BigNumber.ByteArrayLittleEndian(System.Numerics.BigInteger,System.Int32)">
+            <summary>
+            Encode the code point <paramref name="data"/>.
+            </summary>
+            <param name="data">The point to encode.</param>
+            <param name="length">The number of bytes to output.</param>
+            <returns>The encoded format of the point</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.BigNumber.BigIntegerLittleEndian(System.Byte[])">
+            <summary>
+            Convert an array of bytes in little endian format to a Big Integer
+            </summary>
+            <param name="Data">The data in little endian format.</param>
+            <returns>The constructed integer</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.BigNumber.BigIntegerBigEndian(System.Byte[])">
+            <summary>
+            Convert an array of bytes in big endian format to a Big Integer
+            </summary>
+            <param name="Data">The data in big endian format.</param>
+            <returns>The constructed integer</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.BigNumber.HexToBigInteger(System.String)">
+            <summary>
+            Create a Big Integer from a hexadecimal string constant. This is not optimized for
+            speed since it is unlikely this will be called very often and may well 
+            be optimized away. Note that the caller is responsible for making sure
+            that the input is positive
+            </summary>
+            <param name="Text">The hexadecimal string to convert</param>
+            <returns>The resulting integer</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.BigNumber.DecimalToBigInteger(System.String)">
+            <summary>
+            Create a Big Integer from a decimal string constant. This is not optimized for
+            speed since it is unlikely this will be called very often and may well 
+            be optimized away. Note that the caller is responsible for making sure
+            that the input is positive
+            </summary>
+            <param name="Text">The decimal value</param>
+            <returns>The resulting integer</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.BigNumber.ModularInverse(System.Numerics.BigInteger,System.Numerics.BigInteger)">
+            <summary>
+            Calculate the modular inverse of a number using the x(p-2) approach
+            </summary>
+            <param name="x">Value</param>
+            <param name="p">Modulus</param>
+            <returns>The modular inverse, i.e. the number y such that 
+            (x * y) mod p = 1.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.BigNumber.ModularInverse(System.Int32,System.Numerics.BigInteger)">
+            <summary>
+            Calculate the modular inverse of a number using the x(p-2) approach
+            </summary>
+            <param name="x">Value</param>
+            <param name="p">Modulus</param>
+            <returns>The modular inverse, i.e. the number y such that 
+            (x * y) mod p = 1.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.BigNumber.Mod(System.Numerics.BigInteger,System.Numerics.BigInteger)">
+            <summary>
+            Calculate the modulus of a number with correct handling for negative numbers.
+            </summary>
+            <param name="x">Value</param>
+            <param name="p">Modulus</param>
+            <returns>x mod p</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.BigNumber.SqrtMinus1(System.Numerics.BigInteger)">
+            <summary>
+            Calculate the square root of -1 modulo p
+            </summary>
+            <param name="p">The modulus</param>
+            <returns>A value x such that x*x mod p = -1 mod p</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.BigNumber.Sqrt(System.Numerics.BigInteger,System.Numerics.BigInteger,System.Nullable{System.Numerics.BigInteger},System.Nullable{System.Boolean})">
+            <summary>
+            Return a Square root of a number modulo a prime. 
+            </summary>
+            <param name="x2">The value</param>
+            <param name="p">The modulus</param>
+            <param name="SqrtMinus1">The value of the square root -1 mod p.</param>
+            <param name="Odd">If specified, specifies whether X is odd (true) or even (false).</param>
+            <returns>A value x such that x*x = x2.</returns>
+            <exception cref="T:Goedel.Cryptography.InvalidOperation">Thrown if the value does not have a root.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.BigNumber.Sqrt8k5(System.Numerics.BigInteger,System.Numerics.BigInteger,System.Nullable{System.Numerics.BigInteger},System.Nullable{System.Boolean})">
+            <summary>
+            Return a Square root of a number modulo the prime for the
+            special case x2 % 8 == 5.
+            </summary>
+            <param name="x2">The value</param>
+            <param name="p">The modulus</param>
+            <param name="SqrtMinus1">The value of the square root -1 mod p.</param>
+            <param name="Odd">If specified, specifies whether X is odd (true) or even (false).</param>
+            <returns>A value x such that x*x = x2.</returns>
+            <exception cref="T:Goedel.Cryptography.InvalidOperation">Thrown if the value does not have a root.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.BigNumber.Mod(System.Int32,System.Numerics.BigInteger)">
+            <summary>
+            Calculate the modulus of a number with correct handling for negative numbers.
+            </summary>
+            <param name="x">Value</param>
+            <param name="p">Modulus</param>
+            <returns>x mod p</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.BigNumber.ToByteArrayLittleEndian(System.Numerics.BigInteger)">
+            <summary>
+            Convert <paramref name="bigInteger"/> to a byte array in little endian format.
+            </summary>
+            <param name="bigInteger">The integer to be converted.</param>
+            <returns>The byte array.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.BigNumber.ToByteArrayLittleEndian(System.Numerics.BigInteger,System.Int32)">
+            <summary>
+            Convert <paramref name="bigInteger"/> to a byte array in little endian format,
+            padding the resulting array so that it is at least <paramref name="length"/>
+            bytes in length.
+            </summary>
+            <param name="bigInteger">The integer to be converted.</param>
+            <param name="length">The exact length of the result.</param>
+            <returns>The byte array.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.BigNumber.ToByteArrayBigEndian(System.Numerics.BigInteger,System.Int32)">
+            <summary>
+            Convert <paramref name="bigInteger"/> to a byte array in big endian format,
+            padding the resulting array so that it is at least <paramref name="length"/>
+            bytes in length.
+            </summary>
+            <param name="bigInteger">The integer to be converted.</param>
+            <param name="length">The exact length of the result.</param>
+            <returns>The byte array.</returns>
+        </member>
         <member name="T:Goedel.Cryptography.CryptoAlgorithmId">
             <summary>
             <para>
@@ -2050,6 +2240,13 @@
         </member>
         <member name="F:Goedel.Cryptography.JoseConstants.SHA3_512">
             <summary>
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.NamespaceDoc">
+            <summary>
+            Core class for cryptographic algorithm handling. Although .NET provides classes
+            to do some of this, the implementations are inconsistent across algorithm types
+            and do not support many of the algorithms that we wish to use. 
             </summary>
         </member>
         <member name="T:Goedel.Cryptography.UdfTypeIdentifier">

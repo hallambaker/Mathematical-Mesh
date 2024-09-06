@@ -58,14 +58,16 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
-        //TestUdf.Test().GenerateTests();
+        TestUdf.Test().GenerateTests();
 
 
-        TestNist.GetRSA();
 
 
         //TestUdf.Test().TestUdfKeygen();
-        
+
+        //TestNist.GetRSA();
+
+
 
         //TestNist.Test().TestKemKeyGen();
         //TestNist.Test().TestKemEncapDecap();
