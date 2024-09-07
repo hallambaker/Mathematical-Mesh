@@ -114,7 +114,7 @@ public partial class PrivateKeyECDH {
 
         Private = pkixKey.Data;
         PKIXParametersPrivate = pkixKey;
-        Curve = pkixKey.IsRecryption ? pkixKey.CurveJose + "z" : pkixKey.CurveJose;
+        Curve = pkixKey.IsThreshold ? pkixKey.CurveJose + "z" : pkixKey.CurveJose;
         }
 
 

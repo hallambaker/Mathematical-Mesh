@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 9/7/2024 12:41:44 AM
+//  This file was automatically generated at 9/7/2024 7:13:46 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1576,6 +1576,111 @@ namespace Goedel.Cryptography.PKIX {
 
 
 		}
+    /// <summary>
+    /// ansii_x9_62_arc =  iso(1)  member_body(2)  us(840)  ansii_x9_62(10045) 
+    /// </summary>
+	public static partial class Constants {
+		/// <summary>
+		/// ansii_x9_62_arc as integer sequence
+		/// </summary>
+		public readonly static int [] OID__ansii_x9_62_arc = new int [] { 1, 2, 840, 10045};
+		/// <summary>
+		/// ansii_x9_62_arc as string
+		/// </summary>
+		public const string OIDS__ansii_x9_62_arc = "1.2.840.10045";
+
+
+		/// <summary>
+		/// id_ec_publicKey = ansii_x9_62_arc (2) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ec_publicKey = new int [] { 1, 2, 840, 10045, 2};
+		/// <summary>
+		/// id_ec_publicKey = ansii_x9_62_arc (2) as string
+		/// </summary>
+		public const string OIDS__id_ec_publicKey = "1.2.840.10045.2";
+
+
+
+		/// <summary>
+		/// id_ec_curves = ansii_x9_62_arc (3) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ec_curves = new int [] { 1, 2, 840, 10045, 3};
+		/// <summary>
+		/// id_ec_curves = ansii_x9_62_arc (3) as string
+		/// </summary>
+		public const string OIDS__id_ec_curves = "1.2.840.10045.3";
+
+
+
+		/// <summary>
+		/// id_ec_curves_prime = id_ec_curves (1) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_ec_curves_prime = new int [] { 1, 2, 840, 10045, 3, 1};
+		/// <summary>
+		/// id_ec_curves_prime = id_ec_curves (1) as string
+		/// </summary>
+		public const string OIDS__id_ec_curves_prime = "1.2.840.10045.3.1";
+
+
+
+		/// <summary>
+		/// secp256r1 = id_ec_curves_prime (7) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__secp256r1 = new int [] { 1, 2, 840, 10045, 3, 1, 7};
+		/// <summary>
+		/// secp256r1 = id_ec_curves_prime (7) as string
+		/// </summary>
+		public const string OIDS__secp256r1 = "1.2.840.10045.3.1.7";
+
+
+		}
+    /// <summary>
+    /// certicom_arc =  iso(1)  identified_organization(3)  certicom(132) 
+    /// </summary>
+	public static partial class Constants {
+		/// <summary>
+		/// certicom_arc as integer sequence
+		/// </summary>
+		public readonly static int [] OID__certicom_arc = new int [] { 1, 3, 132};
+		/// <summary>
+		/// certicom_arc as string
+		/// </summary>
+		public const string OIDS__certicom_arc = "1.3.132";
+
+
+		/// <summary>
+		/// certicom_curve = certicom_arc (0) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__certicom_curve = new int [] { 1, 3, 132, 0};
+		/// <summary>
+		/// certicom_curve = certicom_arc (0) as string
+		/// </summary>
+		public const string OIDS__certicom_curve = "1.3.132.0";
+
+
+
+		/// <summary>
+		/// secp384r1 = certicom_curve (34) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__secp384r1 = new int [] { 1, 3, 132, 0, 34};
+		/// <summary>
+		/// secp384r1 = certicom_curve (34) as string
+		/// </summary>
+		public const string OIDS__secp384r1 = "1.3.132.0.34";
+
+
+
+		/// <summary>
+		/// secp521r1 = certicom_curve (35) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__secp521r1 = new int [] { 1, 3, 132, 0, 35};
+		/// <summary>
+		/// secp521r1 = certicom_curve (35) as string
+		/// </summary>
+		public const string OIDS__secp521r1 = "1.3.132.0.35";
+
+
+		}
 	}
 
 
@@ -1926,7 +2031,7 @@ namespace Goedel.Cryptography.PKIX {
 		public int []  Algorithm  {get; set;}
 
 		/// <summary> ASN.1 member Parameters </summary>
-		public List <byte []  > Parameters  {get; set;}
+		public int []  Parameters  {get; set;}
 
 
 		/// <summary>
@@ -1938,17 +2043,7 @@ namespace Goedel.Cryptography.PKIX {
         public override void Encode (Goedel.ASN.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 
-			if (Parameters == null || Parameters.Count == 0) {
-				Buffer.Encode__Object (null, 0, -1);
-				}
-			else {
-				int XPosition = Buffer.Encode__Sequence_Start();
-				foreach (byte []   _Index in Parameters) {
-		
-			Buffer.Encode__Any  (_Index, 0, 0);
-					}
-				Buffer.Encode__Sequence_End(XPosition, 0, -1);
-			}
+			Buffer.Encode__OIDRef  (Parameters, 4, -1);
 			Buffer.Debug ("Parameters");
 
 			Buffer.Encode__OIDRef  (Algorithm, 0, -1);
@@ -1968,17 +2063,7 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Decode__OIDRef  (Algorithm, 0, -1);
 			Buffer.Debug ("Algorithm");
 
-			if (Parameters == null || Parameters.Count == 0) {
-				Buffer.Decode__Object (null, 0, -1);
-				}
-			else {
-				int XPosition = Buffer.Decode__Sequence_Start();
-				foreach (byte []   _Index in Parameters) {
-		
-			Buffer.Encode__Any  (_Index, 0, 0);
-					}
-				Buffer.Decode__Sequence_End(XPosition, 0, -1);
-			}
+			Buffer.Decode__OIDRef  (Parameters, 4, -1);
 			Buffer.Debug ("Parameters");
 			Buffer.Decode__Sequence_End (Position);
             }

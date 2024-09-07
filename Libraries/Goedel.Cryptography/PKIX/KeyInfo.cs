@@ -29,25 +29,23 @@ public partial class SubjectPublicKeyInfo {
     /// <summary>
     /// Construct from algorithm identifier and key data.
     /// </summary>
-    /// <param name="OID">Algorithm identifier.</param>
-    /// <param name="KeyData">Key Data.</param>
-
-    public SubjectPublicKeyInfo(string OID, byte[] KeyData) {
-        this.Algorithm = new AlgorithmIdentifier(OID);
-        this.SubjectPublicKey = KeyData;
+    /// <param name="oid">Algorithm identifier.</param>
+    /// <param name="keyData">Key Data.</param>
+    public SubjectPublicKeyInfo(string oid, byte[] keyData) {
+        Algorithm = new AlgorithmIdentifier(oid);
+        SubjectPublicKey = keyData;
 
         }
 
     /// <summary>
     /// Construct from algorithm identifier and key data.
     /// </summary>
-    /// <param name="OID">Algorithm identifier.</param>
-    /// <param name="KeyData">Key Data.</param>
-
-    public SubjectPublicKeyInfo(int[] OID, byte[] KeyData) {
-        this.Algorithm = new AlgorithmIdentifier(OID);
-        this.SubjectPublicKey = KeyData;
-
+    /// <param name="oid">Algorithm identifier.</param>
+    /// <param name="keyData">Key Data.</param>
+    /// <param name="parameter">Optional algorithm parameter.</param>
+    public SubjectPublicKeyInfo(int[] oid, byte[] keyData, int[] parameter = null) {
+        Algorithm = new AlgorithmIdentifier(oid, parameter);
+        SubjectPublicKey = keyData;
         }
 
     }
@@ -59,23 +57,17 @@ public partial class AlgorithmIdentifier {
     /// <summary>
     /// Construct from OID identifier string.
     /// </summary>
-    /// <param name="ID">The identifier as a CryptoAlgorithmID</param>
-    public AlgorithmIdentifier(CryptoAlgorithmId ID) {
-        var OID = ID.ToOID();
-
-        this.Algorithm = Goedel.ASN.ASN.OIDToArray(OID);
-        }
-
-    /// <summary>
-    /// Construct from OID identifier string.
-    /// </summary>
-    /// <param name="ID">The identifier as a string</param>
-    public AlgorithmIdentifier(string ID) => Algorithm = Goedel.ASN.ASN.OIDToArray(ID);
+    /// <param name="id">The identifier as a string</param>
+    public AlgorithmIdentifier(string id) => Algorithm = ASN.ASN.OIDToArray(id);
 
     /// <summary>
     /// Create an Algorithm Identifier from an integer array.
     /// </summary>
-    /// <param name="Numbers">OID as an integer sequence.</param>
-    public AlgorithmIdentifier(int[] Numbers) => Algorithm = Numbers;
+    /// <param name="numbers">OID as an integer sequence.</param>
+    /// <param name="parameter">Optional algorithm parameter.</param>
+    public AlgorithmIdentifier(int[] numbers, int[] parameter = null) {
+        Algorithm = numbers;
+        Parameters = parameter;
+        }
 
     }

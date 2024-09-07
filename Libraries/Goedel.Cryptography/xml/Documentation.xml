@@ -385,7 +385,7 @@
         <member name="P:Goedel.Cryptography.Algorithms.CurveEdwards25519Private.Encoding">
             <summary>The wire encoding. Null if the key is not exportable</summary>
         </member>
-        <member name="P:Goedel.Cryptography.Algorithms.CurveEdwards25519Private.IsRecryption">
+        <member name="P:Goedel.Cryptography.Algorithms.CurveEdwards25519Private.IsThreshold">
             <summary>If true, this is a recryption key.</summary>
         </member>
         <member name="M:Goedel.Cryptography.Algorithms.CurveEdwards25519Private.#ctor">
@@ -865,7 +865,7 @@
         <member name="P:Goedel.Cryptography.Algorithms.CurveEdwards448Private.Encoding">
             <summary>The wire encoding. Null if the key is not exportable</summary>
         </member>
-        <member name="P:Goedel.Cryptography.Algorithms.CurveEdwards448Private.IsRecryption">
+        <member name="P:Goedel.Cryptography.Algorithms.CurveEdwards448Private.IsThreshold">
             <summary>If true, this is a recryption key.</summary>
         </member>
         <member name="M:Goedel.Cryptography.Algorithms.CurveEdwards448Private.#ctor(System.Boolean)">
@@ -1235,7 +1235,7 @@
         <member name="P:Goedel.Cryptography.Algorithms.CurveX25519Private.Secret">
             <summary>The random secret used to generate the private key</summary>
         </member>
-        <member name="P:Goedel.Cryptography.Algorithms.CurveX25519Private.IsRecryption">
+        <member name="P:Goedel.Cryptography.Algorithms.CurveX25519Private.IsThreshold">
             <summary>If true, this is a recryption key.</summary>
         </member>
         <member name="P:Goedel.Cryptography.Algorithms.CurveX25519Private.Private">
@@ -1568,7 +1568,7 @@
         <member name="P:Goedel.Cryptography.Algorithms.CurveX448Private.Secret">
             <summary>The random secret used to generate the private key</summary>
         </member>
-        <member name="P:Goedel.Cryptography.Algorithms.CurveX448Private.IsRecryption">
+        <member name="P:Goedel.Cryptography.Algorithms.CurveX448Private.IsThreshold">
             <summary>If true, this is a recryption key.</summary>
         </member>
         <member name="P:Goedel.Cryptography.Algorithms.CurveX448Private.Private">
@@ -5009,7 +5009,7 @@
         <member name="P:Goedel.Cryptography.IKeyPrivateECDH.Data">
             <summary> ASN.1 member Data </summary>
         </member>
-        <member name="P:Goedel.Cryptography.IKeyPrivateECDH.IsRecryption">
+        <member name="P:Goedel.Cryptography.IKeyPrivateECDH.IsThreshold">
             <summary>If true, this is a recryption key.</summary>
         </member>
         <member name="T:Goedel.Cryptography.IKeyResultECDH">
@@ -5108,6 +5108,118 @@
             <param name="keyType">The key security model</param>
             <param name="CryptoAlgorithmID">The cryptographic algorithm represented by the key.</param>
             <returns>The created key pair.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.CurveNistPrivate">
+            <summary>
+            Private key, a scalar strictly less than the curve order.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.CurveNistPrivate.Private">
+            <summary>The implementation private key value (if exportable)</summary>
+        </member>
+        <member name="T:Goedel.Cryptography.CurveNistPublic">
+            <summary>
+            An ECC public key, a point on one of the NIST curves.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.CurveNistPublic.PublicKey">
+            <summary>The implementation public key value</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.CurveNistPublic.Encoding">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.CurveNistPublic.#ctor(System.Byte[],Goedel.Cryptography.Nist.IEccCurve)">
+            <summary>
+            Constructor, create an instance from the encoded point in <paramref name="encoding"/>
+            on the curve <paramref name="curve"/>.
+            </summary>
+            <param name="encoding">The encoded point.</param>
+            <param name="curve">The curve.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.CurveNistPublic.#ctor(Goedel.Cryptography.Nist.EccPoint,Goedel.Cryptography.Nist.IEccCurve)">
+            <summary>
+            Constructor, create an instance from the point  in <paramref name="publicKey"/>
+            on the curve <paramref name="curve"/>.
+            </summary>
+            <param name="publicKey">The encoded point.</param>
+            <param name="curve">The curve.</param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Goedel.Cryptography.CurveNistPublic.Decode(System.Byte[])" -->
+        <member name="M:Goedel.Cryptography.CurveNistPublic.Encode(Goedel.Cryptography.Nist.EccPoint)">
+            <summary>
+            Encode the point <paramref name="point"/> the uncompressed encoding 
+            specified in https://www.secg.org/sec1-v2.pdf 
+            </summary>
+            <param name="point">The point to encode.</param>
+            <returns>The encoded point.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="T:Goedel.Cryptography.KeyPairECDHP">
+            <summary>
+            NIST P256/P384/P521 Elliptic Curve Key Pair
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyPairECDHP.PublicKey">
+            <summary>The implementation public key value</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyPairECDHP.PrivateKey">
+            <summary>The implementation private key value (if exportable)</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyPairECDHP.IKeyAdvancedPublic">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyPairECDHP.IKeyAdvancedPrivate">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyPairECDHP.PKIXPrivateKeyECDH">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyPairECDHP.PKIXPublicKeyECDH">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyPairECDHP.KeyUses">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyPairECDHP.PublicOnly">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyPairECDHP.PublicData">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPairECDHP.#ctor(System.Byte[],Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Construct a KeyPairEd25519 instance for the specified key data in interchange 
+            format. 
+            </summary>
+            <param name="key">The key data as specified in RFC8032.</param>
+            <param name="keyType">The key type.</param>
+            <param name="keyUses">The permitted key uses.</param>
+            <param name="cryptoAlgorithmID">Specifies the default algorithm variation for use
+            in signature operations.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPairECDHP.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPairECDHP.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[]@,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPairECDHP.KeyPair(Goedel.Cryptography.IKeyAdvancedPrivate,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPairECDHP.KeyPair(Goedel.Cryptography.IKeyAdvancedPublic,Goedel.Cryptography.KeyUses)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPairECDHP.KeyPairPublic">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPairECDHP.Persist(Goedel.Cryptography.KeyCollection)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPairECDHP.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPairECDHP.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.KeyShareEdwards">
             <summary>
@@ -5348,27 +5460,25 @@
             <summary>The implementation private key value (if exportable)</summary>
         </member>
         <member name="P:Goedel.Cryptography.KeyPairEd25519.IKeyAdvancedPublic">
-            <summary>The implementation public key value</summary>
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.KeyPairEd25519.IKeyAdvancedPrivate">
-            <summary>The implementation private key value (if exportable)</summary>
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.KeyPairEd25519.PKIXPrivateKeyECDH">
-            <summary>The private key parameters represented in PKIX form</summary>
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.KeyPairEd25519.PKIXPublicKeyECDH">
-            <summary>The public key parameters represented in PKIX form</summary>
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.KeyPairEd25519.KeyUses">
-            <summary>The supported key uses (e.g. signing, encryption)</summary>
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.KeyPairEd25519.PublicOnly">
-            <summary>If true, the key only has access to public key values.</summary>
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.KeyPairEd25519.PublicData">
-            <summary>
-            The byte encoding of the public key
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd25519.#ctor(System.Byte[],Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
@@ -5376,19 +5486,6 @@
             format. 
             </summary>
             <param name="key">The key data as specified in RFC8032.</param>
-            <param name="keyType">The key type.</param>
-            <param name="keyUses">The permitted key uses.</param>
-            <param name="cryptoAlgorithmID">Specifies the default algorithm variation for use
-            in signature operations.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.KeyPairEd25519.#ctor(System.Byte[],System.Byte[],Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
-            <summary>
-            Construct a key via parameters presented to KDF-HMAC-SHA-2-512. 
-            <para>The values <paramref name="ikm"/> and <paramref name="salt"/> are used to
-            generate the key data value as specified by RFC8032.</para>
-            </summary>
-            <param name="ikm">The initial keying material.</param>
-            <param name="salt">Salt value.</param>
             <param name="keyType">The key type.</param>
             <param name="keyUses">The permitted key uses.</param>
             <param name="cryptoAlgorithmID">Specifies the default algorithm variation for use
@@ -7444,15 +7541,16 @@
             <summary>
             Construct from algorithm identifier and key data.
             </summary>
-            <param name="OID">Algorithm identifier.</param>
-            <param name="KeyData">Key Data.</param>
+            <param name="oid">Algorithm identifier.</param>
+            <param name="keyData">Key Data.</param>
         </member>
-        <member name="M:Goedel.Cryptography.PKIX.SubjectPublicKeyInfo.#ctor(System.Int32[],System.Byte[])">
+        <member name="M:Goedel.Cryptography.PKIX.SubjectPublicKeyInfo.#ctor(System.Int32[],System.Byte[],System.Int32[])">
             <summary>
             Construct from algorithm identifier and key data.
             </summary>
-            <param name="OID">Algorithm identifier.</param>
-            <param name="KeyData">Key Data.</param>
+            <param name="oid">Algorithm identifier.</param>
+            <param name="keyData">Key Data.</param>
+            <param name="parameter">Optional algorithm parameter.</param>
         </member>
         <member name="P:Goedel.Cryptography.PKIX.SubjectPublicKeyInfo.Algorithm">
             <summary> ASN.1 member Algorithm </summary>
@@ -7473,23 +7571,18 @@
             AlgorithmIdentifier 
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.PKIX.AlgorithmIdentifier.#ctor(Goedel.Cryptography.CryptoAlgorithmId)">
-            <summary>
-            Construct from OID identifier string.
-            </summary>
-            <param name="ID">The identifier as a CryptoAlgorithmID</param>
-        </member>
         <member name="M:Goedel.Cryptography.PKIX.AlgorithmIdentifier.#ctor(System.String)">
             <summary>
             Construct from OID identifier string.
             </summary>
-            <param name="ID">The identifier as a string</param>
+            <param name="id">The identifier as a string</param>
         </member>
-        <member name="M:Goedel.Cryptography.PKIX.AlgorithmIdentifier.#ctor(System.Int32[])">
+        <member name="M:Goedel.Cryptography.PKIX.AlgorithmIdentifier.#ctor(System.Int32[],System.Int32[])">
             <summary>
             Create an Algorithm Identifier from an integer array.
             </summary>
-            <param name="Numbers">OID as an integer sequence.</param>
+            <param name="numbers">OID as an integer sequence.</param>
+            <param name="parameter">Optional algorithm parameter.</param>
         </member>
         <member name="P:Goedel.Cryptography.PKIX.AlgorithmIdentifier.Algorithm">
             <summary> ASN.1 member Algorithm </summary>
@@ -7538,6 +7631,12 @@
             </summary>
             <summary>
             id_crfg_curve_algs =  iso(1)  identified_organization(3)  Thawte(101) 
+            </summary>
+            <summary>
+            ansii_x9_62_arc =  iso(1)  member_body(2)  us(840)  ansii_x9_62(10045) 
+            </summary>
+            <summary>
+            certicom_arc =  iso(1)  identified_organization(3)  certicom(132) 
             </summary>
         </member>
         <member name="F:Goedel.Cryptography.PKIX.Constants.OID__id_pkix">
@@ -8918,6 +9017,96 @@
         <member name="F:Goedel.Cryptography.PKIX.Constants.OIDS__id_Ed448">
             <summary>
             id_Ed448 = id_crfg_curve_algs (113) as string
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OID__ansii_x9_62_arc">
+            <summary>
+            ansii_x9_62_arc as integer sequence
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OIDS__ansii_x9_62_arc">
+            <summary>
+            ansii_x9_62_arc as string
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OID__id_ec_publicKey">
+            <summary>
+            id_ec_publicKey = ansii_x9_62_arc (2) as integer sequence
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OIDS__id_ec_publicKey">
+            <summary>
+            id_ec_publicKey = ansii_x9_62_arc (2) as string
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OID__id_ec_curves">
+            <summary>
+            id_ec_curves = ansii_x9_62_arc (3) as integer sequence
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OIDS__id_ec_curves">
+            <summary>
+            id_ec_curves = ansii_x9_62_arc (3) as string
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OID__id_ec_curves_prime">
+            <summary>
+            id_ec_curves_prime = id_ec_curves (1) as integer sequence
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OIDS__id_ec_curves_prime">
+            <summary>
+            id_ec_curves_prime = id_ec_curves (1) as string
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OID__secp256r1">
+            <summary>
+            secp256r1 = id_ec_curves_prime (7) as integer sequence
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OIDS__secp256r1">
+            <summary>
+            secp256r1 = id_ec_curves_prime (7) as string
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OID__certicom_arc">
+            <summary>
+            certicom_arc as integer sequence
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OIDS__certicom_arc">
+            <summary>
+            certicom_arc as string
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OID__certicom_curve">
+            <summary>
+            certicom_curve = certicom_arc (0) as integer sequence
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OIDS__certicom_curve">
+            <summary>
+            certicom_curve = certicom_arc (0) as string
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OID__secp384r1">
+            <summary>
+            secp384r1 = certicom_curve (34) as integer sequence
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OIDS__secp384r1">
+            <summary>
+            secp384r1 = certicom_curve (34) as string
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OID__secp521r1">
+            <summary>
+            secp521r1 = certicom_curve (35) as integer sequence
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.PKIX.Constants.OIDS__secp521r1">
+            <summary>
+            secp521r1 = certicom_curve (35) as string
             </summary>
         </member>
         <member name="T:Goedel.Cryptography.PKIX.TBSCertificate">
@@ -10327,31 +10516,35 @@
             Device root.
             </summary>
         </member>
-        <member name="T:Goedel.Cryptography.PKIX.PKIXPublicKeyECDH">
+        <member name="T:Goedel.Cryptography.PKIX.PKIXEcdhKeyBase">
             <summary>
             PKIXPublicKeyECDH 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPublicKeyECDH.CurveJose">
+        <member name="P:Goedel.Cryptography.PKIX.PKIXEcdhKeyBase.CurveJose">
             <summary>The Jose curve identifier.</summary>
         </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPublicKeyECDH.SubjectPublicKeyInfo(System.Int32[])">
+        <member name="P:Goedel.Cryptography.PKIX.PKIXEcdhKeyBase.Parameters">
+            <summary>Optional additional oid specifying the curve.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.PKIX.PKIXEcdhKeyBase.OID">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PKIX.PKIXEcdhKeyBase.SubjectPublicKeyInfo(System.Int32[])">
             <summary>
             Construct a PKIX SubjectPublicKeyInfo block
             </summary>
             <param name="oidValue">The OID value</param>
             <returns>The PKIX structure</returns>
         </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPublicKeyECDH.#ctor">
-            <summary>Empty constructor for deserialization operations.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPublicKeyECDH.#ctor(System.Byte[])">
+        <member name="M:Goedel.Cryptography.PKIX.PKIXEcdhKeyBase.#ctor(Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
             Create PKIX representation from the encoded values.
             </summary>
-            <param name="data"></param>
+            <param name="data">The encoded key.</param>
+            <param name="cryptoAlgorithmID">The cryptographic algorithm.</param>
         </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPublicKeyECDH.Encode(Goedel.ASN.Buffer)">
+        <member name="M:Goedel.Cryptography.PKIX.PKIXEcdhKeyBase.Encode(Goedel.ASN.Buffer)">
              <summary>
              Encode ASN.1 class members to specified buffer. 
             
@@ -10359,250 +10552,32 @@
              </summary>
              <param name="buffer">Output buffer</param>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPublicKeyECDH.PublicParameters">
-            <summary>Return the corresponding public parameters</summary>
-        </member>
-        <member name="T:Goedel.Cryptography.PKIX.PKIXPrivateKeyECDH">
+        <member name="T:Goedel.Cryptography.PKIX.PKIXPublicKeyECDH">
             <summary>
-            PKIXPrivateKeyECDH 
+            PKIXPublicKeyECDH 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPrivateKeyECDH.CurveJose">
-            <summary>The Jose curve identifier.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPrivateKeyECDH.IsRecryption">
-            <summary>If true, this is a recryption key.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPrivateKeyECDH.#ctor">
-            <summary>
-            Empty constructor for deserialization operations.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPrivateKeyECDH.#ctor(System.Byte[],Goedel.Cryptography.PKIX.PKIXPublicKeyECDH)">
+        <member name="M:Goedel.Cryptography.PKIX.PKIXPublicKeyECDH.#ctor(Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
             Create PKIX representation from the encoded values.
             </summary>
-            <param name="data">The private key data as an octet string</param>
-            <param name="public">The public key representation.</param>
+            <param name="data">The encoded key.</param>
+            <param name="cryptoAlgorithmID">The cryptographic algorithm.</param>
         </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPrivateKeyECDH.SubjectPublicKeyInfo(System.Int32[])">
+        <member name="T:Goedel.Cryptography.PKIX.PKIXPrivateKeyECDH">
             <summary>
-            Construct a PKIX SubjectPublicKeyInfo block
-            </summary>
-            <param name="oidValue">The OID value</param>
-            <returns>The PKIX structure</returns>
-        </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPrivateKeyECDH.PublicParameters">
-            <summary>
-            Return the corresponding public parameters
+            PKIXPublicKeyECDH 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPrivateKeyECDH.PKIXPublicKeyECDH">
-            <summary>
-            Return the corresponding public parameters
-            </summary>
+        <member name="P:Goedel.Cryptography.PKIX.PKIXPrivateKeyECDH.IsThreshold">
+            <summary>If true, this is a threshold key.</summary>
         </member>
-        <member name="T:Goedel.Cryptography.PKIX.PKIXPublicKeyEd25519">
+        <member name="M:Goedel.Cryptography.PKIX.PKIXPrivateKeyECDH.#ctor(Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
-            PKIXPrivateKeyECDH 
+            Create PKIX representation from the encoded values.
             </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPublicKeyEd25519.CurveJose">
-            <summary>
-            The Jose curve identifier (Ed25519);
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPublicKeyEd25519.OID">
-            <summary>
-            Return the algorithm identifier that represents this key
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPublicKeyEd25519.#ctor">
-            <summary>
-            Default constructor, create empty structure.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPublicKeyEd25519.#ctor(System.Byte[])">
-            <summary>
-            Default constructor, create empty structure.
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.PKIX.PKIXPrivateKeyEd25519">
-            <summary>
-            PKIXPrivateKeyECDH 
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPrivateKeyEd25519.CurveJose">
-            <summary>
-            The Jose curve identifier (Ed25519);
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPrivateKeyEd25519.OID">
-            <summary>
-            Return the algorithm identifier that represents this key
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPrivateKeyEd25519.#ctor">
-            <summary>
-            Default constructor, create empty structure.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPrivateKeyEd25519.#ctor(System.Byte[],Goedel.Cryptography.PKIX.PKIXPublicKeyECDH)">
-            <summary>
-            Default constructor, create empty structure.
-            </summary>
-            <param name="data">The private key data as an octet string</param>
-            <param name="publicKey">The public key representation.</param>
-        </member>
-        <member name="T:Goedel.Cryptography.PKIX.PKIXPublicKeyEd448">
-            <summary>
-            PKIXPrivateKeyECDH 
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPublicKeyEd448.CurveJose">
-            <summary>
-            The Jose curve identifier (Ed25519);
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPublicKeyEd448.OID">
-            <summary>
-            Return the algorithm identifier that represents this key
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPublicKeyEd448.#ctor">
-            <summary>
-            Default constructor, create empty structure.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPublicKeyEd448.#ctor(System.Byte[])">
-            <summary>
-            Default constructor, create empty structure.
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.PKIX.PKIXPrivateKeyEd448">
-            <summary>
-            PKIXPrivateKeyECDH 
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPrivateKeyEd448.CurveJose">
-            <summary>
-            The Jose curve identifier (Ed25519);
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPrivateKeyEd448.OID">
-            <summary>
-            Return the algorithm identifier that represents this key
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPrivateKeyEd448.#ctor">
-            <summary>
-            Default constructor, create empty structure.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPrivateKeyEd448.#ctor(System.Byte[],Goedel.Cryptography.PKIX.PKIXPublicKeyECDH)">
-            <summary>
-            Default constructor, create empty structure.
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.PKIX.PKIXPublicKeyX25519">
-            <summary>
-            PKIXPrivateKeyECDH 
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPublicKeyX25519.CurveJose">
-            <summary>
-            The Jose curve identifier (Ed25519);
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPublicKeyX25519.OID">
-            <summary>
-            Return the algorithm identifier that represents this key
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPublicKeyX25519.#ctor">
-            <summary>
-            Default constructor, create empty structure.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPublicKeyX25519.#ctor(System.Byte[])">
-            <summary>
-            Default constructor, create empty structure.
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.PKIX.PKIXPrivateKeyX25519">
-            <summary>
-            PKIXPrivateKeyECDH 
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPrivateKeyX25519.CurveJose">
-            <summary>
-            The Jose curve identifier (Ed25519);
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPrivateKeyX25519.OID">
-            <summary>
-            Return the algorithm identifier that represents this key
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPrivateKeyX25519.#ctor">
-            <summary>
-            Default constructor, create empty structure.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPrivateKeyX25519.#ctor(System.Byte[],Goedel.Cryptography.PKIX.PKIXPublicKeyECDH)">
-            <summary>
-            Default constructor, create empty structure.
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.PKIX.PKIXPublicKeyX448">
-            <summary>
-            PKIXPrivateKeyECDH 
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPublicKeyX448.CurveJose">
-            <summary>
-            The Jose curve identifier (Ed25519);
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPublicKeyX448.OID">
-            <summary>
-            Return the algorithm identifier that represents this key
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPublicKeyX448.#ctor">
-            <summary>
-            Default constructor, create empty structure.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPublicKeyX448.#ctor(System.Byte[])">
-            <summary>
-            Default constructor, create empty structure.
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.PKIX.PKIXPrivateKeyX448">
-            <summary>
-            PKIXPrivateKeyECDH 
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPrivateKeyX448.CurveJose">
-            <summary>
-            The Jose curve identifier (Ed25519);
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPrivateKeyX448.OID">
-            <summary>
-            Return the algorithm identifier that represents this key
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPrivateKeyX448.#ctor">
-            <summary>
-            Default constructor, create empty structure.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.PKIX.PKIXPrivateKeyX448.#ctor(System.Byte[],Goedel.Cryptography.PKIX.PKIXPublicKeyECDH)">
-            <summary>
-            Default constructor, create empty structure.
-            </summary>
+            <param name="data">The encoded key.</param>
+            <param name="cryptoAlgorithmID">The cryptographic algorithm.</param>
         </member>
         <member name="T:Goedel.Cryptography.PKIX.IPKIXData">
             <summary>
@@ -10633,11 +10608,6 @@
             </summary>
             <param name="OID">The OID value</param>
             <returns>The PKIX structure</returns>
-        </member>
-        <member name="P:Goedel.Cryptography.PKIX.IPKIXPublicKey.PublicParameters">
-            <summary>
-            Return the corresponding public parameters
-            </summary>
         </member>
         <member name="T:Goedel.Cryptography.PKIX.IPKIXPrivateKey">
             <summary>

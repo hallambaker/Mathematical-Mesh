@@ -58,14 +58,14 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
-        //TestUdf.GenerateTests();
+        TestUdf.GenerateTests();
 
         //var fred = new KeyFactoryECC();
 
-        var bytes = "fred".ToBytes();
-        KeyFactoryECC.Generate(bytes, bytes, "fred", 256);
-        KeyFactoryECC.Generate(bytes, bytes, "fred", 384);
-        KeyFactoryECC.Generate(bytes, bytes, "fred", 521);
+        //var bytes = "fred".ToBytes();
+        //KeyFactoryECC.Generate(bytes, bytes, "fred", 256);
+        //KeyFactoryECC.Generate(bytes, bytes, "fred", 384);
+        //KeyFactoryECC.Generate(bytes, bytes, "fred", 521);
         //TestUdf.Test().TestUdfKeygenML();
 
         //TestUdf.Test().TestUdfKeygenECC();

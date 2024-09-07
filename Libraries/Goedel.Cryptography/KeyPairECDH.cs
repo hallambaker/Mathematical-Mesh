@@ -47,7 +47,7 @@ public interface IKeyPrivateECDH {
     byte[] Data { get; }
 
     /// <summary>If true, this is a recryption key.</summary>
-    bool IsRecryption { get; }
+    bool IsThreshold { get; }
     }
 
 /// <summary>

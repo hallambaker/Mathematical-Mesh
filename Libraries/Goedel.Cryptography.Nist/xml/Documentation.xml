@@ -4,6 +4,28 @@
         <name>Goedel.Cryptography.Nist</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Cryptography.Nist.EccCurveFactory">
+            <summary>
+            Factory class returning the parameters of a specified curve.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.EccCurveFactory.P256">
+            <summary>The NIST Curve P256.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.EccCurveFactory.P384">
+            <summary>The NIST Curve P384.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.EccCurveFactory.P521">
+            <summary>The NIST Curve P521.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.EccCurveFactory.GetCurve(Goedel.Cryptography.Nist.NistCurve)">
+            <summary>
+            Return the curve identified by <paramref name="curve"/>.
+            </summary>
+            <param name="curve">The curve identifier.</param>
+            <returns>The curve.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">The curve is not known.</exception>
+        </member>
         <member name="P:Goedel.Cryptography.Nist.EccDomainParameters.CurveE">
             <summary>
             The polynomial representing the curve, contains a, b and the curve type
@@ -206,6 +228,11 @@
         <member name="P:Goedel.Cryptography.Nist.IEccCurve.OrderN">
             <summary>
             Order of <see cref="P:Goedel.Cryptography.Nist.IEccCurve.BasePointG"/> which is a large prime
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.IEccCurve.KeySize">
+            <summary>
+            The key size in bits.
             </summary>
         </member>
         <member name="M:Goedel.Cryptography.Nist.IEccCurve.Multiply(Goedel.Cryptography.Nist.EccPoint,System.Numerics.BigInteger)">

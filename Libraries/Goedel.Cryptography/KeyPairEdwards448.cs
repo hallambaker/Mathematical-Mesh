@@ -87,19 +87,17 @@ public class KeyPairEd448 : KeyPairEdwards {
         KeyUses = keyUses;
         if (keySecurity == KeySecurity.Public) {
             PublicKey = new CurveEdwards448Public(key);
-            PKIXPublicKeyECDH = new PKIXPublicKeyEd448(PublicKey.Encoding);
             }
         else {
             encodedPrivateKey = key;
             var exportable = keySecurity.IsExportable();
             PrivateKey = new CurveEdwards448Private(key, exportable);
             PublicKey = PrivateKey.Public;
-            PKIXPublicKeyECDH = new PKIXPublicKeyEd448(PublicKey.Encoding);
             if (exportable) {
-                PKIXPrivateKeyECDH = new PKIXPrivateKeyEd448(key, PKIXPublicKeyECDH);
+                PKIXPrivateKeyECDH = new PKIXPrivateKeyECDH(CryptoAlgorithmId.Ed448, key);
                 }
             }
-
+        PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed448, PublicKey.Encoding);
         }
 
     /// <summary>
@@ -138,12 +136,12 @@ public class KeyPairEd448 : KeyPairEdwards {
         CryptoAlgorithmId = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmId.Ed448);
         PrivateKey = privateKey;
         PublicKey = privateKey.Public;
-        PKIXPublicKeyECDH = new PKIXPublicKeyEd448(PublicKey.Encoding);
+        PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed448, PublicKey.Encoding);
         KeySecurity = keySecurity;
         KeyUses = keyUses;
         if (keySecurity.IsExportable()) {
-            PKIXPrivateKeyECDH = new PKIXPrivateKeyEd448(privateKey.Secret, PKIXPublicKeyECDH) {
-                IsRecryption = privateKey.IsRecryption
+            PKIXPrivateKeyECDH = new PKIXPrivateKeyECDH(CryptoAlgorithmId.Ed448, privateKey.Secret) {
+                IsThreshold = privateKey.IsThreshold
                 };
             }
         }
@@ -163,7 +161,7 @@ public class KeyPairEd448 : KeyPairEdwards {
         CryptoAlgorithmId = cryptoAlgorithmID == CryptoAlgorithmId.Default ?
             CryptoAlgorithmId.Ed448 : cryptoAlgorithmID;
         this.PublicKey = publicKey as CurveEdwards448Public;
-        PKIXPublicKeyECDH = new PKIXPublicKeyEd448(this.PublicKey.Encoding);
+        PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed448, PublicKey.Encoding);
         KeyUses = keyUses;
         }
 
@@ -181,20 +179,16 @@ public class KeyPairEd448 : KeyPairEdwards {
         new(Platform.GetRandomBits(448), keyType, keyUses, cryptoAlgorithmID);
 
 
-
-
     ///<inheritdoc/>
     public override KeyPairAdvanced KeyPair(IKeyAdvancedPrivate privateKey,
                 KeySecurity keySecurity = KeySecurity.Bound,
                 KeyUses keyUses = KeyUses.Any) =>
         new KeyPairEd448((CurveEdwards448Private)privateKey, keySecurity, keyUses);
 
-
     ///<inheritdoc/>
     public override KeyPairAdvanced KeyPair(IKeyAdvancedPublic publicKey,
                 KeyUses keyUses = KeyUses.Any) =>
         new KeyPairEd448((CurveEdwards448Public)publicKey, keyUses: keyUses);
-
 
     ///<inheritdoc/>
     public override KeyPair KeyPairPublic() => new KeyPairEd448(PublicKey, keyUses: KeyUses);
@@ -203,7 +197,7 @@ public class KeyPairEd448 : KeyPairEdwards {
     ///<inheritdoc/>
     public override void Persist(KeyCollection keyCollection) {
         Assert.AssertTrue(PersistPending, CryptographicException.Throw);
-        var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyEd448(encodedPrivateKey, PKIXPublicKeyECDH) { };
+        var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyECDH(CryptoAlgorithmId.Ed448, encodedPrivateKey) { };
         keyCollection.Persist(KeyIdentifier, pkix, KeySecurity.IsExportable());
         }
 

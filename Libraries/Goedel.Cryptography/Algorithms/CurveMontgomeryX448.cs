@@ -332,7 +332,7 @@ public class CurveX448Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
     public byte[] Secret { get; }
 
     /// <summary>If true, this is a recryption key.</summary>
-    public bool IsRecryption { get; set; } = false;
+    public bool IsThreshold { get; set; } = false;
 
     /// <summary>The private key, i.e. a scalar</summary>
     public BigInteger Private { get; }
@@ -453,7 +453,7 @@ public class CurveX448Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
 
         for (var i = 1; i < shares; i++) {
             var NewPrivate = Platform.GetRandomBigInteger(CurveX448.Q);
-            Result[i] = new CurveX448Private(NewPrivate, exportable: true) { IsRecryption = true };
+            Result[i] = new CurveX448Private(NewPrivate, exportable: true) { IsThreshold = true };
             Accumulator = (Accumulator + NewPrivate).Mod(CurveX448.Q);
             }
 
@@ -461,7 +461,7 @@ public class CurveX448Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
 
         Result[0] = new CurveX448Private(
             (CurveX448.Q + Private - Accumulator).Mod(CurveX448.Q), exportable: true) {
-            IsRecryption = true
+            IsThreshold = true
             };
         return Result;
 
@@ -485,7 +485,7 @@ public class CurveX448Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
 
         return new CurveX448Private(
             (CurveX448.Q + Private - Accumulator).Mod(CurveX448.Q)) {
-            IsRecryption = true
+            IsThreshold = true
             };
         }
 

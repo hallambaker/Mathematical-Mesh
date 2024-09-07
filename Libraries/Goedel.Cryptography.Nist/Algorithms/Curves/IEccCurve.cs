@@ -41,6 +41,12 @@ public interface IEccCurve {
     BigInteger OrderN { get; }
 
     /// <summary>
+    /// The key size in bits.
+    /// </summary>
+    int KeySize { get; }
+
+
+    /// <summary>
     /// Multiply a point by a scalar value over a curve
     /// </summary>
     EccPoint Multiply(EccPoint startPoint, BigInteger scalar);

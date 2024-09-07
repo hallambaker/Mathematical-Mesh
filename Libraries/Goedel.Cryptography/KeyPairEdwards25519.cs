@@ -34,36 +34,34 @@ public class KeyPairEd25519 : KeyPairEdwards {
     ///<summary>The implementation private key value (if exportable)</summary>
     public CurveEdwards25519Private PrivateKey { get; set; }
 
-    ///<summary>The implementation public key value</summary>
+    ///<inheritdoc/>
     public override IKeyAdvancedPublic IKeyAdvancedPublic => PublicKey;
 
-    ///<summary>The implementation private key value (if exportable)</summary>
+    ///<inheritdoc/>
     public override IKeyAdvancedPrivate IKeyAdvancedPrivate => PrivateKey;
 
-    ///<summary>The private key parameters represented in PKIX form</summary>
+    ///<inheritdoc/>
     public override PKIXPrivateKeyECDH PKIXPrivateKeyECDH { get; }
 
-    ///<summary>The public key parameters represented in PKIX form</summary>
+    ///<inheritdoc/>
     public override PKIXPublicKeyECDH PKIXPublicKeyECDH { get; }
 
-    /// <summary>The supported key uses (e.g. signing, encryption)</summary>
+    ///<inheritdoc/>
     public override KeyUses KeyUses { get; } = KeyUses.Any;
 
-    ///<summary>If true, the key only has access to public key values.</summary>
+    ///<inheritdoc/>
     public override bool PublicOnly => PrivateKey == null;
 
-    /// <summary>
-    /// The byte encoding of the public key
-    /// </summary>
+    ///<inheritdoc/>
     public override byte[] PublicData => PublicKey.Encoding;
-
-
-
-    #endregion
-
 
     //readonly KeySecurity KeyType = KeySecurity.Public;
     readonly byte[] EncodedPrivateKey = null;
+    #endregion
+
+
+
+    #region Constructors
 
 
     /// <summary>
@@ -81,14 +79,14 @@ public class KeyPairEd25519 : KeyPairEdwards {
                 KeyUses keyUses = KeyUses.Any,
                 CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) {
 
-        CryptoAlgorithmId = cryptoAlgorithmID == CryptoAlgorithmId.Default ? 
+        CryptoAlgorithmId = cryptoAlgorithmID == CryptoAlgorithmId.Default ?
                         CryptoAlgorithmId.Ed25519 : cryptoAlgorithmID;
 
         KeySecurity = keyType;
         KeyUses = keyUses;
         if (keyType == KeySecurity.Public) {
             PublicKey = new CurveEdwards25519Public(key);
-            PKIXPublicKeyECDH = new PKIXPublicKeyEd25519(PublicKey.Encoding);
+            PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed25519,PublicKey.Encoding);
             KeySecurity = KeySecurity.Public;
             }
         else {
@@ -96,31 +94,12 @@ public class KeyPairEd25519 : KeyPairEdwards {
             var exportable = keyType.IsExportable();
             PrivateKey = new CurveEdwards25519Private(key, exportable);
             PublicKey = PrivateKey.Public;
-            PKIXPublicKeyECDH = new PKIXPublicKeyEd25519(PublicKey.Encoding);
+            PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed25519,PublicKey.Encoding);
             if (exportable) {
-                PKIXPrivateKeyECDH = new PKIXPrivateKeyEd25519(key, PKIXPublicKeyECDH);
+                PKIXPrivateKeyECDH = new PKIXPrivateKeyECDH(CryptoAlgorithmId.Ed25519, key);
                 }
             }
 
-        }
-
-
-    /// <summary>
-    /// Construct a key via parameters presented to KDF-HMAC-SHA-2-512. 
-    /// <para>The values <paramref name="ikm"/> and <paramref name="salt"/> are used to
-    /// generate the key data value as specified by RFC8032.</para>
-    /// </summary>
-    /// <param name="ikm">The initial keying material.</param>
-    /// <param name="salt">Salt value.</param>
-    /// <param name="keyType">The key type.</param>
-    /// <param name="keyUses">The permitted key uses.</param>
-    /// <param name="cryptoAlgorithmID">Specifies the default algorithm variation for use
-    /// in signature operations.</param>
-    public KeyPairEd25519(byte[] ikm, byte[] salt,
-                KeySecurity keyType = KeySecurity.Public,
-                KeyUses keyUses = KeyUses.Any,
-                CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) :
-                this(KeyDeriveHKDF.Derive(ikm, salt, null, 256, CryptoAlgorithmId.HMAC_SHA_2_512), keyType, keyUses, cryptoAlgorithmID) {
         }
 
     /// <summary>
@@ -140,16 +119,17 @@ public class KeyPairEd25519 : KeyPairEdwards {
         CryptoAlgorithmId = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmId.Ed25519);
         PrivateKey = privateKey ?? new CurveEdwards25519Private();
         PublicKey = PrivateKey.Public;
-        PKIXPublicKeyECDH = new PKIXPublicKeyEd25519(PublicKey.Encoding);
+        PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed25519, PublicKey.Encoding);
         KeySecurity = keySecurity;
         KeyUses = keyUses;
         if (keySecurity.IsExportable()) {
-            PKIXPrivateKeyECDH = new PKIXPrivateKeyEd25519(privateKey.Secret, PKIXPublicKeyECDH) {
-                IsRecryption = privateKey.IsRecryption
+            PKIXPrivateKeyECDH = new PKIXPrivateKeyECDH(CryptoAlgorithmId.Ed25519,privateKey.Secret) {
+                IsThreshold = privateKey.IsThreshold
                 };
             }
-
         }
+    #endregion
+
 
     /// <summary>
     /// Construct class from a public key value
@@ -164,7 +144,7 @@ public class KeyPairEd25519 : KeyPairEdwards {
 
         CryptoAlgorithmId = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmId.Ed25519);
         this.PublicKey = publicKey as CurveEdwards25519Public;
-        PKIXPublicKeyECDH = new PKIXPublicKeyEd25519(this.PublicKey.Encoding);
+        PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed25519, PublicKey.Encoding);
         KeyUses = keyUses;
         }
 
@@ -203,7 +183,7 @@ public class KeyPairEd25519 : KeyPairEdwards {
     public override void Persist(
             KeyCollection keyCollection) {
         Assert.AssertTrue(PersistPending, CryptographicException.Throw);
-        var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyEd25519(EncodedPrivateKey, PKIXPublicKeyECDH) { };
+        var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyECDH(CryptoAlgorithmId.Ed25519, EncodedPrivateKey) { };
         keyCollection.Persist(KeyIdentifier, pkix, KeySecurity.IsExportable());
         }
 

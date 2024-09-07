@@ -60,10 +60,7 @@ public interface IPKIXPublicKey : IPKIXData {
     /// <returns>The PKIX structure</returns>
     SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] OID = null);
 
-    /// <summary>
-    /// Return the corresponding public parameters
-    /// </summary>
-    IPKIXPublicKey PublicParameters { get; }
+
 
     }
 

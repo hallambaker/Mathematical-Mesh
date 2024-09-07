@@ -103,11 +103,11 @@ public class TestUdf : Disposable {
     public static TestUdf Test() => new();
 
     public static void GenerateTests() {
-        GenerateTests(UdfDirectoryRSA, AlgIdsRSA);
-        GenerateTests(UdfDirectoryML, AlgIdsML);
-        GenerateTests(UdfDirectoryECC, AlgIdsECC);
+        //GenerateTests(UdfDirectoryRSA, AlgIdsRSA);
+        //GenerateTests(UdfDirectoryML, AlgIdsML);
+        //GenerateTests(UdfDirectoryECC, AlgIdsECC);
 
-        //GenerateTests(UdfDirectoryECCP, AlgIdsECCP);
+        GenerateTests(UdfDirectoryECCP, AlgIdsECCP);
         }
 
     private static void GenerateTests(string directory, UdfAlgorithmIdentifier[] algIds) {

@@ -125,8 +125,8 @@ public class KeyFactoryECC {
             _ => throw new CryptographicException()
         };
 
-        var factory = new EccCurveFactory();
-        var curve = factory.GetCurve(curveId);
+        //var factory = new EccCurveFactory();
+        var curve = EccCurveFactory.GetCurve(curveId);
 
         var d = generator.GetEntropy(1, curve.OrderN, "d");
 

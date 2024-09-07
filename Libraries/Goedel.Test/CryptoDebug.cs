@@ -349,18 +349,18 @@ public class DareRecipientDebug : DareRecipient {
     /// <returns>The recipient informatin object.</returns>
     public DareRecipientDebug(byte[] MasterKey, CryptoKey PublicKey) {
 
-        var Secret = Platform.GetRandomBytes(32);
-        var PrivateKey = new CurveEdwards25519Private();
-        var Ephemeralpublic = PrivateKey.Public;
-        var PKIXPublicKeyECDH = new PKIXPublicKeyEd25519(Ephemeralpublic.Encoding);
-        var PKIXPrivateKeyECDH = new PKIXPrivateKeyEd25519(Secret, PKIXPublicKeyECDH);
-        EphemeralPrivate = new PrivateKeyECDH(PKIXPrivateKeyECDH);
+        var secret = Platform.GetRandomBytes(32);
+        var privateKey = new CurveEdwards25519Private();
+        var ephemeralpublic = privateKey.Public;
+        var pkixPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed25519,ephemeralpublic.Encoding);
+        var pkixPrivateKeyECDH = new PKIXPrivateKeyECDH(CryptoAlgorithmId.Ed25519, secret);
+        EphemeralPrivate = new PrivateKeyECDH(pkixPrivateKeyECDH);
 
         var PublicKeyEd = PublicKey as KeyPairEd25519;
 
         var result = new CurveEdwards25519Result() {
-            EphemeralPublicValue = PrivateKey.Public,
-            AgreementEd25519 = PrivateKey.Agreement(PublicKeyEd.IKeyAdvancedPublic as CurveEdwards25519Public)
+            EphemeralPublicValue = privateKey.Public,
+            AgreementEd25519 = privateKey.Agreement(PublicKeyEd.IKeyAdvancedPublic as CurveEdwards25519Public)
             };
 
         EncryptionKey = result.KeyDerive.Derive(KDFInfo, 256);

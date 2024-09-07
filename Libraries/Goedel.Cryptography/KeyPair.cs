@@ -264,8 +264,14 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
                 keyPair = KeyPairFactoryDH(keySize, keySecurity, keyUses, algorithmID);
                 break;
                 }
+            case CryptoAlgorithmId.P256:
+            case CryptoAlgorithmId.P384:
+            case CryptoAlgorithmId.P521: {
+                var binaryData = KeySeed(256, ikm, keySpecifier, keyName);
+                keyPair = new KeyPairECDHP(binaryData, keySecurity, keyUses, algorithmID);
+                break;
+                }
             case CryptoAlgorithmId.X25519: {
-
                 var binaryData = KeySeed(256, ikm, keySpecifier, keyName);
                 keyPair = new KeyPairX25519(binaryData, keySecurity, keyUses);
                 break;

@@ -1,4 +1,6 @@
-﻿namespace Goedel.Cryptography.Nist;
+﻿using System.Security.Cryptography;
+
+namespace Goedel.Cryptography.Nist;
 public class PrimeCurve : IEccCurve {
     private readonly PrimeFieldOperator _operator;
 
@@ -17,13 +19,21 @@ public class PrimeCurve : IEccCurve {
 
     public NistCurve CurveName { get; }
 
-    public PrimeCurve(NistCurve curveName, BigInteger p, BigInteger b, EccPoint g, BigInteger n) {
+    public int KeySize { get; }
+
+    public PrimeCurve(
+                    NistCurve curveName, 
+                    BigInteger p, 
+                    BigInteger b, 
+                    EccPoint g, 
+                    BigInteger n) {
         CurveName = curveName;
 
         FieldSizeQ = p;
         CoefficientB = b;
         BasePointG = g;
         OrderN = n;
+        KeySize = OrderN.CountBits();
 
         _operator = new PrimeFieldOperator(p);
         }

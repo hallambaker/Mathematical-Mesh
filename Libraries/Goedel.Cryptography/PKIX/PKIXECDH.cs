@@ -23,15 +23,19 @@
 
 namespace Goedel.Cryptography.PKIX;
 
-
 /// <summary>
 /// PKIXPublicKeyECDH 
 /// </summary>
-public abstract partial class PKIXPublicKeyECDH : Goedel.ASN.ByteArrayVerbatim,
-                IPKIXPublicKey, IKeyPublicECDH {
+public partial class PKIXEcdhKeyBase : Goedel.ASN.ByteArrayVerbatim  {
 
     /// <summary>The Jose curve identifier.</summary>
-    public abstract string CurveJose { get; }
+    public string CurveJose { get; }
+    
+    ///<summary>Optional additional oid specifying the curve.</summary> 
+    public int[] Parameters { get; } = null;
+
+    ///<inheritdoc/>
+    public override int[] OID { get; }
 
     /// <summary>
     /// Construct a PKIX SubjectPublicKeyInfo block
@@ -40,19 +44,20 @@ public abstract partial class PKIXPublicKeyECDH : Goedel.ASN.ByteArrayVerbatim,
     /// <returns>The PKIX structure</returns>
     public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] oidValue = null) {
         oidValue ??= OID;
-        return new SubjectPublicKeyInfo(oidValue, DER());
-        }
-
-    /// <summary>Empty constructor for deserialization operations.</summary>
-    public PKIXPublicKeyECDH() {
+        return new SubjectPublicKeyInfo(oidValue, DER(), Parameters);
         }
 
     /// <summary>
     /// Create PKIX representation from the encoded values.
     /// </summary>
-    /// <param name="data"></param>
-    public PKIXPublicKeyECDH(byte[] data) => Data = data.Duplicate();
-
+    /// <param name="data">The encoded key.</param>
+    /// <param name="cryptoAlgorithmID">The cryptographic algorithm.</param>
+    public PKIXEcdhKeyBase(
+                CryptoAlgorithmId cryptoAlgorithmID,
+                byte[] data) {
+        Data = data.Duplicate();
+        (CurveJose, OID, Parameters) = GetParameters (cryptoAlgorithmID);
+        }
 
     /// <summary>
     /// Encode ASN.1 class members to specified buffer. 
@@ -62,303 +67,56 @@ public abstract partial class PKIXPublicKeyECDH : Goedel.ASN.ByteArrayVerbatim,
     /// <param name="buffer">Output buffer</param>
     public override void Encode(Goedel.ASN.Buffer buffer) => buffer.Encode__Octets(Data, 0, -1);
 
-    /// <summary>Return the corresponding public parameters</summary>
-    public IPKIXPublicKey PublicParameters => this;
+    public static (string, int[], int[]) GetParameters(CryptoAlgorithmId cryptoAlgorithmID) => cryptoAlgorithmID switch {
+            CryptoAlgorithmId.P256 => 
+                    (JoseConstants.P256, Constants.OID__id_ec_publicKey,Constants.OID__secp256r1),
+            CryptoAlgorithmId.P384 => 
+                    (JoseConstants.P384, Constants.OID__id_ec_publicKey,Constants.OID__secp384r1),
+            CryptoAlgorithmId.P521 => 
+                    (JoseConstants.P521, Constants.OID__id_ec_publicKey,Constants.OID__secp521r1),
+            CryptoAlgorithmId.Ed25519 =>
+                (JoseConstants.Ed25519, Constants.OID__id_Ed25519, null),
+            CryptoAlgorithmId.Ed448 =>
+                (JoseConstants.Ed448, Constants.OID__id_Ed25519, null),
+            CryptoAlgorithmId.X25519 =>
+                (JoseConstants.X25519, Constants.OID__id_Ed25519, null),
+            CryptoAlgorithmId.X448 =>
+                (JoseConstants.X448, Constants.OID__id_Ed25519, null),
+            _ => throw new CryptographicException()
+            };
+    }
 
+
+/// <summary>
+/// PKIXPublicKeyECDH 
+/// </summary>
+public partial class PKIXPublicKeyECDH : PKIXEcdhKeyBase,
+                IPKIXPublicKey, IKeyPublicECDH {
+    /// <summary>
+    /// Create PKIX representation from the encoded values.
+    /// </summary>
+    /// <param name="data">The encoded key.</param>
+    /// <param name="cryptoAlgorithmID">The cryptographic algorithm.</param>
+    public PKIXPublicKeyECDH(
+                CryptoAlgorithmId cryptoAlgorithmID,
+                byte[] data) : base (cryptoAlgorithmID, data) { }
     }
 
 /// <summary>
-/// PKIXPrivateKeyECDH 
+/// PKIXPublicKeyECDH 
 /// </summary>
-public abstract partial class PKIXPrivateKeyECDH : Goedel.ASN.ByteArrayVerbatim,
-                    IPKIXPrivateKey, IKeyPrivateECDH {
-
-    /// <summary>The Jose curve identifier.</summary>
-    public abstract string CurveJose { get; }
-
-
-    /// <summary>If true, this is a recryption key.</summary>
-    public bool IsRecryption { get; set; } = false;
-
-    /// <summary>
-    /// Empty constructor for deserialization operations.
-    /// </summary>
-    public PKIXPrivateKeyECDH() {
-        }
+public partial class PKIXPrivateKeyECDH : PKIXEcdhKeyBase,
+                IPKIXPrivateKey, IKeyPrivateECDH {
+    /// <summary>If true, this is a threshold key.</summary>
+    public bool IsThreshold { get; set; } = false;
 
     /// <summary>
     /// Create PKIX representation from the encoded values.
     /// </summary>
-    /// <param name="data">The private key data as an octet string</param>
-    /// <param name="public">The public key representation.</param>
-    public PKIXPrivateKeyECDH(byte[] data, PKIXPublicKeyECDH @public) {
-        this.Data = data.Duplicate();
-        PKIXPublicKeyECDH = @public;
-        }
-
-
-    /// <summary>
-    /// Construct a PKIX SubjectPublicKeyInfo block
-    /// </summary>
-    /// <param name="oidValue">The OID value</param>
-    /// <returns>The PKIX structure</returns>
-    public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] oidValue = null) {
-        oidValue ??= OID;
-        return new SubjectPublicKeyInfo(oidValue, DER());
-        }
-
-
-    /// <summary>
-    /// Return the corresponding public parameters
-    /// </summary>
-    public IPKIXPublicKey PublicParameters => PKIXPublicKeyECDH;
-
-
-    /// <summary>
-    /// Return the corresponding public parameters
-    /// </summary>
-    public PKIXPublicKeyECDH PKIXPublicKeyECDH { get; }
+    /// <param name="data">The encoded key.</param>
+    /// <param name="cryptoAlgorithmID">The cryptographic algorithm.</param>
+    public PKIXPrivateKeyECDH(
+                CryptoAlgorithmId cryptoAlgorithmID,
+                byte[] data) : base(cryptoAlgorithmID, data) { }
 
     }
-
-
-#region // Edwards Curves
-/// <summary>
-/// PKIXPrivateKeyECDH 
-/// </summary>
-public partial class PKIXPublicKeyEd25519 : PKIXPublicKeyECDH {
-
-    /// <summary>
-    /// The Jose curve identifier (Ed25519);
-    /// </summary>
-    public override string CurveJose => CurveEdwards25519.CurveJose;
-
-    /// <summary>
-    /// Return the algorithm identifier that represents this key
-    /// </summary>
-    public override int[] OID => Constants.OID__id_Ed25519;
-
-    /// <summary>
-    /// Default constructor, create empty structure.
-    /// </summary>
-    public PKIXPublicKeyEd25519() {
-        }
-
-    /// <summary>
-    /// Default constructor, create empty structure.
-    /// </summary>
-    public PKIXPublicKeyEd25519(byte[] data) => Data = data;
-
-    }
-
-/// <summary>
-/// PKIXPrivateKeyECDH 
-/// </summary>
-public partial class PKIXPrivateKeyEd25519 : PKIXPrivateKeyECDH {
-
-    /// <summary>
-    /// The Jose curve identifier (Ed25519);
-    /// </summary>
-    public override string CurveJose => CurveEdwards25519.CurveJose;
-
-    /// <summary>
-    /// Return the algorithm identifier that represents this key
-    /// </summary>
-    public override int[] OID => Constants.OID__id_Ed25519;
-
-
-    /// <summary>
-    /// Default constructor, create empty structure.
-    /// </summary>
-    public PKIXPrivateKeyEd25519() : base() {
-        }
-
-    /// <summary>
-    /// Default constructor, create empty structure.
-    /// </summary>
-    /// <param name="data">The private key data as an octet string</param>
-    /// <param name="publicKey">The public key representation.</param>
-    public PKIXPrivateKeyEd25519(byte[] data, PKIXPublicKeyECDH publicKey) : base(data, publicKey) {
-        }
-
-    }
-
-/// <summary>
-/// PKIXPrivateKeyECDH 
-/// </summary>
-public partial class PKIXPublicKeyEd448 : PKIXPublicKeyECDH {
-
-    /// <summary>
-    /// The Jose curve identifier (Ed25519);
-    /// </summary>
-    public override string CurveJose => CurveEdwards448.CurveJose;
-
-    /// <summary>
-    /// Return the algorithm identifier that represents this key
-    /// </summary>
-    public override int[] OID => Constants.OID__id_Ed448;
-
-    /// <summary>
-    /// Default constructor, create empty structure.
-    /// </summary>
-    public PKIXPublicKeyEd448() {
-        }
-
-    /// <summary>
-    /// Default constructor, create empty structure.
-    /// </summary>
-    public PKIXPublicKeyEd448(byte[] data) => Data = data;
-
-    }
-
-/// <summary>
-/// PKIXPrivateKeyECDH 
-/// </summary>
-public partial class PKIXPrivateKeyEd448 : PKIXPrivateKeyECDH {
-
-    /// <summary>
-    /// The Jose curve identifier (Ed25519);
-    /// </summary>
-    public override string CurveJose => CurveEdwards448.CurveJose;
-
-    /// <summary>
-    /// Return the algorithm identifier that represents this key
-    /// </summary>
-    public override int[] OID => Constants.OID__id_Ed448;
-
-    /// <summary>
-    /// Default constructor, create empty structure.
-    /// </summary>
-    public PKIXPrivateKeyEd448() {
-        }
-
-    /// <summary>
-    /// Default constructor, create empty structure.
-    /// </summary>
-    public PKIXPrivateKeyEd448(byte[] data, PKIXPublicKeyECDH publicKey) : base(data, publicKey) {
-        }
-
-    }
-#endregion
-#region // Montgomery Curves
-/// <summary>
-/// PKIXPrivateKeyECDH 
-/// </summary>
-public partial class PKIXPublicKeyX25519 : PKIXPublicKeyECDH {
-
-    /// <summary>
-    /// The Jose curve identifier (Ed25519);
-    /// </summary>
-    public override string CurveJose => CurveX25519.CurveJose;
-
-    /// <summary>
-    /// Return the algorithm identifier that represents this key
-    /// </summary>
-    public override int[] OID => Constants.OID__id_X25519;
-
-    /// <summary>
-    /// Default constructor, create empty structure.
-    /// </summary>
-    public PKIXPublicKeyX25519() {
-        }
-
-    /// <summary>
-    /// Default constructor, create empty structure.
-    /// </summary>
-    public PKIXPublicKeyX25519(byte[] data) => Data = data;
-
-    }
-
-
-
-/// <summary>
-/// PKIXPrivateKeyECDH 
-/// </summary>
-public partial class PKIXPrivateKeyX25519 : PKIXPrivateKeyECDH {
-
-    /// <summary>
-    /// The Jose curve identifier (Ed25519);
-    /// </summary>
-    public override string CurveJose => CurveX25519.CurveJose;
-
-    /// <summary>
-    /// Return the algorithm identifier that represents this key
-    /// </summary>
-    public override int[] OID => Constants.OID__id_X25519;
-
-
-    /// <summary>
-    /// Default constructor, create empty structure.
-    /// </summary>
-    public PKIXPrivateKeyX25519() : base() {
-        }
-
-    /// <summary>
-    /// Default constructor, create empty structure.
-    /// </summary>
-    public PKIXPrivateKeyX25519(byte[] data, PKIXPublicKeyECDH publicKey) : base(data, publicKey) {
-        }
-
-    }
-
-
-
-/// <summary>
-/// PKIXPrivateKeyECDH 
-/// </summary>
-public partial class PKIXPublicKeyX448 : PKIXPublicKeyECDH {
-
-    /// <summary>
-    /// The Jose curve identifier (Ed25519);
-    /// </summary>
-    public override string CurveJose => CurveX448.CurveJose;
-
-    /// <summary>
-    /// Return the algorithm identifier that represents this key
-    /// </summary>
-    public override int[] OID => Constants.OID__id_X448;
-
-    /// <summary>
-    /// Default constructor, create empty structure.
-    /// </summary>
-    public PKIXPublicKeyX448() {
-        }
-
-    /// <summary>
-    /// Default constructor, create empty structure.
-    /// </summary>
-    public PKIXPublicKeyX448(byte[] data) => Data = data;
-
-    }
-
-
-
-/// <summary>
-/// PKIXPrivateKeyECDH 
-/// </summary>
-public partial class PKIXPrivateKeyX448 : PKIXPrivateKeyECDH {
-
-    /// <summary>
-    /// The Jose curve identifier (Ed25519);
-    /// </summary>
-    public override string CurveJose => CurveX448.CurveJose;
-
-    /// <summary>
-    /// Return the algorithm identifier that represents this key
-    /// </summary>
-    public override int[] OID => Constants.OID__id_X448;
-
-    /// <summary>
-    /// Default constructor, create empty structure.
-    /// </summary>
-    public PKIXPrivateKeyX448() {
-        }
-
-    /// <summary>
-    /// Default constructor, create empty structure.
-    /// </summary>
-    public PKIXPrivateKeyX448(byte[] data, PKIXPublicKeyECDH publicKey) : base(data, publicKey) {
-        }
-
-    }
-#endregion

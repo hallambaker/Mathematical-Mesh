@@ -32,7 +32,7 @@ public class CurveEdwards448 : CurveEdwards {
 
     #region // curve parameter constant definitions
     ///<summary>The Jose curve name</summary>
-    public const string CurveJose = "Ed448";
+    public const string CurveJose = JoseConstants.Ed448;
 
     ///<summary>The Jose curve name for direct encoding</summary>
     public const string CurveJoseDirect = CurveJose + CurveJoseDirectSuffix;
@@ -549,7 +549,7 @@ public class CurveEdwards448Private : CurveEdwardsPrivate, IKeyPrivateECDH {
     public byte[] Encoding { get; }
 
     /// <summary>If true, this is a recryption key.</summary>
-    public bool IsRecryption { get; set; } = false;
+    public bool IsThreshold { get; set; } = false;
 
 
     /// <summary>
@@ -795,7 +795,7 @@ public class CurveEdwards448Private : CurveEdwardsPrivate, IKeyPrivateECDH {
 
 
             var NewPrivate = Platform.GetRandomBigInteger(CurveEdwards448.Q);
-            Result[i] = new CurveEdwards448Private(NewPrivate, exportable: true) { IsRecryption = true };
+            Result[i] = new CurveEdwards448Private(NewPrivate, exportable: true) { IsThreshold = true };
             Accumulator = (Accumulator + NewPrivate) % (CurveEdwards448.Q);
 
             }
@@ -804,7 +804,7 @@ public class CurveEdwards448Private : CurveEdwardsPrivate, IKeyPrivateECDH {
 
         Result[0] = new CurveEdwards448Private(
             (CurveEdwards448.Q + Private - Accumulator) % (CurveEdwards448.Q), exportable: true) {
-            IsRecryption = true
+            IsThreshold = true
             };
         return Result;
 
@@ -827,7 +827,7 @@ public class CurveEdwards448Private : CurveEdwardsPrivate, IKeyPrivateECDH {
 
         return new CurveEdwards25519Private(
             (CurveEdwards448.Q + Private - Accumulator).Mod(CurveEdwards448.Q)) {
-            IsRecryption = true
+            IsThreshold = true
             };
         }
 

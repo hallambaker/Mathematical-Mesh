@@ -250,6 +250,29 @@ OID id_dh_public			dds_algorithms_dh	1
 OID id_dh_private 			dds_algorithms_dh	2
 
 
+// The ECC oids parameters.
+
+ROOT ansii_x9_62_arc
+	iso					1 
+	member_body			2
+	us					840
+	ansii_x9_62				10045
+
+ROOT certicom_arc
+	iso						1
+	identified_organization 3
+	certicom				132
+
+OID certicom_curve			certicom_arc 0
+
+OID id_ec_publicKey			ansii_x9_62_arc 2
+OID id_ec_curves			ansii_x9_62_arc 3
+OID id_ec_curves_prime		id_ec_curves 1
+OID secp256r1				id_ec_curves_prime 7
+
+OID secp384r1				certicom_curve 34
+OID secp521r1				certicom_curve 35
+
 Class Certificate  
 	TBSCertificate			TBSCertificate
 	SignatureAlgorithm		AlgorithmIdentifier
@@ -288,8 +311,8 @@ Class DigestInfo
 
 Class AlgorithmIdentifier
 	Algorithm				OIDRef
-	Parameters				List Any
-
+	Parameters				OIDRef
+		Optional
 
 Class TaggedBitString
 	Algorithm				OIDRef

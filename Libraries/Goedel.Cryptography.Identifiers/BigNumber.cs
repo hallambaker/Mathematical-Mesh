@@ -346,9 +346,11 @@ public static class BigNumber {
     /// bytes in length.
     /// </summary>
     /// <param name="bigInteger">The integer to be converted.</param>
-    /// <param name="length">The exact length of the result.</param>
+    /// <param name="length">The length of the result to return in bytes. If zero, the length
+    /// is calculated from <paramref name="bigInteger"/>.</param>
     /// <returns>The byte array.</returns>
-    public static byte[] ToByteArrayLittleEndian(this BigInteger bigInteger, int length) {
+    public static byte[] ToByteArrayLittleEndian(this BigInteger bigInteger, int length=0) {
+        length = length == 0 ? bigInteger.CountBytes() : length;
 
         var Result = bigInteger.ToByteArray();
         if (Result.Length == length) {
@@ -359,7 +361,6 @@ public static class BigNumber {
         length = Math.Min(length, Result.Length);
         Array.Copy(Result, Copy, length);
         return Copy;
-
         }
 
     /// <summary>
@@ -368,9 +369,12 @@ public static class BigNumber {
     /// bytes in length.
     /// </summary>
     /// <param name="bigInteger">The integer to be converted.</param>
-    /// <param name="length">The exact length of the result.</param>
+    /// <param name="length">The length of the result to return in bytes. If zero, the length
+    /// is calculated from <paramref name="bigInteger"/>.</param>
     /// <returns>The byte array.</returns>
-    public static byte[] ToByteArrayBigEndian(this BigInteger bigInteger, int length) {
+    public static byte[] ToByteArrayBigEndian(this BigInteger bigInteger, int length=0) {
+
+
         var buffer = ToByteArrayLittleEndian(bigInteger, length);
         Array.Reverse(buffer);
         return buffer;
