@@ -83,7 +83,7 @@ public class TestNist : Disposable {
         //var keypair1 = composer.GenerateKeyPair(2048);
 
 
-        var keypair1 =  KeyFactoryRsa.Generate(null, null, "fred", 2048);
+        var (keypair1, hints) =  KeyFactoryRsa.Generate(null, null, "fred", 2048);
 
 
         var rsaKeyPair = KeyPairRSA.Generate(2048, KeySecurity.Exportable);

@@ -25,6 +25,8 @@ public class UdfKeyGenTest : AcvpTest {
     public string? KeyAlgorithm { get; set; }
 
 
+    public string? Hints { get; set; }
+
 
     public UdfKeyGenTest() {
         }
@@ -36,11 +38,15 @@ public class UdfKeyGenTest : AcvpTest {
         var data = SHAKE256.Process($"This is a common test seed of {testId}".ToBytes(), size);
         
         SeedUdf = Udf.DerivedKey(udfAlgorithm, data);
-        var keypair = Udf.DeriveKey(SeedUdf);
+
+
+        
+
+        var (keypair, hints) = Udf.DeriveKeyHints(SeedUdf, null);
         KeyUdf = keypair.UDFBytes;
         KeyUdfString = keypair.UDFValue;
-        KeyAlgorithm = keypair.CryptoAlgorithmId.ToJoseID();
-
+        KeyAlgorithm = keypair.CryptoAlgorithmId.ToString();
+        Hints = hints;
         TestData = new AcvpTestItem() {
             TcId = testId,
             };
@@ -49,7 +55,7 @@ public class UdfKeyGenTest : AcvpTest {
         Bind(TestData, "keyUdf", KeyUdf);
         Bind(TestData, "keyUdfValue", KeyUdfString);
         Bind(TestData, "keyalg", KeyAlgorithm);
-
+        Bind(TestData, "hints", Hints);
 
         }
 
@@ -60,7 +66,7 @@ public class UdfKeyGenTest : AcvpTest {
         KeyUdf = BindBinary(test, "keyUdf");
         KeyUdfString = BindString(test, "keyUdfValue");
         KeyAlgorithm = BindString(test, "keyalg");
-
+        Hints = BindString(test, "hints");
         }
 
 
@@ -69,7 +75,7 @@ public class UdfKeyGenTest : AcvpTest {
 
         keypair.UDFBytes.TestEqual(KeyUdf);
         keypair.UDFValue.TestEqual(KeyUdfString);
-        keypair.CryptoAlgorithmId.ToJoseID().TestEqual(KeyAlgorithm);
+        keypair.CryptoAlgorithmId.ToString().TestEqual(KeyAlgorithm);
         }
 
 

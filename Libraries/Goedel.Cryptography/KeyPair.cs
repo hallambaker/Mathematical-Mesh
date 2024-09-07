@@ -234,7 +234,7 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
     /// a single seed.</param>
     /// <param name="keySize">The size of the key in bits.</param>
     /// <returns>the derrived key.</returns>
-    public static KeyPair Factory(
+    public static (KeyPair, string?) Factory(
         CryptoAlgorithmId algorithmID,
         KeySecurity keySecurity,
         byte[] ikm,
@@ -246,28 +246,16 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
 
         KeyPair keyPair;
 
+        string hints = null;
         switch (algorithmID) {
+            case CryptoAlgorithmId.RSASign:
             case CryptoAlgorithmId.RSAExch: {
-                var bits = keySize / 2;
-                var seedp = KeySeed(bits, ikm, keySpecifier, keyName, "p");
-                var seedq = KeySeed(bits, ikm, keySpecifier, keyName, "q");
-
-
-                keyPair = KeyPairRSA.KeyPairFactory (CryptoAlgorithmId.RSAExch,
+                (keyPair, var hintsRsa) = KeyPairRSA.KeyPairFactory (CryptoAlgorithmId.RSAExch,
                     keySecurity, ikm, keySpecifier, keyName, keyCollection, keySize, keyUses);
-
-                    //KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Encrypt, algorithmID);
+                hints = hintsRsa.ToString ();
                 break;
                 }
-            case CryptoAlgorithmId.RSASign: {
-                var bits = keySize / 2;
-                var seedp = KeySeed(bits, ikm, keySpecifier, keyName, "p");
-                var seedq = KeySeed(bits, ikm, keySpecifier, keyName, "q");
 
-
-                keyPair = KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Sign, algorithmID);
-                break;
-                }
             case CryptoAlgorithmId.DH: {
                 var bits = keySize;
                 var binaryData = KeySeed(bits, ikm, keySpecifier, keyName);
@@ -316,7 +304,7 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
                 }
             }
         Register(keyPair, keySecurity, keyCollection);
-        return keyPair;
+        return (keyPair, hints);
         }
 
 

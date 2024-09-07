@@ -1188,6 +1188,7 @@ public class Udf {
                 KeySecurity keySecurity = KeySecurity.Persistable,
                 KeyUses keyUses = KeyUses.Any) => DeriveKey(udf, null, keySecurity, keyUses);
 
+
     /// <summary>
     /// Derive a key pair from the UDF key <paramref name="udf"/> with Key security model
     /// <paramref name="keySecurity"/> and Key uses <paramref name="keyUses"/>.
@@ -1206,6 +1207,29 @@ public class Udf {
                 KeyUses keyUses = KeyUses.Any,
                 CryptoAlgorithmId cryptoAlgorithmIdin = CryptoAlgorithmId.Default,
                 string keyName = null) {
+        var (result, _) = DeriveKeyHints(udf, keyCollection, keySecurity, keyUses, cryptoAlgorithmIdin, keyName);
+        return result;
+        }
+
+
+    /// <summary>
+    /// Derive a key pair from the UDF key <paramref name="udf"/> with Key security model
+    /// <paramref name="keySecurity"/> and Key uses <paramref name="keyUses"/>.
+    /// </summary>
+    /// <param name="cryptoAlgorithmIdin">Additional algorithm identifier.</param>
+    /// <param name="udf">The UDF to derrive the key from.</param>
+    /// <param name="keyCollection">The key collection to add the key to.</param>
+    /// <param name="keySecurity">The key security model.</param>
+    /// <param name="keyUses">The allowed key uses.</param>
+    /// <param name="keyName">Optional key name used to specify generation of multiple keys from 
+    /// a single seed.</param>
+    /// <returns>The derrived key pair.</returns>
+    public static (KeyPair, string?) DeriveKeyHints(string udf,
+                IKeyLocate keyCollection,
+                KeySecurity keySecurity = KeySecurity.Persistable,
+                KeyUses keyUses = KeyUses.Any,
+                CryptoAlgorithmId cryptoAlgorithmIdin = CryptoAlgorithmId.Default,
+                string keyName = null) {
 
         var ikm = Parse(udf, out var code);
         (code == (byte)UdfTypeIdentifier.DerivedKey).AssertTrue(OperationNotSupported.Throw);
@@ -1216,6 +1240,11 @@ public class Udf {
                         CryptoAlgorithmId.Ed448, CryptoAlgorithmId.X448);
 
         CryptoAlgorithmId cryptoAlgorithmId = algorithm switch {
+
+            UdfAlgorithmIdentifier.P256 => CryptoAlgorithmId.P256,
+            UdfAlgorithmIdentifier.P384 => CryptoAlgorithmId.P384,
+            UdfAlgorithmIdentifier.P521 => CryptoAlgorithmId.P521,
+
             UdfAlgorithmIdentifier.RSA2048 => CryptoAlgorithmId.RSAExch,
             UdfAlgorithmIdentifier.RSA3072 => CryptoAlgorithmId.RSAExch,
             UdfAlgorithmIdentifier.RSA4096 => CryptoAlgorithmId.RSAExch,
@@ -1253,6 +1282,10 @@ public class Udf {
             keySpecifier, keyName,
             keyCollection, keySize, keyUses);
         }
+
+
+
+
 
     /// <summary>
     /// Generate a UDF for a test key for the algorithm <paramref name="cryptoAlgorithmId"/>

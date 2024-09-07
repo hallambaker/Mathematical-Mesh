@@ -389,6 +389,25 @@ public static class BigNumber {
         }
 
 
+    public static int CountBytes(this BigInteger value) {
+        var count = 1;
+
+        while (value > 0) {
+            value = value / 256;
+            count++;
+            }
+        return count;
+        }
+
+    public static int CountBits(this BigInteger value) {
+        var count = 0;
+
+        while (value > 0) {
+            value = value / 2;
+            count++;
+            }
+        return count;
+        }
 
 
     }

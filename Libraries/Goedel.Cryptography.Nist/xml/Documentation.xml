@@ -4,13 +4,6 @@
         <name>Goedel.Cryptography.Nist</name>
     </assembly>
     <members>
-        <member name="M:Goedel.Cryptography.Nist.BinaryCurve.FastMultiply(System.Numerics.BigInteger)">
-            <summary>
-            Based on the Fixed-base comb method (Algorithm 17 from https://link.springer.com/content/pdf/10.1007/3-540-44499-8_1.pdf)
-            </summary>
-            <param name="scalar"></param>
-            <returns></returns>
-        </member>
         <member name="P:Goedel.Cryptography.Nist.EccDomainParameters.CurveE">
             <summary>
             The polynomial representing the curve, contains a, b and the curve type
@@ -1164,7 +1157,48 @@
         <member name="P:Goedel.Cryptography.Nist.PrivateKeyRsaCrt.IQMP">
             <summary>Coefficient</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Nist.PrimeGeneratorHelper.ProbablePrimeFactor(Goedel.Cryptography.Nist.IPrimeGenerator,System.Int32,System.Int32,System.Numerics.BigInteger,System.Numerics.BigInteger,System.Int32,System.Numerics.BigInteger)">
+        <member name="M:Goedel.Cryptography.Nist.IPrimeGenerator.GetPrime(System.Int32,System.Int32,System.String)">
+            <summary>
+            Return a prime value of <paramref name="bits"/> meeting the requirments 
+            set by a modulus of size <paramref name="modulus"/> for variable 
+            <paramref name="tag"/>.
+            </summary>
+            <param name="bits">The size of the prime in bits.</param>
+            <param name="modulus">The size of the modulus in bits.</param>
+            <param name="tag">Tag used to identify the item for deterministic generation.</param>
+            <returns>The primne value.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IPrimeGenerator.GetEntropy(System.Numerics.BigInteger,System.Numerics.BigInteger,System.String)">
+            <summary>
+            Return a random value in the interval <paramref name="minInclusive"/> to
+            <paramref name="maxInclusive"/> inclusive for variable <paramref name="tag"/>.
+            </summary>
+            <param name="minInclusive"></param>
+            <param name="maxInclusive"></param>
+            <param name="tag">Tag used to identify the item for deterministic generation.</param>
+            <returns>The random value.</returns>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeGenerator.CallCount">
+            <summary>Dictionary tracking the number of times the method has been called.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeGenerator.#ctor">
+            <summary>
+            Constructor, return a prime generator using the platform random number generator.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeGenerator.GetEntropy(System.Numerics.BigInteger,System.Numerics.BigInteger,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeGenerator.GetPrime(System.Int32,System.Int32,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeGenerator.UpdateCallCount(System.String)">
+            <summary>
+            Update the call count in the dictionary.
+            </summary>
+            <param name="tag">The identifier to update.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeGeneratorHelper.ProbablePrimeFactor(Goedel.Cryptography.Nist.IPrimeGenerator,System.Int32,System.Int32,System.Numerics.BigInteger,System.Numerics.BigInteger,System.Int32,System.Numerics.BigInteger,System.String)">
             <summary>
             C.9 Compute a Probable Prime Factor Based on Auxiliary Primes
             </summary>

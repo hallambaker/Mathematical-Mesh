@@ -22,37 +22,124 @@
 
 
 using Goedel.Cryptography.Nist;
+using Goedel.Cryptography.Standard;
+
 using System.Reflection.Metadata;
 
 namespace Goedel.Cryptography;
 
-public class PrimeGeneratorUdf(
+
+
+public record RsaGenerationHints {
+
+
+    public int Q;
+    public int Q1;
+    public int Q2;
+    public int QQ;
+
+    public int P;
+    public int P1;
+    public int P2;
+    public int PP;
+
+    public RsaGenerationHints(Dictionary<string, int> callCount) {
+        callCount.TryGetValue("q", out Q);
+        callCount.TryGetValue("q1", out Q1);
+        callCount.TryGetValue("q2", out Q2);
+        callCount.TryGetValue("qq", out QQ);
+
+        callCount.TryGetValue("p", out P);
+        callCount.TryGetValue("p1", out P1);
+        callCount.TryGetValue("p2", out P2);
+        callCount.TryGetValue("pp", out PP);
+        }
+
+
+    public byte[] ToBytes() {
+        var stream = new MemoryStream();
+        Append(stream, P);
+        Append(stream, Q);
+
+        Append(stream, P1);
+        Append(stream, Q1);
+
+        Append(stream, P2);
+        Append(stream, Q2);
+
+        Append(stream, PP);
+        Append(stream, QQ);
+
+
+        return stream.ToArray();
+        }
+
+
+    public void Append(MemoryStream stream, int value) {
+        while (true) {
+            if (value < 0x80) {
+                stream.WriteByte((byte)value);
+                return;
+                }
+            else {
+                stream.WriteByte((byte) (0x80 | (value & 0x7f)));
+                value = value >> 7;
+                }
+            }
+        }
+
+    ///<inheritdoc/>
+    public override string ToString() => ToBytes().ToStringBase32(format: ConversionFormat.Dash4);
+
+    }
+
+
+public class KeyFactoryECC {
+
+    //public KeyFactoryECC() {
+
+    //    var factory = new EccCurveFactory();
+    //    var curve1 = factory.GetCurve(NistCurve.P256);
+
+    //    }
+
+
+    public static void Generate(
                     byte[] ikm,
                     byte[] keySpecifier,
-                    string keyName) : IPrimeGenerator {
+                    string keyName,
+                    int keySize) {
+        var generator = new PrimeGeneratorUdf(ikm, keySpecifier, keyName);
+        Generate(generator, keySize);
 
-    //byte[] Ikm { get; } = ikm;
-    //byte[] KeySpecifier { get; } = keySpecifier;
-    //string KeyName { get; } = keyName;
-
-
-    ///<inheritdoc/>
-    public BigInteger GetEntropy(BigInteger minInclusive, BigInteger maxInclusive) {
-
-
-
-        throw new NotImplementedException();
         }
 
-    ///<inheritdoc/>
-    public (BigInteger, BigInteger) GetPrime(int bits, int modulus) {
-        var param = $"{parameter}{i}";
+    public static void Generate(IPrimeGenerator generator, int keySize) {
 
-        var seed = KeyPair.KeySeed(bits, ikm, keySpecifier, keyName, param);
 
-        throw new NotImplementedException();
+
+        var curveId = keySize switch {
+            256 => NistCurve.P256,
+            384 => NistCurve.P384,
+            521 => NistCurve.P521,
+            _ => throw new CryptographicException()
+        };
+
+        var factory = new EccCurveFactory();
+        var curve = factory.GetCurve(curveId);
+
+        var d = generator.GetEntropy(1, curve.OrderN, "d");
+
+
+        var Q = curve.Multiply(curve.BasePointG, d);
+
+        //need to encode octets according to
+        //https://www.secg.org/sec1-v2.pdf
+
+        // First output the byte 04 (uncompressed)
+        // Then X in bigendian form and Y in bigendian form.
+
         }
-
 
 
 
@@ -63,13 +150,17 @@ public class PrimeGeneratorUdf(
 public  class KeyFactoryRsa {
 
 
-    public static PkixPrivateKeyRsa Generate(
+    public static (PkixPrivateKeyRsa, RsaGenerationHints) Generate(
                         byte[] ikm,
                         byte[] keySpecifier,
                         string keyName,
                         int keySize) {
-        var generator = new PrimeGenerator();
-        return Generate(generator, keySize);
+        var generator = new PrimeGeneratorUdf(ikm, keySpecifier, keyName);
+        var result = Generate(generator, keySize);
+
+        var hints = new RsaGenerationHints(generator.CallCount);
+        Console.WriteLine($"Hints  P {hints.P}   Q {hints.Q}");
+        return (result, hints);
         }
 
 
@@ -90,17 +181,6 @@ public  class KeyFactoryRsa {
             Exponent1 = keypair.PrivKey.DMP1.ToByteArrayBigEndian(primeBytes),
             Exponent2 = keypair.PrivKey.DMQ1.ToByteArrayBigEndian(primeBytes),
             Coefficient = keypair.PrivKey.IQMP.ToByteArrayBigEndian(primeBytes)
-
-
-            //Modulus = keypair.PubKey.N.ToByteArrayLittleEndian(keySize),
-            //PublicExponent = keypair.PubKey.E.ToByteArrayLittleEndian(3),
-
-            //Prime1 = keypair.PrivKey.P.ToByteArrayLittleEndian(primesize),
-            //Prime2 = keypair.PrivKey.Q.ToByteArrayLittleEndian(primesize),
-            //PrivateExponent = keypair.PrivKey.D.ToByteArrayLittleEndian(keySize),
-            //Exponent1 = keypair.PrivKey.DMP1.ToByteArrayLittleEndian(primesize),
-            //Exponent2 = keypair.PrivKey.DMQ1.ToByteArrayLittleEndian(primesize),
-            //Coefficient = keypair.PrivKey.IQMP.ToByteArrayLittleEndian(primesize)
             };
 
         return result;

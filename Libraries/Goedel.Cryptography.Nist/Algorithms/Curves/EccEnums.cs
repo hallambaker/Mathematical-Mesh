@@ -1,6 +1,6 @@
 ﻿
 namespace Goedel.Cryptography.Nist;
-public enum Curve {
+public enum NistCurve {
     [EnumMember(Value = "P-192")]
     P192,
     [EnumMember(Value = "P-224")]

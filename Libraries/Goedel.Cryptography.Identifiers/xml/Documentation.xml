@@ -434,6 +434,15 @@
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA87pure">
             <summary>ML-DSA (Dilithium) 87</summary> 
         </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.P256">
+            <summary>NIST Curve P256</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.P384">
+            <summary>NIST Curve P256</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.P521">
+            <summary>NIST Curve P256</summary> 
+        </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.RSAExch">
             <summary>RSA Encryption using OAEP padding.</summary>
         </member>

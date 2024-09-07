@@ -15,9 +15,9 @@ public class PrimeCurve : IEccCurve {
     // CurveType is obviously prime
     public CurveType CurveType { get { return CurveType.Prime; } }
 
-    public Curve CurveName { get; }
+    public NistCurve CurveName { get; }
 
-    public PrimeCurve(Curve curveName, BigInteger p, BigInteger b, EccPoint g, BigInteger n) {
+    public PrimeCurve(NistCurve curveName, BigInteger p, BigInteger b, EccPoint g, BigInteger n) {
         CurveName = curveName;
 
         FieldSizeQ = p;

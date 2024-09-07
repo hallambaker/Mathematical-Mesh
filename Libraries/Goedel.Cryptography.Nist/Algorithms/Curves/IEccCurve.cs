@@ -8,7 +8,7 @@ public interface IEccCurve {
     /// <summary>
     /// Name of the curve as an enum
     /// </summary>
-    Curve CurveName { get; }
+    NistCurve CurveName { get; }
 
     /// <summary>
     /// Field size, either a q = prime > 3, or q = 2^m where m is prime. Represents the total number of points

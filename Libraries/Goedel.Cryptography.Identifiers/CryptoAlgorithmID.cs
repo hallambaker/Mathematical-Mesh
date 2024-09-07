@@ -292,7 +292,14 @@ public enum CryptoAlgorithmId {
     ///<summary>ML-DSA (Dilithium) 87</summary> 
     MLDSA87pure = MLDSA87 + DIRECT,
 
+    ///<summary>NIST Curve P256</summary> 
+    P256 = Signature + Meta * 10,
 
+    ///<summary>NIST Curve P256</summary> 
+    P384 = Signature + Meta * 11,
+
+    ///<summary>NIST Curve P256</summary> 
+    P521 = Signature + Meta * 12,
 
 
     // Public Key Exchange

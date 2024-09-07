@@ -4238,6 +4238,9 @@
             <param name="keyStorage">The key security specifier.</param>
             <returns>true if the key is persisted, otherwise false</returns>
         </member>
+        <member name="M:Goedel.Cryptography.RsaGenerationHints.ToString">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Cryptography.PlatformInformation">
             <summary>Enumeration used to specify information requested from the platform
             to enable use of platform specific features.</summary>
@@ -10958,6 +10961,27 @@
             </summary>
             <param name="inputs">List of arrays to wipe</param>
         </member>
+        <member name="P:Goedel.Cryptography.PrimeGeneratorUdf.CallCount">
+            <summary>Dictionary tracking the number of times the method has been called.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.PrimeGeneratorUdf.GetEntropy(System.Numerics.BigInteger,System.Numerics.BigInteger,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PrimeGeneratorUdf.GetEntropyUncounted(System.Int32,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PrimeGeneratorUdf.GetPrime(System.Int32,System.Int32,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PrimeGeneratorUdf.Register(System.String,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PrimeGeneratorUdf.UpdateCallCount(System.String)">
+            <summary>
+            Update the call count in the dictionary.
+            </summary>
+            <param name="tag">The identifier to update.</param>
+        </member>
         <member name="T:Goedel.Cryptography.Standard.CryptoProviderAuthentication">
             <summary>
             Provider for bulk authentication algorithms (e.g. HMAC-SHA256).
@@ -12278,6 +12302,20 @@
             <returns></returns>
         </member>
         <member name="M:Goedel.Cryptography.Udf.DeriveKey(System.String,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId,System.String)">
+            <summary>
+            Derive a key pair from the UDF key <paramref name="udf"/> with Key security model
+            <paramref name="keySecurity"/> and Key uses <paramref name="keyUses"/>.
+            </summary>
+            <param name="cryptoAlgorithmIdin">Additional algorithm identifier.</param>
+            <param name="udf">The UDF to derrive the key from.</param>
+            <param name="keyCollection">The key collection to add the key to.</param>
+            <param name="keySecurity">The key security model.</param>
+            <param name="keyUses">The allowed key uses.</param>
+            <param name="keyName">Optional key name used to specify generation of multiple keys from 
+            a single seed.</param>
+            <returns>The derrived key pair.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Udf.DeriveKeyHints(System.String,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId,System.String)">
             <summary>
             Derive a key pair from the UDF key <paramref name="udf"/> with Key security model
             <paramref name="keySecurity"/> and Key uses <paramref name="keyUses"/>.
