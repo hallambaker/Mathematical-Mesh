@@ -59,7 +59,7 @@ partial class Program {
 
 
 
-        ShellTests.Test().TestUDF();
+        //ShellTests.Test().TestUDF();
         //TestPlatformWindows.Test().TestKeyRead();
 
         //RegistrationTests.Test().CallsignBind();
