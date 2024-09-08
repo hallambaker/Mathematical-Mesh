@@ -32,16 +32,16 @@ public static class AlgorithmID {
     /// </summary>
     public static readonly Dictionary<string, CryptoAlgorithmId> UpperToID =
         new() {
-                { JoseConstants.AES, CryptoAlgorithmId.AES256 },
+                //{ JoseConstants.AES, CryptoAlgorithmId.AES256 },
                 { JoseConstants.AES128, CryptoAlgorithmId.AES128 },
                 { JoseConstants.AES256, CryptoAlgorithmId.AES256 },
 
-                { JoseConstants.SHA2, CryptoAlgorithmId.SHA_2_512 },
+                //{ JoseConstants.SHA2, CryptoAlgorithmId.SHA_2_512 },
                 { JoseConstants.SHA2_512, CryptoAlgorithmId.SHA_2_512 },
                 { JoseConstants.SHA2_256, CryptoAlgorithmId.SHA_2_256 },
 
             //{"SHA128",  CryptoAlgorithmID.SHA_2_512T128 },
-                { JoseConstants.SHA3, CryptoAlgorithmId.SHA_3_512 },
+                //{ JoseConstants.SHA3, CryptoAlgorithmId.SHA_3_512 },
                 { JoseConstants.SHA3_256, CryptoAlgorithmId.SHA_3_256 },
                 { JoseConstants.SHA3_512, CryptoAlgorithmId.SHA_3_256 },
 
@@ -58,8 +58,30 @@ public static class AlgorithmID {
                 { JoseConstants.MLDSA65, CryptoAlgorithmId.MLDSA65 },
                 { JoseConstants.MLDSA87, CryptoAlgorithmId.MLDSA87 },
 
+                { JoseConstants.P256, CryptoAlgorithmId.P256 },
+                { JoseConstants.P384, CryptoAlgorithmId.P384 },
+                { JoseConstants.P521, CryptoAlgorithmId.P521 },
+
             //{"", CryptoAlgorithmID }
             };
+
+    /// <summary>
+    /// Lookup  identifier by Jose name or commonly used alias
+    /// </summary>
+    public static readonly Dictionary<string, CryptoAlgorithmId> ExtraToID =
+        new() {
+
+
+                //{ JoseConstants.SHA2, CryptoAlgorithmId.SHA_2_512 },
+                { JoseConstants.SHA2, CryptoAlgorithmId.SHA_2_512 },
+                { JoseConstants.SHA3, CryptoAlgorithmId.SHA_3_512 },
+
+
+
+            //{"", CryptoAlgorithmID }
+            };
+
+
 
 
     /// <summary>
@@ -250,8 +272,13 @@ public static class AlgorithmID {
             return defaultID;
             }
 
-        var Found = UpperToID.TryGetValue(uncasedID.ToUpper(), out CryptoAlgorithmId result);
-        return Found ? result : CryptoAlgorithmId.Unknown;
+        if (UpperToID.TryGetValue(uncasedID.ToUpper(), out var result)) {
+            return result;
+            }
+        if (ExtraToID.TryGetValue(uncasedID.ToUpper(), out result)) {
+            return result;
+            }
+        return CryptoAlgorithmId.Unknown;
         }
 
 

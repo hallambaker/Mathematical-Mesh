@@ -58,20 +58,22 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
-        TestUdf.GenerateTests();
+        //var TestGoedelCryptography = new TestGoedelCryptography();
 
-        //var fred = new KeyFactoryECC();
+        ShellTests.Test().TestUDF();
 
-        //var bytes = "fred".ToBytes();
-        //KeyFactoryECC.Generate(bytes, bytes, "fred", 256);
-        //KeyFactoryECC.Generate(bytes, bytes, "fred", 384);
-        //KeyFactoryECC.Generate(bytes, bytes, "fred", 521);
+        //TestUdf.GenerateTests();
+        //TestGoedelCryptography.UDFKeyGen(UDFKeyGen.TEST1);
+        //TestGoedelCryptography.UDFKeyGen(UDFKeyGen.TEST2);
+        //TestGoedelCryptography.UDFKeyGen(UDFKeyGen.TEST3);
+        //TestGoedelCryptography.UDFKeyGen(UDFKeyGen.TEST4);
+        //TestGoedelCryptography.UDFKeyGen(UDFKeyGen.TEST_KG_Device);
+        //TestGoedelCryptography.UDFKeyGen(UDFKeyGen.TEST_KG_User);
+        //TestGoedelCryptography.UDFKeyGen(UDFKeyGen.TEST_KG_Service);
         //TestUdf.Test().TestUdfKeygenML();
-
-        //TestUdf.Test().TestUdfKeygenECC();
-
         //TestUdf.Test().TestUdfKeygenRSA();
-        //TestNist.GetRSA();
+        //TestUdf.Test().TestUdfKeygenECC();
+        //TestUdf.Test().TestUdfKeygenECCP();
 
 
 

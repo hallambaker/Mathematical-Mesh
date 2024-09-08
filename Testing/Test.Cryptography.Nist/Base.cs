@@ -1,6 +1,7 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.Nist;
+using Goedel.Mesh.Test;
 
 using System;
 using System.Net.NetworkInformation;
@@ -13,7 +14,8 @@ namespace Goedel.XUnit;
 /// </summary>
 public class TestNist : Disposable {
 
-    public string ACVP_Root => @"..\NIST.Test.Vectors";
+    public string ACVP_Root => Path.Combine(TestEnvironmentBase.CommonData,
+                "NIST.Test.Vectors");
 
     public string KemKeyGen => Path.Combine(ACVP_Root, "ML-KEM-keyGen-FIPS203");
     public string KemEncapDecap => Path.Combine(ACVP_Root, "ML-KEM-encapDecap-FIPS203");

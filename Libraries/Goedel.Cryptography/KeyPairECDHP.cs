@@ -274,7 +274,8 @@ subjectPublicKeyInfo SubjectPublicKeyInfo SEQUENCE (2 elem)
                 KeySecurity keyType = KeySecurity.Public,
                 KeyUses keyUses = KeyUses.Any,
                 CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.P521) {
-
+        
+        CryptoAlgorithmId = cryptoAlgorithmID;
         var (keySize, curve) = cryptoAlgorithmID switch {
             CryptoAlgorithmId.P256 => (256, EccCurveFactory.P256),
             CryptoAlgorithmId.P384 => (384, EccCurveFactory.P384),

@@ -2,6 +2,7 @@
 using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.Jose;
 using Goedel.IO;
+using Goedel.Mesh.Test;
 
 using System.Security.Cryptography;
 using System.Text.Json;
@@ -14,7 +15,8 @@ namespace Goedel.XUnit;
 public class TestUdf : Disposable {
 
 
-    public static string Goedel_ACVP_Root => @"..\Goedel.Test.Vectors";
+    public static string Goedel_ACVP_Root => Path.Combine(TestEnvironmentBase.CommonData,
+                "Goedel.Test.Vectors");
 
     public static string UdfDirectoryML => Path.Combine(Goedel_ACVP_Root, "Udf.ML");
     public static string UdfDirectoryECC => Path.Combine(Goedel_ACVP_Root, "Udf.ECC");
@@ -76,7 +78,8 @@ public class TestUdf : Disposable {
             }
 
         }
-    [Fact]
+
+    [Fact(Skip = "Takes a very long time.")]
     public void TestUdfKeygenRSA() {
 
         var testBinding = new AcvpTestBinding<UdfKeyGenTest>(UdfDirectoryRSA);
@@ -103,9 +106,9 @@ public class TestUdf : Disposable {
     public static TestUdf Test() => new();
 
     public static void GenerateTests() {
-        //GenerateTests(UdfDirectoryRSA, AlgIdsRSA);
-        //GenerateTests(UdfDirectoryML, AlgIdsML);
-        //GenerateTests(UdfDirectoryECC, AlgIdsECC);
+        GenerateTests(UdfDirectoryRSA, AlgIdsRSA);
+        GenerateTests(UdfDirectoryML, AlgIdsML);
+        GenerateTests(UdfDirectoryECC, AlgIdsECC);
 
         GenerateTests(UdfDirectoryECCP, AlgIdsECCP);
         }

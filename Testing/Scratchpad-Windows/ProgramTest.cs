@@ -59,8 +59,8 @@ partial class Program {
 
 
 
-        TestPlatform.Test().TestKeyRead();
-        TestPlatformWindows.Test().TestKeyRead();
+        ShellTests.Test().TestUDF();
+        //TestPlatformWindows.Test().TestKeyRead();
 
         //RegistrationTests.Test().CallsignBind();
 
