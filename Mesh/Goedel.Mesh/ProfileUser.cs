@@ -61,8 +61,12 @@ public partial class ProfileUser {
     /// </summary>
     /// <returns></returns>
     public override void Validate() {
-        base.Validate();
-
+        try {
+            base.Validate();
+            }
+        catch (Exception e) {
+            throw new InvalidProfile(inner: e);
+            }
         AccountAuthenticationKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
         AccountSignatureKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
 

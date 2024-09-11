@@ -61,8 +61,8 @@ partial class Program {
 
 
         //TestService.Test().TestCredentialAccountFails(DataValidity.CorruptPayload);
-        //TestService.Test().TestCredentialAccountFails(DataValidity.CorruptMissing);
-        //TestService.Test().TestCredentialAccountFails(DataValidity.CorruptSigner);
+        TestService.Test().TestCredentialAccountFails(DataValidity.CorruptMissing);
+        TestService.Test().TestCredentialAccountFails(DataValidity.CorruptSigner);
 
         //var TestGoedelCryptography = new TestGoedelCryptography();
 
@@ -92,7 +92,7 @@ partial class Program {
         //TestGoedelCryptography.UDFKeyGen(UDFKeyGen.TEST_KG_Device);
         //TestGoedelCryptography.UDFKeyGen(UDFKeyGen.TEST_KG_User);
         //TestGoedelCryptography.UDFKeyGen(UDFKeyGen.TEST_KG_Service);
-        TestUdf.Test().TestUdfKeygenML();
+        //TestUdf.Test().TestUdfKeygenML();
         //TestUdf.Test().TestUdfKeygenRSA();
         //TestUdf.Test().TestUdfKeygenECC();
         //TestUdf.Test().TestUdfKeygenECCP();
@@ -102,7 +102,7 @@ partial class Program {
         //TestNist.Test().TestKemKeyGen();
         //TestNist.Test().TestKemEncapDecap();
         //TestNist.Test().TestDsaKeyGen();
-        //TestNist.Test().TestDsaSign();
+        TestNist.Test().TestDsaSign();
         //TestNist.Test().TestDsaVerify();
 
 

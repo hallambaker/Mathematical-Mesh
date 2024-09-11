@@ -90,15 +90,20 @@ public class MeshCredentialPublic : MeshKeyCredentialPublic {
     /// </summary>
     /// <returns>The verified device (if successful)</returns>
     public MeshVerifiedDevice VerifyDevice() {
-        if (ConnectionDevice != null) {
-            return VerifyAccount();
+        try {
+            if (ConnectionDevice != null) {
+                return VerifyAccount();
+                }
+            ProfileDevice.AssertNotNull(NotAuthenticated.Throw);
+            ProfileDevice.Validate();
+            AuthenticationPublic.MatchKeyIdentifier(
+                    ProfileDevice.Authentication.Udf).AssertTrue(NotAuthenticated.Throw);
+            CredentialValidation = CredentialValidation.Device;
+            return new MeshVerifiedDevice(this);
             }
-        ProfileDevice.AssertNotNull(NotAuthenticated.Throw);
-        ProfileDevice.Validate();
-        AuthenticationPublic.MatchKeyIdentifier(
-                ProfileDevice.Authentication.Udf).AssertTrue(NotAuthenticated.Throw);
-        CredentialValidation = CredentialValidation.Device;
-        return new MeshVerifiedDevice(this);
+        catch (Exception e){
+            throw new InvalidProfile(inner: e);    
+            }
         }
 
     /// <summary>
@@ -108,13 +113,15 @@ public class MeshCredentialPublic : MeshKeyCredentialPublic {
     public MeshVerifiedAccount VerifyAccount() {
         ConnectionDevice.AssertNotNull(NotAuthenticated.Throw);
 
-        //Account = ConnectionAccount?.Account;
-
         AuthenticationPublic.MatchKeyIdentifier(
             ConnectionDevice.AuthenticationPublic.KeyIdentifier).AssertTrue(NotAuthenticated.Throw);
-
-        CredentialValidation = CredentialValidation.Account;
-        return new MeshVerifiedAccount(this);
+        try {
+            CredentialValidation = CredentialValidation.Account;
+            return new MeshVerifiedAccount(this);
+            }
+        catch (Exception e) {
+            throw new NotAuthenticated(inner: e);
+            }
 
         }
 

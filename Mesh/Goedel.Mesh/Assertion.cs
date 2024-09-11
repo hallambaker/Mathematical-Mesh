@@ -35,9 +35,21 @@ public partial class Assertion {
     /// Verify the profile to check that it is correctly signed and consistent.
     /// </summary>
     /// <returns></returns>
-    public virtual void Validate(ProfileAccount profile) =>
-        DareEnvelope.VerifySignature(profile.AdministratorSignatureKey).
+    public virtual void Validate(ProfileAccount profile) {
+        try {
+
+            DareEnvelope.VerifySignature(profile.AdministratorSignatureKey).
                 AssertTrue(InvalidAssertion.Throw);
+            }
+        catch (InvalidAssertion) {
+            throw new InvalidAssertion();
+            }
+        catch (Exception e) {
+            throw new InvalidAssertion(inner: e);
+            }
+
+        }
+
 
 
     /// <summary>

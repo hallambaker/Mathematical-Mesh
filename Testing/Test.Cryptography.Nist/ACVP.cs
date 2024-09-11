@@ -109,7 +109,7 @@ public class DsaSignTest : DsaKeyGenTest {
             }
 
         else {
-            var signature = privateKey.SignInternal(Message, Rnd);
+            var signature = privateKey.SignInternal(Message, rnd: Rnd);
             signature.TestEqual(Signature);
             }
 
