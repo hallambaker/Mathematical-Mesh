@@ -23,6 +23,7 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
+using Goedel.Cryptography.PQC;
 using Goedel.Protocol;
 
 namespace Goedel.Test.Core;
@@ -368,10 +369,16 @@ public class DareRecipientDebug : DareRecipient {
 
         var exchange = Platform.KeyWrapRFC3394.Wrap(EncryptionKey, MasterKey);
 
-        var JoseKey = Key.GetPublic(result.EphemeralKeyPair);
+        if (result.EphemeralKeyPair is KeyPair keyPairEpk) {
+            Epk = Key.GetPublic(keyPairEpk);
+            }
+        else if (result.EphemeralKeyPair is AgreementDataBinary kemCiphertext) {
+            Ek = kemCiphertext.Value;
+            }
+
 
         KeyIdentifier = PublicKey.KeyIdentifier;
-        Epk = JoseKey;
+
         WrappedBaseSeed = exchange;
         }
     }

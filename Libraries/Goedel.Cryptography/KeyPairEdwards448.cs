@@ -20,6 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 namespace Goedel.Cryptography;
 
 
@@ -27,7 +29,7 @@ namespace Goedel.Cryptography;
 /// <summary>
 /// KeyPair binding for Ed448 signature and exchange.
 /// </summary>
-public class KeyPairEd448 : KeyPairEdwards {
+public class KeyPairEd448 : KeyPairEdwards, IAgreementData {
 
 
     #region // Properties and fields 
@@ -195,7 +197,8 @@ public class KeyPairEd448 : KeyPairEdwards {
 
 
     ///<inheritdoc/>
-    public override void Persist(KeyCollection keyCollection) {
+    public override void Persist(
+                KeyCollection keyCollection) {
         Assert.AssertTrue(PersistPending, CryptographicException.Throw);
         var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyECDH(CryptoAlgorithmId.Ed448, encodedPrivateKey) { };
         keyCollection.Persist(KeyIdentifier, pkix, KeySecurity.IsExportable());
@@ -223,17 +226,18 @@ public class KeyPairEd448 : KeyPairEdwards {
 
     ///<inheritdoc/>
     public override void Encrypt(byte[] key,
-        out byte[] exchange,
-        out KeyPair ephemeral,
-        out byte[] ciphertext, byte[] salt = null) => PublicKey.Agreement().Encrypt(key, out exchange, out ephemeral, out ciphertext, salt);
+            out byte[] exchange,
+            out IAgreementData ephemeral,
+            byte[] salt = null) => PublicKey.Agreement().Encrypt(key, out exchange, out ephemeral, salt);
 
 
 
     ///<inheritdoc/>
     public override byte[] Decrypt(byte[] encryptedKey,
-        KeyPair ephemeral = null,
-        byte[] ciphertext = null,
-        CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, KeyAgreementResult partial = null, byte[] salt = null) {
+            IAgreementData ephemeral = null,
+            CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+            KeyAgreementResult partial = null,
+                byte[] salt = null) {
 
         var KeyPairEd448 = ephemeral as KeyPairEd448;
         Assert.AssertNotNull(KeyPairEd448, KeyTypeMismatch.Throw);
@@ -242,60 +246,106 @@ public class KeyPairEd448 : KeyPairEdwards {
         return Agreementx.Decrypt(encryptedKey, ephemeral, partial, salt);
         }
 
+    #region // Sign Methods
+
     ///<inheritdoc/>
-    public override byte[] Sign(byte[] data, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null) {
-        return base.Sign(data, algorithmID, context);
+    public override byte[] Sign(
+                    byte[] data,
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+                    byte[] context = null) {
+
+        switch (algorithmID) {
+            case CryptoAlgorithmId.Ed448:
+            case CryptoAlgorithmId.Default: {
+                var (result, _) = SignManifest(data, CryptoAlgorithmId.Ed448, context);
+                return result;
+                }
+            case CryptoAlgorithmId.Ed448ph: {
+                using var shake256 = new SHAKE256(64 * 8);
+                var digest = shake256.ComputeHash(data);
+                return SignDigest(digest, CryptoAlgorithmId.Ed448ph, context);
+                }
+            }
+        throw new CipherModeNotSupported();
         }
 
     ///<inheritdoc/>
-    public override bool Verify(byte[] data, byte[] signature, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null) {
-        return base.Verify(data, signature, algorithmID, context);
-        }
-
-
-    ///<inheritdoc/>
-    public override byte[] SignHash(
+    public override byte[] SignDigest(
             byte[] data,
             CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
             byte[] context = null) {
         Assert.AssertTrue((KeyUses & KeyUses.Sign) != 0, CryptographicOperationNotSupported.Throw);
 
-        algorithmID = algorithmID == CryptoAlgorithmId.Default ? CryptoAlgorithmId : algorithmID;
-        if (algorithmID == CryptoAlgorithmId.Ed448ph) {
-            using var shake256 = new SHAKE256(64 * 8);
-            data = shake256.ComputeHash(data);
-            }
+        (data.Length == 64).AssertTrue(InternalCryptographicException.Throw);
+        (algorithmID == CryptoAlgorithmId.Ed448ph).AssertTrue(InternalCryptographicException.Throw);
 
-        var dom4 = CurveEdwards448.Dom4(algorithmID, context);
+        var dom4 = CurveEdwards448.Dom4(CryptoAlgorithmId.Ed448ph, context);
         return PrivateKey.Sign(data, dom4);
         }
-
 
     ///<inheritdoc/>
     public override ThresholdSignatureEdwards SignHashThreshold(byte[] data,
     CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
         byte[] context = null) => new ThresholdSignatureEdwards448(PrivateKey);
 
+    ///<inheritdoc/>
+    public override (byte[], CryptoAlgorithmId) SignManifest(byte[] data, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null) {
+        Assert.AssertTrue((KeyUses & KeyUses.Sign) != 0, CryptographicOperationNotSupported.Throw);
 
+        // Always use pure to sign a manifest.
+        var dom4 = CurveEdwards448.Dom4(CryptoAlgorithmId.Ed448, context);
+        return (PrivateKey.Sign(data, dom4), CryptoAlgorithmId.Ed448);
+        }
+
+    #endregion
+    #region // Verify Methods
 
     ///<inheritdoc/>
-    public override bool VerifyHash(
+    public override bool Verify(
+                    byte[] data,
+                    byte[] signature,
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+                    byte[] context = null) {
+
+        switch (algorithmID) {
+            case CryptoAlgorithmId.Ed448:
+            case CryptoAlgorithmId.Default: {
+                return VerifyManifest(data, signature, CryptoAlgorithmId.Ed448, context);
+                }
+            case CryptoAlgorithmId.Ed448ph: {
+                using var shake256 = new SHAKE256(64 * 8);
+                var digest = shake256.ComputeHash(data);
+                return VerifyDigest(digest, signature, CryptoAlgorithmId.Ed448ph, context);
+                }
+            }
+        throw new CipherModeNotSupported();
+        }
+
+    ///<inheritdoc/>
+    public override bool VerifyManifest(
+                    byte[] manifest, byte[] signature,
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+                    byte[] context = null) {
+        var dom4 = CurveEdwards448.Dom4(CryptoAlgorithmId.Ed448, context);
+        return PublicKey.Verify(signature, manifest, dom4);
+        }
+
+    ///<inheritdoc/>
+    public override bool VerifyDigest(
         byte[] digest,
         byte[] signature,
         CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
             byte[] context = null) {
         Assert.AssertTrue((KeyUses & KeyUses.Sign) != 0, CryptographicOperationNotSupported.Throw);
 
-        algorithmID = algorithmID == CryptoAlgorithmId.Default ? CryptoAlgorithmId : algorithmID;
-        if (algorithmID == CryptoAlgorithmId.Ed448ph) {
-            using var shake256 = new SHAKE256(64 * 8);
-            digest = shake256.ComputeHash(digest);
-            }
+        (digest.Length == 64).AssertTrue(CryptographicException.Throw);
+        (algorithmID == CryptoAlgorithmId.Ed448ph).AssertTrue(CryptographicException.Throw);
 
-        var dom4 = CurveEdwards448.Dom4(algorithmID, context);
+        var dom4 = CurveEdwards448.Dom4(CryptoAlgorithmId.Ed448ph, context);
         return PublicKey.Verify(signature, digest, dom4);
         }
 
 
+    #endregion
     #endregion
     }

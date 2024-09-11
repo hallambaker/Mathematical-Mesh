@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 9/8/2024 2:52:41 AM
+//  This file was automatically generated at 9/11/2024 2:00:30 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -232,12 +232,18 @@ public partial class DareTrailer : Dare {
 
 	public virtual List<DareSignature>?					Signatures  {get; set;}
         /// <summary>
-        ///A list of signatures over the apex digest.
-        ///A envelope trailer MUST NOT contain av apex field if the header contains 
-        ///a signatures field.
+        ///The encrypted witness value
         /// </summary>
 
-	public virtual List<DareSignature>?					ApexSignatures  {get; set;}
+	public virtual byte[]?						WitnessValue  {get; set;}
+
+        /// <summary>
+        ///Additional data added to the signature to bind to an application 
+        ///defined context.
+        /// </summary>
+
+	public virtual byte[]?						ApplicationContextValue  {get; set;}
+
         /// <summary>
         ///Contains a DAREHeader object 
         /// </summary>
@@ -261,7 +267,7 @@ public partial class DareTrailer : Dare {
         ///If present, contains the Binary Merkle Tree digest value.
         /// </summary>
 
-	public virtual byte[]?						TreeDigest  {get; set;}
+	public virtual byte[]?						ApexDigest  {get; set;}
 
 
 
@@ -278,17 +284,18 @@ public partial class DareTrailer : Dare {
 			{ "signatures", new PropertyListStruct ("signatures", 
 					(IBinding data, object? value) => {(data as DareTrailer).Signatures = value as List<DareSignature>;}, (IBinding data) => (data as DareTrailer).Signatures,
 					false, ()=>new  List<DareSignature>(), ()=>new DareSignature())} ,
-			{ "ApexSignatures", new PropertyListStruct ("ApexSignatures", 
-					(IBinding data, object? value) => {(data as DareTrailer).ApexSignatures = value as List<DareSignature>;}, (IBinding data) => (data as DareTrailer).ApexSignatures,
-					false, ()=>new  List<DareSignature>(), ()=>new DareSignature())} ,
+			{ "WitnessValue", new PropertyBinary ("WitnessValue", 
+					(IBinding data, byte[]? value) => {(data as DareTrailer).WitnessValue = value;}, (IBinding data) => (data as DareTrailer).WitnessValue )},
+			{ "ApplicationContextValue", new PropertyBinary ("ApplicationContextValue", 
+					(IBinding data, byte[]? value) => {(data as DareTrailer).ApplicationContextValue = value;}, (IBinding data) => (data as DareTrailer).ApplicationContextValue )},
 			{ "SignedData", new PropertyBinary ("SignedData", 
 					(IBinding data, byte[]? value) => {(data as DareTrailer).SignedData = value;}, (IBinding data) => (data as DareTrailer).SignedData )},
 			{ "PayloadDigest", new PropertyBinary ("PayloadDigest", 
 					(IBinding data, byte[]? value) => {(data as DareTrailer).PayloadDigest = value;}, (IBinding data) => (data as DareTrailer).PayloadDigest )},
 			{ "ChainDigest", new PropertyBinary ("ChainDigest", 
 					(IBinding data, byte[]? value) => {(data as DareTrailer).ChainDigest = value;}, (IBinding data) => (data as DareTrailer).ChainDigest )},
-			{ "TreeDigest", new PropertyBinary ("TreeDigest", 
-					(IBinding data, byte[]? value) => {(data as DareTrailer).TreeDigest = value;}, (IBinding data) => (data as DareTrailer).TreeDigest )}
+			{ "ApexDigest", new PropertyBinary ("ApexDigest", 
+					(IBinding data, byte[]? value) => {(data as DareTrailer).ApexDigest = value;}, (IBinding data) => (data as DareTrailer).ApexDigest )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1195,16 +1202,16 @@ public partial class DareRecipient : Dare {
 	public virtual Key?						Epk  {get; set;}
 
         /// <summary>
+        ///Binary cryptographic exchange parameters
+        /// </summary>
+
+	public virtual byte[]?						Ek  {get; set;}
+
+        /// <summary>
         ///The wrapped base seed. The base seed is encrypted under the result of the key exchange.
         /// </summary>
 
 	public virtual byte[]?						WrappedBaseSeed  {get; set;}
-
-        /// <summary>
-        ///The per-recipient key exchange data (if required).
-        /// </summary>
-
-	public virtual byte[]?						RecipientKeyData  {get; set;}
 
 
 
@@ -1225,10 +1232,10 @@ public partial class DareRecipient : Dare {
 			{ "epk", new PropertyStruct ("epk", 
 					(IBinding data, object? value) => {(data as DareRecipient).Epk = value as Key;}, (IBinding data) => (data as DareRecipient).Epk,
 					true)} ,
+			{ "ek", new PropertyBinary ("ek", 
+					(IBinding data, byte[]? value) => {(data as DareRecipient).Ek = value;}, (IBinding data) => (data as DareRecipient).Ek )},
 			{ "wmk", new PropertyBinary ("wmk", 
-					(IBinding data, byte[]? value) => {(data as DareRecipient).WrappedBaseSeed = value;}, (IBinding data) => (data as DareRecipient).WrappedBaseSeed )},
-			{ "rkd", new PropertyBinary ("rkd", 
-					(IBinding data, byte[]? value) => {(data as DareRecipient).RecipientKeyData = value;}, (IBinding data) => (data as DareRecipient).RecipientKeyData )}
+					(IBinding data, byte[]? value) => {(data as DareRecipient).WrappedBaseSeed = value;}, (IBinding data) => (data as DareRecipient).WrappedBaseSeed )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

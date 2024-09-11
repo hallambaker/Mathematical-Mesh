@@ -311,8 +311,9 @@ public static class Extensions {
                 // Recipient.Header.Epk  -- The ephemeral public key
                 // Recipient.Header.Epk.KeyPair  -- The ephemeral public key
 
+                var agreementData = recipient.GetAgreementData();
                 return decryptionKey.Decrypt(
-                        recipient.WrappedBaseSeed, recipient.Epk?.KeyPair,
+                        recipient.WrappedBaseSeed, agreementData,
                         algorithmID: algorithmID, partial: null);
                 }
             }

@@ -29,6 +29,7 @@ using Goedel.Debug;
 using Goedel.Mesh;
 using Goedel.Mesh.Test;
 using Goedel.Test;
+using Goedel.Test.Core;
 using Goedel.Utilities;
 using Goedel.XUnit;
 
@@ -58,11 +59,32 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
+
+        //TestService.Test().TestCredentialAccountFails(DataValidity.CorruptPayload);
+        //TestService.Test().TestCredentialAccountFails(DataValidity.CorruptMissing);
+        //TestService.Test().TestCredentialAccountFails(DataValidity.CorruptSigner);
+
         //var TestGoedelCryptography = new TestGoedelCryptography();
 
-        ShellTests.Test().TestUDF();
+        //ShellTests.Test().TestUDF();
 
-        //TestUdf.GenerateTests();
+        //TestUdf.Test().TestUdfKeygenML();
+
+        //MakeUdf.GenerateTests();
+
+        //TestUdf.Test().TestUdfKeygenRSA();
+        //TestGoedelCryptography.Test().UDFKeyGen(UDFKeyGen.TEST1);
+
+        //UDFKeyGen.TEST1.Test();
+        //RFC8032.TEST1.Test();
+        //RFC8032.TEST2.Test();
+        //RFC8032.TESTfoo3.Test();
+        //RFC8032.TEST256Octets.Test();
+        //RFC8032.TESTabc44.Test();
+
+
+        //UDFKeyGen.TEST_KG_Device.Test();
+
         //TestGoedelCryptography.UDFKeyGen(UDFKeyGen.TEST1);
         //TestGoedelCryptography.UDFKeyGen(UDFKeyGen.TEST2);
         //TestGoedelCryptography.UDFKeyGen(UDFKeyGen.TEST3);
@@ -70,7 +92,7 @@ partial class Program {
         //TestGoedelCryptography.UDFKeyGen(UDFKeyGen.TEST_KG_Device);
         //TestGoedelCryptography.UDFKeyGen(UDFKeyGen.TEST_KG_User);
         //TestGoedelCryptography.UDFKeyGen(UDFKeyGen.TEST_KG_Service);
-        //TestUdf.Test().TestUdfKeygenML();
+        TestUdf.Test().TestUdfKeygenML();
         //TestUdf.Test().TestUdfKeygenRSA();
         //TestUdf.Test().TestUdfKeygenECC();
         //TestUdf.Test().TestUdfKeygenECCP();

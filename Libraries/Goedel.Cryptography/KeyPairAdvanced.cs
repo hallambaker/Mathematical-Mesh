@@ -273,25 +273,29 @@ public abstract partial class KeyAgreementResult : IPKIXAgreement {
     public virtual IKeyAdvancedPublic EphemeralPublicValue { get; set; }
 
     /// <summary>The public key portion of the ephemeral key</summary>
-    public abstract KeyPair EphemeralKeyPair { get; }
+    public abstract IAgreementData EphemeralKeyPair { get; }
 
     /// <summary>
     /// Encrypt the bulk key.   z   
     /// </summary>
-    /// <param name="ephemeral"></param>
+    /// <param name="agreementData"></param>
     /// <param name="key"></param>
     /// <param name="salt"></param>
+    /// <param name="wrappedKey">The wrapped key.</param>
     /// <returns>The encoder</returns>
-    public virtual void Encrypt(byte[] key,
-        out byte[] exchange, out KeyPair ephemeral, out byte[] ciphertext, byte[] salt = null) {
+    public virtual void Encrypt(
+            byte[] key,
+            out byte[] wrappedKey,
+            out IAgreementData agreementData,
+            byte[] salt = null) {
 
         //Screen.WriteLine($"PRK Encrypt is {IKM.ToStringBase16()}");
 
-        var EncryptionKey = KeyDerive.Derive(salt, length: 256);
+        var sharedSecret = KeyDerive.Derive(salt, length: 256);
 
-        exchange = Platform.KeyWrapRFC3394.Wrap(EncryptionKey, key);
-        ephemeral = EphemeralKeyPair;
-        ciphertext = null;
+        wrappedKey = Platform.KeyWrapRFC3394.Wrap(sharedSecret, key);
+        agreementData = EphemeralKeyPair;
+
         //Screen.WriteLine($"Ephemeral {ephemeral.KeyIdentifier}");
         //Screen.WriteLine($"    IKM {IKM.ToStringBase16FormatHex()}");
         //Screen.WriteLine($"    EncryptionKey Encrypt is {EncryptionKey.ToStringBase16()}");
@@ -308,7 +312,7 @@ public abstract partial class KeyAgreementResult : IPKIXAgreement {
     /// <returns>The decoded data instance</returns>
     public virtual byte[] Decrypt(
                 byte[] encryptedKey,
-                KeyPair ephemeral,
+                IAgreementData ephemeral,
                 KeyAgreementResult partial = null,
                 byte[] salt = null) {
 

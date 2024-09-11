@@ -36,6 +36,7 @@ public class DilithiumPublic {
 
                     };
 
+
     /// <summary>
     /// Verify the signature <paramref name="signature"/> over message
     /// <paramref name="message"/> returning true if and only if the 
@@ -43,10 +44,47 @@ public class DilithiumPublic {
     /// </summary>
     /// <param name="signature">The signature to verify.</param>
     /// <param name="message">The message signed.</param>
+    /// <param name="context">Optional context string of 255 bytes or fewer.</param>
     /// <returns>True if the signature is valid, otherwise false.</returns>
-    public bool Verify(
+    public bool VerifyPure(
+                    byte[] signature,
+                    byte[] message,
+                    byte[] context) => VerifyInternal(signature,
+                        DilithiumNist.CreateManifestPrefixPure(message, context), message);
+
+
+    /// <summary>
+    /// Verify the signature <paramref name="signature"/> over message with digest
+    /// <paramref name="digest"/> created with digest algorithm oid returning true if and only if the 
+    /// signature is valid.
+    /// </summary>
+    /// <param name="signature">The signature to verify.</param>
+    /// <param name="digest">The digest value.</param>
+    /// <param name="oid">An OID specifying the digest algorithm.</param>
+    /// <param name="context">Optional context string of 255 bytes or fewer.</param>
+    /// <returns>Signature</returns>
+    public bool VerifyHashed(
+                    byte[] signature,
+                    byte[] digest,
+                    byte[] oid,
+                    byte[] context) => VerifyInternal(signature,
+                        DilithiumNist.CreateManifestPrefixHashed(digest, oid, context), digest);
+
+    /// <summary>
+    /// Verify the signature <paramref name="signature"/> over message
+    /// <paramref name="message"/> returning true if and only if the 
+    /// signature is valid.
+    /// </summary>
+    /// <param name="signature">The signature to verify.</param>
+    /// <param name="message">The message signed.</param>
+    /// <param name="prefix">Prefix inserted ahead of the message to specify
+    /// the manifest data.</param>
+    /// <returns>True if the signature is valid, otherwise false.</returns>
+    public bool VerifyInternal(
                 byte[] signature,
-                byte[] message) => Dilithium.Verify(this, signature, message);
+                byte[] message,
+                byte[]? prefix = null) => Dilithium.VerifyInternal(
+                    this, signature, message, prefix);
 
 
     }

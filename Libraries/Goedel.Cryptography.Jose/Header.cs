@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Cryptography.PQC;
+
 namespace Goedel.Cryptography.Jose;
 
 
@@ -36,4 +38,18 @@ public partial class Header {
     /// </summary>
     /// <param name="Provider">The encryption provider</param>
     public Header(CryptoProviderEncryption Provider) => Alg = Provider.CryptoAlgorithmID.ToJoseID();
+
+
+    public IAgreementData GetAgreementData() {
+
+        if (Epk is not null) {
+            return  Epk.GetKeyPair(KeySecurity.Bound) as IAgreementData;
+            }
+        else if (Ek is not null) {
+            return new AgreementDataBinary(Ek);
+            }
+        return null;
+        }
+
+
     }

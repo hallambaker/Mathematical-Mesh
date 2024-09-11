@@ -26,7 +26,7 @@ namespace Goedel.Cryptography;
 /// <summary>
 /// X25519 public / private keypair.
 /// </summary>
-public class KeyPairX25519 : KeyPairECDH {
+public class KeyPairX25519 : KeyPairECDH, IAgreementData {
 
 
     #region //Properties
@@ -241,32 +241,34 @@ public class KeyPairX25519 : KeyPairECDH {
     ///<inheritdoc/>
     public override void Encrypt(byte[] Key,
         out byte[] Exchange,
-        out KeyPair Ephemeral,
-        out byte[] ciphertext, byte[] Salt = null) => PublicKey.Agreement().Encrypt(Key, out Exchange, out Ephemeral, out ciphertext, Salt);
+        out IAgreementData Ephemeral,
+        byte[] Salt = null) => 
+                PublicKey.Agreement().Encrypt(Key, out Exchange, out Ephemeral, Salt);
 
 
     ///<inheritdoc/>
     public override byte[] Decrypt(byte[] EncryptedKey,
-        KeyPair Ephemeral = null,
-        byte[] ciphertext = null,
-        CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default, KeyAgreementResult Partial = null, byte[] Salt = null) {
+            IAgreementData ephemeral = null,
+            CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
+            KeyAgreementResult Partial = null,
+            byte[] Salt = null) {
 
-        var keyPairX25519 = Ephemeral as KeyPairX25519;
+        var keyPairX25519 = ephemeral as KeyPairX25519;
         Assert.AssertNotNull(keyPairX25519, KeyTypeMismatch.Throw);
 
         var Agreementx = Agreement(keyPairX25519, Partial as CurveX25519Result);
-        return Agreementx.Decrypt(EncryptedKey, Ephemeral, Partial, Salt);
+        return Agreementx.Decrypt(EncryptedKey, ephemeral, Partial, Salt);
         }
 
 
     ///<inheritdoc/>
-    public override byte[] SignHash(
+    public override byte[] SignDigest(
         byte[] Data,
         CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
         byte[] Context = null) => throw new InvalidOperation();
 
     ///<inheritdoc/>
-    public override bool VerifyHash(
+    public override bool VerifyDigest(
         byte[] Data,
         byte[] Signature,
         CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,

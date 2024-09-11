@@ -21,6 +21,10 @@
 #endregion
 
 
+using System;
+
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 namespace Goedel.Cryptography;
 
 /// <summary>
@@ -174,6 +178,97 @@ public static partial class AlgorithmID {
         var Found = IDToOID.TryGetValue(id, out var Result);
         return Found ? Result : null;
         }
+
+    /// <summary>
+    /// Pare the string representing the asn.1 OID <paramref name="oid"/>
+    /// to reduce it to byt form.
+    /// </summary>
+    /// <param name="oid">The oid in string form.</param>
+    /// <returns>The oid in byte form.</returns>
+    public static byte[] ParseOid(this string oid) {
+        string[] split = oid.Trim(' ', '.').Split('.');
+
+        (split.Length >= 2).AssertTrue(CryptographicException.Throw);
+
+        var v0 = int.Parse(split[0]);
+        var v1 = int.Parse(split[1]);
+
+        (v0 <= 6).AssertTrue(CryptographicException.Throw);
+        (v1 <= 40).AssertTrue(CryptographicException.Throw);
+
+        var first = v0*40 + v1;
+
+        var length = 1;
+        for (var i = 2; i < split.Length; i++) {
+            var vn = int.Parse(split[i]);
+            length += countLen(vn);
+            }
+
+        var bytes = new byte[length];
+
+        var pos = addByte(bytes, (byte)first, 0);
+        for (var i = 2; i < split.Length; i++) {
+            var vn = int.Parse(split[i]);
+            pos = addValue(vn, bytes, pos);
+            }
+
+        return bytes;
+
+
+        int countLen (int value) {
+            if (value < 0x80) {
+                return 1;
+                }
+            if (value < 0x4000) {
+                return 2;
+                }
+            if (value < 0x200000) {
+                return 3;
+                }
+            if (value < 0x10000000) {
+                return 4;
+                }
+            return 5;
+            }
+
+        int addValue (int data, byte[] bytes, int pos) {
+            if (data < 0x80) {
+                pos = addByte(bytes, data, pos);
+                return pos;
+                }
+            if (data < 0x4000) {
+                pos = addByte(bytes, data &0x7f, pos);
+                pos = addByte(bytes, (data >> 7) | 0x80, pos);
+                return pos;
+                }
+            if (data < 0x200000) {
+                pos = addByte(bytes, data & 0x7f, pos);
+                pos = addByte(bytes, (data >> 7) | 0x80, pos);
+                pos = addByte(bytes, (data >> 14) | 0x80, pos);
+                return pos;
+                }
+            if (data < 0x10000000) {
+                pos = addByte(bytes, data & 0x7f, pos);
+                pos = addByte(bytes, (data >> 7) | 0x80, pos);
+                pos = addByte(bytes, (data >> 14) | 0x80, pos);
+                pos = addByte(bytes, (data >> 21) | 0x80, pos);
+                return pos;
+                }
+            pos = addByte(bytes, data & 0x7f, pos);
+            pos = addByte(bytes, (data >> 7) | 0x80, pos);
+            pos = addByte(bytes, (data >> 14) | 0x80, pos);
+            pos = addByte(bytes, (data >> 21) | 0x80, pos);
+            pos = addByte(bytes, (data >> 28) | 0x80, pos);
+            return pos;
+            }
+
+        int addByte (byte[] bytes, int value, int pos) {
+            bytes[pos++] = (byte)value;
+            return pos;
+            }
+
+        }
+
 
 
     /// <summary>

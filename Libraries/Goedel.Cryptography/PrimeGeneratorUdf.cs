@@ -37,11 +37,18 @@ public class PrimeGeneratorUdf(
     public Dictionary<string, int> CallCount { get; } = new();
 
     ///<inheritdoc/>
-    public BigInteger GetEntropy(BigInteger minInclusive, BigInteger maxInclusive, string tag = null) {
+    public BigInteger GetEntropy(
+                BigInteger minInclusive, 
+                BigInteger maxInclusive, 
+                string tag = null, 
+                int? hint = null) {
 
         BigInteger result;
         if (CallCount.TryGetValue(tag, out var count)) {
             CallCount.Remove(tag);
+            }
+        else {
+            count = (int) (hint is null ? 0 : hint-1);
             }
 
         var bits = maxInclusive.CountBits();
@@ -62,7 +69,7 @@ public class PrimeGeneratorUdf(
 
             result = bytes.BigIntegerBigEndian();
 
-            Console.WriteLine($"Count {tagExtended}");
+            //Console.WriteLine($"Count {tagExtended}");
 
             } while (result > maxInclusive | result < minInclusive);
 
@@ -78,7 +85,7 @@ public class PrimeGeneratorUdf(
         }
 
     ///<inheritdoc/>
-    public (BigInteger, BigInteger) GetPrime(int bits, int modulus, string tag = null) {
+    public (BigInteger, BigInteger) GetPrime(int bits, int modulus, string tag = null, int? hint = null) {
         var iterations = modulus switch {
             2048 => 32,
             3072 => 27,
@@ -92,14 +99,16 @@ public class PrimeGeneratorUdf(
             }
         var p1 = xp1;
 
-        var count = 0;
+
+        var count = (int)(hint == null ? 0 : 2 * (hint));
+        p1 += count;
         while (!NumberTheory.MillerRabin(p1, iterations)) {
             p1 += 2;
             count++;
             }
 
         CallCount.Add(tag, count);
-        //Console.WriteLine($"Prime {tag}, {count}");
+        //Console.WriteLine($"Prime {tag}, {count}/{hint}, {p1}, {p1-xp1}");
 
         return (xp1, p1);
         }

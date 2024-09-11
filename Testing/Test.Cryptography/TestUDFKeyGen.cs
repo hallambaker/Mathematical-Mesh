@@ -228,7 +228,7 @@ public class TestVectorUDFKeyGen {
         var udf = Udf.DerivedKey(UdfAlgorithmIdentifier, data: Seed.ToUTF8());
 
 
-        var keypair = Udf.DeriveKey(udf, KeySecurity.Ephemeral, KeyUses);
+        var keypair = Udf.DeriveKey(udf, keySecurity: KeySecurity.Ephemeral, keyUses: KeyUses);
         Console.WriteLine($"{UdfAlgorithmIdentifier}:  {udf} -> {keypair.KeyIdentifier}");
 
 
@@ -275,11 +275,11 @@ public class TestVectorUDFKeyGen {
         var plaintext = Platform.GetRandomBits(256);
 
         // sign a message with the private
-        publicKey.Encrypt(plaintext, out var exchange, out var ephemeral, out var ciphertext);
+        publicKey.Encrypt(plaintext, out var exchange, out var ephemeral);
 
         // check the signature with the public
 
-        var decrypt = privateKey.Decrypt(exchange, ephemeral, ciphertext: ciphertext);
+        var decrypt = privateKey.Decrypt(exchange, ephemeral);
         decrypt.TestEqual(plaintext);
 
         return true;

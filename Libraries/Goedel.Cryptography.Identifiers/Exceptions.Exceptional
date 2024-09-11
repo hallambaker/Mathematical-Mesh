@@ -6,6 +6,7 @@ Namespace Goedel.Cryptography
         Console "A cryptographic exception occurred.."
 		Description
 			|Base class for cryptographic exceptions.
+
 		Exception InvalidFrameIndex
 			Console "The container specified a reference to an invalid frame"
 			Description

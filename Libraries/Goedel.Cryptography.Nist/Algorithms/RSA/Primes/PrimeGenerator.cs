@@ -15,7 +15,8 @@ public interface IPrimeGenerator {
     /// <param name="modulus">The size of the modulus in bits.</param>
     /// <param name="tag">Tag used to identify the item for deterministic generation.</param>
     /// <returns>The primne value.</returns>
-    (BigInteger, BigInteger) GetPrime(int bits, int modulus, string tag = null);
+    /// <param name="hint"></param>
+    (BigInteger, BigInteger) GetPrime(int bits, int modulus, string tag = null, int? hint = null);
 
     /// <summary>
     /// Return a random value in the interval <paramref name="minInclusive"/> to
@@ -25,7 +26,11 @@ public interface IPrimeGenerator {
     /// <param name="maxInclusive"></param>
     /// <param name="tag">Tag used to identify the item for deterministic generation.</param>
     /// <returns>The random value.</returns>
-    BigInteger GetEntropy(BigInteger minInclusive, BigInteger maxInclusive, string tag = null);
+    /// <param name="hint"></param>
+    BigInteger GetEntropy(
+                BigInteger minInclusive,
+                BigInteger maxInclusive,
+                string tag = null, int? hint = null);
 
 
 
@@ -51,13 +56,17 @@ public class PrimeGenerator : IPrimeGenerator {
         }
 
     ///<inheritdoc/>
-    public BigInteger GetEntropy(BigInteger minInclusive, BigInteger maxInclusive, string tag = null) {
+    public BigInteger GetEntropy(BigInteger minInclusive, BigInteger maxInclusive, string tag = null, int? hint = null) {
         UpdateCallCount(tag);
         return _entropyProvider.GetEntropy(minInclusive, maxInclusive);
         }
 
     ///<inheritdoc/>
-    public (BigInteger, BigInteger) GetPrime(int bits, int modulus, string tag = null) {
+    public (BigInteger, BigInteger) GetPrime(
+            int bits, 
+            int modulus, 
+            string tag = null, 
+            int? hint = null) {
 
         var iterations = modulus switch {
             2048 => 32,
@@ -72,7 +81,9 @@ public class PrimeGenerator : IPrimeGenerator {
             }
         var p1 = xp1;
 
-        var count = 0;
+
+
+        var count = (int) (hint == null ? 0 : 2*hint);
         while (!NumberTheory.MillerRabin(p1, iterations)) {
             p1 += 2;
             count++;

@@ -101,10 +101,10 @@ public partial class ProfileAccount {
             return false;
             }
         if (AdministratorSignatureKey.MatchKeyIdentifier(signature.KeyIdentifier)) {
-            return AdministratorSignatureKey.VerifyHash(digest, signature.SignatureValue);
+            return AdministratorSignatureKey.VerifyDigest(digest, signature.SignatureValue);
             }
         if (ProfileSignatureKey.MatchKeyIdentifier(ProfileSignatureKey.KeyIdentifier)) {
-            return ProfileSignatureKey.VerifyHash(digest, signature.SignatureValue);
+            return ProfileSignatureKey.VerifyDigest(digest, signature.SignatureValue);
             }
         return false;
         }

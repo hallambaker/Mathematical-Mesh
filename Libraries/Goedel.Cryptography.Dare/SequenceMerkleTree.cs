@@ -69,7 +69,7 @@ public class SequenceMerkleTree : SequenceTree {
     public override DareTrailer FillDummyTrailer(CryptoStack cryptoStack) {
 
         var Trailer = cryptoStack.GetDummyTrailer();
-        Trailer.TreeDigest = Trailer.PayloadDigest;
+        Trailer.ApexDigest = Trailer.PayloadDigest;
 
         return Trailer;
         }
@@ -83,10 +83,10 @@ public class SequenceMerkleTree : SequenceTree {
         trailer ??= CryptoParametersSequence.GetNullTrailer();
 
         if (FrameCount > 0) {
-            trailer.TreeDigest = GetTreeDigest(FrameCount, trailer.PayloadDigest);
+            trailer.ApexDigest = GetTreeDigest(FrameCount, trailer.PayloadDigest);
             }
         else {
-            trailer.TreeDigest = CryptoParametersSequence.CombineDigest(null, trailer.PayloadDigest);
+            trailer.ApexDigest = CryptoParametersSequence.CombineDigest(null, trailer.PayloadDigest);
             }
         }
 

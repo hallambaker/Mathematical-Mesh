@@ -309,7 +309,7 @@ public static class ArrayUtilities {
     /// <param name="first">First array</param>
     /// <param name="second">Second array</param>
     /// <returns>result</returns>
-    public static byte[] Concatenate(this byte[] first, byte[] second) {
+    public static byte[] Concat(this byte[] first, byte[] second) {
         var Buffer = new byte[first.Length + second.Length];
         Array.Copy(first, Buffer, first.Length);
         Array.Copy(second, 0, Buffer, first.Length, second.Length);

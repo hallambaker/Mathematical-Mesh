@@ -31,27 +31,31 @@ public partial class DareSignature {
         }
 
     /// <summary>
-    /// Sign the digest value <paramref name="DigestValue"/> with 
+    /// Sign the digest value <paramref name="ManifestValue"/> with 
     /// <paramref name="signerKey"/> and create a DARESignature
     /// instance with the resulting values.
     /// </summary>
     /// <param name="signerKey">The signature key.</param>
-    /// <param name="DigestValue">The digest value.</param>
-    /// <param name="digestId">The digest algorithm used to calculate 
-    /// <paramref name="DigestValue"/>.</param>
-    /// <param name="keyDerive">Key derivation function used to calculate a signature witness 
-    /// value (if required).</param>
-    public DareSignature(CryptoKey signerKey, byte[] DigestValue,
-                CryptoAlgorithmId digestId, KeyDerive keyDerive = null) {
+    /// <param name="ManifestValue">The manifest value.</param>
+    /// <param name="digestId">The digest algorithm used to process 
+    /// <paramref name="ManifestValue"/> (if required).</param>
 
-        SignatureValue = signerKey.SignHash(DigestValue, digestId);
+    public DareSignature(CryptoKey signerKey, 
+                byte[] ManifestValue,
+                CryptoAlgorithmId digestId= CryptoAlgorithmId.Default) {
+
+
+        (SignatureValue, var alg) = signerKey.SignManifest(ManifestValue, digestId);
+        Alg = alg.ToJoseID();
         KeyIdentifier = signerKey.KeyIdentifier;
-        Alg = signerKey.SignatureAlgorithmID(digestId).ToJoseID();
+        }
 
-        if (keyDerive != null) {
-            WitnessValue = keyDerive.Derive(SignatureValue);
-            }
-
+    public bool Verify(
+                CryptoKey signerKey,
+                byte[] ManifestValue) {
+        var digest = Alg.ToCryptoAlgorithmID();
+        return signerKey.VerifyManifest(ManifestValue, SignatureValue, digest);
 
         }
+
     }

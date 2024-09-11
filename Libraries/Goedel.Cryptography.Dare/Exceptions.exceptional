@@ -11,6 +11,15 @@ Namespace Goedel.Cryptography.Dare
 	Exception EnvelopeDataCorrupt
         Console "The envelope data is corrupted."
 
+	Exception EnvelopeDigestCorrupt
+        Console "The envelope digest is invalid."
+
+	Exception EnvelopeSignatureMissing
+        Console "The envelope does not have a required signature."
+
+	Exception EnvelopeSignatureInvalid
+        Console "The envelope has an invalid signature."
+
 	Exception InvalidContainerTypeException
         Console "This class does not support the specified container type."
 		Description

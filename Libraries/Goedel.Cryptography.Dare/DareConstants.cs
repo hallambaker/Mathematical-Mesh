@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 9/8/2024 2:52:42 AM
+//  This file was automatically generated at 9/11/2024 2:00:30 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -81,6 +81,12 @@ public enum SequenceEvent {
 ///Constants specified in hallambaker-mesh-udf
 ///</summary>
 public static partial class DareConstants {
+
+    // File: Misc
+
+    ///<summary>
+    ///</summary>
+    public const string DareSignaturePrefix = "DARE Signature v. 3.0";
 
     // File: ContainerTypes
 

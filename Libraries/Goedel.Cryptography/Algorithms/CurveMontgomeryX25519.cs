@@ -518,7 +518,7 @@ public class CurveX25519Result : ResultECDH {
     /// <summary>
     /// The Ephemeral public key
     /// </summary>
-    public override KeyPair EphemeralKeyPair => new KeyPairX25519(EphemeralPublicValue as CurveX25519Public);
+    public override IAgreementData EphemeralKeyPair => new KeyPairX25519(EphemeralPublicValue as CurveX25519Public);
 
 
     /// <summary>Carry from proxy recryption efforts</summary>

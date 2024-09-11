@@ -125,7 +125,7 @@ public partial class CapabilitySign : IKeySign {
     /// <param name="context">Additional data added to the signature scope
     /// for protocol isolation.</param>
     /// <returns>The signature data</returns>       
-    public virtual byte[] SignHash(
+    public virtual byte[] SignDigest(
         byte[] data,
         CryptoAlgorithmId algorithmID =
         CryptoAlgorithmId.Default,
@@ -149,18 +149,18 @@ public partial class CapabilityDecrypt : IKeyDecrypt {
     /// </summary>
     /// <param name="encryptedKey">The encrypted session</param>
     /// <param name="ephemeral">Ephemeral key input (required for DH)</param>
-    /// <param name="ciphertext"></param>
     /// <param name="algorithmID">The algorithm to use (redundant?)</param>
-    /// <param name="partial">Partial key agreement carry in (for recryption)</param>        
-    /// <returns>The decoded data instance</returns>
+    /// <param name="partial">Partial key agreement carry in (for recryption)</param>
     /// <param name="salt">Optional salt value for use in key derivation. If specified
-    /// must match the salt used to encrypt.</param>
+    /// must match the salt used to encrypt.</param>        
+    /// <returns>The decoded data instance</returns>
+    /// 
     public virtual byte[] Decrypt(
             byte[] encryptedKey,
-            KeyPair ephemeral = null,
-            byte[] ciphertext = null,
+            IAgreementData ephemeral = null,
             CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
-            KeyAgreementResult partial = null, byte[] salt = null) => KeyPair.Decrypt(encryptedKey,
+            KeyAgreementResult partial = null,
+            byte[] salt = null) => KeyPair.Decrypt(encryptedKey,
                 ephemeral, algorithmID: algorithmID, partial: partial, salt: salt);
 
     /// <summary>
@@ -183,18 +183,18 @@ public partial class CapabilityDecryptPartial : ICapabilityPartial {
     /// </summary>
     /// <param name="encryptedKey">The encrypted session</param>
     /// <param name="ephemeral">Ephemeral key input (required for DH)</param>
-    /// <param name="ciphertext"></param>
     /// <param name="algorithmID">The algorithm to use (redundant?)</param>
-    /// <param name="partial">Partial key agreement carry in (for recryption)</param>        
-    /// <returns>The decoded data instance</returns>
+    /// <param name="partial">Partial key agreement carry in (for recryption)</param>
     /// <param name="salt">Optional salt value for use in key derivation. If specified
-    /// must match the salt used to encrypt.</param>
+    /// must match the salt used to encrypt.</param>        
+    /// <returns>The decoded data instance</returns>
+    /// 
     public override byte[] Decrypt(
             byte[] encryptedKey,
-            KeyPair ephemeral = null,
-            byte[] ciphertext = null,
+            IAgreementData ephemeral = null,
             CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
-            KeyAgreementResult partial = null, byte[] salt = null) => KeyPair.Decrypt(encryptedKey, ephemeral, algorithmID: algorithmID, partial: null, salt: salt);
+            KeyAgreementResult partial = null,
+            byte[] salt = null) => KeyPair.Decrypt(encryptedKey, ephemeral, algorithmID: algorithmID, partial: null, salt: salt);
 
 
 

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 9/8/2024 2:52:41 AM
+//  This file was automatically generated at 9/11/2024 2:00:30 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -719,6 +719,12 @@ public partial class Header : KeyCore {
 	public virtual Key?						Epk  {get; set;}
 
         /// <summary>
+        ///Binary cryptographic exchange parameters
+        /// </summary>
+
+	public virtual byte[]?						Ek  {get; set;}
+
+        /// <summary>
         ///Another IANA content type parameter
         /// </summary>
 
@@ -762,6 +768,8 @@ public partial class Header : KeyCore {
 			{ "epk", new PropertyStruct ("epk", 
 					(IBinding data, object? value) => {(data as Header).Epk = value as Key;}, (IBinding data) => (data as Header).Epk,
 					true)} ,
+			{ "ek", new PropertyBinary ("ek", 
+					(IBinding data, byte[]? value) => {(data as Header).Ek = value;}, (IBinding data) => (data as Header).Ek )},
 			{ "typ", new PropertyString ("typ", 
 					(IBinding data, string? value) => {(data as Header).Typ = value;}, (IBinding data) => (data as Header).Typ )},
 			{ "cty", new PropertyString ("cty", 

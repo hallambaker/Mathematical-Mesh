@@ -255,12 +255,12 @@ public enum CryptoAlgorithmId {
 
 
     /// <summary>Elliptic Curve DSA with curve 25519x pure</summary>
-    EdDSA = Signature + Meta * 2 + DIRECT,
+    EdDSA = Signature + Meta * 2 ,
     /// <summary>Elliptic Curve DSA with curve 25519x pure</summary>
-    Ed25519 = Signature + Meta * 3 + DIRECT,
+    Ed25519 = Signature + Meta * 3,
 
-    /// <summary>Elliptic Curve DSA with curve 25519x pure</summary>
-    Ed25519pure = Ed25519 + DIRECT,
+    ///// <summary>Elliptic Curve DSA with curve 25519x pure</summary>
+    //Ed25519pure = Ed25519 + DIRECT,
 
     /// <summary>Elliptic Curve DSA with curve 25519x prehashed using SHA512</summary>
     Ed25519ph = Signature + Meta * 4 + SHA_2_512,
@@ -268,38 +268,38 @@ public enum CryptoAlgorithmId {
     /// <summary>Elliptic Curve DSA with curve Ed448</summary>
     Ed448 = Signature + Meta * 5,
 
-    /// <summary>Elliptic Curve DSA with curve Ed448</summary>
-    Ed448pure = Ed448 + DIRECT,
+    ///// <summary>Elliptic Curve DSA with curve Ed448</summary>
+    //Ed448pure = Ed448 + DIRECT,
 
     /// <summary>Elliptic Curve DSA with curve Ed448</summary>
     Ed448ph = Signature + Meta * 6 + SHAKE_256,
 
     ///<summary>ML-DSA (Dilithium) 44</summary> 
-    MLDSA44 = Signature + Meta * 7,
+    MLDSA44hash = Signature + Meta * 7,
 
     ///<summary>ML-DSA (Dilithium) 44 PURE</summary> 
-    MLDSA44pure = MLDSA44 + DIRECT,
+    MLDSA44pure = Signature + Meta * 8,
 
     ///<summary>ML-DSA (Dilithium) 65</summary> 
-    MLDSA65 = Signature + Meta * 8,
+    MLDSA65hash = Signature + Meta * 9,
 
     ///<summary>ML-DSA (Dilithium) 65</summary> 
-    MLDSA65pure = MLDSA65 + DIRECT,
+    MLDSA65pure = Signature + Meta * 10,
 
     ///<summary>ML-DSA (Dilithium) 87</summary> 
-    MLDSA87 = Signature + Meta * 9,
+    MLDSA87hash = Signature + Meta * 11,
 
     ///<summary>ML-DSA (Dilithium) 87</summary> 
-    MLDSA87pure = MLDSA87 + DIRECT,
+    MLDSA87pure = Signature + Meta * 12,
 
     ///<summary>NIST Curve P256</summary> 
-    P256 = Signature + Meta * 10,
+    P256 = Signature + Meta * 13,
 
     ///<summary>NIST Curve P256</summary> 
-    P384 = Signature + Meta * 11,
+    P384 = Signature + Meta * 14,
 
     ///<summary>NIST Curve P256</summary> 
-    P521 = Signature + Meta * 12,
+    P521 = Signature + Meta * 15,
 
 
     // Public Key Exchange

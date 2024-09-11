@@ -137,12 +137,12 @@ public partial class PrivateKeyUDF : IActivate {
                 KeyUses keyUses, string saltSuffix,
                 CryptoAlgorithmId cryptoAlgorithmID) {
         var baseKey = Udf.DeriveKey(PrivateValue, keyCollection,
-                KeySecurity.Ephemeral, keyUses: keyUses, cryptoAlgorithmID, saltSuffix) as KeyPairAdvanced;
+                keySecurity: KeySecurity.Ephemeral, keyUses: keyUses, cryptoAlgorithmIdin: cryptoAlgorithmID, keyName: saltSuffix) as KeyPairAdvanced;
 
         //Console.WriteLine($"Private: Base-{baseKey.UDF} Seed-{activationSeed} Type-{meshKeyType}");
 
         var activationKey = Udf.DeriveKey(activationSeed, keyCollection,
-                KeySecurity.Ephemeral, keyUses: keyUses, cryptoAlgorithmID, saltSuffix) as KeyPairAdvanced;
+                keySecurity: KeySecurity.Ephemeral, keyUses: keyUses, cryptoAlgorithmIdin: cryptoAlgorithmID, keyName: saltSuffix) as KeyPairAdvanced;
 
 
 

@@ -403,34 +403,28 @@
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed25519">
             <summary>Elliptic Curve DSA with curve 25519x pure</summary>
         </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed25519pure">
-            <summary>Elliptic Curve DSA with curve 25519x pure</summary>
-        </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed25519ph">
             <summary>Elliptic Curve DSA with curve 25519x prehashed using SHA512</summary>
         </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed448">
             <summary>Elliptic Curve DSA with curve Ed448</summary>
         </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed448pure">
-            <summary>Elliptic Curve DSA with curve Ed448</summary>
-        </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed448ph">
             <summary>Elliptic Curve DSA with curve Ed448</summary>
         </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA44">
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA44hash">
             <summary>ML-DSA (Dilithium) 44</summary> 
         </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA44pure">
             <summary>ML-DSA (Dilithium) 44 PURE</summary> 
         </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA65">
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA65hash">
             <summary>ML-DSA (Dilithium) 65</summary> 
         </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA65pure">
             <summary>ML-DSA (Dilithium) 65</summary> 
         </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA87">
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA87hash">
             <summary>ML-DSA (Dilithium) 87</summary> 
         </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA87pure">

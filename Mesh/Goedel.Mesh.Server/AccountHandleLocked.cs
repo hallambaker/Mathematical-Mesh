@@ -199,7 +199,7 @@ public class AccountHandleLocked : Disposable {
         var sequence = GetSequence(label, false);
         return sequence == null ? null : new StoreStatus() {
             // Bug: This should populate the TreeDigest
-            Digest = sequence.HeaderFinal?.TreeDigest ?? sequence.TrailerLast?.TreeDigest,
+            Digest = sequence.HeaderFinal?.ApexDigest ?? sequence.TrailerLast?.ApexDigest,
             Index = (int)sequence.FrameCount,
             Store = label
             };

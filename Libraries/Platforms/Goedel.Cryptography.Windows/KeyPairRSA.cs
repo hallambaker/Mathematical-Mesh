@@ -222,28 +222,31 @@ public partial class KeyPairRSA1 : KeyPairBaseRSA {
     #region // operations
 
     ///<inheritdoc/>
-    public override void Encrypt(byte[] Key, out byte[] Exchange, out KeyPair Ephemeral, out byte[] ciphertext, byte[] Salt = null) {
+    public override void Encrypt(
+                byte[] Key,
+                out byte[] Exchange,
+                out IAgreementData Ephemeral,
+                byte[] salt = null) {
         Ephemeral = null;
-        ciphertext = null;
         Exchange = provider.Encrypt(Key, RSAEncryptionPadding.Pkcs1);
         }
 
     ///<inheritdoc/>
     public override byte[] Decrypt(
-            byte[] EncryptedKey,
-            KeyPair Ephemeral = null,
-            byte[] ciphertext = null,
-            CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
-            KeyAgreementResult Partial = null, byte[] Salt = null) => provider.Decrypt(EncryptedKey, RSAEncryptionPadding.Pkcs1);
+                byte[] EncryptedKey,
+                IAgreementData Ephemeral = null,
+                CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
+                KeyAgreementResult Partial = null,
+                byte[] Salt = null) => provider.Decrypt(EncryptedKey, RSAEncryptionPadding.Pkcs1);
 
     ///<inheritdoc/>
-    public override byte[] SignHash(
+    public override byte[] SignDigest(
             byte[] Data,
             CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
             byte[] Context = null) => provider.SignHash(Data, AlgorithmID.ToHashAlgorithmName(), RSASignaturePadding.Pkcs1);
 
     ///<inheritdoc/>
-    public override bool VerifyHash(byte[] Digest, byte[] Signature,
+    public override bool VerifyDigest(byte[] Digest, byte[] Signature,
             CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default, byte[] Context = null) => provider.VerifyHash(Digest, Signature, AlgorithmID.ToHashAlgorithmName(), RSASignaturePadding.Pkcs1);
     #endregion
     }

@@ -167,7 +167,7 @@ public abstract partial class CryptoStack {
             }
         // The extra salt data is prepended rather than postpended. This ensures that the salt value is changed
         // by the extra salt even if the extra salt value is all zeros.
-        var ThisSalt = extraSalt == null ? Salt : extraSalt.Concatenate(Salt);
+        var ThisSalt = extraSalt == null ? Salt : extraSalt.Concat(Salt);
 
         CalculateParameters(ThisSalt, out var KeyEncrypt, out var KeyMac, out var IV);
 
@@ -187,27 +187,62 @@ public abstract partial class CryptoStack {
     public DareTrailer GetTrailer(CryptoStackStreamWriter writer) {
         DareTrailer Result = null;
 
-        if (writer.DigestValue != null) {
-            Result = new DareTrailer() {
-                PayloadDigest = writer.DigestValue
-                };
-            }
-        //WitnessValue
 
-        var KDF = EncryptId == CryptoAlgorithmId.NULL
-            ? null
-            : new KeyDeriveHKDF(BaseSeed, Salt, CryptoAlgorithmId.HMAC_SHA_2_256);
+
+        if (writer.DigestValue != null) {
+
+            Result = new DareTrailer() {
+                PayloadDigest = writer.DigestValue,
+                WitnessValue = writer.WitnessValue,
+                };
+
+            if (writer.GetApexDigest != null) {
+                Result.ApexDigest = writer.GetApexDigest(writer.DigestValue);
+                }
+
+
+            }
 
         if (SignerKeys != null) {
             Result ??= new DareTrailer();
             Result.Signatures = new List<DareSignature>();
+
+            // Here calculate the manifest
+            var manifest = GetManifest(DigestId, Result);
+
+            if (EncryptId != CryptoAlgorithmId.NULL) {
+                var derive = new KeyDeriveHKDF(BaseSeed, Salt, CryptoAlgorithmId.HMAC_SHA_2_256);
+                Result.WitnessValue = KeyDeriveHKDF.Derive(BaseSeed, Salt, manifest, 
+                                algorithm:CryptoAlgorithmId.HMAC_SHA_2_256);
+                }
+
             foreach (var Key in SignerKeys) {
-                Result.Signatures.Add(new DareSignature(Key, writer.DigestValue, DigestId, KDF));
+                Result.Signatures.Add(new DareSignature(Key, manifest, DigestId));
                 }
             }
 
 
         return Result;
+        }
+
+
+    public static byte[] GetManifest(CryptoAlgorithmId digestId, DareTrailer trailer) {
+        var memoryStream = new MemoryStream();
+        var writer = new JsonBWriter(memoryStream);
+
+        writer.WriteString(digestId.ToJoseID());
+        writer.WriteBinary(trailer.PayloadDigest);
+        if (trailer.ChainDigest != null) {
+            writer.WriteBinary(trailer.ChainDigest);
+            }
+        if (trailer.ApexDigest != null) {
+            writer.WriteBinary(trailer.ApexDigest);
+            }
+
+        writer.Flush();
+        memoryStream.Flush();
+
+        return memoryStream.ToArray();  
         }
 
 

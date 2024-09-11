@@ -138,7 +138,7 @@ public abstract class KeyPairBaseDH : KeyPairAdvanced {
 /// that allow conversion of the public key (and private key if known) values to various
 /// formats.
 /// </summary>
-public class KeyPairDH : KeyPairBaseDH {
+public class KeyPairDH : KeyPairBaseDH, IAgreementData {
 
 
     /// <summary>
@@ -378,32 +378,31 @@ public class KeyPairDH : KeyPairBaseDH {
     /// <param name="key"></param>
     /// <param name="exchange"></param>
     /// <param name="ephemeral"></param>
-    /// <param name="ciphertext"></param>
     /// <param name="salt"></param>
+    /// 
     public override void Encrypt(byte[] key,
             out byte[] exchange,
-            out KeyPair ephemeral,
-            out byte[] ciphertext, 
+            out IAgreementData ephemeral,
             byte[] salt = null) => PublicKey.Agreement().Encrypt(
-                        key, out exchange, out ephemeral, out ciphertext, salt);
+                        key, out exchange, out ephemeral, salt);
 
     /// <summary>
     /// Perform a key exchange to decrypt a bulk or wrapped key under this one.
     /// </summary>
     /// <param name="EncryptedKey">The encrypted session key</param>
     /// <param name="Ephemeral">Ephemeral key input (required for DH)</param>
-    /// <param name="ciphertext"></param>
     /// <param name="AlgorithmID">The algorithm to use.</param>
     /// <param name="Partial">Partial key agreement value (for recryption)</param>
-    /// <returns>The decoded data instance</returns>
     /// <param name="Salt">Optional salt value for use in key derivation. If specified
     /// must match the salt used to encrypt.</param>
+    /// <returns>The decoded data instance</returns>
+    /// 
     public override byte[] Decrypt(
                 byte[] EncryptedKey,
-                KeyPair Ephemeral,
-                byte[] ciphertext = null,
+                IAgreementData Ephemeral,
                 CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
-                KeyAgreementResult Partial = null, byte[] Salt = null) {
+                KeyAgreementResult Partial = null,
+                byte[] Salt = null) {
 
         var DHPublic = Ephemeral as KeyPairDH;
         Assert.AssertNotNull(DHPublic, KeyTypeMismatch.Throw);
@@ -423,7 +422,7 @@ public class KeyPairDH : KeyPairBaseDH {
     /// <param name="Context">Additional data added to the signature scope
     /// for protocol isolation.</param>
     /// <returns>The signature data</returns>
-    public override byte[] SignHash(
+    public override byte[] SignDigest(
         byte[] Data,
         CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
         byte[] Context = null) => throw new NotImplementedException();
@@ -437,7 +436,7 @@ public class KeyPairDH : KeyPairBaseDH {
     /// for protocol isolation.</param>
     /// <param name="Digest">The digest value to be verified.</param>
     /// <returns>True if the signature is valid, otherwise false.</returns>
-    public override bool VerifyHash(
+    public override bool VerifyDigest(
         byte[] Digest,
         byte[] Signature,
         CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default, byte[] Context = null) => throw new NotImplementedException();

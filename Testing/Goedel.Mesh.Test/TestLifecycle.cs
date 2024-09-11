@@ -42,8 +42,8 @@ public static class Crypto {
 
         var Key = Platform.GetRandomBits(256);
 
-        KeyPair.Encrypt(Key, out var Exchange, out var Ephemeral, out var ciphertext);
-        var Result = KeyPair.Decrypt(Exchange, Ephemeral, ciphertext: ciphertext);
+        KeyPair.Encrypt(Key, out var Exchange, out var Ephemeral);
+        var Result = KeyPair.Decrypt(Exchange, Ephemeral);
 
         Key.IsEqualTo(Result).TestTrue();
 

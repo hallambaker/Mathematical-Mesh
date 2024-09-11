@@ -537,6 +537,11 @@
             The key parameters of the ephemeral key
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.Header.Ek">
+             <summary>
+            Binary cryptographic exchange parameters
+             </summary>
+        </member>
         <member name="P:Goedel.Cryptography.Jose.Header.Typ">
              <summary>
             Another IANA content type parameter
@@ -1675,7 +1680,7 @@
             Default Constructor
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.Recipient.#ctor(System.Byte[],Goedel.Cryptography.KeyPair,Goedel.Cryptography.KeyPair,System.Byte[],System.String)">
+        <member name="M:Goedel.Cryptography.Jose.Recipient.#ctor(System.Byte[],Goedel.Cryptography.KeyPair,Goedel.Cryptography.IAgreementData,System.String)">
             <summary>
             Encrypt to the specified key of the specified profile.
             </summary>

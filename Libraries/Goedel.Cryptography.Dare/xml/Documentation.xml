@@ -486,6 +486,12 @@
             The computed Digest value.
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.CryptoStackStream.WitnessValue">
+            <summary>The encryption witness value, if used.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.CryptoStackStream.GetApexDigest">
+            <summary>Function returning the apex digest value.</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.CryptoStackStream.BytesRead">
             <summary>The number of bytes read</summary> 
         </member>
@@ -1031,6 +1037,10 @@
             Constants specified in hallambaker-mesh-udf
             </summary>
         </member>
+        <member name="F:Goedel.Cryptography.Dare.DareConstants.DareSignaturePrefix">
+            <summary>
+            </summary>
+        </member>
         <member name="F:Goedel.Cryptography.Dare.DareConstants.SequenceTypeListTag">
             <summary>Jose enumeration tag for SequenceType.List</summary>
         </member>
@@ -1189,14 +1199,14 @@
             The key parameters of the ephemeral key as specified in JWE
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.DareRecipient.Ek">
+             <summary>
+            Binary cryptographic exchange parameters
+             </summary>
+        </member>
         <member name="P:Goedel.Cryptography.Dare.DareRecipient.WrappedBaseSeed">
              <summary>
             The wrapped base seed. The base seed is encrypted under the result of the key exchange.
-             </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareRecipient.RecipientKeyData">
-             <summary>
-            The per-recipient key exchange data (if required).
              </summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareRecipient._Binding">
@@ -1390,14 +1400,28 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Serialize(Goedel.Protocol.Writer,System.Boolean)">
-            <inheritdoc/>
-        </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Deserialize(Goedel.Protocol.JsonReader)">
             <summary>
             Deserialize the input string to populate this object
             </summary>
             <param name="jsonReader">Input data</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Encode(Goedel.Cryptography.Dare.CryptoParameters,System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Int32,System.Byte[])">
+            <summary>
+            Decode a streamed message
+            </summary>
+            <param name="inputData">The input data</param>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="contentMeta">The content metadata</param>
+            <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+            <param name="dataSequences">Data sequences to be converted to an EDS and presented 
+                as an EDSS header entry.</param>
+            <param name="chunk">The maximum chunk size. If unspecified, the default
+            system chunk size (2048) is used.</param>
+            <param name="cover">Optional Sequence of plaintext bytes specifying a cover page
+            to be presented in place of an encrypted document if it cannot be decrypted.</param>
+            <returns>The serialized encoding of the data.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelope.FromJSON(System.Byte[],System.Boolean,System.Boolean,Goedel.Cryptography.IKeyLocate)">
             <summary>
@@ -1408,47 +1432,6 @@
             <param name="decrypt">If true, attempt to decrypt the message body as it is read.</param>
             <param name="keyCollection">Key collection to be used to discover decryption keys</param>
             <returns>The created object.</returns>	
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.GetPlaintext(Goedel.Cryptography.IKeyLocate)">
-            <summary>
-            Return the plaintext payload using the credentials stored in <paramref name="keyCollection"/>
-            to obtain decryption keys if necessary.
-            </summary>
-            <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
-            <returns>The plaintext payload.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Verify(Goedel.Cryptography.KeyPair,System.Byte[])">
-            <summary>
-            Verify that the signature value is correct for the key <paramref name="key"/>
-            </summary>
-            <param name="key">The signature key.</param>
-            <param name="digest">The payload digest value if known.</param>
-            <returns>True, if the signature is valid.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.GetValidatedDigest">
-            <summary>
-            Compute the digest of the payload and if a digest value is specified in the header
-            or trailer, verify that it matches.
-            </summary>
-            <returns>If a payload digest field is specified in the trailer that does not
-            match the digest of the payload, returns the payload. Otherwise returns the
-            digest of the payload.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.GetUnvalidatedDigest">
-            <summary>
-            Compute the digest of the payload and if a digest value is specified in the header
-            or trailer, verify that it matches.
-            </summary>
-            <returns>If a payload digest field is specified in the trailer that does not
-            match the digest of the payload, returns the payload. Otherwise returns the
-            digest of the payload.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.FindSignature(Goedel.Cryptography.CryptoKey)">
-            <summary>
-            Find a signature whose key identifier matches <paramref name="key"/>
-            </summary>
-            <param name="key">The key</param>
-            <returns>The signature entry.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelope.FromJSON(Goedel.Protocol.JsonBcdReader,System.Boolean,System.Boolean,Goedel.Cryptography.IKeyLocate,System.Boolean)">
             <summary>
@@ -1469,6 +1452,22 @@
             <param name="jsonReader">The stream from which data is to be read.</param>
             <returns>The DareEnvelope instance.</returns>
         </member>
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.GetPlaintext(Goedel.Cryptography.IKeyLocate)">
+            <summary>
+            Return the plaintext payload using the credentials stored in <paramref name="keyCollection"/>
+            to obtain decryption keys if necessary.
+            </summary>
+            <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
+            <returns>The plaintext payload.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.DecodeJsonObject(Goedel.Cryptography.IKeyLocate)">
+            <summary>
+            Decode a tagged JSONObject using keys from <paramref name="keyCollection"/> to decrypt
+            if necessary.
+            </summary>
+            <param name="keyCollection">Key collection to be used for decryption.</param>
+            <returns>The decoded object.</returns>
+        </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Encode(Goedel.Cryptography.Dare.CryptoParameters,System.String,System.String,Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Int32,System.Byte[])">
             <summary>
             Decode a streamed message
@@ -1486,23 +1485,6 @@
             <param name="cover">Optional Sequence of plaintext bytes specifying a cover page
             to be presented in place of an encrypted document if it cannot be decrypted.</param>
             <returns>The number of bytes in the input file.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Encode(Goedel.Cryptography.Dare.CryptoParameters,System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Int32,System.Byte[])">
-            <summary>
-            Decode a streamed message
-            </summary>
-            <param name="inputData">The input data</param>
-            <param name="cryptoParameters">Specifies the cryptographic enhancements to
-            be applied to this message.</param>
-            <param name="contentMeta">The content metadata</param>
-            <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-            <param name="dataSequences">Data sequences to be converted to an EDS and presented 
-                as an EDSS header entry.</param>
-            <param name="chunk">The maximum chunk size. If unspecified, the default
-            system chunk size (2048) is used.</param>
-            <param name="cover">Optional Sequence of plaintext bytes specifying a cover page
-            to be presented in place of an encrypted document if it cannot be decrypted.</param>
-            <returns>The serialized encoding of the data.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Encode(Goedel.Cryptography.Dare.CryptoParameters,System.IO.Stream,System.IO.Stream,System.Int64,Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Int32,System.Byte[])">
             <summary>
@@ -1528,14 +1510,6 @@
             <param name="cover">Optional Sequence of plaintext bytes specifying a cover page
             to be presented in place of an encrypted document if it cannot be decrypted.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.DecodeJsonObject(Goedel.Cryptography.IKeyLocate)">
-            <summary>
-            Decode a tagged JSONObject using keys from <paramref name="keyCollection"/> to decrypt
-            if necessary.
-            </summary>
-            <param name="keyCollection">Key collection to be used for decryption.</param>
-            <returns>The decoded object.</returns>
-        </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Decode(System.String,System.String,Goedel.Cryptography.IKeyLocate,System.Boolean)">
             <summary>
             Decode a streamed message
@@ -1559,17 +1533,14 @@
             written out to a temporary file which is deleted if the verification fails and renamed
             to the output file otherwise.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.TryDecode(System.IO.Stream,System.IO.Stream,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.DareHeader@,System.Boolean)">
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Verify(System.Byte[],Goedel.Cryptography.IKeyLocate)">
             <summary>
-            Decode a streamed message
+            Static method that reads the bytes <paramref name="input"/>, parses the
+            content to return an envelope.
             </summary>
-            <param name="inputStream">The input stream, must support reading.</param>
-            <param name="outputStream">The output stream, must support writing</param>
-            <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
-            <param name="dareHeader">The header data.</param>
-            <param name="verify">If true, verify the payload digest on the payload. The decoded data is 
-            written out to a temporary file which is deleted if the verification fails and renamed
-            to the output file otherwise.</param>
+            <param name="input"></param>
+            <param name="keyCollection"></param>
+            <returns></returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Verify(System.String,Goedel.Cryptography.IKeyLocate)">
             <summary>
@@ -1584,6 +1555,50 @@
             </summary>
             <param name="inputStream">The input stream, must support reading.</param>
             <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Verify(Goedel.Cryptography.KeyPair,System.Byte[])">
+            <summary>
+            Verify that the signature value is correct for the key <paramref name="key"/>
+            </summary>
+            <param name="key">The signature key.</param>
+            <param name="digest">The payload digest value if known.</param>
+            <returns>True, if the signature is valid.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.VerifySignature(Goedel.Cryptography.KeyPair)">
+            <summary>
+            Search the signatures over the envelope to verify the first
+            signature matching the key <paramref name="keyPair"/> returning
+            true if and only if the signature is valid.
+            </summary>
+            <param name="keyPair">The signing key to check.</param>
+            <returns></returns>
+            <exception cref="T:Goedel.Cryptography.Dare.EnvelopeSignatureMissing">The specified
+            signature could not be found.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.FindSignature(Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Find a signature whose key identifier matches <paramref name="key"/>
+            </summary>
+            <param name="key">The key</param>
+            <returns>The signature entry.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.GetValidatedDigest">
+            <summary>
+            Compute the digest of the payload and if a digest value is specified in the header
+            or trailer, verify that it matches.
+            </summary>
+            <returns>If a payload digest field is specified in the trailer that does not
+            match the digest of the payload, returns the payload. Otherwise returns the
+            digest of the payload.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.GetUnvalidatedDigest">
+            <summary>
+            Compute the digest of the payload and if a digest value is specified in the header
+            or trailer, verify that it matches.
+            </summary>
+            <returns>If a payload digest field is specified in the trailer that does not
+            match the digest of the payload, returns the payload. Otherwise returns the
+            digest of the payload.</returns>
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareEnvelopeWriter.CanRead">
             <summary>
@@ -2063,11 +2078,15 @@
             a signatures field.
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.DareTrailer.ApexSignatures">
+        <member name="P:Goedel.Cryptography.Dare.DareTrailer.WitnessValue">
              <summary>
-            A list of signatures over the apex digest.
-            A envelope trailer MUST NOT contain av apex field if the header contains 
-            a signatures field.
+            The encrypted witness value
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareTrailer.ApplicationContextValue">
+             <summary>
+            Additional data added to the signature to bind to an application 
+            defined context.
              </summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareTrailer.SignedData">
@@ -2086,7 +2105,7 @@
             frame and the frame immediately preceding.
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.DareTrailer.TreeDigest">
+        <member name="P:Goedel.Cryptography.Dare.DareTrailer.ApexDigest">
              <summary>
             If present, contains the Binary Merkle Tree digest value.
              </summary>
@@ -2727,18 +2746,16 @@
             Default constructor for use in deserialization.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareSignature.#ctor(Goedel.Cryptography.CryptoKey,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyDerive)">
+        <member name="M:Goedel.Cryptography.Dare.DareSignature.#ctor(Goedel.Cryptography.CryptoKey,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
-            Sign the digest value <paramref name="DigestValue"/> with 
+            Sign the digest value <paramref name="ManifestValue"/> with 
             <paramref name="signerKey"/> and create a DARESignature
             instance with the resulting values.
             </summary>
             <param name="signerKey">The signature key.</param>
-            <param name="DigestValue">The digest value.</param>
-            <param name="digestId">The digest algorithm used to calculate 
-            <paramref name="DigestValue"/>.</param>
-            <param name="keyDerive">Key derivation function used to calculate a signature witness 
-            value (if required).</param>
+            <param name="ManifestValue">The manifest value.</param>
+            <param name="digestId">The digest algorithm used to process 
+            <paramref name="ManifestValue"/> (if required).</param>
         </member>
         <member name="T:Goedel.Cryptography.Dare.IntervalSignature">
              <summary>
@@ -3353,6 +3370,99 @@
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="P:Goedel.Cryptography.Dare.EnvelopeDataCorrupt.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.EnvelopeDigestCorrupt">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EnvelopeDigestCorrupt.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EnvelopeDigestCorrupt.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EnvelopeDigestCorrupt.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EnvelopeDigestCorrupt._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EnvelopeDigestCorrupt.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.EnvelopeSignatureMissing">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EnvelopeSignatureMissing.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EnvelopeSignatureMissing.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EnvelopeSignatureMissing.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EnvelopeSignatureMissing._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EnvelopeSignatureMissing.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.EnvelopeSignatureInvalid">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EnvelopeSignatureInvalid.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EnvelopeSignatureInvalid.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EnvelopeSignatureInvalid.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EnvelopeSignatureInvalid._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EnvelopeSignatureInvalid.Throw">
             <summary>
             The public fatory delegate
             </summary>

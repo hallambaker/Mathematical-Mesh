@@ -461,6 +461,6 @@ public class ResultDiffieHellman : KeyAgreementResult {
     /// <summary>
     /// The Ephemeral public key
     /// </summary>
-    public override KeyPair EphemeralKeyPair => new KeyPairDH(EphemeralPublicValue as DiffeHellmanPublic);
+    public override IAgreementData EphemeralKeyPair => new KeyPairDH(EphemeralPublicValue as DiffeHellmanPublic);
 
     }

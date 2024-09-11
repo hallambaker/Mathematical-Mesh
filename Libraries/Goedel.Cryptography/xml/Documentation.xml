@@ -67,6 +67,14 @@
             <param name="id">Algorithm Identifier</param>
             <returns>XML Signature and Encryption algorithm identifier</returns>
         </member>
+        <member name="M:Goedel.Cryptography.AlgorithmID.ParseOid(System.String)">
+            <summary>
+            Pare the string representing the asn.1 OID <paramref name="oid"/>
+            to reduce it to byt form.
+            </summary>
+            <param name="oid">The oid in string form.</param>
+            <returns>The oid in byte form.</returns>
+        </member>
         <member name="M:Goedel.Cryptography.AlgorithmID.ToHashAlgorithmName(Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Get the .Net Standard Hash algorithm name.
@@ -351,8 +359,8 @@
             <remarks>This method does not prehash the message data since if
             prehashing is desired, it is because the data needs to be hashed
             before being presented.</remarks>
-            <param name="message">The message data.</param>
             <param name="signature">The encoded signature data.</param>
+            <param name="message">The message data.</param>
             <param name="context">Context value, if used.</param>
             <returns>True if signature verification succeeded, otherwise false.</returns>
         </member>
@@ -742,8 +750,8 @@
             prehashing is desired, it is because the data needs to be hashed
             before being presented.</remarks>
             <param name="Public">The public key</param>
-            <param name="Message">The message data.</param>
             <param name="Signature">The encoded signature data.</param>
+            <param name="Message">The message data.</param>
             <param name="Context">Context value, if used.</param>
             <returns>True if signature verification succeeded, otherwise false.</returns>
         </member>
@@ -792,16 +800,16 @@
             <summary>
             Construct from binary encoded form.
             </summary>
-            <param name="Encoding">The binary encoded public key.</param>
+            <param name="encoding">The binary encoded public key.</param>
         </member>
         <member name="M:Goedel.Cryptography.Algorithms.CurveEdwards448Public.Verify(System.Byte[],System.Byte[],System.Byte[])">
             <summary>
             Verify a signature over the purported data digest.
             </summary>
-            <param name="Signature">The signature blob value.</param>
+            <param name="signature">The signature blob value.</param>
             <param name="Context">Additional data added to the signature scope
             for protocol isolation.</param>
-            <param name="Digest">The digest value to be verified.</param>
+            <param name="digest">The digest value to be verified.</param>
             <returns>True if the signature is valid, otherwise false.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Algorithms.CurveEdwards448Public.Agreement">
@@ -817,21 +825,21 @@
             Perform final stage in a Diffie Hellman Agreement to reduce an 
             array of carry returns to a single agreement result.
             </summary>
-            <param name="Carry">The partial recryption results.</param>
+            <param name="carry">The partial recryption results.</param>
             <returns>The key agreement value ZZ</returns>
         </member>
         <member name="M:Goedel.Cryptography.Algorithms.CurveEdwards448Public.Combine(Goedel.Cryptography.Algorithms.CurveEdwards448Public)">
             <summary>
             Combine the two public keys to create a composite public key.
             </summary>
-            <param name="Contribution">The key contribution.</param>
+            <param name="contribution">The key contribution.</param>
             <returns>The composite key</returns>
         </member>
         <member name="M:Goedel.Cryptography.Algorithms.CurveEdwards448Public.Combine(Goedel.Cryptography.IKeyAdvancedPublic)">
             <summary>
             Combine the two public keys to create a composite public key.
             </summary>
-            <param name="Contribution">The key contribution.</param>
+            <param name="contribution">The key contribution.</param>
             <returns>The composite key</returns>
         </member>
         <member name="T:Goedel.Cryptography.Algorithms.CurveEdwards448Private">
@@ -872,7 +880,7 @@
             <summary>
             Generate a new private key
             </summary>
-            <param name="Exportable">If true, the private key is exportable</param>
+            <param name="exportable">If true, the private key is exportable</param>
         </member>
         <member name="M:Goedel.Cryptography.Algorithms.CurveEdwards448Private.#ctor(System.Byte[],System.Boolean)">
             <summary>
@@ -1979,7 +1987,7 @@
             <summary>
             Add this point to a second point
             </summary>
-            <param name="P2">Second point</param>
+            <param name="p2">Second point</param>
             <returns>The result of the addition.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Algorithms.CurveEdwards.Add(Goedel.Cryptography.Algorithms.Curve)">
@@ -2022,7 +2030,7 @@
             <summary>
             Recover the X coordinate from the Y value and sign of X.
             </summary>
-            <param name="X0">If true X is odd, otherwise, X is even.</param>
+            <param name="x0">If true X is odd, otherwise, X is even.</param>
             <returns>The X coordinate.</returns>
         </member>
         <member name="P:Goedel.Cryptography.Algorithms.CurveEdwards.ZInv">
@@ -2038,8 +2046,8 @@
             <summary>
             Convert back from 3D to 2D representation
             </summary>
-            <param name="Xout">The X value</param>
-            <param name="Yout">The Y value</param>
+            <param name="xout">The X value</param>
+            <param name="yout">The Y value</param>
         </member>
         <member name="M:Goedel.Cryptography.Algorithms.CurveEdwards.DoublePoint">
             <summary>
@@ -2051,7 +2059,7 @@
             <summary>
             Add two points
             </summary>
-            <param name="Point">Second point</param>
+            <param name="point">Second point</param>
             <returns>The result of the addition.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Algorithms.CurveEdwards.GetK(Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Byte[],System.Byte[])">
@@ -2170,7 +2178,7 @@
             <summary>
             Make a recryption keyset by splitting the private key.
             </summary>
-            <param name="Shares">Number of shares to create</param>
+            <param name="shares">Number of shares to create</param>
             <returns>Array shares.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Algorithms.CurveEdwardsPrivate.Combine(Goedel.Cryptography.IKeyAdvancedPrivate,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses)">
@@ -4238,9 +4246,6 @@
             <param name="keyStorage">The key security specifier.</param>
             <returns>true if the key is persisted, otherwise false</returns>
         </member>
-        <member name="M:Goedel.Cryptography.RsaGenerationHints.ToString">
-            <inheritdoc/>
-        </member>
         <member name="T:Goedel.Cryptography.PlatformInformation">
             <summary>Enumeration used to specify information requested from the platform
             to enable use of platform specific features.</summary>
@@ -4306,7 +4311,7 @@
         </member>
         <member name="M:Goedel.Cryptography.KeyPair.Sign(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
-            Sign a precomputed digest
+            Sign the data <paramref name="data"/>.
             </summary>
             <param name="data">The data to sign.</param>
             <param name="algorithmID">The algorithm to use.</param>
@@ -4365,7 +4370,7 @@
             the value of <paramref name="keySecurity"/></param>
             <returns>The created key pair</returns>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPair.Factory(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeySecurity,System.Byte[],System.Byte[],System.String,Goedel.Cryptography.IKeyLocate,System.Int32,Goedel.Cryptography.KeyUses)">
+        <member name="M:Goedel.Cryptography.KeyPair.Factory(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeySecurity,System.Byte[],System.Byte[],System.String,Goedel.Cryptography.IKeyLocate,System.Int32,Goedel.Cryptography.KeyUses,System.String)">
             <summary>
             Factory creating a key pair of the type specified by <paramref name="algorithmID"/>
             using the data provided by a UDF identifier. 
@@ -4677,16 +4682,17 @@
         <member name="P:Goedel.Cryptography.KeyAgreementResult.EphemeralKeyPair">
             <summary>The public key portion of the ephemeral key</summary>
         </member>
-        <member name="M:Goedel.Cryptography.KeyAgreementResult.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[]@,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyAgreementResult.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.IAgreementData@,System.Byte[])">
             <summary>
             Encrypt the bulk key.   z   
             </summary>
-            <param name="ephemeral"></param>
+            <param name="agreementData"></param>
             <param name="key"></param>
             <param name="salt"></param>
+            <param name="wrappedKey">The wrapped key.</param>
             <returns>The encoder</returns>
         </member>
-        <member name="M:Goedel.Cryptography.KeyAgreementResult.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyAgreementResult.Decrypt(System.Byte[],Goedel.Cryptography.IAgreementData,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
             <summary>
             Perform a key exchange to decrypt a bulk or wrapped key under this one.
             </summary>
@@ -4941,30 +4947,30 @@
             <param name="carry">Carried result to add in to the agreement (for recryption)</param>
             <returns>The key agreement value ZZ</returns>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairDH.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[]@,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairDH.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.IAgreementData@,System.Byte[])">
             <summary>
             Encrypt the specified exchange key.
             </summary>
             <param name="key"></param>
             <param name="exchange"></param>
             <param name="ephemeral"></param>
-            <param name="ciphertext"></param>
             <param name="salt"></param>
+            
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairDH.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairDH.Decrypt(System.Byte[],Goedel.Cryptography.IAgreementData,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
             <summary>
             Perform a key exchange to decrypt a bulk or wrapped key under this one.
             </summary>
             <param name="EncryptedKey">The encrypted session key</param>
             <param name="Ephemeral">Ephemeral key input (required for DH)</param>
-            <param name="ciphertext"></param>
             <param name="AlgorithmID">The algorithm to use.</param>
             <param name="Partial">Partial key agreement value (for recryption)</param>
-            <returns>The decoded data instance</returns>
             <param name="Salt">Optional salt value for use in key derivation. If specified
             must match the salt used to encrypt.</param>
+            <returns>The decoded data instance</returns>
+            
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairDH.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairDH.SignDigest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
             Sign a precomputed digest
             </summary>
@@ -4974,7 +4980,7 @@
             for protocol isolation.</param>
             <returns>The signature data</returns>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairDH.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairDH.VerifyDigest(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
             Verify a signature over the purported data digest.
             </summary>
@@ -5197,10 +5203,10 @@
             <param name="cryptoAlgorithmID">Specifies the default algorithm variation for use
             in signature operations.</param>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairECDHP.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairECDHP.Decrypt(System.Byte[],Goedel.Cryptography.IAgreementData,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairECDHP.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[]@,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairECDHP.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.IAgreementData@,System.Byte[])">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairECDHP.KeyPair(Goedel.Cryptography.IKeyAdvancedPrivate,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses)">
@@ -5215,10 +5221,10 @@
         <member name="M:Goedel.Cryptography.KeyPairECDHP.Persist(Goedel.Cryptography.KeyCollection)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairECDHP.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairECDHP.SignDigest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairECDHP.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairECDHP.VerifyDigest(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.KeyShareEdwards">
@@ -5540,25 +5546,28 @@
             <param name="Carry">Carried result to add in to the agreement (for recryption)</param>
             <returns>The key agreement value ZZ</returns>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairEd25519.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[]@,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairEd25519.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.IAgreementData@,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairEd25519.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairEd25519.Decrypt(System.Byte[],Goedel.Cryptography.IAgreementData,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairEd25519.Sign(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairEd25519.SignManifest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairEd25519.Verify(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Cryptography.KeyPairEd25519.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairEd25519.SignDigest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd25519.SignHashThreshold(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairEd25519.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairEd25519.Verify(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPairEd25519.VerifyManifest(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPairEd25519.VerifyDigest(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.KeyPairEd448">
@@ -5668,25 +5677,31 @@
             <param name="carry">Carried result to add in to the agreement (for recryption)</param>
             <returns>The key agreement value ZZ</returns>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairEd448.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[]@,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairEd448.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.IAgreementData@,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairEd448.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairEd448.Decrypt(System.Byte[],Goedel.Cryptography.IAgreementData,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd448.Sign(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairEd448.Verify(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Cryptography.KeyPairEd448.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairEd448.SignDigest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd448.SignHashThreshold(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairEd448.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairEd448.SignManifest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPairEd448.Verify(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPairEd448.VerifyManifest(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPairEd448.VerifyDigest(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.PQC.KeyPairMlDsaNist">
@@ -5793,25 +5808,38 @@
         <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsaNist.Persist(Goedel.Cryptography.KeyCollection)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsaNist.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
-            <inheritdoc/>
-            <exception cref="T:Goedel.Cryptography.OperationNotSupported">ML-DSA does not support signature operations.</exception>
-        </member>
-        <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsaNist.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[]@,System.Byte[])">
-            <inheritdoc/>
-            <exception cref="T:Goedel.Cryptography.OperationNotSupported">ML-DSA does not support signature operations.</exception>
-        </member>
         <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsaNist.Sign(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsaNist.SignDigest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsaNist.SignManifest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsaNist.Verify(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsaNist.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsaNist.VerifyDigest(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsaNist.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlDsaNist.VerifyManifest(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Cryptography.PQC.AgreementDataBinary">
+            <summary>
+            Kem Ciphertext result.
+            </summary>
+            <param name="Value"></param>
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.AgreementDataBinary.#ctor(System.Byte[])">
+            <summary>
+            Kem Ciphertext result.
+            </summary>
+            <param name="Value"></param>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.AgreementDataBinary.Value">
+            <summary></summary>
         </member>
         <member name="T:Goedel.Cryptography.PQC.KeyPairMlKemNist">
             <summary>
@@ -5917,17 +5945,17 @@
         <member name="M:Goedel.Cryptography.PQC.KeyPairMlKemNist.Persist(Goedel.Cryptography.KeyCollection)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.KeyPairMlKemNist.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlKemNist.Decrypt(System.Byte[],Goedel.Cryptography.IAgreementData,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.KeyPairMlKemNist.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[]@,System.Byte[])">
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlKemNist.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.IAgreementData@,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.KeyPairMlKemNist.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlKemNist.SignDigest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
             <exception cref="T:Goedel.Cryptography.OperationNotSupported">ML-KEM does not support signature operations.</exception>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.KeyPairMlKemNist.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.PQC.KeyPairMlKemNist.VerifyDigest(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
             <exception cref="T:Goedel.Cryptography.OperationNotSupported">ML-KEM does not support signature operations.</exception>
         </member>
@@ -6062,16 +6090,16 @@
             <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
             the value of <paramref name="keySecurity"/></param>/// <returns>The created key pair</returns>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairRSA.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[]@,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairRSA.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.IAgreementData@,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairRSA.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairRSA.Decrypt(System.Byte[],Goedel.Cryptography.IAgreementData,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairRSA.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairRSA.SignDigest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairRSA.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairRSA.VerifyDigest(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.CryptoKeySymmetric">
@@ -6108,13 +6136,13 @@
             </summary>
             <param name="encryptionKey">The UDF presentation of the secret value.</param>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKeySymmetric.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[]@,System.Byte[])">
+        <member name="M:Goedel.Cryptography.CryptoKeySymmetric.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.IAgreementData@,System.Byte[])">
             <summary>
             Encrypt the bulk key.
             </summary>
             <returns>The encoder</returns>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKeySymmetric.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
+        <member name="M:Goedel.Cryptography.CryptoKeySymmetric.Decrypt(System.Byte[],Goedel.Cryptography.IAgreementData,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
             <summary>
             Perform a key exchange to decrypt a bulk or wrapped key under this one.
             </summary>
@@ -6126,7 +6154,7 @@
             <param name="algorithmID">The algorithm to use (redundant?)</param>
             <returns>The decoded data instance</returns>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKeySymmetric.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.CryptoKeySymmetric.SignDigest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
             Sign a precomputed digest (Not implemented)
             </summary>
@@ -6136,7 +6164,7 @@
             for protocol isolation.</param>
             <returns>The signature data</returns>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKeySymmetric.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.CryptoKeySymmetric.VerifyDigest(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
             Verify a signature over the purported data digest.
             </summary>
@@ -6182,7 +6210,7 @@
             </summary>
             <param name="keyIdentifier">The decryption/verification key.</param>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKeySymmetricSigner.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.CryptoKeySymmetricSigner.SignDigest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
             Sign a precomputed digest 
             </summary>
@@ -6192,7 +6220,7 @@
             for protocol isolation.</param>
             <returns>The signature data</returns>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKeySymmetricSigner.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.CryptoKeySymmetricSigner.VerifyDigest(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
             Verify a signature over the purported data digest.
             </summary>
@@ -6333,16 +6361,16 @@
             <param name="Carry">Carried result to add in to the agreement (for recryption)</param>
             <returns>The key agreement value ZZ</returns>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairX25519.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[]@,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairX25519.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.IAgreementData@,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairX25519.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairX25519.Decrypt(System.Byte[],Goedel.Cryptography.IAgreementData,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairX25519.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairX25519.SignDigest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairX25519.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairX25519.VerifyDigest(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.KeyPairX448">
@@ -6452,16 +6480,16 @@
             <param name="Carry">Carried result to add in to the agreement (for recryption)</param>
             <returns>The key agreement value ZZ</returns>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairX448.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[]@,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairX448.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.IAgreementData@,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairX448.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairX448.Decrypt(System.Byte[],Goedel.Cryptography.IAgreementData,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairX448.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairX448.SignDigest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairX448.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairX448.VerifyDigest(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.IKeyDecrypt">
@@ -6469,18 +6497,18 @@
             Interface describing private key operations
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.IKeyDecrypt.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
+        <member name="M:Goedel.Cryptography.IKeyDecrypt.Decrypt(System.Byte[],Goedel.Cryptography.IAgreementData,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
             <summary>
             Perform a key exchange to encrypt a bulk or wrapped key under this one.
             </summary>
             <param name="encryptedKey">The encrypted session</param>
             <param name="ephemeral">Ephemeral key input (required for DH)</param>
-            <param name="ciphertext"></param>
             <param name="algorithmID">The algorithm to use (redundant?)</param>
-            <param name="partial">Partial key agreement carry in (for recryption)</param>        
-            <returns>The decoded data instance</returns>
+            <param name="partial">Partial key agreement carry in (for recryption)</param>
             <param name="salt">Optional salt value for use in key derivation. If specified
-            must match the salt used to encrypt.</param>
+            must match the salt used to encrypt.</param>        
+            <returns>The decoded data instance</returns>
+            
         </member>
         <member name="M:Goedel.Cryptography.IKeyDecrypt.Agreement(Goedel.Cryptography.KeyPair)">
             <summary>
@@ -6494,7 +6522,7 @@
             Interface describing private key operations
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.IKeySign.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.IKeySign.SignDigest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
             Sign a precomputed digest
             </summary>
@@ -6589,7 +6617,7 @@
             <returns>True if keyId is sufficiently long and matches the leading characters of the
             key identifier.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[]@,System.Byte[])">
+        <member name="M:Goedel.Cryptography.CryptoKey.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.IAgreementData@,System.Byte[])">
             <summary>
             Encrypt a bulk key.
             </summary>
@@ -6597,23 +6625,22 @@
             <param name="key">The key to encrypt.</param>
             <param name="ephemeral">The ephemeral key to use for the exchange (if used)</param>
             <param name="exchange">The private key to use for the exchange.</param>
-            <param name="ciphertext">Ciphertext value (for use in KEM)</param>
             <param name="salt">Optional salt value for use in key derivation.</param>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
+        <member name="M:Goedel.Cryptography.CryptoKey.Decrypt(System.Byte[],Goedel.Cryptography.IAgreementData,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
             <summary>
             Perform a key exchange to encrypt a bulk or wrapped key under this one.
             </summary>
             <param name="encryptedKey">The encrypted session</param>
-            <param name="ephemeral">Ephemeral key input (required for DH)</param>
-            <param name="ciphertext"></param>
+            <param name="agreementData">Ephemeral key input (required for DH)</param>
             <param name="algorithmID">The algorithm to use (redundant?)</param>
-            <param name="partial">Partial key agreement carry in (for recryption)</param>        
-            <returns>The decoded data instance</returns>
+            <param name="partial">Partial key agreement carry in (for recryption)</param>
             <param name="salt">Optional salt value for use in key derivation. If specified
-            must match the salt used to encrypt.</param>
+            must match the salt used to encrypt.</param>        
+            <returns>The decoded data instance</returns>
+            
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.Sign(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.CryptoKey.SignManifest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
             Sign data directly.
             </summary>
@@ -6623,18 +6650,18 @@
             for protocol isolation.</param>
             <returns>The signature data</returns>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.Verify(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.CryptoKey.VerifyManifest(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
             Verify a signature over the purported data digest.
             </summary>
             <param name="signature">The signature blob value.</param>
-            <param name="algorithmID">The signature and hash algorithm to use.</param>
+            <param name="algorithmID">The signature and hash algorithm to use (if required).</param>
             <param name="context">Additional data added to the signature scope
             for protocol isolation.</param>
             <param name="data">The data value to be verified.</param>
             <returns>True if the signature is valid, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.CryptoKey.SignDigest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
             Sign a precomputed digest
             </summary>
@@ -6644,7 +6671,7 @@
             for protocol isolation.</param>
             <returns>The signature data</returns>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.CryptoKey.VerifyDigest(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
             Verify a signature over the purported data digest.
             </summary>
@@ -10934,13 +10961,13 @@
         <member name="P:Goedel.Cryptography.PrimeGeneratorUdf.CallCount">
             <summary>Dictionary tracking the number of times the method has been called.</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.PrimeGeneratorUdf.GetEntropy(System.Numerics.BigInteger,System.Numerics.BigInteger,System.String)">
+        <member name="M:Goedel.Cryptography.PrimeGeneratorUdf.GetEntropy(System.Numerics.BigInteger,System.Numerics.BigInteger,System.String,System.Nullable{System.Int32})">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.PrimeGeneratorUdf.GetEntropyUncounted(System.Int32,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.PrimeGeneratorUdf.GetPrime(System.Int32,System.Int32,System.String)">
+        <member name="M:Goedel.Cryptography.PrimeGeneratorUdf.GetPrime(System.Int32,System.Int32,System.String,System.Nullable{System.Int32})">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.PrimeGeneratorUdf.Register(System.String,System.Int32)">
@@ -12261,17 +12288,18 @@
             <param name="udf">The string to parse.</param>
             <returns>The UDF Type identifier and data section.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Udf.DeriveKey(System.String,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses)">
+        <member name="M:Goedel.Cryptography.Udf.DeriveKey(System.String,System.String,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses)">
             <summary>
             Derive a key pair from the UDF key <paramref name="udf"/> with Key security model
             <paramref name="keySecurity"/> and Key uses <paramref name="keyUses"/>.
             </summary>
             <param name="udf"></param>
+            <param name="hints"></param>
             <param name="keySecurity"></param>
-            <param name="keyUses"></param>
             <returns></returns>
+            <param name="keyUses"></param>
         </member>
-        <member name="M:Goedel.Cryptography.Udf.DeriveKey(System.String,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId,System.String)">
+        <member name="M:Goedel.Cryptography.Udf.DeriveKey(System.String,Goedel.Cryptography.IKeyLocate,System.String,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId,System.String)">
             <summary>
             Derive a key pair from the UDF key <paramref name="udf"/> with Key security model
             <paramref name="keySecurity"/> and Key uses <paramref name="keyUses"/>.
@@ -12285,7 +12313,7 @@
             a single seed.</param>
             <returns>The derrived key pair.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Udf.DeriveKeyHints(System.String,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId,System.String)">
+        <member name="M:Goedel.Cryptography.Udf.DeriveKeyHints(System.String,Goedel.Cryptography.IKeyLocate,System.String,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId,System.String)">
             <summary>
             Derive a key pair from the UDF key <paramref name="udf"/> with Key security model
             <paramref name="keySecurity"/> and Key uses <paramref name="keyUses"/>.

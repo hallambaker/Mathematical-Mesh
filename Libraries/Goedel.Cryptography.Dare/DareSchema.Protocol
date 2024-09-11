@@ -56,13 +56,13 @@
 				|A list of signatures.
 				|A envelope trailer MUST NOT contain a signatures field if the header contains 
 				|a signatures field.
-		Struct DareSignature ApexSignatures
-			Multiple
+		Binary WitnessValue
 			Description
-				|A list of signatures over the apex digest.
-				|A envelope trailer MUST NOT contain av apex field if the header contains 
-				|a signatures field.
-
+				|The encrypted witness value
+		Binary ApplicationContextValue
+			Description
+				|Additional data added to the signature to bind to an application 
+				|defined context.
 		Binary SignedData
 			Description
 				|Contains a DAREHeader object 
@@ -75,8 +75,7 @@
 			Description
 				|If present, contains the digest of the PayloadDigest values of this
 				|frame and the frame immediately preceding.
-
-		Binary TreeDigest
+		Binary ApexDigest
 			Description
 				|If present, contains the Binary Merkle Tree digest value.
 
@@ -320,14 +319,16 @@
 			Tag "epk"
 			Description
 				|The key parameters of the ephemeral key as specified in JWE
+		Binary Ek
+			Tag "ek"
+			Description
+				|Binary cryptographic exchange parameters
+
 		Binary WrappedBaseSeed
 			Tag "wmk"
 			Description
 				|The wrapped base seed. The base seed is encrypted under the result of the key exchange.
-		Binary RecipientKeyData
-			Tag "rkd"
-			Description
-				|The per-recipient key exchange data (if required).
+
 
 
 	Structure DarePolicy

@@ -20,6 +20,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Nist\Goedel.Cryptography.Nist.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Test\Goedel.Cryptography.Test.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Test.Core\Goedel.Test.Core.csproj" />
 		<ProjectReference Include="..\Goedel.Mesh.Test\Goedel.Mesh.Test.csproj" />

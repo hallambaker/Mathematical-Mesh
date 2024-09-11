@@ -288,16 +288,16 @@
             <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
             the value of <paramref name="keySecurity"/></param>/// <returns>The created key pair</returns>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairRSA1.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[]@,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairRSA1.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.IAgreementData@,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairRSA1.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairRSA1.Decrypt(System.Byte[],Goedel.Cryptography.IAgreementData,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairRSA1.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairRSA1.SignDigest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairRSA1.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.KeyPairRSA1.VerifyDigest(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
     </members>

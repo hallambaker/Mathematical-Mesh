@@ -80,7 +80,7 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
         }
 
     /// <summary>
-    /// Sign a precomputed digest
+    /// Sign the data <paramref name="data"/>.
     /// </summary>
     /// <param name="data">The data to sign.</param>
     /// <param name="algorithmID">The algorithm to use.</param>
@@ -91,8 +91,10 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
             CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
             byte[] context = null) {
 
-        var hash = algorithmID.Bulk().GetDigest(data);
-        return SignHash(hash, algorithmID, context);
+        var algorithm = algorithmID.Bulk();
+
+        var hash = algorithm.GetDigest(data);
+        return SignDigest(hash, algorithmID, context);
         }
 
 
@@ -108,7 +110,7 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
     public virtual bool Verify(byte[] data, byte[] signature,
             CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null) {
         var hash = algorithmID.Bulk().GetDigest(data);
-        return VerifyHash(hash, signature, algorithmID, context);
+        return VerifyDigest(hash, signature, algorithmID, context);
         }
 
 
@@ -157,9 +159,9 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
                 break;
                 }
 
-            case CryptoAlgorithmId.MLDSA44:
-            case CryptoAlgorithmId.MLDSA65:
-            case CryptoAlgorithmId.MLDSA87: {
+            case CryptoAlgorithmId.MLDSA44hash:
+            case CryptoAlgorithmId.MLDSA65hash:
+            case CryptoAlgorithmId.MLDSA87hash: {
                 keyPair = KeyPairFactoryMlDsa(keySize, keySecurity, keyUses, algorithmID);
                 break;
                 }
@@ -242,16 +244,19 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
         string keyName,
         IKeyLocate keyCollection = null,
         int keySize = 0,
-        KeyUses keyUses = KeyUses.Any) {
+        KeyUses keyUses = KeyUses.Any, string hints = null) {
 
         KeyPair keyPair;
 
-        string hints = null;
+        //string hints = null;
         switch (algorithmID) {
             case CryptoAlgorithmId.RSASign:
             case CryptoAlgorithmId.RSAExch: {
-                (keyPair, var hintsRsa) = KeyPairRSA.KeyPairFactory (CryptoAlgorithmId.RSAExch,
-                    keySecurity, ikm, keySpecifier, keyName, keyCollection, keySize, keyUses);
+
+                var hintsRsa = RsaGenerationHints.GetHints(hints);
+                //RsaGenerationHints hintsRsa=null;
+                (keyPair, hintsRsa) = KeyPairRSA.KeyPairFactory (CryptoAlgorithmId.RSAExch,
+                    keySecurity, ikm, keySpecifier, keyName, keyCollection, keySize, keyUses, hintsRsa);
                 hints = hintsRsa.ToString ();
                 break;
                 }
@@ -298,9 +303,9 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
                         ikm, keySpecifier, keyName, keyCollection, keySize, keyUses);
                 break;
                 }
-            case CryptoAlgorithmId.MLDSA44:
-            case CryptoAlgorithmId.MLDSA65:
-            case CryptoAlgorithmId.MLDSA87: {
+            case CryptoAlgorithmId.MLDSA44hash:
+            case CryptoAlgorithmId.MLDSA65hash:
+            case CryptoAlgorithmId.MLDSA87hash: {
                 keyPair = KeyPairMlDsaNist.Factory(algorithmID, keySecurity,
                         ikm, keySpecifier, keyName, keyCollection, keySize, keyUses);
                 break;
@@ -336,7 +341,7 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
         parameter ??= "";
 
         var suffix = (keyName + parameter).ToBytes();
-        var info = keySpecifier.Concatenate(suffix);
+        var info = keySpecifier.Concat(suffix);
 
         return KeyDeriveHKDF.Derive(ikm, null, info, bits, CryptoAlgorithmId.HMAC_SHA_2_512);
         }

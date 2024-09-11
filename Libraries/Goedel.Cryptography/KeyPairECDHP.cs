@@ -306,12 +306,20 @@ subjectPublicKeyInfo SubjectPublicKeyInfo SEQUENCE (2 elem)
 
 
     ///<inheritdoc/>
-    public override byte[] Decrypt(byte[] encryptedKey, KeyPair ephemeral = null, byte[] ciphertext = null, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, KeyAgreementResult partial = null, byte[] salt = null) {
+    public override byte[] Decrypt(
+                byte[] encryptedKey,
+                IAgreementData ephemeral = null,
+                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+                KeyAgreementResult partial = null, byte[] salt = null) {
         throw new NotImplementedException();
         }
 
     ///<inheritdoc/>
-    public override void Encrypt(byte[] key, out byte[] exchange, out KeyPair ephemeral, out byte[] ciphertext, byte[] salt = null) {
+    public override void Encrypt(
+                byte[] key,
+                out byte[] exchange,
+                out IAgreementData ephemeral,
+                byte[] salt = null) {
         throw new NotImplementedException();
         }
 
@@ -336,12 +344,12 @@ subjectPublicKeyInfo SubjectPublicKeyInfo SEQUENCE (2 elem)
         }
 
     ///<inheritdoc/>
-    public override byte[] SignHash(byte[] digest, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null) {
+    public override byte[] SignDigest(byte[] digest, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null) {
         throw new NotImplementedException();
         }
 
     ///<inheritdoc/>
-    public override bool VerifyHash(byte[] digest, byte[] signature, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null) {
+    public override bool VerifyDigest(byte[] digest, byte[] signature, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null) {
         throw new NotImplementedException();
         }
     }

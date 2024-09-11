@@ -1,5 +1,7 @@
 ﻿using Goedel.Utilities;
 
+using System.Security.Cryptography;
+
 namespace Goedel.Cryptography.Nist;
 
 
@@ -184,17 +186,21 @@ public class DilithiumNist(DilithiumParameters param, IShaFactory shaFactory=nul
         }
 
 
+
     /// <summary>
     /// Signs a message with a given secret key
     /// </summary>
     /// <param name="secretKey">Secret key.</param>
     /// <param name="message">Arbitrary set of bits.</param>
+    /// <param name="prefix">Prefix inserted ahead of the message to specify
+    /// the manifest data.</param>
     /// <param name="rnd">The deterministic seed value.</param>
     /// <returns>Signature</returns>
-    public byte[] Sign(
+    public byte[] SignInternal(
                 DilithiumPrivate secretKey,
                 byte[] message,
-                byte[] rnd=null) {
+                byte[]? prefix = null, 
+                byte[]? rnd = null) {
 
         var k = secretKey.K;
         var tr = secretKey.TR;
@@ -207,14 +213,14 @@ public class DilithiumNist(DilithiumParameters param, IShaFactory shaFactory=nul
         var mu = new byte[64];
         this.h.Init();
         this.h.Update(BitsToBytes(tr), tr.Length);
+        if (prefix != null) {
+            this.h.Update(prefix, prefix.Length * 8);
+            }
         this.h.Update(message, message.Length * 8);
         this.h.Final(mu, 512);
 
         // rnd is either 256 random bits, or 256 0-bits. 
         rnd ??= new byte[32];
-
-
-
 
         //if (!deterministic) {
         //    rnd = _entropyProvider.GetEntropy(256).Bits;
@@ -355,10 +361,13 @@ public class DilithiumNist(DilithiumParameters param, IShaFactory shaFactory=nul
     /// <param name="signature">The signature to verify.</param>
     /// <param name="message">The message signed.</param>
     /// <returns>True if the signature is valid, otherwise false.</returns>
-    public bool Verify(
+    /// <param name="prefix">Prefix inserted ahead of the message to specify
+    /// the manifest data.</param>
+    public bool VerifyInternal(
                     DilithiumPublic publicKey,
                     byte[] signature,
-                    byte[] message) {
+                    byte[] message, 
+                    byte[]? prefix = null) {
 
         var t1 = publicKey.T1;
         var aHat = publicKey.AHat;
@@ -407,6 +416,9 @@ public class DilithiumNist(DilithiumParameters param, IShaFactory shaFactory=nul
         var mu = new byte[64];
         this.h.Init();
         this.h.Update(tr, 512);
+        if (prefix != null) {
+            this.h.Update(prefix, prefix.Length * 8);
+            }
         this.h.Update(message, message.Length * 8);
         this.h.Final(mu, 512);
         // Console.WriteLine("muCandidate: " + IntermediateValueHelper.Print(mu));
@@ -462,6 +474,78 @@ public class DilithiumNist(DilithiumParameters param, IShaFactory shaFactory=nul
             // Console.WriteLine("cTilde != cTildePrime, signature rejected");
             return false;
             }
+        }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="context"></param>
+
+    /// <returns></returns>
+    public static byte[] CreateManifestPrefixPure(
+                byte[] message,
+                byte[] context) {
+        // 𝑀′ ← BytesToBits(IntegerToBytes(0, 1) ∥ IntegerToBytes(|𝑐𝑡𝑥|, 1) ∥ 𝑐𝑡𝑥) ∥ �
+
+        //1
+        var clen = context?.Length ?? 0;
+        (clen > 255).AssertTrue(CryptographicException.Throw);
+
+        var length = 1 + 1 + clen;
+        var bytes = new byte[length];
+
+        //5
+        int i = 0;
+        bytes[i++] = 0;
+        if (context is null) {
+            bytes[i++] = 0;
+            }
+        else {
+            bytes[i++] = (byte)clen;
+            Array.Copy(context, 0, bytes, i, length);
+            i += clen;
+            }
+        (length == i).AssertTrue(CryptographicException.Throw);
+
+        return bytes;
+        }
+
+    /// <param name="digest">The digest value.</param>
+    /// <param name="oid">An OID specifying the digest algorithm.</param>
+    /// <param name="context">Optional context string of 255 bytes or fewer.</param>
+
+    public static byte[] CreateManifestPrefixHashed(
+                byte[] digest,
+                byte[] oid,
+                byte[]? context) {
+        // M' ← BytesToBits(IntegerToBytes(1, 1) ∥ IntegerToBytes(|𝑐𝑡𝑥|, 1) ∥ 𝑐𝑡𝑥 ∥ OID ∥ PH𝑀)
+
+        //1
+        var clen = context?.Length ?? 0;
+        (clen > 255).AssertTrue(CryptographicException.Throw);
+
+        // 22
+        var length = 1 + 1 + clen + oid.Length;
+        var bytes = new byte[length];
+
+        int i = 0;
+        bytes[i++] = 1;
+        if (context is null) {
+            bytes[i++] = 0;
+            }
+        else {
+            bytes[i++] = (byte)clen;
+            Array.Copy (context, 0, bytes, i, length);
+            i += clen;
+            }
+
+        Array.Copy(oid, 0, bytes, i, oid.Length);
+        i += oid.Length;
+
+        (length == i).AssertTrue(CryptographicException.Throw);
+        
+        return bytes;
         }
 
     /// <summary>

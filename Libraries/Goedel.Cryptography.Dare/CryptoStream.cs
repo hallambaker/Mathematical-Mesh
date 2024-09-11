@@ -84,6 +84,13 @@ public class CryptoStackStream : Stream {
     /// </summary>
     public byte[] DigestValue { get; protected set; }
 
+    ///<summary>The encryption witness value, if used.</summary> 
+    public byte[] WitnessValue { get; protected set; }
+
+    ///<summary>Function returning the apex digest value.</summary> 
+    public Func<byte[], byte[]> GetApexDigest { get; protected set; }
+
+
     ///<summary>The number of bytes read</summary> 
     public long BytesRead { get; protected set; } = 0;
 

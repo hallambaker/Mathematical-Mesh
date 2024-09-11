@@ -171,7 +171,7 @@ public partial class TestService {
         var testKey = Udf.TestKey(cryptoAlgorithmId, $"{seed}-{round}-{count}");
 
 
-        return Udf.DeriveKey(testKey, null, KeySecurity.Exportable) as KeyPairAdvanced;
+        return Udf.DeriveKey(testKey, keySecurity: KeySecurity.Exportable) as KeyPairAdvanced;
         }
 
 

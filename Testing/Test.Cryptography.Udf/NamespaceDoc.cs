@@ -22,6 +22,7 @@
 
 global using Goedel.Test;
 global using Goedel.Utilities;
+global using Goedel.Cryptography.Test;
 
 global using System.IO;
 

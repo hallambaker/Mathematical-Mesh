@@ -526,7 +526,7 @@ public partial class CurveKey {
             UDF = Goedel.Cryptography.Udf.TestKey(cryptoAlgorithmID, prefix + Name);
             }
 
-        KeyPair = Goedel.Cryptography.Udf.DeriveKey(UDF, KeySecurity.Exportable, KeyUses.Any) as KeyPairAdvanced;
+        KeyPair = Goedel.Cryptography.Udf.DeriveKey(UDF, keySecurity: KeySecurity.Exportable, keyUses: KeyUses.Any) as KeyPairAdvanced;
         SetParameters(KeyPair, extended);
 
         }
@@ -864,8 +864,8 @@ public class CryptoCombine {
         SeedAliceDevice = Udf.DerivedKey(UdfAlgorithmIdentifier.Ed25519, data: random1);
         SeedAliceOverlay = Udf.DerivedKey(UdfAlgorithmIdentifier.Ed25519, data: random2);
 
-        KeyPairDevice = Udf.DeriveKey(SeedAliceDevice, KeySecurity.Exportable) as KeyPairEd25519;
-        KeyPairOverlay = Udf.DeriveKey(SeedAliceOverlay, KeySecurity.Exportable) as KeyPairEd25519;
+        KeyPairDevice = Udf.DeriveKey(SeedAliceDevice, keySecurity: KeySecurity.Exportable) as KeyPairEd25519;
+        KeyPairOverlay = Udf.DeriveKey(SeedAliceOverlay, keySecurity: KeySecurity.Exportable) as KeyPairEd25519;
 
         CombinedPrivate = KeyPairDevice.Combine(KeyPairDevice) as KeyPairEd25519;
         CombinedPublic = KeyPairDevice.CombinePublic(KeyPairDevice) as KeyPairEd25519;

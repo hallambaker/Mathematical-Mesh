@@ -33,18 +33,18 @@ public interface IKeyDecrypt {
     /// </summary>
     /// <param name="encryptedKey">The encrypted session</param>
     /// <param name="ephemeral">Ephemeral key input (required for DH)</param>
-    /// <param name="ciphertext"></param>
     /// <param name="algorithmID">The algorithm to use (redundant?)</param>
-    /// <param name="partial">Partial key agreement carry in (for recryption)</param>        
-    /// <returns>The decoded data instance</returns>
+    /// <param name="partial">Partial key agreement carry in (for recryption)</param>
     /// <param name="salt">Optional salt value for use in key derivation. If specified
-    /// must match the salt used to encrypt.</param>
+    /// must match the salt used to encrypt.</param>        
+    /// <returns>The decoded data instance</returns>
+    /// 
     byte[] Decrypt(
                 byte[] encryptedKey,
-                KeyPair ephemeral = null,
-                byte[] ciphertext = null, // hack: redundant?
-                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
-                KeyAgreementResult partial = null, byte[] salt = null);
+                IAgreementData ephemeral = null,
+                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, // hack: redundant?
+                KeyAgreementResult partial = null,
+                byte[] salt = null);
 
     /// <summary>
     /// Perform a partial key agreement.
@@ -70,10 +70,15 @@ public interface IKeySign {
     /// <param name="context">Additional data added to the signature scope
     /// for protocol isolation.</param>
     /// <returns>The signature data</returns>
-    byte[] SignHash(byte[] data,
+    byte[] SignDigest(byte[] data,
             CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
             byte[] context = null);
     }
+
+
+public interface IAgreementData {
+    }
+
 
 /// <summary>
 /// Base class for all cryptographic keys.
@@ -221,29 +226,30 @@ public abstract class CryptoKey : IKeyLocate, IKeyDecrypt, IKeySign {
     /// <param name="key">The key to encrypt.</param>
     /// <param name="ephemeral">The ephemeral key to use for the exchange (if used)</param>
     /// <param name="exchange">The private key to use for the exchange.</param>
-    /// <param name="ciphertext">Ciphertext value (for use in KEM)</param>
     /// <param name="salt">Optional salt value for use in key derivation.</param>
-    public abstract void Encrypt(byte[] key,
-        out byte[] exchange, out KeyPair ephemeral, out byte[]? ciphertext, byte[] salt = null);
+    public virtual void Encrypt(
+                    byte[] key,
+                    out byte[] exchange,
+                    out IAgreementData ephemeral,
+                    byte[] salt = null) => throw new OperationNotSupported();
 
     /// <summary>
     /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
     /// </summary>
     /// <param name="encryptedKey">The encrypted session</param>
-    /// <param name="ephemeral">Ephemeral key input (required for DH)</param>
-    /// <param name="ciphertext"></param>
+    /// <param name="agreementData">Ephemeral key input (required for DH)</param>
     /// <param name="algorithmID">The algorithm to use (redundant?)</param>
-    /// <param name="partial">Partial key agreement carry in (for recryption)</param>        
-    /// <returns>The decoded data instance</returns>
+    /// <param name="partial">Partial key agreement carry in (for recryption)</param>
     /// <param name="salt">Optional salt value for use in key derivation. If specified
-    /// must match the salt used to encrypt.</param>
-    public abstract byte[] Decrypt(
+    /// must match the salt used to encrypt.</param>        
+    /// <returns>The decoded data instance</returns>
+    /// 
+    public virtual byte[] Decrypt(
                 byte[] encryptedKey,
-                KeyPair ephemeral = null,
-                byte[] ciphertext = null, // hack: redundant?
-                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
-                KeyAgreementResult partial = null, byte[] salt = null);
-
+                IAgreementData agreementData = null,
+                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, // hack: redundant?
+                KeyAgreementResult partial = null,
+                byte[] salt = null) => throw new OperationNotSupported();
 
     /// <summary>
     /// Sign data directly.
@@ -253,32 +259,42 @@ public abstract class CryptoKey : IKeyLocate, IKeyDecrypt, IKeySign {
     /// <param name="context">Additional data added to the signature scope
     /// for protocol isolation.</param>
     /// <returns>The signature data</returns>
-    public virtual byte[] Sign(byte[] data,
+    public virtual (byte[], CryptoAlgorithmId) SignManifest(byte[] data,
             CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
             byte[] context = null) {
-        var digestID = algorithmID.Digest();
+
+        // calculate the digest algorithm.
+        var digestID = algorithmID.Digest().DefaultDigest();
+
         var digestProvider = algorithmID.CreateDigest();
         var digest = digestProvider.ComputeHash(data);
 
-        return SignHash(digest, CryptoAlgorithmId, context);
+        var algorithmId = CryptoAlgorithmId.Meta() | digestID;
+
+
+        var result = SignDigest(digest, digestID, context);
+        return (result, algorithmId);
         }
 
     /// <summary>
     /// Verify a signature over the purported data digest.
     /// </summary>
     /// <param name="signature">The signature blob value.</param>
-    /// <param name="algorithmID">The signature and hash algorithm to use.</param>
+    /// <param name="algorithmID">The signature and hash algorithm to use (if required).</param>
     /// <param name="context">Additional data added to the signature scope
     /// for protocol isolation.</param>
     /// <param name="data">The data value to be verified.</param>
     /// <returns>True if the signature is valid, otherwise false.</returns>
-    public virtual bool Verify(byte[] data, byte[] signature,
-        CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null) {
+    public virtual bool VerifyManifest(
+                byte[] data, 
+                byte[] signature,
+                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, 
+                byte[] context = null) {
         var digestID = algorithmID.Digest();
-        var digestProvider = algorithmID.CreateDigest();
+        var digestProvider = digestID.CreateDigest();
         var digest = digestProvider.ComputeHash(data);
 
-        return VerifyHash(digest, signature, CryptoAlgorithmId, context);
+        return VerifyDigest(digest, signature, digestID, context);
         }
 
 
@@ -291,9 +307,10 @@ public abstract class CryptoKey : IKeyLocate, IKeyDecrypt, IKeySign {
     /// <param name="context">Additional data added to the signature scope
     /// for protocol isolation.</param>
     /// <returns>The signature data</returns>
-    public abstract byte[] SignHash(byte[] digest,
-            CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
-            byte[] context = null);
+    public virtual byte[] SignDigest(
+                byte[] digest,
+                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+                byte[] context = null) => throw new OperationNotSupported();
 
     /// <summary>
     /// Verify a signature over the purported data digest.
@@ -304,8 +321,11 @@ public abstract class CryptoKey : IKeyLocate, IKeyDecrypt, IKeySign {
     /// for protocol isolation.</param>
     /// <param name="digest">The digest value to be verified.</param>
     /// <returns>True if the signature is valid, otherwise false.</returns>
-    public abstract bool VerifyHash(byte[] digest, byte[] signature,
-            CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null);
+    public virtual bool VerifyDigest(
+                byte[] digest, 
+                byte[] signature,
+                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, 
+                byte[] context = null) => throw new OperationNotSupported();
 
 
 

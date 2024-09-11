@@ -26,6 +26,13 @@ using Goedel.Cryptography.Nist;
 
 namespace Goedel.Cryptography.PQC;
 
+/// <summary>
+/// Kem Ciphertext result.
+/// </summary>
+/// <param name="Value"></param>
+public record AgreementDataBinary(byte[] Value) : IAgreementData {
+
+    }
 
 /// <summary>
 /// ML-KEM keypair implemented according to FIPS 203 https://csrc.nist.gov/pubs/fips/203/final
@@ -242,7 +249,12 @@ public class KeyPairMlKemNist : KeyPair, IOpaqueBinaryKey {
         }
 
     ///<inheritdoc/>
-    public override byte[] Decrypt(byte[] encryptedKey, KeyPair ephemeral = null, byte[] ciphertext = null, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, KeyAgreementResult partial = null, byte[] salt = null) {
+    public override byte[] Decrypt(
+                byte[] encryptedKey,
+                IAgreementData ephemeral = null,
+                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+                KeyAgreementResult partial = null,
+                byte[] salt = null) {
         var (sharedKey, implicitRejection) = PrivateKey.Decapsulate(encryptedKey);
 
         throw new NotImplementedException();
@@ -250,30 +262,25 @@ public class KeyPairMlKemNist : KeyPair, IOpaqueBinaryKey {
 
 
     ///<inheritdoc/>
-    public override void Encrypt(byte[] key, out byte[] exchange, out KeyPair ephemeral, out byte[] ciphertext, byte[] salt = null) {
+    public override void Encrypt(
+                    byte[] key,
+                    out byte[] exchange,
+                    out IAgreementData agreementData,
+                    byte[] salt = null) {
 
         var seed = Shake256.HashData(key, 32);
-        (ciphertext, var sharedSecret) = PublicKey.Encapsulate(seed);
+        var (ciphertext,  sharedSecret) = PublicKey.Encapsulate(seed);
 
-        
-        ephemeral = null;
+        exchange = Platform.KeyWrapRFC3394.Wrap(sharedSecret, key);
+        agreementData = new AgreementDataBinary (ciphertext);
 
-        // Nope have to do
-        //var EncryptionKey = sharedSecret.Derive(salt, length: 256);
-        //exchange = Platform.KeyWrapRFC3394.Wrap(EncryptionKey, key);
-
-
-
-
-
-        throw new NotImplementedException();
         }
 
 
 
     ///<inheritdoc/>
     ///<exception cref="OperationNotSupported">ML-KEM does not support signature operations.</exception>
-    public override byte[] SignHash(
+    public override byte[] SignDigest(
                 byte[] data,
                 CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                 byte[] context = null) =>
@@ -282,7 +289,7 @@ public class KeyPairMlKemNist : KeyPair, IOpaqueBinaryKey {
 
     ///<inheritdoc/>
     ///<exception cref="OperationNotSupported">ML-KEM does not support signature operations.</exception>
-    public override bool VerifyHash(
+    public override bool VerifyDigest(
                 byte[] digest, byte[] signature,
                 CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                 byte[] context = null) =>

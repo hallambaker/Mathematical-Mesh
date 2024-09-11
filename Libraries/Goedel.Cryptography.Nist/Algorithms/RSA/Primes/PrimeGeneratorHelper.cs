@@ -25,7 +25,9 @@ public static class PrimeGeneratorHelper {
                 BigInteger r2,
                 int nLen,
                 BigInteger e, 
-                string tag) {
+                string tag,
+                int? primeSeed,
+                int? primeTest) {
 
         BigInteger lowerBound, upperBound;
         upperBound = NumberTheory.Pow2(nLen / 2) - 1;
@@ -71,7 +73,7 @@ public static class PrimeGeneratorHelper {
 
             do {
                 // 3
-                x = entropyProvider.GetEntropy(lowerBound, upperBound, tag2);
+                x = entropyProvider.GetEntropy(lowerBound, upperBound, tag2, primeSeed);
 
                 // 4
                 y = x + (R - x).PosMod(modulo);
@@ -92,8 +94,8 @@ public static class PrimeGeneratorHelper {
                 } while (y >= NumberTheory.Pow2(nLen / 2));
 
             var yBase = y;
-            int offset = 0;
-
+            int offset = (int)(primeTest is null ? 0 : primeTest);
+            y += offset * modulo;
             do {
 
                 y.AssertEqual(yBase + (modulo * offset), CryptographicException.Throw);
@@ -112,6 +114,10 @@ public static class PrimeGeneratorHelper {
                     //    return new PpfResult(y, x);
                     //    }
                     }
+                if (primeTest is not null) {
+                    throw new CryptographicException();
+                    }
+
 
                 // 8
                 i++;

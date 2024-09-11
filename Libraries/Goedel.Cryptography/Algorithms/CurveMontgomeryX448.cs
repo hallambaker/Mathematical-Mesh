@@ -549,7 +549,7 @@ public class CurveX448Result : ResultECDH {
     /// <summary>
     /// The Ephemeral public key
     /// </summary>
-    public override KeyPair EphemeralKeyPair =>
+    public override IAgreementData EphemeralKeyPair =>
         new KeyPairX448(EphemeralPublicValue as CurveX448Public);
 
 

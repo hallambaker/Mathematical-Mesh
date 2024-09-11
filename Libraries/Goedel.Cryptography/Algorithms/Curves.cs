@@ -539,9 +539,9 @@ public abstract class CurveEdwards : Curve {
     /// <summary>
     /// Add this point to a second point
     /// </summary>
-    /// <param name="P2">Second point</param>
+    /// <param name="p2">Second point</param>
     /// <returns>The result of the addition.</returns>
-    public abstract CurveEdwards Add(CurveEdwards? P2);
+    public abstract CurveEdwards Add(CurveEdwards? p2);
 
     /// <summary>
     /// Add the point <paramref name="point"/> to this point on the curve
@@ -614,12 +614,12 @@ public abstract class CurveEdwards : Curve {
     /// <summary>
     /// Recover the X coordinate from the Y value and sign of X.
     /// </summary>
-    /// <param name="X0">If true X is odd, otherwise, X is even.</param>
+    /// <param name="x0">If true X is odd, otherwise, X is even.</param>
     /// <returns>The X coordinate.</returns>
-    public virtual BigInteger RecoverX(bool X0) {
+    public virtual BigInteger RecoverX(bool x0) {
         Assert.AssertTrue(Y < Prime, InvalidOperation.Throw);
         var x2 = (Y * Y - 1) * (CurveConstantD * Y * Y + 1).ModularInverse(Prime);
-        return x2.Sqrt(Prime, SqrtMinus1, X0);
+        return x2.Sqrt(Prime, SqrtMinus1, x0);
         }
 
     /// <summary>Modular multiplicative inverse of Z</summary>
@@ -634,11 +634,11 @@ public abstract class CurveEdwards : Curve {
     /// <summary>
     /// Convert back from 3D to 2D representation
     /// </summary>
-    /// <param name="Xout">The X value</param>
-    /// <param name="Yout">The Y value</param>
-    public void Translate(out BigInteger Xout, out BigInteger Yout) {
-        Xout = (X * ZInv).Mod(Prime);
-        Yout = (Y * ZInv).Mod(Prime);
+    /// <param name="xout">The X value</param>
+    /// <param name="yout">The Y value</param>
+    public void Translate(out BigInteger xout, out BigInteger yout) {
+        xout = (X * ZInv).Mod(Prime);
+        yout = (Y * ZInv).Mod(Prime);
         }
 
     /// <summary>
@@ -650,9 +650,9 @@ public abstract class CurveEdwards : Curve {
     /// <summary>
     /// Add two points
     /// </summary>
-    /// <param name="Point">Second point</param>
+    /// <param name="point">Second point</param>
     /// <returns>The result of the addition.</returns>
-    public abstract void Accumulate(CurveEdwards Point);
+    public abstract void Accumulate(CurveEdwards point);
 
     /// <summary>
     /// Calculate the value of K for the algorithm <paramref name="algorithmID"/>,
@@ -784,9 +784,9 @@ public abstract class CurveEdwardsPrivate : IKeyAdvancedPrivate {
     /// <summary>
     /// Make a recryption keyset by splitting the private key.
     /// </summary>
-    /// <param name="Shares">Number of shares to create</param>
+    /// <param name="shares">Number of shares to create</param>
     /// <returns>Array shares.</returns>
-    public abstract IKeyAdvancedPrivate CompleteRecryptionKeySet(IEnumerable<KeyPair> Shares);
+    public abstract IKeyAdvancedPrivate CompleteRecryptionKeySet(IEnumerable<KeyPair> shares);
 
     /// <summary>
     /// Combine the two public keys to create a composite public key.

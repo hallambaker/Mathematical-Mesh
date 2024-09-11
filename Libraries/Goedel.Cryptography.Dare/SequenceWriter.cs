@@ -127,7 +127,7 @@ public class SequenceWriterDeferred : SequenceWriter {
     public List<KeyPair> AdditionalRecipients { get; set; }
 
     ///<summary>The apex digest value of the Sequence as written to the file.</summary>
-    public byte[] Digest => DareTrailer.TreeDigest ?? DareTrailer.ChainDigest;
+    public byte[] Digest => DareTrailer.ApexDigest ?? DareTrailer.ChainDigest;
 
 
     // set up at the start of the transaction and allow multiple 'cached writes'

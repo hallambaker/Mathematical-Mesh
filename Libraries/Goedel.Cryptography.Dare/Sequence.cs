@@ -914,7 +914,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             Signatures = trailerIn?.Signatures ?? headerIn.Signatures,
             SignedData = trailerIn?.SignedData ?? headerIn.SignedData,
             PayloadDigest = trailerIn?.PayloadDigest ?? headerIn.PayloadDigest,
-            TreeDigest = trailerIn?.TreeDigest ?? headerIn.TreeDigest,
+            ApexDigest = trailerIn?.ApexDigest ?? headerIn.ApexDigest,
             DigestAlgorithm = headerIn.DigestAlgorithm
             };
 
@@ -1494,7 +1494,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
 
             if (envelope.Trailer is var trailer) {
                 builder.AppendIndent(indent + 1, $"Payload: {trailer.PayloadDigest?.ToStringBase64url()}");
-                builder.AppendIndent(indent + 1, $"Tree:    {trailer.TreeDigest?.ToStringBase64url()}");
+                builder.AppendIndent(indent + 1, $"Tree:    {trailer.ApexDigest?.ToStringBase64url()}");
                 }
 
             positionRead = jbcdStream.PositionRead;

@@ -322,9 +322,10 @@ public partial class KeyPairRSA : KeyPairBaseRSA {
             string keyName,
             IKeyLocate keyCollection = null,
             int keySize = 0,
-            KeyUses keyUses = KeyUses.Any) {
+            KeyUses keyUses = KeyUses.Any,
+            RsaGenerationHints hintsIn=null) {
 
-        var (privateKey, hints) = KeyFactoryRsa.Generate(ikm, keySpecifier, keyName, keySize);
+        var (privateKey, hints) = KeyFactoryRsa.Generate(ikm, keySpecifier, keyName, keySize, hintsIn);
         return (new(privateKey), hints);
         }
 
@@ -333,32 +334,36 @@ public partial class KeyPairRSA : KeyPairBaseRSA {
 
     ///<inheritdoc/>
     public override void Encrypt(
-                byte[] Key, 
-                out byte[] Exchange, 
-                out KeyPair Ephemeral, 
-                out byte[] ciphertext, 
+                byte[] Key,
+                out byte[] Exchange,
+                out IAgreementData agreementData,
                 byte[] Salt = null) {
-        Ephemeral = null;
+        agreementData = null;
         Exchange = provider.Encrypt(Key, RSAEncryptionPadding.Pkcs1);
-        ciphertext = null;
         }
 
     ///<inheritdoc/>
     public override byte[] Decrypt(
             byte[] EncryptedKey,
-            KeyPair Ephemeral = null,
-            byte[] ciphertext = null,
+            IAgreementData agreementData = null,
             CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
-            KeyAgreementResult Partial = null, byte[] Salt = null) => provider.Decrypt(EncryptedKey, RSAEncryptionPadding.Pkcs1);
+            KeyAgreementResult Partial = null,
+            byte[] Salt = null) => provider.Decrypt(EncryptedKey, RSAEncryptionPadding.Pkcs1);
 
     ///<inheritdoc/>
-    public override byte[] SignHash(
-            byte[] Data,
-            CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
-            byte[] Context = null) => provider.SignHash(Data, AlgorithmID.ToHashAlgorithmName(), RSASignaturePadding.Pkcs1);
+    public override byte[] SignDigest(
+            byte[] data,
+            CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+            byte[] context = null) {
+
+        var digestId = algorithmID.ToHashAlgorithmName();
+        return provider.SignHash(data, digestId, RSASignaturePadding.Pkcs1);
+
+
+        }
 
     ///<inheritdoc/>
-    public override bool VerifyHash(byte[] Digest, byte[] Signature,
+    public override bool VerifyDigest(byte[] Digest, byte[] Signature,
             CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default, byte[] Context = null) => provider.VerifyHash(Digest, Signature, AlgorithmID.ToHashAlgorithmName(), RSASignaturePadding.Pkcs1);
     #endregion
     }

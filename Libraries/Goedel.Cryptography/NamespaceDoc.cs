@@ -23,7 +23,7 @@
 global using Goedel.Cryptography.Algorithms;
 global using Goedel.Cryptography.PKIX;
 global using Goedel.Cryptography.PQC;
-
+global using Goedel.Cryptography.Nist;
 global using Goedel.Utilities;
 
 global using System;

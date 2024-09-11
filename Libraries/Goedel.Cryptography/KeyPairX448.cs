@@ -25,7 +25,7 @@ namespace Goedel.Cryptography;
 /// <summary>
 /// KeyPair binding for X448 signature and exchange.
 /// </summary>
-public class KeyPairX448 : KeyPairECDH {
+public class KeyPairX448 : KeyPairECDH, IAgreementData {
 
     #region //Properties
     ///<inheritdoc/>
@@ -222,15 +222,17 @@ public class KeyPairX448 : KeyPairECDH {
 
     ///<inheritdoc/>
     public override void Encrypt(byte[] Key,
-        out byte[] exchange,
-        out KeyPair ephemeral,
-        out byte[] ciphertext, byte[] salt = null) => PublicKey.Agreement().Encrypt(Key, out exchange, out ephemeral, out ciphertext, salt);
+            out byte[] exchange,
+            out IAgreementData ephemeral,
+            byte[] salt = null) => 
+                PublicKey.Agreement().Encrypt(Key, out exchange, out ephemeral, salt);
 
     ///<inheritdoc/>
-    public override byte[] Decrypt(byte[] encryptedKey,
-        KeyPair ephemeral = null,
-        byte[] ciphertext = null,
-        CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, KeyAgreementResult partial = null, byte[] salt = null) {
+    public override byte[] Decrypt(
+            byte[] encryptedKey,
+            IAgreementData ephemeral = null,
+            CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+        KeyAgreementResult partial = null, byte[] salt = null) {
 
         var keyPairX448 = ephemeral as KeyPairX448;
         Assert.AssertNotNull(keyPairX448, KeyTypeMismatch.Throw);
@@ -240,15 +242,16 @@ public class KeyPairX448 : KeyPairECDH {
         }
 
     ///<inheritdoc/>
-    public override byte[] SignHash(byte[] data,
+    public override byte[] SignDigest(
+            byte[] data,
             CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
             byte[] context = null) => throw new InvalidOperation();
 
     ///<inheritdoc/>
-    public override bool VerifyHash(
-        byte[] data,
-        byte[] signature,
-        CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
+    public override bool VerifyDigest(
+            byte[] data,
+            byte[] signature,
+            CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
             byte[] Context = null) => throw new InvalidOperation();
     #endregion
     }

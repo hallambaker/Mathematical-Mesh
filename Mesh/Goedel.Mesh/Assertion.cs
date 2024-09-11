@@ -36,7 +36,7 @@ public partial class Assertion {
     /// </summary>
     /// <returns></returns>
     public virtual void Validate(ProfileAccount profile) =>
-        DareEnvelope.Verify(profile.AdministratorSignatureKey).
+        DareEnvelope.VerifySignature(profile.AdministratorSignatureKey).
                 AssertTrue(InvalidAssertion.Throw);
 
 

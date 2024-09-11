@@ -178,7 +178,7 @@ public partial class Profile {
     /// to be verified.</param>
     /// <returns>True if there is a valid signature under this profile, otherwise false.</returns>
     public bool Verify(DareEnvelope envelopedAssertion) =>
-                envelopedAssertion.Verify(ProfileSignatureKey);
+                envelopedAssertion.VerifySignature(ProfileSignatureKey);
 
 
     /// <summary>
@@ -196,7 +196,7 @@ public partial class Profile {
             return false;
             }
         if (ProfileSignatureKey.MatchKeyIdentifier(ProfileSignatureKey.KeyIdentifier)) {
-            return ProfileSignatureKey.VerifyHash(digest, signature.SignatureValue);
+            return ProfileSignatureKey.VerifyDigest(digest, signature.SignatureValue);
             }
         return false;
         }

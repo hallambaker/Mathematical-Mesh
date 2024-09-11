@@ -139,7 +139,8 @@ public partial class TestService {
         var deviceHandle = credentialTemp.VerifyDevice();
         var accountHandle = credentialTemp.VerifyAccount();
 
-        Xunit.Assert.Throws<InvalidAssertion>(() => accountHandle.Validate(contextAccountAlice.ProfileUser));
+        Xunit.Assert.Throws<InvalidAssertion>(() => 
+                accountHandle.Validate(contextAccountAlice.ProfileUser));
 
         }
 

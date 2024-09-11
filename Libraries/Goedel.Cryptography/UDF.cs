@@ -1181,12 +1181,14 @@ public class Udf {
     /// <paramref name="keySecurity"/> and Key uses <paramref name="keyUses"/>.
     /// </summary>
     /// <param name="udf"></param>
+    /// <param name="hints"></param>
     /// <param name="keySecurity"></param>
-    /// <param name="keyUses"></param>
     /// <returns></returns>
+    /// <param name="keyUses"></param>
     public static KeyPair DeriveKey(string udf,
-                KeySecurity keySecurity = KeySecurity.Persistable,
-                KeyUses keyUses = KeyUses.Any) => DeriveKey(udf, null, keySecurity, keyUses);
+                string hints = null,
+                KeySecurity keySecurity = KeySecurity.Persistable, 
+                KeyUses keyUses = KeyUses.Any) => DeriveKey(udf, null, hints, keySecurity, keyUses);
 
 
     /// <summary>
@@ -1203,11 +1205,11 @@ public class Udf {
     /// <returns>The derrived key pair.</returns>
     public static KeyPair DeriveKey(string udf,
                 IKeyLocate keyCollection,
+                string hints = null,
                 KeySecurity keySecurity = KeySecurity.Persistable,
                 KeyUses keyUses = KeyUses.Any,
-                CryptoAlgorithmId cryptoAlgorithmIdin = CryptoAlgorithmId.Default,
-                string keyName = null) {
-        var (result, _) = DeriveKeyHints(udf, keyCollection, keySecurity, keyUses, cryptoAlgorithmIdin, keyName);
+                CryptoAlgorithmId cryptoAlgorithmIdin = CryptoAlgorithmId.Default, string keyName = null) {
+        var (result, _) = DeriveKeyHints(udf, keyCollection, hints, keySecurity: keySecurity, keyUses: keyUses, cryptoAlgorithmIdin: cryptoAlgorithmIdin, keyName: keyName);
         return result;
         }
 
@@ -1226,10 +1228,10 @@ public class Udf {
     /// <returns>The derrived key pair.</returns>
     public static (KeyPair, string?) DeriveKeyHints(string udf,
                 IKeyLocate keyCollection,
+                string hints = null,
                 KeySecurity keySecurity = KeySecurity.Persistable,
                 KeyUses keyUses = KeyUses.Any,
-                CryptoAlgorithmId cryptoAlgorithmIdin = CryptoAlgorithmId.Default,
-                string keyName = null) {
+                CryptoAlgorithmId cryptoAlgorithmIdin = CryptoAlgorithmId.Default, string keyName = null) {
 
         var ikm = Parse(udf, out var code);
         (code == (byte)UdfTypeIdentifier.DerivedKey).AssertTrue(OperationNotSupported.Throw);
@@ -1259,9 +1261,9 @@ public class Udf {
             UdfAlgorithmIdentifier.MeshActivationAccount => defaultId,
             UdfAlgorithmIdentifier.MeshProfileService => defaultId,
             UdfAlgorithmIdentifier.MeshActivationService => defaultId,
-            UdfAlgorithmIdentifier.MLDSA44 => CryptoAlgorithmId.MLDSA44,
-            UdfAlgorithmIdentifier.MLDSA65 => CryptoAlgorithmId.MLDSA65,
-            UdfAlgorithmIdentifier.MLDSA87 => CryptoAlgorithmId.MLDSA87,
+            UdfAlgorithmIdentifier.MLDSA44 => CryptoAlgorithmId.MLDSA44hash,
+            UdfAlgorithmIdentifier.MLDSA65 => CryptoAlgorithmId.MLDSA65hash,
+            UdfAlgorithmIdentifier.MLDSA87 => CryptoAlgorithmId.MLDSA87hash,
             UdfAlgorithmIdentifier.MLKEM512 => CryptoAlgorithmId.MLKEM512,
             UdfAlgorithmIdentifier.MLKEM768 => CryptoAlgorithmId.MLKEM768,
             UdfAlgorithmIdentifier.MLKEM1024 => CryptoAlgorithmId.MLKEM1024,
@@ -1280,7 +1282,7 @@ public class Udf {
         return KeyPair.Factory(cryptoAlgorithmId, keySecurity,
             ikm,
             keySpecifier, keyName,
-            keyCollection, keySize, keyUses);
+            keyCollection, keySize, keyUses, hints);
         }
 
 

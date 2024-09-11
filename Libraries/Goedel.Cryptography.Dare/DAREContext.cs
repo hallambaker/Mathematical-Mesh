@@ -21,6 +21,8 @@
 #endregion
 //using System;
 
+using Goedel.Cryptography.PQC;
+
 namespace Goedel.Cryptography.Dare;
 
 /// <summary>
@@ -46,17 +48,24 @@ public partial class DareRecipient {
     /// <param name="encryptionKey">The recipient encryption key.</param>
     /// <
     /// <returns>The recipient informatin object.</returns>
-    public DareRecipient(byte[] masterKey, CryptoKey encryptionKey) {
+    public DareRecipient(
+                    byte[] masterKey, 
+                    CryptoKey encryptionKey) {
         //var ExchangeProvider = PublicKey.ExchangeProvider();
         //ExchangeProvider.Encrypt(MasterKey, out var Exchange, out var Ephemeral, Salt: KDFSalt);
 
+        encryptionKey.Encrypt(
+                    masterKey,
+                    out var exchange,
+                    out var ephemeral);
 
-        encryptionKey.Encrypt(masterKey, out var exchange, out var ephemeral, out byte[]? ciphertext);
-
-        if (ephemeral != null) {
-            Epk = Key.GetPublic(ephemeral);
+        if (ephemeral is KeyPair keyPairEpk) {
+            Epk = Key.GetPublic(keyPairEpk);
             }
-        RecipientKeyData = ciphertext;
+        else if (ephemeral is AgreementDataBinary kemCiphertext) {
+            Ek = kemCiphertext.Value;
+            }
+
         KeyIdentifier = encryptionKey.KeyIdentifier;
         WrappedBaseSeed = exchange;
 
@@ -70,4 +79,17 @@ public partial class DareRecipient {
     /// <param name="masterKey">The master key</param>
     /// <returns>The recipient informatin object.</returns>
     public DareRecipient(byte[] masterKey) => KeyIdentifier = Udf.SymetricKeyId(masterKey);
+
+    public IAgreementData GetAgreementData() {
+
+        if (Epk is not null) {
+            return Epk.GetKeyPair(KeySecurity.Bound) as IAgreementData;
+            }
+        else if (Ek is not null) {
+            return new AgreementDataBinary(Ek);
+            }
+        return null;
+        }
+
+
     }

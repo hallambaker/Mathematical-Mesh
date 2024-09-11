@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 9/8/2024 2:52:42 AM
+//  This file was automatically generated at 9/11/2024 2:00:30 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -166,6 +166,159 @@ public partial class EnvelopeDataCorrupt : global::Goedel.Utilities.GoedelExcept
     /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
     static System.Exception _Throw(object reasons) => new EnvelopeDataCorrupt(args:reasons) ;
+		
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+
+
+    }
+
+
+/// <summary>
+/// </summary>
+[global::System.Serializable]
+public partial class EnvelopeDigestCorrupt : global::Goedel.Utilities.GoedelException {
+
+    ///<summary>The exception formatting delegate. May be overriden 
+	///locally or globally to implement different exception formatting.</summary>
+	public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+			global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+	///<summary>Templates for formatting response messages.</summary>
+	public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+			new () {
+
+			"The envelope digest is invalid."
+			};
+
+	/// <summary>
+	/// Construct instance for exception
+	/// </summary>		
+	/// <param name="description">Description of the error, may be used to override the 
+	/// generated message.</param>	
+	/// <param name="inner">Inner Exception</param>	
+	/// <param name="args">Optional list of parameterized arguments.</param>
+	public EnvelopeDigestCorrupt  (string description=null, System.Exception inner=null,
+		params object[] args) : 
+			base (ExceptionFormatDelegate(description, Templates,
+				null, args), inner) {
+		}
+
+
+
+
+
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+    static System.Exception _Throw(object reasons) => new EnvelopeDigestCorrupt(args:reasons) ;
+		
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+
+
+    }
+
+
+/// <summary>
+/// </summary>
+[global::System.Serializable]
+public partial class EnvelopeSignatureMissing : global::Goedel.Utilities.GoedelException {
+
+    ///<summary>The exception formatting delegate. May be overriden 
+	///locally or globally to implement different exception formatting.</summary>
+	public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+			global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+	///<summary>Templates for formatting response messages.</summary>
+	public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+			new () {
+
+			"The envelope does not have a required signature."
+			};
+
+	/// <summary>
+	/// Construct instance for exception
+	/// </summary>		
+	/// <param name="description">Description of the error, may be used to override the 
+	/// generated message.</param>	
+	/// <param name="inner">Inner Exception</param>	
+	/// <param name="args">Optional list of parameterized arguments.</param>
+	public EnvelopeSignatureMissing  (string description=null, System.Exception inner=null,
+		params object[] args) : 
+			base (ExceptionFormatDelegate(description, Templates,
+				null, args), inner) {
+		}
+
+
+
+
+
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+    static System.Exception _Throw(object reasons) => new EnvelopeSignatureMissing(args:reasons) ;
+		
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+
+
+    }
+
+
+/// <summary>
+/// </summary>
+[global::System.Serializable]
+public partial class EnvelopeSignatureInvalid : global::Goedel.Utilities.GoedelException {
+
+    ///<summary>The exception formatting delegate. May be overriden 
+	///locally or globally to implement different exception formatting.</summary>
+	public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+			global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+	///<summary>Templates for formatting response messages.</summary>
+	public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+			new () {
+
+			"The envelope has an invalid signature."
+			};
+
+	/// <summary>
+	/// Construct instance for exception
+	/// </summary>		
+	/// <param name="description">Description of the error, may be used to override the 
+	/// generated message.</param>	
+	/// <param name="inner">Inner Exception</param>	
+	/// <param name="args">Optional list of parameterized arguments.</param>
+	public EnvelopeSignatureInvalid  (string description=null, System.Exception inner=null,
+		params object[] args) : 
+			base (ExceptionFormatDelegate(description, Templates,
+				null, args), inner) {
+		}
+
+
+
+
+
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+    static System.Exception _Throw(object reasons) => new EnvelopeSignatureInvalid(args:reasons) ;
 		
 	/// <summary>
     /// The public fatory delegate

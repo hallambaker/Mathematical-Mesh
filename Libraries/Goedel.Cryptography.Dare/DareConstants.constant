@@ -1,6 +1,9 @@
 ﻿Namespace Goedel.Cryptography.Dare DareConstants
 	|Constants specified in hallambaker-mesh-udf
 
+File Misc
+	String DareSignaturePrefix "DARE Signature v. 3.0"
+
 
 File ContainerTypes
 	Enum SequenceType "Sequence types"

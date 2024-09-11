@@ -103,18 +103,18 @@ public class KeyPairServiced : KeyPair {
     public override void Encrypt(
         byte[] key,
         out byte[] exchange,
-        out KeyPair ephemeral,
-        out byte[] ciphertext, byte[] salt = null) => Share.Encrypt(key, out exchange, out ephemeral, out ciphertext, salt);
+        out IAgreementData ephemeral,
+        byte[] salt = null) => Share.Encrypt(key, out exchange, out ephemeral, salt);
 
     ///<inheritdoc/>
     public override KeyPair KeyPairPublic() => Share.KeyPairPublic();
 
     ///<inheritdoc/>
-    public override bool VerifyHash(
+    public override bool VerifyDigest(
         byte[] digest,
         byte[] signature,
         CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
-        byte[] context = null) => Share.VerifyHash(digest, signature, algorithmID, context);
+        byte[] context = null) => Share.VerifyDigest(digest, signature, algorithmID, context);
 
 
     #endregion
@@ -123,11 +123,11 @@ public class KeyPairServiced : KeyPair {
     ///<inheritdoc/>
     public override byte[] Decrypt(
             byte[] encryptedKey,
-            KeyPair ephemeral = null,
-            byte[] ciphertext = null,
+            IAgreementData ephemeral = null,
             CryptoAlgorithmId algorithmID =
             CryptoAlgorithmId.Default,
-            KeyAgreementResult partial = null, byte[] salt = null) {
+            KeyAgreementResult partial = null,
+            byte[] salt = null) {
 
         var partial1 = KeyCollection.RemoteAgreement(ServiceAddress,
             ephemeral as KeyPairAdvanced, Share.KeyIdentifier);
@@ -145,7 +145,7 @@ public class KeyPairServiced : KeyPair {
     public override void Persist(KeyCollection keyCollection) => throw new System.NotImplementedException();
 
     ///<inheritdoc/>
-    public override byte[] SignHash(
+    public override byte[] SignDigest(
         byte[] data,
         CryptoAlgorithmId algorithmID =
         CryptoAlgorithmId.Default,

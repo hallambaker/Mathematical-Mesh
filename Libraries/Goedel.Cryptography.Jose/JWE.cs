@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Cryptography.PQC;
+
 namespace Goedel.Cryptography.Jose;
 
 /// <summary>
@@ -290,8 +292,8 @@ public partial class JoseWebEncryption {
     public Recipient AddRecipient(KeyPair EncryptionKey, string KID = null,
             CryptoAlgorithmId ProviderAlgorithm = CryptoAlgorithmId.Default) {
 
-        EncryptionKey.Encrypt(CryptoDataEncrypt.Key, out var Exchange, out var Ephemeral, out var ciphertext);
-        var Recipient = new Recipient(Exchange, EncryptionKey, Ephemeral, ciphertext, KID);
+        EncryptionKey.Encrypt(CryptoDataEncrypt.Key, out var Exchange, out var Ephemeral);
+        var Recipient = new Recipient(Exchange, EncryptionKey, Ephemeral, KID);
 
         Recipients ??= new List<Recipient>();
         Recipients.Add(Recipient);
@@ -468,9 +470,11 @@ public partial class JoseWebEncryption {
         var ProtectedHeader = Header.FromJson(Protected.JsonReader(), false);
         var BulkID = ProtectedHeader.Enc.FromJoseID();
 
+        var agreementData = Recipient.Header.GetAgreementData();
+
         var Ephemeral = Recipient.Header.Epk.GetKeyPair(KeySecurity.Bound);
 
-        var Exchange = DecryptionKey.Decrypt(Recipient.EncryptedKey, ephemeral: Ephemeral,
+        var Exchange = DecryptionKey.Decrypt(Recipient.EncryptedKey, agreementData: agreementData,
                     algorithmID: BulkID, partial: KeyAgreementResult);
 
         var Provider = CryptoCatalog.Default.GetEncryption(BulkID);
@@ -592,23 +596,22 @@ public partial class Recipient {
     public Recipient(
                     byte[] ExchangeData,
                     KeyPair RecipientKey,
-                    KeyPair Ephemeral,
-                    byte[]? ciphertext, 
+                    IAgreementData agreementData,
                     string KID = null) {
 
 
         Header = new Header() {
             Alg = RecipientKey?.CryptoAlgorithmId.Meta().ToJoseID(),
             Kid = KID ?? RecipientKey?.KeyIdentifier,
-
             };
-        if (Ephemeral != null) {
-            Header.Epk = Key.GetPublic(Ephemeral);
+        if (agreementData is KeyPair agreementKeypair) {
+            Header.Epk = Key.GetPublic(agreementKeypair);
             }
+        else if (agreementData is AgreementDataBinary agreementDataBinary) {
+            Header.Ek = agreementDataBinary.Value;
+            }
+
         EncryptedKey = ExchangeData;
-
-        ciphertext.AssertNull (NYI.Throw, "Need to refactor the creation of the content key data!!!");
-
         }
 
 

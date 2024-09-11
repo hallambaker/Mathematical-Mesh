@@ -168,7 +168,7 @@ public static partial class Extensions {
         var cryptoAlgorithmID = GetCryptoAlgorithmID(operation, secretSeed);
 
         var result = Udf.DeriveKey(secretSeed.PrivateValue, keyCollection,
-                keySecurity, keyUses: keyUses, cryptoAlgorithmID, keyName) as KeyPairAdvanced;
+                keySecurity: keySecurity, keyUses: keyUses, cryptoAlgorithmIdin: cryptoAlgorithmID, keyName: keyName) as KeyPairAdvanced;
 
         return result;
         }

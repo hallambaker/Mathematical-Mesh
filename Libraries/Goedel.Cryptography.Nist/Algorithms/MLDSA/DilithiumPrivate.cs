@@ -76,11 +76,42 @@ public class DilithiumPrivate {
     /// Signs a message with this secret key
     /// </summary>
     /// <param name="message">Arbitrary set of bits.</param>
+    /// <param name="context">Optional context string of 255 bytes or fewer.</param>
+    /// <param name="rnd">The deterministic seed value.</param>
+    /// <returns>Signature</returns>
+    public byte[] SignPure(
+                byte[] message,
+                byte[] context,
+                byte[] rnd = null) => SignInternal(
+                    DilithiumNist.CreateManifestPrefixPure(message, context), message, rnd: rnd);
+
+    /// <summary>
+    /// Signs a message with this secret key
+    /// </summary>
+    /// <param name="digest">The digest value.</param>
+    /// <param name="oid">An OID specifying the digest algorithm.</param>
+    /// <param name="context">Optional context string of 255 bytes or fewer.</param>
+    /// <param name="rnd">The deterministic seed value.</param>
+    /// <returns>Signature</returns>
+    public byte[] SignHashed(
+                byte[] digest,
+                byte[] oid,
+                byte[] context,
+                byte[] rnd = null) => SignInternal(
+                    DilithiumNist.CreateManifestPrefixHashed(digest, oid, context), digest, rnd: rnd);
+
+    /// <summary>
+    /// Signs a message with this secret key
+    /// </summary>
+    /// <param name="message">Arbitrary set of bits.</param>
+    /// <param name="prefix">Prefix inserted ahead of the message to specify
+    /// the manifest data.</param>
     /// <param name="rnd">The deterministic seed value.</param>
     /// <returns>Signature</returns>
     public byte[] SignInternal(
                 byte[] message,
-                byte[] rnd = null) => Dilithium.Sign(this, message, rnd);
+                byte[]? prefix = null,
+                byte[] rnd = null) => Dilithium.SignInternal(this, message, prefix, rnd: rnd);
 
 
     }

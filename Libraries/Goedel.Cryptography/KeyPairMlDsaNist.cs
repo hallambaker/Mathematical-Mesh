@@ -25,6 +25,8 @@
 
 using Goedel.Cryptography.Nist;
 
+using System.Security.Cryptography.X509Certificates;
+
 namespace Goedel.Cryptography.PQC;
 
 
@@ -156,9 +158,9 @@ public class KeyPairMlDsaNist : KeyPair, IOpaqueBinaryKey {
                 CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.NULL) {
 
         DilithiumParameterSet mode = cryptoAlgorithmID switch {
-            CryptoAlgorithmId.MLDSA44 => DilithiumParameterSet.ML_DSA_44,
-            CryptoAlgorithmId.MLDSA65 => DilithiumParameterSet.ML_DSA_65,
-            CryptoAlgorithmId.MLDSA87 => DilithiumParameterSet.ML_DSA_87,
+            CryptoAlgorithmId.MLDSA44hash => DilithiumParameterSet.ML_DSA_44,
+            CryptoAlgorithmId.MLDSA65hash => DilithiumParameterSet.ML_DSA_65,
+            CryptoAlgorithmId.MLDSA87hash => DilithiumParameterSet.ML_DSA_87,
             _ => DilithiumParameterSet.None
             };
 
@@ -191,7 +193,7 @@ public class KeyPairMlDsaNist : KeyPair, IOpaqueBinaryKey {
     /// a single seed.</param>
     /// <param name="keySize">The size of the key in bits.</param>
     /// <returns>the derrived key.</returns>
-    public static new KeyPair Factory(
+    public static KeyPair Factory(
         CryptoAlgorithmId algorithmID,
         KeySecurity keySecurity,
         byte[] ikm,
@@ -202,15 +204,15 @@ public class KeyPairMlDsaNist : KeyPair, IOpaqueBinaryKey {
         KeyUses keyUses = KeyUses.Any) {
 
         switch (algorithmID) {
-            case CryptoAlgorithmId.MLDSA44: {
+            case CryptoAlgorithmId.MLDSA44hash: {
                 var binaryData = KeySeed(256, ikm, keySpecifier, keyName);
                 return Generate(DilithiumParameterSet.ML_DSA_44, binaryData, keySecurity, keyUses);
                 }
-            case CryptoAlgorithmId.MLDSA65: {
+            case CryptoAlgorithmId.MLDSA65hash: {
                 var binaryData = KeySeed(256, ikm, keySpecifier, keyName);
                 return Generate(DilithiumParameterSet.ML_DSA_65, binaryData, keySecurity, keyUses);
                 }
-            case CryptoAlgorithmId.MLDSA87: {
+            case CryptoAlgorithmId.MLDSA87hash: {
                 var binaryData = KeySeed(256, ikm, keySpecifier, keyName);
                 return Generate(DilithiumParameterSet.ML_DSA_87, binaryData, keySecurity, keyUses);
 
@@ -247,61 +249,106 @@ public class KeyPairMlDsaNist : KeyPair, IOpaqueBinaryKey {
         }
 
     ///<inheritdoc/>
-    ///<exception cref="OperationNotSupported">ML-DSA does not support signature operations.</exception>
-    public override byte[] Decrypt(byte[] encryptedKey, KeyPair ephemeral = null, byte[] ciphertext = null, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, KeyAgreementResult partial = null, byte[] salt = null) {
-        throw new OperationNotSupported();
+    public override byte[] Sign(
+                    byte[] data, 
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, 
+                    byte[] context = null) {
+
+        switch (algorithmID) {
+            case CryptoAlgorithmId.MLDSA44pure:
+            case CryptoAlgorithmId.MLDSA65pure:
+            case CryptoAlgorithmId.MLDSA87pure:
+            case CryptoAlgorithmId.Default: {
+                var (result, _) = SignManifest(data, CryptoAlgorithmId.Default, context);
+                return result;
+                }
+            case CryptoAlgorithmId.MLDSA44hash:
+            case CryptoAlgorithmId.MLDSA65hash:
+            case CryptoAlgorithmId.MLDSA87hash: {
+                var digestId = algorithmID.DefaultDigest();
+                var digest = digestId.GetDigest(data);
+                return SignDigest(digest, digestId, context);
+                }
+            }
+
+        throw new CipherModeNotSupported();
         }
 
-
     ///<inheritdoc/>
-    ///<exception cref="OperationNotSupported">ML-DSA does not support signature operations.</exception>
-    public override void Encrypt(byte[] key, out byte[] exchange, out KeyPair ephemeral, out byte[] ciphertext, byte[] salt = null) {
-        throw new OperationNotSupported();
-        }
-
-    ///<inheritdoc/>
-    public override byte[] Sign(byte[] data, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null) {
-
-        // have to add in the wrappers for pre hash etc...
-
-        return base.Sign(data, algorithmID, context);
-        }
-
-    ///<inheritdoc/>
-    public override bool Verify(byte[] data, byte[] signature, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null) {
-
-        // have to add in the wrappers for pre hash etc...
-
-        return base.Verify(data, signature, algorithmID, context);
-        }
-
-
-    ///<inheritdoc/>
-    public override byte[] SignHash(
-                byte[] data,
-                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+    public override byte[] SignDigest(
+                byte[] digestValue,
+                CryptoAlgorithmId digestID = CryptoAlgorithmId.Default,
                 byte[] context = null) {
 
+        digestID = digestID.DefaultDigest();
 
-        // have to add in the wrappers for pre hash etc...
+        var oid = digestID.ToOID();
+        var oidBytes = oid.ParseOid();
 
-        var sig = PrivateKey.SignInternal(data);
+        var sig = PrivateKey.SignHashed(digestValue, oidBytes, context);
         return sig;
         }
 
 
     ///<inheritdoc/>
-    public override bool VerifyHash(
-                byte[] digest, byte[] signature,
-                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+    public override (byte[], CryptoAlgorithmId) SignManifest(
+                    byte[] data, 
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, 
+                    byte[] context = null) {
+        return (PrivateKey.SignPure(data, context), CryptoAlgorithmId.NULL);
+        }
+
+    ///<inheritdoc/>
+    public override bool Verify(
+                    byte[] data, 
+                    byte[] signature, 
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, 
+                    byte[] context = null) {
+
+        switch (algorithmID) {
+            case CryptoAlgorithmId.MLDSA44pure:
+            case CryptoAlgorithmId.MLDSA65pure:
+            case CryptoAlgorithmId.MLDSA87pure:
+            case CryptoAlgorithmId.Default: {
+                return VerifyManifest(data, signature, CryptoAlgorithmId.Default, context);
+                }
+            case CryptoAlgorithmId.MLDSA44hash:
+            case CryptoAlgorithmId.MLDSA65hash:
+            case CryptoAlgorithmId.MLDSA87hash: {
+                var digestId = algorithmID.DefaultDigest();
+                var digest = digestId.GetDigest(data);
+                return VerifyDigest(digest, signature, digestId, context);
+                }
+            }
+        throw new CipherModeNotSupported();
+        }
+
+
+    ///<inheritdoc/>
+    public override bool VerifyDigest(
+                byte[] digestValue, 
+                byte[] signature,
+                CryptoAlgorithmId digestID = CryptoAlgorithmId.Default,
                 byte[] context = null) {
 
-        // have to add in the wrappers for pre hash etc...
+        digestID = digestID.DefaultDigest();
+        var oid = digestID.ToOID();
+        var oidBytes = oid.ParseOid();
 
-        var result = PublicKey.Verify(signature, digest);
+        var result = PublicKey.VerifyHashed(signature, digestValue, oidBytes, context);
 
         return result;
         }
+
+    ///<inheritdoc/>
+    public override bool VerifyManifest(
+                        byte[] data,
+                        byte[] signature,
+                        CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+                        byte[] context = null) {
+        return PublicKey.VerifyPure(signature, data, context);
+        }
+
     }
 
 

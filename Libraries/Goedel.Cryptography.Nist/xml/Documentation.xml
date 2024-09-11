@@ -332,16 +332,18 @@
         <member name="M:Goedel.Cryptography.Nist.DilithiumNist.GenerateKey(System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.Sign(Goedel.Cryptography.Nist.DilithiumPrivate,System.Byte[],System.Byte[])">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.SignInternal(Goedel.Cryptography.Nist.DilithiumPrivate,System.Byte[],System.Byte[],System.Byte[])">
             <summary>
             Signs a message with a given secret key
             </summary>
             <param name="secretKey">Secret key.</param>
             <param name="message">Arbitrary set of bits.</param>
+            <param name="prefix">Prefix inserted ahead of the message to specify
+            the manifest data.</param>
             <param name="rnd">The deterministic seed value.</param>
             <returns>Signature</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.Verify(Goedel.Cryptography.Nist.DilithiumPublic,System.Byte[],System.Byte[])">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.VerifyInternal(Goedel.Cryptography.Nist.DilithiumPublic,System.Byte[],System.Byte[],System.Byte[])">
             <summary>
             Verify the signature <paramref name="signature"/> over message
             <paramref name="message"/> returning true if and only if the 
@@ -351,6 +353,21 @@
             <param name="signature">The signature to verify.</param>
             <param name="message">The message signed.</param>
             <returns>True if the signature is valid, otherwise false.</returns>
+            <param name="prefix">Prefix inserted ahead of the message to specify
+            the manifest data.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.CreateManifestPrefixPure(System.Byte[],System.Byte[])">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.CreateManifestPrefixHashed(System.Byte[],System.Byte[],System.Byte[])">
+            <param name="digest">The digest value.</param>
+            <param name="oid">An OID specifying the digest algorithm.</param>
+            <param name="context">Optional context string of 255 bytes or fewer.</param>
         </member>
         <member name="M:Goedel.Cryptography.Nist.DilithiumNist.IntegerToBits(System.Int32,System.Int32)">
             <summary>
@@ -746,11 +763,32 @@
             <returns>The private key.</returns>
         </member>
         <!-- Badly formed XML comment ignored for member "M:Goedel.Cryptography.Nist.DilithiumPrivate.FromSecretKey(System.Byte[])" -->
-        <member name="M:Goedel.Cryptography.Nist.DilithiumPrivate.SignInternal(System.Byte[],System.Byte[])">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumPrivate.SignPure(System.Byte[],System.Byte[],System.Byte[])">
             <summary>
             Signs a message with this secret key
             </summary>
             <param name="message">Arbitrary set of bits.</param>
+            <param name="context">Optional context string of 255 bytes or fewer.</param>
+            <param name="rnd">The deterministic seed value.</param>
+            <returns>Signature</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.DilithiumPrivate.SignHashed(System.Byte[],System.Byte[],System.Byte[],System.Byte[])">
+            <summary>
+            Signs a message with this secret key
+            </summary>
+            <param name="digest">The digest value.</param>
+            <param name="oid">An OID specifying the digest algorithm.</param>
+            <param name="context">Optional context string of 255 bytes or fewer.</param>
+            <param name="rnd">The deterministic seed value.</param>
+            <returns>Signature</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.DilithiumPrivate.SignInternal(System.Byte[],System.Byte[],System.Byte[])">
+            <summary>
+            Signs a message with this secret key
+            </summary>
+            <param name="message">Arbitrary set of bits.</param>
+            <param name="prefix">Prefix inserted ahead of the message to specify
+            the manifest data.</param>
             <param name="rnd">The deterministic seed value.</param>
             <returns>Signature</returns>
         </member>
@@ -772,7 +810,7 @@
             </summary>
             <returns>The private key.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.DilithiumPublic.Verify(System.Byte[],System.Byte[])">
+        <member name="M:Goedel.Cryptography.Nist.DilithiumPublic.VerifyPure(System.Byte[],System.Byte[],System.Byte[])">
             <summary>
             Verify the signature <paramref name="signature"/> over message
             <paramref name="message"/> returning true if and only if the 
@@ -780,6 +818,31 @@
             </summary>
             <param name="signature">The signature to verify.</param>
             <param name="message">The message signed.</param>
+            <param name="context">Optional context string of 255 bytes or fewer.</param>
+            <returns>True if the signature is valid, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.DilithiumPublic.VerifyHashed(System.Byte[],System.Byte[],System.Byte[],System.Byte[])">
+            <summary>
+            Verify the signature <paramref name="signature"/> over message with digest
+            <paramref name="digest"/> created with digest algorithm oid returning true if and only if the 
+            signature is valid.
+            </summary>
+            <param name="signature">The signature to verify.</param>
+            <param name="digest">The digest value.</param>
+            <param name="oid">An OID specifying the digest algorithm.</param>
+            <param name="context">Optional context string of 255 bytes or fewer.</param>
+            <returns>Signature</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.DilithiumPublic.VerifyInternal(System.Byte[],System.Byte[],System.Byte[])">
+            <summary>
+            Verify the signature <paramref name="signature"/> over message
+            <paramref name="message"/> returning true if and only if the 
+            signature is valid.
+            </summary>
+            <param name="signature">The signature to verify.</param>
+            <param name="message">The message signed.</param>
+            <param name="prefix">Prefix inserted ahead of the message to specify
+            the manifest data.</param>
             <returns>True if the signature is valid, otherwise false.</returns>
         </member>
         <member name="T:Goedel.Cryptography.Nist.KyberNist">
@@ -1161,6 +1224,9 @@
             <param name="m">Random seed, 32 bytes</param>
             <returns>Tuple containing (shared secret K, ciphertext c)</returns>
         </member>
+        <member name="M:Goedel.Cryptography.Nist.RsaGenerationHints.ToString">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Cryptography.Nist.PrivateKeyRsaCrt">
             <summary>
             RSA private key in CRT form.
@@ -1184,7 +1250,7 @@
         <member name="P:Goedel.Cryptography.Nist.PrivateKeyRsaCrt.IQMP">
             <summary>Coefficient</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Nist.IPrimeGenerator.GetPrime(System.Int32,System.Int32,System.String)">
+        <member name="M:Goedel.Cryptography.Nist.IPrimeGenerator.GetPrime(System.Int32,System.Int32,System.String,System.Nullable{System.Int32})">
             <summary>
             Return a prime value of <paramref name="bits"/> meeting the requirments 
             set by a modulus of size <paramref name="modulus"/> for variable 
@@ -1194,8 +1260,9 @@
             <param name="modulus">The size of the modulus in bits.</param>
             <param name="tag">Tag used to identify the item for deterministic generation.</param>
             <returns>The primne value.</returns>
+            <param name="hint"></param>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.IPrimeGenerator.GetEntropy(System.Numerics.BigInteger,System.Numerics.BigInteger,System.String)">
+        <member name="M:Goedel.Cryptography.Nist.IPrimeGenerator.GetEntropy(System.Numerics.BigInteger,System.Numerics.BigInteger,System.String,System.Nullable{System.Int32})">
             <summary>
             Return a random value in the interval <paramref name="minInclusive"/> to
             <paramref name="maxInclusive"/> inclusive for variable <paramref name="tag"/>.
@@ -1204,6 +1271,7 @@
             <param name="maxInclusive"></param>
             <param name="tag">Tag used to identify the item for deterministic generation.</param>
             <returns>The random value.</returns>
+            <param name="hint"></param>
         </member>
         <member name="P:Goedel.Cryptography.Nist.PrimeGenerator.CallCount">
             <summary>Dictionary tracking the number of times the method has been called.</summary> 
@@ -1213,10 +1281,10 @@
             Constructor, return a prime generator using the platform random number generator.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.PrimeGenerator.GetEntropy(System.Numerics.BigInteger,System.Numerics.BigInteger,System.String)">
+        <member name="M:Goedel.Cryptography.Nist.PrimeGenerator.GetEntropy(System.Numerics.BigInteger,System.Numerics.BigInteger,System.String,System.Nullable{System.Int32})">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.PrimeGenerator.GetPrime(System.Int32,System.Int32,System.String)">
+        <member name="M:Goedel.Cryptography.Nist.PrimeGenerator.GetPrime(System.Int32,System.Int32,System.String,System.Nullable{System.Int32})">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.Nist.PrimeGenerator.UpdateCallCount(System.String)">
@@ -1225,7 +1293,7 @@
             </summary>
             <param name="tag">The identifier to update.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.PrimeGeneratorHelper.ProbablePrimeFactor(Goedel.Cryptography.Nist.IPrimeGenerator,System.Int32,System.Int32,System.Numerics.BigInteger,System.Numerics.BigInteger,System.Int32,System.Numerics.BigInteger,System.String)">
+        <member name="M:Goedel.Cryptography.Nist.PrimeGeneratorHelper.ProbablePrimeFactor(Goedel.Cryptography.Nist.IPrimeGenerator,System.Int32,System.Int32,System.Numerics.BigInteger,System.Numerics.BigInteger,System.Int32,System.Numerics.BigInteger,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>
             C.9 Compute a Probable Prime Factor Based on Auxiliary Primes
             </summary>

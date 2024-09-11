@@ -4,15 +4,25 @@ using Goedel.Cryptography.Jose;
 using Goedel.IO;
 using Goedel.Mesh.Test;
 
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text.Json;
 
 namespace Goedel.XUnit;
 
+public enum KeyGenTestMode {
+    None = 0,
+    Sign = 1,
+    Encrypt = 2,
+    SignEncrypt = 3
+    }
+
 /// <summary>
 /// Test library for PQC algorithms.
 /// </summary>
 public class TestUdf : Disposable {
+
+    public static TestUdf Test()  => new();
 
 
     public static string Goedel_ACVP_Root => Path.Combine(TestEnvironmentBase.CommonData,
@@ -20,36 +30,44 @@ public class TestUdf : Disposable {
 
     public static string UdfDirectoryML => Path.Combine(Goedel_ACVP_Root, "Udf.ML");
     public static string UdfDirectoryECC => Path.Combine(Goedel_ACVP_Root, "Udf.ECC");
-    public static string UdfDirectoryRSA => Path.Combine(Goedel_ACVP_Root, "Udf.RSA"); 
+    public static string UdfDirectoryRSA => Path.Combine(Goedel_ACVP_Root, "Udf.RSA");
     public static string UdfDirectoryECCP => Path.Combine(Goedel_ACVP_Root, "Udf.ECCP");
 
-    public static UdfAlgorithmIdentifier[]  AlgIdsML = [
-            UdfAlgorithmIdentifier.MLDSA44,
-            UdfAlgorithmIdentifier.MLDSA65,
-            UdfAlgorithmIdentifier.MLDSA87,
-            UdfAlgorithmIdentifier.MLKEM512,
-            UdfAlgorithmIdentifier.MLKEM768,
-            UdfAlgorithmIdentifier.MLKEM1024,
+
+
+
+    public static (UdfAlgorithmIdentifier, KeyGenTestMode)[] AlgIdsML = [
+            (UdfAlgorithmIdentifier.MLDSA44, KeyGenTestMode.Sign),
+            (UdfAlgorithmIdentifier.MLDSA65, KeyGenTestMode.Sign),
+            (UdfAlgorithmIdentifier.MLDSA87, KeyGenTestMode.Sign),
+            (UdfAlgorithmIdentifier.MLKEM512, KeyGenTestMode.Encrypt),
+            (UdfAlgorithmIdentifier.MLKEM768, KeyGenTestMode.Encrypt),
+            (UdfAlgorithmIdentifier.MLKEM1024, KeyGenTestMode.Encrypt),
             ];
 
-    public static UdfAlgorithmIdentifier[] AlgIdsRSA = [
-            UdfAlgorithmIdentifier.RSA2048,
-            UdfAlgorithmIdentifier.RSA3072,
-            UdfAlgorithmIdentifier.RSA4096,
+    public static (UdfAlgorithmIdentifier, KeyGenTestMode)[] AlgIdsRSA = [
+            (UdfAlgorithmIdentifier.RSA2048, KeyGenTestMode.SignEncrypt),
+            (UdfAlgorithmIdentifier.RSA3072, KeyGenTestMode.SignEncrypt),
+            (UdfAlgorithmIdentifier.RSA4096, KeyGenTestMode.SignEncrypt)
             ];
 
-    public static UdfAlgorithmIdentifier[] AlgIdsECC = [
-            UdfAlgorithmIdentifier.X25519,
-            UdfAlgorithmIdentifier.X448,
-            UdfAlgorithmIdentifier.Ed25519,
-            UdfAlgorithmIdentifier.Ed448
+    public static (UdfAlgorithmIdentifier, KeyGenTestMode)[] AlgIdsECC = [
+            (UdfAlgorithmIdentifier.X25519, KeyGenTestMode.Encrypt),
+            (UdfAlgorithmIdentifier.X448, KeyGenTestMode.Encrypt),
+            (UdfAlgorithmIdentifier.Ed25519, KeyGenTestMode.Sign),
+            (UdfAlgorithmIdentifier.Ed448, KeyGenTestMode.Sign)
             ];
 
-    public static UdfAlgorithmIdentifier[] AlgIdsECCP = [
-            UdfAlgorithmIdentifier.P256,
-            UdfAlgorithmIdentifier.P384,
-            UdfAlgorithmIdentifier.P521,
+    public static (UdfAlgorithmIdentifier, KeyGenTestMode)[] AlgIdsECCP = [
+            (UdfAlgorithmIdentifier.P256, KeyGenTestMode.SignEncrypt),
+            (UdfAlgorithmIdentifier.P384, KeyGenTestMode.SignEncrypt),
+            (UdfAlgorithmIdentifier.P521, KeyGenTestMode.SignEncrypt),
             ];
+
+
+
+
+
 
     /// <summary>
     /// Static constructor, put initializations here.
@@ -97,23 +115,24 @@ public class TestUdf : Disposable {
             }
 
         }
+    }
+
+public class MakeUdf {
 
 
     /// <summary>
-    /// Create method, return an instance.
+    /// Generate a set of test vectors
     /// </summary>
-    /// <returns>The instance</returns>
-    public static TestUdf Test() => new();
-
     public static void GenerateTests() {
-        GenerateTests(UdfDirectoryRSA, AlgIdsRSA);
-        GenerateTests(UdfDirectoryML, AlgIdsML);
-        GenerateTests(UdfDirectoryECC, AlgIdsECC);
+        GenerateTests(TestUdf.UdfDirectoryRSA, TestUdf.AlgIdsRSA);
+        //GenerateTests(TestUdf.UdfDirectoryML, AlgIdsML);
+        //GenerateTests(TestUdf.UdfDirectoryECC, AlgIdsECC);
 
-        GenerateTests(UdfDirectoryECCP, AlgIdsECCP);
+        //GenerateTests(TestUdf.UdfDirectoryECCP, AlgIdsECCP);
         }
 
-    private static void GenerateTests(string directory, UdfAlgorithmIdentifier[] algIds) {
+    private static void GenerateTests(string directory, 
+                    (UdfAlgorithmIdentifier, KeyGenTestMode)[] algIds) {
 
 
         var keySizes = new int[] { 128, 192, 256 };
@@ -128,7 +147,7 @@ public class TestUdf : Disposable {
 
         var testGroupId = 1;
         var testId = 1;
-        foreach (var algId in algIds) {
+        foreach (var (algId, mode) in algIds) {
             var group = new AcvpTestGroup() {
                 tgId = testGroupId++,
                 };
@@ -139,7 +158,8 @@ public class TestUdf : Disposable {
 
                     System.Console.WriteLine($"Test {testId}  {algId}, {keySize}");
 
-                    var test = new UdfKeyGenTest(testId++, algId, keySize);
+                    // Discard hints for the last test
+                    var test = new UdfKeyGenTest(testId++, algId, mode, keySize, i!= testsPer-1);
                     group.Add(test.TestData);
 
                     group.ParameterSet ??= test.KeyAlgorithm;

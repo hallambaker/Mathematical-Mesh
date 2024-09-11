@@ -22,76 +22,8 @@
 
 
 using Goedel.Cryptography.Nist;
-using Goedel.Cryptography.Standard;
-
-using System.Reflection.Metadata;
-
 namespace Goedel.Cryptography;
 
-
-
-public record RsaGenerationHints {
-
-
-    public int Q;
-    public int Q1;
-    public int Q2;
-    public int QQ;
-
-    public int P;
-    public int P1;
-    public int P2;
-    public int PP;
-
-    public RsaGenerationHints(Dictionary<string, int> callCount) {
-        callCount.TryGetValue("q", out Q);
-        callCount.TryGetValue("q1", out Q1);
-        callCount.TryGetValue("q2", out Q2);
-        callCount.TryGetValue("qq", out QQ);
-
-        callCount.TryGetValue("p", out P);
-        callCount.TryGetValue("p1", out P1);
-        callCount.TryGetValue("p2", out P2);
-        callCount.TryGetValue("pp", out PP);
-        }
-
-
-    public byte[] ToBytes() {
-        var stream = new MemoryStream();
-        Append(stream, P);
-        Append(stream, Q);
-
-        Append(stream, P1);
-        Append(stream, Q1);
-
-        Append(stream, P2);
-        Append(stream, Q2);
-
-        Append(stream, PP);
-        Append(stream, QQ);
-
-
-        return stream.ToArray();
-        }
-
-
-    public void Append(MemoryStream stream, int value) {
-        while (true) {
-            if (value < 0x80) {
-                stream.WriteByte((byte)value);
-                return;
-                }
-            else {
-                stream.WriteByte((byte) (0x80 | (value & 0x7f)));
-                value = value >> 7;
-                }
-            }
-        }
-
-    ///<inheritdoc/>
-    public override string ToString() => ToBytes().ToStringBase32(format: ConversionFormat.Dash4);
-
-    }
 
 
 public class KeyFactoryECC {
@@ -128,7 +60,7 @@ public class KeyFactoryECC {
         //var factory = new EccCurveFactory();
         var curve = EccCurveFactory.GetCurve(curveId);
 
-        var d = generator.GetEntropy(1, curve.OrderN, "d");
+        var d = generator.GetEntropy(1, curve.OrderN, "d", null);
 
 
         var Q = curve.Multiply(curve.BasePointG, d);
@@ -154,19 +86,21 @@ public  class KeyFactoryRsa {
                         byte[] ikm,
                         byte[] keySpecifier,
                         string keyName,
-                        int keySize) {
+                        int keySize,
+                        RsaGenerationHints hintsIn = null) {
         var generator = new PrimeGeneratorUdf(ikm, keySpecifier, keyName);
-        var result = Generate(generator, keySize);
+        var result = Generate(generator, keySize, hintsIn);
 
         var hints = new RsaGenerationHints(generator.CallCount);
-        Console.WriteLine($"Hints  P {hints.P}   Q {hints.Q}");
+        //Console.WriteLine($"Hints  P {hints.P}   Q {hints.Q}");
         return (result, hints);
         }
 
 
-    public static PkixPrivateKeyRsa Generate(IPrimeGenerator generator, int keySize) {
+    public static PkixPrivateKeyRsa Generate(IPrimeGenerator generator, int keySize,
+                        RsaGenerationHints hintsIn = null) {
         var keyGenerator = new CrtKeyComposer(generator);
-        var keypair = keyGenerator.GenerateKeyPair(keySize);
+        var keypair = keyGenerator.GenerateKeyPair(keySize, hintsIn);
         //var result = keypair.GetPkixPrivateKeyRSA();
 
         var keyBytes = keySize / 8;

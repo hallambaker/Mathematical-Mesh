@@ -79,8 +79,7 @@ public class CryptoKeySymmetric : CryptoKey {
     public override void Encrypt(
         byte[] key,
         out byte[] exchange,
-        out KeyPair ephemeral,
-        out byte[] ciphertext, 
+        out IAgreementData ephemeral,
         byte[] info = null) {
 
         var keyDerive = new KeyDeriveHKDF(SecretValue, (byte[])null);
@@ -91,7 +90,6 @@ public class CryptoKeySymmetric : CryptoKey {
         //Console.WriteLine($"Encryption Key = {encryptionKey.ToStringBase16FormatHex()}");
 
         ephemeral = null;
-        ciphertext = null;
         }
 
 
@@ -107,10 +105,10 @@ public class CryptoKeySymmetric : CryptoKey {
     /// <returns>The decoded data instance</returns>
     public override byte[] Decrypt(
                 byte[] encryptedKey,
-                KeyPair ephemeral = null,
-                byte[] ciphertext = null,
+                IAgreementData ephemeral = null,
                 CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
-                KeyAgreementResult partial = null, byte[] info = null) {
+                KeyAgreementResult partial = null,
+                byte[] info = null) {
 
         var keyDerive = new KeyDeriveHKDF(SecretValue, (byte[])null);
         var encryptionKey = keyDerive.Derive(info, 256);
@@ -131,7 +129,7 @@ public class CryptoKeySymmetric : CryptoKey {
     /// <param name="context">Additional data added to the signature scope
     /// for protocol isolation.</param>
     /// <returns>The signature data</returns>
-    public override byte[] SignHash(byte[] data, CryptoAlgorithmId algorithmID =
+    public override byte[] SignDigest(byte[] data, CryptoAlgorithmId algorithmID =
         CryptoAlgorithmId.Default, byte[] context = null) => throw new NotImplementedException();
 
 
@@ -144,7 +142,7 @@ public class CryptoKeySymmetric : CryptoKey {
     /// for protocol isolation.</param>
     /// <param name="digest">The digest value to be verified.</param>
     /// <returns>True if the signature is valid, otherwise false.</returns>
-    public override bool VerifyHash(
+    public override bool VerifyDigest(
             byte[] digest,
             byte[] signature,
             CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
@@ -230,8 +228,8 @@ public class CryptoKeySymmetricSigner : CryptoKeySymmetric {
     /// <param name="context">Additional data added to the signature scope
     /// for protocol isolation.</param>
     /// <returns>The signature data</returns>
-    public override byte[] SignHash(byte[] data, CryptoAlgorithmId algorithmID =
-        CryptoAlgorithmId.Default, byte[] context = null) => SigningKey.SignHash(data, algorithmID, context);
+    public override byte[] SignDigest(byte[] data, CryptoAlgorithmId algorithmID =
+        CryptoAlgorithmId.Default, byte[] context = null) => SigningKey.SignDigest(data, algorithmID, context);
 
 
     /// <summary>
@@ -243,11 +241,11 @@ public class CryptoKeySymmetricSigner : CryptoKeySymmetric {
     /// for protocol isolation.</param>
     /// <param name="digest">The digest value to be verified.</param>
     /// <returns>True if the signature is valid, otherwise false.</returns>
-    public override bool VerifyHash(
+    public override bool VerifyDigest(
             byte[] digest,
             byte[] signature,
             CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
-            byte[] context = null) => SigningKey.VerifyHash(digest, signature, algorithmID, context);
+            byte[] context = null) => SigningKey.VerifyDigest(digest, signature, algorithmID, context);
 
 
     /// <summary>

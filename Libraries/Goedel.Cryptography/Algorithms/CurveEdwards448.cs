@@ -351,11 +351,11 @@ public class CurveEdwards448 : CurveEdwards {
     /// prehashing is desired, it is because the data needs to be hashed
     /// before being presented.</remarks>
     /// <param name="Public">The public key</param>
-    /// <param name="Message">The message data.</param>
     /// <param name="Signature">The encoded signature data.</param>
+    /// <param name="Message">The message data.</param>
     /// <param name="Context">Context value, if used.</param>
     /// <returns>True if signature verification succeeded, otherwise false.</returns>
-    public bool VerifySignature(byte[] Public, byte[] Message, byte[] Signature, byte[] Context = null) {
+    public bool VerifySignature(byte[] Public, byte[] Signature, byte[] Message, byte[] Context = null) {
         Assert.AssertTrue(Public.Length == 57, InvalidOperation.Throw);
         Assert.AssertTrue(Signature.Length == 114, InvalidOperation.Throw);
 
@@ -440,22 +440,22 @@ public class CurveEdwards448Public : CurveEdwardsPublic {
     /// <summary>
     /// Construct from binary encoded form.
     /// </summary>
-    /// <param name="Encoding">The binary encoded public key.</param>
-    public CurveEdwards448Public(byte[] Encoding) {
-        this.Public = CurveEdwards448.Decode(Encoding);
-        this.Encoding = Encoding;
+    /// <param name="encoding">The binary encoded public key.</param>
+    public CurveEdwards448Public(byte[] encoding) {
+        this.Public = CurveEdwards448.Decode(encoding);
+        this.Encoding = encoding;
         }
 
     /// <summary>
     /// Verify a signature over the purported data digest.
     /// </summary>
-    /// <param name="Signature">The signature blob value.</param>
+    /// <param name="signature">The signature blob value.</param>
     /// <param name="Context">Additional data added to the signature scope
     /// for protocol isolation.</param>
-    /// <param name="Digest">The digest value to be verified.</param>
+    /// <param name="digest">The digest value to be verified.</param>
     /// <returns>True if the signature is valid, otherwise false.</returns>
-    public bool Verify(byte[] Signature, byte[] Digest, byte[] Context = null) =>
-                Public.VerifySignature(Encoding, Digest, Signature, Context);
+    public bool Verify(byte[] signature, byte[] digest, byte[] context = null) =>
+                Public.VerifySignature(Encoding, signature, digest, context);
 
     /// <summary>
     /// Create a new ephemeral private key and use it to perform a key
@@ -477,13 +477,13 @@ public class CurveEdwards448Public : CurveEdwardsPublic {
     /// Perform final stage in a Diffie Hellman Agreement to reduce an 
     /// array of carry returns to a single agreement result.
     /// </summary>
-    /// <param name="Carry">The partial recryption results.</param>
+    /// <param name="carry">The partial recryption results.</param>
     /// <returns>The key agreement value ZZ</returns>
-    public static CurveEdwards448 Agreement(CurveEdwards448[] Carry) {
-        Assert.AssertTrue(Carry.Length >= 1, InsufficientResults.Throw);
+    public static CurveEdwards448 Agreement(CurveEdwards448[] carry) {
+        Assert.AssertTrue(carry.Length >= 1, InsufficientResults.Throw);
 
         var Total = CurveEdwards448.Neutral;
-        foreach (var Part in Carry) {
+        foreach (var Part in carry) {
             Total.Accumulate(Part);
             }
 
@@ -493,10 +493,10 @@ public class CurveEdwards448Public : CurveEdwardsPublic {
     /// <summary>
     /// Combine the two public keys to create a composite public key.
     /// </summary>
-    /// <param name="Contribution">The key contribution.</param>
+    /// <param name="contribution">The key contribution.</param>
     /// <returns>The composite key</returns>
-    public CurveEdwards448Public Combine(CurveEdwards448Public Contribution) {
-        var NewPublic = Public.Add(Contribution.Public);
+    public CurveEdwards448Public Combine(CurveEdwards448Public contribution) {
+        var NewPublic = Public.Add(contribution.Public);
         return new CurveEdwards448Public((CurveEdwards448)NewPublic);
         }
 
@@ -504,10 +504,10 @@ public class CurveEdwards448Public : CurveEdwardsPublic {
     /// <summary>
     /// Combine the two public keys to create a composite public key.
     /// </summary>
-    /// <param name="Contribution">The key contribution.</param>
+    /// <param name="contribution">The key contribution.</param>
     /// <returns>The composite key</returns>
-    public override IKeyAdvancedPublic Combine(IKeyAdvancedPublic Contribution) =>
-        Combine(Contribution as CurveEdwards448Public);
+    public override IKeyAdvancedPublic Combine(IKeyAdvancedPublic contribution) =>
+        Combine(contribution as CurveEdwards448Public);
     }
 
 #endregion
@@ -555,9 +555,9 @@ public class CurveEdwards448Private : CurveEdwardsPrivate, IKeyPrivateECDH {
     /// <summary>
     /// Generate a new private key
     /// </summary>
-    /// <param name="Exportable">If true, the private key is exportable</param>
-    public CurveEdwards448Private(bool Exportable = false) :
-            this(Platform.GetRandomBytes(32), Exportable) => Secret = Platform.GetRandomBytes(32);
+    /// <param name="exportable">If true, the private key is exportable</param>
+    public CurveEdwards448Private(bool exportable = false) :
+            this(Platform.GetRandomBytes(32), exportable) => Secret = Platform.GetRandomBytes(32);
 
     /// <summary>
     /// Construct a private key from the specified binary representation.
@@ -889,7 +889,7 @@ public class CurveEdwards448Result : ResultECDH {
     /// <summary>
     /// The Ephemeral public key
     /// </summary>
-    public override KeyPair EphemeralKeyPair => new KeyPairEd448(EphemeralKeyValue448);
+    public override IAgreementData EphemeralKeyPair => new KeyPairEd448(EphemeralKeyValue448);
 
     /// <summary>Public key generated by ephemeral key generation.</summary>
     CurveEdwards448Public EphemeralKeyValue448 => EphemeralPublicValue as CurveEdwards448Public;

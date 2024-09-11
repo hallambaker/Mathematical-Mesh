@@ -54,9 +54,9 @@ public static class AlgorithmID {
                 { JoseConstants.MLKEM768, CryptoAlgorithmId.MLKEM768 },
                 { JoseConstants.MLKEM1024, CryptoAlgorithmId.MLKEM1024 },
 
-                { JoseConstants.MLDSA44, CryptoAlgorithmId.MLDSA44 },
-                { JoseConstants.MLDSA65, CryptoAlgorithmId.MLDSA65 },
-                { JoseConstants.MLDSA87, CryptoAlgorithmId.MLDSA87 },
+                { JoseConstants.MLDSA44, CryptoAlgorithmId.MLDSA44hash },
+                { JoseConstants.MLDSA65, CryptoAlgorithmId.MLDSA65hash },
+                { JoseConstants.MLDSA87, CryptoAlgorithmId.MLDSA87hash },
 
                 { JoseConstants.P256, CryptoAlgorithmId.P256 },
                 { JoseConstants.P384, CryptoAlgorithmId.P384 },
@@ -75,7 +75,6 @@ public static class AlgorithmID {
                 //{ JoseConstants.SHA2, CryptoAlgorithmId.SHA_2_512 },
                 { JoseConstants.SHA2, CryptoAlgorithmId.SHA_2_512 },
                 { JoseConstants.SHA3, CryptoAlgorithmId.SHA_3_512 },
-
 
 
             //{"", CryptoAlgorithmID }
@@ -168,7 +167,6 @@ public static class AlgorithmID {
 
             //none    No digital signature or MAC performed   alg Optional[IESG]  [RFC7518, Section 3.6]
                 { "none", CryptoAlgorithmId.NULL }
-
 
             // Not supported
             //HS384   HMAC using SHA-384	alg Optional[IESG]  [RFC7518, Section 3.2]

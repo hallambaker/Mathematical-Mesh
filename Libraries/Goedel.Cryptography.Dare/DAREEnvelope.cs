@@ -109,7 +109,6 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     public virtual void LoadBody() { }
 
     #endregion
-
     #region IDisposable boilerplate code.
 
     /// <summary>
@@ -151,7 +150,6 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     protected virtual void Disposing() { }
 
     #endregion
-
     #region // Constructors and Factories
 
     /// <summary>
@@ -242,7 +240,6 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     //    }
 
     #endregion
-
     #region // Convenience accessors
 
     /// <summary>
@@ -266,60 +263,8 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         out byte[] chunk) => jsonReader.ReadBinaryIncremental(out chunk);
 
     #endregion
-
     #region // Serialization overrides
 
-    /////<inheritdoc/>
-    //public override void Setter(
-    //        string tag, TokenValue value) {
-    //    switch (tag) {
-    //        case "Header": {
-    //            if (value is TokenValueStruct<DareHeader> vvalue) {
-    //                Header = vvalue.Value;
-    //                }
-    //            break;
-    //            }
-    //        case "Body": {
-    //            if (value is TokenValueBinary vvalue) {
-    //                Body = vvalue.Value;
-    //                }
-    //            break;
-    //            }
-    //        case "Trailer": {
-    //            if (value is TokenValueStruct<DareTrailer> vvalue) {
-    //                Trailer = vvalue.Value;
-    //                }
-    //            break;
-    //            }
-
-
-    //        default: {
-    //            base.Setter(tag, value);
-    //            break;
-    //            }
-    //        }
-    //    }
-
-    /////<inheritdoc/>
-    //public override TokenValue Getter(
-    //        string tag) {
-    //    switch (tag) {
-    //        case "Header": {
-    //            return new TokenValueStruct<DareHeader>(Header);
-    //            }
-    //        case "Body": {
-    //            return new TokenValueBinary(Body);
-    //            }
-    //        case "Trailer": {
-    //            return new TokenValueStruct<DareTrailer>(Trailer);
-    //            }
-    //        default: {
-    //            return base.Getter(tag);
-    //            }
-    //        }
-    //    }
-
-    ///<inheritdoc/>
     public override void Serialize(Writer writer,
                 bool tagged = false) {
         var first = false;
@@ -375,9 +320,137 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         }
 
     #endregion
-
     #region // Payload decoding routines 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /// <summary>
+    /// Decode a streamed message
+    /// </summary>
+    /// <param name="inputData">The input data</param>
+    /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
+    /// be applied to this message.</param>
+    /// <param name="contentMeta">The content metadata</param>
+    /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+    /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
+    ///     as an EDSS header entry.</param>
+    /// <param name="chunk">The maximum chunk size. If unspecified, the default
+    /// system chunk size (2048) is used.</param>
+    /// <param name="cover">Optional Sequence of plaintext bytes specifying a cover page
+    /// to be presented in place of an encrypted document if it cannot be decrypted.</param>
+    /// <returns>The serialized encoding of the data.</returns>
+    public static byte[] Encode(
+        CryptoParameters cryptoParameters,
+        byte[] inputData,
+        ContentMeta contentMeta = null,
+        byte[] cloaked = null,
+        List<byte[]> dataSequences = null,
+        int chunk = -1,
+        byte[] cover = null) {
+        using var outputStream = new MemoryStream();
+        using var inputStream = new MemoryStream(inputData);
+        Encode(
+            cryptoParameters, inputStream, outputStream, inputStream.Length,
+            contentMeta, cloaked, dataSequences, chunk, cover);
+        return outputStream.ToArray();
+        }
+
+
+
+
+
+
+  
+
+
+
+    ///// <summary>
+    ///// Decode a streamed message
+    ///// </summary>
+    ///// <param name="inputStream">The input stream, must support reading.</param>
+    ///// <param name="outputStream">The output stream, must support writing</param>
+    ///// <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
+    ///// <param name="dareHeader">The header data.</param>
+    ///// <param name="verify">If true, verify the payload digest on the payload. The decoded data is 
+    ///// written out to a temporary file which is deleted if the verification fails and renamed
+    ///// to the output file otherwise.</param>
+
+    //public static bool TryDecode(
+    //    Stream inputStream,
+    //    Stream outputStream,
+    //    IKeyLocate keyCollection,
+    //    out DareHeader dareHeader,
+    //    bool verify = false
+    //    ) {
+    //    keyCollection ??= Cryptography.KeyCollection.Default;
+
+    //    var jsonBcdReader = new JsonBcdReader(inputStream);
+    //    using var message = DecodeHeader(jsonBcdReader);
+    //    dareHeader = message.Header;
+
+    //    try {
+    //        var decoder = message.Header.GetDecoder(
+    //            jsonBcdReader, out var Reader,
+    //            keyCollection: keyCollection,
+    //            verify: verify);
+
+    //        Reader.CopyTo(outputStream);
+    //        outputStream.Flush();
+
+    //        decoder.Close();
+
+    //        return true;
+    //        }
+    //    catch {
+    //        return false;
+    //        }
+    //    }
+
+
+
+
+
+
+
+
+
+    //public bool TestDecryption(
+    //                KeyPair keyPair
+    //                ) {
+
+    //    return false;
+    //    }
+
+
+
+
+
+
+
+    #endregion
+
+    #region // Serialization methods
+
+
+
+    #endregion
+    #region // Deserialization methods
     /// <summary>
     /// Deserialize 
     /// </summary>
@@ -393,131 +466,6 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         var jsonBcdReader = new JsonBcdReader(data);
         return FromJSON(jsonBcdReader, tagged, decrypt, keyCollection);
         }
-
-    /// <summary>
-    /// Return the plaintext payload using the credentials stored in <paramref name="keyCollection"/>
-    /// to obtain decryption keys if necessary.
-    /// </summary>
-    /// <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
-    /// <returns>The plaintext payload.</returns>
-    public byte[] GetPlaintext(IKeyLocate keyCollection) {
-        using var inputStream = new MemoryStream(Body);
-        using var outputStream = new MemoryStream();
-
-        var decoder = Header.GetDecoder(
-            inputStream, out var reader,
-            keyCollection: keyCollection);
-        reader.CopyTo(outputStream);
-        decoder.Close();
-        return outputStream.ToArray();
-        }
-
-    /// <summary>
-    /// Verify that the signature value is correct for the key <paramref name="key"/>
-    /// </summary>
-    /// <param name="key">The signature key.</param>
-    /// <param name="digest">The payload digest value if known.</param>
-    /// <returns>True, if the signature is valid.</returns>
-    public bool Verify(KeyPair key, byte[] digest = null) {
-
-        var signature = FindSignature(key);
-        if (signature == null) {
-            return false;
-            }
-        digest ??= GetValidatedDigest();
-        return key.VerifyHash(digest, signature.SignatureValue);
-        }
-
-
-
-
-    /// <summary>
-    /// Compute the digest of the payload and if a digest value is specified in the header
-    /// or trailer, verify that it matches.
-    /// </summary>
-    /// <returns>If a payload digest field is specified in the trailer that does not
-    /// match the digest of the payload, returns the payload. Otherwise returns the
-    /// digest of the payload.</returns>
-    public byte[] GetValidatedDigest() {
-
-        "Change from returning byte[] to byte[] plus algorithm".TaskTest();
-
-        var digestAlg = (Header.DigestAlgorithm ?? "S512").FromJoseIDDigest();
-        var provider = digestAlg.CreateDigest();
-        var result = provider.ComputeHash(Body);
-
-        if (PayloadDigest != null) {
-            if (!PayloadDigest.IsEqualTo(result)) {
-                return null;
-                }
-            }
-
-        return result;
-        }
-
-    /// <summary>
-    /// Compute the digest of the payload and if a digest value is specified in the header
-    /// or trailer, verify that it matches.
-    /// </summary>
-    /// <returns>If a payload digest field is specified in the trailer that does not
-    /// match the digest of the payload, returns the payload. Otherwise returns the
-    /// digest of the payload.</returns>
-    public byte[] GetUnvalidatedDigest() {
-        if (PayloadDigest != null) {
-            return PayloadDigest;
-            }
-
-        var digestAlg = (Header.DigestAlgorithm ?? "S512").FromJoseIDDigest();
-        var provider = digestAlg.CreateDigest();
-        var result = provider.ComputeHash(Body);
-
-        return result;
-        }
-
-
-
-
-    /// <summary>
-    /// Find a signature whose key identifier matches <paramref name="key"/>
-    /// </summary>
-    /// <param name="key">The key</param>
-    /// <returns>The signature entry.</returns>
-    public DareSignature FindSignature(CryptoKey key) {
-
-        if (Trailer.Signatures != null) {
-            foreach (var signature in Trailer.Signatures) {
-                if (key.MatchKeyIdentifier(signature.KeyIdentifier)) {
-                    return signature;
-                    }
-                }
-            }
-        if (Header.Signatures != null) {
-            foreach (var signature in Header.Signatures) {
-                if (key.MatchKeyIdentifier(signature.KeyIdentifier)) {
-                    return signature;
-                    }
-                }
-            }
-
-
-        return null;
-        }
-
-
-
-    ///// <summary>
-    ///// Deserialize 
-    ///// </summary>
-    ///// <param name="stream">The input stream</param>
-    ///// <param name="decrypt">If true, attempt to decrypt the message body as it is read.</param>
-    ///// <param name="keyCollection">Key collection to be used to discover decryption keys</param>
-    ///// <returns>The created object.</returns>	
-    //public static DareEnvelope FromJSON(Stream stream,
-    //    bool decrypt = false,
-    //    IKeyLocate keyCollection = null) {
-    //    var jsonBcdReader = new JsonBcdReader(stream); // Hack: should merge this with GetPlaintext
-    //    return FromJSON(jsonBcdReader, false, decrypt, keyCollection);
-    //    }
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -568,6 +516,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         return message;
         }
 
+
     /// <summary>
     /// Read a DareEnvelope from a stream in incremental mode. The header of the 
     /// message is read but not the body.
@@ -585,6 +534,51 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
             Header = header
             };
         }
+
+    /// <summary>
+    /// Return the plaintext payload using the credentials stored in <paramref name="keyCollection"/>
+    /// to obtain decryption keys if necessary.
+    /// </summary>
+    /// <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
+    /// <returns>The plaintext payload.</returns>
+    public byte[] GetPlaintext(IKeyLocate keyCollection) {
+        using var inputStream = new MemoryStream(Body);
+        using var outputStream = new MemoryStream();
+
+        var decoder = Header.GetDecoder(
+            inputStream, out var reader,
+            keyCollection: keyCollection);
+        reader.CopyTo(outputStream);
+        decoder.Close();
+        return outputStream.ToArray();
+        }
+
+
+    /// <summary>
+    /// Decode a tagged JSONObject using keys from <paramref name="keyCollection"/> to decrypt
+    /// if necessary.
+    /// </summary>
+    /// <param name="keyCollection">Key collection to be used for decryption.</param>
+    /// <returns>The decoded object.</returns>
+    public JsonObject DecodeJsonObject(IKeyLocate keyCollection = null) {
+        var plaintext = GetPlaintext(keyCollection);
+        if (plaintext == null | plaintext?.Length == 0) {
+            return null;
+            }
+        //Console.WriteLine(plaintext.ToUTF8());
+
+        var reader = new JsonBcdReader(plaintext);
+
+        var result = reader.ReadTaggedObject(TagDictionary);
+        if (result != null) {
+            result.Enveloped = this;
+            }
+        return result;
+        }
+
+    #endregion
+
+    #region // Transcription methods
 
     /// <summary>
     /// Decode a streamed message
@@ -618,38 +612,6 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
             contentMeta, cloaked, dataSequences, chunk, cover);
         return input.Length;
         }
-
-    /// <summary>
-    /// Decode a streamed message
-    /// </summary>
-    /// <param name="inputData">The input data</param>
-    /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
-    /// be applied to this message.</param>
-    /// <param name="contentMeta">The content metadata</param>
-    /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-    /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
-    ///     as an EDSS header entry.</param>
-    /// <param name="chunk">The maximum chunk size. If unspecified, the default
-    /// system chunk size (2048) is used.</param>
-    /// <param name="cover">Optional Sequence of plaintext bytes specifying a cover page
-    /// to be presented in place of an encrypted document if it cannot be decrypted.</param>
-    /// <returns>The serialized encoding of the data.</returns>
-    public static byte[] Encode(
-        CryptoParameters cryptoParameters,
-        byte[] inputData,
-        ContentMeta contentMeta = null,
-        byte[] cloaked = null,
-        List<byte[]> dataSequences = null,
-        int chunk = -1,
-        byte[] cover = null) {
-        using var outputStream = new MemoryStream();
-        using var inputStream = new MemoryStream(inputData);
-        Encode(
-            cryptoParameters, inputStream, outputStream, inputStream.Length,
-            contentMeta, cloaked, dataSequences, chunk, cover);
-        return outputStream.ToArray();
-        }
-
 
     /// <summary>
     /// Encode data received on the input stream to the output stream with the specified
@@ -688,30 +650,6 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
             outputStream, contentMeta, contentLength, cloaked, dataSequences, cover);
         inputStream.CopyTo(dareEnvelopeWriter);
         }
-
-    /// <summary>
-    /// Decode a tagged JSONObject using keys from <paramref name="keyCollection"/> to decrypt
-    /// if necessary.
-    /// </summary>
-    /// <param name="keyCollection">Key collection to be used for decryption.</param>
-    /// <returns>The decoded object.</returns>
-    public JsonObject DecodeJsonObject(IKeyLocate keyCollection = null) {
-        var plaintext = GetPlaintext(keyCollection);
-        if (plaintext == null | plaintext?.Length == 0) {
-            return null;
-            }
-        //Console.WriteLine(plaintext.ToUTF8());
-
-        var reader = new JsonBcdReader(plaintext);
-
-
-        var result = reader.ReadTaggedObject(TagDictionary);
-        if (result != null) {
-            result.Enveloped = this;
-            }
-        return result;
-        }
-
 
     /// <summary>
     /// Decode a streamed message
@@ -800,48 +738,27 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         return length;
         }
 
+
+
+    #endregion
+
+    #region // Signing methods
+
+    #endregion
+
+    #region // Signature verification methods
+
     /// <summary>
-    /// Decode a streamed message
+    /// Static method that reads the bytes <paramref name="input"/>, parses the
+    /// content to return an envelope.
     /// </summary>
-    /// <param name="inputStream">The input stream, must support reading.</param>
-    /// <param name="outputStream">The output stream, must support writing</param>
-    /// <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
-    /// <param name="dareHeader">The header data.</param>
-    /// <param name="verify">If true, verify the payload digest on the payload. The decoded data is 
-    /// written out to a temporary file which is deleted if the verification fails and renamed
-    /// to the output file otherwise.</param>
-
-    public static bool TryDecode(
-        Stream inputStream,
-        Stream outputStream,
-        IKeyLocate keyCollection,
-        out DareHeader dareHeader,
-        bool verify = false
-        ) {
-        keyCollection ??= Cryptography.KeyCollection.Default;
-
-        var jsonBcdReader = new JsonBcdReader(inputStream);
-        using var message = DecodeHeader(jsonBcdReader);
-        dareHeader = message.Header;
-
-        try {
-            var decoder = message.Header.GetDecoder(
-                jsonBcdReader, out var Reader,
-                keyCollection: keyCollection,
-                verify: verify);
-
-            Reader.CopyTo(outputStream);
-            outputStream.Flush();
-
-            decoder.Close();
-
-            return true;
-            }
-        catch {
-            return false;
-            }
-        }
-
+    /// <param name="input"></param>
+    /// <param name="keyCollection"></param>
+    /// <returns></returns>
+    public static DareEnvelope Verify(
+            byte[] input,
+            IKeyLocate keyCollection = null) => 
+                Verify(new MemoryStream(input), keyCollection);
 
     /// <summary>
     /// Decode a streamed message
@@ -854,6 +771,8 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         using var inputStream = inputFile.OpenFileRead();
         return Verify(inputStream, keyCollection);
         }
+
+
 
     /// <summary>
     /// Decode a streamed message
@@ -878,15 +797,150 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         message.PayloadMac = decoder.MacValue;
         message.PayloadLength = decoder.BytesRead;
 
+
+        // check the witness value here.
+
         if (jsonBcdReader.NextArray()) {
             message.Trailer = DareTrailer.FromJson(jsonBcdReader, false);
+
+            message.Trailer.PayloadDigest.AssertEqual(message.PayloadDigestComputed,
+                    EnvelopeDigestCorrupt.Throw);
+            }
+        return message;
+        }
+
+    /// <summary>
+    /// Verify that the signature value is correct for the key <paramref name="key"/>
+    /// </summary>
+    /// <param name="key">The signature key.</param>
+    /// <param name="digest">The payload digest value if known.</param>
+    /// <returns>True, if the signature is valid.</returns>
+    public bool Verify(KeyPair key, byte[] digest = null) {
+
+        var signature = FindSignature(key);
+        if (signature == null) {
+            return false;
+            }
+        digest ??= GetValidatedDigest();
+        return key.VerifyDigest(digest, signature.SignatureValue);
+        }
+
+    /// <summary>
+    /// Search the signatures over the envelope to verify the first
+    /// signature matching the key <paramref name="keyPair"/> returning
+    /// true if and only if the signature is valid.
+    /// </summary>
+    /// <param name="keyPair">The signing key to check.</param>
+    /// <returns></returns>
+    /// <exception cref="EnvelopeSignatureMissing">The specified
+    /// signature could not be found.</exception>
+    public bool VerifySignature(
+                KeyPair keyPair) {
+        var signature = FindSignature(keyPair);
+        signature.AssertNotNull(EnvelopeSignatureMissing.Throw);
+
+        // Check the payload digest exists.
+        var payloadDigest = Trailer.PayloadDigest ?? Header.PayloadDigest;
+        if (payloadDigest == null) {
+            return false;
             }
 
+        // Verify specified digest against the computed
+        var payloadComputed = GetValidatedDigest();
+        if (payloadComputed == null) {
+            return false;
+            }
+        var digestId = Header.DigestAlgorithm.ToCryptoAlgorithmID();
+        var manifest = CryptoStack.GetManifest(digestId, Trailer);
 
-        return message;
-
+        var result = signature.Verify(keyPair, manifest);
+        return result;
         }
-    #endregion
 
+
+    /// <summary>
+    /// Find a signature whose key identifier matches <paramref name="key"/>
+    /// </summary>
+    /// <param name="key">The key</param>
+    /// <returns>The signature entry.</returns>
+    public DareSignature FindSignature(CryptoKey key) {
+
+        if (Trailer.Signatures != null) {
+            foreach (var signature in Trailer.Signatures) {
+                if (key.MatchKeyIdentifier(signature.KeyIdentifier)) {
+                    return signature;
+                    }
+                }
+            }
+        if (Header.Signatures != null) {
+            foreach (var signature in Header.Signatures) {
+                if (key.MatchKeyIdentifier(signature.KeyIdentifier)) {
+                    return signature;
+                    }
+                }
+            }
+
+        return null;
+        }
+
+    //public DareSignature? GetSignature(string keyId) {
+    //    var signatures = Trailer.Signatures;
+    //    if (signatures is null) {
+    //        return null;
+    //        }
+
+    //    foreach (var signature in signatures) {
+    //        if (signature.KeyIdentifier == keyId) {
+    //            return signature;
+    //            }
+    //        }
+
+    //    return null;
+    //    }
+
+    /// <summary>
+    /// Compute the digest of the payload and if a digest value is specified in the header
+    /// or trailer, verify that it matches.
+    /// </summary>
+    /// <returns>If a payload digest field is specified in the trailer that does not
+    /// match the digest of the payload, returns the payload. Otherwise returns the
+    /// digest of the payload.</returns>
+    public byte[] GetValidatedDigest() {
+
+        "Change from returning byte[] to byte[] plus algorithm".TaskTest();
+
+        var digestAlg = (Header.DigestAlgorithm ?? "S512").FromJoseIDDigest();
+        var provider = digestAlg.CreateDigest();
+        var result = provider.ComputeHash(Body);
+
+        if (PayloadDigest != null) {
+            if (!PayloadDigest.IsEqualTo(result)) {
+                return null;
+                }
+            }
+
+        return result;
+        }
+
+    /// <summary>
+    /// Compute the digest of the payload and if a digest value is specified in the header
+    /// or trailer, verify that it matches.
+    /// </summary>
+    /// <returns>If a payload digest field is specified in the trailer that does not
+    /// match the digest of the payload, returns the payload. Otherwise returns the
+    /// digest of the payload.</returns>
+    public byte[] GetUnvalidatedDigest() {
+        if (PayloadDigest != null) {
+            return PayloadDigest;
+            }
+
+        var digestAlg = (Header.DigestAlgorithm ?? "S512").FromJoseIDDigest();
+        var provider = digestAlg.CreateDigest();
+        var result = provider.ComputeHash(Body);
+
+        return result;
+        }
+
+    #endregion
 
     }

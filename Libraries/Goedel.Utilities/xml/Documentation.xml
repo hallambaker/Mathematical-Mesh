@@ -626,7 +626,7 @@
             <param name="value">The value to add</param>
             <returns>True if a new entry was added, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Utilities.ArrayUtilities.Concatenate(System.Byte[],System.Byte[])">
+        <member name="M:Goedel.Utilities.ArrayUtilities.Concat(System.Byte[],System.Byte[])">
             <summary>
             Concatenate the two arrays
             </summary>
@@ -969,6 +969,15 @@
         </member>
         <member name="M:Goedel.Utilities.Assert.AssertEqual(System.Byte[],System.Byte[],Goedel.Utilities.ThrowDelegate,System.Object[])">
             <summary>Test to see if two arrays are equal.
+            </summary>
+            <param name="test1">First test value</param>
+            <param name="test2">Second test value</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
+        <member name="M:Goedel.Utilities.Assert.AssertNotEqual(System.Byte[],System.Byte[],Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>Test to see if two arrays are not equal.
             </summary>
             <param name="test1">First test value</param>
             <param name="test2">Second test value</param>

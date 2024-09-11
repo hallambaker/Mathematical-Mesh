@@ -154,6 +154,25 @@ public static class AssertTest {
         }
 
 
+    /// <summary>Test to see if two arrays are equal.
+    /// </summary>
+    /// <param name="test1">First test value</param>
+    /// <param name="test2">Second test value</param>
+    /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
+    /// Condition is true</param>
+    /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
+
+    public static void TestNotEqual(this byte[] test1, byte[] test2, ThrowDelegate throwDelegate = null,
+                params object[] args) {
+        if (FlagFailure) {
+            Assert.AssertNotEqual(test1, test2, throwDelegate ?? TestExpectedArraysEqual.Throw, args);
+            }
+        else {
+            TestsFailed++;
+            }
+        }
+
+
     /// <summary>Test to see if two values are equal.
     /// </summary>
     /// <param name="test1">First test value</param>

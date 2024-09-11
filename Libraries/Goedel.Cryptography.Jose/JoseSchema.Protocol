@@ -155,6 +155,10 @@
 			Tag "epk"
 			Description
 				|The key parameters of the ephemeral key
+		Binary Ek
+			Tag "ek"
+			Description
+				|Binary cryptographic exchange parameters
 		String Typ
 			Tag "typ"
 			Description

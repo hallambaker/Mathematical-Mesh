@@ -557,11 +557,11 @@ public class CurveEdwards25519Public : CurveEdwardsPublic {
     /// <remarks>This method does not prehash the message data since if
     /// prehashing is desired, it is because the data needs to be hashed
     /// before being presented.</remarks>
-    /// <param name="message">The message data.</param>
     /// <param name="signature">The encoded signature data.</param>
+    /// <param name="message">The message data.</param>
     /// <param name="context">Context value, if used.</param>
     /// <returns>True if signature verification succeeded, otherwise false.</returns>
-    public bool Verify(byte[] message, byte[] signature, byte[] context = null) =>
+    public bool Verify(byte[] signature, byte[] message, byte[] context = null) =>
         Public.VerifySignature(message, signature, context);
 
 
@@ -933,7 +933,7 @@ public class CurveEdwards25519Result : ResultECDH {
     /// <summary>
     /// The Ephemeral public key
     /// </summary>
-    public override KeyPair EphemeralKeyPair => new KeyPairEd25519(EphemeralPublicValue as CurveEdwards25519Public);
+    public override IAgreementData EphemeralKeyPair => new KeyPairEd25519(EphemeralPublicValue as CurveEdwards25519Public);
 
     /// <summary>Carry from proxy recryption efforts</summary>
     public CurveEdwards25519 Carry { get; set; }

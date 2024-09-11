@@ -312,7 +312,7 @@ public abstract class RudConnection : Disposable {
 
         mutualKeyAgreementResult = privateKey.Agreement(keyPublic);
 
-        var ikm = clientKeyAgreementResult.IKM.Concatenate(mutualKeyAgreementResult.IKM);
+        var ikm = clientKeyAgreementResult.IKM.Concat(mutualKeyAgreementResult.IKM);
 
         var keyDerive = new KeyDeriveHKDF(ikm);
 

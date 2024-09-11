@@ -17,5 +17,17 @@
             Initialization routine for cryptographic functions on the dotNet Core platform.
             </summary>
         </member>
+        <member name="M:Goedel.Cryptography.Test.TestDare.#ctor(System.IO.Stream)">
+            <summary>
+            Read an envelope from <paramref name="inputStream"/> without decrypting the
+            message body.
+            </summary>
+            <param name="inputStream"></param>
+        </member>
+        <member name="M:Goedel.Cryptography.Test.TestDare.CorruptBody">
+            <summary>
+            Corrupt the envelope body and correct the payload digest.
+            </summary>
+        </member>
     </members>
 </doc>

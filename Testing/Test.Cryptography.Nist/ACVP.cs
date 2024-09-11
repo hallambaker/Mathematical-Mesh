@@ -142,7 +142,7 @@ public class DsaVerifyTest : DsaKeyGenTest {
         var publicKey = DilithiumPublic.FromPublicKey(PublicKey);
 
         //var message = MsbLsbConversionHelpers.MostSignificantByteArrayToLeastSignificantBitArray(Message);
-        var test = publicKey.Verify(Signature, Message);
+        var test = publicKey.VerifyInternal(Signature, Message);
 
         test.TestEqual(TestPassed == true);
         }
