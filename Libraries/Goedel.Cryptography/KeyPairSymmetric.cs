@@ -20,6 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 namespace Goedel.Cryptography;
 
 /// <summary>
@@ -37,7 +39,7 @@ public class CryptoKeySymmetric : CryptoKey {
     public string SecretKey;
 
     ///<summary>The secret key.</summary>
-    private byte[] SecretValue { get; }
+    protected byte[] SecretValue { get; }
 
 
     /// <summary>
@@ -54,8 +56,6 @@ public class CryptoKeySymmetric : CryptoKey {
         // Create the presentation of the secret value.
         SecretValue = secretValue;
         SecretKey = Udf.TypeBDSToString(udfTypeIdentifier, SecretValue, 8 * (secretValue.Length + 1));
-
-
         KeyIdentifier = Udf.SymetricKeyId(SecretKey);
 
 
@@ -170,7 +170,9 @@ public class CryptoKeySymmetricSigner : CryptoKeySymmetric {
     ///<summary>The signature key. This is only populated if either the private signature key
     ///value is available or the key has been used to verify a signature that provided 
     ///the public parameters.</summary>
-    public KeyPair SigningKey { get; }
+    KeyPair SigningKey { get; }
+
+    CryptoAlgorithmId AlgorithmSign { get; }
 
     /// <summary>
     /// Constructor creating an instance with a new signing key. 
@@ -183,25 +185,21 @@ public class CryptoKeySymmetricSigner : CryptoKeySymmetric {
     public CryptoKeySymmetricSigner(
             KeySecurity keySecurity = KeySecurity.Exportable,
             int bits = 0,
-            CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Ed448,
-            CryptoAlgorithmId algorithmDigest = CryptoAlgorithmId.SHA_2_512) :
-                base(CreateKey(out var keyPair, keySecurity, bits, algorithmSign, algorithmDigest), UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512) => SigningKey = keyPair;
+            CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.HMAC_SHA_2_256) :
+                base(CreateKey(keySecurity, bits, algorithmSign),
+                    UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512) {
+        AlgorithmSign = algorithmSign;
+        }
 
 
     static byte[] CreateKey(
-            out KeyPair signingKey,
             KeySecurity keySecurity,
             int bits,
-            CryptoAlgorithmId algorithmSign,
-            CryptoAlgorithmId algorithmDigest) {
+            CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.HMAC_SHA_2_256) {
 
-        algorithmDigest.AssertEqual(CryptoAlgorithmId.SHA_2_512, Internal.Throw); // NYI: Algorithm agility.
 
-        bits = bits.Minimum(Udf.MinimumBits);
-        signingKey = KeyPair.Factory(algorithmSign, keySecurity);
-
-        var secretValue = signingKey.UDFBytes.OrTruncated(bits);
-
+        bits = bits == 0 ? 256 : bits; // default to 128 bit work factor.
+        var secretValue = Platform.GetRandomBits(bits);
 
         return secretValue;
         }
@@ -216,8 +214,34 @@ public class CryptoKeySymmetricSigner : CryptoKeySymmetric {
 
         }
 
+    ///<inheritdoc/>
+    public override (byte[], CryptoAlgorithmId) SignManifest(
+                    byte[] data, 
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, 
+                    byte[] context = null) =>
+                        (GetMac(data, context), CryptoAlgorithmId.NULL);
 
 
+
+    ///<inheritdoc/>
+    public override bool VerifyManifest(
+                    byte[] data, 
+                    byte[] signature, 
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, 
+                    byte[] context = null) {
+        var test = GetMac(data, context);
+        return test.Equals(signature);
+        }
+
+
+    byte[] GetMac(byte[] data, byte[] context = null) {
+        using var hmac = AlgorithmSign.CreateMac(SecretValue);
+        var manifest = CryptographyExtensions.CreateManifestPrefixPure(context);
+        hmac.TransformBlock(manifest, 0, manifest.Length, manifest, 0);
+        hmac.TransformFinalBlock(data, 0, data.Length);
+
+        return hmac.Hash;
+        }
 
 
     /// <summary>
@@ -228,8 +252,9 @@ public class CryptoKeySymmetricSigner : CryptoKeySymmetric {
     /// <param name="context">Additional data added to the signature scope
     /// for protocol isolation.</param>
     /// <returns>The signature data</returns>
-    public override byte[] SignDigest(byte[] data, CryptoAlgorithmId algorithmID =
-        CryptoAlgorithmId.Default, byte[] context = null) => SigningKey.SignDigest(data, algorithmID, context);
+    public override byte[] SignDigest(byte[] digest, CryptoAlgorithmId algorithmID =
+        CryptoAlgorithmId.Default, byte[] context = null) =>
+                GetMacDigest(digest, algorithmID, context);
 
 
     /// <summary>
@@ -245,7 +270,25 @@ public class CryptoKeySymmetricSigner : CryptoKeySymmetric {
             byte[] digest,
             byte[] signature,
             CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
-            byte[] context = null) => SigningKey.VerifyDigest(digest, signature, algorithmID, context);
+            byte[] context = null) {
+        var test = GetMacDigest(digest, algorithmID, context);
+        return test.Equals(signature);
+        }
+
+
+    byte[] GetMacDigest(byte[] digest, CryptoAlgorithmId digestID, byte[] context = null) {
+        digestID = digestID.DefaultDigest();
+
+        var oid = digestID.ToOID();
+        var oidBytes = oid.ParseOid();
+
+        var manifest = CryptographyExtensions.CreateManifestHashed(digest, oidBytes, context);
+        using var hmac = AlgorithmSign.CreateMac(SecretValue);
+        hmac.TransformFinalBlock(manifest, 0, manifest.Length);
+
+
+        return hmac.Hash;
+        }
 
 
     /// <summary>

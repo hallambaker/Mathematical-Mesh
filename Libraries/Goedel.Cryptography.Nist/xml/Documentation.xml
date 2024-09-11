@@ -356,19 +356,6 @@
             <param name="prefix">Prefix inserted ahead of the message to specify
             the manifest data.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.CreateManifestPrefixPure(System.Byte[],System.Byte[])">
-            <summary>
-            
-            </summary>
-            <param name="message"></param>
-            <param name="context"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.DilithiumNist.CreateManifestPrefixHashed(System.Byte[],System.Byte[],System.Byte[])">
-            <param name="digest">The digest value.</param>
-            <param name="oid">An OID specifying the digest algorithm.</param>
-            <param name="context">Optional context string of 255 bytes or fewer.</param>
-        </member>
         <member name="M:Goedel.Cryptography.Nist.DilithiumNist.IntegerToBits(System.Int32,System.Int32)">
             <summary>
             Algorithm 9. NOTE: This wipes out the value of x.

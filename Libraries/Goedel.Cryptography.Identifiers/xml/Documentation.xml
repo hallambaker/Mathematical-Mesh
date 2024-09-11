@@ -808,6 +808,23 @@
             <param name="id">Composite identifier</param>
             <returns>The bulk component.</returns>
         </member>
+        <member name="M:Goedel.Cryptography.CryptographyExtensions.CreateManifestPrefixPure(System.Byte[])">
+            <summary>
+            Return a manifest prefix in the form described in FIPS204 for DilithiumPure.
+            The message is not included in the manifest as it may be long.
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptographyExtensions.CreateManifestHashed(System.Byte[],System.Byte[],System.Byte[])">
+            <summary>
+            Return a manifest in the form described in FIPS204 for DilithiumHashed
+            </summary>
+            <param name="digest">The digest value.</param>
+            <param name="oid">An OID specifying the digest algorithm.</param>
+            <param name="context">Optional context string of 255 bytes or fewer.</param>
+            <returns>The manifest bytes.</returns>
+        </member>
         <member name="T:Goedel.Cryptography.CryptographicException">
             <summary>
             Base class for cryptographic exceptions.

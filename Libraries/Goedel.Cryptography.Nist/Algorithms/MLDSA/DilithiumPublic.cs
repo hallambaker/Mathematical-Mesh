@@ -49,8 +49,8 @@ public class DilithiumPublic {
     public bool VerifyPure(
                     byte[] signature,
                     byte[] message,
-                    byte[] context) => VerifyInternal(signature,
-                        DilithiumNist.CreateManifestPrefixPure(message, context), message);
+                    byte[] context) => VerifyInternal(signature, message,
+                        CryptographyExtensions.CreateManifestPrefixPure(context));
 
 
     /// <summary>
@@ -68,7 +68,7 @@ public class DilithiumPublic {
                     byte[] digest,
                     byte[] oid,
                     byte[] context) => VerifyInternal(signature,
-                        DilithiumNist.CreateManifestPrefixHashed(digest, oid, context), digest);
+                        CryptographyExtensions.CreateManifestHashed(digest, oid, context));
 
     /// <summary>
     /// Verify the signature <paramref name="signature"/> over message

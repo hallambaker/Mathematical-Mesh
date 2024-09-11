@@ -22,6 +22,8 @@
 
 namespace Goedel.Cryptography;
 
+
+
 /// <summary>
 /// Convert a BigInteger to a Bitfield and return successive bits
 /// beginning with the most significant and ending with the least.

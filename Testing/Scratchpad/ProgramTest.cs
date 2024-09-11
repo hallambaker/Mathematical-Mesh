@@ -23,6 +23,8 @@
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
+using Goedel.Cryptography.Dare;
+
 //using Goedel.Cryptography.Nist;
 using Goedel.Debug;
 //using Goedel.Cryptography.PQC;
@@ -60,9 +62,26 @@ partial class Program {
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
 
+
+        //TestNist.Test().TestKemEncapDecap();
+        CallsignDirect.Test().RegisterAlice();
+
+        //ShellTests.Test().NewArchiveTestOnce(true, false, false, false);
+
+
+        //UDFKeyGen.TEST1.Test();
+
+
+
+
+
+        //TestSequences.Test().TestSign(SequenceType.Merkle);
+
+
+
         //TestService.Test().TestCredentialAccountFails(DataValidity.CorruptPayload);
-        TestService.Test().TestCredentialAccountFails(DataValidity.CorruptMissing);
-        TestService.Test().TestCredentialAccountFails(DataValidity.CorruptSigner);
+        //TestService.Test().TestCredentialAccountFails(DataValidity.CorruptMissing);
+        //TestService.Test().TestCredentialAccountFails(DataValidity.CorruptSigner);
 
         //var TestGoedelCryptography = new TestGoedelCryptography();
 
@@ -102,7 +121,7 @@ partial class Program {
         //TestNist.Test().TestKemKeyGen();
         //TestNist.Test().TestKemEncapDecap();
         //TestNist.Test().TestDsaKeyGen();
-        TestNist.Test().TestDsaSign();
+        //TestNist.Test().TestDsaSign();
         //TestNist.Test().TestDsaVerify();
 
 

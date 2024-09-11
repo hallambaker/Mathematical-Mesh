@@ -9338,15 +9338,6 @@
             to be verified.</param>
             <returns>True if there is a valid signature under this profile, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Profile.Verify(Goedel.Cryptography.Dare.DareSignature,System.Byte[],System.String)">
-            <summary>
-            Verify the profile and return the value true if successful, otherwise false.
-            </summary>
-            <param name="signature">The envelope signature.</param>
-            <param name="digest">The payload digest value.</param>
-            <param name="keyIdentifier">The signature key identifier.</param>
-            <returns>True if the profile is valid, otherwise false.</returns>
-        </member>
         <member name="M:Goedel.Mesh.Profile.Validate(System.Collections.Generic.IEnumerable{Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.Profile}},Goedel.Cryptography.Dare.DareSignature,System.Byte[],System.String)">
             <summary>
             Verify that the signature <paramref name="signature"/> is valid under one of the
@@ -9464,9 +9455,6 @@
             <param name="activationAccount">The activation used to create the account data.</param>
         </member>
         <member name="M:Goedel.Mesh.ProfileAccount.Validate">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.ProfileAccount.Verify(Goedel.Cryptography.Dare.DareSignature,System.Byte[],System.String)">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ProfileAccount.AccountAddress">

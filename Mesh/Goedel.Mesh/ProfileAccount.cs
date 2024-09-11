@@ -92,22 +92,22 @@ public partial class ProfileAccount {
 
         }
 
-    ///<inheritdoc/>
-    public override bool Verify(
-            DareSignature signature,
-            byte[] digest,
-            string keyIdentifier) {
-        if (!Udf.Matches(keyIdentifier)) {
-            return false;
-            }
-        if (AdministratorSignatureKey.MatchKeyIdentifier(signature.KeyIdentifier)) {
-            return AdministratorSignatureKey.VerifyDigest(digest, signature.SignatureValue);
-            }
-        if (ProfileSignatureKey.MatchKeyIdentifier(ProfileSignatureKey.KeyIdentifier)) {
-            return ProfileSignatureKey.VerifyDigest(digest, signature.SignatureValue);
-            }
-        return false;
-        }
+    /////<inheritdoc/>
+    //public override bool Verify(
+    //        DareSignature signature,
+    //        byte[] digest,
+    //        string keyIdentifier) {
+    //    if (!Udf.Matches(keyIdentifier)) {
+    //        return false;
+    //        }
+    //    if (AdministratorSignatureKey.MatchKeyIdentifier(signature.KeyIdentifier)) {
+    //        return AdministratorSignatureKey.VerifyManifest(digest, signature.SignatureValue);
+    //        }
+    //    if (ProfileSignatureKey.MatchKeyIdentifier(ProfileSignatureKey.KeyIdentifier)) {
+    //        return ProfileSignatureKey.VerifyManifest(digest, signature.SignatureValue);
+    //        }
+    //    return false;
+    //    }
 
 
     }

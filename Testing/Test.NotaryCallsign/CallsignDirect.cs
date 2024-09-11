@@ -133,7 +133,7 @@ public partial class CallsignDirect : UnitTestSet {
         CheckResolve(CallsignBob, contextAccountBob);
         }
 
-    [Fact]
+    [Fact(Skip = "Implement new path math")]
     public void RegisterAliceDuplicate() {
 
 

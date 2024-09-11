@@ -6194,7 +6194,7 @@
             value is available or the key has been used to verify a signature that provided 
             the public parameters.</summary>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKeySymmetricSigner.#ctor(Goedel.Cryptography.KeySecurity,System.Int32,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Cryptography.CryptoKeySymmetricSigner.#ctor(Goedel.Cryptography.KeySecurity,System.Int32,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Constructor creating an instance with a new signing key. 
             </summary>
@@ -6209,6 +6209,12 @@
             Constructor creating an instance from the key identifier <paramref name="keyIdentifier"/>.
             </summary>
             <param name="keyIdentifier">The decryption/verification key.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoKeySymmetricSigner.SignManifest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoKeySymmetricSigner.VerifyManifest(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.CryptoKeySymmetricSigner.SignDigest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>

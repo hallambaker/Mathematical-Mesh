@@ -82,8 +82,8 @@ public class DilithiumPrivate {
     public byte[] SignPure(
                 byte[] message,
                 byte[] context,
-                byte[] rnd = null) => SignInternal(
-                    DilithiumNist.CreateManifestPrefixPure(message, context), message, rnd: rnd);
+                byte[] rnd = null) => SignInternal(message,
+                    CryptographyExtensions.CreateManifestPrefixPure(context), rnd: rnd);
 
     /// <summary>
     /// Signs a message with this secret key
@@ -98,7 +98,7 @@ public class DilithiumPrivate {
                 byte[] oid,
                 byte[] context,
                 byte[] rnd = null) => SignInternal(
-                    DilithiumNist.CreateManifestPrefixHashed(digest, oid, context), digest, rnd: rnd);
+                    CryptographyExtensions.CreateManifestHashed(digest, oid, context),  rnd: rnd);
 
     /// <summary>
     /// Signs a message with this secret key
