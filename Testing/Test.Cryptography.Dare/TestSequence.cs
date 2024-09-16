@@ -70,7 +70,11 @@ public record TestSequence : TestBase {
         Filename = Seed.GetFilename(file);
 
 
-        using (var sequence = Sequence.NewSequence(Filename, FileStatus.Overwrite, sequenceType)) {
+        using (var sequence = Sequence.NewSequence(
+                        Filename, 
+                        FileStatus.Overwrite, 
+                        sequenceType,
+                        policy: TestContext.DarePolicy)) {
             for (var i = 0; i < records; i++) {
                 (sequence.FrameCount == i + 1).TestTrue();
 

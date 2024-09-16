@@ -150,6 +150,10 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     ///<summary>The key location instance.</summary>
     public IKeyLocate KeyLocate { get; protected set; }
 
+
+    public DarePolicy DarePolicy { get; protected set; }
+
+
     #endregion
     #region // Indexing and convenience accessors
 
@@ -910,7 +914,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             ContentMeta = headerIn.ContentMeta,
             ContentMetaData = headerIn.ContentMetaData,
             Received = headerIn.Received ?? System.DateTime.Now,
-
+            WitnessValue = trailerIn.WitnessValue ?? headerIn.WitnessValue,
             Signatures = trailerIn?.Signatures ?? headerIn.Signatures,
             SignedData = trailerIn?.SignedData ?? headerIn.SignedData,
             PayloadDigest = trailerIn?.PayloadDigest ?? headerIn.PayloadDigest,
@@ -932,28 +936,6 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
 
         return result;
 
-        }
-
-    /// <summary>
-    /// Append an empty frame containing Sequence index or content information.
-    /// </summary>
-    /// <param name="sequenceIndex">The SequenceIndex to append.</param>
-    /// <param name="contentMeta">The ContentMeta to append.</param>
-    public void Append(
-                SequenceIndex sequenceIndex = null,
-                ContentMeta contentMeta = null) {
-
-        var header = new DareHeader() {
-            SequenceInfo = MakeSequenceInfo(),
-            ContentMeta = contentMeta,
-            SequenceIndex = sequenceIndex
-            };
-
-
-        var trailer = new DareTrailer() {
-            };
-
-        Append(header, null, null);
         }
 
 

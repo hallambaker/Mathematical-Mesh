@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 9/11/2024 4:45:16 PM
+//  This file was automatically generated at 9/15/2024 4:55:16 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -29,6 +29,10 @@ namespace Goedel.Cryptography ;
 public static partial class JoseConstants {
 
     // File: JoseIdentifier
+
+    ///<summary>
+    ///</summary>
+    public const string NA = "+NA";
 
     ///<summary>
     ///</summary>
@@ -85,6 +89,14 @@ public static partial class JoseConstants {
     ///<summary>
     ///</summary>
     public const string RSA4096 = "RSA4096";
+
+    ///<summary>
+    ///</summary>
+    public const string RSA7680 = "RSA7680";
+
+    ///<summary>
+    ///</summary>
+    public const string RSA15360 = "RSA15360";
 
     ///<summary>
     ///</summary>

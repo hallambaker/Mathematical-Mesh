@@ -88,11 +88,11 @@ public abstract class CryptoProviderDigest : CryptoProviderBulk {
 
 
     /// <summary>The crypto algorithm class.</summary>
-    protected static readonly CryptoAlgorithmClasses _AlgorithmClass =
-        CryptoAlgorithmClasses.Digest;
+    protected static readonly CryptoAlgorithmClass _AlgorithmClass =
+        CryptoAlgorithmClass.Digest;
 
     /// <summary>Return the crypto algorithm class.</summary>
-    public override CryptoAlgorithmClasses AlgorithmClass => _AlgorithmClass;
+    public override CryptoAlgorithmClass AlgorithmClass => _AlgorithmClass;
 
 
     }
@@ -103,11 +103,11 @@ public abstract class CryptoProviderDigest : CryptoProviderBulk {
 public abstract class CryptoProviderAuthentication : CryptoProviderDigest {
 
     /// <summary>The crypto algorithm class.</summary>
-    protected static readonly new CryptoAlgorithmClasses _AlgorithmClass =
-        CryptoAlgorithmClasses.MAC;
+    protected static readonly new CryptoAlgorithmClass _AlgorithmClass =
+        CryptoAlgorithmClass.MAC;
 
     /// <summary>Return the crypto algorithm class.</summary>
-    public override CryptoAlgorithmClasses AlgorithmClass => _AlgorithmClass;
+    public override CryptoAlgorithmClass AlgorithmClass => _AlgorithmClass;
 
 
     /// <summary>
@@ -228,11 +228,11 @@ public abstract class CryptoProviderEncryption : CryptoProviderBulk {
 
 
     /// <summary>Return the crypto algorithm class.</summary>
-    public override CryptoAlgorithmClasses AlgorithmClass => _AlgorithmClass;
+    public override CryptoAlgorithmClass AlgorithmClass => _AlgorithmClass;
 
     /// <summary>The crypto algorithm class.</summary>
-    protected static readonly CryptoAlgorithmClasses _AlgorithmClass =
-        CryptoAlgorithmClasses.Encryption;
+    protected static readonly CryptoAlgorithmClass _AlgorithmClass =
+        CryptoAlgorithmClass.Encryption;
 
     /// <summary>
     /// Create an encoder for a bulk algorithm and optional key wrap or exchange.

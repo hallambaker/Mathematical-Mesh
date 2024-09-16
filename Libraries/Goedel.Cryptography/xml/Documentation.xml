@@ -3183,7 +3183,7 @@
             <param name="CryptoAlgorithm">Algorithm description</param>
             <returns>The catalog entry.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoCatalog.Add(Goedel.Cryptography.CryptoAlgorithmId,System.Int32,Goedel.Cryptography.CryptoAlgorithmClasses,Goedel.Cryptography.CryptoProviderFactoryDelegate)">
+        <member name="M:Goedel.Cryptography.CryptoCatalog.Add(Goedel.Cryptography.CryptoAlgorithmId,System.Int32,Goedel.Cryptography.CryptoAlgorithmClass,Goedel.Cryptography.CryptoProviderFactoryDelegate)">
             <summary>
             Add a cryptographic algorithm provider to the catalog
             </summary>
@@ -3367,7 +3367,7 @@
         <member name="P:Goedel.Cryptography.CryptoAlgorithm.CryptoProviderFactory">
             <summary>Factory method to create providers</summary>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoAlgorithm.#ctor(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmClasses,Goedel.Cryptography.CryptoProviderFactoryDelegate,System.Int32)">
+        <member name="M:Goedel.Cryptography.CryptoAlgorithm.#ctor(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmClass,Goedel.Cryptography.CryptoProviderFactoryDelegate,System.Int32)">
             <summary>
             Create an instance with the specified property values.
             </summary>

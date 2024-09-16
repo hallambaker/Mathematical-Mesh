@@ -112,9 +112,8 @@ public partial class CryptoParametersSequence : CryptoParameters {
         if (PolicySignature != PolicySignature.None) {
             if (policy.SignKeys != null) {
                 SignerKeys = new List<CryptoKey>();
-                foreach (var key in policy.SignKeys) {
-                    var keyPair = key.KeyPair;
-                    EncryptionKeys.Add(keyPair);
+                foreach (var keyPair in policy.SignatureKeys) {
+                    SignerKeys.Add(keyPair);
                     }
                 }
             }

@@ -208,7 +208,7 @@ public abstract partial class CryptoStack {
             Result.Signatures = new List<DareSignature>();
 
             // Here calculate the manifest
-            var manifest = GetManifest(DigestId, Result);
+            var manifest = GetEnvelopeSignatureManifest(DigestId, Result);
 
             if (EncryptId != CryptoAlgorithmId.NULL) {
                 var derive = new KeyDeriveHKDF(BaseSeed, Salt, CryptoAlgorithmId.HMAC_SHA_2_256);
@@ -226,7 +226,26 @@ public abstract partial class CryptoStack {
         }
 
 
-    public static byte[] GetManifest(CryptoAlgorithmId digestId, DareTrailer trailer) {
+    public static byte[] GetEnvelopeSignatureManifest(CryptoAlgorithmId digestId, DareTrailer trailer) {
+        var memoryStream = new MemoryStream();
+        var writer = new JsonBWriter(memoryStream);
+
+        writer.WriteString(digestId.ToJoseID());
+        writer.WriteBinary(trailer.PayloadDigest);
+        if (trailer.ChainDigest != null) {
+            writer.WriteBinary(trailer.ChainDigest);
+            }
+        //if (trailer.ApexDigest != null) {
+        //    writer.WriteBinary(trailer.ApexDigest);
+        //    }
+
+        writer.Flush();
+        memoryStream.Flush();
+
+        return memoryStream.ToArray();  
+        }
+
+    public static byte[] GetSequenceSignatureManifest(CryptoAlgorithmId digestId, DareTrailer trailer) {
         var memoryStream = new MemoryStream();
         var writer = new JsonBWriter(memoryStream);
 
@@ -242,8 +261,10 @@ public abstract partial class CryptoStack {
         writer.Flush();
         memoryStream.Flush();
 
-        return memoryStream.ToArray();  
+        return memoryStream.ToArray();
         }
+
+
 
 
     /// <summary>

@@ -35,7 +35,7 @@ public abstract class CryptoProviderEncryption :
     /// <summary>
     /// The type of algorithm
     /// </summary>
-    public override CryptoAlgorithmClasses AlgorithmClass => CryptoAlgorithmClasses.Encryption;
+    public override CryptoAlgorithmClass AlgorithmClass => CryptoAlgorithmClass.Encryption;
 
     /// <summary>
     /// The .NET cryptographic provider (for use by sub classes).

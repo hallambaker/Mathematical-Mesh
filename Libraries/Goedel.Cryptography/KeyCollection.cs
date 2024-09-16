@@ -237,9 +237,16 @@ public abstract class KeyCollection : IKeyLocate {
     /// <returns>The identifier.</returns>
     public virtual bool TryFindKeySignature(string keyId, out CryptoKey cryptoKey) {
 
-        var result = DictionaryKeyPairByAccountSign.TryGetValue(keyId, out var keyPair);
-        cryptoKey = keyPair;
-        return result;
+        if (DictionaryKeyPairByAccountSign.TryGetValue(keyId, out var keyPair)) {
+            cryptoKey = keyPair;
+            return true;
+            }
+        if (DictionaryKeyPairByUDF.TryGetValue(keyId, out  keyPair)) {
+            cryptoKey = keyPair;
+            return true;
+            }
+        cryptoKey = null;
+        return false;
         }
 
 

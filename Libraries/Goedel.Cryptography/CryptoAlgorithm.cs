@@ -66,7 +66,7 @@ public class CryptoAlgorithm {
     /// <summary>
     /// Return the type of algorithm.
     /// </summary>
-    public CryptoAlgorithmClasses AlgorithmClass { get; set; }
+    public CryptoAlgorithmClass AlgorithmClass { get; set; }
 
     /// <summary>
     /// ASN.1 Object Identifier
@@ -92,7 +92,7 @@ public class CryptoAlgorithm {
     /// <param name="KeySize">Default algorithm key size.</param>
     public CryptoAlgorithm(
                 CryptoAlgorithmId CryptoAlgorithmID,
-        CryptoAlgorithmClasses AlgorithmClass,
+        CryptoAlgorithmClass AlgorithmClass,
         CryptoProviderFactoryDelegate CryptoProviderFactory,
         int KeySize = 0) {
         this.CryptoAlgorithmID = CryptoAlgorithmID;
@@ -111,7 +111,7 @@ public class CryptoAlgorithm {
     public CryptoProviderEncryption CryptoProviderEncryption(int KeySize = 0) {
         KeySize = KeySize == 0 ? this.KeySize : KeySize;
 
-        Assert.AssertTrue(AlgorithmClass == CryptoAlgorithmClasses.Encryption,
+        Assert.AssertTrue(AlgorithmClass == CryptoAlgorithmClass.Encryption,
                 CryptographicException.Throw);
         return CryptoProviderFactory(KeySize, CryptoAlgorithmId.NULL) as
             CryptoProviderEncryption;
@@ -125,7 +125,7 @@ public class CryptoAlgorithm {
     /// <returns>An authentication provider.</returns>
     public CryptoProviderAuthentication CryptoProviderAuthentication(int KeySize = 0) {
         KeySize = KeySize == 0 ? this.KeySize : KeySize;
-        Assert.AssertTrue(AlgorithmClass == CryptoAlgorithmClasses.MAC,
+        Assert.AssertTrue(AlgorithmClass == CryptoAlgorithmClass.MAC,
                 CryptographicException.Throw);
         return CryptoProviderFactory(KeySize, CryptoAlgorithmId.NULL) as
             CryptoProviderAuthentication;
@@ -138,7 +138,7 @@ public class CryptoAlgorithm {
     /// <returns>An authentication provider.</returns>
     public CryptoProviderDigest CryptoProviderDigest(int OutputSize = 0) {
         OutputSize = OutputSize == 0 ? this.KeySize : OutputSize;
-        Assert.AssertTrue(AlgorithmClass == CryptoAlgorithmClasses.Digest,
+        Assert.AssertTrue(AlgorithmClass == CryptoAlgorithmClass.Digest,
                 CryptographicException.Throw);
         return CryptoProviderFactory(0, CryptoAlgorithmId.NULL) as
             CryptoProviderDigest;
@@ -152,7 +152,7 @@ public class CryptoAlgorithm {
     /// /// <param name="Key">The key to apply</param>
     /// <returns>Result of digest operation.</returns>
     public byte[] Process(byte[] Buffer, byte[] Key = null) {
-        Assert.AssertTrue(AlgorithmClass == CryptoAlgorithmClasses.Digest,
+        Assert.AssertTrue(AlgorithmClass == CryptoAlgorithmClass.Digest,
                 CryptographicException.Throw);
         var Provider = CryptoProviderFactory(0, CryptoAlgorithmId.NULL) as CryptoProviderDigest;
         Assert.AssertNotNull(Provider, CryptographicException.Throw);

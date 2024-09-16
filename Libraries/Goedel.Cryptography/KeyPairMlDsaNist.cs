@@ -255,9 +255,9 @@ public class KeyPairMlDsaNist : KeyPair, IOpaqueBinaryKey {
                     byte[] context = null) {
 
         switch (algorithmID) {
-            case CryptoAlgorithmId.MLDSA44pure:
-            case CryptoAlgorithmId.MLDSA65pure:
-            case CryptoAlgorithmId.MLDSA87pure:
+            case CryptoAlgorithmId.MLDSA44:
+            case CryptoAlgorithmId.MLDSA65:
+            case CryptoAlgorithmId.MLDSA87:
             case CryptoAlgorithmId.Default: {
                 var (result, _) = SignManifest(data, CryptoAlgorithmId.Default, context);
                 return result;
@@ -306,9 +306,9 @@ public class KeyPairMlDsaNist : KeyPair, IOpaqueBinaryKey {
                     byte[] context = null) {
 
         switch (algorithmID) {
-            case CryptoAlgorithmId.MLDSA44pure:
-            case CryptoAlgorithmId.MLDSA65pure:
-            case CryptoAlgorithmId.MLDSA87pure:
+            case CryptoAlgorithmId.MLDSA44:
+            case CryptoAlgorithmId.MLDSA65:
+            case CryptoAlgorithmId.MLDSA87:
             case CryptoAlgorithmId.Default: {
                 return VerifyManifest(data, signature, CryptoAlgorithmId.Default, context);
                 }

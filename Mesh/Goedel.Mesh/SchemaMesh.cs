@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 9/11/2024 4:45:21 PM
+//  This file was automatically generated at 9/15/2024 4:55:21 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -961,6 +961,13 @@ abstract public partial class Profile : Assertion {
 
 	public virtual KeyData?						ProfileSignature  {get; set;}
 
+        /// <summary>
+        ///A list of fingerprints of accepted root signature keys for the profile.
+        ///The profile finderprint is calculated over the concatenation of the
+        ///fingerprint URIs.
+        /// </summary>
+
+	public virtual List<string>?					RootKeyUdf  {get; set;}
 
 
     ///<summary>Implement IBinding</summary> 
@@ -977,7 +984,9 @@ abstract public partial class Profile : Assertion {
 					(IBinding data, string? value) => {(data as Profile).Description = value;}, (IBinding data) => (data as Profile).Description )},
 			{ "ProfileSignature", new PropertyStruct ("ProfileSignature", 
 					(IBinding data, object? value) => {(data as Profile).ProfileSignature = value as KeyData;}, (IBinding data) => (data as Profile).ProfileSignature,
-					false, ()=>new  KeyData(), ()=>new KeyData())} 
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "RootKeyUdf", new PropertyListString ("RootKeyUdf", 
+					(IBinding data, List<string>? value) => {(data as Profile).RootKeyUdf = value;}, (IBinding data) => (data as Profile).RootKeyUdf )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

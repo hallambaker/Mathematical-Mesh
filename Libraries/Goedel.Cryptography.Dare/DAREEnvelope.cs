@@ -851,7 +851,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
             return false;
             }
         var digestId = Header.DigestAlgorithm.ToCryptoAlgorithmID();
-        var manifest = CryptoStack.GetManifest(digestId, Trailer);
+        var manifest = CryptoStack.GetEnvelopeSignatureManifest(digestId, Trailer);
 
         var result = signature.Verify(keyPair, manifest);
         return result;

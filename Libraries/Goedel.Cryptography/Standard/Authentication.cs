@@ -31,7 +31,7 @@ public abstract class CryptoProviderAuthentication :
     /// <summary>
     /// The type of algorithm
     /// </summary>
-    public override CryptoAlgorithmClasses AlgorithmClass => CryptoAlgorithmClasses.MAC;
+    public override CryptoAlgorithmClass AlgorithmClass => CryptoAlgorithmClass.MAC;
 
     /// <summary>
     /// Hash algorithm provider.

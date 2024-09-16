@@ -181,29 +181,29 @@ public partial class Shell : _Shell {
         var algClass = algID.Class();
 
         switch (algClass) {
-            case CryptoAlgorithmClasses.Digest: {
+            case CryptoAlgorithmClass.Digest: {
                 AlgorithmDigest = algID;
                 return;
                 }
-            case CryptoAlgorithmClasses.Encryption: {
+            case CryptoAlgorithmClass.Encryption: {
                 AlgorithmEncrypt = algID;
                 return;
                 }
-            case CryptoAlgorithmClasses.MAC: {
+            case CryptoAlgorithmClass.MAC: {
                 AlgorithmMAC = algID;
                 return;
                 }
-            case CryptoAlgorithmClasses.Signature: {
+            case CryptoAlgorithmClass.SignHash: {
                 AlgorithmSign = algID;
                 return;
                 }
-            case CryptoAlgorithmClasses.Exchange: {
+            case CryptoAlgorithmClass.Exchange: {
                 AlgorithmExchange = algID;
                 AlgorithmAuthenticate = algID;
                 return;
                 }
 
-            case CryptoAlgorithmClasses.NULL:
+            case CryptoAlgorithmClass.NULL:
             break;
             default:
             break;

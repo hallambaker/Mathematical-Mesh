@@ -20,6 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Cryptography.Nist;
+
 namespace Goedel.Cryptography.Dare;
 
 
@@ -32,6 +34,8 @@ public partial class DarePolicy {
     ///<summary>Key collection to be used to resolve keys.</summary> 
     public IKeyLocate KeyLocation { get; set; }
 
+
+    public List<KeyPair> SignatureKeys { get; set; } = null;
 
     /////<summary></summary> 
     //CryptoParameters CryptoParameters { get; set; }
@@ -71,11 +75,21 @@ public partial class DarePolicy {
 
             foreach (var recipient in recipients) {
                 keyLocate.TryFindKeyEncryption(recipient, out var keypair).AssertTrue(KeyNotFound.Throw);
-                EncryptKeys.Add(Jose.Key.FactoryPublic(keypair as KeyPair));
+                EncryptKeys.Add(Key.FactoryPublic(keypair as KeyPair));
+                }
+            }
+        if (signers != null) {
+            SignKeys = new List<Jose.Key>();
+            SignatureKeys = new();
+            foreach (var signer in signers) {
+                keyLocate.TryFindKeySignature(signer, out var keypair).AssertTrue(KeyNotFound.Throw);
+                SignatureKeys.Add(keypair as KeyPair);
+                SignKeys.Add(Key.FactoryPublic(keypair as KeyPair));
                 }
             }
 
-        signers.Future();
+
+
 
         Sealed = true;
         }

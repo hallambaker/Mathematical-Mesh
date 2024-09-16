@@ -4,6 +4,60 @@
         <name>Goedel.Cryptography.Identifiers</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Cryptography.AssuranceLevel">
+            <summary>
+            Assurance levels for cryptographic algorithms
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.AssuranceLevel.PQ64">
+            <summary>64 bits quantum security</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.AssuranceLevel.PQ80">
+            <summary>64 bits quantum security</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.AssuranceLevel.PQ96">
+            <summary>64 bits quantum security</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.AssuranceLevel.PQ128">
+            <summary>64 bits quantum security</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.AssuranceLevel.CC80">
+            <summary>64 bits quantum security</summary> 
+            <summary>80 bits classical security strength</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.AssuranceLevel.CC112">
+            <summary>112 bits classical security strength</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.AssuranceLevel.CC128">
+            <summary>128 bits classical security strength</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.AssuranceLevel.CC192">
+            <summary>192 bits classical security strength</summary>    
+        </member>
+        <member name="F:Goedel.Cryptography.AssuranceLevel.CC224">
+            <summary>224 bits classical security strength</summary>  
+        </member>
+        <member name="F:Goedel.Cryptography.AssuranceLevel.CC256">
+            <summary>256 bits classical security strength</summary>  
+        </member>
+        <member name="F:Goedel.Cryptography.AssuranceLevel.PQC1">
+            <summary>128 bits classical security strength, 64 bits quantum security</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.AssuranceLevel.PQC2">
+            <summary>128 bits classical security strength, 80 bits quantum security</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.AssuranceLevel.PQC3">
+            <summary>192 bits classical security strength, 96 bits quantum security</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.AssuranceLevel.PQC4">
+            <summary>192 bits classical security strength, 128 bits quantum security</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.AssuranceLevel.PQC5">
+            <summary>256 bits classical security strength, 128 bits quantum security</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.AssuranceLevel.Unkown">
+            <summary></summary> 
+        </member>
         <member name="T:Goedel.Cryptography.BitIndex">
             <summary>
             Convert a BigInteger to a Bitfield and return successive bits
@@ -195,6 +249,62 @@
             <param name="length">The length of the result to return in bytes. If zero, the length
             is calculated from <paramref name="bigInteger"/>.</param>
             <returns>The byte array.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.CryptoAlgorithmProfile">
+            <summary>
+            Profile describing a family of cryptographic algorithms with the same capabilities
+            and assurance quality (conventional or quantum).
+            </summary>
+            <param name="SignId">The base <see cref="T:Goedel.Cryptography.CryptoAlgorithmId"/> for the family.</param>
+            <param name="Class">The functionality supported.</param>
+            <param name="Variants">Description of the variations of the algorithm from lowest to
+            highest assurance level.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoAlgorithmProfile.#ctor(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmClass,Goedel.Cryptography.AlgorithmVariant[],System.String,System.String)">
+            <summary>
+            Profile describing a family of cryptographic algorithms with the same capabilities
+            and assurance quality (conventional or quantum).
+            </summary>
+            <param name="SignId">The base <see cref="T:Goedel.Cryptography.CryptoAlgorithmId"/> for the family.</param>
+            <param name="Class">The functionality supported.</param>
+            <param name="Variants">Description of the variations of the algorithm from lowest to
+            highest assurance level.</param>
+        </member>
+        <member name="P:Goedel.Cryptography.CryptoAlgorithmProfile.SignId">
+            <summary>The base <see cref="T:Goedel.Cryptography.CryptoAlgorithmId"/> for the family.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.CryptoAlgorithmProfile.Class">
+            <summary>The functionality supported.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.CryptoAlgorithmProfile.Variants">
+            <summary>Description of the variations of the algorithm from lowest to
+            highest assurance level.</summary>
+        </member>
+        <member name="T:Goedel.Cryptography.CryptoAlgorithmClass">
+            <summary>
+            Algorithm classes.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmClass.Digest">
+            <summary>Digest algorithm.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmClass.MAC">
+            <summary>Message Authentication Code</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmClass.Encryption">
+            <summary>Symmetric Encryption.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmClass.Exchange">
+            <summary>Asymmetric Encryption.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmClass.SignHash">
+            <summary>Digital Signature</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmClass.SignManifest">
+            <summary>Digital Signature</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmClass.NULL">
+            <summary>Unspecified.</summary>
         </member>
         <member name="T:Goedel.Cryptography.CryptoAlgorithmId">
             <summary>
@@ -412,22 +522,22 @@
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Ed448ph">
             <summary>Elliptic Curve DSA with curve Ed448</summary>
         </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA44">
+            <summary>ML-DSA (Dilithium) 44 PURE</summary> 
+        </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA44hash">
             <summary>ML-DSA (Dilithium) 44</summary> 
         </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA44pure">
-            <summary>ML-DSA (Dilithium) 44 PURE</summary> 
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA65">
+            <summary>ML-DSA (Dilithium) 65</summary> 
         </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA65hash">
             <summary>ML-DSA (Dilithium) 65</summary> 
         </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA65pure">
-            <summary>ML-DSA (Dilithium) 65</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA87hash">
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA87">
             <summary>ML-DSA (Dilithium) 87</summary> 
         </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA87pure">
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.MLDSA87hash">
             <summary>ML-DSA (Dilithium) 87</summary> 
         </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.P256">
@@ -486,127 +596,6 @@
         </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES256_GCM_KW">
             <summary>RFC 3394 / NIST with AES and 192 bit key</summary>
-        </member>
-        <member name="T:Goedel.Cryptography.KeySecurity">
-            <summary>Enumeration specifying whether the key is public or private and if private,
-            the storage model.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeySecurity.Null">
-            <summary>Null Flags.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeySecurity.Persisted">
-            <summary>Flag indicating that the private key has been persisted to the local machine</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeySecurity.Persistable">
-            <summary>Flag indicating that the private key may be persisted to the local machine.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeySecurity.Session">
-            <summary>Flag indicating that the private key may be stored in an in-memory
-            structure (e.g. key collection) but not persisted.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeySecurity.Exportable">
-            <summary>Flag indicating that the private key may be exported.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeySecurity.Ephemeral">
-            <summary>Private key that cannot be exported or persisted.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeySecurity.Bound">
-            <summary>Private key that is stored on the local machine and cannot be exported.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeySecurity.ExportableStored">
-            <summary>Flag indicating that the private key has been store and may be exported.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeySecurity.Public">
-            <summary>Key is public only.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeySecurity.Master">
-            <summary>
-            Key is a Mesh master key and will be stored in a key container marked 
-            as archivable and user protected. Master keys SHOULD be deleted after 
-            being escrowed and recovery verified.
-            </summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeySecurity.Admin">
-            <summary>
-            Key is a Mesh administration key and will be  stored in a key container marked as non 
-            exportable and user protected.
-            </summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeySecurity.Device">
-            <summary>
-            Key is Mesh a device key and will be  stored in a key container bound to 
-            the current machine that cannot be exported or archived.
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.KeyUses">
-            <summary>
-            Combined Key Uses. This is a conjunction of the JOSE and PKIX key uses.
-            </summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeyUses.DigitalSignature">
-            <summary>PKIX Sign</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeyUses.Sign">
-            <summary>Jose Sign (alias for the PKIX bitmask)</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeyUses.NonRepudiation">
-            <summary>If clear, signatures may be repudiated</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeyUses.KeyEncipherment">
-            <summary>PKIX Encryption</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeyUses.Encrypt">
-            <summary>Jose Encryption (alias for the PKIX bitmask)</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeyUses.DataEncipherment">
-            <summary>PKIX Flag, should not be used.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeyUses.KeyAgreement">
-            <summary>PKIX Key agreement (used for client, server authentication).</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeyUses.KeyCertSign">
-            <summary>PKIX Sign certificates</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeyUses.CRLSign">
-            <summary>
-            Sign CRLs
-            </summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeyUses.EncipherOnly">
-            <summary>
-            Don't use
-            </summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeyUses.DecipherOnly">
-            <summary>
-            Don't Use.
-            </summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeyUses.Any">
-            <summary>Jose Sign or Encryption (alias for the PKIX bitmask)</summary>
-        </member>
-        <member name="T:Goedel.Cryptography.CryptoAlgorithmClasses">
-            <summary>
-            Algorithm classes.
-            </summary>
-        </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmClasses.NULL">
-            <summary>Unspecified.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmClasses.Digest">
-            <summary>Digest algorithm.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmClasses.MAC">
-            <summary>Message Authentication Code</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmClasses.Encryption">
-            <summary>Symmetric Encryption.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmClasses.Signature">
-            <summary>Digital Signature</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmClasses.Exchange">
-            <summary>Asymmetric Encryption.</summary>
         </member>
         <member name="T:Goedel.Cryptography.CryptoID">
             <summary>
@@ -2160,6 +2149,10 @@
             Constants specified in hallambaker-mesh-udf
             </summary>
         </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.NA">
+            <summary>
+            </summary>
+        </member>
         <member name="F:Goedel.Cryptography.JoseConstants.AES">
             <summary>
             </summary>
@@ -2216,6 +2209,14 @@
             <summary>
             </summary>
         </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.RSA7680">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.RSA15360">
+            <summary>
+            </summary>
+        </member>
         <member name="F:Goedel.Cryptography.JoseConstants.MLKEM512">
             <summary>
             </summary>
@@ -2263,6 +2264,104 @@
         <member name="F:Goedel.Cryptography.JoseConstants.SHA3_512">
             <summary>
             </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.KeySecurity">
+            <summary>Enumeration specifying whether the key is public or private and if private,
+            the storage model.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.Null">
+            <summary>Null Flags.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.Persisted">
+            <summary>Flag indicating that the private key has been persisted to the local machine</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.Persistable">
+            <summary>Flag indicating that the private key may be persisted to the local machine.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.Session">
+            <summary>Flag indicating that the private key may be stored in an in-memory
+            structure (e.g. key collection) but not persisted.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.Exportable">
+            <summary>Flag indicating that the private key may be exported.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.Ephemeral">
+            <summary>Private key that cannot be exported or persisted.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.Bound">
+            <summary>Private key that is stored on the local machine and cannot be exported.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.ExportableStored">
+            <summary>Flag indicating that the private key has been store and may be exported.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.Public">
+            <summary>Key is public only.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.Master">
+            <summary>
+            Key is a Mesh master key and will be stored in a key container marked 
+            as archivable and user protected. Master keys SHOULD be deleted after 
+            being escrowed and recovery verified.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.Admin">
+            <summary>
+            Key is a Mesh administration key and will be  stored in a key container marked as non 
+            exportable and user protected.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeySecurity.Device">
+            <summary>
+            Key is Mesh a device key and will be  stored in a key container bound to 
+            the current machine that cannot be exported or archived.
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.KeyUses">
+            <summary>
+            Combined Key Uses. This is a conjunction of the JOSE and PKIX key uses.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.DigitalSignature">
+            <summary>PKIX Sign</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.Sign">
+            <summary>Jose Sign (alias for the PKIX bitmask)</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.NonRepudiation">
+            <summary>If clear, signatures may be repudiated</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.KeyEncipherment">
+            <summary>PKIX Encryption</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.Encrypt">
+            <summary>Jose Encryption (alias for the PKIX bitmask)</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.DataEncipherment">
+            <summary>PKIX Flag, should not be used.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.KeyAgreement">
+            <summary>PKIX Key agreement (used for client, server authentication).</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.KeyCertSign">
+            <summary>PKIX Sign certificates</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.CRLSign">
+            <summary>
+            Sign CRLs
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.EncipherOnly">
+            <summary>
+            Don't use
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.DecipherOnly">
+            <summary>
+            Don't Use.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.KeyUses.Any">
+            <summary>Jose Sign or Encryption (alias for the PKIX bitmask)</summary>
         </member>
         <member name="T:Goedel.Cryptography.NamespaceDoc">
             <summary>

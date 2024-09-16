@@ -51,16 +51,16 @@ public static partial class Extension {
     /// </summary>
     /// <param name="cryptoAlgorithmID">The algorithm identifier to categorize.</param>
     /// <returns>The class of algorithm specified by <paramref name="cryptoAlgorithmID"/></returns>
-    public static CryptoAlgorithmClasses Class(
+    public static CryptoAlgorithmClass Class(
                 this CryptoAlgorithmId cryptoAlgorithmID) =>
         (cryptoAlgorithmID & CryptoAlgorithmId.BulkTagMask) switch {
-            CryptoAlgorithmId.Digest => CryptoAlgorithmClasses.Digest,
-            CryptoAlgorithmId.Encryption => CryptoAlgorithmClasses.Encryption,
-            CryptoAlgorithmId.MAC => CryptoAlgorithmClasses.MAC,
+            CryptoAlgorithmId.Digest => CryptoAlgorithmClass.Digest,
+            CryptoAlgorithmId.Encryption => CryptoAlgorithmClass.Encryption,
+            CryptoAlgorithmId.MAC => CryptoAlgorithmClass.MAC,
             _ => (cryptoAlgorithmID & CryptoAlgorithmId.MetaTagMask) switch {
-                CryptoAlgorithmId.Signature => CryptoAlgorithmClasses.Signature,
-                CryptoAlgorithmId.Exchange => CryptoAlgorithmClasses.Exchange,
-                _ => CryptoAlgorithmClasses.NULL,
+                CryptoAlgorithmId.Signature => CryptoAlgorithmClass.SignHash,
+                CryptoAlgorithmId.Exchange => CryptoAlgorithmClass.Exchange,
+                _ => CryptoAlgorithmClass.NULL,
                 },
             };
 

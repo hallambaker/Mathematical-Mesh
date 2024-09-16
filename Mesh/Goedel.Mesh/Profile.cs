@@ -180,27 +180,6 @@ public partial class Profile {
     public bool Verify(DareEnvelope envelopedAssertion) =>
                 envelopedAssertion.VerifySignature(ProfileSignatureKey);
 
-
-    ///// <summary>
-    ///// Verify the profile and return the value true if successful, otherwise false.
-    ///// </summary>
-    ///// <param name="signature">The envelope signature.</param>
-    ///// <param name="digest">The payload digest value.</param>
-    ///// <param name="keyIdentifier">The signature key identifier.</param>
-    ///// <returns>True if the profile is valid, otherwise false.</returns>
-    //public virtual bool Verify(
-    //            DareSignature signature,
-    //            byte[] digest,
-    //            string keyIdentifier) {
-    //    if (!Udf.Matches(keyIdentifier)) {
-    //        return false;
-    //        }
-    //    if (ProfileSignatureKey.MatchKeyIdentifier(ProfileSignatureKey.KeyIdentifier)) {
-    //        return ProfileSignatureKey.VerifyDigest(digest, signature.SignatureValue);
-    //        }
-    //    return false;
-    //    }
-
     /// <summary>
     /// Verify that the signature <paramref name="signature"/> is valid under one of the
     /// profiles specified in <paramref name="envelopedProfiles"/> and that the specified profile 
@@ -256,6 +235,40 @@ public partial class Profile {
 
         return false;
         }
+
+
+    // return the UDF string
+    public Udf GetUdf() {
+        return  new Udf(UdfString, ProfileSignatureKey.UDFBytes).CacheValue(out udf);
+
+
+
+        }
+
+
+    public DareEnvelope SignProfile() {
+
+
+        throw new NYI();
+        }
+
+
+    public DareEnvelope GetEnvelopeSlim(
+                    CryptoAlgorithmId signatureAlgorithm=CryptoAlgorithmId.NULL) {
+
+        // null algorithm, take the first signature algorithm in the list.
+
+
+
+        throw new NYI();
+        }
+
+
+    //public bool Validate(
+    //            ) {
+    //    throw new NYI(); 
+    //    }
+
 
 
     #endregion

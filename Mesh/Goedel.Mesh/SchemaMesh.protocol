@@ -167,7 +167,12 @@
 				|the key is used as the permanent object identifier of the profile. Thus,
 				|by definition, the KeySignature value of a Profile does not change under
 				|any circumstance.
-
+		String RootKeyUdf
+			Multiple
+			Description
+				|A list of fingerprints of accepted root signature keys for the profile.
+				|The profile finderprint is calculated over the concatenation of the
+				|fingerprint URIs.
 
 	Structure ProfileDevice
 		Inherits Profile

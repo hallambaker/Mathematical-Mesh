@@ -9369,6 +9369,13 @@
             any circumstance.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Profile.RootKeyUdf">
+             <summary>
+            A list of fingerprints of accepted root signature keys for the profile.
+            The profile finderprint is calculated over the concatenation of the
+            fingerprint URIs.
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.Profile._Binding">
             <summary>Implement IBinding</summary> 
         </member>

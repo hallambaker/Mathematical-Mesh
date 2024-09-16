@@ -128,7 +128,7 @@ public class CryptoCatalog {
     public CryptoAlgorithm Add(
         CryptoAlgorithmId CryptoAlgorithmID,
         int KeySize,
-        CryptoAlgorithmClasses AlgorithmClass,
+        CryptoAlgorithmClass AlgorithmClass,
         CryptoProviderFactoryDelegate CryptoProviderFactory) {
 
         var CryptoAlgorithm = new CryptoAlgorithm(CryptoAlgorithmID, AlgorithmClass, CryptoProviderFactory, KeySize);
@@ -240,7 +240,7 @@ public abstract class CryptoProvider {
     /// <summary>
     /// The type of algorithm
     /// </summary>
-    public abstract CryptoAlgorithmClasses AlgorithmClass { get; }
+    public abstract CryptoAlgorithmClass AlgorithmClass { get; }
 
     /// <summary>
     /// The CryptoAlgorithmID Identifier.

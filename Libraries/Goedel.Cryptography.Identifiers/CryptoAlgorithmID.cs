@@ -120,22 +120,27 @@ public enum CryptoAlgorithmId {
     SHA_2_256 = Digest + 2,
 
     /// <summary>SHA2 512 bit</summary>
-    SHA_2_512 = Digest + 3,
+    SHA_2_384 = Digest + 3,
 
     /// <summary>SHA2 512 bit</summary>
-    SHA_2_512T128 = Digest + 4,
+    SHA_2_512 = Digest + 4,
+
+    /// <summary>SHA2 512 bit</summary>
+    SHA_2_512T128 = Digest + 5,
 
     /// <summary>SHA3 256 bit</summary>
-    SHA_3_256 = Digest + 5,
+    SHA_3_256 = Digest + 6,
+
+    /// <summary>SHA3 256 bit</summary>
+    SHA_3_384 = Digest + 7,
+    /// <summary>SHA3 512 bit</summary>
+    SHA_3_512 = Digest + 8,
 
     /// <summary>SHA3 512 bit</summary>
-    SHA_3_512 = Digest + 6,
+    SHAKE_128 = Digest + 9,
 
     /// <summary>SHA3 512 bit</summary>
-    SHAKE_128 = Digest + 7,
-
-    /// <summary>SHA3 512 bit</summary>
-    SHAKE_256 = Digest + 8,
+    SHAKE_256 = Digest + 10,
 
 
 
@@ -158,14 +163,20 @@ public enum CryptoAlgorithmId {
 
     /// <summary>Flag for Electronic Code Book Mode</summary>
     ModeECB = 6,
+    
+    /// <summary>Flag for OCB Mode</summary>
+    ModeOCB = 7,
+
 
 
     /// <summary>AES 128 bit key</summary>
     AES128 = Encryption,
 
     /// <summary>AES 256 bit key</summary>
-    AES256 = Encryption + 8,
+    AES192 = Encryption + 8,
 
+    /// <summary>AES 256 bit key</summary>
+    AES256 = Encryption + 16,
 
     /// <summary>AES 128 bit in CBC mode</summary>
     AES128CBC = AES128 + ModeCBC,
@@ -184,6 +195,19 @@ public enum CryptoAlgorithmId {
 
     /// <summary>AES 128 bit ECB mode with zeros padding</summary>
     AES128ECB = AES128 + ModeECB,
+
+    /// <summary>AES 128 bit in CBC mode</summary>
+    AES128OCB = AES128 + ModeOCB,
+
+
+    /// <summary>AES 128 bit in CBC mode</summary>
+    AES192CBC = AES192 + ModeCBC,
+
+    /// <summary>AES 128 bit in CBC mode</summary>
+    AES192GCM = AES192 + ModeGCM,
+
+    /// <summary>AES 128 bit in CBC mode</summary>
+    AES192OCB = AES192 + ModeOCB,
 
 
     /// <summary>AES 256 bit in CBC mode</summary>
@@ -204,6 +228,8 @@ public enum CryptoAlgorithmId {
     /// <summary>AES 128 bit ECB mode with zeros padding</summary>
     AES256ECB = AES256 + ModeECB,
 
+    /// <summary>AES 128 bit in CBC mode</summary>
+    AES256OCB = AES256 + ModeOCB,
 
     // HMAC Modes
 
@@ -217,7 +243,19 @@ public enum CryptoAlgorithmId {
     HMAC_SHA_2_512T128 = 14,
 
     /// <summary>HMAC SHA 2 with 512 bit key.</summary>
-    HMAC_SHA_3_512 = 15,
+    HMAC_SHA_3_256 = 15,
+
+    /// <summary>HMAC SHA 2 with 512 bit key.</summary>
+    HMAC_SHA_3_512 = 16,
+
+    /// <summary>HMAC SHA 2 with 512 bit key.</summary>
+    CMAC= 17,
+
+    /// <summary>HMAC SHA 2 with 512 bit key.</summary>
+    KMAC_128 = 18,
+
+    /// <summary>HMAC SHA 2 with 512 bit key.</summary>
+    KMAC_256 = 19,
 
 
 
@@ -256,6 +294,7 @@ public enum CryptoAlgorithmId {
 
     /// <summary>Elliptic Curve DSA with curve 25519x pure</summary>
     EdDSA = Signature + Meta * 2 ,
+
     /// <summary>Elliptic Curve DSA with curve 25519x pure</summary>
     Ed25519 = Signature + Meta * 3,
 
@@ -263,7 +302,7 @@ public enum CryptoAlgorithmId {
     //Ed25519pure = Ed25519 + DIRECT,
 
     /// <summary>Elliptic Curve DSA with curve 25519x prehashed using SHA512</summary>
-    Ed25519ph = Signature + Meta * 4 + SHA_2_512,
+    Ed25519ph = Signature + Meta * 4,
 
     /// <summary>Elliptic Curve DSA with curve Ed448</summary>
     Ed448 = Signature + Meta * 5,
@@ -272,25 +311,25 @@ public enum CryptoAlgorithmId {
     //Ed448pure = Ed448 + DIRECT,
 
     /// <summary>Elliptic Curve DSA with curve Ed448</summary>
-    Ed448ph = Signature + Meta * 6 + SHAKE_256,
-
-    ///<summary>ML-DSA (Dilithium) 44</summary> 
-    MLDSA44hash = Signature + Meta * 7,
+    Ed448ph = Signature + Meta * 6,
 
     ///<summary>ML-DSA (Dilithium) 44 PURE</summary> 
-    MLDSA44pure = Signature + Meta * 8,
+    MLDSA44 = Signature + Meta * 7,
+
+    ///<summary>ML-DSA (Dilithium) 44</summary> 
+    MLDSA44hash = Signature + Meta * 8,
 
     ///<summary>ML-DSA (Dilithium) 65</summary> 
-    MLDSA65hash = Signature + Meta * 9,
+    MLDSA65 = Signature + Meta * 9,
 
     ///<summary>ML-DSA (Dilithium) 65</summary> 
-    MLDSA65pure = Signature + Meta * 10,
+    MLDSA65hash = Signature + Meta * 10,
 
     ///<summary>ML-DSA (Dilithium) 87</summary> 
-    MLDSA87hash = Signature + Meta * 11,
+    MLDSA87 = Signature + Meta * 11,
 
     ///<summary>ML-DSA (Dilithium) 87</summary> 
-    MLDSA87pure = Signature + Meta * 12,
+    MLDSA87hash = Signature + Meta * 12,
 
     ///<summary>NIST Curve P256</summary> 
     P256 = Signature + Meta * 13,
@@ -354,133 +393,4 @@ public enum CryptoAlgorithmId {
     ///<summary>RFC 3394 / NIST with AES and 192 bit key</summary>
     AES256_GCM_KW = Wrap + Meta * 5,
 
-    }
-
-///<summary>Enumeration specifying whether the key is public or private and if private,
-///the storage model.</summary>
-[Flags]
-public enum KeySecurity {
-
-    ///<summary>Null Flags.</summary>
-    Null = 0,
-
-    ///<summary>Flag indicating that the private key has been persisted to the local machine</summary>
-    Persisted = 0b0001,
-
-    ///<summary>Flag indicating that the private key may be persisted to the local machine.</summary>
-    Persistable = 0b0010,
-
-    ///<summary>Flag indicating that the private key may be stored in an in-memory
-    ///structure (e.g. key collection) but not persisted.</summary>
-    Session = 0b0100,
-
-    ///<summary>Flag indicating that the private key may be exported.</summary>
-    Exportable = 0b01000,
-
-
-    ///<summary>Private key that cannot be exported or persisted.</summary>
-    Ephemeral = Null,
-
-    ///<summary>Private key that is stored on the local machine and cannot be exported.</summary>
-    Bound = Persistable,
-
-    ///<summary>Flag indicating that the private key has been store and may be exported.</summary>
-    ExportableStored = Persistable | Exportable,
-
-    ///<summary>Key is public only.</summary>
-    Public = 0b10000,
-
-    /// <summary>
-    /// Key is a Mesh master key and will be stored in a key container marked 
-    /// as archivable and user protected. Master keys SHOULD be deleted after 
-    /// being escrowed and recovery verified.
-    /// </summary>
-    Master = ExportableStored,
-
-    /// <summary>
-    /// Key is a Mesh administration key and will be  stored in a key container marked as non 
-    /// exportable and user protected.
-    /// </summary>
-    Admin = Bound,
-
-    /// <summary>
-    /// Key is Mesh a device key and will be  stored in a key container bound to 
-    /// the current machine that cannot be exported or archived.
-    /// </summary>
-    Device = Bound
-
-    }
-
-
-/// <summary>
-/// Combined Key Uses. This is a conjunction of the JOSE and PKIX key uses.
-/// </summary>
-[Flags]
-public enum KeyUses {
-    ///<summary>PKIX Sign</summary>
-    DigitalSignature = 0x0001,       // EmailSignature | DataSignature | CodeSigning
-
-    ///<summary>Jose Sign (alias for the PKIX bitmask)</summary>
-    Sign = DigitalSignature,
-
-    ///<summary>If clear, signatures may be repudiated</summary>
-    NonRepudiation = 0x0002,       // Confirmation
-
-    ///<summary>PKIX Encryption</summary>
-    KeyEncipherment = 0x0004,       // EmailEncryption | DataEncryption
-
-    ///<summary>Jose Encryption (alias for the PKIX bitmask)</summary>
-    Encrypt = KeyAgreement,
-
-    ///<summary>PKIX Flag, should not be used.</summary>
-    DataEncipherment = 0x0008,       // Don't Use
-
-    ///<summary>PKIX Key agreement (used for client, server authentication).</summary>
-    KeyAgreement = 0x0010,       // ServerAuth | ClientAuth
-
-    ///<summary>PKIX Sign certificates</summary>
-    KeyCertSign = 0x0020,       // CA | Root
-
-    /// <summary>
-    /// Sign CRLs
-    /// </summary>
-    CRLSign = 0x0040,       // CRL
-
-    /// <summary>
-    /// Don't use
-    /// </summary>
-    EncipherOnly = 0x0080,       // Don't use
-
-    /// <summary>
-    /// Don't Use.
-    /// </summary>
-    DecipherOnly = 0x0100,        // Don't use
-
-    ///<summary>Jose Sign or Encryption (alias for the PKIX bitmask)</summary>
-    Any = Sign | Encrypt
-    }
-
-/// <summary>
-/// Algorithm classes.
-/// </summary>
-[Flags]
-public enum CryptoAlgorithmClasses {
-
-    /// <summary>Unspecified.</summary>
-    NULL,
-
-    /// <summary>Digest algorithm.</summary>
-    Digest = 1,
-
-    /// <summary>Message Authentication Code</summary>
-    MAC = 2,
-
-    /// <summary>Symmetric Encryption.</summary>
-    Encryption = 4,
-
-    /// <summary>Digital Signature</summary>
-    Signature = 8,
-
-    /// <summary>Asymmetric Encryption.</summary>
-    Exchange = 16
     }

@@ -63,10 +63,11 @@ partial class Program {
 
 
 
+        TestService.Test().MeshCreateAdmin();
         //TestNist.Test().TestKemEncapDecap();
-        CallsignDirect.Test().RegisterAlice();
+        //CallsignDirect.Test().RegisterAlice();
 
-        //ShellTests.Test().NewArchiveTestOnce(true, false, false, false);
+        //ShellTests.Test().NewArchiveTestOnce(true, false, true, false);
 
 
         //UDFKeyGen.TEST1.Test();
@@ -75,7 +76,7 @@ partial class Program {
 
 
 
-        //TestSequences.Test().TestSign(SequenceType.Merkle);
+        TestSequences.Test().TestSign(SequenceType.Merkle);
 
 
 
