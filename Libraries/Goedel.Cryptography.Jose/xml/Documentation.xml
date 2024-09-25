@@ -522,6 +522,13 @@
             </summary>
             <param name="Provider">The encryption provider</param>
         </member>
+        <member name="M:Goedel.Cryptography.Jose.Header.GetAgreementData">
+            <summary>
+            Get the agreement data, this is presented in Epk for ephemeral keys and in
+            Ek for a KEM.
+            </summary>
+            <returns>The agreement data.</returns>
+        </member>
         <member name="P:Goedel.Cryptography.Jose.Header.Jku">
              <summary>
             JWK Set URL
@@ -1684,19 +1691,19 @@
             <summary>
             Encrypt to the specified key of the specified profile.
             </summary>
-            <param name="RecipientKey">KeyPair for the recipient.</param>
-            <param name="ExchangeData">The key to be exchanged.</param>
-            <param name="Ephemeral">The ephemeral key (if required by the algorithm)</param>
-            <param name="KID">Recipient Key ID.</param>
+            <param name="recipientKey">KeyPair for the recipient.</param>
+            <param name="exchangeData">The key to be exchanged.</param>
+            <param name="agreementData">The ephemeral key or ciphertext (if required by the algorithm)</param>
+            <param name="kid">Recipient Key ID.</param>
         </member>
         <member name="M:Goedel.Cryptography.Jose.Recipient.#ctor(System.String,System.String,System.Byte[])">
             <summary>
             Wrap the specified content encryption key and form the corresponding 
             Reccipient object containing the corresponding identifier, etc.
             </summary>
-            <param name="Algorithm">The algorithm identifier</param>
-            <param name="Identifier">The key identifier</param>
-            <param name="WrappedKey">The wrapped key</param>
+            <param name="algorithm">The algorithm identifier</param>
+            <param name="identifier">The key identifier</param>
+            <param name="wrappedKey">The wrapped key</param>
         </member>
         <member name="T:Goedel.Cryptography.Jose.PublicKeyRSA">
              <summary>

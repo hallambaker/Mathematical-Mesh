@@ -25,63 +25,20 @@ using Goedel.Cryptography.Nist;
 namespace Goedel.Cryptography;
 
 
-
-public class KeyFactoryECC {
-
-    //public KeyFactoryECC() {
-
-    //    var factory = new EccCurveFactory();
-    //    var curve1 = factory.GetCurve(NistCurve.P256);
-
-    //    }
-
-
-    public static void Generate(
-                    byte[] ikm,
-                    byte[] keySpecifier,
-                    string keyName,
-                    int keySize) {
-        var generator = new PrimeGeneratorUdf(ikm, keySpecifier, keyName);
-        Generate(generator, keySize);
-
-        }
-
-    public static void Generate(IPrimeGenerator generator, int keySize) {
-
-
-
-        var curveId = keySize switch {
-            256 => NistCurve.P256,
-            384 => NistCurve.P384,
-            521 => NistCurve.P521,
-            _ => throw new CryptographicException()
-        };
-
-        //var factory = new EccCurveFactory();
-        var curve = EccCurveFactory.GetCurve(curveId);
-
-        var d = generator.GetEntropy(1, curve.OrderN, "d", null);
-
-
-        var Q = curve.Multiply(curve.BasePointG, d);
-
-        //need to encode octets according to
-        //https://www.secg.org/sec1-v2.pdf
-
-        // First output the byte 04 (uncompressed)
-        // Then X in bigendian form and Y in bigendian form.
-
-        }
-
-
-
-    }
-
-
-
+/// <summary>
+/// RSA Key factory.
+/// </summary>
 public  class KeyFactoryRsa {
 
-
+    /// <summary>
+    /// Generate RSA key parameters with hints.
+    /// </summary>
+    /// <param name="ikm">The initial keying material.</param>
+    /// <param name="keySpecifier">The key type specifier.</param>
+    /// <param name="keyName">The key name.</param>
+    /// <param name="keySize">The key size (in bits)</param>
+    /// <param name="hintsIn">Optional generation hints to avoid need to search for parameters.</param>
+    /// <returns>The RSA key pair and hints.</returns>
     public static (PkixPrivateKeyRsa, RsaGenerationHints) Generate(
                         byte[] ikm,
                         byte[] keySpecifier,
@@ -97,6 +54,13 @@ public  class KeyFactoryRsa {
         }
 
 
+    /// <summary>
+    /// Generate RSA key parameters
+    /// </summary>
+    /// <param name="generator">The prime generator to use.</param>
+    /// <param name="keySize">The key size in bits.</param>
+    /// <param name="hintsIn">Optional generation hints to avoid need to search for parameters.</param>
+    /// <returns>The RSA key pair</returns>
     public static PkixPrivateKeyRsa Generate(IPrimeGenerator generator, int keySize,
                         RsaGenerationHints hintsIn = null) {
         var keyGenerator = new CrtKeyComposer(generator);

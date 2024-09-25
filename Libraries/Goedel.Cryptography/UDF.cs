@@ -31,6 +31,9 @@ namespace Goedel.Cryptography;
 /// Class implementing the Uniform Data Fingerprint spec.
 /// </summary>
 /// <param name="Value">The identifier value field.</param>
+/// <param name="Code">The UDF identifier type.</param>
+/// <param name="Bits">The number of bits of precision. If 0, the default
+/// number of bits <see cref="DefaultBits"/> is used.</param>
 public record Udf(
             UdfTypeIdentifier Code,
             byte[] Value,
@@ -47,7 +50,7 @@ public record Udf(
     public static int DefaultBits { get; set; } = 140;
 
     /// <summary>
-    /// Maximum precision (usually 440);
+    /// Minimum precision (usually 128);
     /// </summary>
     public static int MinimumBits { get; set; } = 128;
 
@@ -862,7 +865,13 @@ public record Udf(
                 CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.SHA_2_512) =>
         DataToUDFBinary(data, UDFConstants.PKIXKey, bits, cryptoAlgorithmId);
 
-
+    /// <summary>
+    /// Calculate a UDF over a sequence of binary UDF values.
+    /// </summary>
+    /// <param name="roots">The UDF digests to compute the digest of.</param>
+    /// <param name="cryptoAlgorithmId">The algorithm to use to compute the digest.</param>
+    /// <returns>The constructed UDF.</returns>
+    /// <exception cref="CryptographicException">The digest algorithm is not known or not supported.</exception>
     public static Udf? CalculateProfileUdf(
                     IEnumerable<byte[]> roots,
                     CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.SHA_2_512
@@ -870,11 +879,25 @@ public record Udf(
         if (roots is null) {
             return null;
             }
+        HashAlgorithm provider;
+        UdfTypeIdentifier id;
 
-        var (provider, id) = cryptoAlgorithmId switch {
-            CryptoAlgorithmId.SHA_2_512 => (SHA512.Create(), UdfTypeIdentifier.Digest_SHA_2_512),
-            _ => throw new CryptographicException()
-            };
+
+        switch (cryptoAlgorithmId) {
+            case CryptoAlgorithmId.SHA_2_512: {
+                provider = SHA512.Create();
+                id = UdfTypeIdentifier.Digest_SHA_2_512;
+                break;
+                }
+            case CryptoAlgorithmId.SHA_3_512: {
+                provider = SHA3Managed.Create();
+                id = UdfTypeIdentifier.Digest_SHA_3_512;
+                break;
+                }
+            default: {
+                throw new CryptographicException();
+                }
+            }
 
         var length = new byte[1];
         foreach (var root in roots) {
@@ -1213,11 +1236,11 @@ public record Udf(
     /// Derive a key pair from the UDF key <paramref name="udf"/> with Key security model
     /// <paramref name="keySecurity"/> and Key uses <paramref name="keyUses"/>.
     /// </summary>
-    /// <param name="udf"></param>
-    /// <param name="hints"></param>
-    /// <param name="keySecurity"></param>
-    /// <returns></returns>
-    /// <param name="keyUses"></param>
+    /// <param name="udf">The UDF to derrive the key from.</param>
+    /// <param name="hints">Optional hints string used to speed up decoding.</param>
+    /// <param name="keySecurity">The key security model.</param>
+    /// <param name="keyUses">The allowed key uses.</param>
+    /// <returns>The derrived key pair.</returns>
     public static KeyPair DeriveKey(string udf,
                 string hints = null,
                 KeySecurity keySecurity = KeySecurity.Persistable, 
@@ -1235,6 +1258,7 @@ public record Udf(
     /// <param name="keyUses">The allowed key uses.</param>
     /// <param name="keyName">Optional key name used to specify generation of multiple keys from 
     /// a single seed.</param>
+    /// <param name="hints">Optional hints string used to speed up decoding.</param>
     /// <returns>The derrived key pair.</returns>
     public static KeyPair DeriveKey(string udf,
                 IKeyLocate keyCollection,
@@ -1258,6 +1282,7 @@ public record Udf(
     /// <param name="keyUses">The allowed key uses.</param>
     /// <param name="keyName">Optional key name used to specify generation of multiple keys from 
     /// a single seed.</param>
+    /// <param name="hints">Optional hints string used to speed up decoding.</param>
     /// <returns>The derrived key pair.</returns>
     public static (KeyPair, string?) DeriveKeyHints(string udf,
                 IKeyLocate keyCollection,
@@ -1366,7 +1391,14 @@ public record Udf(
 /// <summary>Static class containing static extension methods providing convenience functions.</summary>
 public static partial class Extension {
 
-
+    /// <summary>
+    /// Search the list of roots <paramref name="roots"/> and return true if the root
+    /// <paramref name="keyIdentifier"/> is present.
+    /// </summary>
+    /// <param name="roots">List of root key identifier UDFs.</param>
+    /// <param name="keyIdentifier">The root key to find.</param>
+    /// <returns>True if <paramref name="keyIdentifier"/> is present in
+    /// <paramref name="roots"/>, otherwise false.</returns>
     public static bool IsPresent(this IEnumerable<byte[]> roots, byte[] keyIdentifier) {
         foreach (var root in roots) {
             if (keyIdentifier.IsEqualTo(root)) {

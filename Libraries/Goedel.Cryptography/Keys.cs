@@ -75,7 +75,10 @@ public interface IKeySign {
             byte[] context = null);
     }
 
-
+/// <summary>
+/// Interface allowing ephemeral keys and KEM data to be used in the same API slot
+/// on the encrypt API.
+/// </summary>
 public interface IAgreementData {
     }
 

@@ -1,5 +1,11 @@
 ﻿namespace Goedel.Cryptography.Nist;
+
+/// <summary>
+/// Extensions working on BitArrays.
+/// </summary>
 public static class BitArrayExtensions {
+    
+    ///<summary>Number of bits in a byte.</summary> 
     public const int BITSINBYTE = 8;
 
     /* DEF (1/10/2017) -- 
@@ -9,20 +15,16 @@ public static class BitArrayExtensions {
         Which is reversed from the way CAVS thinks about it
         So we're going backwards here
     */
-    public static BitArray BitShiftRight(this BitArray bArray) => new BitArray(bArray).RightShift(1);
 
-    public static BitArray BitShiftRight(this BitArray bArray, int increment) => new BitArray(bArray).RightShift(increment);
 
-    public static BitArray BitShiftLeft(this BitArray bArray) => new BitArray(bArray).LeftShift(1);
-
-    public static BitArray BitShiftLeft(this BitArray bArray, int increment) => new BitArray(bArray).LeftShift(increment);
-
-    public static byte[] ToBytes(this BitArray bArray) {
-        byte[] bytes = new byte[(bArray.Length - 1) / BITSINBYTE + 1];
-        bArray.CopyTo(bytes, 0);
-        return bytes;
-        }
-
+    /// <summary>
+    /// Extract the sub array from <paramref name="bArray"/> starting at <paramref name="startIndex"/>
+    /// for <paramref name="length"/> bits.
+    /// </summary>
+    /// <param name="bArray">The array to extract from.</param>
+    /// <param name="startIndex">The start index.</param>
+    /// <param name="length">The number of bits.</param>
+    /// <returns>The extracted array.</returns>
     public static BitArray SubArray(this BitArray bArray, int startIndex, int length) {
         //if (startIndex + length > bArray.Count)
         //{
@@ -36,6 +38,13 @@ public static class BitArrayExtensions {
         return copy;
         }
 
+    /// <summary>
+    /// Concatenate <paramref name="bArray"/> and <paramref name="bitsToAdd"/> and return
+    /// the array.
+    /// </summary>
+    /// <param name="bArray">First array.</param>
+    /// <param name="bitsToAdd">Array to append.</param>
+    /// <returns>The result.</returns>
     public static BitArray Concatenate(this BitArray bArray, BitArray bitsToAdd) {
         var boolArray = new bool[bArray.Length + bitsToAdd.Length];
         bArray.CopyTo(boolArray, 0);
@@ -44,37 +53,14 @@ public static class BitArrayExtensions {
         return new BitArray(boolArray);
         }
 
-    public static String ToBinaryString(this BitArray bArray) {
-        var sb = new StringBuilder();
-        bool[] boolArray = new bool[bArray.Length];
-        bArray.CopyTo(boolArray, 0);
-        Array.ForEach(boolArray, b => sb.Append(b ? "1" : "0"));
-        return sb.ToString();
-        }
-
+    /// <summary>
+    /// Return the reverse of the bit array <paramref name="bArray"/>
+    /// </summary>
+    /// <param name="bArray">The array to reverse.</param>
+    /// <returns>The result.</returns>
     public static BitArray Reverse(this BitArray bArray) {
         return MsbLsbConversionHelpers.ReverseBitArrayBits(bArray);
         }
 
-    /// <summary>
-    /// Converts a <see cref="BitArray"/> to an int.
-    /// </summary>
-    /// <param name="bArray">The <see cref="BitArray"/> to convert.</param>
-    /// <returns>Integer representation of <see cref="bArray"/>.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown when the <see cref="bArray"/> is greater than 32 bits.</exception>
-    public static int ToInt(this BitArray bArray) {
-        if (bArray.Count > 32) {
-            throw new ArgumentOutOfRangeException(nameof(bArray));
-            }
-
-        var value = 0;
-        for (var i = 0; i < bArray.Length; i++) {
-            if (bArray[i]) {
-                value += 1 << i;
-                }
-            }
-
-        return value;
-        }
     }
 

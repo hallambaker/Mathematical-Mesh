@@ -1,6 +1,6 @@
 ﻿namespace Goedel.Cryptography.Nist;
 /// <summary>
-/// Provides a SHA implementation for hashing <see cref="message"/>s
+/// Provides a SHA implementation for hashing 
 /// </summary>
 public interface ISha {
     /// <summary>
@@ -9,7 +9,7 @@ public interface ISha {
     HashFunction HashFunction { get; }
 
     /// <summary>
-    /// Given a <see cref="message"/>, return a <see cref="BitString"/>
+    /// Given a <paramref name="message"/>, return a hash of <paramref name="outLen"/> bytes
     /// </summary>
     /// <param name="message">The message to hash</param>
     /// <param name="outLen"></param>
@@ -17,7 +17,7 @@ public interface ISha {
     HashResult HashMessage(BitString message, int outLen = 0);
 
     /// <summary>
-    /// Given a <see cref="BigInteger"/>, return a digest
+    /// Given a <paramref name="number"/>, return a digest
     /// </summary>
     /// <param name="number"></param>
     /// <returns></returns>
@@ -50,11 +50,5 @@ public interface ISha {
     /// <returns></returns>
     void Final(byte[] output, int outputBitLength = 0);
 
-    ///// <summary>
-    ///// Hash multiple GB at a time
-    ///// </summary>
-    ///// <param name="message"></param>
-    ///// <returns></returns>
-    //HashResult HashLargeMessage(LargeBitString message);
     }
 

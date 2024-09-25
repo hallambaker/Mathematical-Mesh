@@ -66,7 +66,7 @@ public partial class ApplicationSection : IHeadedSelection {
 // Documented in Guigen output
 public partial class BoundApplication : IBoundPresentation, IDialog {
     public CatalogedApplication CatalogedApplication => Bound as CatalogedApplication;
-    public virtual GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundApplication;
+    public virtual GuiDialog Dialog(Gui gui) => (gui as EverythingMaui)?.DialogBoundApplication;
 
     public string? LabelValue => LocalName;
     public string? SecondaryValue => "TBS";

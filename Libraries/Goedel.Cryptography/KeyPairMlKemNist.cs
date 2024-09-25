@@ -206,7 +206,7 @@ public class KeyPairMlKemNist : KeyPair, IOpaqueBinaryKey {
     /// a single seed.</param>
     /// <param name="keySize">The size of the key in bits.</param>
     /// <returns>the derrived key.</returns>
-    public static new KeyPair Factory(
+    public static KeyPair Factory(
         CryptoAlgorithmId algorithmID,
         KeySecurity keySecurity,
         byte[] ikm,

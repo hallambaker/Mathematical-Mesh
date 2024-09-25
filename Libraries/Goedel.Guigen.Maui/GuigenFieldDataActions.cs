@@ -4,17 +4,14 @@ public class GuigenFieldDataActions : GuigenField, IWidget {
     GuiBoundPropertyDataActions TypedBinding => PropertyBinding as GuiBoundPropertyDataActions;
     Label FieldLabel;
     Layout Layout { get; }
-    GuigenFieldSet FieldsSet;
-    GuigenBinding Binding => FieldsSet.Binding;
+
+
     IBindable Data;
 
     public GuigenFieldDataActions(
              GuigenFieldSet fieldsSet,
              GuiBoundPropertyDataActions binding,
              IBindable? data = null) : base(fieldsSet, binding) {
-
-        FieldsSet = fieldsSet;
-
 
 
         FieldLabel = new Label() {

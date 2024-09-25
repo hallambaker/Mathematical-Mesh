@@ -38,7 +38,7 @@ public partial class BoundMessage : IBoundPresentation, IDialog {
     public override IFieldIcon Type => FieldIcons.Message(IsRead);
 
     protected SpoolIndexEntry? SpoolIndexEntry => Bound as SpoolIndexEntry;
-    protected Message? Message => SpoolIndexEntry?.Message;
+    //protected Message? Message => SpoolIndexEntry?.Message;
 
     public bool IsRead => false;
 

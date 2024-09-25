@@ -22,6 +22,9 @@
 
 namespace Goedel.Cryptography;
 
+/// <summary>
+/// Extension class.
+/// </summary>
 public static class CryptographyExtensions {
 
     /// <summary>

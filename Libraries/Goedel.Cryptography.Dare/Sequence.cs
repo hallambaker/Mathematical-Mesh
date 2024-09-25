@@ -150,7 +150,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     ///<summary>The key location instance.</summary>
     public IKeyLocate KeyLocate { get; protected set; }
 
-
+    ///<summary>The policy to apply when adding to the sequence.</summary> 
     public DarePolicy DarePolicy { get; protected set; }
 
 
@@ -337,8 +337,6 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                     byte[] bitmask = null,
                     IInternSequenceIndexEntry store = null) {
 
-
-
         if (!create && !File.Exists(fileName)) {
             return null;
             }
@@ -364,6 +362,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             sequence.Filename = fileName;
             sequence.IndexedFromStart = sequence.SequenceIndexEntryFirst;
             sequence.IndexedFromEnd = sequence.SequenceIndexEntryLast;
+            sequence.DarePolicy = policy;
             return sequence;
             }
         catch (Exception exception) {

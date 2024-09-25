@@ -185,7 +185,6 @@ public class CryptoKeySymmetricSigner : CryptoKeySymmetric {
     /// <param name="bits">Number of bits precision, if less than the minimum number
     /// of bits will be set equal to <see cref="Udf.MinimumBits"/></param>
     /// <param name="algorithmSign">The signature algorithm to use.</param>
-    /// <param name="algorithmDigest">The digest algorithm to use.</param>
     public CryptoKeySymmetricSigner(
             KeySecurity keySecurity = KeySecurity.Exportable,
             int bits = 0,
@@ -251,8 +250,8 @@ public class CryptoKeySymmetricSigner : CryptoKeySymmetric {
     /// <summary>
     /// Sign a precomputed digest 
     /// </summary>
-    /// <param name="data">The data to sign.</param>
-    /// <param name="algorithmID">The algorithm to use.</param>
+    /// <param name="digest">The digest to sign.</param>
+    /// <param name="algorithmID">The algorithm used to create the digest.</param>
     /// <param name="context">Additional data added to the signature scope
     /// for protocol isolation.</param>
     /// <returns>The signature data</returns>
@@ -265,7 +264,7 @@ public class CryptoKeySymmetricSigner : CryptoKeySymmetric {
     /// Verify a signature over the purported data digest.
     /// </summary>
     /// <param name="signature">The signature blob value.</param>
-    /// <param name="algorithmID">The signature and hash algorithm to use.</param>
+    /// <param name="algorithmID">The algorithm used to create the digest.</param>
     /// <param name="context">Additional data added to the signature scope
     /// for protocol isolation.</param>
     /// <param name="digest">The digest value to be verified.</param>

@@ -272,6 +272,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     #endregion
     #region // Serialization overrides
 
+    ///<inheritdoc/>
     public override void Serialize(Writer writer,
                 bool tagged = false) {
         var first = false;

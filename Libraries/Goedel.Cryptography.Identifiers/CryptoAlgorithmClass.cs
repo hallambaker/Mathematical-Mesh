@@ -26,25 +26,56 @@ using System.Security.Cryptography;
 
 namespace Goedel.Cryptography;
 
+/// <summary>
+/// Extension classes related to key identifiers.
+/// </summary>
 public static partial class IdentifierExtensions {
 
-
+    /// <summary>
+    /// Return the conventional security component of <paramref name="assurance"/>
+    /// </summary>
+    /// <param name="assurance">The assurance level to parse.</param>
+    /// <returns>The conventional assurance level.</returns>
     public static AssuranceLevel Conventional (this AssuranceLevel assurance) =>
         assurance & AssuranceLevel.ConventionalMask;
 
+    /// <summary>
+    /// Return the quantum security component of <paramref name="assurance"/>
+    /// </summary>
+    /// <param name="assurance">The assurance level to parse.</param>
+    /// <returns>The quantum assurance level.</returns>
     public static AssuranceLevel Quantum(this AssuranceLevel assurance) =>
         assurance & AssuranceLevel.QuantumMask;
 
+    /// <summary>
+    /// Return the greater of the two assurance levels <paramref name="first"/> and
+    /// <paramref name="second"/>.
+    /// </summary>
+    /// <param name="first">First item.</param>
+    /// <param name="second">Second item.</param>
+    /// <returns>The greater of the assurance levels.</returns>
     static AssuranceLevel MaxInner(this AssuranceLevel first, AssuranceLevel second) =>
         first > second ? first : second;
 
-
+    /// <summary>
+    /// Return the greater of the two assurance levels <paramref name="first"/> and
+    /// <paramref name="second"/> after parsing the conventional and 
+    /// quantum levels separately.
+    /// </summary>
+    /// <param name="first">First item.</param>
+    /// <param name="second">Second item.</param>
+    /// <returns>The greater of the assurance levels.</returns>
 
     public static AssuranceLevel Max(this AssuranceLevel first, AssuranceLevel second) =>
         first.Conventional().MaxInner(second.Conventional()) |
         first.Quantum().MaxInner(second.Quantum());
 
 
+    /// <summary>
+    /// Return the assurance level of <paramref name="bits"/> symmetric bits.
+    /// </summary>
+    /// <param name="bits">The number of symmetric key bits.</param>
+    /// <returns>The assurance level.</returns>
     public static AssuranceLevel OfSymmetricKeyBits(this int bits) {
         if (bits < 80) {
             return AssuranceLevel.None;
@@ -67,19 +98,41 @@ public static partial class IdentifierExtensions {
 
     }
 
+
+/// <summary>
+/// Describes a cryptographic algorithm
+/// </summary>
+/// <param name="CryptoAlgorithmId">The algorithm identifier.</param>
+/// <param name="Jose">Jose identifier.</param>
+/// <param name="OID">The algorithm OID</param>
 public record AlgorithmEntry(
                 CryptoAlgorithmId CryptoAlgorithmId,
                 string Jose = null,
                 string OID = null) {
     }
 
+/// <summary>
+/// Describes a combination of cryptographic algorithms.
+/// </summary>
+/// <param name="CryptoAlgorithmId">The algorithm identifier of the combination.</param>
+/// <param name="Jose">Jose identifier of the combination.</param>
+/// <param name="OID">The algorithm OID</param>
 public record AlgorithmCombination(
                 CryptoAlgorithmId CryptoAlgorithmId,
                 string Jose = null,
                 string OID = null) : AlgorithmEntry (CryptoAlgorithmId, Jose, OID) {
     }
 
-
+/// <summary>
+/// Describes an algorithmic variant.
+/// </summary>
+/// <param name="KeySize">The nominal key size in units defined by the algorithm.</param>
+/// <param name="AssuranceLevel">The assurance level.</param>
+/// <param name="CryptoAlgorithmId">The algorithm identifier.</param>
+/// <param name="Jose">Jose identifier.</param>
+/// <param name="OID">The algorithm OID</param>
+/// <param name="Parameter">Supplemental OID used to identify the curve. </param>
+/// <param name="Suites">Suites combining this algorithm with a symmetric algorithm.</param>
 public record AlgorithmVariant (
                 int KeySize,
                 AssuranceLevel AssuranceLevel,
@@ -88,11 +141,6 @@ public record AlgorithmVariant (
                 string OID = null,
                 string Parameter = null,
                 AlgorithmCombination[] Suites = null) : AlgorithmEntry(CryptoAlgorithmId, Jose, OID) {
-
-    //public AssuranceLevel GetAssuranceLevelMinimum (
-    //                AlgorithmVariant[] variant) { 
-    //    return AssuranceLevel; 
-    //    }
     }
 
 /// <summary>
@@ -102,6 +150,8 @@ public record AlgorithmVariant (
 /// <param name="CryptoAlgorithmId">The base <see cref="CryptoAlgorithmId"/> for the family.</param>
 /// <param name="Class">The functionality supported.</param>
 /// <param name="Variants">Description of the variations of the algorithm from lowest to
+/// <param name="Jose">Jose identifier.</param>
+/// <param name="OID">The algorithm OID</param>
 /// highest assurance level.</param>
 public record CryptoAlgorithmProfile(
                 CryptoAlgorithmId CryptoAlgorithmId,
@@ -112,7 +162,7 @@ public record CryptoAlgorithmProfile(
 
     CryptoAlgorithmProfile[]? Cousins=null;
 
-
+    ///<summary>AES in CBC mode</summary> 
     public static readonly CryptoAlgorithmProfile AesCBC = new(
             CryptoAlgorithmId.SHA_2_256, CryptoAlgorithmClass.Encryption, [
                     new(128, AssuranceLevel.PQC1, CryptoAlgorithmId.AES128CBC),
@@ -121,6 +171,7 @@ public record CryptoAlgorithmProfile(
                 ]
             );
 
+    ///<summary>AES in GCM mode</summary> 
     public static readonly CryptoAlgorithmProfile AesGCM = new(
             CryptoAlgorithmId.SHA_2_256, CryptoAlgorithmClass.AEAD, [
                     new(128, AssuranceLevel.PQC1, CryptoAlgorithmId.AES128GCM),
@@ -129,6 +180,7 @@ public record CryptoAlgorithmProfile(
                 ]
             );
 
+    ///<summary>AES in OCD mode</summary> 
     public static readonly CryptoAlgorithmProfile AesOCB = new(
             CryptoAlgorithmId.SHA_2_256, CryptoAlgorithmClass.AEAD, [
                     new(128, AssuranceLevel.PQC1, CryptoAlgorithmId.AES128OCB),
@@ -137,6 +189,7 @@ public record CryptoAlgorithmProfile(
                 ]
             );
 
+    ///<summary>SHA 2 Digest</summary> 
     public static readonly CryptoAlgorithmProfile Sha2Hash = new(
                 CryptoAlgorithmId.SHA_2_256, CryptoAlgorithmClass.Digest, [
                     new(256, AssuranceLevel.PQC1, CryptoAlgorithmId.SHA_2_256),
@@ -145,6 +198,7 @@ public record CryptoAlgorithmProfile(
                     ]
                 );
 
+    ///<summary>SHA 3 Digest</summary> 
     public static readonly CryptoAlgorithmProfile Sha3Hash = new(
                 CryptoAlgorithmId.SHA_3_256, CryptoAlgorithmClass.Digest, [
                     new(256, AssuranceLevel.PQC1, CryptoAlgorithmId.SHA_3_256),
@@ -153,6 +207,7 @@ public record CryptoAlgorithmProfile(
                     ]
                 );
 
+    ///<summary>SHA 3 SHAKE function</summary> 
     public static readonly CryptoAlgorithmProfile Shake = new(
                 CryptoAlgorithmId.SHAKE_128, CryptoAlgorithmClass.Shake, [
                     new(128, AssuranceLevel.PQC1, CryptoAlgorithmId.SHAKE_128),
@@ -160,6 +215,7 @@ public record CryptoAlgorithmProfile(
                 ]
             );
 
+    ///<summary>HMAC-SHA2</summary> 
     public static readonly CryptoAlgorithmProfile HmacSha2 = new(
                 CryptoAlgorithmId.HMAC_SHA_2_256, CryptoAlgorithmClass.MAC, [
                     new(256, AssuranceLevel.PQC1, CryptoAlgorithmId.HMAC_SHA_2_256),
@@ -168,6 +224,7 @@ public record CryptoAlgorithmProfile(
                     ]
                 );
 
+    ///<summary>HMAC-SHA3</summary> 
     public static readonly CryptoAlgorithmProfile HmacSha3 = new(
             CryptoAlgorithmId.HMAC_SHA_2_256, CryptoAlgorithmClass.MAC, [
                     new(256, AssuranceLevel.PQC1, CryptoAlgorithmId.HMAC_SHA_3_256),
@@ -175,12 +232,14 @@ public record CryptoAlgorithmProfile(
                 ]
             );
 
+    ///<summary>KMAC</summary> 
     public static readonly CryptoAlgorithmProfile KMAC = new(
                 CryptoAlgorithmId.KMAC_128, CryptoAlgorithmClass.MAC, [
                     new(128, AssuranceLevel.PQC1, CryptoAlgorithmId.KMAC_128),
                     new(256, AssuranceLevel.PQC1, CryptoAlgorithmId.KMAC_256)
                     ]
                 );
+
 
     static readonly AlgorithmVariant[] RSAVariants = [                    
                 new AlgorithmVariant(2048, AssuranceLevel.CC112, Jose:JoseConstants.RSA2048),
@@ -204,16 +263,19 @@ public record CryptoAlgorithmProfile(
     ///<summary>Variants of ECDH key agreement.</summary> 
     public static readonly CryptoAlgorithmProfile ECDH = new(
                  CryptoAlgorithmId.EdDSA, CryptoAlgorithmClass.Encryption, [
-                    new AlgorithmVariant(256, AssuranceLevel.CC128, Jose:JoseConstants.P256),
-                    new AlgorithmVariant(372, AssuranceLevel.CC192, Jose:JoseConstants.P384),
-                    new AlgorithmVariant(521, AssuranceLevel.CC256, Jose:JoseConstants.P521)
+                    new AlgorithmVariant(256, AssuranceLevel.CC128, Jose:JoseConstants.P256,
+                            OID:"1.2.840.10045.2.1", Parameter:"1.2.840.10045.3.1.7"),
+                    new AlgorithmVariant(372, AssuranceLevel.CC192, Jose:JoseConstants.P384,
+                            OID:"1.2.840.10045.2.1", Parameter:"1.3.132.0.34"),
+                    new AlgorithmVariant(521, AssuranceLevel.CC256, Jose:JoseConstants.P521,
+                            OID:"1.2.840.10045.2.1", Parameter:"1.3.132.0.35"),
                     ]);
 
     ///<summary>Variants of ECDH key agreement.</summary> 
     public static readonly CryptoAlgorithmProfile XDH = new(
                  CryptoAlgorithmId.EdDSA, CryptoAlgorithmClass.Encryption, [
-                    new AlgorithmVariant(255, AssuranceLevel.CC128, OID:"1 3 101 110",Jose:JoseConstants.X25519),
-                    new AlgorithmVariant(448, AssuranceLevel.CC224, OID:"1 3 101 111",Jose:JoseConstants.X448)
+                    new AlgorithmVariant(255, AssuranceLevel.CC128, OID:"1.3.101.110",Jose:JoseConstants.X25519),
+                    new AlgorithmVariant(448, AssuranceLevel.CC224, OID:"1.3.101.111",Jose:JoseConstants.X448)
                     ]);
 
     ///<summary>Variants of ECDSA signature over a manifest or the data itself.</summary> 
@@ -299,6 +361,10 @@ public record CryptoAlgorithmProfile(
             }
         }
 
+    /// <summary>
+    /// Add a group to the catalog.
+    /// </summary>
+    /// <param name="group">The group to add.</param>
     public static void AddGroup(CryptoAlgorithmProfile[] group) {
         var cousins = new CryptoAlgorithmProfile[group.Length];
 
@@ -310,6 +376,10 @@ public record CryptoAlgorithmProfile(
             }
         }
 
+    /// <summary>
+    /// Add an algorithm profile to the catalog.
+    /// </summary>
+    /// <param name="profile">The profile to add.</param>
     public static void AddProfile(CryptoAlgorithmProfile profile) {
 
         foreach (var entry in profile.Variants) {
@@ -318,6 +388,11 @@ public record CryptoAlgorithmProfile(
 
         }
 
+    /// <summary>
+    /// Add a variant to the catalog.
+    /// </summary>
+    /// <param name="profile">The profile to add to.</param>
+    /// <param name="variant">The variant to add.</param>
     public static void AddVariant(CryptoAlgorithmProfile profile, AlgorithmVariant variant) {
         }
 

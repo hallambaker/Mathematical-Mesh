@@ -12,6 +12,7 @@ public class EccDomainParameters : IDsaDomainParameters {
     /// </summary>
     public SecretGenerationMode SecretGeneration { get; }
 
+
     public EccDomainParameters(IEccCurve e) {
         CurveE = e;
         }

@@ -23,6 +23,9 @@
 
 namespace Goedel.Cryptography;
 
+/// <summary>
+/// Operations on big integers.
+/// </summary>
 public static class BigNumber {
     /// <summary>
     /// Return a positive random BigInteger that is strictly less than 2^bits.
@@ -314,6 +317,20 @@ public partial class KeyPairRSA : KeyPairBaseRSA {
         return new KeyPairRSA(RSAParameters, keySecurity);
         }
 
+    /// <summary>
+    /// RSA KeyPair generation factory used by UDF.
+    /// </summary>
+    /// <param name="algorithmID">The type of key to create.</param>
+    /// <param name="keyCollection">The key collection to add the key to.</param>
+    /// <param name="keySecurity">The key security model.</param>
+    /// <param name="keyUses">The allowed key uses.</param>
+    /// <param name="ikm">Initial keying material for the key.</param>
+    /// <param name="keySpecifier">Key specifier material for the key.</param>
+    /// <param name="keyName">Optional key name used to specify generation of multiple keys from 
+    /// a single seed.</param>
+    /// <param name="keySize">The size of the key in bits.</param>
+    /// <param name="hintsIn">Optional string containing Base32 encoded key generation hints.</param>
+    /// <returns>The RSA key pair and generation hints.</returns>
     public static (KeyPairRSA, RsaGenerationHints) KeyPairFactory(
             CryptoAlgorithmId algorithmID,
             KeySecurity keySecurity,

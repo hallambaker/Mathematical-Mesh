@@ -59,27 +59,37 @@ public class KyberParameters {
     /// </summary>
     public int CiphertextLength { get; }
 
-
+    ///<summary>Kyber 512 parameters.</summary> 
     public static KyberParameters Kyber512 { get; } =
         new KyberParameters(KyberParameterSet.ML_KEM_512);
 
+    ///<summary>Kyber 768 parameters.</summary> 
     public static KyberParameters Kyber768 { get; } =
         new KyberParameters(KyberParameterSet.ML_KEM_768);
 
+    ///<summary>Kyber 1024 parameters</summary> 
     public static KyberParameters Kyber1024 { get; } =
         new KyberParameters(KyberParameterSet.ML_KEM_1024);
 
-
+    ///<summary>Encapsulation key for ML-KEM-512</summary> 
     public const int EncapsulationKeyLength512 = 800;
+    ///<summary>Decapsulation key for ML-KEM-512</summary> 
     public const int DecapsulationKeyLength512 = 1632;
+    ///<summary>Ciphertext for ML-KEM-512</summary> 
     public const int CiphertextLength512 = 768;
 
+    ///<summary>Encapsulation key for ML-KEM-768</summary> 
     public const int EncapsulationKeyLength768 = 1184;
+    ///<summary>Decapsulation key for ML-KEM-768</summary> 
     public const int DecapsulationKeyLength768 = 2400;
+    ///<summary>Ciphertext for ML-KEM-768</summary> 
     public const int CiphertextLength768 = 1088;
 
+    ///<summary>Encapsulation key for ML-KEM-1024</summary> 
     public const int EncapsulationKeyLength1024 = 1568;
+    ///<summary>Decapsulation key for ML-KEM-1024</summary> 
     public const int DecapsulationKeyLength1024 = 3168;
+    ///<summary>Ciphertext for ML-KEM-1024</summary> 
     public const int CiphertextLength1024 = 1568;
 
 

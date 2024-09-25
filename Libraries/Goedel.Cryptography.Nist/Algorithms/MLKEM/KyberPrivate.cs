@@ -3,9 +3,15 @@ using System.Data.SqlTypes;
 
 namespace Goedel.Cryptography.Nist;
 
+/// <summary>
+/// Kyber Private key
+/// </summary>
 public class KyberPrivate {
+
+    ///<summary>Parameter set</summary> 
     public KyberNist Kyber { get; }
 
+    ///<summary>The public key.</summary> 
     public KyberPublic KyberPublic { get; }
     
 
@@ -42,7 +48,7 @@ public class KyberPrivate {
 
     /// <summary>
     /// Factory method returning an instance generated from the seed
-    /// <paramref name="seed"/> with strength <paramref name="parameterSet"/>.
+    /// <paramref name="seed"/> with strength <paramref name="kyber"/>.
     /// </summary>
     /// <param name="seed">The 64 byte seed.</param>
     /// <param name="kyber">The parameter set</param>
@@ -78,9 +84,9 @@ public class KyberPrivate {
 
     /// <summary>
     /// Factory method returning an instance generated from the secret key value
-    /// <paramref name="sk"/>.
+    /// <paramref name="dk"/>.
     /// </summary>
-    /// <param name="sk">The expanded secret key./param>
+    /// <param name="dk">The expanded secret key.</param>
     /// <returns>The private key.</returns>
     public static KyberPrivate FromSecretKey(byte[] dk) {
         var kyber = KyberNist.GetByPrivateKeyLength(dk.Length);

@@ -120,7 +120,7 @@ public struct BitIndex {
 /// <summary>
 /// Extension methods for manipulating BigIntegers
 /// </summary>
-public static class BigNumber {
+public static class BigNumberExtensions {
 
     /// <summary>
     /// Duplicate the values in the array
@@ -269,11 +269,6 @@ public static class BigNumber {
     public static BigInteger SqrtMinus1(this BigInteger p) => BigInteger.ModPow(2, (p - 1) / 4, p);
 
 
-    public static (BigInteger, BigInteger) Sort(this BigInteger a, BigInteger b) =>
-        a > b ? (b, a) : (a, b);
-
-
-
     /// <summary>
     /// Return a Square root of a number modulo a prime. 
     /// </summary>
@@ -383,18 +378,19 @@ public static class BigNumber {
         }
 
 
-    public static bool IsLessPower2(this BigInteger value, int power) =>
-            value < new BigInteger(1) << (power);
-
-    public static bool IsGreaterPower2(this BigInteger value, int power) =>
-            value > new BigInteger(1) << (power);
-
-
+    /// <summary>
+    /// Erase the value contained in <paramref name="value"/>.
+    /// </summary>
+    /// <param name="value">The value to erase.</param>
     public static void Erase(this ref BigInteger value) {
         value = 0;
         }
 
-
+    /// <summary>
+    /// Count the number of bytes required to represent <paramref name="value"/>.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <returns>The number of bytes.</returns>
     public static int CountBytes(this BigInteger value) {
         var count = 1;
 
@@ -405,6 +401,12 @@ public static class BigNumber {
         return count;
         }
 
+
+    /// <summary>
+    /// Count the number of bits required to represent <paramref name="value"/>.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <returns>The number of bits.</returns>
     public static int CountBits(this BigInteger value) {
         var count = 0;
 

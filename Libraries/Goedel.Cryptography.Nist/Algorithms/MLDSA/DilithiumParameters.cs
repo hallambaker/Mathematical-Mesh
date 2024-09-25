@@ -84,19 +84,25 @@ public class DilithiumParameters {
     ///<summary>The length of a computed signature.</summary> 
     public int SignatureLength { get; set; }
 
-
+    ///<summary>Private key length for ML-DSA-44</summary> 
     public const int PrivateKeyLength44 = 2560;
+    ///<summary>Public key length for ML-DSA-44</summary> 
     public const int PublicKeyLength44 = 1312;
+    ///<summary>Signature length for ML-DSA-44</summary> 
     public const int SignatureLength44 = 2420;
 
-
+    ///<summary>Private key length for ML-DSA-65</summary> 
     public const int PrivateKeyLength65 = 4032;
+    ///<summary>Public key length for ML-DSA-65</summary> 
     public const int PublicKeyLength65 = 1952;
+    ///<summary>Signature length for ML-DSA-65</summary> 
     public const int SignatureLength65 = 3309;
 
-
+    ///<summary>Private key length for ML-DSA-87</summary> 
     public const int PrivateKeyLength87 = 4896;
+    ///<summary>Public key length for ML-DSA-87</summary> 
     public const int PublicKeyLength87 = 2592;
+    ///<summary>Signature length for ML-DSA-87</summary> 
     public const int SignatureLength87 = 4627;
 
 

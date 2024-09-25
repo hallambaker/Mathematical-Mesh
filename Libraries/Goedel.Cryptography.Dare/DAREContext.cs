@@ -46,7 +46,6 @@ public partial class DareRecipient {
     /// </summary>
     /// <param name="masterKey">The master key</param>
     /// <param name="encryptionKey">The recipient encryption key.</param>
-    /// <
     /// <returns>The recipient informatin object.</returns>
     public DareRecipient(
                     byte[] masterKey, 
@@ -80,6 +79,11 @@ public partial class DareRecipient {
     /// <returns>The recipient informatin object.</returns>
     public DareRecipient(byte[] masterKey) => KeyIdentifier = Udf.SymetricKeyId(masterKey);
 
+    /// <summary>
+    /// Get the agreement data, this is presented in Epk for ephemeral keys and in
+    /// Ek for a KEM.
+    /// </summary>
+    /// <returns>The agreement data.</returns>
     public IAgreementData GetAgreementData() {
 
         if (Epk is not null) {

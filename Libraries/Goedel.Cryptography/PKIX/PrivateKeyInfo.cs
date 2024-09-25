@@ -110,6 +110,7 @@ public partial class PkixPrivateKeyRsa {
     /// </summary>
     /// <param name="Buffer">The source buffer</param>
     public void Decode(global::Goedel.ASN.DecodeBuffer Buffer) {
+
         Buffer.Decode__Sequence_Start();
 
         Version = Buffer.Decode__Integer(0, -1);

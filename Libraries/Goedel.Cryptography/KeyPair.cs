@@ -73,7 +73,10 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
     /////<summary>The length of a signature in bytes.</summary> 
     //public abstract int LengthSignature { get; }
 
-
+    /// <summary>
+    /// Constructor, create an instance with security level <paramref name="keySecurity"/>
+    /// </summary>
+    /// <param name="keySecurity">The security level.</param>
     public KeyPair(
             KeySecurity keySecurity = KeySecurity.Bound) {
         KeySecurity = keySecurity;
@@ -112,9 +115,6 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
         var hash = algorithmID.Bulk().GetDigest(data);
         return VerifyDigest(hash, signature, algorithmID, context);
         }
-
-
-
 
     /// <summary>
     /// Factory method to generate a keypair of a type specified by <paramref name="algorithmID"/>
@@ -235,6 +235,7 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
     /// <param name="keyName">Optional key name used to specify generation of multiple keys from 
     /// a single seed.</param>
     /// <param name="keySize">The size of the key in bits.</param>
+    /// <param name="hints">Optional string containing Base32 encoded key generation hints.</param>
     /// <returns>the derrived key.</returns>
     public static (KeyPair, string?) Factory(
         CryptoAlgorithmId algorithmID,
@@ -244,7 +245,8 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
         string keyName,
         IKeyLocate keyCollection = null,
         int keySize = 0,
-        KeyUses keyUses = KeyUses.Any, string hints = null) {
+        KeyUses keyUses = KeyUses.Any, 
+        string hints = null) {
 
         KeyPair keyPair;
 

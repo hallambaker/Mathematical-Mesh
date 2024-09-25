@@ -26,6 +26,13 @@ using System.Reflection;
 
 namespace Goedel.Cryptography;
 
+
+/// <summary>
+/// Generate a prime number from a UDF seed.
+/// </summary>
+/// <param name="ikm">The initial keying material.</param>
+/// <param name="keySpecifier">The key specifier.</param>
+/// <param name="keyName">The key name.</param>
 public class PrimeGeneratorUdf(
                     byte[] ikm,
                     byte[] keySpecifier,

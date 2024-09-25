@@ -87,8 +87,6 @@ public record DataActions(string? Protocol) : IDataActions {
 
 public partial class ContactNetworkIdentifier {
 
-    NetworkAddress NetworkAddress => (Bound as NetworkAddress)!;
-
     public override IDataActions? Actions => GetActions(Protocol);
 
 
@@ -188,7 +186,7 @@ public partial class ContactPhysicalAddress : IBoundPresentation {
 public partial class BoundContact : IBoundPresentation, IDialog {
 
     public CatalogedContact CatalogedContact => Bound as CatalogedContact;
-    public GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundContact;
+    public virtual GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundContact;
 
     public static BoundContact Factory(CatalogedContact contact) {
         var result = new BoundContact();
@@ -227,7 +225,7 @@ public partial class BoundContactPlace : IBoundPresentation, IDialog {
 
 public partial class BoundContactPerson : IBoundPresentation, IDialog {
 
-    public GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundContactPerson;
+    public override GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundContactPerson;
 
 
     public override IFieldIcon Type => FieldIcons.ContactPerson;

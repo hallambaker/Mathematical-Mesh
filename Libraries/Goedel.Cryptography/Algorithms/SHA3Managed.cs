@@ -44,6 +44,14 @@ public class SHA3Managed : SHA3 {
             };
 
     /// <summary>
+    /// Factory method returning a provider for hash length <paramref name="hashBitLength"/>/
+    /// </summary>
+    /// <param name="hashBitLength">Number of bits.</param>
+    /// <returns>The provider.</returns>
+    public static SHA3Managed Create (int hashBitLength = 512) => new(hashBitLength);
+
+
+    /// <summary>
     /// Convenience routine to preform one stop processing.
     /// </summary>
     /// <param name="input">The input data</param>

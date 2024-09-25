@@ -103,19 +103,19 @@
             </summary>
             <returns>True iff the next bit to be read is 1.</returns>
         </member>
-        <member name="T:Goedel.Cryptography.BigNumber">
+        <member name="T:Goedel.Cryptography.BigNumberExtensions">
             <summary>
             Extension methods for manipulating BigIntegers
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.BigNumber.Duplicate(System.Byte[])">
+        <member name="M:Goedel.Cryptography.BigNumberExtensions.Duplicate(System.Byte[])">
             <summary>
             Duplicate the values in the array
             </summary>
             <param name="Source">The source array</param>
             <returns>A new array containing a copy of the elements in the source.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.BigNumber.Duplicate(System.Byte[],System.Int32,System.Int32)">
+        <member name="M:Goedel.Cryptography.BigNumberExtensions.Duplicate(System.Byte[],System.Int32,System.Int32)">
             <summary>
             Duplicate the values in the array
             </summary>
@@ -124,7 +124,7 @@
             <param name="Length">The number of items to copy</param>
             <returns>A new array containing a copy of a selected range of the elements in the source.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.BigNumber.ByteArrayLittleEndian(System.Numerics.BigInteger,System.Int32)">
+        <member name="M:Goedel.Cryptography.BigNumberExtensions.ByteArrayLittleEndian(System.Numerics.BigInteger,System.Int32)">
             <summary>
             Encode the code point <paramref name="data"/>.
             </summary>
@@ -132,21 +132,21 @@
             <param name="length">The number of bytes to output.</param>
             <returns>The encoded format of the point</returns>
         </member>
-        <member name="M:Goedel.Cryptography.BigNumber.BigIntegerLittleEndian(System.Byte[])">
+        <member name="M:Goedel.Cryptography.BigNumberExtensions.BigIntegerLittleEndian(System.Byte[])">
             <summary>
             Convert an array of bytes in little endian format to a Big Integer
             </summary>
             <param name="Data">The data in little endian format.</param>
             <returns>The constructed integer</returns>
         </member>
-        <member name="M:Goedel.Cryptography.BigNumber.BigIntegerBigEndian(System.Byte[])">
+        <member name="M:Goedel.Cryptography.BigNumberExtensions.BigIntegerBigEndian(System.Byte[])">
             <summary>
             Convert an array of bytes in big endian format to a Big Integer
             </summary>
             <param name="Data">The data in big endian format.</param>
             <returns>The constructed integer</returns>
         </member>
-        <member name="M:Goedel.Cryptography.BigNumber.HexToBigInteger(System.String)">
+        <member name="M:Goedel.Cryptography.BigNumberExtensions.HexToBigInteger(System.String)">
             <summary>
             Create a Big Integer from a hexadecimal string constant. This is not optimized for
             speed since it is unlikely this will be called very often and may well 
@@ -156,7 +156,7 @@
             <param name="Text">The hexadecimal string to convert</param>
             <returns>The resulting integer</returns>
         </member>
-        <member name="M:Goedel.Cryptography.BigNumber.DecimalToBigInteger(System.String)">
+        <member name="M:Goedel.Cryptography.BigNumberExtensions.DecimalToBigInteger(System.String)">
             <summary>
             Create a Big Integer from a decimal string constant. This is not optimized for
             speed since it is unlikely this will be called very often and may well 
@@ -166,7 +166,7 @@
             <param name="Text">The decimal value</param>
             <returns>The resulting integer</returns>
         </member>
-        <member name="M:Goedel.Cryptography.BigNumber.ModularInverse(System.Numerics.BigInteger,System.Numerics.BigInteger)">
+        <member name="M:Goedel.Cryptography.BigNumberExtensions.ModularInverse(System.Numerics.BigInteger,System.Numerics.BigInteger)">
             <summary>
             Calculate the modular inverse of a number using the x(p-2) approach
             </summary>
@@ -175,7 +175,7 @@
             <returns>The modular inverse, i.e. the number y such that 
             (x * y) mod p = 1.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.BigNumber.ModularInverse(System.Int32,System.Numerics.BigInteger)">
+        <member name="M:Goedel.Cryptography.BigNumberExtensions.ModularInverse(System.Int32,System.Numerics.BigInteger)">
             <summary>
             Calculate the modular inverse of a number using the x(p-2) approach
             </summary>
@@ -184,7 +184,7 @@
             <returns>The modular inverse, i.e. the number y such that 
             (x * y) mod p = 1.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.BigNumber.Mod(System.Numerics.BigInteger,System.Numerics.BigInteger)">
+        <member name="M:Goedel.Cryptography.BigNumberExtensions.Mod(System.Numerics.BigInteger,System.Numerics.BigInteger)">
             <summary>
             Calculate the modulus of a number with correct handling for negative numbers.
             </summary>
@@ -192,14 +192,14 @@
             <param name="p">Modulus</param>
             <returns>x mod p</returns>
         </member>
-        <member name="M:Goedel.Cryptography.BigNumber.SqrtMinus1(System.Numerics.BigInteger)">
+        <member name="M:Goedel.Cryptography.BigNumberExtensions.SqrtMinus1(System.Numerics.BigInteger)">
             <summary>
             Calculate the square root of -1 modulo p
             </summary>
             <param name="p">The modulus</param>
             <returns>A value x such that x*x mod p = -1 mod p</returns>
         </member>
-        <member name="M:Goedel.Cryptography.BigNumber.Sqrt(System.Numerics.BigInteger,System.Numerics.BigInteger,System.Nullable{System.Numerics.BigInteger},System.Nullable{System.Boolean})">
+        <member name="M:Goedel.Cryptography.BigNumberExtensions.Sqrt(System.Numerics.BigInteger,System.Numerics.BigInteger,System.Nullable{System.Numerics.BigInteger},System.Nullable{System.Boolean})">
             <summary>
             Return a Square root of a number modulo a prime. 
             </summary>
@@ -210,7 +210,7 @@
             <returns>A value x such that x*x = x2.</returns>
             <exception cref="T:Goedel.Cryptography.InvalidOperation">Thrown if the value does not have a root.</exception>
         </member>
-        <member name="M:Goedel.Cryptography.BigNumber.Sqrt8k5(System.Numerics.BigInteger,System.Numerics.BigInteger,System.Nullable{System.Numerics.BigInteger},System.Nullable{System.Boolean})">
+        <member name="M:Goedel.Cryptography.BigNumberExtensions.Sqrt8k5(System.Numerics.BigInteger,System.Numerics.BigInteger,System.Nullable{System.Numerics.BigInteger},System.Nullable{System.Boolean})">
             <summary>
             Return a Square root of a number modulo the prime for the
             special case x2 % 8 == 5.
@@ -222,7 +222,7 @@
             <returns>A value x such that x*x = x2.</returns>
             <exception cref="T:Goedel.Cryptography.InvalidOperation">Thrown if the value does not have a root.</exception>
         </member>
-        <member name="M:Goedel.Cryptography.BigNumber.Mod(System.Int32,System.Numerics.BigInteger)">
+        <member name="M:Goedel.Cryptography.BigNumberExtensions.Mod(System.Int32,System.Numerics.BigInteger)">
             <summary>
             Calculate the modulus of a number with correct handling for negative numbers.
             </summary>
@@ -230,14 +230,14 @@
             <param name="p">Modulus</param>
             <returns>x mod p</returns>
         </member>
-        <member name="M:Goedel.Cryptography.BigNumber.ToByteArrayLittleEndian(System.Numerics.BigInteger)">
+        <member name="M:Goedel.Cryptography.BigNumberExtensions.ToByteArrayLittleEndian(System.Numerics.BigInteger)">
             <summary>
             Convert <paramref name="bigInteger"/> to a byte array in little endian format.
             </summary>
             <param name="bigInteger">The integer to be converted.</param>
             <returns>The byte array.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.BigNumber.ToByteArrayLittleEndian(System.Numerics.BigInteger,System.Int32)">
+        <member name="M:Goedel.Cryptography.BigNumberExtensions.ToByteArrayLittleEndian(System.Numerics.BigInteger,System.Int32)">
             <summary>
             Convert <paramref name="bigInteger"/> to a byte array in little endian format,
             padding the resulting array so that it is at least <paramref name="length"/>
@@ -248,7 +248,7 @@
             is calculated from <paramref name="bigInteger"/>.</param>
             <returns>The byte array.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.BigNumber.ToByteArrayBigEndian(System.Numerics.BigInteger,System.Int32)">
+        <member name="M:Goedel.Cryptography.BigNumberExtensions.ToByteArrayBigEndian(System.Numerics.BigInteger,System.Int32)">
             <summary>
             Convert <paramref name="bigInteger"/> to a byte array in big endian format,
             padding the resulting array so that it is at least <paramref name="length"/>
@@ -259,6 +259,148 @@
             is calculated from <paramref name="bigInteger"/>.</param>
             <returns>The byte array.</returns>
         </member>
+        <member name="M:Goedel.Cryptography.BigNumberExtensions.Erase(System.Numerics.BigInteger@)">
+            <summary>
+            Erase the value contained in <paramref name="value"/>.
+            </summary>
+            <param name="value">The value to erase.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.BigNumberExtensions.CountBytes(System.Numerics.BigInteger)">
+            <summary>
+            Count the number of bytes required to represent <paramref name="value"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The number of bytes.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.BigNumberExtensions.CountBits(System.Numerics.BigInteger)">
+            <summary>
+            Count the number of bits required to represent <paramref name="value"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The number of bits.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.IdentifierExtensions">
+            <summary>
+            Extension classes related to key identifiers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.IdentifierExtensions.Conventional(Goedel.Cryptography.AssuranceLevel)">
+            <summary>
+            Return the conventional security component of <paramref name="assurance"/>
+            </summary>
+            <param name="assurance">The assurance level to parse.</param>
+            <returns>The conventional assurance level.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.IdentifierExtensions.Quantum(Goedel.Cryptography.AssuranceLevel)">
+            <summary>
+            Return the quantum security component of <paramref name="assurance"/>
+            </summary>
+            <param name="assurance">The assurance level to parse.</param>
+            <returns>The quantum assurance level.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.IdentifierExtensions.MaxInner(Goedel.Cryptography.AssuranceLevel,Goedel.Cryptography.AssuranceLevel)">
+            <summary>
+            Return the greater of the two assurance levels <paramref name="first"/> and
+            <paramref name="second"/>.
+            </summary>
+            <param name="first">First item.</param>
+            <param name="second">Second item.</param>
+            <returns>The greater of the assurance levels.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.IdentifierExtensions.Max(Goedel.Cryptography.AssuranceLevel,Goedel.Cryptography.AssuranceLevel)">
+            <summary>
+            Return the greater of the two assurance levels <paramref name="first"/> and
+            <paramref name="second"/> after parsing the conventional and 
+            quantum levels separately.
+            </summary>
+            <param name="first">First item.</param>
+            <param name="second">Second item.</param>
+            <returns>The greater of the assurance levels.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.IdentifierExtensions.OfSymmetricKeyBits(System.Int32)">
+            <summary>
+            Return the assurance level of <paramref name="bits"/> symmetric bits.
+            </summary>
+            <param name="bits">The number of symmetric key bits.</param>
+            <returns>The assurance level.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.AlgorithmEntry">
+            <summary>
+            Describes a cryptographic algorithm
+            </summary>
+            <param name="CryptoAlgorithmId">The algorithm identifier.</param>
+            <param name="Jose">Jose identifier.</param>
+            <param name="OID">The algorithm OID</param>
+        </member>
+        <member name="M:Goedel.Cryptography.AlgorithmEntry.#ctor(Goedel.Cryptography.CryptoAlgorithmId,System.String,System.String)">
+            <summary>
+            Describes a cryptographic algorithm
+            </summary>
+            <param name="CryptoAlgorithmId">The algorithm identifier.</param>
+            <param name="Jose">Jose identifier.</param>
+            <param name="OID">The algorithm OID</param>
+        </member>
+        <member name="P:Goedel.Cryptography.AlgorithmEntry.CryptoAlgorithmId">
+            <summary>The algorithm identifier.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.AlgorithmEntry.Jose">
+            <summary>Jose identifier.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.AlgorithmEntry.OID">
+            <summary>The algorithm OID</summary>
+        </member>
+        <member name="T:Goedel.Cryptography.AlgorithmCombination">
+            <summary>
+            Describes a combination of cryptographic algorithms.
+            </summary>
+            <param name="CryptoAlgorithmId">The algorithm identifier of the combination.</param>
+            <param name="Jose">Jose identifier of the combination.</param>
+            <param name="OID">The algorithm OID</param>
+        </member>
+        <member name="M:Goedel.Cryptography.AlgorithmCombination.#ctor(Goedel.Cryptography.CryptoAlgorithmId,System.String,System.String)">
+            <summary>
+            Describes a combination of cryptographic algorithms.
+            </summary>
+            <param name="CryptoAlgorithmId">The algorithm identifier of the combination.</param>
+            <param name="Jose">Jose identifier of the combination.</param>
+            <param name="OID">The algorithm OID</param>
+        </member>
+        <member name="T:Goedel.Cryptography.AlgorithmVariant">
+            <summary>
+            Describes an algorithmic variant.
+            </summary>
+            <param name="KeySize">The nominal key size in units defined by the algorithm.</param>
+            <param name="AssuranceLevel">The assurance level.</param>
+            <param name="CryptoAlgorithmId">The algorithm identifier.</param>
+            <param name="Jose">Jose identifier.</param>
+            <param name="OID">The algorithm OID</param>
+            <param name="Parameter">Supplemental OID used to identify the curve. </param>
+            <param name="Suites">Suites combining this algorithm with a symmetric algorithm.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.AlgorithmVariant.#ctor(System.Int32,Goedel.Cryptography.AssuranceLevel,Goedel.Cryptography.CryptoAlgorithmId,System.String,System.String,System.String,Goedel.Cryptography.AlgorithmCombination[])">
+            <summary>
+            Describes an algorithmic variant.
+            </summary>
+            <param name="KeySize">The nominal key size in units defined by the algorithm.</param>
+            <param name="AssuranceLevel">The assurance level.</param>
+            <param name="CryptoAlgorithmId">The algorithm identifier.</param>
+            <param name="Jose">Jose identifier.</param>
+            <param name="OID">The algorithm OID</param>
+            <param name="Parameter">Supplemental OID used to identify the curve. </param>
+            <param name="Suites">Suites combining this algorithm with a symmetric algorithm.</param>
+        </member>
+        <member name="P:Goedel.Cryptography.AlgorithmVariant.KeySize">
+            <summary>The nominal key size in units defined by the algorithm.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.AlgorithmVariant.AssuranceLevel">
+            <summary>The assurance level.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.AlgorithmVariant.Parameter">
+            <summary>Supplemental OID used to identify the curve. </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.AlgorithmVariant.Suites">
+            <summary>Suites combining this algorithm with a symmetric algorithm.</summary>
+        </member>
         <member name="T:Goedel.Cryptography.CryptoAlgorithmProfile">
             <summary>
             Profile describing a family of cryptographic algorithms with the same capabilities
@@ -267,6 +409,8 @@
             <param name="CryptoAlgorithmId">The base <see cref="T:Goedel.Cryptography.CryptoAlgorithmId"/> for the family.</param>
             <param name="Class">The functionality supported.</param>
             <param name="Variants">Description of the variations of the algorithm from lowest to
+            <param name="Jose">Jose identifier.</param>
+            <param name="OID">The algorithm OID</param>
             highest assurance level.</param>
         </member>
         <member name="M:Goedel.Cryptography.CryptoAlgorithmProfile.#ctor(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmClass,Goedel.Cryptography.AlgorithmVariant[],System.String,System.String)">
@@ -277,6 +421,8 @@
             <param name="CryptoAlgorithmId">The base <see cref="T:Goedel.Cryptography.CryptoAlgorithmId"/> for the family.</param>
             <param name="Class">The functionality supported.</param>
             <param name="Variants">Description of the variations of the algorithm from lowest to
+            <param name="Jose">Jose identifier.</param>
+            <param name="OID">The algorithm OID</param>
             highest assurance level.</param>
         </member>
         <member name="P:Goedel.Cryptography.CryptoAlgorithmProfile.Class">
@@ -284,7 +430,36 @@
         </member>
         <member name="P:Goedel.Cryptography.CryptoAlgorithmProfile.Variants">
             <summary>Description of the variations of the algorithm from lowest to
+            <param name="Jose">Jose identifier.</param>
+            <param name="OID">The algorithm OID</param>
             highest assurance level.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmProfile.AesCBC">
+            <summary>AES in CBC mode</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmProfile.AesGCM">
+            <summary>AES in GCM mode</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmProfile.AesOCB">
+            <summary>AES in OCD mode</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmProfile.Sha2Hash">
+            <summary>SHA 2 Digest</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmProfile.Sha3Hash">
+            <summary>SHA 3 Digest</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmProfile.Shake">
+            <summary>SHA 3 SHAKE function</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmProfile.HmacSha2">
+            <summary>HMAC-SHA2</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmProfile.HmacSha3">
+            <summary>HMAC-SHA3</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmProfile.KMAC">
+            <summary>KMAC</summary> 
         </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmProfile.RsaSign">
             <summary>RSA signature variants, these are abreviated as the necessary processing is handled 
@@ -326,6 +501,25 @@
         </member>
         <member name="P:Goedel.Cryptography.CryptoAlgorithmProfile.OidIdToEntry">
             <summary>Lookup algorithm by OID</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoAlgorithmProfile.AddGroup(Goedel.Cryptography.CryptoAlgorithmProfile[])">
+            <summary>
+            Add a group to the catalog.
+            </summary>
+            <param name="group">The group to add.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoAlgorithmProfile.AddProfile(Goedel.Cryptography.CryptoAlgorithmProfile)">
+            <summary>
+            Add an algorithm profile to the catalog.
+            </summary>
+            <param name="profile">The profile to add.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoAlgorithmProfile.AddVariant(Goedel.Cryptography.CryptoAlgorithmProfile,Goedel.Cryptography.AlgorithmVariant)">
+            <summary>
+            Add a variant to the catalog.
+            </summary>
+            <param name="profile">The profile to add to.</param>
+            <param name="variant">The variant to add.</param>
         </member>
         <member name="T:Goedel.Cryptography.CryptoAlgorithmClass">
             <summary>
@@ -888,6 +1082,11 @@
             </summary>
             <param name="id">Composite identifier</param>
             <returns>The bulk component.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.CryptographyExtensions">
+            <summary>
+            Extension class.
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.CryptographyExtensions.CreateManifestPrefixPure(System.Byte[])">
             <summary>

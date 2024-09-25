@@ -10,17 +10,25 @@ namespace Goedel.Cryptography.Nist;
 ///         MSB to LSB - most significant Byte first (index 0), least significant Byte last (last index)
 /// </summary>
 public class BitString {
+    ///<summary>Number of bytes per digit.</summary> 
     public const int BYTESPERDIGIT = 4;
+
+    ///<summary>Number of bits in Byte.</summary> 
     public const int BITSINBYTE = 8;
     private readonly BitArray _bits;
 
     #region Constructors
+
+    /// <summary>
+    /// Create an instance of <paramref name="bitCount"/> bits.
+    /// </summary>
+    /// <param name="bitCount">The number of bits.</param>
     public BitString(int bitCount) {
         _bits = new BitArray(bitCount);
         }
 
     /// <summary>
-    /// Create <see cref="BitString"/> expecting <see cref="byte[]"/> in Most Significant Byte (MSB) order.
+    /// Create <see cref="BitString"/> expecting <paramref name="msBytes"/> in Most Significant Byte (MSB) order.
     /// </summary>
     /// <param name="msBytes">The MSB bytes to use in the LSb <see cref="BitString"/></param>
     public BitString(byte[] msBytes) {
@@ -38,8 +46,10 @@ public class BitString {
     /// <summary>
     /// Converts BigInteger to BitString with proper byte orientation
     /// </summary>
-    /// <param name="bigInt"></param>
-    /// <param name="bitLength"></param>
+    /// <param name="bigInt">The value to convert.</param>
+    /// <param name="bitLength">The number of bits to convert.</param>
+    /// <param name="allowRemoval">If true allow removal of empty byte added to
+    /// avoid twos complement issues..</param>
     public BitString(BigInteger bigInt, int bitLength = 0, bool allowRemoval = true) {
         byte[] bytesInLSB = bigInt.ToByteArray();
 
@@ -150,7 +160,7 @@ public class BitString {
     /// If true is provided to function, returned in Least Significant Byte order.
     /// </remarks>
     /// <param name="reverseBytes">Should the bytes be reverse in the array?  (Changes from MSB to LSB)</param>
-    /// <returns><see cref="byte[]"/> of <see cref="Bits"/></returns>
+    /// <returns>Byte array of <see cref="Bits"/> bits.</returns>
     public byte[] ToBytes(bool reverseBytes = false) {
         if (Bits.Length == 0) {
             return new byte[0];
@@ -484,7 +494,6 @@ public class BitString {
 
     /// <summary>
     /// Adds two bit strings together - e.g. "11" (3) + 111 (7) = 1010 (10).
-    /// Similar to <see cref="AddWithModulo(NIST.CVP.ACVTS.Libraries.Math.BitString,NIST.CVP.ACVTS.Libraries.Math.BitString,int)"/>, but without truncation.
     /// </summary>
     /// <param name="left"></param>
     /// <param name="right"></param>
@@ -521,8 +530,7 @@ public class BitString {
 
     /// <summary>
     /// Adds two bit strings together - e.g. "11" (3) + 111 (7) = 1010 (10).
-    /// Similar to <see cref="AddWithModulo(NIST.CVP.ACVTS.Libraries.Math.BitString,NIST.CVP.ACVTS.Libraries.Math.BitString,int)"/>, but without truncation.
-    /// </summary>
+     /// </summary>
     /// <param name="left"></param>
     /// <param name="right"></param>
     /// <returns></returns>

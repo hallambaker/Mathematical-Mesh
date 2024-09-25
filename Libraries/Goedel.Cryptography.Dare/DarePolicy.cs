@@ -34,7 +34,7 @@ public partial class DarePolicy {
     ///<summary>Key collection to be used to resolve keys.</summary> 
     public IKeyLocate KeyLocation { get; set; }
 
-
+    ///<summary>The root signature keys.</summary> 
     public List<KeyPair> SignatureKeys { get; set; } = null;
 
     /////<summary></summary> 

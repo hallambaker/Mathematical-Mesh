@@ -390,10 +390,22 @@ public class KyberNist(KyberParameters param, IShaFactory shaFactory=null)  {
         return y;
         }
 
+    /// <summary>
+    /// Compress <paramref name="d"/>, <paramref name="x"/>
+    /// </summary>
+    /// <param name="d">Parameter d</param>
+    /// <param name="x">Parameter x</param>
+    /// <returns>x compressed in d, Q</returns>
     public int Compress(int d, int x) {
         return ((x * d.Exp2() + (Parameters.Q / 2)) / Parameters.Q);
         }
 
+    /// <summary>
+    /// Recover compressed x from <paramref name="d"/>, <paramref name="y"/>
+    /// </summary>
+    /// <param name="d">Parameter d</param>
+    /// <param name="y">Parameter y</param>
+    /// <returns>x decompressed in d, Q</returns>
     public int Decompress(int d, int y) {
         return ((y * Parameters.Q + (d.Exp2() / 2)) / d.Exp2());
         }

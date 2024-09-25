@@ -83,7 +83,7 @@ public partial class GroupSelection : ApplicationSelection {
 
 public partial class BoundApplicationGroup : IBoundPresentation, IDialog {
 
-    public GuiDialog Dialog(Gui gui) => (gui as EverythingMaui).DialogBoundApplicationGroup;
+    public override GuiDialog Dialog(Gui gui) => (gui as EverythingMaui)?.DialogBoundApplicationGroup;
 
     public override string? IconValue => "application_group.png";
 
@@ -106,7 +106,7 @@ public partial class BoundApplicationGroup : IBoundPresentation, IDialog {
 
     public BoundApplicationGroup(ContextGroup contextGroup, ContextUser contextUser) {
         ContextUser = contextUser;
-        contextGroup = contextGroup;
+        this.contextGroup = contextGroup;
         Bound = ContextGroup.CatalogedGroup;
         }
 
@@ -117,10 +117,10 @@ public partial class BoundApplicationGroup : IBoundPresentation, IDialog {
         return result;
         }
 
-    public void ReadBound() {
+    public override void ReadBound() {
         }
 
-    public void SetBound() {
+    public override void SetBound() {
         }
 
 

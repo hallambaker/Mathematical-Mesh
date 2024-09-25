@@ -807,7 +807,7 @@
             Verify a signature over the purported data digest.
             </summary>
             <param name="signature">The signature blob value.</param>
-            <param name="Context">Additional data added to the signature scope
+            <param name="context">Additional data added to the signature scope
             for protocol isolation.</param>
             <param name="digest">The digest value to be verified.</param>
             <returns>True if the signature is valid, otherwise false.</returns>
@@ -2678,6 +2678,13 @@
             </summary>
             <param name="hashBitLength"></param>
         </member>
+        <member name="M:Goedel.Cryptography.Algorithms.SHA3Managed.Create(System.Int32)">
+            <summary>
+            Factory method returning a provider for hash length <paramref name="hashBitLength"/>/
+            </summary>
+            <param name="hashBitLength">Number of bits.</param>
+            <returns>The provider.</returns>
+        </member>
         <member name="M:Goedel.Cryptography.Algorithms.SHA3Managed.Process512(System.Byte[])">
             <summary>
             Convenience routine to preform one stop processing.
@@ -4254,6 +4261,53 @@
             <param name="keyStorage">The key security specifier.</param>
             <returns>true if the key is persisted, otherwise false</returns>
         </member>
+        <member name="T:Goedel.Cryptography.KeyFactoryECC">
+            <summary>
+            Key factory generating ECC keypairs on the NIST curves P256, P384 and P512,
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyFactoryECC.Generate(System.Byte[],System.Byte[],System.String,System.Int32)">
+            <summary>
+            Generate a key pair
+            </summary>
+            <param name="ikm"></param>
+            <param name="keySpecifier"></param>
+            <param name="keyName"></param>
+            <param name="keySize"></param>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyFactoryECC.Generate(Goedel.Cryptography.Nist.IPrimeGenerator,System.Int32)">
+            <summary>
+            Generate a key with size <paramref name="keySize"/> using <paramref name="generator"/>
+            </summary>
+            <param name="generator">The random number generator.</param>
+            <param name="keySize">The key size in bits.</param>
+            <exception cref="T:Goedel.Cryptography.CryptographicException">The number of bits is not supported.</exception>
+        </member>
+        <member name="T:Goedel.Cryptography.KeyFactoryRsa">
+            <summary>
+            RSA Key factory.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyFactoryRsa.Generate(System.Byte[],System.Byte[],System.String,System.Int32,Goedel.Cryptography.Nist.RsaGenerationHints)">
+            <summary>
+            Generate RSA key parameters with hints.
+            </summary>
+            <param name="ikm">The initial keying material.</param>
+            <param name="keySpecifier">The key type specifier.</param>
+            <param name="keyName">The key name.</param>
+            <param name="keySize">The key size (in bits)</param>
+            <param name="hintsIn">Optional generation hints to avoid need to search for parameters.</param>
+            <returns>The RSA key pair and hints.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyFactoryRsa.Generate(Goedel.Cryptography.Nist.IPrimeGenerator,System.Int32,Goedel.Cryptography.Nist.RsaGenerationHints)">
+            <summary>
+            Generate RSA key parameters
+            </summary>
+            <param name="generator">The prime generator to use.</param>
+            <param name="keySize">The key size in bits.</param>
+            <param name="hintsIn">Optional generation hints to avoid need to search for parameters.</param>
+            <returns>The RSA key pair</returns>
+        </member>
         <member name="T:Goedel.Cryptography.PlatformInformation">
             <summary>Enumeration used to specify information requested from the platform
             to enable use of platform specific features.</summary>
@@ -4316,6 +4370,12 @@
         <member name="P:Goedel.Cryptography.KeyPair.ForcePublicParameters">
             <summary>If true, a signature generated using this key will always include the
             full public key parameters.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPair.#ctor(Goedel.Cryptography.KeySecurity)">
+            <summary>
+            Constructor, create an instance with security level <paramref name="keySecurity"/>
+            </summary>
+            <param name="keySecurity">The security level.</param>
         </member>
         <member name="M:Goedel.Cryptography.KeyPair.Sign(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
@@ -4392,6 +4452,7 @@
             <param name="keyName">Optional key name used to specify generation of multiple keys from 
             a single seed.</param>
             <param name="keySize">The size of the key in bits.</param>
+            <param name="hints">Optional string containing Base32 encoded key generation hints.</param>
             <returns>the derrived key.</returns>
         </member>
         <member name="M:Goedel.Cryptography.KeyPair.KeySeed(System.Int32,System.Byte[],System.Byte[],System.String,System.String)">
@@ -5134,6 +5195,59 @@
         <member name="P:Goedel.Cryptography.CurveNistPrivate.Private">
             <summary>The implementation private key value (if exportable)</summary>
         </member>
+        <member name="P:Goedel.Cryptography.CurveNistPrivate.PublicKey">
+            <summary>The public key, a point on the curve.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.CurveNistPrivate.#ctor(System.Byte[],Goedel.Cryptography.Nist.IEccCurve,System.Boolean)">
+            <summary>
+            Constructor unpacking the key <paramref name="encoding"/> according to the curve
+            <paramref name="curve"/>.
+            </summary>
+            <param name="encoding">The encoded scalar.</param>
+            <param name="curve">The curve on which the point is located.</param>
+            <param name="exportable">If true, allow the private key to be exported.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.CurveNistPrivate.#ctor(System.Numerics.BigInteger,Goedel.Cryptography.Nist.IEccCurve,System.Boolean)">
+            <summary>
+            Constructor unpacking the key <paramref name="privateKey"/> according to the curve
+            <paramref name="curve"/>.
+            </summary>
+            <param name="privateKey">The scalar.</param>
+            <param name="curve">The curve on which the point is located.</param>
+            <param name="exportable">If true, allow the private key to be exported.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.CurveNistPrivate.Decode(System.Byte[])">
+            <summary>
+            Decode the encoded scalar <paramref name="encoding"/>.
+            </summary>
+            <param name="encoding">The encoded scalar</param>
+            <returns>The scalar</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CurveNistPrivate.Encode(System.Numerics.BigInteger)">
+            <summary>
+            Encode the scalar <paramref name="privateKey"/>.
+            </summary>
+            <param name="privateKey">The private key to encode.</param>
+            <returns>The encoded scalar.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.CurveNistPrivate.Agreement(Goedel.Cryptography.KeyPair)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.CurveNistPrivate.Combine(Goedel.Cryptography.IKeyAdvancedPrivate,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.CurveNistPrivate.CompleteRecryptionKeySet(System.Collections.Generic.IEnumerable{Goedel.Cryptography.KeyPair})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.CurveNistPrivate.GetKeyPair(Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.CurveNistPrivate.MakeThresholdKeySet(System.Int32,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.CurveNistPrivate.MakeThresholdKeySet(System.Int32)">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Cryptography.CurveNistPublic">
             <summary>
             An ECC public key, a point on one of the NIST curves.
@@ -5161,7 +5275,16 @@
             <param name="publicKey">The encoded point.</param>
             <param name="curve">The curve.</param>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Goedel.Cryptography.CurveNistPublic.Decode(System.Byte[])" -->
+        <member name="M:Goedel.Cryptography.CurveNistPublic.Decode(System.Byte[])">
+            <summary>
+            Encode the point encoded in the byte stream <paramref name="encoding"/>
+            according to the uncompressed encoding 
+            specified in https://www.secg.org/sec1-v2.pdf 
+            </summary>
+            <param name="encoding">The data to decode.</param>
+            <returns>The decoded point.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
         <member name="M:Goedel.Cryptography.CurveNistPublic.Encode(Goedel.Cryptography.Nist.EccPoint)">
             <summary>
             Encode the point <paramref name="point"/> the uncompressed encoding 
@@ -5170,6 +5293,9 @@
             <param name="point">The point to encode.</param>
             <returns>The encoded point.</returns>
             <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.CurveNistPublic.Combine(Goedel.Cryptography.IKeyAdvancedPublic)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.KeyPairECDHP">
             <summary>
@@ -5567,6 +5693,9 @@
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd25519.Decrypt(System.Byte[],Goedel.Cryptography.IAgreementData,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPairEd25519.Sign(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairEd25519.SignManifest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
@@ -5985,6 +6114,11 @@
             <inheritdoc/>
             <exception cref="T:Goedel.Cryptography.OperationNotSupported">ML-KEM does not support signature operations.</exception>
         </member>
+        <member name="T:Goedel.Cryptography.BigNumber">
+            <summary>
+            Operations on big integers.
+            </summary>
+        </member>
         <member name="M:Goedel.Cryptography.BigNumber.Random(System.Int32)">
             <summary>
             Return a positive random BigInteger that is strictly less than 2^bits.
@@ -6116,6 +6250,22 @@
             <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
             the value of <paramref name="keySecurity"/></param>/// <returns>The created key pair</returns>
         </member>
+        <member name="M:Goedel.Cryptography.KeyPairRSA.KeyPairFactory(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeySecurity,System.Byte[],System.Byte[],System.String,Goedel.Cryptography.IKeyLocate,System.Int32,Goedel.Cryptography.KeyUses,Goedel.Cryptography.Nist.RsaGenerationHints)">
+            <summary>
+            RSA KeyPair generation factory used by UDF.
+            </summary>
+            <param name="algorithmID">The type of key to create.</param>
+            <param name="keyCollection">The key collection to add the key to.</param>
+            <param name="keySecurity">The key security model.</param>
+            <param name="keyUses">The allowed key uses.</param>
+            <param name="ikm">Initial keying material for the key.</param>
+            <param name="keySpecifier">Key specifier material for the key.</param>
+            <param name="keyName">Optional key name used to specify generation of multiple keys from 
+            a single seed.</param>
+            <param name="keySize">The size of the key in bits.</param>
+            <param name="hintsIn">Optional string containing Base32 encoded key generation hints.</param>
+            <returns>The RSA key pair and generation hints.</returns>
+        </member>
         <member name="M:Goedel.Cryptography.KeyPairRSA.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.IAgreementData@,System.Byte[])">
             <inheritdoc/>
         </member>
@@ -6231,7 +6381,6 @@
             <param name="bits">Number of bits precision, if less than the minimum number
             of bits will be set equal to <see cref="P:Goedel.Cryptography.Udf.MinimumBits"/></param>
             <param name="algorithmSign">The signature algorithm to use.</param>
-            <param name="algorithmDigest">The digest algorithm to use.</param>
         </member>
         <member name="M:Goedel.Cryptography.CryptoKeySymmetricSigner.#ctor(System.String)">
             <summary>
@@ -6249,8 +6398,8 @@
             <summary>
             Sign a precomputed digest 
             </summary>
-            <param name="data">The data to sign.</param>
-            <param name="algorithmID">The algorithm to use.</param>
+            <param name="digest">The digest to sign.</param>
+            <param name="algorithmID">The algorithm used to create the digest.</param>
             <param name="context">Additional data added to the signature scope
             for protocol isolation.</param>
             <returns>The signature data</returns>
@@ -6260,7 +6409,7 @@
             Verify a signature over the purported data digest.
             </summary>
             <param name="signature">The signature blob value.</param>
-            <param name="algorithmID">The signature and hash algorithm to use.</param>
+            <param name="algorithmID">The algorithm used to create the digest.</param>
             <param name="context">Additional data added to the signature scope
             for protocol isolation.</param>
             <param name="digest">The digest value to be verified.</param>
@@ -6572,6 +6721,12 @@
             <param name="context">Additional data added to the signature scope
             for protocol isolation.</param>
             <returns>The signature data</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.IAgreementData">
+            <summary>
+            Interface allowing ephemeral keys and KEM data to be used in the same API slot
+            on the encrypt API.
+            </summary>
         </member>
         <member name="T:Goedel.Cryptography.CryptoKey">
             <summary>
@@ -10626,6 +10781,14 @@
              </summary>
              <param name="buffer">Output buffer</param>
         </member>
+        <member name="M:Goedel.Cryptography.PKIX.PKIXEcdhKeyBase.GetParameters(Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Return JOSE and ASN.1 identifiers describing an ECC algorithm <paramref name="cryptoAlgorithmID"/>.
+            </summary>
+            <param name="cryptoAlgorithmID">The ECC algorithm.</param>
+            <returns>The Jose identifier string, Algorithm OID and Curve parameter.</returns>
+            <exception cref="T:Goedel.Cryptography.CryptographicException"></exception>
+        </member>
         <member name="T:Goedel.Cryptography.PKIX.PKIXPublicKeyECDH">
             <summary>
             PKIXPublicKeyECDH 
@@ -11004,6 +11167,22 @@
             Dispose each of <paramref name="inputs"/> unless null.
             </summary>
             <param name="inputs">List of arrays to wipe</param>
+        </member>
+        <member name="T:Goedel.Cryptography.PrimeGeneratorUdf">
+            <summary>
+            Generate a prime number from a UDF seed.
+            </summary>
+            <param name="ikm">The initial keying material.</param>
+            <param name="keySpecifier">The key specifier.</param>
+            <param name="keyName">The key name.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.PrimeGeneratorUdf.#ctor(System.Byte[],System.Byte[],System.String)">
+            <summary>
+            Generate a prime number from a UDF seed.
+            </summary>
+            <param name="ikm">The initial keying material.</param>
+            <param name="keySpecifier">The key specifier.</param>
+            <param name="keyName">The key name.</param>
         </member>
         <member name="P:Goedel.Cryptography.PrimeGeneratorUdf.CallCount">
             <summary>Dictionary tracking the number of times the method has been called.</summary> 
@@ -11774,15 +11953,28 @@
             Class implementing the Uniform Data Fingerprint spec.
             </summary>
             <param name="Value">The identifier value field.</param>
+            <param name="Code">The UDF identifier type.</param>
+            <param name="Bits">The number of bits of precision. If 0, the default
+            number of bits <see cref="P:Goedel.Cryptography.Udf.DefaultBits"/> is used.</param>
         </member>
         <member name="M:Goedel.Cryptography.Udf.#ctor(Goedel.Cryptography.UdfTypeIdentifier,System.Byte[],System.Int32)">
             <summary>
             Class implementing the Uniform Data Fingerprint spec.
             </summary>
             <param name="Value">The identifier value field.</param>
+            <param name="Code">The UDF identifier type.</param>
+            <param name="Bits">The number of bits of precision. If 0, the default
+            number of bits <see cref="P:Goedel.Cryptography.Udf.DefaultBits"/> is used.</param>
+        </member>
+        <member name="P:Goedel.Cryptography.Udf.Code">
+            <summary>The UDF identifier type.</summary>
         </member>
         <member name="P:Goedel.Cryptography.Udf.Value">
             <summary>The identifier value field.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Udf.Bits">
+            <summary>The number of bits of precision. If 0, the default
+            number of bits <see cref="P:Goedel.Cryptography.Udf.DefaultBits"/> is used.</summary>
         </member>
         <member name="P:Goedel.Cryptography.Udf.DefaultBits">
             <summary>
@@ -11791,7 +11983,7 @@
         </member>
         <member name="P:Goedel.Cryptography.Udf.MinimumBits">
             <summary>
-            Maximum precision (usually 440);
+            Minimum precision (usually 128);
             </summary>
         </member>
         <member name="P:Goedel.Cryptography.Udf.MaximumBits">
@@ -12185,6 +12377,15 @@
             <param name="cryptoAlgorithmId">The digest algorithm to use.</param>
             <returns>The binary UDF fingerprint.</returns>
         </member>
+        <member name="M:Goedel.Cryptography.Udf.CalculateProfileUdf(System.Collections.Generic.IEnumerable{System.Byte[]},Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Calculate a UDF over a sequence of binary UDF values.
+            </summary>
+            <param name="roots">The UDF digests to compute the digest of.</param>
+            <param name="cryptoAlgorithmId">The algorithm to use to compute the digest.</param>
+            <returns>The constructed UDF.</returns>
+            <exception cref="T:Goedel.Cryptography.CryptographicException">The digest algorithm is not known or not supported.</exception>
+        </member>
         <member name="M:Goedel.Cryptography.Udf.Parse(System.String,System.Byte@)">
             <summary>
             Parse a UDF to obtain the type identifier and Binary Data Sequence.
@@ -12345,11 +12546,11 @@
             Derive a key pair from the UDF key <paramref name="udf"/> with Key security model
             <paramref name="keySecurity"/> and Key uses <paramref name="keyUses"/>.
             </summary>
-            <param name="udf"></param>
-            <param name="hints"></param>
-            <param name="keySecurity"></param>
-            <returns></returns>
-            <param name="keyUses"></param>
+            <param name="udf">The UDF to derrive the key from.</param>
+            <param name="hints">Optional hints string used to speed up decoding.</param>
+            <param name="keySecurity">The key security model.</param>
+            <param name="keyUses">The allowed key uses.</param>
+            <returns>The derrived key pair.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Udf.DeriveKey(System.String,Goedel.Cryptography.IKeyLocate,System.String,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId,System.String)">
             <summary>
@@ -12363,6 +12564,7 @@
             <param name="keyUses">The allowed key uses.</param>
             <param name="keyName">Optional key name used to specify generation of multiple keys from 
             a single seed.</param>
+            <param name="hints">Optional hints string used to speed up decoding.</param>
             <returns>The derrived key pair.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Udf.DeriveKeyHints(System.String,Goedel.Cryptography.IKeyLocate,System.String,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId,System.String)">
@@ -12377,6 +12579,7 @@
             <param name="keyUses">The allowed key uses.</param>
             <param name="keyName">Optional key name used to specify generation of multiple keys from 
             a single seed.</param>
+            <param name="hints">Optional hints string used to speed up decoding.</param>
             <returns>The derrived key pair.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Udf.TestKey(Goedel.Cryptography.CryptoAlgorithmId,System.String)">
@@ -12399,6 +12602,16 @@
         </member>
         <member name="T:Goedel.Cryptography.Extension">
             <summary>Static class containing static extension methods providing convenience functions.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Extension.IsPresent(System.Collections.Generic.IEnumerable{System.Byte[]},System.Byte[])">
+            <summary>
+            Search the list of roots <paramref name="roots"/> and return true if the root
+            <paramref name="keyIdentifier"/> is present.
+            </summary>
+            <param name="roots">List of root key identifier UDFs.</param>
+            <param name="keyIdentifier">The root key to find.</param>
+            <returns>True if <paramref name="keyIdentifier"/> is present in
+            <paramref name="roots"/>, otherwise false.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Extension.CompareUDF(System.String,System.String)">
             <summary>

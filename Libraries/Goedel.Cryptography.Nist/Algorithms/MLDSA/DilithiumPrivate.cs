@@ -65,7 +65,7 @@ public class DilithiumPrivate {
     /// Factory method returning an instance generated from the secret key value
     /// <paramref name="sk"/>.
     /// </summary>
-    /// <param name="sk">The expanded secret key./param>
+    /// <param name="sk">The expanded secret key.</param>
     /// <returns>The private key.</returns>
     public static DilithiumPrivate FromSecretKey(byte[] sk) => 
                 new DilithiumPrivate(sk, DilithiumNist.GetByPrivateKeyLength (sk.Length));

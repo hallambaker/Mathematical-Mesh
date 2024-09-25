@@ -569,40 +569,24 @@ public partial class Recipient {
     /// </summary>
     public Recipient() { }
 
-    ///// <summary>
-    ///// Encrypt to the specified key of the specified profile.
-    ///// </summary>
-    ///// <param name="RecipientData">KeyPair for the recipient.</param>
-    ///// <param name="KID">Recipient Key ID.</param>
-    //public Recipient(CryptoDataExchange RecipientData, string KID=null) {
-    //    var RecipientKey = RecipientData.Meta;
-    //    Header = new Header() {
-    //        Alg = RecipientKey?.CryptoAlgorithmID.Meta().ToJoseID(),
-    //        Kid = KID ?? RecipientKey?.UDF
-    //        };
-    //    if (RecipientData.Ephemeral != null) {
-    //        Header.Epk = Key.GetPublic(RecipientData.Ephemeral);
-    //        }
-    //    EncryptedKey = RecipientData.Exchange;
-    //    }
 
     /// <summary>
     /// Encrypt to the specified key of the specified profile.
     /// </summary>
-    /// <param name="RecipientKey">KeyPair for the recipient.</param>
-    /// <param name="ExchangeData">The key to be exchanged.</param>
-    /// <param name="Ephemeral">The ephemeral key (if required by the algorithm)</param>
-    /// <param name="KID">Recipient Key ID.</param>
+    /// <param name="recipientKey">KeyPair for the recipient.</param>
+    /// <param name="exchangeData">The key to be exchanged.</param>
+    /// <param name="agreementData">The ephemeral key or ciphertext (if required by the algorithm)</param>
+    /// <param name="kid">Recipient Key ID.</param>
     public Recipient(
-                    byte[] ExchangeData,
-                    KeyPair RecipientKey,
+                    byte[] exchangeData,
+                    KeyPair recipientKey,
                     IAgreementData agreementData,
-                    string KID = null) {
+                    string kid = null) {
 
 
         Header = new Header() {
-            Alg = RecipientKey?.CryptoAlgorithmId.Meta().ToJoseID(),
-            Kid = KID ?? RecipientKey?.KeyIdentifier,
+            Alg = recipientKey?.CryptoAlgorithmId.Meta().ToJoseID(),
+            Kid = kid ?? recipientKey?.KeyIdentifier,
             };
         if (agreementData is KeyPair agreementKeypair) {
             Header.Epk = Key.GetPublic(agreementKeypair);
@@ -611,7 +595,7 @@ public partial class Recipient {
             Header.Ek = agreementDataBinary.Value;
             }
 
-        EncryptedKey = ExchangeData;
+        EncryptedKey = exchangeData;
         }
 
 
@@ -619,15 +603,18 @@ public partial class Recipient {
     /// Wrap the specified content encryption key and form the corresponding 
     /// Reccipient object containing the corresponding identifier, etc.
     /// </summary>
-    /// <param name="Algorithm">The algorithm identifier</param>
-    /// <param name="Identifier">The key identifier</param>
-    /// <param name="WrappedKey">The wrapped key</param>
-    public Recipient(string Algorithm, string Identifier, byte[] WrappedKey) {
+    /// <param name="algorithm">The algorithm identifier</param>
+    /// <param name="identifier">The key identifier</param>
+    /// <param name="wrappedKey">The wrapped key</param>
+    public Recipient(
+                    string algorithm, 
+                    string identifier, 
+                    byte[] wrappedKey) {
         Header = new Header() {
-            Alg = Algorithm,
-            Kid = Identifier
+            Alg = algorithm,
+            Kid = identifier
             };
-        EncryptedKey = WrappedKey;
+        EncryptedKey = wrappedKey;
 
         }
 

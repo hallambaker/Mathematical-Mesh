@@ -1,5 +1,8 @@
 ﻿namespace Goedel.Cryptography.Nist;
 
+/// <summary>
+/// Extension class handling big integer operations.
+/// </summary>
 public static class BigIntegerExtensions {
     /// <summary>
     /// Takes the modulo of a value (or <see cref="BigInteger"/> expression) and ensures it is between [0, <paramref name="modulo"/> - 1]

@@ -39,7 +39,11 @@ public partial class Header {
     /// <param name="Provider">The encryption provider</param>
     public Header(CryptoProviderEncryption Provider) => Alg = Provider.CryptoAlgorithmID.ToJoseID();
 
-
+    /// <summary>
+    /// Get the agreement data, this is presented in Epk for ephemeral keys and in
+    /// Ek for a KEM.
+    /// </summary>
+    /// <returns>The agreement data.</returns>
     public IAgreementData GetAgreementData() {
 
         if (Epk is not null) {

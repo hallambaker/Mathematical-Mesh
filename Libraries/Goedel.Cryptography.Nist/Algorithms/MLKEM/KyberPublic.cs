@@ -1,7 +1,12 @@
 ﻿
 namespace Goedel.Cryptography.Nist;
 
+/// <summary>
+/// ML-KEM public key.
+/// </summary>
 public class KyberPublic {
+
+    ///<summary>The kyber parameters</summary> 
     public KyberNist Kyber { get; }
 
     ///<swummary>The encoded Public Key value</swummary> 

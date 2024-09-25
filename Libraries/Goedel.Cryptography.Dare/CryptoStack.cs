@@ -180,7 +180,12 @@ public abstract partial class CryptoStack {
 
 
 
-
+    /// <summary>
+    /// Return the envelope signature manifest.
+    /// </summary>
+    /// <param name="digestId">The digest identifier used to digest the envelope payload.</param>
+    /// <param name="trailer">The trailer data.</param>
+    /// <returns>The binary manifest value.</returns>
     public static byte[] GetEnvelopeSignatureManifest(CryptoAlgorithmId digestId, DareTrailer trailer) {
         var memoryStream = new MemoryStream();
         var writer = new JsonBWriter(memoryStream);
@@ -200,6 +205,12 @@ public abstract partial class CryptoStack {
         return memoryStream.ToArray();  
         }
 
+    /// <summary>
+    /// Return the sequence signature manifest.
+    /// </summary>
+    /// <param name="digestId">The digest identifier used to digest the envelope payload.</param>
+    /// <param name="trailer">The trailer data.</param>
+    /// <returns>The binary manifest value.</returns>
     public static byte[] GetSequenceSignatureManifest(CryptoAlgorithmId digestId, DareTrailer trailer) {
         var memoryStream = new MemoryStream();
         var writer = new JsonBWriter(memoryStream);

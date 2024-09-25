@@ -450,7 +450,7 @@ public class CurveEdwards448Public : CurveEdwardsPublic {
     /// Verify a signature over the purported data digest.
     /// </summary>
     /// <param name="signature">The signature blob value.</param>
-    /// <param name="Context">Additional data added to the signature scope
+    /// <param name="context">Additional data added to the signature scope
     /// for protocol isolation.</param>
     /// <param name="digest">The digest value to be verified.</param>
     /// <returns>True if the signature is valid, otherwise false.</returns>

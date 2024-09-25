@@ -17,18 +17,23 @@ namespace Goedel.Cryptography.Nist;
 /// <param name="shaFactory"></param>
 /// 
 public class DilithiumNist(DilithiumParameters param, IShaFactory shaFactory=null) {
+
+    ///<summary>The parameter set.</summary> 
     public DilithiumParameters Parameters { get; }  = param;
 
+    ///<summary>Parameters for ML-DSA-44.</summary> 
     public static DilithiumNist MlDsa44 => mlDsa44 ??
        new DilithiumNist(DilithiumParameters.ML_DSA_44)
                 .CacheValue(out mlDsa44);
     static DilithiumNist? mlDsa44 = null;
 
+    ///<summary>Parameters for ML-DSA-65.</summary> 
     public static DilithiumNist MlDsa65 => mlDsa65 ??
        new DilithiumNist(DilithiumParameters.ML_DSA_65)
                 .CacheValue(out mlDsa65);
     static DilithiumNist? mlDsa65 = null;
 
+    ///<summary>Parameters for ML-DSA-87.</summary> 
     public static DilithiumNist MlDsa87 => mlDsa87 ??
        new DilithiumNist(DilithiumParameters.ML_DSA_87)
                 .CacheValue(out mlDsa87);

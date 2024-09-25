@@ -39,16 +39,31 @@ public record CurveNistPrivate : IKeyAdvancedPrivate {
     ///<summary>The implementation private key value (if exportable)</summary>
     public BigInteger Private { get; set; }
 
+    ///<summary>The public key, a point on the curve.</summary> 
     public CurveNistPublic PublicKey { get; set; }
 
     IEccCurve Curve { get; set; }
     #endregion
     #region // Constructors
 
+    /// <summary>
+    /// Constructor unpacking the key <paramref name="encoding"/> according to the curve
+    /// <paramref name="curve"/>.
+    /// </summary>
+    /// <param name="encoding">The encoded scalar.</param>
+    /// <param name="curve">The curve on which the point is located.</param>
+    /// <param name="exportable">If true, allow the private key to be exported.</param>
     public CurveNistPrivate(byte[] encoding, IEccCurve curve, bool exportable) :
                     this(Decode(encoding), curve, exportable) {
         }
 
+    /// <summary>
+    /// Constructor unpacking the key <paramref name="privateKey"/> according to the curve
+    /// <paramref name="curve"/>.
+    /// </summary>
+    /// <param name="privateKey">The scalar.</param>
+    /// <param name="curve">The curve on which the point is located.</param>
+    /// <param name="exportable">If true, allow the private key to be exported.</param>
     public CurveNistPrivate(BigInteger privateKey, IEccCurve curve, bool exportable) {
 
         //// Verify that the keysize matches the curve size.
@@ -65,35 +80,49 @@ public record CurveNistPrivate : IKeyAdvancedPrivate {
     #endregion
     #region // Encode/Decode
 
+    /// <summary>
+    /// Decode the encoded scalar <paramref name="encoding"/>.
+    /// </summary>
+    /// <param name="encoding">The encoded scalar</param>
+    /// <returns>The scalar</returns>
     public static BigInteger Decode(byte[] encoding) =>
                 encoding.BigIntegerBigEndian();
 
-
+    /// <summary>
+    /// Encode the scalar <paramref name="privateKey"/>.
+    /// </summary>
+    /// <param name="privateKey">The private key to encode.</param>
+    /// <returns>The encoded scalar.</returns>
     public static byte[] Encode(BigInteger privateKey) =>
                 privateKey.ToByteArrayBigEndian();
     #endregion
 
-
+    ///<inheritdoc/>
     public KeyAgreementResult Agreement(KeyPair keyPair) {
         throw new NotImplementedException();
         }
 
+    ///<inheritdoc/>
     public IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate contribution, KeySecurity keySecurity = KeySecurity.Admin, KeyUses keyUses = KeyUses.Any) {
         throw new NotImplementedException();
         }
 
+    ///<inheritdoc/>
     public IKeyAdvancedPrivate CompleteRecryptionKeySet(IEnumerable<KeyPair> shares) {
         throw new NotImplementedException();
         }
 
+    ///<inheritdoc/>
     public KeyPairAdvanced GetKeyPair(KeySecurity keySecurity = KeySecurity.Public, KeyUses keyUses = KeyUses.Any, CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) {
         throw new NotImplementedException();
         }
 
+    ///<inheritdoc/>
     public ShamirSharePrivate[] MakeThresholdKeySet(int shares, int threshold) {
         throw new NotImplementedException();
         }
 
+    ///<inheritdoc/>
     public IKeyAdvancedPrivate[] MakeThresholdKeySet(int shares) {
         throw new NotImplementedException();
         }
@@ -138,7 +167,7 @@ public record CurveNistPublic : IKeyAdvancedPublic {
 
         PublicKey = publicKey;
         Curve = curve;
-        } 
+        }
     #endregion
 
     /// <summary>
@@ -146,7 +175,7 @@ public record CurveNistPublic : IKeyAdvancedPublic {
     /// according to the uncompressed encoding 
     /// specified in https://www.secg.org/sec1-v2.pdf 
     /// </summary>
-    /// <param name="<paramref name="privateKey"/> ">The data to decode.</param>
+    /// <param name="encoding">The data to decode.</param>
     /// <returns>The decoded point.</returns>
     /// <exception cref="NotImplementedException"></exception>
     public static EccPoint Decode(byte[] encoding) {
@@ -186,13 +215,10 @@ public record CurveNistPublic : IKeyAdvancedPublic {
         return stream.ToArray();
         }
 
-
+    ///<inheritdoc/>
     public IKeyAdvancedPublic Combine(IKeyAdvancedPublic contribution) {
         throw new NotImplementedException();
         }
-
-
-
 
     }
 

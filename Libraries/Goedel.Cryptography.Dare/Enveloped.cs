@@ -51,7 +51,7 @@ public partial class Enveloped<T> : DareEnvelope where T : JsonObject {
 
     byte[] bodyValue;
 
-    bool wasFromEnvelope = false;
+
     ///<inheritdoc/>
     public override byte[] Body {
         get => GetBodyLazy();
@@ -73,11 +73,10 @@ public partial class Enveloped<T> : DareEnvelope where T : JsonObject {
 
     /// <summary>
     /// Construct a typed copy of the envelope <paramref name="enveloped"/> with the same
-    /// Header, Body, Trailer and JSONObject.
+    /// Header, Trailer and JSONObject but omitting the body data.
     /// </summary>
     /// <param name="enveloped">The envelope to copy.</param>
     public Enveloped(DareEnvelope enveloped) {
-        wasFromEnvelope = true;
         Untyped = enveloped;
         Header = enveloped.Header;
         //Body = enveloped.Body;
@@ -130,14 +129,12 @@ public partial class Enveloped<T> : DareEnvelope where T : JsonObject {
 
     /// <summary>
     /// Constructor returining an envelope containing the object <paramref name="data"/>
-    /// optionally encrypted under <paramref name="encryptionKey"/> and signed under
-    /// <paramref name="signingKey"/>.
+    /// optionally enhanced unde <paramref name="cryptoParameters"/>.
     /// </summary>
     /// <param name="data">The object to be enveloped.</param>
-    /// <param name="signingKey">The signature key.</param>
-    /// <param name="encryptionKey">The encryption key.</param>
     /// <param name="contentMeta">The value of the ContentMeta Header tag.</param>
     /// <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
+    /// <param name="cryptoParameters">The cryptographic enhancement parameters.</param>
     public Enveloped(
                 T data,
                 CryptoParameters cryptoParameters,

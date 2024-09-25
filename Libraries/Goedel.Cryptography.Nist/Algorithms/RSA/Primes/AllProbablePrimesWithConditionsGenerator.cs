@@ -4,17 +4,31 @@ namespace Goedel.Cryptography.Nist;
 
 
 
-
+/// <summary>
+/// Generate probable primes with conditions.
+/// </summary>
 public class AllProbablePrimesWithConditionsGenerator : IFips186_5PrimeGenerator {
     private readonly IEntropyProvider _entropyProvider;
     private readonly IPrimeGenerator _primeGenerator;
     private int _pBound = 5;
 
+    /// <summary>
+    /// Constructor, return an instance using the prime generator
+    /// <paramref name="primeGenerator"/>
+    /// </summary>
+    /// <param name="primeGenerator">The prime generator.</param>
     public AllProbablePrimesWithConditionsGenerator(
                     IPrimeGenerator primeGenerator) {
         _primeGenerator = primeGenerator;
         }
 
+    /// <summary>
+    /// Generate primes compliant with FIPS 186v5
+    /// </summary>
+    /// <param name="param">The prime parameters.</param>
+    /// <param name="hintsIn">Generation hints, if present will be used to skip
+    /// straight to the values.</param>
+    /// <returns>The prime generation result.</returns>
     public PrimeGeneratorResult GeneratePrimesFips186_5(
                     PrimeGeneratorParameters param, 
                     RsaGenerationHints hintsIn = null) {

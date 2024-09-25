@@ -79,7 +79,8 @@ public partial class CryptoParameters {
         }
     List<CryptoKey> signerKeys;
 
-
+    ///<summary>If true, include the signature public key value in the signature,
+    ///this is used for deferred key signature.</summary> 
     public bool IncludeSignatureKey { get; init; } = false;
 
     /// <summary>The payload digest algorithm.</summary>
@@ -188,6 +189,15 @@ public partial class CryptoParameters {
         DigestId = DigestId == CryptoAlgorithmId.Default ? CryptoID.DefaultDigestId : DigestId;
         }
 
+    /// <summary>
+    /// Constructor, return an instance with the set of recipients <paramref name="recipients"/>,
+    /// signers <paramref name="signers"/>, encryption algorithm <paramref name="encryptID"/> and
+    /// digest algorithm <paramref name="digestID"/>.
+    /// </summary>
+    /// <param name="recipients">The recipient keys to encrypt to.</param>
+    /// <param name="signers">The signature keys to sign.</param>
+    /// <param name="encryptID">The bulk encryption algorithm.</param>
+    /// <param name="digestID">The digest algorithm.</param>
     public CryptoParameters(
                     List<CryptoKey> recipients = null,
                     List<CryptoKey> signers = null,

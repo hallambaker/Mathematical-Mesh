@@ -237,6 +237,8 @@ public class KeyPairEd25519 : KeyPairEdwards, IAgreementData {
 
 
     #region // Sign Methods
+
+    ///<inheritdoc/>
     public override byte[] Sign(
         byte[] data,
         CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,

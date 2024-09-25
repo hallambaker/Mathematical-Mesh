@@ -67,6 +67,7 @@ public partial class DareHeader {
     /// </summary>
     public CryptoStack CryptoStack;
 
+    ///<summary>Convenience accessor, the crypto stack as encoder.</summary> 
     public CryptoStackEncode CryptoStackEncode => CryptoStack as CryptoStackEncode;
 
     //public override string ToString() => "{Header}";

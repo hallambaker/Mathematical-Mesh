@@ -67,6 +67,12 @@ public partial class PKIXEcdhKeyBase : Goedel.ASN.ByteArrayVerbatim  {
     /// <param name="buffer">Output buffer</param>
     public override void Encode(Goedel.ASN.Buffer buffer) => buffer.Encode__Octets(Data, 0, -1);
 
+    /// <summary>
+    /// Return JOSE and ASN.1 identifiers describing an ECC algorithm <paramref name="cryptoAlgorithmID"/>.
+    /// </summary>
+    /// <param name="cryptoAlgorithmID">The ECC algorithm.</param>
+    /// <returns>The Jose identifier string, Algorithm OID and Curve parameter.</returns>
+    /// <exception cref="CryptographicException"></exception>
     public static (string, int[], int[]) GetParameters(CryptoAlgorithmId cryptoAlgorithmID) => cryptoAlgorithmID switch {
             CryptoAlgorithmId.P256 => 
                     (JoseConstants.P256, Constants.OID__id_ec_publicKey,Constants.OID__secp256r1),

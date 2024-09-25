@@ -348,6 +348,9 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.ActivationCommon.KeyProfileSigners">
+            <summary>List of profile signature keys.</summary> 
+        </member>
         <member name="P:Goedel.Mesh.ActivationCommon.AccountDeviceId">
             <summary>The device identifier.</summary> 
         </member>
