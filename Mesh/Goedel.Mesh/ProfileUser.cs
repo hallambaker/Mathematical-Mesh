@@ -25,10 +25,10 @@ namespace Goedel.Mesh;
 
 
 public partial class ProfileUser {
-    ///<summary>The account signature key</summary> 
-    public KeyPair AccountSignatureKey => accountSignatureKey ??
-        ProfileSignature.GetKeyPair().CacheValue(out accountSignatureKey);
-    KeyPair accountSignatureKey;
+    /////<summary>The account signature key</summary> 
+    //public KeyPair AccountSignatureKey => accountSignatureKey ??
+    //    ProfileSignature.GetKeyPair().CacheValue(out accountSignatureKey);
+    //KeyPair accountSignatureKey;
 
 
     ///<summary>The account escrow key</summary> 
@@ -47,14 +47,27 @@ public partial class ProfileUser {
     /// </summary>
     /// <param name="accountAddress">The account address</param>
     /// <param name="activationAccount">The activation used to create the account data.</param>        
-    public ProfileUser(string accountAddress,
+    ProfileUser(string accountAddress,
                 ActivationCommon activationAccount) : base(accountAddress, activationAccount) {
-
-
         CommonSignature = new KeyData(activationAccount.CommonSignatureKey);
-        // Sign the profile
-        Envelope(activationAccount.ProfileSignatureKey);
         }
+
+
+    /// <summary>
+    /// Construct a Profile Account instance  from <paramref name="accountAddress"/>.
+    /// </summary>
+    /// <param name="accountAddress">The account address</param>
+    /// <param name="activationAccount">The activation used to create the account data.</param>
+    public static ProfileUser Generate(
+                string accountAddress,
+                ActivationCommon activationAccount) {
+
+        var profile = new ProfileUser(accountAddress, activationAccount);
+
+        profile.SignProfile();
+        return profile;
+        }
+
 
     /// <summary>
     /// Verify the profile to check that it is correctly signed and consistent.
@@ -68,8 +81,6 @@ public partial class ProfileUser {
             throw new InvalidProfile(inner: e);
             }
         AccountAuthenticationKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
-        AccountSignatureKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
-
         }
 
 
@@ -87,7 +98,7 @@ public partial class ProfileUser {
         indent++;
         DareEnvelope.Report(builder, indent);
         indent++;
-        builder.AppendIndent(indent, $"KeyOfflineSignature: {ProfileSignature.Udf} ");
+        builder.AppendIndent(indent, $"KeyOfflineSignature: {UdfString} ");
         builder.AppendIndent(indent, $"AccountAddress : {AccountAddress} ");
         builder.AppendIndent(indent, $"KeyEncryption:       {CommonEncryption.Udf} ");
 

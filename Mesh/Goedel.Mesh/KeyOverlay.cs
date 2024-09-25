@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Cryptography;
+
 namespace Goedel.Mesh;
 
 
@@ -136,6 +138,34 @@ public static partial class Extensions {
                 KeySecurity keySecurity = KeySecurity.Ephemeral) =>
         new(GenerateContributionKeyPair(secretSeed, type, actor, operation,
             keyCollection, keySecurity));
+
+
+
+    public static List<CryptoKey> GenerateKeySet(
+                this PrivateKeyUDF secretSeed,
+                MeshKeyType type,
+                MeshActor actor,
+                MeshKeyOperation operation,
+                IKeyCollection keyCollection = null,
+                KeySecurity keySecurity = KeySecurity.Ephemeral,
+                string info = null
+                ) {
+        var result = new List<CryptoKey>();
+        var keyName = type.ToLabel() + actor.ToLabel() + operation.ToLabel() + (info ?? "");
+        var keyUses = GetMeshKeyType(operation);
+        var x = secretSeed.AlgorithmRootSignIds;
+
+        foreach (var alg in x ){
+            var key = Udf.DeriveKey(secretSeed.PrivateValue, keyCollection,
+                    keySecurity: keySecurity, keyUses: keyUses, cryptoAlgorithmIdin: alg, keyName: keyName);
+            result.Add(key);
+            }
+
+
+        return result;
+        }
+
+
 
     /// <summary>
     /// Derive a base private key of type <paramref name="type"/> for the

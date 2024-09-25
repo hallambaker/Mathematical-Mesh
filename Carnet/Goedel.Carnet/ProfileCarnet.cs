@@ -33,24 +33,6 @@ public partial class ProfileCarnet {
     public ProfileCarnet() {
         }
 
-    /// <summary>
-    /// Construct a Profile Account instance  from <paramref name="accountAddress"/>.
-    /// </summary>
-    /// <param name="accountAddress">The account address</param>
-    /// <param name="activationAccount">The activation used to create the account data.</param>
-    public ProfileCarnet(
-                string accountAddress,
-                //Enveloped<ProfileAccount> envelopedProfileRegistry,
-                ActivationCommon activationAccount) {
-        //EnvelopedProfileRegistry = envelopedProfileRegistry;
-        ProfileSignature = new KeyData(activationAccount.ProfileSignatureKey);
-
-        //CommonEncryption = new KeyData(activationAccount.CommonEncryptionKey);
-        //CommonAuthentication = new KeyData(activationAccount.CommonAuthenticationKey);
-
-
-        Envelope(activationAccount.ProfileSignatureKey);
-        }
 
     /// <summary>
     /// Construct a Profile Host instance  from a <see cref="PrivateKeyUDF"/>
@@ -68,7 +50,7 @@ public partial class ProfileCarnet {
                 bool persist = false) : base(secretSeed, keyCollection, persist) {
 
         //EnvelopedProfileRegistry = envelopedProfileRegistry;
-        Envelope(KeyProfileSign);
+        Envelope(KeyProfileSigners);
 
         }
 
@@ -110,8 +92,10 @@ public partial class ProfileCarnet {
         secretSeed ??= new PrivateKeyUDF(
             udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount, secret: null, algorithmEncrypt: algorithmEncrypt,
             algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate, bits: bits);
-        return new ProfileCarnet(serviceAddress,
+        var profile = new ProfileCarnet(serviceAddress,
                     secretSeed, keyCollection, persist);
+        profile.SignProfile();
+        return profile;
         }
 
 

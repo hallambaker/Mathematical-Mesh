@@ -43,7 +43,7 @@ public partial class ProfileHost {
     /// Construct a Profile Host instance  from a <see cref="PrivateKeyUDF"/>
     /// </summary>
     /// <param name="secretSeed">The secret seed value.</param>
-    public ProfileHost(
+    ProfileHost(
                 PrivateKeyUDF secretSeed) : base(secretSeed) {
         }
 
@@ -76,7 +76,9 @@ public partial class ProfileHost {
         secretSeed ??= new PrivateKeyUDF(
             udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileDevice, secret: null, algorithmEncrypt: algorithmEncrypt,
             algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate, bits: bits);
-        return new ProfileHost(secretSeed);
+        var profile = new ProfileHost(secretSeed);
+        profile.SignProfile();
+        return profile;
         }
 
     /// <summary>

@@ -406,9 +406,9 @@ public class UDFKeyGen : IEnumerable<object[]> {
         UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.MeshProfileDevice,
         KeyUses = KeyUses.KeyAgreement,
 
-        ResultSign = "MAKO-UAVA-4CDQ-5GUV-RQNE-LHVH-4O5X",
-        ResultEncrypt = "MCHN-CQPP-7FHB-BSVO-QQRB-D5QC-HFWV",
-        ResultAuthenticate = "MA3S-P35M-BHUC-QD4N-NAUX-6RA3-5SDL"
+        ResultSign = "MC7Y-2PYD-2WEX-AU6Z-YA72-EXOL-LZN2",
+        ResultEncrypt = "MDG3-FSND-R4PZ-MK2G-7DRF-RSVQ-FQ5N",
+        ResultAuthenticate = "MDXL-FSGA-7274-TSG4-56RA-LDOD-B4DD"
         };
 
     // will fail as 
@@ -417,9 +417,9 @@ public class UDFKeyGen : IEnumerable<object[]> {
         SeedA = "test1a",
         UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.MeshProfileAccount,
         KeyUses = KeyUses.KeyAgreement,
-        ResultSign = "MBY4-6QG2-ECEY-IHGR-UURT-CPA3-LZTM",
-        ResultEncrypt = "MBHJ-2YS4-3DPU-E5MW-TSAY-5Q5B-MK7Q",
-        ResultAuthenticate = "MCI2-CHPI-5KDF-QNDP-AHVF-XWVV-AL3H"
+        ResultSign = "MBZH-STLC-GJBH-EENF-F7FN-2ZFB-OLNT",
+        ResultEncrypt = "MBKN-MYWT-JQNN-NHJW-QTYW-IG4B-6RFS",
+        ResultAuthenticate = "MALB-LOQ4-MYLZ-5LIL-WL6W-FYQ3-FVOB"
         };
 
 
@@ -428,9 +428,9 @@ public class UDFKeyGen : IEnumerable<object[]> {
         SeedA = "test1a",
         UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.MeshProfileService,
         KeyUses = KeyUses.KeyAgreement,
-        ResultSign = "MC3B-UOG2-F6J4-DEHY-LULL-SQGL-WWSI",
-        ResultEncrypt = "MBGB-L5B6-DSHN-2ZKG-MGCS-MWED-HP3R",
-        ResultAuthenticate = "MCRX-DVAG-KCPR-VWRP-N726-LWVV-2FAL"
+        ResultSign = "MDLD-XFKV-K3BL-5J45-VJFI-KDK3-7FZ3",
+        ResultEncrypt = "MARZ-5GFG-I7FC-4JBS-42ZF-QCCH-45NL",
+        ResultAuthenticate = "MCIZ-P4W4-62VZ-UX27-Z6L6-SRJF-LI74"
         };
 
     #endregion

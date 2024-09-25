@@ -43,6 +43,10 @@ public partial class KeyShare {
 public class KeyPairServiced : KeyPair {
 
     #region // Properties
+
+    ///<inheritdoc/>
+    public override AssuranceLevel AssuranceLevel => Primary.AssuranceLevel;
+
     ///<inheritdoc/>
     public override KeyUses KeyUses => Share.KeyUses;
 

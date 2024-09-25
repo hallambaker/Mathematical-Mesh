@@ -76,7 +76,7 @@
             Default constructor.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.CryptoParameters.#ctor(Goedel.Cryptography.IKeyLocate,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String},Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Cryptography.Dare.CryptoParameters.#ctor(Goedel.Cryptography.IKeyLocate,System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Create a CryptoParameters instance to encode data for the specified recipients and
             signers using the specified KeyCollection to resolve the identifiers.
@@ -249,14 +249,6 @@
             <param name="keyMac">The derrived MAC key.</param>
             <param name="iv">The derrivedIV.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.CryptoStack.GetTrailer(Goedel.Cryptography.Dare.CryptoStackStreamWriter)">
-            <summary>
-            Construct the trailer value.
-            </summary>
-            <param name="writer">The cryptographic stream used to write the payload
-            data.</param>
-            <returns>The trailer value.</returns>
-        </member>
         <member name="M:Goedel.Cryptography.Dare.CryptoStack.GetEncoder(System.IO.Stream,Goedel.Cryptography.Dare.PackagingFormat,System.Int64,System.Byte[])">
             <summary>
             Construct a stream encoder for the cryptographic parameters. The encoder may
@@ -274,14 +266,6 @@
             </summary>
             <param name="data">The data to encode.</param>
             <param name="extraSalt">Additional salt value.</param>
-            <returns>The encoded data.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.CryptoStack.Encode(System.Byte[],Goedel.Cryptography.Dare.DareTrailer@)">
-            <summary>
-            Encode a payload data block
-            </summary>
-            <param name="data">The data to encode.</param>
-            <param name="trailer">Prototype trailer containing the calculated digest value.</param>
             <returns>The encoded data.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.CryptoStack.EncodeEDS(System.Byte[],System.Byte[])">
@@ -425,6 +409,22 @@
             <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
             <param name="dataSequences">Data sequences to be converted to an EDS and presented 
                 as an EDSS header entry.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.CryptoStackEncode.GetTrailer(Goedel.Cryptography.Dare.CryptoStackStreamWriter)">
+            <summary>
+            Construct the trailer value.
+            </summary>
+            <param name="writer">The cryptographic stream used to write the payload
+            data.</param>
+            <returns>The trailer value.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.CryptoStackEncode.Encode(System.Byte[],Goedel.Cryptography.Dare.DareTrailer@)">
+            <summary>
+            Encode a payload data block
+            </summary>
+            <param name="data">The data to encode.</param>
+            <param name="trailer">Prototype trailer containing the calculated digest value.</param>
+            <returns>The encoded data.</returns>
         </member>
         <member name="T:Goedel.Cryptography.Dare.PackagingFormat">
             <summary>
@@ -1289,6 +1289,9 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.DareEnvelope.Signatures">
+            <summary>Convenience accessor to the list of signatures.</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.DareEnvelope.DataSequences">
             <summary>
             Return the number of data sequences.
@@ -1570,6 +1573,17 @@
             signature matching the key <paramref name="keyPair"/> returning
             true if and only if the signature is valid.
             </summary>
+            <param name="keyPair">The signing key to check.</param>
+            <returns></returns>
+            <exception cref="T:Goedel.Cryptography.Dare.EnvelopeSignatureMissing">The specified
+            signature could not be found.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.VerifySignature(Goedel.Cryptography.KeyPair,Goedel.Cryptography.Dare.DareSignature)">
+            <summary>
+            Verify the signature <paramref name="signature"/> against the keypair
+            <paramref name="keyPair"/>.
+            </summary>
+            <param name="signature">The signature entry to check.</param>
             <param name="keyPair">The signing key to check.</param>
             <returns></returns>
             <exception cref="T:Goedel.Cryptography.Dare.EnvelopeSignatureMissing">The specified
@@ -2812,7 +2826,7 @@
             Default constructor for use in deserialization.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareSignature.#ctor(Goedel.Cryptography.CryptoKey,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Cryptography.Dare.DareSignature.#ctor(Goedel.Cryptography.CryptoKey,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Boolean)">
             <summary>
             Sign the digest value <paramref name="ManifestValue"/> with 
             <paramref name="signerKey"/> and create a DARESignature
@@ -3326,6 +3340,18 @@
                 as an EDSS header entry.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Enveloped`1.#ctor(`0,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.ObjectEncoding)">
+            <summary>
+            Constructor returining an envelope containing the object <paramref name="data"/>
+            optionally encrypted under <paramref name="encryptionKey"/> and signed under
+            <paramref name="signingKey"/>.
+            </summary>
+            <param name="data">The object to be enveloped.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <param name="contentMeta">The value of the ContentMeta Header tag.</param>
+            <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped`1.#ctor(`0,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.ObjectEncoding)">
             <summary>
             Constructor returining an envelope containing the object <paramref name="data"/>
             optionally encrypted under <paramref name="encryptionKey"/> and signed under

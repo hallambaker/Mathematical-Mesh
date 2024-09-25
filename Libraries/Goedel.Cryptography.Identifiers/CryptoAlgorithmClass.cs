@@ -21,6 +21,7 @@
 #endregion
 
 
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 
 namespace Goedel.Cryptography;
@@ -28,9 +29,41 @@ namespace Goedel.Cryptography;
 public static partial class IdentifierExtensions {
 
 
-    //public AssuranceLevel Max(this AssuranceLevel first, AssuranceLevel second) {
-    //    first > second ? 
-    //    }
+    public static AssuranceLevel Conventional (this AssuranceLevel assurance) =>
+        assurance & AssuranceLevel.ConventionalMask;
+
+    public static AssuranceLevel Quantum(this AssuranceLevel assurance) =>
+        assurance & AssuranceLevel.QuantumMask;
+
+    static AssuranceLevel MaxInner(this AssuranceLevel first, AssuranceLevel second) =>
+        first > second ? first : second;
+
+
+
+    public static AssuranceLevel Max(this AssuranceLevel first, AssuranceLevel second) =>
+        first.Conventional().MaxInner(second.Conventional()) |
+        first.Quantum().MaxInner(second.Quantum());
+
+
+    public static AssuranceLevel OfSymmetricKeyBits(this int bits) {
+        if (bits < 80) {
+            return AssuranceLevel.None;
+            }
+        if (bits < 128) {
+            return AssuranceLevel.CC80;
+            }
+        if (bits < 160) {
+            return AssuranceLevel.PQC1;
+            }
+        if (bits < 192) {
+            return AssuranceLevel.PQC2;
+            }
+        if (bits < 256) {
+            return AssuranceLevel.PQC3;
+            }
+        return AssuranceLevel.PQC5;
+        }
+
 
     }
 

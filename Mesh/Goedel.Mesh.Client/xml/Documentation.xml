@@ -447,7 +447,7 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.AccountDeviceId">
             <summary>The device identifier within the account.</summary> 
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyProfile">
+        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyProfileSigners">
             <summary>The account profile key</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.KeyAdministratorSign">

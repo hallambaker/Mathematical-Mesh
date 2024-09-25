@@ -553,6 +553,13 @@
             <param name="accountAddress">The account address</param>
             <param name="activationAccount">The activation used to create the account data.</param>
         </member>
+        <member name="M:Goedel.Repository.ProfileRepository.Generate(System.String,Goedel.Mesh.ActivationCommon)">
+            <summary>
+            Construct a Profile Account instance  from <paramref name="accountAddress"/>.
+            </summary>
+            <param name="accountAddress">The account address</param>
+            <param name="activationAccount">The activation used to create the account data.</param>
+        </member>
         <member name="M:Goedel.Repository.ProfileRepository.Validate">
             <summary>
             Verify the profile to check that it is correctly signed and consistent.

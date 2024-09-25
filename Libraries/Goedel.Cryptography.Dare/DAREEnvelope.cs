@@ -73,6 +73,13 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     /// <returns>Object of this type</returns>
     public static JsonObject Factory() => new DareEnvelope();
 
+
+
+    ///<summary>Convenience accessor to the list of signatures.</summary> 
+    public List<DareSignature> Signatures => Trailer?.Signatures ?? Header?.Signatures;
+
+
+
     /// <summary>
     /// Return the number of data sequences.
     /// </summary>
@@ -376,7 +383,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
 
 
 
-  
+
 
 
 
@@ -757,7 +764,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     /// <returns></returns>
     public static DareEnvelope Verify(
             byte[] input,
-            IKeyLocate keyCollection = null) => 
+            IKeyLocate keyCollection = null) =>
                 Verify(new MemoryStream(input), keyCollection);
 
     /// <summary>
@@ -835,8 +842,21 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     /// <exception cref="EnvelopeSignatureMissing">The specified
     /// signature could not be found.</exception>
     public bool VerifySignature(
-                KeyPair keyPair) {
-        var signature = FindSignature(keyPair);
+                KeyPair keyPair) => VerifySignature(keyPair, FindSignature(keyPair));
+        
+
+    /// <summary>
+    /// Verify the signature <paramref name="signature"/> against the keypair
+    /// <paramref name="keyPair"/>.
+    /// </summary>
+    /// <param name="signature">The signature entry to check.</param>
+    /// <param name="keyPair">The signing key to check.</param>
+    /// <returns></returns>
+    /// <exception cref="EnvelopeSignatureMissing">The specified
+    /// signature could not be found.</exception>
+    public bool VerifySignature(
+                KeyPair keyPair,
+                DareSignature signature) {
         signature.AssertNotNull(EnvelopeSignatureMissing.Throw);
 
         // Check the payload digest exists.
@@ -910,16 +930,23 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         "Change from returning byte[] to byte[] plus algorithm".TaskTest();
 
         var digestAlg = (Header.DigestAlgorithm ?? "S512").FromJoseIDDigest();
-        var provider = digestAlg.CreateDigest();
-        var result = provider.ComputeHash(Body);
 
-        if (PayloadDigest != null) {
-            if (!PayloadDigest.IsEqualTo(result)) {
-                return null;
-                }
+        if (Body is null) {
+            return PayloadDigestComputed;
             }
+        else {
 
-        return result;
+            var provider = digestAlg.CreateDigest();
+            var result = provider.ComputeHash(Body);
+
+            if (PayloadDigest != null) {
+                if (!PayloadDigest.IsEqualTo(result)) {
+                    return null;
+                    }
+                }
+
+            return result;
+            }
         }
 
     /// <summary>

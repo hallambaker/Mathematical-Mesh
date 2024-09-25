@@ -222,8 +222,15 @@ public static class AlgorithmID {
             return CryptoAlgorithmId.NULL;
             }
 
-        var Found = StringToID.TryGetValue(JoseID, out CryptoAlgorithmId result);
-        return Found ? result : CryptoAlgorithmId.NULL;
+        if (StringToID.TryGetValue(JoseID, out CryptoAlgorithmId result)) {
+            return result;
+            }
+        if (UpperToID.TryGetValue(JoseID.ToUpper(), out result)) {
+            return result;
+            }
+
+
+        return CryptoAlgorithmId.NULL;
         }
 
     /// <summary>

@@ -315,9 +315,7 @@ public partial class CreateExamples {
                     signers: accounts);
 
 
-        Dare.CryptoParametersPlaintext = new CryptoParameters() {
-            KeyLocate = keyCollection
-            };
+        Dare.CryptoParametersPlaintext = new CryptoParameters(keyCollection: keyCollection);
         Dare.CryptoParametersEncrypt = new CryptoParametersDebug(
                     keyCollection: keyCollection,
                     recipients: accounts);

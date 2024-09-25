@@ -67,6 +67,8 @@ public partial class DareHeader {
     /// </summary>
     public CryptoStack CryptoStack;
 
+    public CryptoStackEncode CryptoStackEncode => CryptoStack as CryptoStackEncode;
+
     //public override string ToString() => "{Header}";
 
     ///<summary>The content Metadata.</summary>
@@ -163,7 +165,7 @@ public partial class DareHeader {
     /// <param name="dareTrailer">Prototype trailer containing the calculated digest value.</param>
     /// <returns>The EDS</returns>
     public byte[] EnhanceBody(byte[] Plaintext, out DareTrailer dareTrailer) =>
-        CryptoStack.Encode(Plaintext, out dareTrailer);
+        CryptoStackEncode.Encode(Plaintext, out dareTrailer);
 
 
     /// <summary>

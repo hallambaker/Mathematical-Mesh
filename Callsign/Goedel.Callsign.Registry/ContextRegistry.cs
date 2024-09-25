@@ -153,7 +153,7 @@ public class ContextRegistry : ContextAccount {
         var activationRegistry = new ActivationCommon(keyCollectionRegistry, accountSeed) {
             ActivationKey = accountSeed.PrivateValue
             };
-        var profileRegistry = new ProfileRegistry(RegistryName, activationRegistry);
+        var profileRegistry =  ProfileRegistry.Generate(RegistryName, activationRegistry);
         profileRegistry.Validate();
 
         // Wrap the registry profile in an application entry.

@@ -49,20 +49,8 @@ public partial class ProfileResolver {
                 PrivateKeyUDF secretSeed,
                 IKeyCollection keyCollection,
                 bool persist = false) : base(secretSeed, keyCollection, persist) {
-
         EnvelopedProfileRegistry = envelopedProfileRegistry;
-        Envelope(KeyProfileSign);
-
         }
-
-
-    /// <summary>
-    /// Generate profile specific keys.
-    /// </summary>
-    protected override void Generate() {
-        base.Generate();
-        }
-
 
 
 
@@ -92,8 +80,12 @@ public partial class ProfileResolver {
         secretSeed ??= new PrivateKeyUDF(
             udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount, secret: null, algorithmEncrypt: algorithmEncrypt,
             algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate, bits: bits);
-        return new ProfileResolver(envelopedProfileRegistry, secretSeed,
+        var profile = new ProfileResolver(envelopedProfileRegistry, secretSeed,
                     keyCollection, persist);
+
+        profile.SignProfile();
+
+        return profile; 
         }
 
 

@@ -92,6 +92,8 @@ public abstract class CryptoKey : IKeyLocate, IKeyDecrypt, IKeySign {
         get; set;
         }
 
+    ///<summary>The assurance level provided by the algorithm.</summary> 
+    public abstract AssuranceLevel AssuranceLevel { get; }
 
     /// <summary>
     /// UDF fingerprint of the key
@@ -372,6 +374,25 @@ public delegate KeyPair FactoryRSAPrivateKeyDelegate(
 /// RSA Key Pair
 /// </summary>
 public abstract class KeyPairBaseRSA : KeyPair {
+
+    ///<inheritdoc/>
+    public override AssuranceLevel AssuranceLevel => Assurance(PkixPublicKeyRsa.Modulus.Length);
+
+    AssuranceLevel Assurance(int bits) {
+        if (bits < 2048) {
+            return AssuranceLevel.None;
+            }
+        if (bits < 3072) {
+            return AssuranceLevel.CC112;
+            }
+        if (bits < 7680) {
+            return AssuranceLevel.CC128;
+            }
+        if (bits < 15360) {
+            return AssuranceLevel.CC192;
+            }
+        return AssuranceLevel.CC256;
+        }
 
     /// <summary>
     /// Return private key parameters in PKIX structure

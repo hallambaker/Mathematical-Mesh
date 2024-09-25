@@ -351,9 +351,6 @@
         <member name="P:Goedel.Mesh.ActivationCommon.AccountDeviceId">
             <summary>The device identifier.</summary> 
         </member>
-        <member name="P:Goedel.Mesh.ActivationCommon.ProfileSignatureKey">
-            <summary>The account profile signature key.</summary>
-        </member>
         <member name="P:Goedel.Mesh.ActivationCommon.AdministratorSignatureKey">
             <summary>The account administrator signature key bound to an administrator device.</summary>
         </member>
@@ -493,7 +490,7 @@
             <param name="indent">The number of units to indent the presentation.</param>
             <param name="keyCollection">The Key collection.</param>
         </member>
-        <member name="P:Goedel.Mesh.ActivationCommon.ProfileSignature">
+        <member name="P:Goedel.Mesh.ActivationCommon.ProfileSignatures">
              <summary>
             Grant access to profile online signing key used to sign updates
             to the profile.
@@ -2407,7 +2404,7 @@
             creations to.</param>
             <returns>The entry created.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogAccess.MakeKeyData(Goedel.Mesh.Right,Goedel.Cryptography.KeyPairAdvanced,System.String,Goedel.Mesh.ITransactContextAccount)">
+        <member name="M:Goedel.Mesh.CatalogAccess.MakeKeyData(Goedel.Mesh.Right,Goedel.Cryptography.CryptoKey,System.String,Goedel.Mesh.ITransactContextAccount)">
             <summary>
             Make a key data entry granting the key <paramref name="keyPair"/> according to
             the right <paramref name="right"/>. If a threshold share is created, create
@@ -7311,6 +7308,9 @@
              A serviced KeyPair
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.KeyPairServiced.AssuranceLevel">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.KeyPairServiced.KeyUses">
             <inheritdoc/>
         </member>
@@ -9253,9 +9253,6 @@
              Parent class from which all profile classes are derived
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Profile.KeyProfileSign">
-            <summary>Key used to sign the profile.</summary> 
-        </member>
         <member name="P:Goedel.Mesh.Profile.MeshKeyType">
             <summary>The key contribution type</summary> 
         </member>
@@ -9269,16 +9266,17 @@
             <summary>The primary key value.</summary>
         </member>
         <member name="P:Goedel.Mesh.Profile.UdfString">
-            <summary>The UDF of the profile, that is the UDF of the offline signature.</summary>
+            <summary>The UDF of the profile, that is the UDF of the list <see cref="P:Goedel.Mesh.Profile.RootUdfs"/></summary>
+        </member>
+        <member name="P:Goedel.Mesh.Profile.UdfBytes">
+            <summary>The UDF bytes</summary> 
         </member>
         <member name="P:Goedel.Mesh.Profile.Udf">
             <summary>The profile exended UDF used for matching.</summary> 
         </member>
         <member name="P:Goedel.Mesh.Profile.SecretSeed">
             <summary>The secret seed value used to derrive the private keys.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Profile.ProfileSignatureKey">
-            <summary>The signature key of the profile</summary> 
+            
         </member>
         <member name="M:Goedel.Mesh.Profile.#ctor">
             <summary>
@@ -9293,6 +9291,12 @@
             <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
             <param name="persist">If <see langword="true"/> persist the secret seed value to
             <paramref name="keyCollection"/>.</param>
+            
+        </member>
+        <member name="M:Goedel.Mesh.Profile.SignProfile">
+            <summary>
+            Sign the profile under the complete set of root signature keys.
+            </summary>
         </member>
         <member name="M:Goedel.Mesh.Profile.Matches(System.String,System.Int32)">
             <summary>
@@ -9321,6 +9325,11 @@
         <member name="M:Goedel.Mesh.Profile.Generate">
             <summary>
             Generate profile specific keys, is overriden in child classes.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Profile.SetRoots">
+            <summary>
+            Initialize <see cref="P:Goedel.Mesh.Profile.RootUdfs"/> from the list of signing keys.
             </summary>
         </member>
         <member name="M:Goedel.Mesh.Profile.Validate">
@@ -9361,17 +9370,9 @@
             Description of the profile
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Profile.ProfileSignature">
+        <member name="P:Goedel.Mesh.Profile.RootUdfs">
              <summary>
-            The permanent signature key used to sign the profile itself. The UDF of
-            the key is used as the permanent object identifier of the profile. Thus,
-            by definition, the KeySignature value of a Profile does not change under
-            any circumstance.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Profile.RootKeyUdf">
-             <summary>
-            A list of fingerprints of accepted root signature keys for the profile.
+            A list of binary UDF fingerprints of accepted root signature keys for the profile.
             The profile finderprint is calculated over the concatenation of the
             fingerprint URIs.
              </summary>
@@ -9448,7 +9449,7 @@
             Blank constructor for use by deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProfileAccount.#ctor(Goedel.Cryptography.Jose.PrivateKeyUDF)">
+        <member name="M:Goedel.Mesh.ProfileAccount.#ctor(Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.IEnumerable{Goedel.Cryptography.CryptoAlgorithmId})">
             <summary>
             Construct a Profile Host instance  from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
             </summary>
@@ -9569,7 +9570,7 @@
             Constructor for use by deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProfileDevice.#ctor(Goedel.Cryptography.Jose.PrivateKeyUDF)">
+        <member name="M:Goedel.Mesh.ProfileDevice.#ctor(Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.IEnumerable{Goedel.Cryptography.CryptoAlgorithmId})">
             <summary>
             Construct a Profile Host instance  from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
             </summary>
@@ -9580,7 +9581,7 @@
             Generate profile specific keys.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProfileDevice.Generate(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Int32,Goedel.Cryptography.Jose.PrivateKeyUDF)">
+        <member name="M:Goedel.Mesh.ProfileDevice.Generate(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Int32)">
             <summary>
             Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
             seed.
@@ -9696,6 +9697,13 @@
             </summary>
         </member>
         <member name="M:Goedel.Mesh.ProfileGroup.#ctor(System.String,Goedel.Mesh.ActivationCommon)">
+            <summary>
+            Construct a Profile Account instance  from <paramref name="accountAddress"/>.
+            </summary>
+            <param name="accountAddress">The account address</param>
+            <param name="activationAccount">The activation used to create the account data.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileGroup.Generate(System.String,Goedel.Mesh.ActivationCommon)">
             <summary>
             Construct a Profile Account instance  from <paramref name="accountAddress"/>.
             </summary>
@@ -9916,13 +9924,6 @@
             <param name="activationDevice">Activation of the host device.</param>
             <param name="connectionDevice">Connection of the host to the service.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileService.#ctor(Goedel.Cryptography.KeyPair,Goedel.Cryptography.KeyPair)">
-            <summary>
-            Constructor create service with the signature key <paramref name="keySign"/>
-            </summary>
-            <param name="keySign">The offline signature key.</param>
-            <param name="keyEncrypt">The service encryption key.</param>
-        </member>
         <member name="M:Goedel.Mesh.ProfileService.Sign(Goedel.Mesh.Connection,Goedel.Protocol.ObjectEncoding)">
             <summary>
             Sign a host connection.
@@ -9996,9 +9997,6 @@
              Account assertion. This is signed by the service hosting the account.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ProfileUser.AccountSignatureKey">
-            <summary>The account signature key</summary> 
-        </member>
         <member name="P:Goedel.Mesh.ProfileUser.EscrowEncryptionKey">
             <summary>The account escrow key</summary> 
         </member>
@@ -10013,6 +10011,13 @@
             </summary>
             <param name="accountAddress">The account address</param>
             <param name="activationAccount">The activation used to create the account data.</param>        
+        </member>
+        <member name="M:Goedel.Mesh.ProfileUser.Generate(System.String,Goedel.Mesh.ActivationCommon)">
+            <summary>
+            Construct a Profile Account instance  from <paramref name="accountAddress"/>.
+            </summary>
+            <param name="accountAddress">The account address</param>
+            <param name="activationAccount">The activation used to create the account data.</param>
         </member>
         <member name="M:Goedel.Mesh.ProfileUser.Validate">
             <summary>
@@ -13988,6 +13993,16 @@
             </summary>
             <param name="signingKey">Optional signature key.</param>
             <param name="encryptionKey">Optional encryption key.</param>
+            <param name="objectEncoding">The encoding to use to compute the inner object.</param>
+            <returns>Envelope containing the signed profile. Also updates the property
+            <see cref="P:Goedel.Mesh.MeshItem.DareEnvelope"/></returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshItem.Envelope(System.Collections.Generic.List{Goedel.Cryptography.CryptoKey},System.Collections.Generic.List{Goedel.Cryptography.CryptoKey},Goedel.Protocol.ObjectEncoding,System.Boolean)">
+            <summary>
+            Sign the profile under <paramref name="signingKeys"/>.
+            </summary>
+            <param name="signingKeys">Optional list of signature keys.</param>
+            <param name="encryptionKeys">Optional list of encryption keys.</param>
             <param name="objectEncoding">The encoding to use to compute the inner object.</param>
             <returns>Envelope containing the signed profile. Also updates the property
             <see cref="P:Goedel.Mesh.MeshItem.DareEnvelope"/></returns>

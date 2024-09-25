@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Cryptography.Nist;
+
 namespace Goedel.Mesh;
 
 /// <summary>
@@ -83,11 +85,14 @@ public interface ITransactContextAccount {
 public partial class ActivationCommon {
     // Properties providing access to account-wide keys.
 
+
+    public List<CryptoKey> KeyProfileSigners { get; private set; }
+
     ///<summary>The device identifier.</summary> 
     public string AccountDeviceId => CommonAuthenticationKey.KeyIdentifier;
 
-    ///<summary>The account profile signature key.</summary>
-    public KeyPair ProfileSignatureKey { get; set; }
+    /////<summary>The account profile signature key.</summary>
+    //public KeyPair ProfileSignatureKey { get; set; }
 
     ///<summary>The account administrator signature key bound to an administrator device.</summary>
     public KeyPair AdministratorSignatureKey { get; set; }
@@ -158,14 +163,21 @@ public partial class ActivationCommon {
     void ActivateFromSeed(
                 IKeyCollection keyCollection,
                 PrivateKeyUDF secretSeed) {
-        this.SecretSeed = secretSeed;
+        SecretSeed = secretSeed;
 
-        ProfileSignatureKey = secretSeed.GenerateContributionKeyPair(
+        KeyProfileSigners = SecretSeed.GenerateKeySet(
             MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.Profile,
             keyCollection, KeySecurity.Exportable);
+
+        //ProfileSignatureKey = secretSeed.GenerateContributionKeyPair(
+        //    MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.Profile,
+        //    keyCollection, KeySecurity.Exportable);
+
+
         AdministratorSignatureKey = secretSeed.GenerateContributionKeyPair(
             MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.AdminSign,
             keyCollection, KeySecurity.Exportable);
+
         AdministratorEncryptionKey = secretSeed.GenerateContributionKeyPair(
             MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.AdminEncrypt,
             keyCollection, KeySecurity.Exportable);
@@ -199,8 +211,14 @@ public partial class ActivationCommon {
             return;
             }
 
-        ProfileSignatureKey = ProfileSignature?.GetKeyPair(
-                KeySecurity.Exportable, keyCollection);
+        if (ProfileSignatures != null) {
+            KeyProfileSigners = new();
+            foreach (var signer in ProfileSignatures) {
+                KeyProfileSigners.Add(signer.GetKeyPair
+                        (KeySecurity.Exportable, keyCollection));
+                }
+            }
+
         AdministratorSignatureKey = AdministratorSignature?.GetKeyPair
                 (KeySecurity.Exportable, keyCollection);
 
@@ -417,15 +435,6 @@ public partial class ActivationCommon {
 
         activationAccount.ConnectionDevice.Roles = roles;
 
-        //// Create the (unsigned) ConnectionUser
-        //newActivation.ConnectionDevice = new ConnectionDevice() {
-        //    Encryption = new KeyData(activationAccount.AccountEncryption),
-        //    Signature = new KeyData(activationAccount.AccountSignature),
-        //    Authentication = new KeyData(activationAccount.AccountAuthentication),
-        //    Roles = roles
-        //    };
-
-
         return newActivation;
 
         }
@@ -438,9 +447,14 @@ public partial class ActivationCommon {
         switch (right.Resource) {
             case Resource.ProfileRoot: {
                 Component.Logger.GrantRoot();
-                newActivation.ProfileSignature = catalog.MakeKeyData(right,
-                    ProfileSignatureKey as KeyPairAdvanced, keyIdentifier, transactContextAccount);
-
+                newActivation.ProfileSignatures = new();
+                foreach (var key in KeyProfileSigners) {
+                    var keyData = catalog.MakeKeyData(right,
+                                key, keyIdentifier, transactContextAccount);
+                    if (keyData != null) {
+                        newActivation.ProfileSignatures.Add(keyData);
+                        }
+                    }
                 break;
                 }
             case Resource.ProfileAdmin: {

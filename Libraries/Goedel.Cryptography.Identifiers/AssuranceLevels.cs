@@ -28,6 +28,9 @@ namespace Goedel.Cryptography;
 /// Assurance levels for cryptographic algorithms
 /// </summary>
 public enum AssuranceLevel {
+    ///<summary>No assurance whatsoever</summary> 
+    None        = 0,
+
     ///<summary>64 bits quantum security</summary> 
     PQ64        = 0x01,
     ///<summary>64 bits quantum security</summary> 
@@ -39,17 +42,17 @@ public enum AssuranceLevel {
     ///<summary>64 bits quantum security</summary> 
 
     ///<summary>80 bits classical security strength</summary> 
-    CC80        = 0x000,
+    CC80        = 0x010,
     ///<summary>112 bits classical security strength</summary> 
-    CC112       = 0x010,
+    CC112       = 0x020,
     ///<summary>128 bits classical security strength</summary> 
-    CC128       = 0x020,
+    CC128       = 0x030,
     ///<summary>192 bits classical security strength</summary>    
-    CC192       = 0x030,
+    CC192       = 0x040,
     ///<summary>224 bits classical security strength</summary>  
-    CC224       = 0x040,
+    CC224       = 0x050,
     ///<summary>256 bits classical security strength</summary>  
-    CC256       = 0x050,
+    CC256       = 0x060,
 
     ///<summary>128 bits classical security strength, 64 bits quantum security</summary> 
     PQC1        = CC128 | PQ64,
@@ -62,8 +65,16 @@ public enum AssuranceLevel {
     ///<summary>256 bits classical security strength, 128 bits quantum security</summary> 
     PQC5        = CC256 | PQ128,
 
+    ///<summary>Mask to return the conventional assurance level</summary> 
+    ConventionalMask = 0xf0,
+
+    ///<summary>Mask to return the quantum assurance level</summary> 
+    QuantumMask = 0x0f,
     ///<summary></summary> 
     Unkown      = -1
+
+
+
     }
 
 

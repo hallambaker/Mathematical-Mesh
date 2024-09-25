@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Cryptography.Jose;
+
 namespace Goedel.Mesh;
 
 public partial class AccountHostAssignment {
@@ -82,6 +84,42 @@ public partial class MeshItem {
 
         return DareEnvelope;
         }
+
+    /// <summary>
+    /// Sign the profile under <paramref name="signingKeys"/>.
+    /// </summary>
+    /// <param name="signingKeys">Optional list of signature keys.</param>
+    /// <param name="encryptionKeys">Optional list of encryption keys.</param>
+    /// <param name="objectEncoding">The encoding to use to compute the inner object.</param>
+    /// <returns>Envelope containing the signed profile. Also updates the property
+    /// <see cref="DareEnvelope"/></returns>
+    public virtual DareEnvelope Envelope(
+                List<CryptoKey> signingKeys,
+                List<CryptoKey> encryptionKeys = null,
+                ObjectEncoding objectEncoding = ObjectEncoding.JSON,
+                bool includeSignatureKey = false
+                ) {
+
+        var contentMeta = new ContentMeta() {
+            //UniqueId = base._PrimaryKey,
+            UniqueId = _PrimaryKey,
+            Created = System.DateTime.Now,
+            ContentType = MeshConstants.IanaTypeMeshObject,
+            MessageType = _Tag
+        };
+
+        var cryptoParameters = new CryptoParameters(encryptionKeys, signingKeys) {
+            IncludeSignatureKey = includeSignatureKey
+            };
+
+        Enveloped = new Enveloped<MeshItem>(this, cryptoParameters, contentMeta: contentMeta,
+                    objectEncoding: objectEncoding);
+        DareEnvelope.Header.EnvelopeId = EnvelopeId;
+
+        return DareEnvelope;
+        }
+
+
 
 
     /// <summary>

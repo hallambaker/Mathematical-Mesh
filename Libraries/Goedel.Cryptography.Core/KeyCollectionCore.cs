@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Utilities;
+
 namespace Goedel.Cryptography.Core;
 
 
@@ -132,6 +134,9 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
         }
     ///<inheritdoc/>
     public override void Persist(string udf, IJson joseKey, bool exportable) {
+
+
+
         var fileName = Path.Combine(DirectoryKeys, udf);
 
         joseKey.Exportable = exportable;
@@ -140,7 +145,7 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
         Directory.CreateDirectory(DirectoryKeys);
         fileName.WriteFileNew(plaintext);
 
-
+        //Console.WriteLine($"Persist to {udf} : {plaintext.ToUTF8()}");
         }
 
     /// <summary>
@@ -175,6 +180,9 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
 
     ///<inheritdoc/>
     public override bool LocatePrivateKeyPair(string udf, out CryptoKey cryptoKey) {
+        if (base.LocatePrivateKeyPair (udf, out cryptoKey)) {
+            return true;
+            }
 
         var fileName = Path.Combine(DirectoryKeys, udf);
 

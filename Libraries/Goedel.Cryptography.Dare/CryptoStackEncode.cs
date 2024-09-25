@@ -113,5 +113,73 @@ public partial class CryptoStackEncode : CryptoStack {
             }
         }
 
+    /// <summary>
+    /// Construct the trailer value.
+    /// </summary>
+    /// <param name="writer">The cryptographic stream used to write the payload
+    /// data.</param>
+    /// <returns>The trailer value.</returns>
+    public DareTrailer GetTrailer(CryptoStackStreamWriter writer) {
+        DareTrailer Result = null;
 
+        if (writer.DigestValue != null) {
+
+            Result = new DareTrailer() {
+                PayloadDigest = writer.DigestValue,
+                WitnessValue = writer.WitnessValue,
+                };
+
+            if (writer.GetApexDigest != null) {
+                Result.ApexDigest = writer.GetApexDigest(writer.DigestValue);
+                }
+            }
+
+        if (SignerKeys != null) {
+            Result ??= new DareTrailer();
+            Result.Signatures = new List<DareSignature>();
+
+            // Here calculate the manifest
+            var manifest = GetEnvelopeSignatureManifest(DigestId, Result);
+
+            if (EncryptId != CryptoAlgorithmId.NULL) {
+                var derive = new KeyDeriveHKDF(BaseSeed, Salt, CryptoAlgorithmId.HMAC_SHA_2_256);
+                Result.WitnessValue = KeyDeriveHKDF.Derive(BaseSeed, Salt, manifest,
+                                algorithm: CryptoAlgorithmId.HMAC_SHA_2_256);
+                }
+
+            foreach (var Key in SignerKeys) {
+                Result.Signatures.Add(new DareSignature(Key, manifest, DigestId, CryptoParameters.IncludeSignatureKey));
+                }
+            }
+
+
+        return Result;
+        }
+
+    readonly static byte[] NullArray = Array.Empty<byte>();
+
+    /// <summary>
+    /// Encode a payload data block
+    /// </summary>
+    /// <param name="data">The data to encode.</param>
+    /// <param name="trailer">Prototype trailer containing the calculated digest value.</param>
+    /// <returns>The encoded data.</returns>
+    public byte[] Encode(
+        byte[] data,
+        out DareTrailer trailer
+        ) {
+        data ??= NullArray;
+
+        using var input = new MemoryStream(data);
+        using var output = new MemoryStream();
+
+        var EncoderData = GetEncoder(output, PackagingFormat.Direct, data.LongLength, null);
+        input.CopyTo(EncoderData.Writer);
+        EncoderData.Close();
+        output.Flush();
+        trailer = GetTrailer(EncoderData);
+
+
+        return output.ToArray();
+        }
     }

@@ -140,6 +140,25 @@ public abstract class KeyPairBaseDH : KeyPairAdvanced {
 /// </summary>
 public class KeyPairDH : KeyPairBaseDH, IAgreementData {
 
+    ///<inheritdoc/>
+    public override AssuranceLevel AssuranceLevel => Assurance(DHDomain.Modulus.Length);
+
+    AssuranceLevel Assurance(int bits) {
+        if (bits < 2048) {
+            return AssuranceLevel.None;
+            }
+        if (bits < 3072) {
+            return AssuranceLevel.CC112;
+            }
+        if (bits < 7680) {
+            return AssuranceLevel.CC128;
+            }
+        if (bits < 15360) {
+            return AssuranceLevel.CC192;
+            }
+        return AssuranceLevel.CC256;
+        }
+
 
     /// <summary>
     /// The internal Public DH parameters

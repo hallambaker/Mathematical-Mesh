@@ -914,7 +914,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             ContentMeta = headerIn.ContentMeta,
             ContentMetaData = headerIn.ContentMetaData,
             Received = headerIn.Received ?? System.DateTime.Now,
-            WitnessValue = trailerIn.WitnessValue ?? headerIn.WitnessValue,
+            WitnessValue = trailerIn?.WitnessValue ?? headerIn.WitnessValue,
             Signatures = trailerIn?.Signatures ?? headerIn.Signatures,
             SignedData = trailerIn?.SignedData ?? headerIn.SignedData,
             PayloadDigest = trailerIn?.PayloadDigest ?? headerIn.PayloadDigest,

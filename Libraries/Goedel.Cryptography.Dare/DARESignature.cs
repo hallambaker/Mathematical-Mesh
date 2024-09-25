@@ -40,14 +40,19 @@ public partial class DareSignature {
     /// <param name="digestId">The digest algorithm used to process 
     /// <paramref name="ManifestValue"/> (if required).</param>
 
-    public DareSignature(CryptoKey signerKey, 
+    public DareSignature(CryptoKey signerKey,
                 byte[] ManifestValue,
-                CryptoAlgorithmId digestId= CryptoAlgorithmId.Default) {
+                CryptoAlgorithmId digestId = CryptoAlgorithmId.Default,
+                bool includeSignatureKey = false) {
 
 
         (SignatureValue, var alg) = signerKey.SignManifest(ManifestValue, digestId);
         Alg = alg.ToJoseID();
         KeyIdentifier = signerKey.KeyIdentifier;
+
+        if (includeSignatureKey) {
+            SignatureKey = Key.GetPublic(signerKey);
+            }
         }
 
     public bool Verify(
@@ -57,5 +62,16 @@ public partial class DareSignature {
         return signerKey.VerifyManifest(ManifestValue, SignatureValue, digest);
 
         }
+
+
+    //public AssuranceLevel VerifyAssurance(
+    //            CryptoKey signerKey,
+    //            byte[] ManifestValue) {
+
+    //    Verify(signerKey, ManifestValue).AssertTrue(NYI.Throw);
+    //    return signerKey.AssuranceLevel;
+    //    }
+
+
 
     }

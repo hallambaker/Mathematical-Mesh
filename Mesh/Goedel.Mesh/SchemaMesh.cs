@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 9/15/2024 4:55:21 PM
+//  This file was automatically generated at 9/24/2024 11:13:33 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -953,21 +953,12 @@ abstract public partial class Profile : Assertion {
 	public virtual string?						Description  {get; set;}
 
         /// <summary>
-        ///The permanent signature key used to sign the profile itself. The UDF of
-        ///the key is used as the permanent object identifier of the profile. Thus,
-        ///by definition, the KeySignature value of a Profile does not change under
-        ///any circumstance.
-        /// </summary>
-
-	public virtual KeyData?						ProfileSignature  {get; set;}
-
-        /// <summary>
-        ///A list of fingerprints of accepted root signature keys for the profile.
+        ///A list of binary UDF fingerprints of accepted root signature keys for the profile.
         ///The profile finderprint is calculated over the concatenation of the
         ///fingerprint URIs.
         /// </summary>
 
-	public virtual List<string>?					RootKeyUdf  {get; set;}
+	public virtual List<byte[]>?					RootUdfs  {get; set;}
 
 
     ///<summary>Implement IBinding</summary> 
@@ -982,11 +973,8 @@ abstract public partial class Profile : Assertion {
 
 			{ "Description", new PropertyString ("Description", 
 					(IBinding data, string? value) => {(data as Profile).Description = value;}, (IBinding data) => (data as Profile).Description )},
-			{ "ProfileSignature", new PropertyStruct ("ProfileSignature", 
-					(IBinding data, object? value) => {(data as Profile).ProfileSignature = value as KeyData;}, (IBinding data) => (data as Profile).ProfileSignature,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
-			{ "RootKeyUdf", new PropertyListString ("RootKeyUdf", 
-					(IBinding data, List<string>? value) => {(data as Profile).RootKeyUdf = value;}, (IBinding data) => (data as Profile).RootKeyUdf )}
+			{ "RootUdfs", new PropertyListBinary ("RootUdfs", 
+					(IBinding data, List<byte[]>? value) => {(data as Profile).RootUdfs = value;}, (IBinding data) => (data as Profile).RootUdfs )}
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -2850,8 +2838,7 @@ public partial class ActivationCommon : Activation {
         ///to the profile.
         /// </summary>
 
-	public virtual KeyData?						ProfileSignature  {get; set;}
-
+	public virtual List<KeyData>?					ProfileSignatures  {get; set;}
         /// <summary>
         ///Grant access to Profile administration key used to make changes to
         ///administrator catalogs.
@@ -2889,9 +2876,9 @@ public partial class ActivationCommon : Activation {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "ProfileSignature", new PropertyStruct ("ProfileSignature", 
-					(IBinding data, object? value) => {(data as ActivationCommon).ProfileSignature = value as KeyData;}, (IBinding data) => (data as ActivationCommon).ProfileSignature,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "ProfileSignatures", new PropertyListStruct ("ProfileSignatures", 
+					(IBinding data, object? value) => {(data as ActivationCommon).ProfileSignatures = value as List<KeyData>;}, (IBinding data) => (data as ActivationCommon).ProfileSignatures,
+					false, ()=>new  List<KeyData>(), ()=>new KeyData())} ,
 			{ "AdministratorSignature", new PropertyStruct ("AdministratorSignature", 
 					(IBinding data, object? value) => {(data as ActivationCommon).AdministratorSignature = value as KeyData;}, (IBinding data) => (data as ActivationCommon).AdministratorSignature,
 					false, ()=>new  KeyData(), ()=>new KeyData())} ,

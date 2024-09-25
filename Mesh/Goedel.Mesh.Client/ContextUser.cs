@@ -156,6 +156,9 @@ public partial class ContextUser : ContextAccount {
 
         // Get the device key so that we can decrypt the activation record.
         var deviceKeySeed = KeyCollection.LocatePrivateKey(ProfileDevice.UdfString) as PrivateKeyUDF;
+
+
+
         deviceSeedId = deviceKeySeed.KeyId;
 
         BaseDecrypt = deviceKeySeed.GenerateContributionKeyPair(MeshKeyType.Base,
@@ -259,7 +262,7 @@ public partial class ContextUser : ContextAccount {
     byte[] GetMeshSecret() {
         try {
             // pull the master key
-            MeshSecretSeed = KeyCollection.LocatePrivateKey(ProfileUser.ProfileSignature.Udf) as PrivateKeyUDF;
+            MeshSecretSeed = KeyCollection.LocatePrivateKey(ProfileUser.UdfString) as PrivateKeyUDF;
             MeshSecretSeed.AssertNotNull(NoMeshSecret.Throw);
             // convert to byte array;
             return MeshSecretSeed.PrivateValue.FromBase32();
@@ -272,7 +275,7 @@ public partial class ContextUser : ContextAccount {
     /// <summary>
     /// Erase the Mesh Secret from the persistence store of this machine.
     /// </summary>
-    public void EraseMeshSecret() => KeyCollection.ErasePrivateKey(ProfileUser.ProfileSignature.Udf);
+    public void EraseMeshSecret() => KeyCollection.ErasePrivateKey(ProfileUser.UdfString);
 
     /// <summary>
     /// Create an escrow set for the master key.
@@ -303,7 +306,7 @@ public partial class ContextUser : ContextAccount {
                 string accountAddress,
                 ContactPerson? contact = null) {
 
-        KeyProfile.AssertNotNull(NotSuperAdministrator.Throw);
+        KeyProfileSigners.AssertNotNull(NotSuperAdministrator.Throw);
 
         // Since the service does not know this account (yet)
         var credentialPrivate = new MeshKeyCredentialPrivate(
@@ -319,7 +322,7 @@ public partial class ContextUser : ContextAccount {
         // Update the profile
         ProfileUser.ServiceUdf = ProfileService.UdfString;
         ProfileUser.AccountAddress = accountAddress;
-        ProfileUser.Envelope(KeyProfile);
+        ProfileUser.Envelope(KeyProfileSigners, includeSignatureKey: true);
 
         ActivationCommon.BindService(ProfileService);
 
@@ -735,9 +738,10 @@ public partial class ContextUser : ContextAccount {
         var activationGroup = new ActivationCommon(keyCollectionGroup, accountSeed) {
             ActivationKey = accountSeed.PrivateValue
             };
-        var profileGroup = new ProfileGroup(groupAddress, activationGroup) {
-            Cover = cover
-            };
+
+        var profileGroup = ProfileGroup.Generate(groupAddress, activationGroup);    
+        profileGroup.Cover = cover;
+           
 
         // Check that the profile is valid before using it.
         profileGroup.Validate();
@@ -930,7 +934,7 @@ public partial class ContextUser : ContextAccount {
         var connectURI = MeshUri.ConnectUriDevice(ServiceAddress, pin);
 
         // Create a device profile 
-        var profileDevice = new ProfileDevice(secretSeed);
+        var profileDevice = ProfileDevice.Generate(secretSeed);
 
         // Create and sign the connection
         var connectionService = new ConnectionService() {

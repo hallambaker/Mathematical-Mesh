@@ -47,7 +47,8 @@ public class AesBlock : BlockProvider {
     /// </summary>
     /// <param name="Key">Key</param>
     /// <param name="Encrypt">If true, encrypt, otherwise decrypt</param>
-    public AesBlock(byte[] Key, bool Encrypt) => Transform = Encrypt ? Provider.CreateEncryptor(Key, null) : Provider.CreateDecryptor(Key, null);
+    public AesBlock(byte[] Key, bool Encrypt) => 
+            Transform = Encrypt ? Provider.CreateEncryptor(Key, null) : Provider.CreateDecryptor(Key, null);
 
     /// <summary>
     /// Factory method

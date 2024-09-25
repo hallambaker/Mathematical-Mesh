@@ -59,7 +59,8 @@ public partial class ProfileAccount {
     /// </summary>
     /// <param name="secretSeed">The secret seed value.</param>
     public ProfileAccount(
-                PrivateKeyUDF secretSeed) : base(secretSeed) {
+                PrivateKeyUDF secretSeed,
+                IEnumerable<CryptoAlgorithmId> algorithms = null) : base(secretSeed) {
         }
 
     /// <summary>
@@ -67,15 +68,18 @@ public partial class ProfileAccount {
     /// </summary>
     /// <param name="accountAddress">The account address</param>
     /// <param name="activationAccount">The activation used to create the account data.</param>
-    public ProfileAccount(
+    protected ProfileAccount(
                 string accountAddress,
                 ActivationCommon activationAccount) {
         AccountAddress = accountAddress;
 
-        //Set the public key parameters
+        // Set the root UDFs
+        KeyProfileSigners = activationAccount.KeyProfileSigners;
+        SetRoots();
 
+        //Set the public key parameters
         EscrowEncryption = new KeyData(activationAccount.EscrowEncryptionKey);
-        ProfileSignature = new KeyData(activationAccount.ProfileSignatureKey);
+        //ProfileSignature = new KeyData(activationAccount.ProfileSignatureKey);
         AdministratorSignature = new KeyData(activationAccount.AdministratorSignatureKey);
         CommonEncryption = new KeyData(activationAccount.CommonEncryptionKey);
         CommonAuthentication = new KeyData(activationAccount.CommonAuthenticationKey);

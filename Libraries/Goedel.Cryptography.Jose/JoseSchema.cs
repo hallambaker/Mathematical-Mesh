@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 9/15/2024 4:55:19 PM
+//  This file was automatically generated at 9/24/2024 11:13:31 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1813,19 +1813,24 @@ public partial class PrivateKeyUDF : Key {
 	public virtual string?						KeyType  {get; set;}
 
         /// <summary>
+        ///List of algorithms used to derrive root signature keys.
+        /// </summary>
+
+	public virtual List<string>?					RootSignAlgorithms  {get; set;}
+        /// <summary>
         ///The algorithm used to derrive the encryption key
         /// </summary>
 
 	public virtual string?						AlgorithmEncrypt  {get; set;}
 
         /// <summary>
-        ///The algorithm used to derrive the encryption key
+        ///The algorithm used to derrive the signature key
         /// </summary>
 
 	public virtual string?						AlgorithmSign  {get; set;}
 
         /// <summary>
-        ///The algorithm used to derrive the encryption key
+        ///The algorithm used to derrive the authentication key
         /// </summary>
 
 	public virtual string?						AlgorithmAuthenticate  {get; set;}
@@ -1846,6 +1851,8 @@ public partial class PrivateKeyUDF : Key {
 					(IBinding data, string? value) => {(data as PrivateKeyUDF).PrivateValue = value;}, (IBinding data) => (data as PrivateKeyUDF).PrivateValue )},
 			{ "KeyType", new PropertyString ("KeyType", 
 					(IBinding data, string? value) => {(data as PrivateKeyUDF).KeyType = value;}, (IBinding data) => (data as PrivateKeyUDF).KeyType )},
+			{ "RootSignAlgorithms", new PropertyListString ("RootSignAlgorithms", 
+					(IBinding data, List<string>? value) => {(data as PrivateKeyUDF).RootSignAlgorithms = value;}, (IBinding data) => (data as PrivateKeyUDF).RootSignAlgorithms )},
 			{ "AlgorithmEncrypt", new PropertyString ("AlgorithmEncrypt", 
 					(IBinding data, string? value) => {(data as PrivateKeyUDF).AlgorithmEncrypt = value;}, (IBinding data) => (data as PrivateKeyUDF).AlgorithmEncrypt )},
 			{ "AlgorithmSign", new PropertyString ("AlgorithmSign", 

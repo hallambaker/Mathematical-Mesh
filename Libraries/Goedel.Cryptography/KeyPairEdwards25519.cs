@@ -30,6 +30,10 @@ namespace Goedel.Cryptography;
 public class KeyPairEd25519 : KeyPairEdwards, IAgreementData {
 
     #region //Properties
+
+    ///<inheritdoc/>
+    public override AssuranceLevel AssuranceLevel => AssuranceLevel.CC128;
+
     ///<summary>The implementation public key value</summary>
     public CurveEdwards25519Public PublicKey { get; set; }
 

@@ -23,15 +23,24 @@
 
 
 
+using Goedel.Cryptography;
+using Goedel.Cryptography.Jose;
+using Goedel.Cryptography.Standard;
+
+using System.Security.Cryptography;
+
 namespace Goedel.Mesh;
 
 public partial class Profile {
 
     #region // Properties
 
-    ///<summary>Key used to sign the profile.</summary> 
-    public KeyPair KeyProfileSign { get; private set; }
+    /////<summary>Key used to sign the profile.</summary> 
+    //public KeyPair KeyProfileSign { get; private set; }
 
+
+
+    public List<CryptoKey> KeyProfileSigners { get; protected set; } 
 
     ///<summary>The key contribution type</summary> 
     public virtual MeshKeyType MeshKeyType => Goedel.Mesh.MeshKeyType.Base;
@@ -54,27 +63,20 @@ public partial class Profile {
     ///<summary>The primary key value.</summary>
     public override string _PrimaryKey => UdfString;
 
-    ///<summary>The UDF of the profile, that is the UDF of the offline signature.</summary>
-    public string UdfString => ProfileSignature.Udf;
+    ///<summary>The UDF of the profile, that is the UDF of the list <see cref="RootUdfs"/></summary>
+    public string UdfString => Udf?.AsString;
+
+    ///<summary>The UDF bytes</summary> 
+    public byte[] UdfBytes => Udf?.Value;
 
     ///<summary>The profile exended UDF used for matching.</summary> 
-    public Udf Udf => udf ?? new Udf(UdfString, ProfileSignatureKey.UDFBytes).CacheValue(out udf);
+    public Udf Udf => udf ?? Udf.CalculateProfileUdf (RootUdfs).CacheValue(out udf);
     Udf udf;
 
     ///<summary>The secret seed value used to derrive the private keys.</summary>
-    public PrivateKeyUDF SecretSeed {
-        get => secretSeed;
-        set {
-            secretSeed = value;
-            Generate();
-            }
-        }
-    PrivateKeyUDF secretSeed;
+    ///
+    public PrivateKeyUDF SecretSeed { get; set; }
 
-    ///<summary>The signature key of the profile</summary> 
-    public KeyPair ProfileSignatureKey => profileSignatureKey ??
-        ProfileSignature.GetKeyPair().CacheValue(out profileSignatureKey);
-    KeyPair profileSignatureKey;
     #endregion
     #region // Constructors
     /// <summary>
@@ -90,28 +92,33 @@ public partial class Profile {
     /// <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
     /// <param name="persist">If <see langword="true"/> persist the secret seed value to
     /// <paramref name="keyCollection"/>.</param>
-    public Profile(
+    /// 
+    protected Profile(
                 PrivateKeyUDF secretSeed,
                 IKeyCollection keyCollection = null,
                 bool persist = false) {
         SecretSeed = secretSeed ?? new PrivateKeyUDF(udfAlgorithmIdentifier: UdfAlgorithmIdentifier);
 
-        // We always have a profile signature key in a profile.
-
+        // Generate profile specific keys
+        Generate();
 
         if (persist) {
-            keyCollection.Persist(ProfileSignature.Udf, secretSeed, false);
+            keyCollection.Persist(UdfString, secretSeed, false);
             }
 
-        // Generate profile specific keys
-        //Generate();
-
-        // sign the profile.
-        Envelope(KeyProfileSign);
-
         }
+
     #endregion
     #region // Methods 
+
+    /// <summary>
+    /// Sign the profile under the complete set of root signature keys.
+    /// </summary>
+    public void SignProfile() {
+        // sign the profile.
+        Envelope(KeyProfileSigners, includeSignatureKey: true);
+        }
+
 
     /// <summary>
     /// Test to see if <paramref name="presentation"/> matches the profile UDF value.
@@ -133,7 +140,7 @@ public partial class Profile {
     /// <param name="keyCollection"></param>
     public void PersistSeed(IKeyCollection keyCollection = null) {
         SecretSeed.AssertNotNull(NoDeviceSecret.Throw);
-        keyCollection.Persist(ProfileSignature.Udf, SecretSeed, false);
+        keyCollection.Persist(UdfString, SecretSeed, false);
         }
 
 
@@ -144,6 +151,10 @@ public partial class Profile {
     /// <param name="keyLocate">Key collection containing the secret seed.</param>
     public void Activate(IKeyCollection keyLocate) {
         SecretSeed ??= keyLocate.LocatePrivateKey(UdfString) as PrivateKeyUDF;
+
+        // Hack: choose which algorithm(s) to unpack under!
+        // Default to single signed under the default algorithm
+        var algorithms = new List<CryptoAlgorithmId>() { CryptoID.DefaultSignatureId };
         Generate();
         }
 
@@ -153,22 +164,74 @@ public partial class Profile {
     /// Generate profile specific keys, is overriden in child classes.
     /// </summary>
     protected virtual void Generate() {
-        (KeyProfileSign, ProfileSignature) = SecretSeed.GenerateContributionKey(
+        KeyProfileSigners = SecretSeed.GenerateKeySet(
                     MeshKeyType, MeshActor, MeshKeyOperation.Profile);
 
-
+        SetRoots();
         }
+
+
+    /// <summary>
+    /// Initialize <see cref="RootUdfs"/> from the list of signing keys.
+    /// </summary>
+    protected void SetRoots() {
+        RootUdfs = [];
+        foreach (var key in KeyProfileSigners) {
+            RootUdfs.Add(key.UDFBytes);
+            }
+        }
+
+
 
     /// <summary>
     /// Verify the profile to check that it is correctly signed and consistent.
     /// </summary>
     /// <returns></returns>
     public virtual void Validate() {
-        Verify(DareEnvelope).AssertTrue(InvalidProfile.Throw);
-        ProfileSignatureKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
+
+        // Does 
+        var assurance = ValidateRootUdfs();
+        // Throw an exception if the assurance level is none.
+        (assurance > AssuranceLevel.None).AssertTrue(InvalidProfile.Throw);
+
+
+        //Verify(DareEnvelope).AssertTrue(InvalidProfile.Throw);
+        //ProfileSignatureKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
 
 
         }
+
+
+    public virtual AssuranceLevel ValidateRootUdfs() {
+
+        // Check that there is a non empty list of signatures
+        var signatures = DareEnvelope?.Signatures;
+        signatures?.AssertNotNull(InvalidProfile.Throw);
+        (signatures.Count>0).AssertTrue(InvalidProfile.Throw);
+
+        var assurance = AssuranceLevel.None;
+        foreach (var signature in signatures) {
+            // Deferred signatures contain the key in the signature.
+            signature.SignatureKey.AssertNotNull(InvalidProfile.Throw);
+
+            // Convert the key parameters to a public key
+            var signatureKey = signature.SignatureKey.GetKeyPair(KeySecurity.Public);
+
+            // Check the recomputed UDF is in the Root UDFs
+            RootUdfs.IsPresent(signatureKey.UDFBytes).AssertTrue(InvalidProfile.Throw);
+
+            // Check that the signature is valid
+            var result = DareEnvelope.VerifySignature(signatureKey, signature);
+            result.AssertTrue(InvalidProfile.Throw);
+            // Assurance level is the maximum of the signatures presented.
+            assurance = assurance.Max(signatureKey.AssuranceLevel);
+            }
+
+        return assurance;
+        }
+
+
+
 
     /// <summary>
     /// Verify that the assertion contained in <paramref name="envelopedAssertion"/>
@@ -178,7 +241,8 @@ public partial class Profile {
     /// to be verified.</param>
     /// <returns>True if there is a valid signature under this profile, otherwise false.</returns>
     public bool Verify(DareEnvelope envelopedAssertion) =>
-                envelopedAssertion.VerifySignature(ProfileSignatureKey);
+                throw new NotImplementedException();
+                //envelopedAssertion.VerifySignature(ProfileSignatureKey);
 
     /// <summary>
     /// Verify that the signature <paramref name="signature"/> is valid under one of the
@@ -237,20 +301,14 @@ public partial class Profile {
         }
 
 
-    // return the UDF string
-    public Udf GetUdf() {
-        return  new Udf(UdfString, ProfileSignatureKey.UDFBytes).CacheValue(out udf);
+    //// return the UDF string
+    //public Udf GetUdf() {
+    //    return  new Udf(UdfString, ProfileSignatureKey.UDFBytes).CacheValue(out udf);
 
 
 
-        }
+    //    }
 
-
-    public DareEnvelope SignProfile() {
-
-
-        throw new NYI();
-        }
 
 
     public DareEnvelope GetEnvelopeSlim(

@@ -157,7 +157,7 @@ public class ContextMeshPreconfigured : ContextAccount {
         var serviceAuthenticator = CatalogedPublication.GetServiceAuthenticator(key);
         var deviceAuthenticator = CatalogedPublication.GetDeviceAuthenticator(key);
 
-        var profileDevice = new ProfileDevice(privateKeyUDF);
+        var profileDevice = ProfileDevice.Generate(privateKeyUDF);
 
 
         // check for sanity here

@@ -255,9 +255,9 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
 
                 var hintsRsa = RsaGenerationHints.GetHints(hints);
                 //RsaGenerationHints hintsRsa=null;
-                (keyPair, hintsRsa) = KeyPairRSA.KeyPairFactory (CryptoAlgorithmId.RSAExch,
+                (keyPair, hintsRsa) = KeyPairRSA.KeyPairFactory(CryptoAlgorithmId.RSAExch,
                     keySecurity, ikm, keySpecifier, keyName, keyCollection, keySize, keyUses, hintsRsa);
-                hints = hintsRsa.ToString ();
+                hints = hintsRsa.ToString();
                 break;
                 }
 
@@ -315,6 +315,14 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
                 }
             }
         Register(keyPair, keySecurity, keyCollection);
+
+        //if (keyName == "BaseDeviceEncrypt") {
+        //    Console.WriteLine($"Generate Key, IKM {ikm.ToStringBase16FormatHex()}");
+        //    Console.WriteLine($"  Key Specifier {keySpecifier.ToStringBase16FormatHex()}");
+        //    Console.WriteLine($"  Key Name {keyName}");
+        //    Console.WriteLine($"      => {keyPair.UDFValue}");
+
+        //    }
         return (keyPair, hints);
         }
 

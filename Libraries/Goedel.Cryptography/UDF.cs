@@ -21,12 +21,20 @@
 #endregion
 
 
+using Goedel.ASN;
+
+using System.Security.Cryptography;
+
 namespace Goedel.Cryptography;
 
 /// <summary>
 /// Class implementing the Uniform Data Fingerprint spec.
 /// </summary>
-public class Udf {
+/// <param name="Value">The identifier value field.</param>
+public record Udf(
+            UdfTypeIdentifier Code,
+            byte[] Value,
+            int Bits=0) {
 
     #region // Constants
 
@@ -78,22 +86,8 @@ public class Udf {
 
     #endregion
 
-    byte[] Value { get; }
-
-    byte Code { get; }
-
-    /// <summary>
-    /// Constructor, returns a UDF instance with code byte specified by <paramref name="presentation"/>
-    /// and extended binary value <paramref name="value"/>.
-    /// </summary>
-    /// <param name="presentation">The presentation value.</param>
-    /// <param name="value"></param>
-    public Udf(string presentation, byte[] value) {
-        var parsed = Parse(presentation, out var code);
-
-        Code = code;
-        Value = value;
-        }
+    ///<summary>The UDF in presentation form.</summary> 
+    public string AsString { get; } = TypeBDSToString(Code, Value, Bits);
 
     /// <summary>
     /// Test to see if <paramref name="presentation"/> matches the UDF value.
@@ -112,8 +106,12 @@ public class Udf {
             return false;
             }
 
-        for (var i = 0; i < parsed.Length; i++) {
-            if (parsed[i] != Value[i]) {
+        if (parsed[0] != (byte)Code) {
+            return false;
+            }
+
+        for (var i = 1; i < parsed.Length; i++) {
+            if (parsed[i] != Value[i-1]) {
                 return false;
                 }
             }
@@ -302,7 +300,7 @@ public class Udf {
         var result = new byte[bytes];
         result[0] = (byte)typeID;
 
-        Buffer.BlockCopy(source, offset, result, 1, bytes - 1);
+        System.Buffer.BlockCopy(source, offset, result, 1, bytes - 1);
 
         return result;
         }
@@ -864,6 +862,41 @@ public class Udf {
                 CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.SHA_2_512) =>
         DataToUDFBinary(data, UDFConstants.PKIXKey, bits, cryptoAlgorithmId);
 
+
+    public static Udf? CalculateProfileUdf(
+                    IEnumerable<byte[]> roots,
+                    CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.SHA_2_512
+                    ) {
+        if (roots is null) {
+            return null;
+            }
+
+        var (provider, id) = cryptoAlgorithmId switch {
+            CryptoAlgorithmId.SHA_2_512 => (SHA512.Create(), UdfTypeIdentifier.Digest_SHA_2_512),
+            _ => throw new CryptographicException()
+            };
+
+        var length = new byte[1];
+        foreach (var root in roots) {
+            (root.Length < 256).AssertTrue(CryptographicException.Throw);
+            length[0] = (byte)root.Length;
+            provider.TransformBlock(length, 0, 1, length, 0);
+            provider.TransformBlock(root, 0, root.Length, root, 0);
+
+            //Console.WriteLine($"  +{root.ToStringBase32()}");
+            }
+
+        var empty = Array.Empty<byte>();
+        var result = provider.TransformFinalBlock(empty, 0, 0);
+
+        var data = DigestToUDFBinary(provider.Hash, UDFConstants.UdfList, 512, cryptoAlgorithmId);
+
+        //Console.WriteLine($"UDF = {data.ToStringBase32()}");
+
+        return new Udf(id, data);
+        }
+
+
     #endregion
     #endregion
     #region // Parse string to get value
@@ -878,7 +911,7 @@ public class Udf {
         var buffer = BaseConvert.FromBase32(udf);
         code = buffer[0];
         var result = new byte[buffer.Length - 1];
-        Buffer.BlockCopy(buffer, 1, result, 0, buffer.Length - 1);
+        System.Buffer.BlockCopy(buffer, 1, result, 0, buffer.Length - 1);
         return result;
         }
 
@@ -891,7 +924,7 @@ public class Udf {
         var buffer = BaseConvert.FromBase32(udf);
         var code = buffer[0];
         var result = new byte[buffer.Length - 1];
-        Buffer.BlockCopy(buffer, 1, result, 0, buffer.Length - 1);
+        System.Buffer.BlockCopy(buffer, 1, result, 0, buffer.Length - 1);
         return ((UdfTypeIdentifier)code, result);
         }
 
@@ -1146,7 +1179,7 @@ public class Udf {
 
         result[0] = keySpecifier[0];
         result[1] = keySpecifier[1];
-        Buffer.BlockCopy(data, 0, result, 2, data.Length);
+        System.Buffer.BlockCopy(data, 0, result, 2, data.Length);
 
         var bits = result.Length * 8;
         return TypeBDSToString(UdfTypeIdentifier.DerivedKey, result, bits + 8);
@@ -1277,6 +1310,9 @@ public class Udf {
             _ => 0
             };
 
+        var udf2 = (uint)cryptoAlgorithmId.ToUDFID();
+        ikm[0] = (byte)(udf2 >> 8);  
+        ikm[1] = (byte)(udf2);
 
         var keySpecifier = KeySpecifier(algorithm);
         return KeyPair.Factory(cryptoAlgorithmId, keySecurity,
@@ -1329,6 +1365,19 @@ public class Udf {
 #region // Extension  methods with convenience functions
 /// <summary>Static class containing static extension methods providing convenience functions.</summary>
 public static partial class Extension {
+
+
+    public static bool IsPresent(this IEnumerable<byte[]> roots, byte[] keyIdentifier) {
+        foreach (var root in roots) {
+            if (keyIdentifier.IsEqualTo(root)) {
+                return true;
+                }
+            }
+        return false;
+
+        }
+
+
     /// <summary>
     /// Compare the fingerprint <paramref name="UDF"/> to see that it matches the 
     /// pattern <paramref name="pattern"/> according

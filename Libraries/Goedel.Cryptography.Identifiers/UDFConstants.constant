@@ -93,6 +93,9 @@ File ContentTypeValues
 	Code PKIXKey  "application/pkix-keyinfo"    
 		Description
 			|Content type identifier for PKIX KeyInfo data type
+    Code UdfList "application/udf-list" 
+		Description
+			|Content type identifier for list of UDF binary entries
     Code OpenPGPKey  "application/pgp-keys"
 		Description
 			| Content type identifier for OpenPGP Key

@@ -336,7 +336,7 @@ public partial class ResultCreateAccount {
     public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
 
         builder.AppendLineNotNull(ProfileAccount?.AccountAddress, $"Account={ProfileAccount?.AccountAddress}");
-        builder.AppendLineNotNull(ProfileAccount?.ProfileSignature?.Udf, $"UDF={ProfileAccount?.ProfileSignature?.Udf}");
+        builder.AppendLineNotNull(ProfileAccount?.UdfString, $"UDF={ProfileAccount?.UdfString}");
 
         }
     }

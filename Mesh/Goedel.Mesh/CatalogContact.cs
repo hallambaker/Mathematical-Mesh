@@ -609,7 +609,7 @@ public class NetworkProtocolEntry {
         if (NetworkAddress is NetworkProfile networkProfile) {
             var profileAccount = networkProfile.EnvelopedProfileAccount.Decode();
             meshKeyEncryption = profileAccount.CommonEncryption.CryptoKey;
-            meshKeyAdministrator = profileAccount.ProfileSignature.CryptoKey;
+            meshKeyAdministrator = profileAccount.AdministratorSignature.CryptoKey;
             }
         return keyPair;
         }

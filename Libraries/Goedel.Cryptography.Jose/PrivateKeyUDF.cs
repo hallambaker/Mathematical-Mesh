@@ -30,6 +30,10 @@ namespace Goedel.Cryptography.Jose;
 /// </summary>
 public interface IActivate {
 
+    ///<summary>The algorithm identifiers used to specify the root(s)</summary>
+    IEnumerable<CryptoAlgorithmId> AlgorithmRootSignIds { get; }
+
+
     ///<summary>The encryption algorithm identifier</summary>
     CryptoAlgorithmId AlgorithmEncryptID { get; }
 
@@ -64,6 +68,13 @@ public partial class PrivateKeyUDF : IActivate {
     ///<summary>Opaque key identifier</summary> 
     public string KeyId => Udf.ContentDigestOfDataString(PrivateValue.ToUTF8(), "PrivateKey");
 
+    ///<summary>The algorithm identifiers used to specify the root(s)</summary>
+    public IEnumerable<CryptoAlgorithmId> AlgorithmRootSignIds => algorithmRootSignID ??
+        GetFromList().CacheValue(out algorithmRootSignID);
+
+    IEnumerable<CryptoAlgorithmId> algorithmRootSignID;
+
+
     ///<summary>The encryption algorithm identifier</summary>
     public CryptoAlgorithmId AlgorithmEncryptID =>
         AlgorithmEncrypt != null ? AlgorithmEncrypt.FromJoseID() : CryptoAlgorithmId.Default;
@@ -93,8 +104,9 @@ public partial class PrivateKeyUDF : IActivate {
     /// <param name="algorithmEncrypt">The encryption algorithm.</param>
     /// <param name="algorithmSign">The signature algorithm</param>
     /// <param name="algorithmAuthenticate">The signature algorithm</param>
-    /// <param name="bits">The size of key to generate in bits/</param>
+    /// <param name="algorithmRootIds"></param>
     /// 
+    /// <param name="bits">The size of key to generate in bits/</param>
     public PrivateKeyUDF(
                 string udf = null,
             UdfAlgorithmIdentifier udfAlgorithmIdentifier = UdfAlgorithmIdentifier.Any,
@@ -102,7 +114,7 @@ public partial class PrivateKeyUDF : IActivate {
             CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
             CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
             CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
-            int bits = 256) {
+            IEnumerable<CryptoAlgorithmId> algorithmRootIds = null, int bits = 256) {
 
         if (udf == null) {
             PrivateValue = udf ?? Udf.DerivedKey(udfAlgorithmIdentifier,
@@ -117,7 +129,29 @@ public partial class PrivateKeyUDF : IActivate {
         AlgorithmSign = algorithmSign.ToJoseID();
         AlgorithmEncrypt = algorithmEncrypt.ToJoseID();
         AlgorithmAuthenticate = algorithmAuthenticate.ToJoseID();
+
+        if (algorithmRootIds is null) {
+            RootSignAlgorithms = new List<string> { CryptoID.DefaultSignatureId.ToJoseID() };
+            }
+        else {
+            RootSignAlgorithms = new();
+            foreach (var rootId in algorithmRootIds) {
+                RootSignAlgorithms.Add(rootId.ToJoseID());
+                }
+            }
+
         }
+
+    IEnumerable<CryptoAlgorithmId> GetFromList() {
+        var result = new List<CryptoAlgorithmId>();
+        foreach (var id in RootSignAlgorithms) {
+            var alg = id.FromJoseID();
+            result.Add(alg);
+            }
+
+        return result;
+        }
+
 
 
     /// <summary>

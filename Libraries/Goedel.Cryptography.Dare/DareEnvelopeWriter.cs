@@ -161,7 +161,8 @@ internal class DareEnvelopeWriter : Stream {
         // write out the trailer
         cryptoStackStreamWriter.Close();
 
-        var trailer = dareHeader.CryptoStack.GetTrailer(cryptoStackStreamWriter);
+
+        var trailer = dareHeader.CryptoStackEncode.GetTrailer(cryptoStackStreamWriter);
         if (trailer != null) {
             outputStream.WriteArraySeparator();
             trailer.Serialize(outputStream);

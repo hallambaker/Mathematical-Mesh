@@ -129,6 +129,28 @@ public partial class Enveloped<T> : DareEnvelope where T : JsonObject {
         }
 
     /// <summary>
+    /// Constructor returining an envelope containing the object <paramref name="data"/>
+    /// optionally encrypted under <paramref name="encryptionKey"/> and signed under
+    /// <paramref name="signingKey"/>.
+    /// </summary>
+    /// <param name="data">The object to be enveloped.</param>
+    /// <param name="signingKey">The signature key.</param>
+    /// <param name="encryptionKey">The encryption key.</param>
+    /// <param name="contentMeta">The value of the ContentMeta Header tag.</param>
+    /// <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
+    public Enveloped(
+                T data,
+                CryptoParameters cryptoParameters,
+                ContentMeta contentMeta = null,
+                ObjectEncoding objectEncoding = ObjectEncoding.JSON) : base(cryptoParameters,
+                    data.GetBytes(objectEncoding: objectEncoding), contentMeta: contentMeta) {
+        data.Enveloped = this;
+
+        }
+
+
+
+    /// <summary>
     /// Decrypt and deserialize the envelope to obtain the typed contents and set the value of 
     /// <see cref="JsonObject.Enveloped"/> to the original envelope data.
     /// </summary>

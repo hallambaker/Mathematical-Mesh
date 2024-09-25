@@ -2739,11 +2739,19 @@
             </summary>
             <param name="hashBitLength">The number of output bits</param>
         </member>
+        <member name="M:Goedel.Cryptography.Algorithms.SHAKE256.HashData(System.Byte[],System.Int32)">
+            <summary>
+            Convenience routine to preform one stop processing.
+            </summary>
+            <param name="input">The input data</param>
+            <param name="hashByteLength">The number of output bytes</param>
+            <returns>The digest value</returns>
+        </member>
         <member name="M:Goedel.Cryptography.Algorithms.SHAKE256.Process(System.Byte[],System.Int32)">
             <summary>
             Convenience routine to preform one stop processing.
             </summary>
-            <param name="Input">The input data</param>
+            <param name="input">The input data</param>
             <param name="hashBitLength">The number of output bits</param>
             <returns>The digest value</returns>
         </member>
@@ -4821,6 +4829,9 @@
             formats.
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.KeyPairDH.AssuranceLevel">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.KeyPairDH.PublicKey">
             <summary>
             The internal Public DH parameters
@@ -5165,6 +5176,9 @@
             NIST P256/P384/P521 Elliptic Curve Key Pair
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.KeyPairECDHP.AssuranceLevel">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.KeyPairECDHP.PublicKey">
             <summary>The implementation public key value</summary>
         </member>
@@ -5459,6 +5473,9 @@
             Ed25519 public / private keypair.
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.KeyPairEd25519.AssuranceLevel">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.KeyPairEd25519.PublicKey">
             <summary>The implementation public key value</summary>
         </member>
@@ -5574,6 +5591,9 @@
             <summary>
             KeyPair binding for Ed448 signature and exchange.
             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyPairEd448.AssuranceLevel">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.KeyPairEd448.PublicKey">
             <summary>The implementation public key value</summary>
@@ -5708,6 +5728,9 @@
             <summary>
             ML-DSA keypair implemented according to FIPS 204 https://csrc.nist.gov/pubs/fips/204/ipd
             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlDsaNist.AssuranceLevel">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.PQC.KeyPairMlDsaNist.PublicKey">
             <summary>The public key value.</summary>
@@ -5845,6 +5868,9 @@
             <summary>
             ML-KEM keypair implemented according to FIPS 203 https://csrc.nist.gov/pubs/fips/203/final
             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.PQC.KeyPairMlKemNist.AssuranceLevel">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.PQC.KeyPairMlKemNist.PublicKey">
             <summary>The public key value.</summary>
@@ -6108,10 +6134,13 @@
             </summary>
         </member>
         <member name="P:Goedel.Cryptography.CryptoKeySymmetric.KeyIdentifier">
-            <summary>UDF fingerprint of the key.</summary>
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.CryptoKeySymmetric.AssuranceLevel">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.CryptoKeySymmetric.UDFBytes">
-            <summary>Binary fingerprint of the key</summary>
+            <inheritdoc/>
         </member>
         <member name="F:Goedel.Cryptography.CryptoKeySymmetric.SecretKey">
             <summary>The UDF presentation of the secret key</summary>
@@ -6248,6 +6277,9 @@
             X25519 public / private keypair.
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.KeyPairX25519.AssuranceLevel">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.KeyPairX25519.PublicKey">
             <summary>The public key value.</summary>
         </member>
@@ -6383,6 +6415,9 @@
             <summary>
             KeyPair binding for X448 signature and exchange.
             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyPairX448.AssuranceLevel">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.KeyPairX448.PublicKey">
             <inheritdoc/>
@@ -6547,6 +6582,9 @@
             <summary>
             Cryptographic Algorithm Identifier
             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.CryptoKey.AssuranceLevel">
+            <summary>The assurance level provided by the algorithm.</summary> 
         </member>
         <member name="P:Goedel.Cryptography.CryptoKey.KeyIdentifier">
             <summary>
@@ -6723,6 +6761,9 @@
             <summary>
             RSA Key Pair
             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyPairBaseRSA.AssuranceLevel">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.KeyPairBaseRSA.PkixPrivateKeyRSA">
             <summary>
@@ -11732,6 +11773,16 @@
             <summary>
             Class implementing the Uniform Data Fingerprint spec.
             </summary>
+            <param name="Value">The identifier value field.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Udf.#ctor(Goedel.Cryptography.UdfTypeIdentifier,System.Byte[],System.Int32)">
+            <summary>
+            Class implementing the Uniform Data Fingerprint spec.
+            </summary>
+            <param name="Value">The identifier value field.</param>
+        </member>
+        <member name="P:Goedel.Cryptography.Udf.Value">
+            <summary>The identifier value field.</summary>
         </member>
         <member name="P:Goedel.Cryptography.Udf.DefaultBits">
             <summary>
@@ -11762,13 +11813,8 @@
             <param name="typeIdentifier">The cryptographic algorithm identifier.</param>
             <returns>The UDF type identifier.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Udf.#ctor(System.String,System.Byte[])">
-            <summary>
-            Constructor, returns a UDF instance with code byte specified by <paramref name="presentation"/>
-            and extended binary value <paramref name="value"/>.
-            </summary>
-            <param name="presentation">The presentation value.</param>
-            <param name="value"></param>
+        <member name="P:Goedel.Cryptography.Udf.AsString">
+            <summary>The UDF in presentation form.</summary> 
         </member>
         <member name="M:Goedel.Cryptography.Udf.Matches(System.String,System.Int32)">
             <summary>

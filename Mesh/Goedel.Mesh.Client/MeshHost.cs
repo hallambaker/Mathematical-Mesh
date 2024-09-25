@@ -460,7 +460,7 @@ public class MeshHost : Disposable {
             };
 
         // create the initial profile
-        var profileUser = new ProfileUser(accountAddress, activationCommon);
+        var profileUser = ProfileUser.Generate(accountAddress, activationCommon);
         Logger.CreateAccount(profileUser.UdfString, profileUser.AccountAuthenticationKey?.KeyIdentifier);
         Logger.CommonSeed(commonSeed.KeyId);
 

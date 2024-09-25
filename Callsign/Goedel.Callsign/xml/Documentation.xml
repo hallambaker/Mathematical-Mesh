@@ -282,6 +282,13 @@
             <param name="accountAddress">The account address</param>
             <param name="activationAccount">The activation used to create the account data.</param>
         </member>
+        <member name="M:Goedel.Callsign.ProfileRegistry.Generate(System.String,Goedel.Mesh.ActivationCommon)">
+            <summary>
+            Construct a Profile Account instance  from <paramref name="accountAddress"/>.
+            </summary>
+            <param name="accountAddress">The account address</param>
+            <param name="activationAccount">The activation used to create the account data.</param>
+        </member>
         <member name="M:Goedel.Callsign.ProfileRegistry.Validate">
             <summary>
             Verify the profile to check that it is correctly signed and consistent.
@@ -361,11 +368,6 @@
             <param name="persist">If true, persist the service record to the local machine
             <param name="envelopedProfileRegistry">The enveloped registry profile</param>
             store.</param>
-        </member>
-        <member name="M:Goedel.Callsign.ProfileResolver.Generate">
-            <summary>
-            Generate profile specific keys.
-            </summary>
         </member>
         <member name="M:Goedel.Callsign.ProfileResolver.Generate(Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.ProfileAccount},Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Int32,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Boolean)">
             <summary>

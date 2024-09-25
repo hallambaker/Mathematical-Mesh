@@ -337,15 +337,19 @@
 		String KeyType
 			Description
 				|The UDF key identifier
+		String RootSignAlgorithms
+			Multiple
+			Description
+				|List of algorithms used to derrive root signature keys.
 		String AlgorithmEncrypt
 			Description
 				|The algorithm used to derrive the encryption key
 		String AlgorithmSign
 			Description
-				|The algorithm used to derrive the encryption key
+				|The algorithm used to derrive the signature key
 		String AlgorithmAuthenticate
 			Description
-				|The algorithm used to derrive the encryption key
+				|The algorithm used to derrive the authentication key
 
 	Structure KeyAgreement
 		Description

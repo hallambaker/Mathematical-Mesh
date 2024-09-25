@@ -37,6 +37,15 @@ public class KeyPairMlDsaNist : KeyPair, IOpaqueBinaryKey {
 
     #region //Properties
 
+
+    ///<inheritdoc/>
+    public override AssuranceLevel AssuranceLevel => PublicKey.Dilithium.Parameters.ParameterSet switch {
+        DilithiumParameterSet.ML_DSA_44 => AssuranceLevel.PQC2,
+        DilithiumParameterSet.ML_DSA_65 => AssuranceLevel.PQC3,
+        DilithiumParameterSet.ML_DSA_87 => AssuranceLevel.PQC5,
+        _ => throw new InternalCryptographicException()
+        };
+
     ///<summary>The public key value.</summary>
     public DilithiumPublic PublicKey { get; set; }
     ///<summary>The private key value</summary>

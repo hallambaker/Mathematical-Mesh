@@ -40,12 +40,25 @@ public partial class ProfileGroup {
     /// </summary>
     /// <param name="accountAddress">The account address</param>
     /// <param name="activationAccount">The activation used to create the account data.</param>
-    public ProfileGroup(
+    private ProfileGroup(
                 string accountAddress,
-                ActivationCommon activationAccount) : base(accountAddress, activationAccount) =>
+                ActivationCommon activationAccount) : base(accountAddress, activationAccount) {
+        }
 
-        // Sign the profile
-        Envelope(activationAccount.ProfileSignatureKey);
 
+    /// <summary>
+    /// Construct a Profile Account instance  from <paramref name="accountAddress"/>.
+    /// </summary>
+    /// <param name="accountAddress">The account address</param>
+    /// <param name="activationAccount">The activation used to create the account data.</param>
+    public static ProfileGroup Generate(
+                string accountAddress,
+                ActivationCommon activationAccount) {
+
+        var profile = new ProfileGroup(accountAddress, activationAccount);
+
+        profile.SignProfile();
+        return profile;
+        }
 
     }

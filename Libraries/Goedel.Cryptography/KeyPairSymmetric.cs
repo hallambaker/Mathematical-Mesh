@@ -29,10 +29,14 @@ namespace Goedel.Cryptography;
 /// </summary>
 public class CryptoKeySymmetric : CryptoKey {
 
-    /// <summary>UDF fingerprint of the key.</summary>
+
+    ///<inheritdoc/>
     public override string KeyIdentifier { get; }
 
-    /// <summary>Binary fingerprint of the key</summary>
+    ///<inheritdoc/>
+    public override AssuranceLevel AssuranceLevel => SecretValue.Length.OfSymmetricKeyBits();
+
+    ///<inheritdoc/>
     public override byte[] UDFBytes => throw new NYI();
 
     ///<summary>The UDF presentation of the secret key</summary>

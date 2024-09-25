@@ -28,6 +28,10 @@ namespace Goedel.Cryptography;
 public class KeyPairX448 : KeyPairECDH, IAgreementData {
 
     #region //Properties
+
+    ///<inheritdoc/>
+    public override AssuranceLevel AssuranceLevel => AssuranceLevel.CC224;
+
     ///<inheritdoc/>
     public virtual CurveX448Public PublicKey { get; }
 

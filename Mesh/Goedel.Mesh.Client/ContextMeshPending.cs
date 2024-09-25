@@ -118,7 +118,7 @@ public class ContextMeshPending : ContextAccount {
         MeshUri.ParseUri(ref accountAddress, ref pin);
 
         var profileDevice = ProfileDevice.Generate(
-                    algorithmEncrypt, algorithmSign, algorithmAuthenticate, bits);
+                    algorithmEncrypt: algorithmEncrypt, algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate, bits: bits);
 
         profileDevice.PersistSeed(meshHost.KeyCollection);
 

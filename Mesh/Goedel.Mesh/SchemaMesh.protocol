@@ -161,18 +161,21 @@
 		String Description
 			Description
 				|Description of the profile
-		Struct KeyData ProfileSignature
-			Description
-				|The permanent signature key used to sign the profile itself. The UDF of
-				|the key is used as the permanent object identifier of the profile. Thus,
-				|by definition, the KeySignature value of a Profile does not change under
-				|any circumstance.
-		String RootKeyUdf
+		//Struct KeyData ProfileSignature
+		//	Description
+		//		|The permanent signature key used to sign the profile itself. The UDF of
+		//		|the key is used as the permanent object identifier of the profile. Thus,
+		//		|by definition, the KeySignature value of a Profile does not change under
+		//		|any circumstance.
+		Binary RootUdfs
 			Multiple
 			Description
-				|A list of fingerprints of accepted root signature keys for the profile.
+				|A list of binary UDF fingerprints of accepted root signature keys for the profile.
 				|The profile finderprint is calculated over the concatenation of the
 				|fingerprint URIs.
+		 
+
+
 
 	Structure ProfileDevice
 		Inherits Profile
@@ -447,7 +450,8 @@
 
 	Structure ActivationCommon
 		Inherits Activation
-		Struct KeyData ProfileSignature
+		Struct KeyData ProfileSignatures
+			Multiple
 			Description
 				|Grant access to profile online signing key used to sign updates
 				|to the profile.

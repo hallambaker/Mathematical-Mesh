@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 9/15/2024 4:55:16 PM
+//  This file was automatically generated at 9/24/2024 11:13:28 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -300,6 +300,9 @@ public static partial class UDFConstants {
 
     ///<summary>application/pkix-keyinfo</summary>
     public const string PKIXKey = "PKIXKey";
+
+    ///<summary>application/udf-list</summary>
+    public const string UdfList = "UdfList";
 
     ///<summary>application/pgp-keys</summary>
     public const string OpenPGPKey = "OpenPGPKey";

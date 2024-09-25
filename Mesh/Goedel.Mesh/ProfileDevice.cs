@@ -21,6 +21,7 @@
 #endregion
 
 
+
 namespace Goedel.Mesh;
 
 
@@ -53,9 +54,20 @@ public partial class ProfileDevice {
     /// Construct a Profile Host instance  from a <see cref="PrivateKeyUDF"/>
     /// </summary>
     /// <param name="secretSeed">The secret seed value.</param>
-    public ProfileDevice(
-                PrivateKeyUDF secretSeed) : base(secretSeed) {
+    protected ProfileDevice(
+                PrivateKeyUDF secretSeed,
+                IEnumerable<CryptoAlgorithmId> algorithms = null) : base(secretSeed) {
         }
+
+    //public static ProfileDevice Generate(
+    //            PrivateKeyUDF secretSeed,
+    //            IEnumerable<CryptoAlgorithmId> algorithms = null) {
+    //    var profile = new ProfileDevice(secretSeed, algorithms);
+    //    profile.SignProfile();
+    //    return profile;
+    //    }
+
+
 
     #endregion
     #region // Methods 
@@ -86,15 +98,18 @@ public partial class ProfileDevice {
     /// <param name="bits">The size of key to generate in bits/</param>
     /// <returns>The created profile.</returns>
     public static ProfileDevice Generate(
+                PrivateKeyUDF secretSeed = null,
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
-                int bits = 256,
-                PrivateKeyUDF secretSeed = null) {
+                int bits = 256) {
         secretSeed ??= new PrivateKeyUDF(
-            udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileDevice, secret: null, algorithmEncrypt: algorithmEncrypt,
+            udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileDevice, secret: null,
+            algorithmEncrypt: algorithmEncrypt,
             algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate, bits: bits);
-        return new ProfileDevice(secretSeed);
+        var profile = new ProfileDevice(secretSeed);
+        profile.SignProfile();
+        return profile;
         }
 
 
@@ -140,7 +155,7 @@ public partial class ProfileDevice {
         indent++;
         DareEnvelope.Report(builder, indent);
         indent++;
-        builder.AppendIndent(indent, $"ProfileSignature: {ProfileSignature.Udf} ");
+        builder.AppendIndent(indent, $"ProfileUDF:          {UdfString} ");
 
         builder.AppendIndent(indent, $"KeySignature:        {Signature.Udf} ");
         builder.AppendIndent(indent, $"KeyEncryption:       {Encryption.Udf} ");

@@ -161,13 +161,6 @@
             Default constructor, returns an empty instance.
             </summary>
         </member>
-        <member name="M:Goedel.Carnet.ProfileCarnet.#ctor(System.String,Goedel.Mesh.ActivationCommon)">
-            <summary>
-            Construct a Profile Account instance  from <paramref name="accountAddress"/>.
-            </summary>
-            <param name="accountAddress">The account address</param>
-            <param name="activationAccount">The activation used to create the account data.</param>
-        </member>
         <member name="M:Goedel.Carnet.ProfileCarnet.#ctor(System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean)">
             <summary>
             Construct a Profile Host instance  from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>

@@ -124,11 +124,11 @@ public class MakeUdf {
     /// Generate a set of test vectors
     /// </summary>
     public static void GenerateTests() {
-        GenerateTests(TestUdf.UdfDirectoryRSA, TestUdf.AlgIdsRSA);
-        //GenerateTests(TestUdf.UdfDirectoryML, AlgIdsML);
-        //GenerateTests(TestUdf.UdfDirectoryECC, AlgIdsECC);
+        //GenerateTests(TestUdf.UdfDirectoryRSA, TestUdf.AlgIdsRSA);
+        GenerateTests(TestUdf.UdfDirectoryML, TestUdf.AlgIdsML);
+        GenerateTests(TestUdf.UdfDirectoryECC, TestUdf.AlgIdsECC);
 
-        //GenerateTests(TestUdf.UdfDirectoryECCP, AlgIdsECCP);
+        //GenerateTests(TestUdf.UdfDirectoryECCP, TestUdf.AlgIdsECCP);
         }
 
     private static void GenerateTests(string directory, 

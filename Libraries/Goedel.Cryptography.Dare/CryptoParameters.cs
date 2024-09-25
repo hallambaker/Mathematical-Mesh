@@ -79,6 +79,9 @@ public partial class CryptoParameters {
         }
     List<CryptoKey> signerKeys;
 
+
+    public bool IncludeSignatureKey { get; init; } = false;
+
     /// <summary>The payload digest algorithm.</summary>
     public CryptoAlgorithmId DigestId;
 
@@ -130,7 +133,7 @@ public partial class CryptoParameters {
     /// <summary>
     /// Default constructor.
     /// </summary>
-    protected CryptoParameters() {
+    public CryptoParameters() {
         }
 
     /// <summary>
@@ -148,16 +151,16 @@ public partial class CryptoParameters {
     /// encoding.</param>
     public CryptoParameters(
                     IKeyLocate keyCollection = null,
-                    List<string> recipients = null,
-                    List<string> signers = null,
+                    IEnumerable<string> recipients = null,
+                    IEnumerable<string> signers = null,
                     CryptoKey recipient = null,
                     CryptoKey signer = null,
                     CryptoAlgorithmId encryptID = CryptoAlgorithmId.NULL,
                     CryptoAlgorithmId digestID = CryptoAlgorithmId.NULL) {
-        this.DigestId = digestID;
-        this.EncryptId = encryptID;
+        DigestId = digestID;
+        EncryptId = encryptID;
 
-        this.KeyLocate = keyCollection;
+        KeyLocate = keyCollection;
 
         if (recipients != null) {
             EncryptionKeys = new List<CryptoKey>();
@@ -185,22 +188,22 @@ public partial class CryptoParameters {
         DigestId = DigestId == CryptoAlgorithmId.Default ? CryptoID.DefaultDigestId : DigestId;
         }
 
-
-
-    //public CryptoParameters(DarePolicy policy)  {
-    //    if (policy.EncryptKeys != null) {
-
-    //        EncryptionKeys = new ();
-
-    //        foreach (var entry in policy.EncryptKeys) {
-    //            EncryptionKeys.Add(Key.GetPublic(entry));
-    //            }
-    //        SetEncrypt();
-
-    //        }
-
-    //    }
-
+    public CryptoParameters(
+                    List<CryptoKey> recipients = null,
+                    List<CryptoKey> signers = null,
+                    CryptoAlgorithmId encryptID = CryptoAlgorithmId.NULL,
+                    CryptoAlgorithmId digestID = CryptoAlgorithmId.NULL) {
+        DigestId = digestID;
+        EncryptId = encryptID;
+        if (signers is not null) {
+            SignerKeys = signers;
+            }
+        if (recipients is not null) {
+            EncryptionKeys = recipients;
+            SetEncrypt();
+            }
+        DigestId = DigestId == CryptoAlgorithmId.Default ? CryptoID.DefaultDigestId : DigestId;
+        }
 
 
     /// <summary>

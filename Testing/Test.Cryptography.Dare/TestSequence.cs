@@ -52,6 +52,9 @@ public record TestSequence : TestBase {
 
     bool IsPlaintext => TestContext.Encrypt == ModeEnhance.None;
 
+
+    public IKeyLocate KeyLocate;
+
     public TestSequence(
                     TestContext context,
                     SequenceType sequenceType = SequenceType.Merkle,
@@ -68,7 +71,7 @@ public record TestSequence : TestBase {
         SequenceType = sequenceType;
 
         Filename = Seed.GetFilename(file);
-
+        KeyLocate = TestContext.DarePolicy.KeyLocation;
 
         using (var sequence = Sequence.NewSequence(
                         Filename, 
@@ -105,7 +108,8 @@ public record TestSequence : TestBase {
 
         var additionalRecords = Seed.GetRandomInt(Records, chunk, "additionalChunks");
 
-        using (var sequence = Sequence.OpenExisting(Filename, fileStatus: FileStatus.Append)) {
+        using (var sequence = Sequence.OpenExisting(Filename, fileStatus: FileStatus.Append,
+                    keyCollection: KeyLocate)) {
             var frameCount = sequence.FrameCount;
             for (var i = 0; i < additionalRecords; i++) {
                 (sequence.FrameCount == frameCount + i).TestTrue();

@@ -30,6 +30,10 @@ public class KeyPairX25519 : KeyPairECDH, IAgreementData {
 
 
     #region //Properties
+
+    ///<inheritdoc/>
+    public override AssuranceLevel AssuranceLevel => AssuranceLevel.CC128;
+
     ///<summary>The public key value.</summary>
     public CurveX25519Public PublicKey { get; set; }
     ///<summary>The private key value</summary>

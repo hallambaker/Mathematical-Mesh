@@ -24,6 +24,8 @@
 
 using Goedel.Cryptography.Nist;
 
+using System.Diagnostics.Eventing.Reader;
+
 namespace Goedel.Cryptography.PQC;
 
 /// <summary>
@@ -40,6 +42,14 @@ public record AgreementDataBinary(byte[] Value) : IAgreementData {
 public class KeyPairMlKemNist : KeyPair, IOpaqueBinaryKey {
 
     #region //Properties
+
+    ///<inheritdoc/>
+    public override AssuranceLevel AssuranceLevel => PublicKey.Kyber.Parameters.ParameterSet switch {
+        KyberParameterSet.ML_KEM_512 => AssuranceLevel.PQC1,
+        KyberParameterSet.ML_KEM_768 => AssuranceLevel.PQC3,
+        KyberParameterSet.ML_KEM_1024 => AssuranceLevel.PQC5,
+        _ => throw new InternalCryptographicException()
+        };
 
     ///<summary>The public key value.</summary>
     public KyberPublic PublicKey { get; set; }
@@ -251,11 +261,23 @@ public class KeyPairMlKemNist : KeyPair, IOpaqueBinaryKey {
     ///<inheritdoc/>
     public override byte[] Decrypt(
                 byte[] encryptedKey,
-                IAgreementData ephemeral = null,
+                IAgreementData agreementData = null,
                 CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                 KeyAgreementResult partial = null,
                 byte[] salt = null) {
-        var (sharedKey, implicitRejection) = PrivateKey.Decapsulate(encryptedKey);
+
+        if (agreementData is AgreementDataBinary binary) {
+            var (sharedKey, implicitRejection) = PrivateKey.Decapsulate(binary.Value);
+            var result = Platform.KeyWrapRFC3394.Unwrap(sharedKey, encryptedKey);
+
+            return result;
+            // unwrap the key here
+
+            }
+        else {
+
+
+            }
 
         throw new NotImplementedException();
         }
@@ -268,8 +290,8 @@ public class KeyPairMlKemNist : KeyPair, IOpaqueBinaryKey {
                     out IAgreementData agreementData,
                     byte[] salt = null) {
 
-        var seed = Shake256.HashData(key, 32);
-        var (ciphertext,  sharedSecret) = PublicKey.Encapsulate(seed);
+        var seed = SHAKE256.HashData(key, 32);
+        var (sharedSecret, ciphertext) = PublicKey.Encapsulate(seed);
 
         exchange = Platform.KeyWrapRFC3394.Wrap(sharedSecret, key);
         agreementData = new AgreementDataBinary (ciphertext);

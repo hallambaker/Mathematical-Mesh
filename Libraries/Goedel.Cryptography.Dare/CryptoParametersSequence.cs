@@ -112,8 +112,17 @@ public partial class CryptoParametersSequence : CryptoParameters {
         if (PolicySignature != PolicySignature.None) {
             if (policy.SignKeys != null) {
                 SignerKeys = new List<CryptoKey>();
-                foreach (var keyPair in policy.SignatureKeys) {
-                    SignerKeys.Add(keyPair);
+                if (policy.SignatureKeys is not null) {
+                    foreach (var keyPair in policy.SignatureKeys) {
+                        SignerKeys.Add(keyPair);
+                        }
+                    }
+                else {
+                    foreach (var key in policy.SignKeys) {
+                        if (keyLocate.TryFindKeySignature(key.KeyPair.KeyIdentifier, out var keyPair)) {
+                            SignerKeys.Add(keyPair);
+                            }
+                        }
                     }
                 }
             }

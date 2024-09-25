@@ -222,8 +222,8 @@ public class MeshPersist : Disposable {
         //using var accountHandle = GetAccountUnverified(requestConnection.AccountAddress);
         var serviceNonce = CryptoCatalog.GetBits(128);
 
-        var MeshUDF = accountHandle.ProfileAccount.ProfileSignature.CryptoKey.UDFBytes;
-        var DeviceUDF = requestConnection.ProfileDevice.ProfileSignature.CryptoKey.UDFBytes;
+        var MeshUDF = accountHandle.ProfileAccount.UdfBytes;
+        var DeviceUDF = requestConnection.ProfileDevice.UdfBytes;
 
         var witness = Udf.MakeWitnessString(MeshUDF, serviceNonce, DeviceUDF,
             requestConnection.ClientNonce);

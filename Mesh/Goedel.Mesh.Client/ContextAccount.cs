@@ -167,9 +167,8 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     ///<summary>The device identifier within the account.</summary> 
     public string AccountDeviceId => ActivationCommon.AccountDeviceId;
 
-
     ///<summary>The account profile key</summary>
-    public virtual KeyPair KeyProfile => ActivationCommon?.ProfileSignatureKey;
+    public List<CryptoKey> KeyProfileSigners  => ActivationCommon?.KeyProfileSigners;
     ///<summary>The administration signature key</summary>
     public virtual KeyPair KeyAdministratorSign => ActivationCommon?.AdministratorSignatureKey;
     ///<summary>The administration signature key</summary>

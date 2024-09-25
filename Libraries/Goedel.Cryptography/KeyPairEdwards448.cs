@@ -33,6 +33,10 @@ public class KeyPairEd448 : KeyPairEdwards, IAgreementData {
 
 
     #region // Properties and fields 
+
+    ///<inheritdoc/>
+    public override AssuranceLevel AssuranceLevel => AssuranceLevel.CC224;
+
     ///<summary>The implementation public key value</summary>
     public virtual CurveEdwards448Public PublicKey { get; }
 

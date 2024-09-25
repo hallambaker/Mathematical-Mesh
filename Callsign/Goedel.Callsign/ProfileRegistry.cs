@@ -34,12 +34,27 @@ public partial class ProfileRegistry {
     /// </summary>
     /// <param name="accountAddress">The account address</param>
     /// <param name="activationAccount">The activation used to create the account data.</param>
-    public ProfileRegistry(
+    private ProfileRegistry(
                 string accountAddress,
-                ActivationCommon activationAccount) : base(accountAddress, activationAccount) =>
-        Envelope(activationAccount.ProfileSignatureKey);
+                ActivationCommon activationAccount) : base(accountAddress, activationAccount) {
+        }
 
 
+
+    /// <summary>
+    /// Construct a Profile Account instance  from <paramref name="accountAddress"/>.
+    /// </summary>
+    /// <param name="accountAddress">The account address</param>
+    /// <param name="activationAccount">The activation used to create the account data.</param>
+    public static ProfileRegistry Generate(
+                string accountAddress,
+                ActivationCommon activationAccount)  {
+
+        var profile = new ProfileRegistry(accountAddress, activationAccount);
+        
+        profile.SignProfile();
+        return profile;
+        }
 
     /// <summary>
     /// Verify the profile to check that it is correctly signed and consistent.

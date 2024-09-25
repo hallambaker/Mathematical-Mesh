@@ -145,12 +145,21 @@ public class SHAKE256 : SHA3 {
     /// <summary>
     /// Convenience routine to preform one stop processing.
     /// </summary>
-    /// <param name="Input">The input data</param>
+    /// <param name="input">The input data</param>
+    /// <param name="hashByteLength">The number of output bytes</param>
+    /// <returns>The digest value</returns>
+    public static byte[] HashData(byte[] input, int hashByteLength = 32) =>
+            Process(input, hashByteLength*8);
+
+    /// <summary>
+    /// Convenience routine to preform one stop processing.
+    /// </summary>
+    /// <param name="input">The input data</param>
     /// <param name="hashBitLength">The number of output bits</param>
     /// <returns>The digest value</returns>
-    public static byte[] Process(byte[] Input, int hashBitLength = 256) {
+    public static byte[] Process(byte[] input, int hashBitLength = 256) {
         using var provider = new SHAKE256(hashBitLength);
-        provider.TransformFinalBlock(Input, 0, Input.Length);
+        provider.TransformFinalBlock(input, 0, input.Length);
         return provider.Hash;
         }
 

@@ -9,6 +9,9 @@
             Assurance levels for cryptographic algorithms
             </summary>
         </member>
+        <member name="F:Goedel.Cryptography.AssuranceLevel.None">
+            <summary>No assurance whatsoever</summary> 
+        </member>
         <member name="F:Goedel.Cryptography.AssuranceLevel.PQ64">
             <summary>64 bits quantum security</summary> 
         </member>
@@ -54,6 +57,12 @@
         </member>
         <member name="F:Goedel.Cryptography.AssuranceLevel.PQC5">
             <summary>256 bits classical security strength, 128 bits quantum security</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.AssuranceLevel.ConventionalMask">
+            <summary>Mask to return the conventional assurance level</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.AssuranceLevel.QuantumMask">
+            <summary>Mask to return the quantum assurance level</summary> 
         </member>
         <member name="F:Goedel.Cryptography.AssuranceLevel.Unkown">
             <summary></summary> 
@@ -255,7 +264,7 @@
             Profile describing a family of cryptographic algorithms with the same capabilities
             and assurance quality (conventional or quantum).
             </summary>
-            <param name="SignId">The base <see cref="T:Goedel.Cryptography.CryptoAlgorithmId"/> for the family.</param>
+            <param name="CryptoAlgorithmId">The base <see cref="T:Goedel.Cryptography.CryptoAlgorithmId"/> for the family.</param>
             <param name="Class">The functionality supported.</param>
             <param name="Variants">Description of the variations of the algorithm from lowest to
             highest assurance level.</param>
@@ -265,13 +274,10 @@
             Profile describing a family of cryptographic algorithms with the same capabilities
             and assurance quality (conventional or quantum).
             </summary>
-            <param name="SignId">The base <see cref="T:Goedel.Cryptography.CryptoAlgorithmId"/> for the family.</param>
+            <param name="CryptoAlgorithmId">The base <see cref="T:Goedel.Cryptography.CryptoAlgorithmId"/> for the family.</param>
             <param name="Class">The functionality supported.</param>
             <param name="Variants">Description of the variations of the algorithm from lowest to
             highest assurance level.</param>
-        </member>
-        <member name="P:Goedel.Cryptography.CryptoAlgorithmProfile.SignId">
-            <summary>The base <see cref="T:Goedel.Cryptography.CryptoAlgorithmId"/> for the family.</summary>
         </member>
         <member name="P:Goedel.Cryptography.CryptoAlgorithmProfile.Class">
             <summary>The functionality supported.</summary>
@@ -279,6 +285,47 @@
         <member name="P:Goedel.Cryptography.CryptoAlgorithmProfile.Variants">
             <summary>Description of the variations of the algorithm from lowest to
             highest assurance level.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmProfile.RsaSign">
+            <summary>RSA signature variants, these are abreviated as the necessary processing is handled 
+            internally to the implementation and all we require is the assurance levels..</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmProfile.RsaExchange">
+            <summary>RSA encryption variants, these are abreviated as the necessary processing is handled 
+            internally to the implementation and all we require is the assurance levels..</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmProfile.ECDH">
+            <summary>Variants of ECDH key agreement.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmProfile.XDH">
+            <summary>Variants of ECDH key agreement.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmProfile.ECDSA">
+            <summary>Variants of ECDSA signature over a manifest or the data itself.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmProfile.EdDSA">
+            <summary>Variants of ECDSA signature over a manifest or the data itself.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmProfile.MLKEM">
+            <summary>Variants of ML-KEM.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmProfile.MLDSA">
+            <summary>Variants of ML-DSA over a manifest or the data itself.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmProfile.MLDSAhash">
+            <summary>Variants of ML-DSA over a specified digest value and digest algorithm.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmProfile.All">
+            <summary>Catalog of all algorithms collected into groups offering </summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.CryptoAlgorithmProfile.AlgorithmIdToEntry">
+            <summary>Lookup algorithm by <see cref="T:Goedel.Cryptography.CryptoAlgorithmId"/></summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.CryptoAlgorithmProfile.JoseIdToEntry">
+            <summary>Lookup algorithm by JOSE Identifier.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.CryptoAlgorithmProfile.OidIdToEntry">
+            <summary>Lookup algorithm by OID</summary> 
         </member>
         <member name="T:Goedel.Cryptography.CryptoAlgorithmClass">
             <summary>
@@ -288,10 +335,16 @@
         <member name="F:Goedel.Cryptography.CryptoAlgorithmClass.Digest">
             <summary>Digest algorithm.</summary>
         </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmClass.Shake">
+            <summary>Digest algorithm.</summary>
+        </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmClass.MAC">
             <summary>Message Authentication Code</summary>
         </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmClass.Encryption">
+            <summary>Symmetric Encryption.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmClass.AEAD">
             <summary>Symmetric Encryption.</summary>
         </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmClass.Exchange">
@@ -390,6 +443,9 @@
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.SHA_2_256">
             <summary>SHA2 256 bit</summary>
         </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.SHA_2_384">
+            <summary>SHA2 512 bit</summary>
+        </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.SHA_2_512">
             <summary>SHA2 512 bit</summary>
         </member>
@@ -397,6 +453,9 @@
             <summary>SHA2 512 bit</summary>
         </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.SHA_3_256">
+            <summary>SHA3 256 bit</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.SHA_3_384">
             <summary>SHA3 256 bit</summary>
         </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.SHA_3_512">
@@ -426,8 +485,14 @@
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.ModeECB">
             <summary>Flag for Electronic Code Book Mode</summary>
         </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.ModeOCB">
+            <summary>Flag for OCB Mode</summary>
+        </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES128">
             <summary>AES 128 bit key</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES192">
+            <summary>AES 256 bit key</summary>
         </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES256">
             <summary>AES 256 bit key</summary>
@@ -450,6 +515,18 @@
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES128ECB">
             <summary>AES 128 bit ECB mode with zeros padding</summary>
         </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES128OCB">
+            <summary>AES 128 bit in CBC mode</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES192CBC">
+            <summary>AES 128 bit in CBC mode</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES192GCM">
+            <summary>AES 128 bit in CBC mode</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES192OCB">
+            <summary>AES 128 bit in CBC mode</summary>
+        </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES256CBC">
             <summary>AES 256 bit in CBC mode</summary>
         </member>
@@ -468,6 +545,9 @@
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES256ECB">
             <summary>AES 128 bit ECB mode with zeros padding</summary>
         </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.AES256OCB">
+            <summary>AES 128 bit in CBC mode</summary>
+        </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.HMAC_SHA_2_256">
             <summary>HMAC SHA 2 with 256 bit key.</summary>
         </member>
@@ -477,7 +557,19 @@
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.HMAC_SHA_2_512T128">
             <summary>HMAC SHA 2 with 512 bit key.</summary>
         </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.HMAC_SHA_3_256">
+            <summary>HMAC SHA 2 with 512 bit key.</summary>
+        </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.HMAC_SHA_3_512">
+            <summary>HMAC SHA 2 with 512 bit key.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.CMAC">
+            <summary>HMAC SHA 2 with 512 bit key.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.KMAC_128">
+            <summary>HMAC SHA 2 with 512 bit key.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.KMAC_256">
             <summary>HMAC SHA 2 with 512 bit key.</summary>
         </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Level_Any">
@@ -2724,6 +2816,9 @@
         </member>
         <member name="F:Goedel.Cryptography.UDFConstants.PKIXKey">
             <summary>application/pkix-keyinfo</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfList">
+            <summary>application/udf-list</summary>
         </member>
         <member name="F:Goedel.Cryptography.UDFConstants.OpenPGPKey">
             <summary>application/pgp-keys</summary>

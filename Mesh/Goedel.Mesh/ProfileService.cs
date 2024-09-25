@@ -21,6 +21,7 @@
 #endregion
 
 
+
 namespace Goedel.Mesh;
 
 public partial class ProfileService {
@@ -98,7 +99,9 @@ public partial class ProfileService {
         secretSeed ??= new PrivateKeyUDF(
             udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount, secret: null, algorithmEncrypt: algorithmEncrypt,
             algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate, bits: bits);
-        return new ProfileService(secretSeed, keyCollection, persist);
+        var profile = new ProfileService(secretSeed, keyCollection, persist);
+        profile.SignProfile();
+        return profile;
         }
 
     /// <summary>
@@ -168,18 +171,18 @@ public partial class ProfileService {
 
 
 
-    /// <summary>
-    /// Constructor create service with the signature key <paramref name="keySign"/>
-    /// </summary>
-    /// <param name="keySign">The offline signature key.</param>
-    /// <param name="keyEncrypt">The service encryption key.</param>
-    public ProfileService(KeyPair keySign, KeyPair keyEncrypt) {
-        KeySignature = keySign;
-        KeyEncryption = keyEncrypt;
+    ///// <summary>
+    ///// Constructor create service with the signature key <paramref name="keySign"/>
+    ///// </summary>
+    ///// <param name="keySign">The offline signature key.</param>
+    ///// <param name="keyEncrypt">The service encryption key.</param>
+    //public ProfileService(KeyPair keySign, KeyPair keyEncrypt) {
+    //    KeySignature = keySign;
+    //    KeyEncryption = keyEncrypt;
 
-        ProfileSignature = new KeyData(keySign.KeyPairPublic());
-        ServiceEncryption = new KeyData(keyEncrypt.KeyPairPublic());
-        }
+    //    ProfileSignature = new KeyData(keySign.KeyPairPublic());
+    //    ServiceEncryption = new KeyData(keyEncrypt.KeyPairPublic());
+    //    }
 
 
     /// <summary>

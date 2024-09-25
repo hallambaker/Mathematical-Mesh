@@ -204,6 +204,11 @@ public record CurveNistPublic : IKeyAdvancedPublic {
 public class KeyPairECDHP : KeyPairECDH {
 
     #region //Properties
+
+    ///<inheritdoc/>
+    public override AssuranceLevel AssuranceLevel => throw new NotImplementedException();
+
+
     ///<summary>The implementation public key value</summary>
     public CurveNistPublic PublicKey { get; set; }
 
