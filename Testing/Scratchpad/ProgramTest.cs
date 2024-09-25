@@ -61,6 +61,18 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
+
+
+        //TestSequences.Test().TestSign(SequenceType.List);
+        //TestSequences.Test().TestSign(SequenceType.Tree);
+
+
+        //TestSequences.Test().TestSparse(ModeEnhance.Sequence, ModeEnhance.Sequence);
+
+        TestSequences.Test().ZContainerTestSigned();
+
+
+
         //TCallsign.Test().TestIssue();
         //TestGoedelCryptography.Test().UDFKeyGen(UDFKeyGen.TEST1);
         //TestGoedelCryptography.Test().UDFKeyGen(UDFKeyGen.TEST_KG_Device);
@@ -84,14 +96,14 @@ partial class Program {
 
 
         //TestService.Test().TestProfileFails(DataValidity.CorruptSigner);
-        TestService.Test().TestProfileFails(DataValidity.CorruptSignature);
-        TestService.Test().TestProfileFails(DataValidity.CorruptDigest);
-        TestService.Test().TestProfileFails(DataValidity.CorruptPayload);
-        TestService.Test().TestProfileFails(DataValidity.CorruptMissing);
+        //TestService.Test().TestProfileFails(DataValidity.CorruptSignature);
+        //TestService.Test().TestProfileFails(DataValidity.CorruptDigest);
+        //TestService.Test().TestProfileFails(DataValidity.CorruptPayload);
+        //TestService.Test().TestProfileFails(DataValidity.CorruptMissing);
 
-        TestService.Test().TestCredentialAccountFails(DataValidity.CorruptPayload);
-        TestService.Test().TestCredentialAccountFails(DataValidity.CorruptDigest);
-        TestService.Test().TestCredentialAccountFails(DataValidity.CorruptSignature);
+        //TestService.Test().TestCredentialAccountFails(DataValidity.CorruptPayload);
+        //TestService.Test().TestCredentialAccountFails(DataValidity.CorruptDigest);
+        //TestService.Test().TestCredentialAccountFails(DataValidity.CorruptSignature);
 
         //var TestGoedelCryptography = new TestGoedelCryptography();
 

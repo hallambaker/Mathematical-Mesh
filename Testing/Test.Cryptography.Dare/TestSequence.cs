@@ -71,7 +71,7 @@ public record TestSequence : TestBase {
         SequenceType = sequenceType;
 
         Filename = Seed.GetFilename(file);
-        KeyLocate = TestContext.DarePolicy.KeyLocation;
+        KeyLocate = TestContext.KeyCollection ?? TestContext.DarePolicy?.KeyLocation;
 
         using (var sequence = Sequence.NewSequence(
                         Filename, 
@@ -267,7 +267,7 @@ public record TestSequence : TestBase {
 
             CorruptFrame(frame);
 
-            using var sequence = OpenSequence();
+            using var sequence = OpenSequence(KeyLocate);
             DecryptFail(sequence, frame);
             }
         }
@@ -291,7 +291,7 @@ public record TestSequence : TestBase {
 
             CorruptFrame(frame);
 
-            using var sequence = OpenSequence();
+            using var sequence = OpenSequence(KeyLocate);
             VerifyFail(sequence, frame);
             }
         }

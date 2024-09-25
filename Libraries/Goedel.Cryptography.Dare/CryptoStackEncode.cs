@@ -109,6 +109,7 @@ public partial class CryptoStackEncode : CryptoStack {
                 }
             }
         if (DigestId != CryptoAlgorithmId.NULL) {
+            //DigestId = DigestId.DefaultDigest();
             header.DigestAlgorithm = DigestId.ToJoseID();
             }
         }

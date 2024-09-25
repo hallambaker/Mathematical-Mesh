@@ -83,14 +83,14 @@ public partial class CryptoParameters {
     public bool IncludeSignatureKey { get; init; } = false;
 
     /// <summary>The payload digest algorithm.</summary>
-    public CryptoAlgorithmId DigestId;
+    public CryptoAlgorithmId DigestId = CryptoAlgorithmId.NULL;
 
     /// <summary>The payload encryption algorithm.</summary>
     public CryptoAlgorithmId EncryptId {
         get => encryptId;
         set => SetEncryptId(value);
         }
-    CryptoAlgorithmId encryptId;
+    CryptoAlgorithmId encryptId = CryptoAlgorithmId.NULL;
 
     void SetEncryptId(CryptoAlgorithmId encryptId) {
         this.encryptId = encryptId;

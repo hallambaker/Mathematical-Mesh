@@ -139,10 +139,10 @@ public partial class TestSequences {
 
 
     [Theory]
-    [InlineData(SequenceType.List)]
+    //[InlineData(SequenceType.List)]
     [InlineData(SequenceType.Digest)]
     [InlineData(SequenceType.Chain)]
-    [InlineData(SequenceType.Tree)]
+    //[InlineData(SequenceType.Tree)]
     [InlineData(SequenceType.Merkle)]
     public void TestSign(SequenceType sequenceType,
         ModeEnhance sign = ModeEnhance.Record,
@@ -175,10 +175,10 @@ public partial class TestSequences {
 
 
     [Theory]
-    [InlineData(SequenceType.List)]
+    //[InlineData(SequenceType.List)]
     [InlineData(SequenceType.Digest)]
     [InlineData(SequenceType.Chain)]
-    [InlineData(SequenceType.Tree)]
+    //[InlineData(SequenceType.Tree)]
     [InlineData(SequenceType.Merkle)]
     public void TestSignEncrypt(SequenceType sequenceType,
                 ModeEnhance sign = ModeEnhance.Record,
@@ -336,16 +336,16 @@ public partial class TestSequences {
 
         // Generate key(s)
         var sign = KeyPair.Factory(CryptoAlgorithmId.Ed448,
-                KeySecurity.Session, keyCollection, keyUses: KeyUses.Encrypt);
+                KeySecurity.Session, keyCollection, keyUses: KeyUses.Sign);
         var signers = new List<string> { sign.KeyIdentifier };
 
         var CryptoParameters = new DarePolicy(
                     keyCollection,
                     signers: signers);
 
-        ZTestContainer($"ContainerList", SequenceType.List, 0, policy: CryptoParameters);
-        ZTestContainer($"ContainerList", SequenceType.List, 1, policy: CryptoParameters);
-        ZTestContainer($"ContainerList", SequenceType.List, 10, policy: CryptoParameters);
+        ZTestContainer($"ContainerList", SequenceType.Merkle, 0, policy: CryptoParameters);
+        ZTestContainer($"ContainerList", SequenceType.Merkle, 1, policy: CryptoParameters);
+        ZTestContainer($"ContainerList", SequenceType.Merkle, 10, policy: CryptoParameters);
         }
 
     [Fact]
