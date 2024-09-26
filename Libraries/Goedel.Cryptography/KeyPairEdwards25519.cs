@@ -59,7 +59,7 @@ public class KeyPairEd25519 : KeyPairEdwards, IAgreementData {
     public override bool PublicOnly => PrivateKey == null;
 
     ///<inheritdoc/>
-    public override byte[] PublicData => PublicKey.Encoding;
+    public override byte[] PublicData => PublicKey.EncodingPublicKey;
 
     //readonly KeySecurity KeyType = KeySecurity.Public;
     readonly byte[] EncodedPrivateKey = null;
@@ -92,7 +92,7 @@ public class KeyPairEd25519 : KeyPairEdwards, IAgreementData {
         KeyUses = keyUses;
         if (keyType == KeySecurity.Public) {
             PublicKey = new CurveEdwards25519Public(key);
-            PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed25519,PublicKey.Encoding);
+            PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed25519,PublicKey.EncodingPublicKey);
             KeySecurity = KeySecurity.Public;
             }
         else {
@@ -100,7 +100,7 @@ public class KeyPairEd25519 : KeyPairEdwards, IAgreementData {
             var exportable = keyType.IsExportable();
             PrivateKey = new CurveEdwards25519Private(key, exportable);
             PublicKey = PrivateKey.Public;
-            PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed25519,PublicKey.Encoding);
+            PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed25519,PublicKey.EncodingPublicKey);
             if (exportable) {
                 PKIXPrivateKeyECDH = new PKIXPrivateKeyECDH(CryptoAlgorithmId.Ed25519, key);
                 }
@@ -125,7 +125,7 @@ public class KeyPairEd25519 : KeyPairEdwards, IAgreementData {
         CryptoAlgorithmId = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmId.Ed25519);
         PrivateKey = privateKey ?? new CurveEdwards25519Private();
         PublicKey = PrivateKey.Public;
-        PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed25519, PublicKey.Encoding);
+        PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed25519, PublicKey.EncodingPublicKey);
         KeySecurity = keySecurity;
         KeyUses = keyUses;
         if (keySecurity.IsExportable()) {
@@ -150,7 +150,7 @@ public class KeyPairEd25519 : KeyPairEdwards, IAgreementData {
 
         CryptoAlgorithmId = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmId.Ed25519);
         this.PublicKey = publicKey as CurveEdwards25519Public;
-        PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed25519, PublicKey.Encoding);
+        PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed25519, PublicKey.EncodingPublicKey);
         KeyUses = keyUses;
         }
 
@@ -212,7 +212,8 @@ public class KeyPairEd25519 : KeyPairEdwards, IAgreementData {
         }
 
     ///<inheritdoc/>
-    public override void Encrypt(byte[] key,
+    public override void Encrypt(
+            byte[] key,
             out byte[] exchange,
             out IAgreementData ephemeral,
             byte[] salt = null) => PublicKey.Agreement().Encrypt(key, out exchange, out ephemeral, salt);

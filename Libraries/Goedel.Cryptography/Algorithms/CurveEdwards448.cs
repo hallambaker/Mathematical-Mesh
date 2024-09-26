@@ -426,7 +426,7 @@ public class CurveEdwards448Public : CurveEdwardsPublic {
     public override CurveEdwards PublicKey => Public;
 
     /// <summary>Encoded form of the public key.</summary>
-    public override byte[] Encoding { get; }
+    public override byte[] EncodingPublicKey { get; }
 
     /// <summary>
     /// Construct from public key parameters.
@@ -434,7 +434,7 @@ public class CurveEdwards448Public : CurveEdwardsPublic {
     /// <param name="publicKey">The public key.</param>
     public CurveEdwards448Public(CurveEdwards448 publicKey) {
         this.Public = publicKey;
-        this.Encoding = publicKey.Encode();
+        this.EncodingPublicKey = publicKey.Encode();
         }
 
     /// <summary>
@@ -443,7 +443,7 @@ public class CurveEdwards448Public : CurveEdwardsPublic {
     /// <param name="encoding">The binary encoded public key.</param>
     public CurveEdwards448Public(byte[] encoding) {
         this.Public = CurveEdwards448.Decode(encoding);
-        this.Encoding = encoding;
+        this.EncodingPublicKey = encoding;
         }
 
     /// <summary>
@@ -455,7 +455,7 @@ public class CurveEdwards448Public : CurveEdwardsPublic {
     /// <param name="digest">The digest value to be verified.</param>
     /// <returns>True if the signature is valid, otherwise false.</returns>
     public bool Verify(byte[] signature, byte[] digest, byte[] context = null) =>
-                Public.VerifySignature(Encoding, signature, digest, context);
+                Public.VerifySignature(EncodingPublicKey, signature, digest, context);
 
     /// <summary>
     /// Create a new ephemeral private key and use it to perform a key
@@ -570,9 +570,9 @@ public class CurveEdwards448Private : CurveEdwardsPrivate, IKeyPrivateECDH {
         var Buffer = SHAKE256.Process(secret, 114 * 8);
         PreSecret = Buffer.Duplicate(0, 57);
         HashPrefix = Buffer.Duplicate(57, 57);
-        Private = ExtractPrivate(PreSecret);
+        SecretKey = ExtractPrivate(PreSecret);
 
-        var PublicPoint = CurveEdwards448.GetPublic(Private);
+        var PublicPoint = CurveEdwards448.GetPublic(SecretKey);
         Public = new CurveEdwards448Public(PublicPoint);
         if (exportable) {
             Encoding = Secret;
@@ -586,7 +586,7 @@ public class CurveEdwards448Private : CurveEdwardsPrivate, IKeyPrivateECDH {
     /// <param name="privateKey">The private key</param>
     /// <param name="exportable">If true, the private key is exportable</param>
     public CurveEdwards448Private(BigInteger privateKey, bool exportable = false) {
-        this.Private = privateKey;
+        this.SecretKey = privateKey;
         this.Secret = privateKey.ToByteArray();
 
         var PublicPoint = CurveEdwards448.GetPublic(privateKey);
@@ -623,7 +623,7 @@ public class CurveEdwards448Private : CurveEdwardsPrivate, IKeyPrivateECDH {
         HashPrefix = Buffer.Duplicate(32, 32);
 
         // Calculate the public point
-        var PublicPoint = CurveEdwards448.GetPublic(Private);
+        var PublicPoint = CurveEdwards448.GetPublic(SecretKey);
         Public = new CurveEdwards448Public(PublicPoint);
 
         // Calculate the witness value
@@ -712,7 +712,7 @@ public class CurveEdwards448Private : CurveEdwardsPrivate, IKeyPrivateECDH {
     /// <param name="k">The data to sign.</param>
     /// <param name="r">The presignature value.</param>
     /// <returns>The value r+k* Private.</returns>
-    public override BigInteger Sign(BigInteger k, BigInteger r) => (r + k * Private) % DomainParameters.Curve448.Q;
+    public override BigInteger Sign(BigInteger k, BigInteger r) => (r + k * SecretKey) % DomainParameters.Curve448.Q;
 
 
     /// <summary>
@@ -752,7 +752,7 @@ public class CurveEdwards448Private : CurveEdwardsPrivate, IKeyPrivateECDH {
     /// </summary>
     /// <param name="publicKey">Public key parameters</param>
     /// <returns>The key agreement value ZZ</returns>
-    public CurveEdwards448 Agreement(CurveEdwards448Public publicKey) => publicKey.Public.Multiply(Private);
+    public CurveEdwards448 Agreement(CurveEdwards448Public publicKey) => publicKey.Public.Multiply(SecretKey);
 
 
     /// <summary>
@@ -763,7 +763,7 @@ public class CurveEdwards448Private : CurveEdwardsPrivate, IKeyPrivateECDH {
     /// result of this key agreement.</param>
     /// <returns>The key agreement value ZZ</returns>
     public CurveEdwards448 Agreement(CurveEdwards448Public publicKey, CurveEdwards448 carry) {
-        var Result = publicKey.Public.Multiply(Private);
+        var Result = publicKey.Public.Multiply(SecretKey);
         Result.Accumulate(carry);
 
         return Result;
@@ -803,7 +803,7 @@ public class CurveEdwards448Private : CurveEdwardsPrivate, IKeyPrivateECDH {
         //Assert.True(Accumulator > 0 & Accumulator < Private, CryptographicException.Throw);
 
         Result[0] = new CurveEdwards448Private(
-            (CurveEdwards448.Q + Private - Accumulator) % (CurveEdwards448.Q), exportable: true) {
+            (CurveEdwards448.Q + SecretKey - Accumulator) % (CurveEdwards448.Q), exportable: true) {
             IsThreshold = true
             };
         return Result;
@@ -822,11 +822,11 @@ public class CurveEdwards448Private : CurveEdwardsPrivate, IKeyPrivateECDH {
             var key = share as KeyPairEd448;
             var privateKey = (key.IKeyAdvancedPrivate as CurveEdwards448Private);
 
-            Accumulator = (Accumulator + privateKey.Private).Mod(CurveEdwards448.Q);
+            Accumulator = (Accumulator + privateKey.SecretKey).Mod(CurveEdwards448.Q);
             }
 
         return new CurveEdwards25519Private(
-            (CurveEdwards448.Q + Private - Accumulator).Mod(CurveEdwards448.Q)) {
+            (CurveEdwards448.Q + SecretKey - Accumulator).Mod(CurveEdwards448.Q)) {
             IsThreshold = true
             };
         }
@@ -842,7 +842,7 @@ public class CurveEdwards448Private : CurveEdwardsPrivate, IKeyPrivateECDH {
     public CurveEdwards448Private Combine(CurveEdwards448Private contribution,
                 KeySecurity keySecurity = KeySecurity.Bound,
                 KeyUses keyUses = KeyUses.Any) {
-        var NewPrivate = (Private + contribution.Private).Mod(CurveEdwards448.Q);
+        var NewPrivate = (SecretKey + contribution.SecretKey).Mod(CurveEdwards448.Q);
         return new CurveEdwards448Private(NewPrivate, keySecurity.IsExportable());
         }
 
@@ -869,10 +869,8 @@ public class CurveEdwards448Private : CurveEdwardsPrivate, IKeyPrivateECDH {
 /// </summary>
 public class CurveEdwards448Result : ResultECDH {
     ///<summary>The Jose curve name</summary>
-    public override string CurveJose => CurveEdwards448.CurveJose;
+    public override string CurveJose => JoseConstants.Ed448;
 
-    ///<summary>The key agreement value, a point on the curve.</summary>
-    public override Curve Agreement => AgreementEd448;
 
     /// <summary>The key agreement result</summary>
     public CurveEdwards448 AgreementEd448 { get; set; }

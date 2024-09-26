@@ -71,7 +71,7 @@ public abstract class KeyPairEdwards : KeyPairECDH {
 
         var privateKey = (IKeyAdvancedPrivate as CurveEdwardsPrivate);
 
-        var Shared = new Shared(privateKey.Private,
+        var Shared = new Shared(privateKey.SecretKey,
                 privateKey.PublicPoint.DomainParameters.Q);
 
         var keyshares = new KeyShareEdwards[n];
@@ -289,7 +289,7 @@ public class ThresholdSignatureEdwards25519 : ThresholdSignatureEdwards {
     /// <param name="key">The private key contribution.</param>
     public ThresholdSignatureEdwards25519(CurveEdwards25519Private key) :
             base(DomainParameters.Curve25519.Q) {
-        privateKey = key.Private;
+        privateKey = key.SecretKey;
         PublicR = CurveEdwards25519.Base.Multiply(PrivateR);
         }
 
@@ -341,7 +341,7 @@ public class ThresholdSignatureEdwards448 : ThresholdSignatureEdwards {
     /// <param name="key">The private key contribution.</param>
     public ThresholdSignatureEdwards448(CurveEdwards448Private key) :
             base(DomainParameters.Curve448.Q) {
-        privateKey = key.Private;
+        privateKey = key.SecretKey;
         PublicR = CurveEdwards448.Base.Multiply(PrivateR);
         }
 

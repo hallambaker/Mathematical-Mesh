@@ -99,7 +99,7 @@ public partial class TestGoedelCryptography {
         var Private = new CurveEdwards25519Private(Test.SecretKey);
         var Public = Private.Public;
 
-        Public.Encoding.TestEqual(Test.PublicKey);
+        Public.EncodingPublicKey.TestEqual(Test.PublicKey);
 
         }
 
@@ -108,7 +108,7 @@ public partial class TestGoedelCryptography {
         var Private = new CurveEdwards448Private(Test.SecretKey);
         var Public = Private.Public;
 
-        Public.Encoding.TestEqual(Test.PublicKey);
+        Public.EncodingPublicKey.TestEqual(Test.PublicKey);
 
         }
 

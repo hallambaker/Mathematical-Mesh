@@ -22,10 +22,19 @@
 
 namespace Goedel.Cryptography.Algorithms;
 
+
+public interface ICurve {
+    /// <summary>
+    /// Return a IKeyAdvancedPublic public key for this point. 
+    /// </summary>
+    IKeyAdvancedPublic KeyAdvancedPublic { get; }
+    }
+
+
 /// <summary>
 /// Base Class for Elliptic Curve implementations
 /// </summary>
-public abstract class Curve {
+public abstract class Curve : ICurve {
 
     ///<summary>The Jose curve name for direct encoding</summary>
     public const string CurveJoseDirectSuffix = "z";
@@ -727,7 +736,7 @@ public abstract class CurveEdwardsPublic : IKeyAdvancedPublic {
     public abstract CurveEdwards PublicKey { get; }
 
     ///<summary>The encoding of the point</summary>
-    public virtual byte[] Encoding { get; }
+    public virtual byte[] EncodingPublicKey { get; }
 
     /// <summary>
     /// Combine the two public keys to create a composite public key.
@@ -750,7 +759,7 @@ public abstract class CurveEdwardsPrivate : IKeyAdvancedPrivate {
     public abstract CurveEdwards PublicPoint { get; }
 
     /// <summary>The private key, i.e. a scalar</summary>
-    public BigInteger Private { get; protected set; }
+    public BigInteger SecretKey { get; protected set; }
 
     /// <summary>
     /// Perform a partial key agreement.

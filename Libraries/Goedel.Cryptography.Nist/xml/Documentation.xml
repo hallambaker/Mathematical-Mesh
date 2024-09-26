@@ -311,6 +311,63 @@
             Determines if a given point exists in the field
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeCurve.CoefficientA">
+            <summary>The A coefficient.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeCurve.CoefficientB">
+            <summary>The B coefficient.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeCurve.BasePointG">
+            <summary>The base point G.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeCurve.OrderN">
+            <summary>The group order.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeCurve.FieldSizeQ">
+            <summary>The field size.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeCurve.CurveName">
+            <summary>The curve name</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeCurve.KeySize">
+            <summary>The key size in bits.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeCurve.MinimumOutputSize">
+            <summary>The minimum number of bits required to generate a key.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeCurve.#ctor(Goedel.Cryptography.Nist.NistCurve,System.Numerics.BigInteger,System.Numerics.BigInteger,Goedel.Cryptography.Nist.EccPoint,System.Numerics.BigInteger,System.Int32)">
+            <summary>
+            Constructor, return an instance with the specified parameters.
+            </summary>
+            <param name="curveName">The curve name.</param>
+            <param name="p">The field size, Q.</param>
+            <param name="b">The b coefficient.</param>
+            <param name="g">The base point G.</param>
+            <param name="n">The prime.</param>
+            <param name="l">Minimum number of bits required to generate a key (defaults to keysize).</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeCurve.Multiply(Goedel.Cryptography.Nist.EccPoint,System.Numerics.BigInteger)">
+            <summary>
+            Multiply <paramref name="startPoint"/> by <paramref name="scalar"/>.
+            </summary>
+            <param name="startPoint">The point.</param>
+            <param name="scalar">The scalar.</param>
+            <returns>Returns scalar.Point.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeCurve.PointExistsOnCurve(Goedel.Cryptography.Nist.EccPoint)">
+            <summary>
+            Return true if the point <paramref name="point"/> is on this curve, otherwise, false.
+            </summary>
+            <param name="point">The point.</param>
+            <returns>True if the point <paramref name="point"/> is on this curve, otherwise, false.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeCurve.PointExistsInField(Goedel.Cryptography.Nist.EccPoint)">
+            <summary>
+            Return true if the point <paramref name="point"/> exists in the field, otherwise, false.
+            </summary>
+            <param name="point">The point.</param>
+            <returns>True if the point <paramref name="point"/> exists in the field, otherwise, false.</returns>
+        </member>
         <member name="T:Goedel.Cryptography.Nist.DilithiumNist">
             <summary>
             ML-DSA internal functions implementation derrived from the NIST ACVP reference 

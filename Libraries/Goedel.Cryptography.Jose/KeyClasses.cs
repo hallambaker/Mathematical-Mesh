@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Cryptography.Nist;
+
 namespace Goedel.Cryptography.Jose;
 
 
@@ -215,11 +217,16 @@ public partial class KeyAgreementECDH {
     /// Return the Goedel.Cryptography result.
     /// </summary>
     public override KeyAgreementResult KeyAgreementResult => Curve switch {
-        CurveX448.CurveJose => new CurveX448Result() {
+        JoseConstants.X448 => new CurveX448Result() {
             AgreementX448 = new CurveX448(Result)
             },
-        CurveX25519.CurveJose => new CurveX25519Result() {
+        JoseConstants.X25519 => new CurveX25519Result() {
             AgreementX25519 = new CurveX25519(Result)
+            },
+        JoseConstants.P256 or
+        JoseConstants.P384 or
+        JoseConstants.P521 => new CurveNistResult() {
+            AgreementNist = CurveNistPublic.Decode(Result)
             },
         //CurveEdwards448.CurveJose => new CurveEdwards448Result() {
         //    AgreementEd448 = new CurveEdwards448(Result)
@@ -242,7 +249,7 @@ public partial class KeyAgreementECDH {
     /// </summary>
     /// <param name="result">The Goedel.Cryptography result.</param>
     public KeyAgreementECDH(ResultECDH result) {
-        Result = result.Agreement.KeyAdvancedPublic.Encoding;
+        Result = result.IKM;
         Curve = result.CurveJose;
         }
     //Result = result.Agreement.ToByteArray();

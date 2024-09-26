@@ -64,7 +64,7 @@ public class KeyPairEd448 : KeyPairEdwards, IAgreementData {
     /// <summary>
     /// The byte encoding of the public key
     /// </summary>
-    public override byte[] PublicData => PublicKey.Encoding;
+    public override byte[] PublicData => PublicKey.EncodingPublicKey;
 
     #endregion
 
@@ -103,7 +103,7 @@ public class KeyPairEd448 : KeyPairEdwards, IAgreementData {
                 PKIXPrivateKeyECDH = new PKIXPrivateKeyECDH(CryptoAlgorithmId.Ed448, key);
                 }
             }
-        PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed448, PublicKey.Encoding);
+        PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed448, PublicKey.EncodingPublicKey);
         }
 
     /// <summary>
@@ -142,7 +142,7 @@ public class KeyPairEd448 : KeyPairEdwards, IAgreementData {
         CryptoAlgorithmId = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmId.Ed448);
         PrivateKey = privateKey;
         PublicKey = privateKey.Public;
-        PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed448, PublicKey.Encoding);
+        PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed448, PublicKey.EncodingPublicKey);
         KeySecurity = keySecurity;
         KeyUses = keyUses;
         if (keySecurity.IsExportable()) {
@@ -167,7 +167,7 @@ public class KeyPairEd448 : KeyPairEdwards, IAgreementData {
         CryptoAlgorithmId = cryptoAlgorithmID == CryptoAlgorithmId.Default ?
             CryptoAlgorithmId.Ed448 : cryptoAlgorithmID;
         this.PublicKey = publicKey as CurveEdwards448Public;
-        PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed448, PublicKey.Encoding);
+        PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed448, PublicKey.EncodingPublicKey);
         KeyUses = keyUses;
         }
 

@@ -197,7 +197,7 @@ public class CurveX25519Public : IKeyAdvancedPublic {
     public virtual CurveX25519 Public { get; }
 
     /// <summary>Encoded form of the public key.</summary>
-    public virtual byte[] Encoding { get; }
+    public virtual byte[] EncodingPublicKey { get; }
 
     /// <summary>
     /// Construct provider from public key parameters.
@@ -205,7 +205,7 @@ public class CurveX25519Public : IKeyAdvancedPublic {
     /// <param name="publicKey">The public key values.</param>
     public CurveX25519Public(CurveX25519 publicKey) {
         this.Public = publicKey;
-        this.Encoding = publicKey.Encode();
+        this.EncodingPublicKey = publicKey.Encode();
         }
 
     /// <summary>
@@ -214,7 +214,7 @@ public class CurveX25519Public : IKeyAdvancedPublic {
     /// <param name="encoding">The encoded public key value.</param>
     public CurveX25519Public(byte[] encoding) {
         this.Public = new CurveX25519(encoding);
-        this.Encoding = encoding;
+        this.EncodingPublicKey = encoding;
         }
     /// <summary>
     /// Create a new ephemeral private key and use it to perform a key
@@ -303,7 +303,7 @@ public class CurveX25519Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
     public bool IsThreshold { get; set; } = false;
 
     /// <summary>The private key, i.e. a scalar</summary>
-    public BigInteger Private { get; }
+    public BigInteger SecretKey { get; }
 
 
     /// <summary>
@@ -313,7 +313,7 @@ public class CurveX25519Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
     /// <param name="exportable">If true, the private key is exportable</param>
 
     public CurveX25519Private(BigInteger privateKey, bool exportable = false) {
-        Private = privateKey;
+        SecretKey = privateKey;
         Secret = CurveX25519.EncodeScalar(privateKey);
 
         var PublicPoint = CurveX25519.GetPublic(privateKey);
@@ -374,7 +374,7 @@ public class CurveX25519Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
     /// <param name="publicKey">Public key parameters</param>
     /// <returns>The key agreement value ZZ</returns>
     public CurveX25519 Agreement(CurveX25519Public publicKey) =>
-        (CurveX25519)publicKey.Public.Multiply(Private);
+        (CurveX25519)publicKey.Public.Multiply(SecretKey);
 
     /// <summary>
     /// Perform a Diffie Hellman Key Agreement to a private key
@@ -384,7 +384,7 @@ public class CurveX25519Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
     /// result of this key agreement.</param>
     /// <returns>The key agreement value ZZ</returns>
     public CurveX25519 Agreement(CurveX25519Public publicKey, CurveX25519 carry) {
-        var Result = (CurveX25519)publicKey.Public.Multiply(Private);
+        var Result = (CurveX25519)publicKey.Public.Multiply(SecretKey);
         Result.Accumulate(carry);
 
         return Result;
@@ -428,7 +428,7 @@ public class CurveX25519Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
         //Assert.True(Accumulator > 0 & Accumulator < Private, CryptographicException.Throw);
 
         Result[0] = new CurveX25519Private(
-            (CurveX25519.Q + Private - Accumulator).Mod(CurveX25519.Q), exportable: true) {
+            (CurveX25519.Q + SecretKey - Accumulator).Mod(CurveX25519.Q), exportable: true) {
             IsThreshold = true
             };
         return Result;
@@ -448,11 +448,11 @@ public class CurveX25519Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
             var key = share as KeyPairX25519;
             var privateKey = (key.IKeyAdvancedPrivate as CurveX25519Private);
 
-            Accumulator = (Accumulator + privateKey.Private).Mod(CurveX25519.Q);
+            Accumulator = (Accumulator + privateKey.SecretKey).Mod(CurveX25519.Q);
             }
 
         return new CurveX25519Private(
-            (CurveX25519.Q + Private - Accumulator).Mod(CurveX25519.Q)) {
+            (CurveX25519.Q + SecretKey - Accumulator).Mod(CurveX25519.Q)) {
             IsThreshold = true
             };
         }
@@ -468,7 +468,7 @@ public class CurveX25519Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
     public CurveX25519Private Combine(CurveX25519Private contribution,
                 KeySecurity keySecurity = KeySecurity.Bound,
                 KeyUses keyUses = KeyUses.Any) {
-        var NewPrivate = (Private + contribution.Private).Mod(CurveX25519.Q);
+        var NewPrivate = (SecretKey + contribution.SecretKey).Mod(CurveX25519.Q);
         return new CurveX25519Private(NewPrivate, keySecurity.IsExportable());
         }
 
@@ -500,9 +500,7 @@ public class CurveX25519Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
 /// </summary>
 public class CurveX25519Result : ResultECDH {
     ///<summary>The Jose curve name</summary>
-    public override string CurveJose => CurveX25519.CurveJose;
-    ///<summary>The key agreement value, a point on the curve.</summary>
-    public override Curve Agreement => AgreementX25519;
+    public override string CurveJose => JoseConstants.X25519;
 
     /// <summary>The key agreement result</summary>
     public CurveX25519 AgreementX25519 { get; set; }

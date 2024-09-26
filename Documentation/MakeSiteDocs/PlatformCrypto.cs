@@ -24,6 +24,7 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
+using Goedel.Cryptography.Nist;
 using Goedel.Test;
 using Goedel.Utilities;
 
@@ -188,9 +189,9 @@ public partial class SigExample {
         var SSab = (SSa + SSb).Mod(DomainParameters.Curve25519.Q);
         (S == SSab).TestTrue();
 
-        var privateKey1 = (Edwards1.IKeyAdvancedPrivate as CurveEdwardsPrivate).Private;
-        var privateKey2 = (Edwards2.IKeyAdvancedPrivate as CurveEdwardsPrivate).Private;
-        var privateKey = (EdwardsAggregate.IKeyAdvancedPrivate as CurveEdwardsPrivate).Private;
+        var privateKey1 = (Edwards1.IKeyAdvancedPrivate as CurveEdwardsPrivate).SecretKey;
+        var privateKey2 = (Edwards2.IKeyAdvancedPrivate as CurveEdwardsPrivate).SecretKey;
+        var privateKey = (EdwardsAggregate.IKeyAdvancedPrivate as CurveEdwardsPrivate).SecretKey;
 
         // multiply by the lagrange coefficients.
         privateKey1 = (privateKey1 * La).Mod(Modulus);
@@ -294,7 +295,7 @@ public partial class Quorate : SigExample {
         PublicSignatureKey = (EdwardsAggregate.IKeyAdvancedPublic as CurveEdwardsPublic).PublicKey;
 
         // extract the private key for later use
-        var privateKey = (EdwardsAggregate.IKeyAdvancedPrivate as CurveEdwardsPrivate).Private;
+        var privateKey = (EdwardsAggregate.IKeyAdvancedPrivate as CurveEdwardsPrivate).SecretKey;
 
 
         var keyShares = EdwardsAggregate.Split(3, 2, out var polynomial);
@@ -445,15 +446,25 @@ public partial class CurveResult {
     public BigInteger X3;
     public BigInteger Z3;
 
+
+    public CurveResult(EccPoint point = null) {
+        throw new NYI();
+        //CurvePoint = point;
+        //Key = CurvePoint.KeyAdvancedPublic;
+        //Public = Key.EncodingPublicKey;
+
+        //(X, Y) = point.GetXY();
+        }
+
     public CurveResult(Curve point = null) {
         CurvePoint = point;
         Key = CurvePoint.KeyAdvancedPublic;
-        Public = Key.Encoding;
+        Public = Key.EncodingPublicKey;
 
         (X, Y) = point.GetXY();
         }
     public CurveResult(IKeyAdvancedPrivate key, KeyPairAdvanced Point) {
-        var scalar = key.Private;
+        var scalar = key.SecretKey;
 
         CurveMontgomery curve;
         switch (Point.IKeyAdvancedPublic) {
@@ -565,7 +576,7 @@ public partial class CurveKey {
         var privateKey = keyPair.IKeyAdvancedPrivate as CurveX25519Private;
         var publicKey = privateKey.Public;
 
-        Scalar = privateKey.Private;
+        Scalar = privateKey.SecretKey;
         Private = privateKey.Encoding;
         Public = publicKey.Public.Encode(extended);
 
@@ -577,7 +588,7 @@ public partial class CurveKey {
         var privateKey = keyPair.IKeyAdvancedPrivate as CurveX448Private;
         var publicKey = privateKey.Public;
 
-        Scalar = privateKey.Private;
+        Scalar = privateKey.SecretKey;
         Private = privateKey.Encoding;
         Public = publicKey.Public.Encode(extended);
 
@@ -589,9 +600,9 @@ public partial class CurveKey {
         var privateKey = keyPair.IKeyAdvancedPrivate as CurveEdwards25519Private;
         var publicKey = privateKey.Public;
 
-        Scalar = privateKey.Private;
+        Scalar = privateKey.SecretKey;
         Private = privateKey.Encoding;
-        Public = publicKey.Encoding;
+        Public = publicKey.EncodingPublicKey;
 
         X = publicKey.Public.X;
         Y = publicKey.Public.Y;
@@ -601,9 +612,9 @@ public partial class CurveKey {
         var privateKey = keyPair.IKeyAdvancedPrivate as CurveEdwards448Private;
         var publicKey = privateKey.Public;
 
-        Scalar = privateKey.Private;
+        Scalar = privateKey.SecretKey;
         Private = privateKey.Encoding;
-        Public = publicKey.Encoding;
+        Public = publicKey.EncodingPublicKey;
 
         X = publicKey.Public.X;
         Y = publicKey.Public.Y;
@@ -649,8 +660,12 @@ public partial class Decrypt {
         var keyE = KeyE.KeyPair.IKeyAdvancedPrivate;
 
         var keyEA = keyE.Agreement(KeyA.KeyPair) as ResultECDH;
-        KeyEA = new CurveResult(keyEA.Agreement);
-
+        KeyEA = keyEA switch {
+            CurveX25519Result curveX25519Result => new CurveResult(curveX25519Result.AgreementX25519),
+            CurveX448Result curveX448Result => new CurveResult(curveX448Result.AgreementX448),
+            CurveNistResult curveNistResult => new CurveResult(curveNistResult.AgreementNist),
+            _ => throw new NYI()
+            };
 
         var keys = new List<KeyPair>() { Key1.KeyPair };
 
@@ -764,11 +779,11 @@ public class CryptoGroup {
     public byte[] KeyPairGroupPrivate => (KeyPairGroup.IKeyAdvancedPrivate as CurveEdwards25519Private).Encoding;
     public byte[] KeyPairDevicePrivate => (KeyPairDevice.IKeyAdvancedPrivate as CurveEdwards25519Private).Encoding;
 
-    public BigInteger KeyPairDevicePrivateInt => (KeyPairDevice.IKeyAdvancedPrivate as CurveEdwards25519Private).Private;
+    public BigInteger KeyPairDevicePrivateInt => (KeyPairDevice.IKeyAdvancedPrivate as CurveEdwards25519Private).SecretKey;
 
-    public BigInteger KeyPairGroupPrivateInt => (KeyPairGroup.IKeyAdvancedPrivate as CurveEdwards25519Private).Private;
+    public BigInteger KeyPairGroupPrivateInt => (KeyPairGroup.IKeyAdvancedPrivate as CurveEdwards25519Private).SecretKey;
 
-    public BigInteger KeyPairServicePrivateInt => (KeyPairService.IKeyAdvancedPrivate as CurveEdwards25519Private).Private;
+    public BigInteger KeyPairServicePrivateInt => (KeyPairService.IKeyAdvancedPrivate as CurveEdwards25519Private).SecretKey;
 
 
     public DareEnvelope Envelope;
@@ -850,9 +865,9 @@ public class CryptoCombine {
     public KeyPairEd25519 CombinedPrivate;
     public KeyPairEd25519 CombinedPublic;
 
-    public BigInteger SecretScalarDevice => (KeyPairDevice.IKeyAdvancedPrivate as CurveEdwards25519Private).Private;
-    public BigInteger SecretScalarOverlay => (KeyPairOverlay.IKeyAdvancedPrivate as CurveEdwards25519Private).Private;
-    public BigInteger SecretScalarComposite => (CombinedPrivate.IKeyAdvancedPrivate as CurveEdwards25519Private).Private;
+    public BigInteger SecretScalarDevice => (KeyPairDevice.IKeyAdvancedPrivate as CurveEdwards25519Private).SecretKey;
+    public BigInteger SecretScalarOverlay => (KeyPairOverlay.IKeyAdvancedPrivate as CurveEdwards25519Private).SecretKey;
+    public BigInteger SecretScalarComposite => (CombinedPrivate.IKeyAdvancedPrivate as CurveEdwards25519Private).SecretKey;
 
     public CryptoCombine() {
 

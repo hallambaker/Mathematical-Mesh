@@ -1,4 +1,6 @@
-﻿namespace Goedel.Cryptography.Nist;
+﻿using System.Security.Cryptography;
+
+namespace Goedel.Cryptography.Nist;
 public class EccPoint {
     public bool Infinity { get; } = false;
 

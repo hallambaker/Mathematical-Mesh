@@ -64,7 +64,7 @@ public partial class TestService {
 
         var keyBase = KeyPair.Factory(cryptoAlgorithmId, keySecurity: KeySecurity.Exportable) as KeyPairAdvanced;
 
-        var kbp = keyBase.IKeyAdvancedPrivate.Private.Mod(CurveX25519.Q);
+        var kbp = keyBase.IKeyAdvancedPrivate.SecretKey.Mod(CurveX25519.Q);
 
         var keys = keyBase.IKeyAdvancedPrivate.MakeThresholdKeySet(shares);
 
@@ -187,7 +187,7 @@ public partial class TestService {
         var key1e = key1 as IKeyPrivateECDH;
         var domain = GetDomainParameters(key1e.CurveJose);
 
-        key1.Private.Mod(domain.Q).TestEqual(key2.Private.Mod(domain.Q));
+        key1.SecretKey.Mod(domain.Q).TestEqual(key2.SecretKey.Mod(domain.Q));
         }
 
 

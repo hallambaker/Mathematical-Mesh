@@ -35,7 +35,7 @@ public partial class TestGoedelCryptography {
 
         var KeyA = new CurveEdwards25519Private();
         var KeyAPublic = KeyA.Public;
-        var KeyAPrivate = KeyA.Private;
+        var KeyAPrivate = KeyA.SecretKey;
         var Curve1 = KeyAPublic.Public.Multiply(CurveEdwards25519.Q);
         (Curve1.Y0 == 1).TestTrue();
 
@@ -62,7 +62,7 @@ public partial class TestGoedelCryptography {
 
         var KeyB = new CurveEdwards25519Private();
         var KeyBPublic = KeyB.Public;
-        var KeyBPrivate = KeyB.Private;
+        var KeyBPrivate = KeyB.SecretKey;
 
         Pub2 = KeyBPublic.Public.Multiply(KeyAPrivate);
         (Base.Y == CurveEdwards25519.Base.Y).TestTrue();
@@ -100,7 +100,7 @@ public partial class TestGoedelCryptography {
         var Private = new CurveEdwards25519Private(SecretKey);
         var Public = Private.Public;
 
-        var PublicBytes = Public.Encoding.ToStringBase16();
+        var PublicBytes = Public.EncodingPublicKey.ToStringBase16();
 
         (PublicBytes == PublicKey.ToStringBase16()).TestTrue();
         }
@@ -200,7 +200,7 @@ public partial class TestGoedelCryptography {
         var Private = new CurveEdwards448Private(SecretKey);
         var Public = Private.Public;
 
-        var PublicBytes = Public.Encoding.ToStringBase16();
+        var PublicBytes = Public.EncodingPublicKey.ToStringBase16();
 
         (PublicBytes == PublicKey.ToStringBase16()).TestTrue();
         }
@@ -215,7 +215,7 @@ public partial class TestGoedelCryptography {
 
         var KeyA = new CurveEdwards448Private();
         var KeyAPublic = KeyA.Public;
-        var KeyAPrivate = KeyA.Private;
+        var KeyAPrivate = KeyA.SecretKey;
         var Curve1 = KeyAPublic.Public.Multiply(CurveEdwards448.Q);
         (Curve1.Y0 == 1).TestTrue();
 
@@ -242,7 +242,7 @@ public partial class TestGoedelCryptography {
 
         var KeyB = new CurveEdwards448Private();
         var KeyBPublic = KeyB.Public;
-        var KeyBPrivate = KeyB.Private;
+        var KeyBPrivate = KeyB.SecretKey;
 
         Pub2 = KeyBPublic.Public.Multiply(KeyAPrivate);
         (Base.Y == CurveEdwards448.Base.Y).TestTrue();

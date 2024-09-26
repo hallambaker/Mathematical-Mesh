@@ -111,7 +111,7 @@ public class KeyCredentialPrivate : KeyCredentialPublic, ICredentialPrivate {
                 };
             Extensions.Add(new PacketExtension() {
                 Tag = Tag,
-                Value = AuthenticationPrivate.IKeyAdvancedPublic.Encoding
+                Value = AuthenticationPrivate.IKeyAdvancedPublic.EncodingPublicKey
                 });
             }
 
@@ -163,7 +163,7 @@ public class KeyCredentialPrivate : KeyCredentialPublic, ICredentialPrivate {
 
         var extension = new PacketExtension() {
             Tag = ephemeral.CryptoAlgorithmId.ToJoseID(),
-            Value = ephemeral.IKeyAdvancedPublic.Encoding
+            Value = ephemeral.IKeyAdvancedPublic.EncodingPublicKey
             };
 
 

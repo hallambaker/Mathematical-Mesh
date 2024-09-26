@@ -269,7 +269,7 @@ public class KeyPairDH : KeyPairBaseDH, IAgreementData {
             if (keySecurity.IsExportable()) {
                 PKIXPrivateKeyDH = new PKIXPrivateKeyDH() {
                     Domain = DHDomain,
-                    Private = PrivateKey.Private.ToByteArray(),
+                    Private = PrivateKey.SecretKey.ToByteArray(),
                     Public = PrivateKey.Public.ToByteArray(),
                     };
                 }
@@ -289,7 +289,7 @@ public class KeyPairDH : KeyPairBaseDH, IAgreementData {
         Assert.AssertTrue(PersistPending, CryptographicException.Throw);
         var pkix = new PKIXPrivateKeyDH() {
             Domain = DHDomain,
-            Private = PrivateKey.Private.ToByteArray(),
+            Private = PrivateKey.SecretKey.ToByteArray(),
             Public = PrivateKey.Public.ToByteArray(),
             };
         keyCollection.Persist(KeyIdentifier, pkix, KeySecurity.IsExportable());

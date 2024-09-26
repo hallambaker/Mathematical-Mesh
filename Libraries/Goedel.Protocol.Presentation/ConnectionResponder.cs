@@ -100,7 +100,7 @@ public partial class ConnectionResponder : RudConnection {
         EphemeralsCurrent = new List<KeyPairAdvanced> { ephemeral };
         var extension = new PacketExtension() {
             Tag = ephemeral.CryptoAlgorithmId.ToJoseID(),
-            Value = ephemeral.IKeyAdvancedPublic.Encoding
+            Value = ephemeral.IKeyAdvancedPublic.EncodingPublicKey
             };
 
         EphemeralExtensionsCurrent = new List<PacketExtension> { extension };

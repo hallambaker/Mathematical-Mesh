@@ -4,11 +4,25 @@ namespace Goedel.Cryptography.Nist;
 public class PrimeCurve : IEccCurve {
     private readonly PrimeFieldOperator _operator;
 
+
+    public CryptoAlgorithmId CryptoAlgorithmId { get; init; }
+    public string JoseId { get; init; }
+
     // A = -3 (mod p) for prime curves
+
+    ///<summary>The A coefficient.</summary> 
     public BigInteger CoefficientA { get { return FieldSizeQ - 3; } }
+
+    ///<summary>The B coefficient.</summary> 
     public BigInteger CoefficientB { get; }
+
+    ///<summary>The base point G.</summary> 
     public EccPoint BasePointG { get; }
+
+    ///<summary>The group order.</summary> 
     public BigInteger OrderN { get; }
+
+    ///<summary>The field size.</summary> 
     public BigInteger FieldSizeQ { get; }
 
     // Cofactor is always 1 for a prime curve
@@ -17,16 +31,31 @@ public class PrimeCurve : IEccCurve {
     // CurveType is obviously prime
     public CurveType CurveType { get { return CurveType.Prime; } }
 
+    ///<summary>The curve name</summary> 
     public NistCurve CurveName { get; }
 
+    ///<summary>The key size in bits.</summary> 
     public int KeySize { get; }
 
+    ///<summary>The minimum number of bits required to generate a key.</summary> 
+    public int MinimumOutputSize { get; }
+
+    /// <summary>
+    /// Constructor, return an instance with the specified parameters.
+    /// </summary>
+    /// <param name="curveName">The curve name.</param>
+    /// <param name="p">The field size, Q.</param>
+    /// <param name="b">The b coefficient.</param>
+    /// <param name="g">The base point G.</param>
+    /// <param name="n">The prime.</param>
+    /// <param name="l">Minimum number of bits required to generate a key (defaults to keysize).</param>
     public PrimeCurve(
                     NistCurve curveName, 
                     BigInteger p, 
                     BigInteger b, 
                     EccPoint g, 
-                    BigInteger n) {
+                    BigInteger n,
+                    int l = -1) {
         CurveName = curveName;
 
         FieldSizeQ = p;
@@ -34,6 +63,8 @@ public class PrimeCurve : IEccCurve {
         BasePointG = g;
         OrderN = n;
         KeySize = OrderN.CountBits();
+
+        MinimumOutputSize = l < 0? KeySize : l;
 
         _operator = new PrimeFieldOperator(p);
         }
@@ -117,12 +148,22 @@ public class PrimeCurve : IEccCurve {
 
         return point;
         }
-
+    /// <summary>
+    /// Multiply <paramref name="startPoint"/> by <paramref name="scalar"/>.
+    /// </summary>
+    /// <param name="startPoint">The point.</param>
+    /// <param name="scalar">The scalar.</param>
+    /// <returns>Returns scalar.Point.</returns>
     public EccPoint Multiply(EccPoint startPoint, BigInteger scalar) {
         // Find scalar within group and convert to NABS, normal modulo here, not on the field, like CAVS
         return Multiply(startPoint, new NonAdjacentBitString(scalar % OrderN));
         }
 
+    /// <summary>
+    /// Return true if the point <paramref name="point"/> is on this curve, otherwise, false.
+    /// </summary>
+    /// <param name="point">The point.</param>
+    /// <returns>True if the point <paramref name="point"/> is on this curve, otherwise, false.</returns>
     public bool PointExistsOnCurve(EccPoint point) {
         if (point.Infinity) {
             return true;
@@ -139,6 +180,12 @@ public class PrimeCurve : IEccCurve {
         return (lhs == rhs);
         }
 
+
+    /// <summary>
+    /// Return true if the point <paramref name="point"/> exists in the field, otherwise, false.
+    /// </summary>
+    /// <param name="point">The point.</param>
+    /// <returns>True if the point <paramref name="point"/> exists in the field, otherwise, false.</returns>
     public bool PointExistsInField(EccPoint point) {
         if (point.X < 0 || point.X > FieldSizeQ - 1) {
             return false;

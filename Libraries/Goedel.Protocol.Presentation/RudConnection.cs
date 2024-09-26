@@ -293,7 +293,7 @@ public abstract class RudConnection : Disposable {
         ClientKeyExchange(privateEphemeral, publickey);
 
         keyId = publickey.KeyIdentifier;
-        ephemeral = privateEphemeral.IKeyAdvancedPublic.Encoding;
+        ephemeral = privateEphemeral.IKeyAdvancedPublic.EncodingPublicKey;
         }
 
 
@@ -365,7 +365,7 @@ public abstract class RudConnection : Disposable {
         MutualKeyExchange(privateEphemeral, publickey);
 
         keyId = publickey.KeyIdentifier;
-        ephemeral = privateEphemeral.IKeyAdvancedPublic.Encoding;
+        ephemeral = privateEphemeral.IKeyAdvancedPublic.EncodingPublicKey;
         }
 
 

@@ -274,8 +274,8 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
             case CryptoAlgorithmId.P256:
             case CryptoAlgorithmId.P384:
             case CryptoAlgorithmId.P521: {
-                var binaryData = KeySeed(256, ikm, keySpecifier, keyName);
-                keyPair = new KeyPairECDHP(binaryData, keySecurity, keyUses, algorithmID);
+                keyPair = KeyPairECDHNist.Factory(algorithmID, keySecurity,
+                        ikm, keySpecifier, keyName, keyCollection, keySize, keyUses);
                 break;
                 }
             case CryptoAlgorithmId.X25519: {

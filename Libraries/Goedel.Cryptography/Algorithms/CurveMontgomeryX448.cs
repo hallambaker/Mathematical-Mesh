@@ -225,7 +225,7 @@ public class CurveX448Public : IKeyAdvancedPublic {
     public virtual CurveX448 Public { get; }
 
     /// <summary>Encoded form of the public key.</summary>
-    public virtual byte[] Encoding { get; }
+    public virtual byte[] EncodingPublicKey { get; }
 
     /// <summary>
     /// Construct provider from public key parameters.
@@ -233,7 +233,7 @@ public class CurveX448Public : IKeyAdvancedPublic {
     /// <param name="publicKey">The public key values.</param>
     public CurveX448Public(CurveX448 publicKey) {
         this.Public = publicKey;
-        this.Encoding = publicKey.Encode(true);
+        this.EncodingPublicKey = publicKey.Encode(true);
         }
 
     /// <summary>
@@ -242,7 +242,7 @@ public class CurveX448Public : IKeyAdvancedPublic {
     /// <param name="encoding">The encoded public key value.</param>
     public CurveX448Public(byte[] encoding) {
         this.Public = CurveX448.DecodePoint(encoding);
-        this.Encoding = encoding;
+        this.EncodingPublicKey = encoding;
         }
     /// <summary>
     /// Create a new ephemeral private key and use it to perform a key
@@ -335,7 +335,7 @@ public class CurveX448Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
     public bool IsThreshold { get; set; } = false;
 
     /// <summary>The private key, i.e. a scalar</summary>
-    public BigInteger Private { get; }
+    public BigInteger SecretKey { get; }
 
 
     /// <summary>
@@ -345,7 +345,7 @@ public class CurveX448Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
     /// <param name="exportable">If true, the private key is exportable</param>
 
     public CurveX448Private(BigInteger privateKey, bool exportable = false) {
-        Private = privateKey;
+        SecretKey = privateKey;
         Secret = CurveX448.EncodeScalar(privateKey);
 
         var PublicPoint = CurveX448.GetPublic(privateKey);
@@ -406,7 +406,7 @@ public class CurveX448Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
     /// <param name="publicKey">Public key parameters</param>
     /// <returns>The key agreement value ZZ</returns>
     public CurveX448 Agreement(CurveX448Public publicKey) =>
-        (CurveX448)publicKey.Public.Multiply(Private);
+        (CurveX448)publicKey.Public.Multiply(SecretKey);
 
     /// <summary>
     /// Perform a Diffie Hellman Key Agreement to a private key
@@ -416,7 +416,7 @@ public class CurveX448Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
     /// result of this key agreement.</param>
     /// <returns>The key agreement value ZZ</returns>
     public CurveX448 Agreement(CurveX448Public publicKey, CurveX448 carry) {
-        var Result = (CurveX448)publicKey.Public.Multiply(Private);
+        var Result = (CurveX448)publicKey.Public.Multiply(SecretKey);
         Result.Accumulate(carry);
 
         return Result;
@@ -460,7 +460,7 @@ public class CurveX448Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
         //Assert.True(Accumulator > 0 & Accumulator < Private, CryptographicException.Throw);
 
         Result[0] = new CurveX448Private(
-            (CurveX448.Q + Private - Accumulator).Mod(CurveX448.Q), exportable: true) {
+            (CurveX448.Q + SecretKey - Accumulator).Mod(CurveX448.Q), exportable: true) {
             IsThreshold = true
             };
         return Result;
@@ -480,11 +480,11 @@ public class CurveX448Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
             var key = share as KeyPairX448;
             var privateKey = (key.IKeyAdvancedPrivate as CurveX448Private);
 
-            Accumulator = (Accumulator + privateKey.Private).Mod(CurveX448.Q);
+            Accumulator = (Accumulator + privateKey.SecretKey).Mod(CurveX448.Q);
             }
 
         return new CurveX448Private(
-            (CurveX448.Q + Private - Accumulator).Mod(CurveX448.Q)) {
+            (CurveX448.Q + SecretKey - Accumulator).Mod(CurveX448.Q)) {
             IsThreshold = true
             };
         }
@@ -500,7 +500,7 @@ public class CurveX448Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
     public CurveX448Private Combine(CurveX448Private contribution,
                 KeySecurity keySecurity = KeySecurity.Bound,
                 KeyUses keyUses = KeyUses.Any) {
-        var NewPrivate = (Private + contribution.Private).Mod(CurveX448.Q);
+        var NewPrivate = (SecretKey + contribution.SecretKey).Mod(CurveX448.Q);
         return new CurveX448Private(NewPrivate, keySecurity.IsExportable());
         }
 
@@ -530,10 +530,9 @@ public class CurveX448Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
 /// Represent the result of a Diffie Hellman Key exchange.
 /// </summary>
 public class CurveX448Result : ResultECDH {
-    ///<summary>The Jose curve name</summary>
-    public override string CurveJose => CurveX448.CurveJose;
-    ///<summary>The key agreement value, a point on the curve.</summary>
-    public override Curve Agreement => AgreementX448;
+    ///<inheritdoc/>
+    public override string CurveJose => JoseConstants.X448;
+
 
     /// <summary>The key agreement result</summary>
     public CurveX448 AgreementX448 { get; set; }

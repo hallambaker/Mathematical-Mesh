@@ -69,8 +69,8 @@ partial class Program {
 
         //TestSequences.Test().TestSparse(ModeEnhance.Sequence, ModeEnhance.Sequence);
 
-        TestSequences.Test().ZContainerTestSigned();
-
+        TestGoedelCryptography.Test().TestECDHP();
+        TestGoedelCryptography.Test().TestECDSA();
 
 
         //TCallsign.Test().TestIssue();

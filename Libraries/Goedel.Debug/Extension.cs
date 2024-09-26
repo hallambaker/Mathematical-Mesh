@@ -83,7 +83,7 @@ public class KeyPairX448Corrupt : KeyPairX448 {
     /// <param name="curvePrivate">The uncorrupted private key value.</param>
     /// <returns>The corrupted scalar.</returns>
     public static CurveX448Private Corrupt(CurveX448Private curvePrivate) {
-        var privateKey = curvePrivate.Private + 1;
+        var privateKey = curvePrivate.SecretKey + 1;
 
 
         var result = new CurveX448Private(privateKey, true);
@@ -115,7 +115,7 @@ public class KeyPairEd448Corrupt : KeyPairEd448 {
     /// <param name="curvePrivate">The uncorrupted private key value.</param>
     /// <returns>The corrupted scalar.</returns>
     public static CurveEdwards448Private Corrupt(CurveEdwards448Private curvePrivate) {
-        var privateKey = curvePrivate.Private + 1;
+        var privateKey = curvePrivate.SecretKey + 1;
 
         var result = new CurveEdwards448Private(privateKey, true);
         result.Public = curvePrivate.Public;

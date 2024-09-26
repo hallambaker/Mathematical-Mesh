@@ -24,6 +24,19 @@ public class TestNist : Disposable {
     public string DsaVerify => Path.Combine(ACVP_Root, "ML-DSA-sigVer-FIPS204");
 
 
+
+    // ECDSA vectors
+    public string EcDsaKeyGen => Path.Combine(ACVP_Root, "ECDSA-KeyGen-FIPS186-5");
+    public string EcDsaKeyVer => Path.Combine(ACVP_Root, "ECDSA-KeyVer-FIPS186-5");
+    public string EcDsaSign => Path.Combine(ACVP_Root, "ECDSA-SigGen-FIPS186-5");
+    public string EcDsaVerify => Path.Combine(ACVP_Root, "ECDSA-SigVer-FIPS186-5");
+
+    // ECDH vectors
+    //public string EcDsaKeyGen => Path.Combine(ACVP_Root, "ECDSA-KeyGen-FIPS186-5");
+
+
+
+
     /// <summary>
     /// Static constructor, put initializations here.
     /// </summary>

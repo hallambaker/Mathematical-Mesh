@@ -209,7 +209,7 @@ public class DiffeHellmanPublic : IKeyAdvancedPublic {
         Combine(contribution as DiffeHellmanPublic);
 
     ///<summary>The encoding of the public value.</summary>
-    public byte[] Encoding => Public.ToByteArray();
+    public byte[] EncodingPublicKey => Public.ToByteArray();
 
     #endregion
     }
@@ -220,7 +220,7 @@ public class DiffeHellmanPublic : IKeyAdvancedPublic {
 public class DiffeHellmanPrivate : DiffeHellmanPublic, IKeyAdvancedPrivate {
 
     /// <summary>Private Key</summary>
-    public BigInteger Private { get; set; }
+    public BigInteger SecretKey { get; set; }
 
     /// <summary>If true, this key is part of a recryption set.</summary>
     public bool IsRecryption { get; set; }
@@ -249,8 +249,8 @@ public class DiffeHellmanPrivate : DiffeHellmanPublic, IKeyAdvancedPrivate {
     /// <param name="bits">The number of bits in the modulus to be created. Valid values
     /// are 2048 and 4096</param>
     public DiffeHellmanPrivate(int bits = 2048) : base(bits) {
-        Private = Platform.GetRandomBigInteger(Modulus);
-        Public = BigInteger.ModPow(Generator, Private, Modulus);
+        SecretKey = Platform.GetRandomBigInteger(Modulus);
+        Public = BigInteger.ModPow(Generator, SecretKey, Modulus);
         IsRecryption = false;
         }
 
@@ -263,8 +263,8 @@ public class DiffeHellmanPrivate : DiffeHellmanPublic, IKeyAdvancedPrivate {
     public DiffeHellmanPrivate(DiffeHellmanPublic diffeHellmanPublic) :
                  base(diffeHellmanPublic?.DHDomain) {
 
-        Private = Platform.GetRandomBigInteger(Modulus);
-        Public = BigInteger.ModPow(Generator, Private, Modulus);
+        SecretKey = Platform.GetRandomBigInteger(Modulus);
+        Public = BigInteger.ModPow(Generator, SecretKey, Modulus);
         IsRecryption = false;
         }
 
@@ -274,13 +274,13 @@ public class DiffeHellmanPrivate : DiffeHellmanPublic, IKeyAdvancedPrivate {
     /// </summary>
     /// <param name="pkixPrivateKeyDH">Key parameters</param>
     public DiffeHellmanPrivate(PKIXPrivateKeyDH pkixPrivateKeyDH) : base(pkixPrivateKeyDH?.Domain) {
-        Private = pkixPrivateKeyDH.Private.ToBigInteger();
+        SecretKey = pkixPrivateKeyDH.Private.ToBigInteger();
         Public = pkixPrivateKeyDH.Public.ToBigInteger();
         IsRecryption = false;
         }
 
     private DiffeHellmanPrivate(BigInteger @private) {
-        this.Private = @private;
+        this.SecretKey = @private;
         Public = BigInteger.ModPow(Generator, @private, Modulus);
         }
 
@@ -322,7 +322,7 @@ public class DiffeHellmanPrivate : DiffeHellmanPublic, IKeyAdvancedPrivate {
         var publicDH = publicKey as DiffeHellmanPublic;
         Contract.Requires(publicDH != null);
         Verify(publicDH);
-        return BigInteger.ModPow(publicDH.Public, Private, Modulus);
+        return BigInteger.ModPow(publicDH.Public, SecretKey, Modulus);
         }
 
     /// <summary>
@@ -366,7 +366,7 @@ public class DiffeHellmanPrivate : DiffeHellmanPublic, IKeyAdvancedPrivate {
             accumulator = (accumulator + newPrivate) % (Modulus - 1);
             }
 
-        result[0] = new DiffeHellmanPrivate((Modulus + Private - accumulator - 1) % (Modulus - 1)) {
+        result[0] = new DiffeHellmanPrivate((Modulus + SecretKey - accumulator - 1) % (Modulus - 1)) {
             IsRecryption = true
             };
         return result;
@@ -388,11 +388,11 @@ public class DiffeHellmanPrivate : DiffeHellmanPublic, IKeyAdvancedPrivate {
             var key = share as KeyPairDH;
             var privateKey = (key.IKeyAdvancedPrivate as CurveEdwards448Private);
 
-            accumulator = (accumulator + privateKey.Private).Mod(Modulus - 1);
+            accumulator = (accumulator + privateKey.SecretKey).Mod(Modulus - 1);
             }
 
         return new DiffeHellmanPrivate(
-            (Modulus - 1 + Private - accumulator).Mod(Modulus - 1)) {
+            (Modulus - 1 + SecretKey - accumulator).Mod(Modulus - 1)) {
             IsRecryption = true
             };
         }
@@ -413,7 +413,7 @@ public class DiffeHellmanPrivate : DiffeHellmanPublic, IKeyAdvancedPrivate {
         contribution.AssertNotNull(NullParameter.Throw);
 
 
-        var newPrivate = (Private + contribution.Private) % Modulus;
+        var newPrivate = (SecretKey + contribution.SecretKey) % Modulus;
         return new DiffeHellmanPrivate(newPrivate);
         }
 

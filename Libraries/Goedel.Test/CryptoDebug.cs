@@ -353,7 +353,7 @@ public class DareRecipientDebug : DareRecipient {
         var secret = Platform.GetRandomBytes(32);
         var privateKey = new CurveEdwards25519Private();
         var ephemeralpublic = privateKey.Public;
-        var pkixPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed25519,ephemeralpublic.Encoding);
+        var pkixPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed25519,ephemeralpublic.EncodingPublicKey);
         var pkixPrivateKeyECDH = new PKIXPrivateKeyECDH(CryptoAlgorithmId.Ed25519, secret);
         EphemeralPrivate = new PrivateKeyECDH(pkixPrivateKeyECDH);
 

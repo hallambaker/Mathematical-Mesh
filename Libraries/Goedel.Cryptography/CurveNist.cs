@@ -21,15 +21,12 @@
 #endregion
 
 
-using Goedel.Cryptography.Nist;
-
-using System.Text;
+using Goedel.ASN;
+using Goedel.Cryptography.PKIX;
 
 namespace Goedel.Cryptography;
 
-
-
-
+#region // Private Key
 /// <summary>
 /// Private key, a scalar strictly less than the curve order.
 /// </summary>
@@ -37,12 +34,15 @@ public record CurveNistPrivate : IKeyAdvancedPrivate {
 
     #region // Properties
     ///<summary>The implementation private key value (if exportable)</summary>
-    public BigInteger Private { get; set; }
+    public BigInteger SecretKey { get; set; }
 
     ///<summary>The public key, a point on the curve.</summary> 
     public CurveNistPublic PublicKey { get; set; }
 
-    IEccCurve Curve { get; set; }
+    ///<summary>Encoding of the secret key.</summary> 
+    public byte[] EncodingSecretKey => Encode(SecretKey);
+
+    public PrimeCurve Curve { get; set; }
     #endregion
     #region // Constructors
 
@@ -53,29 +53,33 @@ public record CurveNistPrivate : IKeyAdvancedPrivate {
     /// <param name="encoding">The encoded scalar.</param>
     /// <param name="curve">The curve on which the point is located.</param>
     /// <param name="exportable">If true, allow the private key to be exported.</param>
-    public CurveNistPrivate(byte[] encoding, IEccCurve curve, bool exportable) :
-                    this(Decode(encoding), curve, exportable) {
+    public CurveNistPrivate(byte[] encoding, PrimeCurve curve, bool exportable) :
+                    this(curve, Decode(encoding), exportable) {
         }
 
     /// <summary>
     /// Constructor unpacking the key <paramref name="privateKey"/> according to the curve
     /// <paramref name="curve"/>.
     /// </summary>
-    /// <param name="privateKey">The scalar.</param>
     /// <param name="curve">The curve on which the point is located.</param>
+    /// <param name="privateKey">The scalar.</param>
     /// <param name="exportable">If true, allow the private key to be exported.</param>
-    public CurveNistPrivate(BigInteger privateKey, IEccCurve curve, bool exportable) {
+    public CurveNistPrivate(PrimeCurve curve, BigInteger? privateKey = null, bool exportable = false) {
 
-        //// Verify that the keysize matches the curve size.
-        //var keylen = privateKey.CountBits();
-
-        //(privateKey.CountBits() == curve.KeySize).AssertTrue(CryptographicException.Throw);
-
-        Private = privateKey;
+        SecretKey = privateKey ?? Generate(curve);
         Curve = curve;
-        var publicKey = curve.Multiply(curve.BasePointG, privateKey);
+        var publicKey = curve.Multiply(curve.BasePointG, SecretKey);
         PublicKey = new CurveNistPublic(publicKey, curve);
         }
+
+    static BigInteger Generate(PrimeCurve curve) {
+        var n = Platform.GetRandomBits(curve.MinimumOutputSize);
+        var d = 1 + n.ToBigInteger() % (curve.OrderN - 1);
+
+        return d;
+        }
+
+
 
     #endregion
     #region // Encode/Decode
@@ -99,8 +103,38 @@ public record CurveNistPrivate : IKeyAdvancedPrivate {
 
     ///<inheritdoc/>
     public KeyAgreementResult Agreement(KeyPair keyPair) {
-        throw new NotImplementedException();
+        var point = Agreement((keyPair as KeyPairECDHNist).PublicKey);
+
+        return new CurveNistResult() {
+            AgreementNist = point,
+            Curve = Curve,
+            EphemeralPublicValue = PublicKey
+            };
         }
+
+    /// <summary>
+    /// Perform a key agreement operation on the point <paramref name="publicKey"/> using
+    /// the secret scalar <see cref="SecretKey"/>.
+    /// </summary>
+    /// <param name="publicKey"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public EccPoint Agreement(CurveNistPublic publicKey) =>
+            Curve.Multiply(publicKey.PublicKey, SecretKey);
+
+
+    /// <summary>
+    /// Perform a Diffie Hellman Key Agreement to a private key
+    /// </summary>
+    /// <param name="publicKey">Public key parameters</param>
+    /// <param name="carry">Recryption carry over value, to be combined with the
+    /// result of this key agreement.</param>
+    /// <returns>The key agreement value ZZ</returns>
+    public EccPoint Agreement(CurveNistPublic publicKey, CurveNistResult carry) {
+        var result = Curve.Multiply(publicKey.PublicKey, SecretKey);
+        return Curve.Add(result, carry.AgreementNist);
+        }
+
 
     ///<inheritdoc/>
     public IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate contribution, KeySecurity keySecurity = KeySecurity.Admin, KeyUses keyUses = KeyUses.Any) {
@@ -128,6 +162,9 @@ public record CurveNistPrivate : IKeyAdvancedPrivate {
         }
     }
 
+#endregion
+#region // Public Key
+
 /// <summary>
 /// An ECC public key, a point on one of the NIST curves.
 /// </summary>
@@ -137,10 +174,10 @@ public record CurveNistPublic : IKeyAdvancedPublic {
     ///<summary>The implementation public key value</summary>
     public EccPoint PublicKey { get; set; }
 
-    IEccCurve Curve { get; set; }
+    public PrimeCurve Curve { get; set; }
 
     ///<inheritdoc/>
-    public byte[] Encoding => Encode(PublicKey);
+    public byte[] EncodingPublicKey => Encode(PublicKey);
 
     #endregion
     #region // Constructors
@@ -151,7 +188,7 @@ public record CurveNistPublic : IKeyAdvancedPublic {
     /// </summary>
     /// <param name="encoding">The encoded point.</param>
     /// <param name="curve">The curve.</param>
-    public CurveNistPublic(byte[] encoding, IEccCurve curve) :
+    public CurveNistPublic(byte[] encoding, PrimeCurve curve) :
             this(Decode(encoding), curve) {
         }
 
@@ -161,7 +198,7 @@ public record CurveNistPublic : IKeyAdvancedPublic {
     /// </summary>
     /// <param name="publicKey">The encoded point.</param>
     /// <param name="curve">The curve.</param>
-    public CurveNistPublic(EccPoint publicKey, IEccCurve curve) {
+    public CurveNistPublic(EccPoint publicKey, PrimeCurve curve) {
         // check that the point is on the curve and throw an exception if not.
         curve.PointExistsOnCurve(publicKey).AssertTrue(CryptographicException.Throw);
 
@@ -179,8 +216,8 @@ public record CurveNistPublic : IKeyAdvancedPublic {
     /// <returns>The decoded point.</returns>
     /// <exception cref="NotImplementedException"></exception>
     public static EccPoint Decode(byte[] encoding) {
-        var length = encoding.Length/2;
-        (length>=128).AssertTrue(CryptographicException.Throw);
+        var length = encoding.Length / 2;
+        (length >= 128).AssertTrue(CryptographicException.Throw);
         var buf = new byte[length];
 
         using var stream = new MemoryStream(encoding);
@@ -220,167 +257,63 @@ public record CurveNistPublic : IKeyAdvancedPublic {
         throw new NotImplementedException();
         }
 
-    }
-
-
-
-/// <summary>
-/// NIST P256/P384/P521 Elliptic Curve Key Pair
-/// </summary>
-public class KeyPairECDHP : KeyPairECDH {
-
-    #region //Properties
-
-    ///<inheritdoc/>
-    public override AssuranceLevel AssuranceLevel => throw new NotImplementedException();
-
-
-    ///<summary>The implementation public key value</summary>
-    public CurveNistPublic PublicKey { get; set; }
-
-    ///<summary>The implementation private key value (if exportable)</summary>
-    public CurveNistPrivate PrivateKey { get; set; }
-
-    ///<inheritdoc/>
-    public override IKeyAdvancedPublic IKeyAdvancedPublic => PublicKey;
-
-    ///<inheritdoc/>
-    public override IKeyAdvancedPrivate IKeyAdvancedPrivate => PrivateKey;
-
-    ///<inheritdoc/>
-    public override PKIXPrivateKeyECDH PKIXPrivateKeyECDH { get; }
-
-    ///<inheritdoc/>
-    public override PKIXPublicKeyECDH PKIXPublicKeyECDH { get; }
-
-    ///<inheritdoc/>
-    public override KeyUses KeyUses { get; } = KeyUses.Any;
-
-    ///<inheritdoc/>
-    public override bool PublicOnly => PrivateKey == null;
-
-    ///<inheritdoc/>
-    public override byte[] PublicData => PublicKey.Encoding;
-
-    //readonly KeySecurity KeyType = KeySecurity.Public;
-    readonly byte[] EncodedPrivateKey = null;
-
-
-    /*
-subjectPublicKeyInfo SubjectPublicKeyInfo SEQUENCE (2 elem)
-    algorithm AlgorithmIdentifier SEQUENCE (2 elem)
-        algorithm OBJECT IDENTIFIER 1.2.840.10045.2.1 ecPublicKey (ANSI X9.62 public key type)
-        parameters ANY OBJECT IDENTIFIER 1.2.840.10045.3.1.7 prime256v1 (ANSI X9.62 named elliptic curve)Offset: 296
-            Length: 2+8
-            Value: 1.2.840.10045.3.1.7 prime256v1 ANSI X9.62 named elliptic curve
-        subjectPublicKey BIT STRING (520 bit) 0000010010100100000001001110101111110101111011111000111111000100101001…
-
-     30 59      SEQUENCE
-        30 13       SEQUENCE
-            06 07 2A 86 48 CE 3D 02 01  OBJECT IDENTIFIER ecPublicKey 1.2.840.10045.2.1
-            06 08 2A 86 48 CE 3D 03 01 07 OBJECT IDENTIFIER prime256v1 1.2.840.10045.3.1.7
-        03 42 BIT STRING (520 bit)
-            00 04 A4 04  EB F5 EF 8F C4 A5 3A 71
-            31 FF 98 A0 EB 81 B6 2E  F5 A5 0C E3 18 20 91 58
-            05 F4 A3 5B EA 36 4D A5  A2 93 0D 10 BD B3 E5 63
-            16 38 40 35 11 90 1A DD  12 33 0B 77 62 F1 D2 D8
-            EE 82 71 E8 B3 6F
-     */
-
-
-
-    #endregion
 
     /// <summary>
-    /// Construct a KeyPairEd25519 instance for the specified key data in interchange 
-    /// format. 
+    /// Create a new ephemeral private key and use it to perform a key
+    /// agreement.
     /// </summary>
-    /// <param name="key">The key data as specified in RFC8032.</param>
-    /// <param name="keyType">The key type.</param>
-    /// <param name="keyUses">The permitted key uses.</param>
-    /// <param name="cryptoAlgorithmID">Specifies the default algorithm variation for use
-    /// in signature operations.</param>
-    public KeyPairECDHP(
-                byte[] key,
-                KeySecurity keyType = KeySecurity.Public,
-                KeyUses keyUses = KeyUses.Any,
-                CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.P521) {
-        
-        CryptoAlgorithmId = cryptoAlgorithmID;
-        var (keySize, curve) = cryptoAlgorithmID switch {
-            CryptoAlgorithmId.P256 => (256, EccCurveFactory.P256),
-            CryptoAlgorithmId.P384 => (384, EccCurveFactory.P384),
-            CryptoAlgorithmId.P521 => (521, EccCurveFactory.P521),
-            _ => throw new CryptographicException()
+    /// <returns>The key agreement parameters, the public key value and the
+    /// key agreement.</returns>
+    public CurveNistResult Agreement() {
+        var privateKey = new CurveNistPrivate(Curve);
+        var point = privateKey.Agreement(this);
+
+        return new CurveNistResult() {
+            AgreementNist = point,
+            Curve = Curve,
+            EphemeralPublicValue = privateKey.PublicKey
             };
-
-        KeySecurity = keyType;
-        KeyUses = keyUses;
-
-        if (keyType == KeySecurity.Public) {
-            PublicKey = new CurveNistPublic(key, curve);
-            PKIXPublicKeyECDH = new PKIXPublicKeyECDH(cryptoAlgorithmID, PublicKey.Encoding);
-            KeySecurity = KeySecurity.Public;
-            }
-        else {
-            EncodedPrivateKey = key;
-            var exportable = keyType.IsExportable();
-            PrivateKey = new CurveNistPrivate(key, curve, exportable);
-            PublicKey = PrivateKey.PublicKey;
-            PKIXPublicKeyECDH = new PKIXPublicKeyECDH(cryptoAlgorithmID, PublicKey.Encoding);
-            if (exportable) {
-                PKIXPrivateKeyECDH = new PKIXPrivateKeyECDH(cryptoAlgorithmID, key);
-                }
-            }
-
         }
 
+
+    } 
+#endregion
+#region // Result on curve
+
+/// <summary>
+/// Represent the result of a Diffie Hellman Key exchange.
+/// </summary>
+public class CurveNistResult : ResultECDH {
+
+    /// <summary>The key agreement result</summary>
+    public EccPoint AgreementNist { get; init; }
+
+    public PrimeCurve Curve { get; init; }
 
     ///<inheritdoc/>
-    public override byte[] Decrypt(
-                byte[] encryptedKey,
-                IAgreementData ephemeral = null,
-                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
-                KeyAgreementResult partial = null, byte[] salt = null) {
-        throw new NotImplementedException();
-        }
+    public override string CurveJose => Curve.JoseId;
+
+    /////<summary>The key agreement value, a point on the curve.</summary>
+    //public override ICurve Agreement => AgreementNist;
 
     ///<inheritdoc/>
-    public override void Encrypt(
-                byte[] key,
-                out byte[] exchange,
-                out IAgreementData ephemeral,
-                byte[] salt = null) {
-        throw new NotImplementedException();
-        }
+    public override byte[] DER() => CurveNistPublic.Encode(AgreementNist);
 
     ///<inheritdoc/>
-    public override KeyPairAdvanced KeyPair(IKeyAdvancedPrivate privateKey, KeySecurity keySecurity = KeySecurity.Admin, KeyUses keyUses = KeyUses.Any) {
-        throw new NotImplementedException();
-        }
+    public override byte[] IKM => DER();
 
-    ///<inheritdoc/>
-    public override KeyPairAdvanced KeyPair(IKeyAdvancedPublic publicKey, KeyUses keyUses = KeyUses.Any) {
-        throw new NotImplementedException();
-        }
+    /// <summary>
+    /// The Ephemeral public key
+    /// </summary>
+    public override IAgreementData EphemeralKeyPair => new KeyPairECDHNist(Public);
 
-    ///<inheritdoc/>
-    public override KeyPair KeyPairPublic() {
-        throw new NotImplementedException();
-        }
+    /// <summary>Carry from proxy recryption efforts</summary>
+    public CurveEdwards25519 Carry { get; set; }
 
-    ///<inheritdoc/>
-    public override void Persist(KeyCollection keyCollection) {
-        throw new NotImplementedException();
-        }
+    /// <summary>Public key generated by ephemeral key generation.</summary>
+    public CurveNistPublic Public => EphemeralPublicValue as CurveNistPublic;
 
-    ///<inheritdoc/>
-    public override byte[] SignDigest(byte[] digest, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null) {
-        throw new NotImplementedException();
-        }
 
-    ///<inheritdoc/>
-    public override bool VerifyDigest(byte[] digest, byte[] signature, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null) {
-        throw new NotImplementedException();
-        }
     }
+#endregion
+
