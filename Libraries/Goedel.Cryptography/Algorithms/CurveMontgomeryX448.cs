@@ -254,7 +254,7 @@ public class CurveX448Public : IKeyAdvancedPublic {
         var Private = new CurveX448Private();
 
         return new CurveX448Result() {
-            EphemeralPublicValue = Private.Public,
+            EphemeralPublicValue = Private.PublicKey,
             AgreementX448 = Private.Agreement(this)
             };
         }
@@ -323,7 +323,7 @@ public class CurveX448Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
 
 
     /// <summary>The public key, i.e. a point on the curve</summary>
-    public CurveX448Public Public { get; set; }
+    public CurveX448Public PublicKey { get; set; }
 
     /// <summary>Encoded form of the public key.</summary>
     public byte[] Encoding { get; }
@@ -349,7 +349,7 @@ public class CurveX448Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
         Secret = CurveX448.EncodeScalar(privateKey);
 
         var PublicPoint = CurveX448.GetPublic(privateKey);
-        Public = new CurveX448Public(PublicPoint);
+        PublicKey = new CurveX448Public(PublicPoint);
 
         if (exportable) {
             Encoding = Secret;
@@ -427,64 +427,41 @@ public class CurveX448Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
 
     #region // Advanced functions
 
-    /// <summary>
-    /// Make a Shamir threshold keyset with <paramref name="shares"/> shares
-    /// with a threshold of <paramref name="threshold"/>.
-    /// </summary>
-    /// <param name="shares">Number of shares to create</param>
-    /// <param name="threshold">The number of shares required to recover the key.</param>
-    /// <returns>The shares created.</returns>
-    public ShamirSharePrivate[] MakeThresholdKeySet(int shares, int threshold) => throw new NYI();
 
-
-    /// <summary>
-    /// Split the private key into a number of recryption keys.
-    /// <para>
-    /// Since the
-    /// typical use case for recryption requires both parts of the generated machine
-    /// to be used on a machine that is not the machine on which they are created, the
-    /// key security level is always to permit export.</para>
-    /// </summary>
-    /// <param name="shares">The number of keys to create.</param>
-    /// <returns>The created keys</returns>
+    ///<inheritdoc/>
     public IKeyAdvancedPrivate[] MakeThresholdKeySet(int shares) {
-        BigInteger Accumulator = 0;
-        var Result = new IKeyAdvancedPrivate[shares];
+        BigInteger accumulator = 0;
+        var result = new IKeyAdvancedPrivate[shares];
 
         for (var i = 1; i < shares; i++) {
-            var NewPrivate = Platform.GetRandomBigInteger(CurveX448.Q);
-            Result[i] = new CurveX448Private(NewPrivate, exportable: true) { IsThreshold = true };
-            Accumulator = (Accumulator + NewPrivate).Mod(CurveX448.Q);
+            var newPrivate = Platform.GetRandomBigInteger(CurveX448.Q);
+            result[i] = new CurveX448Private(newPrivate, exportable: true) { IsThreshold = true };
+            accumulator = (accumulator + newPrivate).Mod(CurveX448.Q);
             }
 
         //Assert.True(Accumulator > 0 & Accumulator < Private, CryptographicException.Throw);
 
-        Result[0] = new CurveX448Private(
-            (CurveX448.Q + SecretKey - Accumulator).Mod(CurveX448.Q), exportable: true) {
+        result[0] = new CurveX448Private(
+            (CurveX448.Q + SecretKey - accumulator).Mod(CurveX448.Q), exportable: true) {
             IsThreshold = true
             };
-        return Result;
+        return result;
 
         }
 
 
-    /// <summary>
-    /// Make a recryption keyset by splitting the private key.
-    /// </summary>
-    /// <param name="Shares">Number of shares to create</param>
-    /// <returns>Array shares.</returns>
-    public IKeyAdvancedPrivate CompleteRecryptionKeySet(IEnumerable<KeyPair> Shares) {
-        BigInteger Accumulator = 0;
+    ///<inheritdoc/>
+    public IKeyAdvancedPrivate CompleteRecryptionKeySet(IEnumerable<KeyPair> shares) {
+        BigInteger accumulator = 0;
 
-        foreach (var share in Shares) {
+        foreach (var share in shares) {
             var key = share as KeyPairX448;
             var privateKey = (key.IKeyAdvancedPrivate as CurveX448Private);
-
-            Accumulator = (Accumulator + privateKey.SecretKey).Mod(CurveX448.Q);
+            accumulator = (accumulator + privateKey.SecretKey).Mod(CurveX448.Q);
             }
 
         return new CurveX448Private(
-            (CurveX448.Q + SecretKey - Accumulator).Mod(CurveX448.Q)) {
+            (CurveX448.Q + SecretKey - accumulator).Mod(CurveX448.Q)) {
             IsThreshold = true
             };
         }
@@ -500,8 +477,8 @@ public class CurveX448Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
     public CurveX448Private Combine(CurveX448Private contribution,
                 KeySecurity keySecurity = KeySecurity.Bound,
                 KeyUses keyUses = KeyUses.Any) {
-        var NewPrivate = (SecretKey + contribution.SecretKey).Mod(CurveX448.Q);
-        return new CurveX448Private(NewPrivate, keySecurity.IsExportable());
+        var newPrivate = (SecretKey + contribution.SecretKey).Mod(CurveX448.Q);
+        return new CurveX448Private(newPrivate, keySecurity.IsExportable());
         }
 
 

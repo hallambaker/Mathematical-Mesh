@@ -99,7 +99,7 @@ public class KeyPairX25519 : KeyPairECDH, IAgreementData {
             encodedPrivateKey = key;
             var exportable = keyType.IsExportable();
             PrivateKey = new CurveX25519Private(key, exportable);
-            PublicKey = PrivateKey.Public;
+            PublicKey = PrivateKey.PublicKey;
             if (exportable) {
                 PKIXPrivateKeyECDH = new PKIXPrivateKeyECDH(CryptoAlgorithmId.X25519, key);
                 }
@@ -141,7 +141,7 @@ public class KeyPairX25519 : KeyPairECDH, IAgreementData {
                 CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) {
         CryptoAlgorithmId = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmId.X25519);
         this.PrivateKey = privateKey;
-        PublicKey = privateKey.Public;
+        PublicKey = privateKey.PublicKey;
         PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.X25519, PublicKey.EncodingPublicKey);
         keyType = keySecurity;
         KeyUses = keyUses;

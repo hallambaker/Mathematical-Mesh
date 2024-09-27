@@ -92,7 +92,7 @@ public class KeyPairX448 : KeyPairECDH, IAgreementData {
             encodedPrivateKey = key;
             var exportable = keyType.IsExportable();
             PrivateKey = new CurveX448Private(key, exportable);
-            PublicKey = PrivateKey.Public;
+            PublicKey = PrivateKey.PublicKey;
              if (exportable) {
                 PKIXPrivateKeyECDH = new PKIXPrivateKeyECDH(CryptoAlgorithmId.X448, key);
                 }
@@ -135,7 +135,7 @@ public class KeyPairX448 : KeyPairECDH, IAgreementData {
                 CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) {
         CryptoAlgorithmId = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmId.X448);
         PrivateKey = privateKey;
-        PublicKey = privateKey.Public;
+        PublicKey = privateKey.PublicKey;
         PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.X448, PublicKey.EncodingPublicKey);
         KeySecurity = keySecurity;
         KeyUses = keyUses;

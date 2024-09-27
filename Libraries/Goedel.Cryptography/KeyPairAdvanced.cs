@@ -59,14 +59,14 @@ public interface IKeyAdvancedPublic {
 /// </summary>
 public interface IKeyAdvancedPrivate {
 
-    /// <summary>
-    /// Make a Shamir threshold keyset with <paramref name="shares"/> shares
-    /// with a threshold of <paramref name="threshold"/>.
-    /// </summary>
-    /// <param name="shares">Number of shares to create</param>
-    /// <param name="threshold">The number of shares required to recover the key.</param>
-    /// <returns>The shares created.</returns>
-    ShamirSharePrivate[] MakeThresholdKeySet(int shares, int threshold);
+    ///// <summary>
+    ///// Make a Shamir threshold keyset with <paramref name="shares"/> shares
+    ///// with a threshold of <paramref name="threshold"/>.
+    ///// </summary>
+    ///// <param name="shares">Number of shares to create</param>
+    ///// <param name="threshold">The number of shares required to recover the key.</param>
+    ///// <returns>The shares created.</returns>
+    //ShamirSharePrivate[] MakeThresholdKeySet(int shares, int threshold);
 
 
     /// <summary>

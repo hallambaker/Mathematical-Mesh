@@ -574,7 +574,7 @@ public partial class CurveKey {
     void SetParameters(KeyPairX25519 keyPair, bool extended) {
         //var publicKey = keyPair.IKeyAdvancedPublic as CurveX25519Public;
         var privateKey = keyPair.IKeyAdvancedPrivate as CurveX25519Private;
-        var publicKey = privateKey.Public;
+        var publicKey = privateKey.PublicKey;
 
         Scalar = privateKey.SecretKey;
         Private = privateKey.Encoding;
@@ -586,7 +586,7 @@ public partial class CurveKey {
     void SetParameters(KeyPairX448 keyPair, bool extended) {
         //var publicKey = keyPair.IKeyAdvancedPublic as CurveX448Public;
         var privateKey = keyPair.IKeyAdvancedPrivate as CurveX448Private;
-        var publicKey = privateKey.Public;
+        var publicKey = privateKey.PublicKey;
 
         Scalar = privateKey.SecretKey;
         Private = privateKey.Encoding;

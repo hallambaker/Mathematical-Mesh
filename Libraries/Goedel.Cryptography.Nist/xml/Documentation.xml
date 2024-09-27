@@ -118,6 +118,15 @@
             </summary>
             <param name="errorMessage"></param>
         </member>
+        <member name="T:Goedel.Cryptography.Nist.EccPoint">
+            <summary>A point on a prime curve.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.EccPoint.Curve">
+            <summary>The curve.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.EccPoint.Infinity">
+            <summary>If true, this is the infinityh point.</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Nist.EccPoint.X">
             <summary>
             X Coordinate of the point
@@ -311,6 +320,15 @@
             Determines if a given point exists in the field
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeCurve.CryptoAlgorithmId">
+            <summary>The cryptographic algorithm ID</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeCurve.JoseId">
+            <summary>The Jose ID.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeCurve.ByteEncoding">
+            <summary>Number of bytes required to encode X and Y.</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Nist.PrimeCurve.CoefficientA">
             <summary>The A coefficient.</summary> 
         </member>
@@ -325,6 +343,12 @@
         </member>
         <member name="P:Goedel.Cryptography.Nist.PrimeCurve.FieldSizeQ">
             <summary>The field size.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeCurve.CofactorH">
+            <summary>Cofactor is always 1 for a prime curve</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeCurve.CurveType">
+            <summary>CurveType is obviously prime</summary> 
         </member>
         <member name="P:Goedel.Cryptography.Nist.PrimeCurve.CurveName">
             <summary>The curve name</summary> 

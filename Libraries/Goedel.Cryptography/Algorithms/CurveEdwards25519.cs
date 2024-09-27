@@ -702,8 +702,8 @@ public class CurveEdwards25519Private : CurveEdwardsPrivate, IKeyPrivateECDH {
     public override KeyPairAdvanced GetKeyPair(
                 KeySecurity keyType = KeySecurity.Public,
                 KeyUses keyUses = KeyUses.Any,
-                CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) => new
-                    KeyPairEd25519(this, keyType, keyUses, cryptoAlgorithmID);
+                CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) => 
+                    new KeyPairEd25519(this, keyType, keyUses, cryptoAlgorithmID);
 
     /// <summary>
     /// Verify that a witness value was used to construct a public key.

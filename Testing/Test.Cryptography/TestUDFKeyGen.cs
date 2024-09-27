@@ -199,12 +199,12 @@ public partial class TestGoedelCryptography {
         var c1 = new CurveX448Private(10, true);
         var c2 = new CurveX448Private(12, true);
 
-        var c12pub = c1.Public.Combine(c2.Public);
+        var c12pub = c1.PublicKey.Combine(c2.PublicKey);
 
         var c12priv = c1.Combine(c2);
 
         var t1 = c12pub.Public;
-        var t2 = c12priv.Public.Public;
+        var t2 = c12priv.PublicKey.Public;
 
 
         t1.U.TestEqual(t2.U);

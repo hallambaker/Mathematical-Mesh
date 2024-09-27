@@ -24,6 +24,8 @@
 using Goedel.Cryptography.Algorithms;
 
 using System.Numerics;
+using Goedel.Cryptography.Jose;
+using Goedel.Cryptography.Nist;
 
 #pragma warning disable IDE0059
 
@@ -47,7 +49,24 @@ public partial class TestGoedelCryptography {
         key1.TestEqual(key);
         }
 
+    [Fact]
+    public void TestECDHPThreshold() {
 
+        var KeyA = new CurveNistPrivate(EccCurveFactory.P256);
+        var KeyAPublic = KeyA.PublicKey;
+
+        var RecryptKeys = KeyA.MakeThresholdKeySet(2);
+
+        var Result = KeyAPublic.Agreement();
+
+        EccPoint[] Carry = new EccPoint[2];
+        Carry[0] = (RecryptKeys[0] as CurveNistPrivate).Agreement(Result.EphemeralPoint);
+        Carry[1] = (RecryptKeys[1] as CurveNistPrivate).Agreement(Result.EphemeralPoint);
+
+        var AgreeAB = CurveNistPrivate.Agreement(Carry);
+
+        AgreeAB.AgreementNist.Equals(Result.AgreementNist).TestTrue();
+        }
 
     [Fact]
     public void TestECDSA() {
@@ -127,9 +146,7 @@ public partial class TestGoedelCryptography {
       38, 156, 251, 49, 110, 163, 218, 128, 106, 72, 246, 218, 167, 121,
       140, 254, 144, 196].
 
-   keydatalen
-      This value is 128 - the number of bits in the desired output key
-      (because "A128GCM" uses a 128-bit key).
+
 
    AlgorithmID
       This is set to the octets representing the 32-bit big-endian value
@@ -149,6 +166,12 @@ public partial class TestGoedelCryptography {
       "Bob", followed, by the octets representing the UTF-8 string "Bob"
       - [66, 111, 98].
 
+
+
+   keydatalen
+      This value is 128 - the number of bits in the desired output key
+      (because "A128GCM" uses a 128-bit key).
+
    SuppPubInfo
       This is set to the octets representing the 32-bit big-endian value
       128 - [0, 0, 0, 128] - the keydatalen value.
@@ -167,8 +190,10 @@ public partial class TestGoedelCryptography {
    158, 86, 217, 29, 129, 113, 53, 211, 114, 131, 66, 131, 191, 132, 38,
    156, 251, 49, 110, 163, 218, 128, 106, 72, 246, 218, 167, 121, 140,
    254, 144, 196,
-   0, 0, 0, 7, 65, 49, 50, 56, 71, 67, 77, 0, 0, 0, 5, 65, 108, 105, 99,
-   101, 0, 0, 0, 3, 66, 111, 98, 0, 0, 0, 128]
+   0, 0, 0, 7, 65, 49, 50, 56, 71, 67, 77, 
+   0, 0, 0, 5, 65, 108, 105, 99, 101, 
+   0, 0, 0, 3, 66, 111, 98, 
+   0, 0, 0, 128]
 
    The resulting derived key, which is the first 128 bits of the round 1
    hash output is:

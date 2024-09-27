@@ -4,9 +4,14 @@ namespace Goedel.Cryptography.Nist;
 public class PrimeCurve : IEccCurve {
     private readonly PrimeFieldOperator _operator;
 
-
+    ///<summary>The cryptographic algorithm ID</summary> 
     public CryptoAlgorithmId CryptoAlgorithmId { get; init; }
+    
+    ///<summary>The Jose ID.</summary> 
     public string JoseId { get; init; }
+
+    ///<summary>Number of bytes required to encode X and Y.</summary> 
+    public int ByteEncoding { get; init; }
 
     // A = -3 (mod p) for prime curves
 
@@ -25,10 +30,11 @@ public class PrimeCurve : IEccCurve {
     ///<summary>The field size.</summary> 
     public BigInteger FieldSizeQ { get; }
 
-    // Cofactor is always 1 for a prime curve
+
+    ///<summary>Cofactor is always 1 for a prime curve</summary> 
     public int CofactorH { get { return 1; } }
 
-    // CurveType is obviously prime
+    ///<summary>CurveType is obviously prime</summary> 
     public CurveType CurveType { get { return CurveType.Prime; } }
 
     ///<summary>The curve name</summary> 
@@ -60,11 +66,12 @@ public class PrimeCurve : IEccCurve {
 
         FieldSizeQ = p;
         CoefficientB = b;
-        BasePointG = g;
+        BasePointG = new EccPoint (this, g.X, g.Y);
         OrderN = n;
         KeySize = OrderN.CountBits();
 
         MinimumOutputSize = l < 0? KeySize : l;
+
 
         _operator = new PrimeFieldOperator(p);
         }
@@ -82,7 +89,7 @@ public class PrimeCurve : IEccCurve {
 
         // Any point added to its inverse is infinity
         if (pointA.Equals(Negate(pointB))) {
-            return new EccPoint("infinity");
+            return new EccPoint(this, "infinity");
             }
 
         // Cannot add two identical points, use Double instead
@@ -97,7 +104,7 @@ public class PrimeCurve : IEccCurve {
         var x = _operator.Subtract(_operator.Subtract(_operator.Multiply(lambda, lambda), pointA.X), pointB.X);
         var y = _operator.Subtract(_operator.Multiply(_operator.Subtract(pointA.X, x), lambda), pointA.Y);
 
-        return new EccPoint(x, y);
+        return new EccPoint(this, x, y);
         }
 
     public EccPoint Negate(EccPoint point) {
@@ -106,7 +113,7 @@ public class PrimeCurve : IEccCurve {
             }
 
         // Negate the point, - (x, y) == (x, -y), but -1 * y (mod q) == q - y
-        return new EccPoint(point.X, _operator.Negate(point.Y));
+        return new EccPoint(this, point.X, _operator.Negate(point.Y));
         }
 
     public EccPoint Subtract(EccPoint pointA, EccPoint pointB) {
@@ -129,11 +136,11 @@ public class PrimeCurve : IEccCurve {
         var x = _operator.Subtract(_operator.Multiply(lambda, lambda), _operator.Multiply(2, point.X));
         var y = _operator.Subtract(_operator.Multiply(_operator.Subtract(point.X, x), lambda), point.Y);
 
-        return new EccPoint(x, y);
+        return new EccPoint(this, x, y);
         }
 
     private EccPoint Multiply(EccPoint startPoint, NonAdjacentBitString nafBs) {
-        var point = new EccPoint("infinity");
+        var point = new EccPoint(this, "infinity");
         var naBits = nafBs.Bits;
 
         for (var i = naBits.Length - 1; i >= 0; i--) {

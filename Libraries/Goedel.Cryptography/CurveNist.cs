@@ -22,6 +22,8 @@
 
 
 using Goedel.ASN;
+using Goedel.Cryptography.Algorithms;
+using Goedel.Cryptography.Nist;
 using Goedel.Cryptography.PKIX;
 
 namespace Goedel.Cryptography;
@@ -42,6 +44,7 @@ public record CurveNistPrivate : IKeyAdvancedPrivate {
     ///<summary>Encoding of the secret key.</summary> 
     public byte[] EncodingSecretKey => Encode(SecretKey);
 
+    ///<summary>The curve parameters.</summary> 
     public PrimeCurve Curve { get; set; }
     #endregion
     #region // Constructors
@@ -78,8 +81,6 @@ public record CurveNistPrivate : IKeyAdvancedPrivate {
 
         return d;
         }
-
-
 
     #endregion
     #region // Encode/Decode
@@ -122,7 +123,6 @@ public record CurveNistPrivate : IKeyAdvancedPrivate {
     public EccPoint Agreement(CurveNistPublic publicKey) =>
             Curve.Multiply(publicKey.PublicKey, SecretKey);
 
-
     /// <summary>
     /// Perform a Diffie Hellman Key Agreement to a private key
     /// </summary>
@@ -136,31 +136,94 @@ public record CurveNistPrivate : IKeyAdvancedPrivate {
         }
 
 
+    /// <summary>
+    /// Create a new ephemeral private key and use it to perform a key
+    /// agreement.
+    /// </summary>
+    /// <returns>The key agreement parameters, the public key value and the
+    /// key agreement.</returns>
+    public static CurveNistResult Agreement(EccPoint[] Carry) {
+        Assert.AssertTrue(Carry.Length >= 1, InsufficientResults.Throw);
+
+        var curve = Carry[0].Curve;
+
+        var Total = curve.Add (Carry[0], Carry[1]);
+        for (var i = 1; i < Carry.Length; i++) {
+
+            Total = curve.Add(Total, Carry[i]);
+            }
+
+        return new CurveNistResult() {
+            AgreementNist = Total,
+            Curve = curve
+            };
+        }
+
     ///<inheritdoc/>
-    public IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate contribution, KeySecurity keySecurity = KeySecurity.Admin, KeyUses keyUses = KeyUses.Any) {
-        throw new NotImplementedException();
+    public KeyPairAdvanced GetKeyPair(
+                KeySecurity keySecurity = KeySecurity.Public,
+                KeyUses keyUses = KeyUses.Any,
+                CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) =>
+        new KeyPairECDHNist(this, keySecurity, keyUses, cryptoAlgorithmID);
+
+
+    ///<inheritdoc/>
+    public IKeyAdvancedPrivate Combine(
+                    IKeyAdvancedPrivate contribution, 
+                    KeySecurity keySecurity = KeySecurity.Admin, 
+                    KeyUses keyUses = KeyUses.Any) =>
+                Combine(contribution as CurveNistPrivate, keySecurity, keyUses);
+
+    /// <summary>
+    /// Combine the two public keys to create a composite public key.
+    /// </summary>
+    /// <param name="contribution">The key contribution.</param>
+    /// <param name="keySecurity">The key security model.</param>
+    /// <param name="keyUses">The allowed key uses.</param>
+    /// <returns>The composite key</returns>
+    public CurveNistPrivate Combine(CurveNistPrivate contribution,
+                KeySecurity keySecurity = KeySecurity.Bound,
+                KeyUses keyUses = KeyUses.Any) {
+        var newPrivate = (SecretKey + contribution.SecretKey) % Curve.FieldSizeQ;
+        return new CurveNistPrivate(Curve, newPrivate, keySecurity.IsExportable());
         }
 
     ///<inheritdoc/>
     public IKeyAdvancedPrivate CompleteRecryptionKeySet(IEnumerable<KeyPair> shares) {
-        throw new NotImplementedException();
+        BigInteger accumulator = 0;
+
+        foreach (var share in shares) {
+            var key = share as KeyPairECDHNist;
+            var privateKey = key.SecretKey;
+
+            accumulator = (accumulator + privateKey.SecretKey).Mod(Curve.FieldSizeQ);
+            }
+
+        return new CurveNistPrivate(Curve,
+            (Curve.FieldSizeQ + SecretKey - accumulator).Mod(Curve.FieldSizeQ), true) {
+            };
         }
 
-    ///<inheritdoc/>
-    public KeyPairAdvanced GetKeyPair(KeySecurity keySecurity = KeySecurity.Public, KeyUses keyUses = KeyUses.Any, CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) {
-        throw new NotImplementedException();
-        }
-
-    ///<inheritdoc/>
-    public ShamirSharePrivate[] MakeThresholdKeySet(int shares, int threshold) {
-        throw new NotImplementedException();
-        }
 
     ///<inheritdoc/>
     public IKeyAdvancedPrivate[] MakeThresholdKeySet(int shares) {
-        throw new NotImplementedException();
+        BigInteger accumulator = 0;
+        var result = new IKeyAdvancedPrivate[shares];
+
+        for (var i = 1; i < shares; i++) {
+            var newPrivate = Platform.GetRandomBigInteger(Curve.FieldSizeQ);
+            result[i] = new CurveNistPrivate(Curve, newPrivate, exportable: true);
+            accumulator = (accumulator + newPrivate).Mod(Curve.FieldSizeQ);
+            }
+
+        //Assert.True(Accumulator > 0 & Accumulator < Private, CryptographicException.Throw);
+
+        result[0] = new CurveNistPrivate(Curve,
+            (Curve.FieldSizeQ + SecretKey - accumulator).Mod(Curve.FieldSizeQ));
+        return result;
         }
     }
+
 
 #endregion
 #region // Public Key
@@ -172,15 +235,19 @@ public record CurveNistPublic : IKeyAdvancedPublic {
 
     #region // Properties
     ///<summary>The implementation public key value</summary>
-    public EccPoint PublicKey { get; set; }
+    public EccPoint PublicKey { get;  }
 
-    public PrimeCurve Curve { get; set; }
+    ///<summary>The prime curve</summary> 
+    public PrimeCurve Curve { get; }
 
     ///<inheritdoc/>
     public byte[] EncodingPublicKey => Encode(PublicKey);
 
     #endregion
     #region // Constructors
+
+
+
 
     /// <summary>
     /// Constructor, create an instance from the encoded point in <paramref name="encoding"/>
@@ -232,7 +299,15 @@ public record CurveNistPublic : IKeyAdvancedPublic {
         (l == length).AssertTrue(CryptographicException.Throw);
         var y = buf.BigIntegerBigEndian();
 
-        return new EccPoint(x, y);
+        // These are fized constants so use the constants as switch labels.
+        var curve = length switch {
+            32 => EccCurveFactory.P256,
+            48 => EccCurveFactory.P384,
+            66 => EccCurveFactory.P521,
+            _ => throw new NYI()
+            };
+
+        return new EccPoint(curve, x, y);
         }
 
     /// <summary>
@@ -245,9 +320,9 @@ public record CurveNistPublic : IKeyAdvancedPublic {
     public static byte[] Encode(EccPoint point) {
         using var stream = new MemoryStream();
         stream.WriteByte(0x04); //
-        var x = point.X.ToByteArrayLittleEndian();
+        var x = point.X.ToByteArrayLittleEndian(point.Curve.ByteEncoding);
         stream.Write(x); // X coordinate of the point
-        var y = point.X.ToByteArrayLittleEndian();
+        var y = point.X.ToByteArrayLittleEndian(point.Curve.ByteEncoding);
         stream.Write(y); // Y coordinate of the point.
         return stream.ToArray();
         }
@@ -290,11 +365,9 @@ public class CurveNistResult : ResultECDH {
 
     public PrimeCurve Curve { get; init; }
 
+
     ///<inheritdoc/>
     public override string CurveJose => Curve.JoseId;
-
-    /////<summary>The key agreement value, a point on the curve.</summary>
-    //public override ICurve Agreement => AgreementNist;
 
     ///<inheritdoc/>
     public override byte[] DER() => CurveNistPublic.Encode(AgreementNist);
@@ -305,13 +378,13 @@ public class CurveNistResult : ResultECDH {
     /// <summary>
     /// The Ephemeral public key
     /// </summary>
-    public override IAgreementData EphemeralKeyPair => new KeyPairECDHNist(Public);
+    public override IAgreementData EphemeralKeyPair => new KeyPairECDHNist(EphemeralPoint);
 
     /// <summary>Carry from proxy recryption efforts</summary>
     public CurveEdwards25519 Carry { get; set; }
 
     /// <summary>Public key generated by ephemeral key generation.</summary>
-    public CurveNistPublic Public => EphemeralPublicValue as CurveNistPublic;
+    public CurveNistPublic EphemeralPoint => EphemeralPublicValue as CurveNistPublic;
 
 
     }

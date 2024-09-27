@@ -43,6 +43,89 @@ public abstract class KeyDerive {
     /// <returns>The key agreement result.</returns>
     public abstract byte[] Derive(byte[] info, int length = 0);
 
+
+
+
+
+
+
+    }
+
+
+/// <summary>
+/// Class implementing the ConcatKDF.
+/// </summary>
+public class KeyDeriveConcatKDF :  KeyDerive {
+
+
+    byte[] HashData { get; }
+
+    int Start { get; }
+
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    /// <param name="ikm"></param>
+    /// <param name="algorithmId"></param>
+    /// <param name="partyUInfo"></param>
+    /// <param name="partyVInfo"></param>
+    /// <param name="supInfoLength"></param>
+    public KeyDeriveConcatKDF(
+            byte[] ikm,
+            byte[] algorithmId,
+            byte[]? partyUInfo=null,
+            byte[]? partyVInfo=null,
+            int supInfoLength=0) {
+
+        partyUInfo ??= Array.Empty<byte>();
+        partyVInfo ??= Array.Empty<byte>();
+
+        var length = ikm.Length + algorithmId.Length + partyUInfo.Length + partyVInfo.Length +
+                supInfoLength + 20;
+
+        HashData = new byte[length];
+
+        var i = 0;
+        AddInt(1, ref i);
+        Array.Copy(ikm, 0, HashData, i, ikm.Length);
+        i += ikm.Length;
+        AddData(algorithmId, ref i);
+        AddData(partyUInfo, ref i);
+        AddData(partyVInfo, ref i);
+        Start = i;
+        }
+
+    void AddInt(int data, ref int i) {
+        HashData[i++] = (byte)(data >> 24);
+        HashData[i++] = (byte)(data >> 16);
+        HashData[i++] = (byte)(data >> 8);
+        HashData[i++] = (byte)(data);
+        }
+
+    void AddData(byte[] data, ref int i) {
+        AddInt(data.Length, ref i);
+        Array.Copy(data, 0, HashData, i, data.Length);
+        i += data.Length;
+        }
+
+    ///<inheritdoc/>
+    public override byte[] Derive(byte[] info, int length = 0) {
+        var i = Start;
+        AddInt(length, ref i);
+        Array.Copy(info, 0, HashData, i, info.Length);
+
+        var hash = SHA256.HashData (HashData);
+        if (length == 256) {
+            return hash;
+            }
+
+        // Truncate the array to the requested number of bytes.
+        var result = new byte[length / 8];
+        Array.Copy(hash, 0, result, 0, result.Length);
+        
+        return result;
+        }
+
     }
 
 

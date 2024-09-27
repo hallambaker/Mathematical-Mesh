@@ -550,8 +550,8 @@ public partial class TestGoedelCryptography {
             var KeyA = new CurveX25519Private();
             var KeyB = new CurveX25519Private();
 
-            var AgreeAB = KeyA.Agreement(KeyB.Public);
-            var AgreeBA = KeyB.Agreement(KeyA.Public);
+            var AgreeAB = KeyA.Agreement(KeyB.PublicKey);
+            var AgreeBA = KeyB.Agreement(KeyA.PublicKey);
 
             (AgreeAB == AgreeBA).TestTrue();
             }
@@ -567,8 +567,8 @@ public partial class TestGoedelCryptography {
             var KeyA = new CurveX448Private();
             var KeyB = new CurveX448Private();
 
-            var AgreeAB = KeyA.Agreement(KeyB.Public);
-            var AgreeBA = KeyB.Agreement(KeyA.Public);
+            var AgreeAB = KeyA.Agreement(KeyB.PublicKey);
+            var AgreeBA = KeyB.Agreement(KeyA.PublicKey);
 
             (AgreeAB == AgreeBA).TestTrue();
             }
@@ -591,15 +591,15 @@ public partial class TestGoedelCryptography {
     public static bool TryX25519AgreeRecryption() {
 
         var KeyA = new CurveX25519Private();
-        var KeyAPublic = KeyA.Public;
+        var KeyAPublic = KeyA.PublicKey;
 
         var RecryptKeys = KeyA.MakeThresholdKeySet(2);
 
         var Result = KeyAPublic.Agreement();
 
         CurveX25519[] Carry = new CurveX25519[2];
-        Carry[0] = (RecryptKeys[0] as CurveX25519Private).Agreement(Result.Public);
-        Carry[1] = (RecryptKeys[1] as CurveX25519Private).Agreement(Result.Public);
+        Carry[0] = (RecryptKeys[0] as CurveX25519Private).Agreement(Result.EphemeralPoint);
+        Carry[1] = (RecryptKeys[1] as CurveX25519Private).Agreement(Result.EphemeralPoint);
 
         var AgreeAB = CurveX25519Public.Agreement(Carry);
 

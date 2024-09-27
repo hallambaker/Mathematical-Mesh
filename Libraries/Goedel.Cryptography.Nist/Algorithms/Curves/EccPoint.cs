@@ -1,7 +1,14 @@
 ﻿using System.Security.Cryptography;
 
 namespace Goedel.Cryptography.Nist;
+
+///<summary>A point on a prime curve.</summary> 
 public class EccPoint {
+
+    ///<summary>The curve.</summary> 
+    public PrimeCurve Curve { get; }
+
+    ///<summary>If true, this is the infinityh point.</summary> 
     public bool Infinity { get; } = false;
 
     /// <summary>
@@ -14,15 +21,18 @@ public class EccPoint {
     /// </summary>
     public BigInteger Y { get; set; }
 
+
     public EccPoint() {
 
         }
 
-    public EccPoint(string inf) {
+    public EccPoint(PrimeCurve curve, string inf) {
         Infinity = true;
+        Curve = curve;
         }
 
-    public EccPoint(BigInteger x, BigInteger y) {
+    public EccPoint(PrimeCurve curve, BigInteger x, BigInteger y) {
+        Curve = curve;
         X = x;
         Y = y;
         }

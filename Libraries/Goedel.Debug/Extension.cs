@@ -87,7 +87,7 @@ public class KeyPairX448Corrupt : KeyPairX448 {
 
 
         var result = new CurveX448Private(privateKey, true);
-        result.Public = curvePrivate.Public;
+        result.PublicKey = curvePrivate.PublicKey;
 
         return result;
         }

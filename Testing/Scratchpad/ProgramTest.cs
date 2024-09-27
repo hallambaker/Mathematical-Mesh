@@ -70,6 +70,7 @@ partial class Program {
         //TestSequences.Test().TestSparse(ModeEnhance.Sequence, ModeEnhance.Sequence);
 
         TestGoedelCryptography.Test().TestECDHP();
+        TestGoedelCryptography.Test().TestECDHPThreshold();
         TestGoedelCryptography.Test().TestECDSA();
 
 

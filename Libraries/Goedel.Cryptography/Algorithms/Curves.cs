@@ -769,14 +769,14 @@ public abstract class CurveEdwardsPrivate : IKeyAdvancedPrivate {
     public abstract KeyAgreementResult Agreement(KeyPair keyPair);
 
 
-    /// <summary>
-    /// Make a Shamir threshold keyset with <paramref name="shares"/> shares
-    /// with a threshold of <paramref name="threshold"/>.
-    /// </summary>
-    /// <param name="shares">Number of shares to create</param>
-    /// <param name="threshold">The number of shares required to recover the key.</param>
-    /// <returns>The shares created.</returns>
-    public ShamirSharePrivate[] MakeThresholdKeySet(int shares, int threshold) => throw new NYI();
+    ///// <summary>
+    ///// Make a Shamir threshold keyset with <paramref name="shares"/> shares
+    ///// with a threshold of <paramref name="threshold"/>.
+    ///// </summary>
+    ///// <param name="shares">Number of shares to create</param>
+    ///// <param name="threshold">The number of shares required to recover the key.</param>
+    ///// <returns>The shares created.</returns>
+    //public ShamirSharePrivate[] MakeThresholdKeySet(int shares, int threshold) => throw new NYI();
 
     /// <summary>
     /// Split the private key into a number of recryption keys.
