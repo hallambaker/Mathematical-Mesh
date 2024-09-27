@@ -1,3 +1,3 @@
-﻿namespace Goedel.Cryptography.Nist;
-public interface IDsaSignatureResult { }
+﻿//namespace Goedel.Cryptography.Nist;
+//public interface IDsaSignatureResult { }
 

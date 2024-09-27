@@ -1,5 +1,5 @@
-﻿namespace Goedel.Cryptography.Nist;
-public interface IEccNonceProvider {
-    BigInteger GetNonce(BigInteger privateD, BigInteger hashedMessage, BigInteger orderN);
-    }
+﻿//namespace Goedel.Cryptography.Nist;
+//public interface IEccNonceProvider {
+//    BigInteger GetNonce(BigInteger privateD, BigInteger hashedMessage, BigInteger orderN);
+//    }
 

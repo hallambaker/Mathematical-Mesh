@@ -1,3 +1,3 @@
-﻿namespace Goedel.Cryptography.Nist;
-public interface IKeyPairValidateResult { }
+﻿//namespace Goedel.Cryptography.Nist;
+//public interface IKeyPairValidateResult { }
 

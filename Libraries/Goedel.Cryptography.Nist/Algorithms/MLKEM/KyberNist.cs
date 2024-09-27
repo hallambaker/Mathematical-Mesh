@@ -675,6 +675,14 @@ public class KyberNist(KyberParameters param, IShaFactory shaFactory=null)  {
         return (ek, dk);
         }
 
+    /// <summary>
+    /// Encrypt <paramref name="m"/> under the key <paramref name="ek"/> using the randum
+    /// input <paramref name="rand"/>
+    /// </summary>
+    /// <param name="ek">The encapsulation key.</param>
+    /// <param name="m">The message.</param>
+    /// <param name="rand">Random value.</param>
+    /// <returns>The ciphertext data.</returns>
     public byte[] K_Pke_Encrypt(byte[] ek, byte[] m, byte[] rand) {
         byte n = 0;
         var tHat = new int[Parameters.K][];
@@ -749,6 +757,13 @@ public class KyberNist(KyberParameters param, IShaFactory shaFactory=null)  {
         return c;
         }
 
+    /// <summary>
+    /// Decrypt the ciphertext <paramref name="c"/> using decapsulation key 
+    /// <paramref name="dk"/> and return the message.
+    /// </summary>
+    /// <param name="dk">The decapsulation key.</param>
+    /// <param name="c">The ciphertext.</param>
+    /// <returns>The message</returns>
     public byte[] K_Pke_Decrypt(byte[] dk, byte[] c) {
         var c1 = c[..(32 * Parameters.Du * Parameters.K)];
         var c2 = c[(32 * Parameters.Du * Parameters.K)..];

@@ -1,5 +1,5 @@
 ﻿namespace Goedel.Cryptography.Nist;
-public class GaloisFieldOperator : IFieldOperator {
+public class GaloisFieldOperator {
     private readonly BigInteger _m;
 
     public GaloisFieldOperator(BigInteger modulo) {

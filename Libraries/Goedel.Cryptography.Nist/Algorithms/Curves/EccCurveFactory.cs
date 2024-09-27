@@ -79,7 +79,7 @@ public static class EccCurveFactory {
     /// <param name="curve">The curve identifier.</param>
     /// <returns>The curve.</returns>
     /// <exception cref="ArgumentOutOfRangeException">The curve is not known.</exception>
-    public static IEccCurve GetCurve(NistCurve curve) =>
+    public static PrimeCurve GetCurve(NistCurve curve) =>
         curve switch {
             NistCurve.P256 => P256,
             NistCurve.P384 => P384,

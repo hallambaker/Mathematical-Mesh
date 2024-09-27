@@ -1,26 +1,26 @@
-﻿namespace Goedel.Cryptography.Nist;
-public class EccVerificationResult : IDsaVerificationResult, ICryptoResult {
-    /// <summary>
-    /// Was the generation successful?
-    /// </summary>
-    public bool Success => string.IsNullOrEmpty(ErrorMessage);
+﻿//namespace Goedel.Cryptography.Nist;
+//public class EccVerificationResult : IDsaVerificationResult, ICryptoResult {
+//    /// <summary>
+//    /// Was the generation successful?
+//    /// </summary>
+//    public bool Success => string.IsNullOrEmpty(ErrorMessage);
 
-    /// <summary>
-    /// Message associated to generation attempt
-    /// </summary>
-    public string ErrorMessage { get; }
+//    /// <summary>
+//    /// Message associated to generation attempt
+//    /// </summary>
+//    public string ErrorMessage { get; }
 
-    /// <summary>
-    /// No errors
-    /// </summary>
-    public EccVerificationResult() { }
+//    /// <summary>
+//    /// No errors
+//    /// </summary>
+//    public EccVerificationResult() { }
 
-    /// <summary>
-    /// Include error message
-    /// </summary>
-    /// <param name="errorMessage"></param>
-    public EccVerificationResult(string errorMessage) {
-        ErrorMessage = errorMessage;
-        }
-    }
+//    /// <summary>
+//    /// Include error message
+//    /// </summary>
+//    /// <param name="errorMessage"></param>
+//    public EccVerificationResult(string errorMessage) {
+//        ErrorMessage = errorMessage;
+//        }
+//    }
 

@@ -1,3 +1,3 @@
-﻿namespace Goedel.Cryptography.Nist;
-public interface IDomainParametersValidateResult { }
+﻿//namespace Goedel.Cryptography.Nist;
+//public interface IDomainParametersValidateResult { }
 

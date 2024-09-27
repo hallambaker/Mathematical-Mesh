@@ -6,7 +6,7 @@ namespace Goedel.Cryptography.Nist;
 /// <summary>
 /// Point on a NIST prime curve.
 /// </summary>
-public class PrimeCurve : IEccCurve {
+public class PrimeCurve  {
     private readonly PrimeFieldOperator _operator;
 
     ///<summary>The cryptographic algorithm ID</summary> 

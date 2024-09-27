@@ -34,6 +34,10 @@ public static class Erasure {
         value = 0;
         }
 
+    /// <summary>
+    /// Erase the value contained in <paramref name="value"/>.
+    /// </summary>
+    /// <param name="value">The value to erase.</param>
     public static void Erase(this byte[]? value) {
         if (value is null) {
             return;

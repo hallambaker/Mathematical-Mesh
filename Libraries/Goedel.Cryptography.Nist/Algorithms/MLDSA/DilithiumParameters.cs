@@ -105,13 +105,15 @@ public class DilithiumParameters {
     ///<summary>Signature length for ML-DSA-87</summary> 
     public const int SignatureLength87 = 4627;
 
-
+    ///<summary>ML-DSA 44 parameters.</summary> 
     public static DilithiumParameters ML_DSA_44 { get; } =
     new DilithiumParameters(DilithiumParameterSet.ML_DSA_44);
 
+    ///<summary>ML-DSA 65 parameters.</summary> 
     public static DilithiumParameters ML_DSA_65 { get; } =
         new DilithiumParameters(DilithiumParameterSet.ML_DSA_65);
 
+    ///<summary>ML-DSA 87 parameters.</summary> 
     public static DilithiumParameters ML_DSA_87 { get; } =
         new DilithiumParameters(DilithiumParameterSet.ML_DSA_87);
 

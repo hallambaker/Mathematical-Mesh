@@ -1,3 +1,3 @@
-﻿namespace Goedel.Cryptography.Nist;
-public interface IDsaVerificationResult { }
+﻿//namespace Goedel.Cryptography.Nist;
+//public interface IDsaVerificationResult { }
 
