@@ -4,13 +4,22 @@ namespace Goedel.Cryptography.Nist;
 
 
 
-
+/// <summary>
+/// RSA Prime Generation Hints.
+/// </summary>
 public record RsaGenerationHints {
 
+    /// <summary>
+    /// Hints for a qualified prime.
+    /// </summary>
     public record PrimeHints {
+        ///<summary>Number of test operations.</summary> 
         public int PrimeTest;
+        ///<summary>Tests of aux1</summary> 
         public int Aux1;
+        ///<summary>Tests of Aux 2</summary> 
         public int Aux2;
+        ///<summary>Number of candidate primes regenerated.</summary> 
         public int PrimeGen;
         }
 
@@ -18,7 +27,10 @@ public record RsaGenerationHints {
     public PrimeHints Q = new();
     public PrimeHints P = new();
 
-
+    /// <summary>
+    /// Create an instance from the encoded string <paramref name="hints"/>
+    /// </summary>
+    /// <param name="hints">Base32 encoded hints.</param>
     public RsaGenerationHints(string hints) {
         var bytes = hints.FromBase32();
         int i = 0;
@@ -35,7 +47,10 @@ public record RsaGenerationHints {
         Q.PrimeGen = GetHint(bytes, ref i);
         }
 
-
+    /// <summary>
+    /// Create an instance from a dictionary of labeled call counts..
+    /// </summary>
+    /// <param name="callCount">The dictionary of call counts.</param>
     public RsaGenerationHints(Dictionary<string, int> callCount) {
         callCount.TryGetValue("p", out P.PrimeTest);
         callCount.TryGetValue("q", out Q.PrimeTest);
@@ -51,7 +66,7 @@ public record RsaGenerationHints {
         }
 
 
-    int GetHint(byte[] values, ref int index) {
+    static int GetHint(byte[] values, ref int index) {
         if (index >= values.Length) {
             return 0;
             }
@@ -83,7 +98,11 @@ public record RsaGenerationHints {
         return xx;
         }
 
-
+    /// <summary>
+    /// Return the hints of string <paramref name="hints"/>
+    /// </summary>
+    /// <param name="hints">The string describing the hints.</param>
+    /// <returns>The instance.</returns>
     public static RsaGenerationHints GetHints(string hints) {
         if (hints == null) {
             return null;
@@ -91,7 +110,10 @@ public record RsaGenerationHints {
         return new RsaGenerationHints(hints);
         }
 
-
+    /// <summary>
+    /// Convert the hints to anb encoded byte array.
+    /// </summary>
+    /// <returns></returns>
     public byte[] ToBytes() {
         var stream = new MemoryStream();
         Append(stream, P.PrimeTest);
@@ -110,7 +132,7 @@ public record RsaGenerationHints {
         }
 
 
-    public void Append(MemoryStream stream, int value) {
+    void Append(MemoryStream stream, int value) {
         if (value > 0x3FFFFF) {
             stream.WriteByte((byte)0x83);
             stream.WriteByte((byte)0xFF);

@@ -15,7 +15,6 @@ public class NativeShaFactory : IShaFactory {
 
             case ModeValues.SHA3:
             return hashFunction.DigestSize switch {
-                DigestSizes.d224 => new NativeFastSha3(224),
                 DigestSizes.d256 => new NativeFastSha3(256),
                 DigestSizes.d384 => new NativeFastSha3(384),
                 DigestSizes.d512 => new NativeFastSha3(512),

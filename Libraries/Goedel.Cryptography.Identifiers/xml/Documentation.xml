@@ -1110,6 +1110,12 @@
             </summary>
             <param name="value">The value to erase.</param>
         </member>
+        <member name="M:Goedel.Cryptography.Erasure.Erase(System.Byte[])">
+            <summary>
+            Erase the value contained in <paramref name="value"/>.
+            </summary>
+            <param name="value">The value to erase.</param>
+        </member>
         <member name="T:Goedel.Cryptography.CryptographicException">
             <summary>
             Base class for cryptographic exceptions.

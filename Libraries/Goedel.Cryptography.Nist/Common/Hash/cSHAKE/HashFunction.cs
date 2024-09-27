@@ -1,11 +1,11 @@
-﻿namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash.cSHAKE {
-    public struct HashFunction {
-        public HashFunction(int digestLength, int capacity) : this() {
-            DigestLength = digestLength;
-            Capacity = capacity;
-            }
+﻿//namespace NIST.CVP.ACVTS.Libraries.Crypto.Common.Hash.cSHAKE {
+//    public struct HashFunction {
+//        public HashFunction(int digestLength, int capacity) : this() {
+//            DigestLength = digestLength;
+//            Capacity = capacity;
+//            }
 
-        public int DigestLength { get; set; }
-        public int Capacity { get; set; }
-        }
-    }
+//        public int DigestLength { get; set; }
+//        public int Capacity { get; set; }
+//        }
+//    }

@@ -48,22 +48,6 @@
         <member name="F:Goedel.Cryptography.Nist.NistCurve.P521">
             <summary>Curve P-521, (secp521r1)</summary> 
         </member>
-        <member name="T:Goedel.Cryptography.Nist.CurveType">
-            <summary>
-            The curve type. Only prime curves are required.
-            </summary>
-        </member>
-        <member name="F:Goedel.Cryptography.Nist.CurveType.Prime">
-            <summary>Prime curve.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Nist.CurveType.Binary">
-            <summary>Binary curve</summary> 
-        </member>
-        <member name="T:Goedel.Cryptography.Nist.NonceProviderTypes">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:Goedel.Cryptography.Nist.EccPoint">
             <summary>A point on a prime curve.</summary> 
         </member>
@@ -105,86 +89,6 @@
             <param name="b"></param>
             <returns></returns>
         </member>
-        <member name="P:Goedel.Cryptography.Nist.IEccCurve.CurveType">
-            <summary>
-            Type of curve, prime or binary
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Nist.IEccCurve.CurveName">
-            <summary>
-            Name of the curve as an enum
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Nist.IEccCurve.FieldSizeQ">
-            <summary>
-            Field size, either a q = prime > 3, or q = 2^m where m is prime. Represents the total number of points
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Nist.IEccCurve.CoefficientA">
-            <summary>
-            Coefficient a
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Nist.IEccCurve.CoefficientB">
-            <summary>
-            Coefficient b
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Nist.IEccCurve.BasePointG">
-            <summary>
-            Base point of the curve
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Nist.IEccCurve.CofactorH">
-            <summary>
-            Cofactor of the curve, a curve has h * <see cref="P:Goedel.Cryptography.Nist.IEccCurve.OrderN"/> possible points. Value is usually 1, 2, or 4.
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Nist.IEccCurve.OrderN">
-            <summary>
-            Order of <see cref="P:Goedel.Cryptography.Nist.IEccCurve.BasePointG"/> which is a large prime
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Nist.IEccCurve.KeySize">
-            <summary>
-            The key size in bits.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.IEccCurve.Multiply(Goedel.Cryptography.Nist.EccPoint,System.Numerics.BigInteger)">
-            <summary>
-            Multiply a point by a scalar value over a curve
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.IEccCurve.Double(Goedel.Cryptography.Nist.EccPoint)">
-            <summary>
-            Double a point over a curve
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.IEccCurve.Add(Goedel.Cryptography.Nist.EccPoint,Goedel.Cryptography.Nist.EccPoint)">
-            <summary>
-            Add two points together over a curve, a + b
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.IEccCurve.Subtract(Goedel.Cryptography.Nist.EccPoint,Goedel.Cryptography.Nist.EccPoint)">
-            <summary>
-            Subtracts two points over a curve, a - b
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.IEccCurve.Negate(Goedel.Cryptography.Nist.EccPoint)">
-            <summary>
-            Negates a point, a => -a
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.IEccCurve.PointExistsOnCurve(Goedel.Cryptography.Nist.EccPoint)">
-            <summary>
-            Determines if a given point exists on the curve
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.IEccCurve.PointExistsInField(Goedel.Cryptography.Nist.EccPoint)">
-            <summary>
-            Determines if a given point exists in the field
-            </summary>
-        </member>
         <member name="T:Goedel.Cryptography.Nist.PrimeCurve">
             <summary>
             Point on a NIST prime curve.
@@ -216,9 +120,6 @@
         </member>
         <member name="P:Goedel.Cryptography.Nist.PrimeCurve.CofactorH">
             <summary>Cofactor is always 1 for a prime curve</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Nist.PrimeCurve.CurveType">
-            <summary>CurveType is obviously prime</summary> 
         </member>
         <member name="P:Goedel.Cryptography.Nist.PrimeCurve.CurveName">
             <summary>The curve name</summary> 
@@ -778,6 +679,15 @@
         <member name="F:Goedel.Cryptography.Nist.DilithiumParameters.SignatureLength87">
             <summary>Signature length for ML-DSA-87</summary> 
         </member>
+        <member name="P:Goedel.Cryptography.Nist.DilithiumParameters.ML_DSA_44">
+            <summary>ML-DSA 44 parameters.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.DilithiumParameters.ML_DSA_65">
+            <summary>ML-DSA 65 parameters.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.DilithiumParameters.ML_DSA_87">
+            <summary>ML-DSA 87 parameters.</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.Nist.DilithiumParameters.#ctor(Goedel.Cryptography.Nist.DilithiumParameterSet)">
             <summary>
             Default constructor, create an instance for the parameters 
@@ -1169,6 +1079,25 @@
             <param name="d"></param>
             <returns></returns>
         </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.K_Pke_Encrypt(System.Byte[],System.Byte[],System.Byte[])">
+            <summary>
+            Encrypt <paramref name="m"/> under the key <paramref name="ek"/> using the randum
+            input <paramref name="rand"/>
+            </summary>
+            <param name="ek">The encapsulation key.</param>
+            <param name="m">The message.</param>
+            <param name="rand">Random value.</param>
+            <returns>The ciphertext data.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.KyberNist.K_Pke_Decrypt(System.Byte[],System.Byte[])">
+            <summary>
+            Decrypt the ciphertext <paramref name="c"/> using decapsulation key 
+            <paramref name="dk"/> and return the message.
+            </summary>
+            <param name="dk">The decapsulation key.</param>
+            <param name="c">The ciphertext.</param>
+            <returns>The message</returns>
+        </member>
         <member name="M:Goedel.Cryptography.Nist.KyberNist.ZetaFunction(System.Int32)">
             <summary>
             Helper function for NTTs that performs a bit-reversal on k and retrieves that index from the precomputed zeta array
@@ -1391,6 +1320,53 @@
             <param name="m">Random seed, 32 bytes</param>
             <returns>Tuple containing (shared secret K, ciphertext c)</returns>
         </member>
+        <member name="T:Goedel.Cryptography.Nist.RsaGenerationHints">
+            <summary>
+            RSA Prime Generation Hints.
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.RsaGenerationHints.PrimeHints">
+            <summary>
+            Hints for a qualified prime.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.RsaGenerationHints.PrimeHints.PrimeTest">
+            <summary>Number of test operations.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.RsaGenerationHints.PrimeHints.Aux1">
+            <summary>Tests of aux1</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.RsaGenerationHints.PrimeHints.Aux2">
+            <summary>Tests of Aux 2</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.RsaGenerationHints.PrimeHints.PrimeGen">
+            <summary>Number of candidate primes regenerated.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.RsaGenerationHints.#ctor(System.String)">
+            <summary>
+            Create an instance from the encoded string <paramref name="hints"/>
+            </summary>
+            <param name="hints">Base32 encoded hints.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.RsaGenerationHints.#ctor(System.Collections.Generic.Dictionary{System.String,System.Int32})">
+            <summary>
+            Create an instance from a dictionary of labeled call counts..
+            </summary>
+            <param name="callCount">The dictionary of call counts.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.RsaGenerationHints.GetHints(System.String)">
+            <summary>
+            Return the hints of string <paramref name="hints"/>
+            </summary>
+            <param name="hints">The string describing the hints.</param>
+            <returns>The instance.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.RsaGenerationHints.ToBytes">
+            <summary>
+            Convert the hints to anb encoded byte array.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Goedel.Cryptography.Nist.RsaGenerationHints.ToString">
             <inheritdoc/>
         </member>
@@ -1484,35 +1460,27 @@
             <returns>The random value.</returns>
             <param name="hint"></param>
         </member>
-        <member name="P:Goedel.Cryptography.Nist.PrimeGenerator.CallCount">
-            <summary>Dictionary tracking the number of times the method has been called.</summary> 
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.PrimeGenerator.#ctor">
+        <member name="T:Goedel.Cryptography.Nist.PrimeGeneratorHelper">
             <summary>
-            Constructor, return a prime generator using the platform random number generator.
+            Static class with prime generation helpers.
             </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.PrimeGenerator.GetEntropy(System.Numerics.BigInteger,System.Numerics.BigInteger,System.String,System.Nullable{System.Int32})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.PrimeGenerator.GetPrime(System.Int32,System.Int32,System.String,System.Nullable{System.Int32})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.PrimeGenerator.UpdateCallCount(System.String)">
-            <summary>
-            Update the call count in the dictionary.
-            </summary>
-            <param name="tag">The identifier to update.</param>
         </member>
         <member name="M:Goedel.Cryptography.Nist.PrimeGeneratorHelper.ProbablePrimeFactor(Goedel.Cryptography.Nist.IPrimeGenerator,System.Int32,System.Int32,System.Numerics.BigInteger,System.Numerics.BigInteger,System.Int32,System.Numerics.BigInteger,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>
             C.9 Compute a Probable Prime Factor Based on Auxiliary Primes
             </summary>
+            <param name="entropyProvider"></param>
+            <param name="pBound"></param>
+            <param name="c"></param>
             <param name="r1"></param>
             <param name="r2"></param>
             <param name="nLen"></param>
             <param name="e"></param>
+            <param name="tag"></param>
+            <param name="primeSeed"></param>
+            <param name="primeTest"></param>
             <returns></returns>
+            <exception cref="T:Goedel.Cryptography.CryptographicException"></exception>
         </member>
         <member name="P:Goedel.Cryptography.Nist.PrimeGeneratorParameters.RSA2048">
             <summary>Static parameter set for 2048 bit keys</summary> 
@@ -1644,7 +1612,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Nist.ListExtensions.AddIfNotNullOrEmpty(System.Collections.Generic.List{System.String},System.String)">
             <summary>
-            Adds a string to a <see cref="T:System.Collections.Generic.List`1"/> when the string is not null or empty, otherwise do nothing.
+            Adds a string to a <paramref name="list"/> when the string is not null or empty, otherwise do nothing.
             </summary>
             <param name="list">The list to (potentially) add the <see cref="!:itemToAdd"/> too</param>
             <param name="itemToAdd">The item that is evaluated for adding to <see cref="!:list"/></param>
@@ -1652,7 +1620,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Nist.ListExtensions.AddIfNotNull``1(System.Collections.Generic.List{``0},``0)">
             <summary>
-            Add an item to <see cref="T:System.Collections.Generic.List`1"/> if it is not null
+            Add an item to <paramref name="list"/> if it is not null
             </summary>
             <typeparam name="T">The type contained within the list</typeparam>
             <param name="list">The list</param>
@@ -1661,15 +1629,15 @@
         </member>
         <member name="M:Goedel.Cryptography.Nist.ListExtensions.AddRangeIfNotNullOrEmpty``1(System.Collections.Generic.List{``0},System.Collections.Generic.IEnumerable{``0})">
             <summary>
-            Adds an <see cref="T:System.Collections.Generic.IEnumerable`1"/> to a <see cref="T:System.Collections.Generic.List`1"/> when the <see cref="!:itemsToAdd"/> has more than 0 elements.
+            Adds an <see cref="T:System.Collections.Generic.IEnumerable`1"/> to a <paramref name="list"/> when the <paramref name="itemsToAdd"/> has more than 0 elements.
             </summary>
-            <param name="list">The list to (potentially) add the <see cref="!:itemsToAdd"/> too</param>
-            <param name="itemsToAdd">The object that is evaluated for adding to <see cref="!:list"/></param>
+            <param name="list">The list to (potentially) add the <paramref name="itemsToAdd"/> too</param>
+            <param name="itemsToAdd">The object that is evaluated for adding to <paramref name="list"/></param>
             <returns>True if item added, false otherwise.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Nist.ListExtensions.Add``1(System.Collections.Generic.List{``0},``0,System.Int32)">
             <summary>
-            Adds an item to <see cref="T:System.Collections.Generic.List`1"/> <paramref name="numberOfTimesToAdd"/> times.
+            Adds an item to <paramref name="list"/> <paramref name="numberOfTimesToAdd"/> times.
             </summary>
             <typeparam name="T"></typeparam>
             <param name="list"></param>
@@ -1687,6 +1655,55 @@
             <summary>
             Output length in bits.
             </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.HashFunction.GetHashCode">
+            <summary>
+            Get the hash value.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.ModeValues">
+            <summary>
+            Digest mode values.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.ModeValues.SHA3">
+            <summary>SHA-3</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.ModeValues.SHAKE">
+            <summary>SHAKE</summary> 
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.DigestSizes">
+            <summary>
+            Digest mode sizes
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.DigestSizes.d128">
+            <summary>128 bit digest output</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.DigestSizes.d256">
+            <summary>256 bit digest output</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.DigestSizes.d384">
+            <summary>384 bit digest output</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.DigestSizes.d512">
+            <summary>512 bit digest output</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.DigestSizes.NONE">
+            <summary>None</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.HashFunctions.None">
+            <summary>None</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.HashFunctions.Sha3_d256">
+            <summary>SHA3 256 bit</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.HashFunctions.Sha3_d384">
+            <summary>SHA3 384 bit</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.HashFunctions.Sha3_d512">
+            <summary>SHA3 512 bit</summary> 
         </member>
         <member name="T:Goedel.Cryptography.Nist.ISha">
             <summary>
@@ -1862,20 +1879,6 @@
             Represents the return of a Crypto invoke
             </summary>
         </member>
-        <member name="T:Goedel.Cryptography.Nist.IHmac">
-            <summary>
-            Interface for HMAC operations
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.IMac.Generate(Goedel.Cryptography.Nist.BitString,Goedel.Cryptography.Nist.BitString,System.Int32)">
-            <summary>
-            Generates a MAC based on <see cref="!:key"/> and <see cref="!:message"/>
-            </summary>
-            <param name="key">The key</param>
-            <param name="message">The message</param>
-            <param name="macLength">Number of bits to return from the MSb of the MAC</param>
-            <returns></returns>
-        </member>
         <member name="M:Goedel.Cryptography.Nist.NumberTheory.MillerRabin(System.Numerics.BigInteger,System.Int32)">
             <summary>
             C.3.1 Probabilistic Primality Check, Miller-Rabin Algorithm
@@ -1906,6 +1909,74 @@
             </summary>
             <param name="exp"></param>
             <returns></returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.PrimeFieldOperator">
+            <summary>
+            The prime field operator.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeFieldOperator.#ctor(System.Numerics.BigInteger)">
+            <summary>
+            Constructor, return an instance for the modular field <paramref name="modulo"/>.
+            </summary>
+            <param name="modulo">The prime modulus.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeFieldOperator.Add(System.Numerics.BigInteger,System.Numerics.BigInteger)">
+            <summary>
+            Add <paramref name="a"/> and <paramref name="b"/> modulo the modulus and 
+            return the result.
+            </summary>
+            <param name="a">First parameter</param>
+            <param name="b">Second parameter.</param>
+            <returns><paramref name="a"/> + <paramref name="b"/>.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeFieldOperator.Divide(System.Numerics.BigInteger,System.Numerics.BigInteger)">
+            <summary>
+            Divide <paramref name="a"/> by <paramref name="b"/> modulo the modulus and 
+            return the result.
+            </summary>
+            <param name="a">First parameter</param>
+            <param name="b">Second parameter.</param>
+            <returns><paramref name="a"/> + <paramref name="b"/>.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeFieldOperator.Multiply(System.Numerics.BigInteger,System.Numerics.BigInteger)">
+            <summary>
+            Multiply <paramref name="a"/> and <paramref name="b"/> modulo the modulus and 
+            return the result.
+            </summary>
+            <param name="a">First parameter</param>
+            <param name="b">Second parameter.</param>
+            <returns><paramref name="a"/> * <paramref name="b"/>.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeFieldOperator.Subtract(System.Numerics.BigInteger,System.Numerics.BigInteger)">
+            <summary>
+            Subtract <paramref name="b"/> from <paramref name="a"/> modulo the modulus and 
+            return the result.
+            </summary>
+            <param name="a">First parameter</param>
+            <param name="b">Second parameter.</param>
+            <returns><paramref name="a"/> - <paramref name="b"/>.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeFieldOperator.Negate(System.Numerics.BigInteger)">
+            <summary>
+            Return the additive inverse of <paramref name="a"/>
+            </summary>
+            <param name="a">Input</param>
+            <returns>-<paramref name="a"/></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeFieldOperator.Inverse(System.Numerics.BigInteger)">
+            <summary>
+            Return the multiplicative inverse of <paramref name="a"/>
+            </summary>
+            <param name="a">Input</param>
+            <returns>1/<paramref name="a"/></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeFieldOperator.Modulo(System.Numerics.BigInteger)">
+            <summary>
+            Reduce <paramref name="a"/> by the modulus.
+            </summary>
+            <param name="a">Input</param>
+            <returns>|<paramref name="a"/>|</returns>
         </member>
         <member name="M:Goedel.Cryptography.Nist.PrimeGen186_4.ShaweTaylorRandomPrime(System.Int32,System.Numerics.BigInteger,Goedel.Cryptography.Nist.ISha)">
             <summary>

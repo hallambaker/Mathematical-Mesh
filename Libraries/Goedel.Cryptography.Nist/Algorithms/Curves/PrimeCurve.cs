@@ -39,8 +39,8 @@ public class PrimeCurve  {
     ///<summary>Cofactor is always 1 for a prime curve</summary> 
     public int CofactorH { get { return 1; } }
 
-    ///<summary>CurveType is obviously prime</summary> 
-    public CurveType CurveType { get { return CurveType.Prime; } }
+    /////<summary>CurveType is obviously prime</summary> 
+    //public CurveType CurveType { get { return CurveType.Prime; } }
 
     ///<summary>The curve name</summary> 
     public NistCurve CurveName { get; }

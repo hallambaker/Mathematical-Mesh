@@ -44,45 +44,44 @@ public class HashFunction {
         OID = attributes.OID;
         }
 
-    public override bool Equals(object other) {
-        if (other is HashFunction obj) {
-            return GetHashCode() == obj.GetHashCode();
-            }
 
-        return false;
-        }
 
+    /// <summary>
+    /// Get the hash value.
+    /// </summary>
+    /// <returns></returns>
     public override int GetHashCode() => HashCode.Combine(Mode, DigestSize);
     }
 
+/// <summary>
+/// Digest mode values.
+/// </summary>
 public enum ModeValues {
-    [EnumMember(Value = "SHA-1")]
-    SHA1,
-    [EnumMember(Value = "SHA2")]
-    SHA2,
+    ///<summary>SHA-3</summary> 
     [EnumMember(Value = "SHA3")]
     SHA3,
+    ///<summary>SHAKE</summary> 
     [EnumMember(Value = "SHAKE")]
     SHAKE
     }
 
+/// <summary>
+/// Digest mode sizes
+/// </summary>
 public enum DigestSizes {
+    ///<summary>128 bit digest output</summary> 
     [EnumMember(Value = "128")]
     d128,
-    [EnumMember(Value = "160")]
-    d160,
-    [EnumMember(Value = "224")]
-    d224,
+    ///<summary>256 bit digest output</summary> 
     [EnumMember(Value = "256")]
     d256,
+    ///<summary>384 bit digest output</summary> 
     [EnumMember(Value = "384")]
     d384,
+    ///<summary>512 bit digest output</summary> 
     [EnumMember(Value = "512")]
     d512,
-    [EnumMember(Value = "512/224")]
-    d512t224,
-    [EnumMember(Value = "512/256")]
-    d512t256,
+    ///<summary>None</summary> 
     [EnumMember(Value = "NONE")]
     NONE
     }
