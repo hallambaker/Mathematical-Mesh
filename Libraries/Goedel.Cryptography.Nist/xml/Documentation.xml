@@ -9,6 +9,14 @@
             Factory class returning the parameters of a specified curve.
             </summary>
         </member>
+        <member name="M:Goedel.Cryptography.Nist.EccCurveFactory.GetCurve(System.Int32)">
+            <summary>
+            Return a prime curve by the size of the byte encoding of the point.
+            </summary>
+            <param name="length">The length of the integer encoding in bytes.</param>
+            <returns>The curve.</returns>
+            <exception cref="T:Goedel.Cryptography.CryptographicException">The encoding size is not supported.</exception>
+        </member>
         <member name="P:Goedel.Cryptography.Nist.EccCurveFactory.P256">
             <summary>The NIST Curve P256.</summary> 
         </member>
@@ -25,25 +33,6 @@
             <param name="curve">The curve identifier.</param>
             <returns>The curve.</returns>
             <exception cref="T:System.ArgumentOutOfRangeException">The curve is not known.</exception>
-        </member>
-        <member name="P:Goedel.Cryptography.Nist.EccDomainParameters.CurveE">
-            <summary>
-            The polynomial representing the curve, contains a, b and the curve type
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Nist.EccDomainParameters.SecretGeneration">
-            <summary>
-            How secrets are generated used by these <see cref="T:Goedel.Cryptography.Nist.EccDomainParameters"/>.
-            Generally this field doesn't matter but is needed for some group properties in gen/vals.
-            Theoretically it should factor into KeyGen, but our tests are agnostic to this property.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.EccDsa.#ctor(Goedel.Cryptography.Nist.ISha,Goedel.Cryptography.Nist.IEntropyProvider)">
-            <summary>
-            KAS constructor
-            </summary>
-            <param name="sha">The SHA instance.</param>
-            <param name="entropyProvider">An entropy provider.</param>
         </member>
         <member name="T:Goedel.Cryptography.Nist.NistCurve">
             <summary>
@@ -70,53 +59,10 @@
         <member name="F:Goedel.Cryptography.Nist.CurveType.Binary">
             <summary>Binary curve</summary> 
         </member>
-        <member name="T:Goedel.Cryptography.Nist.SecretGenerationMode">
-            <summary>The secret generation mode.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Nist.SecretGenerationMode.TestingCandidates">
-            <summary>Testing candidates, a secret is generated with the number of bits
-            necessary and rejected if it is too large.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Nist.SecretGenerationMode.ExtraRandomBits">
-            <summary>Extra bits, the secret is generated with a suffiently large number of bits that
-            truncation is unlikely to introduce bias.</summary> 
-        </member>
         <member name="T:Goedel.Cryptography.Nist.NonceProviderTypes">
             <summary>
             
             </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.EccKeyPairGenerateResult.#ctor(Goedel.Cryptography.Nist.EccKeyPair)">
-            <summary>
-            No errors
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.EccKeyPairGenerateResult.#ctor(System.String)">
-            <summary>
-            Include error message
-            </summary>
-            <param name="errorMessage"></param>
-        </member>
-        <member name="P:Goedel.Cryptography.Nist.EccKeyPairValidateResult.Success">
-            <summary>
-            Was the validation successful?
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Nist.EccKeyPairValidateResult.ErrorMessage">
-            <summary>
-            Message associated to validation attempt
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.EccKeyPairValidateResult.#ctor">
-            <summary>
-            No errors
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.EccKeyPairValidateResult.#ctor(System.String)">
-            <summary>
-            Include error message
-            </summary>
-            <param name="errorMessage"></param>
         </member>
         <member name="T:Goedel.Cryptography.Nist.EccPoint">
             <summary>A point on a prime curve.</summary> 
@@ -136,6 +82,28 @@
             <summary>
             Y Coordinate of the point
             </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.EccPoint.#ctor(Goedel.Cryptography.Nist.PrimeCurve,System.String)">
+            <summary>
+            Return the point at infionity.
+            </summary>
+            <param name="curve"></param>
+            <param name="inf"></param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.EccPoint.#ctor(Goedel.Cryptography.Nist.PrimeCurve,System.Numerics.BigInteger,System.Numerics.BigInteger)">
+            <summary>
+            Return an unchecked point on the curve.
+            </summary>
+            <param name="curve"></param>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.EccPoint.Equals(Goedel.Cryptography.Nist.EccPoint)">
+            <summary>
+            Return true is the point is equal to <paramref name="b"/>, otherwise false.
+            </summary>
+            <param name="b"></param>
+            <returns></returns>
         </member>
         <member name="P:Goedel.Cryptography.Nist.EccVerificationResult.Success">
             <summary>
@@ -320,6 +288,11 @@
             Determines if a given point exists in the field
             </summary>
         </member>
+        <member name="T:Goedel.Cryptography.Nist.PrimeCurve">
+            <summary>
+            Point on a NIST prime curve.
+            </summary>
+        </member>
         <member name="P:Goedel.Cryptography.Nist.PrimeCurve.CryptoAlgorithmId">
             <summary>The cryptographic algorithm ID</summary> 
         </member>
@@ -369,6 +342,53 @@
             <param name="g">The base point G.</param>
             <param name="n">The prime.</param>
             <param name="l">Minimum number of bits required to generate a key (defaults to keysize).</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeCurve.GetPointVerified(System.Numerics.BigInteger,System.Numerics.BigInteger)">
+            <summary>
+            Verify that <paramref name="x"/>, <paramref name="y"/> is a point on the 
+            curve and return a constructed point.
+            </summary>
+            <param name="x">The X coordinate.</param>
+            <param name="y">The Y coordinate.</param>
+            <returns>The verified point.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeCurve.Add(Goedel.Cryptography.Nist.EccPoint,Goedel.Cryptography.Nist.EccPoint)">
+            <summary>
+            Point add operation.
+            </summary>
+            <param name="pointA">First point</param>
+            <param name="pointB">Second Point</param>
+            <returns><paramref name="pointA"/>+ <paramref name="pointB"/>.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeCurve.Negate(Goedel.Cryptography.Nist.EccPoint)">
+            <summary>
+            Point negation operation.
+            </summary>
+            <param name="point">The point to negate.</param>
+            <returns>-<paramref name="point"/></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeCurve.Subtract(Goedel.Cryptography.Nist.EccPoint,Goedel.Cryptography.Nist.EccPoint)">
+            <summary>
+            Point subtract operation.
+            </summary>
+            <param name="pointA">First point</param>
+            <param name="pointB">Second Point</param>
+            <returns><paramref name="pointA"/>- <paramref name="pointB"/>.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeCurve.Double(Goedel.Cryptography.Nist.EccPoint)">
+            <summary>
+            Point double operation.
+            </summary>
+            <param name="point">The point to double.</param>
+            <returns> <paramref name="point"/> + <paramref name="point"/></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeCurve.Multiply(Goedel.Cryptography.Nist.EccPoint,Goedel.Cryptography.Nist.NonAdjacentBitString)">
+            <summary>
+            Point multiply operation.
+            </summary>
+            <param name="startPoint">First point</param>
+            <param name="nafBs">Second Point</param>
+            <returns><paramref name="startPoint"/> *<paramref name="nafBs"/>.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Nist.PrimeCurve.Multiply(Goedel.Cryptography.Nist.EccPoint,System.Numerics.BigInteger)">
             <summary>

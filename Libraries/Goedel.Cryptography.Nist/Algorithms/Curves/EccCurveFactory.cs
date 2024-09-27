@@ -8,6 +8,23 @@ public static class EccCurveFactory {
 
     #region PCurves
 
+
+    /// <summary>
+    /// Return a prime curve by the size of the byte encoding of the point.
+    /// </summary>
+    /// <param name="length">The length of the integer encoding in bytes.</param>
+    /// <returns>The curve.</returns>
+    /// <exception cref="CryptographicException">The encoding size is not supported.</exception>
+    public static PrimeCurve GetCurve (int length) => length switch {
+                // These are fized constants so use the constants as switch labels.
+                32 => EccCurveFactory.P256,
+                48 => EccCurveFactory.P384,
+                66 => EccCurveFactory.P521,
+                _ => throw new CryptographicException()
+                };
+
+
+
     ///<summary>The NIST Curve P256.</summary> 
     public static PrimeCurve P256 => p256 ?? GetP256().CacheValue(out p256);
     static PrimeCurve p256;

@@ -259,12 +259,6 @@
             is calculated from <paramref name="bigInteger"/>.</param>
             <returns>The byte array.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.BigNumberExtensions.Erase(System.Numerics.BigInteger@)">
-            <summary>
-            Erase the value contained in <paramref name="value"/>.
-            </summary>
-            <param name="value">The value to erase.</param>
-        </member>
         <member name="M:Goedel.Cryptography.BigNumberExtensions.CountBytes(System.Numerics.BigInteger)">
             <summary>
             Count the number of bytes required to represent <paramref name="value"/>.
@@ -1104,6 +1098,17 @@
             <param name="oid">An OID specifying the digest algorithm.</param>
             <param name="context">Optional context string of 255 bytes or fewer.</param>
             <returns>The manifest bytes.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Erasure">
+            <summary>
+            Extension methods to erase data.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Erasure.Erase(System.Numerics.BigInteger@)">
+            <summary>
+            Erase the value contained in <paramref name="value"/>.
+            </summary>
+            <param name="value">The value to erase.</param>
         </member>
         <member name="T:Goedel.Cryptography.CryptographicException">
             <summary>

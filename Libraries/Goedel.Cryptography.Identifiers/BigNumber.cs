@@ -378,13 +378,7 @@ public static class BigNumberExtensions {
         }
 
 
-    /// <summary>
-    /// Erase the value contained in <paramref name="value"/>.
-    /// </summary>
-    /// <param name="value">The value to erase.</param>
-    public static void Erase(this ref BigInteger value) {
-        value = 0;
-        }
+
 
     /// <summary>
     /// Count the number of bytes required to represent <paramref name="value"/>.

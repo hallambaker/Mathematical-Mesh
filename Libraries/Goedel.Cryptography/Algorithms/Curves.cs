@@ -23,18 +23,10 @@
 namespace Goedel.Cryptography.Algorithms;
 
 
-public interface ICurve {
-    /// <summary>
-    /// Return a IKeyAdvancedPublic public key for this point. 
-    /// </summary>
-    IKeyAdvancedPublic KeyAdvancedPublic { get; }
-    }
-
-
 /// <summary>
 /// Base Class for Elliptic Curve implementations
 /// </summary>
-public abstract class Curve : ICurve {
+public abstract class Curve  {
 
     ///<summary>The Jose curve name for direct encoding</summary>
     public const string CurveJoseDirectSuffix = "z";

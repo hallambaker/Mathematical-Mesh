@@ -33,19 +33,19 @@ public enum CurveType {
     Binary
     }
 
-///<summary>The secret generation mode.</summary> 
-public enum SecretGenerationMode {
+/////<summary>The secret generation mode.</summary> 
+//public enum SecretGenerationMode {
 
-    ///<summary>Testing candidates, a secret is generated with the number of bits
-    ///necessary and rejected if it is too large.</summary> 
-    [EnumMember(Value = "testing candidates")]
-    TestingCandidates,
+//    ///<summary>Testing candidates, a secret is generated with the number of bits
+//    ///necessary and rejected if it is too large.</summary> 
+//    [EnumMember(Value = "testing candidates")]
+//    TestingCandidates,
 
-    ///<summary>Extra bits, the secret is generated with a suffiently large number of bits that
-    ///truncation is unlikely to introduce bias.</summary> 
-    [EnumMember(Value = "extra bits")]
-    ExtraRandomBits
-    }
+//    ///<summary>Extra bits, the secret is generated with a suffiently large number of bits that
+//    ///truncation is unlikely to introduce bias.</summary> 
+//    [EnumMember(Value = "extra bits")]
+//    ExtraRandomBits
+//    }
 
 /// <summary>
 /// 

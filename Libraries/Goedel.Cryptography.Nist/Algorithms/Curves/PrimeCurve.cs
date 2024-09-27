@@ -1,6 +1,11 @@
-﻿using System.Security.Cryptography;
+﻿using System.Runtime.Intrinsics.Arm;
+using System.Security.Cryptography;
 
 namespace Goedel.Cryptography.Nist;
+
+/// <summary>
+/// Point on a NIST prime curve.
+/// </summary>
 public class PrimeCurve : IEccCurve {
     private readonly PrimeFieldOperator _operator;
 
@@ -76,6 +81,28 @@ public class PrimeCurve : IEccCurve {
         _operator = new PrimeFieldOperator(p);
         }
 
+    /// <summary>
+    /// Verify that <paramref name="x"/>, <paramref name="y"/> is a point on the 
+    /// curve and return a constructed point.
+    /// </summary>
+    /// <param name="x">The X coordinate.</param>
+    /// <param name="y">The Y coordinate.</param>
+    /// <returns>The verified point.</returns>
+    public EccPoint GetPointVerified(BigInteger x, BigInteger y) {
+        var point = new EccPoint(this, x, y);
+        // Check that point exists in the field.
+        PointExistsInField(point).AssertTrue(CryptographicException.Throw);
+        // Check that point is on the curve.
+        PointExistsOnCurve(point).AssertTrue(CryptographicException.Throw);
+        return point;
+        }
+
+    /// <summary>
+    /// Point add operation.
+    /// </summary>
+    /// <param name="pointA">First point</param>
+    /// <param name="pointB">Second Point</param>
+    /// <returns><paramref name="pointA"/>+ <paramref name="pointB"/>.</returns>
     public EccPoint Add(EccPoint pointA, EccPoint pointB) {
         // Any point added to infinity is itself
         if (pointA.Infinity) {
@@ -107,6 +134,11 @@ public class PrimeCurve : IEccCurve {
         return new EccPoint(this, x, y);
         }
 
+    /// <summary>
+    /// Point negation operation.
+    /// </summary>
+    /// <param name="point">The point to negate.</param>
+    /// <returns>-<paramref name="point"/></returns>
     public EccPoint Negate(EccPoint point) {
         if (point.Infinity) {
             return point;
@@ -116,10 +148,21 @@ public class PrimeCurve : IEccCurve {
         return new EccPoint(this, point.X, _operator.Negate(point.Y));
         }
 
+    /// <summary>
+    /// Point subtract operation.
+    /// </summary>
+    /// <param name="pointA">First point</param>
+    /// <param name="pointB">Second Point</param>
+    /// <returns><paramref name="pointA"/>- <paramref name="pointB"/>.</returns>
     public EccPoint Subtract(EccPoint pointA, EccPoint pointB) {
         return Add(pointA, Negate(pointB));
         }
 
+    /// <summary>
+    /// Point double operation.
+    /// </summary>
+    /// <param name="point">The point to double.</param>
+    /// <returns> <paramref name="point"/> + <paramref name="point"/></returns>
     public EccPoint Double(EccPoint point) {
         if ((point.X == 0 && point.Y == 0) || point.Infinity) {
             return point;
@@ -139,6 +182,12 @@ public class PrimeCurve : IEccCurve {
         return new EccPoint(this, x, y);
         }
 
+    /// <summary>
+    /// Point multiply operation.
+    /// </summary>
+    /// <param name="startPoint">First point</param>
+    /// <param name="nafBs">Second Point</param>
+    /// <returns><paramref name="startPoint"/> *<paramref name="nafBs"/>.</returns>
     private EccPoint Multiply(EccPoint startPoint, NonAdjacentBitString nafBs) {
         var point = new EccPoint(this, "infinity");
         var naBits = nafBs.Bits;
@@ -204,5 +253,8 @@ public class PrimeCurve : IEccCurve {
 
         return true;
         }
+
+
+
     }
 

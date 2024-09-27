@@ -63,16 +63,25 @@ partial class Program {
 
 
 
-        //TestSequences.Test().TestSign(SequenceType.List);
+        ShellTests.Test().TestMessageGroup();
+        RegistrationTests.Test().CallsignRegistration();
+
+
+        //MakeSiteDocs.Test().GroupTests();
+
+
+
         //TestSequences.Test().TestSign(SequenceType.Tree);
 
 
         //TestSequences.Test().TestSparse(ModeEnhance.Sequence, ModeEnhance.Sequence);
 
-        TestGoedelCryptography.Test().TestECDHP();
-        TestGoedelCryptography.Test().TestECDHPThreshold();
-        TestGoedelCryptography.Test().TestECDSA();
+        //TestGoedelCryptography.Test().TestECDHP();
+        //TestGoedelCryptography.Test().TestECDHPThreshold();
 
+        //for (var i = 0; i < 100; i++) {
+        //    TestGoedelCryptography.Test().TestECDSA();
+        //    }
 
         //TCallsign.Test().TestIssue();
         //TestGoedelCryptography.Test().UDFKeyGen(UDFKeyGen.TEST1);

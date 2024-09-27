@@ -6416,6 +6416,9 @@
             the body.
             </summary>
         </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.GetBodyLazy">
+            <summary>Return the body of the entry.</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.Sequence">
             <summary>The Sequence that is indexed.</summary> 
         </member>

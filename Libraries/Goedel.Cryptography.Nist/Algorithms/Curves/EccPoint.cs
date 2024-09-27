@@ -21,22 +21,33 @@ public class EccPoint {
     /// </summary>
     public BigInteger Y { get; set; }
 
-
-    public EccPoint() {
-
-        }
-
+    /// <summary>
+    /// Return the point at infionity.
+    /// </summary>
+    /// <param name="curve"></param>
+    /// <param name="inf"></param>
     public EccPoint(PrimeCurve curve, string inf) {
         Infinity = true;
         Curve = curve;
         }
 
+    /// <summary>
+    /// Return an unchecked point on the curve.
+    /// </summary>
+    /// <param name="curve"></param>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
     public EccPoint(PrimeCurve curve, BigInteger x, BigInteger y) {
         Curve = curve;
         X = x;
         Y = y;
         }
 
+    /// <summary>
+    /// Return true is the point is equal to <paramref name="b"/>, otherwise false.
+    /// </summary>
+    /// <param name="b"></param>
+    /// <returns></returns>
     public bool Equals(EccPoint b) {
         // Both points are infinity
         if (this.Infinity && b.Infinity) {

@@ -147,6 +147,7 @@ subjectPublicKeyInfo SubjectPublicKeyInfo SEQUENCE (2 elem)
     /// <param name="keyUses">The permitted key uses.</param>
     /// <param name="cryptoAlgorithmID">Specifies the default algorithm variation for use
     /// in signature operations.</param>
+    /// <param name="curve">The curve parameters.</param>
     public KeyPairECDHNist(
                 CurveNistPrivate privateKey = null,
                 KeySecurity keySecurity = KeySecurity.Bound,
@@ -208,11 +209,8 @@ subjectPublicKeyInfo SubjectPublicKeyInfo SEQUENCE (2 elem)
 
         var (algId, curve) = GetCurve(keySize);
 
-        var n = Platform.GetRandomBits(curve.MinimumOutputSize);
-        var d = 1+ n.ToBigInteger() % (curve.OrderN-1);
-
         var exportable = keyType.IsExportable();
-        var secretKey = new CurveNistPrivate(curve, d, exportable);
+        var secretKey = new CurveNistPrivate(curve, null, exportable);
 
         return new KeyPairECDHNist(secretKey, keyType, keyUses, algId);
         }
@@ -338,12 +336,31 @@ subjectPublicKeyInfo SubjectPublicKeyInfo SEQUENCE (2 elem)
         }
 
     ///<inheritdoc/>
-    public override byte[] SignDigest(byte[] digest, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null) {
-        throw new NotImplementedException();
+    public override byte[] SignDigest(
+                byte[] digest, 
+                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, 
+                byte[] context = null) {
+        var (r, s) = SecretKey.SignInner(digest);
+        //Console.WriteLine($"R {r}");
+        //Console.WriteLine($"S {s}");
+
+        var bytes = SecretKey.EncodeSignature(r, s);
+        return bytes;
+
         }
 
     ///<inheritdoc/>
-    public override bool VerifyDigest(byte[] digest, byte[] signature, CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null) {
-        throw new NotImplementedException();
+    public override bool VerifyDigest(
+                byte[] digest, 
+                byte[] signature, 
+                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, 
+                byte[] context = null) {
+        var (r, s) = PublicKey.DecodeSignature(signature);
+        //Console.WriteLine($"R {r}");
+        //Console.WriteLine($"S {s}");
+
+        var result = PublicKey.VerifyInner(r, s, digest);
+        return result;
+
         }
     }

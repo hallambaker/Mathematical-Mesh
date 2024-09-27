@@ -26,6 +26,8 @@ using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.Nist;
 using Goedel.Cryptography.PKIX;
 
+using System.Drawing;
+
 namespace Goedel.Cryptography;
 
 #region // Private Key
@@ -46,6 +48,10 @@ public record CurveNistPrivate : IKeyAdvancedPrivate {
 
     ///<summary>The curve parameters.</summary> 
     public PrimeCurve Curve { get; set; }
+
+
+    byte[]? HashSecretKey { get; set; }
+
     #endregion
     #region // Constructors
 
@@ -72,13 +78,18 @@ public record CurveNistPrivate : IKeyAdvancedPrivate {
         SecretKey = privateKey ?? Generate(curve);
         Curve = curve;
         var publicKey = curve.Multiply(curve.BasePointG, SecretKey);
+
         PublicKey = new CurveNistPublic(publicKey, curve);
         }
 
-    static BigInteger Generate(PrimeCurve curve) {
+    /// <summary>
+    /// Generate a BigInteger in the interval [1..OrderN-1] inclusive.
+    /// </summary>
+    /// <param name="curve">The curve.</param>
+    /// <returns>The generated integer.</returns>
+    public static BigInteger Generate(PrimeCurve curve) {
         var n = Platform.GetRandomBits(curve.MinimumOutputSize);
-        var d = 1 + n.ToBigInteger() % (curve.OrderN - 1);
-
+        var d = 1 + (n.BigIntegerLittleEndian() % (curve.OrderN - 2));
         return d;
         }
 
@@ -149,7 +160,6 @@ public record CurveNistPrivate : IKeyAdvancedPrivate {
 
         var Total = curve.Add (Carry[0], Carry[1]);
         for (var i = 1; i < Carry.Length; i++) {
-
             Total = curve.Add(Total, Carry[i]);
             }
 
@@ -184,7 +194,7 @@ public record CurveNistPrivate : IKeyAdvancedPrivate {
     public CurveNistPrivate Combine(CurveNistPrivate contribution,
                 KeySecurity keySecurity = KeySecurity.Bound,
                 KeyUses keyUses = KeyUses.Any) {
-        var newPrivate = (SecretKey + contribution.SecretKey) % Curve.FieldSizeQ;
+        var newPrivate = (SecretKey + contribution.SecretKey) % Curve.OrderN;
         return new CurveNistPrivate(Curve, newPrivate, keySecurity.IsExportable());
         }
 
@@ -196,11 +206,11 @@ public record CurveNistPrivate : IKeyAdvancedPrivate {
             var key = share as KeyPairECDHNist;
             var privateKey = key.SecretKey;
 
-            accumulator = (accumulator + privateKey.SecretKey).Mod(Curve.FieldSizeQ);
+            accumulator = (accumulator + privateKey.SecretKey).Mod(Curve.OrderN);
             }
 
         return new CurveNistPrivate(Curve,
-            (Curve.FieldSizeQ + SecretKey - accumulator).Mod(Curve.FieldSizeQ), true) {
+            (Curve.OrderN + SecretKey - accumulator).Mod(Curve.OrderN), true) {
             };
         }
 
@@ -211,17 +221,143 @@ public record CurveNistPrivate : IKeyAdvancedPrivate {
         var result = new IKeyAdvancedPrivate[shares];
 
         for (var i = 1; i < shares; i++) {
-            var newPrivate = Platform.GetRandomBigInteger(Curve.FieldSizeQ);
+            var newPrivate = Platform.GetRandomBigInteger(Curve.OrderN);
             result[i] = new CurveNistPrivate(Curve, newPrivate, exportable: true);
-            accumulator = (accumulator + newPrivate).Mod(Curve.FieldSizeQ);
+            accumulator = (accumulator + newPrivate).Mod(Curve.OrderN);
             }
 
         //Assert.True(Accumulator > 0 & Accumulator < Private, CryptographicException.Throw);
 
         result[0] = new CurveNistPrivate(Curve,
-            (Curve.FieldSizeQ + SecretKey - accumulator).Mod(Curve.FieldSizeQ));
+            (Curve.OrderN + SecretKey - accumulator).Mod(Curve.OrderN));
         return result;
         }
+
+
+    /// <summary>
+    /// Sign a message using the public key according to NIST.FIPS.186-5
+    /// </summary>
+    /// <remarks>This method does not prehash the message data since if
+    /// prehashing is desired, it is because the data needs to be hashed
+    /// before being presented.</remarks>
+    /// <param name="digest">The message digest H as derrived in step1.</param>
+    /// <param name="domain">Domain value, if used.</param>
+    /// <returns>The encoded signature data (r, s)</returns>
+    public (BigInteger, BigInteger) SignInner(byte[] digest, byte[]? domain=null) {
+        BigInteger k=0, kInverse=0;
+
+        try {
+            //Console.WriteLine($"Public {PublicKey.PublicKey.X}");
+            //Console.WriteLine($"Public {PublicKey.PublicKey.Y}");
+
+            //https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-5.pdf
+            //2. Derive the integer e from H
+            var bitsOfDigestNeeded =
+                Math.Min(Curve.OrderN.ExactBitLength(), digest.Length * 8);
+            var hashDigest = new BitString(digest);
+            var e = hashDigest.MSBSubstring(0, bitsOfDigestNeeded).ToPositiveBigInteger();
+
+            // 3. Generate secret scalar k [1, n-1] using RFC 8032 deterministic mechanism
+            HashSecretKey ??= SHA512.HashData(SecretKey.ToByteArrayBigEndian());
+            k = HashModQ(domain, HashSecretKey, domain);
+
+            // 5. Compute point (x, y) = k * G
+            var point = Curve.Multiply(Curve.BasePointG, k);
+
+            // 7. Represent x as an integer j
+            var j = point.X;
+
+            // 8 Compute r = j mod n
+            var r = j % Curve.OrderN;
+
+            // 4. Compute s = k^-1 (e + d*r) mod n, where e = H(m) as an integer
+            kInverse = k.ModularInverse(Curve.OrderN);
+
+            //9. Compute s = 𝑘𝑘−1⋅ (e + r ⋅ d) mod n
+            var s = (kInverse * (e + SecretKey * r)).PosMod(Curve.OrderN);
+
+            return (r, s);
+            }
+        finally {
+            // 10. Securely destroy k and 𝑘𝑘−1.
+
+            k.Erase();
+            kInverse.Erase();
+            }
+        }
+
+
+
+
+
+    /// <summary>
+    /// Encode a signature value <paramref name="r"/>, <paramref name="s"/>
+    /// as an array containing two fixed length bigendian arrays.
+    /// <para>Yes, the encoding of the signature from RFC7518 is
+    /// the opposite of the encoding of the key from
+    /// SEC 1: Elliptic Curve Cryptography.</para>
+    /// </summary>
+    /// <param name="r">The R value</param>
+    /// <param name="s">The S value.</param>
+    /// <returns>The encoded bytes.</returns>
+    public byte[] EncodeSignature(BigInteger r, BigInteger s) {
+        var result = new byte[Curve.ByteEncoding * 2];
+        var bytes = r.ToByteArrayBigEndian(Curve.ByteEncoding); // from RFC7518
+        //Console.WriteLine($"Bytes{bytes.ToStringBase16FormatHex()}");
+
+        Array.Copy(bytes, 0, result, 0, Curve.ByteEncoding);
+
+        bytes = s.ToByteArrayBigEndian(Curve.ByteEncoding);
+        Array.Copy(bytes, 0, result, Curve.ByteEncoding, Curve.ByteEncoding);
+
+        return result;
+        }
+
+
+
+
+
+    static byte[] ZeroByteArray = Array.Empty<byte>();
+
+    /// <summary>
+    /// Hash the data <paramref name="A0"/> etc ignoring nulls and return a number strictly
+    /// less than Curve.OrderN
+    /// </summary>
+    /// <param name="A0">First data to digest.</param>
+    /// <param name="A1">Second Data to digest.</param>
+    /// <param name="A2">Third Data to digest.</param>
+    /// <param name="A3">Fourth Data to digest.</param>
+    /// <returns>An integer strictly less than Curve.OrderN</returns>
+    public BigInteger HashModQ(byte[] A0, byte[]? A1, byte[]? A2, byte[]? A3 = null) {
+        byte[] digest = null;
+
+        try {
+            using var Sha512 = SHA512.Create();
+            if (A0 != null) {
+                Sha512.Digest(A0);
+                }
+            if (A1 != null) {
+                Sha512.Digest(A1);
+                }
+            if (A2 != null) {
+                Sha512.Digest(A2);
+                }
+            if (A3 != null) {
+                Sha512.Digest(A3);
+                }
+            Sha512.TransformFinalBlock(ZeroByteArray, 0, 0);
+            digest = Sha512.Hash;
+            var result = digest.BigIntegerLittleEndian();
+
+            result %= Curve.OrderN;
+
+            return result;
+            }
+        finally {
+            digest.Erase();
+            }
+        }
+
     }
 
 
@@ -278,6 +414,9 @@ public record CurveNistPublic : IKeyAdvancedPublic {
     /// Encode the point encoded in the byte stream <paramref name="encoding"/>
     /// according to the uncompressed encoding 
     /// specified in https://www.secg.org/sec1-v2.pdf 
+    /// <para>Yes, the encoding of the signature from RFC7518 is
+    /// the opposite of the encoding of the key from
+    /// SEC 1: Elliptic Curve Cryptography.</para>
     /// </summary>
     /// <param name="encoding">The data to decode.</param>
     /// <returns>The decoded point.</returns>
@@ -293,21 +432,17 @@ public record CurveNistPublic : IKeyAdvancedPublic {
 
         var l = stream.Read(buf);
         (l == length).AssertTrue(CryptographicException.Throw);
-        var x = buf.BigIntegerBigEndian();
+        var x = buf.BigIntegerBigEndian(); // from SEC 1: Elliptic Curve Cryptography.
 
         l = stream.Read(buf);
         (l == length).AssertTrue(CryptographicException.Throw);
         var y = buf.BigIntegerBigEndian();
 
         // These are fized constants so use the constants as switch labels.
-        var curve = length switch {
-            32 => EccCurveFactory.P256,
-            48 => EccCurveFactory.P384,
-            66 => EccCurveFactory.P521,
-            _ => throw new NYI()
-            };
+        var curve = EccCurveFactory.GetCurve(length);
 
-        return new EccPoint(curve, x, y);
+        // Verify that the point is valid and return the point.
+        return curve.GetPointVerified(x, y);
         }
 
     /// <summary>
@@ -350,7 +485,78 @@ public record CurveNistPublic : IKeyAdvancedPublic {
             };
         }
 
+    /// <summary>
+    /// Perform signatujre verisifcation the signature (<paramref name="r"/>, <paramref name="s"/>)
+    /// and digest <paramref name="digest"/> returning true if the signature is valid
+    /// otherwise false.
+    /// </summary>
+    /// <param name="r">The r parameter.</param>
+    /// <param name="s">The s signature parameter.</param>
+    /// <param name="digest">The digest value.</param>
+    /// <param name="domain">Optional domain distinguisher (unused).</param>
+    /// <returns>True if the signature is valid, otherwise false.</returns>
+    public bool VerifyInner(
+                BigInteger r, 
+                BigInteger s, 
+                byte[] digest, 
+                byte[]? domain = null) {
 
+        // 1. Check r and s to be within the interval [1, n-1]
+        if (r < 1 || r> Curve.OrderN - 1 || s < 1 || s > Curve.OrderN-1) {
+            return false;
+            }
+
+        // 2. Hash message e = H(m)
+        var bitsOfDigestNeeded =
+            Math.Min(Curve.OrderN.ExactBitLength(), digest.Length * 8);
+        var hashDigest = new BitString(digest);
+
+        // 3. Derive the integer e from H 
+        var e = hashDigest.MSBSubstring(0, bitsOfDigestNeeded).ToPositiveBigInteger();
+
+
+        // 4. Compute u1 = e * s^-1 (mod n)
+        var sInverse = s.ModularInverse(Curve.OrderN);
+        var u1 = (e * sInverse) % Curve.OrderN;
+
+        // 5. Compute u2 = r * s^-1 (mod n)
+        var u2 = (r * sInverse) % Curve.OrderN;
+
+        // 6. Compute point R = u1 * G + u2 * Q, if R is infinity, return invalid
+        var u1TimesG = Curve.Multiply(Curve.BasePointG, u1);
+        var u2TimesQ = Curve.Multiply(PublicKey, u2);
+        var pointR = Curve.Add(u1TimesG, u2TimesQ);
+
+        // 7. Convert xR to an integer j
+        var j = pointR.X;
+
+        // 8. Compute v = j (mod n)
+        var v = j % Curve.OrderN;
+
+        // 9. If v == r, return valid, otherwise invalid
+        return (v == r);
+
+        }
+
+
+    /// <summary>
+    /// Decode the signature 
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    public (BigInteger, BigInteger) DecodeSignature(byte[] data) {
+        (data.Length == Curve.ByteEncoding * 2).AssertTrue(CryptographicException.Throw);
+
+        var bytes = new byte[Curve.ByteEncoding];
+        Array.Copy(data, 0, bytes, 0, Curve.ByteEncoding);
+        //Console.WriteLine($"Bytes{bytes.ToStringBase16FormatHex()}");
+        var r = bytes.BigIntegerBigEndian();
+
+        Array.Copy(data, Curve.ByteEncoding, bytes, 0, Curve.ByteEncoding);
+        var s = bytes.BigIntegerBigEndian();
+
+        return (r, s);
+        }
     } 
 #endregion
 #region // Result on curve
@@ -362,7 +568,8 @@ public class CurveNistResult : ResultECDH {
 
     /// <summary>The key agreement result</summary>
     public EccPoint AgreementNist { get; init; }
-
+    
+    ///<summary>The curve parameters</summary> 
     public PrimeCurve Curve { get; init; }
 
 
