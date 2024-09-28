@@ -28,14 +28,19 @@ namespace Goedel.Cryptography.Test;
 
 
 
-
+/// <summary>
+/// Test DARE envelopes
+/// </summary>
 public class TestDare {
 
     long BodyStart { get; }
     long TrailerStart { get; }
     DareEnvelope Message { get; }
 
-
+    /// <summary>
+    /// Constructor, returns a test envelope from <paramref name="envelope"/>
+    /// </summary>
+    /// <param name="envelope">The template.</param>
     public TestDare(byte[] envelope) : this (new MemoryStream(envelope)){ 
         }
 
@@ -84,7 +89,10 @@ public class TestDare {
 
         }
 
-
+    /// <summary>
+    /// Convert the envelope to bytes.
+    /// </summary>
+    /// <returns>Serialized envelope.</returns>
     public byte[] GetBytes() {
         using var stream = new MemoryStream();
         var writer = new JsonBWriter(stream);

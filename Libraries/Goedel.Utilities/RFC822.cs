@@ -186,6 +186,11 @@ public static partial class Extension {
     /// <returns>The service component.</returns>
     public static string GetService(this string identifier) => GetServiceRaw(identifier).ToLower();
 
+    /// <summary>
+    /// Parse the address <paramref name="identifier"/> and return the account portion.
+    /// </summary>
+    /// <param name="identifier">The address to parse.</param>
+    /// <returns>The address portion.</returns>
     public static string GetAccount(this string identifier) {
         identifier.SplitAccountAddress(out var _, out var account);
         return account;

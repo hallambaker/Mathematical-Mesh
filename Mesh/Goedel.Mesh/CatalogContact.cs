@@ -479,21 +479,44 @@ public partial class NetworkProfile {
         }
 
     }
+
+/// <summary>
+/// Network capability.
+/// </summary>
 public partial class NetworkCapability {
+    
+    /// <summary>
+    /// Default constructor used for deserialization.
+    /// </summary>
     public NetworkCapability() {
         }
 
+    /// <summary>
+    /// Constructor returning a capability for <paramref name="address"/>,
+    /// <paramref name="profile"/>.
+    /// </summary>
+    /// <param name="address">The capability address.</param>
+    /// <param name="profile">The capability profile.</param>
     public NetworkCapability(string address, ProfileAccount profile) : base(address, profile) {
         }
     }
 
 
-
+/// <summary>
+/// Person name.
+/// </summary>
 public partial class PersonName {
 
+    /// <summary>
+    /// Deserialization constructor.
+    /// </summary>
     public PersonName() {
         }
 
+    /// <summary>
+    /// Constructor returning an instance for <paramref name="fullname"/>.
+    /// </summary>
+    /// <param name="fullname">The person's full name.</param>
     public PersonName(string fullname) {
         if (fullname is null) {
             return;

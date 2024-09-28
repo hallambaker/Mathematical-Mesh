@@ -55,19 +55,8 @@ public partial class ProfileDevice {
     /// </summary>
     /// <param name="secretSeed">The secret seed value.</param>
     protected ProfileDevice(
-                PrivateKeyUDF secretSeed,
-                IEnumerable<CryptoAlgorithmId> algorithms = null) : base(secretSeed) {
+                PrivateKeyUDF secretSeed) : base(secretSeed) {
         }
-
-    //public static ProfileDevice Generate(
-    //            PrivateKeyUDF secretSeed,
-    //            IEnumerable<CryptoAlgorithmId> algorithms = null) {
-    //    var profile = new ProfileDevice(secretSeed, algorithms);
-    //    profile.SignProfile();
-    //    return profile;
-    //    }
-
-
 
     #endregion
     #region // Methods 

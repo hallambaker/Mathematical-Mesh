@@ -23,8 +23,10 @@ public record RsaGenerationHints {
         public int PrimeGen;
         }
 
-
+    ///<summary>Hints used to generate the prime Q.</summary> 
     public PrimeHints Q = new();
+
+    ///<summary>Hints used to generate the prime P.</summary> 
     public PrimeHints P = new();
 
     /// <summary>
@@ -158,17 +160,30 @@ public record RsaGenerationHints {
 
 
 
-
+/// <summary>
+/// Key composer, generate RSA prime values and convert to Chinese Remainder Theorem
+/// values.
+/// </summary>
 public class CrtKeyComposer  {
 
-    IFips186_5PrimeGenerator generator;
+    AllProbablePrimesWithConditionsGenerator generator;
 
-
+    /// <summary>
+    /// Constructor, return an instance using <paramref name="primeGenerator"/> to
+    /// generate primes.
+    /// </summary>
+    /// <param name="primeGenerator">The prime generator.</param>
     public CrtKeyComposer(IPrimeGenerator primeGenerator) {
 
         generator = new AllProbablePrimesWithConditionsGenerator(primeGenerator);
         }
 
+    /// <summary>
+    /// Generate an RSA Keypair.
+    /// </summary>
+    /// <param name="keySize">The key size.</param>
+    /// <param name="hintsIn">Optional hints values to speed generation.</param>
+    /// <returns>The generated key pair.</returns>
     public RsaFipsKeyPair GenerateKeyPair(int keySize,
                         RsaGenerationHints hintsIn = null) {
         var params1 = PrimeGeneratorParameters.GetPrimeGeneratorParameters(keySize);
@@ -177,7 +192,15 @@ public class CrtKeyComposer  {
         return result;
         }
 
-
+    /// <summary>
+    /// Compose RSA CRT theorem parameters from <paramref name="e"/>,
+    /// <paramref name="primes"/> and <paramref name="keySize"/>.
+    /// </summary>
+    /// <param name="e">The exponent.</param>
+    /// <param name="primes">The primes p, q.</param>
+    /// <param name="keySize">The key size.</param>
+    /// <returns>The CRT key parameters.</returns>
+    /// <exception cref="Exception"></exception>
     public static RsaFipsKeyPair ComposeKey(BigInteger e, PrimePair primes, int keySize) {
         var n = primes.P * primes.Q;
 
@@ -216,10 +239,7 @@ public class CrtKeyComposer  {
                 Q = primes.Q,
                 D = d
                 },
-            PubKey = new RsaPublicKey {
-                E = e,
-                N = n
-                }
+            PubKey = new RsaPublicKey(e,n) 
             };
         }
     }

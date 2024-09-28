@@ -90,7 +90,7 @@ public partial class EverythingMaui {
             }
         catch (Exception exception) {
             if (TryProcessException(exception, data, out var result)) {
-                return result;
+                return result!;
                 }
             if (ExceptionDirectory.TryGetValue(exception.GetType().FullName, out var factory)) {
                 return factory();

@@ -35,11 +35,7 @@ public partial class Profile {
 
     #region // Properties
 
-    /////<summary>Key used to sign the profile.</summary> 
-    //public KeyPair KeyProfileSign { get; private set; }
-
-
-
+    ///<summary>List of signing keys used to sign the profile.</summary> 
     public List<CryptoKey> KeyProfileSigners { get; protected set; } 
 
     ///<summary>The key contribution type</summary> 
@@ -201,7 +197,11 @@ public partial class Profile {
 
         }
 
-
+    /// <summary>
+    /// Validate each profile signature against the list of root signing key fingerprints.
+    /// </summary>
+    /// <returns>The highest assurance level achieved by the set of included
+    /// signatures.</returns>
     public virtual AssuranceLevel ValidateRootUdfs() {
 
         // Check that there is a non empty list of signatures
@@ -299,33 +299,6 @@ public partial class Profile {
 
         return false;
         }
-
-
-    //// return the UDF string
-    //public Udf GetUdf() {
-    //    return  new Udf(UdfString, ProfileSignatureKey.UDFBytes).CacheValue(out udf);
-
-
-
-    //    }
-
-
-
-    public DareEnvelope GetEnvelopeSlim(
-                    CryptoAlgorithmId signatureAlgorithm=CryptoAlgorithmId.NULL) {
-
-        // null algorithm, take the first signature algorithm in the list.
-
-
-
-        throw new NYI();
-        }
-
-
-    //public bool Validate(
-    //            ) {
-    //    throw new NYI(); 
-    //    }
 
 
 

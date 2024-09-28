@@ -91,6 +91,8 @@ public partial class MeshItem {
     /// <param name="signingKeys">Optional list of signature keys.</param>
     /// <param name="encryptionKeys">Optional list of encryption keys.</param>
     /// <param name="objectEncoding">The encoding to use to compute the inner object.</param>
+    /// <param name="includeSignatureKey">If true include the public key parameters in the
+    /// signature.</param>
     /// <returns>Envelope containing the signed profile. Also updates the property
     /// <see cref="DareEnvelope"/></returns>
     public virtual DareEnvelope Envelope(

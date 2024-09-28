@@ -350,6 +350,13 @@
             <param name="identifier">The AccountID to split.</param>
             <returns>The service component.</returns>
         </member>
+        <member name="M:Goedel.Utilities.Extension.GetAccount(System.String)">
+            <summary>
+            Parse the address <paramref name="identifier"/> and return the account portion.
+            </summary>
+            <param name="identifier">The address to parse.</param>
+            <returns>The address portion.</returns>
+        </member>
         <member name="M:Goedel.Utilities.Extension.GetServiceRaw(System.String)">
             <summary>
             Parse a string that may contain an account identifier to extract the service and 

@@ -59,8 +59,7 @@ public partial class ProfileAccount {
     /// </summary>
     /// <param name="secretSeed">The secret seed value.</param>
     public ProfileAccount(
-                PrivateKeyUDF secretSeed,
-                IEnumerable<CryptoAlgorithmId> algorithms = null) : base(secretSeed) {
+                PrivateKeyUDF secretSeed) : base(secretSeed) {
         }
 
     /// <summary>

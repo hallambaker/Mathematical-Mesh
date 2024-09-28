@@ -1342,6 +1342,12 @@
         <member name="F:Goedel.Cryptography.Nist.RsaGenerationHints.PrimeHints.PrimeGen">
             <summary>Number of candidate primes regenerated.</summary> 
         </member>
+        <member name="F:Goedel.Cryptography.Nist.RsaGenerationHints.Q">
+            <summary>Hints used to generate the prime Q.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.RsaGenerationHints.P">
+            <summary>Hints used to generate the prime P.</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.Nist.RsaGenerationHints.#ctor(System.String)">
             <summary>
             Create an instance from the encoded string <paramref name="hints"/>
@@ -1370,6 +1376,38 @@
         <member name="M:Goedel.Cryptography.Nist.RsaGenerationHints.ToString">
             <inheritdoc/>
         </member>
+        <member name="T:Goedel.Cryptography.Nist.CrtKeyComposer">
+            <summary>
+            Key composer, generate RSA prime values and convert to Chinese Remainder Theorem
+            values.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.CrtKeyComposer.#ctor(Goedel.Cryptography.Nist.IPrimeGenerator)">
+            <summary>
+            Constructor, return an instance using <paramref name="primeGenerator"/> to
+            generate primes.
+            </summary>
+            <param name="primeGenerator">The prime generator.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.CrtKeyComposer.GenerateKeyPair(System.Int32,Goedel.Cryptography.Nist.RsaGenerationHints)">
+            <summary>
+            Generate an RSA Keypair.
+            </summary>
+            <param name="keySize">The key size.</param>
+            <param name="hintsIn">Optional hints values to speed generation.</param>
+            <returns>The generated key pair.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.CrtKeyComposer.ComposeKey(System.Numerics.BigInteger,Goedel.Cryptography.Nist.PrimePair,System.Int32)">
+            <summary>
+            Compose RSA CRT theorem parameters from <paramref name="e"/>,
+            <paramref name="primes"/> and <paramref name="keySize"/>.
+            </summary>
+            <param name="e">The exponent.</param>
+            <param name="primes">The primes p, q.</param>
+            <param name="keySize">The key size.</param>
+            <returns>The CRT key parameters.</returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
         <member name="T:Goedel.Cryptography.Nist.PrivateKeyRsaCrt">
             <summary>
             RSA private key in CRT form.
@@ -1392,6 +1430,41 @@
         </member>
         <member name="P:Goedel.Cryptography.Nist.PrivateKeyRsaCrt.IQMP">
             <summary>Coefficient</summary> 
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.RsaFipsKeyPair">
+            <summary>
+            RSA Key Pair
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.RsaFipsKeyPair.PubKey">
+            <summary>
+            Public key
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.RsaFipsKeyPair.PrivKey">
+            <summary>
+            Private key
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.RsaPublicKey">
+            <summary>
+            RSA public key parameters
+            </summary>
+            <param name="E">The exponent.</param>
+            <param name="N">The modulus.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.RsaPublicKey.#ctor(System.Numerics.BigInteger,System.Numerics.BigInteger)">
+            <summary>
+            RSA public key parameters
+            </summary>
+            <param name="E">The exponent.</param>
+            <param name="N">The modulus.</param>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.RsaPublicKey.E">
+            <summary>The exponent.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.RsaPublicKey.N">
+            <summary>The modulus.</summary>
         </member>
         <member name="T:Goedel.Cryptography.Nist.AllProbablePrimesWithConditionsGenerator">
             <summary>
@@ -1436,6 +1509,24 @@
         </member>
         <member name="P:Goedel.Cryptography.Nist.AuxiliaryResult.XQ2">
             <summary>The auillary prime Q2.</summary> 
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.PpfResult">
+            <summary>
+            Probable prime generator result.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PpfResult.Prime">
+            <summary>The prime.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PpfResult.XPrime">
+            <summary>The XPrime.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PpfResult.#ctor(System.Numerics.BigInteger,System.Numerics.BigInteger)">
+            <summary>
+            Constuctor returning instance for <paramref name="p"/>, <paramref name="xp"/>
+            </summary>
+            <param name="p">The prime.</param>
+            <param name="xp">The XPrime.</param>
         </member>
         <member name="M:Goedel.Cryptography.Nist.IPrimeGenerator.GetPrime(System.Int32,System.Int32,System.String,System.Nullable{System.Int32})">
             <summary>
@@ -1509,6 +1600,37 @@
         <member name="P:Goedel.Cryptography.Nist.PrimeGeneratorParameters.B">
             <summary>Optional filter for probable primes</summary> 
         </member>
+        <member name="T:Goedel.Cryptography.Nist.PrimeGeneratorResult">
+            <summary>
+            Prime generator result.
+            </summary>
+            <param name="Primes">The prime pair</param>
+            <param name="AuxValues">The auxillary values.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeGeneratorResult.#ctor(Goedel.Cryptography.Nist.PrimePair,Goedel.Cryptography.Nist.AuxiliaryResult)">
+            <summary>
+            Prime generator result.
+            </summary>
+            <param name="Primes">The prime pair</param>
+            <param name="AuxValues">The auxillary values.</param>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeGeneratorResult.Primes">
+            <summary>The prime pair</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeGeneratorResult.AuxValues">
+            <summary>The auxillary values.</summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.PrimePair">
+            <summary>
+            Record holding a prime pair.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimePair.P">
+            <summary>The prime P.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimePair.Q">
+            <summary>The prime Q.</summary> 
+        </member>
         <member name="T:Goedel.Cryptography.Nist.NativeShaFactory">
             <summary>
             Digest factory using the NIST code.
@@ -1522,19 +1644,6 @@
         </member>
         <member name="M:Goedel.Cryptography.Nist.NativeShaFactory.GetShakeInstance(Goedel.Cryptography.Nist.HashFunction)">
             <inheritdoc/>
-        </member>
-        <member name="T:Goedel.Cryptography.Nist.EntropyProviderFactory">
-            <summary>
-            Used for retrieving an instance of an <see cref="T:Goedel.Cryptography.Nist.IEntropyProvider"/>
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.EntropyProviderFactory.GetEntropyProvider(Goedel.Cryptography.Nist.EntropyProviderTypes)">
-            <summary>
-            Returns a new instance of an <see cref="T:Goedel.Cryptography.Nist.IEntropyProvider"/>
-            </summary>
-            <param name="providerType">The <see cref="T:Goedel.Cryptography.Nist.IEntropyProvider"/> type </param>
-            <exception cref="T:System.ArgumentException">Thrown when <see cref="!:providerType"/> is invalid</exception>
-            <returns></returns>
         </member>
         <member name="F:Goedel.Cryptography.Nist.EntropyProviderTypes.Testable">
             <summary>
@@ -1879,6 +1988,11 @@
             Represents the return of a Crypto invoke
             </summary>
         </member>
+        <member name="T:Goedel.Cryptography.Nist.NumberTheory">
+            <summary>
+            Extension class performing number theory routines
+            </summary>
+        </member>
         <member name="M:Goedel.Cryptography.Nist.NumberTheory.MillerRabin(System.Numerics.BigInteger,System.Int32)">
             <summary>
             C.3.1 Probabilistic Primality Check, Miller-Rabin Algorithm
@@ -1977,22 +2091,6 @@
             </summary>
             <param name="a">Input</param>
             <returns>|<paramref name="a"/>|</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.PrimeGen186_4.ShaweTaylorRandomPrime(System.Int32,System.Numerics.BigInteger,Goedel.Cryptography.Nist.ISha)">
-            <summary>
-            C.6 Makes small 32-bit prime numbers
-            </summary>
-            <param name="length"></param>
-            <param name="inputSeed"></param>
-            <param name="sha"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.PrimeGen186_4.TrialDivision(System.Numerics.BigInteger)">
-            <summary>
-            C.7 Determine if a 32-bit uint is prime
-            </summary>
-            <param name="c"></param>
-            <returns></returns>
         </member>
         <member name="T:Goedel.Cryptography.Nist.BitString">
             <summary>
@@ -2269,6 +2367,42 @@
             <exception cref="T:System.ArgumentNullException">Thrown when the array is null.</exception>
             <returns>The length in bits of the byte array (returned value always mod 8)</returns>
         </member>
+        <member name="T:Goedel.Cryptography.Nist.IntExtensions">
+            <summary>
+            Extension class with integer handling extensions.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IntExtensions.CeilingDivide(System.Int32,System.Int32)">
+            <summary>
+            Return a/b rounding any remainder up.
+            </summary>
+            <param name="a">First parameter</param>
+            <param name="b">Second parameter</param>
+            <returns>a/b rounding any remainder up.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IntExtensions.FloorDivide(System.Int32,System.Int32)">
+            <summary>
+            Return a/b rounding any remainder down.
+            </summary>
+            <param name="a">First parameter</param>
+            <param name="b">Second parameter</param>
+            <returns>a/b rounding any remainder down.</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Goedel.Cryptography.Nist.IntExtensions.IncrementOrReset(System.Int32,System.Int32,System.Int32,System.Int32)" -->
+        <member name="M:Goedel.Cryptography.Nist.IntExtensions.GetExactBitLength(System.Int32)">
+            <summary>
+            Get the exact bit length of <paramref name="a"/>
+            </summary>
+            <param name="a">The integer to get the length of.</param>
+            <returns>The exact bit length.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IntExtensions.Exp2(System.Int32)">
+            <summary>
+            return 2^<paramref name="a"/>
+            </summary>
+            <param name="a">Exponent.</param>
+            <returns>2^<paramref name="a"/></returns>
+        </member>
         <member name="M:Goedel.Cryptography.Nist.IntExtensions.PosMod(System.Int32,System.Int32)">
             <summary>
             Takes the modulo of a value (or <see cref="T:System.Int32"/> expression) and ensures it is between [0, <paramref name="modulo"/> - 1]
@@ -2331,6 +2465,53 @@
             <param name="value"></param>
             <param name="modulo"></param>
             <returns></returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.MsbLsbConversionHelpers">
+            <summary>
+            Conversion helpers for big vs little endian.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MsbLsbConversionHelpers.ReverseByteOrder(System.Byte[])">
+            <summary>
+            Create a new array of bytes in the reverse order to <paramref name="bytes"/>.
+            </summary>
+            <param name="bytes">The input array.</param>
+            <returns>The input array bytes in reverse order.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MsbLsbConversionHelpers.ReverseBitArrayBits(System.Collections.BitArray)">
+            <summary>
+            Create a new array of bits in the reverse order to <paramref name="array"/>.
+            </summary>
+            <param name="array">The input array.</param>
+            <returns>The input array bits in reverse order.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MsbLsbConversionHelpers.MostSignificantByteArrayToLeastSignificantBitArray(System.Byte[])">
+            <summary>
+            Convert the MSB array <paramref name="msBytes"/> a binary array in LSB order.
+            </summary>
+            <param name="msBytes">The MSB array.</param>
+            <returns>The bit array.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MsbLsbConversionHelpers.MostSignificantByteArrayToMostSignificantBitArray(System.Byte[])">
+            <summary>
+            Convert the MSB array <paramref name="msBytes"/> a binary array in MSB order.
+            </summary>
+            <param name="msBytes">The MSB array.</param>
+            <returns>The bit array.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MsbLsbConversionHelpers.LeastSignificantByteArrayToLeastSignificantBitArray(System.Byte[])">
+            <summary>
+            Convert the LSB array <paramref name="msBytes"/> a binary array in LSB order.
+            </summary>
+            <param name="lsBytes">The MSB array.</param>
+            <returns>The bit array.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.MsbLsbConversionHelpers.LeastSignificantByteArrayToMostSignificantBitArray(System.Byte[])">
+            <summary>
+            Convert the LSB array <paramref name="msBytes"/> a binary array in MSB order.
+            </summary>
+            <param name="lsBytes">The MSB array.</param>
+            <returns>The bit array.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Nist.MsbLsbConversionHelpers.GetBitArrayFromStringOf1sAnd0s(System.String)">
              <summary>

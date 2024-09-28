@@ -74,6 +74,7 @@ public partial class ContextUser : ContextAccount {
     ///<summary>The connection device</summary>
     public ConnectionDevice ConnectionAccount => CatalogedDevice?.ConnectionDevice;
 
+    ///<summary>The human readable device description.</summary> 
     public DeviceDescription DeviceDescription => CatalogedDevice?.DeviceDescription;
 
     /////<summary>The connection of the profile to the account address</summary>
@@ -719,6 +720,7 @@ public partial class ContextUser : ContextAccount {
     /// <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
     /// <param name="roles">List of rights to be granted.</param>
     /// <param name="cover">Specifies HTML content containing a default cover page.</param>
+    /// <param name="groupName">Friendly name for the group.</param>
     /// <returns></returns>
 
     public async Task<ContextGroup> CreateGroupAsync(
@@ -836,9 +838,9 @@ public partial class ContextUser : ContextAccount {
         }
 
     /// <summary>
-    /// Get a managment context for the group <paramref name="groupAddress"/>.
+    /// Get a managment context for the group <paramref name="entry"/>.
     /// </summary>
-    /// <param name="groupAddress">The group to return the management context for.</param>
+    /// <param name="entry">The group to return the management context for.</param>
     /// <returns>The created management context.</returns>
     public ContextGroup GetContextGroup(CatalogedGroup entry) {
         // BUG!!! Should be the UDF of the group.

@@ -112,9 +112,20 @@ public static partial class ExtensionMethods {
         return bold ? "<b>" + Message + "</b>" : Message;
         }
 
-
+    /// <summary>
+    /// Returns <paramref name="value"/> if not null, otherwise, the string "null"
+    /// </summary>
+    /// <param name="value">Value to convert.</param>
+    /// <returns>The converted value.</returns>
     public static string ValueOrNull(this string value) => value == null ? "null" : value;
 
+    /// <summary>
+    /// Returns an empty string if <paramref name="value"/> is null, otherwise the string
+    /// <paramref name="tag"/> || <paramref name="value"/>.
+    /// </summary>
+    /// <param name="value">The value to present.</param>
+    /// <param name="tag">Optional tag to prefix a non null value.</param>
+    /// <returns>The presentation.</returns>
     public static string NotNullTagged(this string value, string? tag) => value == null ? "" :
         (tag == null ? "" : tag) + value;
 

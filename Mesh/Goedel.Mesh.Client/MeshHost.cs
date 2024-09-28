@@ -356,6 +356,10 @@ public class MeshHost : Disposable {
             }
         }
 
+    /// <summary>
+    /// Update <paramref name="catalogItem"/> in the catalog.
+    /// </summary>
+    /// <param name="catalogItem">The item to update.</param>
     public void Update(HostCatalogItem catalogItem) {
         PersistHost.Update(catalogItem, false);
         }
@@ -386,6 +390,8 @@ public class MeshHost : Disposable {
     /// <param name="rights">The rights to be granted to the initial connected device.</param>
     /// <param name="create">If true, create a new mesh, otherwise attempt recovery from the
     /// service.</param>
+    /// <param name="deviceDescription">User readable name for the group.</param>
+    /// <param name="personName">User's name.</param>
     /// <returns>Context for administering the Mesh</returns>
     public virtual async Task<ContextUser> ConfigureMeshAsync(
             string accountAddress,

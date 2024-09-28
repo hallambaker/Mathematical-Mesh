@@ -17,12 +17,29 @@
             Initialization routine for cryptographic functions on the dotNet Core platform.
             </summary>
         </member>
+        <member name="T:Goedel.Cryptography.Test.TestDare">
+            <summary>
+            Test DARE envelopes
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Test.TestDare.#ctor(System.Byte[])">
+            <summary>
+            Constructor, returns a test envelope from <paramref name="envelope"/>
+            </summary>
+            <param name="envelope">The template.</param>
+        </member>
         <member name="M:Goedel.Cryptography.Test.TestDare.#ctor(System.IO.Stream)">
             <summary>
             Read an envelope from <paramref name="inputStream"/> without decrypting the
             message body.
             </summary>
             <param name="inputStream"></param>
+        </member>
+        <member name="M:Goedel.Cryptography.Test.TestDare.GetBytes">
+            <summary>
+            Convert the envelope to bytes.
+            </summary>
+            <returns>Serialized envelope.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Test.TestDare.CorruptBody">
             <summary>

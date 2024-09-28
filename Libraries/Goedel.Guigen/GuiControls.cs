@@ -108,14 +108,18 @@ public interface IFail : IResult {
     }
 
 
-
+/// <summary>
+/// Null result class
+/// </summary>
 public abstract record NullResult : IResult {
 
-
+    ///<summary>The resource ID</summary> 
     public ResourceId? ResourceId { get; } = null;
 
+    ///<summary>Message to return</summary> 
     public string Message => "";
 
+    ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; }
 
     //public virtual string Error { get; }
@@ -125,49 +129,73 @@ public abstract record NullResult : IResult {
         ResourceId = resourceId;
         }
 
-    public GuiBinding? Binding => null;
+    ///<summary>The Gui Binding</summary> 
+    public GuiBinding Binding => null!;
 
-    ///<summary></summary> 
-
+    ///<summary>Teardown result</summary> 
     public static NullResult Teardown { get; } = new TeardownResult() { };
 
+    ///<summary>Initialized result.</summary> 
     public static NullResult Initialized { get; } = new InitializedResult() { };
 
+    ///<summary>Entry is valid.</summary> 
     public static NullResult Valid { get; } = new ValidResult();
 
+    ///<summary>Operation has completed.</summary> 
     public static NullResult Completed { get; } = new CompletedResult();
 
+    ///<summary>Operation has completed and GUI should return to home state.</summary> 
     public static NullResult HomeResult { get; } = new HomeResult();
 
+    /// <summary>
+    /// Get the result values.
+    /// </summary>
+    /// <returns>The result values.</returns>
     public object[] GetValues() => Array.Empty<object>();
     }
 
+/// <summary>
+/// Home result
+/// </summary>
 public record HomeResult : NullResult {
     public override ReturnResult ReturnResult { get; init; } = ReturnResult.Home
 ;
     }
 
-
+/// <summary>
+/// Completed result
+/// </summary>
 public record CompletedResult : NullResult {
     public override ReturnResult ReturnResult { get; init; } = ReturnResult.Completed
 ;
     }
 
+/// <summary>
+/// Initialized result
+/// </summary>
 public record InitializedResult : NullResult {
     public override ReturnResult ReturnResult { get; init; } = ReturnResult.Initialized
 ;
     }
 
+/// <summary>
+/// Teardown result
+/// </summary>
 public record TeardownResult : NullResult {
     public override ReturnResult ReturnResult { get; init; } = ReturnResult.Teardown
 ;
     }
 
+/// <summary>
+/// Valid result
+/// </summary>
 public record ValidResult : NullResult {
     public override ReturnResult ReturnResult { get; init; } = ReturnResult.Valid;
     }
 
-
+/// <summary>
+/// Error result
+/// </summary>
 public record ErrorResult : NullResult, IFail {
 
     public string? Error { get; }
@@ -188,7 +216,7 @@ public record ErrorResult : NullResult, IFail {
 
 public record GuiBinding(
                 Func<object, bool> IsType,
-                Func<IBindable> Factory,
+                Func<IBindable>? Factory,
                 GuiBoundProperty[] BoundProperties
                 ) {
 
@@ -473,7 +501,7 @@ public record GuiSection(
         }
     IBindable? data = null;
 
-    public Action UpdateData { get; set; }
+    public Action UpdateData { get; set; } = () => { };
 
 
     public Func<IBindable?> BindData { get; set; } = () => null!;

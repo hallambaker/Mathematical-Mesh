@@ -1,19 +1,15 @@
 ﻿
 namespace Goedel.Cryptography.Nist;
 
-public class PrimeGeneratorResult {
-    public PrimePair Primes { get; }
-    public AuxiliaryResult AuxValues { get; }
-    public string ErrorMessage { get; }
+/// <summary>
+/// Prime generator result.
+/// </summary>
+/// <param name="Primes">The prime pair</param>
+/// <param name="AuxValues">The auxillary values.</param>
+public record PrimeGeneratorResult (
+            PrimePair Primes,
+            AuxiliaryResult AuxValues
+            ) {
 
-
-    public PrimeGeneratorResult(PrimePair primes, AuxiliaryResult aux) {
-        Primes = primes;
-        AuxValues = aux;
-        }
-
-    public PrimeGeneratorResult(string error) {
-        ErrorMessage = error;
-        }
     }
 

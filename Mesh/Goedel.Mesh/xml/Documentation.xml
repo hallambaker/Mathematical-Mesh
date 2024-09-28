@@ -3553,7 +3553,23 @@
         </member>
         <member name="T:Goedel.Mesh.NetworkCapability">
             <summary>
+            Network capability.
             </summary>
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.NetworkCapability.#ctor">
+            <summary>
+            Default constructor used for deserialization.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.NetworkCapability.#ctor(System.String,Goedel.Mesh.ProfileAccount)">
+            <summary>
+            Constructor returning a capability for <paramref name="address"/>,
+            <paramref name="profile"/>.
+            </summary>
+            <param name="address">The capability address.</param>
+            <param name="profile">The capability profile.</param>
         </member>
         <member name="P:Goedel.Mesh.NetworkCapability.Capabilities">
              <summary>
@@ -3606,10 +3622,24 @@
             <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Mesh.PersonName">
+            <summary>
+            Person name.
+            </summary>
              <summary>
             
              The name of a natural person
              </summary>
+        </member>
+        <member name="M:Goedel.Mesh.PersonName.#ctor">
+            <summary>
+            Deserialization constructor.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.PersonName.#ctor(System.String)">
+            <summary>
+            Constructor returning an instance for <paramref name="fullname"/>.
+            </summary>
+            <param name="fullname">The person's full name.</param>
         </member>
         <member name="M:Goedel.Mesh.PersonName.SetFullName">
             <summary>Set the full name.</summary>
@@ -7090,6 +7120,21 @@
             <param name="keySecurity">The key security model of the derrived key.</param>
             <returns>KeyData for the public parameters of the derrived key.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Extensions.GenerateKeySet(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.MeshKeyType,Goedel.Mesh.MeshActor,Goedel.Mesh.MeshKeyOperation,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.KeySecurity,System.String)">
+            <summary>
+            Generate a set of root keys from the algorithms specified in <paramref name="secretSeed"/>.
+            </summary>
+            <param name="secretSeed">The secret seed value.</param>
+            <param name="type">The contribuition type</param>
+            <param name="actor">The actor that will use the key</param>
+            <param name="operation">The operation for which the key will be used.</param>
+            <param name="keyCollection">The key collection to register the private key to
+            (the key is always generated as ephemeral.)</param>
+            <param name="keySecurity">The key security model of the derrived key.</param>
+            <returns>KeyData for the public parameters of the derrived key.</returns>
+            <param name="info">Additional info.</param>
+            <returns>The key set.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Extensions.GenerateContributionKeyPair(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.MeshKeyType,Goedel.Mesh.MeshActor,Goedel.Mesh.MeshKeyOperation,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.KeySecurity,System.String)">
             <summary>
             Derive a base private key of type <paramref name="type"/> for the
@@ -9256,6 +9301,9 @@
              Parent class from which all profile classes are derived
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Profile.KeyProfileSigners">
+            <summary>List of signing keys used to sign the profile.</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Profile.MeshKeyType">
             <summary>The key contribution type</summary> 
         </member>
@@ -9340,6 +9388,13 @@
             Verify the profile to check that it is correctly signed and consistent.
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Profile.ValidateRootUdfs">
+            <summary>
+            Validate each profile signature against the list of root signing key fingerprints.
+            </summary>
+            <returns>The highest assurance level achieved by the set of included
+            signatures.</returns>
         </member>
         <member name="M:Goedel.Mesh.Profile.Verify(Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>
@@ -9452,7 +9507,7 @@
             Blank constructor for use by deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProfileAccount.#ctor(Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.IEnumerable{Goedel.Cryptography.CryptoAlgorithmId})">
+        <member name="M:Goedel.Mesh.ProfileAccount.#ctor(Goedel.Cryptography.Jose.PrivateKeyUDF)">
             <summary>
             Construct a Profile Host instance  from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
             </summary>
@@ -9573,7 +9628,7 @@
             Constructor for use by deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProfileDevice.#ctor(Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.IEnumerable{Goedel.Cryptography.CryptoAlgorithmId})">
+        <member name="M:Goedel.Mesh.ProfileDevice.#ctor(Goedel.Cryptography.Jose.PrivateKeyUDF)">
             <summary>
             Construct a Profile Host instance  from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
             </summary>
@@ -14007,6 +14062,8 @@
             <param name="signingKeys">Optional list of signature keys.</param>
             <param name="encryptionKeys">Optional list of encryption keys.</param>
             <param name="objectEncoding">The encoding to use to compute the inner object.</param>
+            <param name="includeSignatureKey">If true include the public key parameters in the
+            signature.</param>
             <returns>Envelope containing the signed profile. Also updates the property
             <see cref="P:Goedel.Mesh.MeshItem.DareEnvelope"/></returns>
         </member>

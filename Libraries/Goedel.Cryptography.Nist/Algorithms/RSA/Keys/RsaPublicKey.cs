@@ -1,8 +1,13 @@
 ﻿
 namespace Goedel.Cryptography.Nist;
 
-public class RsaPublicKey {
-    public BigInteger E { get; set; }
-    public BigInteger N { get; set; }
+/// <summary>
+/// RSA public key parameters
+/// </summary>
+/// <param name="E">The exponent.</param>
+/// <param name="N">The modulus.</param>
+public record RsaPublicKey (
+            BigInteger E,
+            BigInteger N) {
     }
 

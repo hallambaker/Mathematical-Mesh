@@ -1,10 +1,24 @@
 ﻿
 namespace Goedel.Cryptography.Nist;
-public static class MsbLsbConversionHelpers {
-    public static byte[] ReverseByteOrder(byte[] bytes) {
-        return bytes.Reverse().ToArray();
-        }
 
+/// <summary>
+/// Conversion helpers for big vs little endian.
+/// </summary>
+public static class MsbLsbConversionHelpers {
+
+    /// <summary>
+    /// Create a new array of bytes in the reverse order to <paramref name="bytes"/>.
+    /// </summary>
+    /// <param name="bytes">The input array.</param>
+    /// <returns>The input array bytes in reverse order.</returns>
+    public static byte[] ReverseByteOrder(byte[] bytes)=>
+                bytes.Reverse().ToArray();
+
+    /// <summary>
+    /// Create a new array of bits in the reverse order to <paramref name="array"/>.
+    /// </summary>
+    /// <param name="array">The input array.</param>
+    /// <returns>The input array bits in reverse order.</returns>
     public static BitArray ReverseBitArrayBits(BitArray array) {
         BitArray copy = new BitArray(array);
 
@@ -20,6 +34,11 @@ public static class MsbLsbConversionHelpers {
         return copy;
         }
 
+    /// <summary>
+    /// Convert the MSB array <paramref name="msBytes"/> a binary array in LSB order.
+    /// </summary>
+    /// <param name="msBytes">The MSB array.</param>
+    /// <returns>The bit array.</returns>
     public static BitArray MostSignificantByteArrayToLeastSignificantBitArray(byte[] msBytes) {
         // Get the LSB of the MSB byte array, so both bits and bytes are LS
         var leastSignificantByteArray = ReverseByteOrder(msBytes);
@@ -28,6 +47,11 @@ public static class MsbLsbConversionHelpers {
         return new BitArray(leastSignificantByteArray);
         }
 
+    /// <summary>
+    /// Convert the MSB array <paramref name="msBytes"/> a binary array in MSB order.
+    /// </summary>
+    /// <param name="msBytes">The MSB array.</param>
+    /// <returns>The bit array.</returns>
     public static BitArray MostSignificantByteArrayToMostSignificantBitArray(byte[] msBytes) {
         // Get the most significant byte array as a least significant bit array
         var leastSignificantBitArray = MostSignificantByteArrayToLeastSignificantBitArray(msBytes);
@@ -36,10 +60,20 @@ public static class MsbLsbConversionHelpers {
         return ReverseBitArrayBits(leastSignificantBitArray);
         }
 
+    /// <summary>
+    /// Convert the LSB array <paramref name="msBytes"/> a binary array in LSB order.
+    /// </summary>
+    /// <param name="lsBytes">The MSB array.</param>
+    /// <returns>The bit array.</returns>
     public static BitArray LeastSignificantByteArrayToLeastSignificantBitArray(byte[] lsBytes) {
         return new BitArray(lsBytes);
         }
 
+    /// <summary>
+    /// Convert the LSB array <paramref name="msBytes"/> a binary array in MSB order.
+    /// </summary>
+    /// <param name="lsBytes">The MSB array.</param>
+    /// <returns>The bit array.</returns>
     public static BitArray LeastSignificantByteArrayToMostSignificantBitArray(byte[] lsBytes) {
         var lsBitArray = new BitArray(lsBytes);
 

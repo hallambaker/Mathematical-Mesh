@@ -1211,6 +1211,9 @@
         <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionAccount">
             <summary>The connection device</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextUser.DeviceDescription">
+            <summary>The human readable device description.</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.ApplicationEntries">
             <summary>The connection device</summary>
         </member>
@@ -1436,6 +1439,7 @@
             <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
             <param name="roles">List of rights to be granted.</param>
             <param name="cover">Specifies HTML content containing a default cover page.</param>
+            <param name="groupName">Friendly name for the group.</param>
             <returns></returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.EscrowSeed(Goedel.Mesh.KeyData[])">
@@ -1456,9 +1460,9 @@
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetContextGroup(Goedel.Mesh.CatalogedGroup)">
             <summary>
-            Get a managment context for the group <paramref name="groupAddress"/>.
+            Get a managment context for the group <paramref name="entry"/>.
             </summary>
-            <param name="groupAddress">The group to return the management context for.</param>
+            <param name="entry">The group to return the management context for.</param>
             <returns>The created management context.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.Preconfigure(System.String,System.Int32)">
@@ -3281,6 +3285,12 @@
             already exist.</param>
             <param name="context">The dynamic context that interfaces to the catalog item.</param>
         </member>
+        <member name="M:Goedel.Mesh.Client.MeshHost.Update(Goedel.Mesh.Client.HostCatalogItem)">
+            <summary>
+            Update <paramref name="catalogItem"/> in the catalog.
+            </summary>
+            <param name="catalogItem">The item to update.</param>
+        </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.Delete(System.String)">
             <summary>
             Delete <paramref name="key"/> from the host catalog.
@@ -3299,6 +3309,8 @@
              <param name="rights">The rights to be granted to the initial connected device.</param>
              <param name="create">If true, create a new mesh, otherwise attempt recovery from the
              service.</param>
+             <param name="deviceDescription">User readable name for the group.</param>
+             <param name="personName">User's name.</param>
              <returns>Context for administering the Mesh</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.GetContextMesh(System.String,System.Boolean)">

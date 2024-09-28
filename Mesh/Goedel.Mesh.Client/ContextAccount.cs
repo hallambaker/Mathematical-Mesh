@@ -1134,11 +1134,15 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
                     }
             };
         ;
+
+        Screen.WriteLine($"{Fails here, returning wrong key agreement encoding!}");
         var response = await MeshClient.OperateAsync(operateRequest);
         response.AssertSuccess(CryptographicOperationRefused.Throw);
 
         var result = response.Results[0] as CryptographicResultKeyAgreement;
 
+
+        Screen.WriteLine($"{}");
         return result.KeyAgreement.KeyAgreementResult;
 
 

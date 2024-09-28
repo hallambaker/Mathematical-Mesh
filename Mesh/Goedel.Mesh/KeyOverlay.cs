@@ -140,7 +140,19 @@ public static partial class Extensions {
             keyCollection, keySecurity));
 
 
-
+    /// <summary>
+    /// Generate a set of root keys from the algorithms specified in <paramref name="secretSeed"/>.
+    /// </summary>
+    /// <param name="secretSeed">The secret seed value.</param>
+    /// <param name="type">The contribuition type</param>
+    /// <param name="actor">The actor that will use the key</param>
+    /// <param name="operation">The operation for which the key will be used.</param>
+    /// <param name="keyCollection">The key collection to register the private key to
+    /// (the key is always generated as ephemeral.)</param>
+    /// <param name="keySecurity">The key security model of the derrived key.</param>
+    /// <returns>KeyData for the public parameters of the derrived key.</returns>
+    /// <param name="info">Additional info.</param>
+    /// <returns>The key set.</returns>
     public static List<CryptoKey> GenerateKeySet(
                 this PrivateKeyUDF secretSeed,
                 MeshKeyType type,

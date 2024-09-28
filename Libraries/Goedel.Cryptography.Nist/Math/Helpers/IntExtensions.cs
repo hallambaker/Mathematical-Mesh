@@ -1,5 +1,16 @@
 ﻿namespace Goedel.Cryptography.Nist;
+
+/// <summary>
+/// Extension class with integer handling extensions.
+/// </summary>
 public static class IntExtensions {
+
+    /// <summary>
+    /// Return a/b rounding any remainder up.
+    /// </summary>
+    /// <param name="a">First parameter</param>
+    /// <param name="b">Second parameter</param>
+    /// <returns>a/b rounding any remainder up.</returns>
     public static int CeilingDivide(this int a, int b) {
         // Modulo is slow, avoid it
         var result = a / b;
@@ -10,6 +21,12 @@ public static class IntExtensions {
         return result;
         }
 
+    /// <summary>
+    /// Return a/b rounding any remainder down.
+    /// </summary>
+    /// <param name="a">First parameter</param>
+    /// <param name="b">Second parameter</param>
+    /// <returns>a/b rounding any remainder down.</returns>
     public static int FloorDivide(this int a, int b) {
         if ((a < 0) ^ (b < 0) && a % b != 0) {
             return (a / b - 1);
@@ -18,6 +35,14 @@ public static class IntExtensions {
         return a / b;
         }
 
+    /// <summary>
+    /// Return a+increment unless a>max, in which case return min.
+    /// </summary>
+    /// <param name="a">Value to increment.</param>
+    /// <param name="min">Reset value returned if a+increment > max</param>
+    /// <param name="max">MNaximum value, a is returned if a+increment <= max.</param>
+    /// <param name="increment">Increment to add</param>
+    /// <returns>The value a+increment or min if the reult would be greater than max.</returns>
     public static int IncrementOrReset(this int a, int min, int max, int increment = 1) {
         a++;
         if (a > max) {
@@ -27,6 +52,11 @@ public static class IntExtensions {
         return a;
         }
 
+    /// <summary>
+    /// Get the exact bit length of <paramref name="a"/>
+    /// </summary>
+    /// <param name="a">The integer to get the length of.</param>
+    /// <returns>The exact bit length.</returns>
     public static int GetExactBitLength(this int a) {
         int size = 0;
 
@@ -37,6 +67,11 @@ public static class IntExtensions {
         return size;
         }
 
+    /// <summary>
+    /// return 2^<paramref name="a"/>
+    /// </summary>
+    /// <param name="a">Exponent.</param>
+    /// <returns>2^<paramref name="a"/></returns>
     public static int Exp2(this int a) {
         return 1 << a;
         }

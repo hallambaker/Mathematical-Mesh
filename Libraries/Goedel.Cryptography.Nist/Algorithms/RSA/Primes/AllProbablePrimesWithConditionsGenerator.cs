@@ -7,7 +7,7 @@ namespace Goedel.Cryptography.Nist;
 /// <summary>
 /// Generate probable primes with conditions.
 /// </summary>
-public class AllProbablePrimesWithConditionsGenerator : IFips186_5PrimeGenerator {
+public class AllProbablePrimesWithConditionsGenerator  {
     private readonly IEntropyProvider _entropyProvider;
     private readonly IPrimeGenerator _primeGenerator;
     private int _pBound = 5;

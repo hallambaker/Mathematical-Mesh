@@ -47,16 +47,6 @@ public partial class ProfileHost {
                 PrivateKeyUDF secretSeed) : base(secretSeed) {
         }
 
-    ///// <summary>
-    ///// Generate profile specific keys.
-    ///// </summary>
-    //protected override void Generate() {
-    //    var keyAuthenticate = SecretSeed.GenerateContributionKeyPair(
-    //            MeshKeyType, MeshActor, MeshKeyOperation.Authenticate);
-
-    //    BaseAuthentication = new KeyData(keyAuthenticate.KeyPairPublic());
-    //    }
-
     /// <summary>
     /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
     /// seed.
@@ -67,7 +57,7 @@ public partial class ProfileHost {
     /// <param name="algorithmAuthenticate">The signature algorithm</param>
     /// <param name="bits">The size of key to generate in bits/</param>
     /// <returns>The created profile.</returns>
-    public static new ProfileHost Generate(
+    public static  ProfileHost Generate(
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,

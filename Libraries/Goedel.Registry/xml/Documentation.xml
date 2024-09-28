@@ -72,6 +72,22 @@
             <param name="bold">If true, wrap value in bold style tags</param>
             <returns>The resulting formatted string.</returns>
         </member>
+        <member name="M:Goedel.Registry.ExtensionMethods.ValueOrNull(System.String)">
+            <summary>
+            Returns <paramref name="value"/> if not null, otherwise, the string "null"
+            </summary>
+            <param name="value">Value to convert.</param>
+            <returns>The converted value.</returns>
+        </member>
+        <member name="M:Goedel.Registry.ExtensionMethods.NotNullTagged(System.String,System.String)">
+            <summary>
+            Returns an empty string if <paramref name="value"/> is null, otherwise the string
+            <paramref name="tag"/> || <paramref name="value"/>.
+            </summary>
+            <param name="value">The value to present.</param>
+            <param name="tag">Optional tag to prefix a non null value.</param>
+            <returns>The presentation.</returns>
+        </member>
         <member name="T:Goedel.Registry.Separator">
             <summary>
             The separator class prints as one value the first time ToString() is called

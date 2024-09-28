@@ -345,6 +345,7 @@ public class CurveX448Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
     /// <param name="exportable">If true, the private key is exportable</param>
 
     public CurveX448Private(BigInteger privateKey, bool exportable = false) {
+
         SecretKey = privateKey;
         Secret = CurveX448.EncodeScalar(privateKey);
 
@@ -430,19 +431,36 @@ public class CurveX448Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
 
     ///<inheritdoc/>
     public IKeyAdvancedPrivate[] MakeThresholdKeySet(int shares) {
+        //if (SecretKey > CurveX448.Q) {
+        //    Console.WriteLine($"ooops");
+        //    }
+
         BigInteger accumulator = 0;
         var result = new IKeyAdvancedPrivate[shares];
 
         for (var i = 1; i < shares; i++) {
             var newPrivate = Platform.GetRandomBigInteger(CurveX448.Q);
-            result[i] = new CurveX448Private(newPrivate, exportable: true) { IsThreshold = true };
+            if (newPrivate < 0) {
+                }
+
+            result[i] = new CurveX448Private(newPrivate, exportable: true) {
+                IsThreshold = true 
+                };
             accumulator = (accumulator + newPrivate).Mod(CurveX448.Q);
             }
 
         //Assert.True(Accumulator > 0 & Accumulator < Private, CryptographicException.Throw);
+        var remainder = ((CurveX448.Q + SecretKey) - accumulator).Mod(CurveX448.Q);
+        //if (remainder > CurveX448.Q) {
+        //    Console.WriteLine($"qooops");
+        //    }
+        //if ((remainder + accumulator).Mod(CurveX448.Q) != SecretKey.Mod(CurveX448.Q)) {
+        //    Console.WriteLine($"ww ooops");
+        //    }
+        //Console.WriteLine($"Sum = {(remainder + accumulator).Mod(CurveX448.Q)}");
+        //Console.WriteLine($"ww {SecretKey.Mod(CurveX448.Q)}");
 
-        result[0] = new CurveX448Private(
-            (CurveX448.Q + SecretKey - accumulator).Mod(CurveX448.Q), exportable: true) {
+        result[0] = new CurveX448Private(remainder, exportable: true) {
             IsThreshold = true
             };
         return result;

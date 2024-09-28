@@ -1,4 +1,8 @@
 ﻿namespace Goedel.Cryptography.Nist;
+
+/// <summary>
+/// Extension class performing number theory routines
+/// </summary>
 public static class NumberTheory {
     /// <summary>
     /// C.3.1 Probabilistic Primality Check, Miller-Rabin Algorithm
