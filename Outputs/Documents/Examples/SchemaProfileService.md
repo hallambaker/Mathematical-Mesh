@@ -2,31 +2,27 @@
 {
   "ProfileService":{
     "ServiceAuthentication":{
-      "Udf":"MBC7-GBU6-CLL7-USJM-UCQ2-72R2-2H7O",
+      "Udf":"MCTD-ZVU7-RN34-WLA7-B2QM-KLGK-5QMS",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"TqIu0kEwjnjeXeZeID53a9893eRH-BRPc5iQ1_d-J_A_E
-  zGclqGTlaHJSOyf1bfu0Q2VNkWtiwUA"}}},
+          "Public":"DUwPRui2ROR6_dGHYRm3VvMlAeeJf-6CBxXpm9bgh1jDS
+  KRvqsQem9TGeABV8yPj7iYLGXKEjFwA"}}},
     "ServiceEncryption":{
-      "Udf":"MBIH-BWP2-Z43Z-NIR6-SWLY-WIMD-S7AK",
+      "Udf":"MCSV-3BYM-4SIX-VVJ3-AQ7H-FZGM-D6BT",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"2eapnJ1gDZN4bHJGoHYLciCcLCMmnTZtaDF-e26BxJwE_
-  0vO5PAWCkc5xZeGcGr3ITpdzrWhAFiA"}}},
+          "Public":"-pi3A5_OwSrNxcpi2yxLtKbxcksbA148AApGmCpuf6RwB
+  piwKgKjK9CoTVEut7j3_1XybS2bavUA"}}},
     "ServiceSignature":{
-      "Udf":"MAYH-WLYU-U6TX-S64V-E5WS-5LLO-C4ZW",
+      "Udf":"MCIA-MNHD-ZYRQ-46U4-SKQ2-AGAE-J5WI",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"H_yTB3rN_OP86NjklUOHr_WP1vgXQHoWXnOXRsQkv9kgc
-  XrMD3FEBJAhxS4bFrQJl7p-GTVe20YA"}}},
-    "ProfileSignature":{
-      "Udf":"MD3E-FN6W-3G45-YQ43-QXYR-CU4X-RKG5",
-      "PublicParameters":{
-        "PublicKeyECDH":{
-          "crv":"Ed448",
-          "Public":"X-VsXh60gID4HH8Jh-H4Y1sgrCIyYSO3rbErd7be7MV0E
-  6xG7XxsSeO4OCFQIBszhUaO41KX2AMA"}}}}}
+          "Public":"QJbjpMeZb_tebCHwP073GK07kWyciSx0sU7-325TBHTOp
+  h488_6JC2dvLpYgTMlvFMroOXW8lQqA"}}},
+    "RootUdfs":["YIhiI7fm1y1INy8Ju31ThJGNC16dnLWfvP1Js7SlZGCD5EDhM
+  lnc9aeTKya_em4QVlSqcNFoKT5HWiaXVEPajQ"
+      ]}}
 ~~~~

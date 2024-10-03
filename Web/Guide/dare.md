@@ -25,11 +25,11 @@ the contents are encrypted under the corresponding encryption key:
 <rsp>File: ciphertext.dare
     Bytes: 16
     Encryption Algorithm: A256CBC
-        Recipient: MBUF-P7S2-WFEF-D3ML-OKCC-XYOT-6SLD
+        Recipient: MDSO-NJIQ-HUNW-UWRS-WPOE-BBO3-NDWN
     Digest Algorithm: S512
-    Payload Digest: 0F80F0A764D7A6F4AF97738E39FDD2ACD4F46D3FFEA567FFE
-3DB2EE2A586E4D1F3D4158EEB6451FE39477A58ECADB8FA4FAC7D76FAA29AE811CC16
-0E4F50B4AB
+    Payload Digest: 0311935C4158083AF1B0E1A41632DE52A5A49837B03D36494
+85BA346AA419F9E668BE1F83BD14B55ECDA608A8BDB51141E39DD9814F9979F90ED9E
+5120A26636
 </div>
 ~~~~
 
@@ -53,7 +53,7 @@ encoded:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman dare encode TestDir1 ^
-    /encrypt=LICV-3VXL-OVCG-FTUC-CDEW-URNJ-5I
+    /encrypt=CJGO-SRYL-7TCI-K5ZY-KJDZ-OW7K-ZI
 <rsp>ERROR - No encryption key is available
 </div>
 ~~~~
@@ -95,12 +95,12 @@ The command to verify a signed message is identical:
 <rsp>File: TestFile1.txt.mesh.dare
     Bytes: 16
     Encryption Algorithm: A256CBC
-        Recipient: MDKE-C7ME-2B4W-UICO-VV47-2SMK-JZ2X
+        Recipient: MBOG-K6EY-GSR3-EUWO-MMZG-4MUG-MMTN
     Digest Algorithm: S512
-    Payload Digest: 990DEE2BD5020D3982D8B90B3FC3D6DABD8AD24CDCBA00938
-1E4133675A4E1A89608A88D4F0823D9589BDD8209460B686310B85D236869B56DE8D4
-025FD04A67
-        Signer: MDE2-MKMI-773P-GJ3F-YYAI-UVCK-OMKS
+    Payload Digest: 393EDDC99E36165C5497467F41C0DACE20B91C0F37FA91C01
+74A807C67E942D634D0B75ED741FBD2BC10925F8381D568B76BECC0B4C504F1D2F0EF
+5151072368
+        Signer: MDSC-FB3G-FEPA-PXO3-MFLY-W5LR-WOBU
 </div>
 ~~~~
 
@@ -112,7 +112,7 @@ level otherwise.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman dare verify TestFile1.txt.symmetric.dare ^
-    /encrypt=LICV-3VXL-OVCG-FTUC-CDEW-URNJ-5I
+    /encrypt=CJGO-SRYL-7TCI-K5ZY-KJDZ-OW7K-ZI
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -146,7 +146,7 @@ To decode a message encrypted under a symmetric key, we must specify the key:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman dare decode TestFile1.txt.symmetric.dare ^
-    /encrypt=LICV-3VXL-OVCG-FTUC-CDEW-URNJ-5I
+    /encrypt=CJGO-SRYL-7TCI-K5ZY-KJDZ-OW7K-ZI
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -294,6 +294,9 @@ the files are extracted by default:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman archive extract Sequence.dcon TestOut
+<rsp>ERROR - The process cannot access the file 'C:\Users\hallam\Test\Dete
+rministic\Examples-InternetDrafts\Working\Sequence.dcon' because it i
+s being used by another process.
 </div>
 ~~~~
 
@@ -317,8 +320,17 @@ The `dare append` command adds an entry to a sequence:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman archive append Sequence.dcon TestFile1.txt
+<rsp>ERROR - The process cannot access the file 'C:\Users\hallam\Test\Dete
+rministic\Examples-InternetDrafts\Working\Sequence.dcon' because it i
+s being used by another process.
 <cmd>Alice> meshman archive append Sequence.dcon TestFile2.txt
+<rsp>ERROR - The process cannot access the file 'C:\Users\hallam\Test\Dete
+rministic\Examples-InternetDrafts\Working\Sequence.dcon' because it i
+s being used by another process.
 <cmd>Alice> meshman archive append Sequence.dcon TestFile3.txt
+<rsp>ERROR - The process cannot access the file 'C:\Users\hallam\Test\Dete
+rministic\Examples-InternetDrafts\Working\Sequence.dcon' because it i
+s being used by another process.
 </div>
 ~~~~
 
@@ -332,6 +344,9 @@ marking an entry as deleted:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman archive delete Sequence.dcon  TestFile2.txt
+<rsp>ERROR - The process cannot access the file 'C:\Users\hallam\Test\Dete
+rministic\Examples-InternetDrafts\Working\Sequence.dcon' because it i
+s being used by another process.
 </div>
 ~~~~
 
@@ -349,7 +364,9 @@ sequence:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman archive index Sequence.dcon
-<rsp>ERROR - An unknown error occurred
+<rsp>ERROR - The process cannot access the file 'C:\Users\hallam\Test\Dete
+rministic\Examples-InternetDrafts\Working\Sequence.dcon' because it i
+s being used by another process.
 </div>
 ~~~~
 

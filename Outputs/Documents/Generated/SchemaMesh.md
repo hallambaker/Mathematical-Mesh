@@ -128,11 +128,10 @@ Parent class from which all profile classes are derived
 <dl>
 <dt>Description: String (Optional)
 <dd>Description of the profile
-<dt>ProfileSignature: KeyData (Optional)
-<dd>The permanent signature key used to sign the profile itself. The UDF of
-the key is used as the permanent object identifier of the profile. Thus,
-by definition, the KeySignature value of a Profile does not change under
-any circumstance.
+<dt>RootUdfs: Binary [0..Many]
+<dd>A list of binary UDF fingerprints of accepted root signature keys for the profile.
+The profile finderprint is calculated over the concatenation of the
+fingerprint URIs.
 </dl>
 ###Structure: ProfileDevice
 
@@ -389,6 +388,8 @@ Describes the connection of a member to a group.
 <dd>Encryption key to be used to encrypt data for the service to use.
 <dt>CallsignServiceProfile: ProfileAccount (Optional)
 <dd>Profile of the callsign registry used by the service.
+<dt>EnvelopedProfileService: Enveloped<ProfileService> (Optional)
+<dd>Profile of the service.
 </dl>
 ###Structure: ConnectionHost
 
@@ -433,7 +434,7 @@ Mesh host
 </dl>
 
 <dl>
-<dt>ProfileSignature: KeyData (Optional)
+<dt>ProfileSignatures: KeyData [0..Many]
 <dd>Grant access to profile online signing key used to sign updates
 to the profile.
 <dt>AdministratorSignature: KeyData (Optional)
@@ -552,8 +553,6 @@ Base class for contact entries.
 <dd>The local name.
 <dt>Anchors: Anchor [0..Many]
 <dd>Mesh fingerprints associated with the contact.
-<dt>NetworkAddresses: NetworkAddress [0..Many]
-<dd>Network address entries
 <dt>Locations: Location [0..Many]
 <dd>The physical locations the contact is associated with.
 <dt>Roles: Role [0..Many]
@@ -667,13 +666,40 @@ particular network address
 <dd>If true, the name is not in current use.
 <dt>Address: String (Optional)
 <dd>The network address, e.g. alice@example.com
-<dt>NetworkCapability: String [0..Many]
-<dd>The capabilities bound to this address.
+<dt>Protocol: String (Optional)
+<dd>The IANA protocol|identifier of the network protocols by which 
+the contact may be reached using the specified Address. 
+</dl>
+###Structure: NetworkCredential
+
+<dl>
+<dt>Inherits:  NetworkAddress
+</dl>
+
+<dl>
+<dt>Type: String (Optional)
+<dd>The IANA credential type
+<dt>Credential: Binary (Optional)
+<dd>The credential
+</dl>
+###Structure: NetworkProfile
+
+<dl>
+<dt>Inherits:  NetworkAddress
+</dl>
+
+<dl>
 <dt>EnvelopedProfileAccount: Enveloped<ProfileAccount> (Optional)
 <dd>The account profile
-<dt>Protocols: NetworkProtocol [0..Many]
-<dd>Public keys associated with the network address
 </dl>
+###Structure: NetworkCapability
+
+<dl>
+<dt>Inherits:  NetworkProfile
+</dl>
+
+[No fields]
+
 ###Structure: NetworkProtocol
 
 <dl>
@@ -737,6 +763,15 @@ the contact may be reached using the specified Address.
 <dt>Repeat: String (Optional)
 <dt>Busy: Boolean (Optional)
 </dl>
+###Structure: WorkTask
+
+<dl>
+<dt>Inherits:  Engagement
+</dl>
+
+<dl>
+<dt>Dependency: String [0..Many]
+</dl>
 ##Catalog Entries
 
 ###Structure: CatalogedEntry
@@ -744,12 +779,14 @@ the contact may be reached using the specified Address.
 Base class for cataloged Mesh data.
 
 <dl>
-<dt>Labels: String [0..Many]
-<dd>The set of labels describing the entry
-<dt>LocalName: String (Optional)
-<dd>User specified identifier.
 <dt>Uid: String (Optional)
 <dd>Globaly unique identifier
+<dt>LocalName: String (Optional)
+<dd>User specified identifier.
+<dt>Path: String (Optional)
+<dd>The set of labels describing the entry
+<dt>Description: String (Optional)
+<dd>Description
 </dl>
 ###Structure: CatalogedDevice
 
@@ -764,6 +801,8 @@ Public device entry, indexed under the device ID Hello
 <dd>Timestamp, allows 
 <dt>Udf: String (Optional)
 <dd>UDF of the signature key of the device in the Mesh
+<dt>Platform: String (Optional)
+<dd>Device Platform
 <dt>DeviceUdf: String (Optional)
 <dd>UDF of the offline signature key of the device
 <dt>SignatureUdf: String (Optional)
@@ -773,6 +812,8 @@ Public device entry, indexed under the device ID Hello
 specific to the device.
 <dt>EnvelopedProfileDevice: Enveloped<ProfileDevice> (Optional)
 <dd>The device profile
+<dt>DeviceDescription: DeviceDescription (Optional)
+<dd>Description of the device
 <dt>EnvelopedConnectionService: Enveloped<ConnectionService> (Optional)
 <dd>Slim version of ConnectionDevice used by the presentation layer
 <dt>EnvelopedConnectionDevice: Enveloped<ConnectionDevice> (Optional)
@@ -781,6 +822,24 @@ specific to the device.
 <dd>The activation of the device within the Mesh account
 <dt>EnvelopedActivationCommon: Enveloped<ActivationCommon> (Optional)
 <dd>The activation of the device within the Mesh account
+</dl>
+###Structure: DeviceDescription
+
+<dl>
+<dt>Idiom: String (Optional)
+<dd>The device form factor, valid values are Desktop, Phone, Tablet, TV, Watch
+<dt>Manufacturer: String (Optional)
+<dd>Manufacturer name
+<dt>Model: String (Optional)
+<dd>Manufacturer defined model
+<dt>Name: String (Optional)
+<dd>Name of the device as specified by the user
+<dt>Platform: String (Optional)
+<dd>The device platform or operating system: Android / iOS / macOS / Tizen / watchOS / Windows
+<dt>Version: String (Optional)
+<dd>Platform version in format Major.Minor.Build.Revision
+<dt>ImageLocator: String (Optional)
+<dd>EARL specifying an image of the device.
 </dl>
 ###Structure: CatalogedSignature
 
@@ -792,6 +851,31 @@ Cataloged Signature
 
 [No fields]
 
+###Structure: CatalogedDocument
+
+A document stored on a service somewhere.
+
+<dl>
+<dt>Inherits:  CatalogedEntry
+</dl>
+
+<dl>
+<dt>Udf: String (Optional)
+<dd>Document fingerprint.
+<dt>Filename: String (Optional)
+<dt>Title: String (Optional)
+<dt>Version: String (Optional)
+<dt>URI: String (Optional)
+<dd>Locator to be used to retrieve the data.
+<dt>ContentType: String (Optional)
+<dd>IANA content type of the encoded content.
+<dt>Encoding: String (Optional)
+<dd>Content encoding, typically DARE envelope.
+<dt>Created: DateTime (Optional)
+<dt>Updated: DateTime (Optional)
+<dt>Length: Integer (Optional)
+<dd>Encoded document length in bytes.
+</dl>
 ###Structure: CatalogedPublication
 
 <dl>
@@ -826,16 +910,6 @@ by the envelope metadata.
 <dd>Specifies the client identification key
 <dt>HostAuthentication: KeyData [0..Many]
 <dd>Means of authenticating the host key
-</dl>
-###Structure: CatalogedApplicationSsh
-
-<dl>
-<dt>Inherits:  CatalogedApplication
-</dl>
-
-<dl>
-<dt>ClientKey: KeyData (Optional)
-<dd>The S/Mime encryption key
 </dl>
 ###Structure: CatalogedNetwork
 
@@ -1051,10 +1125,8 @@ qualified URI.
 </dl>
 
 <dl>
-<dt>EnvelopedTask: Enveloped<Engagement> (Optional)
 <dt>Title: String (Optional)
-<dt>Key: String (Optional)
-<dd>Unique key.
+<dt>EnvelopedTask: Enveloped<Engagement> (Optional)
 </dl>
 ###Structure: CatalogedApplication
 
@@ -1097,6 +1169,15 @@ qualified URI.
 <dt>EnvelopedActivationCommon: Enveloped<ActivationCommon> (Optional)
 <dd>The activation of the device within the Mesh account
 </dl>
+###Structure: CatalogedFeed
+
+<dl>
+<dt>Inherits:  CatalogedBookmark
+</dl>
+
+<dl>
+<dt>Protocol: String (Optional)
+</dl>
 ###Structure: CatalogedApplicationMail
 
 <dl>
@@ -1116,7 +1197,41 @@ qualified URI.
 <dt>OpenpgpEncrypt: KeyData (Optional)
 <dd>The OpenPGP encryption key
 </dl>
-###Structure: CatalogedApplicationNetwork
+###Structure: CatalogedApplicationPkix
+
+<dl>
+<dt>Inherits:  CatalogedApplication
+</dl>
+
+[No fields]
+
+###Structure: CatalogedApplicationOpenPgp
+
+<dl>
+<dt>Inherits:  CatalogedApplication
+</dl>
+
+[No fields]
+
+###Structure: CatalogedApplicationSsh
+
+<dl>
+<dt>Inherits:  CatalogedApplication
+</dl>
+
+<dl>
+<dt>ClientKey: KeyData (Optional)
+<dd>The S/Mime encryption key
+</dl>
+###Structure: CatalogedApplicationGit
+
+<dl>
+<dt>Inherits:  CatalogedApplication
+</dl>
+
+[No fields]
+
+###Structure: CatalogedApplicationDeveloper
 
 <dl>
 <dt>Inherits:  CatalogedApplication
@@ -1305,6 +1420,15 @@ in reply.
 of the response.
 </dl>
 ###Structure: GroupInvitation
+
+<dl>
+<dt>Inherits:  Message
+</dl>
+
+<dl>
+<dt>Text: String (Optional)
+</dl>
+###Structure: MessageMail
 
 <dl>
 <dt>Inherits:  Message

@@ -75,7 +75,8 @@ Additional digest algorithms may be specified using the `/alg` option:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman hash digest TestFile1.txt /alg=sha256
-<rsp>C7BE1ED902FB8DD4D48997C6452F5D7E509FBCDBE2808B16BCF4EDCE4C07D14E
+<rsp>A028D4F74B602BA45EB0A93C9A4677240DCF281A1A9322F183BD32F0BED82EC72DE9C
+3957B2F4C9A1CCF7ED14F85D73498DF38017E703D47EBB9F0B3BF116F69
 <cmd>Alice> meshman hash digest TestFile1.txt /alg=sha3256
 <rsp>3C3B66EDCFE51F5B15BF372F61E25710FFC1AD3C0E3C60D832B42053A96772CF
 <cmd>Alice> meshman hash digest TestFile1.txt /alg=sha3
@@ -100,8 +101,8 @@ If no key is specified, a random secret is generated:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman hash mac TestFile1.txt
-<rsp>AAC6-WUAL-T2E7-OIFA-LHGB-UQ75-M75P
-NASY-Z5ZP-QVRN-MVFQ-4WO5-T26A-YNCV
+<rsp>ACJN-NPZT-O7RJ-TTLG-3TU3-MGFA-LMJ6
+NBII-Y7Y2-KPYX-NS5R-TTSY-MIX7-ROZT
 </div>
 ~~~~
 
@@ -111,9 +112,9 @@ A key may be specified using the `/key` option:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman hash mac TestFile1.txt ^
-    /key=NASY-Z5ZP-QVRN-MVFQ-4WO5-T26A-YNCV
-<rsp>AAC6-WUAL-T2E7-OIFA-LHGB-UQ75-M75P
-NASY-Z5ZP-QVRN-MVFQ-4WO5-T26A-YNCV
+    /key=NBII-Y7Y2-KPYX-NS5R-TTSY-MIX7-ROZT
+<rsp>ACJN-NPZT-O7RJ-TTLG-3TU3-MGFA-LMJ6
+NBII-Y7Y2-KPYX-NS5R-TTSY-MIX7-ROZT
 </div>
 ~~~~
 
@@ -124,11 +125,11 @@ If the expected digest value is specified, this is used to check the calculated 
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman hash mac TestFile1.txt ^
-    /key=NASY-Z5ZP-QVRN-MVFQ-4WO5-T26A-YNCV ^
-    /expect=AAC6-WUAL-T2E7-OIFA-LHGB-UQ75-M75P
+    /key=NBII-Y7Y2-KPYX-NS5R-TTSY-MIX7-ROZT ^
+    /expect=ACJN-NPZT-O7RJ-TTLG-3TU3-MGFA-LMJ6
 <rsp>True
 <cmd>Alice> meshman hash mac TestFile1.txt ^
-    /key=NASY-Z5ZP-QVRN-MVFQ-4WO5-T26A-YNCV ^
+    /key=NBII-Y7Y2-KPYX-NS5R-TTSY-MIX7-ROZT ^
     /expect=MDLI-GX2C-3OQB-BVWI-REXY-EB56-JG4R
 <rsp>ERROR - The calculated fingerprint did not match the expected value.
 </div>

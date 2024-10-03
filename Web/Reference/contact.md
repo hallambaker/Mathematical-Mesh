@@ -104,7 +104,7 @@ by means of a dynamic URI.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman contact exchange mcu://carol@example.com/EFQH-S7D5-WFDK-3TUO-H4RJ-RDFQ-MHAQ
+<cmd>Alice> meshman contact exchange mcd://carol@example.com/EGDV-Z3GM-27VS-KONB-5IKL-7NBQ-EMZW-2TSA-76XR-SZVM-5NBX-DL45-PLIN-A
 <rsp></div>
 ~~~~
 
@@ -135,7 +135,7 @@ presented as a URI or QR code without reciprocating the exchange.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman contact fetch mcu://doug@example.com/EFQA-NB6U-DGXX-CTWH-UVVB-2F47-5NDA
+<cmd>Alice> meshman contact fetch mcd://doug@example.com/EHZK-ZKQG-YIY2-KVNY-AA5U-AFUA-CUM2-CHW4-RMHJ-VGMN-P4I4-5LI2-JCFV-6
 <rsp>[CatalogedContact]
 
 </div>
@@ -226,29 +226,29 @@ The 'contact list' command lists all data in the contact catalog.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MB3T-WIPZ-JRCW-QZFM-SCQL-OVVO-AHO2
-  Person MB3T-WIPZ-JRCW-QZFM-SCQL-OVVO-AHO2
-  Anchor MB3T-WIPZ-JRCW-QZFM-SCQL-OVVO-AHO2
+<rsp>Entry<CatalogedContact>: MBQE-UNZP-5RH2-WYHY-IO5Q-JRAD-WTE3
+  Person MBQE-UNZP-5RH2-WYHY-IO5Q-JRAD-WTE3
+  Anchor MBQE-UNZP-5RH2-WYHY-IO5Q-JRAD-WTE3
   Address alice@example.com
 
-Entry<CatalogedContact>: NCIO-3ZRE-NYUC-XRNS-CDLI-HL42-EDBR
+Entry<CatalogedContact>: NCQT-M4X2-LSIJ-GRPC-FUXJ-YIK7-KV33
   Person 
-  Anchor MDCR-A2UE-SKQA-3HBF-YFO6-VQ6H-E72X
+  Anchor MBQN-O35O-S5NJ-XZ5K-7RRD-NAMW-VN6H
   Address bob@example.com
 
-Entry<CatalogedContact>: NDNA-G2KO-GNLV-RMLQ-YAOB-ZDHC-SRZU
+Entry<CatalogedContact>: NDBE-XPGH-FLCF-57RP-IT5N-XHBB-PK7A
   Person 
-  Anchor MBXT-N7ZN-3U5H-HTTC-4VWF-6WA5-LKGR
+  Anchor MBQG-AYCC-THQE-A3RF-CF4V-GEEW-GL3Z
   Address groupw@example.com
 
-Entry<CatalogedContact>: NCZO-YOS4-JWWD-H7YZ-CRN2-XQGP-4QXQ
+Entry<CatalogedContact>: NCYT-PO6T-OK42-BKSL-B3LX-BNB7-SKA7
   Person 
-  Anchor MBXT-N7ZN-3U5H-HTTC-4VWF-6WA5-LKGR
+  Anchor MBQG-AYCC-THQE-A3RF-CF4V-GEEW-GL3Z
   Address groupw@example.com
 
-Entry<CatalogedContact>: NCIP-SDNI-F6PT-CERQ-MRF5-RQVS-KVW4
+Entry<CatalogedContact>: NCRY-X27D-VG2N-CHET-RRMT-53AL-R3A6
   Person 
-  Anchor MCO6-N3XT-LVAR-CFKY-SWDF-A5QC-6SBU
+  Anchor MBQD-WBR4-Q3OT-7OYB-N7ZY-YM7G-ZKYE
   Address carol@example.com
 
 </div>

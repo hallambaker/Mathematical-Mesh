@@ -42,9 +42,15 @@ Function
 </dd>
 </dl>
 <dl>
+<dt>mcd
+<dd>
+    The proposed IANA URI scheme for offering a device connection.
+</dd>
+</dl>
+<dl>
 <dt>mcu
 <dd>
-    The proposed IANA URI scheme.
+    The proposed IANA URI scheme for offering to exchange contacts.
 </dd>
 </dl>
 <dl>
@@ -95,6 +101,18 @@ Function
 </dl>
 <dl>
 <dt>Expired
+<dd>
+    Transaction result tag Expired
+</dd>
+</dl>
+<dl>
+<dt>AccountUnknown
+<dd>
+    Transaction result tag Expired
+</dd>
+</dl>
+<dl>
+<dt>PinInvalid
 <dd>
     Transaction result tag Expired
 </dd>

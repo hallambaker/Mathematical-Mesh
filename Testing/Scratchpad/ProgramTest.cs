@@ -65,8 +65,8 @@ partial class Program {
 
         //ShellTests.Test().TestMessageGroup();
         //RegistrationTests.Test().CallsignBind();
-        TestGoedelCryptography.Test().TestECDHPThreshold();
-
+        TestPresence.Test().PresenceHeartbeat();
+        TestPresence.Test().PresenceSessionRequest();
         //MakeSiteDocs.Test().GroupTests();
 
 

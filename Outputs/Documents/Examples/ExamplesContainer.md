@@ -79,13 +79,13 @@ Frame 0
 ~~~~
 {
   "DareHeader":{
-    "dig":"S512",
     "policy":{},
     "ContentMetaData":"e30",
     "SequenceInfo":{
       "DataEncoding":"JSON",
       "ContainerType":"Chain",
-      "Index":0}}}
+      "Index":0},
+    "dig":"S512"}}
 
 [Empty trailer]
 ~~~~
@@ -96,13 +96,13 @@ Frame 0
 ~~~~
 {
   "DareHeader":{
-    "dig":"S512",
     "policy":{},
     "ContentMetaData":"e30",
     "SequenceInfo":{
       "DataEncoding":"JSON",
       "ContainerType":"Chain",
-      "Index":0}}}
+      "Index":0},
+    "dig":"S512"}}
 
 {
   "DareTrailer":{
@@ -118,10 +118,10 @@ Frame 1
 ~~~~
 {
   "DareHeader":{
-    "dig":"S512",
     "ContentMetaData":"e30",
     "SequenceInfo":{
-      "Index":1}}}
+      "Index":1},
+    "dig":"S512"}}
 
 {
   "DareTrailer":{
@@ -137,10 +137,10 @@ Frame 2
 ~~~~
 {
   "DareHeader":{
-    "dig":"S512",
     "ContentMetaData":"e30",
     "SequenceInfo":{
-      "Index":2}}}
+      "Index":2},
+    "dig":"S512"}}
 
 {
   "DareTrailer":{
@@ -156,10 +156,10 @@ Frame 3
 ~~~~
 {
   "DareHeader":{
-    "dig":"S512",
     "ContentMetaData":"e30",
     "SequenceInfo":{
-      "Index":3}}}
+      "Index":3},
+    "dig":"S512"}}
 
 {
   "DareTrailer":{
@@ -182,13 +182,13 @@ Frame 0
 ~~~~
 {
   "DareHeader":{
-    "dig":"S512",
     "policy":{},
     "ContentMetaData":"e30",
     "SequenceInfo":{
       "DataEncoding":"JSON",
       "ContainerType":"Merkle",
-      "Index":0}}}
+      "Index":0},
+    "dig":"S512"}}
 
 [Empty trailer]
 ~~~~
@@ -199,19 +199,19 @@ Frame 0
 ~~~~
 {
   "DareHeader":{
-    "dig":"S512",
     "policy":{},
     "ContentMetaData":"e30",
     "SequenceInfo":{
       "DataEncoding":"JSON",
       "ContainerType":"Merkle",
-      "Index":0}}}
+      "Index":0},
+    "dig":"S512"}}
 
 {
   "DareTrailer":{
     "PayloadDigest":"z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg_SpIdNs6c5H
   0NE8XYXysP-DGNKHfuwvY7kxvUdBeoGlODJ6-SfaPg",
-    "TreeDigest":"wvk8X5vTHUlVff7cj3k6fHBqXw52PA_7KK5zRLkheMKnGVF
+    "ApexDigest":"wvk8X5vTHUlVff7cj3k6fHBqXw52PA_7KK5zRLkheMKnGVF
   gHY0VL46Fz78rIjCnSNGXmDoBBG5phZRCU1guDA"}}
 ~~~~
 
@@ -221,17 +221,17 @@ Frame 1
 ~~~~
 {
   "DareHeader":{
-    "dig":"S512",
     "ContentMetaData":"e30",
     "SequenceInfo":{
       "Index":1,
-      "TreePosition":0}}}
+      "TreePosition":0},
+    "dig":"S512"}}
 
 {
   "DareTrailer":{
     "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
   DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
-    "TreeDigest":"vJ6ngNATvZcXSMALi5IUqzl1GBxBnTNVcC87VL_BhMRCbAv
+    "ApexDigest":"vJ6ngNATvZcXSMALi5IUqzl1GBxBnTNVcC87VL_BhMRCbAv
   KSj8gs0VFgxxLkZ2myrtaDIwhHoswiTiBMLNWug"}}
 ~~~~
 
@@ -241,17 +241,17 @@ Frame 2
 ~~~~
 {
   "DareHeader":{
-    "dig":"S512",
     "ContentMetaData":"e30",
     "SequenceInfo":{
       "Index":2,
-      "TreePosition":392}}}
+      "TreePosition":392},
+    "dig":"S512"}}
 
 {
   "DareTrailer":{
     "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
   DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
-    "TreeDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
+    "ApexDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
   Vz9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}}
 ~~~~
 
@@ -261,17 +261,17 @@ Frame 3
 ~~~~
 {
   "DareHeader":{
-    "dig":"S512",
     "ContentMetaData":"e30",
     "SequenceInfo":{
       "Index":3,
-      "TreePosition":392}}}
+      "TreePosition":392},
+    "dig":"S512"}}
 
 {
   "DareTrailer":{
     "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
   DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
-    "TreeDigest":"7fHmkEIsPkN6sDYAOLvpIJn5Dg3PxDDAaq-ll2kh8722kok
+    "ApexDigest":"7fHmkEIsPkN6sDYAOLvpIJn5Dg3PxDDAaq-ll2kh8722kok
   kFnZQcYtjuVC71aHNXI18q-lPnfRkmwryG-bhqQ"}}
 ~~~~
 
@@ -281,17 +281,17 @@ Frame 4
 ~~~~
 {
   "DareHeader":{
-    "dig":"S512",
     "ContentMetaData":"e30",
     "SequenceInfo":{
       "Index":4,
-      "TreePosition":1676}}}
+      "TreePosition":1676},
+    "dig":"S512"}}
 
 {
   "DareTrailer":{
     "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
   DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
-    "TreeDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
+    "ApexDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
   Vz9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}}
 ~~~~
 
@@ -301,17 +301,17 @@ Frame 5
 ~~~~
 {
   "DareHeader":{
-    "dig":"S512",
     "ContentMetaData":"e30",
     "SequenceInfo":{
       "Index":5,
-      "TreePosition":1676}}}
+      "TreePosition":1676},
+    "dig":"S512"}}
 
 {
   "DareTrailer":{
     "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
   DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
-    "TreeDigest":"vJ6ngNATvZcXSMALi5IUqzl1GBxBnTNVcC87VL_BhMRCbAv
+    "ApexDigest":"vJ6ngNATvZcXSMALi5IUqzl1GBxBnTNVcC87VL_BhMRCbAv
   KSj8gs0VFgxxLkZ2myrtaDIwhHoswiTiBMLNWug"}}
 ~~~~
 
@@ -321,17 +321,17 @@ Frame 6
 ~~~~
 {
   "DareHeader":{
-    "dig":"S512",
     "ContentMetaData":"e30",
     "SequenceInfo":{
       "Index":6,
-      "TreePosition":2963}}}
+      "TreePosition":2963},
+    "dig":"S512"}}
 
 {
   "DareTrailer":{
     "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
   DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
-    "TreeDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
+    "ApexDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
   Vz9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}}
 ~~~~
 
@@ -346,7 +346,7 @@ The signing key parameters are:
 ~~~~
 {
   "PrivateKeyECDH":{
-    "Private":"hkYsLO2D7_4vuqZB3MFMV6blEozFJ5KL6CqBtu61Ops",
+    "Private":"H4vYLegql3J8i2rDmU0t9rFGRpg5P2IeBdykCE_YMWo",
     "crv":"Ed25519"}}
 ~~~~
 
@@ -358,13 +358,13 @@ Frame 0
 ~~~~
 {
   "DareHeader":{
-    "dig":"S512",
     "policy":{},
     "ContentMetaData":"e30",
     "SequenceInfo":{
       "DataEncoding":"JSON",
       "ContainerType":"Merkle",
-      "Index":0}}}
+      "Index":0},
+    "dig":"S512"}}
 
 [Empty trailer]
 ~~~~
@@ -375,19 +375,19 @@ Frame 0
 ~~~~
 {
   "DareHeader":{
-    "dig":"S512",
     "policy":{},
     "ContentMetaData":"e30",
     "SequenceInfo":{
       "DataEncoding":"JSON",
       "ContainerType":"Merkle",
-      "Index":0}}}
+      "Index":0},
+    "dig":"S512"}}
 
 {
   "DareTrailer":{
     "PayloadDigest":"z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg_SpIdNs6c5H
   0NE8XYXysP-DGNKHfuwvY7kxvUdBeoGlODJ6-SfaPg",
-    "TreeDigest":"wvk8X5vTHUlVff7cj3k6fHBqXw52PA_7KK5zRLkheMKnGVF
+    "ApexDigest":"wvk8X5vTHUlVff7cj3k6fHBqXw52PA_7KK5zRLkheMKnGVF
   gHY0VL46Fz78rIjCnSNGXmDoBBG5phZRCU1guDA"}}
 ~~~~
 
@@ -397,17 +397,17 @@ Frame 1
 ~~~~
 {
   "DareHeader":{
-    "dig":"S512",
     "ContentMetaData":"e30",
     "SequenceInfo":{
       "Index":1,
-      "TreePosition":0}}}
+      "TreePosition":0},
+    "dig":"S512"}}
 
 {
   "DareTrailer":{
     "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
   DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
-    "TreeDigest":"vJ6ngNATvZcXSMALi5IUqzl1GBxBnTNVcC87VL_BhMRCbAv
+    "ApexDigest":"vJ6ngNATvZcXSMALi5IUqzl1GBxBnTNVcC87VL_BhMRCbAv
   KSj8gs0VFgxxLkZ2myrtaDIwhHoswiTiBMLNWug"}}
 ~~~~
 
@@ -417,17 +417,17 @@ Frame 2
 ~~~~
 {
   "DareHeader":{
-    "dig":"S512",
     "ContentMetaData":"e30",
     "SequenceInfo":{
       "Index":2,
-      "TreePosition":392}}}
+      "TreePosition":392},
+    "dig":"S512"}}
 
 {
   "DareTrailer":{
     "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
   DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
-    "TreeDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
+    "ApexDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
   Vz9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}}
 ~~~~
 
@@ -444,16 +444,16 @@ Frame 0
 {
   "DareHeader":{
     "enc":"A256CBC",
-    "kid":"EBQJ-FR5L-ZVQZ-RM6Q-NWX7-GWWF-ILA6",
-    "Salt":"vGDAim2Mp8NzSNukjBII2g",
+    "kid":"EBQF-MUOR-2SRA-TGTR-4GAU-NQOS-VTV6",
+    "Salt":"Vo73JB-bMliSaGxMYdn28g",
     "recipients":[{
-        "kid":"MDFQ-C642-7ZJ6-WVCA-QHPW-236B-UNCE",
+        "kid":"MC76-W4OU-INGZ-PG5U-TEOO-WOAV-3VGU",
         "epk":{
           "PublicKeyECDH":{
             "crv":"Ed25519",
-            "Public":"h-o1arAOJY35KHuhrQ8bKsBmNRfJqfJk-4ayofbIGyM"}},
-        "wmk":"WqglEont79XuqIaSmsvPqTfi_sk4Iq2UmVDNGLWh_sdxFyARsP
-  kb7w"}
+            "Public":"lgeR7EU59do_w5n4eqG9ziYmk6RNL-dqUCmoBKyqRKc"}},
+        "wmk":"jDxwV06iQ0cA1v2da-LtSQF9l9caN26TtHlZOhPglj4DnbgxsP
+  B2jA"}
       ],
     "policy":{
       "enc":"none",
@@ -461,7 +461,7 @@ Frame 0
       "EncryptKeys":[{
           "PublicKeyECDH":{
             "crv":"Ed25519",
-            "Public":"i3K71T5Wk65mjz0pnIKxja3WkFlrsnDS8fRz1p7sYrI"}}
+            "Public":"hvJXZNC4r0jxBiw1pLFRQOHW3zgwTV4ObgTaxC6C2OM"}}
         ],
       "Sealed":true},
     "ContentMetaData":"e30",
@@ -480,16 +480,16 @@ Frame 0
 {
   "DareHeader":{
     "enc":"A256CBC",
-    "kid":"EBQJ-FR5L-ZVQZ-RM6Q-NWX7-GWWF-ILA6",
-    "Salt":"vGDAim2Mp8NzSNukjBII2g",
+    "kid":"EBQF-MUOR-2SRA-TGTR-4GAU-NQOS-VTV6",
+    "Salt":"Vo73JB-bMliSaGxMYdn28g",
     "recipients":[{
-        "kid":"MDFQ-C642-7ZJ6-WVCA-QHPW-236B-UNCE",
+        "kid":"MC76-W4OU-INGZ-PG5U-TEOO-WOAV-3VGU",
         "epk":{
           "PublicKeyECDH":{
             "crv":"Ed25519",
-            "Public":"h-o1arAOJY35KHuhrQ8bKsBmNRfJqfJk-4ayofbIGyM"}},
-        "wmk":"WqglEont79XuqIaSmsvPqTfi_sk4Iq2UmVDNGLWh_sdxFyARsP
-  kb7w"}
+            "Public":"lgeR7EU59do_w5n4eqG9ziYmk6RNL-dqUCmoBKyqRKc"}},
+        "wmk":"jDxwV06iQ0cA1v2da-LtSQF9l9caN26TtHlZOhPglj4DnbgxsP
+  B2jA"}
       ],
     "policy":{
       "enc":"none",
@@ -497,7 +497,7 @@ Frame 0
       "EncryptKeys":[{
           "PublicKeyECDH":{
             "crv":"Ed25519",
-            "Public":"i3K71T5Wk65mjz0pnIKxja3WkFlrsnDS8fRz1p7sYrI"}}
+            "Public":"hvJXZNC4r0jxBiw1pLFRQOHW3zgwTV4ObgTaxC6C2OM"}}
         ],
       "Sealed":true},
     "ContentMetaData":"e30",
@@ -516,16 +516,16 @@ Frame 1
 {
   "DareHeader":{
     "enc":"A256CBC",
-    "kid":"EBQJ-WIVZ-4VJB-DF5L-2SZB-SGG2-5C2W",
-    "Salt":"H7FynpxwxNgbJOSlb2PWhg",
+    "kid":"EBQK-6S3Q-R32O-WYTB-IS6Y-ZD3P-J3VR",
+    "Salt":"8mUai-sxiSulsdMsdWd1ug",
     "recipients":[{
-        "kid":"MDFQ-C642-7ZJ6-WVCA-QHPW-236B-UNCE",
+        "kid":"MC76-W4OU-INGZ-PG5U-TEOO-WOAV-3VGU",
         "epk":{
           "PublicKeyECDH":{
             "crv":"Ed25519",
-            "Public":"vd4lZ3AmmXc3y1dyx1uztncI9sKm9XHD0JWAjADdYV4"}},
-        "wmk":"1igQ2waotUIIIMfpZ_YcgIQwq0CwETwmXoLaeDvNogGMUu-2GL
-  KMFA"}
+            "Public":"lXhvcOmziTjpwoNB1Jln9lBUyQY65Qx7mV_bARUe6bw"}},
+        "wmk":"dqG1VEJfjnlvmYS7Op-FnFr5_sSTS6Sb5w73OZGox2AR5f-Nrj
+  JGsg"}
       ],
     "ContentMetaData":"e30",
     "SequenceInfo":{
@@ -541,16 +541,16 @@ Frame 2
 {
   "DareHeader":{
     "enc":"A256CBC",
-    "kid":"EBQK-DA4B-GOHA-V6TX-6RNC-TT3Q-CDUR",
-    "Salt":"i_eTMhLV4Z6_gpmPHm7bow",
+    "kid":"EBQL-VR3Q-4BGH-I5NR-7T7Y-FUD6-Z35O",
+    "Salt":"8JSnoarjnD_eF87bxT0kvg",
     "recipients":[{
-        "kid":"MDFQ-C642-7ZJ6-WVCA-QHPW-236B-UNCE",
+        "kid":"MC76-W4OU-INGZ-PG5U-TEOO-WOAV-3VGU",
         "epk":{
           "PublicKeyECDH":{
             "crv":"Ed25519",
-            "Public":"_BFmweHRK3_0sjZEZw6A9izpMt88-1KtG60vwPXkjYk"}},
-        "wmk":"ZiGP-3vKpPW2YbhhMjrK9NJAYGIEwicoykNtIKlJ6q6k2FbTAD
-  ZrkA"}
+            "Public":"iA59MqMyoVlUufbCdad3xwaj71IIkfI-D9maX7o4m9g"}},
+        "wmk":"Q8wrOytFe1l-E-HvEwAxZQeVi4t7a4IrD7hIv1xcWNytAX11KA
+  hZjA"}
       ],
     "ContentMetaData":"e30",
     "SequenceInfo":{

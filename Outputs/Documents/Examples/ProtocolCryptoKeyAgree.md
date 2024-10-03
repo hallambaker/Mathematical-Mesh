@@ -11,35 +11,35 @@ to the Access catalog of the group account:
         "GranteeUdf":"bob@example.com",
         "EnvelopedKeyShare":[{
             "enc":"A256CBC",
-            "kid":"EBQM-SDBL-2FII-4ZEO-XDZK-3ZMX-IGPU",
-            "Salt":"o5MMIhLjNAF69Olax4CPaw",
+            "kid":"EBQF-MXCU-GV2R-W7OH-WHUL-TP33-5JQO",
+            "Salt":"3m6KcNZ2pLKfFkqdER915g",
             "recipients":[{
-                "kid":"MBJA-SIGD-FUNB-PAR7-EBPB-WAPG-HHDF",
+                "kid":"MBRT-7NEO-DREA-TE3U-IOVU-FA3M-BJJQ",
                 "epk":{
                   "PublicKeyECDH":{
                     "crv":"X448",
-                    "Public":"V_Q7ZRiaZHf_aFJiMZRIqxclvTbV-K8nJy0
-  C8Hv8eC8bTSZ4mxj9yoCq9rGWS3iZJpnwVGhRW7AA"}},
-                "wmk":"gbw5UOsFlyZgKYLkp_F-N9S-UQwYxi7tARS4UpDgSa
-  tznboopHoz4g"}
+                    "Public":"hUWbG_5jfQQlvbjRNqCNbWqZ83TyDlXvOc5
+  G9YCsifriM74giRsoW1JwkrbC5vgu7pKwUBY6oyqA"}},
+                "wmk":"X4EtovCfgxUzUgFj3pI8rq9vFhGol9kCYHKNZ4iEZy
+  X0fVmkl7MKUQ"}
               ],
             "ContentMetaData":"ewogICJNZXNzYWdlVHlwZSI6ICJLZXlEYX
   RhIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmplY3QiLAogICJDcmVhdGV
-  kIjogIjIwMjMtMDYtMjhUMTc6MDA6NDRaIn0"},
-          "Vq_0YOMoVHrh_12ZfRAh6IEucnE940F8yrBwaDJ3pgbIb_Lg-ZuBr3
-  taOfL1Y3EqG6uAo3SNOpyLwLpAuQlKoyj3ARlD6dKqOLweJ08p-ntNePRseexnltL
-  H-ZzmD435w8xUq0a0u-8exOhiTM8Ews1_ger8Ca-J7PILCoXBMqaFKnY0gYNqoDps
-  3L-DobgCXKahFUvS_m2QMjrZYgb0MJsytbhD6KIQbsUvbKvv-m7O84oV0ZWkuR2kN
-  0dvN3PRjfEkMtXdCqticFaji-h9W58qH4EttDtuKgwimIRI990kBulZXerH1M_PZ4
-  ey1VaBS7vR4c6AE5IkorL0ZWm-SZKBX6oiXTU4jPmfuerThRPZIGSbbrIaCVMtxdU
-  RufhOrrXq8oSTwSbT-htVlW_5tkiOyhX_xkSDDiouTuOJ9U4gld47Ovs04KOSDCfH
-  EXc-DlGK7GO_D9HAxPsHcIA8ICRheJyGhieyrOmImca3Mb9ukKX-Tt9JzrKOnap1J
-  4pVwANgVrhinmji8l5O1DHtoECxtSz-UDObszOTZWQlmXgdXwRpFEaIBrdMDuxTVK
-  d_vyypUv1Grty9nwV8IWYp9rKdDYK4lVfmTzR0fPhgHVYgBKDlrUuz8ncszmoSu9B
-  xQ6GcuUlQSxWmykgnfwGvdB2NXmH-PXfmvtfGW08BkTzVD3ShoJY10VcKnnPhXgI2
-  QxZ9oQtggCVzNnWk10Caqw"
+  kIjogIjIwMjQtMTAtMDNUMTQ6NTc6MTJaIn0"},
+          "pA7f25zgQNDrL67rSonFtNAwBu7KnAIgvPvSfPaJvnW81vw-bmBNwi
+  m5DR9y1irNRWweL2O2bHtUVqooxCUPmjALAM3l5WMmfW3CPeaqQ4jmIoZi-eqQ5qO
+  yyzvLXcEYpF3OpGtaIPz2s6a1-HnS-UuPDjVlSa2FCahUruXBoXfTj9zpJjDR1XNb
+  7H5ogD6qUJ9UHxg_ag_4If1YXrPfJCIrg-OieKPdXaw5mTKm2MNrORmvjZhhU4dPd
+  _sU19igQdo019IMNeuKUDzwDt_LhlJUHJOYV_JVL6JcYU89tvSrmh7fK4L1lZJTif
+  vk1LoE3U62ZJEarZe8C0Xzgie2sQaQCfYFw97T6Hqflo_VknQ0whdwZjsiDQCo41n
+  NfF-t9ibwsYFDFrHIdK_zxC7Q4Cnl4hDRGOVftLx_pNbpT1imjWGi62goNHYzeI72
+  soeD6ElHVznsZ_NHzqD5hE_jTJ47gxD_vLPQPnrTSQLo0ZdyAN66zGMcgxOT5qgpc
+  EFJJIi1ct8H6MStAx_WcqSta8rLq-vyXA4GfPlcDj2O8o1-4Ldt67534PMi3Th9kM
+  gFuAKb8ABnXL3DzFftkmIEhRnZ_9oKH7d6kw8Q6P7RbcdJTDiLIYsIU8_PSwP_LxB
+  TNpv-3qRySXxCQmERtvDFIrHCMslUcF7SRflh7UDfge-pAwln-5D0a3rbUIZ7sGJA
+  3yHbh13k061HbTOhBdVRcQ"
           ],
-        "Id":"MAOA-XEIS-6KM2-334Y-7M3P-S4U3-LCQP",
+        "Id":"MDE7-R4RY-LPFS-EUSU-3EKP-XEHX-V5KT",
         "Active":true}}}}
 ~~~~
 
@@ -60,9 +60,9 @@ The request payload:
           "PublicKey":{
             "PublicKeyECDH":{
               "crv":"X448",
-              "Public":"6mY-euLujNnyO12hdczFv4vckjk1FGrQwXZeye329
-  U2FtV7i3PLLbxIwOvkfEJOtp7zUtXdc5DMA"}},
-          "KeyId":"MAOA-XEIS-6KM2-334Y-7M3P-S4U3-LCQP"}}
+              "Public":"w2BmbzBeyvQDgSAT3e8aEkWuFerYNZx-ZiVRl_ICA
+  5t6nzyVuU-dJy2JnOOzRDN44yJSVNisAT2A"}},
+          "KeyId":"MDE7-R4RY-LPFS-EUSU-3EKP-XEHX-V5KT"}}
       ]}}
 ~~~~
 
@@ -79,8 +79,8 @@ operation and returns the result:
           "KeyAgreement":{
             "KeyAgreementECDH":{
               "Curve":"X448",
-              "Result":"ODcTzgThPhguBD0DIbx6IwIuHRml4ZD7XI6x4NeXt
-  WHlbKJvFJC6empaS2fTxmxCoFMCH9vDLOmA"}}}}
+              "Result":"zhVNGGbLIyoQSlgAIntyPClrzF3wzFmAk4NFmTLjs
+  LmL3PuvbB4yWmr0xIotV2OpgJ52-mCU8yWA"}}}}
       ],
     "Status":201,
     "StatusDescription":"Operation completed successfully"}}

@@ -99,5 +99,27 @@ manufacturer profile.
 <dt>ServiceAuthenticator: String (Optional)
 <dd>Authenticator key used to authenticate claim to the service.
 <dt>DeviceAuthenticator: String (Optional)
-<dd>Authenticator key used to authenticate claim to the device.	
+<dd>Authenticator key used to authenticate claim to the device.
+</dl>
+###Structure: ShellDispatch
+
+<dl>
+<dt>Protocol: String (Optional)
+<dd>The protocol to dispatch
+<dt>Icon: String (Optional)
+<dd>The Icon to display
+<dt>Actions: ShellAction [0..Many]
+<dd>The supported by the protocol
+</dl>
+###Structure: ShellAction
+
+<dl>
+<dt>Id: String (Optional)
+<dd>The protocol to dispatch
+<dt>Icon: String (Optional)
+<dd>The Icon to display
+<dt>Mode: String (Optional)
+<dd>The Action to perform
+<dt>Parameter: String (Optional)
+<dd>The Action to perform
 </dl>

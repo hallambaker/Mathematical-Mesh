@@ -97,6 +97,8 @@ A JOSE Header.
 <dl>
 <dt>Jku: String (Optional)
 <dd>JWK Set URL
+<dt>Ek: Binary (Optional)
+<dd>Binary cryptographic exchange parameters
 <dt>Typ: String (Optional)
 <dd>Another IANA content type parameter
 <dt>Cty: String (Optional)
@@ -262,12 +264,14 @@ A UDF Key
 <dd>The private value
 <dt>KeyType: String (Optional)
 <dd>The UDF key identifier
+<dt>RootSignAlgorithms: String [0..Many]
+<dd>List of algorithms used to derrive root signature keys.
 <dt>AlgorithmEncrypt: String (Optional)
 <dd>The algorithm used to derrive the encryption key
 <dt>AlgorithmSign: String (Optional)
-<dd>The algorithm used to derrive the encryption key
+<dd>The algorithm used to derrive the signature key
 <dt>AlgorithmAuthenticate: String (Optional)
-<dd>The algorithm used to derrive the encryption key
+<dd>The algorithm used to derrive the authentication key
 </dl>
 ###Structure: KeyAgreement
 
@@ -300,4 +304,30 @@ Result of applying a key agreement.
 <dd>The curve name
 <dt>Result: Binary (Optional)
 <dd>The result
+</dl>
+###Structure: PublicKeyBinary
+
+<dl>
+<dt>Inherits:  Key
+</dl>
+
+A public key represented as a binary blob whose type is specified
+by Kty.
+
+<dl>
+<dt>Public: Binary (Optional)
+<dd>The public key value
+</dl>
+###Structure: PrivateKeyBinary
+
+<dl>
+<dt>Inherits:  Key
+</dl>
+
+A private key represented as a binary blob whose type is specified
+by Kty.
+
+<dl>
+<dt>Public: Binary (Optional)
+<dd>The private key value
 </dl>

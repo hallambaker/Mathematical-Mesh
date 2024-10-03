@@ -57,7 +57,8 @@ The `dare append` command appends the specified file to the sequence.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman archive append Sequence.dcon TestFile1.txt
-<rsp></div>
+<rsp>ERROR - The process cannot access the file 'C:\Users\hallam\Test\Deterministic\Examples-InternetDrafts\Working\Sequence.dcon' because it is being used by another process.
+</div>
 ~~~~
 
 
@@ -174,7 +175,8 @@ sequence but does not erase the data from the file.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman archive delete Sequence.dcon  TestFile2.txt
-<rsp></div>
+<rsp>ERROR - The process cannot access the file 'C:\Users\hallam\Test\Deterministic\Examples-InternetDrafts\Working\Sequence.dcon' because it is being used by another process.
+</div>
 ~~~~
 
 
@@ -206,7 +208,8 @@ sequence but does not erase the data from the file.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman archive delete Sequence.dcon  TestFile2.txt
-<rsp></div>
+<rsp>ERROR - The process cannot access the file 'C:\Users\hallam\Test\Deterministic\Examples-InternetDrafts\Working\Sequence.dcon' because it is being used by another process.
+</div>
 ~~~~
 
 
@@ -279,7 +282,7 @@ The `dare index` command appends an index record to the end of the sequence.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman archive index Sequence.dcon
-<rsp>ERROR - An unknown error occurred
+<rsp>ERROR - The process cannot access the file 'C:\Users\hallam\Test\Deterministic\Examples-InternetDrafts\Working\Sequence.dcon' because it is being used by another process.
 </div>
 ~~~~
 

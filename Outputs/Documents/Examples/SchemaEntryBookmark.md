@@ -3,6 +3,6 @@
   "CatalogedBookmark":{
     "Uri":"http://www.example.com",
     "Title":"site1",
-    "LocalName":"Sites-1",
-    "Uid":"ND3H-L37J-BWNZ-NERL-XWFR-ZC46-CW53"}}
+    "Uid":"NB36-ECJV-3CAS-M7DX-G2CY-3GUA-WYPS",
+    "LocalName":"Sites-1"}}
 ~~~~

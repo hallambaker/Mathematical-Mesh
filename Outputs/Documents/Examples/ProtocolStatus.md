@@ -9,8 +9,8 @@ account that it has access rights for:
 {
   "DownloadRequest":{
     "MaxResults":-1,
-    "DeviceUDF":"MBYI-QYCM-JXEY-OJ5D-4OW2-RPIR-SHUM",
-    "CatalogedDeviceDigest":"MC55-7MYF-ENK3-L6N2-GTXT-WG45-WN",
+    "DeviceUDF":"MBQP-MYOA-LTSP-B5GX-A7HP-ZFJ5-4VQ6",
+    "CatalogedDeviceDigest":"MDLQ-JTEG-3A6E-MWEM-CRQO-3JHE-MK",
     "Select":[{
         "Store":"Credential",
         "IndexMin":3},
@@ -35,6 +35,9 @@ account that it has access rights for:
       {
         "Store":"Access",
         "IndexMin":3},
+      {
+        "Store":"Document",
+        "IndexMin":1},
       {
         "Store":"Publication",
         "IndexMin":1},
@@ -64,31 +67,31 @@ Merkle tree apex digest values for each:
     "Updates":[{
         "Envelopes":[[{
               "enc":"A256CBC",
-              "dig":"S512",
-              "Salt":"irmN6peoQ3obHMmNW164ow",
+              "Salt":"J_Nk5H3kNtXgBb1vkGxQJw",
               "recipients":[{
-                  "kid":"MD5W-K3CL-LJ5Q-YVXA-CMFG-5SPX-TUXV",
+                  "kid":"MD2Q-UIKU-BK4T-457Y-UWSM-LE3D-6P4T",
                   "epk":{
                     "PublicKeyECDH":{
                       "crv":"X448",
-                      "Public":"c1wBMbDx_9Rd82IfuWaPqvf-rDhV5QShZ
-  DZE7gEqT6ciyPARKXVSYKjGiRqiGT2PMyi8UY_tkc2A"}},
-                  "wmk":"jezjPjJU-Djfm_bZitHdInmOPTg1iIQrx7CseX5Z
-  -E6gv9w37BchXg"}
+                      "Public":"wcZaaaYez9GzF5DliSy-xLjpdaJn8MmVj
+  3nxFs5Fpbva5-FsikBBwyIk0I5s2pXSEGun3k6TlVSA"}},
+                  "wmk":"AZ-f-QBFwwKsj1j4xxQ4c94RG-rIb62q_FVawNcl
+  igOBvxVDw2nrdQ"}
                 ],
               "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICI6ZnRwLmV4
   YW1wbGUuY29tIiwKICAiRXZlbnQiOiAiVXBkYXRlIn0",
               "SequenceInfo":{
                 "Index":3,
                 "TreePosition":1137},
-              "Received":"2023-06-28T17:00:19Z",
-              "PayloadDigest":"hAJqF3IoraQqNHLcHZMsf_c1IcrD_xDOnJ
-  0gN9QBcSoRk8QhcfsKzi9L6J7kGzjhHprDCxyYgCE88DZUYC7CnA",
-              "TreeDigest":"ZdG_UR3YUbPxX1e28NR6S26yAwkmsLKmwSkcH
-  12bWUrEH9A54K_PX9VdKZODQQ5yy0nBtvubUAJefbjgexLeFw"},
-            "UC8cIjRLdmfLxW4pQ7-dAl1nKucTTs29pTSCQM6_v3H0d4jL8lzn
-  tinoJGl6PgkOEiyPYc6a7ioi_RnEpFlH1dtoZ7Ra6VE_Y0co944cx3f05CZdZc9Zz
-  P6k7d4XpShqnJq7rMvTZDMOHsiWr7VnulMz9_mU4g_uAz94qwvACdA",
+              "Received":"2024-10-03T14:57:02Z",
+              "PayloadDigest":"x002-YWfJ8Uw2av0qbQfhzr7cCcLqF88-R
+  WAMZzobppmuEvNYGNPPMQAYZ9XiSqLKgA-NMwPhFUiXt9D_2XbZA",
+              "ApexDigest":"djYmW9N3fLqEnUaRHBpaedC9HNwZhG3_rs5AW
+  Hh0Qpn1PhoBnPh-h_ZT7nw2sOXVTzUgf3EAxd40N4Li2PT5PA",
+              "dig":"S512"},
+            "qVG1kzZJLAtf88rWQB3aF-EjuXpoRdVUjRqH44JXbpA3wlbUcOwu
+  BKzGFvOMYiXWteQRBP4XE28mYFsxutFkZfsDDxmL-XC2qQImiW-x4xFirZv2uyCmG
+  O7k0asPPfBZ0L8BmPicZtgeCOeIv9Fbo6WIg3xVRI1nO8H-L4EqTA8",
             {}
             ]
           ],
@@ -121,6 +124,10 @@ Merkle tree apex digest values for each:
         "Envelopes":[
           ],
         "Store":"Access"},
+      {
+        "Envelopes":[
+          ],
+        "Store":"Document"},
       {
         "Envelopes":[
           ],

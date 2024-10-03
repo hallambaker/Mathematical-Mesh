@@ -28,10 +28,10 @@ A mail application profile is added to a Mesh profile using the
 <rsp>Account:         alice@example.net
 Inbound Server:  pop://alice@pop3.example.net
 Outbound Server: submit://alice@submit.example.net
-S/Mime Sign:     MC2K-ALZ3-YH6B-XRVT-REXZ-4THZ-2SCC
-S/Mime Encrypt:  MCPI-DJZ2-K2JG-VTMD-UI7O-RCZH-RVP6
-OpenPGP Sign:    MA3K-B7DH-KOON-J56T-NLP2-7BOS-PYO7
-OpenPGP Encrypt: MBBQ-6DVG-VD6C-ITGR-6FOI-EU7C-XSL7
+S/Mime Sign:     MDQM-CRPK-ADI2-E4MS-HRZA-5ZYQ-54MI
+S/Mime Encrypt:  MD7R-UKOD-OSVA-AXGM-RLZ6-EDDL-URAQ
+OpenPGP Sign:    MC3O-HLZW-2WL5-TZFL-BE2I-FZRS-XXL3
+OpenPGP Encrypt: MASN-6PSG-CQNT-KGBL-PDJW-NLKW-QPJS
 </div>
 ~~~~
 
@@ -67,10 +67,10 @@ Account profiles may be updated to change the network configuration using the
 <rsp>Account:         alice@example.net
 Inbound Server:  imap://alice@imap.example.net
 Outbound Server: submit://alice@submit.example.net
-S/Mime Sign:     MAE2-33FZ-R2AP-BN5O-YAO4-VGQD-YTIZ
-S/Mime Encrypt:  MANV-7HIN-RGQG-VOJF-IYQI-ORA4-ZDVA
-OpenPGP Sign:    MDGI-YJTT-N3G5-VQRV-V6HH-XNKA-5DG4
-OpenPGP Encrypt: MC2E-4BAB-AVZC-B6QY-UJZR-P73B-V26M
+S/Mime Sign:     MCYA-EO7M-L7UJ-WUB6-KQJR-CZ2W-WYNY
+S/Mime Encrypt:  MDCA-MHLO-S7J2-GMO2-NZMX-NN2Q-QDTA
+OpenPGP Sign:    MAKW-HW77-O6MA-U7BW-6YAE-MCNX-BUXJ
+OpenPGP Encrypt: MCDB-TPJL-WN24-YSXG-CBVM-3RFJ-WYF2
 </div>
 ~~~~
 

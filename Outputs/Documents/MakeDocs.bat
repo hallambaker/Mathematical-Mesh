@@ -22,7 +22,7 @@ protogen ../../../Libraries/Goedel.Cryptography.Jose/JoseSchema.protocol  /md  J
 protogen ../../../Mesh/Goedel.Mesh.Management/StatusSchema.protocol  /md  StatusSchema.md
 protogen ../../../Mesh/Goedel.Mesh.Presence/PresenceSchema.protocol  /md  PresenceSchema.md
 
-constant %Root%/Libraries/Goedel.Cryptography/UDFConstants.constant /md
+constant %Root%/Libraries/Goedel.Cryptography.Identifiers/UDFConstants.constant /md
 constant %Root%/Mesh/Goedel.Mesh/MeshConstants.constant /md
 
 

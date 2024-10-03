@@ -540,7 +540,7 @@ public partial class ContextUser : ContextAccount {
             cryptoKey = KeyCommonSignature;
             return true;
             }
-        if (TryFindKeySignature(keyId, out cryptoKey)) {
+        if (base.TryFindKeySignature(keyId, out cryptoKey)) {
             return true;
             }
         return false;

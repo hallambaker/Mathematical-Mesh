@@ -5,7 +5,7 @@ The service sends out the following request:
 {
   "RequestConfirmation":{
     "Text":"start",
-    "MessageId":"NDTU-IIPR-L5SK-L6CZ-JJGF-XA6L-565H",
+    "MessageId":"NC75-ZYCL-N3BL-FVYI-TFSW-FFJV-DZHW",
     "Sender":"console@example.com",
     "Recipient":"alice@example.com"}}
 ~~~~
@@ -16,30 +16,33 @@ Alice accepts the request and returns the following response:
 {
   "ResponseConfirmation":{
     "Request":[{
-        "EnvelopeId":"MBRF-HV6Z-UAXU-IUP5-4B6A-XIRE-UHGZ",
-        "dig":"S512",
-        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJORFRVLUlJUFItTD
-  VTSy1MNkNaLUpKR0YtWEE2TC01NjVIIiwKICAiTWVzc2FnZVR5cGUiOiAiUmVxdWV
+        "EnvelopeId":"MDOD-KSMY-EZZE-TTOD-EHJB-JESO-A56I",
+        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQzc1LVpZQ0wtTj
+  NCTC1GVllJLVRGU1ctRkZKVi1EWkhXIiwKICAiTWVzc2FnZVR5cGUiOiAiUmVxdWV
   zdENvbmZpcm1hdGlvbiIsCiAgImN0eSI6ICJhcHBsaWNhdGlvbi9tbW0vb2JqZWN0
-  IiwKICAiQ3JlYXRlZCI6ICIyMDIzLTA2LTI4VDE3OjAwOjM0WiJ9",
+  IiwKICAiQ3JlYXRlZCI6ICIyMDI0LTEwLTAzVDE0OjU3OjA3WiJ9",
         "SequenceInfo":{
           "Index":7,
-          "TreePosition":6224},
-        "Received":"2023-06-28T17:00:34Z",
+          "TreePosition":6209},
+        "Received":"2024-10-03T14:57:07Z",
         "signatures":[{
-            "alg":"S512",
-            "kid":"MC3L-5Y6X-X2WA-6OAI-S56F-HNEV-R32R",
-            "signature":"351CsK0q7VJWGm-1YuvzzxWRCTVOCqedM6F9CQ9j
-  kCflfv1lJz43P6xg-xB1OQRdc6e92zgfv3-ApGteIPtv5vylpKo6EgzXGmpMZC3zA
-  hymQesHMqsfGW-QyVk7460UhBq3sdLg1QCX01_Q_TgHUzIA"}
+            "alg":"ED448",
+            "kid":"MDZB-PS54-WJES-ILJW-BCYW-FAE2-BUBS",
+            "signature":"2HoAMBgTDEcUpsZfrKwhFviDMe0tUqQCrJNcSaMp
+  SRMeS0xnnfE1DVcVMCNQ10qy_nGPSF36_vOAP6rfYqhVhKNFBDe_xRyG7jeFhujBW
+  Hd1vJ8z7AXqq329wjMBHv4J67BhXBMAaH-afNN6Mfp12AQA"}
           ],
-        "PayloadDigest":"hrg74rSm8V5zkdPOkn16W30g9lP4zANIh1OhtHp_
-  XDwTGLtrDyDbp2_6Y3HMVylrGXB29fxxf0kppinWTsOHjg"},
-      "",
+        "PayloadDigest":"1aT56ZrHwTX9fGMH9dskak74a30YFXzGWbOEfmPS
+  VJsTRn9wa9Po5TsOBEf0piakhhoP6eIjd9dLdyNx5uHL5Q",
+        "dig":"S512"},
+      "ewogICJSZXF1ZXN0Q29uZmlybWF0aW9uIjogewogICAgIlRleHQiOiAic3
+  RhcnQiLAogICAgIk1lc3NhZ2VJZCI6ICJOQzc1LVpZQ0wtTjNCTC1GVllJLVRGU1c
+  tRkZKVi1EWkhXIiwKICAgICJTZW5kZXIiOiAiY29uc29sZUBleGFtcGxlLmNvbSIs
+  CiAgICAiUmVjaXBpZW50IjogImFsaWNlQGV4YW1wbGUuY29tIn19",
       {}
       ],
     "Accept":true,
-    "MessageId":"MB7S-ZUPK-XJ6Q-N42Y-4UTW-7CQI-33HL",
+    "MessageId":"MCF4-6SUJ-F74P-IUAC-PNAW-RL3C-5IIS",
     "Sender":"alice@example.com",
     "Recipient":"console@example.com"}}
 ~~~~

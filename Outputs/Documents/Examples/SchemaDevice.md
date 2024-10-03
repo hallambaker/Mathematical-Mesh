@@ -7,31 +7,27 @@
 {
   "ProfileDevice":{
     "Encryption":{
-      "Udf":"MCFX-IUBA-KOCW-3FUS-23Z5-NR5U-YOLN",
+      "Udf":"MCO6-RDDJ-ODGA-LDXX-LAED-F4U4-BMG6",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"BfwkRznFA0S1VirR_017VY-2B3mX8Nf_0tr5okyfLAwV0
-  BgMta5eovZBEWl93_9S4VpbjOYU3cMA"}}},
+          "Public":"4eTX68F2ikaHPn76XsUcMxQYUXXBfLAUYC1_t9lLfEsim
+  HeG1gnxryjXP-4VkxnjBlakix0jYoiA"}}},
     "Signature":{
-      "Udf":"MCGI-AARY-CKX6-OTD6-XLON-JIZK-HGE5",
+      "Udf":"MBYL-PWIV-L54F-7XK6-FDRE-N7BP-ZKFZ",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"Bz5Ze08Ub_2VY7hwZy3fa_Gw6xsDaUMKxg9h3sX_cimQf
-  hUWoi5Q4wC3QYPxEomeUfxy_q8YHdkA"}}},
+          "Public":"oPI3NV2EyzfIui4yK1YfxSlCsWNq8KoycOlPG3MDir5VV
+  3iIl-EDSuTN6a2oykchtRRdQPOMQOUA"}}},
     "Authentication":{
-      "Udf":"MCRL-42BN-TYVI-BDGP-K2NJ-OGNI-QEA3",
+      "Udf":"MB2X-XJRH-ERZY-HDQW-RWZV-RHSP-A7IU",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"Ezrv7Ku8k3odatUvfln__4zTYH9T8Ch-OP7H3MZMtRxjn
-  iHBS-m8UsKGYYZUKqxXeB6lLa4_sHGA"}}},
-    "ProfileSignature":{
-      "Udf":"MBYI-QYCM-JXEY-OJ5D-4OW2-RPIR-SHUM",
-      "PublicParameters":{
-        "PublicKeyECDH":{
-          "crv":"Ed448",
-          "Public":"zuSuZB2gaW_FEdWSromPIOcqY9eYHC7Zp-MA-t4zBRWCX
-  52UaLTUkDaOAEz18whmatsdZ9S7lFmA"}}}}}
+          "Public":"4HAxfPzuE6vMmUIvAiVrTNPFj-MJ9nqtSUqoGQCAqRtGx
+  3oLJb8oOj-dm-d0Bui-mHHg6vrfMxwA"}}},
+    "RootUdfs":["YK_Fvk9KYlKqeZVN9HzyU-gBXvYzYOsspQM_Mz8GR9riSDOj5
+  CzvDrsDL3VVZzITRoWz3jK8kS3R23dPNOBKyA"
+      ]}}
 ~~~~
