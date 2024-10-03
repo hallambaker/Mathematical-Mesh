@@ -249,7 +249,15 @@ public partial class KeyAgreementECDH {
     /// </summary>
     /// <param name="result">The Goedel.Cryptography result.</param>
     public KeyAgreementECDH(ResultECDH result) {
-        Result = result.IKM;
+
+
+
+        Result = result switch {
+            CurveX448Result x448 =>      x448.AgreementX448.Encode(true),
+            CurveX25519Result x25519 => x25519.AgreementX25519.Encode(true),
+            CurveNistResult curveNist => curveNist.Encode(),
+            _ => throw new NYI()
+            };
         Curve = result.CurveJose;
         }
     //Result = result.Agreement.ToByteArray();

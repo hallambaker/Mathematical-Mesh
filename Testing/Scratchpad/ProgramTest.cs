@@ -63,7 +63,7 @@ partial class Program {
 
 
 
-        ShellTests.Test().TestMessageGroup();
+        //ShellTests.Test().TestMessageGroup();
         RegistrationTests.Test().CallsignRegistration();
 
 
