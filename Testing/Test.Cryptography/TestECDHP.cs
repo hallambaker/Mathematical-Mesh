@@ -57,9 +57,12 @@ public partial class TestGoedelCryptography {
 
         var RecryptKeys = KeyA.MakeThresholdKeySet(2);
 
+        var totalRecrypt = RecryptKeys[0].SecretKey + RecryptKeys[1].SecretKey;
+        
+
         var Result = KeyAPublic.Agreement();
 
-        EccPoint[] Carry = new EccPoint[2];
+        var Carry = new EccPoint[2];
         Carry[0] = (RecryptKeys[0] as CurveNistPrivate).Agreement(Result.EphemeralPoint);
         Carry[1] = (RecryptKeys[1] as CurveNistPrivate).Agreement(Result.EphemeralPoint);
 

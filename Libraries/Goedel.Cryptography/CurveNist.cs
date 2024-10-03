@@ -159,7 +159,7 @@ public record CurveNistPrivate : IKeyAdvancedPrivate {
         var curve = Carry[0].Curve;
 
         var Total = curve.Add (Carry[0], Carry[1]);
-        for (var i = 1; i < Carry.Length; i++) {
+        for (var i = 2; i < Carry.Length; i++) {
             Total = curve.Add(Total, Carry[i]);
             }
 
