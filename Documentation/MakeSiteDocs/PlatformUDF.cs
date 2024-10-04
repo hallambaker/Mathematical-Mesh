@@ -26,6 +26,7 @@ using Goedel.Test;
 using Goedel.Utilities;
 
 using System;
+using System.IO;
 using System.Numerics;
 
 using GC = Goedel.Cryptography;
@@ -46,6 +47,9 @@ public partial class CreateExamples {
 
     public ResultDigest ResultDigestSHA2;
     public ResultDigest ResultDigestSHA3;
+
+    public byte[] ListOfRoots;
+    public string UdfOfListOfRoots;
 
     public ResultDigest ResultCommitSHA2;
     public ResultDigest ResultCommitSHA3;
@@ -88,8 +92,19 @@ public partial class CreateExamples {
         //test.DER();
         //var _ = PublicKeyed25519.UDF;
 
-
-
+        var data = "UDF Data Value".ToBytes();
+        var contentType = "text/plain";
+        var udf1 = Udf.DataToUDFBinary(data, contentType, 0, CryptoAlgorithmId.SHA_2_512);
+        var udf2 = Udf.DataToUDFBinary(data, contentType, 0, CryptoAlgorithmId.SHA_3_512);
+        using (var stream = new MemoryStream()) {
+            stream.WriteByte((byte)udf1.Length);
+            stream.Write(udf1);
+            stream.WriteByte((byte)udf2.Length);
+            stream.Write(udf2);
+            ListOfRoots = stream.ToArray();
+            }
+        UdfOfListOfRoots = Udf.ContentDigestOfDataString(ListOfRoots, UDFConstants.UdfList,
+            140, CryptoAlgorithmId.SHA_2_512);
 
         }
 

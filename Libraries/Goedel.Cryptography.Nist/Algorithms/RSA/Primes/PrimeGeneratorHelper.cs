@@ -79,12 +79,10 @@ public static class PrimeGeneratorHelper {
 
             BigInteger x, y;
             int i;
-            int ii = 0;
-            do {
-                var tag2 = tag + tag + $"{ii++}";
 
+            do {
                 // 3
-                x = entropyProvider.GetEntropy(lowerBound, upperBound, tag2, primeSeed);
+                x = entropyProvider.GetEntropy(lowerBound, upperBound, tag, primeSeed);
 
                 // 4
                 y = x + (R - x).PosMod(modulo);
@@ -116,7 +114,7 @@ public static class PrimeGeneratorHelper {
                     if (NumberTheory.MillerRabin(y, iterations)) {
 
                         //Console.WriteLine($"Modulo {tag}, {offset}");
-                        entropyProvider.Register(tag, offset);
+                        entropyProvider.Register(tag+tag, offset);
                         return new PpfResult(y, x);
                         }
 

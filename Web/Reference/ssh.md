@@ -94,7 +94,7 @@ The ssh create command creates a new SSH client entry.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman ssh create /web /threshold /id=ssh
-<rsp>UDF: MCDB-WYWC-AJ7E-GYZ6-FPEK-Y4WV-AOSM
+<rsp>UDF: MC7I-NMDE-PGIQ-4W3W-TC5I-QYWC-DQWK
 </div>
 ~~~~
 
@@ -275,7 +275,7 @@ specified, only host entries are shown. In all other cases, both types of entry 
 ~~~~
 <div="terminal">
 <cmd>Alice2> meshman ssh list
-<rsp>UDF: MCDB-WYWC-AJ7E-GYZ6-FPEK-Y4WV-AOSM
+<rsp>UDF: MC7I-NMDE-PGIQ-4W3W-TC5I-QYWC-DQWK
 </div>
 ~~~~
 

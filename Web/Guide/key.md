@@ -18,7 +18,7 @@ The `key nonce` command is used to generate a new random nonce value:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key nonce
-<rsp>NCAC-2JTC-TIAV-RGQQ-WRZY-N5NX-TDLA
+<rsp>NAMH-DTYV-L3RQ-XCHF-YXKT-QFJR-OSKQ
 </div>
 ~~~~
 
@@ -31,7 +31,7 @@ generated using the `/bits` option:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key nonce /bits=256
-<rsp>NCOV-TES2-A3F6-4LJL-PCXX-YN64-4SVO-KV67-GBQV-WYWX-DADG-UTGU-OVJ5-Y
+<rsp>NAWN-QIMU-2DR7-7DPQ-RAOK-WF4Y-KOWQ-N7XH-PYCD-77D3-ZROE-T2Y5-AZFO-G
 </div>
 ~~~~
 
@@ -41,7 +41,7 @@ Secrets are generated in the same way using the command `key secret`:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key secret
-<rsp>ECLW-O5SD-BFSE-3UQW-H4YM-35DI-KSRQ
+<rsp>EDCA-XKZK-CR6S-RR3X-IHHA-YA6Z-IMTQ
 </div>
 ~~~~
 
@@ -52,7 +52,7 @@ Again, any output length can be requested up to the platform limit:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key secret /bits=256
-<rsp>ECUI-RZJA-IOQ4-M6SU-WJVT-PWAB-HNXS-HBBJ-2MWG-FHG7-DXN5-D7C5-YIOX-M
+<rsp>EDKK-VXAQ-2HBY-LG3G-4FYK-3A7K-R5A2-PJVL-QSMR-2CQU-6H5W-IL7L-DMPV-U
 </div>
 ~~~~
 
@@ -71,8 +71,8 @@ a new secret/digest pair which are then used to process the content data:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key earl
-<rsp>ECLL-FJIS-NHPL-MFEN-RWW5-7XWQ-3R5R-PY
-MB76-DWBP-554T-B7TW-JIO2-E64D-T7ZP-VR3F-X643-W5ZY-MM7X-HEFJ-YH7Q-QKCZ
+<rsp>EAFE-JAJM-2KAH-PZZX-SUUP-RD5S-ORK4-CU
+MBQA-PQEL-PSZZ-ELNR-IG6I-W254-RLCB-Z5EW-BSPW-7VT7-EIB2-DC2A-PSY6-MAUD
 
 </div>
 ~~~~
@@ -100,11 +100,11 @@ bit secret is created and three shares are created with a quorum of two:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key share
-<rsp>5FN4-CSWQ-IX64-YEV4-MV6U-4KQK-C4
-MBIV-FGKW-DOFM-FTNR-4CQN-V73T-7BE5-ZG2C-KT6Y-QDQQ-ZS6C-4TD3-OVBG
-SAQJ-O3PQ-F3SL-ECRE-PJTS-X3YB-L5ZK-E
-SAQU-LAA7-CL4R-4FT4-4II7-EYFU-STNS-2
-SARP-HESN-64GY-UIWV-JG6L-RUTH-ZJB6-W
+<rsp>63RN-ESUG-XN3S-AEDH-STW7-UXQU-YQ
+MDKI-FFF2-XTFD-3HBR-U643-V2DE-ETQN-IANV-NW5R-MQRQ-6LEE-NPDR-LNWA
+SAQM-GI34-24ZL-UJAM-AVK2-LCEZ-P4S6-I
+SAQY-6ZBH-MPPL-RUHX-7JB3-MIZY-UA3Q-I
+SARF-XJGR-6CFL-O7PD-54Y4-NPOX-YFEC-I
 </div>
 ~~~~
 
@@ -119,11 +119,11 @@ obtain the result as a JSON structure:
 <cmd>Alice> meshman key share /json
 <rsp>{
   "ResultKey": {
-    "Key": "5FN4-CSWQ-IX64-YEV4-MV6U-4KQK-C4",
-    "Identifier": "MBIV-FGKW-DOFM-FTNR-4CQN-V73T-7BE5-ZG2C-KT6Y-QDQQ-ZS6C-4TD3-OVBG",
-    "Shares": ["SAQJ-O3PQ-F3SL-ECRE-PJTS-X3YB-L5ZK-E",
-      "SAQU-LAA7-CL4R-4FT4-4II7-EYFU-STNS-2",
-      "SARP-HESN-64GY-UIWV-JG6L-RUTH-ZJB6-W"],
+    "Key": "63RN-ESUG-XN3S-AEDH-STW7-UXQU-YQ",
+    "Identifier": "MDKI-FFF2-XTFD-3HBR-U643-V2DE-ETQN-IANV-NW5R-MQRQ-6LEE-NPDR-LNWA",
+    "Shares": ["SAQM-GI34-24ZL-UJAM-AVK2-LCEZ-P4S6-I",
+      "SAQY-6ZBH-MPPL-RUHX-7JB3-MIZY-UA3Q-I",
+      "SARF-XJGR-6CFL-O7PD-54Y4-NPOX-YFEC-I"],
     "Success": true}}
 </div>
 ~~~~
@@ -134,9 +134,9 @@ meet the quorum using the `key recover`:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman key recover SAQJ-O3PQ-F3SL-ECRE-PJTS-X3YB-L5ZK-E ^
-    SARP-HESN-64GY-UIWV-JG6L-RUTH-ZJB6-W
-<rsp>5FN4-CSWQ-IX64-YEV4-MV6U-4KQK-C4
+<cmd>Alice> meshman key recover SAQM-GI34-24ZL-UJAM-AVK2-LCEZ-P4S6-I ^
+    SARF-XJGR-6CFL-O7PD-54Y4-NPOX-YFEC-I
+<rsp>63RN-ESUG-XN3S-AEDH-STW7-UXQU-YQ
 </div>
 ~~~~
 
@@ -152,13 +152,13 @@ of three:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key share /quorum=3 /shares=5
-<rsp>PY6G-Y3PH-CUKB-OZ4B-JNHY-ZLFO-H4
-MDRF-EPVP-ZZF5-BQXO-EVJ5-BNCA-ZFM3-EERN-UVGK-XV3X-KJP6-2TIK-ZZZV
-SAYJ-CT25-4CLO-QKR5-IDQY-MUB2-O7OU-M
-SAY3-ATKT-RME5-CHXR-O7U2-ZIF6-CR5C-K
-SAZN-WNSN-NU74-74RU-BSM3-4QIX-QKCN-Y
-SAZR-ECSL-Q44O-JJAE-73Y3-WMKG-YH6T-Q
-SA2F-JSKN-3D2Q-6NDE-J3Y2-G4KL-2LRZ-6
+<rsp>5XUI-L3EM-IK3X-WKIH-X4R6-IOYA-6I
+MB44-3BTU-GCFN-TJQW-K3W4-NRV7-JNX3-CBMV-7SED-LWDT-DFKI-VNXE-Y7LB
+SAYH-6UWU-RXBV-G2S7-BSW3-34GE-O3IM-Q
+SAY7-2ZGG-CF53-5ZPO-6COT-PYHI-LPW6-C
+SAZG-QHS2-O62Y-KKRK-2TLC-Z5CP-5JL5-O
+SAZ3-674R-YBYK-MNYS-XFMJ-2KX3-EIHR-A
+SA2A-HCDL-5OWS-EDFG-TYSI-RBHK-AMJS-M
 </div>
 ~~~~
 
@@ -170,7 +170,7 @@ be different:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman key share 5FN4-CSWQ-IX64-YEV4-MV6U-4KQK-C4
+<cmd>Alice> meshman key share 63RN-ESUG-XN3S-AEDH-STW7-UXQU-YQ
 <rsp>ERROR - Attempted to divide by zero.
 </div>
 ~~~~

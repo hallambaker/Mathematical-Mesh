@@ -107,10 +107,10 @@ File ContentTypeValues
 			|A DNS resource record in binary format
     Code UDFEncryption  "application/udf-encryption"
 		Description
-			| UDF Fingerprint list
+			|UDF encrypted data
     Code UDFLock  "application/udf-lock"
 		Description
-			|UDF Fingerprint list
+			|System file lock.
 
 
 File KeyUses
@@ -134,22 +134,23 @@ File ECDHValuesNIST
 		Integer P512				592	"P-521"
 
 File RSATags
-	Enum DerivedKeyRSATags "UDF type identifier codes"
-		Tag p "p"  
+	Enum DerivedKeyRSATags "RSA seed derivation tags"
+		Tag p "p[i]"  
 		Tag p1 "p1"  
 		Tag p2 "p2"  
-		Tag pp "pp*"  
-		Tag q "q"
+		Tag q "q[i]"
 		Tag q1 "q1"  
 		Tag q2 "q2"  
-		Tag qq "qq*" 
+
 
 File RSAValues
 	Parameters DerivedKeyRSAValuesL "RSA parameter values"
 		Integer RSA2048				140		"RSA-2048"
 		Integer RSA3072				170		"RSA-3072"
 		Integer RSA4096				200		"RSA-4096"
-
+		Integer RSA6144				260		"RSA-6144"
+		Integer RSA8192				320		"RSA-8192"
+		Integer RSA15360			530		"RSA-15360"
 
 File IANAValues
 	IANA UdfTypeIdentifier "UDF type identifier codes"

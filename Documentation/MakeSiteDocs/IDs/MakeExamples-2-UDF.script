@@ -18,6 +18,7 @@
 #% UDFDigest(Example);
 #% UDFAuthenticator(Example);
 #% UDFDigestURI(Example);
+#% UDFList(Example);
 #% UDFDigestLocator(Example);
 #% UDFDigestEARL(Example);
 #% UDFDigestEARLRAW(Example);
@@ -156,6 +157,32 @@ udf:#{Example.ResultDigestSHA2.Digest}
 ~~~~
 #end zfile
 
+#zfile CreateExamples UDFList "Examples\\UDFList.md" Example
+#% var DataString = "UDF Data Value";
+#% var ContentType = "text/plain";
+
+The SHA-2-512 and SHA-3-512 binary fingerprint values calculated over the data string
+"#{DataString}" and content type #{ContentType} earlier can be prefixed with their
+lengths and concatenated to form a UDF fingerprint list:
+
+~~~~
+DataString: #{DataString}
+Content-Type: #{ContentType}
+
+List = #{Example.ListOfRoots.ToStringBase16FormatHex()}
+~~~~
+
+The SHA-2-512 fingerprint of the list is thus:
+
+~~~~
+DataString: #{DataString}
+Content-Type: #{UDFConstants.UdfList}
+
+Udf = #{Example.UdfOfListOfRoots}
+~~~~
+
+#end zfile
+
 #zfile CreateExamples UDFDigestLocator "Examples\\UDFDigestLocator.md" Example
 ~~~~
 udf://example.com/#{Example.ResultDigestSHA2.Digest}
@@ -233,7 +260,7 @@ Alice is an employee of Example Inc., she uses three email addresses:
 An X25519 key may be derived as follows:
 
 ~~~~
-Fingerprint =
+Private Key Generator =
     #{Example.UDFResults.Derive.X25519.UDF}
 
 IKM =#{Example.UDFResults.Derive.X25519.IKM.ToStringBase16FormatHex()}
@@ -244,48 +271,52 @@ PRK =#{Example.UDFResults.Derive.X25519.PRK.ToStringBase16FormatHex()}
 
 OKM =#{Example.UDFResults.Derive.X25519.OKM.ToStringBase16FormatHex()}
     
-Key = #{keyX25519.PrivateKey.Secret}
+Key = #{keyX25519.PrivateKey.Secret.ToStringBase16FormatHex()}
 
-Fingerprint = #{Example.UDFResults.Derive.X25519.DerrivedKeyPair.UDFValue}
+Public Key Fingerprint = 
+    #{Example.UDFResults.Derive.X25519.DerrivedKeyPair.KeyIdentifier}
 ~~~~
 
 Derivation of an X448 key:
 
 ~~~~
-Fingerprint =
+Private Key Generator =
     #{Example.UDFResults.Derive.X448.UDF}
 
 OKM =#{Example.UDFResults.Derive.X448.OKM.ToStringBase16FormatHex()}
     
-Key = #{keyX448.PrivateKey.Secret}
+Key = #{keyX448.PrivateKey.Secret.ToStringBase16FormatHex()}
 
-Fingerprint = #{Example.UDFResults.Derive.X448.DerrivedKeyPair.UDFValue}
+Public Key Fingerprint = 
+    #{Example.UDFResults.Derive.X448.DerrivedKeyPair.KeyIdentifier}
 ~~~~
 
 Derivation of an Ed25519 key:
 
 ~~~~
-Fingerprint =
+Private Key Generator =
     #{Example.UDFResults.Derive.Ed25519.UDF}
     
 OKM =#{Example.UDFResults.Derive.Ed25519.OKM.ToStringBase16FormatHex()}
 
-Key = #{keyEd25519.PrivateKey.Secret}
+Key = #{keyEd25519.PrivateKey.Secret.ToStringBase16FormatHex()}
 
-Fingerprint = #{Example.UDFResults.Derive.Ed25519.DerrivedKeyPair.UDFValue}
+Public Key Fingerprint = 
+    #{Example.UDFResults.Derive.Ed25519.DerrivedKeyPair.KeyIdentifier}
 ~~~~
 
 Derivation of an Ed448 key:
 
 ~~~~
-Fingerprint =
+Private Key Generator =
     #{Example.UDFResults.Derive.Ed448.UDF}
  
 OKM =#{Example.UDFResults.Derive.Ed448.OKM.ToStringBase16FormatHex()}
 
-Key = #{keyEd448.PrivateKey.Secret}
+Key = #{keyEd448.PrivateKey.Secret.ToStringBase16FormatHex()}
 
-Fingerprint = #{Example.UDFResults.Derive.Ed448.DerrivedKeyPair.UDFValue}
+Public Key Fingerprint = 
+    #{Example.UDFResults.Derive.Ed448.DerrivedKeyPair.KeyIdentifier}
 ~~~~
 
 #end zfile
@@ -295,7 +326,7 @@ Fingerprint = #{Example.UDFResults.Derive.Ed448.DerrivedKeyPair.UDFValue}
 A P-256 key may be derived as follows:
 
 ~~~~
-Fingerprint =
+Private Key Generator =
     #{Example.UDFResults.Derive.P256.UDF}
 
 IKM =#{Example.UDFResults.Derive.P256.IKM.ToStringBase16FormatHex()}
@@ -308,24 +339,33 @@ OKM =#{Example.UDFResults.Derive.P256.OKM.ToStringBase16FormatHex()}
     
 
 #% DescribeResult ("Key", Example.UDFResults.Derive.P256.Key);
+
+Public Key Fingerprint = 
+    #{Example.UDFResults.Derive.P256.DerrivedKeyPair.KeyIdentifier}
 ~~~~
 
 Derivation of a P-384 key:
 
 ~~~~
-Fingerprint =
+Private Key Generator =
     #{Example.UDFResults.Derive.P384.UDF}
     
 #% DescribeResult ("Key", Example.UDFResults.Derive.P384.Key);
+
+Public Key Fingerprint = 
+    #{Example.UDFResults.Derive.P384.DerrivedKeyPair.KeyIdentifier}
 ~~~~
 
 Derivation of a P-521 key:
 
 ~~~~
-Fingerprint =
+Private Key Generator =
     #{Example.UDFResults.Derive.P521.UDF}
 
 #% DescribeResult ("Key", Example.UDFResults.Derive.P521.Key);   
+
+Public Key Fingerprint = 
+    #{Example.UDFResults.Derive.P521.DerrivedKeyPair.KeyIdentifier}
 ~~~~
 
 #end zfile
@@ -335,7 +375,7 @@ Fingerprint =
 An RSA-2048 may be derived as follows:
 
 ~~~~
-Fingerprint =
+Private Key Generator =
     #{Example.UDFResults.Derive.RSA2048.UDF}
 
 IKM =#{Example.UDFResults.Derive.RSA2048.IKM.ToStringBase16FormatHex()}
@@ -348,7 +388,34 @@ Info(p) =#{Example.UDFResults.Derive.RSA2048.Info_P.ToStringBase16FormatHex()}
 
 // Rest TBS
 
+Public Key Fingerprint = 
+    #{Example.UDFResults.Derive.RSA2048.DerrivedKeyPair.KeyIdentifier}
+
 Hints = #{Example.UDFResults.Derive.RSA2048.Hints}
+~~~~
+
+An RSA-3072 may be derived as follows:
+
+~~~~
+Private Key Generator =
+    #{Example.UDFResults.Derive.RSA3072.UDF}
+
+Public Key Fingerprint = 
+    #{Example.UDFResults.Derive.RSA3072.DerrivedKeyPair.KeyIdentifier}
+
+Hints = #{Example.UDFResults.Derive.RSA3072.Hints}
+~~~~
+
+An RSA-4096 may be derived as follows:
+
+~~~~
+Private Key Generator =
+    #{Example.UDFResults.Derive.RSA4096.UDF}
+
+Public Key Fingerprint = 
+    #{Example.UDFResults.Derive.RSA4096.DerrivedKeyPair.KeyIdentifier}
+
+Hints = #{Example.UDFResults.Derive.RSA4096.Hints}
 ~~~~
 
 #end zfile
@@ -535,7 +602,7 @@ HKDF(Key) =  #!
 
 MAC(&<key>, &<Content-ID> + ‘:’ + H(&<Data>)) =  #!
 #end if
-#% var binaryUDF = Udf.DigestToUDFBinary (HashData, ContentType, 140, CryptoAlgorithmId, key);
+#% var binaryUDF = Udf.DigestToUDFBinary (HashData, ContentType, 0, CryptoAlgorithmId, key);
 #{UDFData.ToStringBase16FormatHex()}
 
 The prefixed Binary Data Sequence is thus#{binaryUDF.ToStringBase16FormatHex()}

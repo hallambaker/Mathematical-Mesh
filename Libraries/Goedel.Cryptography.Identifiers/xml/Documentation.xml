@@ -2835,7 +2835,7 @@
             <summary>Authentication</summary>
         </member>
         <member name="T:Goedel.Cryptography.DerivedKeyRSATags">
-            <summary>UDF type identifier codes</summary>
+            <summary>RSA seed derivation tags</summary>
         </member>
         <member name="F:Goedel.Cryptography.DerivedKeyRSATags.Unknown">
             <summary>Undefined type</summary>

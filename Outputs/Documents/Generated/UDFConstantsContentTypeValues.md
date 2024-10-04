@@ -37,12 +37,12 @@
 <dl>
 <dt>application/udf-encryption
 <dd>
-     UDF Fingerprint list
+    UDF encrypted data
 </dd>
 </dl>
 <dl>
 <dt>application/udf-lock
 <dd>
-    UDF Fingerprint list
+    System file lock.
 </dd>
 </dl>

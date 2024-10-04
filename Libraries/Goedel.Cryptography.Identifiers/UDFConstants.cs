@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 10/4/2024 1:03:58 AM
+//  This file was automatically generated at 10/4/2024 1:18:55 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -133,7 +133,7 @@ public enum DerivedKeyUdfDerrivedKeyUses {
     ///<summary>Authentication</summary>
     Authentication = 3    }
 
-///<summary>UDF type identifier codes</summary>
+///<summary>RSA seed derivation tags</summary>
 public enum DerivedKeyRSATags {
     ///<summary>Undefined type</summary>
     Unknown = -1    }

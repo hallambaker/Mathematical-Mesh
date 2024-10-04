@@ -295,7 +295,7 @@ public record Udf(
         // Constrain the number of bits to an integer multiple of 20 bits between DefaultBits
         // and MaximumBits.
         bits = bits <= 0 ? DefaultBits : bits;
-        bits = bits.Minimum(source.Length * 8);
+        bits = bits.Minimum(8+source.Length * 8);
 
         // Calculate the number of bytes
         var bytes = (bits + 7) / 8;

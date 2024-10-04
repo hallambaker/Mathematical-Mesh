@@ -104,7 +104,7 @@ by means of a dynamic URI.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman contact exchange mcd://carol@example.com/EEQG-C2W5-XQPV-OWD6-S4UA-7OXX-LHX4-62UH-4Q4L-T543-6TN4-XBB2-VFVV-O
+<cmd>Alice> meshman contact exchange mcd://carol@example.com/EGIA-G2GH-CVMU-J4IJ-NYBR-R3R6-Z2UZ-I3S2-2ZH6-4WGZ-IFZA-CPFZ-KN3B-6
 <rsp></div>
 ~~~~
 
@@ -135,7 +135,7 @@ presented as a URI or QR code without reciprocating the exchange.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman contact fetch mcd://doug@example.com/EHSV-636H-VOFS-F7RX-4YNS-FCE7-YFKM-XASX-CFOL-W6FU-V5HQ-FQAN-MI6I-I
+<cmd>Alice> meshman contact fetch mcd://doug@example.com/EHVF-ZB46-LPZM-UJI3-SFEG-6JRU-6G5A-4A74-Q3XR-G4SP-6WBR-HWU2-KP6D-4
 <rsp>[CatalogedContact]
 
 </div>
@@ -226,29 +226,29 @@ The 'contact list' command lists all data in the contact catalog.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MBQB-2H3J-6QK6-ZRL3-ZPFQ-KYCG-LTBU
-  Person MBQB-2H3J-6QK6-ZRL3-ZPFQ-KYCG-LTBU
-  Anchor MBQB-2H3J-6QK6-ZRL3-ZPFQ-KYCG-LTBU
+<rsp>Entry<CatalogedContact>: MBQK-54VC-H3HR-TYBH-ZIE6-VVIY-ZNPA
+  Person MBQK-54VC-H3HR-TYBH-ZIE6-VVIY-ZNPA
+  Anchor MBQK-54VC-H3HR-TYBH-ZIE6-VVIY-ZNPA
   Address alice@example.com
 
-Entry<CatalogedContact>: NBWO-LXHG-76BJ-76A3-2S4Q-VHQF-J6BJ
+Entry<CatalogedContact>: NB4A-ZXEH-I6SL-XNQ6-MN5E-C5MB-JNJ6
   Person 
-  Anchor MBQM-POZD-73H4-KCMN-Y4DB-WQXW-YALS
+  Anchor MBQN-CAEX-IDBY-ZSEK-HCAC-OBZB-JLSA
   Address bob@example.com
 
-Entry<CatalogedContact>: NCBF-ESMH-HFJB-3W2H-KP3V-RI55-45SA
+Entry<CatalogedContact>: NDQ3-6YOW-GH6N-LKZL-KJ3Y-GGCD-MVYY
   Person 
-  Anchor MBQB-3LB7-E5C6-6NNF-VX7C-JFL4-RWDN
+  Anchor MBQC-ZDVS-Z5JZ-5NYH-RXP4-LVDD-2VCK
   Address groupw@example.com
 
-Entry<CatalogedContact>: NBRK-LJVM-ECSH-DXP6-AOC5-GKHB-YVO5
+Entry<CatalogedContact>: NCV2-LJCN-H2F6-2Z7H-5B7N-SOMU-3KMJ
   Person 
-  Anchor MBQB-3LB7-E5C6-6NNF-VX7C-JFL4-RWDN
+  Anchor MBQC-ZDVS-Z5JZ-5NYH-RXP4-LVDD-2VCK
   Address groupw@example.com
 
-Entry<CatalogedContact>: NC6I-MSDJ-YSFK-ZDD7-MZCX-ZEB6-MOC5
+Entry<CatalogedContact>: NBPB-2IL6-NZCH-A5OQ-XA7U-R5DH-66TR
   Person 
-  Anchor MBQD-ITC6-FG5B-K25F-OF6W-XNZM-IKLU
+  Anchor MBQE-XCPU-Q4TJ-NCCJ-A5CW-CJOX-RX6H
   Address carol@example.com
 
 </div>

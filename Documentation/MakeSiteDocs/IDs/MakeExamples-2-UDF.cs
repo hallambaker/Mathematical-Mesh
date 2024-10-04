@@ -28,6 +28,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		 UDFDigest(Example);
 		 UDFAuthenticator(Example);
 		 UDFDigestURI(Example);
+		 UDFList(Example);
 		 UDFDigestLocator(Example);
 		 UDFDigestEARL(Example);
 		 UDFDigestEARLRAW(Example);
@@ -257,6 +258,42 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	
 
 	//
+	// UDFList
+	//
+	public static void UDFList(CreateExamples Example) { /* XFile  */
+			using var _Output = new StreamWriter("Examples\\UDFList.md");
+		Example._Output = _Output;
+		Example._UDFList(Example);
+		}
+	public void _UDFList(CreateExamples Example) {
+
+			 var DataString = "UDF Data Value";
+			 var ContentType = "text/plain";
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The SHA-2-512 and SHA-3-512 binary fingerprint values calculated over the data string\n{0}", _Indent);
+			_Output.Write ("\"{1}\" and content type {2} earlier can be prefixed with their\n{0}", _Indent, DataString, ContentType);
+			_Output.Write ("lengths and concatenated to form a UDF fingerprint list:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("DataString: {1}\n{0}", _Indent, DataString);
+			_Output.Write ("Content-Type: {1}\n{0}", _Indent, ContentType);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("List = {1}\n{0}", _Indent, Example.ListOfRoots.ToStringBase16FormatHex());
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The SHA-2-512 fingerprint of the list is thus:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("DataString: {1}\n{0}", _Indent, DataString);
+			_Output.Write ("Content-Type: {1}\n{0}", _Indent, UDFConstants.UdfList);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Udf = {1}\n{0}", _Indent, Example.UdfOfListOfRoots);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+				}
+	
+
+	//
 	// UDFDigestLocator
 	//
 	public static void UDFDigestLocator(CreateExamples Example) { /* XFile  */
@@ -391,7 +428,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("An X25519 key may be derived as follows:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("Fingerprint =\n{0}", _Indent);
+			_Output.Write ("Private Key Generator =\n{0}", _Indent);
 			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.X25519.UDF);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("IKM ={1}\n{0}", _Indent, Example.UDFResults.Derive.X25519.IKM.ToStringBase16FormatHex());
@@ -402,48 +439,52 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("OKM ={1}\n{0}", _Indent, Example.UDFResults.Derive.X25519.OKM.ToStringBase16FormatHex());
 			_Output.Write ("    \n{0}", _Indent);
-			_Output.Write ("Key = {1}\n{0}", _Indent, keyX25519.PrivateKey.Secret);
+			_Output.Write ("Key = {1}\n{0}", _Indent, keyX25519.PrivateKey.Secret.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("Fingerprint = {1}\n{0}", _Indent, Example.UDFResults.Derive.X25519.DerrivedKeyPair.UDFValue);
+			_Output.Write ("Public Key Fingerprint = \n{0}", _Indent);
+			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.X25519.DerrivedKeyPair.KeyIdentifier);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Derivation of an X448 key:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("Fingerprint =\n{0}", _Indent);
+			_Output.Write ("Private Key Generator =\n{0}", _Indent);
 			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.X448.UDF);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("OKM ={1}\n{0}", _Indent, Example.UDFResults.Derive.X448.OKM.ToStringBase16FormatHex());
 			_Output.Write ("    \n{0}", _Indent);
-			_Output.Write ("Key = {1}\n{0}", _Indent, keyX448.PrivateKey.Secret);
+			_Output.Write ("Key = {1}\n{0}", _Indent, keyX448.PrivateKey.Secret.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("Fingerprint = {1}\n{0}", _Indent, Example.UDFResults.Derive.X448.DerrivedKeyPair.UDFValue);
+			_Output.Write ("Public Key Fingerprint = \n{0}", _Indent);
+			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.X448.DerrivedKeyPair.KeyIdentifier);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Derivation of an Ed25519 key:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("Fingerprint =\n{0}", _Indent);
+			_Output.Write ("Private Key Generator =\n{0}", _Indent);
 			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Ed25519.UDF);
 			_Output.Write ("    \n{0}", _Indent);
 			_Output.Write ("OKM ={1}\n{0}", _Indent, Example.UDFResults.Derive.Ed25519.OKM.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("Key = {1}\n{0}", _Indent, keyEd25519.PrivateKey.Secret);
+			_Output.Write ("Key = {1}\n{0}", _Indent, keyEd25519.PrivateKey.Secret.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("Fingerprint = {1}\n{0}", _Indent, Example.UDFResults.Derive.Ed25519.DerrivedKeyPair.UDFValue);
+			_Output.Write ("Public Key Fingerprint = \n{0}", _Indent);
+			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Ed25519.DerrivedKeyPair.KeyIdentifier);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Derivation of an Ed448 key:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("Fingerprint =\n{0}", _Indent);
+			_Output.Write ("Private Key Generator =\n{0}", _Indent);
 			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Ed448.UDF);
 			_Output.Write (" \n{0}", _Indent);
 			_Output.Write ("OKM ={1}\n{0}", _Indent, Example.UDFResults.Derive.Ed448.OKM.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("Key = {1}\n{0}", _Indent, keyEd448.PrivateKey.Secret);
+			_Output.Write ("Key = {1}\n{0}", _Indent, keyEd448.PrivateKey.Secret.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("Fingerprint = {1}\n{0}", _Indent, Example.UDFResults.Derive.Ed448.DerrivedKeyPair.UDFValue);
+			_Output.Write ("Public Key Fingerprint = \n{0}", _Indent);
+			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Ed448.DerrivedKeyPair.KeyIdentifier);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 				}
@@ -463,7 +504,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("A P-256 key may be derived as follows:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("Fingerprint =\n{0}", _Indent);
+			_Output.Write ("Private Key Generator =\n{0}", _Indent);
 			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P256.UDF);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("IKM ={1}\n{0}", _Indent, Example.UDFResults.Derive.P256.IKM.ToStringBase16FormatHex());
@@ -476,24 +517,33 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("    \n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			 DescribeResult ("Key", Example.UDFResults.Derive.P256.Key);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Public Key Fingerprint = \n{0}", _Indent);
+			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P256.DerrivedKeyPair.KeyIdentifier);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Derivation of a P-384 key:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("Fingerprint =\n{0}", _Indent);
+			_Output.Write ("Private Key Generator =\n{0}", _Indent);
 			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P384.UDF);
 			_Output.Write ("    \n{0}", _Indent);
 			 DescribeResult ("Key", Example.UDFResults.Derive.P384.Key);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Public Key Fingerprint = \n{0}", _Indent);
+			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P384.DerrivedKeyPair.KeyIdentifier);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Derivation of a P-521 key:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("Fingerprint =\n{0}", _Indent);
+			_Output.Write ("Private Key Generator =\n{0}", _Indent);
 			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P521.UDF);
 			_Output.Write ("\n{0}", _Indent);
 			 DescribeResult ("Key", Example.UDFResults.Derive.P521.Key);   
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Public Key Fingerprint = \n{0}", _Indent);
+			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P521.DerrivedKeyPair.KeyIdentifier);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 				}
@@ -513,7 +563,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("An RSA-2048 may be derived as follows:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("Fingerprint =\n{0}", _Indent);
+			_Output.Write ("Private Key Generator =\n{0}", _Indent);
 			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.UDF);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("IKM ={1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.IKM.ToStringBase16FormatHex());
@@ -526,7 +576,34 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("// Rest TBS\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Public Key Fingerprint = \n{0}", _Indent);
+			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.DerrivedKeyPair.KeyIdentifier);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Hints = {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.Hints);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("An RSA-3072 may be derived as follows:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("Private Key Generator =\n{0}", _Indent);
+			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA3072.UDF);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Public Key Fingerprint = \n{0}", _Indent);
+			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA3072.DerrivedKeyPair.KeyIdentifier);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Hints = {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA3072.Hints);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("An RSA-4096 may be derived as follows:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("Private Key Generator =\n{0}", _Indent);
+			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA4096.UDF);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Public Key Fingerprint = \n{0}", _Indent);
+			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA4096.DerrivedKeyPair.KeyIdentifier);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Hints = {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA4096.Hints);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 				}
@@ -746,7 +823,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("MAC(&<key>, &<Content-ID> + ‘:’ + H(&<Data>)) =  ", _Indent);
 			}
-		 var binaryUDF = Udf.DigestToUDFBinary (HashData, ContentType, 140, CryptoAlgorithmId, key);
+		 var binaryUDF = Udf.DigestToUDFBinary (HashData, ContentType, 0, CryptoAlgorithmId, key);
 		_Output.Write ("{1}\n{0}", _Indent, UDFData.ToStringBase16FormatHex());
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("The prefixed Binary Data Sequence is thus{1}\n{0}", _Indent, binaryUDF.ToStringBase16FormatHex());

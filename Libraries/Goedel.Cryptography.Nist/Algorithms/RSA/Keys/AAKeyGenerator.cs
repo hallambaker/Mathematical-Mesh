@@ -54,8 +54,8 @@ public record RsaGenerationHints {
     /// </summary>
     /// <param name="callCount">The dictionary of call counts.</param>
     public RsaGenerationHints(Dictionary<string, int> callCount) {
-        callCount.TryGetValue("p", out P.PrimeTest);
-        callCount.TryGetValue("q", out Q.PrimeTest);
+        callCount.TryGetValue("pp", out P.PrimeTest);
+        callCount.TryGetValue("qq", out Q.PrimeTest);
 
         callCount.TryGetValue("q1", out Q.Aux1);
         callCount.TryGetValue("p1", out P.Aux1);
@@ -63,8 +63,8 @@ public record RsaGenerationHints {
         callCount.TryGetValue("q2", out Q.Aux2);
         callCount.TryGetValue("p2", out P.Aux2);
 
-        callCount.TryGetValue("qq", out Q.PrimeGen);
-        callCount.TryGetValue("pp", out P.PrimeGen);
+        callCount.TryGetValue("q", out Q.PrimeGen);
+        callCount.TryGetValue("p", out P.PrimeGen);
         }
 
 

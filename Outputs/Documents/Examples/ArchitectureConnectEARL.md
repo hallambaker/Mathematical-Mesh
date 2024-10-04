@@ -1,3 +1,3 @@
 ~~~~
-mcd://maker@example.com/EA5X-HFHU-RL5B-SRQQ-AWST-OZNY-UE
+mcd://maker@example.com/EACX-H62H-KJOX-E6DY-OA7A-R7ZC-PE
 ~~~~

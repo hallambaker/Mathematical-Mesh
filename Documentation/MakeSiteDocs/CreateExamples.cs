@@ -345,6 +345,8 @@ public partial class CreateExamples {
         deviceId = (resultAccept.ProcessResult as ResultAcknowledgeConnection).
                 AcknowledgeConnection.MessageConnectionRequest.ProfileDevice.UdfString;
         Connect.Device2Id = deviceId;
+        System.Console.WriteLine($"Device 2 is {Connect.Device2Id}");
+
 
         //Connect.ConnectReject = Alice1.Example(
         //    $"device reject {id2} /message /web"
@@ -409,10 +411,15 @@ public partial class CreateExamples {
 
 
         Connect.AliceProfileDevice2 = dev2Machine.ProfileDevice;
+
+
         Connect.AliceActivationDevice2 = connectStaticPollSuccess.ActivationAccount;
         Connect.AliceActivationAccount2 = connectStaticPollSuccess.ActivationCommon;
         Connect.AliceConnectionDevice2 = dev2Device.ConnectionDevice;
         Connect.AliceConnectionService2 = dev2Device.ConnectionService;
+
+
+
         }
 
     public void TestConnectDisconnect(string index) {

@@ -11,27 +11,27 @@ the account and the list of roles that have been authorized for the device..
       "web"
       ],
     "Signature":{
-      "Udf":"MCE7-2NH5-N2UD-LK5B-Q2IU-2G5O-5NPH",
+      "Udf":"MCS2-2VTH-7FGF-2ETJ-PJQZ-PKPO-3NZC",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"c-uoL_64olcjuQPK5YMff6uOmlCVV2sfdHchdrqQyP-1v
-  icbBRiEBSFsmNCvmxmgvv_DD1qchhSA"}}},
+          "Public":"ZugWLydgBgLa087iFRwA19w9iC3VCxym8L6AceP-FFqii
+  zFUkyONCeryM-erdSZy-W7GPtQFDkuA"}}},
     "Encryption":{
-      "Udf":"MDKH-VEF5-NGE4-6VBJ-2XFG-GFGC-PXA3",
+      "Udf":"MCUM-EI7S-VLIJ-ALQO-SPSK-VM5P-R6MA",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"QWqGtDGk6NaCTTR1_q5G2ozp2dFcMZ-5hEQegmLxhnely
-  AZYBE2LQa0A0tt9DFInObQ1uC3Juo0A"}}},
-    "ProfileUdf":"MBQB-2H3J-6QK6-ZRL3-ZPFQ-KYCG-LTBU",
+          "Public":"vzBo5i9gRd3Vj3b-JCsCTUjjwUKe8knUii680EnNpkuB8
+  ODc_lVzA6qJPo5JA--SoMXbVAtY-8oA"}}},
+    "ProfileUdf":"MBQK-54VC-H3HR-TYBH-ZIE6-VVIY-ZNPA",
     "Authentication":{
-      "Udf":"MCQQ-D7WM-KUN7-GGBZ-BYWA-NLOF-FNFJ",
+      "Udf":"MBO5-BV4J-OXHA-RA27-3CAW-4WNR-XOYW",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"g0hPd-XJs5U-TfgRopKe9XHw2uw8G0Lx5mKB88JgOITr8
-  9H4V8ba1k0m0XGLLJSwk3XBn5QqYOWA"}}}}}
+          "Public":"p2oXCigHVLc_CJDsyeBcRWSmF6DirEXrApIjEaJXJ58Gs
+  1DfGTD2nMLDsSlxPzlZOhxAuq4v1AsA"}}}}}
 ~~~~
 
 The ConnectionService assertion is used to authenticate the device to the 
@@ -44,13 +44,13 @@ The corresponding ConnectionService assertion is:
 ~~~~
 {
   "ConnectionService":{
-    "ProfileUdf":"MBQB-2H3J-6QK6-ZRL3-ZPFQ-KYCG-LTBU",
+    "ProfileUdf":"MBQK-54VC-H3HR-TYBH-ZIE6-VVIY-ZNPA",
     "Authentication":{
-      "Udf":"MCQQ-D7WM-KUN7-GGBZ-BYWA-NLOF-FNFJ",
+      "Udf":"MBO5-BV4J-OXHA-RA27-3CAW-4WNR-XOYW",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"g0hPd-XJs5U-TfgRopKe9XHw2uw8G0Lx5mKB88JgOITr8
-  9H4V8ba1k0m0XGLLJSwk3XBn5QqYOWA"}}}}}
+          "Public":"p2oXCigHVLc_CJDsyeBcRWSmF6DirEXrApIjEaJXJ58Gs
+  1DfGTD2nMLDsSlxPzlZOhxAuq4v1AsA"}}}}}
 ~~~~
 

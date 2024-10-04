@@ -2,7 +2,7 @@
 An RSA-2048 may be derived as follows:
 
 ~~~~
-Fingerprint =
+Private Key Generator =
     ZAAA-RJ5I-OSMI-X2KH-MBHX-KUPB-OC54-NQI
 
 IKM =
@@ -19,6 +19,33 @@ Info(p) =
 
 // Rest TBS
 
-Hints = YMBK-SAQC-GMFT-SAAA
+Public Key Fingerprint = 
+    MC3F-GOL3-C2A3-NLSI-EVK3-OEHP-TTOV
+
+Hints = TEC2-AAYC-GMFT-SAQC
+~~~~
+
+An RSA-3072 may be derived as follows:
+
+~~~~
+Private Key Generator =
+    ZAAA-TRZW-THS7-KXE6-2L3G-JAUK-VMDR-MOY
+
+Public Key Fingerprint = 
+    MDWW-4LGC-FL3I-PA6M-TJT6-OTHY-CP6A
+
+Hints = VICL-YAIJ-A5DR-EBYB
+~~~~
+
+An RSA-4096 may be derived as follows:
+
+~~~~
+Private Key Generator =
+    ZAAA-VMJY-JTS6-EXFD-ZBUI-UP3Z-CPCU-WFA
+
+Public Key Fingerprint = 
+    MCAO-OK3H-CC37-AMMQ-D5QL-U5IN-IFMI
+
+Hints = A3WQ-EFWG-ANOA-GBID
 ~~~~
 

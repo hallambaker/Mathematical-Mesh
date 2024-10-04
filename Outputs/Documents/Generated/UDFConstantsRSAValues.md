@@ -3,4 +3,7 @@
 <tr><td>RSA-2048</td><td>140</td></tr>
 <tr><td>RSA-3072</td><td>170</td></tr>
 <tr><td>RSA-4096</td><td>200</td></tr>
+<tr><td>RSA-6144</td><td>260</td></tr>
+<tr><td>RSA-8192</td><td>320</td></tr>
+<tr><td>RSA-15360</td><td>530</td></tr>
 </table>
