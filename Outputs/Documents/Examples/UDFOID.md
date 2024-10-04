@@ -3,30 +3,30 @@ Given the following Ed25519 public key:
 
 ~~~~
 
-  3B 64 7C C9  BB 8B 6F 14  AF 48 58 2B  C6 15 8B D7
-  CF 21 5F D4  9F 0E 01 78  58 61 FF 83  E9 28 74 00
+  98 44 9D 1C  44 78 B2 FC  08 6F F4 A2  BF B2 09 BC
+  BF 0D EB FC  81 7D 03 DC  BD 95 E2 E9  33 AB 25 5A
 ~~~~
 
 The equivalent DER encoding is:
 
 ~~~~
 
-  30 2C 30 05  06 03 2B 65  70 03 23 00  04 20 3B 64
-  7C C9 BB 8B  6F 14 AF 48  58 2B C6 15  8B D7 CF 21
-  5F D4 9F 0E  01 78 58 61  FF 83 E9 28  74 00
+  30 2C 30 05  06 03 2B 65  70 03 23 00  04 20 98 44
+  9D 1C 44 78  B2 FC 08 6F  F4 A2 BF B2  09 BC BF 0D
+  EB FC 81 7D  03 DC BD 95  E2 E9 33 AB  25 5A
 ~~~~
 
 To encode this key as a UDF OID sequence we prepend the value OID
 and convert to Base32:
 
 ~~~~
-OID:        OAYC-YMAF-AYBS-WZLQ-AMRQ-ABBA-HNSH-ZSN3-RNXR-JL2I-LAV4-M
-        FML-27HS-CX6U-T4HA-C6CY-MH7Y-H2JI-OQAA
+OID:        OAYC-YMAF-AYBS-WZLQ-AMRQ-ABBA-TBCJ-2HCE-PCZP-YCDP-6SRL-7
+        MQJ-XS7Q-3274-QF6Q-HXF5-SXRO-SM5L-EVNA
 ~~~~
 
 The corresponding UDF content digest value is more compact and allows us to identify the 
 key unambiguously but does not provide the value:
 
 ~~~~
-MB27-KHIJ-R24U-OILH-G4HI-XDOP-HSVT
+MCXO-44WR-I6TO-4GHH-2HGF-YI5A-JKMT
 ~~~~

@@ -7,27 +7,27 @@ includes Recipients and Salt fields to enable the content to be decoded.
 ~~~~
 [{
     "enc":"A256CBC",
-    "kid":"EBQG-OBBS-3BGV-7CLJ-XWZ5-NP6T-4NVS",
-    "Salt":"TvtIwvtcGURHvW5OqSqdeA",
-    "annotations":["iAEAiCDItyv9qGfSWS2klIvgU6FQpviN3Wre6SH396QNqA
-  mkAQ",
-      "iAEBiCA_fniLsQcwOUa65Ja1WfOKP0RoC2tyUTVVhUm_esxqkg",
-      "iAECiDCflGqZ1Rfd_NGaeIMN_d_vUdp_HUnqS5ewAIPwKIXfNmwLrQUK7j
-  -t1LWcfWgA_Yk"
+    "kid":"EBQJ-IMKL-5AMQ-TELS-RET6-G3YY-37OF",
+    "Salt":"TjsNh27nD1KFULQ-stjsbA",
+    "annotations":["iAEAiCCwsoXU7hiLj8R5q-VRiQFWgguI6VW2yZSRO6SW3o
+  EuuQ",
+      "iAEBiCBwSs1uh_mOVm6w98JC2AGCPrp0CTatBP9b6GF4uAT4Ng",
+      "iAECiDA5QxNl32AkfBez3nhetlGUKIW10dfI9OuTezjb03TZtFD8IZb2by
+  I7MVdiId7IWwc"
       ],
     "recipients":[{
-        "kid":"MC76-W4OU-INGZ-PG5U-TEOO-WOAV-3VGU",
+        "kid":"MBSN-WL7P-L35O-O4DY-EMAO-LGUS-B6QW",
         "epk":{
           "PublicKeyECDH":{
             "crv":"Ed25519",
-            "Public":"saHRAjXwBwNCLiOeVYUVlIKSk9PlVgICu9BBTmEjk0w"}},
-        "wmk":"NfYjjgNWypCE9G71K-izI0g_5aAlgD64p_YwGaC58GBcsPMQs4
-  wOSw"}
+            "Public":"dXuxNNVGe81qWvJVJ7CXDPAYGHX-pWHTL5UW_iwbhNo"}},
+        "wmk":"1eDDPI2zMzXpmgZGeSGJOTyOShl7PGW1LUpXlErPULNBp0ugux
+  Ldtw"}
       ],
     "ContentMetaData":"ewogICJjdHkiOiAiYXBwbGljYXRpb24vZXhhbXBsZS
   1tYWlsIn0"},
-  "IdAbCcIkDfWMlWnVWm2-IDnyxzcWjENrKB2hVquAtzqDv9PldQN1isOVrLKTR5
-  i-MklMKk7IYKJieThHl8RrAg"
+  "ausPd9Ur1OCYEbDv9-STxhI-IFuIQ2BKE3SHF6zrZrcmViyGsmSJsvaTtgJUYl
+  HUXAttAfzKlbfAj7IRHftPGQ"
   ]
 ~~~~
 

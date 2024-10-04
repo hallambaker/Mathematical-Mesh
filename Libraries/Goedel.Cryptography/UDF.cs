@@ -1308,6 +1308,10 @@ public record Udf(
             UdfAlgorithmIdentifier.RSA2048 => CryptoAlgorithmId.RSAExch,
             UdfAlgorithmIdentifier.RSA3072 => CryptoAlgorithmId.RSAExch,
             UdfAlgorithmIdentifier.RSA4096 => CryptoAlgorithmId.RSAExch,
+            UdfAlgorithmIdentifier.RSA6144 => CryptoAlgorithmId.RSAExch,
+            UdfAlgorithmIdentifier.RSA8192 => CryptoAlgorithmId.RSAExch,
+            UdfAlgorithmIdentifier.RSA15360 => CryptoAlgorithmId.RSAExch,
+
             UdfAlgorithmIdentifier.Ed25519 => CryptoAlgorithmId.Ed25519,
             UdfAlgorithmIdentifier.Ed448 => CryptoAlgorithmId.Ed448,
             UdfAlgorithmIdentifier.X25519 => CryptoAlgorithmId.X25519,

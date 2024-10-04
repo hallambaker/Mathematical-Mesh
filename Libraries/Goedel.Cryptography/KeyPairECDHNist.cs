@@ -332,7 +332,9 @@ subjectPublicKeyInfo SubjectPublicKeyInfo SEQUENCE (2 elem)
 
     ///<inheritdoc/>
     public override void Persist(KeyCollection keyCollection) {
-        throw new NotImplementedException();
+        Assert.AssertTrue(PersistPending, CryptographicException.Throw);
+        var pkix = PKIXPrivateKeyECDH ;
+        keyCollection.Persist(KeyIdentifier, pkix, KeySecurity.IsExportable());
         }
 
     ///<inheritdoc/>

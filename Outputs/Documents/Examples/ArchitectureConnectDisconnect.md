@@ -4,7 +4,7 @@ Alice disconnects the new device:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman device delete MBQP-MYOA-LTSP-B5GX-A7HP-ZFJ5-4VQ6
+<cmd>Alice> meshman device delete MBQB-RX7H-5QIR-V7MS-AN4W-JW7A-UXYV
 </div>
 ~~~~
 

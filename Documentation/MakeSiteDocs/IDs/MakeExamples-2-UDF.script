@@ -226,7 +226,10 @@ Alice is an employee of Example Inc., she uses three email addresses:
 #end zfile
 
 #zfile CreateExamples UDFDeriveCFRG "Examples\\UDFDeriveCFRG.md" Example
-
+#% var keyX25519 = Example.UDFResults.Derive.X25519.DerrivedKeyPair as KeyPairX25519;
+#% var keyX448 = Example.UDFResults.Derive.X448.DerrivedKeyPair as KeyPairX448;
+#% var keyEd25519 = Example.UDFResults.Derive.Ed25519.DerrivedKeyPair as KeyPairEd25519;
+#% var keyEd448 = Example.UDFResults.Derive.Ed448.DerrivedKeyPair as KeyPairEd448;
 An X25519 key may be derived as follows:
 
 ~~~~
@@ -235,13 +238,15 @@ Fingerprint =
 
 IKM =#{Example.UDFResults.Derive.X25519.IKM.ToStringBase16FormatHex()}
 
-salt =#{Example.UDFResults.Derive.X25519.Salt.ToStringBase16FormatHex()}
+Info =#{Example.UDFResults.Derive.X25519.Info.ToStringBase16FormatHex()}
 
 PRK =#{Example.UDFResults.Derive.X25519.PRK.ToStringBase16FormatHex()}
 
 OKM =#{Example.UDFResults.Derive.X25519.OKM.ToStringBase16FormatHex()}
     
-Key =#{Example.UDFResults.Derive.X25519.Key.ToStringBase16FormatHex()}
+Key = #{keyX25519.PrivateKey.Secret}
+
+Fingerprint = #{Example.UDFResults.Derive.X25519.DerrivedKeyPair.UDFValue}
 ~~~~
 
 Derivation of an X448 key:
@@ -249,8 +254,12 @@ Derivation of an X448 key:
 ~~~~
 Fingerprint =
     #{Example.UDFResults.Derive.X448.UDF}
+
+OKM =#{Example.UDFResults.Derive.X448.OKM.ToStringBase16FormatHex()}
     
-Key =#{Example.UDFResults.Derive.X448.Key.ToStringBase16FormatHex()}
+Key = #{keyX448.PrivateKey.Secret}
+
+Fingerprint = #{Example.UDFResults.Derive.X448.DerrivedKeyPair.UDFValue}
 ~~~~
 
 Derivation of an Ed25519 key:
@@ -259,7 +268,11 @@ Derivation of an Ed25519 key:
 Fingerprint =
     #{Example.UDFResults.Derive.Ed25519.UDF}
     
-Key =#{Example.UDFResults.Derive.Ed25519.Key.ToStringBase16FormatHex()}
+OKM =#{Example.UDFResults.Derive.Ed25519.OKM.ToStringBase16FormatHex()}
+
+Key = #{keyEd25519.PrivateKey.Secret}
+
+Fingerprint = #{Example.UDFResults.Derive.Ed25519.DerrivedKeyPair.UDFValue}
 ~~~~
 
 Derivation of an Ed448 key:
@@ -267,8 +280,12 @@ Derivation of an Ed448 key:
 ~~~~
 Fingerprint =
     #{Example.UDFResults.Derive.Ed448.UDF}
-    
-Key =#{Example.UDFResults.Derive.Ed448.Key.ToStringBase16FormatHex()}
+ 
+OKM =#{Example.UDFResults.Derive.Ed448.OKM.ToStringBase16FormatHex()}
+
+Key = #{keyEd448.PrivateKey.Secret}
+
+Fingerprint = #{Example.UDFResults.Derive.Ed448.DerrivedKeyPair.UDFValue}
 ~~~~
 
 #end zfile
@@ -283,7 +300,7 @@ Fingerprint =
 
 IKM =#{Example.UDFResults.Derive.P256.IKM.ToStringBase16FormatHex()}
 
-salt =#{Example.UDFResults.Derive.P256.Salt.ToStringBase16FormatHex()}
+Info =#{Example.UDFResults.Derive.P256.Info.ToStringBase16FormatHex()}
 
 PRK =#{Example.UDFResults.Derive.P256.PRK.ToStringBase16FormatHex()}
 
@@ -323,21 +340,15 @@ Fingerprint =
 
 IKM =#{Example.UDFResults.Derive.RSA2048.IKM.ToStringBase16FormatHex()}
 
-salt =#{Example.UDFResults.Derive.RSA2048.Salt.ToStringBase16FormatHex()}
+Info =#{Example.UDFResults.Derive.RSA2048.Info.ToStringBase16FormatHex()}
 
 [Generation of the PRK as before]
 
 Info(p) =#{Example.UDFResults.Derive.RSA2048.Info_P.ToStringBase16FormatHex()}
 
-OKM(p) =#{Example.UDFResults.Derive.RSA2048.OKM_P.ToStringBase16FormatHex()}
+// Rest TBS
 
-Info(q) =#{Example.UDFResults.Derive.RSA2048.Info_Q.ToStringBase16FormatHex()}
-
-OKM(q) = #{Example.UDFResults.Derive.RSA2048.OKM_Q.ToStringBase16FormatHex()}
-    
-#% DescribeResult ("Key P", Example.UDFResults.Derive.RSA2048.P);
-
-#% DescribeResult ("Key Q", Example.UDFResults.Derive.RSA2048.Q);
+Hints = #{Example.UDFResults.Derive.RSA2048.Hints}
 ~~~~
 
 #end zfile
@@ -350,18 +361,16 @@ Fingerprint =
 
 To generate an RSA-2048 key
 
-salt =#{Example.UDFResults.Derive.Any_RSA2048.Salt.ToStringBase16FormatHex()}
+Info =#{Example.UDFResults.Derive.Any_RSA2048.Info.ToStringBase16FormatHex()}
 
-#% DescribeResult ("Key P", Example.UDFResults.Derive.Any_RSA2048.P);
-
-#% DescribeResult ("Key Q", Example.UDFResults.Derive.Any_RSA2048.Q);    
+// Rest TBS  
 
 To generate an X25519 key
 
-salt =#{Example.UDFResults.Derive.Any_RSA2048.Salt.ToStringBase16FormatHex()}
+Info =#{Example.UDFResults.Derive.Any_RSA2048.Info.ToStringBase16FormatHex()}
 
 Key = 
-    #{Example.UDFResults.Derive.Any_x25519.Key}
+    #{Example.UDFResults.Derive.Any_x25519.Key.ToStringBase16FormatHex()}
 ~~~~
 
 #end zfile

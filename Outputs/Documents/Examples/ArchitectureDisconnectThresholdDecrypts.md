@@ -5,7 +5,7 @@ way as before.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman device delete MBQN-RX3S-JAXD-GPDP-U3HD-PAOR-7ZVF
+<cmd>Alice> meshman device delete MBQJ-ZMG4-QN7C-E4AL-HPH6-FW26-JJVF
 </div>
 ~~~~
 

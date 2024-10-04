@@ -189,6 +189,11 @@ public class KeyDeriveHKDF : KeyDerive {
     public static byte[] Derive(
             byte[] ikm, byte[] salt = null, byte[] info = null, int length = 0,
             CryptoAlgorithmId algorithm = CryptoAlgorithmId.Default) {
+        //Console.WriteLine($"ikm = {ikm.ToStringBase16FormatHex()}");
+        //if (salt != null) {
+        //    Console.WriteLine($"salt = {salt.ToStringBase16FormatHex()}");
+        //    }
+
         var kdf = new KeyDeriveHKDF(ikm, salt, algorithm);
         return kdf.Derive(info, length);
         }

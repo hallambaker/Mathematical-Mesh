@@ -84,8 +84,8 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			  ConsoleExample (Account.CreateAlice);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The command returns the value of Alice's Mesh Account fingerprint {1}. \n{0}", _Indent, AliceFingerprint);
-			_Output.Write ("This value is used as a unique identifier that is cryptographically bound to the signature key used\n{0}", _Indent);
-			_Output.Write ("to authenticate the account profile.\n{0}", _Indent);
+			_Output.Write ("This value is used as a unique identifier that is cryptographically bound to a list of \n{0}", _Indent);
+			_Output.Write ("fingerprints specifying signature keys that are considered authoritative for that account.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 				}
 	
@@ -392,7 +392,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleExample (Example.Contact.ContactBobRequest);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("Alice checks his Mesh messages and approves Bob's request:\n{0}", _Indent);
+			_Output.Write ("Alice checks her Mesh messages and approves Bob's request:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleExample (Example.Contact.ContactAliceResponse);
 			_Output.Write ("\n{0}", _Indent);

@@ -204,7 +204,7 @@ public partial class CreateExamples {
         var seed = DeterministicSeed.Create("InternetDrafts");
         testEnvironment = new TestEnvironmentCommon(seed);
 
-
+        //PlatformUDF();
 
         PlatformCrypto();
         //Directory.SetCurrentDirectory(outputPath);

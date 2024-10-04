@@ -25,6 +25,7 @@ using Goedel.Mesh.Shell;
 using Goedel.Test;
 using Goedel.Utilities;
 
+using System;
 using System.Numerics;
 
 using GC = Goedel.Cryptography;
@@ -107,13 +108,15 @@ public partial class Derive {
     public DerivedKeyEC Ed25519 = new(UdfAlgorithmIdentifier.Ed25519);
     public DerivedKeyEC Ed448 = new(UdfAlgorithmIdentifier.Ed448);
 
-    public DerivedKeyNIST P256 = new(UdfAlgorithmIdentifier.P256);
-    public DerivedKeyNIST P384 = new(UdfAlgorithmIdentifier.P384);
-    public DerivedKeyNIST P521 = new(UdfAlgorithmIdentifier.P521);
+
 
     public DerivedKeyRSA RSA2048 = new(UdfAlgorithmIdentifier.RSA2048);
     public DerivedKeyRSA RSA3072 = new(UdfAlgorithmIdentifier.RSA3072);
     public DerivedKeyRSA RSA4096 = new(UdfAlgorithmIdentifier.RSA4096);
+
+    public DerivedKeyNIST P256 = new(UdfAlgorithmIdentifier.P256);
+    public DerivedKeyNIST P384 = new(UdfAlgorithmIdentifier.P384);
+    public DerivedKeyNIST P521 = new(UdfAlgorithmIdentifier.P521);
 
     public DerivedKeyRSA Any_RSA2048 =
         new(UdfAlgorithmIdentifier.Any, UdfAlgorithmIdentifier.RSA2048);
@@ -127,7 +130,7 @@ public partial class DerivedKey {
     public string UDF;
 
     public byte[] IKM;
-    public byte[] Salt;
+    public byte[] Info;
     public byte[] PRK => HKDF.PRK;
 
 
@@ -135,9 +138,13 @@ public partial class DerivedKey {
 
     public UdfAlgorithmIdentifier AlgorithmID;
 
+    public KeyPair DerrivedKeyPair { get; }
+    public string? Hints { get; }
+
+
     public DerivedKey(UdfAlgorithmIdentifier type,
                 UdfAlgorithmIdentifier specific = UdfAlgorithmIdentifier.Any) {
-
+        Console.WriteLine($"\n---Type {type}");
         AlgorithmID = specific == UdfAlgorithmIdentifier.Any ? type : specific;
 
         var seed = GC.Udf.KeySpecifier(type);
@@ -145,11 +152,17 @@ public partial class DerivedKey {
 
         UDF = GC.Udf.DerivedKey(type, data: random);
         IKM = GC.Udf.DerivedKey(UDF);
+        Console.WriteLine($"IKM = {IKM.ToStringBase16FormatHex()}");
 
-        Salt = GC.Udf.KeySpecifier(AlgorithmID);
 
-        HKDF = new KeyDeriveHKDF(IKM, Salt, CryptoAlgorithmId.HMAC_SHA_2_512);
+        Info = GC.Udf.KeySpecifier(AlgorithmID);
+        Console.WriteLine($"Info = {Info.ToStringBase16FormatHex()}");
 
+        byte[] nullSalt = null;
+        HKDF = new KeyDeriveHKDF(IKM, nullSalt, CryptoAlgorithmId.HMAC_SHA_2_512);
+
+
+        (DerrivedKeyPair, Hints) = Udf.DeriveKeyHints(UDF, null, keySecurity: KeySecurity.Ephemeral);
         }
 
     }
@@ -165,22 +178,22 @@ public partial class DerivedKeyEC : DerivedKey {
     public DerivedKeyEC(UdfAlgorithmIdentifier type,
             UdfAlgorithmIdentifier specific = UdfAlgorithmIdentifier.Any) :
                     base(type, specific) {
-
+        Info = GC.Udf.KeySpecifier(AlgorithmID);
         switch (AlgorithmID) {
             case UdfAlgorithmIdentifier.X25519: {
-                OKM = HKDF.Derive(null, 256);
+                OKM = HKDF.Derive(Info, 256);
                 break;
                 }
             case UdfAlgorithmIdentifier.X448: {
-                OKM = HKDF.Derive(null, 448);
+                OKM = HKDF.Derive(Info, 448);
                 break;
                 }
             case UdfAlgorithmIdentifier.Ed25519: {
-                OKM = HKDF.Derive(null, 256);
+                OKM = HKDF.Derive(Info, 256);
                 break;
                 }
             case UdfAlgorithmIdentifier.Ed448: {
-                OKM = HKDF.Derive(null, 448);
+                OKM = HKDF.Derive(Info, 448);
                 break;
                 }
             default:
@@ -188,6 +201,7 @@ public partial class DerivedKeyEC : DerivedKey {
             }
 
         Key = OKM;
+        //Console.WriteLine($"OKM = {OKM.ToStringBase16FormatHex()}");
         }
 
 

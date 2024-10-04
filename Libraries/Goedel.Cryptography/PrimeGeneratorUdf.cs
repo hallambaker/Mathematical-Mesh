@@ -64,16 +64,8 @@ public class PrimeGeneratorUdf(
             count++;
             var tagExtended = $"{tag}.{count}";
 
-            byte[] bytes = KeyPair.KeySeed(bits, ikm, keySpecifier, keyName, tagExtended);
-            var trim = bits %8;
-
-            var mask = (byte)0x7f;
-            for (; trim > 0; trim--) {
-                bytes[0] = (byte) (bytes[0] & mask);
-                mask = (byte)( mask >> 1);
-                }
-
-
+            byte[] bytes = KeyPair.KeySeed(nbytes * 8, ikm, keySpecifier, keyName, tagExtended);
+            trim(bits, bytes);
             result = bytes.BigIntegerBigEndian();
 
             //Console.WriteLine($"Count {tagExtended}");
@@ -82,13 +74,30 @@ public class PrimeGeneratorUdf(
 
         CallCount.Add(tag, count);
         return result;
+
+
         }
 
     ///<inheritdoc/>
     public BigInteger GetEntropyUncounted(int bits, string tag) {
-        byte[] bytes = KeyPair.KeySeed(bits, ikm, keySpecifier, keyName, tag);
+
+        var nbytes = (bits + 7) / 8;
+
+        byte[] bytes = KeyPair.KeySeed(nbytes*8, ikm, keySpecifier, keyName, tag);
+        trim(bits, bytes);
+
         var result = bytes.BigIntegerBigEndian();
         return result;
+        }
+
+    static void trim(int bits, byte[] bytes) {
+        var trim = bits % 8;
+
+        var mask = (byte)0x7f;
+        for (; trim > 0; trim--) {
+            bytes[0] = (byte)(bytes[0] & mask);
+            mask = (byte)(mask >> 1);
+            }
         }
 
     ///<inheritdoc/>

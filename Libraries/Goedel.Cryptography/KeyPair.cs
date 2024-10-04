@@ -280,6 +280,7 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
                 }
             case CryptoAlgorithmId.X25519: {
                 var binaryData = KeySeed(256, ikm, keySpecifier, keyName);
+                Console.WriteLine($"binaryData = {binaryData.ToStringBase16FormatHex()}");
                 keyPair = new KeyPairX25519(binaryData, keySecurity, keyUses);
                 break;
                 }

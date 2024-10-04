@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 10/3/2024 2:56:44 PM
+//  This file was automatically generated at 10/4/2024 1:03:58 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -89,18 +89,24 @@ public enum UdfAlgorithmIdentifier {
     RSA3072 = 9,
     ///<summary>4096 bit RSA keypair</summary>
     RSA4096 = 10,
+    ///<summary>6144 bit RSA keypair</summary>
+    RSA6144 = 11,
+    ///<summary>8192 bit RSA keypair</summary>
+    RSA8192 = 12,
+    ///<summary>15360 bit RSA keypair</summary>
+    RSA15360 = 13,
     ///<summary>ML-KEM 512 as described in FIPS 203</summary>
-    MLKEM512 = 11,
+    MLKEM512 = 14,
     ///<summary>ML-KEM-768 as described in FIPS 203</summary>
-    MLKEM768 = 12,
+    MLKEM768 = 15,
     ///<summary>ML-KEM-1024 as described in FIPS 203</summary>
-    MLKEM1024 = 13,
+    MLKEM1024 = 16,
     ///<summary>ML-DSA-44 as described in FIPS 204</summary>
-    MLDSA44 = 14,
+    MLDSA44 = 17,
     ///<summary>ML-DSA-65 as described in FIPS 204</summary>
-    MLDSA65 = 15,
+    MLDSA65 = 18,
     ///<summary>ML-DSA-87 as described in FIPS 204</summary>
-    MLDSA87 = 16,
+    MLDSA87 = 19,
     ///<summary>Mesh device profile</summary>
     MeshProfileDevice = 256,
     ///<summary>Mesh device activation</summary>
@@ -211,6 +217,18 @@ public static partial class UDFConstants {
     public const string  UdfAlgorithmIdentifierRSA4096Tag = "RSA4096";
     ///<summary>Description for UdfAlgorithmIdentifier.RSA4096</summary>
     public const string  UdfAlgorithmIdentifierRSA4096Title = "4096 bit RSA keypair";
+    ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.RSA6144</summary>
+    public const string  UdfAlgorithmIdentifierRSA6144Tag = "RSA6144";
+    ///<summary>Description for UdfAlgorithmIdentifier.RSA6144</summary>
+    public const string  UdfAlgorithmIdentifierRSA6144Title = "6144 bit RSA keypair";
+    ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.RSA8192</summary>
+    public const string  UdfAlgorithmIdentifierRSA8192Tag = "RSA8192";
+    ///<summary>Description for UdfAlgorithmIdentifier.RSA8192</summary>
+    public const string  UdfAlgorithmIdentifierRSA8192Title = "8192 bit RSA keypair";
+    ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.RSA15360</summary>
+    public const string  UdfAlgorithmIdentifierRSA15360Tag = "RSA15360";
+    ///<summary>Description for UdfAlgorithmIdentifier.RSA15360</summary>
+    public const string  UdfAlgorithmIdentifierRSA15360Title = "15360 bit RSA keypair";
     ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.MLKEM512</summary>
     public const string  UdfAlgorithmIdentifierMLKEM512Tag = "MLKEM512";
     ///<summary>Description for UdfAlgorithmIdentifier.MLKEM512</summary>

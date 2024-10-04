@@ -59,7 +59,7 @@ An abstract, comment and reaction tags may be specified as options.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman bookmark add http://example.com/ "Example Dot Com" /id=Folder1-1 
-<rsp>[NCOL-RVWU-OSDO-QT5N-P7JG-AG6V-2NPO/Folder1-1] http://example.com/
+<rsp>[NBU6-H6UE-VYAW-MKTE-NNS4-MMFA-4D7G/Folder1-1] http://example.com/
 "Example
 </div>
 ~~~~
@@ -120,7 +120,7 @@ The 'bookmark get' command retrieves a bookmark by means of its unique catalog i
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman bookmark get Folder1-2
-<rsp>[NDMU-PPV3-OH5G-QPX4-NO2L-XCON-RDTN/Folder1-2] http://example.net/Bananas
+<rsp>[NB7Z-FTZA-R7EC-3NM6-PQRK-5YIQ-GZF5/Folder1-2] http://example.net/Bananas
 "Banana
 </div>
 ~~~~
@@ -173,13 +173,13 @@ The 'bookmark list' command lists all data in the bookmark catalog.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman bookmark list
-<rsp>[NB36-ECJV-3CAS-M7DX-G2CY-3GUA-WYPS/Sites-1] http://www.example.com
+<rsp>[NCVL-GKQ7-UFSC-C2M4-XKN2-BOKI-WQ56/Sites-1] http://www.example.com
 site1
-[NCOL-RVWU-OSDO-QT5N-P7JG-AG6V-2NPO/Folder1-1] http://example.com/
+[NBU6-H6UE-VYAW-MKTE-NNS4-MMFA-4D7G/Folder1-1] http://example.com/
 "Example
-[NDMU-PPV3-OH5G-QPX4-NO2L-XCON-RDTN/Folder1-2] http://example.net/Bananas
+[NB7Z-FTZA-R7EC-3NM6-PQRK-5YIQ-GZF5/Folder1-2] http://example.net/Bananas
 "Banana
-[NBT4-5QWK-TUU6-XN5B-EEX5-J55B-5SQ3/Folder1-1a] http://example.com/Fred
+[NDXB-R3GE-LXUA-OTOT-C7MT-44EH-UWT4/Folder1-1a] http://example.com/Fred
 "The
 </div>
 ~~~~

@@ -66,7 +66,7 @@ public static class PrimeGeneratorHelper {
 
         BigInteger R;
 
-        var tag2 = tag + tag;
+
         do {
             if (Rfirst < Rsecond) {
                 Rfirst += (2 * r1 * r2);
@@ -79,8 +79,10 @@ public static class PrimeGeneratorHelper {
 
             BigInteger x, y;
             int i;
-
+            int ii = 0;
             do {
+                var tag2 = tag + tag + $"{ii++}";
+
                 // 3
                 x = entropyProvider.GetEntropy(lowerBound, upperBound, tag2, primeSeed);
 
@@ -98,7 +100,7 @@ public static class PrimeGeneratorHelper {
 
                 // 5
                 i = 0;
-
+                
                 // 6
                 } while (y >= NumberTheory.Pow2(nLen / 2));
 

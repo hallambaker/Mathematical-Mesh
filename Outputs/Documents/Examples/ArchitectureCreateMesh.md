@@ -7,11 +7,11 @@ and is likely to require authentication and possibly payment.
 <div="terminal">
 <cmd>Alice> meshman account create alice@example.com
 <rsp>Account=alice@example.com
-UDF=MBQE-UNZP-5RH2-WYHY-IO5Q-JRAD-WTE3
+UDF=MBQB-2H3J-6QK6-ZRL3-ZPFQ-KYCG-LTBU
 </div>
 ~~~~
 
 The command returns the value of Alice's Mesh Account fingerprint . 
-This value is used as a unique identifier that is cryptographically bound to the signature key used
-to authenticate the account profile.
+This value is used as a unique identifier that is cryptographically bound to a list of 
+fingerprints specifying signature keys that are considered authoritative for that account.
 

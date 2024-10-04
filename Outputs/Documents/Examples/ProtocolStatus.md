@@ -9,8 +9,8 @@ account that it has access rights for:
 {
   "DownloadRequest":{
     "MaxResults":-1,
-    "DeviceUDF":"MBQP-MYOA-LTSP-B5GX-A7HP-ZFJ5-4VQ6",
-    "CatalogedDeviceDigest":"MDLQ-JTEG-3A6E-MWEM-CRQO-3JHE-MK",
+    "DeviceUDF":"MBQB-RX7H-5QIR-V7MS-AN4W-JW7A-UXYV",
+    "CatalogedDeviceDigest":"MCEG-3RY5-K5PZ-Z72O-PPLO-CXJ7-G3",
     "Select":[{
         "Store":"Credential",
         "IndexMin":3},
@@ -67,31 +67,31 @@ Merkle tree apex digest values for each:
     "Updates":[{
         "Envelopes":[[{
               "enc":"A256CBC",
-              "Salt":"J_Nk5H3kNtXgBb1vkGxQJw",
+              "Salt":"2wEUFlRp1XXSftpZNQ5v5A",
               "recipients":[{
-                  "kid":"MD2Q-UIKU-BK4T-457Y-UWSM-LE3D-6P4T",
+                  "kid":"MCQT-WUWB-P2AX-NDIF-TFVU-DNW4-K4CO",
                   "epk":{
                     "PublicKeyECDH":{
                       "crv":"X448",
-                      "Public":"wcZaaaYez9GzF5DliSy-xLjpdaJn8MmVj
-  3nxFs5Fpbva5-FsikBBwyIk0I5s2pXSEGun3k6TlVSA"}},
-                  "wmk":"AZ-f-QBFwwKsj1j4xxQ4c94RG-rIb62q_FVawNcl
-  igOBvxVDw2nrdQ"}
+                      "Public":"k-av48-wyuCodxBBgVsybr4aLVwXocEoA
+  I3WPG6pkv7ynfP3kGgA0wthyaXVJuQ8Ixc8uxG5mSaA"}},
+                  "wmk":"xLFD-VKg1pzswPT4cVs3Pxj65RBiOqB_CJ7p6lDX
+  0Rq2S65rNeu2jg"}
                 ],
               "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICI6ZnRwLmV4
   YW1wbGUuY29tIiwKICAiRXZlbnQiOiAiVXBkYXRlIn0",
               "SequenceInfo":{
                 "Index":3,
                 "TreePosition":1137},
-              "Received":"2024-10-03T14:57:02Z",
-              "PayloadDigest":"x002-YWfJ8Uw2av0qbQfhzr7cCcLqF88-R
-  WAMZzobppmuEvNYGNPPMQAYZ9XiSqLKgA-NMwPhFUiXt9D_2XbZA",
-              "ApexDigest":"djYmW9N3fLqEnUaRHBpaedC9HNwZhG3_rs5AW
-  Hh0Qpn1PhoBnPh-h_ZT7nw2sOXVTzUgf3EAxd40N4Li2PT5PA",
+              "Received":"2024-10-04T01:04:29Z",
+              "PayloadDigest":"a7KuWKxHefybAnDx8Z85XwiI6X3eb-pIg7
+  2lnKx942PYBS-V_IcLf4p9t_b_ODkqRSa1eimqNsa5iPJ7r5NDpQ",
+              "ApexDigest":"HFoyOkB_EiHYNlxJyUBC8OM5fL4PSpAFpVT_Z
+  C6a6SECrRGpip0ycKr3GKhD9t8tN2vtViPMM-MWnUKlX92_fw",
               "dig":"S512"},
-            "qVG1kzZJLAtf88rWQB3aF-EjuXpoRdVUjRqH44JXbpA3wlbUcOwu
-  BKzGFvOMYiXWteQRBP4XE28mYFsxutFkZfsDDxmL-XC2qQImiW-x4xFirZv2uyCmG
-  O7k0asPPfBZ0L8BmPicZtgeCOeIv9Fbo6WIg3xVRI1nO8H-L4EqTA8",
+            "hgkq7gIhdJaBbFm9BZwdOFK1T8J1liBXHgpTmYb43Ol0XnN6MwWs
+  hPJ58BrISoEdQ5l_0Hjq4DJHr_gleb1RoND14u40JSVNCSBM6Eye6UlxDcmFnMb5Z
+  STzhfrCrhQ0revfJFka6DMtDYtDx-Y_qGYsJhxkv6W_nFXvw8tKL8o",
             {}
             ]
           ],

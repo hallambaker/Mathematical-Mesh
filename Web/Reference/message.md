@@ -49,7 +49,7 @@ The required parameter is the message identifier of the request to be accepted.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman message accept NBWN-4HLV-RURQ-O7TC-ANA2-D5K4-4UFH
+<cmd>Alice> meshman message accept NA5B-6Z6O-F74O-X2AA-CTW2-I7C2-CCRX
 <rsp></div>
 ~~~~
 
@@ -120,9 +120,9 @@ supported.
 ~~~~
 <div="terminal">
 <cmd>Bob> meshman message confirm alice@example.com "Purchase equipment for $6,000?"
-<rsp>Envelope ID: MAUG-SBGB-ESSM-LNTK-7W4N-TZOR-QPRT
-Message ID: NCCP-EY2P-JOLB-Y6CP-62LW-N66N-LJ2K
-Response ID: MBCT-5DTN-PGSG-FHIA-7KM6-YEF4-BD7J
+<rsp>Envelope ID: MAAS-6YC7-DAAG-L3L2-WBL7-GBSQ-V6ZY
+Message ID: NCUU-OQR5-XQHS-FFJY-E23R-MSEV-GENU
+Response ID: MC3C-6L5B-UYS2-KSGP-BL5I-CALU-KTKK
 </div>
 ~~~~
 
@@ -155,9 +155,9 @@ The first parameter is required and specifies the intended recipient.
 ~~~~
 <div="terminal">
 <cmd>Bob> meshman contact request alice@example.com
-<rsp>Envelope ID: MBAU-H34I-FU2B-3TEF-LTMG-RT5T-GYRC
-Message ID: NBWN-4HLV-RURQ-O7TC-ANA2-D5K4-4UFH
-Response ID: MBR6-OL3R-4XVW-T26E-DT2C-S6SB-D4QI
+<rsp>Envelope ID: MBVY-XORI-2GVR-6J4M-RNXQ-RSQJ-XPTU
+Message ID: NA5B-6Z6O-F74O-X2AA-CTW2-I7C2-CCRX
+Response ID: MAHD-CP2A-XRAI-REOV-ILAZ-A3SE-BAPP
 </div>
 ~~~~
 
@@ -231,7 +231,7 @@ The required parameter is the message identifier of the request to be rejected.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman message reject NADI-GEER-FWSC-XCKV-PJX6-GNFT-CZPV
+<cmd>Alice> meshman message reject NBUX-W5FA-DICN-CBHX-FENN-7TIV-IITD
 <rsp></div>
 ~~~~
 

@@ -2771,6 +2771,15 @@
         <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.RSA4096">
             <summary>4096 bit RSA keypair</summary>
         </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.RSA6144">
+            <summary>6144 bit RSA keypair</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.RSA8192">
+            <summary>8192 bit RSA keypair</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.RSA15360">
+            <summary>15360 bit RSA keypair</summary>
+        </member>
         <member name="F:Goedel.Cryptography.UdfAlgorithmIdentifier.MLKEM512">
             <summary>ML-KEM 512 as described in FIPS 203</summary>
         </member>
@@ -2917,6 +2926,24 @@
         </member>
         <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierRSA4096Title">
             <summary>Description for UdfAlgorithmIdentifier.RSA4096</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierRSA6144Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.RSA6144</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierRSA6144Title">
+            <summary>Description for UdfAlgorithmIdentifier.RSA6144</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierRSA8192Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.RSA8192</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierRSA8192Title">
+            <summary>Description for UdfAlgorithmIdentifier.RSA8192</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierRSA15360Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.RSA15360</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierRSA15360Title">
+            <summary>Description for UdfAlgorithmIdentifier.RSA15360</summary>
         </member>
         <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMLKEM512Tag">
             <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MLKEM512</summary>

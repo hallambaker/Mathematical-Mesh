@@ -53,8 +53,8 @@ and is likely to require authentication and possibly payment.
 #%  ConsoleExample (Account.CreateAlice);
 
 The command returns the value of Alice's Mesh Account fingerprint #{AliceFingerprint}. 
-This value is used as a unique identifier that is cryptographically bound to the signature key used
-to authenticate the account profile.
+This value is used as a unique identifier that is cryptographically bound to a list of 
+fingerprints specifying signature keys that are considered authoritative for that account.
 
 #end zfile
 
@@ -245,7 +245,7 @@ Bob sends Alice a contact exchange request:
 
 #%  ConsoleExample (Example.Contact.ContactBobRequest);
 
-Alice checks his Mesh messages and approves Bob's request:
+Alice checks her Mesh messages and approves Bob's request:
 
 #%  ConsoleExample (Example.Contact.ContactAliceResponse);
 

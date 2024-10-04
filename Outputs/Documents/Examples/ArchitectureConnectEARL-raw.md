@@ -1,1 +1,1 @@
-mcd://maker@example.com/EDZW-33F5-EL2X-SWIB-LKM3-J5PP-FM
+mcd://maker@example.com/EA5X-HFHU-RL5B-SRQQ-AWST-OZNY-UE

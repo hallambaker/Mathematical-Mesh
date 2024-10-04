@@ -384,7 +384,10 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		}
 	public void _UDFDeriveCFRG(CreateExamples Example) {
 
-			_Output.Write ("\n{0}", _Indent);
+			 var keyX25519 = Example.UDFResults.Derive.X25519.DerrivedKeyPair as KeyPairX25519;
+			 var keyX448 = Example.UDFResults.Derive.X448.DerrivedKeyPair as KeyPairX448;
+			 var keyEd25519 = Example.UDFResults.Derive.Ed25519.DerrivedKeyPair as KeyPairEd25519;
+			 var keyEd448 = Example.UDFResults.Derive.Ed448.DerrivedKeyPair as KeyPairEd448;
 			_Output.Write ("An X25519 key may be derived as follows:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
@@ -393,13 +396,15 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("IKM ={1}\n{0}", _Indent, Example.UDFResults.Derive.X25519.IKM.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("salt ={1}\n{0}", _Indent, Example.UDFResults.Derive.X25519.Salt.ToStringBase16FormatHex());
+			_Output.Write ("Info ={1}\n{0}", _Indent, Example.UDFResults.Derive.X25519.Info.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("PRK ={1}\n{0}", _Indent, Example.UDFResults.Derive.X25519.PRK.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("OKM ={1}\n{0}", _Indent, Example.UDFResults.Derive.X25519.OKM.ToStringBase16FormatHex());
 			_Output.Write ("    \n{0}", _Indent);
-			_Output.Write ("Key ={1}\n{0}", _Indent, Example.UDFResults.Derive.X25519.Key.ToStringBase16FormatHex());
+			_Output.Write ("Key = {1}\n{0}", _Indent, keyX25519.PrivateKey.Secret);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Fingerprint = {1}\n{0}", _Indent, Example.UDFResults.Derive.X25519.DerrivedKeyPair.UDFValue);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Derivation of an X448 key:\n{0}", _Indent);
@@ -407,8 +412,12 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("Fingerprint =\n{0}", _Indent);
 			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.X448.UDF);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("OKM ={1}\n{0}", _Indent, Example.UDFResults.Derive.X448.OKM.ToStringBase16FormatHex());
 			_Output.Write ("    \n{0}", _Indent);
-			_Output.Write ("Key ={1}\n{0}", _Indent, Example.UDFResults.Derive.X448.Key.ToStringBase16FormatHex());
+			_Output.Write ("Key = {1}\n{0}", _Indent, keyX448.PrivateKey.Secret);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Fingerprint = {1}\n{0}", _Indent, Example.UDFResults.Derive.X448.DerrivedKeyPair.UDFValue);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Derivation of an Ed25519 key:\n{0}", _Indent);
@@ -417,7 +426,11 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("Fingerprint =\n{0}", _Indent);
 			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Ed25519.UDF);
 			_Output.Write ("    \n{0}", _Indent);
-			_Output.Write ("Key ={1}\n{0}", _Indent, Example.UDFResults.Derive.Ed25519.Key.ToStringBase16FormatHex());
+			_Output.Write ("OKM ={1}\n{0}", _Indent, Example.UDFResults.Derive.Ed25519.OKM.ToStringBase16FormatHex());
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Key = {1}\n{0}", _Indent, keyEd25519.PrivateKey.Secret);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Fingerprint = {1}\n{0}", _Indent, Example.UDFResults.Derive.Ed25519.DerrivedKeyPair.UDFValue);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Derivation of an Ed448 key:\n{0}", _Indent);
@@ -425,8 +438,12 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("Fingerprint =\n{0}", _Indent);
 			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Ed448.UDF);
-			_Output.Write ("    \n{0}", _Indent);
-			_Output.Write ("Key ={1}\n{0}", _Indent, Example.UDFResults.Derive.Ed448.Key.ToStringBase16FormatHex());
+			_Output.Write (" \n{0}", _Indent);
+			_Output.Write ("OKM ={1}\n{0}", _Indent, Example.UDFResults.Derive.Ed448.OKM.ToStringBase16FormatHex());
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Key = {1}\n{0}", _Indent, keyEd448.PrivateKey.Secret);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Fingerprint = {1}\n{0}", _Indent, Example.UDFResults.Derive.Ed448.DerrivedKeyPair.UDFValue);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 				}
@@ -451,7 +468,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("IKM ={1}\n{0}", _Indent, Example.UDFResults.Derive.P256.IKM.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("salt ={1}\n{0}", _Indent, Example.UDFResults.Derive.P256.Salt.ToStringBase16FormatHex());
+			_Output.Write ("Info ={1}\n{0}", _Indent, Example.UDFResults.Derive.P256.Info.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("PRK ={1}\n{0}", _Indent, Example.UDFResults.Derive.P256.PRK.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
@@ -501,21 +518,15 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("IKM ={1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.IKM.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("salt ={1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.Salt.ToStringBase16FormatHex());
+			_Output.Write ("Info ={1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.Info.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("[Generation of the PRK as before]\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Info(p) ={1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.Info_P.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("OKM(p) ={1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.OKM_P.ToStringBase16FormatHex());
+			_Output.Write ("// Rest TBS\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("Info(q) ={1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.Info_Q.ToStringBase16FormatHex());
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("OKM(q) = {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.OKM_Q.ToStringBase16FormatHex());
-			_Output.Write ("    \n{0}", _Indent);
-			 DescribeResult ("Key P", Example.UDFResults.Derive.RSA2048.P);
-			_Output.Write ("\n{0}", _Indent);
-			 DescribeResult ("Key Q", Example.UDFResults.Derive.RSA2048.Q);
+			_Output.Write ("Hints = {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.Hints);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 				}
@@ -538,18 +549,16 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("To generate an RSA-2048 key\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("salt ={1}\n{0}", _Indent, Example.UDFResults.Derive.Any_RSA2048.Salt.ToStringBase16FormatHex());
+			_Output.Write ("Info ={1}\n{0}", _Indent, Example.UDFResults.Derive.Any_RSA2048.Info.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
-			 DescribeResult ("Key P", Example.UDFResults.Derive.Any_RSA2048.P);
-			_Output.Write ("\n{0}", _Indent);
-			 DescribeResult ("Key Q", Example.UDFResults.Derive.Any_RSA2048.Q);    
+			_Output.Write ("// Rest TBS  \n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("To generate an X25519 key\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("salt ={1}\n{0}", _Indent, Example.UDFResults.Derive.Any_RSA2048.Salt.ToStringBase16FormatHex());
+			_Output.Write ("Info ={1}\n{0}", _Indent, Example.UDFResults.Derive.Any_RSA2048.Info.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Key = \n{0}", _Indent);
-			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Any_x25519.Key);
+			_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Any_x25519.Key.ToStringBase16FormatHex());
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 				}

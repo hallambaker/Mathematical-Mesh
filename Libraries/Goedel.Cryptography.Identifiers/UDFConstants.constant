@@ -65,12 +65,15 @@ File AlgorithmIdentifier
         Integer RSA2048		8	"2048 bit RSA keypair"
         Integer RSA3072		9	"3072 bit RSA keypair"
         Integer RSA4096		10	"4096 bit RSA keypair"
-		Integer MLKEM512	11  "ML-KEM 512 as described in FIPS 203"
-		Integer MLKEM768	12  "ML-KEM-768 as described in FIPS 203"
-		Integer MLKEM1024	13  "ML-KEM-1024 as described in FIPS 203"
-		Integer MLDSA44		14  "ML-DSA-44 as described in FIPS 204"
-		Integer MLDSA65		15  "ML-DSA-65 as described in FIPS 204"
-		Integer MLDSA87		16  "ML-DSA-87 as described in FIPS 204"
+        Integer RSA6144		11	"6144 bit RSA keypair"
+        Integer RSA8192		12	"8192 bit RSA keypair"
+        Integer RSA15360	13	"15360 bit RSA keypair"
+		Integer MLKEM512	14  "ML-KEM 512 as described in FIPS 203"
+		Integer MLKEM768	15  "ML-KEM-768 as described in FIPS 203"
+		Integer MLKEM1024	16  "ML-KEM-1024 as described in FIPS 203"
+		Integer MLDSA44		17  "ML-DSA-44 as described in FIPS 204"
+		Integer MLDSA65		18  "ML-DSA-65 as described in FIPS 204"
+		Integer MLDSA87		19  "ML-DSA-87 as described in FIPS 204"
         Integer ReservedIetf 17  "Reserved for IETF recommended algorithms"
 			Reserve 255
 
@@ -133,13 +136,19 @@ File ECDHValuesNIST
 File RSATags
 	Enum DerivedKeyRSATags "UDF type identifier codes"
 		Tag p "p"  
+		Tag p1 "p1"  
+		Tag p2 "p2"  
+		Tag pp "pp*"  
 		Tag q "q"
+		Tag q1 "q1"  
+		Tag q2 "q2"  
+		Tag qq "qq*" 
 
 File RSAValues
 	Parameters DerivedKeyRSAValuesL "RSA parameter values"
-		Integer RSA2048				1024	"RSA-2048"
-		Integer RSA3072				1536	"RSA-3072"
-		Integer RSA4096				2048	"RSA-4096"
+		Integer RSA2048				140		"RSA-2048"
+		Integer RSA3072				170		"RSA-3072"
+		Integer RSA4096				200		"RSA-4096"
 
 
 File IANAValues

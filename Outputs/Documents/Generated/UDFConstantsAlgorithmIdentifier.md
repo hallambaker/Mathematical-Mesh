@@ -11,12 +11,15 @@
 <tr><td>8</td><td>RSA2048</td><td>2048 bit RSA keypair</td></tr>
 <tr><td>9</td><td>RSA3072</td><td>3072 bit RSA keypair</td></tr>
 <tr><td>10</td><td>RSA4096</td><td>4096 bit RSA keypair</td></tr>
-<tr><td>11</td><td>MLKEM512</td><td>ML-KEM 512 as described in FIPS 203</td></tr>
-<tr><td>12</td><td>MLKEM768</td><td>ML-KEM-768 as described in FIPS 203</td></tr>
-<tr><td>13</td><td>MLKEM1024</td><td>ML-KEM-1024 as described in FIPS 203</td></tr>
-<tr><td>14</td><td>MLDSA44</td><td>ML-DSA-44 as described in FIPS 204</td></tr>
-<tr><td>15</td><td>MLDSA65</td><td>ML-DSA-65 as described in FIPS 204</td></tr>
-<tr><td>16</td><td>MLDSA87</td><td>ML-DSA-87 as described in FIPS 204</td></tr>
+<tr><td>11</td><td>RSA6144</td><td>6144 bit RSA keypair</td></tr>
+<tr><td>12</td><td>RSA8192</td><td>8192 bit RSA keypair</td></tr>
+<tr><td>13</td><td>RSA15360</td><td>15360 bit RSA keypair</td></tr>
+<tr><td>14</td><td>MLKEM512</td><td>ML-KEM 512 as described in FIPS 203</td></tr>
+<tr><td>15</td><td>MLKEM768</td><td>ML-KEM-768 as described in FIPS 203</td></tr>
+<tr><td>16</td><td>MLKEM1024</td><td>ML-KEM-1024 as described in FIPS 203</td></tr>
+<tr><td>17</td><td>MLDSA44</td><td>ML-DSA-44 as described in FIPS 204</td></tr>
+<tr><td>18</td><td>MLDSA65</td><td>ML-DSA-65 as described in FIPS 204</td></tr>
+<tr><td>19</td><td>MLDSA87</td><td>ML-DSA-87 as described in FIPS 204</td></tr>
 <tr><td>17-255</td><td>ReservedIetf</td><td>Reserved for IETF recommended algorithms</td></tr>
 <tr><td>256</td><td>MeshProfileDevice</td><td>Mesh device profile</td></tr>
 <tr><td>257</td><td>MeshActivationDevice</td><td>Mesh device activation</td></tr>

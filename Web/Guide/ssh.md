@@ -52,7 +52,7 @@ The `ssh create` command adds an SSH profile named `ssh` to a Mesh account:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman ssh create /web /threshold /id=ssh
-<rsp>UDF: MAYH-ANT7-SOJP-RKD5-7RBX-F4E6-LTN3
+<rsp>UDF: MCDB-WYWC-AJ7E-GYZ6-FPEK-Y4WV-AOSM
 </div>
 ~~~~
 
@@ -139,7 +139,7 @@ Client configurations may be deleted using the `ssh delete` command
 <rsp>[CatalogedApplicationSsh]
 
 <cmd>Alice> meshman ssh list
-<rsp>UDF: MAYH-ANT7-SOJP-RKD5-7RBX-F4E6-LTN3
+<rsp>UDF: MCDB-WYWC-AJ7E-GYZ6-FPEK-Y4WV-AOSM
 </div>
 ~~~~
 
