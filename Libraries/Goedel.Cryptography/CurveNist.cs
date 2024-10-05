@@ -256,6 +256,7 @@ public record CurveNistPrivate : IKeyAdvancedPrivate {
                 Math.Min(Curve.OrderN.ExactBitLength(), digest.Length * 8);
             var hashDigest = new BitString(digest);
             var e = hashDigest.MSBSubstring(0, bitsOfDigestNeeded).ToPositiveBigInteger();
+            //Console.WriteLine($"E {e}");
 
             // 3. Generate secret scalar k [1, n-1] using RFC 8032 deterministic mechanism
             HashSecretKey ??= SHA512.HashData(SecretKey.ToByteArrayBigEndian());
@@ -266,6 +267,7 @@ public record CurveNistPrivate : IKeyAdvancedPrivate {
 
             // 7. Represent x as an integer j
             var j = point.X;
+            //Console.WriteLine($"J {j}");
 
             // 8 Compute r = j mod n
             var r = j % Curve.OrderN;
@@ -275,6 +277,13 @@ public record CurveNistPrivate : IKeyAdvancedPrivate {
 
             //9. Compute s = 𝑘𝑘−1⋅ (e + r ⋅ d) mod n
             var s = (kInverse * (e + SecretKey * r)).PosMod(Curve.OrderN);
+
+
+
+            // test stuff
+            //var testp = Curve.Multiply(Curve.BasePointG, SecretKey);
+            //var check = testp.Equals(PublicKey);
+
 
             return (r, s);
             }
@@ -423,7 +432,7 @@ public record CurveNistPublic : IKeyAdvancedPublic {
     /// <exception cref="NotImplementedException"></exception>
     public static EccPoint Decode(byte[] encoding) {
         var length = encoding.Length / 2;
-        (length >= 128).AssertTrue(CryptographicException.Throw);
+        (length >= 16).AssertTrue(CryptographicException.Throw);
         var buf = new byte[length];
 
         using var stream = new MemoryStream(encoding);
@@ -455,11 +464,15 @@ public record CurveNistPublic : IKeyAdvancedPublic {
     public static byte[] Encode(EccPoint point) {
         using var stream = new MemoryStream();
         stream.WriteByte(0x04); //
-        var x = point.X.ToByteArrayLittleEndian(point.Curve.ByteEncoding);
+        var x = point.X.ToByteArrayBigEndian(point.Curve.ByteEncoding);
         stream.Write(x); // X coordinate of the point
-        var y = point.X.ToByteArrayLittleEndian(point.Curve.ByteEncoding);
+        var y = point.Y.ToByteArrayBigEndian(point.Curve.ByteEncoding);
         stream.Write(y); // Y coordinate of the point.
-        return stream.ToArray();
+
+        var result = stream.ToArray();
+        //var check = Decode(result);
+        //check.Equals(point).AssertTrue(NYI.Throw);
+        return result;
         }
 
     ///<inheritdoc/>
@@ -513,7 +526,7 @@ public record CurveNistPublic : IKeyAdvancedPublic {
 
         // 3. Derive the integer e from H 
         var e = hashDigest.MSBSubstring(0, bitsOfDigestNeeded).ToPositiveBigInteger();
-
+        //Console.WriteLine($"!E {e}");
 
         // 4. Compute u1 = e * s^-1 (mod n)
         var sInverse = s.ModularInverse(Curve.OrderN);
@@ -532,6 +545,7 @@ public record CurveNistPublic : IKeyAdvancedPublic {
 
         // 8. Compute v = j (mod n)
         var v = j % Curve.OrderN;
+        //Console.WriteLine($"!J {j}");
 
         // 9. If v == r, return valid, otherwise invalid
         return (v == r);

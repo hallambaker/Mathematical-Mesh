@@ -241,7 +241,7 @@ subjectPublicKeyInfo SubjectPublicKeyInfo SEQUENCE (2 elem)
 
         var curve = GetCurve(algorithmID) ;
         var binaryData = KeySeed(curve.MinimumOutputSize, ikm, keySpecifier, keyName);
-        var d = 1 + binaryData.ToBigInteger() % (curve.OrderN - 1);
+        var d = 1 + binaryData.BigIntegerBigEndian() % (curve.OrderN - 1);
 
         var exportable = keySecurity.IsExportable();
         var secretKey = new CurveNistPrivate(curve, d, exportable);
@@ -347,6 +347,9 @@ subjectPublicKeyInfo SubjectPublicKeyInfo SEQUENCE (2 elem)
         //Console.WriteLine($"S {s}");
 
         var bytes = SecretKey.EncodeSignature(r, s);
+
+        //var test = PublicKey.VerifyInner(r, s, digest);
+
         return bytes;
 
         }
@@ -358,8 +361,8 @@ subjectPublicKeyInfo SubjectPublicKeyInfo SEQUENCE (2 elem)
                 CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, 
                 byte[] context = null) {
         var (r, s) = PublicKey.DecodeSignature(signature);
-        //Console.WriteLine($"R {r}");
-        //Console.WriteLine($"S {s}");
+        //Console.WriteLine($"!R {r}");
+        //Console.WriteLine($"!S {s}");
 
         var result = PublicKey.VerifyInner(r, s, digest);
         return result;

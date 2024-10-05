@@ -60,10 +60,14 @@ partial class Program {
         Trace.Listeners.Add(new GoedelTraceListener());
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
+        MakeUdf.GenerateTests();
+
+        //TestUdf.Test().TestUdfKeygenECC();
+        //TestUdf.Test().TestUdfKeygenML();
+        //TestUdf.Test().TestUdfKeygenRSA();
+        TestUdf.Test().TestUdfKeygenECCP();
 
 
-
-        //ShellTests.Test().TestMessageGroup();
         //RegistrationTests.Test().CallsignBind();
         TestPresence.Test().PresenceHeartbeat();
         TestPresence.Test().PresenceSessionRequest();

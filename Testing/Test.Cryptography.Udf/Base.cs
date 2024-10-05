@@ -126,10 +126,9 @@ public class MakeUdf {
     /// </summary>
     public static void GenerateTests() {
         //GenerateTests(TestUdf.UdfDirectoryRSA, TestUdf.AlgIdsRSA);
-        GenerateTests(TestUdf.UdfDirectoryML, TestUdf.AlgIdsML);
-        GenerateTests(TestUdf.UdfDirectoryECC, TestUdf.AlgIdsECC);
-
-        //GenerateTests(TestUdf.UdfDirectoryECCP, TestUdf.AlgIdsECCP);
+        //GenerateTests(TestUdf.UdfDirectoryML, TestUdf.AlgIdsML);
+        //GenerateTests(TestUdf.UdfDirectoryECC, TestUdf.AlgIdsECC);
+        GenerateTests(TestUdf.UdfDirectoryECCP, TestUdf.AlgIdsECCP);
         }
 
     private static void GenerateTests(string directory, 
