@@ -27,6 +27,9 @@ namespace Goedel.Utilities;
 /// </summary>
 public abstract class Disposable : IDisposable {
 
+    ///<summary>If true, the object has been disposed.</summary> 
+    public bool IsDisposed => disposed;
+
     /// <summary>
     /// Dispose method, frees all resources.
     /// </summary>

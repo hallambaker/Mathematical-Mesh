@@ -28,9 +28,9 @@ using the `message contact` command:
 ~~~~
 <div="terminal">
 <cmd>Bob> meshman contact request alice@example.com
-<rsp>Envelope ID: MAQZ-5I5U-RM2L-A6L5-HDQL-GPP5-LYKY
-Message ID: NCXX-LH2E-SJMD-H2LI-J7KB-DJV2-45UR
-Response ID: MBIU-SC6Z-NNEF-4463-L2WK-UUQ6-5ELH
+<rsp>Envelope ID: MBXA-LC4Y-JPOL-566F-XHFH-UKHT-CPYS
+Message ID: NBQT-BJ65-V3KT-VIW7-3CPD-PLUW-VTE7
+Response ID: MCKR-A3VX-WNTE-BPWX-7KJN-U5XF-B356
 </div>
 ~~~~
 
@@ -41,27 +41,27 @@ Alice reviews her pending messages using the `message pending` command:
 <div="terminal">
 <cmd>Alice> meshman account sync
 <cmd>Alice> meshman message pending
-<rsp>MessageID: NAF3-GGMH-PTI3-NHTN-F5SU-XMHC-UCU5
+<rsp>MessageID: NCJ2-ZO44-ATSC-DUIY-PYQF-HNUN-2HJC
         Contact Request::
-        MessageID: NAF3-GGMH-PTI3-NHTN-F5SU-XMHC-UCU5
+        MessageID: NCJ2-ZO44-ATSC-DUIY-PYQF-HNUN-2HJC
         To: alice@example.com From: mallet@example.com
-        PIN: ABUK-CGY3-NTGJ-QMIM-LPTM-RDCE-CVMA
-MessageID: NCXX-LH2E-SJMD-H2LI-J7KB-DJV2-45UR
+        PIN: ACNM-L4LA-JHOZ-HRMM-XANW-BKWF-26DA
+MessageID: NBQT-BJ65-V3KT-VIW7-3CPD-PLUW-VTE7
         Contact Request::
-        MessageID: NCXX-LH2E-SJMD-H2LI-J7KB-DJV2-45UR
+        MessageID: NBQT-BJ65-V3KT-VIW7-3CPD-PLUW-VTE7
         To: alice@example.com From: bob@example.com
-        PIN: ADUJ-IRU6-RAPP-K6KB-EJ3U-DRDB-KWKA
-MessageID: NADD-B6K4-SDGI-BSJX-SKLV-R2X5-IPYH
-<cmd>Alice> meshman message accept NCXX-LH2E-SJMD-H2LI-J7KB-DJV2-45UR
+        PIN: ACGU-5FLZ-EUCZ-EBAY-LA4U-VT2K-KJQA
+MessageID: ND2F-I3BZ-645E-OSBR-Z5NI-MIUG-4IRN
+<cmd>Alice> meshman message accept NBQT-BJ65-V3KT-VIW7-3CPD-PLUW-VTE7
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MBQK-54VC-H3HR-TYBH-ZIE6-VVIY-ZNPA
-  Person MBQK-54VC-H3HR-TYBH-ZIE6-VVIY-ZNPA
-  Anchor MBQK-54VC-H3HR-TYBH-ZIE6-VVIY-ZNPA
+<rsp>Entry<CatalogedContact>: MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ
+  Person MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ
+  Anchor MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ
   Address alice@example.com
 
-Entry<CatalogedContact>: NB4A-ZXEH-I6SL-XNQ6-MN5E-C5MB-JNJ6
+Entry<CatalogedContact>: NBYF-NJLS-POE7-YZJT-CWOW-T4DV-MJPQ
   Person 
-  Anchor MBQN-CAEX-IDBY-ZSEK-HCAC-OBZB-JLSA
+  Anchor MBQL-4JMF-6I3J-ZEZ4-YFNC-H32E-RDP5
   Address bob@example.com
 
 </div>
@@ -72,7 +72,7 @@ Alice sees the request from Bob and accepts it with the `message accept` command
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman message accept NCXX-LH2E-SJMD-H2LI-J7KB-DJV2-45UR
+<cmd>Alice> meshman message accept NBQT-BJ65-V3KT-VIW7-3CPD-PLUW-VTE7
 </div>
 ~~~~
 
@@ -82,14 +82,14 @@ Bob's contact information has been added to Alice's address book:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MBQK-54VC-H3HR-TYBH-ZIE6-VVIY-ZNPA
-  Person MBQK-54VC-H3HR-TYBH-ZIE6-VVIY-ZNPA
-  Anchor MBQK-54VC-H3HR-TYBH-ZIE6-VVIY-ZNPA
+<rsp>Entry<CatalogedContact>: MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ
+  Person MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ
+  Anchor MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ
   Address alice@example.com
 
-Entry<CatalogedContact>: NB4A-ZXEH-I6SL-XNQ6-MN5E-C5MB-JNJ6
+Entry<CatalogedContact>: NBYF-NJLS-POE7-YZJT-CWOW-T4DV-MJPQ
   Person 
-  Anchor MBQN-CAEX-IDBY-ZSEK-HCAC-OBZB-JLSA
+  Anchor MBQL-4JMF-6I3J-ZEZ4-YFNC-H32E-RDP5
   Address bob@example.com
 
 </div>
@@ -112,7 +112,7 @@ using the `message reject` command:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman message reject NAF3-GGMH-PTI3-NHTN-F5SU-XMHC-UCU5
+<cmd>Alice> meshman message reject NCJ2-ZO44-ATSC-DUIY-PYQF-HNUN-2HJC
 </div>
 ~~~~
 
@@ -159,9 +159,9 @@ a confirmation request `Purchase equipment for $6,000?` using the
 <div="terminal">
 <cmd>Bob> meshman message confirm alice@example.com "Purchase equipment for ^
     $6,000?"
-<rsp>Envelope ID: MDTV-BRGV-DILE-POGZ-JZPE-X3OL-SKUW
-Message ID: NA26-KNMO-Y5GI-HLZL-SROC-OZMC-TEDT
-Response ID: MDFN-2P5U-GTV7-TG7T-JO4S-CSTN-RYOO
+<rsp>Envelope ID: MBCK-5GUT-7VCN-PVZI-5AJ2-NCC2-BXYT
+Message ID: NCWS-U7X5-KH5X-GJGQ-YMRS-JDDX-VUGY
+Response ID: MBJE-NBQ6-IOXH-HHCF-JHTQ-RFCX-GL2P
 </div>
 ~~~~
 
@@ -171,31 +171,31 @@ Alice reviews her pending messages using the using the `message pending` command
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman message pending
-<rsp>MessageID: NAUT-J3JS-GKV6-YH3V-7WIU-46W4-Y6ZM
+<rsp>MessageID: NCKP-YT3W-P6UO-RMXC-AADI-UMZU-MXHM
         Confirmation Request::
-        MessageID: NAUT-J3JS-GKV6-YH3V-7WIU-46W4-Y6ZM
+        MessageID: NCKP-YT3W-P6UO-RMXC-AADI-UMZU-MXHM
         To: alice@example.com From: mallet@example.com
         Text: "Purchase
-MessageID: NA26-KNMO-Y5GI-HLZL-SROC-OZMC-TEDT
+MessageID: NCWS-U7X5-KH5X-GJGQ-YMRS-JDDX-VUGY
         Confirmation Request::
-        MessageID: NA26-KNMO-Y5GI-HLZL-SROC-OZMC-TEDT
+        MessageID: NCWS-U7X5-KH5X-GJGQ-YMRS-JDDX-VUGY
         To: alice@example.com From: bob@example.com
         Text: "Purchase
-MessageID: NAHP-52ZQ-2W3U-GZ36-FUXX-UCFU-4GY5
+MessageID: NCNQ-GNZL-T5OB-LMG3-QRLO-ZJJS-HLUN
         Contact Request::
-        MessageID: NAHP-52ZQ-2W3U-GZ36-FUXX-UCFU-4GY5
+        MessageID: NCNQ-GNZL-T5OB-LMG3-QRLO-ZJJS-HLUN
         To: alice@example.com From: carol@example.com
         PIN: 
-MessageID: NDR2-72HA-DLC7-JBPZ-3UGL-BGJ5-FFYC
-MessageID: NAPX-XU4B-T4ET-JQOC-TTUN-EXCZ-2BSR
-MessageID: NDPC-BWU4-ULAU-DUSZ-PDP5-7QOH-H53L
+MessageID: NCJE-CLT3-KBMJ-PTYB-YIKW-Y776-MFA6
+MessageID: NDW4-S5EU-3BER-BTL2-EA2D-C4LL-TKLA
+MessageID: NBUX-DOPM-JJKG-NKMV-K24G-MX24-4QNW
         Confirmation Request::
-        MessageID: NDPC-BWU4-ULAU-DUSZ-PDP5-7QOH-H53L
+        MessageID: NBUX-DOPM-JJKG-NKMV-K24G-MX24-4QNW
         To: alice@example.com From: console@example.com
         Text: start
-MessageID: NANH-ZJY3-4XRC-G3WA-WMFB-DFU6-HW3X
-MessageID: NA5L-OBCK-V3V3-VRBZ-4ISE-GB3B-VR64
-MessageID: NADD-B6K4-SDGI-BSJX-SKLV-R2X5-IPYH
+MessageID: NA2W-XWGB-F4LB-MUSW-MC4I-YK2G-GAJT
+MessageID: NBTZ-WSA2-2OFC-QMTP-LA2D-FMRE-P4N5
+MessageID: ND2F-I3BZ-645E-OSBR-Z5NI-MIUG-4IRN
 </div>
 ~~~~
 
@@ -204,7 +204,7 @@ Alice she accepts Bob's request using the `message pending` command:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman message accept NA26-KNMO-Y5GI-HLZL-SROC-OZMC-TEDT
+<cmd>Alice> meshman message accept NCWS-U7X5-KH5X-GJGQ-YMRS-JDDX-VUGY
 </div>
 ~~~~
 
@@ -213,7 +213,7 @@ Bob receives Alice's approval using the `message status` command:
 
 ~~~~
 <div="terminal">
-<cmd>Bob> meshman message status MDFN-2P5U-GTV7-TG7T-JO4S-CSTN-RYOO
+<cmd>Bob> meshman message status MBJE-NBQ6-IOXH-HHCF-JHTQ-RFCX-GL2P
 <rsp>Accept
 </div>
 ~~~~
@@ -226,7 +226,7 @@ Alice can also reject requests using the `message reject` command:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman message reject NAUT-J3JS-GKV6-YH3V-7WIU-46W4-Y6ZM
+<cmd>Alice> meshman message reject NCKP-YT3W-P6UO-RMXC-AADI-UMZU-MXHM
 </div>
 ~~~~
 
@@ -235,7 +235,7 @@ Bob receives a reply telling him the request was rejected:
 
 ~~~~
 <div="terminal">
-<cmd>Mallet> meshman message status MCVQ-MMZP-LSCH-CL7M-VT6S-N3D3-OMY6
+<cmd>Mallet> meshman message status MDLA-DA6B-I5UE-T27P-NJK5-JR3B-G35Z
 <rsp>Reject
 </div>
 ~~~~

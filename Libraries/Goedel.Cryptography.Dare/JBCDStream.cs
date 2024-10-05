@@ -122,6 +122,12 @@ public partial class JbcdStream : Disposable {
     /// Dispose method, frees all resources.
     /// </summary>
     protected override void Disposing() {
+        if (Path.GetFileName(Filename) == "Access.dcat") {
+            var sub = Filename.Split('\\');
+            if (sub[sub.Length - 3] != "Sparkly") {
+                }
+            }
+
         //Screen.WriteLine($"close {Filename} read {disposeStreamRead != null} write {disposeStreamWrite != null}");
         disposeStreamWrite?.Dispose();
         disposeStreamRead?.Dispose();

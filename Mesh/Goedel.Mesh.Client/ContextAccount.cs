@@ -959,19 +959,12 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
 
         if (DictionaryStores.TryGetValue(name, out var syncStore)) {
-            if (name == SpoolInbound.Label) {
-                //Screen.WriteLine($"Exists type is {syncStore.Store.GetType()}");
-                }
-
-
-            if (!blind & (syncStore.Store is CatalogBlind)) {
-                if (name == SpoolInbound.Label) {
-                    //Screen.WriteLine($"Was blind, remake");
-                    }
-
+            if (!blind & ((syncStore.Store is CatalogBlind) | syncStore.Store.IsDisposed)) {
                 // if we have a blind store from a sync operation but need a populated one,
                 // remake it.
-                syncStore.Store.Dispose();
+                if (!syncStore.Store.IsDisposed) {
+                    syncStore.Store.Dispose();
+                    }
                 syncStore.Store = MakeStore(name, decrypt: decrypt);
                 }
 
@@ -1135,14 +1128,14 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             };
         ;
 
-        Screen.WriteLine($"Fails here, returning wrong key agreement encoding!");
+        //Screen.WriteLine($"Fails here, returning wrong key agreement encoding!");
         var response = await MeshClient.OperateAsync(operateRequest);
         response.AssertSuccess(CryptographicOperationRefused.Throw);
 
         var result = response.Results[0] as CryptographicResultKeyAgreement;
 
 
-        Screen.WriteLine($"");
+        //Screen.WriteLine($"");
         return result.KeyAgreement.KeyAgreementResult;
 
 

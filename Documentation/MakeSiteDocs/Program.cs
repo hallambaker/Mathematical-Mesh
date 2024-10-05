@@ -206,7 +206,7 @@ public partial class CreateExamples {
 
         //PlatformUDF();
 
-        PlatformCrypto();
+        //PlatformCrypto();
         //Directory.SetCurrentDirectory(outputPath);
         //Directory.SetCurrentDirectory(outputPath);
         Directory.CreateDirectory(TestDir1);
@@ -236,7 +236,7 @@ public partial class CreateExamples {
 
 
         LayerAccount();
-
+        CheckAccess();
 
 
         //LayerService();
@@ -284,6 +284,26 @@ public partial class CreateExamples {
 
         MakeDocs();
         }
+
+    void CheckAccess() {
+
+        if (Alice1?.ContextUser == null) {
+            return;
+            }
+
+        if (!Alice1.ContextUser.DictionaryStores.TryGetValue("Access", out var access)){
+            return;
+            }
+
+        if (!access.Store.IsDisposed) {
+            return;
+            }
+        else {
+            }
+
+        }
+
+
 
     public bool All = true;
 

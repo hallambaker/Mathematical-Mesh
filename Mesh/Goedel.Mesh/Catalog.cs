@@ -23,6 +23,7 @@
 
 
 using System.Collections.Specialized;
+using System.ComponentModel;
 
 namespace Goedel.Mesh;
 
@@ -394,7 +395,10 @@ public abstract class Catalog<T> : Store, IEnumerable<T>, INotifyCollectionChang
     /// </summary>
     public override SequenceIndexEntry AppendDirect(DareEnvelope envelope, bool updateEnvelope = false) {
 
-        return Sequence.Append(envelope, updateEnvelope);
+        // Appending the entry to the sequence should automatically trigger the Intern dispatch.
+        var index = Sequence.Append(envelope, updateEnvelope);
+
+        return index;
 
         //// This is not viable because the envelope that is applied has to be the container
         //// envelope;

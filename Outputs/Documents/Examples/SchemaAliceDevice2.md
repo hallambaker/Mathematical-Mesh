@@ -5,28 +5,28 @@ For example, the device profile corresponding to one of the devices belonging to
 {
   "ProfileDevice":{
     "Encryption":{
-      "Udf":"MAXU-PRRI-4UUI-JYUA-BOA6-YTF3-ZU66",
+      "Udf":"MDXH-OU3E-BSXS-RV5M-RRW5-TL22-F5LV",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"d33irTjsl53f2fvnrHVwm1F7dwECGzynXtEek8zNkuWIR
-  81bgQTjTJrkWvSIuWw6BobEd5miLPWA"}}},
+          "Public":"1IvoYJuO1h2tkr9as_02RI_XLuLk9ivYP6ohgfkkg7fof
+  3_5HLfQInZvuikU8zUFxHQPpOXPLQcA"}}},
     "Signature":{
-      "Udf":"MDCJ-2FTP-PBLN-BPGQ-7DV3-L32H-V732",
+      "Udf":"MAO4-ST3F-DYFM-SBPU-SJXR-SQK4-4SD4",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"PO6isI6gpe0b9bJ4ZBpog33NySIxPcNTyu3UcSo6eWuza
-  eYeZk3dsaFL-wXOcUd6bway9ewPzbsA"}}},
+          "Public":"pUKmk2m5VrDxsu1jhsFxAmUmcn_cI2E4jODTEW18YfEz6
+  iSdQYXk_d7g6TcIZluQF2ReusptKu0A"}}},
     "Authentication":{
-      "Udf":"MDWG-3KU4-YWVF-Y2OQ-2BZ3-J3SN-VQIU",
+      "Udf":"MDLF-R6QH-UDWS-2HDN-EX4Q-6KBA-F55U",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"XzxlzOp6IJDzn2v3MSi91pcMRi1rTRgtmRn2ZK6Yns9pe
-  4WDN9f9H_NBn1gBtF-HnS0-wp1NaOGA"}}},
-    "RootUdfs":["YFYofoqlC-YtsxioyzV6zK0pMBhM77xoVTkaotp9LprZRN1Ah
-  sSZblAzclWLH9Qx4HCW8zkWkmJ9IzQMjr76D4M"
+          "Public":"0NH_A8BX3DWpkzbmZ2XmSdB8dfVvu5Fk00P4KPqWefWYz
+  lPQYUL_DEm193hMxjc8OI1K3xlq0s-A"}}},
+    "RootUdfs":["YNxmjwUZU8Hz4G4vFN46KP5aW7vHxbCrCv8FKH3FaqRpHkJlT
+  kvJwAW7jvJ-8kntPsM24wxx5b9iVUn87cRi_-8"
       ]}}
 ~~~~
 

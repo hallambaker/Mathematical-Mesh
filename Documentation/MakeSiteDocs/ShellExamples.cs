@@ -29,13 +29,18 @@ public partial class CreateExamples {
 
         //ShellAccount = new ShellAccount(this);
 
-
+        CheckAccess();
 
         ShellNetwork = new ShellNetwork(this);
-
+        CheckAccess();
 
         ShellBookmark = new ShellBookmark(this);
+        CheckAccess();
+
+
         ShellPassword = new ShellPassword(this);
+
+        CheckAccess();
 
         ShellCalendar = new ShellCalendar(this);
 
@@ -46,6 +51,8 @@ public partial class CreateExamples {
         ShellMessage = new ShellMessage(this);
         ShellSSH = new ShellSSH(this);
         ShellMail = new ShellMail(this);
+        
+        CheckAccess();
 
         // Do this last
         DelayedAuth();

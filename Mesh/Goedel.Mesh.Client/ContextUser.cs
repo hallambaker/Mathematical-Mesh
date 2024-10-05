@@ -1063,9 +1063,6 @@ public partial class ContextUser : ContextAccount {
 
             }
 
-
-
-
         transact.CatalogDelete(catalogDevice, deviceEntry);
         await transact.TransactAsync();
         }

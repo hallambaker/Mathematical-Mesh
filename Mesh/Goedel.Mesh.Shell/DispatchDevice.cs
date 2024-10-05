@@ -210,8 +210,9 @@ public partial class Shell {
     public override ShellResult DeviceDelete(DeviceDelete options) {
         var contextAccount = GetContextUser(options);
         var deviceID = options.DeviceID.Value;
+        contextAccount.DeleteDeviceAsync(deviceID).Wait();
         try {
-            contextAccount.DeleteDeviceAsync(deviceID).Wait();
+
             }
         catch {
             }

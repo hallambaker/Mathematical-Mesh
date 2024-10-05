@@ -280,9 +280,18 @@ public abstract class Transaction<TAccount> : Disposable
 
 
     ///<summary>Returns the capability catalog for the account</summary>
-    public CatalogAccess GetCatalogAccess() =>
-        ContextAccount.GetStore(CatalogAccess.Label, decrypt: true) as CatalogAccess;
+    public CatalogAccess GetCatalogAccess() {
+        var store = ContextAccount.GetStore(CatalogAccess.Label, decrypt: true) as CatalogAccess;
 
+        if (store.Sequence.StreamDisposed) {
+            Screen.WriteLine($"Here check to see if the file is open and if so, reopen and resync.");
+            }
+        if (store.Sequence.StreamIsDisposed) {
+            Screen.WriteLine($"Disposal by external party.");
+            }
+
+        return store;
+        }
 
     /////<summary>Returns the capability catalog for the account</summary>
     //public CatalogApplication GetCatalogApplication() =>

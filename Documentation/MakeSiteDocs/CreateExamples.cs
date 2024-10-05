@@ -118,13 +118,24 @@ public partial class CreateExamples {
         // ignore unit test errors.
         Goedel.Test.AssertTest.FlagFailure = false;
 
+        CheckAccess();
 
         ServiceConnect();
+
+        CheckAccess();
+
         CreateAliceAccount();
+
+        CheckAccess();
+
+
         EncodeDecodeFile(index);
+
+        CheckAccess();
 
         ConnectDeviceCompare(index);
 
+        CheckAccess();
 
         PasswordCatalog();
         BookmarkCatalog();
@@ -134,7 +145,7 @@ public partial class CreateExamples {
         NetworkCatalog();
         TaskCatalog();
 
-
+        CheckAccess();
 
 
         SSHApp();
@@ -149,6 +160,8 @@ public partial class CreateExamples {
         ConnectPINDynamicQR();
         ConnectStaticQR();
         //LayerAccount(); // Auth device unfinished
+
+        CheckAccess();
 
         ContactExchangeDynamic();
         ContactExchangeUri();

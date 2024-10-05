@@ -1057,6 +1057,9 @@
             Base class for an object that implements the standard IDisposable pattern.
             </summary>
         </member>
+        <member name="P:Goedel.Utilities.Disposable.IsDisposed">
+            <summary>If true, the object has been disposed.</summary> 
+        </member>
         <member name="M:Goedel.Utilities.Disposable.Dispose">
             <summary>
             Dispose method, frees all resources.

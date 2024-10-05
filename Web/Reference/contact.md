@@ -104,7 +104,7 @@ by means of a dynamic URI.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman contact exchange mcd://carol@example.com/EGIA-G2GH-CVMU-J4IJ-NYBR-R3R6-Z2UZ-I3S2-2ZH6-4WGZ-IFZA-CPFZ-KN3B-6
+<cmd>Alice> meshman contact exchange mcd://carol@example.com/EFDA-U3HI-TROI-33TA-XANX-UTPA-2FIP-7SHR-VT5Z-XB2B-HF4L-ADIZ-BCD3-4
 <rsp></div>
 ~~~~
 
@@ -135,7 +135,7 @@ presented as a URI or QR code without reciprocating the exchange.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman contact fetch mcd://doug@example.com/EHVF-ZB46-LPZM-UJI3-SFEG-6JRU-6G5A-4A74-Q3XR-G4SP-6WBR-HWU2-KP6D-4
+<cmd>Alice> meshman contact fetch mcd://doug@example.com/EFJY-NCRJ-UOZP-YEAK-UAMO-RUAD-DTYG-KRQ2-5JXN-RJFV-IKZN-GWWH-GKLN-2
 <rsp>[CatalogedContact]
 
 </div>
@@ -226,29 +226,29 @@ The 'contact list' command lists all data in the contact catalog.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MBQK-54VC-H3HR-TYBH-ZIE6-VVIY-ZNPA
-  Person MBQK-54VC-H3HR-TYBH-ZIE6-VVIY-ZNPA
-  Anchor MBQK-54VC-H3HR-TYBH-ZIE6-VVIY-ZNPA
+<rsp>Entry<CatalogedContact>: MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ
+  Person MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ
+  Anchor MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ
   Address alice@example.com
 
-Entry<CatalogedContact>: NB4A-ZXEH-I6SL-XNQ6-MN5E-C5MB-JNJ6
+Entry<CatalogedContact>: NBYF-NJLS-POE7-YZJT-CWOW-T4DV-MJPQ
   Person 
-  Anchor MBQN-CAEX-IDBY-ZSEK-HCAC-OBZB-JLSA
+  Anchor MBQL-4JMF-6I3J-ZEZ4-YFNC-H32E-RDP5
   Address bob@example.com
 
-Entry<CatalogedContact>: NDQ3-6YOW-GH6N-LKZL-KJ3Y-GGCD-MVYY
+Entry<CatalogedContact>: NAD5-OSJK-5WXL-ONCN-JNSC-RIDA-KVHN
   Person 
-  Anchor MBQC-ZDVS-Z5JZ-5NYH-RXP4-LVDD-2VCK
+  Anchor MBQI-GRBW-QGJ4-WPKJ-J224-X7IY-HA7S
   Address groupw@example.com
 
-Entry<CatalogedContact>: NCV2-LJCN-H2F6-2Z7H-5B7N-SOMU-3KMJ
+Entry<CatalogedContact>: NCAY-W6SV-SE4A-MEIA-WCPJ-KAHT-EO4H
   Person 
-  Anchor MBQC-ZDVS-Z5JZ-5NYH-RXP4-LVDD-2VCK
+  Anchor MBQI-GRBW-QGJ4-WPKJ-J224-X7IY-HA7S
   Address groupw@example.com
 
-Entry<CatalogedContact>: NBPB-2IL6-NZCH-A5OQ-XA7U-R5DH-66TR
+Entry<CatalogedContact>: NA63-UAMB-OVOS-Z6QG-KLDD-TXTB-LMIU
   Person 
-  Anchor MBQE-XCPU-Q4TJ-NCCJ-A5CW-CJOX-RX6H
+  Anchor MBQD-CVDL-6P74-KAYN-EFYO-UNPA-R6IR
   Address carol@example.com
 
 </div>

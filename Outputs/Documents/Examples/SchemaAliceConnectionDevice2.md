@@ -11,27 +11,27 @@ the account and the list of roles that have been authorized for the device..
       "web"
       ],
     "Signature":{
-      "Udf":"MCS2-2VTH-7FGF-2ETJ-PJQZ-PKPO-3NZC",
+      "Udf":"MAK7-H4MW-KDKC-ODMO-CNMJ-OWFX-423M",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"ZugWLydgBgLa087iFRwA19w9iC3VCxym8L6AceP-FFqii
-  zFUkyONCeryM-erdSZy-W7GPtQFDkuA"}}},
+          "Public":"Q-6Mu5NbAA8PvxTgY1svGVi3wxOXqizSwfWYYuN1wKzFZ
+  B8960KltXRrWxZtboB_Ln4vUbUACdkA"}}},
     "Encryption":{
-      "Udf":"MCUM-EI7S-VLIJ-ALQO-SPSK-VM5P-R6MA",
+      "Udf":"MBJP-LVFC-3QCA-MYXF-JNDH-XRYD-AHOL",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"vzBo5i9gRd3Vj3b-JCsCTUjjwUKe8knUii680EnNpkuB8
-  ODc_lVzA6qJPo5JA--SoMXbVAtY-8oA"}}},
-    "ProfileUdf":"MBQK-54VC-H3HR-TYBH-ZIE6-VVIY-ZNPA",
+          "Public":"sy_EODIlXmJeKPc07Ev5fxsErLXQQ-ZOqHufiBs7LBD-z
+  sBE34b0ot6rYIB4kuVDcDW9C149p6IA"}}},
+    "ProfileUdf":"MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ",
     "Authentication":{
-      "Udf":"MBO5-BV4J-OXHA-RA27-3CAW-4WNR-XOYW",
+      "Udf":"MBHZ-TYG5-5ZX2-DR7Y-TVOI-5WO6-K3VP",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"p2oXCigHVLc_CJDsyeBcRWSmF6DirEXrApIjEaJXJ58Gs
-  1DfGTD2nMLDsSlxPzlZOhxAuq4v1AsA"}}}}}
+          "Public":"_w6N1f3j0mpTBYtQQF3wnY3d3jsVYISOd5SR8lgfAAfMt
+  5jVXBY6oadNfeJVK1exmi1Z_q9e8cCA"}}}}}
 ~~~~
 
 The ConnectionService assertion is used to authenticate the device to the 
@@ -44,13 +44,13 @@ The corresponding ConnectionService assertion is:
 ~~~~
 {
   "ConnectionService":{
-    "ProfileUdf":"MBQK-54VC-H3HR-TYBH-ZIE6-VVIY-ZNPA",
+    "ProfileUdf":"MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ",
     "Authentication":{
-      "Udf":"MBO5-BV4J-OXHA-RA27-3CAW-4WNR-XOYW",
+      "Udf":"MBHZ-TYG5-5ZX2-DR7Y-TVOI-5WO6-K3VP",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"p2oXCigHVLc_CJDsyeBcRWSmF6DirEXrApIjEaJXJ58Gs
-  1DfGTD2nMLDsSlxPzlZOhxAuq4v1AsA"}}}}}
+          "Public":"_w6N1f3j0mpTBYtQQF3wnY3d3jsVYISOd5SR8lgfAAfMt
+  5jVXBY6oadNfeJVK1exmi1Z_q9e8cCA"}}}}}
 ~~~~
 

@@ -97,7 +97,8 @@ public class TestUdf : Disposable {
 
         }
 
-    [Fact(Skip = "Takes a very long time.")]
+    [Fact]
+    //[Fact(Skip = "Takes a very long time.")]
     public void TestUdfKeygenRSA() {
 
         var testBinding = new AcvpTestBinding<UdfKeyGenTest>(UdfDirectoryRSA);
@@ -106,7 +107,7 @@ public class TestUdf : Disposable {
             }
 
         }
-    [Fact(Skip = "Not yet implemented.")]
+    [Fact]
     public void TestUdfKeygenECCP() {
 
         var testBinding = new AcvpTestBinding<UdfKeyGenTest>(UdfDirectoryECCP);

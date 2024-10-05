@@ -111,6 +111,11 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     ///<summary>The length.</summary> 
     public long Length => JbcdStream.Length;
 
+    ///<summary>If true, the underlying JCBDStream has been disposed.</summary> 
+    public bool StreamDisposed { get; protected set; } = false;
+
+    ///<summary>If true, the underlying stream has been disposed.</summary> 
+    public bool StreamIsDisposed => JbcdStream.IsDisposed;
     /// <summary>
     /// The underlying stream reader/writer for the Sequence. This will be disposed of when
     /// the Sequence is released.
@@ -225,8 +230,12 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// <summary>
     /// The class specific disposal routine.
     /// </summary>
-    protected override void Disposing() =>
-        DisposeJBCDStream?.Dispose();
+    protected override void Disposing() {
+        if (DisposeJBCDStream is not null) {
+            DisposeJBCDStream.Dispose();
+            StreamDisposed = true;
+            }
+        }
     #endregion
     #region // IEnumerable and filtering enumerations
 

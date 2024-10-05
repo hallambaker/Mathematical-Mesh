@@ -5230,6 +5230,12 @@
         <member name="P:Goedel.Cryptography.Dare.Sequence.Length">
             <summary>The length.</summary> 
         </member>
+        <member name="P:Goedel.Cryptography.Dare.Sequence.StreamDisposed">
+            <summary>If true, the underlying JCBDStream has been disposed.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Sequence.StreamIsDisposed">
+            <summary>If true, the underlying stream has been disposed.</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.Sequence.DisposeJBCDStream">
             <summary>
             The underlying stream reader/writer for the Sequence. This will be disposed of when

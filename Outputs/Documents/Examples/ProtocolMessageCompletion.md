@@ -8,10 +8,10 @@ a completion message to the Local spool.
 {
   "MessageComplete":{
     "References":[{
-        "MessageId":"ACQ2-2RB7-4PU3-ESSI-AYXC-V5NC-BT3C",
-        "ResponseId":"MCGJ-S6GD-FR6P-SDM7-3QVP-IB35-WMKL",
+        "MessageId":"ACJ4-ZU6E-2VVX-5YDL-EYU6-FCHD-CTMK",
+        "ResponseId":"MDPP-AD5H-QIX3-4GXL-3GUK-POGY-OMFJ",
         "Relationship":"Closed"}
       ],
-    "MessageId":"ND6A-NS3G-PDMT-QURN-FADT-KFMC-7462"}}
+    "MessageId":"NDPW-6HAL-D6M7-7SVK-57TN-HZ32-XHCO"}}
 ~~~~
 
