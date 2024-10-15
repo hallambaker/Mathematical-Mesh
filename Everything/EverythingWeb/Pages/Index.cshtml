@@ -1,0 +1,15 @@
+﻿@page
+@model IndexModel
+@using EverythingWeb.Pages
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Everything</h1>
+    <p>User: @Model.Name</p>
+    <p><a href="AddDocument">Add Document</a></p>
+    <p><a href="Documents">Documents</a></p>
+    <p><a href="Notifications">Notifications</a></p>
+
+</div>

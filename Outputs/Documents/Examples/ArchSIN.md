@@ -1,8 +1,8 @@
 <dl>
 <dt>alice@example.com
 <dd>Alice's regular email address (not a SIN). 
-<dt>alice@mm--mbqk-4s2g-tcng-yiol-iui5-dtrw-iokz.example.com
+<dt>alice@mm--mbqc-7oha-rnba-frdl-r4gi-yqha-dl36.example.com
 <dd>A strong email address for Alice that can be used by a regular email client.
-<dt>alice@example.com.mm--mbqk-4s2g-tcng-yiol-iui5-dtrw-iokz
+<dt>alice@example.com.mm--mbqc-7oha-rnba-frdl-r4gi-yqha-dl36
 <dd>A strong email address for Alice that can only used by an email client that can process SINs.
 </dl>

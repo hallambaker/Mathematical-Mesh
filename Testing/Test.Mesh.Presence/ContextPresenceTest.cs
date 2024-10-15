@@ -18,9 +18,9 @@ public class ContextPresenceTest : ContextPresence {
             ServiceAccessToken serviceAccessToken,
             CommunicationDisruptor communicationDisruptor) :
         base(contextUser, serviceAccessToken) {
-        CommunicationDisruptor = communicationDisruptor;
-        HeartbeatMilliSeconds = communicationDisruptor.HeartbeatMilliSeconds;
-        RetransmitHeartbeatMilliSeconds = communicationDisruptor.RetransmitHeartbeatMilliSeconds;
+            CommunicationDisruptor = communicationDisruptor;
+            HeartbeatMilliSeconds = communicationDisruptor.HeartbeatMilliSeconds;
+            RetransmitHeartbeatMilliSeconds = communicationDisruptor.RetransmitHeartbeatMilliSeconds;
         }
 
 

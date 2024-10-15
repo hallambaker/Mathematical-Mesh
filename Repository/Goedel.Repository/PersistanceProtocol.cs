@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/5/2024 2:40:01 AM
+//  This file was automatically generated at 10/15/2024 6:53:56 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -55,10 +55,10 @@ namespace Goedel.Repository;
 
 	/// <summary>
 	///
-	/// Callsign Registrar protocol supporting query function.
+	/// Provides a repository service permitting 
 	/// Protocol interactions supported by the Mesh Service.
 	/// </summary>
-public abstract partial class PersistanceProtocol : global::Goedel.Protocol.JsonObject {
+public abstract partial class RepositoryProtocol : global::Goedel.Protocol.JsonObject {
 
 	/// <summary>
     /// Tag identifying this class
@@ -68,7 +68,7 @@ public abstract partial class PersistanceProtocol : global::Goedel.Protocol.Json
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "PersistanceProtocol";
+	public new const string __Tag = "RepositoryProtocol";
 
 	/// <summary>
     /// Dictionary mapping tags to factory methods

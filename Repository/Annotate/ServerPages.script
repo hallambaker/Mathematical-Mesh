@@ -1,0 +1,97 @@
+﻿#using System.Text
+#using Goedel.Protocol
+#using Goedel.Utilities
+#% #pragma warning disable IDE0022
+#% #pragma warning disable IDE0060
+#% #pragma warning disable IDE1006
+#xclass Annotate Annotations
+
+#method StartPage PageOptions options
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+#end method
+
+
+#method EndPage PageOptions options
+  </body>
+</html>
+#end method
+
+
+
+#method PageHome PageOptions options
+<div class="container">
+  <h1>Home</h1>
+  <p><a href="Upload">Add Document</a></p>
+  <p><a href="Documents">List Documents</a></p>
+  <p><a href="Actions">List Actions</a></p>
+</div>
+
+#end method
+
+#method PageSelect PageOptions options
+<div class="container">
+
+    <form method="post" action="Append" enctype="multipart/form-data">
+
+        <label>Select the file:</label>
+
+        <input type="file" id="fileUpload" name="data" />
+        <br/>
+        <input type="radio" id="auto" name="format" value="auto"><label>Auto detect</label>
+        <input type="radio" id="md" name="format" value="md"><label>Markdown</label>
+        <input type="radio" id="word" name="format" value="word"><label>Word</label>
+        <input type="radio" id="html" name="format" value="html"><label>HTML</label>
+        <input type="radio" id="xml2rfc" name="format" value="xml2rfc" checked="checked"><label>XML2RFC</label>
+        <br/>
+        <input type="submit" value="Upload">
+    </form>
+
+</div>
+#end method
+
+#method PageUpload PageOptions options
+<div class="container">
+  <h1>Upload Complete</h1>
+
+</div>
+#end method
+
+
+#method PageDocuments PageOptions options
+<div class="container">
+  <h1>List of managed documents</h1>
+
+</div>
+#end method
+
+#method PageDocument PageOptions options
+<div class="container">
+  <h1>A particular managed documents</h1>
+</div>
+#end method
+
+
+#method PageActions PageOptions options
+<div class="container">
+  <h1>List of outstanding actions</h1>
+</div>
+#end method
+
+
+#method PageError PageOptions options
+<div class="container">
+  <h1>An error occurred</h1>
+
+</div>
+#end method
+
+#end xclass

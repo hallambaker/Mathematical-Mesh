@@ -19,7 +19,6 @@ MSBuildThisFileDirectory =
 
 LinkFiles = \
     Goedel.ASN.dll\
-    Goedel.Cryptography.Nist.dll\
     Goedel.IO.dll\
     Goedel.Utilities.dll
 

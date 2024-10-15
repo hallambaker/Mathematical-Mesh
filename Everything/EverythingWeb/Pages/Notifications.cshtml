@@ -1,0 +1,27 @@
+﻿@page
+@model IndexModel
+@{
+
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">My Notifications</h1>
+    <p>User: Phill</p>
+<form>
+        <input type="radio" id="latest" name="age"><label>Latest</label>
+        <input type="radio" id="oldest" name="age"><label>Oldest</label>
+        <input type="radio" id="open" name="status"><label>Open</label>
+        <input type="radio" id="closed" name="status"><label>Closed</label>
+        <input type="submit" value="Sort">
+</form>
+
+    <p><a href="Document">Document 1</a></p>
+    <p><a href="Document">Document 2</a></p>
+    <p><a href="Document">Document 3</a></p>
+    <p><a href="Document">Document 4</a></p>
+    <p><a href="Document">Document 5</a></p>
+    <p><a href="Document">Document 6</a></p>
+
+
+</div>

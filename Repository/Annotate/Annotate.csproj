@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="$(SolutionDir)Settings/CommonSettingsLinemode.xml" />
+	<PropertyGroup>
+		<AssemblyName>Annotate</AssemblyName>
+		<Product>Annotate</Product>
+		<Description>Reference library for the Mathematical Mesh.</Description>
+		<Copyright>© 2024</Copyright>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Goedel.FSR\Goedel.FSR.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Web\Goedel.Protocol.Web.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Exceptions.cs">
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="ServerPages.cs">
+      <DependentUpon>ServerPages.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Exceptions.exceptional">
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+      <Generator>exceptional</Generator>
+    </None>
+    <None Update="ServerPages.script">
+      <LastGenOutput>ServerPages.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+  </ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Pages\" />
+	</ItemGroup>
+
+</Project>

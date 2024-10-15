@@ -1,0 +1,370 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Protocol.Web</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Protocol.Web.EventExtensions">
+            <summary>
+            Extensions class defining logging events and convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Web.EventExtensions.#cctor">
+            <summary>
+            Static initializer, is called once when the module loads.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Web.WebExtensions">
+            <summary>
+            Extensions class
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Web.FormEntryType">
+            <summary>
+            The Form entry types
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Web.FormEntryType.String">
+            <summary>String form entry</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Web.FormEntryType.File">
+            <summary>File form entry</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Web.FormEntryType.Binary">
+            <summary>Binary data form entry</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.Web.FormItem">
+            <summary>
+            Form item accessor describes the backer class for a form item.
+            </summary>
+            <param name="Name">The form entry name.</param>
+            <param name="FormEntryType">The type of the data item.</param>
+            <param name="Setter">Setter method setting the value in the form.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Web.FormItem.#ctor(System.String,Goedel.Protocol.Web.FormEntryType,System.Action{Goedel.Protocol.Web.FormData,System.Object})">
+            <summary>
+            Form item accessor describes the backer class for a form item.
+            </summary>
+            <param name="Name">The form entry name.</param>
+            <param name="FormEntryType">The type of the data item.</param>
+            <param name="Setter">Setter method setting the value in the form.</param>
+        </member>
+        <member name="P:Goedel.Protocol.Web.FormItem.Name">
+            <summary>The form entry name.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Web.FormItem.FormEntryType">
+            <summary>The type of the data item.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Web.FormItem.Setter">
+            <summary>Setter method setting the value in the form.</summary>
+        </member>
+        <member name="T:Goedel.Protocol.Web.FileField">
+            <summary>
+            Backer record describing a file read from an input field.
+            </summary>
+            <param name="Id">Unique identifier.</param>
+            <param name="Filename">The filename used on the source machine.</param>
+            <param name="ContentType">The content type.</param>
+            <param name="Data">The binary file data.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Web.FileField.#ctor(System.String,System.String,System.String,System.Byte[])">
+            <summary>
+            Backer record describing a file read from an input field.
+            </summary>
+            <param name="Id">Unique identifier.</param>
+            <param name="Filename">The filename used on the source machine.</param>
+            <param name="ContentType">The content type.</param>
+            <param name="Data">The binary file data.</param>
+        </member>
+        <member name="P:Goedel.Protocol.Web.FileField.Id">
+            <summary>Unique identifier.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Web.FileField.Filename">
+            <summary>The filename used on the source machine.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Web.FileField.ContentType">
+            <summary>The content type.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Web.FileField.Data">
+            <summary>The binary file data.</summary>
+        </member>
+        <member name="T:Goedel.Protocol.Web.FormData">
+            <summary>
+            Root class for form data descriptors.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Web.FormData.Items">
+            <summary>The form field descriptors.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Web.FormData.GetFormItem(System.String)">
+            <summary>Return the form item for the form field named 
+            <paramref name="name"/></summary> 
+            <param name="name">The form field name.</param>
+            <returns>The form item.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Web.IWebService">
+            <summary>
+            Interface for a WebService.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Web.IWebService.ResourceMap">
+            <summary>The resource map</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.Web.MultipartLex">
+            <summary>
+            Lexical analyzer for command line parsing.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Web.MultipartLex.#ctor(Goedel.FSR.LexReader)">
+            <summary>
+            Create and initialize a lexical analyzer.
+            </summary>
+            <param name="Reader">The input source.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Web.MultipartLex.#ctor(System.IO.Stream)">
+            <summary>
+            Create and initialize a lexical analyzer.
+            </summary>
+            <param name="Stream">The input source.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Web.MultipartLex.#ctor(System.IO.TextReader)">
+            <summary>
+            Create and initialize a lexical analyzer.
+            </summary>
+            <param name="TextReader">The input source.</param>
+        </member>
+        <member name="P:Goedel.Protocol.Web.MultipartLex.CharacterMappings">
+            <summary>
+            Maps characters to character sets
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Web.MultipartLex.CompressedTransitions">
+            <summary>
+            State transitions in response to character set
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Web.MultipartLex.GetToken(Goedel.Protocol.Web.MultipartLex.State)">
+            <summary>
+            Get the next token from the stream
+            </summary>
+            <param name="StartState">The initial starting state</param>
+            <returns>The token detected or -1 if an error occurred</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Web.MultipartLex.GetToken">
+            <summary>
+            Get the next token from the stream
+            </summary>
+            <returns>The token detected or -1 if an error occurred</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Web.MultipartLex.State">
+            <summary>State types</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Web.MultipartLex.State.ItemStart">
+            <summary>ItemStart</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Web.MultipartLex.State.Tag">
+            <summary>Tag</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Web.MultipartLex.State.TagColon">
+            <summary>TagColon</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Web.MultipartLex.State.TagWS">
+            <summary>TagWS</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Web.MultipartLex.State.Value">
+            <summary>Value</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Web.MultipartLex.State.ValueSemi">
+            <summary>ValueSemi</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Web.MultipartLex.State.ParameterWS">
+            <summary>ParameterWS</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Web.MultipartLex.State.Parameter">
+            <summary>Parameter</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Web.MultipartLex.State.PValueStart">
+            <summary>PValueStart</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Web.MultipartLex.State.PValueQuote">
+            <summary>PValueQuote</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Web.MultipartLex.State.PValue">
+            <summary>PValue</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Web.MultipartLex.State.PValueComplete">
+            <summary>PValueComplete</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Web.MultipartLex.State.Complete">
+            <summary>Complete</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Web.MultipartLex.State.Fail">
+            <summary>Fail</summary>
+        </member>
+        <member name="T:Goedel.Protocol.Web.MultipartLex.Token">
+            <summary>Token Types</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Web.MultipartLex.Token.INVALID">
+            <summary>Could not find a valid token.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Web.MultipartLex.Token.Error">
+            <summary>Error</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Web.MultipartLex.Token.Empty">
+            <summary>Empty</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Web.MultipartLex.Token.Header">
+            <summary>Header</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Web.MultipartLex.Character_Mapping">
+            <summary>Mapping of characters to character groups</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Web.MultipartLex.Init">
+            <summary>Generated initialization method, is called automatically 
+            the FSR to reset </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Web.MultipartLex.#ctor">
+            <summary>
+            Construct a parser to read from a string to be specified in GetToken (data)
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Web.MultipartLex.Process(System.Int32)">
+            <summary>
+            Process the byte <paramref name="data"/>.
+            </summary>
+            <param name="data">The byte to process.</param>
+            <returns>True if the data parsed correctly, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Web.MultipartLex.Reset(Goedel.Protocol.Web.FieldData)">
+            <summary>
+            Reset the value buffers to start a new parse and set the template to be filled
+            to <paramref name="fieldData"/>.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Web.MultipartLex.Reset">
+            <summary>
+            Reset the value buffers to start a new parse.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Web.MultipartLex.Reset(System.Int32)">
+            <summary>
+            Reset the value buffers to start a new parse.
+            </summary>
+            <param name="c">The character read</param>
+        </member>
+        <member name="M:Goedel.Protocol.Web.MultipartLex.Ignore(System.Int32)">
+            <summary>
+            Do nothing
+            </summary>
+            <param name="c">The character read</param>
+        </member>
+        <member name="M:Goedel.Protocol.Web.MultipartLex.AddTag(System.Int32)">
+            <summary>
+            Add to the buffer.
+            </summary>
+            <param name="c">The character read</param>
+        </member>
+        <member name="M:Goedel.Protocol.Web.MultipartLex.GotTag(System.Int32)">
+            <summary>
+            Register the header tag.
+            </summary>
+            <param name="c">The character read</param>
+        </member>
+        <member name="M:Goedel.Protocol.Web.MultipartLex.AddValue(System.Int32)">
+            <summary>
+            Add to the buffer.
+            </summary>
+            <param name="c">The character read</param>
+        </member>
+        <member name="M:Goedel.Protocol.Web.MultipartLex.GotValue(System.Int32)">
+            <summary>
+            Register the header primary value.
+            </summary>
+            <param name="c">The character read</param>
+        </member>
+        <member name="M:Goedel.Protocol.Web.MultipartLex.AddParameter(System.Int32)">
+            <summary>
+            Add to the buffer.
+            </summary>
+            <param name="c">The character read</param>
+        </member>
+        <member name="M:Goedel.Protocol.Web.MultipartLex.GotParameter(System.Int32)">
+            <summary>
+            Register a parameter tag.
+            </summary>
+            <param name="c">The character read</param>
+        </member>
+        <member name="M:Goedel.Protocol.Web.MultipartLex.AddPValue(System.Int32)">
+            <summary>
+            Add to the buffer.
+            </summary>
+            <param name="c">The character read</param>
+        </member>
+        <member name="M:Goedel.Protocol.Web.MultipartLex.GotPValue(System.Int32)">
+            <summary>
+            Register a parameter value.
+            </summary>
+            <param name="c">The character read</param>
+        </member>
+        <member name="M:Goedel.Protocol.Web.MultipartLex.End(System.Int32)">
+            <summary>
+            End the parse
+            </summary>
+            <param name="c">The character read</param>
+        </member>
+        <member name="M:Goedel.Protocol.Web.MultipartLex.Abort(System.Int32)">
+            <summary>
+            Abort the parse
+            </summary>
+            <param name="c">The character read</param>
+        </member>
+        <member name="T:Goedel.Protocol.Web.StreamLookaheadReader">
+            <summary>
+            Stream reader with one byte lookahead.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Web.StreamLookaheadReader.#ctor(System.IO.Stream)">
+            <summary>
+            Constructor, return an instance reading the stream <paramref name="stream"/>.
+            </summary>
+            <param name="stream">The stream to be read.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Web.StreamLookaheadReader.Start(System.Int32)">
+            <summary>
+            Reset the max character reader.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Web.StreamLookaheadReader.Peek">
+            <summary>
+            Return the next byte in the stream without advancing the read pointer.
+            </summary>
+            <returns>The next unread byte in the stream.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Web.StreamLookaheadReader.ReadByte">
+            <summary>
+            Read the next byte and advance the read pointer.
+            </summary>
+            <returns>The next unread byte in the stream.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Web.NamespaceDoc">
+            <summary>
+            Support library for captive Web server for presenting generated pages.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Web.Resource">
+            <summary>
+            Web Service resource descriptor.
+            </summary>
+            <param name="Method">The callback method for the resource.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Web.Resource.#ctor(System.Func{Goedel.Protocol.Web.IWebService,System.Net.HttpListenerContext,System.Threading.Tasks.Task})">
+            <summary>
+            Web Service resource descriptor.
+            </summary>
+            <param name="Method">The callback method for the resource.</param>
+        </member>
+        <member name="P:Goedel.Protocol.Web.Resource.Method">
+            <summary>The callback method for the resource.</summary>
+        </member>
+    </members>
+</doc>

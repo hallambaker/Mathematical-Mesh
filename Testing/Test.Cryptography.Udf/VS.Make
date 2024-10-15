@@ -19,6 +19,7 @@ MSBuildThisFileDirectory =
 
 LinkFiles = \
     Goedel.Cryptography.Nist.dll\
+    Goedel.Cryptography.Test.dll\
     Goedel.Utilities.dll\
     Goedel.Test.Core.dll\
     Goedel.Mesh.Test.dll\

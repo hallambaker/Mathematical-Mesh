@@ -8,32 +8,32 @@ The request payload specifies the data to be appended to the stores.
     "Updates":[{
         "Envelopes":[[{
               "enc":"A256CBC",
-              "kid":"EBQE-RAUI-E4FW-E7AM-NHYA-D37S-H75K",
-              "Salt":"nKm9-ppD3fQ5-WnCdR3LaQ",
+              "kid":"EBQH-FCIB-JKQT-746V-FE2I-IEEI-GMEC",
+              "Salt":"WsdkI2icQX-czV4twcrQSQ",
               "recipients":[{
-                  "kid":"MCYC-OLUF-YF5U-VRE7-D5WY-NF7Z-UJVJ",
+                  "kid":"MDZV-J4CB-QLA5-K6GU-GGP2-OAXS-3FB6",
                   "epk":{
                     "PublicKeyECDH":{
                       "crv":"X448",
-                      "Public":"Jp8bhBoyUD4NqDhUjk-6OVVb8Ma5oQBMj
-  5vzW3XJiM-v4amdvjbPwS7aPXsOk_ppmra9rPZCa7CA"}},
-                  "wmk":"nGqe9SoDWC1J3uHbT6Rd6GGtt5A49JTEAD_C1W91
-  eWwTU-6l2FrYLA"}
+                      "Public":"nNKy3ud25ZOHhOpIoCREUMru72r9RPny4
+  8Tg_yw7JELHYek0nEgUiVgYJiVUweGMmPL0HC-KdY4A"}},
+                  "wmk":"LLtDyCCrKdEbVEzohPLP2Q_ZxMLz9qv2dXLBiaB2
+  XVkFHt-Jxa9rgw"}
                 ],
-              "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQUhULUlQ
-  TkMtM1YzTi1aSUdFLTc2Q1gtTTNPWS1IU1pKIiwKICAiRXZlbnQiOiAiTmV3In0",
+              "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQUNMLTVM
+  WFktS1hGNC00MzJCLVhDWkEtV1RGNC1RUDVRIiwKICAiRXZlbnQiOiAiTmV3In0",
               "SequenceInfo":{
                 "Index":1,
                 "TreePosition":0},
-              "PayloadDigest":"0c--vSsSvAXZIABuixvQhX1GcDCPfSf-ck
-  W0mSPcdSX1yBmu11EuEr34a5-nK1fFwTWA96uD5Izy91i1b-aUeg",
-              "ApexDigest":"wLUjdiAjBY-fS0Q3fIHiCfpyU-ecQrXqI0iAN
-  I0QElN18XxTvYrrnLdEuBXoAzXZ5WXedXPYiwUcbIIZMoLFhA",
+              "PayloadDigest":"jus6Cpy4Fk_4HN2oW7xhkBSv6Ah-cAImeN
+  rmBbcQy4heAkyzHiOouwUNiy1ek-eh68q2zgEwaqWAxVUutj9sMQ",
+              "ApexDigest":"rY8d41_tcAvacoZ7x5NI2GmM9R33bPgWN_uTc
+  VuKD6cuj6aTFqwdY2nCSRiyE6Pw_lpUIdiDEWz6XmdQh33Z3A",
               "dig":"S512"},
-            "sqtAdD9s8YGbqo7qkq8PUphwVVb5ZGh1og1EFEsFtqS1fHLjNifu
-  WUSAXl9-TQK3IVq62j48Yfz6hNupfM9XJlSAt2v5sw6miehbELgvpV5HTECBeHBPG
-  u_NEgnQRYDY-TamjkEYW94mAhUJel73vOzUfReMR7yQJ9u_lcbqVBX1ZiwgVEm853
-  afZ8doOH5Z"
+            "lzE4p_C7tj1-0YCg1J__UUvK-WqDtWDCOvsm4MN0y95R8-XpbgEi
+  888BlNOnp6d1pvNNKHtxtNzO9_yOMKTAur3B6a1nag1-x35DddfV-8Ho9DjSAoMGh
+  NWZ6I336ggTSHMOWLJXbqxBYCUrnBHMZn7ZWADU0IoqzE4VXsODflmYQihY2sPQMO
+  iiHM07WD_r"
             ]
           ],
         "Store":"Bookmark"}

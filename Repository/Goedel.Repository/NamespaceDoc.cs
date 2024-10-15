@@ -28,7 +28,7 @@ global using System.Text;
 
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 
-namespace Goedel.Presence;
+namespace Goedel.Repository;
 /// <summary>
 /// Desctiption of the 
 /// </summary>

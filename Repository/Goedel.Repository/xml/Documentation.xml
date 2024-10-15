@@ -362,29 +362,34 @@
             <returns>The publication message.</returns>
             <exception cref="T:System.NotImplementedException"></exception>
         </member>
-        <member name="T:Goedel.Repository.PersistanceProtocol">
+        <member name="T:Goedel.Repository.NamespaceDoc">
+            <summary>
+            Desctiption of the 
+            </summary>
+        </member>
+        <member name="T:Goedel.Repository.RepositoryProtocol">
              <summary>
             
-             Callsign Registrar protocol supporting query function.
+             Provides a repository service permitting 
              Protocol interactions supported by the Mesh Service.
              </summary>
         </member>
-        <member name="P:Goedel.Repository.PersistanceProtocol._Tag">
+        <member name="P:Goedel.Repository.RepositoryProtocol._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Repository.PersistanceProtocol.__Tag">
+        <member name="F:Goedel.Repository.RepositoryProtocol.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="P:Goedel.Repository.PersistanceProtocol._TagDictionary">
+        <member name="P:Goedel.Repository.RepositoryProtocol._TagDictionary">
             <summary>
             Dictionary mapping tags to factory methods
             </summary>
         </member>
-        <member name="M:Goedel.Repository.PersistanceProtocol.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
+        <member name="M:Goedel.Repository.RepositoryProtocol.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
             <summary>
             Construct an instance from the specified tagged JsonReader stream.
             </summary>
@@ -770,11 +775,6 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
-        </member>
-        <member name="T:Goedel.Presence.NamespaceDoc">
-            <summary>
-            Desctiption of the 
-            </summary>
         </member>
     </members>
 </doc>

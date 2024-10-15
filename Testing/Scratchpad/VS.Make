@@ -18,6 +18,7 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
+    Test.ASN1.dll\
     Test.Common.dll\
     Goedel.Utilities.dll\
     Goedel.Test.dll\

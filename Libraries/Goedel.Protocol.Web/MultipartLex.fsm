@@ -1,0 +1,76 @@
+﻿FSR Goedel.Protocol.Web MultipartLex
+
+	Charset Digit		"0" "9"
+	Charset alpha		"a" "z"
+	Charset ALPHA		"A" "Z"
+
+	Token Error		""
+	Token Empty		""
+	Token Header	"Content-Type: text/xml"
+
+
+
+
+	State ItemStart Reset Error			// 0
+		ALPHA GoTo Tag
+		alpha GoTo Tag
+		Digit GoTo Tag
+	
+
+	State Tag AddTag Empty  			// 1
+		ALPHA GoTo Tag
+		alpha GoTo Tag
+		Digit GoTo Tag
+		On "-" GoTo Tag
+		On ":" GoTo TagColon
+
+	State TagColon GotTag Header  		// 2
+		On " \t" GoTo TagWS
+
+	State TagWS Ignore Header  			// 3
+		On " \t" GoTo TagWS
+		Any GoTo Value
+
+	State Value AddValue Header  		// 4
+		On ";" GoTo ValueSemi
+		Any GoTo Value
+
+	State ValueSemi GotValue Empty  	// 5
+		On " \t" GoTo ParameterWS
+		ALPHA GoTo Parameter
+		alpha GoTo Parameter
+		Digit GoTo Parameter
+		On "-" GoTo Parameter
+
+	State ParameterWS Ignore Empty  	// 6
+		On " \t" GoTo ParameterWS
+		ALPHA GoTo Parameter
+		alpha GoTo Parameter
+		Digit GoTo Parameter
+		On "-" GoTo Parameter
+
+	State Parameter AddParameter Empty  // 7
+		ALPHA GoTo Parameter
+		alpha GoTo Parameter
+		Digit GoTo Parameter
+		On "-" GoTo Parameter
+		On "=" GoTo PValueStart
+
+	State PValueStart GotParameter Empty // 8
+		On "\"" GoTo PValueQuote
+
+	State PValueQuote Ignore Empty  	// 9
+		On "\"" GoTo PValueComplete
+		Any GoTo PValue
+
+	State PValue AddPValue Header  		// 10
+		On "\"" GoTo PValueComplete
+		Any GoTo PValue
+
+	State PValueComplete GotPValue Header  	// 11
+		On ";" GoTo ParameterWS
+
+
+	State Complete End Header
+	State Fail Abort Error
+		

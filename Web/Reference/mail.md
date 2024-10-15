@@ -64,10 +64,10 @@ specified on the command line.
 <rsp>Account:         alice@example.net
 Inbound Server:  pop://alice@pop3.example.net
 Outbound Server: submit://alice@submit.example.net
-S/Mime Sign:     MC6U-VH2X-4XAO-TIDG-GNY4-PLL5-H23E
-S/Mime Encrypt:  MAMD-27MN-LWLK-BR54-ZF2L-7GKL-QBIN
-OpenPGP Sign:    MAUB-N4OR-L5NX-SVZZ-H5VM-NARS-LX7N
-OpenPGP Encrypt: MA66-BKMZ-SXWB-IH5J-F62J-FGHW-W6UG
+S/Mime Sign:     MDWH-RON2-QOI3-UFH4-MIJX-LZRU-F43D
+S/Mime Encrypt:  MDCH-HIM4-XMQB-Q7EY-PRMM-DLGW-CKG4
+OpenPGP Sign:    MDA6-IXNL-FOQC-HX7V-NCBC-MNOG-CK23
+OpenPGP Encrypt: MCBZ-75RE-UM7Q-VR2J-L732-AZZZ-BLFZ
 </div>
 ~~~~
 
@@ -163,10 +163,10 @@ The mail list command lists all the mail configurations in the applications cata
 <rsp>Account:         alice@example.net
 Inbound Server:  imap://alice@imap.example.net
 Outbound Server: submit://alice@submit.example.net
-S/Mime Sign:     MADI-6JQL-ET42-F6OS-3XTX-X5E3-QUA2
-S/Mime Encrypt:  MCVL-XNU4-WUU3-45WX-IU7H-PHQZ-IOY2
-OpenPGP Sign:    MBUO-W3L5-WNT2-ERHL-JRV3-L5GH-2W6I
-OpenPGP Encrypt: MBIM-MXQT-GSYA-EHEN-KXL3-VKY6-QJKM
+S/Mime Sign:     MCCJ-IANC-HEWS-7XZI-OR72-ZFC4-SCQL
+S/Mime Encrypt:  MDO5-36TO-HN5V-6SZ5-MD5B-63BZ-737K
+OpenPGP Sign:    MAII-NUGV-FX7P-IAQ2-UXZ3-CP3J-6MKN
+OpenPGP Encrypt: MB74-LYO7-NBVD-EZ3E-7ADE-AR4N-2AY7
 </div>
 ~~~~
 

@@ -1,0 +1,28 @@
+﻿@page
+@model IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Everything</h1>
+
+
+
+    <p>User: Phill</p>
+    <form method="post" action="Document">
+        <label>Select the file:</label>
+        <input type="file" id="fileUpload" name="filename" />
+        <input type="radio" id="auto" name="format"><label>Auto detect</label>
+        <input type="radio" id="md" name="format"><label>Markdown</label>
+        <input type="radio" id="word" name="format"><label>Word</label>
+        <input type="radio" id="html" name="format"><label>HTML</label>
+        <input type="radio" id="xml2rfc" name="format"><label>XML2RFC</label>
+
+        <input type="submit" value="Upload">
+    </form>
+
+
+
+</div>

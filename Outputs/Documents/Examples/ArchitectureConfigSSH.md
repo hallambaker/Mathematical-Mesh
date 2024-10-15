@@ -7,7 +7,7 @@ private key information available to devices she has connected to her Mesh with 
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman ssh create /web /threshold /id=ssh
-<rsp>UDF: MD62-HEDK-M7T5-B4PI-CV2K-5U6R-X5LQ
+<rsp>UDF: MBR3-LM6K-JRW2-JWYF-JK3C-SIA4-HG77
 </div>
 ~~~~
 

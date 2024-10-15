@@ -68,23 +68,23 @@ public partial class TestPresence {
         var pollResultB = presenceBob.Poll();
 
 
-        //Console.WriteLine("####################################################################");
+        Console.WriteLine("####################################################################");
 
 
         // Test Alice sends after Bob calls to wait.
         var t1 = presenceBob.GetSessionRequestAsync();
-        //Console.WriteLine("Next!!!!");
+        Console.WriteLine("Next!!!!");
         var t2 = presenceAlice.SessionRequestAsync(AccountB);
-        //Console.WriteLine("Nex???");
+        Console.WriteLine("Nex???");
         Task.WaitAll(t1, t2);
-        //Console.WriteLine("Done!!!!");
+        Console.WriteLine("Done!!!!");
 
-        //// Test Alice sends before Bob calls to wait.
-        //var t3 = presenceAlice.SessionRequestAsync(AccountB);
-        //var t4 = presenceBob.GetSessionRequestAsync();
+        // Test Alice sends before Bob calls to wait.
+        var t3 = presenceAlice.SessionRequestAsync(AccountB);
+        var t4 = presenceBob.GetSessionRequestAsync();
 
-        //await t3;
-        //await t4;
+        t3.Wait();
+        t4.Wait();
         }
 
 

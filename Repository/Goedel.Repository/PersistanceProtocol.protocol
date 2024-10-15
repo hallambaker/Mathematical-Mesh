@@ -1,9 +1,9 @@
-﻿Protocol Goedel.Repository PersistanceProtocol PersistanceProtocol
+﻿Protocol Goedel.Repository RepositoryProtocol RepositoryProtocol
 
-	Section 2 "persistance service"
+	Section 2 "Repository Service"
 
 	Description 
-		|Callsign Registrar protocol supporting query function.
+		|Provides a repository service permitting 
 
     Using Goedel.Cryptography.Jose
     Using Goedel.Cryptography.Dare

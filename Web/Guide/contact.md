@@ -75,9 +75,9 @@ Mesh account address:
 ~~~~
 <div="terminal">
 <cmd>Bob> meshman contact request alice@example.com
-<rsp>Envelope ID: MBXA-LC4Y-JPOL-566F-XHFH-UKHT-CPYS
-Message ID: NBQT-BJ65-V3KT-VIW7-3CPD-PLUW-VTE7
-Response ID: MCKR-A3VX-WNTE-BPWX-7KJN-U5XF-B356
+<rsp>Envelope ID: MDN4-KZU4-YSH5-HFIZ-7Y5K-TKXM-TLRE
+Message ID: NAJJ-X5FX-POHN-TTR4-3TXK-KTE7-3KKM
+Response ID: MANS-AVVY-VD36-MFEX-3XUR-PPTU-KSPD
 </div>
 ~~~~
 
@@ -90,27 +90,27 @@ with the `contact list` command:
 <div="terminal">
 <cmd>Alice> meshman account sync
 <cmd>Alice> meshman message pending
-<rsp>MessageID: NCJ2-ZO44-ATSC-DUIY-PYQF-HNUN-2HJC
+<rsp>MessageID: ND6M-OIPE-KYSW-HJCU-C6VY-XXBC-BCKU
         Contact Request::
-        MessageID: NCJ2-ZO44-ATSC-DUIY-PYQF-HNUN-2HJC
+        MessageID: ND6M-OIPE-KYSW-HJCU-C6VY-XXBC-BCKU
         To: alice@example.com From: mallet@example.com
-        PIN: ACNM-L4LA-JHOZ-HRMM-XANW-BKWF-26DA
-MessageID: NBQT-BJ65-V3KT-VIW7-3CPD-PLUW-VTE7
+        PIN: AB5G-ONJA-7REW-O3HH-XGTD-N47M-TPQQ
+MessageID: NAJJ-X5FX-POHN-TTR4-3TXK-KTE7-3KKM
         Contact Request::
-        MessageID: NBQT-BJ65-V3KT-VIW7-3CPD-PLUW-VTE7
+        MessageID: NAJJ-X5FX-POHN-TTR4-3TXK-KTE7-3KKM
         To: alice@example.com From: bob@example.com
-        PIN: ACGU-5FLZ-EUCZ-EBAY-LA4U-VT2K-KJQA
-MessageID: ND2F-I3BZ-645E-OSBR-Z5NI-MIUG-4IRN
-<cmd>Alice> meshman message accept NBQT-BJ65-V3KT-VIW7-3CPD-PLUW-VTE7
+        PIN: AB3A-ETHW-4RGL-GEYG-KEAP-TLEM-UKDQ
+MessageID: NDHA-E73C-WZUG-QCMR-5IPX-52JV-WYX6
+<cmd>Alice> meshman message accept NAJJ-X5FX-POHN-TTR4-3TXK-KTE7-3KKM
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ
-  Person MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ
-  Anchor MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ
+<rsp>Entry<CatalogedContact>: MBQC-7OHA-RNBA-FRDL-R4GI-YQHA-DL36
+  Person MBQC-7OHA-RNBA-FRDL-R4GI-YQHA-DL36
+  Anchor MBQC-7OHA-RNBA-FRDL-R4GI-YQHA-DL36
   Address alice@example.com
 
-Entry<CatalogedContact>: NBYF-NJLS-POE7-YZJT-CWOW-T4DV-MJPQ
+Entry<CatalogedContact>: NCUE-TSMR-TL3E-7MV6-N3KA-YQX3-UTZ4
   Person 
-  Anchor MBQL-4JMF-6I3J-ZEZ4-YFNC-H32E-RDP5
+  Anchor MBQM-MRAS-TBEC-OOLM-NPQY-XF7O-KQME
   Address bob@example.com
 
 </div>
@@ -126,14 +126,14 @@ information appears in his catalog.
 <div="terminal">
 <cmd>Bob> meshman account sync /auto
 <cmd>Bob> meshman contact list
-<rsp>Entry<CatalogedContact>: MBQL-4JMF-6I3J-ZEZ4-YFNC-H32E-RDP5
-  Person MBQL-4JMF-6I3J-ZEZ4-YFNC-H32E-RDP5
-  Anchor MBQL-4JMF-6I3J-ZEZ4-YFNC-H32E-RDP5
+<rsp>Entry<CatalogedContact>: MBQM-MRAS-TBEC-OOLM-NPQY-XF7O-KQME
+  Person MBQM-MRAS-TBEC-OOLM-NPQY-XF7O-KQME
+  Anchor MBQM-MRAS-TBEC-OOLM-NPQY-XF7O-KQME
   Address bob@example.com
 
-Entry<CatalogedContact>: NDP6-2XWO-OZVI-VRUS-UDOV-TXMY-TOJR
+Entry<CatalogedContact>: NCSB-DVZI-I7SI-A5WV-ORSG-XNQX-43WZ
   Person 
-  Anchor MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ
+  Anchor MBQC-7OHA-RNBA-FRDL-R4GI-YQHA-DL36
   Address alice@example.com
 
 </div>
@@ -172,29 +172,29 @@ adding Carol to her contacts catalog:
 <div="terminal">
 <cmd>Alice> meshman contact exchange
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ
-  Person MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ
-  Anchor MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ
+<rsp>Entry<CatalogedContact>: MBQC-7OHA-RNBA-FRDL-R4GI-YQHA-DL36
+  Person MBQC-7OHA-RNBA-FRDL-R4GI-YQHA-DL36
+  Anchor MBQC-7OHA-RNBA-FRDL-R4GI-YQHA-DL36
   Address alice@example.com
 
-Entry<CatalogedContact>: NBYF-NJLS-POE7-YZJT-CWOW-T4DV-MJPQ
+Entry<CatalogedContact>: NCUE-TSMR-TL3E-7MV6-N3KA-YQX3-UTZ4
   Person 
-  Anchor MBQL-4JMF-6I3J-ZEZ4-YFNC-H32E-RDP5
+  Anchor MBQM-MRAS-TBEC-OOLM-NPQY-XF7O-KQME
   Address bob@example.com
 
-Entry<CatalogedContact>: NAD5-OSJK-5WXL-ONCN-JNSC-RIDA-KVHN
+Entry<CatalogedContact>: NCY3-XFE4-TTYM-CTIN-42GX-3YPW-I6KJ
   Person 
-  Anchor MBQI-GRBW-QGJ4-WPKJ-J224-X7IY-HA7S
+  Anchor MBQO-MSFK-YKHZ-6B3V-KONK-G6TK-2RX7
   Address groupw@example.com
 
-Entry<CatalogedContact>: NCAY-W6SV-SE4A-MEIA-WCPJ-KAHT-EO4H
+Entry<CatalogedContact>: NAE4-ZUGF-QTI7-4HOF-4O5J-HYOF-TL6C
   Person 
-  Anchor MBQI-GRBW-QGJ4-WPKJ-J224-X7IY-HA7S
+  Anchor MBQO-MSFK-YKHZ-6B3V-KONK-G6TK-2RX7
   Address groupw@example.com
 
-Entry<CatalogedContact>: NA63-UAMB-OVOS-Z6QG-KLDD-TXTB-LMIU
+Entry<CatalogedContact>: NB2K-K4G6-WIUF-VSII-ZM2O-XOHX-C4A5
   Person 
-  Anchor MBQD-CVDL-6P74-KAYN-EFYO-UNPA-R6IR
+  Anchor MBQJ-KAS4-KK6J-PYDW-ZHSK-JCUQ-ESDA
   Address carol@example.com
 
 </div>
@@ -238,34 +238,34 @@ using the `contact fetch` command:
 <rsp>[CatalogedContact]
 
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ
-  Person MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ
-  Anchor MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ
+<rsp>Entry<CatalogedContact>: MBQC-7OHA-RNBA-FRDL-R4GI-YQHA-DL36
+  Person MBQC-7OHA-RNBA-FRDL-R4GI-YQHA-DL36
+  Anchor MBQC-7OHA-RNBA-FRDL-R4GI-YQHA-DL36
   Address alice@example.com
 
-Entry<CatalogedContact>: NBYF-NJLS-POE7-YZJT-CWOW-T4DV-MJPQ
+Entry<CatalogedContact>: NCUE-TSMR-TL3E-7MV6-N3KA-YQX3-UTZ4
   Person 
-  Anchor MBQL-4JMF-6I3J-ZEZ4-YFNC-H32E-RDP5
+  Anchor MBQM-MRAS-TBEC-OOLM-NPQY-XF7O-KQME
   Address bob@example.com
 
-Entry<CatalogedContact>: NAD5-OSJK-5WXL-ONCN-JNSC-RIDA-KVHN
+Entry<CatalogedContact>: NCY3-XFE4-TTYM-CTIN-42GX-3YPW-I6KJ
   Person 
-  Anchor MBQI-GRBW-QGJ4-WPKJ-J224-X7IY-HA7S
+  Anchor MBQO-MSFK-YKHZ-6B3V-KONK-G6TK-2RX7
   Address groupw@example.com
 
-Entry<CatalogedContact>: NCAY-W6SV-SE4A-MEIA-WCPJ-KAHT-EO4H
+Entry<CatalogedContact>: NAE4-ZUGF-QTI7-4HOF-4O5J-HYOF-TL6C
   Person 
-  Anchor MBQI-GRBW-QGJ4-WPKJ-J224-X7IY-HA7S
+  Anchor MBQO-MSFK-YKHZ-6B3V-KONK-G6TK-2RX7
   Address groupw@example.com
 
-Entry<CatalogedContact>: NA63-UAMB-OVOS-Z6QG-KLDD-TXTB-LMIU
+Entry<CatalogedContact>: NB2K-K4G6-WIUF-VSII-ZM2O-XOHX-C4A5
   Person 
-  Anchor MBQD-CVDL-6P74-KAYN-EFYO-UNPA-R6IR
+  Anchor MBQJ-KAS4-KK6J-PYDW-ZHSK-JCUQ-ESDA
   Address carol@example.com
 
-Entry<CatalogedContact>: NCST-FUWN-V2DB-5VIL-LJM5-4SIC-7GQ4
+Entry<CatalogedContact>: NA7U-6UVQ-ACV6-ID7I-HKKP-SI3C-EMPV
   Person 
-  Anchor MBQC-OXNK-BMFM-QMMQ-FOKA-MOBQ-J42I
+  Anchor MBQB-4HOJ-BXIP-J7AH-KHQR-TYAV-XIT7
   Address doug@example.com
 
 </div>
@@ -294,34 +294,34 @@ A complete list of contacts is obtained using the  `contact list` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ
-  Person MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ
-  Anchor MBQK-4S2G-TCNG-YIOL-IUI5-DTRW-IOKZ
+<rsp>Entry<CatalogedContact>: MBQC-7OHA-RNBA-FRDL-R4GI-YQHA-DL36
+  Person MBQC-7OHA-RNBA-FRDL-R4GI-YQHA-DL36
+  Anchor MBQC-7OHA-RNBA-FRDL-R4GI-YQHA-DL36
   Address alice@example.com
 
-Entry<CatalogedContact>: NBYF-NJLS-POE7-YZJT-CWOW-T4DV-MJPQ
+Entry<CatalogedContact>: NCUE-TSMR-TL3E-7MV6-N3KA-YQX3-UTZ4
   Person 
-  Anchor MBQL-4JMF-6I3J-ZEZ4-YFNC-H32E-RDP5
+  Anchor MBQM-MRAS-TBEC-OOLM-NPQY-XF7O-KQME
   Address bob@example.com
 
-Entry<CatalogedContact>: NAD5-OSJK-5WXL-ONCN-JNSC-RIDA-KVHN
+Entry<CatalogedContact>: NCY3-XFE4-TTYM-CTIN-42GX-3YPW-I6KJ
   Person 
-  Anchor MBQI-GRBW-QGJ4-WPKJ-J224-X7IY-HA7S
+  Anchor MBQO-MSFK-YKHZ-6B3V-KONK-G6TK-2RX7
   Address groupw@example.com
 
-Entry<CatalogedContact>: NCAY-W6SV-SE4A-MEIA-WCPJ-KAHT-EO4H
+Entry<CatalogedContact>: NAE4-ZUGF-QTI7-4HOF-4O5J-HYOF-TL6C
   Person 
-  Anchor MBQI-GRBW-QGJ4-WPKJ-J224-X7IY-HA7S
+  Anchor MBQO-MSFK-YKHZ-6B3V-KONK-G6TK-2RX7
   Address groupw@example.com
 
-Entry<CatalogedContact>: NA63-UAMB-OVOS-Z6QG-KLDD-TXTB-LMIU
+Entry<CatalogedContact>: NB2K-K4G6-WIUF-VSII-ZM2O-XOHX-C4A5
   Person 
-  Anchor MBQD-CVDL-6P74-KAYN-EFYO-UNPA-R6IR
+  Anchor MBQJ-KAS4-KK6J-PYDW-ZHSK-JCUQ-ESDA
   Address carol@example.com
 
-Entry<CatalogedContact>: NCST-FUWN-V2DB-5VIL-LJM5-4SIC-7GQ4
+Entry<CatalogedContact>: NA7U-6UVQ-ACV6-ID7I-HKKP-SI3C-EMPV
   Person 
-  Anchor MBQC-OXNK-BMFM-QMMQ-FOKA-MOBQ-J42I
+  Anchor MBQB-4HOJ-BXIP-J7AH-KHQR-TYAV-XIT7
   Address doug@example.com
 
 </div>
