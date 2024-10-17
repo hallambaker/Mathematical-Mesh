@@ -12,11 +12,10 @@ namespace Annotate;
 public partial class Annotations : global::Goedel.Registry.Script {
 
 	
-
-	//
-	// StartPage
-	//
-	public void StartPage (PageOptions options) {
+	/// <summary>	
+	///  StartPage
+	/// </summary>
+	public void  StartPage () {
 		_Output.Write ("<!DOCTYPE html>\n{0}", _Indent);
 		_Output.Write ("<html lang=\"en\">\n{0}", _Indent);
 		_Output.Write ("  <head>\n{0}", _Indent);
@@ -29,20 +28,18 @@ public partial class Annotations : global::Goedel.Registry.Script {
 		_Output.Write ("  <body>\n{0}", _Indent);
 		}
 	
-
-	//
-	// EndPage
-	//
-	public void EndPage (PageOptions options) {
+	/// <summary>	
+	///  EndPage 
+	/// </summary>
+	public void  EndPage  () {
 		_Output.Write ("  </body>\n{0}", _Indent);
 		_Output.Write ("</html>\n{0}", _Indent);
 		}
 	
-
-	//
-	// PageHome
-	//
-	public void PageHome (PageOptions options) {
+	/// <summary>	
+	///  PageHome
+	/// </summary>
+	public void  PageHome () {
 		_Output.Write ("<div class=\"container\">\n{0}", _Indent);
 		_Output.Write ("  <h1>Home</h1>\n{0}", _Indent);
 		_Output.Write ("  <p><a href=\"Upload\">Add Document</a></p>\n{0}", _Indent);
@@ -52,14 +49,13 @@ public partial class Annotations : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		}
 	
-
-	//
-	// PageSelect
-	//
-	public void PageSelect (PageOptions options) {
+	/// <summary>	
+	///  PageSelect 
+	/// </summary>
+	public void  PageSelect  () {
 		_Output.Write ("<div class=\"container\">\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("    <form method=\"post\" action=\"Append\" enctype=\"multipart/form-data\">\n{0}", _Indent);
+		_Output.Write ("    <form method0=\"post\" action=\"Append\" enctype=\"multipart/form-data\">\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("        <label>Select the file:</label>\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
@@ -77,56 +73,51 @@ public partial class Annotations : global::Goedel.Registry.Script {
 		_Output.Write ("</div>\n{0}", _Indent);
 		}
 	
-
-	//
-	// PageUpload
-	//
-	public void PageUpload (PageOptions options) {
+	/// <summary>	
+	///  PageUpload 
+	/// </summary>
+	public void  PageUpload  () {
 		_Output.Write ("<div class=\"container\">\n{0}", _Indent);
 		_Output.Write ("  <h1>Upload Complete</h1>\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("</div>\n{0}", _Indent);
 		}
 	
-
-	//
-	// PageDocuments
-	//
-	public void PageDocuments (PageOptions options) {
+	/// <summary>	
+	///  PageDocuments 
+	/// </summary>
+	public void  PageDocuments  () {
 		_Output.Write ("<div class=\"container\">\n{0}", _Indent);
 		_Output.Write ("  <h1>List of managed documents</h1>\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("</div>\n{0}", _Indent);
 		}
 	
-
-	//
-	// PageDocument
-	//
-	public void PageDocument (PageOptions options) {
+	/// <summary>	
+	///  PageDocument 
+	/// </summary>
+	public void  PageDocument  () {
 		_Output.Write ("<div class=\"container\">\n{0}", _Indent);
 		_Output.Write ("  <h1>A particular managed documents</h1>\n{0}", _Indent);
 		_Output.Write ("</div>\n{0}", _Indent);
 		}
 	
-
-	//
-	// PageActions
-	//
-	public void PageActions (PageOptions options) {
+	/// <summary>	
+	///  PageActions 
+	/// </summary>
+	public void  PageActions  () {
 		_Output.Write ("<div class=\"container\">\n{0}", _Indent);
 		_Output.Write ("  <h1>List of outstanding actions</h1>\n{0}", _Indent);
 		_Output.Write ("</div>\n{0}", _Indent);
 		}
 	
-
-	//
-	// PageError
-	//
-	public void PageError (PageOptions options) {
+	/// <summary>	
+	///  PageError 
+	/// </summary>
+	public void  PageError  () {
 		_Output.Write ("<div class=\"container\">\n{0}", _Indent);
 		_Output.Write ("  <h1>An error occurred</h1>\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("</div>\n{0}", _Indent);
 		}
-		}
+	}

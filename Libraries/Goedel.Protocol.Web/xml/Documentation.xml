@@ -19,6 +19,20 @@
             Extensions class
             </summary>
         </member>
+        <member name="T:Goedel.Protocol.Web.FieldData">
+            <summary>
+            Backer record describing a form field entry in a MIME multipart.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Web.FieldData.Name">
+            <summary>The field name</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Web.FieldData.Filename">
+            <summary>The filename</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Web.FieldData.ContentType">
+            <summary>The content type</summary> 
+        </member>
         <member name="T:Goedel.Protocol.Web.FormEntryType">
             <summary>
             The Form entry types
@@ -318,10 +332,54 @@
             </summary>
             <param name="c">The character read</param>
         </member>
+        <member name="T:Goedel.Protocol.Web.NamespaceDoc">
+            <summary>
+            Support library for captive Web server for presenting generated pages.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Web.ParsedMultipart">
+            <summary>
+            Parser for MIME/Multipart specialized to reading HTTP form data.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Web.ParsedMultipart.Error">
+            <summary>If true, the parse failed.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Web.ParsedMultipart.Parse(System.IO.Stream,Goedel.Protocol.Web.FormData)">
+            <summary>
+            Parse data presented in the stream <paramref name="data"/> and record items to
+            <paramref name="formData"/>.
+            </summary>
+            <param name="data">The stream to read.</param>
+            <param name="formData">Instance to receive the parsed data.</param>
+            <returns>The parser context.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Web.Resource">
+            <summary>
+            Web Service resource descriptor.
+            </summary>
+            <param name="Method">The callback method for the resource.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Web.Resource.#ctor(System.Func{Goedel.Protocol.Web.IWebService,System.Net.HttpListenerContext,System.Threading.Tasks.Task})">
+            <summary>
+            Web Service resource descriptor.
+            </summary>
+            <param name="Method">The callback method for the resource.</param>
+        </member>
+        <member name="P:Goedel.Protocol.Web.Resource.Method">
+            <summary>The callback method for the resource.</summary>
+        </member>
         <member name="T:Goedel.Protocol.Web.StreamLookaheadReader">
             <summary>
             Stream reader with one byte lookahead.
             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Web.StreamLookaheadReader.MaxRead">
+            <summary>Maximum number of bytes to read. Unbounded if less than 0.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Web.StreamLookaheadReader.ValidLength">
+            <summary>If true, the number of bytes read since the last call to 
+            <see cref="M:Goedel.Protocol.Web.StreamLookaheadReader.Start(System.Int32)"/> is smaller than <see cref="P:Goedel.Protocol.Web.StreamLookaheadReader.MaxRead"/>.</summary> 
         </member>
         <member name="M:Goedel.Protocol.Web.StreamLookaheadReader.#ctor(System.IO.Stream)">
             <summary>
@@ -345,26 +403,6 @@
             Read the next byte and advance the read pointer.
             </summary>
             <returns>The next unread byte in the stream.</returns>
-        </member>
-        <member name="T:Goedel.Protocol.Web.NamespaceDoc">
-            <summary>
-            Support library for captive Web server for presenting generated pages.
-            </summary>
-        </member>
-        <member name="T:Goedel.Protocol.Web.Resource">
-            <summary>
-            Web Service resource descriptor.
-            </summary>
-            <param name="Method">The callback method for the resource.</param>
-        </member>
-        <member name="M:Goedel.Protocol.Web.Resource.#ctor(System.Func{Goedel.Protocol.Web.IWebService,System.Net.HttpListenerContext,System.Threading.Tasks.Task})">
-            <summary>
-            Web Service resource descriptor.
-            </summary>
-            <param name="Method">The callback method for the resource.</param>
-        </member>
-        <member name="P:Goedel.Protocol.Web.Resource.Method">
-            <summary>The callback method for the resource.</summary>
         </member>
     </members>
 </doc>

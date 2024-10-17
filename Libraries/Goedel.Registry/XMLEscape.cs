@@ -264,6 +264,9 @@ public class XMLTextWriter {
         }
 
 
+
+
+
     /// <summary>
     /// Write an element start tag with optional attributes.
     /// </summary>

@@ -92,7 +92,7 @@ public class AnnotationService: IWebService {
                 HttpListenerContext context) {
         var annotation = service as AnnotationService;
         var annotations = Annotations.Get(annotation, context);
-        annotations.PageHome(annotations.pageOptions);
+        annotations.PageHome();
         annotations.End();
         }
 
@@ -101,7 +101,7 @@ public class AnnotationService: IWebService {
                 HttpListenerContext context) {
         var annotation = service as AnnotationService;
         var annotations = Annotations.Get(annotation, context);
-        annotations.PageSelect(annotations.pageOptions);
+        annotations.PageSelect();
         annotations.End();
         }
 
@@ -116,7 +116,7 @@ public class AnnotationService: IWebService {
         //ParsedMultipart.Parse(annotations.PostData);
 
 
-        annotations.PageUpload(annotations.pageOptions);
+        annotations.PageUpload();
         annotations.End();
         }
 
@@ -125,7 +125,7 @@ public class AnnotationService: IWebService {
                 HttpListenerContext context) {
         var annotation = service as AnnotationService;
         var annotations = Annotations.Get(annotation, context);
-        annotations.PageDocuments(annotations.pageOptions);
+        annotations.PageDocuments();
         annotations.End();
         }
 
@@ -134,7 +134,7 @@ public class AnnotationService: IWebService {
                 HttpListenerContext context) {
         var annotation = service as AnnotationService;
         var annotations = Annotations.Get(annotation, context);
-        annotations.PageActions(annotations.pageOptions);
+        annotations.PageActions();
         annotations.End();
         }
 
@@ -143,7 +143,7 @@ public class AnnotationService: IWebService {
                 HttpListenerContext context) {
         var annotation = service as AnnotationService;
         var annotations = Annotations.Get(annotation, context);
-        annotations.PageDocument(annotations.pageOptions);
+        annotations.PageDocument();
         annotations.End();
         }
 
@@ -152,7 +152,7 @@ public class AnnotationService: IWebService {
                 HttpListenerContext context) {
         var annotation = service as AnnotationService;
         var annotations = Annotations.Get(annotation, context);
-        annotations.PageHome(annotations.pageOptions);
+        annotations.PageHome();
         annotations.End();
         }
 
@@ -246,11 +246,11 @@ public partial class Annotations {
 
 
      void Start () {
-        StartPage(pageOptions);
+        StartPage();
         }
 
     public void End() {
-        EndPage(pageOptions);
+        EndPage();
         _Output.Flush();
         Response.OutputStream.Close();
         }

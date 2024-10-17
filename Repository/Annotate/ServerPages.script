@@ -6,7 +6,7 @@
 #% #pragma warning disable IDE1006
 #xclass Annotate Annotations
 
-#method StartPage PageOptions options
+#method0 StartPage
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,17 +17,17 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   </head>
   <body>
-#end method
+#end method0
 
 
-#method EndPage PageOptions options
+#method0 EndPage 
   </body>
 </html>
-#end method
+#end method0
 
 
 
-#method PageHome PageOptions options
+#method0 PageHome
 <div class="container">
   <h1>Home</h1>
   <p><a href="Upload">Add Document</a></p>
@@ -35,12 +35,12 @@
   <p><a href="Actions">List Actions</a></p>
 </div>
 
-#end method
+#end method0
 
-#method PageSelect PageOptions options
+#method0 PageSelect 
 <div class="container">
 
-    <form method="post" action="Append" enctype="multipart/form-data">
+    <form method0="post" action="Append" enctype="multipart/form-data">
 
         <label>Select the file:</label>
 
@@ -56,42 +56,42 @@
     </form>
 
 </div>
-#end method
+#end method0
 
-#method PageUpload PageOptions options
+#method0 PageUpload 
 <div class="container">
   <h1>Upload Complete</h1>
 
 </div>
-#end method
+#end method0
 
 
-#method PageDocuments PageOptions options
+#method0 PageDocuments 
 <div class="container">
   <h1>List of managed documents</h1>
 
 </div>
-#end method
+#end method0
 
-#method PageDocument PageOptions options
+#method0 PageDocument 
 <div class="container">
   <h1>A particular managed documents</h1>
 </div>
-#end method
+#end method0
 
 
-#method PageActions PageOptions options
+#method0 PageActions 
 <div class="container">
   <h1>List of outstanding actions</h1>
 </div>
-#end method
+#end method0
 
 
-#method PageError PageOptions options
+#method0 PageError 
 <div class="container">
   <h1>An error occurred</h1>
 
 </div>
-#end method
+#end method0
 
 #end xclass
