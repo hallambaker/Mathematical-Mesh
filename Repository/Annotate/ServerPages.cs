@@ -50,6 +50,70 @@ public partial class Annotations : global::Goedel.Registry.Script {
 		}
 	
 	/// <summary>	
+	///  PageEnterComment
+	/// </summary>
+	public void  PageEnterComment () {
+		_Output.Write ("<div class=\"whatever\">\n{0}", _Indent);
+		_Output.Write ("  <h1>Enter a comment</h1>\n{0}", _Indent);
+		_Output.Write ("  \n{0}", _Indent);
+		_Output.Write ("  <form id=\"myForm\">\n{0}", _Indent);
+		_Output.Write ("    <table>\n{0}", _Indent);
+		_Output.Write ("  \n{0}", _Indent);
+		_Output.Write ("    <tr><td><label for=\"user\">User</label></td><td><input type=\"text\" id=\"user\" name=\"User\" /></td></tr>\n{0}", _Indent);
+		_Output.Write ("    <tr><td><label for=\"anchor\">Anchor</label></td><td><input type=\"text\" id=\"anchor\" name=\"Anchor\" /></td></tr>\n{0}", _Indent);
+		_Output.Write ("    <tr><td><label for=\"semantic\">Semantic</label></td><td><select name=\"Semantic\" id=\"semantic\">\n{0}", _Indent);
+		_Output.Write ("  <option value=\"discuss\">Discuss</option>\n{0}", _Indent);
+		_Output.Write ("  <option value=\"suggest\">Suggest</option>\n{0}", _Indent);
+		_Output.Write ("  <option value=\"query\">Query</option>\n{0}", _Indent);
+		_Output.Write ("  <option value=\"issue\">Issue</option>\n{0}", _Indent);
+		_Output.Write ("  <option value=\"info\">Information</option>\n{0}", _Indent);
+		_Output.Write ("</select></td></tr>\n{0}", _Indent);
+		_Output.Write ("    <tr><td><label for=\"text\">Text</label></td><td><textarea type=\"text\" id=\"text\" name=\"Text\" ></textarea></td></tr>\n{0}", _Indent);
+		_Output.Write ("    <tr><td><button onclick=\"showAlert()\" type=\"button\">Click Me!!</button></td></tr>\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("    </table>\n{0}", _Indent);
+		_Output.Write (" </form>\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("  <p>Here will be an form</p>\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("      <script>\n{0}", _Indent);
+		_Output.Write ("        function showAlert() {{\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("            const url = 'Comment'\n{0}", _Indent);
+		_Output.Write ("            const comment = {{\n{0}", _Indent);
+		_Output.Write ("                id: 1017,\n{0}", _Indent);
+		_Output.Write ("                }}\n{0}", _Indent);
+		_Output.Write ("            comment.User = document.getElementById('user').value;\n{0}", _Indent);
+		_Output.Write ("            comment.Anchor = document.getElementById('anchor').value;\n{0}", _Indent);
+		_Output.Write ("            comment.Semantic = document.getElementById('semantic').value;\n{0}", _Indent);
+		_Output.Write ("            comment.Text = document.getElementById('text').value;\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("            // a POST request\n{0}", _Indent);
+		_Output.Write ("            const response =  fetch('Comment', {{\n{0}", _Indent);
+		_Output.Write ("                method: 'POST',\n{0}", _Indent);
+		_Output.Write ("                headers: {{\n{0}", _Indent);
+		_Output.Write ("                    'Content-Type': 'application/json; charset=utf-8'\n{0}", _Indent);
+		_Output.Write ("                    }},\n{0}", _Indent);
+		_Output.Write ("                body: JSON.stringify(comment)\n{0}", _Indent);
+		_Output.Write ("                }})\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("            }}\n{0}", _Indent);
+		_Output.Write ("    </script>\n{0}", _Indent);
+		_Output.Write ("</div>\n{0}", _Indent);
+		}
+	
+	/// <summary>	
+	///  PageComment
+	/// </summary>
+	public void  PageComment () {
+		_Output.Write ("<div class=\"container\">\n{0}", _Indent);
+		_Output.Write ("  <h1>Got a comment</h1>\n{0}", _Indent);
+		_Output.Write ("  </div>\n{0}", _Indent);
+		}
+	
+	/// <summary>	
 	///  PageSelect 
 	/// </summary>
 	public void  PageSelect  () {

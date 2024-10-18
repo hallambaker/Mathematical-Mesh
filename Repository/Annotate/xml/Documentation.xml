@@ -4,6 +4,64 @@
         <name>Annotate</name>
     </assembly>
     <members>
+        <member name="M:Annotate.Annotations.StartPage">
+            <summary>	
+             StartPage
+            </summary>
+        </member>
+        <member name="M:Annotate.Annotations.EndPage">
+            <summary>	
+             EndPage 
+            </summary>
+        </member>
+        <member name="M:Annotate.Annotations.PageHome">
+            <summary>	
+             PageHome
+            </summary>
+        </member>
+        <member name="M:Annotate.Annotations.PageEnterComment">
+            <summary>	
+             PageEnterComment
+            </summary>
+        </member>
+        <member name="M:Annotate.Annotations.PageComment">
+            <summary>	
+             PageComment
+            </summary>
+        </member>
+        <member name="M:Annotate.Annotations.PageSelect">
+            <summary>	
+             PageSelect 
+            </summary>
+        </member>
+        <member name="M:Annotate.Annotations.PageUpload">
+            <summary>	
+             PageUpload 
+            </summary>
+        </member>
+        <member name="M:Annotate.Annotations.PageDocuments">
+            <summary>	
+             PageDocuments 
+            </summary>
+        </member>
+        <member name="M:Annotate.Annotations.PageDocument">
+            <summary>	
+             PageDocument 
+            </summary>
+        </member>
+        <member name="M:Annotate.Annotations.PageActions">
+            <summary>	
+             PageActions 
+            </summary>
+        </member>
+        <member name="M:Annotate.Annotations.PageError">
+            <summary>	
+             PageError 
+            </summary>
+        </member>
+        <member name="P:Annotate.AnnotationService.ResourceMap">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Repository.Internal">
             <summary>
             An internal assertion check failed.
@@ -55,9 +113,6 @@
             <summary>
             Desctiption of the 
             </summary>
-        </member>
-        <member name="P:Annotate.AnnotationService.ResourceMap">
-            <inheritdoc/>
         </member>
     </members>
 </doc>

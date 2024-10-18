@@ -43,7 +43,10 @@ public class AnnotationService: IWebService {
         { "/Documents", new (GetListDocuments) },
         { "/Actions", new (GetListActions) },
         { "/Document", new (GetShowDocument) },
+        { "/Comment", new (GetComment) },
+        { "/CommentForm", new (MakeComment) },
         { "*", new (Error) }
+
         };
 
 
@@ -82,9 +85,6 @@ public class AnnotationService: IWebService {
         else {
             await Error(this, context);
             }
-
-
-
         }
 
     public static async Task GetHome(
@@ -105,13 +105,34 @@ public class AnnotationService: IWebService {
         annotations.End();
         }
 
+
+    public static async Task MakeComment(
+            IWebService service,
+            HttpListenerContext context) {
+        var annotation = service as AnnotationService;
+        var annotations = Annotations.Get(annotation, context);
+        annotations.PageEnterComment();
+        annotations.End();
+        }
+
+
+    public static async Task GetComment(
+                IWebService service,
+                HttpListenerContext context) {
+        var annotation = service as AnnotationService;
+        Annotations.PostComment(annotation, context);
+
+
+        }
+
+
     public static async Task PostUploadDocument (
                 IWebService service,
                 HttpListenerContext context) {
         var annotation = service as AnnotationService;
         var fields = new FormDataUpload();
 
-        var annotations = Annotations.Post(annotation, context, fields);
+        var annotations = Annotations.PostForm(annotation, context, fields);
 
         //ParsedMultipart.Parse(annotations.PostData);
 
@@ -198,62 +219,4 @@ public class FormDataComment : FormData {
 
 
 public class PageOptions {
-    }
-
-
-public partial class Annotations {
-
-    public AnnotationService Annotation { get; init; }
-    public HttpListenerContext Context { get; init; }
-
-    HttpListenerResponse Response => Context.Response;
-
-    public PageOptions pageOptions = new PageOptions();
-
-
-    public string UserName { get; set; } = "Fred";
-
-    public byte[] PostData { get; set; }
-
-    public static Annotations Get(
-                AnnotationService annotation,
-                HttpListenerContext context) {
-        var writer = new StreamWriter(context.Response.OutputStream);
-        var result = new Annotations() {
-            Annotation = annotation,
-            Context = context,
-            _Output = writer
-            };
-
-        result.Start();
-        return result;
-        }
-
-
-    public static Annotations Post(
-            AnnotationService annotation,
-            HttpListenerContext context,
-            FormData formData
-            ) {
-        var result = Get(annotation, context);
-        ParsedMultipart.Parse(context.Request.InputStream, formData);
-        return result;
-        }
-
-
-
-
-
-
-     void Start () {
-        StartPage();
-        }
-
-    public void End() {
-        EndPage();
-        _Output.Flush();
-        Response.OutputStream.Close();
-        }
-
-
     }

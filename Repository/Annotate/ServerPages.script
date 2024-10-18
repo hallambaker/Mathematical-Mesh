@@ -37,6 +37,65 @@
 
 #end method0
 
+#method0 PageEnterComment
+<div class="whatever">
+  <h1>Enter a comment</h1>
+  
+  <form id="myForm">
+    <table>
+  
+    <tr><td><label for="user">User</label></td><td><input type="text" id="user" name="User" /></td></tr>
+    <tr><td><label for="anchor">Anchor</label></td><td><input type="text" id="anchor" name="Anchor" /></td></tr>
+    <tr><td><label for="semantic">Semantic</label></td><td><select name="Semantic" id="semantic">
+  <option value="discuss">Discuss</option>
+  <option value="suggest">Suggest</option>
+  <option value="query">Query</option>
+  <option value="issue">Issue</option>
+  <option value="info">Information</option>
+</select></td></tr>
+    <tr><td><label for="text">Text</label></td><td><textarea type="text" id="text" name="Text" ></textarea></td></tr>
+    <tr><td><button onclick="showAlert()" type="button">Click Me!!</button></td></tr>
+
+    </table>
+ </form>
+
+  <p>Here will be an form</p>
+
+
+      <script>
+        function showAlert() {
+
+            const url = 'Comment'
+            const comment = {
+                id: 1017,
+                }
+            comment.User = document.getElementById('user').value;
+            comment.Anchor = document.getElementById('anchor').value;
+            comment.Semantic = document.getElementById('semantic').value;
+            comment.Text = document.getElementById('text').value;
+
+            // a POST request
+            const response =  fetch('Comment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8'
+                    },
+                body: JSON.stringify(comment)
+                })
+
+
+            }
+    </script>
+</div>
+#end method0
+
+
+#method0 PageComment
+<div class="container">
+  <h1>Got a comment</h1>
+  </div>
+#end method0
+
 #method0 PageSelect 
 <div class="container">
 
