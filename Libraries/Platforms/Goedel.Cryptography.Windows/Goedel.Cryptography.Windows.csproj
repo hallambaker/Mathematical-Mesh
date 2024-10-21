@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettingsWindows.xml" />
+	<!--<Import Project="$(SolutionDir)Settings/CommonSettingsWindows.xml" />-->
   <PropertyGroup>
-	<TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
-	  <!--<RuntimeIdentifier>win10-x64</RuntimeIdentifier>-->
+
+	  <TargetFrameworks>net8.0-windows10.0.22621.0</TargetFrameworks>
     <RootNamespace>Goedel.Cryptography.Windows</RootNamespace>
     <Product>Goedel.Cryptography.Windows</Product>
     <Description>Platform specific windows libraries.</Description>

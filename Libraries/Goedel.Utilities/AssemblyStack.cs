@@ -36,7 +36,7 @@ public static class AssemblyStack {
         var frame = stack.GetFrame(1);
         var method = frame.GetMethod();
 
-        return method.Name;
+        return method?.Name;
         }
 
     /// <summary>
@@ -48,7 +48,7 @@ public static class AssemblyStack {
         var frame = stack.GetFrame(2);
         var method = frame.GetMethod();
 
-        return method.Name;
+        return method?.Name;
         }
 
     /// <summary>

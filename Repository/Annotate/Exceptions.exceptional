@@ -1,8 +1,0 @@
-﻿
-Namespace Goedel.Repository
-
-	Exception Internal
-        Console "An internal error occurred"
-		Description
-			|An internal assertion check failed.
-
