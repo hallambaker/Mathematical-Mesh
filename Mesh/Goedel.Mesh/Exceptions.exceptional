@@ -51,6 +51,17 @@ Namespace Goedel.Mesh
 		Exception InvalidDate
 			Console "The specified date was invalid."
 
+	Exception ItemAlreadyExists
+        Console "The item {0} already exists"
+		Description
+			|The item already exists
+
+	Exception ItemDoesNotExist
+        Console "The item {0} does not exist"
+		Description
+			|The item does not exist
+
+
 	Exception NotAdministrator
 		Console "This device does not have administration capability"
 	Exception NotSuperAdministrator

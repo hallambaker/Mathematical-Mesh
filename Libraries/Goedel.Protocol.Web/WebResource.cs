@@ -7,7 +7,7 @@ namespace Goedel.Protocol.Web;
 /// Web Service resource descriptor.
 /// </summary>
 /// <param name="Method">The callback method for the resource.</param>
-public record Resource(
-            Func<IWebService, HttpListenerContext, Task> Method
+public record WebResource<T>(
+            Func<T, HttpListenerContext, Task> Method
             ) {
     }

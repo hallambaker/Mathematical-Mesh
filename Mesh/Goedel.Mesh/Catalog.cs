@@ -100,7 +100,7 @@ public abstract class Catalog<T> : Store, IEnumerable<T>, INotifyCollectionChang
                 bool read = true,
                 bool decrypt = true,
                 bool create = true,
-                byte[] bitmask = null) :
+                byte[]? bitmask = null) :
             base(directory, containerName, policy, cryptoParameters, keyCollection,
                 decrypt: decrypt, create: create, bitmask: bitmask) {
 
@@ -168,6 +168,24 @@ public abstract class Catalog<T> : Store, IEnumerable<T>, INotifyCollectionChang
             }
         }
 
+
+    protected virtual bool Validate(T catalogedEntry, bool create=true) {
+
+        // Does the value already exist?
+        if (!DictionaryByLocalName.TryGetValue(catalogedEntry.LocalName, out var entry)) {
+            return true;
+            }
+
+        // Existing value is always a fail on create
+        create.AssertFalse(ItemAlreadyExists.Throw, catalogedEntry.LocalName);
+
+        // Existing value is allowed when updating an item.
+        (catalogedEntry._PrimaryKey == entry._PrimaryKey).AssertTrue(
+                ItemAlreadyExists.Throw, catalogedEntry.LocalName);
+
+        return true;
+        }
+
     #endregion
     #region // Public interfaces to Add/Update/Delete typed catalog entry to the catalog
     /// <summary>
@@ -175,6 +193,7 @@ public abstract class Catalog<T> : Store, IEnumerable<T>, INotifyCollectionChang
     /// </summary>
     /// <param name="catalogEntry">The entry to add.</param>
     public PersistentIndexEntry New(T catalogEntry) {
+        Validate(catalogEntry, true);
         var envelope = PersistenceStore.PrepareNew(catalogEntry);
         return PersistenceStore.Apply(envelope);
         }
@@ -185,6 +204,7 @@ public abstract class Catalog<T> : Store, IEnumerable<T>, INotifyCollectionChang
     /// <param name="catalogEntry">The entry to update.</param>
     /// <param name="encryptionKey">Key under which the item is to be encrypted.</param>
     public void Update(T catalogEntry, CryptoKey encryptionKey = null) {
+        Validate(catalogEntry, false);
         var envelope = PersistenceStore.PrepareUpdate(out _, catalogEntry, encryptionKey: encryptionKey);
         PersistenceStore.Apply(envelope);
         }

@@ -22,7 +22,7 @@ public static class EnumHelpers {
 
             return enumToGetDescriptionFrom.ToString();
             }
-        catch (Exception ex) {
+        catch {
             //ThisLogger.Debug($"Error getting description for enum: {enumToGetDescriptionFrom.GetType()}");
             //ThisLogger.Debug(ex);
             }

@@ -8,7 +8,7 @@ namespace Goedel.Cryptography.Nist;
 /// Generate probable primes with conditions.
 /// </summary>
 public class AllProbablePrimesWithConditionsGenerator  {
-    private readonly IEntropyProvider _entropyProvider;
+
     private readonly IPrimeGenerator _primeGenerator;
     private int _pBound = 5;
 
