@@ -6,8 +6,8 @@ namespace Goedel.Protocol.Web;
 /// <summary>
 /// Interface for a WebService.
 /// </summary>
-public interface IWebService<T> {
+public interface IWebService<U> {
 
     ///<summary>The resource map</summary> 
-    Dictionary<string, WebResource<T>> ResourceMap { get; }
+    Dictionary<string, WebResource<U>> ResourceMap { get; }
     }
