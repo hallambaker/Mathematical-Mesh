@@ -159,4 +159,4 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			 ConsoleReference (ShellBookmark.BookmarkList);
 			_Output.Write ("\n{0}", _Indent);
 				}
-		}
+	}

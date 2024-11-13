@@ -127,4 +127,4 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			 ConsoleReference (ShellNetwork.NetworkList);
 			_Output.Write ("\n{0}", _Indent);
 				}
-		}
+	}

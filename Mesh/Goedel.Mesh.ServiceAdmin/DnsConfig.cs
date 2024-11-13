@@ -30,10 +30,10 @@ namespace Goedel.Mesh.ServiceAdmin;
 public partial class DnsConfiguration : global::Goedel.Registry.Script {
 
 	
-
-	//
-	// BindConfig
-	//
+	/// <summary>	
+	/// BindConfig
+	/// </summary>
+	/// <param name="options"></param>
 	public void BindConfig (Configuration configuration) {
 		_Output.Write ("; PATH=/etc/bind/zones/db.meshService\n{0}", _Indent);
 		_Output.Write (";\n{0}", _Indent);
@@ -65,10 +65,10 @@ public partial class DnsConfiguration : global::Goedel.Registry.Script {
 			}
 		}
 	
-
-	//
-	// NetshConfig
-	//
+	/// <summary>	
+	/// NetshConfig
+	/// </summary>
+	/// <param name="options"></param>
 	public void NetshConfig (Configuration configuration) {
 		 var hostConfig = configuration.GenericHost;
 		 var account = hostConfig.RunAs;

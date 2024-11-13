@@ -36,4 +36,4 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			 Examples.ToDoList = null; // Cause future attempts to add entries to cause an error.
 	
 			}
-		}
+	}

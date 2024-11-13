@@ -13,10 +13,10 @@ namespace ExampleGenerator;
 public partial class CreateExamples : global::Goedel.Registry.Script {
 
 	
-
-	//
-	// WebDocs
-	//
+	/// <summary>	
+	/// WebDocs
+	/// </summary>
+	/// <param name="options"></param>
 	public void WebDocs (CreateExamples Index) {
 		 Web (Index);
 		 UserGuide (Index);
@@ -63,10 +63,10 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		 MailReference (Index);
 		}
 	
-
-	//
-	// ConsoleExample
-	//
+	/// <summary>	
+	/// ConsoleExample
+	/// </summary>
+	/// <param name="options"></param>
 	public void ConsoleExample (List<ExampleResult> exampleResults) {
 		 if (exampleResults == null) { ReportMissingExample(); return;}
 		_Output.Write ("\n{0}", _Indent);
@@ -83,10 +83,10 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		_Output.Write ("~~~~\n{0}", _Indent);
 		}
 	
-
-	//
-	// DescribeRequest
-	//
+	/// <summary>	
+	/// DescribeRequest
+	/// </summary>
+	/// <param name="options"></param>
 	public void DescribeRequest (TraceTransaction trace) {
 		 if (trace == null) {ReportMissing(); return;}
 		_Output.Write ("\n{0}", _Indent);
@@ -94,10 +94,10 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		}
 	
-
-	//
-	// DescribeResponse
-	//
+	/// <summary>	
+	/// DescribeResponse
+	/// </summary>
+	/// <param name="options"></param>
 	public void DescribeResponse (TraceTransaction trace) {
 		 if (trace == null) {ReportMissing(); return;}
 		_Output.Write ("\n{0}", _Indent);
@@ -105,10 +105,10 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		}
 	
-
-	//
-	// DescribeRequestBinding
-	//
+	/// <summary>	
+	/// DescribeRequestBinding
+	/// </summary>
+	/// <param name="options"></param>
 	public void DescribeRequestBinding (TraceTransaction trace) {
 		 if (trace == null) {ReportMissing(); return;}
 		_Output.Write ("~~~~\n{0}", _Indent);
@@ -119,10 +119,10 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		 ReportMissing();
 		}
 	
-
-	//
-	// DescribeResponseBinding
-	//
+	/// <summary>	
+	/// DescribeResponseBinding
+	/// </summary>
+	/// <param name="options"></param>
 	public void DescribeResponseBinding (TraceTransaction trace) {
 		 if (trace == null) {ReportMissing(); return;}
 		_Output.Write ("~~~~\n{0}", _Indent);
@@ -133,10 +133,10 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		 ReportMissing();
 		}
 	
-
-	//
-	// Format
-	//
+	/// <summary>	
+	/// Format
+	/// </summary>
+	/// <param name="options"></param>
 	public void Format (JsonObject data) {
 		 if (data == null) {ReportMissing(); return;}
 		_Output.Write ("{1}\n{0}", _Indent, Preformat);
@@ -144,10 +144,10 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		_Output.Write ("{1}\n{0}", _Indent, Preformat);
 		}
 	
-
-	//
-	// ConsoleJSON
-	//
+	/// <summary>	
+	/// ConsoleJSON
+	/// </summary>
+	/// <param name="options"></param>
 	public void ConsoleJSON (List<ExampleResult> exampleResults) {
 		 if (exampleResults == null) {ReportMissing(); return;}
 		 var exampleResult = exampleResults[0];
@@ -160,10 +160,10 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		_Output.Write ("~~~~\n{0}", _Indent);
 		}
 	
-
-	//
-	// ConsoleReference
-	//
+	/// <summary>	
+	/// ConsoleReference
+	/// </summary>
+	/// <param name="options"></param>
 	public void ConsoleReference (List<ExampleResult> exampleResults) {
 		 if (exampleResults == null) {ReportMissing(); return;}
 		 var exampleResult = exampleResults[0];
@@ -178,10 +178,10 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		}
 	
-
-	//
-	// ConsoleReference2
-	//
+	/// <summary>	
+	/// ConsoleReference2
+	/// </summary>
+	/// <param name="options"></param>
 	public void ConsoleReference2 (List<ExampleResult> exampleResults) {
 		 if (exampleResults == null) {ReportMissing(); return;}
 		 var exampleResult = exampleResults[0];
@@ -383,10 +383,10 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 				}
 	
-
-	//
-	// Describe
-	//
+	/// <summary>	
+	/// Describe
+	/// </summary>
+	/// <param name="options"></param>
 	public void Describe (DescribeCommandSet CommandSet) {
 		_Output.Write ("# {1}\n{0}", _Indent, CommandSet.Identifier);
 		_Output.Write ("\n{0}", _Indent);
@@ -399,10 +399,11 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		_Output.Write ("~~~~\n{0}", _Indent);
 		}
 	
-
-	//
-	// Describe
-	//
+	/// <summary>	
+	/// Describe
+	/// </summary>
+	/// <param name="options"></param>
+	/// <param name="options"></param>
 	public void Describe (DescribeCommandSet CommandSet, DescribeCommand Command) {
 		_Output.Write ("# {1} {2}\n{0}", _Indent, CommandSet.Identifier, Command.Identifier);
 		_Output.Write ("\n{0}", _Indent);
@@ -415,21 +416,19 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		_Output.Write ("~~~~\n{0}", _Indent);
 		}
 	
-
-	//
-	// MakeTitle
-	//
+	/// <summary>	
+	/// MakeTitle
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakeTitle (string title) {
 		_Output.Write ("<title>{1}\n{0}", _Indent, title);
 		_Output.Write ("# Using the {1} Command Set\n{0}", _Indent, title);
 		}
 	
-
-	//
-	// 
-	//
-
+	/// <summary>	
+	/// 
+	/// </summary>
 		 public string ToCommand (string command) => "`" + command + "`";
 		 public string ToCommand (string group, string command) => "`" + group + " " + command + "`";
 	
-		}
+	}

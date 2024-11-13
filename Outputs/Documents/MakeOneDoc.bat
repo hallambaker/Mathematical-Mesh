@@ -39,6 +39,6 @@ copy ..\favicon.png .
 
 
 :: rfctool %DocSource%\hallambaker-mesh-10-everything.docx  /auto /cache=bib.xml
-rfctool %DocSource%\hallambaker-mesh-developer.docx /auto /cache=bib.xml
+rfctool %DocSource%\hallambaker-palimpsest.docx /auto /cache=bib.xml
 exit /b 0
 

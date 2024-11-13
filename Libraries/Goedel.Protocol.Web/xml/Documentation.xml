@@ -116,12 +116,12 @@
             <param name="name">The form field name.</param>
             <returns>The form item.</returns>
         </member>
-        <member name="T:Goedel.Protocol.Web.IWebService">
+        <member name="T:Goedel.Protocol.Web.IWebService`1">
             <summary>
             Interface for a WebService.
             </summary>
         </member>
-        <member name="P:Goedel.Protocol.Web.IWebService.ResourceMap">
+        <member name="P:Goedel.Protocol.Web.IWebService`1.ResourceMap">
             <summary>The resource map</summary> 
         </member>
         <member name="T:Goedel.Protocol.Web.MultipartLex">
@@ -354,21 +354,6 @@
             <param name="formData">Instance to receive the parsed data.</param>
             <returns>The parser context.</returns>
         </member>
-        <member name="T:Goedel.Protocol.Web.Resource">
-            <summary>
-            Web Service resource descriptor.
-            </summary>
-            <param name="Method">The callback method for the resource.</param>
-        </member>
-        <member name="M:Goedel.Protocol.Web.Resource.#ctor(System.Func{Goedel.Protocol.Web.IWebService,System.Net.HttpListenerContext,System.Threading.Tasks.Task})">
-            <summary>
-            Web Service resource descriptor.
-            </summary>
-            <param name="Method">The callback method for the resource.</param>
-        </member>
-        <member name="P:Goedel.Protocol.Web.Resource.Method">
-            <summary>The callback method for the resource.</summary>
-        </member>
         <member name="T:Goedel.Protocol.Web.StreamLookaheadReader">
             <summary>
             Stream reader with one byte lookahead.
@@ -403,6 +388,26 @@
             Read the next byte and advance the read pointer.
             </summary>
             <returns>The next unread byte in the stream.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Web.WebResource`1">
+            <summary>
+            Web Service resource descriptor.
+            </summary>
+            <param name="Method">The callback method for the resource.</param>
+            <param name="SignedIn">If true, the user must be signed in to access this page.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Web.WebResource`1.#ctor(System.Func{System.Net.HttpListenerContext,`0,System.Threading.Tasks.Task},System.Boolean)">
+            <summary>
+            Web Service resource descriptor.
+            </summary>
+            <param name="Method">The callback method for the resource.</param>
+            <param name="SignedIn">If true, the user must be signed in to access this page.</param>
+        </member>
+        <member name="P:Goedel.Protocol.Web.WebResource`1.Method">
+            <summary>The callback method for the resource.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Web.WebResource`1.SignedIn">
+            <summary>If true, the user must be signed in to access this page.</summary>
         </member>
     </members>
 </doc>

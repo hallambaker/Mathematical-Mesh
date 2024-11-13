@@ -224,4 +224,4 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			  ConsoleReference (Group.GroupList);
 			_Output.Write ("\n{0}", _Indent);
 				}
-		}
+	}

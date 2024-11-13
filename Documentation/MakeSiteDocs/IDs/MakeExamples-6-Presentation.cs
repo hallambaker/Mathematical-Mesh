@@ -15,10 +15,10 @@ namespace ExampleGenerator;
 public partial class CreateExamples : global::Goedel.Registry.Script {
 
 	
-
-	//
-	// MakePresentationExamples
-	//
+	/// <summary>	
+	/// MakePresentationExamples
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakePresentationExamples (CreateExamples Example) {
 		 PresentationFirstContact(Example);
 		 PresentationZeroRoundTrip(Example);
@@ -106,4 +106,4 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("Key exchange example TBS\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 				}
-		}
+	}

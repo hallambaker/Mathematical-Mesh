@@ -171,6 +171,10 @@ public abstract class Catalog<T> : Store, IEnumerable<T>, INotifyCollectionChang
 
     protected virtual bool Validate(T catalogedEntry, bool create=true) {
 
+        if (catalogedEntry.LocalName is null) {
+            return true;
+            }
+
         // Does the value already exist?
         if (!DictionaryByLocalName.TryGetValue(catalogedEntry.LocalName, out var entry)) {
             return true;

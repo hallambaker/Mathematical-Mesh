@@ -16,10 +16,10 @@ namespace ExampleGenerator;
 public partial class CreateExamples : global::Goedel.Registry.Script {
 
 	
-
-	//
-	// MakeSchemaExamples
-	//
+	/// <summary>	
+	/// MakeSchemaExamples
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakeSchemaExamples (CreateExamples Example) {
 		 SchemaAliceProfile(Example);
 		 SchemaProfileService(Example);
@@ -55,10 +55,10 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		 SchemaFairExchangeCapability(Example);
 		}
 	
-
-	//
-	// DescribeMessage
-	//
+	/// <summary>	
+	/// DescribeMessage
+	/// </summary>
+	/// <param name="options"></param>
 	public void DescribeMessage (Goedel.Mesh.Message message) {
 		 if (message == null) { ReportMissingExample(); return;}
 		 Format(message);
@@ -860,4 +860,4 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			 DescribeMessage (Confirm.ResponseConfirmation);
 			_Output.Write ("\n{0}", _Indent);
 				}
-		}
+	}

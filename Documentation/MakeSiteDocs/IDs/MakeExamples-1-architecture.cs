@@ -17,10 +17,10 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 
 	 public static CreateExamples Instance (StreamWriter output) => new CreateExamples () {_Output = output};
 	
-
-	//
-	// MakeArchitectureExamples
-	//
+	/// <summary>	
+	/// MakeArchitectureExamples
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakeArchitectureExamples (CreateExamples Example) {
 		 Colophon(Example);
 		 ArchitectureConnectPassword(Example);
@@ -560,4 +560,4 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("<dd>A strong email address for Alice that can only used by an email client that can process SINs.\n{0}", _Indent);
 			_Output.Write ("</dl>\n{0}", _Indent);
 				}
-		}
+	}

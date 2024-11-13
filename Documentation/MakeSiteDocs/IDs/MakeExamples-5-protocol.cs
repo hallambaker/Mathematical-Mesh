@@ -15,10 +15,10 @@ namespace ExampleGenerator;
 public partial class CreateExamples : global::Goedel.Registry.Script {
 
 	
-
-	//
-	// MakeProtocolExamples
-	//
+	/// <summary>	
+	/// MakeProtocolExamples
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakeProtocolExamples (CreateExamples Example) {
 		 ProtocolHello(Example);
 		 ProtocolAccountCreate(Example);
@@ -774,4 +774,4 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("connection process as before.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 				}
-		}
+	}

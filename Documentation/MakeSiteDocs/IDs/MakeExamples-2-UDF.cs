@@ -16,10 +16,10 @@ namespace ExampleGenerator;
 public partial class CreateExamples : global::Goedel.Registry.Script {
 
 	
-
-	//
-	// MakeUDFExamples
-	//
+	/// <summary>	
+	/// MakeUDFExamples
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakeUDFExamples (CreateExamples Example) {
 		 UDFVariousUDF(Example);
 		 UDFNonce(Example);
@@ -49,10 +49,11 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		 JSONBCDApplication(Example);
 		}
 	
-
-	//
-	// DescribeValueUDF
-	//
+	/// <summary>	
+	/// DescribeValueUDF
+	/// </summary>
+	/// <param name="options"></param>
+	/// <param name="options"></param>
 	public void DescribeValueUDF (string tag, string text) {
 		 var ptag = (tag + ":").PadRight (12);
 		 var wrapped = text.Wrap(ptag, indent:8);
@@ -789,10 +790,12 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 				}
 	
-
-	//
-	// MakeUTFExtendedExample
-	//
+	/// <summary>	
+	/// MakeUTFExtendedExample
+	/// </summary>
+	/// <param name="options"></param>
+	/// <param name="options"></param>
+	/// <param name="options"></param>
 	public void MakeUTFExtendedExample (string DataString, CryptoAlgorithmId CryptoAlgorithmId, string key) {
 		 var DataBytes = DataString.ToUTF8();
 		 var ContentType = "text/plain";
@@ -1218,4 +1221,4 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 				}
-		}
+	}
