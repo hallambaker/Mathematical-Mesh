@@ -23,7 +23,7 @@
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
-using Goedel.Cryptography.Dare;
+using Test.Cryptography.Oauth;
 
 //using Goedel.Cryptography.Nist;
 using Goedel.Debug;
@@ -70,7 +70,8 @@ partial class Program {
 
         //RegistrationTests.Test().CallsignBind();
         //TestPresence.Test().PresenceHeartbeat();
-        ShellTestsAdmin.Test().TestHello();
+
+        TestOauth.Test().TestDidResolve();
         //MakeSiteDocs.Test().GroupTests();
 
 

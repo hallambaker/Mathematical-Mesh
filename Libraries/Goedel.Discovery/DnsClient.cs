@@ -117,7 +117,26 @@ public abstract class DnsClient {
         return task;
         }
 
+
+    public static async Task<Did> ResolveAtHandle(string domain) {
+        using var context = Default.GetContext();
+
+        var records = await context.QueryRecord(domain, DNSTypeCode.TXT);
+
+
+        return null;
+        }
+
+
     }
+
+public record Did {
+
+
+    public string Identifier = "";
+
+    }
+
 
 
 /// <summary>
@@ -288,6 +307,22 @@ public abstract class DNSContext : Disposable {
             ID = NextID
             };
         QueueRequest(request);
+        }
+
+
+    public async Task<IEnumerable<DNSRecord>> QueryRecord(
+                    string address,
+                    DNSTypeCode typeCode = DNSTypeCode.TXT) {
+
+
+        var taskTimeout = Task.Delay(0);
+        var taskRetry = Task.Delay(0);
+        QueueRequest(address, typeCode);
+
+
+        var result = await NextAsync(taskTimeout, taskRetry);
+        return result.Answers;
+
         }
 
 

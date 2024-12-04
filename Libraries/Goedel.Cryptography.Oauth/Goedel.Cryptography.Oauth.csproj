@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
+	<PropertyGroup>
+
+		<Product>Goedel.Cryptography.Oauth</Product>
+		<Description>Oauth2 support libraries.</Description>
+		<Copyright>© 2024</Copyright>
+		<Title>Goedel.Cryptography.Oauth</Title>
+
+	</PropertyGroup>
+
+
+	<ItemGroup>
+		<ProjectReference Include="..\Goedel.Cryptography.Identifiers\Goedel.Cryptography.Identifiers.csproj" />
+		<ProjectReference Include="..\Goedel.Cryptography.Nist\Goedel.Cryptography.Nist.csproj" />
+		<ProjectReference Include="..\Goedel.Discovery\Goedel.Discovery.csproj" />
+		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+	</ItemGroup>
+
+
+
+</Project>

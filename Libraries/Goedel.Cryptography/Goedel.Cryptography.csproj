@@ -4,7 +4,7 @@
 
     <Product>Goedel.Cryptography</Product>
     <Description>Cryptographic support libraries.</Description>
-    <Copyright>© 2020</Copyright>
+    <Copyright>© 2020-2024</Copyright>
     <Title>Goedel.Cryptography</Title>
 
   </PropertyGroup>
