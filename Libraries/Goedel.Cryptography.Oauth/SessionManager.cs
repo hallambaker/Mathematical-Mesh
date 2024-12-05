@@ -2,6 +2,7 @@
 using Goedel.ASN;
 using Goedel.IO;
 
+using System.Runtime.CompilerServices;
 using System.Text.Json.Nodes;
 using System.Xml;
 
@@ -45,7 +46,7 @@ public class SessionManager : Disposable {
         }
 
 
-    public static string Resolve(DidPlc did) {
+    public static DidDocument Resolve(DidPlc did) {
 
 
         var client = UriClient.HttpClient;
@@ -53,16 +54,45 @@ public class SessionManager : Disposable {
 
         var result = client.GetStringAsync(uri).Sync();
         Console.WriteLine(result);
-        var node = new DidDocument(result);
+        return new DidDocument(result);
 
-        return null;
 
         }
 
 
 
+
+
+
+
     #endregion
     }
+
+
+public record OAuth {
+    public DidService AtProtoService { get; }
+
+    public string ResourceServerEndpoint =>
+        AtProtoService?.ServiceEndpoint.AddPath(".well-known/oauth-protected-resource");
+    public string AuthorizationServerEndpoint => 
+        AtProtoService?.ServiceEndpoint.AddPath(".well-known/oauth-authorization-server");
+
+
+    public OAuth(DidDocument document) {
+        if (document.Services.TryGetValue("#atproto_pds", out var service)) {
+            AtProtoService = service;
+            }
+
+        var client = UriClient.HttpClient;
+
+        var result1 = client.GetStringAsync(ResourceServerEndpoint).Sync();
+        var result2 = client.GetStringAsync(AuthorizationServerEndpoint).Sync();
+        }
+
+    }
+
+
+
 
 
 public record DidDocument {
@@ -163,6 +193,10 @@ public record DidService {
     }
 
 public static class Extensions {
+
+    public static string AddPath(this string first, string path) =>
+        (first[first.Length - 1] == '/') ? first + path : first + "/" + path;
+
 
     public static string GetString(this JsonNode node) {
         if (!(node is JsonValue value)) {

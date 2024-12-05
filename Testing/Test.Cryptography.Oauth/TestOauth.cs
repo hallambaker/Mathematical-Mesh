@@ -27,9 +27,10 @@ public class TestOauth {
     public void TestDidResolve() {
 
         var did = SessionManager.HandleToDid("phill.hallambaker.com");
+        var document = SessionManager.Resolve(did as DidPlc);
 
 
-        SessionManager.Resolve(did as DidPlc);
+        var oauth = new OAuth(document);
 
         }
 
