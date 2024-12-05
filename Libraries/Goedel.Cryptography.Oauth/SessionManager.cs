@@ -46,7 +46,7 @@ public class SessionManager : Disposable {
         }
 
 
-    public static DidDocument Resolve(DidPlc did) {
+    public static DidDocument2 Resolve(DidPlc did) {
 
 
         var client = UriClient.HttpClient;
@@ -54,7 +54,7 @@ public class SessionManager : Disposable {
 
         var result = client.GetStringAsync(uri).Sync();
         Console.WriteLine(result);
-        return new DidDocument(result);
+        return new DidDocument2(result);
 
 
         }
@@ -69,8 +69,9 @@ public class SessionManager : Disposable {
     }
 
 
+
 public record OAuth {
-    public DidService AtProtoService { get; }
+    public DidService2 AtProtoService { get; }
 
     public string ResourceServerEndpoint =>
         AtProtoService?.ServiceEndpoint.AddPath(".well-known/oauth-protected-resource");
@@ -78,7 +79,7 @@ public record OAuth {
         AtProtoService?.ServiceEndpoint.AddPath(".well-known/oauth-authorization-server");
 
 
-    public OAuth(DidDocument document) {
+    public OAuth(DidDocument2 document) {
         if (document.Services.TryGetValue("#atproto_pds", out var service)) {
             AtProtoService = service;
             }
@@ -95,11 +96,11 @@ public record OAuth {
 
 
 
-public record DidDocument {
+public record DidDocument2 {
     public JsonNode Tree { get; }
-    public Dictionary<string, DidService> Services { get; private set; }
+    public Dictionary<string, DidService2> Services { get; private set; }
 
-    public DidDocument(string text) {
+    public DidDocument2(string text) {
         Tree = JsonNode.Parse(text);
 
 
@@ -149,7 +150,7 @@ public record DidDocument {
         Services = new();
         foreach (var item in array) {
             if (item is JsonObject service) {
-                var didService = new DidService(service);
+                var didService = new DidService2(service);
 
                 Services.Add(didService.Id, didService);
                 }
@@ -158,14 +159,14 @@ public record DidDocument {
 
     }
 
-public record DidService {
+public record DidService2 {
 
     public string Id { get; }
     public string Type { get; }
     public string ServiceEndpoint { get; }
 
 
-    public DidService(JsonObject service) {
+    public DidService2(JsonObject service) {
 
         foreach (var field in service) {
             switch (field.Key) {

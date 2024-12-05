@@ -22,6 +22,7 @@
 
 global using Goedel.Utilities;
 global using Goedel.Discovery;
+global using Goedel.Serialization;
 
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
