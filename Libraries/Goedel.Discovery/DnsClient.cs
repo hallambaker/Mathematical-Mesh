@@ -20,6 +20,9 @@
 //  THE SOFTWARE.
 #endregion
 
+using System.Net.NetworkInformation;
+using System.Security.Cryptography.X509Certificates;
+
 namespace Goedel.Discovery;
 
 
@@ -123,6 +126,64 @@ public abstract class DnsClient {
 
         var records = await context.QueryRecord(domain, DNSTypeCode.TXT);
 
+        // Check record exists
+        records.AssertNotNull(NYI.Throw);
+
+        // Get the first record, must be TXT
+
+        var enumerator = records.GetEnumerator();
+        enumerator.MoveNext();
+        var record = enumerator.Current as DNSRecord_TXT;
+        record?.Text.AssertNotNull(NYI.Throw);
+
+        // Throw error if more than one.
+        enumerator.MoveNext().AssertFalse(NYI.Throw);
+
+        return  Did.Factory(record);
+
+        }
+
+
+
+
+
+    }
+
+public record Did {
+    
+    public string Identifier = "";
+
+
+    public Did() {
+
+        } 
+        
+    public static Did Factory (DNSRecord_TXT record) {
+        foreach (var text in record.Text) {
+            var stripped = StripPrefix("did=", text);
+            if (stripped != null) {
+                return (Factory(stripped));
+                }
+            }
+        return null;
+        }
+
+    public static Did Factory(string identifier) {
+        if (identifier.StartsWith(DidPlc.Prefix)) {
+            return new DidPlc(identifier);
+            }
+        if (identifier.StartsWith(DidWeb.Prefix)) {
+            return new DidWeb(identifier);
+            }
+        return null;
+        }
+
+
+
+    public static string StripPrefix(string prefix, string text) {
+        if (text.ToLower().StartsWith(prefix)) {
+            return text[prefix.Length..];
+            }
 
         return null;
         }
@@ -130,10 +191,33 @@ public abstract class DnsClient {
 
     }
 
-public record Did {
+public record DidWeb : Did {
+
+    public const string Prefix = "did:web:";
+
+    public string Domain;
 
 
-    public string Identifier = "";
+    public DidWeb(string identifier) {
+
+        Identifier = identifier;
+        Domain = identifier[Prefix.Length..];
+        }
+
+    }
+
+public record DidPlc : Did {
+
+    public const string Prefix = "did:plc:";
+
+    public string Key;
+
+
+    public DidPlc(string identifier) {
+
+        Identifier = identifier;
+        Key = identifier[Prefix.Length..];
+        }
 
     }
 
@@ -315,12 +399,15 @@ public abstract class DNSContext : Disposable {
                     DNSTypeCode typeCode = DNSTypeCode.TXT) {
 
 
-        var taskTimeout = Task.Delay(0);
-        var taskRetry = Task.Delay(0);
+        var taskTimeout = Task.Delay(10000);
+        var taskRetry = Task.Delay(150000000);
+
+        //await Task.Delay(15);
+
         QueueRequest(address, typeCode);
+        var listener =  NextAsync(taskTimeout, taskRetry);
+        var result = await listener;
 
-
-        var result = await NextAsync(taskTimeout, taskRetry);
         return result.Answers;
 
         }
@@ -339,7 +426,7 @@ public abstract class DNSContext : Disposable {
                     DNSFallback fallback = DNSFallback.Prefix) {
 
         Logger.Resolution(address, service);
-        //Console.WriteLine("Try resolve");
+        Console.WriteLine("Try resolve");
         var serviceDescription = new ServiceDescription(address, service, port, fallback);
 
         if (service == null) {
@@ -350,16 +437,16 @@ public abstract class DNSContext : Disposable {
 
         var taskTimeout = Task.Delay(0);
         var taskRetry = Task.Delay(0);
-        //Console.WriteLine($"Timeouts {timeout} {retry}");
+        Console.WriteLine($"Timeouts {timeout} {retry}");
 
         await taskRetry;
-        //Console.WriteLine("Retry complete");
+        Console.WriteLine("Retry complete");
 
         QueueRequest(serviceDescription.ServiceAddress, DNSTypeCode.SRV);
         QueueRequest(serviceDescription.ServiceAddress, DNSTypeCode.TXT);
 
         while (Pending) {
-            //Console.WriteLine("Pending");
+            Console.WriteLine("Pending");
 
             var result = await NextAsync(taskTimeout, taskRetry);
             if (result != null) {
@@ -371,7 +458,7 @@ public abstract class DNSContext : Disposable {
                     }
                 }
             else {
-                //Console.WriteLine("timed out");
+                Console.WriteLine("timed out");
                 }
             }
         //Console.WriteLine("abort");

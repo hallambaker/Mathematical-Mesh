@@ -1,4 +1,5 @@
 ﻿using Goedel.Cryptography.Oauth;
+using Goedel.Discovery;
 using Goedel.Test;
 using Xunit;
 
@@ -25,7 +26,10 @@ public class TestOauth {
     [Fact]
     public void TestDidResolve() {
 
-        var result = SessionManager.HandleToDid("phill.hallambaker.com");
+        var did = SessionManager.HandleToDid("phill.hallambaker.com");
+
+
+        SessionManager.Resolve(did as DidPlc);
 
         }
 

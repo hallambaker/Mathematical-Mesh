@@ -29,6 +29,7 @@ LinkFiles = \
     Microsoft.Extensions.Configuration.UserSecrets.dll\
     Microsoft.Extensions.DependencyInjection.dll\
     Microsoft.Extensions.DependencyInjection.Abstractions.dll\
+    Microsoft.Extensions.Diagnostics.Abstractions.dll\
     Microsoft.Extensions.FileProviders.Abstractions.dll\
     Microsoft.Extensions.FileProviders.Physical.dll\
     Microsoft.Extensions.FileSystemGlobbing.dll\

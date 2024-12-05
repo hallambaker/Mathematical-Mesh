@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Cryptography.Oauth</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Cryptography.Oauth.NamespaceDoc">
+            <summary>
+            Support classes for OAuth, OpenID etc.
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.SessionManager">
+            <summary>
+            Session manager class, supports OAUTH and other login modes.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.SessionManager.HandleToDid(System.String)">
+            <summary>
+            Return the DID associated with the handle <paramref name="handle"/>.
+            </summary>
+            <param name="handle"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -20,29 +20,11 @@ MSBuildThisFileDirectory =
 LinkFiles = \
     Goedel.Cryptography.Oauth.dll\
     Goedel.Discovery.dll\
-    Test.ASN1.dll\
-    Test.Common.dll\
     Goedel.Utilities.dll\
-    Goedel.Test.dll\
+    Goedel.Cryptography.Core.dll\
     Goedel.Cryptography.dll\
-    Goedel.Cryptography.Jose.dll\
-    Goedel.Mesh.dll\
-    Test.Cryptography.Dare.dll\
-    Test.Cryptography.Jose.dll\
-    Test.Cryptography.Keyfile.dll\
-    Test.Cryptography.Nist.dll\
-    Test.Cryptography.Oauth.dll\
-    Test.Cryptography.Platform.dll\
-    Test.Cryptography.Udf.dll\
-    Test.Cryptography.dll\
-    Test.Discovery.dll\
-    Test.MakeSiteDocs.dll\
-    Test.Mesh.Presence.dll\
-    Test.Mesh.Protocol.dll\
-    Test.Mesh.Shell.dll\
-    Test.Mesh.Store.dll\
-    Test.NotaryCallsign.dll\
-    Test.Protocol.dll
+    Goedel.Test.dll\
+    Goedel.Mesh.Test.dll
 
 ToolTargets = 
 
@@ -60,5 +42,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Scratchpad.exe $(LinkFiles) 
+	powershell publishtarget Test.Cryptography.Oauth.dll
 
