@@ -78,7 +78,7 @@ public class SessionManager : Disposable {
 public record OAuth {
     public DidService AtProtoService { get; }
     public ResourceServerMetadata ResourceServer { get; }
-
+    public List<AuthorizationServerMetadata> AuthorizationServers { get; } = new();
 
     public string ResourceServerEndpoint =>
         AtProtoService?.ServiceEndpoint.AddPath(".well-known/oauth-protected-resource");
@@ -106,6 +106,7 @@ public record OAuth {
             var result2 = client.GetStringAsync(endpoint).Sync();
 
             var authServerData = Serialization<AuthorizationServerMetadata>.Deserialize(result2);
+            AuthorizationServers.Add(authServerData);
             }
 
 
