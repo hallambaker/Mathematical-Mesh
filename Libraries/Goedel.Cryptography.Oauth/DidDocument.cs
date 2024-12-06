@@ -13,24 +13,27 @@ public record DidDocument : ISerializable {
         new("alsoKnownAs", FieldType.ArrayString, 
             (data, s) => ((DidDocument)data).AlsoKnownAs = s as List<string?>,
             (data) => (data as DidDocument)?.AlsoKnownAs),
-        new("verificationMethod", FieldType.ArrayObject, 
-            (data, s) => ((DidDocument)data).VerficationMethods = s as List<DidVerficationMethod?>,
+        new("verificationMethod", FieldType.DictionaryObject, 
+            (data, s) => ((DidDocument)data).VerficationMethods = s as Dictionary<string,DidVerficationMethod?>,
             (data) => (data as DidDocument)?.VerficationMethods, 
-            ()=> new DidVerficationMethod(),()=> new List<DidVerficationMethod>()),
-        new("service", FieldType.ArrayObject, 
-            (data, s) => ((DidDocument)data).Services = s as List<DidService?>,
+            ()=> new DidVerficationMethod(),()=> new Dictionary<string,DidVerficationMethod>()),
+        new("service", FieldType.DictionaryObject, 
+            (data, s) => ((DidDocument)data).Services = s as Dictionary<string,DidService?>,
             (data) => (data as DidDocument)?.Services, 
-            ()=> new DidService(),()=> new List<DidService>())
+            ()=> new DidService(),()=> new Dictionary<string,DidService>())
         ];
 
     public List<string?>? Contexts { get; set; }
     public string? Id { get; set; }
     public List<string?>? AlsoKnownAs { get; set; }
-    public List<DidVerficationMethod?>? VerficationMethods { get; set; }
-    public List<DidService?>? Services { get; set; }
+    public Dictionary<string,DidVerficationMethod?>? VerficationMethods { get; set; }
+    public Dictionary<string,DidService?>? Services { get; set; }
     }
 
-public record DidVerficationMethod : ISerializable {
+public record DidVerficationMethod : ISerializable, ISerializableKeyed {
+
+    public string? Key => Id;
+
     public SerialField[] Fields => fields;
     static readonly SerialField[] fields = [
         new("id", FieldType.String, 
@@ -56,7 +59,9 @@ public record DidVerficationMethod : ISerializable {
     }
 
 
-public record DidService : ISerializable {
+public record DidService : ISerializable, ISerializableKeyed {
+    public string? Key => Id;
+
     public SerialField[] Fields => fields;
     static readonly SerialField[] fields = [
         new("id", FieldType.String, (data, s) => ((DidService)data).Id = s as string,

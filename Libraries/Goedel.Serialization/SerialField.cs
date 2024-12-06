@@ -14,7 +14,8 @@ public enum FieldType {
     String,
     ArrayString,
     Object,
-    ArrayObject
+    ArrayObject,
+    DictionaryObject
     }
 
 
@@ -24,13 +25,18 @@ public interface ISerializable {
     SerialField[] Fields { get; } 
     }
 
+
+public interface ISerializableKeyed {
+    string? Key { get; }
+    }
+
 public record SerialField(
             string Name,
             FieldType FieldType,
             Action<ISerializable, object?> Setter,
             Func<ISerializable, object?>? Getter=null,
             Func<ISerializable>? Factory = null,
-            Func<object>? ListFactory = null,
+            Func<object>? CollectionFactory = null,
             int CborCode = -1
             ) {
     }
@@ -58,43 +64,52 @@ public class Serialization {
 
         foreach (var field in node) {
             var serial = GetField(data, field.Key);
-
-            switch (serial.FieldType) {
-                case FieldType.String: {
-                    var value = GetString(field.Value);
-                    serial.Setter(data, value);
-                    break;
-                    }
-                case FieldType.ArrayString: {
-                    var value = GetArrayString(field.Value);
-                    serial.Setter(data, value);
-                    break;
-                    }
-                case FieldType.Boolean: {
-                    var value = GetBoolean(field.Value);
-                    serial.Setter(data, value);
-                    break;
-                    }
-                case FieldType.Integer: {
-                    var value = GetInteger(field.Value);
-                    serial.Setter(data, value);
-                    break;
-                    }
-                case FieldType.Object: {
-                    if (serial.Factory is not null) {
-                        var value = serial.Factory();
-                        Deserialize(value, field.Value);
+            if (serial != null) {
+                switch (serial.FieldType) {
+                    case FieldType.String: {
+                        var value = GetString(field.Value);
                         serial.Setter(data, value);
+                        break;
                         }
-                    break;
-                    }
-                case FieldType.ArrayObject: {
-                    if ((serial.Factory is not null) && (serial.ListFactory is not null)) {
-                        var value = serial.ListFactory();
-                        DeserializeArrayObject(field.Value, value, serial.Factory);
+                    case FieldType.ArrayString: {
+                        var value = GetArrayString(field.Value);
                         serial.Setter(data, value);
+                        break;
                         }
-                    break;
+                    case FieldType.Boolean: {
+                        var value = GetBoolean(field.Value);
+                        serial.Setter(data, value);
+                        break;
+                        }
+                    case FieldType.Integer: {
+                        var value = GetInteger(field.Value);
+                        serial.Setter(data, value);
+                        break;
+                        }
+                    case FieldType.Object: {
+                        if (serial.Factory is not null) {
+                            var value = serial.Factory();
+                            Deserialize(value, field.Value);
+                            serial.Setter(data, value);
+                            }
+                        break;
+                        }
+                    case FieldType.ArrayObject: {
+                        if ((serial.Factory is not null) && (serial.CollectionFactory is not null)) {
+                            var value = serial.CollectionFactory();
+                            DeserializeArrayObject(field.Value, value, serial.Factory);
+                            serial.Setter(data, value);
+                            }
+                        break;
+                        }
+                    case FieldType.DictionaryObject: {
+                        if ((serial.Factory is not null) && (serial.CollectionFactory is not null)) {
+                            var value = serial.CollectionFactory();
+                            DeserializeDictionaryObject(field.Value, value, serial.Factory);
+                            serial.Setter(data, value);
+                            }
+                        break;
+                        }
                     }
                 }
             }
@@ -172,6 +187,33 @@ public class Serialization {
         return;
 
         }
+
+    public static void DeserializeDictionaryObject(
+                JsonNode? node,
+                object list,
+                Func<ISerializable> factory) {
+        if (!(node is JsonArray array)) {
+            return;
+            }
+        foreach (var field in array) {
+            var item = factory();
+            Deserialize(item, field);
+
+            var ilist = list as System.Collections.IDictionary;
+            var key = (item as ISerializableKeyed).Key;
+
+            if (key != null) {
+                ilist?.Add(key, item);
+                }
+            }
+
+
+        return;
+
+        }
+
+
+
 
     }
 
