@@ -1,17 +1,17 @@
 ﻿namespace Goedel.Cryptography.Oauth;
 
 public record ResourceServerMetadata : ISerializable {
-    public FormFields[] Fields => fields;
-    static readonly FormFields[] fields = [
-            new("resource", FormEntryType.String, (data, s) => ((ResourceServerMetadata)data).Resource = s as string,
+    public SerialField[] Fields => fields;
+    static readonly SerialField[] fields = [
+            new("resource", FieldType.String, (data, s) => ((ResourceServerMetadata)data).Resource = s as string,
                 (data) => (data as ResourceServerMetadata)?.Resource),
-            new("authorization_servers", FormEntryType.ArrayString, (data, s) => ((ResourceServerMetadata)data).AuthorizationServers = s as List<string>,
+            new("authorization_servers", FieldType.ArrayString, (data, s) => ((ResourceServerMetadata)data).AuthorizationServers = s as List<string>,
                 (data) => (data as ResourceServerMetadata)?.AuthorizationServers),
-            new("scopes_supported", FormEntryType.ArrayString, (data, s) => ((ResourceServerMetadata)data).ScopesSupported = s as List<string>,
+            new("scopes_supported", FieldType.ArrayString, (data, s) => ((ResourceServerMetadata)data).ScopesSupported = s as List<string>,
                 (data) => (data as ResourceServerMetadata)?.ScopesSupported),
-            new("bearer_methods_supported", FormEntryType.ArrayString, (data, s) => ((ResourceServerMetadata)data).BearerMethodsSupported = s as List<string>,
+            new("bearer_methods_supported", FieldType.ArrayString, (data, s) => ((ResourceServerMetadata)data).BearerMethodsSupported = s as List<string>,
                 (data) => (data as ResourceServerMetadata)?.BearerMethodsSupported),
-            new("resource_documentation", FormEntryType.String, (data, s) => ((ResourceServerMetadata)data).ResourceDocumentation = s as string,
+            new("resource_documentation", FieldType.String, (data, s) => ((ResourceServerMetadata)data).ResourceDocumentation = s as string,
                 (data) => (data as ResourceServerMetadata)?.ResourceDocumentation),
         ];
     public string? Resource { get; set; }

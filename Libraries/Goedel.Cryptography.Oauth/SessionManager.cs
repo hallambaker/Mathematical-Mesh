@@ -54,6 +54,11 @@ public class SessionManager : Disposable {
 
         var result = client.GetStringAsync(uri).Sync();
         Console.WriteLine(result);
+
+
+        var document = Serialization<DidDocument>.Deserialize(result);
+
+
         return new DidDocument2(result);
 
 
