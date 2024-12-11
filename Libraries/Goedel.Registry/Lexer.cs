@@ -294,7 +294,7 @@ public class Lexer {
 
             for (string line = Reader.ReadLine(); line != null; line = Reader.ReadLine()) {
                 Position.Ln++;
-                //Console.WriteLine("{0:d3} {1}", Position.Ln, line);
+                Console.WriteLine("{0:d3} {1}", Position.Ln, line);
                 bool LineStart = true;
                 Position.Col = -1;
                 Position.Ch = 0;
