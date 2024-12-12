@@ -7,18 +7,15 @@ public partial class ClientMetadata {
         set => applicationType = value.ToLabel();
         }
 
-    public static ClientMetadata FactoryAtproto(
-            string domain,
-            ScopeTypes scope = ScopeTypes.Atproto,
-            bool confidential = false) => FactoryAtproto (
-                $"https://{domain}/", [$"https://{domain}/"], scope, confidential);
+
 
 
     public static ClientMetadata FactoryAtproto(
                 string clientid,
                 List<string?> redirect,
                 ScopeTypes scope = ScopeTypes.Atproto,
-                bool confidential = false) => new ClientMetadata() {
+                bool confidential = false,
+                JWKS keys = null) => new ClientMetadata() {
                     ClientId = clientid,
                     ApplicationType = ApplicationType.Web,
                     GrantTypes = [
@@ -30,17 +27,17 @@ public partial class ClientMetadata {
                     TokenEndpointAuthMethod = confidential ? OauthConstants.AuthenticationMethodJWTTag : null,
                     TokenEndpointAuthSigningAlg = OauthConstants.EndpointSignatureES256Tag,
                     DpopBoundAccessTokens = true,
-                    JWKS = null
+                    Jwks = keys
                     };
     public static string GetScope(ScopeTypes scopes) =>
         scopes switch {
-            ScopeTypes.Atproto => OauthConstants.ScopeTypesAtprotoTag,
-            ScopeTypes.Generic => OauthConstants.ScopeTypesAtprotoTag + " " +
-                OauthConstants.ScopeTypesGenericTag,
-            ScopeTypes.Chat => OauthConstants.ScopeTypesAtprotoTag + " " +
-                OauthConstants.ScopeTypesGenericTag + " " +
-                OauthConstants.ScopeTypesChatTag,
-            _ => OauthConstants.ScopeTypesAtprotoTag
+            ScopeTypes.Atproto => OauthConstants.ScopeTypesAtprotoTitle,
+            ScopeTypes.Generic => OauthConstants.ScopeTypesAtprotoTitle + " " +
+                OauthConstants.ScopeTypesGenericTitle,
+            ScopeTypes.Chat => OauthConstants.ScopeTypesAtprotoTitle + " " +
+                OauthConstants.ScopeTypesGenericTitle + " " +
+                OauthConstants.ScopeTypesChatTitle,
+            _ => OauthConstants.ScopeTypesAtprotoTitle
 
 
             };

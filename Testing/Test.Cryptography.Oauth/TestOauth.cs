@@ -1,7 +1,7 @@
 ﻿using Goedel.Cryptography.Oauth;
 using Goedel.Discovery;
 using Goedel.Test;
-
+using Goedel.Palimpsest;
 using System;
 
 using Xunit;
@@ -36,7 +36,7 @@ public class TestOauth {
         var oauth = new OAuth(document);
 
 
-        var clientMeta = ClientMetadata.FactoryAtproto("mplace2.app");
+
 
 
         var key = OauthClient.GenKey();
@@ -44,9 +44,9 @@ public class TestOauth {
         var keys = new JWKS() {
             Keys = [jwk]
             };
-        clientMeta.Jwks = keys;
+        //clientMeta.Jwks = keys;
 
-
+        var clientMeta = AnnotationService.FactoryAtproto("mplace2.app", keys:keys);
         var asString = clientMeta.ToString();
         Console.WriteLine(asString);
         }

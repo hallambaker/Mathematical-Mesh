@@ -2,6 +2,7 @@
 	<Import Project="$(SolutionDir)Settings/CommonSettingsTest.xml" />
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\..\Palimpsest\Service\Goedel.Palimpsest\Goedel.Palimpsest.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Oauth\Goedel.Cryptography.Oauth.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Discovery\Goedel.Discovery.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
