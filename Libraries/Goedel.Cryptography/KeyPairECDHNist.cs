@@ -202,10 +202,17 @@ subjectPublicKeyInfo SubjectPublicKeyInfo SEQUENCE (2 elem)
     /// <param name="keySize">The key size in bits.</param>
     /// <returns>The created key pair.</returns>
     public static KeyPairECDHNist Generate(
-                int keySize,
+                int keySize = 0,
                 KeySecurity keyType = KeySecurity.Public,
                 KeyUses keyUses = KeyUses.Any,
                 CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) {
+
+        keySize = cryptoAlgorithmID switch {
+            CryptoAlgorithmId.P256 => 256,
+            CryptoAlgorithmId.P384 => 384,
+            CryptoAlgorithmId.P521 => 521,
+            _ => keySize
+            };
 
         var (algId, curve) = GetCurve(keySize);
 
@@ -214,6 +221,25 @@ subjectPublicKeyInfo SubjectPublicKeyInfo SEQUENCE (2 elem)
 
         return new KeyPairECDHNist(secretKey, keyType, keyUses, algId);
         }
+
+
+    /// <summary>
+    /// Generate a key pair for the specified algorithm and key size.
+    /// </summary>
+    /// <param name="keySize">The Key size, must be 255 or 448</param>
+    /// <param name="keySecurity">The key security model</param>
+    /// <param name="cryptoAlgorithmID">The cryptographic algorithm identifier</param>
+    /// <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
+    /// <returns>The generated key pair</returns>
+    public static KeyPair KeyPairFactory(
+                int keySize = 0,
+                KeySecurity keySecurity = KeySecurity.Bound,
+                KeyUses keyUses = KeyUses.Any,
+                CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.NULL) =>
+        Generate(keySize, keySecurity, keyUses, cryptoAlgorithmID);
+
+
+
 
     /// <summary>
     /// Factory creating a key pair of the type specified by <paramref name="algorithmID"/>

@@ -1,0 +1,136 @@
+﻿Protocol Goedel.Cryptography.Oauth  Oauth Oauth
+	CamelCase
+	Description
+		|Support classes for OAUTH2 via ATproto
+
+
+
+
+	Structure AuthorizationServerMetadata
+		SnakeCase
+		Description
+			|AuthorizationServerMetadata2
+		String Issuer
+		String ScopesSupported 
+			Multiple
+		String SubjectTypesSupported
+			Multiple
+		String ResponseTypesSupported 
+			Multiple
+		String ResponseModesSupported 
+			Multiple
+		String GrantTypesSupported
+			Multiple
+		String CodeChallengeMethodsSupported
+			Multiple
+		String UiLocalesSupported 
+			Multiple
+		String DisplayValuesSupported 
+			Multiple
+		Boolean AuthorizationResponseIssParameterSupported
+		String RequestObjectSigningAlgValuesSupported
+			Multiple
+		String RequestObjectEncryptionAlgValuesSupported
+			Multiple
+		String RequestObjectEncryptionEncValuesSupported 
+			Multiple
+		Boolean RequestParameterSupported
+		Boolean RequestUriParameterSupported 
+		Boolean RequireRequestUriRegistration 
+		String JwksUri 
+		String AuthorizationEndpoint
+		String TokenEndpoint
+		String TokenEndpointAuthMethodsSupported 
+			Multiple
+		String TokenEndpointAuthSigningAlgValuesSupported 
+			Multiple
+		String RevocationEndpoint 
+		String IntrospectionEndpoint 
+		String PushedAuthorizationRequestEndpoint
+		Boolean RequirePushedAuthorizationRequests
+		String DpopSigningAlgValuesSupported
+			Multiple
+		Boolean ClientIdMetadataDocumentSupported 
+
+
+	//Enumeration ApplicationType
+	//	Web "web"
+	//	Native "native"
+
+
+	Structure ClientMetadata
+		SnakeCase
+		String ClientId 
+		String applicationType 
+			//Enum ApplicationType
+
+
+		String GrantTypes 
+			Multiple
+		String Scope 
+
+
+		String ResponseTypes 
+			Multiple
+		String RedirectUris 
+			Multiple
+		Boolean DpopBoundAccessTokens 
+		String TokenEndpointAuthMethod 
+		String TokenEndpointAuthSigningAlg 
+		Struct JWKS JWKS
+		String ClientName 
+		String ClientUri 
+		String LogoUri 
+		String TosUri 
+		String PolicyUri 
+
+
+
+	Structure DidDocument
+		CamelCase
+		String Contexts 
+			Tag "@context"
+			Multiple
+		String Id 
+		String AlsoKnownAs 
+			Multiple
+		Struct DidVerificationMethod VerificationMethod
+			Multiple
+		Struct DidService Service
+			Multiple
+
+
+
+	Structure DidVerificationMethod
+		CamelCase
+		String Id 
+		String Type 
+		String Controller 
+		String PublicKeyMultibase 
+
+
+	Structure DidService
+		CamelCase
+		String Id 
+		String Type 
+		String ServiceEndpoint 
+
+
+	Structure JWKS
+		CamelCase
+		Struct JWK Keys 
+			Multiple
+
+	Structure JWK
+		CamelCase
+		String KeyType
+			Tag "kty"
+		String Use 
+			Tag "use"
+		String Curve
+			Tag "crv"
+		String X 
+		String Y 
+		String D 
+		String Kid 
+

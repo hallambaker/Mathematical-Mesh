@@ -174,6 +174,13 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
                 break;
                 }
 
+            case CryptoAlgorithmId.P256:
+            case CryptoAlgorithmId.P384:
+            case CryptoAlgorithmId.P521: {
+                keyPair = KeyPairFactoryECNist(keySize, keySecurity, keyUses, algorithmID);
+                break;
+                }
+
             default:
             break;
             }
@@ -400,6 +407,13 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
     /// platform provider.
     /// </summary>
     public static FactoryKeyPairDelegate KeyPairFactoryECDH { get; set; } = KeyPairECDH.KeyPairFactory;
+
+    /// <summary>
+    /// Generate a new keypair. Initialized by the cryptographic
+    /// platform provider.
+    /// </summary>
+    public static FactoryKeyPairDelegate KeyPairFactoryECNist { get; set; } = KeyPairECDHNist.KeyPairFactory;
+
 
 
     /// <summary>

@@ -14,8 +14,33 @@
 		<ProjectReference Include="..\Goedel.Cryptography.Identifiers\Goedel.Cryptography.Identifiers.csproj" />
 		<ProjectReference Include="..\Goedel.Cryptography.Nist\Goedel.Cryptography.Nist.csproj" />
 		<ProjectReference Include="..\Goedel.Discovery\Goedel.Discovery.csproj" />
+		<ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj" />
 		<ProjectReference Include="..\Goedel.Serialization\Goedel.Serialization.csproj" />
 		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <Compile Update="OauthSchema.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	  <Compile Update="OauthConstants.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <None Update="OauthSchema.Protocol">
+	    <LastGenOutput>OauthSchema.cs</LastGenOutput>
+	    <Generator>ProtoGen</Generator>
+	  </None>
+	  <None Update="OauthConstants.constant">
+	    <LastGenOutput>OauthConstants.cs</LastGenOutput>
+	    <Generator>Constant</Generator>
+	  </None>
 	</ItemGroup>
 
 

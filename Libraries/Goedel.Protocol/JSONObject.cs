@@ -95,33 +95,33 @@ public abstract partial class JsonObject : IBinding {
     public object KeyLocate;
 
 
-    ///<summary>The parser data binding.</summary> 
-    public JbcdValueObject JbcdElementObject { get; set; }
+    /////<summary>The parser data binding.</summary> 
+    //public JbcdValueObject JbcdElementObject { get; set; }
 
-    /// <summary>
-    /// Secondary keys describing the object
-    /// </summary>
-    public virtual List<string> _Keys => null;
+    ///// <summary>
+    ///// Secondary keys describing the object
+    ///// </summary>
+    //public virtual List<string> _Keys => null;
 
     /// <summary>
     /// Secondary key/values pairs describing the object
     /// </summary>
     public virtual List<KeyValuePair<string, string>> _KeyValues => null;
 
-    /// <summary>
-    /// Metadata header describing use in persistence store.
-    /// </summary>
-    public virtual JsonObject _Metadata { get; set; }
+    ///// <summary>
+    ///// Metadata header describing use in persistence store.
+    ///// </summary>
+    //public virtual JsonObject _Metadata { get; set; }
 
 
-    ///<summary>Link to the parent metadata dictionary.</summary> 
-    public virtual Dictionary<string, MetaData> _MetaDataParent => null;
+    /////<summary>Link to the parent metadata dictionary.</summary> 
+    //public virtual Dictionary<string, MetaData> _MetaDataParent => null;
 
 
-    /// <summary>
-    /// The Metadata dictionary for the serializable data.
-    /// </summary>
-    public virtual Dictionary<string, MetaData> _MetaData => new() { };
+    ///// <summary>
+    ///// The Metadata dictionary for the serializable data.
+    ///// </summary>
+    //public virtual Dictionary<string, MetaData> _MetaData => new() { };
 
 
 

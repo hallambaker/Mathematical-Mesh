@@ -1,0 +1,1031 @@
+﻿
+//  Copyright (c) 2016 by .
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+//  
+//  
+//  This file was automatically generated at 12/12/2024 5:53:15 PM
+//   
+//  Changes to this file may be overwritten without warning
+//  
+//  Generator:  protogen version 3.0.0.1141
+//      Goedel Script Version : 0.1   Generated 
+//      Goedel Schema Version : 0.1   Generated
+//  
+//      Copyright : © 2015-2021
+//  
+//  Build Platform: Win32NT 10.0.22631.0
+//  
+//  
+using System;
+using System.IO;
+using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Text;
+using Goedel.Protocol;
+using Goedel.Utilities;
+
+#pragma warning disable IDE0079
+#pragma warning disable IDE1006
+#pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
+
+
+
+namespace Goedel.Cryptography.Oauth;
+
+
+	/// <summary>
+	///
+	/// Support classes for OAUTH2 via ATproto
+	/// </summary>
+public abstract partial class Oauth : global::Goedel.Protocol.JsonObject {
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag =>__Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "Oauth";
+
+	/// <summary>
+    /// Dictionary mapping tags to factory methods
+    /// </summary>
+	public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
+	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
+			new () {
+
+	    {"AuthorizationServerMetadata", AuthorizationServerMetadata._Factory},
+	    {"ClientMetadata", ClientMetadata._Factory},
+	    {"DidDocument", DidDocument._Factory},
+	    {"DidVerificationMethod", DidVerificationMethod._Factory},
+	    {"DidService", DidService._Factory},
+	    {"JWKS", JWKS._Factory},
+	    {"JWK", JWK._Factory}
+		};
+
+    [ModuleInitializer]
+
+    internal static void _Initialize() => AddDictionary(ref _tagDictionary);
+
+
+	/// <summary>
+    /// Construct an instance from the specified tagged JsonReader stream.
+    /// </summary>
+    /// <param name="jsonReader">Input stream</param>
+    /// <param name="result">The created object</param>
+    public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
+		result = jsonReader.ReadTaggedObject(_TagDictionary);
+
+	}
+
+
+
+// Service Dispatch Classes
+
+
+
+	// Transaction Classes
+	/// <summary>
+	///
+	/// AuthorizationServerMetadata2
+	/// </summary>
+public partial class AuthorizationServerMetadata : Oauth {
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						Issuer  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					ScopesSupported  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					SubjectTypesSupported  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					ResponseTypesSupported  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					ResponseModesSupported  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					GrantTypesSupported  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					CodeChallengeMethodsSupported  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					UiLocalesSupported  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					DisplayValuesSupported  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual bool?						AuthorizationResponseIssParameterSupported  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					RequestObjectSigningAlgValuesSupported  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					RequestObjectEncryptionAlgValuesSupported  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					RequestObjectEncryptionEncValuesSupported  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual bool?						RequestParameterSupported  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual bool?						RequestUriParameterSupported  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual bool?						RequireRequestUriRegistration  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						JwksUri  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						AuthorizationEndpoint  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						TokenEndpoint  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					TokenEndpointAuthMethodsSupported  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					TokenEndpointAuthSigningAlgValuesSupported  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						RevocationEndpoint  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						IntrospectionEndpoint  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						PushedAuthorizationRequestEndpoint  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual bool?						RequirePushedAuthorizationRequests  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					DpopSigningAlgValuesSupported  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual bool?						ClientIdMetadataDocumentSupported  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new AuthorizationServerMetadata(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "issuer", new PropertyString ("issuer", 
+					(IBinding data, string? value) => {(data as AuthorizationServerMetadata).Issuer = value;}, (IBinding data) => (data as AuthorizationServerMetadata).Issuer )},
+			{ "scopes_supported", new PropertyListString ("scopes_supported", 
+					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).ScopesSupported = value;}, (IBinding data) => (data as AuthorizationServerMetadata).ScopesSupported )},
+			{ "subject_types_supported", new PropertyListString ("subject_types_supported", 
+					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).SubjectTypesSupported = value;}, (IBinding data) => (data as AuthorizationServerMetadata).SubjectTypesSupported )},
+			{ "response_types_supported", new PropertyListString ("response_types_supported", 
+					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).ResponseTypesSupported = value;}, (IBinding data) => (data as AuthorizationServerMetadata).ResponseTypesSupported )},
+			{ "response_modes_supported", new PropertyListString ("response_modes_supported", 
+					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).ResponseModesSupported = value;}, (IBinding data) => (data as AuthorizationServerMetadata).ResponseModesSupported )},
+			{ "grant_types_supported", new PropertyListString ("grant_types_supported", 
+					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).GrantTypesSupported = value;}, (IBinding data) => (data as AuthorizationServerMetadata).GrantTypesSupported )},
+			{ "code_challenge_methods_supported", new PropertyListString ("code_challenge_methods_supported", 
+					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).CodeChallengeMethodsSupported = value;}, (IBinding data) => (data as AuthorizationServerMetadata).CodeChallengeMethodsSupported )},
+			{ "ui_locales_supported", new PropertyListString ("ui_locales_supported", 
+					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).UiLocalesSupported = value;}, (IBinding data) => (data as AuthorizationServerMetadata).UiLocalesSupported )},
+			{ "display_values_supported", new PropertyListString ("display_values_supported", 
+					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).DisplayValuesSupported = value;}, (IBinding data) => (data as AuthorizationServerMetadata).DisplayValuesSupported )},
+			{ "authorization_response_iss_parameter_supported", new PropertyBoolean ("authorization_response_iss_parameter_supported", 
+					(IBinding data, bool? value) => {(data as AuthorizationServerMetadata).AuthorizationResponseIssParameterSupported = value;}, (IBinding data) => (data as AuthorizationServerMetadata).AuthorizationResponseIssParameterSupported )},
+			{ "request_object_signing_alg_values_supported", new PropertyListString ("request_object_signing_alg_values_supported", 
+					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).RequestObjectSigningAlgValuesSupported = value;}, (IBinding data) => (data as AuthorizationServerMetadata).RequestObjectSigningAlgValuesSupported )},
+			{ "request_object_encryption_alg_values_supported", new PropertyListString ("request_object_encryption_alg_values_supported", 
+					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).RequestObjectEncryptionAlgValuesSupported = value;}, (IBinding data) => (data as AuthorizationServerMetadata).RequestObjectEncryptionAlgValuesSupported )},
+			{ "request_object_encryption_enc_values_supported", new PropertyListString ("request_object_encryption_enc_values_supported", 
+					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).RequestObjectEncryptionEncValuesSupported = value;}, (IBinding data) => (data as AuthorizationServerMetadata).RequestObjectEncryptionEncValuesSupported )},
+			{ "request_parameter_supported", new PropertyBoolean ("request_parameter_supported", 
+					(IBinding data, bool? value) => {(data as AuthorizationServerMetadata).RequestParameterSupported = value;}, (IBinding data) => (data as AuthorizationServerMetadata).RequestParameterSupported )},
+			{ "request_uri_parameter_supported", new PropertyBoolean ("request_uri_parameter_supported", 
+					(IBinding data, bool? value) => {(data as AuthorizationServerMetadata).RequestUriParameterSupported = value;}, (IBinding data) => (data as AuthorizationServerMetadata).RequestUriParameterSupported )},
+			{ "require_request_uri_registration", new PropertyBoolean ("require_request_uri_registration", 
+					(IBinding data, bool? value) => {(data as AuthorizationServerMetadata).RequireRequestUriRegistration = value;}, (IBinding data) => (data as AuthorizationServerMetadata).RequireRequestUriRegistration )},
+			{ "jwks_uri", new PropertyString ("jwks_uri", 
+					(IBinding data, string? value) => {(data as AuthorizationServerMetadata).JwksUri = value;}, (IBinding data) => (data as AuthorizationServerMetadata).JwksUri )},
+			{ "authorization_endpoint", new PropertyString ("authorization_endpoint", 
+					(IBinding data, string? value) => {(data as AuthorizationServerMetadata).AuthorizationEndpoint = value;}, (IBinding data) => (data as AuthorizationServerMetadata).AuthorizationEndpoint )},
+			{ "token_endpoint", new PropertyString ("token_endpoint", 
+					(IBinding data, string? value) => {(data as AuthorizationServerMetadata).TokenEndpoint = value;}, (IBinding data) => (data as AuthorizationServerMetadata).TokenEndpoint )},
+			{ "token_endpoint_auth_methods_supported", new PropertyListString ("token_endpoint_auth_methods_supported", 
+					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).TokenEndpointAuthMethodsSupported = value;}, (IBinding data) => (data as AuthorizationServerMetadata).TokenEndpointAuthMethodsSupported )},
+			{ "token_endpoint_auth_signing_alg_values_supported", new PropertyListString ("token_endpoint_auth_signing_alg_values_supported", 
+					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).TokenEndpointAuthSigningAlgValuesSupported = value;}, (IBinding data) => (data as AuthorizationServerMetadata).TokenEndpointAuthSigningAlgValuesSupported )},
+			{ "revocation_endpoint", new PropertyString ("revocation_endpoint", 
+					(IBinding data, string? value) => {(data as AuthorizationServerMetadata).RevocationEndpoint = value;}, (IBinding data) => (data as AuthorizationServerMetadata).RevocationEndpoint )},
+			{ "introspection_endpoint", new PropertyString ("introspection_endpoint", 
+					(IBinding data, string? value) => {(data as AuthorizationServerMetadata).IntrospectionEndpoint = value;}, (IBinding data) => (data as AuthorizationServerMetadata).IntrospectionEndpoint )},
+			{ "pushed_authorization_request_endpoint", new PropertyString ("pushed_authorization_request_endpoint", 
+					(IBinding data, string? value) => {(data as AuthorizationServerMetadata).PushedAuthorizationRequestEndpoint = value;}, (IBinding data) => (data as AuthorizationServerMetadata).PushedAuthorizationRequestEndpoint )},
+			{ "require_pushed_authorization_requests", new PropertyBoolean ("require_pushed_authorization_requests", 
+					(IBinding data, bool? value) => {(data as AuthorizationServerMetadata).RequirePushedAuthorizationRequests = value;}, (IBinding data) => (data as AuthorizationServerMetadata).RequirePushedAuthorizationRequests )},
+			{ "dpop_signing_alg_values_supported", new PropertyListString ("dpop_signing_alg_values_supported", 
+					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).DpopSigningAlgValuesSupported = value;}, (IBinding data) => (data as AuthorizationServerMetadata).DpopSigningAlgValuesSupported )},
+			{ "client_id_metadata_document_supported", new PropertyBoolean ("client_id_metadata_document_supported", 
+					(IBinding data, bool? value) => {(data as AuthorizationServerMetadata).ClientIdMetadataDocumentSupported = value;}, (IBinding data) => (data as AuthorizationServerMetadata).ClientIdMetadataDocumentSupported )}
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "AuthorizationServerMetadata";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new AuthorizationServerMetadata();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new AuthorizationServerMetadata FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as AuthorizationServerMetadata;
+			}
+		var Result = new AuthorizationServerMetadata ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class ClientMetadata : Oauth {
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						ClientId  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						applicationType  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					GrantTypes  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						Scope  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					ResponseTypes  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					RedirectUris  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual bool?						DpopBoundAccessTokens  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						TokenEndpointAuthMethod  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						TokenEndpointAuthSigningAlg  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual JWKS?						JWKS  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						ClientName  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						ClientUri  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						LogoUri  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						TosUri  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						PolicyUri  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ClientMetadata(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "client_id", new PropertyString ("client_id", 
+					(IBinding data, string? value) => {(data as ClientMetadata).ClientId = value;}, (IBinding data) => (data as ClientMetadata).ClientId )},
+			{ "application_type", new PropertyString ("application_type", 
+					(IBinding data, string? value) => {(data as ClientMetadata).applicationType = value;}, (IBinding data) => (data as ClientMetadata).applicationType )},
+			{ "grant_types", new PropertyListString ("grant_types", 
+					(IBinding data, List<string>? value) => {(data as ClientMetadata).GrantTypes = value;}, (IBinding data) => (data as ClientMetadata).GrantTypes )},
+			{ "scope", new PropertyString ("scope", 
+					(IBinding data, string? value) => {(data as ClientMetadata).Scope = value;}, (IBinding data) => (data as ClientMetadata).Scope )},
+			{ "response_types", new PropertyListString ("response_types", 
+					(IBinding data, List<string>? value) => {(data as ClientMetadata).ResponseTypes = value;}, (IBinding data) => (data as ClientMetadata).ResponseTypes )},
+			{ "redirect_uris", new PropertyListString ("redirect_uris", 
+					(IBinding data, List<string>? value) => {(data as ClientMetadata).RedirectUris = value;}, (IBinding data) => (data as ClientMetadata).RedirectUris )},
+			{ "dpop_bound_access_tokens", new PropertyBoolean ("dpop_bound_access_tokens", 
+					(IBinding data, bool? value) => {(data as ClientMetadata).DpopBoundAccessTokens = value;}, (IBinding data) => (data as ClientMetadata).DpopBoundAccessTokens )},
+			{ "token_endpoint_auth_method", new PropertyString ("token_endpoint_auth_method", 
+					(IBinding data, string? value) => {(data as ClientMetadata).TokenEndpointAuthMethod = value;}, (IBinding data) => (data as ClientMetadata).TokenEndpointAuthMethod )},
+			{ "token_endpoint_auth_signing_alg", new PropertyString ("token_endpoint_auth_signing_alg", 
+					(IBinding data, string? value) => {(data as ClientMetadata).TokenEndpointAuthSigningAlg = value;}, (IBinding data) => (data as ClientMetadata).TokenEndpointAuthSigningAlg )},
+			{ "j_w_k_s", new PropertyStruct ("j_w_k_s", 
+					(IBinding data, object? value) => {(data as ClientMetadata).JWKS = value as JWKS;}, (IBinding data) => (data as ClientMetadata).JWKS,
+					false, ()=>new  JWKS(), ()=>new JWKS())} ,
+			{ "client_name", new PropertyString ("client_name", 
+					(IBinding data, string? value) => {(data as ClientMetadata).ClientName = value;}, (IBinding data) => (data as ClientMetadata).ClientName )},
+			{ "client_uri", new PropertyString ("client_uri", 
+					(IBinding data, string? value) => {(data as ClientMetadata).ClientUri = value;}, (IBinding data) => (data as ClientMetadata).ClientUri )},
+			{ "logo_uri", new PropertyString ("logo_uri", 
+					(IBinding data, string? value) => {(data as ClientMetadata).LogoUri = value;}, (IBinding data) => (data as ClientMetadata).LogoUri )},
+			{ "tos_uri", new PropertyString ("tos_uri", 
+					(IBinding data, string? value) => {(data as ClientMetadata).TosUri = value;}, (IBinding data) => (data as ClientMetadata).TosUri )},
+			{ "policy_uri", new PropertyString ("policy_uri", 
+					(IBinding data, string? value) => {(data as ClientMetadata).PolicyUri = value;}, (IBinding data) => (data as ClientMetadata).PolicyUri )}
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ClientMetadata";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ClientMetadata();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ClientMetadata FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ClientMetadata;
+			}
+		var Result = new ClientMetadata ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class DidDocument : Oauth {
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					Contexts  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						Id  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					AlsoKnownAs  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual List<DidVerificationMethod>?					VerificationMethod  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual List<DidService>?					Service  {get; set;}
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new DidDocument(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "@context", new PropertyListString ("@context", 
+					(IBinding data, List<string>? value) => {(data as DidDocument).Contexts = value;}, (IBinding data) => (data as DidDocument).Contexts )},
+			{ "id", new PropertyString ("id", 
+					(IBinding data, string? value) => {(data as DidDocument).Id = value;}, (IBinding data) => (data as DidDocument).Id )},
+			{ "alsoKnownAs", new PropertyListString ("alsoKnownAs", 
+					(IBinding data, List<string>? value) => {(data as DidDocument).AlsoKnownAs = value;}, (IBinding data) => (data as DidDocument).AlsoKnownAs )},
+			{ "verificationMethod", new PropertyListStruct ("verificationMethod", 
+					(IBinding data, object? value) => {(data as DidDocument).VerificationMethod = value as List<DidVerificationMethod>;}, (IBinding data) => (data as DidDocument).VerificationMethod,
+					false, ()=>new  List<DidVerificationMethod>(), ()=>new DidVerificationMethod())} ,
+			{ "service", new PropertyListStruct ("service", 
+					(IBinding data, object? value) => {(data as DidDocument).Service = value as List<DidService>;}, (IBinding data) => (data as DidDocument).Service,
+					false, ()=>new  List<DidService>(), ()=>new DidService())} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "DidDocument";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new DidDocument();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new DidDocument FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as DidDocument;
+			}
+		var Result = new DidDocument ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class DidVerificationMethod : Oauth {
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						Id  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						Type  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						Controller  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						PublicKeyMultibase  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new DidVerificationMethod(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "id", new PropertyString ("id", 
+					(IBinding data, string? value) => {(data as DidVerificationMethod).Id = value;}, (IBinding data) => (data as DidVerificationMethod).Id )},
+			{ "type", new PropertyString ("type", 
+					(IBinding data, string? value) => {(data as DidVerificationMethod).Type = value;}, (IBinding data) => (data as DidVerificationMethod).Type )},
+			{ "controller", new PropertyString ("controller", 
+					(IBinding data, string? value) => {(data as DidVerificationMethod).Controller = value;}, (IBinding data) => (data as DidVerificationMethod).Controller )},
+			{ "publicKeyMultibase", new PropertyString ("publicKeyMultibase", 
+					(IBinding data, string? value) => {(data as DidVerificationMethod).PublicKeyMultibase = value;}, (IBinding data) => (data as DidVerificationMethod).PublicKeyMultibase )}
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "DidVerificationMethod";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new DidVerificationMethod();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new DidVerificationMethod FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as DidVerificationMethod;
+			}
+		var Result = new DidVerificationMethod ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class DidService : Oauth {
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						Id  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						Type  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						ServiceEndpoint  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new DidService(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "id", new PropertyString ("id", 
+					(IBinding data, string? value) => {(data as DidService).Id = value;}, (IBinding data) => (data as DidService).Id )},
+			{ "type", new PropertyString ("type", 
+					(IBinding data, string? value) => {(data as DidService).Type = value;}, (IBinding data) => (data as DidService).Type )},
+			{ "serviceEndpoint", new PropertyString ("serviceEndpoint", 
+					(IBinding data, string? value) => {(data as DidService).ServiceEndpoint = value;}, (IBinding data) => (data as DidService).ServiceEndpoint )}
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "DidService";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new DidService();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new DidService FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as DidService;
+			}
+		var Result = new DidService ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class JWKS : Oauth {
+        /// <summary>
+        /// </summary>
+
+	public virtual List<JWK>?					Keys  {get; set;}
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new JWKS(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "keys", new PropertyListStruct ("keys", 
+					(IBinding data, object? value) => {(data as JWKS).Keys = value as List<JWK>;}, (IBinding data) => (data as JWKS).Keys,
+					false, ()=>new  List<JWK>(), ()=>new JWK())} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "JWKS";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new JWKS();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new JWKS FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as JWKS;
+			}
+		var Result = new JWKS ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class JWK : Oauth {
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						KeyType  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						Use  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						Curve  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						X  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						Y  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						D  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						Kid  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new JWK(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "kty", new PropertyString ("kty", 
+					(IBinding data, string? value) => {(data as JWK).KeyType = value;}, (IBinding data) => (data as JWK).KeyType )},
+			{ "use", new PropertyString ("use", 
+					(IBinding data, string? value) => {(data as JWK).Use = value;}, (IBinding data) => (data as JWK).Use )},
+			{ "crv", new PropertyString ("crv", 
+					(IBinding data, string? value) => {(data as JWK).Curve = value;}, (IBinding data) => (data as JWK).Curve )},
+			{ "x", new PropertyString ("x", 
+					(IBinding data, string? value) => {(data as JWK).X = value;}, (IBinding data) => (data as JWK).X )},
+			{ "y", new PropertyString ("y", 
+					(IBinding data, string? value) => {(data as JWK).Y = value;}, (IBinding data) => (data as JWK).Y )},
+			{ "d", new PropertyString ("d", 
+					(IBinding data, string? value) => {(data as JWK).D = value;}, (IBinding data) => (data as JWK).D )},
+			{ "kid", new PropertyString ("kid", 
+					(IBinding data, string? value) => {(data as JWK).Kid = value;}, (IBinding data) => (data as JWK).Kid )}
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "JWK";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new JWK();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new JWK FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as JWK;
+			}
+		var Result = new JWK ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+

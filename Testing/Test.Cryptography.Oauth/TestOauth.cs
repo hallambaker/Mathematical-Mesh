@@ -32,8 +32,12 @@ public class TestOauth {
 
         var oauth = new OAuth(document);
 
-        }
 
+        var clientMeta = ClientMetadata.FactoryAtproto("mplace2.app");
+
+
+        var asString = clientMeta.ToString();
+        }
 
 
 

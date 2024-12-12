@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Nodes;
+﻿using System.Text;
+using System.Text.Json.Nodes;
 using System.Xml.Serialization;
 
 namespace Goedel.Serialization;
@@ -40,7 +41,7 @@ public record SerialField(
             int CborCode = -1
             ) {
     }
-public class Serialization {
+public  class Serialization {
 
     public static SerialField GetField(ISerializable data, string tag) {
         foreach (var field in data.Fields) {
@@ -51,7 +52,12 @@ public class Serialization {
         return null!;
 
         }
-    public static void Deserialize(ISerializable 
+
+ 
+
+
+
+    public static void Deserialize( ISerializable 
             data,
             JsonNode? node) {
 
@@ -221,7 +227,7 @@ public class Serialization {
 
 public class Serialization<T> : Serialization where T : ISerializable, new() {
 
-
+ 
 
 
     public static void Serialize(
@@ -256,5 +262,75 @@ public class Serialization<T> : Serialization where T : ISerializable, new() {
 
     }
 
+
+public static class Extensions {
+
+
+    static void Indent(StringBuilder builder, int indent, ref bool first) {
+        if (!first) {
+            builder.Append(",");
+            }
+        first = false;
+        if (indent >= 0) {
+            builder.Append("\n");
+            }
+        for (int i = 0; i < indent; i++) {
+            builder.Append("  ");
+            }
+        }
+
+    /// <summary>
+    /// Return the next indent value. If <paramref name="indent"/> is less than 0, the value is -1,
+    /// otherwise, the value is indent + 1
+    /// </summary>
+    /// <param name="indent">The current indent level.</param>
+    /// <returns>The next indent level.</returns>
+    static int NextIndent(int indent) => indent < 0 ? -1 : indent + 1;
+
+    public static string Serialize(this ISerializable data, int indent = 0) {
+
+        var builder = new StringBuilder();
+
+        //Indent(builder, indent, false);
+        builder.Append("{");
+        indent = NextIndent(indent);
+
+        var first = true;
+        foreach (var field in data.Fields) {
+            if (field is not null) {
+                switch (field.FieldType) {
+                    case FieldType.Integer: {
+                        if (field.Getter(data) is int value) {
+                            Indent(builder, indent, ref first);
+                            builder.Append('"');
+                            builder.Append(field.Name);
+                            builder.Append("\": ");
+                            builder.Append(value.ToString());
+                            }
+                        break;
+                        }
+                    case FieldType.String: {
+                        if (field.Getter(data) is string value) {
+                            Indent(builder, indent, ref first);
+                            builder.Append('"');
+                            builder.Append(field.Name);
+                            builder.Append("\": \"");
+                            builder.Append(value);
+                            builder.Append('"');
+                            }
+                        break;
+                        }
+                    }
+                }
+            }
+
+        first = true;
+        Indent(builder, indent, ref first);
+        builder.Append("}\n");
+
+        return builder.ToString();
+        }
+
+    }
 
 

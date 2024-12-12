@@ -1,0 +1,28 @@
+﻿Namespace Goedel.Cryptography.Oauth OauthConstants
+
+
+
+File OauthIdentifier
+	Enum ApplicationType "Application Types"
+		Code Web		"web"  
+		Code Native	"native"  
+
+	Enum GrantTypes "Grant types"
+		Code AuthorizationCode 		"authorization_code "  
+		Code RefreshToken 	"refresh_token "  
+
+	Enum ScopeTypes "Scope types"
+		Integer Atproto 	0 "atproto"  
+		Integer Generic 	1 "transition:generic"  
+		Integer Chat 		2 "transition:chat.bsky"  
+
+	Enum ResponseType "Response Types"
+		Code Code		"code"  
+
+	Enum AuthenticationMethod "Authentication Method"
+		Code JWT		"private_key_jwt"  
+
+	Enum EndpointSignature "Endpoint Signature Algorithm"
+		Code ES256		"ES256"  
+
+
