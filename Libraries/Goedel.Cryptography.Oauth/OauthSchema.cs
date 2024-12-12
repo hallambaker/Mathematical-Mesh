@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/12/2024 5:53:15 PM
+//  This file was automatically generated at 12/12/2024 6:00:43 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -402,7 +402,7 @@ public partial class ClientMetadata : Oauth {
         /// <summary>
         /// </summary>
 
-	public virtual JWKS?						JWKS  {get; set;}
+	public virtual JWKS?						Jwks  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -459,8 +459,8 @@ public partial class ClientMetadata : Oauth {
 					(IBinding data, string? value) => {(data as ClientMetadata).TokenEndpointAuthMethod = value;}, (IBinding data) => (data as ClientMetadata).TokenEndpointAuthMethod )},
 			{ "token_endpoint_auth_signing_alg", new PropertyString ("token_endpoint_auth_signing_alg", 
 					(IBinding data, string? value) => {(data as ClientMetadata).TokenEndpointAuthSigningAlg = value;}, (IBinding data) => (data as ClientMetadata).TokenEndpointAuthSigningAlg )},
-			{ "j_w_k_s", new PropertyStruct ("j_w_k_s", 
-					(IBinding data, object? value) => {(data as ClientMetadata).JWKS = value as JWKS;}, (IBinding data) => (data as ClientMetadata).JWKS,
+			{ "jwks", new PropertyStruct ("jwks", 
+					(IBinding data, object? value) => {(data as ClientMetadata).Jwks = value as JWKS;}, (IBinding data) => (data as ClientMetadata).Jwks,
 					false, ()=>new  JWKS(), ()=>new JWKS())} ,
 			{ "client_name", new PropertyString ("client_name", 
 					(IBinding data, string? value) => {(data as ClientMetadata).ClientName = value;}, (IBinding data) => (data as ClientMetadata).ClientName )},

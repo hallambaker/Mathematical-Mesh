@@ -77,7 +77,7 @@
 		Boolean DpopBoundAccessTokens 
 		String TokenEndpointAuthMethod 
 		String TokenEndpointAuthSigningAlg 
-		Struct JWKS JWKS
+		Struct JWKS Jwks
 		String ClientName 
 		String ClientUri 
 		String LogoUri 

@@ -91,7 +91,7 @@ public partial class JWK {
             Use = keyPair.KeyUses.HasFlag(KeyUses.Sign) ? "Sig" : "Enc",
             X = keyPairECDHNist.PublicKey.PublicKey.X.ToByteArrayBigEndian(32).ToStringBase64url(),
             Y = keyPairECDHNist.PublicKey.PublicKey.Y.ToByteArrayBigEndian(32).ToStringBase64url(),
-            Kid = keyPair.UDFValue
+            Kid = keyPair.KeyIdentifier
             },
         _ => null
         };
