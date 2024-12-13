@@ -3,6 +3,7 @@ using Goedel.ASN;
 using Goedel.Discovery;
 using Goedel.IO;
 
+using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text.Json.Nodes;
@@ -17,14 +18,13 @@ public class SessionManager : Disposable {
 
     #region // Properties
 
+
+    Dictionary<string, DidDocument> DidDictionary = new();
+    Dictionary<string, AuthorizationServerMetadata> AuthServerDictionary = new();
     #endregion
 
     #region // Constructors
     public SessionManager() {
-
-
-
-
         }
 
     #endregion
@@ -35,21 +35,15 @@ public class SessionManager : Disposable {
     /// </summary>
     /// <param name="handle"></param>
     /// <returns></returns>
-    public static Did  HandleToDid(string handle) {
-        //var r2 = DnsClient.ResolveServiceAsync("example.com", "mmm");
-
+    public DidDocument HandleToDid(string handle) {
+        if (DidDictionary.TryGetValue(handle, out var didDocument)) {
+            return didDocument;
+            }
 
         var atproto = "_atproto." + handle;
+        var did = DnsClient.ResolveAtHandle(atproto).Sync();
 
-        var result = DnsClient.ResolveAtHandle(atproto).Sync();
-
-
-        return result;
-        }
-
-
-    public static DidDocument Resolve(DidPlc did) {
-
+        // have to check for Web here?
 
         var client = UriClient.HttpClient;
         var uri = "https://plc.directory/" + did.Identifier;
@@ -57,24 +51,53 @@ public class SessionManager : Disposable {
         var result = client.GetStringAsync(uri).Sync();
         Console.WriteLine(result);
 
-
-        //var document = Serialization<DidDocument>.Deserialize(result);
-
         using var jsonReader = new JsonReader(result);
-        var doc2 = DidDocument.FromJson(jsonReader, false);
+        
+        didDocument = DidDocument.FromJson(jsonReader, false);
 
-        return doc2;
+        return didDocument;
 
 
         }
 
 
+    public AuthorizationServerMetadata GetAuthorization(
+                DidDocument didDocument
+                ) {
 
+
+
+
+        if (AuthServerDictionary.TryGetValue(handle, out var didDocument)) {
+            return didDocument;
+            }
+
+        throw new NYI();
+        }
 
 
 
 
     #endregion
+    }
+
+public partial class DidDocument {
+
+    public bool TryGetService(string key, out DidService service) {
+        service = null;
+        
+        if (Service is null) {
+            return false;
+            }
+        foreach (var item in Service) {
+            if (item.Id == key) {
+                service = item;
+                return true;
+                }
+            }
+        return false;
+        }
+    
     }
 
 

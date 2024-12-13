@@ -9,13 +9,15 @@ public class OauthClient {
     public KeyPair OauthClientEncryption { get;  }
 
     public JWKS JWKS { get;}
-
+    SessionManager SessionManager { get; }
 
 
     public OauthClient(
                 string clientId,
                 string redirectUri,
                 JWKS keys) {
+        
+        SessionManager = new();
 
         JWKS = keys;
         ScopeTypes scope = ScopeTypes.Atproto;
@@ -72,39 +74,53 @@ public class OauthClient {
 
     #region // Methods
 
-    public async Task<OauthContext> BeginOAuthContext(
+    public async Task<OauthClientResult> PreRequest(
             string handle,
             string state) {
+        handle = ResolveHandle(handle);
+        handle.AssertNotNull(NYI.Throw);
 
-        return new OauthContextFail();
+        // Resolve the DID to a DID document
+        var didDocument = SessionManager.HandleToDid(handle);
+        var authServerMetadata = SessionManager.GetAuthorization(didDocument);
+        // now have to get the server 
+
+
+        return new OauthClientResultFail();
         }
 
 
-    public OauthContext ParseResponse(
+    public OauthClientResult ParseResponse(
                 string responseUri) {
-        return new OauthContextFail();
+        return new OauthClientResultFail();
         }
 
+    public static string ResolveHandle(string handle) {
+        if (handle is null || handle.Length == 0) {
+            return null;
+            }
+        return (handle[0] == '@') ? handle [1..] : handle;
+        }
 
 
     #endregion
 
     }
 
-public abstract record OauthContext {
+public abstract record OauthClientResult {
 
     }
 
-public record OauthContextFail : OauthContext {
+public record OauthClientResultFail : OauthClientResult {
 
     }
 
-public record OauthContextSuccess : OauthContext {
+public record OauthClientResultPreRequest : OauthClientResult {
 
     public string RedirectUri { get; } = null;
 
     }
 
-public record OauthAuthSuccess : OauthContext {
+public record OauthClientResultAuthRequest : OauthClientResult {
     public string ContextUri { get; } = null;
     }

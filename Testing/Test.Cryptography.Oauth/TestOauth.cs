@@ -29,26 +29,26 @@ public class TestOauth {
     [Fact]
     public void TestDidResolve() {
 
-        var did = SessionManager.HandleToDid("phill.hallambaker.com");
-        var document = SessionManager.Resolve(did as DidPlc);
+        //var did = SessionManager.HandleToDid("phill.hallambaker.com");
+        //var document = SessionManager.Resolve(did as DidPlc);
 
 
-        var oauth = new OAuth(document);
+        //var oauth = new OAuth(document);
 
 
 
 
 
-        var key = OauthClient.GenKey();
-        var jwk = JWK.Factory(key);
-        var keys = new JWKS() {
-            Keys = [jwk]
-            };
-        //clientMeta.Jwks = keys;
+        //var key = OauthClient.GenKey();
+        //var jwk = JWK.Factory(key);
+        //var keys = new JWKS() {
+        //    Keys = [jwk]
+        //    };
+        ////clientMeta.Jwks = keys;
 
-        var clientMeta = AnnotationService.FactoryAtproto("mplace2.app", keys:keys);
-        var asString = clientMeta.ToString();
-        Console.WriteLine(asString);
+        //var clientMeta = AnnotationService.FactoryAtproto("mplace2.app", keys:keys);
+        //var asString = clientMeta.ToString();
+        //Console.WriteLine(asString);
         }
 
 
