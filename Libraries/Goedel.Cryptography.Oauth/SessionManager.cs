@@ -78,43 +78,6 @@ public class SessionManager : Disposable {
     }
 
 
-
-public class OauthClient {
-
-    ClientMetadata ClientMetadata { get; }
-
-
-    public OauthClient(
-                ClientMetadata clientMetadata) {
-        // generate the authentication keys
-
-        ClientMetadata = clientMetadata;
-        }
-
-
-    public static string GetClientId(string domain) => $"http://{domain}/.well-known/";
-
-
-    public static KeyPair GenKey() {
-
-        var key = KeyPair.Factory(CryptoAlgorithmId.P256, KeySecurity.Ephemeral);
-
-
-        var jwk = JWK.Factory(key);
-
-        var jwks = new JWKS {
-            Keys = [jwk]
-            };
-
-        //var asString = jwk.Serialize();
-        //Console.WriteLine(asString);
-        return key;
-        }
-
-
-    }
-
-
 public record OAuth {
     public DidService AtProtoService { get; }
     public ResourceServerMetadata ResourceServer { get; }

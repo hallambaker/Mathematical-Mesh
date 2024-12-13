@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/12/2024 6:11:16 PM
+//  This file was automatically generated at 12/13/2024 4:31:42 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -75,6 +75,9 @@ public abstract partial class Oauth : global::Goedel.Protocol.JsonObject {
 			new () {
 
 	    {"AuthorizationServerMetadata", AuthorizationServerMetadata._Factory},
+	    {"AuthorizationRequest", AuthorizationRequest._Factory},
+	    {"AuthorizationResponse", AuthorizationResponse._Factory},
+	    {"ErrorResponse", ErrorResponse._Factory},
 	    {"ClientMetadata", ClientMetadata._Factory},
 	    {"DidDocument", DidDocument._Factory},
 	    {"DidVerificationMethod", DidVerificationMethod._Factory},
@@ -346,6 +349,400 @@ public partial class AuthorizationServerMetadata : Oauth {
 			return Out as AuthorizationServerMetadata;
 			}
 		var Result = new AuthorizationServerMetadata ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// Authorization Request
+	/// </summary>
+public partial class AuthorizationRequest : Oauth {
+        /// <summary>
+        ///Identifies the client software
+        /// </summary>
+
+	public virtual string?						ClientId  {get; set;}
+
+        /// <summary>
+        /// must be code
+        /// </summary>
+
+	public virtual string?						ResponseType  {get; set;}
+
+        /// <summary>
+        /// the PKCE challenge value. 
+        /// </summary>
+
+	public virtual string?						CodeChallenge  {get; set;}
+
+        /// <summary>
+        ///which code challenge method is used, for example S256
+        /// </summary>
+
+	public virtual string?						CodeChallengeMethod  {get; set;}
+
+        /// <summary>
+        ///random token used to verify the authorization request against the response
+        /// </summary>
+
+	public virtual string?						State  {get; set;}
+
+        /// <summary>
+        ///Must match against URIs declared in client metadata and have a format consistent 
+        ///with the application_type declared in the client metadata
+        /// </summary>
+
+	public virtual string?						RedirectUri  {get; set;}
+
+        /// <summary>
+        ///Must be a subset of the scopes declared in client metadata. Must include atproto
+        /// </summary>
+
+	public virtual string?						Scope  {get; set;}
+
+        /// <summary>
+        ///Used by confidential clients to describe the client authentication mechanism
+        /// </summary>
+
+	public virtual string?						ClientAssertionType  {get; set;}
+
+        /// <summary>
+        ///Only used for confidential clients
+        /// </summary>
+
+	public virtual string?						ClientAssertion  {get; set;}
+
+        /// <summary>
+        ///Account identifier to be used for login
+        /// </summary>
+
+	public virtual string?						LoginHint  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new AuthorizationRequest(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "client_id", new PropertyString ("client_id", 
+					(IBinding data, string? value) => {(data as AuthorizationRequest).ClientId = value;}, (IBinding data) => (data as AuthorizationRequest).ClientId )},
+			{ "response_type", new PropertyString ("response_type", 
+					(IBinding data, string? value) => {(data as AuthorizationRequest).ResponseType = value;}, (IBinding data) => (data as AuthorizationRequest).ResponseType )},
+			{ "code_challenge", new PropertyString ("code_challenge", 
+					(IBinding data, string? value) => {(data as AuthorizationRequest).CodeChallenge = value;}, (IBinding data) => (data as AuthorizationRequest).CodeChallenge )},
+			{ "code_challenge_method", new PropertyString ("code_challenge_method", 
+					(IBinding data, string? value) => {(data as AuthorizationRequest).CodeChallengeMethod = value;}, (IBinding data) => (data as AuthorizationRequest).CodeChallengeMethod )},
+			{ "state", new PropertyString ("state", 
+					(IBinding data, string? value) => {(data as AuthorizationRequest).State = value;}, (IBinding data) => (data as AuthorizationRequest).State )},
+			{ "redirect_uri", new PropertyString ("redirect_uri", 
+					(IBinding data, string? value) => {(data as AuthorizationRequest).RedirectUri = value;}, (IBinding data) => (data as AuthorizationRequest).RedirectUri )},
+			{ "scope", new PropertyString ("scope", 
+					(IBinding data, string? value) => {(data as AuthorizationRequest).Scope = value;}, (IBinding data) => (data as AuthorizationRequest).Scope )},
+			{ "client_assertion_type", new PropertyString ("client_assertion_type", 
+					(IBinding data, string? value) => {(data as AuthorizationRequest).ClientAssertionType = value;}, (IBinding data) => (data as AuthorizationRequest).ClientAssertionType )},
+			{ "client_assertion", new PropertyString ("client_assertion", 
+					(IBinding data, string? value) => {(data as AuthorizationRequest).ClientAssertion = value;}, (IBinding data) => (data as AuthorizationRequest).ClientAssertion )},
+			{ "login_hint", new PropertyString ("login_hint", 
+					(IBinding data, string? value) => {(data as AuthorizationRequest).LoginHint = value;}, (IBinding data) => (data as AuthorizationRequest).LoginHint )}
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "AuthorizationRequest";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new AuthorizationRequest();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new AuthorizationRequest FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as AuthorizationRequest;
+			}
+		var Result = new AuthorizationRequest ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// Authorization Request
+	/// </summary>
+public partial class AuthorizationResponse : Oauth {
+        /// <summary>
+        ///The authorization code is generated by the authorization server and opaque 
+        ///to the client. The authorization code MUST expire shortly after it is issued 
+        ///to mitigate the risk of leaks. A maximum authorization code lifetime of 10 
+        ///minutes is RECOMMENDED. The authorization code is bound to the client identifier,
+        ///code challenge and redirect URI.
+        /// </summary>
+
+	public virtual string?						Code  {get; set;}
+
+        /// <summary>
+        ///REQUIRED if the state parameter was present in the client authorization request.
+        ///The exact value received from the client.
+        /// </summary>
+
+	public virtual string?						State  {get; set;}
+
+        /// <summary>
+        ///The identifier of the authorization server which the client can use to prevent
+        ///mix-up attacks, if the client interacts with more than one authorization server.
+        /// </summary>
+
+	public virtual string?						Iss  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new AuthorizationResponse(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "code", new PropertyString ("code", 
+					(IBinding data, string? value) => {(data as AuthorizationResponse).Code = value;}, (IBinding data) => (data as AuthorizationResponse).Code )},
+			{ "state", new PropertyString ("state", 
+					(IBinding data, string? value) => {(data as AuthorizationResponse).State = value;}, (IBinding data) => (data as AuthorizationResponse).State )},
+			{ "iss", new PropertyString ("iss", 
+					(IBinding data, string? value) => {(data as AuthorizationResponse).Iss = value;}, (IBinding data) => (data as AuthorizationResponse).Iss )}
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "AuthorizationResponse";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new AuthorizationResponse();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new AuthorizationResponse FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as AuthorizationResponse;
+			}
+		var Result = new AuthorizationResponse ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class ErrorResponse : Oauth {
+        /// <summary>
+        /// A single ASCII [USASCII] error code from the following
+        ///"invalid_request": The request is missing a required parameter, includes an 
+        ///invalid parameter value, includes a parameter more than once, or is otherwise malformed.
+        ///"unauthorized_client": The client is not authorized to request an authorization code 
+        ///using this method.
+        ///"access_denied": The resource owner or authorization server denied the request.
+        ///"unsupported_response_type": The authorization server does not support obtaining an 
+        ///authorization code using this method.
+        ///"invalid_scope": The requested scope is invalid, unknown, or malformed.
+        ///"server_error": The authorization server encountered an unexpected condition that 
+        ///prevented it from fulfilling the request. (This error code is needed because a 500 
+        ///Internal Server Error HTTP status code cannot be returned to the client via an HTTP redirect.)
+        ///"temporarily_unavailable": The authorization server is currently unable to handle 
+        ///the request due to a temporary overloading or maintenance of the server. (This 
+        ///error code is needed because a 503 Service Unavailable HTTP status code cannot 
+        ///be returned to the client via an HTTP redirect.)
+        /// </summary>
+
+	public virtual string?						Error  {get; set;}
+
+        /// <summary>
+        /// Human-readable ASCII [USASCII] text providing additional information, used to 
+        ///assist the client developer in understanding the error that occurred. Values for
+        ///the error_description parameter MUST NOT include characters outside the set %x20-21 
+        //// %x23-5B / %x5D-7E.
+        /// </summary>
+
+	public virtual string?						ErrorDescription  {get; set;}
+
+        /// <summary>
+        ///A URI identifying a human-readable web page with information about the error, 
+        ///used to provide the client developer with additional information about the error. 
+        ///Values for the error_uri parameter MUST conform to the URI-reference syntax and 
+        ///thus MUST NOT include characters outside the set %x21 / %x23-5B / %x5D-7E
+        /// </summary>
+
+	public virtual string?						ErrorUri  {get; set;}
+
+        /// <summary>
+        ///REQUIRED if a state parameter was present in the client authorization request. 
+        ///The exact value received from the client
+        /// </summary>
+
+	public virtual string?						State  {get; set;}
+
+        /// <summary>
+        ///The identifier of the authorization server which the client can use to prevent
+        ///mix-up attacks, if the client interacts with more than one authorization server.
+        /// </summary>
+
+	public virtual string?						Iss  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ErrorResponse(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Error", new PropertyString ("Error", 
+					(IBinding data, string? value) => {(data as ErrorResponse).Error = value;}, (IBinding data) => (data as ErrorResponse).Error )},
+			{ "ErrorDescription", new PropertyString ("ErrorDescription", 
+					(IBinding data, string? value) => {(data as ErrorResponse).ErrorDescription = value;}, (IBinding data) => (data as ErrorResponse).ErrorDescription )},
+			{ "ErrorUri", new PropertyString ("ErrorUri", 
+					(IBinding data, string? value) => {(data as ErrorResponse).ErrorUri = value;}, (IBinding data) => (data as ErrorResponse).ErrorUri )},
+			{ "State", new PropertyString ("State", 
+					(IBinding data, string? value) => {(data as ErrorResponse).State = value;}, (IBinding data) => (data as ErrorResponse).State )},
+			{ "Iss", new PropertyString ("Iss", 
+					(IBinding data, string? value) => {(data as ErrorResponse).Iss = value;}, (IBinding data) => (data as ErrorResponse).Iss )}
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ErrorResponse";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ErrorResponse();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ErrorResponse FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ErrorResponse;
+			}
+		var Result = new ErrorResponse ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
