@@ -231,7 +231,7 @@ subjectPublicKeyInfo SubjectPublicKeyInfo SEQUENCE (2 elem)
     /// <param name="cryptoAlgorithmID">The cryptographic algorithm identifier</param>
     /// <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
     /// <returns>The generated key pair</returns>
-    public static KeyPair KeyPairFactory(
+    public static new KeyPair KeyPairFactory(
                 int keySize = 0,
                 KeySecurity keySecurity = KeySecurity.Bound,
                 KeyUses keyUses = KeyUses.Any,

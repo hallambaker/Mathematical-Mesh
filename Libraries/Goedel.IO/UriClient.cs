@@ -61,5 +61,8 @@ public static class UriClient {
 
 
 
+    public static string DownloadString(this string uri) => HttpClient.GetStringAsync(uri).Sync();
+
+
 
     }

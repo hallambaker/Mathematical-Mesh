@@ -11,20 +11,126 @@ using System.Xml;
 
 namespace Goedel.Cryptography.Oauth;
 
+
+public interface ICache {
+    }
+
+
+public class CachedDocument<T>  {
+
+    ///<summary>The value.</summary> 
+    public T Value { get; set; }
+
+    ///<summary>Time the value was last refreshed.</summary> 
+    public DateTime Refreshed { get; set; }
+
+    ///<summary>Number of times the item was accessed in the last period.</summary> 
+    public int AccessedLast { get; set; } = 0;
+
+    ///<summary>Number of times the item has been accessed this period so far.</summary> 
+    public int AccessedThis { get; set; } = 0;
+
+    }
+
+
+public delegate Task<T?> ResolutionDelegate<K,T> (
+            K key, 
+            CachedDocument<T>? last = null);
+
+
+public class DocumentCache<K,T> where T: class?{
+
+    ///<summary>Time after which documents are considered expired</summary> 
+    public TimeSpan Expire;
+
+    ///<summary>The cached data.</summary> 
+    public Dictionary<K, CachedDocument<T>> Dictionary { get; set; } = new();
+
+    ///<summary>Number of cached items.</summary> 
+    public int Count => Dictionary.Count;
+
+
+    ResolutionDelegate<K,T> Resolver { get; set; }
+
+    /// <summary>
+    /// Constructor, returns a new instance using the asynchronous resolver 
+    /// <paramref name="resolver"/>.
+    /// </summary>
+    /// <param name="resolver">The resolver delegate.</param>
+    public DocumentCache(
+                ResolutionDelegate<K,T> resolver) {
+        Resolver = resolver;
+        }
+
+    public async Task<T?> GetValueAsync(K key) {
+        if (Dictionary.TryGetValue(key, out var handle)) {
+            if (handle.Refreshed + Expire > DateTime.Now) { 
+                // Value has not expired.
+                handle.AccessedThis++;
+                return handle.Value;
+                }
+            var newData = await Resolver(key, handle);
+            if (newData != null){ 
+                // Resolution succeeded.
+                handle.Value = newData;
+                handle.Refreshed = DateTime.Now;
+                handle.AccessedThis++;
+                return handle.Value;
+                }
+
+            // Could not resolve, remove value from the dictionary.
+            Dictionary.Remove(key); 
+            return default;
+            }
+
+        var fetchedData = await Resolver(key);
+        if (fetchedData != null) { // Resolution succeeded.
+            handle = new CachedDocument<T>() {
+                Value = fetchedData,
+                Refreshed = DateTime.Now
+                };
+            return handle.Value;
+            }
+        return default;
+        }
+
+    /// <summary>
+    /// Purge the cache. This will require a locking mechanism. Best approach is probably
+    /// to create a second sorted dictionary and copy all the items from the first, in batches,
+    /// allowing the lock to expire with each lookup. Then copy the elements top be kept back 
+    /// again.
+    /// </summary>
+    /// <param name="maxRemaining">Number of elements to keep. If less than 0, keep
+    /// all and only remove items with no accesses since the last purge.</param>
+    /// <returns>The number of elements that were purged.</returns>
+    public int Purge(int maxRemaining=-1) {
+        return 0;
+        }
+
+
+    }
+
+
 /// <summary>
 /// Session manager class, supports OAUTH and other login modes.
 /// </summary>
 public class SessionManager : Disposable {
 
     #region // Properties
+    DnsClient DnsClient = DnsClient.Default;
+
+    DocumentCache<string, DidDocument> DidDictionary { get; }
+    DocumentCache<string, ResourceServerMetadata> ResourceServerDictionary { get; }
+    DocumentCache<string, AuthorizationServerMetadata> AuthServerDictionary { get; }
 
 
-    Dictionary<string, DidDocument> DidDictionary = new();
-    Dictionary<string, AuthorizationServerMetadata> AuthServerDictionary = new();
     #endregion
 
     #region // Constructors
     public SessionManager() {
+        DidDictionary = new(TryResolveDid);
+        ResourceServerDictionary = new(TryResolveResourceServer);
+        AuthServerDictionary = new(TryResolveAuthServer);
         }
 
     #endregion
@@ -36,41 +142,58 @@ public class SessionManager : Disposable {
     /// <param name="handle"></param>
     /// <returns></returns>
     public DidDocument HandleToDid(string handle) {
-        if (DidDictionary.TryGetValue(handle, out var didDocument)) {
-            return didDocument;
-            }
+        throw new NYI();
+        //if (DidDictionary.GetValueAsync(handle, out var didDocument)) {
+        //    return didDocument;
+        //    }
 
-        var atproto = "_atproto." + handle;
-        var did = DnsClient.ResolveAtHandle(atproto).Sync();
+        //var atproto = "_atproto." + handle;
+        //var did = DnsClient.ResolveAtHandle(atproto).Sync();
 
-        // have to check for Web here?
+        //// have to check for Web here?
 
-        var client = UriClient.HttpClient;
-        var uri = "https://plc.directory/" + did.Identifier;
+        //var client = UriClient.HttpClient;
+        //var uri = "https://plc.directory/" + did.Identifier;
 
-        var result = client.GetStringAsync(uri).Sync();
-        Console.WriteLine(result);
+        //var result = client.GetStringAsync(uri).Sync();
+        //Console.WriteLine(result);
 
-        using var jsonReader = new JsonReader(result);
+        //using var jsonReader = new JsonReader(result);
         
-        didDocument = DidDocument.FromJson(jsonReader, false);
+        //didDocument = DidDocument.FromJson(jsonReader, false);
 
-        return didDocument;
+        //return didDocument;
 
 
         }
 
+    async Task<DidDocument> TryResolveDid(string handle) => await DidDictionary.GetValueAsync(handle);
 
-    public AuthorizationServerMetadata GetAuthorization(
-                DidDocument didDocument
-                ) {
+    async Task<DidDocument?> TryResolveDid(
+                string key, 
+                CachedDocument<DidDocument>? last) {
+
+        var atproto = "_atproto." + key;
+        var dnsTask = DnsClient.ResolveAtHandle(atproto);
+
+        //Task.WaitAny(dnsTask);
+
+        var did = await dnsTask;
 
 
+        throw new NYI();
+        }
 
+    async Task<ResourceServerMetadata?> TryResolveResourceServer(
+            string key,
+            CachedDocument<ResourceServerMetadata>? last) {
 
-        if (AuthServerDictionary.TryGetValue(handle, out var didDocument)) {
-            return didDocument;
-            }
+        throw new NYI();
+        }
+
+    async Task<AuthorizationServerMetadata?> TryResolveAuthServer(
+            string key,
+            CachedDocument<AuthorizationServerMetadata>? last) {
 
         throw new NYI();
         }
@@ -78,66 +201,77 @@ public class SessionManager : Disposable {
 
 
 
+
+    //public ResourceServerMetadata GetResource(
+    //        DidDocument didDocument
+    //        ) {
+
+
+
+
+    //    if (AuthServerDictionary.TryGetValue(handle, out var didDocument)) {
+    //        return didDocument;
+    //        }
+
+    //    throw new NYI();
+    //    }
+
+    //public AuthorizationServerMetadata GetAuthorization(
+    //            string uri
+    //            ) {
+
+
+
+
+    //    if (AuthServerDictionary.TryGetValue(handle, out var didDocument)) {
+    //        return didDocument;
+    //        }
+
+    //    throw new NYI();
+    //    }
+
+
+
+
     #endregion
     }
 
-public partial class DidDocument {
 
-    public bool TryGetService(string key, out DidService service) {
-        service = null;
-        
-        if (Service is null) {
-            return false;
-            }
-        foreach (var item in Service) {
-            if (item.Id == key) {
-                service = item;
-                return true;
-                }
-            }
-        return false;
-        }
-    
-    }
+//public record OAuth {
+//    public DidService AtProtoService { get; }
+//    public ResourceServerMetadata ResourceServer { get; }
+//    public List<AuthorizationServerMetadata> AuthorizationServers { get; } = new();
+
+//    public string ResourceServerEndpoint =>
+//        AtProtoService?.ServiceEndpoint.AddPath(".well-known/oauth-protected-resource");
+//    public string AuthorizationServerEndpoint(string server) =>
+//        server.AddPath(".well-known/oauth-authorization-server");
 
 
-public record OAuth {
-    public DidService AtProtoService { get; }
-    public ResourceServerMetadata ResourceServer { get; }
-    public List<AuthorizationServerMetadata> AuthorizationServers { get; } = new();
-
-    public string ResourceServerEndpoint =>
-        AtProtoService?.ServiceEndpoint.AddPath(".well-known/oauth-protected-resource");
-    public string AuthorizationServerEndpoint(string server) =>
-        server.AddPath(".well-known/oauth-authorization-server");
-
-
-    public OAuth(DidDocument document) {
+//    public OAuth(DidDocument document) {
 
 
 
-        if (document.Service.TryGetValue("#atproto_pds", out var service)) {
-            AtProtoService = service;
-            }
+//        if (document.Service.TryGetValue("#atproto_pds", out var service)) {
+//            AtProtoService = service;
+//            }
 
-        var client = UriClient.HttpClient;
+//        var client = UriClient.HttpClient;
 
-        var result1 = client.GetStringAsync(ResourceServerEndpoint).Sync();
-        ResourceServer = Serialization<ResourceServerMetadata>.Deserialize(result1);
+//        var result1 = client.GetStringAsync(ResourceServerEndpoint).Sync();
+//        ResourceServer = Serialization<ResourceServerMetadata>.Deserialize(result1);
 
-        foreach (var authServer in ResourceServer.AuthorizationServers) {
+//        foreach (var authServer in ResourceServer.AuthorizationServers) {
 
-            var endpoint = AuthorizationServerEndpoint(authServer);
+//            var endpoint = AuthorizationServerEndpoint(authServer);
 
-            var result2 = client.GetStringAsync(endpoint).Sync();
-            using var jsonReader = new JsonReader(result2);
-            var authServerData = AuthorizationServerMetadata.FromJson(jsonReader, false);
+//            var result2 = client.GetStringAsync(endpoint).Sync();
+//            using var jsonReader = new JsonReader(result2);
+//            var authServerData = AuthorizationServerMetadata.FromJson(jsonReader, false);
 
-            AuthorizationServers.Add(authServerData);
-            }
+//            AuthorizationServers.Add(authServerData);
+//            }
 
+//        }
 
-
-        }
-
-    }
+    //}

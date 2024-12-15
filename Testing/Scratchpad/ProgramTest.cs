@@ -23,17 +23,17 @@
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
-using Test.Cryptography.Oauth;
+//using Test.Cryptography.Oauth;
 
 //using Goedel.Cryptography.Nist;
-using Goedel.Debug;
+//using Goedel.Debug;
 //using Goedel.Cryptography.PQC;
 using Goedel.Mesh;
 using Goedel.Mesh.Test;
 using Goedel.Test;
 using Goedel.Test.Core;
 using Goedel.Utilities;
-using Goedel.XUnit;
+//using Goedel.XUnit;
 
 using Microsoft.Extensions.Logging;
 
@@ -57,7 +57,7 @@ partial class Program {
 
 
     static void Main() {
-        Trace.Listeners.Add(new GoedelTraceListener());
+        //Trace.Listeners.Add(new GoedelTraceListener());
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
         //MakeUdf.GenerateTests();
@@ -71,7 +71,7 @@ partial class Program {
         //RegistrationTests.Test().CallsignBind();
         //TestPresence.Test().PresenceHeartbeat();
 
-        TestOauth.Test().TestDidResolve();
+        //TestOauth.Test().TestDidResolve();
         //MakeSiteDocs.Test().GroupTests();
 
 

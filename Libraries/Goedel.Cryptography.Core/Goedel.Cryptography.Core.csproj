@@ -1,14 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
+  <Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
   <PropertyGroup>
 
     <Product>Goedel.Cryptography.Core</Product>
     <Description>Core crypto routines.</Description>
     <Copyright>© 2020</Copyright>
     <Title>Goedel.Cryptography.Core</Title>
-
   </PropertyGroup>
-
 
   <ItemGroup>
     <ProjectReference Include="..\Goedel.Cryptography.Identifiers\Goedel.Cryptography.Identifiers.csproj" />

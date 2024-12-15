@@ -121,29 +121,36 @@ public abstract class DnsClient {
         }
 
 
-    public static async Task<Did> ResolveAtHandle(string domain) {
+    public static async Task<Did?> ResolveAtHandle(string domain) {
         using var context = Default.GetContext();
-
         var records = await context.QueryRecord(domain, DNSTypeCode.TXT);
+        if (records == null) {
+            return null;
+            }
 
         // Check record exists
-        records.AssertNotNull(NYI.Throw);
+        //records.AssertNotNull(NYI.Throw);
 
         // Get the first record, must be TXT
 
         var enumerator = records.GetEnumerator();
         enumerator.MoveNext();
         var record = enumerator.Current as DNSRecord_TXT;
-        record?.Text.AssertNotNull(NYI.Throw);
+        if (record?.Text == null) {
+            return null;
+            }
+
+        //record?.Text.AssertNotNull(NYI.Throw);
 
         // Throw error if more than one.
-        enumerator.MoveNext().AssertFalse(NYI.Throw);
+        //enumerator.MoveNext().AssertFalse(NYI.Throw);
+        if (enumerator.MoveNext()) {
+            return null;
+            }
 
         return  Did.Factory(record);
 
         }
-
-
 
 
 

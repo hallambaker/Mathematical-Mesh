@@ -3,6 +3,16 @@
 	Description
 		|Support classes for OAUTH2 via ATproto
 
+	Structure ResourceServerMetadata
+		String Resource
+		String AuthorizationServers
+			Multiple
+		String ScopesSupported
+			Multiple
+		String BearerMethodsSupported
+			Multiple
+		String ResourceDocumentation
+
 
 	Structure AuthorizationServerMetadata
 		SnakeCase

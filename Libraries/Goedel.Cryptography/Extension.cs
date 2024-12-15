@@ -129,8 +129,7 @@ public static class ExtensionMethods {
     /// <param name="data">Input data</param>
     /// <returns>The certificate</returns>
     public static Certificate Certificate(this byte[] data) {
-
-        var X509Cert = new X509Certificate2(data);
+        var X509Cert = X509CertificateLoader.LoadCertificate(data);
         var TBSCertificate = X509Cert.TBSCertificate();
         return new Certificate(data, TBSCertificate);
         }

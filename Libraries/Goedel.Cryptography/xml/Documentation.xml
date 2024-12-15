@@ -4693,6 +4693,12 @@
             platform provider.
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.KeyPair.KeyPairFactoryECNist">
+            <summary>
+            Generate a new keypair. Initialized by the cryptographic
+            platform provider.
+            </summary>
+        </member>
         <member name="P:Goedel.Cryptography.KeyPair.KeyPairFactoryMlDsa">
             <summary>
             Generate a new keypair. Initialized by the cryptographic
@@ -5450,6 +5456,16 @@
             <param name="cryptoAlgorithmID">Cryptoraphic algorithm</param>
             <param name="keySize">The key size in bits.</param>
             <returns>The created key pair.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyPairECDHNist.KeyPairFactory(System.Int32,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Generate a key pair for the specified algorithm and key size.
+            </summary>
+            <param name="keySize">The Key size, must be 255 or 448</param>
+            <param name="keySecurity">The key security model</param>
+            <param name="cryptoAlgorithmID">The cryptographic algorithm identifier</param>
+            <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
+            <returns>The generated key pair</returns>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairECDHNist.Factory(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeySecurity,System.Byte[],System.Byte[],System.String,Goedel.Cryptography.IKeyLocate,System.Int32,Goedel.Cryptography.KeyUses)">
             <summary>

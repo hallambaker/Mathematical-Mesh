@@ -48,7 +48,7 @@ public partial class TestItem {
     /// <summary>
     /// Secondary keys describing the object
     /// </summary>
-    public override List<string> _Keys => Keys;
+    //public override List<string> _Keys => Keys;
 
     /// <summary>
     /// Secondary key/values pairs describing the object
@@ -59,12 +59,12 @@ public partial class TestItem {
             };
 
 
-    /// <summary>
-    /// Sequence header corresponding to persistence store entry
-    /// </summary>
-    public DareHeader ContainerHeader {
-        get => _Metadata as DareHeader; set => _Metadata = value;
-        }
+    ///// <summary>
+    ///// Sequence header corresponding to persistence store entry
+    ///// </summary>
+    //public DareHeader ContainerHeader {
+    //    get => _Metadata as DareHeader; set => _Metadata = value;
+    //    }
     }
 
 

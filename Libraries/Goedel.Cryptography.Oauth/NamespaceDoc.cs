@@ -24,7 +24,7 @@
 global using Goedel.Protocol;
 global using Goedel.Utilities;
 global using Goedel.Discovery;
-global using Goedel.Serialization;
+//global using Goedel.Serialization;
 global using Goedel.IO;
 
 

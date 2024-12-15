@@ -3014,30 +3014,9 @@
         <member name="F:Goedel.Protocol.JsonObject.KeyLocate">
             <summary>Key collection to be used to decrypt enveloped data within the object.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.JsonObject.JbcdElementObject">
-            <summary>The parser data binding.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.JsonObject._Keys">
-            <summary>
-            Secondary keys describing the object
-            </summary>
-        </member>
         <member name="P:Goedel.Protocol.JsonObject._KeyValues">
             <summary>
             Secondary key/values pairs describing the object
-            </summary>
-        </member>
-        <member name="P:Goedel.Protocol.JsonObject._Metadata">
-            <summary>
-            Metadata header describing use in persistence store.
-            </summary>
-        </member>
-        <member name="P:Goedel.Protocol.JsonObject._MetaDataParent">
-            <summary>Link to the parent metadata dictionary.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.JsonObject._MetaData">
-            <summary>
-            The Metadata dictionary for the serializable data.
             </summary>
         </member>
         <member name="P:Goedel.Protocol.JsonObject._Tag">

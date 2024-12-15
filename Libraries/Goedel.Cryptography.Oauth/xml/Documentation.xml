@@ -4,10 +4,1208 @@
         <name>Goedel.Cryptography.Oauth</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Cryptography.Oauth.ClientMetadata">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata.ClientId">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata.applicationType">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata.GrantTypes">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata.Scope">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata.ResponseTypes">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata.RedirectUris">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata.DpopBoundAccessTokens">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata.TokenEndpointAuthMethod">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata.TokenEndpointAuthSigningAlg">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata.Jwks">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata.ClientName">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata.ClientUri">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata.LogoUri">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata.TosUri">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata.PolicyUri">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ClientMetadata._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ClientMetadata._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ClientMetadata._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ClientMetadata.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.ClientMetadata._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.ClientMetadata.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.DidDocument">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidDocument.Contexts">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidDocument.Id">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidDocument.AlsoKnownAs">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidDocument.VerificationMethod">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidDocument.Service">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidDocument._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DidDocument._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DidDocument._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DidDocument._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidDocument._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidDocument._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidDocument._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidDocument._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DidDocument.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.DidDocument._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.DidDocument.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.DidService">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidService.Id">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidService.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidService.ServiceEndpoint">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidService._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DidService._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DidService._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DidService._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidService._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidService._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidService._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidService._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DidService.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.DidService._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.DidService.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.JWK">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JWK.KeyType">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JWK.Use">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JWK.Curve">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JWK.X">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JWK.Y">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JWK.D">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JWK.Kid">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JWK._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.JWK._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.JWK._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.JWK._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JWK._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JWK._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JWK._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JWK._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.JWK.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.JWK._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.JWK.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
         <member name="T:Goedel.Cryptography.Oauth.NamespaceDoc">
             <summary>
             Support classes for OAuth, OpenID etc.
             </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.ApplicationType">
+            <summary>Application Types</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ApplicationType.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ApplicationType.Web">
+            <summary>web</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ApplicationType.Native">
+            <summary>native</summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.GrantTypes">
+            <summary>Grant types</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.GrantTypes.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.GrantTypes.AuthorizationCode">
+            <summary>authorization_code </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.GrantTypes.RefreshToken">
+            <summary>refresh_token </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.ScopeTypes">
+            <summary>Scope types</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ScopeTypes.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ScopeTypes.Atproto">
+            <summary>atproto</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ScopeTypes.Generic">
+            <summary>transition:generic</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ScopeTypes.Chat">
+            <summary>transition:chat.bsky</summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.ResponseType">
+            <summary>Response Types</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ResponseType.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ResponseType.Code">
+            <summary>code</summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.AuthenticationMethod">
+            <summary>Authentication Method</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthenticationMethod.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthenticationMethod.JWT">
+            <summary>private_key_jwt</summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.EndpointSignature">
+            <summary>Endpoint Signature Algorithm</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.EndpointSignature.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.EndpointSignature.ES256">
+            <summary>ES256</summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.OauthConstants">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthConstants.ApplicationTypeWebTag">
+            <summary>Jose enumeration tag for ApplicationType.Web</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthConstants.ApplicationTypeNativeTag">
+            <summary>Jose enumeration tag for ApplicationType.Native</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthConstants.ToApplicationType(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthConstants.ToLabel(Goedel.Cryptography.Oauth.ApplicationType)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthConstants.GrantTypesAuthorizationCodeTag">
+            <summary>Jose enumeration tag for GrantTypes.AuthorizationCode</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthConstants.GrantTypesRefreshTokenTag">
+            <summary>Jose enumeration tag for GrantTypes.RefreshToken</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthConstants.ToGrantTypes(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthConstants.ToLabel(Goedel.Cryptography.Oauth.GrantTypes)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthConstants.ScopeTypesAtprotoTag">
+            <summary>Jose enumeration tag for ScopeTypes.Atproto</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthConstants.ScopeTypesAtprotoTitle">
+            <summary>Description for ScopeTypes.Atproto</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthConstants.ScopeTypesGenericTag">
+            <summary>Jose enumeration tag for ScopeTypes.Generic</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthConstants.ScopeTypesGenericTitle">
+            <summary>Description for ScopeTypes.Generic</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthConstants.ScopeTypesChatTag">
+            <summary>Jose enumeration tag for ScopeTypes.Chat</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthConstants.ScopeTypesChatTitle">
+            <summary>Description for ScopeTypes.Chat</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthConstants.ToScopeTypes(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthConstants.ToLabel(Goedel.Cryptography.Oauth.ScopeTypes)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthConstants.ResponseTypeCodeTag">
+            <summary>Jose enumeration tag for ResponseType.Code</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthConstants.ToResponseType(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthConstants.ToLabel(Goedel.Cryptography.Oauth.ResponseType)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthConstants.AuthenticationMethodJWTTag">
+            <summary>Jose enumeration tag for AuthenticationMethod.JWT</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthConstants.ToAuthenticationMethod(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthConstants.ToLabel(Goedel.Cryptography.Oauth.AuthenticationMethod)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthConstants.EndpointSignatureES256Tag">
+            <summary>Jose enumeration tag for EndpointSignature.ES256</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthConstants.ToEndpointSignature(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthConstants.ToLabel(Goedel.Cryptography.Oauth.EndpointSignature)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.Oauth">
+             <summary>
+            
+             Support classes for OAUTH2 via ATproto
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.Oauth._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.Oauth.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.Oauth._TagDictionary">
+            <summary>
+            Dictionary mapping tags to factory methods
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.Oauth.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
+            <summary>
+            Construct an instance from the specified tagged JsonReader stream.
+            </summary>
+            <param name="jsonReader">Input stream</param>
+            <param name="result">The created object</param>
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.ResourceServerMetadata">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ResourceServerMetadata.Resource">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ResourceServerMetadata.AuthorizationServers">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ResourceServerMetadata.ScopesSupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ResourceServerMetadata.BearerMethodsSupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ResourceServerMetadata.ResourceDocumentation">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ResourceServerMetadata._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ResourceServerMetadata._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ResourceServerMetadata._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ResourceServerMetadata._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ResourceServerMetadata._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ResourceServerMetadata._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ResourceServerMetadata._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ResourceServerMetadata._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ResourceServerMetadata.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.ResourceServerMetadata._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.ResourceServerMetadata.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.AuthorizationServerMetadata">
+             <summary>
+            
+             AuthorizationServerMetadata2
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.Issuer">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.ScopesSupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.SubjectTypesSupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.ResponseTypesSupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.ResponseModesSupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.GrantTypesSupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.CodeChallengeMethodsSupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.UiLocalesSupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.DisplayValuesSupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.AuthorizationResponseIssParameterSupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.RequestObjectSigningAlgValuesSupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.RequestObjectEncryptionAlgValuesSupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.RequestObjectEncryptionEncValuesSupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.RequestParameterSupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.RequestUriParameterSupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.RequireRequestUriRegistration">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.JwksUri">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.AuthorizationEndpoint">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.TokenEndpoint">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.TokenEndpointAuthMethodsSupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.TokenEndpointAuthSigningAlgValuesSupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.RevocationEndpoint">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.IntrospectionEndpoint">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.PushedAuthorizationRequestEndpoint">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.RequirePushedAuthorizationRequests">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.DpopSigningAlgValuesSupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.ClientIdMetadataDocumentSupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationServerMetadata._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationServerMetadata._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationServerMetadata._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.AuthorizationServerMetadata._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.AuthorizationServerMetadata.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.AuthorizationRequest">
+             <summary>
+            
+             Authorization Request
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest.ClientId">
+             <summary>
+            Identifies the client software
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest.ResponseType">
+            <summary>
+            must be code
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest.CodeChallenge">
+            <summary>
+            the PKCE challenge value. 
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest.CodeChallengeMethod">
+             <summary>
+            which code challenge method is used, for example S256
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest.State">
+             <summary>
+            random token used to verify the authorization request against the response
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest.RedirectUri">
+             <summary>
+            Must match against URIs declared in client metadata and have a format consistent 
+            with the application_type declared in the client metadata
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest.Scope">
+             <summary>
+            Must be a subset of the scopes declared in client metadata. Must include atproto
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest.ClientAssertionType">
+             <summary>
+            Used by confidential clients to describe the client authentication mechanism
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest.ClientAssertion">
+             <summary>
+            Only used for confidential clients
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest.LoginHint">
+             <summary>
+            Account identifier to be used for login
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationRequest._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationRequest._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationRequest._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.AuthorizationRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.AuthorizationRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.AuthorizationResponse">
+             <summary>
+            
+             Authorization Request
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationResponse.Code">
+             <summary>
+            The authorization code is generated by the authorization server and opaque 
+            to the client. The authorization code MUST expire shortly after it is issued 
+            to mitigate the risk of leaks. A maximum authorization code lifetime of 10 
+            minutes is RECOMMENDED. The authorization code is bound to the client identifier,
+            code challenge and redirect URI.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationResponse.State">
+             <summary>
+            REQUIRED if the state parameter was present in the client authorization request.
+            The exact value received from the client.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationResponse.Iss">
+             <summary>
+            The identifier of the authorization server which the client can use to prevent
+            mix-up attacks, if the client interacts with more than one authorization server.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationResponse._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationResponse._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationResponse._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationResponse._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationResponse._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationResponse._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationResponse._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.AuthorizationResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.AuthorizationResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.ErrorResponse">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ErrorResponse.Error">
+             <summary>
+             A single ASCII [USASCII] error code from the following
+            "invalid_request": The request is missing a required parameter, includes an 
+            invalid parameter value, includes a parameter more than once, or is otherwise malformed.
+            "unauthorized_client": The client is not authorized to request an authorization code 
+            using this method.
+            "access_denied": The resource owner or authorization server denied the request.
+            "unsupported_response_type": The authorization server does not support obtaining an 
+            authorization code using this method.
+            "invalid_scope": The requested scope is invalid, unknown, or malformed.
+            "server_error": The authorization server encountered an unexpected condition that 
+            prevented it from fulfilling the request. (This error code is needed because a 500 
+            Internal Server Error HTTP status code cannot be returned to the client via an HTTP redirect.)
+            "temporarily_unavailable": The authorization server is currently unable to handle 
+            the request due to a temporary overloading or maintenance of the server. (This 
+            error code is needed because a 503 Service Unavailable HTTP status code cannot 
+            be returned to the client via an HTTP redirect.)
+             </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:Goedel.Cryptography.Oauth.ErrorResponse.ErrorDescription" -->
+        <member name="P:Goedel.Cryptography.Oauth.ErrorResponse.ErrorUri">
+             <summary>
+            A URI identifying a human-readable web page with information about the error, 
+            used to provide the client developer with additional information about the error. 
+            Values for the error_uri parameter MUST conform to the URI-reference syntax and 
+            thus MUST NOT include characters outside the set %x21 / %x23-5B / %x5D-7E
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ErrorResponse.State">
+             <summary>
+            REQUIRED if a state parameter was present in the client authorization request. 
+            The exact value received from the client
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ErrorResponse.Iss">
+             <summary>
+            The identifier of the authorization server which the client can use to prevent
+            mix-up attacks, if the client interacts with more than one authorization server.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ErrorResponse._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ErrorResponse._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ErrorResponse._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ErrorResponse._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ErrorResponse._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ErrorResponse._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ErrorResponse._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ErrorResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ErrorResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.ErrorResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.ErrorResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.DidVerificationMethod">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidVerificationMethod.Id">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidVerificationMethod.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidVerificationMethod.Controller">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidVerificationMethod.PublicKeyMultibase">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidVerificationMethod._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DidVerificationMethod._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DidVerificationMethod._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DidVerificationMethod._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidVerificationMethod._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidVerificationMethod._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidVerificationMethod._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidVerificationMethod._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DidVerificationMethod.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.DidVerificationMethod._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.DidVerificationMethod.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.JWKS">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JWKS.Keys">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JWKS._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.JWKS._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.JWKS._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.JWKS._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JWKS._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JWKS._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JWKS._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JWKS._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.JWKS.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.JWKS._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.JWKS.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.CachedDocument`1.Value">
+            <summary>The value.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.CachedDocument`1.Refreshed">
+            <summary>Time the value was last refreshed.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.CachedDocument`1.AccessedLast">
+            <summary>Number of times the item was accessed in the last period.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.CachedDocument`1.AccessedThis">
+            <summary>Number of times the item has been accessed this period so far.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DocumentCache`2.Expire">
+            <summary>Time after which documents are considered expired</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DocumentCache`2.Dictionary">
+            <summary>The cached data.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DocumentCache`2.Count">
+            <summary>Number of cached items.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.DocumentCache`2.#ctor(Goedel.Cryptography.Oauth.ResolutionDelegate{`0,`1})">
+            <summary>
+            Constructor, returns a new instance using the asynchronous resolver 
+            <paramref name="resolver"/>.
+            </summary>
+            <param name="resolver">The resolver delegate.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.DocumentCache`2.Purge(System.Int32)">
+            <summary>
+            Purge the cache. This will require a locking mechanism. Best approach is probably
+            to create a second sorted dictionary and copy all the items from the first, in batches,
+            allowing the lock to expire with each lookup. Then copy the elements top be kept back 
+            again.
+            </summary>
+            <param name="maxRemaining">Number of elements to keep. If less than 0, keep
+            all and only remove items with no accesses since the last purge.</param>
+            <returns>The number of elements that were purged.</returns>
         </member>
         <member name="T:Goedel.Cryptography.Oauth.SessionManager">
             <summary>

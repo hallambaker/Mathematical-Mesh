@@ -287,7 +287,7 @@ public class DeterministicSeed {
 
             var read = new byte[length];
 
-            stream.Read(read, 0, length);
+            stream.ReadExactly(read, 0, length);
 
             read.TestEqual(bytes);
             }

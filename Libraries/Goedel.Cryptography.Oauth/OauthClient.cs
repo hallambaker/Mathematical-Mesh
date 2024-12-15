@@ -82,7 +82,7 @@ public class OauthClient {
 
         // Resolve the DID to a DID document
         var didDocument = SessionManager.HandleToDid(handle);
-        var authServerMetadata = SessionManager.GetAuthorization(didDocument);
+        //var authServerMetadata = SessionManager.GetAuthorization(didDocument);
         // now have to get the server 
 
 

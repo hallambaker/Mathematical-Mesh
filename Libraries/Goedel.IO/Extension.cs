@@ -291,7 +291,7 @@ public static partial class Extension {
     public static void OpenReadToEnd(this string filename, out byte[] data) {
         using var fileStream = filename.OpenFileRead();
         data = new byte[fileStream.Length];
-        fileStream.Read(data, 0, (int)fileStream.Length); // NYI support, test 64 bit file lengths
+        fileStream.ReadExactly(data); 
         }
 
     /// <summary>

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/13/2024 6:40:10 PM
+//  This file was automatically generated at 12/14/2024 7:57:35 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -74,6 +74,7 @@ public abstract partial class Oauth : global::Goedel.Protocol.JsonObject {
 	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
 			new () {
 
+	    {"ResourceServerMetadata", ResourceServerMetadata._Factory},
 	    {"AuthorizationServerMetadata", AuthorizationServerMetadata._Factory},
 	    {"AuthorizationRequest", AuthorizationRequest._Factory},
 	    {"AuthorizationResponse", AuthorizationResponse._Factory},
@@ -108,6 +109,110 @@ public abstract partial class Oauth : global::Goedel.Protocol.JsonObject {
 
 
 	// Transaction Classes
+	/// <summary>
+	/// </summary>
+public partial class ResourceServerMetadata : Oauth {
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						Resource  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					AuthorizationServers  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					ScopesSupported  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					BearerMethodsSupported  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						ResourceDocumentation  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			_StaticProperties, __Tag,() => new ResourceServerMetadata(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Resource", new PropertyString ("Resource", 
+					(IBinding data, string? value) => {(data as ResourceServerMetadata).Resource = value;}, (IBinding data) => (data as ResourceServerMetadata).Resource )},
+			{ "AuthorizationServers", new PropertyListString ("AuthorizationServers", 
+					(IBinding data, List<string>? value) => {(data as ResourceServerMetadata).AuthorizationServers = value;}, (IBinding data) => (data as ResourceServerMetadata).AuthorizationServers )},
+			{ "ScopesSupported", new PropertyListString ("ScopesSupported", 
+					(IBinding data, List<string>? value) => {(data as ResourceServerMetadata).ScopesSupported = value;}, (IBinding data) => (data as ResourceServerMetadata).ScopesSupported )},
+			{ "BearerMethodsSupported", new PropertyListString ("BearerMethodsSupported", 
+					(IBinding data, List<string>? value) => {(data as ResourceServerMetadata).BearerMethodsSupported = value;}, (IBinding data) => (data as ResourceServerMetadata).BearerMethodsSupported )},
+			{ "ResourceDocumentation", new PropertyString ("ResourceDocumentation", 
+					(IBinding data, string? value) => {(data as ResourceServerMetadata).ResourceDocumentation = value;}, (IBinding data) => (data as ResourceServerMetadata).ResourceDocumentation )}
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ResourceServerMetadata";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ResourceServerMetadata();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ResourceServerMetadata FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ResourceServerMetadata;
+			}
+		var Result = new ResourceServerMetadata ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
 	/// <summary>
 	///
 	/// AuthorizationServerMetadata2

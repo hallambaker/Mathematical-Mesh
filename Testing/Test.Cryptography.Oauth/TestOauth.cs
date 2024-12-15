@@ -1,7 +1,6 @@
 ﻿using Goedel.Cryptography.Oauth;
 using Goedel.Discovery;
 using Goedel.Test;
-using Goedel.Palimpsest;
 using System;
 
 using Xunit;

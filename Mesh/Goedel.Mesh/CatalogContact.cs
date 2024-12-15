@@ -464,7 +464,7 @@ public partial class NetworkProfile {
     /// <param name="profile">The Mesh profile to obtain public keys from.</param>
     public NetworkProfile(string address, ProfileAccount profile) {
 
-        List<CryptographicCapability> keyList = null;
+        //List<CryptographicCapability> keyList = null;
 
         EnvelopedProfileAccount = profile.GetEnvelopedProfileAccount();
 

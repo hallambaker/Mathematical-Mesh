@@ -351,7 +351,7 @@ public class CharacterStreamReader : BinaryStreamReader {
     /// <returns>The binary data that was read.</returns>
     public override byte[] ReadBinary(int Length) {
         var Result = new byte[Length];
-        Input.Read(Result, 0, Length);
+        Input.ReadExactly(Result, 0, Length);
         return Result;
         }
 
