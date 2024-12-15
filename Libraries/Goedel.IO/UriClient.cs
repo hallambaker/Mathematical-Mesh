@@ -65,4 +65,17 @@ public static class UriClient {
 
 
 
+    public static async Task<string?> DownloadStringAsync(this string uri) {
+        try {
+            var result = await HttpClient.GetStringAsync(uri);
+            return result;
+            }
+        catch {
+            return null;
+            }
+
+
+        }
+
+
     }

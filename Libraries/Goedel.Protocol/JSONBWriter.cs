@@ -38,7 +38,7 @@ public class JsonBWriter : JsonWriter {
     /// used as the output.
     /// </summary>
     /// <param name="output">Output buffer</param> 
-    public JsonBWriter(Stream output = null) => this.Output = output ?? new MemoryStream();
+    public JsonBWriter(Stream output = null) => Output = output ?? new MemoryStream();
 
 
     /// <summary>

@@ -145,10 +145,6 @@ public partial class JbcdStream {
             WriteByte((byte)((Length >> 8) & 0xff));
             WriteByte((byte)(Length & 0xff));
             }
-
-
-
-
         }
 
     /// <summary>
@@ -603,51 +599,7 @@ public partial class JbcdStream {
         return true;
         }
 
-    #region // Methods that are used by JBCDRecordDataReader
 
-
-    //long FrameDataPosition; // Start of the current record.
-    //long RecordDataRemaining;
-
-    ///// <summary>
-    ///// Begin reading a record frame.
-    ///// </summary>
-    ///// <param name="MaxLength"></param>
-    ///// <returns></returns>
-    //public long ReadRecordBegin(ref long MaxLength) {
-    //    StreamRead.Seek(FrameDataPosition, System.IO.SeekOrigin.Begin);
-
-    //    var Success = ReadTag(out var Code, out var Length);
-    //    if (!Success) {
-    //        return -1;
-    //        }
-    //    MaxLength -= CodeSpace(Code);
-    //    Assert.True(Length <= MaxLength, InvalidFileFormatException.Throw);
-    //    RecordDataRemaining = Length;
-    //    MaxLength -= Length;
-
-    //    return Length;
-    //    }
-
-
-    ///// <summary>
-    ///// Read record data.
-    ///// </summary>
-    ///// <param name="Buffer">Buffer to store record data.</param>
-    ///// <param name="Offset">Index to begin storing data.</param>
-    ///// <param name="Length">Maximum number of bytes to read. This will 
-    ///// be reduced if necessary to the remaining record to be read.</param>
-    ///// <returns>The number of bytes read.</returns>
-    //public int ReadRecordData(byte[] Buffer, int Offset = 0, int Length = -1) {
-    //    Length = Length < 0 ? Buffer.Length - Offset : Length;
-    //    Length = (Length > RecordDataRemaining) ? (int)RecordDataRemaining : Length;
-    //    RecordDataRemaining -= Length;
-    //    return Read(Buffer, Offset, Length);
-    //    }
-
-
-
-    #endregion
     #region // The methods we want to switch to using.
 
 

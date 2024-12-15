@@ -89,6 +89,7 @@ public class DocumentCache<K,T> where T: class?{
                 Value = fetchedData,
                 Refreshed = DateTime.Now
                 };
+            Dictionary.Add(key, handle);
             return handle.Value;
             }
         return default;
@@ -141,99 +142,108 @@ public class SessionManager : Disposable {
     /// </summary>
     /// <param name="handle"></param>
     /// <returns></returns>
-    public DidDocument HandleToDid(string handle) {
+    public  DidDocument HandleToDid(string handle) {
         throw new NYI();
         //if (DidDictionary.GetValueAsync(handle, out var didDocument)) {
         //    return didDocument;
         //    }
 
         //var atproto = "_atproto." + handle;
-        //var did = DnsClient.ResolveAtHandle(atproto).Sync();
 
-        //// have to check for Web here?
 
-        //var client = UriClient.HttpClient;
-        //var uri = "https://plc.directory/" + did.Identifier;
 
-        //var result = client.GetStringAsync(uri).Sync();
-        //Console.WriteLine(result);
 
-        //using var jsonReader = new JsonReader(result);
-        
-        //didDocument = DidDocument.FromJson(jsonReader, false);
 
-        //return didDocument;
 
 
         }
 
-    async Task<DidDocument> TryResolveDid(string handle) => await DidDictionary.GetValueAsync(handle);
+    public async Task<DidDocument> TryResolveDid(string handle) => await DidDictionary.GetValueAsync(handle);
 
     async Task<DidDocument?> TryResolveDid(
                 string key, 
                 CachedDocument<DidDocument>? last) {
 
-        var atproto = "_atproto." + key;
-        var dnsTask = DnsClient.ResolveAtHandle(atproto);
+        var did = await DnsClient.ResolveAtHandle(key);
 
-        //Task.WaitAny(dnsTask);
+        var uri = "https://plc.directory/" + did.Identifier;
 
-        var did = await dnsTask;
+        var result = await UriClient.DownloadStringAsync(uri);
+
+        using var jsonReader = new JsonReader(result);
+        var didDocument = DidDocument.FromJson(jsonReader, false);
+
+        return didDocument;
+        }
 
 
-        throw new NYI();
+    public async Task<ResourceServerMetadata?> TryResolveResourceServer(DidDocument document) {
+
+        if (!document.Service.TryGetValue("#atproto_pds", out var service)) {
+            return null;
+            }
+
+        var result = await ResourceServerDictionary.GetValueAsync(service.ServiceEndpoint);
+
+
+
+        return result;
         }
 
     async Task<ResourceServerMetadata?> TryResolveResourceServer(
             string key,
             CachedDocument<ResourceServerMetadata>? last) {
+        var uri = key.AddPath(".well-known/oauth-protected-resource");
 
-        throw new NYI();
+        var result = await UriClient.DownloadStringAsync(uri);
+        using var jsonReader = new JsonReader(result);
+        var resourceMeta = ResourceServerMetadata.FromJson(jsonReader, false);
+
+        return resourceMeta;
         }
+
+    public async Task<AuthorizationServerMetadata?> TryResolveAuthServer(string key) => 
+                    await AuthServerDictionary.GetValueAsync(key);
 
     async Task<AuthorizationServerMetadata?> TryResolveAuthServer(
             string key,
             CachedDocument<AuthorizationServerMetadata>? last) {
+        var uri = key.AddPath(".well-known/oauth-authorization-server");
 
-        throw new NYI();
+        var result = await UriClient.DownloadStringAsync(uri);
+        using var jsonReader = new JsonReader(result);
+        var authMeta = AuthorizationServerMetadata.FromJson(jsonReader, false);
+
+        return authMeta;
         }
 
 
+    public async Task<OauthHandleResolution> TryResolveHandle(string handle) {
+        var result = new OauthHandleResolution(handle);
 
+        result.DidDocument = await TryResolveDid(handle);
+        if (result.DidDocument is not null) {
+            result.ResourceServerMetadata = await TryResolveResourceServer(result.DidDocument);
+            }
+        if ((result.ResourceServerMetadata?.AuthorizationServers != null) &&
+            (result.ResourceServerMetadata.AuthorizationServers.Count >0)) {
 
-
-    //public ResourceServerMetadata GetResource(
-    //        DidDocument didDocument
-    //        ) {
-
-
-
-
-    //    if (AuthServerDictionary.TryGetValue(handle, out var didDocument)) {
-    //        return didDocument;
-    //        }
-
-    //    throw new NYI();
-    //    }
-
-    //public AuthorizationServerMetadata GetAuthorization(
-    //            string uri
-    //            ) {
-
-
-
-
-    //    if (AuthServerDictionary.TryGetValue(handle, out var didDocument)) {
-    //        return didDocument;
-    //        }
-
-    //    throw new NYI();
-    //    }
-
-
-
-
+            result.AuthorizationServerMetadata = 
+                await TryResolveAuthServer(result.ResourceServerMetadata.AuthorizationServers[0]);
+            }
+        return result;
+        }
     #endregion
+    }
+
+
+public record OauthHandleResolution(
+            string Handle
+            ) {
+
+    public DidDocument? DidDocument = null;
+    public ResourceServerMetadata? ResourceServerMetadata = null;
+    public AuthorizationServerMetadata? AuthorizationServerMetadata = null;
     }
 
 

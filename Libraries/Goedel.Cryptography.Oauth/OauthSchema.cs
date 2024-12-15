@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/14/2024 8:07:26 PM
+//  This file was automatically generated at 12/15/2024 4:22:28 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -146,15 +146,15 @@ public partial class ResourceServerMetadata : Oauth {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Resource", new PropertyString ("Resource", 
+			{ "resource", new PropertyString ("resource", 
 					(IBinding data, string? value) => {(data as ResourceServerMetadata).Resource = value;}, (IBinding data) => (data as ResourceServerMetadata).Resource )},
-			{ "AuthorizationServers", new PropertyListString ("AuthorizationServers", 
+			{ "authorization_servers", new PropertyListString ("authorization_servers", 
 					(IBinding data, List<string>? value) => {(data as ResourceServerMetadata).AuthorizationServers = value;}, (IBinding data) => (data as ResourceServerMetadata).AuthorizationServers )},
-			{ "ScopesSupported", new PropertyListString ("ScopesSupported", 
+			{ "scopes_supported", new PropertyListString ("scopes_supported", 
 					(IBinding data, List<string>? value) => {(data as ResourceServerMetadata).ScopesSupported = value;}, (IBinding data) => (data as ResourceServerMetadata).ScopesSupported )},
-			{ "BearerMethodsSupported", new PropertyListString ("BearerMethodsSupported", 
+			{ "bearer_methods_supported", new PropertyListString ("bearer_methods_supported", 
 					(IBinding data, List<string>? value) => {(data as ResourceServerMetadata).BearerMethodsSupported = value;}, (IBinding data) => (data as ResourceServerMetadata).BearerMethodsSupported )},
-			{ "ResourceDocumentation", new PropertyString ("ResourceDocumentation", 
+			{ "resource_documentation", new PropertyString ("resource_documentation", 
 					(IBinding data, string? value) => {(data as ResourceServerMetadata).ResourceDocumentation = value;}, (IBinding data) => (data as ResourceServerMetadata).ResourceDocumentation )}
         };
 

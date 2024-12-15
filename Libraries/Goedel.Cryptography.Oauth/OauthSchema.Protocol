@@ -4,6 +4,7 @@
 		|Support classes for OAUTH2 via ATproto
 
 	Structure ResourceServerMetadata
+		SnakeCase
 		String Resource
 		String AuthorizationServers
 			Multiple

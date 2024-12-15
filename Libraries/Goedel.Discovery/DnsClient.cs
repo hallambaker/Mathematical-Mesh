@@ -20,6 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.IO;
+
 using System.Net.NetworkInformation;
 using System.Security.Cryptography.X509Certificates;
 
@@ -121,7 +123,10 @@ public abstract class DnsClient {
         }
 
 
-    public static async Task<Did?> ResolveAtHandle(string domain) {
+    public static async Task<Did?> ResolveAtHandleDNS(string domain) {
+        domain = "_atproto." + domain;
+
+
         using var context = Default.GetContext();
         var records = await context.QueryRecord(domain, DNSTypeCode.TXT);
         if (records == null) {
@@ -134,7 +139,9 @@ public abstract class DnsClient {
         // Get the first record, must be TXT
 
         var enumerator = records.GetEnumerator();
-        enumerator.MoveNext();
+        if (!enumerator.MoveNext()) {
+            return null;
+            }
         var record = enumerator.Current as DNSRecord_TXT;
         if (record?.Text == null) {
             return null;
@@ -150,6 +157,46 @@ public abstract class DnsClient {
 
         return  Did.Factory(record);
 
+        }
+    public static async Task<Did?> ResolveAtHandleHttp(string domain) {
+        
+        var uri = $"https://{domain}/.well-known/atproto-did";
+        var result = await UriClient.DownloadStringAsync(uri);
+
+        if (result != null) {
+            return Did.Factory(result.Trim());
+            }
+
+
+        return null;
+        }
+
+    public static async Task<Did?> ResolveAtHandle(string domain) {
+
+        var dnsTask = ResolveAtHandleDNS(domain);
+        var httpTask = ResolveAtHandleHttp(domain);
+
+        await Task.WhenAny(dnsTask, httpTask);
+
+        var dnsNull = false;
+        if (dnsTask.IsCompleted) {
+            var did = await dnsTask;
+            if (did != null) {
+                return did;
+                }
+            dnsNull = true;
+            }
+        else {
+            var did = await httpTask;
+            if (did != null) {
+                return did;
+                }
+            }
+
+        if (dnsNull) {
+            return await httpTask;
+            }
+        return await dnsTask;
         }
 
 
@@ -415,7 +462,7 @@ public abstract class DNSContext : Disposable {
         var listener =  NextAsync(taskTimeout, taskRetry);
         var result = await listener;
 
-        return result.Answers;
+        return result?.Answers;
 
         }
 
