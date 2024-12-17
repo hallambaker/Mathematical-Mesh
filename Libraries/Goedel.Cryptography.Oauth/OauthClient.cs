@@ -1,10 +1,13 @@
 ﻿using Goedel.Cryptography.Algorithms;
+using Goedel.Discovery;
 
 using System.Security.Cryptography;
 
 namespace Goedel.Cryptography.Oauth;
 
 public class OauthClient {
+
+
 
     ClientMetadata ClientMetadata { get; }
     public byte[] ClientMetadataBytes { get; }
@@ -16,6 +19,8 @@ public class OauthClient {
     SessionManager SessionManager { get; }
 
     byte[] SecretKey { get; }
+
+    EncryptedTokenManager EncryptedTokenManager { get; } = new();
     CryptoKeySymmetric CryptoKeySymmetric { get; }
     HMAC HMAC { get; }
     public OauthClient(
@@ -91,36 +96,66 @@ public class OauthClient {
         handle = TrimHandle(handle);
         handle.AssertNotNull(NYI.Throw);
 
+        // https://atproto.com/specs/oauth#summary-of-authorization-flow
+
         var oauth = await SessionManager.TryResolveHandle(handle);
 
         // construct the pre-request
-        var par = ConstructPAR(oauth, state);
-        var parBytes = par.GetBytes();
+        var par = ConstructPar(oauth, state);
+        var parBytes = par.GetAsKeyValue();
 
         // post to the auth service
-        
+        var result = await UriClient.PostBinaryAsync(
+                    oauth.AuthorizationServerMetadata.PushedAuthorizationRequestEndpoint,
+                    parBytes, "application/x-www-form-urlencoded");
+
+
+
 
         // read back the response
+        using var jsonReader = new JsonReader(result);
+        var response = PushedAuthorizationResponse.FromJson(jsonReader, false);
 
 
-        return new OauthClientResultFail();
+        var redirectFields = new AuthorizationRequest2() {
+            ClientId = ClientMetadata.ClientId,
+            RequestUri = response.RequestUri
+            };
+
+        var redirect = redirectFields.GetAsUrlQuery(oauth.AuthorizationServerMetadata.AuthorizationEndpoint);
+
+
+        return new OauthClientResultPreRequest() {
+            RedirectUri = redirect};
         }
 
-
-    public AuthorizationRequest ConstructPAR(
+    /// <summary>
+    /// Construct a Pushed Authorization Request as per RFC 9126
+    /// </summary>
+    /// <param name="handle"></param>
+    /// <param name="state"></param>
+    /// <returns></returns>
+    public AuthorizationRequest ConstructPar(
                         OauthHandleResolution handle,
                         string state) {
 
-        var encodedState = new EncodedState(SecretKey, handle, state);
+        var encodedState = new EncodedState(EncryptedTokenManager, handle, state);
+
+        // Calculate the Proof Key for Code Exchange (PKCE) as per RFC 7636
         var codeChallenge = GetCodeChallenge(encodedState);
 
         var result = new AuthorizationRequest() {
             ClientId = ClientMetadata.ClientId,
+            ResponseType = "code",
             CodeChallenge = codeChallenge,
             CodeChallengeMethod = "S256",
+            State = encodedState.Bytes.ToStringBase64url(),
             RedirectUri = ClientMetadata.RedirectUris[0],
             Scope = ClientMetadata.Scope,
-            State = encodedState.Bytes.ToStringBase64url()
+
+            //ClientAssertionType = OauthConstants.AssertionTypesBearerTitle,
+            ClientAssertion =null,
+            LoginHint = null
             };
 
         return result;
@@ -158,53 +193,6 @@ public class OauthClient {
 
 
 
-    public record EncodedState {
-        public byte[] Nonce;
-        public string Handle;
-        public string DID;
-        public string RedirectUri;
-        public byte[] Bytes;
-
-        public EncodedState(
-                byte[] key,
-                OauthHandleResolution handle,
-                string redirectUri
-                ) {
-            Nonce = Platform.GetRandomBytes(16);
-            Handle = handle.Handle;
-            DID = handle.DidDocument.Id;
-            RedirectUri = redirectUri;
-
-
-            using var memory = new MemoryStream();
-            using var writer = new JsonBWriter(memory);
-
-            writer.WriteBinary(Nonce);
-            writer.WriteString(Handle);
-            writer.WriteString(DID);
-            writer.WriteString(RedirectUri);
-
-            Bytes = memory.ToArray();
-
-            }
-
-        public EncodedState(
-                byte[] key,
-                string encodedDataString
-                ) {
-            var encodedData = encodedDataString.FromBase64();
-
-            using var memory = new MemoryStream(encodedData);
-            using var reader = new JsonBcdReader(encodedData);
-
-            Nonce = reader.ReadBinary();
-            Handle = reader.ReadString();
-            DID = reader.ReadString();
-            RedirectUri = reader.ReadString();
-            }
-
-        }
-
 
 
     public OauthClientResult ParseResponse(
@@ -224,6 +212,9 @@ public class OauthClient {
 
     }
 
+
+
+
 public abstract record OauthClientResult {
 
     }
@@ -234,10 +225,10 @@ public record OauthClientResultFail : OauthClientResult {
 
 public record OauthClientResultPreRequest : OauthClientResult {
 
-    public string RedirectUri { get; } = null;
+    public string RedirectUri { get; init;  } = null;
 
     }
 
 public record OauthClientResultAuthRequest : OauthClientResult {
-    public string ContextUri { get; } = null;
+    public string ContextUri { get; init; } = null;
     }

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/15/2024 4:22:28 PM
+//  This file was automatically generated at 12/17/2024 12:32:31 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -77,6 +77,8 @@ public abstract partial class Oauth : global::Goedel.Protocol.JsonObject {
 	    {"ResourceServerMetadata", ResourceServerMetadata._Factory},
 	    {"AuthorizationServerMetadata", AuthorizationServerMetadata._Factory},
 	    {"AuthorizationRequest", AuthorizationRequest._Factory},
+	    {"AuthorizationRequest2", AuthorizationRequest2._Factory},
+	    {"PushedAuthorizationResponse", PushedAuthorizationResponse._Factory},
 	    {"AuthorizationResponse", AuthorizationResponse._Factory},
 	    {"ErrorResponse", ErrorResponse._Factory},
 	    {"ClientMetadata", ClientMetadata._Factory},
@@ -141,10 +143,7 @@ public partial class ResourceServerMetadata : Oauth {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResourceServerMetadata(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "resource", new PropertyString ("resource", 
 					(IBinding data, string? value) => {(data as ResourceServerMetadata).Resource = value;}, (IBinding data) => (data as ResourceServerMetadata).Resource )},
@@ -156,7 +155,10 @@ public partial class ResourceServerMetadata : Oauth {
 					(IBinding data, List<string>? value) => {(data as ResourceServerMetadata).BearerMethodsSupported = value;}, (IBinding data) => (data as ResourceServerMetadata).BearerMethodsSupported )},
 			{ "resource_documentation", new PropertyString ("resource_documentation", 
 					(IBinding data, string? value) => {(data as ResourceServerMetadata).ResourceDocumentation = value;}, (IBinding data) => (data as ResourceServerMetadata).ResourceDocumentation )}
-        };
+        }, __Tag,() => new ResourceServerMetadata(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -346,10 +348,7 @@ public partial class AuthorizationServerMetadata : Oauth {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new AuthorizationServerMetadata(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "issuer", new PropertyString ("issuer", 
 					(IBinding data, string? value) => {(data as AuthorizationServerMetadata).Issuer = value;}, (IBinding data) => (data as AuthorizationServerMetadata).Issuer )},
@@ -405,7 +404,10 @@ public partial class AuthorizationServerMetadata : Oauth {
 					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).DpopSigningAlgValuesSupported = value;}, (IBinding data) => (data as AuthorizationServerMetadata).DpopSigningAlgValuesSupported )},
 			{ "client_id_metadata_document_supported", new PropertyBoolean ("client_id_metadata_document_supported", 
 					(IBinding data, bool? value) => {(data as AuthorizationServerMetadata).ClientIdMetadataDocumentSupported = value;}, (IBinding data) => (data as AuthorizationServerMetadata).ClientIdMetadataDocumentSupported )}
-        };
+        }, __Tag,() => new AuthorizationServerMetadata(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -535,10 +537,7 @@ public partial class AuthorizationRequest : Oauth {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new AuthorizationRequest(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "client_id", new PropertyString ("client_id", 
 					(IBinding data, string? value) => {(data as AuthorizationRequest).ClientId = value;}, (IBinding data) => (data as AuthorizationRequest).ClientId )},
@@ -560,7 +559,10 @@ public partial class AuthorizationRequest : Oauth {
 					(IBinding data, string? value) => {(data as AuthorizationRequest).ClientAssertion = value;}, (IBinding data) => (data as AuthorizationRequest).ClientAssertion )},
 			{ "login_hint", new PropertyString ("login_hint", 
 					(IBinding data, string? value) => {(data as AuthorizationRequest).LoginHint = value;}, (IBinding data) => (data as AuthorizationRequest).LoginHint )}
-        };
+        }, __Tag,() => new AuthorizationRequest(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -618,6 +620,190 @@ public partial class AuthorizationRequest : Oauth {
 	}
 
 	/// <summary>
+	/// </summary>
+public partial class AuthorizationRequest2 : Oauth {
+        /// <summary>
+        ///Identifies the client software
+        /// </summary>
+
+	public virtual string?						ClientId  {get; set;}
+
+        /// <summary>
+        ///The RequestUri returned by the server
+        /// </summary>
+
+	public virtual string?						RequestUri  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+			{ "client_id", new PropertyString ("client_id", 
+					(IBinding data, string? value) => {(data as AuthorizationRequest2).ClientId = value;}, (IBinding data) => (data as AuthorizationRequest2).ClientId )},
+			{ "request_uri", new PropertyString ("request_uri", 
+					(IBinding data, string? value) => {(data as AuthorizationRequest2).RequestUri = value;}, (IBinding data) => (data as AuthorizationRequest2).RequestUri )}
+        }, __Tag,() => new AuthorizationRequest2(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "AuthorizationRequest2";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new AuthorizationRequest2();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new AuthorizationRequest2 FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as AuthorizationRequest2;
+			}
+		var Result = new AuthorizationRequest2 ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class PushedAuthorizationResponse : Oauth {
+        /// <summary>
+        ///A JSON number that represents the lifetime of the request URI in seconds as a
+        ///positive integer. The request URI lifetime is at the discretion of the 
+        ///authorization server but will typically be relatively short (e.g., between 
+        ///5 and 600 seconds).
+        /// </summary>
+
+	public virtual int?						ExpiresIn  {get; set;}
+
+        /// <summary>
+        ///REQUIRED The request URI corresponding to the authorization request posted. 
+        ///This URI is a single-use reference to the respective request data in the 
+        ///subsequent authorization request. The way the authorization process obtains 
+        ///the authorization request data is at the discretion of the authorization 
+        ///server and is out of scope of this specification. There is no need to make 
+        ///the authorization request data available to other parties via this URI.
+        /// </summary>
+
+	public virtual string?						RequestUri  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+			{ "expires_in", new PropertyInteger32 ("expires_in", 
+					(IBinding data, int? value) => {(data as PushedAuthorizationResponse).ExpiresIn = value;}, (IBinding data) => (data as PushedAuthorizationResponse).ExpiresIn )},
+			{ "request_uri", new PropertyString ("request_uri", 
+					(IBinding data, string? value) => {(data as PushedAuthorizationResponse).RequestUri = value;}, (IBinding data) => (data as PushedAuthorizationResponse).RequestUri )}
+        }, __Tag,() => new PushedAuthorizationResponse(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "PushedAuthorizationResponse";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new PushedAuthorizationResponse();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new PushedAuthorizationResponse FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as PushedAuthorizationResponse;
+			}
+		var Result = new PushedAuthorizationResponse ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
 	///
 	/// Authorization Request
 	/// </summary>
@@ -653,10 +839,7 @@ public partial class AuthorizationResponse : Oauth {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new AuthorizationResponse(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "code", new PropertyString ("code", 
 					(IBinding data, string? value) => {(data as AuthorizationResponse).Code = value;}, (IBinding data) => (data as AuthorizationResponse).Code )},
@@ -664,7 +847,10 @@ public partial class AuthorizationResponse : Oauth {
 					(IBinding data, string? value) => {(data as AuthorizationResponse).State = value;}, (IBinding data) => (data as AuthorizationResponse).State )},
 			{ "iss", new PropertyString ("iss", 
 					(IBinding data, string? value) => {(data as AuthorizationResponse).Iss = value;}, (IBinding data) => (data as AuthorizationResponse).Iss )}
-        };
+        }, __Tag,() => new AuthorizationResponse(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -784,22 +970,22 @@ public partial class ErrorResponse : Oauth {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ErrorResponse(), null);
+			new() {
+
+			{ "error", new PropertyString ("error", 
+					(IBinding data, string? value) => {(data as ErrorResponse).Error = value;}, (IBinding data) => (data as ErrorResponse).Error )},
+			{ "errorDescription", new PropertyString ("errorDescription", 
+					(IBinding data, string? value) => {(data as ErrorResponse).ErrorDescription = value;}, (IBinding data) => (data as ErrorResponse).ErrorDescription )},
+			{ "errorUri", new PropertyString ("errorUri", 
+					(IBinding data, string? value) => {(data as ErrorResponse).ErrorUri = value;}, (IBinding data) => (data as ErrorResponse).ErrorUri )},
+			{ "state", new PropertyString ("state", 
+					(IBinding data, string? value) => {(data as ErrorResponse).State = value;}, (IBinding data) => (data as ErrorResponse).State )},
+			{ "iss", new PropertyString ("iss", 
+					(IBinding data, string? value) => {(data as ErrorResponse).Iss = value;}, (IBinding data) => (data as ErrorResponse).Iss )}
+        }, __Tag,() => new ErrorResponse(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-			{ "Error", new PropertyString ("Error", 
-					(IBinding data, string? value) => {(data as ErrorResponse).Error = value;}, (IBinding data) => (data as ErrorResponse).Error )},
-			{ "ErrorDescription", new PropertyString ("ErrorDescription", 
-					(IBinding data, string? value) => {(data as ErrorResponse).ErrorDescription = value;}, (IBinding data) => (data as ErrorResponse).ErrorDescription )},
-			{ "ErrorUri", new PropertyString ("ErrorUri", 
-					(IBinding data, string? value) => {(data as ErrorResponse).ErrorUri = value;}, (IBinding data) => (data as ErrorResponse).ErrorUri )},
-			{ "State", new PropertyString ("State", 
-					(IBinding data, string? value) => {(data as ErrorResponse).State = value;}, (IBinding data) => (data as ErrorResponse).State )},
-			{ "Iss", new PropertyString ("Iss", 
-					(IBinding data, string? value) => {(data as ErrorResponse).Iss = value;}, (IBinding data) => (data as ErrorResponse).Iss )}
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -867,7 +1053,7 @@ public partial class ClientMetadata : Oauth {
         /// <summary>
         /// </summary>
 
-	public virtual string?						applicationType  {get; set;}
+	public virtual string?						ApplicationType  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -938,15 +1124,12 @@ public partial class ClientMetadata : Oauth {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ClientMetadata(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "client_id", new PropertyString ("client_id", 
 					(IBinding data, string? value) => {(data as ClientMetadata).ClientId = value;}, (IBinding data) => (data as ClientMetadata).ClientId )},
 			{ "application_type", new PropertyString ("application_type", 
-					(IBinding data, string? value) => {(data as ClientMetadata).applicationType = value;}, (IBinding data) => (data as ClientMetadata).applicationType )},
+					(IBinding data, string? value) => {(data as ClientMetadata).ApplicationType = value;}, (IBinding data) => (data as ClientMetadata).ApplicationType )},
 			{ "grant_types", new PropertyListString ("grant_types", 
 					(IBinding data, List<string>? value) => {(data as ClientMetadata).GrantTypes = value;}, (IBinding data) => (data as ClientMetadata).GrantTypes )},
 			{ "scope", new PropertyString ("scope", 
@@ -974,7 +1157,10 @@ public partial class ClientMetadata : Oauth {
 					(IBinding data, string? value) => {(data as ClientMetadata).TosUri = value;}, (IBinding data) => (data as ClientMetadata).TosUri )},
 			{ "policy_uri", new PropertyString ("policy_uri", 
 					(IBinding data, string? value) => {(data as ClientMetadata).PolicyUri = value;}, (IBinding data) => (data as ClientMetadata).PolicyUri )}
-        };
+        }, __Tag,() => new ClientMetadata(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -1062,10 +1248,7 @@ public partial class DidDocument : Oauth {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new DidDocument(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "@context", new PropertyListString ("@context", 
 					(IBinding data, List<string>? value) => {(data as DidDocument).Contexts = value;}, (IBinding data) => (data as DidDocument).Contexts )},
@@ -1079,7 +1262,10 @@ public partial class DidDocument : Oauth {
 			{ "service", new PropertyListStruct ("service", 
 					(IBinding data, object? value) => {(data as DidDocument).Service = value as List<DidService>;}, (IBinding data) => (data as DidDocument).Service,
 					false, ()=>new  List<DidService>(), ()=>new DidService())} 
-        };
+        }, __Tag,() => new DidDocument(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -1166,10 +1352,7 @@ public partial class DidVerificationMethod : Oauth {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new DidVerificationMethod(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "id", new PropertyString ("id", 
 					(IBinding data, string? value) => {(data as DidVerificationMethod).Id = value;}, (IBinding data) => (data as DidVerificationMethod).Id )},
@@ -1179,7 +1362,10 @@ public partial class DidVerificationMethod : Oauth {
 					(IBinding data, string? value) => {(data as DidVerificationMethod).Controller = value;}, (IBinding data) => (data as DidVerificationMethod).Controller )},
 			{ "publicKeyMultibase", new PropertyString ("publicKeyMultibase", 
 					(IBinding data, string? value) => {(data as DidVerificationMethod).PublicKeyMultibase = value;}, (IBinding data) => (data as DidVerificationMethod).PublicKeyMultibase )}
-        };
+        }, __Tag,() => new DidVerificationMethod(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -1261,10 +1447,7 @@ public partial class DidService : Oauth {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new DidService(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "id", new PropertyString ("id", 
 					(IBinding data, string? value) => {(data as DidService).Id = value;}, (IBinding data) => (data as DidService).Id )},
@@ -1272,7 +1455,10 @@ public partial class DidService : Oauth {
 					(IBinding data, string? value) => {(data as DidService).Type = value;}, (IBinding data) => (data as DidService).Type )},
 			{ "serviceEndpoint", new PropertyString ("serviceEndpoint", 
 					(IBinding data, string? value) => {(data as DidService).ServiceEndpoint = value;}, (IBinding data) => (data as DidService).ServiceEndpoint )}
-        };
+        }, __Tag,() => new DidService(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -1343,15 +1529,15 @@ public partial class JWKS : Oauth {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new JWKS(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "keys", new PropertyListStruct ("keys", 
 					(IBinding data, object? value) => {(data as JWKS).Keys = value as List<JWK>;}, (IBinding data) => (data as JWKS).Keys,
 					false, ()=>new  List<JWK>(), ()=>new JWK())} 
-        };
+        }, __Tag,() => new JWKS(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -1453,10 +1639,7 @@ public partial class JWK : Oauth {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new JWK(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "kty", new PropertyString ("kty", 
 					(IBinding data, string? value) => {(data as JWK).KeyType = value;}, (IBinding data) => (data as JWK).KeyType )},
@@ -1472,7 +1655,10 @@ public partial class JWK : Oauth {
 					(IBinding data, string? value) => {(data as JWK).D = value;}, (IBinding data) => (data as JWK).D )},
 			{ "kid", new PropertyString ("kid", 
 					(IBinding data, string? value) => {(data as JWK).Kid = value;}, (IBinding data) => (data as JWK).Kid )}
-        };
+        }, __Tag,() => new JWK(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;

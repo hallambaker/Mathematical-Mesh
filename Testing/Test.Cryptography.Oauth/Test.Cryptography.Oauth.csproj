@@ -3,11 +3,17 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Oauth\Goedel.Cryptography.Oauth.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Debug\Goedel.Debug.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Discovery\Goedel.Discovery.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Protocol.Service\Goedel.Protocol.Service.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Protocol.Web\Goedel.Protocol.Web.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj" />
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj" />
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Core\Goedel.Mesh.Core.csproj" />
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj" />
 		<ProjectReference Include="..\Goedel.Mesh.Test\Goedel.Mesh.Test.csproj" />
 	</ItemGroup>
 

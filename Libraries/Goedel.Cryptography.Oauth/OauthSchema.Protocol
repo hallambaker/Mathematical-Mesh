@@ -105,9 +105,34 @@
 			Description
 				|Account identifier to be used for login
 
+	Structure AuthorizationRequest2
+		SnakeCase
+		String ClientId
+			Required
+			Description
+				|Identifies the client software
+		String RequestUri 
+			Description
+				|The RequestUri returned by the server
 
 
+	Structure PushedAuthorizationResponse
+		SnakeCase
+		Integer ExpiresIn
+			Description
+				|A JSON number that represents the lifetime of the request URI in seconds as a
+				|positive integer. The request URI lifetime is at the discretion of the 
+				|authorization server but will typically be relatively short (e.g., between 
+				|5 and 600 seconds).
 
+		String RequestUri 
+			Description
+				|REQUIRED The request URI corresponding to the authorization request posted. 
+				|This URI is a single-use reference to the respective request data in the 
+				|subsequent authorization request. The way the authorization process obtains 
+				|the authorization request data is at the discretion of the authorization 
+				|server and is out of scope of this specification. There is no need to make 
+				|the authorization request data available to other parties via this URI.
 
 	Structure AuthorizationResponse
 		SnakeCase
@@ -129,6 +154,8 @@
 			Description
 				|The identifier of the authorization server which the client can use to prevent
 				|mix-up attacks, if the client interacts with more than one authorization server.
+
+
 	
 	Structure ErrorResponse
 		String Error
@@ -188,7 +215,7 @@
 	Structure ClientMetadata
 		SnakeCase
 		String ClientId 
-		String applicationType 
+		String ApplicationType 
 			//Enum ApplicationType
 		String GrantTypes 
 			Multiple

@@ -4,12 +4,12 @@
 
 File OauthIdentifier
 	Enum ApplicationType "Application Types"
-		Code Web		"web"  
-		Code Native	"native"  
+		Integer Web		0 "web"  
+		Integer Native	1 "native"  
 
 	Enum GrantTypes "Grant types"
-		Code AuthorizationCode 		"authorization_code "  
-		Code RefreshToken 	"refresh_token "  
+		Integer AuthorizationCode 	0	"authorization_code"  
+		Integer RefreshToken 1	"refresh_token"  
 
 	Enum ScopeTypes "Scope types"
 		Integer Atproto 	0 "atproto"  
@@ -17,12 +17,15 @@ File OauthIdentifier
 		Integer Chat 		2 "transition:chat.bsky"  
 
 	Enum ResponseType "Response Types"
-		Code Code		"code"  
+		Integer Code	0	"code"  
 
 	Enum AuthenticationMethod "Authentication Method"
-		Code JWT		"private_key_jwt"  
+		Integer JWT		0 "private_key_jwt"  
 
 	Enum EndpointSignature "Endpoint Signature Algorithm"
-		Code ES256		"ES256"  
+		Integer ES256	0	"ES256"  
 
 
+
+	Enum AssertionTypes "Assertion Types"
+		Integer Bearer		0 "urn:ietf:params:oauth:client-assertion-type:jwt-bearer"  

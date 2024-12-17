@@ -20,6 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
+using System.Runtime.CompilerServices;
+
 namespace Goedel.Protocol.Web;
 
 
@@ -27,6 +29,77 @@ namespace Goedel.Protocol.Web;
 /// Extensions class
 /// </summary>
 public static partial class WebExtensions {
+
+
+    public static byte[] GetAsFormEncoding(this JsonObject data) {
+        using var buffer = new MemoryStream();
+        using var writer = new StreamWriter(buffer);
+
+        foreach (var item in data._Binding.Properties) {
+            switch (item.Value) {
+
+                case PropertyString propertyString: {
+                    var value = propertyString.Get(data);
+
+                    writer.Write('&');
+                    writer.Write(propertyString.Tag);
+                    writer.Write('=');
+                    writer.WriteLine(WebUtility.UrlEncode(value));
+                    break;
+                    }
+
+
+                }
+
+
+            }
+
+        return buffer.ToArray();
+        }
+
+
+    public static IEnumerable<KeyValuePair<String, String>> GetAsKeyValue(this JsonObject data) {
+        using var buffer = new MemoryStream();
+        using var writer = new StreamWriter(buffer);
+
+        foreach (var item in data._Binding.Properties) {
+            switch (item.Value) {
+                case PropertyString propertyString: {
+                    var value = propertyString.Get(data);
+                    if (value != null) {
+                        yield return new KeyValuePair<string, string>(propertyString.Tag, value);
+                        }
+                    break;
+                    }
+                }
+            }
+        }
+
+    public static string GetAsUrlQuery(this JsonObject data, string uri=null) {
+        var builder = new StringBuilder();
+
+        builder.Append(uri ?? "");
+        bool first = true;
+        foreach (var item in data._Binding.Properties) {
+            switch (item.Value) {
+
+                case PropertyString propertyString: {
+                    var value = propertyString.Get(data);
+
+                    builder.Append(first ? '?' : '&');
+                    first = false;
+
+                    builder.Append(propertyString.Tag);
+                    builder.Append('=');
+                    builder.Append(WebUtility.UrlEncode(value));
+                    break;
+                    }
+                }
+            }
+
+        return builder.ToString();
+
+        }
 
 
     }

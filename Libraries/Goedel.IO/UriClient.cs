@@ -78,4 +78,23 @@ public static class UriClient {
         }
 
 
+    //public static async Task<byte[]?> PostBinaryAsync(
+    //            this string uri, byte[] data, string contentType) {
+    //    var binaryContent = new ByteArrayContent(data);
+
+
+    //    }
+
+    public static async Task<string?> PostBinaryAsync(
+            this string uri, IEnumerable<KeyValuePair<String, String>> data, string contentType) {
+        var binaryContent = new FormUrlEncodedContent(data);
+
+        var test = await binaryContent.ReadAsStringAsync();
+
+        var response = await HttpClient.PostAsync(uri, binaryContent).ConfigureAwait(true);
+        var asString = await response.Content.ReadAsStringAsync();
+
+        return asString;
+        }
+
     }

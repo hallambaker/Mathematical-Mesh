@@ -56,14 +56,30 @@ public class TestOauth {
     [Fact]
     public void TestPAR() {
         var client = new OauthClient(null, null, null);
+        var manager = new EncryptedTokenManager();
         //var par = client.PreRequest(PHB1, "fatfreddy").Sync();
 
         SessionManager SessionManager = new();
         var oauth1 = SessionManager.TryResolveHandle(PHB1).Sync();
-        var req = client.ConstructPAR(oauth1, "fat freddy");
+        var req = client.ConstructPar(oauth1, "fat freddy");
+        var state = new EncodedState(manager, req.State);
 
-        var state = new EncodedState(null, req.State);
+        }
 
+
+    [Fact]
+    public void TestEncDed() {
+        //var x = new AuthorizationRequest();
+        //var y = new AuthorizationServerMetadata();
+
+        var manager = new EncryptedTokenManager();
+
+        var test = "Fat Freddy".ToUTF8();
+
+        var ciphertext = manager.Encrypt(test);
+        var plaintext = manager.Decrypt(ciphertext);
+
+        test.TestEqual(plaintext);
         }
 
     }

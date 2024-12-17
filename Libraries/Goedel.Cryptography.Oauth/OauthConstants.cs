@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 12/15/2024 4:22:28 PM
+//  This file was automatically generated at 12/17/2024 12:40:50 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -27,18 +27,18 @@ public enum ApplicationType {
     ///<summary>Undefined type</summary>
     Unknown = -1,
     ///<summary>web</summary>
-    Web,
+    Web = 0,
     ///<summary>native</summary>
-    Native    }
+    Native = 1    }
 
 ///<summary>Grant types</summary>
 public enum GrantTypes {
     ///<summary>Undefined type</summary>
     Unknown = -1,
-    ///<summary>authorization_code </summary>
-    AuthorizationCode,
-    ///<summary>refresh_token </summary>
-    RefreshToken    }
+    ///<summary>authorization_code</summary>
+    AuthorizationCode = 0,
+    ///<summary>refresh_token</summary>
+    RefreshToken = 1    }
 
 ///<summary>Scope types</summary>
 public enum ScopeTypes {
@@ -56,21 +56,28 @@ public enum ResponseType {
     ///<summary>Undefined type</summary>
     Unknown = -1,
     ///<summary>code</summary>
-    Code    }
+    Code = 0    }
 
 ///<summary>Authentication Method</summary>
 public enum AuthenticationMethod {
     ///<summary>Undefined type</summary>
     Unknown = -1,
     ///<summary>private_key_jwt</summary>
-    JWT    }
+    JWT = 0    }
 
 ///<summary>Endpoint Signature Algorithm</summary>
 public enum EndpointSignature {
     ///<summary>Undefined type</summary>
     Unknown = -1,
     ///<summary>ES256</summary>
-    ES256    }
+    ES256 = 0    }
+
+///<summary>Assertion Types</summary>
+public enum AssertionTypes {
+    ///<summary>Undefined type</summary>
+    Unknown = -1,
+    ///<summary>urn:ietf:params:oauth:client-assertion-type:jwt-bearer</summary>
+    Bearer = 0    }
 
 
 ///<summary>
@@ -82,8 +89,12 @@ public static partial class OauthConstants {
 
     ///<summary>Jose enumeration tag for ApplicationType.Web</summary>
     public const string  ApplicationTypeWebTag = "Web";
+    ///<summary>Description for ApplicationType.Web</summary>
+    public const string  ApplicationTypeWebTitle = "web";
     ///<summary>Jose enumeration tag for ApplicationType.Native</summary>
     public const string  ApplicationTypeNativeTag = "Native";
+    ///<summary>Description for ApplicationType.Native</summary>
+    public const string  ApplicationTypeNativeTitle = "native";
 
     /// <summary>
     /// Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -93,8 +104,6 @@ public static partial class OauthConstants {
     /// <returns>The enumeration value.</returns>
     public static ApplicationType ToApplicationType (this string text) =>
         text switch {
-            ApplicationTypeWebTag => ApplicationType.Web,
-            ApplicationTypeNativeTag => ApplicationType.Native,
             _ => ApplicationType.Unknown
             };
 
@@ -106,16 +115,18 @@ public static partial class OauthConstants {
     /// <returns>The text value.</returns>
     public static string ToLabel (this ApplicationType data) =>
         data switch {
-            ApplicationType.Web => ApplicationTypeWebTag,
-            ApplicationType.Native => ApplicationTypeNativeTag,
             _ => null
             };
 
 
     ///<summary>Jose enumeration tag for GrantTypes.AuthorizationCode</summary>
     public const string  GrantTypesAuthorizationCodeTag = "AuthorizationCode";
+    ///<summary>Description for GrantTypes.AuthorizationCode</summary>
+    public const string  GrantTypesAuthorizationCodeTitle = "authorization_code";
     ///<summary>Jose enumeration tag for GrantTypes.RefreshToken</summary>
     public const string  GrantTypesRefreshTokenTag = "RefreshToken";
+    ///<summary>Description for GrantTypes.RefreshToken</summary>
+    public const string  GrantTypesRefreshTokenTitle = "refresh_token";
 
     /// <summary>
     /// Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -125,8 +136,6 @@ public static partial class OauthConstants {
     /// <returns>The enumeration value.</returns>
     public static GrantTypes ToGrantTypes (this string text) =>
         text switch {
-            GrantTypesAuthorizationCodeTag => GrantTypes.AuthorizationCode,
-            GrantTypesRefreshTokenTag => GrantTypes.RefreshToken,
             _ => GrantTypes.Unknown
             };
 
@@ -138,8 +147,6 @@ public static partial class OauthConstants {
     /// <returns>The text value.</returns>
     public static string ToLabel (this GrantTypes data) =>
         data switch {
-            GrantTypes.AuthorizationCode => GrantTypesAuthorizationCodeTag,
-            GrantTypes.RefreshToken => GrantTypesRefreshTokenTag,
             _ => null
             };
 
@@ -182,6 +189,8 @@ public static partial class OauthConstants {
 
     ///<summary>Jose enumeration tag for ResponseType.Code</summary>
     public const string  ResponseTypeCodeTag = "Code";
+    ///<summary>Description for ResponseType.Code</summary>
+    public const string  ResponseTypeCodeTitle = "code";
 
     /// <summary>
     /// Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -191,7 +200,6 @@ public static partial class OauthConstants {
     /// <returns>The enumeration value.</returns>
     public static ResponseType ToResponseType (this string text) =>
         text switch {
-            ResponseTypeCodeTag => ResponseType.Code,
             _ => ResponseType.Unknown
             };
 
@@ -203,13 +211,14 @@ public static partial class OauthConstants {
     /// <returns>The text value.</returns>
     public static string ToLabel (this ResponseType data) =>
         data switch {
-            ResponseType.Code => ResponseTypeCodeTag,
             _ => null
             };
 
 
     ///<summary>Jose enumeration tag for AuthenticationMethod.JWT</summary>
     public const string  AuthenticationMethodJWTTag = "JWT";
+    ///<summary>Description for AuthenticationMethod.JWT</summary>
+    public const string  AuthenticationMethodJWTTitle = "private_key_jwt";
 
     /// <summary>
     /// Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -219,7 +228,6 @@ public static partial class OauthConstants {
     /// <returns>The enumeration value.</returns>
     public static AuthenticationMethod ToAuthenticationMethod (this string text) =>
         text switch {
-            AuthenticationMethodJWTTag => AuthenticationMethod.JWT,
             _ => AuthenticationMethod.Unknown
             };
 
@@ -231,13 +239,14 @@ public static partial class OauthConstants {
     /// <returns>The text value.</returns>
     public static string ToLabel (this AuthenticationMethod data) =>
         data switch {
-            AuthenticationMethod.JWT => AuthenticationMethodJWTTag,
             _ => null
             };
 
 
     ///<summary>Jose enumeration tag for EndpointSignature.ES256</summary>
     public const string  EndpointSignatureES256Tag = "ES256";
+    ///<summary>Description for EndpointSignature.ES256</summary>
+    public const string  EndpointSignatureES256Title = "ES256";
 
     /// <summary>
     /// Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -247,7 +256,6 @@ public static partial class OauthConstants {
     /// <returns>The enumeration value.</returns>
     public static EndpointSignature ToEndpointSignature (this string text) =>
         text switch {
-            EndpointSignatureES256Tag => EndpointSignature.ES256,
             _ => EndpointSignature.Unknown
             };
 
@@ -259,7 +267,34 @@ public static partial class OauthConstants {
     /// <returns>The text value.</returns>
     public static string ToLabel (this EndpointSignature data) =>
         data switch {
-            EndpointSignature.ES256 => EndpointSignatureES256Tag,
+            _ => null
+            };
+
+
+    ///<summary>Jose enumeration tag for AssertionTypes.Bearer</summary>
+    public const string  AssertionTypesBearerTag = "Bearer";
+    ///<summary>Description for AssertionTypes.Bearer</summary>
+    public const string  AssertionTypesBearerTitle = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer";
+
+    /// <summary>
+    /// Convert the string <paramref name="text"/> to the corresponding enumeration
+    /// value.
+    /// </summary>
+    /// <param name="text">The string to convert.</param>
+    /// <returns>The enumeration value.</returns>
+    public static AssertionTypes ToAssertionTypes (this string text) =>
+        text switch {
+            _ => AssertionTypes.Unknown
+            };
+
+    /// <summary>
+    /// Convert the enumerated value <paramref name="data"/> to the corresponding string
+    /// value.
+    /// </summary>
+    /// <param name="data">The enumerated value.</param>
+    /// <returns>The text value.</returns>
+    public static string ToLabel (this AssertionTypes data) =>
+        data switch {
             _ => null
             };
 

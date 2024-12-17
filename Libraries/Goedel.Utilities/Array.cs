@@ -344,9 +344,15 @@ public static class ArrayUtilities {
         }
 
 
-    //public static T? GetFirst<T>(this List<T> list) {
+    public static int LengthNullable<T>(this T[]? array) =>
+                array is null ? 0 : array.Length;
 
-    //    }
+
+    public static ReadOnlySpan<byte> BufferAppendSpan (
+                this byte[]? buffer, byte[]? addition, int position = 0) {
+        Array.Copy (addition, 0, buffer, position, addition.Length);
+        return new ReadOnlySpan<byte>(buffer, position, addition.Length);
+        }
 
 
     }

@@ -14,6 +14,7 @@
 		<ProjectReference Include="..\Goedel.Cryptography.Identifiers\Goedel.Cryptography.Identifiers.csproj" />
 		<ProjectReference Include="..\Goedel.Cryptography.Nist\Goedel.Cryptography.Nist.csproj" />
 		<ProjectReference Include="..\Goedel.Discovery\Goedel.Discovery.csproj" />
+		<ProjectReference Include="..\Goedel.Protocol.Web\Goedel.Protocol.Web.csproj" />
 		<ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj" />
 		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
 	</ItemGroup>

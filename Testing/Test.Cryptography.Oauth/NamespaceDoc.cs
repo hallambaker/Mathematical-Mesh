@@ -24,7 +24,7 @@
 global using Goedel.Cryptography.Oauth;
 global using Goedel.Utilities;
 global using Goedel.Test;
-
+global using Goedel.Protocol.Web;
 global using Xunit;
 
 #if !(_Github_)

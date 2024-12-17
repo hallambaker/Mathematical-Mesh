@@ -88,7 +88,7 @@ public partial class JWK {
         KeyPairECDHNist keyPairECDHNist => new JWK() {
             KeyType = "EC",
             Curve = "P-256",
-            Use = keyPair.KeyUses.HasFlag(KeyUses.Sign) ? "Sig" : "Enc",
+            Use = keyPair.KeyUses.HasFlag(KeyUses.Sign) ? "sig" : "enc",
             X = keyPairECDHNist.PublicKey.PublicKey.X.ToByteArrayBigEndian(32).ToStringBase64url(),
             Y = keyPairECDHNist.PublicKey.PublicKey.Y.ToByteArrayBigEndian(32).ToStringBase64url(),
             Kid = keyPair.KeyIdentifier

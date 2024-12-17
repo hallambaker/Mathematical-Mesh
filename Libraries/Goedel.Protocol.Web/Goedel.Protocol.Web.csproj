@@ -12,6 +12,7 @@
     <ProjectReference Include="..\Goedel.Discovery\Goedel.Discovery.csproj" />
     <ProjectReference Include="..\Goedel.FSR\Goedel.FSR.csproj" />
     <ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
+    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj" />
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>
 
