@@ -1,6 +1,7 @@
 ﻿using Goedel.Cryptography.Algorithms;
 using Goedel.Discovery;
 
+using System.Reflection.Metadata;
 using System.Security.Cryptography;
 
 namespace Goedel.Cryptography.Oauth;
@@ -196,8 +197,24 @@ public class OauthClient {
 
 
     public OauthClientResult ParseResponse(
-                string responseUri) {
-        return new OauthClientResultFail();
+                Uri responseUri) {
+
+        var fields = HttpUtility.ParseQueryString(responseUri.Query);
+        var iss = fields["iss"];
+        var state = fields["state"];
+        var code = fields["code"];
+
+        // ok unpack the state vector
+
+        var encodedState = new EncodedState(EncryptedTokenManager, state);
+
+
+        return new OauthClientResultAuthRequest() {
+            RedirectUri = encodedState.RedirectUri,
+            Handle = encodedState.Handle,
+            DID = encodedState.DID,
+            Nonce = encodedState.Nonce
+            };
         }
 
     public static string TrimHandle(string handle) {
@@ -230,5 +247,10 @@ public record OauthClientResultPreRequest : OauthClientResult {
     }
 
 public record OauthClientResultAuthRequest : OauthClientResult {
-    public string ContextUri { get; init; } = null;
+    public string RedirectUri { get; init; } = null;
+    public string Handle { get; init; } = null;
+    public string DID { get; init; } = null;
+
+    public byte[]? Nonce { get; init; } = null;
+
     }

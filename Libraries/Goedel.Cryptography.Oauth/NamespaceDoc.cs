@@ -30,6 +30,8 @@ global using Goedel.Cryptography.Algorithms;
 //global using Goedel.Cryptography.Dare;
 global using Goedel.Protocol.Web;
 
+global using System.Web;
+
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif
