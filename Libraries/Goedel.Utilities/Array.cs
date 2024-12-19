@@ -343,11 +343,27 @@ public static class ArrayUtilities {
 
         }
 
-
+    /// <summary>
+    ///  Return the length of the array <paramref name="array"/> if not null
+    ///  and zero otherwise.
+    /// </summary>
+    /// <typeparam name="T">The array type.</typeparam>
+    /// <param name="array">The array to return the length of.</param>
+    /// <returns>The length of <paramref name="array"/> if not null
+    /// and zero otherwise.</returns>
     public static int LengthNullable<T>(this T[]? array) =>
                 array is null ? 0 : array.Length;
 
 
+    /// <summary>
+    /// Copy the data from <paramref name="addition"/> into <paramref name="buffer"/>
+    /// at position <paramref name="position"/> and return a read only span
+    ///  .
+    /// </summary>
+    /// <param name="buffer">The buffer to be written to.</param>
+    /// <param name="addition">The buffer to be copied from.</param>
+    /// <param name="position">The position to begin copying to.</param>
+    /// <returns>A read only span for the portion of the array written to</returns>
     public static ReadOnlySpan<byte> BufferAppendSpan (
                 this byte[]? buffer, byte[]? addition, int position = 0) {
         Array.Copy (addition, 0, buffer, position, addition.Length);

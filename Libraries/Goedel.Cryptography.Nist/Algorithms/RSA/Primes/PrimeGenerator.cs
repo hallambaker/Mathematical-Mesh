@@ -4,6 +4,9 @@ using System.Reflection;
 
 namespace Goedel.Cryptography.Nist;
 
+/// <summary>
+/// Prime generation interface.
+/// </summary>
 public interface IPrimeGenerator {
 
     /// <summary>
@@ -33,7 +36,11 @@ public interface IPrimeGenerator {
                 string tag = null, int? hint = null);
 
 
-
+    /// <summary>
+    /// Register <paramref name="count"/> trials to complete operation <paramref name="tag"/>
+    /// </summary>
+    /// <param name="tag">Tag identifying the operation.</param>
+    /// <param name="count">Count of the number of trials.</param>
     void Register(string tag, int count);
     }
 

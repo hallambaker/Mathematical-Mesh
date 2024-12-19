@@ -60,11 +60,12 @@ public static class UriClient {
         }
 
 
-
-    public static string DownloadString(this string uri) => HttpClient.GetStringAsync(uri).Sync();
-
-
-
+    /// <summary>
+    /// Perform a HTTP client GET on <paramref name="uri"/> and return the result as a string.
+    /// If an exception is thrown, the value null is returned.
+    /// </summary>
+    /// <param name="uri">The URI to query.</param>
+    /// <returns>The data fetched or null if the fetch failed.</returns>
     public static async Task<string?> DownloadStringAsync(this string uri) {
         try {
             var result = await HttpClient.GetStringAsync(uri);
@@ -77,14 +78,15 @@ public static class UriClient {
 
         }
 
-
-    //public static async Task<byte[]?> PostBinaryAsync(
-    //            this string uri, byte[] data, string contentType) {
-    //    var binaryContent = new ByteArrayContent(data);
-
-
-    //    }
-
+    /// <summary>
+    /// Perform a HTTP client POST on <paramref name="uri"/> with data <paramref name="data"/>
+    /// and content type <paramref name="contentType"/> and return the result as a string.
+    /// If an exception is thrown, the value null is returned.
+    /// </summary>
+    /// <param name="uri">The URI to query.</param>
+    /// <param name="contentType">Type of content data to post.</param>
+    /// <param name="data">The data to post.</param>
+    /// <returns>The data fetched or null if the fetch failed.</returns> 
     public static async Task<string?> PostBinaryAsync(
             this string uri, IEnumerable<KeyValuePair<String, String>> data, string contentType) {
         var binaryContent = new FormUrlEncodedContent(data);

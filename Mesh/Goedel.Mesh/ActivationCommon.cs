@@ -270,6 +270,7 @@ public partial class ActivationCommon {
     /// to a rights list.</param>
     /// <param name="transactContextAccount">The transacton context in which to build catalog updates.</param>
     /// <param name="activationDevice">The device activation.</param>
+    /// <param name="deviceDescription">The device description.</param>
     /// <returns>The catalog entry.</returns>
     public CatalogedDevice MakeCatalogedDevice(
                     ProfileDevice profileDevice,
@@ -302,7 +303,7 @@ public partial class ActivationCommon {
     /// <param name="activationAccount">The account key overlay.</param>
     /// <param name="signature">The signature key to use to sign the entry.</param>
     /// <param name="applicationEntries">The list of application entries to be bound.</param>
-    /// 
+    /// <param name="deviceDescription">The device description.</param>
     /// <returns>The CatalogedDevice entry.</returns>
     public CatalogedDevice CreateCataloguedDevice(
                 ProfileUser profileUser,

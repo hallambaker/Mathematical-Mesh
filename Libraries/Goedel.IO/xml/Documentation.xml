@@ -425,5 +425,24 @@
             property on the task object returns a Byte array containing the body of the 
             response received from the resource when the data buffer was uploaded.</returns>
         </member>
+        <member name="M:Goedel.IO.UriClient.DownloadStringAsync(System.String)">
+            <summary>
+            Perform a HTTP client GET on <paramref name="uri"/> and return the result as a string.
+            If an exception is thrown, the value null is returned.
+            </summary>
+            <param name="uri">The URI to query.</param>
+            <returns>The data fetched or null if the fetch failed.</returns>
+        </member>
+        <member name="M:Goedel.IO.UriClient.PostBinaryAsync(System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.String)">
+            <summary>
+            Perform a HTTP client POST on <paramref name="uri"/> with data <paramref name="data"/>
+            and content type <paramref name="contentType"/> and return the result as a string.
+            If an exception is thrown, the value null is returned.
+            </summary>
+            <param name="uri">The URI to query.</param>
+            <param name="contentType">Type of content data to post.</param>
+            <param name="data">The data to post.</param>
+            <returns>The data fetched or null if the fetch failed.</returns> 
+        </member>
     </members>
 </doc>

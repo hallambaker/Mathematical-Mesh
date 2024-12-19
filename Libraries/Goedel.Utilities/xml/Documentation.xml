@@ -661,6 +661,27 @@
             <param name="first">The list to add to.</param>
             <param name="second">The list of items to be added if not null.</param>
         </member>
+        <member name="M:Goedel.Utilities.ArrayUtilities.LengthNullable``1(``0[])">
+            <summary>
+             Return the length of the array <paramref name="array"/> if not null
+             and zero otherwise.
+            </summary>
+            <typeparam name="T">The array type.</typeparam>
+            <param name="array">The array to return the length of.</param>
+            <returns>The length of <paramref name="array"/> if not null
+            and zero otherwise.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.ArrayUtilities.BufferAppendSpan(System.Byte[],System.Byte[],System.Int32)">
+            <summary>
+            Copy the data from <paramref name="addition"/> into <paramref name="buffer"/>
+            at position <paramref name="position"/> and return a read only span
+             .
+            </summary>
+            <param name="buffer">The buffer to be written to.</param>
+            <param name="addition">The buffer to be copied from.</param>
+            <param name="position">The position to begin copying to.</param>
+            <returns>A read only span for the portion of the array written to</returns>
+        </member>
         <member name="T:Goedel.Utilities.AssemblyLogger">
             <summary>
             Caching logger class. C

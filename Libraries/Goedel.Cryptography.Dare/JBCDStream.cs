@@ -24,30 +24,23 @@
 namespace Goedel.Cryptography.Dare;
 
 
-public class BinaryStream : Disposable {
-    /// <summary>
-    /// The underlying stream for stream write operations
-    /// </summary>
-    public Stream StreamWrite;
+//public class BinaryStream : Disposable {
 
-    /// <summary>
-    /// The underlying stream for stream write operations
-    /// </summary>
-    public Stream StreamRead;
 
-    protected BinaryStream() {
-        }
+//    protected BinaryStream() {
+//        }
 
-    public BinaryStream GetWriter(
-                    Stream? writer = null) => new BinaryStream {
-                        StreamWrite = writer ??= new MemoryStream()
-                        };
 
-    public BinaryStream GetReader(
-                    Stream? writer = null) => new BinaryStream {
-                        StreamWrite = writer ??= new MemoryStream()
-                        };
-    }
+//    public BinaryStream GetWriter(
+//                    Stream? writer = null) => new BinaryStream {
+//                        StreamWrite = writer ??= new MemoryStream()
+//                        };
+
+//    public BinaryStream GetReader(
+//                    Stream? writer = null) => new BinaryStream {
+//                        StreamWrite = writer ??= new MemoryStream()
+//                        };
+//    }
 
 
 
@@ -58,9 +51,17 @@ public class BinaryStream : Disposable {
 /// expected this will be replaced in the future by a version that performs direct 
 /// memory mapping of the files.
 /// </summary>
-public partial class JbcdStream : BinaryStream {
+public partial class JbcdStream : Disposable {
 
+    /// <summary>
+    /// The underlying stream for stream write operations
+    /// </summary>
+    public Stream StreamWrite;
 
+    /// <summary>
+    /// The underlying stream for stream write operations
+    /// </summary>
+    public Stream StreamRead;
 
 
     readonly Stream disposeStreamRead = null;

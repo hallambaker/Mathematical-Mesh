@@ -168,7 +168,13 @@ public abstract class Catalog<T> : Store, IEnumerable<T>, INotifyCollectionChang
             }
         }
 
-
+    /// <summary>
+    /// Validate the catalog entry <paramref name="catalogedEntry"/>, creating a new item
+    /// if one does not already exist and return true if the entry is valid.
+    /// </summary>
+    /// <param name="catalogedEntry">The entry to validate.</param>
+    /// <param name="create">If true, the entry will be created if it doesn't exist already.</param>
+    /// <returns>True if the operation succeeds.</returns>
     protected virtual bool Validate(T catalogedEntry, bool create=true) {
 
         if (catalogedEntry.LocalName is null) {

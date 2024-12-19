@@ -1528,6 +1528,11 @@
             <param name="p">The prime.</param>
             <param name="xp">The XPrime.</param>
         </member>
+        <member name="T:Goedel.Cryptography.Nist.IPrimeGenerator">
+            <summary>
+            Prime generation interface.
+            </summary>
+        </member>
         <member name="M:Goedel.Cryptography.Nist.IPrimeGenerator.GetPrime(System.Int32,System.Int32,System.String,System.Nullable{System.Int32})">
             <summary>
             Return a prime value of <paramref name="bits"/> meeting the requirments 
@@ -1551,6 +1556,13 @@
             <returns>The random value.</returns>
             <param name="hint"></param>
         </member>
+        <member name="M:Goedel.Cryptography.Nist.IPrimeGenerator.Register(System.String,System.Int32)">
+            <summary>
+            Register <paramref name="count"/> trials to complete operation <paramref name="tag"/>
+            </summary>
+            <param name="tag">Tag identifying the operation.</param>
+            <param name="count">Count of the number of trials.</param>
+        </member>
         <member name="T:Goedel.Cryptography.Nist.PrimeGeneratorHelper">
             <summary>
             Static class with prime generation helpers.
@@ -1573,6 +1585,11 @@
             <returns></returns>
             <exception cref="T:Goedel.Cryptography.CryptographicException"></exception>
         </member>
+        <member name="T:Goedel.Cryptography.Nist.PrimeGeneratorParameters">
+            <summary>
+            Parameters for NIST prime generation.
+            </summary>
+        </member>
         <member name="P:Goedel.Cryptography.Nist.PrimeGeneratorParameters.RSA2048">
             <summary>Static parameter set for 2048 bit keys</summary> 
         </member>
@@ -1581,6 +1598,14 @@
         </member>
         <member name="P:Goedel.Cryptography.Nist.PrimeGeneratorParameters.RSA4096">
             <summary>Static parameter set for 4096 bit keys</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.PrimeGeneratorParameters.GetPrimeGeneratorParameters(System.Int32)">
+            <summary>
+            Return parameters for a key of size <paramref name="keySize"/>
+            </summary>
+            <param name="keySize">The key size. MUST be 2048, 2096 or 4096 bits.</param>
+            <returns></returns>
+            <exception cref="T:Goedel.Cryptography.CryptographicException"></exception>
         </member>
         <member name="P:Goedel.Cryptography.Nist.PrimeGeneratorParameters.Modulus">
             <summary>RSA modulus.</summary> 
@@ -1593,6 +1618,9 @@
         </member>
         <member name="P:Goedel.Cryptography.Nist.PrimeGeneratorParameters.BitLens">
             <summary>Specify the minimum length of probable auxiliary primes p1, p2 etc.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.PrimeGeneratorParameters.PrimeTestK">
+            <summary>The prime test K parameter.</summary> 
         </member>
         <member name="P:Goedel.Cryptography.Nist.PrimeGeneratorParameters.A">
             <summary>Optional filter for probable primes</summary> 
@@ -1630,6 +1658,77 @@
         </member>
         <member name="P:Goedel.Cryptography.Nist.PrimePair.Q">
             <summary>The prime Q.</summary> 
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.NativeFastKeccakBase">
+            <summary>
+            Implementation of SHA3 aka Keccak
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Nist.NativeFastKeccakBase.Squeezing">
+            <summary>If true, we are preforming a squeeze operation.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastKeccakBase.BlockUpdate(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Block update operation
+            </summary>
+            <param name="input">Input bytes.</param>
+            <param name="inOff">input offset</param>
+            <param name="len">length</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastKeccakBase.Final(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Block final operation.
+            </summary>
+            <param name="output">Output bytes</param>
+            <param name="outOff">Offset</param>
+            <param name="outputBitLength">Output length in bits</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastKeccakBase.Final(System.Byte[],System.Int32)">
+            <summary>
+            Block final operation.
+            </summary>
+            <param name="output">Output bytes</param>
+            <param name="outOff">Offset</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastKeccakBase.Init(System.Int32)">
+            <summary>
+            Initialize
+            </summary>
+            <param name="bitLength">Number of bits to return.</param>
+            <exception cref="T:System.ArgumentException">Incorrect argument supplied.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastKeccakBase.Absorb(System.Byte)">
+            <summary>
+            Absorb byte.
+            </summary>
+            <param name="data">The byte to absorb.</param>
+            <exception cref="T:System.InvalidOperationException">Operation was invalid in current state.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastKeccakBase.AbsorbBits(System.Int32,System.Int32)">
+            <summary>
+            Absorb bits.
+            </summary>
+            <param name="data">The bits to absorb.</param>
+            <param name="bits">The number of bits to absorb.</param>
+            <exception cref="T:System.InvalidOperationException">Operation was invalid in current state.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastKeccakBase.DoFinal(System.Byte[],System.Int32,System.Byte,System.Int32)">
+            <summary>
+            Perform the final operation.
+            </summary>
+            <param name="output">The output buffer.</param>
+            <param name="outOff">Offset from start of buffer.</param>
+            <param name="partialByte">Partial byte</param>
+            <param name="partialBits">Partial bits</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastKeccakBase.Squeeze(System.Byte[],System.Int32,System.Int64)">
+            <summary>
+            Squeeze the buffer.
+            </summary>
+            <param name="output">Output to write to</param>
+            <param name="offset">Offset</param>
+            <param name="outputBitLength">Number of bits to write.</param>
+            <exception cref="T:System.InvalidOperationException"></exception>
         </member>
         <member name="T:Goedel.Cryptography.Nist.NativeShaFactory">
             <summary>

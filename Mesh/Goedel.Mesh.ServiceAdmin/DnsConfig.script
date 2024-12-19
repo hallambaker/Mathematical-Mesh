@@ -1,4 +1,4 @@
-﻿#script 1.0
+﻿#script 1.0 
 #license MITLicense
 #% #pragma warning disable CS1591 
 #pclass Goedel.Mesh.ServiceAdmin DnsConfiguration

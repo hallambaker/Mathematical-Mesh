@@ -122,7 +122,11 @@ public abstract class DnsClient {
         return task;
         }
 
-
+    /// <summary>
+    /// Resolve an @nything handle using DNS.
+    /// </summary>
+    /// <param name="domain">TThe domain component of the handle.</param>
+    /// <returns>The resolved DID.</returns>
     public static async Task<Did?> ResolveAtHandleDNS(string domain) {
         domain = "_atproto." + domain;
 
@@ -156,8 +160,13 @@ public abstract class DnsClient {
             }
 
         return  Did.Factory(record);
-
         }
+
+    /// <summary>
+    /// Resolve an @nything handle using HTTPS.
+    /// </summary>
+    /// <param name="domain">TThe domain component of the handle.</param>
+    /// <returns>The resolved DID.</returns>
     public static async Task<Did?> ResolveAtHandleHttp(string domain) {
         
         var uri = $"https://{domain}/.well-known/atproto-did";
@@ -171,6 +180,11 @@ public abstract class DnsClient {
         return null;
         }
 
+    /// <summary>
+    /// Resolve an @nything handle by attempting both DNS and HTTPS in parallel..
+    /// </summary>
+    /// <param name="domain">TThe domain component of the handle.</param>
+    /// <returns>The resolved DID.</returns>
     public static async Task<Did?> ResolveAtHandle(string domain) {
 
         var dnsTask = ResolveAtHandleDNS(domain);
@@ -203,77 +217,7 @@ public abstract class DnsClient {
 
     }
 
-public record Did {
-    
-    public string Identifier = "";
 
-
-    public Did() {
-
-        } 
-        
-    public static Did Factory (DNSRecord_TXT record) {
-        foreach (var text in record.Text) {
-            var stripped = StripPrefix("did=", text);
-            if (stripped != null) {
-                return (Factory(stripped));
-                }
-            }
-        return null;
-        }
-
-    public static Did Factory(string identifier) {
-        if (identifier.StartsWith(DidPlc.Prefix)) {
-            return new DidPlc(identifier);
-            }
-        if (identifier.StartsWith(DidWeb.Prefix)) {
-            return new DidWeb(identifier);
-            }
-        return null;
-        }
-
-
-
-    public static string StripPrefix(string prefix, string text) {
-        if (text.ToLower().StartsWith(prefix)) {
-            return text[prefix.Length..];
-            }
-
-        return null;
-        }
-
-
-    }
-
-public record DidWeb : Did {
-
-    public const string Prefix = "did:web:";
-
-    public string Domain;
-
-
-    public DidWeb(string identifier) {
-
-        Identifier = identifier;
-        Domain = identifier[Prefix.Length..];
-        }
-
-    }
-
-public record DidPlc : Did {
-
-    public const string Prefix = "did:plc:";
-
-    public string Key;
-
-
-    public DidPlc(string identifier) {
-
-        Identifier = identifier;
-        Key = identifier[Prefix.Length..];
-        }
-
-    }
 
 
 
@@ -448,6 +392,13 @@ public abstract class DNSContext : Disposable {
         }
 
 
+    /// <summary>
+    /// Query the resolver for a record of type <paramref name="typeCode"/> at
+    /// <paramref name="address"/>.
+    /// </summary>
+    /// <param name="address">The domain to query.</param>
+    /// <param name="typeCode">The query type.</param>
+    /// <returns></returns>
     public async Task<IEnumerable<DNSRecord>> QueryRecord(
                     string address,
                     DNSTypeCode typeCode = DNSTypeCode.TXT) {

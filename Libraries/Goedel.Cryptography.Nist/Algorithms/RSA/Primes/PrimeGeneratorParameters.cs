@@ -1,6 +1,9 @@
 ﻿
 namespace Goedel.Cryptography.Nist;
 
+/// <summary>
+/// Parameters for NIST prime generation.
+/// </summary>
 public record PrimeGeneratorParameters {
 
     ///<summary>Static parameter set for 2048 bit keys</summary> 
@@ -28,7 +31,12 @@ public record PrimeGeneratorParameters {
         };
 
 
-
+    /// <summary>
+    /// Return parameters for a key of size <paramref name="keySize"/>
+    /// </summary>
+    /// <param name="keySize">The key size. MUST be 2048, 2096 or 4096 bits.</param>
+    /// <returns></returns>
+    /// <exception cref="CryptographicException"></exception>
     public static PrimeGeneratorParameters GetPrimeGeneratorParameters(int keySize) =>
         keySize switch {
             2048 => RSA2048,
@@ -51,6 +59,7 @@ public record PrimeGeneratorParameters {
     ///<summary>Specify the minimum length of probable auxiliary primes p1, p2 etc.</summary> 
     public int[] BitLens { get; set; } = new int[4]; 
 
+    ///<summary>The prime test K parameter.</summary> 
     public int PrimeTestK { get; set; }
 
 

@@ -34,9 +34,9 @@ public static class AssemblyStack {
     public static string GetMethodName() {
         var stack = new StackTrace();
         var frame = stack.GetFrame(1);
-        var method = frame.GetMethod();
+        //var method = frame.GetMethod();
 
-        return method?.Name;
+        return GetNameOfMethod(frame);
         }
 
     /// <summary>
@@ -46,10 +46,15 @@ public static class AssemblyStack {
     public static string GetCallerMethodName() {
         var stack = new StackTrace();
         var frame = stack.GetFrame(2);
-        var method = frame.GetMethod();
+        //var method = frame.GetMethod();
 
-        return method?.Name;
+        return GetNameOfMethod(frame);
         }
+
+
+    static string GetNameOfMethod(StackFrame frame) =>
+        DiagnosticMethodInfo.Create(frame).Name;
+
 
     /// <summary>
     /// Return the name of the caller of the calling method.

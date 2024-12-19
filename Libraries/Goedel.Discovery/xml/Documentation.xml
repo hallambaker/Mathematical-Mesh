@@ -34,6 +34,70 @@
             The listener thread
             </summary>
         </member>
+        <member name="T:Goedel.Discovery.Did">
+            <summary>
+            W3C DID manager (for what that is worth).
+            </summary>
+        </member>
+        <member name="F:Goedel.Discovery.Did.Identifier">
+            <summary>The stripped DID identifier.</summary> 
+        </member>
+        <member name="M:Goedel.Discovery.Did.Factory(Goedel.Discovery.DNSRecord_TXT)">
+            <summary>
+            Factory returning a DID from the DNS record <paramref name="record"/>
+            </summary>
+            <param name="record">The DNS record.</param>
+            <returns>The DID and resolved document</returns>
+        </member>
+        <member name="M:Goedel.Discovery.Did.Factory(System.String)">
+            <summary>
+            Factory returning a DID from the identifier <paramref name="identifier"/>
+            </summary>
+            <param name="identifier">The identifier.</param>
+            <returns>The DID and resolved document</returns>
+        </member>
+        <member name="M:Goedel.Discovery.Did.StripPrefix(System.String,System.String)">
+            <summary>
+            Strip the prefiox <paramref name="prefix"/> from the DID.
+            </summary>
+            <param name="prefix">Prefix to strip.</param>
+            <param name="text">Test to trim.</param>
+            <returns>The stripped text.</returns>
+        </member>
+        <member name="T:Goedel.Discovery.DidWeb">
+            <summary>
+            Web form DID.
+            </summary>
+        </member>
+        <member name="F:Goedel.Discovery.DidWeb.Prefix">
+            <summary>The DID prefix.</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.DidWeb.Domain">
+            <summary>The Web domain.</summary> 
+        </member>
+        <member name="M:Goedel.Discovery.DidWeb.#ctor(System.String)">
+            <summary>
+            Constructor, return an instance for <paramref name="identifier"/>.
+            </summary>
+            <param name="identifier">The identifier to return an instance for.</param>
+        </member>
+        <member name="T:Goedel.Discovery.DidPlc">
+            <summary>
+            PLC form DID
+            </summary>
+        </member>
+        <member name="F:Goedel.Discovery.DidPlc.Prefix">
+            <summary>The DID prefix.</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.DidPlc.Key">
+            <summary>The PLC key.</summary> 
+        </member>
+        <member name="M:Goedel.Discovery.DidPlc.#ctor(System.String)">
+            <summary>
+            Constructor, return an instance for <paramref name="identifier"/>.
+            </summary>
+            <param name="identifier">The identifier to return an instance for.</param>
+        </member>
         <member name="T:Goedel.Discovery.DNSBuffer">
             <summary>
             Buffer class for DNS operations.
@@ -417,6 +481,27 @@
             <param name="fallback">The fallback mode to use if SRV lookup fails</param> 
             <returns>Description of the discovered services.</returns>
         </member>
+        <member name="M:Goedel.Discovery.DnsClient.ResolveAtHandleDNS(System.String)">
+            <summary>
+            Resolve an @nything handle using DNS.
+            </summary>
+            <param name="domain">TThe domain component of the handle.</param>
+            <returns>The resolved DID.</returns>
+        </member>
+        <member name="M:Goedel.Discovery.DnsClient.ResolveAtHandleHttp(System.String)">
+            <summary>
+            Resolve an @nything handle using HTTPS.
+            </summary>
+            <param name="domain">TThe domain component of the handle.</param>
+            <returns>The resolved DID.</returns>
+        </member>
+        <member name="M:Goedel.Discovery.DnsClient.ResolveAtHandle(System.String)">
+            <summary>
+            Resolve an @nything handle by attempting both DNS and HTTPS in parallel..
+            </summary>
+            <param name="domain">TThe domain component of the handle.</param>
+            <returns>The resolved DID.</returns>
+        </member>
         <member name="T:Goedel.Discovery.DNSContext">
             <summary>
             Multiple managed DNS queries.
@@ -501,6 +586,15 @@
             <param name="address">The DNS address to query</param>
             <param name="dnsTypeCode">The DNS Type code to query</param>
             <returns>Task instance.</returns>
+        </member>
+        <member name="M:Goedel.Discovery.DNSContext.QueryRecord(System.String,Goedel.Discovery.DNSTypeCode)">
+            <summary>
+            Query the resolver for a record of type <paramref name="typeCode"/> at
+            <paramref name="address"/>.
+            </summary>
+            <param name="address">The domain to query.</param>
+            <param name="typeCode">The query type.</param>
+            <returns></returns>
         </member>
         <member name="M:Goedel.Discovery.DNSContext.QueryServiceAsync(System.String,System.String,System.Nullable{System.Int32},Goedel.Discovery.DNSFallback)">
             <summary>
