@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/14/2024 5:27:26 PM
+//  This file was automatically generated at 12/19/2024 4:50:20 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -289,12 +289,12 @@ public partial class WsmpRequest : Goedel.Protocol.Request {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new WsmpRequest(), Goedel.Protocol.Request._binding);
+			new() {
+
+        }, __Tag,() => new WsmpRequest(), Goedel.Protocol.Request._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -365,12 +365,12 @@ public partial class WsmpResponse : Goedel.Protocol.Response {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new WsmpResponse(), Goedel.Protocol.Response._binding);
+			new() {
+
+        }, __Tag,() => new WsmpResponse(), Goedel.Protocol.Response._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -438,12 +438,12 @@ public partial class ServiceConfigRequest : WsmpRequest {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ServiceConfigRequest(), WsmpRequest._binding);
+			new() {
+
+        }, __Tag,() => new ServiceConfigRequest(), WsmpRequest._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -511,12 +511,12 @@ public partial class ServiceConfigResponse : WsmpResponse {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ServiceConfigResponse(), WsmpResponse._binding);
+			new() {
+
+        }, __Tag,() => new ServiceConfigResponse(), WsmpResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -584,12 +584,12 @@ public partial class ServiceStatusRequest : WsmpRequest {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ServiceStatusRequest(), WsmpRequest._binding);
+			new() {
+
+        }, __Tag,() => new ServiceStatusRequest(), WsmpRequest._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -682,10 +682,7 @@ public partial class ServiceStatusResponse : WsmpResponse {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ServiceStatusResponse(), WsmpResponse._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Start", new PropertyDateTime ("Start", 
 					(IBinding data, DateTime? value) => {(data as ServiceStatusResponse).Start = value;}, (IBinding data) => (data as ServiceStatusResponse).Start )},
@@ -697,7 +694,10 @@ public partial class ServiceStatusResponse : WsmpResponse {
 					(IBinding data, int? value) => {(data as ServiceStatusResponse).Completed = value;}, (IBinding data) => (data as ServiceStatusResponse).Completed )},
 			{ "Pending", new PropertyInteger32 ("Pending", 
 					(IBinding data, int? value) => {(data as ServiceStatusResponse).Pending = value;}, (IBinding data) => (data as ServiceStatusResponse).Pending )}
-        };
+        }, __Tag,() => new ServiceStatusResponse(), WsmpResponse._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =

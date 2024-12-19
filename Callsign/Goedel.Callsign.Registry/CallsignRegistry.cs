@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/14/2024 5:27:23 PM
+//  This file was automatically generated at 12/19/2024 4:50:18 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -143,10 +143,7 @@ public partial class CatalogedRegistry : CatalogedApplication {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new CatalogedRegistry(), CatalogedApplication._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "MaximumRequestLength", new PropertyInteger32 ("MaximumRequestLength", 
 					(IBinding data, int? value) => {(data as CatalogedRegistry).MaximumRequestLength = value;}, (IBinding data) => (data as CatalogedRegistry).MaximumRequestLength )},
@@ -161,7 +158,10 @@ public partial class CatalogedRegistry : CatalogedApplication {
 			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", 
 					(IBinding data, object? value) => {(data as CatalogedRegistry).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, (IBinding data) => (data as CatalogedRegistry).EnvelopedActivationCommon,
 					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())} 
-        };
+        }, __Tag,() => new CatalogedRegistry(), CatalogedApplication._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -241,10 +241,7 @@ public partial class ActivationApplicationRegistry : ActivationApplication {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ActivationApplicationRegistry(), ActivationApplication._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "AccountEncryption", new PropertyStruct ("AccountEncryption", 
 					(IBinding data, object? value) => {(data as ActivationApplicationRegistry).AccountEncryption = value as KeyData;}, (IBinding data) => (data as ActivationApplicationRegistry).AccountEncryption,
@@ -252,7 +249,10 @@ public partial class ActivationApplicationRegistry : ActivationApplication {
 			{ "AdministratorSignature", new PropertyStruct ("AdministratorSignature", 
 					(IBinding data, object? value) => {(data as ActivationApplicationRegistry).AdministratorSignature = value as KeyData;}, (IBinding data) => (data as ActivationApplicationRegistry).AdministratorSignature,
 					false, ()=>new  KeyData(), ()=>new KeyData())} 
-        };
+        }, __Tag,() => new ActivationApplicationRegistry(), ActivationApplication._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -332,10 +332,7 @@ public partial class ApplicationEntryRegistry : ApplicationEntry {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ApplicationEntryRegistry(), ApplicationEntry._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "EnvelopedActivation", new PropertyStruct ("EnvelopedActivation", 
 					(IBinding data, object? value) => {(data as ApplicationEntryRegistry).EnvelopedActivation = value as Enveloped<ActivationApplicationRegistry>;}, (IBinding data) => (data as ApplicationEntryRegistry).EnvelopedActivation,
@@ -343,7 +340,10 @@ public partial class ApplicationEntryRegistry : ApplicationEntry {
 			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", 
 					(IBinding data, object? value) => {(data as ApplicationEntryRegistry).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as ApplicationEntryRegistry).EnvelopedConnectionService,
 					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())} 
-        };
+        }, __Tag,() => new ApplicationEntryRegistry(), ApplicationEntry._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =

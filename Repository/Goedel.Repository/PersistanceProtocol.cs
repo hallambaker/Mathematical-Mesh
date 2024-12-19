@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/14/2024 5:27:23 PM
+//  This file was automatically generated at 12/19/2024 4:50:16 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -254,12 +254,12 @@ public partial class ProfileRepository : ProfileAccount {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ProfileRepository(), ProfileAccount._binding);
+			new() {
+
+        }, __Tag,() => new ProfileRepository(), ProfileAccount._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -345,10 +345,7 @@ public partial class CatalogedRepository : CatalogedApplication {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new CatalogedRepository(), CatalogedApplication._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "EnvelopedConnectionAddress", new PropertyStruct ("EnvelopedConnectionAddress", 
 					(IBinding data, object? value) => {(data as CatalogedRepository).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, (IBinding data) => (data as CatalogedRepository).EnvelopedConnectionAddress,
@@ -359,7 +356,10 @@ public partial class CatalogedRepository : CatalogedApplication {
 			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", 
 					(IBinding data, object? value) => {(data as CatalogedRepository).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, (IBinding data) => (data as CatalogedRepository).EnvelopedActivationCommon,
 					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())} 
-        };
+        }, __Tag,() => new CatalogedRepository(), CatalogedApplication._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -446,10 +446,7 @@ public partial class ActivationApplicationRepository : ActivationApplication {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ActivationApplicationRepository(), ActivationApplication._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "AccountEncryption", new PropertyStruct ("AccountEncryption", 
 					(IBinding data, object? value) => {(data as ActivationApplicationRepository).AccountEncryption = value as KeyData;}, (IBinding data) => (data as ActivationApplicationRepository).AccountEncryption,
@@ -460,7 +457,10 @@ public partial class ActivationApplicationRepository : ActivationApplication {
 			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", 
 					(IBinding data, object? value) => {(data as ActivationApplicationRepository).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as ActivationApplicationRepository).EnvelopedConnectionService,
 					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())} 
-        };
+        }, __Tag,() => new ActivationApplicationRepository(), ActivationApplication._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -533,15 +533,15 @@ public partial class ApplicationEntryRepository : ApplicationEntry {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ApplicationEntryRepository(), ApplicationEntry._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "EnvelopedActivation", new PropertyStruct ("EnvelopedActivation", 
 					(IBinding data, object? value) => {(data as ApplicationEntryRepository).EnvelopedActivation = value as Enveloped<ActivationApplicationRepository>;}, (IBinding data) => (data as ApplicationEntryRepository).EnvelopedActivation,
 					false, ()=>new  Enveloped<ActivationApplicationRepository>(), ()=>new Enveloped<ActivationApplicationRepository>())} 
-        };
+        }, __Tag,() => new ApplicationEntryRepository(), ApplicationEntry._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -611,12 +611,12 @@ public partial class PersistanceRequest : Goedel.Protocol.Request {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new PersistanceRequest(), Goedel.Protocol.Request._binding);
+			new() {
+
+        }, __Tag,() => new PersistanceRequest(), Goedel.Protocol.Request._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -687,12 +687,12 @@ public partial class PersistanceResponse : Goedel.Protocol.Response {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new PersistanceResponse(), Goedel.Protocol.Response._binding);
+			new() {
+
+        }, __Tag,() => new PersistanceResponse(), Goedel.Protocol.Response._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -762,12 +762,12 @@ public partial class QueryRequest : PersistanceRequest {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new QueryRequest(), PersistanceRequest._binding);
+			new() {
+
+        }, __Tag,() => new QueryRequest(), PersistanceRequest._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -837,12 +837,12 @@ public partial class QueryResponse : PersistanceResponse {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new QueryResponse(), PersistanceResponse._binding);
+			new() {
+
+        }, __Tag,() => new QueryResponse(), PersistanceResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =

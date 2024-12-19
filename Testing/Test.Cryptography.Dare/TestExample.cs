@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/14/2024 5:27:27 PM
+//  This file was automatically generated at 12/19/2024 4:18:44 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -127,16 +127,16 @@ abstract public partial class TestEntry : TestSchema {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,null, null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Created", new PropertyDateTime ("Created", 
 					(IBinding data, DateTime? value) => {(data as TestEntry).Created = value;}, (IBinding data) => (data as TestEntry).Created )},
 			{ "Modified", new PropertyDateTime ("Modified", 
 					(IBinding data, DateTime? value) => {(data as TestEntry).Modified = value;}, (IBinding data) => (data as TestEntry).Modified )}
-        };
+        }, __Tag,null, null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -222,10 +222,7 @@ public partial class TestItem : TestEntry {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new TestItem(), TestEntry._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "AccountID", new PropertyString ("AccountID", 
 					(IBinding data, string? value) => {(data as TestItem).AccountID = value;}, (IBinding data) => (data as TestItem).AccountID )},
@@ -233,7 +230,10 @@ public partial class TestItem : TestEntry {
 					(IBinding data, string? value) => {(data as TestItem).UserProfileUDF = value;}, (IBinding data) => (data as TestItem).UserProfileUDF )},
 			{ "Status", new PropertyString ("Status", 
 					(IBinding data, string? value) => {(data as TestItem).Status = value;}, (IBinding data) => (data as TestItem).Status )}
-        };
+        }, __Tag,() => new TestItem(), TestEntry._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -340,10 +340,7 @@ public partial class MessageTest : Goedel.Mesh.Message {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new MessageTest(), Goedel.Mesh.Message._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "UniqueId", new PropertyString ("UniqueId", 
 					(IBinding data, string? value) => {(data as MessageTest).UniqueId = value;}, (IBinding data) => (data as MessageTest).UniqueId )},
@@ -359,7 +356,10 @@ public partial class MessageTest : Goedel.Mesh.Message {
 					(IBinding data, int? value) => {(data as MessageTest).Length = value;}, (IBinding data) => (data as MessageTest).Length )},
 			{ "Data", new PropertyBinary ("Data", 
 					(IBinding data, byte[]? value) => {(data as MessageTest).Data = value;}, (IBinding data) => (data as MessageTest).Data )}
-        };
+        }, __Tag,() => new MessageTest(), Goedel.Mesh.Message._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -466,10 +466,7 @@ public partial class CatalogEntryTest : Goedel.Mesh.CatalogedEntry {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new CatalogEntryTest(), Goedel.Mesh.CatalogedEntry._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "UniqueId", new PropertyString ("UniqueId", 
 					(IBinding data, string? value) => {(data as CatalogEntryTest).UniqueId = value;}, (IBinding data) => (data as CatalogEntryTest).UniqueId )},
@@ -485,7 +482,10 @@ public partial class CatalogEntryTest : Goedel.Mesh.CatalogedEntry {
 					(IBinding data, int? value) => {(data as CatalogEntryTest).Length = value;}, (IBinding data) => (data as CatalogEntryTest).Length )},
 			{ "Data", new PropertyBinary ("Data", 
 					(IBinding data, byte[]? value) => {(data as CatalogEntryTest).Data = value;}, (IBinding data) => (data as CatalogEntryTest).Data )}
-        };
+        }, __Tag,() => new CatalogEntryTest(), Goedel.Mesh.CatalogedEntry._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =

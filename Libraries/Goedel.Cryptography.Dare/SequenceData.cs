@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/17/2024 4:14:33 PM
+//  This file was automatically generated at 12/19/2024 4:50:13 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -174,10 +174,7 @@ public partial class SequenceInfo : SequenceData {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new SequenceInfo(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "DataEncoding", new PropertyString ("DataEncoding", 
 					(IBinding data, string? value) => {(data as SequenceInfo).DataEncoding = value;}, (IBinding data) => (data as SequenceInfo).DataEncoding )},
@@ -195,7 +192,10 @@ public partial class SequenceInfo : SequenceData {
 					(IBinding data, long? value) => {(data as SequenceInfo).IndexPosition = value;}, (IBinding data) => (data as SequenceInfo).IndexPosition )},
 			{ "ExchangePosition", new PropertyInteger64 ("ExchangePosition", 
 					(IBinding data, long? value) => {(data as SequenceInfo).ExchangePosition = value;}, (IBinding data) => (data as SequenceInfo).ExchangePosition )}
-        };
+        }, __Tag,() => new SequenceInfo(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -278,17 +278,17 @@ public partial class SequenceIndex : SequenceData {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new SequenceIndex(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Full", new PropertyBoolean ("Full", 
 					(IBinding data, bool? value) => {(data as SequenceIndex).Full = value;}, (IBinding data) => (data as SequenceIndex).Full )},
 			{ "Positions", new PropertyListStruct ("Positions", 
 					(IBinding data, object? value) => {(data as SequenceIndex).Positions = value as List<IndexPosition>;}, (IBinding data) => (data as SequenceIndex).Positions,
 					false, ()=>new  List<IndexPosition>(), ()=>new IndexPosition())} 
-        };
+        }, __Tag,() => new SequenceIndex(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -375,10 +375,7 @@ public partial class IndexPosition : SequenceData {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new IndexPosition(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Index", new PropertyInteger64 ("Index", 
 					(IBinding data, long? value) => {(data as IndexPosition).Index = value;}, (IBinding data) => (data as IndexPosition).Index )},
@@ -386,7 +383,10 @@ public partial class IndexPosition : SequenceData {
 					(IBinding data, long? value) => {(data as IndexPosition).Position = value;}, (IBinding data) => (data as IndexPosition).Position )},
 			{ "UniqueId", new PropertyString ("UniqueId", 
 					(IBinding data, string? value) => {(data as IndexPosition).UniqueId = value;}, (IBinding data) => (data as IndexPosition).UniqueId )}
-        };
+        }, __Tag,() => new IndexPosition(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -467,16 +467,16 @@ public partial class KeyValue : SequenceData {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new KeyValue(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Key", new PropertyString ("Key", 
 					(IBinding data, string? value) => {(data as KeyValue).Key = value;}, (IBinding data) => (data as KeyValue).Key )},
 			{ "Value", new PropertyString ("Value", 
 					(IBinding data, string? value) => {(data as KeyValue).Value = value;}, (IBinding data) => (data as KeyValue).Value )}
-        };
+        }, __Tag,() => new KeyValue(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -545,12 +545,12 @@ public partial class ProofChain : SequenceData {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ProofChain(), null);
+			new() {
+
+        }, __Tag,() => new ProofChain(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;

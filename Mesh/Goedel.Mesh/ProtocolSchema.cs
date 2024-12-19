@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/17/2024 4:14:36 PM
+//  This file was automatically generated at 12/19/2024 4:50:15 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -722,12 +722,12 @@ public partial class MeshRequest : Goedel.Protocol.Request {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new MeshRequest(), Goedel.Protocol.Request._binding);
+			new() {
+
+        }, __Tag,() => new MeshRequest(), Goedel.Protocol.Request._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -816,10 +816,7 @@ public partial class MeshRequestUser : MeshRequest {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new MeshRequestUser(), MeshRequest._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Account", new PropertyString ("Account", 
 					(IBinding data, string? value) => {(data as MeshRequestUser).Account = value;}, (IBinding data) => (data as MeshRequestUser).Account )},
@@ -828,7 +825,10 @@ public partial class MeshRequestUser : MeshRequest {
 			{ "EnvelopedProfileDevice", new PropertyStruct ("EnvelopedProfileDevice", 
 					(IBinding data, object? value) => {(data as MeshRequestUser).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;}, (IBinding data) => (data as MeshRequestUser).EnvelopedProfileDevice,
 					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())} 
-        };
+        }, __Tag,() => new MeshRequestUser(), MeshRequest._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -899,12 +899,12 @@ public partial class MeshResponse : Goedel.Protocol.Response {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new MeshResponse(), Goedel.Protocol.Response._binding);
+			new() {
+
+        }, __Tag,() => new MeshResponse(), Goedel.Protocol.Response._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -987,16 +987,16 @@ public partial class KeyValue : MeshProtocol {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new KeyValue(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Key", new PropertyString ("Key", 
 					(IBinding data, string? value) => {(data as KeyValue).Key = value;}, (IBinding data) => (data as KeyValue).Key )},
 			{ "Value", new PropertyString ("Value", 
 					(IBinding data, string? value) => {(data as KeyValue).Value = value;}, (IBinding data) => (data as KeyValue).Value )}
-        };
+        }, __Tag,() => new KeyValue(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -1111,10 +1111,7 @@ public partial class ConstraintsSelect : MeshProtocol {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ConstraintsSelect(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Store", new PropertyString ("Store", 
 					(IBinding data, string? value) => {(data as ConstraintsSelect).Store = value;}, (IBinding data) => (data as ConstraintsSelect).Store )},
@@ -1128,7 +1125,10 @@ public partial class ConstraintsSelect : MeshProtocol {
 					(IBinding data, DateTime? value) => {(data as ConstraintsSelect).Before = value;}, (IBinding data) => (data as ConstraintsSelect).Before )},
 			{ "PageKey", new PropertyString ("PageKey", 
 					(IBinding data, string? value) => {(data as ConstraintsSelect).PageKey = value;}, (IBinding data) => (data as ConstraintsSelect).PageKey )}
-        };
+        }, __Tag,() => new ConstraintsSelect(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -1234,10 +1234,7 @@ public partial class ConstraintsData : MeshProtocol {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ConstraintsData(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "MaxEntries", new PropertyInteger64 ("MaxEntries", 
 					(IBinding data, long? value) => {(data as ConstraintsData).MaxEntries = value;}, (IBinding data) => (data as ConstraintsData).MaxEntries )},
@@ -1251,7 +1248,10 @@ public partial class ConstraintsData : MeshProtocol {
 					(IBinding data, bool? value) => {(data as ConstraintsData).Payload = value;}, (IBinding data) => (data as ConstraintsData).Payload )},
 			{ "Trailer", new PropertyBoolean ("Trailer", 
 					(IBinding data, bool? value) => {(data as ConstraintsData).Trailer = value;}, (IBinding data) => (data as ConstraintsData).Trailer )}
-        };
+        }, __Tag,() => new ConstraintsData(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -1342,10 +1342,7 @@ public partial class PolicyAccount : MeshProtocol {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new PolicyAccount(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Minimum", new PropertyInteger32 ("Minimum", 
 					(IBinding data, int? value) => {(data as PolicyAccount).Minimum = value;}, (IBinding data) => (data as PolicyAccount).Minimum )},
@@ -1353,7 +1350,10 @@ public partial class PolicyAccount : MeshProtocol {
 					(IBinding data, int? value) => {(data as PolicyAccount).Maximum = value;}, (IBinding data) => (data as PolicyAccount).Maximum )},
 			{ "InvalidCharacters", new PropertyString ("InvalidCharacters", 
 					(IBinding data, string? value) => {(data as PolicyAccount).InvalidCharacters = value;}, (IBinding data) => (data as PolicyAccount).InvalidCharacters )}
-        };
+        }, __Tag,() => new PolicyAccount(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -1437,10 +1437,7 @@ public partial class StoreStatus : MeshProtocol {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new StoreStatus(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Store", new PropertyString ("Store", 
 					(IBinding data, string? value) => {(data as StoreStatus).Store = value;}, (IBinding data) => (data as StoreStatus).Store )},
@@ -1448,7 +1445,10 @@ public partial class StoreStatus : MeshProtocol {
 					(IBinding data, long? value) => {(data as StoreStatus).Index = value;}, (IBinding data) => (data as StoreStatus).Index )},
 			{ "Digest", new PropertyBinary ("Digest", 
 					(IBinding data, byte[]? value) => {(data as StoreStatus).Digest = value;}, (IBinding data) => (data as StoreStatus).Digest )}
-        };
+        }, __Tag,() => new StoreStatus(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -1534,10 +1534,7 @@ public partial class StoreUpdate : StoreStatus {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new StoreUpdate(), StoreStatus._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Envelopes", new PropertyListStruct ("Envelopes", 
 					(IBinding data, object? value) => {(data as StoreUpdate).Envelopes = value as List<DareEnvelope>;}, (IBinding data) => (data as StoreUpdate).Envelopes,
@@ -1546,7 +1543,10 @@ public partial class StoreUpdate : StoreStatus {
 					(IBinding data, bool? value) => {(data as StoreUpdate).Partial = value;}, (IBinding data) => (data as StoreUpdate).Partial )},
 			{ "FinalIndex", new PropertyInteger64 ("FinalIndex", 
 					(IBinding data, long? value) => {(data as StoreUpdate).FinalIndex = value;}, (IBinding data) => (data as StoreUpdate).FinalIndex )}
-        };
+        }, __Tag,() => new StoreUpdate(), StoreStatus._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -1620,15 +1620,15 @@ public partial class MeshHelloRequest : Goedel.Protocol.HelloRequest {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new MeshHelloRequest(), Goedel.Protocol.HelloRequest._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "CallsignBinding", new PropertyStruct ("CallsignBinding", 
 					(IBinding data, object? value) => {(data as MeshHelloRequest).CallsignBinding = value as CallsignBinding;}, (IBinding data) => (data as MeshHelloRequest).CallsignBinding,
 					false, ()=>new  CallsignBinding(), ()=>new CallsignBinding())} 
-        };
+        }, __Tag,() => new MeshHelloRequest(), Goedel.Protocol.HelloRequest._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -1727,10 +1727,7 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new MeshHelloResponse(), Goedel.Protocol.HelloResponse._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "ConstraintsUpdate", new PropertyStruct ("ConstraintsUpdate", 
 					(IBinding data, object? value) => {(data as MeshHelloResponse).ConstraintsUpdate = value as ConstraintsData;}, (IBinding data) => (data as MeshHelloResponse).ConstraintsUpdate,
@@ -1747,7 +1744,10 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
 			{ "CallsignBinding", new PropertyStruct ("CallsignBinding", 
 					(IBinding data, object? value) => {(data as MeshHelloResponse).CallsignBinding = value as CallsignBinding;}, (IBinding data) => (data as MeshHelloResponse).CallsignBinding,
 					false, ()=>new  CallsignBinding(), ()=>new CallsignBinding())} 
-        };
+        }, __Tag,() => new MeshHelloResponse(), Goedel.Protocol.HelloResponse._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -1834,10 +1834,7 @@ public partial class BindRequest : MeshRequest {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new BindRequest(), MeshRequest._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "AccountAddress", new PropertyString ("AccountAddress", 
 					(IBinding data, string? value) => {(data as BindRequest).AccountAddress = value;}, (IBinding data) => (data as BindRequest).AccountAddress )},
@@ -1847,7 +1844,10 @@ public partial class BindRequest : MeshRequest {
 			{ "EnvelopedCallsignBinding", new PropertyListStruct ("EnvelopedCallsignBinding", 
 					(IBinding data, object? value) => {(data as BindRequest).EnvelopedCallsignBinding = value as List<Enveloped<CallsignBinding>>;}, (IBinding data) => (data as BindRequest).EnvelopedCallsignBinding,
 					false, ()=>new  List<Enveloped<CallsignBinding>>(), ()=>new Enveloped<CallsignBinding>())} 
-        };
+        }, __Tag,() => new BindRequest(), MeshRequest._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -1937,10 +1937,7 @@ public partial class BindResponse : MeshResponse {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new BindResponse(), MeshResponse._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Reason", new PropertyString ("Reason", 
 					(IBinding data, string? value) => {(data as BindResponse).Reason = value;}, (IBinding data) => (data as BindResponse).Reason )},
@@ -1949,7 +1946,10 @@ public partial class BindResponse : MeshResponse {
 			{ "EnvelopedAccountHostAssignment", new PropertyStruct ("EnvelopedAccountHostAssignment", 
 					(IBinding data, object? value) => {(data as BindResponse).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, (IBinding data) => (data as BindResponse).EnvelopedAccountHostAssignment,
 					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())} 
-        };
+        }, __Tag,() => new BindResponse(), MeshResponse._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -2021,12 +2021,12 @@ public partial class UnbindRequest : MeshRequestUser {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new UnbindRequest(), MeshRequestUser._binding);
+			new() {
+
+        }, __Tag,() => new UnbindRequest(), MeshRequestUser._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -2096,12 +2096,12 @@ public partial class UnbindResponse : MeshResponse {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new UnbindResponse(), MeshResponse._binding);
+			new() {
+
+        }, __Tag,() => new UnbindResponse(), MeshResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -2180,17 +2180,17 @@ public partial class ConnectRequest : MeshRequest {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ConnectRequest(), MeshRequest._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "EnvelopedRequestConnection", new PropertyStruct ("EnvelopedRequestConnection", 
 					(IBinding data, object? value) => {(data as ConnectRequest).EnvelopedRequestConnection = value as Enveloped<RequestConnection>;}, (IBinding data) => (data as ConnectRequest).EnvelopedRequestConnection,
 					false, ()=>new  Enveloped<RequestConnection>(), ()=>new Enveloped<RequestConnection>())} ,
 			{ "Rights", new PropertyListString ("Rights", 
 					(IBinding data, List<string>? value) => {(data as ConnectRequest).Rights = value;}, (IBinding data) => (data as ConnectRequest).Rights )}
-        };
+        }, __Tag,() => new ConnectRequest(), MeshRequest._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -2270,10 +2270,7 @@ public partial class ConnectResponse : MeshResponse {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ConnectResponse(), MeshResponse._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "EnvelopedAcknowledgeConnection", new PropertyStruct ("EnvelopedAcknowledgeConnection", 
 					(IBinding data, object? value) => {(data as ConnectResponse).EnvelopedAcknowledgeConnection = value as Enveloped<AcknowledgeConnection>;}, (IBinding data) => (data as ConnectResponse).EnvelopedAcknowledgeConnection,
@@ -2281,7 +2278,10 @@ public partial class ConnectResponse : MeshResponse {
 			{ "EnvelopedProfileAccount", new PropertyStruct ("EnvelopedProfileAccount", 
 					(IBinding data, object? value) => {(data as ConnectResponse).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as ConnectResponse).EnvelopedProfileAccount,
 					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())} 
-        };
+        }, __Tag,() => new ConnectResponse(), MeshResponse._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -2359,16 +2359,16 @@ public partial class CompleteRequest : StatusRequest {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new CompleteRequest(), StatusRequest._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "AccountAddress", new PropertyString ("AccountAddress", 
 					(IBinding data, string? value) => {(data as CompleteRequest).AccountAddress = value;}, (IBinding data) => (data as CompleteRequest).AccountAddress )},
 			{ "ResponseID", new PropertyString ("ResponseID", 
 					(IBinding data, string? value) => {(data as CompleteRequest).ResponseID = value;}, (IBinding data) => (data as CompleteRequest).ResponseID )}
-        };
+        }, __Tag,() => new CompleteRequest(), StatusRequest._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -2449,10 +2449,7 @@ public partial class CompleteResponse : MeshResponse {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new CompleteResponse(), MeshResponse._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "EnvelopedRespondConnection", new PropertyStruct ("EnvelopedRespondConnection", 
 					(IBinding data, object? value) => {(data as CompleteResponse).EnvelopedRespondConnection = value as Enveloped<RespondConnection>;}, (IBinding data) => (data as CompleteResponse).EnvelopedRespondConnection,
@@ -2460,7 +2457,10 @@ public partial class CompleteResponse : MeshResponse {
 			{ "EnvelopedAccountHostAssignment", new PropertyStruct ("EnvelopedAccountHostAssignment", 
 					(IBinding data, object? value) => {(data as CompleteResponse).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, (IBinding data) => (data as CompleteResponse).EnvelopedAccountHostAssignment,
 					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())} 
-        };
+        }, __Tag,() => new CompleteResponse(), MeshResponse._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -2555,10 +2555,7 @@ public partial class StatusRequest : MeshRequestUser {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new StatusRequest(), MeshRequestUser._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "DeviceUDF", new PropertyString ("DeviceUDF", 
 					(IBinding data, string? value) => {(data as StatusRequest).DeviceUDF = value;}, (IBinding data) => (data as StatusRequest).DeviceUDF )},
@@ -2572,7 +2569,10 @@ public partial class StatusRequest : MeshRequestUser {
 					(IBinding data, List<string>? value) => {(data as StatusRequest).Services = value;}, (IBinding data) => (data as StatusRequest).Services )},
 			{ "DeviceStatus", new PropertyBoolean ("DeviceStatus", 
 					(IBinding data, bool? value) => {(data as StatusRequest).DeviceStatus = value;}, (IBinding data) => (data as StatusRequest).DeviceStatus )}
-        };
+        }, __Tag,() => new StatusRequest(), MeshRequestUser._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -2682,10 +2682,7 @@ public partial class StatusResponse : MeshResponse {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new StatusResponse(), MeshResponse._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Bitmask", new PropertyBinary ("Bitmask", 
 					(IBinding data, byte[]? value) => {(data as StatusResponse).Bitmask = value;}, (IBinding data) => (data as StatusResponse).Bitmask )},
@@ -2709,7 +2706,10 @@ public partial class StatusResponse : MeshResponse {
 			{ "DeviceStatuses", new PropertyListStruct ("DeviceStatuses", 
 					(IBinding data, object? value) => {(data as StatusResponse).DeviceStatuses = value as List<DeviceStatus>;}, (IBinding data) => (data as StatusResponse).DeviceStatuses,
 					false, ()=>new  List<DeviceStatus>(), ()=>new DeviceStatus())} 
-        };
+        }, __Tag,() => new StatusResponse(), MeshResponse._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -2797,10 +2797,7 @@ public partial class DeviceStatus : MeshProtocol {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new DeviceStatus(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Id", new PropertyString ("Id", 
 					(IBinding data, string? value) => {(data as DeviceStatus).Id = value;}, (IBinding data) => (data as DeviceStatus).Id )},
@@ -2810,7 +2807,10 @@ public partial class DeviceStatus : MeshProtocol {
 					(IBinding data, string? value) => {(data as DeviceStatus).Comment = value;}, (IBinding data) => (data as DeviceStatus).Comment )},
 			{ "LastConnected", new PropertyDateTime ("LastConnected", 
 					(IBinding data, DateTime? value) => {(data as DeviceStatus).LastConnected = value;}, (IBinding data) => (data as DeviceStatus).LastConnected )}
-        };
+        }, __Tag,() => new DeviceStatus(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -2911,10 +2911,7 @@ public partial class DownloadRequest : MeshRequestUser {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new DownloadRequest(), MeshRequestUser._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "MaxResults", new PropertyInteger32 ("MaxResults", 
 					(IBinding data, int? value) => {(data as DownloadRequest).MaxResults = value;}, (IBinding data) => (data as DownloadRequest).MaxResults )},
@@ -2928,7 +2925,10 @@ public partial class DownloadRequest : MeshRequestUser {
 			{ "ConstraintsPost", new PropertyStruct ("ConstraintsPost", 
 					(IBinding data, object? value) => {(data as DownloadRequest).ConstraintsPost = value as ConstraintsData;}, (IBinding data) => (data as DownloadRequest).ConstraintsPost,
 					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())} 
-        };
+        }, __Tag,() => new DownloadRequest(), MeshRequestUser._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -3018,10 +3018,7 @@ public partial class DownloadResponse : MeshResponse {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new DownloadResponse(), MeshResponse._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Updates", new PropertyListStruct ("Updates", 
 					(IBinding data, object? value) => {(data as DownloadResponse).Updates = value as List<StoreUpdate>;}, (IBinding data) => (data as DownloadResponse).Updates,
@@ -3031,7 +3028,10 @@ public partial class DownloadResponse : MeshResponse {
 			{ "EnvelopedCatalogedDevice", new PropertyStruct ("EnvelopedCatalogedDevice", 
 					(IBinding data, object? value) => {(data as DownloadResponse).EnvelopedCatalogedDevice = value as Enveloped<CatalogedDevice>;}, (IBinding data) => (data as DownloadResponse).EnvelopedCatalogedDevice,
 					false, ()=>new  Enveloped<CatalogedDevice>(), ()=>new Enveloped<CatalogedDevice>())} 
-        };
+        }, __Tag,() => new DownloadResponse(), MeshResponse._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -3130,10 +3130,7 @@ public partial class TransactRequest : MeshRequestUser {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new TransactRequest(), MeshRequestUser._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Updates", new PropertyListStruct ("Updates", 
 					(IBinding data, object? value) => {(data as TransactRequest).Updates = value as List<StoreUpdate>;}, (IBinding data) => (data as TransactRequest).Updates,
@@ -3149,7 +3146,10 @@ public partial class TransactRequest : MeshRequestUser {
 			{ "Local", new PropertyListStruct ("Local", 
 					(IBinding data, object? value) => {(data as TransactRequest).Local = value as List<Enveloped<Message>>;}, (IBinding data) => (data as TransactRequest).Local,
 					false, ()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>())} 
-        };
+        }, __Tag,() => new TransactRequest(), MeshRequestUser._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -3237,10 +3237,7 @@ public partial class TransactResponse : MeshResponse {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new TransactResponse(), MeshResponse._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Bitmask", new PropertyBinary ("Bitmask", 
 					(IBinding data, byte[]? value) => {(data as TransactResponse).Bitmask = value;}, (IBinding data) => (data as TransactResponse).Bitmask )},
@@ -3250,7 +3247,10 @@ public partial class TransactResponse : MeshResponse {
 			{ "ConstraintsData", new PropertyStruct ("ConstraintsData", 
 					(IBinding data, object? value) => {(data as TransactResponse).ConstraintsData = value as ConstraintsData;}, (IBinding data) => (data as TransactResponse).ConstraintsData,
 					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())} 
-        };
+        }, __Tag,() => new TransactResponse(), MeshResponse._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -3346,10 +3346,7 @@ public partial class EntryResponse : MeshProtocol {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new EntryResponse(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "IndexRequest", new PropertyInteger64 ("IndexRequest", 
 					(IBinding data, long? value) => {(data as EntryResponse).IndexRequest = value;}, (IBinding data) => (data as EntryResponse).IndexRequest )},
@@ -3360,7 +3357,10 @@ public partial class EntryResponse : MeshProtocol {
 			{ "ConstraintsData", new PropertyStruct ("ConstraintsData", 
 					(IBinding data, object? value) => {(data as EntryResponse).ConstraintsData = value as ConstraintsData;}, (IBinding data) => (data as EntryResponse).ConstraintsData,
 					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())} 
-        };
+        }, __Tag,() => new EntryResponse(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -3429,12 +3429,12 @@ public partial class PublicRequest : DownloadRequest {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new PublicRequest(), DownloadRequest._binding);
+			new() {
+
+        }, __Tag,() => new PublicRequest(), DownloadRequest._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -3514,17 +3514,17 @@ public partial class PostRequest : MeshRequest {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new PostRequest(), MeshRequest._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Accounts", new PropertyListString ("Accounts", 
 					(IBinding data, List<string>? value) => {(data as PostRequest).Accounts = value;}, (IBinding data) => (data as PostRequest).Accounts )},
 			{ "Messages", new PropertyListStruct ("Messages", 
 					(IBinding data, object? value) => {(data as PostRequest).Messages = value as List<Enveloped<Message>>;}, (IBinding data) => (data as PostRequest).Messages,
 					false, ()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>())} 
-        };
+        }, __Tag,() => new PostRequest(), MeshRequest._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -3594,12 +3594,12 @@ public partial class PostResponse : TransactResponse {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new PostResponse(), TransactResponse._binding);
+			new() {
+
+        }, __Tag,() => new PostResponse(), TransactResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -3673,15 +3673,15 @@ public partial class ClaimRequest : MeshRequest {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ClaimRequest(), MeshRequest._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "EnvelopedMessageClaim", new PropertyStruct ("EnvelopedMessageClaim", 
 					(IBinding data, object? value) => {(data as ClaimRequest).EnvelopedMessageClaim = value as Enveloped<MessageClaim>;}, (IBinding data) => (data as ClaimRequest).EnvelopedMessageClaim,
 					false, ()=>new  Enveloped<MessageClaim>(), ()=>new Enveloped<MessageClaim>())} 
-        };
+        }, __Tag,() => new ClaimRequest(), MeshRequest._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -3755,15 +3755,15 @@ public partial class ClaimResponse : MeshResponse {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ClaimResponse(), MeshResponse._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "CatalogedPublication", new PropertyStruct ("CatalogedPublication", 
 					(IBinding data, object? value) => {(data as ClaimResponse).CatalogedPublication = value as CatalogedPublication;}, (IBinding data) => (data as ClaimResponse).CatalogedPublication,
 					false, ()=>new  CatalogedPublication(), ()=>new CatalogedPublication())} 
-        };
+        }, __Tag,() => new ClaimResponse(), MeshResponse._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -3843,16 +3843,16 @@ public partial class PollClaimRequest : MeshRequest {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new PollClaimRequest(), MeshRequest._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "PublicationId", new PropertyString ("PublicationId", 
 					(IBinding data, string? value) => {(data as PollClaimRequest).PublicationId = value;}, (IBinding data) => (data as PollClaimRequest).PublicationId )},
 			{ "TargetAccountAddress", new PropertyString ("TargetAccountAddress", 
 					(IBinding data, string? value) => {(data as PollClaimRequest).TargetAccountAddress = value;}, (IBinding data) => (data as PollClaimRequest).TargetAccountAddress )}
-        };
+        }, __Tag,() => new PollClaimRequest(), MeshRequest._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -3926,15 +3926,15 @@ public partial class PollClaimResponse : MeshResponse {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new PollClaimResponse(), MeshResponse._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "EnvelopedMessage", new PropertyStruct ("EnvelopedMessage", 
 					(IBinding data, object? value) => {(data as PollClaimResponse).EnvelopedMessage = value as Enveloped<Message>;}, (IBinding data) => (data as PollClaimResponse).EnvelopedMessage,
 					false, ()=>new  Enveloped<Message>(), ()=>new Enveloped<Message>())} 
-        };
+        }, __Tag,() => new PollClaimResponse(), MeshResponse._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -4014,16 +4014,16 @@ abstract public partial class CryptographicOperation : MeshProtocol {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,null, null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "KeyId", new PropertyString ("KeyId", 
 					(IBinding data, string? value) => {(data as CryptographicOperation).KeyId = value;}, (IBinding data) => (data as CryptographicOperation).KeyId )},
 			{ "KeyCoefficient", new PropertyBinary ("KeyCoefficient", 
 					(IBinding data, byte[]? value) => {(data as CryptographicOperation).KeyCoefficient = value;}, (IBinding data) => (data as CryptographicOperation).KeyCoefficient )}
-        };
+        }, __Tag,null, null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -4099,16 +4099,16 @@ public partial class CryptographicOperationSign : CryptographicOperation {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new CryptographicOperationSign(), CryptographicOperation._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Data", new PropertyBinary ("Data", 
 					(IBinding data, byte[]? value) => {(data as CryptographicOperationSign).Data = value;}, (IBinding data) => (data as CryptographicOperationSign).Data )},
 			{ "PartialR", new PropertyBinary ("PartialR", 
 					(IBinding data, byte[]? value) => {(data as CryptographicOperationSign).PartialR = value;}, (IBinding data) => (data as CryptographicOperationSign).PartialR )}
-        };
+        }, __Tag,() => new CryptographicOperationSign(), CryptographicOperation._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -4182,15 +4182,15 @@ public partial class CryptographicOperationKeyAgreement : CryptographicOperation
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new CryptographicOperationKeyAgreement(), CryptographicOperation._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "PublicKey", new PropertyStruct ("PublicKey", 
 					(IBinding data, object? value) => {(data as CryptographicOperationKeyAgreement).PublicKey = value as Key;}, (IBinding data) => (data as CryptographicOperationKeyAgreement).PublicKey,
 					true)} 
-        };
+        }, __Tag,() => new CryptographicOperationKeyAgreement(), CryptographicOperation._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -4258,12 +4258,12 @@ public partial class CryptographicOperationGenerate : CryptographicOperation {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new CryptographicOperationGenerate(), CryptographicOperation._binding);
+			new() {
+
+        }, __Tag,() => new CryptographicOperationGenerate(), CryptographicOperation._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -4341,16 +4341,16 @@ public partial class CryptographicOperationShare : CryptographicOperation {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new CryptographicOperationShare(), CryptographicOperation._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Threshold", new PropertyInteger32 ("Threshold", 
 					(IBinding data, int? value) => {(data as CryptographicOperationShare).Threshold = value;}, (IBinding data) => (data as CryptographicOperationShare).Threshold )},
 			{ "Shares", new PropertyInteger32 ("Shares", 
 					(IBinding data, int? value) => {(data as CryptographicOperationShare).Shares = value;}, (IBinding data) => (data as CryptographicOperationShare).Shares )}
-        };
+        }, __Tag,() => new CryptographicOperationShare(), CryptographicOperation._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -4423,14 +4423,14 @@ public partial class CryptographicResult : MeshProtocol {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new CryptographicResult(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Error", new PropertyString ("Error", 
 					(IBinding data, string? value) => {(data as CryptographicResult).Error = value;}, (IBinding data) => (data as CryptographicResult).Error )}
-        };
+        }, __Tag,() => new CryptographicResult(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -4502,15 +4502,15 @@ public partial class CryptographicResultKeyAgreement : CryptographicResult {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new CryptographicResultKeyAgreement(), CryptographicResult._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "KeyAgreement", new PropertyStruct ("KeyAgreement", 
 					(IBinding data, object? value) => {(data as CryptographicResultKeyAgreement).KeyAgreement = value as KeyAgreement;}, (IBinding data) => (data as CryptographicResultKeyAgreement).KeyAgreement,
 					true)} 
-        };
+        }, __Tag,() => new CryptographicResultKeyAgreement(), CryptographicResult._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -4578,12 +4578,12 @@ public partial class CryptographicResultShare : CryptographicResult {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new CryptographicResultShare(), CryptographicResult._binding);
+			new() {
+
+        }, __Tag,() => new CryptographicResultShare(), CryptographicResult._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -4661,10 +4661,7 @@ public partial class OperateRequest : MeshRequest {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new OperateRequest(), MeshRequest._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "AccountAddress", new PropertyString ("AccountAddress", 
 					(IBinding data, string? value) => {(data as OperateRequest).AccountAddress = value;}, (IBinding data) => (data as OperateRequest).AccountAddress )},
@@ -4672,7 +4669,10 @@ public partial class OperateRequest : MeshRequest {
 					(IBinding data, object? value) => {(data as OperateRequest).Operations = value as List<CryptographicOperation>;}, (IBinding data) => (data as OperateRequest).Operations,
 					true, ()=>new List<CryptographicOperation>()
 )} 
-        };
+        }, __Tag,() => new OperateRequest(), MeshRequest._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -4744,16 +4744,16 @@ public partial class OperateResponse : MeshResponse {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new OperateResponse(), MeshResponse._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Results", new PropertyListStruct ("Results", 
 					(IBinding data, object? value) => {(data as OperateResponse).Results = value as List<CryptographicResult>;}, (IBinding data) => (data as OperateResponse).Results,
 					true, ()=>new List<CryptographicResult>()
 )} 
-        };
+        }, __Tag,() => new OperateResponse(), MeshResponse._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =

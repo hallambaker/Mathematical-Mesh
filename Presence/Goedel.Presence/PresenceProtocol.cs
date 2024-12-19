@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/14/2024 5:27:23 PM
+//  This file was automatically generated at 12/19/2024 4:50:16 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -240,16 +240,16 @@ public partial class PresenceFromClient : Goedel.Protocol.Request {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new PresenceFromClient(), Goedel.Protocol.Request._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Serial", new PropertyInteger32 ("Serial", 
 					(IBinding data, int? value) => {(data as PresenceFromClient).Serial = value;}, (IBinding data) => (data as PresenceFromClient).Serial )},
 			{ "Acknowledge", new PropertyInteger32 ("Acknowledge", 
 					(IBinding data, int? value) => {(data as PresenceFromClient).Acknowledge = value;}, (IBinding data) => (data as PresenceFromClient).Acknowledge )}
-        };
+        }, __Tag,() => new PresenceFromClient(), Goedel.Protocol.Request._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -319,12 +319,12 @@ public partial class PresenceConnectRequest : PresenceFromClient {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new PresenceConnectRequest(), PresenceFromClient._binding);
+			new() {
+
+        }, __Tag,() => new PresenceConnectRequest(), PresenceFromClient._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -392,12 +392,12 @@ public partial class PresenceHeartbeat : PresenceFromClient {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new PresenceHeartbeat(), PresenceFromClient._binding);
+			new() {
+
+        }, __Tag,() => new PresenceHeartbeat(), PresenceFromClient._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -465,12 +465,12 @@ public partial class PresenceEndpointRequest : PresenceFromClient {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new PresenceEndpointRequest(), PresenceFromClient._binding);
+			new() {
+
+        }, __Tag,() => new PresenceEndpointRequest(), PresenceFromClient._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -538,12 +538,12 @@ public partial class PresenceAcknowledge : PresenceFromClient {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new PresenceAcknowledge(), PresenceFromClient._binding);
+			new() {
+
+        }, __Tag,() => new PresenceAcknowledge(), PresenceFromClient._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -616,14 +616,14 @@ public partial class PresenceResolveRequest : PresenceFromClient {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new PresenceResolveRequest(), PresenceFromClient._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "DnsRequest", new PropertyBinary ("DnsRequest", 
 					(IBinding data, byte[]? value) => {(data as PresenceResolveRequest).DnsRequest = value;}, (IBinding data) => (data as PresenceResolveRequest).DnsRequest )}
-        };
+        }, __Tag,() => new PresenceResolveRequest(), PresenceFromClient._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -709,10 +709,7 @@ public partial class PresenceFromService : Goedel.Protocol.Response {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new PresenceFromService(), Goedel.Protocol.Response._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "EndPoint", new PropertyStruct ("EndPoint", 
 					(IBinding data, object? value) => {(data as PresenceFromService).EndPoint = value as UdpEndpoint;}, (IBinding data) => (data as PresenceFromService).EndPoint,
@@ -721,7 +718,10 @@ public partial class PresenceFromService : Goedel.Protocol.Response {
 					(IBinding data, DateTime? value) => {(data as PresenceFromService).Now = value;}, (IBinding data) => (data as PresenceFromService).Now )},
 			{ "Acknowledge", new PropertyInteger32 ("Acknowledge", 
 					(IBinding data, int? value) => {(data as PresenceFromService).Acknowledge = value;}, (IBinding data) => (data as PresenceFromService).Acknowledge )}
-        };
+        }, __Tag,() => new PresenceFromService(), Goedel.Protocol.Response._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -798,14 +798,14 @@ public partial class PresenceConnectResponse : PresenceFromService {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new PresenceConnectResponse(), PresenceFromService._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "ConnectionTimeout", new PropertyInteger32 ("ConnectionTimeout", 
 					(IBinding data, int? value) => {(data as PresenceConnectResponse).ConnectionTimeout = value;}, (IBinding data) => (data as PresenceConnectResponse).ConnectionTimeout )}
-        };
+        }, __Tag,() => new PresenceConnectResponse(), PresenceFromService._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -878,14 +878,14 @@ public partial class PresenceErrorInvalidSerial : PresenceFromService {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new PresenceErrorInvalidSerial(), PresenceFromService._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Serial", new PropertyInteger32 ("Serial", 
 					(IBinding data, int? value) => {(data as PresenceErrorInvalidSerial).Serial = value;}, (IBinding data) => (data as PresenceErrorInvalidSerial).Serial )}
-        };
+        }, __Tag,() => new PresenceErrorInvalidSerial(), PresenceFromService._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -953,12 +953,12 @@ public partial class PresenceStatus : PresenceFromService {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new PresenceStatus(), PresenceFromService._binding);
+			new() {
+
+        }, __Tag,() => new PresenceStatus(), PresenceFromService._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -1026,12 +1026,12 @@ public partial class PresenceEndpointResponse : PresenceFromService {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new PresenceEndpointResponse(), PresenceFromService._binding);
+			new() {
+
+        }, __Tag,() => new PresenceEndpointResponse(), PresenceFromService._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -1109,16 +1109,16 @@ public partial class PresenceNotify : PresenceFromService {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new PresenceNotify(), PresenceFromService._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Bitmask", new PropertyBinary ("Bitmask", 
 					(IBinding data, byte[]? value) => {(data as PresenceNotify).Bitmask = value;}, (IBinding data) => (data as PresenceNotify).Bitmask )},
 			{ "Serial", new PropertyInteger32 ("Serial", 
 					(IBinding data, int? value) => {(data as PresenceNotify).Serial = value;}, (IBinding data) => (data as PresenceNotify).Serial )}
-        };
+        }, __Tag,() => new PresenceNotify(), PresenceFromService._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -1191,14 +1191,14 @@ public partial class PresenceResolveResponse : PresenceFromService {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new PresenceResolveResponse(), PresenceFromService._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "DnsResponse", new PropertyBinary ("DnsResponse", 
 					(IBinding data, byte[]? value) => {(data as PresenceResolveResponse).DnsResponse = value;}, (IBinding data) => (data as PresenceResolveResponse).DnsResponse )}
-        };
+        }, __Tag,() => new PresenceResolveResponse(), PresenceFromService._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -1285,10 +1285,7 @@ public partial class SessionRequest : Message {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new SessionRequest(), Message._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Protocol", new PropertyString ("Protocol", 
 					(IBinding data, string? value) => {(data as SessionRequest).Protocol = value;}, (IBinding data) => (data as SessionRequest).Protocol )},
@@ -1299,7 +1296,10 @@ public partial class SessionRequest : Message {
 					false, ()=>new  UdpEndpoint(), ()=>new UdpEndpoint())} ,
 			{ "Expires", new PropertyDateTime ("Expires", 
 					(IBinding data, DateTime? value) => {(data as SessionRequest).Expires = value;}, (IBinding data) => (data as SessionRequest).Expires )}
-        };
+        }, __Tag,() => new SessionRequest(), Message._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -1386,10 +1386,7 @@ public partial class SessionResponse : Message {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new SessionResponse(), Message._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Accept", new PropertyBoolean ("Accept", 
 					(IBinding data, bool? value) => {(data as SessionResponse).Accept = value;}, (IBinding data) => (data as SessionResponse).Accept )},
@@ -1400,7 +1397,10 @@ public partial class SessionResponse : Message {
 			{ "Inbound", new PropertyStruct ("Inbound", 
 					(IBinding data, object? value) => {(data as SessionResponse).Inbound = value as UdpEndpoint;}, (IBinding data) => (data as SessionResponse).Inbound,
 					false, ()=>new  UdpEndpoint(), ()=>new UdpEndpoint())} 
-        };
+        }, __Tag,() => new SessionResponse(), Message._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -1487,10 +1487,7 @@ public partial class SessionEndpoint : PresenceProtocol {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new SessionEndpoint(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "IpAddress", new PropertyBinary ("IpAddress", 
 					(IBinding data, byte[]? value) => {(data as SessionEndpoint).IpAddress = value;}, (IBinding data) => (data as SessionEndpoint).IpAddress )},
@@ -1500,7 +1497,10 @@ public partial class SessionEndpoint : PresenceProtocol {
 					(IBinding data, string? value) => {(data as SessionEndpoint).Protocol = value;}, (IBinding data) => (data as SessionEndpoint).Protocol )},
 			{ "Options", new PropertyListString ("Options", 
 					(IBinding data, List<string>? value) => {(data as SessionEndpoint).Options = value;}, (IBinding data) => (data as SessionEndpoint).Options )}
-        };
+        }, __Tag,() => new SessionEndpoint(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -1577,16 +1577,16 @@ public partial class UdpEndpoint : PresenceProtocol {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new UdpEndpoint(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "IpAddress", new PropertyBinary ("IpAddress", 
 					(IBinding data, byte[]? value) => {(data as UdpEndpoint).IpAddress = value;}, (IBinding data) => (data as UdpEndpoint).IpAddress )},
 			{ "Port", new PropertyInteger32 ("Port", 
 					(IBinding data, int? value) => {(data as UdpEndpoint).Port = value;}, (IBinding data) => (data as UdpEndpoint).Port )}
-        };
+        }, __Tag,() => new UdpEndpoint(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;

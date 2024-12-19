@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/14/2024 5:27:25 PM
+//  This file was automatically generated at 12/19/2024 4:18:41 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -138,10 +138,7 @@ public partial class MultiInstance : TestSchema {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new MultiInstance(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "FieldBoolean", new PropertyBoolean ("FieldBoolean", 
 					(IBinding data, bool? value) => {(data as MultiInstance).FieldBoolean = value;}, (IBinding data) => (data as MultiInstance).FieldBoolean )},
@@ -153,7 +150,10 @@ public partial class MultiInstance : TestSchema {
 					(IBinding data, string? value) => {(data as MultiInstance).FieldString = value;}, (IBinding data) => (data as MultiInstance).FieldString )},
 			{ "FieldBinary", new PropertyBinary ("FieldBinary", 
 					(IBinding data, byte[]? value) => {(data as MultiInstance).FieldBinary = value;}, (IBinding data) => (data as MultiInstance).FieldBinary )}
-        };
+        }, __Tag,() => new MultiInstance(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -240,10 +240,7 @@ public partial class MultiArray : MultiInstance {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new MultiArray(), MultiInstance._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "ArrayBoolean", new PropertyListBoolean ("ArrayBoolean", 
 					(IBinding data, List<bool>? value) => {(data as MultiArray).ArrayBoolean = value;}, (IBinding data) => (data as MultiArray).ArrayBoolean )},
@@ -255,7 +252,10 @@ public partial class MultiArray : MultiInstance {
 					(IBinding data, List<string>? value) => {(data as MultiArray).ArrayString = value;}, (IBinding data) => (data as MultiArray).ArrayString )},
 			{ "ArrayBinary", new PropertyListBinary ("ArrayBinary", 
 					(IBinding data, List<byte[]>? value) => {(data as MultiArray).ArrayBinary = value;}, (IBinding data) => (data as MultiArray).ArrayBinary )}
-        };
+        }, __Tag,() => new MultiArray(), MultiInstance._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -341,10 +341,7 @@ public partial class MultiStruct : MultiArray {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new MultiStruct(), MultiArray._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "FieldMultiInstance", new PropertyStruct ("FieldMultiInstance", 
 					(IBinding data, object? value) => {(data as MultiStruct).FieldMultiInstance = value as MultiInstance;}, (IBinding data) => (data as MultiStruct).FieldMultiInstance,
@@ -359,7 +356,10 @@ public partial class MultiStruct : MultiArray {
 					(IBinding data, object? value) => {(data as MultiStruct).TArrayMultiInstance = value as List<MultiInstance>;}, (IBinding data) => (data as MultiStruct).TArrayMultiInstance,
 					true, ()=>new List<MultiInstance>()
 )} 
-        };
+        }, __Tag,() => new MultiStruct(), MultiArray._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =

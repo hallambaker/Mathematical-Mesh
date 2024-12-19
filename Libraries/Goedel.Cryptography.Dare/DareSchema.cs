@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/17/2024 4:14:33 PM
+//  This file was automatically generated at 12/19/2024 4:50:13 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -150,10 +150,7 @@ public partial class DareEnvelopeSequence : Dare {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new DareEnvelopeSequence(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Header", new PropertyStruct ("Header", 
 					(IBinding data, object? value) => {(data as DareEnvelopeSequence).Header = value as DareHeader;}, (IBinding data) => (data as DareEnvelopeSequence).Header,
@@ -163,7 +160,10 @@ public partial class DareEnvelopeSequence : Dare {
 			{ "Trailer", new PropertyStruct ("Trailer", 
 					(IBinding data, object? value) => {(data as DareEnvelopeSequence).Trailer = value as DareTrailer;}, (IBinding data) => (data as DareEnvelopeSequence).Trailer,
 					false, ()=>new  DareTrailer(), ()=>new DareTrailer())} 
-        };
+        }, __Tag,() => new DareEnvelopeSequence(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -269,10 +269,7 @@ public partial class DareSignatureHeader : Dare {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new DareSignatureHeader(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "WitnessValue", new PropertyBinary ("WitnessValue", 
 					(IBinding data, byte[]? value) => {(data as DareSignatureHeader).WitnessValue = value;}, (IBinding data) => (data as DareSignatureHeader).WitnessValue )},
@@ -286,7 +283,10 @@ public partial class DareSignatureHeader : Dare {
 					(IBinding data, byte[]? value) => {(data as DareSignatureHeader).ApexDigest = value;}, (IBinding data) => (data as DareSignatureHeader).ApexDigest )},
 			{ "dig", new PropertyString ("dig", 
 					(IBinding data, string? value) => {(data as DareSignatureHeader).DigestAlgorithm = value;}, (IBinding data) => (data as DareSignatureHeader).DigestAlgorithm )}
-        };
+        }, __Tag,() => new DareSignatureHeader(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -388,10 +388,7 @@ public partial class DareTrailer : DareSignatureHeader {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new DareTrailer(), DareSignatureHeader._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "signatures", new PropertyListStruct ("signatures", 
 					(IBinding data, object? value) => {(data as DareTrailer).Signatures = value as List<DareSignature>;}, (IBinding data) => (data as DareTrailer).Signatures,
@@ -405,7 +402,10 @@ public partial class DareTrailer : DareSignatureHeader {
 					(IBinding data, byte[]? value) => {(data as DareTrailer).SignedData = value;}, (IBinding data) => (data as DareTrailer).SignedData )},
 			{ "SequenceSignedData", new PropertyBinary ("SequenceSignedData", 
 					(IBinding data, byte[]? value) => {(data as DareTrailer).SequenceSignedData = value;}, (IBinding data) => (data as DareTrailer).SequenceSignedData )}
-        };
+        }, __Tag,() => new DareTrailer(), DareSignatureHeader._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -585,10 +585,7 @@ public partial class DareHeader : DareTrailer {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new DareHeader(), DareTrailer._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "EnvelopeId", new PropertyString ("EnvelopeId", 
 					(IBinding data, string? value) => {(data as DareHeader).EnvelopeId = value;}, (IBinding data) => (data as DareHeader).EnvelopeId )},
@@ -626,7 +623,10 @@ public partial class DareHeader : DareTrailer {
 					(IBinding data, byte[]? value) => {(data as DareHeader).Bitmask = value;}, (IBinding data) => (data as DareHeader).Bitmask )},
 			{ "Debug", new PropertyString ("Debug", 
 					(IBinding data, string? value) => {(data as DareHeader).Debug = value;}, (IBinding data) => (data as DareHeader).Debug )}
-        };
+        }, __Tag,() => new DareHeader(), DareTrailer._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -775,10 +775,7 @@ public partial class ContentMeta : Dare {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ContentMeta(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "UniqueId", new PropertyString ("UniqueId", 
 					(IBinding data, string? value) => {(data as ContentMeta).UniqueId = value;}, (IBinding data) => (data as ContentMeta).UniqueId )},
@@ -810,7 +807,10 @@ public partial class ContentMeta : Dare {
 			{ "FileEntry", new PropertyStruct ("FileEntry", 
 					(IBinding data, object? value) => {(data as ContentMeta).FileEntry = value as FileEntry;}, (IBinding data) => (data as ContentMeta).FileEntry,
 					false, ()=>new  FileEntry(), ()=>new FileEntry())} 
-        };
+        }, __Tag,() => new ContentMeta(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -928,10 +928,7 @@ public partial class DareSignature : Dare {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new DareSignature(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "dig", new PropertyString ("dig", 
 					(IBinding data, string? value) => {(data as DareSignature).Dig = value;}, (IBinding data) => (data as DareSignature).Dig )},
@@ -952,7 +949,10 @@ public partial class DareSignature : Dare {
 					true)} ,
 			{ "signature", new PropertyBinary ("signature", 
 					(IBinding data, byte[]? value) => {(data as DareSignature).SignatureValue = value;}, (IBinding data) => (data as DareSignature).SignatureValue )}
-        };
+        }, __Tag,() => new DareSignature(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -1033,17 +1033,17 @@ public partial class IntervalSignature : Dare {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new IntervalSignature(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Index", new PropertyInteger64 ("Index", 
 					(IBinding data, long? value) => {(data as IntervalSignature).Index = value;}, (IBinding data) => (data as IntervalSignature).Index )},
 			{ "Envelopes", new PropertyStruct ("Envelopes", 
 					(IBinding data, object? value) => {(data as IntervalSignature).Envelopes = value as SignedEnvelope;}, (IBinding data) => (data as IntervalSignature).Envelopes,
 					false, ()=>new  SignedEnvelope(), ()=>new SignedEnvelope())} 
-        };
+        }, __Tag,() => new IntervalSignature(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -1123,16 +1123,16 @@ public partial class SignedEnvelope : Dare {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new SignedEnvelope(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Index", new PropertyInteger64 ("Index", 
 					(IBinding data, long? value) => {(data as SignedEnvelope).Index = value;}, (IBinding data) => (data as SignedEnvelope).Index )},
 			{ "Digest", new PropertyListBinary ("Digest", 
 					(IBinding data, List<byte[]>? value) => {(data as SignedEnvelope).Digest = value;}, (IBinding data) => (data as SignedEnvelope).Digest )}
-        };
+        }, __Tag,() => new SignedEnvelope(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -1211,16 +1211,16 @@ public partial class X509Certificate : Dare {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new X509Certificate(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "x5u", new PropertyString ("x5u", 
 					(IBinding data, string? value) => {(data as X509Certificate).X5u = value;}, (IBinding data) => (data as X509Certificate).X5u )},
 			{ "x5c", new PropertyBinary ("x5c", 
 					(IBinding data, byte[]? value) => {(data as X509Certificate).X5 = value;}, (IBinding data) => (data as X509Certificate).X5 )}
-        };
+        }, __Tag,() => new X509Certificate(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -1320,10 +1320,7 @@ public partial class DareRecipient : Dare {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new DareRecipient(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "kid", new PropertyString ("kid", 
 					(IBinding data, string? value) => {(data as DareRecipient).KeyIdentifier = value;}, (IBinding data) => (data as DareRecipient).KeyIdentifier )},
@@ -1336,7 +1333,10 @@ public partial class DareRecipient : Dare {
 					(IBinding data, byte[]? value) => {(data as DareRecipient).Ek = value;}, (IBinding data) => (data as DareRecipient).Ek )},
 			{ "wmk", new PropertyBinary ("wmk", 
 					(IBinding data, byte[]? value) => {(data as DareRecipient).WrappedBaseSeed = value;}, (IBinding data) => (data as DareRecipient).WrappedBaseSeed )}
-        };
+        }, __Tag,() => new DareRecipient(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -1461,10 +1461,7 @@ public partial class DarePolicy : Dare {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new DarePolicy(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Public", new PropertyBoolean ("Public", 
 					(IBinding data, bool? value) => {(data as DarePolicy).Public = value;}, (IBinding data) => (data as DarePolicy).Public )},
@@ -1486,7 +1483,10 @@ public partial class DarePolicy : Dare {
 )} ,
 			{ "Sealed", new PropertyBoolean ("Sealed", 
 					(IBinding data, bool? value) => {(data as DarePolicy).Sealed = value;}, (IBinding data) => (data as DarePolicy).Sealed )}
-        };
+        }, __Tag,() => new DarePolicy(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -1583,10 +1583,7 @@ public partial class FileEntry : Dare {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new FileEntry(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Path", new PropertyString ("Path", 
 					(IBinding data, string? value) => {(data as FileEntry).Path = value;}, (IBinding data) => (data as FileEntry).Path )},
@@ -1598,7 +1595,10 @@ public partial class FileEntry : Dare {
 					(IBinding data, DateTime? value) => {(data as FileEntry).LastWriteTime = value;}, (IBinding data) => (data as FileEntry).LastWriteTime )},
 			{ "Attributes", new PropertyInteger32 ("Attributes", 
 					(IBinding data, int? value) => {(data as FileEntry).Attributes = value;}, (IBinding data) => (data as FileEntry).Attributes )}
-        };
+        }, __Tag,() => new FileEntry(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -1691,10 +1691,7 @@ public partial class Witness : Dare {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new Witness(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Id", new PropertyString ("Id", 
 					(IBinding data, string? value) => {(data as Witness).Id = value;}, (IBinding data) => (data as Witness).Id )},
@@ -1704,7 +1701,10 @@ public partial class Witness : Dare {
 					(IBinding data, byte[]? value) => {(data as Witness).Apex = value;}, (IBinding data) => (data as Witness).Apex )},
 			{ "Index", new PropertyInteger64 ("Index", 
 					(IBinding data, long? value) => {(data as Witness).Index = value;}, (IBinding data) => (data as Witness).Index )}
-        };
+        }, __Tag,() => new Witness(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -1797,10 +1797,7 @@ public partial class Proof : Dare {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new Proof(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "SignedWitness", new PropertyStruct ("SignedWitness", 
 					(IBinding data, object? value) => {(data as Proof).SignedWitness = value as DareEnvelope;}, (IBinding data) => (data as Proof).SignedWitness,
@@ -1811,7 +1808,10 @@ public partial class Proof : Dare {
 					(IBinding data, long? value) => {(data as Proof).Index = value;}, (IBinding data) => (data as Proof).Index )},
 			{ "Path", new PropertyListBinary ("Path", 
 					(IBinding data, List<byte[]>? value) => {(data as Proof).Path = value;}, (IBinding data) => (data as Proof).Path )}
-        };
+        }, __Tag,() => new Proof(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;

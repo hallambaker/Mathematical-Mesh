@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/17/2024 4:07:11 PM
+//  This file was automatically generated at 12/19/2024 4:50:18 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -144,10 +144,7 @@ abstract public partial class AccountEntry : CatalogedEntry {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,null, CatalogedEntry._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Directory", new PropertyString ("Directory", 
 					(IBinding data, string? value) => {(data as AccountEntry).Directory = value;}, (IBinding data) => (data as AccountEntry).Directory )},
@@ -159,7 +156,10 @@ abstract public partial class AccountEntry : CatalogedEntry {
 					(IBinding data, string? value) => {(data as AccountEntry).Status = value;}, (IBinding data) => (data as AccountEntry).Status )},
 			{ "LocalAddress", new PropertyString ("LocalAddress", 
 					(IBinding data, string? value) => {(data as AccountEntry).LocalAddress = value;}, (IBinding data) => (data as AccountEntry).LocalAddress )}
-        };
+        }, __Tag,null, CatalogedEntry._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -239,10 +239,7 @@ public partial class AccountUser : AccountEntry {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new AccountUser(), AccountEntry._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "EnvelopedProfileUser", new PropertyStruct ("EnvelopedProfileUser", 
 					(IBinding data, object? value) => {(data as AccountUser).EnvelopedProfileUser = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as AccountUser).EnvelopedProfileUser,
@@ -250,7 +247,10 @@ public partial class AccountUser : AccountEntry {
 			{ "EnvelopedAccountHostAssignment", new PropertyStruct ("EnvelopedAccountHostAssignment", 
 					(IBinding data, object? value) => {(data as AccountUser).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, (IBinding data) => (data as AccountUser).EnvelopedAccountHostAssignment,
 					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())} 
-        };
+        }, __Tag,() => new AccountUser(), AccountEntry._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =

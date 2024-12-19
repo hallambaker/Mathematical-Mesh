@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/14/2024 5:27:23 PM
+//  This file was automatically generated at 12/19/2024 4:50:17 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -213,12 +213,12 @@ public partial class ProfileCarnet : ProfileService {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ProfileCarnet(), ProfileService._binding);
+			new() {
+
+        }, __Tag,() => new ProfileCarnet(), ProfileService._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -309,10 +309,7 @@ public partial class CatalogedCarnet : CatalogedEntry {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new CatalogedCarnet(), CatalogedEntry._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Key", new PropertyString ("Key", 
 					(IBinding data, string? value) => {(data as CatalogedCarnet).Key = value;}, (IBinding data) => (data as CatalogedCarnet).Key )},
@@ -325,7 +322,10 @@ public partial class CatalogedCarnet : CatalogedEntry {
 			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", 
 					(IBinding data, object? value) => {(data as CatalogedCarnet).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, (IBinding data) => (data as CatalogedCarnet).EnvelopedActivationCommon,
 					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())} 
-        };
+        }, __Tag,() => new CatalogedCarnet(), CatalogedEntry._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -395,12 +395,12 @@ public partial class CarnetRequest : Goedel.Protocol.Request {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new CarnetRequest(), Goedel.Protocol.Request._binding);
+			new() {
+
+        }, __Tag,() => new CarnetRequest(), Goedel.Protocol.Request._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -471,12 +471,12 @@ public partial class CarnetResponse : Goedel.Protocol.Response {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new CarnetResponse(), Goedel.Protocol.Response._binding);
+			new() {
+
+        }, __Tag,() => new CarnetResponse(), Goedel.Protocol.Response._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =

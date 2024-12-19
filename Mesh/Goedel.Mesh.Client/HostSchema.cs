@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/17/2024 4:07:08 PM
+//  This file was automatically generated at 12/19/2024 4:50:16 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -162,10 +162,7 @@ public partial class CatalogedMachine : HostCatalogItem {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new CatalogedMachine(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Id", new PropertyString ("Id", 
 					(IBinding data, string? value) => {(data as CatalogedMachine).Id = value;}, (IBinding data) => (data as CatalogedMachine).Id )},
@@ -184,7 +181,10 @@ public partial class CatalogedMachine : HostCatalogItem {
 			{ "EnvelopedAccountHostAssignment", new PropertyStruct ("EnvelopedAccountHostAssignment", 
 					(IBinding data, object? value) => {(data as CatalogedMachine).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, (IBinding data) => (data as CatalogedMachine).EnvelopedAccountHostAssignment,
 					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())} 
-        };
+        }, __Tag,() => new CatalogedMachine(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -289,10 +289,7 @@ public partial class CatalogedService : CatalogedMachine {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new CatalogedService(), CatalogedMachine._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "EnvelopedProfileService", new PropertyStruct ("EnvelopedProfileService", 
 					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedProfileService = value as Enveloped<ProfileService>;}, (IBinding data) => (data as CatalogedService).EnvelopedProfileService,
@@ -311,7 +308,10 @@ public partial class CatalogedService : CatalogedMachine {
 					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())} ,
 			{ "ServiceIdentifier", new PropertyString ("ServiceIdentifier", 
 					(IBinding data, string? value) => {(data as CatalogedService).ServiceIdentifier = value;}, (IBinding data) => (data as CatalogedService).ServiceIdentifier )}
-        };
+        }, __Tag,() => new CatalogedService(), CatalogedMachine._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -381,12 +381,12 @@ public partial class CatalogedStandard : CatalogedMachine {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new CatalogedStandard(), CatalogedMachine._binding);
+			new() {
+
+        }, __Tag,() => new CatalogedStandard(), CatalogedMachine._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -481,10 +481,7 @@ public partial class CatalogedPending : CatalogedMachine {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new CatalogedPending(), CatalogedMachine._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "DeviceUDF", new PropertyString ("DeviceUDF", 
 					(IBinding data, string? value) => {(data as CatalogedPending).DeviceUDF = value;}, (IBinding data) => (data as CatalogedPending).DeviceUDF )},
@@ -496,7 +493,10 @@ public partial class CatalogedPending : CatalogedMachine {
 					false, ()=>new  Enveloped<AcknowledgeConnection>(), ()=>new Enveloped<AcknowledgeConnection>())} ,
 			{ "AccountAddress", new PropertyString ("AccountAddress", 
 					(IBinding data, string? value) => {(data as CatalogedPending).AccountAddress = value;}, (IBinding data) => (data as CatalogedPending).AccountAddress )}
-        };
+        }, __Tag,() => new CatalogedPending(), CatalogedMachine._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -609,10 +609,7 @@ public partial class CatalogedPreconfigured : CatalogedMachine {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new CatalogedPreconfigured(), CatalogedMachine._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "EnvelopedProfileDevice", new PropertyStruct ("EnvelopedProfileDevice", 
 					(IBinding data, object? value) => {(data as CatalogedPreconfigured).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;}, (IBinding data) => (data as CatalogedPreconfigured).EnvelopedProfileDevice,
@@ -631,7 +628,10 @@ public partial class CatalogedPreconfigured : CatalogedMachine {
 					(IBinding data, string? value) => {(data as CatalogedPreconfigured).ServiceAuthenticator = value;}, (IBinding data) => (data as CatalogedPreconfigured).ServiceAuthenticator )},
 			{ "DeviceAuthenticator", new PropertyString ("DeviceAuthenticator", 
 					(IBinding data, string? value) => {(data as CatalogedPreconfigured).DeviceAuthenticator = value;}, (IBinding data) => (data as CatalogedPreconfigured).DeviceAuthenticator )}
-        };
+        }, __Tag,() => new CatalogedPreconfigured(), CatalogedMachine._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -716,10 +716,7 @@ public partial class ShellDispatch : HostCatalogItem {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ShellDispatch(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Protocol", new PropertyString ("Protocol", 
 					(IBinding data, string? value) => {(data as ShellDispatch).Protocol = value;}, (IBinding data) => (data as ShellDispatch).Protocol )},
@@ -728,7 +725,10 @@ public partial class ShellDispatch : HostCatalogItem {
 			{ "Actions", new PropertyListStruct ("Actions", 
 					(IBinding data, object? value) => {(data as ShellDispatch).Actions = value as List<ShellAction>;}, (IBinding data) => (data as ShellDispatch).Actions,
 					false, ()=>new  List<ShellAction>(), ()=>new ShellAction())} 
-        };
+        }, __Tag,() => new ShellDispatch(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -819,10 +819,7 @@ public partial class ShellAction : HostCatalogItem {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ShellAction(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Id", new PropertyString ("Id", 
 					(IBinding data, string? value) => {(data as ShellAction).Id = value;}, (IBinding data) => (data as ShellAction).Id )},
@@ -832,7 +829,10 @@ public partial class ShellAction : HostCatalogItem {
 					(IBinding data, string? value) => {(data as ShellAction).Mode = value;}, (IBinding data) => (data as ShellAction).Mode )},
 			{ "Parameter", new PropertyString ("Parameter", 
 					(IBinding data, string? value) => {(data as ShellAction).Parameter = value;}, (IBinding data) => (data as ShellAction).Parameter )}
-        };
+        }, __Tag,() => new ShellAction(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;

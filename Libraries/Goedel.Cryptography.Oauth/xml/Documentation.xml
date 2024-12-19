@@ -12,7 +12,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata.applicationType">
+        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata.ApplicationType">
             <summary>
             </summary>
         </member>
@@ -325,6 +325,33 @@
             Support classes for OAuth, OpenID etc.
             </summary>
         </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthClient.ConstructPar(Goedel.Cryptography.Oauth.OauthHandleResolution,System.String)">
+            <summary>
+            Construct a Pushed Authorization Request as per RFC 9126
+            </summary>
+            <param name="handle"></param>
+            <param name="state"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthClient.GetCodeVerifier(Goedel.Cryptography.Oauth.EncodedState)">
+            <summary>
+            Return a code verifier using the S256 mechanism bound to the state
+            <paramref name="state"/>.
+            <para>
+            code_challenge = BASE64URL-ENCODE(SHA256(ASCII(code_verifier)))
+            </para>
+            </summary>
+            <param name="state">The state variable including nonce.</param>
+            <returns>Base64URL encoded verifier string.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthClient.GetCodeChallenge(Goedel.Cryptography.Oauth.EncodedState)">
+            <summary>
+            Return a code verifier using the S256 mechanism bound to the state
+            <paramref name="state"/>.
+            </summary>
+            <param name="state">The state variable including nonce.</param>
+            <returns>Base64URL encoded challenge string.</returns>
+        </member>
         <member name="T:Goedel.Cryptography.Oauth.ApplicationType">
             <summary>Application Types</summary>
         </member>
@@ -344,10 +371,10 @@
             <summary>Undefined type</summary>
         </member>
         <member name="F:Goedel.Cryptography.Oauth.GrantTypes.AuthorizationCode">
-            <summary>authorization_code </summary>
+            <summary>authorization_code</summary>
         </member>
         <member name="F:Goedel.Cryptography.Oauth.GrantTypes.RefreshToken">
-            <summary>refresh_token </summary>
+            <summary>refresh_token</summary>
         </member>
         <member name="T:Goedel.Cryptography.Oauth.ScopeTypes">
             <summary>Scope types</summary>
@@ -391,6 +418,15 @@
         <member name="F:Goedel.Cryptography.Oauth.EndpointSignature.ES256">
             <summary>ES256</summary>
         </member>
+        <member name="T:Goedel.Cryptography.Oauth.AssertionTypes">
+            <summary>Assertion Types</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AssertionTypes.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AssertionTypes.Bearer">
+            <summary>urn:ietf:params:oauth:client-assertion-type:jwt-bearer</summary>
+        </member>
         <member name="T:Goedel.Cryptography.Oauth.OauthConstants">
             <summary>
             </summary>
@@ -398,8 +434,14 @@
         <member name="F:Goedel.Cryptography.Oauth.OauthConstants.ApplicationTypeWebTag">
             <summary>Jose enumeration tag for ApplicationType.Web</summary>
         </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthConstants.ApplicationTypeWebTitle">
+            <summary>Description for ApplicationType.Web</summary>
+        </member>
         <member name="F:Goedel.Cryptography.Oauth.OauthConstants.ApplicationTypeNativeTag">
             <summary>Jose enumeration tag for ApplicationType.Native</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthConstants.ApplicationTypeNativeTitle">
+            <summary>Description for ApplicationType.Native</summary>
         </member>
         <member name="M:Goedel.Cryptography.Oauth.OauthConstants.ToApplicationType(System.String)">
             <summary>
@@ -420,8 +462,14 @@
         <member name="F:Goedel.Cryptography.Oauth.OauthConstants.GrantTypesAuthorizationCodeTag">
             <summary>Jose enumeration tag for GrantTypes.AuthorizationCode</summary>
         </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthConstants.GrantTypesAuthorizationCodeTitle">
+            <summary>Description for GrantTypes.AuthorizationCode</summary>
+        </member>
         <member name="F:Goedel.Cryptography.Oauth.OauthConstants.GrantTypesRefreshTokenTag">
             <summary>Jose enumeration tag for GrantTypes.RefreshToken</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthConstants.GrantTypesRefreshTokenTitle">
+            <summary>Description for GrantTypes.RefreshToken</summary>
         </member>
         <member name="M:Goedel.Cryptography.Oauth.OauthConstants.ToGrantTypes(System.String)">
             <summary>
@@ -476,6 +524,9 @@
         <member name="F:Goedel.Cryptography.Oauth.OauthConstants.ResponseTypeCodeTag">
             <summary>Jose enumeration tag for ResponseType.Code</summary>
         </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthConstants.ResponseTypeCodeTitle">
+            <summary>Description for ResponseType.Code</summary>
+        </member>
         <member name="M:Goedel.Cryptography.Oauth.OauthConstants.ToResponseType(System.String)">
             <summary>
             Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -494,6 +545,9 @@
         </member>
         <member name="F:Goedel.Cryptography.Oauth.OauthConstants.AuthenticationMethodJWTTag">
             <summary>Jose enumeration tag for AuthenticationMethod.JWT</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthConstants.AuthenticationMethodJWTTitle">
+            <summary>Description for AuthenticationMethod.JWT</summary>
         </member>
         <member name="M:Goedel.Cryptography.Oauth.OauthConstants.ToAuthenticationMethod(System.String)">
             <summary>
@@ -514,6 +568,9 @@
         <member name="F:Goedel.Cryptography.Oauth.OauthConstants.EndpointSignatureES256Tag">
             <summary>Jose enumeration tag for EndpointSignature.ES256</summary>
         </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthConstants.EndpointSignatureES256Title">
+            <summary>Description for EndpointSignature.ES256</summary>
+        </member>
         <member name="M:Goedel.Cryptography.Oauth.OauthConstants.ToEndpointSignature(System.String)">
             <summary>
             Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -523,6 +580,28 @@
             <returns>The enumeration value.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Oauth.OauthConstants.ToLabel(Goedel.Cryptography.Oauth.EndpointSignature)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthConstants.AssertionTypesBearerTag">
+            <summary>Jose enumeration tag for AssertionTypes.Bearer</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthConstants.AssertionTypesBearerTitle">
+            <summary>Description for AssertionTypes.Bearer</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthConstants.ToAssertionTypes(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthConstants.ToLabel(Goedel.Cryptography.Oauth.AssertionTypes)">
             <summary>
             Convert the enumerated value <paramref name="data"/> to the corresponding string
             value.
@@ -881,6 +960,132 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Cryptography.Oauth.AuthorizationRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.AuthorizationRequest2">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest2.ClientId">
+             <summary>
+            Identifies the client software
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest2.RequestUri">
+             <summary>
+            The RequestUri returned by the server
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest2._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationRequest2._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationRequest2._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationRequest2._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest2._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest2._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest2._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest2._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationRequest2.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.AuthorizationRequest2._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.AuthorizationRequest2.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.PushedAuthorizationResponse">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.PushedAuthorizationResponse.ExpiresIn">
+             <summary>
+            A JSON number that represents the lifetime of the request URI in seconds as a
+            positive integer. The request URI lifetime is at the discretion of the 
+            authorization server but will typically be relatively short (e.g., between 
+            5 and 600 seconds).
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.PushedAuthorizationResponse.RequestUri">
+             <summary>
+            REQUIRED The request URI corresponding to the authorization request posted. 
+            This URI is a single-use reference to the respective request data in the 
+            subsequent authorization request. The way the authorization process obtains 
+            the authorization request data is at the discretion of the authorization 
+            server and is out of scope of this specification. There is no need to make 
+            the authorization request data available to other parties via this URI.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.PushedAuthorizationResponse._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.PushedAuthorizationResponse._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.PushedAuthorizationResponse._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.PushedAuthorizationResponse._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.PushedAuthorizationResponse._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.PushedAuthorizationResponse._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.PushedAuthorizationResponse._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.PushedAuthorizationResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.PushedAuthorizationResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.PushedAuthorizationResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.PushedAuthorizationResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>

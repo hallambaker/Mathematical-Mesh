@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/14/2024 5:27:24 PM
+//  This file was automatically generated at 12/19/2024 4:18:41 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -161,12 +161,12 @@ public partial class Result : ShellResult {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new Result(), ShellResult._binding);
+			new() {
+
+        }, __Tag,() => new Result(), ShellResult._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -274,10 +274,7 @@ public partial class ResultAbout : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultAbout(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "DirectoryKeys", new PropertyString ("DirectoryKeys", 
 					(IBinding data, string? value) => {(data as ResultAbout).DirectoryKeys = value;}, (IBinding data) => (data as ResultAbout).DirectoryKeys )},
@@ -295,7 +292,10 @@ public partial class ResultAbout : Result {
 					(IBinding data, string? value) => {(data as ResultAbout).AssemblyVersion = value;}, (IBinding data) => (data as ResultAbout).AssemblyVersion )},
 			{ "Build", new PropertyString ("Build", 
 					(IBinding data, string? value) => {(data as ResultAbout).Build = value;}, (IBinding data) => (data as ResultAbout).Build )}
-        };
+        }, __Tag,() => new ResultAbout(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -363,12 +363,12 @@ public partial class ResultFail : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultFail(), Result._binding);
+			new() {
+
+        }, __Tag,() => new ResultFail(), Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -450,10 +450,7 @@ public partial class ResultKey : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultKey(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Key", new PropertyString ("Key", 
 					(IBinding data, string? value) => {(data as ResultKey).Key = value;}, (IBinding data) => (data as ResultKey).Key )},
@@ -461,7 +458,10 @@ public partial class ResultKey : Result {
 					(IBinding data, string? value) => {(data as ResultKey).Identifier = value;}, (IBinding data) => (data as ResultKey).Identifier )},
 			{ "Shares", new PropertyListString ("Shares", 
 					(IBinding data, List<string>? value) => {(data as ResultKey).Shares = value;}, (IBinding data) => (data as ResultKey).Shares )}
-        };
+        }, __Tag,() => new ResultKey(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -544,10 +544,7 @@ public partial class ResultDigest : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultDigest(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Digest", new PropertyString ("Digest", 
 					(IBinding data, string? value) => {(data as ResultDigest).Digest = value;}, (IBinding data) => (data as ResultDigest).Digest )},
@@ -555,7 +552,10 @@ public partial class ResultDigest : Result {
 					(IBinding data, string? value) => {(data as ResultDigest).Key = value;}, (IBinding data) => (data as ResultDigest).Key )},
 			{ "Verified", new PropertyBoolean ("Verified", 
 					(IBinding data, bool? value) => {(data as ResultDigest).Verified = value;}, (IBinding data) => (data as ResultDigest).Verified )}
-        };
+        }, __Tag,() => new ResultDigest(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -638,10 +638,7 @@ public partial class ResultFile : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultFile(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Filename", new PropertyString ("Filename", 
 					(IBinding data, string? value) => {(data as ResultFile).Filename = value;}, (IBinding data) => (data as ResultFile).Filename )},
@@ -649,7 +646,10 @@ public partial class ResultFile : Result {
 					(IBinding data, int? value) => {(data as ResultFile).TotalBytes = value;}, (IBinding data) => (data as ResultFile).TotalBytes )},
 			{ "Verified", new PropertyBoolean ("Verified", 
 					(IBinding data, bool? value) => {(data as ResultFile).Verified = value;}, (IBinding data) => (data as ResultFile).Verified )}
-        };
+        }, __Tag,() => new ResultFile(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -737,10 +737,7 @@ public partial class ResultKeyFile : ResultFile {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultKeyFile(), ResultFile._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Udf", new PropertyString ("Udf", 
 					(IBinding data, string? value) => {(data as ResultKeyFile).Udf = value;}, (IBinding data) => (data as ResultKeyFile).Udf )},
@@ -750,7 +747,10 @@ public partial class ResultKeyFile : ResultFile {
 					(IBinding data, string? value) => {(data as ResultKeyFile).Algorithm = value;}, (IBinding data) => (data as ResultKeyFile).Algorithm )},
 			{ "Format", new PropertyString ("Format", 
 					(IBinding data, string? value) => {(data as ResultKeyFile).Format = value;}, (IBinding data) => (data as ResultKeyFile).Format )}
-        };
+        }, __Tag,() => new ResultKeyFile(), ResultFile._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -828,16 +828,16 @@ public partial class ResultListLog : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultListLog(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Filename", new PropertyString ("Filename", 
 					(IBinding data, string? value) => {(data as ResultListLog).Filename = value;}, (IBinding data) => (data as ResultListLog).Filename )},
 			{ "Count", new PropertyInteger32 ("Count", 
 					(IBinding data, int? value) => {(data as ResultListLog).Count = value;}, (IBinding data) => (data as ResultListLog).Count )}
-        };
+        }, __Tag,() => new ResultListLog(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -910,14 +910,14 @@ public partial class ResultLog : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultLog(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Count", new PropertyInteger32 ("Count", 
 					(IBinding data, int? value) => {(data as ResultLog).Count = value;}, (IBinding data) => (data as ResultLog).Count )}
-        };
+        }, __Tag,() => new ResultLog(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -1004,10 +1004,7 @@ public partial class ResultArchive : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultArchive(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Entries", new PropertyListStruct ("Entries", 
 					(IBinding data, object? value) => {(data as ResultArchive).Entries = value as List<FileEntry>;}, (IBinding data) => (data as ResultArchive).Entries,
@@ -1018,7 +1015,10 @@ public partial class ResultArchive : Result {
 					(IBinding data, int? value) => {(data as ResultArchive).Deleted = value;}, (IBinding data) => (data as ResultArchive).Deleted )},
 			{ "IndexFrame", new PropertyInteger32 ("IndexFrame", 
 					(IBinding data, int? value) => {(data as ResultArchive).IndexFrame = value;}, (IBinding data) => (data as ResultArchive).IndexFrame )}
-        };
+        }, __Tag,() => new ResultArchive(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -1091,15 +1091,15 @@ public partial class ResultFileDare : ResultFile {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultFileDare(), ResultFile._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Envelope", new PropertyStruct ("Envelope", 
 					(IBinding data, object? value) => {(data as ResultFileDare).Envelope = value as DareEnvelope;}, (IBinding data) => (data as ResultFileDare).Envelope,
 					false, ()=>new  DareEnvelope(), ()=>new DareEnvelope())} 
-        };
+        }, __Tag,() => new ResultFileDare(), ResultFile._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -1182,10 +1182,7 @@ public partial class ResultFileEARL : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultFileEARL(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Source", new PropertyString ("Source", 
 					(IBinding data, string? value) => {(data as ResultFileEARL).Source = value;}, (IBinding data) => (data as ResultFileEARL).Source )},
@@ -1193,7 +1190,10 @@ public partial class ResultFileEARL : Result {
 					(IBinding data, string? value) => {(data as ResultFileEARL).Created = value;}, (IBinding data) => (data as ResultFileEARL).Created )},
 			{ "URI", new PropertyString ("URI", 
 					(IBinding data, string? value) => {(data as ResultFileEARL).URI = value;}, (IBinding data) => (data as ResultFileEARL).URI )}
-        };
+        }, __Tag,() => new ResultFileEARL(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -1265,16 +1265,16 @@ public partial class ResultDump : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultDump(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "CatalogedEntries", new PropertyListStruct ("CatalogedEntries", 
 					(IBinding data, object? value) => {(data as ResultDump).CatalogedEntries = value as List<CatalogedEntry>;}, (IBinding data) => (data as ResultDump).CatalogedEntries,
 					true, ()=>new List<CatalogedEntry>()
 )} 
-        };
+        }, __Tag,() => new ResultDump(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -1350,10 +1350,7 @@ public partial class ResultList : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultList(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "CatalogedDevices", new PropertyListStruct ("CatalogedDevices", 
 					(IBinding data, object? value) => {(data as ResultList).CatalogedDevices = value as List<CatalogedDevice>;}, (IBinding data) => (data as ResultList).CatalogedDevices,
@@ -1362,7 +1359,10 @@ public partial class ResultList : Result {
 					(IBinding data, object? value) => {(data as ResultList).Profiles = value as List<Assertion>;}, (IBinding data) => (data as ResultList).Profiles,
 					true, ()=>new List<Assertion>()
 )} 
-        };
+        }, __Tag,() => new ResultList(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -1435,15 +1435,15 @@ public partial class ResultAccountConnect : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultAccountConnect(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "ProfileDevice", new PropertyStruct ("ProfileDevice", 
 					(IBinding data, object? value) => {(data as ResultAccountConnect).ProfileDevice = value as ProfileDevice;}, (IBinding data) => (data as ResultAccountConnect).ProfileDevice,
 					false, ()=>new  ProfileDevice(), ()=>new ProfileDevice())} 
-        };
+        }, __Tag,() => new ResultAccountConnect(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -1516,14 +1516,14 @@ public partial class ResultPublish : ResultCreateDevice {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultPublish(), ResultCreateDevice._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Uri", new PropertyString ("Uri", 
 					(IBinding data, string? value) => {(data as ResultPublish).Uri = value;}, (IBinding data) => (data as ResultPublish).Uri )}
-        };
+        }, __Tag,() => new ResultPublish(), ResultCreateDevice._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -1611,10 +1611,7 @@ public partial class ResultPublishDevice : ResultCreateDevice {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultPublishDevice(), ResultCreateDevice._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Uri", new PropertyString ("Uri", 
 					(IBinding data, string? value) => {(data as ResultPublishDevice).Uri = value;}, (IBinding data) => (data as ResultPublishDevice).Uri )},
@@ -1626,7 +1623,10 @@ public partial class ResultPublishDevice : ResultCreateDevice {
 			{ "DevicePreconfigurationPrivate", new PropertyStruct ("DevicePreconfigurationPrivate", 
 					(IBinding data, object? value) => {(data as ResultPublishDevice).DevicePreconfigurationPrivate = value as DevicePreconfigurationPrivate;}, (IBinding data) => (data as ResultPublishDevice).DevicePreconfigurationPrivate,
 					false, ()=>new  DevicePreconfigurationPrivate(), ()=>new DevicePreconfigurationPrivate())} 
-        };
+        }, __Tag,() => new ResultPublishDevice(), ResultCreateDevice._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -1709,10 +1709,7 @@ public partial class ResultCreateDevice : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultCreateDevice(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Default", new PropertyBoolean ("Default", 
 					(IBinding data, bool? value) => {(data as ResultCreateDevice).Default = value;}, (IBinding data) => (data as ResultCreateDevice).Default )},
@@ -1721,7 +1718,10 @@ public partial class ResultCreateDevice : Result {
 			{ "CatalogedDevice", new PropertyStruct ("CatalogedDevice", 
 					(IBinding data, object? value) => {(data as ResultCreateDevice).CatalogedDevice = value as CatalogedDevice;}, (IBinding data) => (data as ResultCreateDevice).CatalogedDevice,
 					false, ()=>new  CatalogedDevice(), ()=>new CatalogedDevice())} 
-        };
+        }, __Tag,() => new ResultCreateDevice(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -1794,14 +1794,14 @@ public partial class ResultCreatePersonal : ResultCreateAccount {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultCreatePersonal(), ResultCreateAccount._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "MeshUDF", new PropertyString ("MeshUDF", 
 					(IBinding data, string? value) => {(data as ResultCreatePersonal).MeshUDF = value;}, (IBinding data) => (data as ResultCreatePersonal).MeshUDF )}
-        };
+        }, __Tag,() => new ResultCreatePersonal(), ResultCreateAccount._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -1879,10 +1879,7 @@ public partial class ResultCreateAccount : ResultCreateDevice {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultCreateAccount(), ResultCreateDevice._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "ProfileAccount", new PropertyStruct ("ProfileAccount", 
 					(IBinding data, object? value) => {(data as ResultCreateAccount).ProfileAccount = value as ProfileAccount;}, (IBinding data) => (data as ResultCreateAccount).ProfileAccount,
@@ -1890,7 +1887,10 @@ public partial class ResultCreateAccount : ResultCreateDevice {
 			{ "ActivationAccount", new PropertyStruct ("ActivationAccount", 
 					(IBinding data, object? value) => {(data as ResultCreateAccount).ActivationAccount = value as ActivationAccount;}, (IBinding data) => (data as ResultCreateAccount).ActivationAccount,
 					false, ()=>new  ActivationAccount(), ()=>new ActivationAccount())} 
-        };
+        }, __Tag,() => new ResultCreateAccount(), ResultCreateDevice._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -1963,14 +1963,14 @@ public partial class ResultDeleteAccount : ResultCreateDevice {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultDeleteAccount(), ResultCreateDevice._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "UDF", new PropertyString ("UDF", 
 					(IBinding data, string? value) => {(data as ResultDeleteAccount).UDF = value;}, (IBinding data) => (data as ResultDeleteAccount).UDF )}
-        };
+        }, __Tag,() => new ResultDeleteAccount(), ResultCreateDevice._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -2043,14 +2043,14 @@ public partial class ResultRegisterService : ResultCreateAccount {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultRegisterService(), ResultCreateAccount._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "AccountAddress", new PropertyString ("AccountAddress", 
 					(IBinding data, string? value) => {(data as ResultRegisterService).AccountAddress = value;}, (IBinding data) => (data as ResultRegisterService).AccountAddress )}
-        };
+        }, __Tag,() => new ResultRegisterService(), ResultCreateAccount._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -2118,12 +2118,12 @@ public partial class ResultRecover : ResultCreatePersonal {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultRecover(), ResultCreatePersonal._binding);
+			new() {
+
+        }, __Tag,() => new ResultRecover(), ResultCreatePersonal._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -2196,15 +2196,15 @@ public partial class ResultStatus : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultStatus(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "StatusResponse", new PropertyStruct ("StatusResponse", 
 					(IBinding data, object? value) => {(data as ResultStatus).StatusResponse = value as StatusResponse;}, (IBinding data) => (data as ResultStatus).StatusResponse,
 					false, ()=>new  StatusResponse(), ()=>new StatusResponse())} 
-        };
+        }, __Tag,() => new ResultStatus(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -2286,10 +2286,7 @@ public partial class ResultSync : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultSync(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Fetched", new PropertyInteger64 ("Fetched", 
 					(IBinding data, long? value) => {(data as ResultSync).Fetched = value;}, (IBinding data) => (data as ResultSync).Fetched )},
@@ -2299,7 +2296,10 @@ public partial class ResultSync : Result {
 					(IBinding data, object? value) => {(data as ResultSync).ProcessResults = value as List<ProcessResult>;}, (IBinding data) => (data as ResultSync).ProcessResults,
 					true, ()=>new List<ProcessResult>()
 )} 
-        };
+        }, __Tag,() => new ResultSync(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -2376,16 +2376,16 @@ public partial class ResultEscrow : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultEscrow(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Service", new PropertyString ("Service", 
 					(IBinding data, string? value) => {(data as ResultEscrow).Service = value;}, (IBinding data) => (data as ResultEscrow).Service )},
 			{ "Shares", new PropertyListString ("Shares", 
 					(IBinding data, List<string>? value) => {(data as ResultEscrow).Shares = value;}, (IBinding data) => (data as ResultEscrow).Shares )}
-        };
+        }, __Tag,() => new ResultEscrow(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -2457,15 +2457,15 @@ public partial class ResultMachine : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultMachine(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "CatalogedMachines", new PropertyListStruct ("CatalogedMachines", 
 					(IBinding data, object? value) => {(data as ResultMachine).CatalogedMachines = value as List<CatalogedMachine>;}, (IBinding data) => (data as ResultMachine).CatalogedMachines,
 					false, ()=>new  List<CatalogedMachine>(), ()=>new CatalogedMachine())} 
-        };
+        }, __Tag,() => new ResultMachine(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -2543,17 +2543,17 @@ public partial class ResultPIN : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultPIN(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "MessagePIN", new PropertyStruct ("MessagePIN", 
 					(IBinding data, object? value) => {(data as ResultPIN).MessagePIN = value as MessagePin;}, (IBinding data) => (data as ResultPIN).MessagePIN,
 					false, ()=>new  MessagePin(), ()=>new MessagePin())} ,
 			{ "Uri", new PropertyString ("Uri", 
 					(IBinding data, string? value) => {(data as ResultPIN).Uri = value;}, (IBinding data) => (data as ResultPIN).Uri )}
-        };
+        }, __Tag,() => new ResultPIN(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -2626,15 +2626,15 @@ public partial class ResultHello : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultHello(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Response", new PropertyStruct ("Response", 
 					(IBinding data, object? value) => {(data as ResultHello).Response = value as MeshHelloResponse;}, (IBinding data) => (data as ResultHello).Response,
 					false, ()=>new  MeshHelloResponse(), ()=>new MeshHelloResponse())} 
-        };
+        }, __Tag,() => new ResultHello(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -2707,15 +2707,15 @@ public partial class ResultSequence : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultSequence(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Entries", new PropertyStruct ("Entries", 
 					(IBinding data, object? value) => {(data as ResultSequence).Entries = value as LogEntry;}, (IBinding data) => (data as ResultSequence).Entries,
 					false, ()=>new  LogEntry(), ()=>new LogEntry())} 
-        };
+        }, __Tag,() => new ResultSequence(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -2818,10 +2818,7 @@ public partial class LogEntry : MeshmanShellResult {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new LogEntry(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Key", new PropertyString ("Key", 
 					(IBinding data, string? value) => {(data as LogEntry).Key = value;}, (IBinding data) => (data as LogEntry).Key )},
@@ -2837,7 +2834,10 @@ public partial class LogEntry : MeshmanShellResult {
 					(IBinding data, bool? value) => {(data as LogEntry).Signed = value;}, (IBinding data) => (data as LogEntry).Signed )},
 			{ "KeyExchange", new PropertyBoolean ("KeyExchange", 
 					(IBinding data, bool? value) => {(data as LogEntry).KeyExchange = value;}, (IBinding data) => (data as LogEntry).KeyExchange )}
-        };
+        }, __Tag,() => new LogEntry(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
@@ -2909,15 +2909,15 @@ public partial class ResultEntry : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultEntry(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "CatalogEntry", new PropertyStruct ("CatalogEntry", 
 					(IBinding data, object? value) => {(data as ResultEntry).CatalogEntry = value as CatalogedEntry;}, (IBinding data) => (data as ResultEntry).CatalogEntry,
 					true)} 
-        };
+        }, __Tag,() => new ResultEntry(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -2995,10 +2995,7 @@ public partial class ResultEntrySent : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultEntrySent(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "CatalogEntry", new PropertyStruct ("CatalogEntry", 
 					(IBinding data, object? value) => {(data as ResultEntrySent).CatalogEntry = value as CatalogedEntry;}, (IBinding data) => (data as ResultEntrySent).CatalogEntry,
@@ -3006,7 +3003,10 @@ public partial class ResultEntrySent : Result {
 			{ "Message", new PropertyStruct ("Message", 
 					(IBinding data, object? value) => {(data as ResultEntrySent).Message = value as Message;}, (IBinding data) => (data as ResultEntrySent).Message,
 					false, ()=>new  Message(), ()=>new Message())} 
-        };
+        }, __Tag,() => new ResultEntrySent(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -3074,12 +3074,12 @@ public partial class ResultMail : ResultEntry {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultMail(), ResultEntry._binding);
+			new() {
+
+        }, __Tag,() => new ResultMail(), ResultEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -3147,12 +3147,12 @@ public partial class ResultSSH : ResultEntry {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultSSH(), ResultEntry._binding);
+			new() {
+
+        }, __Tag,() => new ResultSSH(), ResultEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -3220,12 +3220,12 @@ public partial class ResultGroupCreate : ResultEntry {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultGroupCreate(), ResultEntry._binding);
+			new() {
+
+        }, __Tag,() => new ResultGroupCreate(), ResultEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -3303,17 +3303,17 @@ public partial class ResultSent : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultSent(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Message", new PropertyStruct ("Message", 
 					(IBinding data, object? value) => {(data as ResultSent).Message = value as Message;}, (IBinding data) => (data as ResultSent).Message,
 					false, ()=>new  Message(), ()=>new Message())} ,
 			{ "Status", new PropertyString ("Status", 
 					(IBinding data, string? value) => {(data as ResultSent).Status = value;}, (IBinding data) => (data as ResultSent).Status )}
-        };
+        }, __Tag,() => new ResultSent(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -3385,15 +3385,15 @@ public partial class ResultPending : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultPending(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Messages", new PropertyListStruct ("Messages", 
 					(IBinding data, object? value) => {(data as ResultPending).Messages = value as List<Message>;}, (IBinding data) => (data as ResultPending).Messages,
 					false, ()=>new  List<Message>(), ()=>new Message())} 
-        };
+        }, __Tag,() => new ResultPending(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -3465,16 +3465,16 @@ public partial class ResultAuthorize : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultAuthorize(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Messages", new PropertyListStruct ("Messages", 
 					(IBinding data, object? value) => {(data as ResultAuthorize).Messages = value as List<ProcessResult>;}, (IBinding data) => (data as ResultAuthorize).Messages,
 					true, ()=>new List<ProcessResult>()
 )} 
-        };
+        }, __Tag,() => new ResultAuthorize(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -3547,15 +3547,15 @@ public partial class ResultProcess : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultProcess(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "ProcessResult", new PropertyStruct ("ProcessResult", 
 					(IBinding data, object? value) => {(data as ResultProcess).ProcessResult = value as Message;}, (IBinding data) => (data as ResultProcess).ProcessResult,
 					false, ()=>new  Message(), ()=>new Message())} 
-        };
+        }, __Tag,() => new ResultProcess(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -3658,10 +3658,7 @@ public partial class ResultConnect : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultConnect(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Profile", new PropertyStruct ("Profile", 
 					(IBinding data, object? value) => {(data as ResultConnect).Profile = value as Profile;}, (IBinding data) => (data as ResultConnect).Profile,
@@ -3684,7 +3681,10 @@ public partial class ResultConnect : Result {
 			{ "RespondConnection", new PropertyStruct ("RespondConnection", 
 					(IBinding data, object? value) => {(data as ResultConnect).RespondConnection = value as RespondConnection;}, (IBinding data) => (data as ResultConnect).RespondConnection,
 					false, ()=>new  RespondConnection(), ()=>new RespondConnection())} 
-        };
+        }, __Tag,() => new ResultConnect(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -3757,14 +3757,14 @@ public partial class ResultTransactionRequest : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultTransactionRequest(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Identifier", new PropertyString ("Identifier", 
 					(IBinding data, string? value) => {(data as ResultTransactionRequest).Identifier = value;}, (IBinding data) => (data as ResultTransactionRequest).Identifier )}
-        };
+        }, __Tag,() => new ResultTransactionRequest(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -3842,17 +3842,17 @@ public partial class ResultReceived : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultReceived(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Status", new PropertyString ("Status", 
 					(IBinding data, string? value) => {(data as ResultReceived).Status = value;}, (IBinding data) => (data as ResultReceived).Status )},
 			{ "Message", new PropertyStruct ("Message", 
 					(IBinding data, object? value) => {(data as ResultReceived).Message = value as Message;}, (IBinding data) => (data as ResultReceived).Message,
 					false, ()=>new  Message(), ()=>new Message())} 
-        };
+        }, __Tag,() => new ResultReceived(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -3925,15 +3925,15 @@ public partial class ResultApplication : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultApplication(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Application", new PropertyStruct ("Application", 
 					(IBinding data, object? value) => {(data as ResultApplication).Application = value as CatalogedApplication;}, (IBinding data) => (data as ResultApplication).Application,
 					true)} 
-        };
+        }, __Tag,() => new ResultApplication(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -4005,16 +4005,16 @@ public partial class ResultApplicationList : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultApplicationList(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Applications", new PropertyListStruct ("Applications", 
 					(IBinding data, object? value) => {(data as ResultApplicationList).Applications = value as List<CatalogedApplication>;}, (IBinding data) => (data as ResultApplicationList).Applications,
 					true, ()=>new List<CatalogedApplication>()
 )} 
-        };
+        }, __Tag,() => new ResultApplicationList(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -4092,10 +4092,7 @@ public partial class ResultCallsign : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultCallsign(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "CallsignApplication", new PropertyStruct ("CallsignApplication", 
 					(IBinding data, object? value) => {(data as ResultCallsign).CallsignApplication = value as CatalogedApplicationCallsign;}, (IBinding data) => (data as ResultCallsign).CallsignApplication,
@@ -4103,7 +4100,10 @@ public partial class ResultCallsign : Result {
 			{ "Message", new PropertyStruct ("Message", 
 					(IBinding data, object? value) => {(data as ResultCallsign).Message = value as Message;}, (IBinding data) => (data as ResultCallsign).Message,
 					false, ()=>new  Message(), ()=>new Message())} 
-        };
+        }, __Tag,() => new ResultCallsign(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -4181,10 +4181,7 @@ public partial class ResultCallsignResolution : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultCallsignResolution(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "CallsignRegistration", new PropertyStruct ("CallsignRegistration", 
 					(IBinding data, object? value) => {(data as ResultCallsignResolution).CallsignRegistration = value as Registration;}, (IBinding data) => (data as ResultCallsignResolution).CallsignRegistration,
@@ -4192,7 +4189,10 @@ public partial class ResultCallsignResolution : Result {
 			{ "Message", new PropertyStruct ("Message", 
 					(IBinding data, object? value) => {(data as ResultCallsignResolution).Message = value as Message;}, (IBinding data) => (data as ResultCallsignResolution).Message,
 					false, ()=>new  Message(), ()=>new Message())} 
-        };
+        }, __Tag,() => new ResultCallsignResolution(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -4264,15 +4264,15 @@ public partial class ResultCallsignList : Result {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResultCallsignList(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "CallsignApplication", new PropertyListStruct ("CallsignApplication", 
 					(IBinding data, object? value) => {(data as ResultCallsignList).CallsignApplication = value as List<CatalogedApplicationCallsign>;}, (IBinding data) => (data as ResultCallsignList).CallsignApplication,
 					false, ()=>new  List<CatalogedApplicationCallsign>(), ()=>new CatalogedApplicationCallsign())} 
-        };
+        }, __Tag,() => new ResultCallsignList(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =

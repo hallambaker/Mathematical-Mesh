@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/14/2024 5:27:23 PM
+//  This file was automatically generated at 12/19/2024 4:50:17 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -289,12 +289,12 @@ public partial class ResolverRequest : Goedel.Protocol.Request {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResolverRequest(), Goedel.Protocol.Request._binding);
+			new() {
+
+        }, __Tag,() => new ResolverRequest(), Goedel.Protocol.Request._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -365,12 +365,12 @@ public partial class ResolverResponse : Goedel.Protocol.Response {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ResolverResponse(), Goedel.Protocol.Response._binding);
+			new() {
+
+        }, __Tag,() => new ResolverResponse(), Goedel.Protocol.Response._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -459,10 +459,7 @@ public partial class QueryRequest : ResolverRequest {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new QueryRequest(), ResolverRequest._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "CallSign", new PropertyString ("CallSign", 
 					(IBinding data, string? value) => {(data as QueryRequest).CallSign = value;}, (IBinding data) => (data as QueryRequest).CallSign )},
@@ -470,7 +467,10 @@ public partial class QueryRequest : ResolverRequest {
 					(IBinding data, string? value) => {(data as QueryRequest).RegistrationId = value;}, (IBinding data) => (data as QueryRequest).RegistrationId )},
 			{ "LogId", new PropertyString ("LogId", 
 					(IBinding data, string? value) => {(data as QueryRequest).LogId = value;}, (IBinding data) => (data as QueryRequest).LogId )}
-        };
+        }, __Tag,() => new QueryRequest(), ResolverRequest._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -552,10 +552,7 @@ public partial class QueryResponse : ResolverResponse {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new QueryResponse(), ResolverResponse._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Result", new PropertyStruct ("Result", 
 					(IBinding data, object? value) => {(data as QueryResponse).Result = value as Enveloped<Registration>;}, (IBinding data) => (data as QueryResponse).Result,
@@ -563,7 +560,10 @@ public partial class QueryResponse : ResolverResponse {
 			{ "Notarization", new PropertyStruct ("Notarization", 
 					(IBinding data, object? value) => {(data as QueryResponse).Notarization = value as Enveloped<Notarization>;}, (IBinding data) => (data as QueryResponse).Notarization,
 					false, ()=>new  Enveloped<Notarization>(), ()=>new Enveloped<Notarization>())} 
-        };
+        }, __Tag,() => new QueryResponse(), ResolverResponse._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -633,12 +633,12 @@ public partial class SyncRequest : ResolverRequest {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new SyncRequest(), ResolverRequest._binding);
+			new() {
+
+        }, __Tag,() => new SyncRequest(), ResolverRequest._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
@@ -708,12 +708,12 @@ public partial class SyncResponse : ResolverResponse {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new SyncResponse(), ResolverResponse._binding);
+			new() {
+
+        }, __Tag,() => new SyncResponse(), ResolverResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =

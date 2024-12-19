@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/14/2024 5:27:20 PM
+//  This file was automatically generated at 12/19/2024 4:50:12 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -119,16 +119,16 @@ public partial class ShellResult : JsonShellResult {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,() => new ShellResult(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+			new() {
 
 			{ "Success", new PropertyBoolean ("Success", 
 					(IBinding data, bool? value) => {(data as ShellResult).Success = value;}, (IBinding data) => (data as ShellResult).Success )},
 			{ "Reason", new PropertyString ("Reason", 
 					(IBinding data, string? value) => {(data as ShellResult).Reason = value;}, (IBinding data) => (data as ShellResult).Reason )}
-        };
+        }, __Tag,() => new ShellResult(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;

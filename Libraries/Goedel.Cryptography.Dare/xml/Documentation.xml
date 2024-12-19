@@ -4322,6 +4322,16 @@
         <member name="P:Goedel.Cryptography.Dare.IPersistenceEntry.JsonObject">
             <summary>The persisted JsonObject</summary>
         </member>
+        <member name="F:Goedel.Cryptography.Dare.BinaryStream.StreamWrite">
+            <summary>
+            The underlying stream for stream write operations
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.BinaryStream.StreamRead">
+            <summary>
+            The underlying stream for stream write operations
+            </summary>
+        </member>
         <member name="T:Goedel.Cryptography.Dare.JbcdStream">
             <summary>
             Implements a highly restricted stream that supports exactly the functionality
@@ -4329,16 +4339,6 @@
             implementation is supplied by a Stream object (typically a FileStream). It is
             expected this will be replaced in the future by a version that performs direct 
             memory mapping of the files.
-            </summary>
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.JbcdStream.StreamWrite">
-            <summary>
-            The underlying stream for stream write operations
-            </summary>
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.JbcdStream.StreamRead">
-            <summary>
-            The underlying stream for stream write operations
             </summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.JbcdStream.Filename">
