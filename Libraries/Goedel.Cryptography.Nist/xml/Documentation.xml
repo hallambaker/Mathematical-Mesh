@@ -1730,6 +1730,128 @@
             <param name="outputBitLength">Number of bits to write.</param>
             <exception cref="T:System.InvalidOperationException"></exception>
         </member>
+        <member name="T:Goedel.Cryptography.Nist.NativeFastSha3">
+            <summary>
+            Fast SHA3
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.NativeFastSha3.HashFunction">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastSha3.#ctor(System.Int32)">
+            <summary>
+            Constructor, return new instance for bit length <paramref name="bitLength"/>
+            </summary>
+            <param name="bitLength">Number of output bits to be supported.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastSha3.HashMessage(Goedel.Cryptography.Nist.BitString,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastSha3.HashNumber(System.Numerics.BigInteger)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastSha3.Init">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastSha3.Update(System.Byte[],System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastSha3.Update(System.Int32,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastSha3.Final(System.Byte[],System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.NativeFastShake">
+            <summary>
+            SHAKE implementation
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.NativeFastShake.HashFunction">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastShake.#ctor(System.Int32)">
+            <summary>
+            Constructor, return a new instance for <paramref name="bitLength"/> bits.
+            </summary>
+            <param name="bitLength">Number of output bits.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastShake.HashMessage(Goedel.Cryptography.Nist.BitString,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastShake.HashNumber(System.Numerics.BigInteger)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastShake.Init">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastShake.Update(System.Byte[],System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastShake.Update(System.Int32,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastShake.Final(System.Byte[],System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastShake.Absorb(System.Byte[],System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastShake.Squeeze(System.Byte[],System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.NativeFastShaUtils">
+            <summary>
+            Utility class manipulating bits and bytes
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastShaUtils.UInt32_To_BE(System.UInt32,System.Byte[],System.Int32)">
+            <summary>
+            Unpack the unsigned 32 bit integer <paramref name="n"/> to the byte array
+            <paramref name="bs"/> beginning at offset <paramref name="off"/>
+            </summary>
+            <param name="n">The source</param>
+            <param name="bs">The destination</param>
+            <param name="off">The byte offset at the destination.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastShaUtils.BE_To_UInt32(System.Byte[],System.Int32)">
+            <summary>
+            Return an unsigned 32 bit integer from the byte array
+            <paramref name="bs"/> beginning at offset <paramref name="off"/>
+            </summary>
+            <param name="bs">The source</param>
+            <param name="off">The byte offset at the source.</param>
+            <returns>The result</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastShaUtils.LE_To_UInt64(System.Byte[],System.Int32)">
+            <summary>
+            Return an unsigned 64 bit integer from the byte array
+            <paramref name="bs"/> beginning at offset <paramref name="off"/>
+            </summary>
+            <param name="bs">The source</param>
+            <param name="off">The byte offset at the source.</param>
+            <returns>The result</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastShaUtils.UInt64_To_LE(System.UInt64[],System.Int32,System.Int32,System.Byte[],System.Int32)">
+            <summary>
+            Unpack a sequence of unsigned 64 bit long values from <paramref name="ns"/>
+            to the byte array <paramref name="bs"/>
+            </summary>
+            <param name="ns">Source</param>
+            <param name="nsOff">Source offset index</param>
+            <param name="nsLen">Source length</param>
+            <param name="bs">Destination</param>
+            <param name="bsOff">Destination offset</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NativeFastShaUtils.UInt64_To_LE(System.UInt64,System.Byte[],System.Int32)">
+            <summary>
+            Unpack the unsigned 64 bit integer <paramref name="n"/> to the byte array
+            <paramref name="bs"/> beginning at offset <paramref name="off"/>
+            </summary>
+            <param name="n">The source</param>
+            <param name="bs">The destination</param>
+            <param name="off">The byte offset at the destination.</param>
+        </member>
         <member name="T:Goedel.Cryptography.Nist.NativeShaFactory">
             <summary>
             Digest factory using the NIST code.
@@ -1983,6 +2105,20 @@
             </summary>
             <param name="hashFunction">Used to determine the <see cref="T:Goedel.Cryptography.Nist.IShake"/> instance to retrieve.</param>
             <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IShake.Absorb(System.Byte[],System.Int32)">
+            <summary>
+            Absorb <paramref name="bitLength"/> bits from <paramref name="message"/>
+            </summary>
+            <param name="message">Source</param>
+            <param name="bitLength">Number of bits</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IShake.Squeeze(System.Byte[],System.Int32)">
+            <summary>
+            Squeeze <paramref name="outputBitLength"/> bits into <paramref name="output"/>
+            </summary>
+            <param name="output">Destination</param>
+            <param name="outputBitLength">Number of bits</param>
         </member>
         <member name="T:Goedel.Cryptography.Nist.ShaAttributes">
             <summary>

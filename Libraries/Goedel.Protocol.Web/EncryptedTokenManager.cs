@@ -42,7 +42,11 @@ public class EncryptedTokenManager {
     ///<summary>The nonce length in bytes, defaults to 12.</summary> 
     public int NonceLength { get; init; } = 12;
 
-
+    /// <summary>
+    /// Constructor, return a new instance.
+    /// </summary>
+    /// <param name="secretKey">Optionally specify the secret key. If null, the 
+    /// <see cref="Platform.GetRandomBytes"/> delegate will be called to obtain one.</param>
     public EncryptedTokenManager (byte[]? secretKey =null) {
         SecretKey = secretKey ?? Platform.GetRandomBytes (32); 
         }
@@ -86,6 +90,13 @@ public class EncryptedTokenManager {
         return result;
         }
 
+    /// <summary>
+    /// Decrypt the encrypted package <paramref name="ciphertext"/> with 
+    /// <paramref name="associatedDataLength"/> bytes of authenticated associated data.
+    /// </summary>
+    /// <param name="ciphertext">The encoded data package.</param>
+    /// <param name="associatedDataLength">The associated data.</param>
+    /// <returns></returns>
     public byte[] Decrypt(byte[]? ciphertext, int associatedDataLength = 0) {
         var plainTextLength = ciphertext.Length - NonceLength - TagLength - associatedDataLength;
         var result = new byte[plainTextLength];
@@ -109,14 +120,27 @@ public class EncryptedTokenManager {
         }
 
 
-
-    public byte[] EncryptTimeStamped(byte[] plaintext) {
+    /// <summary>
+    /// Encrypt the plaintext <paramref name="plaintext"/> with an appended date time stamp
+    /// as associated data.
+    /// </summary>
+    /// <param name="plaintext">The data to encrypt.</param>
+    /// <param name="dateTime">The time stamp to use. If the value default is specified, the
+    /// current time is used.</param>
+    /// <returns>The encrypted data package.</returns>
+    public byte[] EncryptTimeStamped(byte[] plaintext, DateTime dateTime= default) {
         throw new NYI();
         
         }
 
-
-    public byte[] Decrypt(byte[] plaintext, out DateTime timeStamp) {
+    /// <summary>
+    /// Decrypt the plaintext <paramref name="ciphertext"/> with an ap[pended date time stamp
+    /// as associated data.
+    /// </summary>
+    /// <param name="ciphertext">The data to encrypt.</param>
+    /// <param name="timeStamp">The timestamp.</param>
+    /// <returns>The decrypted data package.</returns>
+    public byte[] Decrypt(byte[] ciphertext, out DateTime timeStamp) {
         throw new NYI();
 
         }

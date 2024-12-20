@@ -8,6 +8,25 @@
             <summary>
             </summary>
         </member>
+        <member name="M:Goedel.Cryptography.Oauth.ClientMetadata.FactoryAtproto(System.String,System.Collections.Generic.List{System.String},Goedel.Cryptography.Oauth.ScopeTypes,System.Boolean,Goedel.Cryptography.Oauth.JWKS)">
+            <summary>
+            Return a ClientMetadata instance for an ATprotocol client with the
+            specified parameters.
+            </summary>
+            <param name="clientid">The client ID, a HTTPS URI</param>
+            <param name="redirect">List of HTTPS redirect URIs</param>
+            <param name="scope">The scope(s) requested</param>
+            <param name="confidential">If true, return a confidential client.</param>
+            <param name="keys">The client keys</param>
+            <returns>The constructed metadata.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.ClientMetadata.GetScope(Goedel.Cryptography.Oauth.ScopeTypes)">
+            <summary>
+            Convert the scope <paramref name="scopes"/> to a string.
+            </summary>
+            <param name="scopes">The scope specifier</param>
+            <returns>String describing the scope.</returns>
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.ClientMetadata.ClientId">
             <summary>
             </summary>
@@ -243,9 +262,91 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="T:Goedel.Cryptography.Oauth.EncodedState">
+            <summary>
+            The encoded state vector.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.EncodedState.Nonce">
+            <summary>The OAUTH nonce to ensure uniquness of the request</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.EncodedState.Handle">
+            <summary>The user handle (e.g. @alice.example.com)</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.EncodedState.DID">
+            <summary>The user's DID</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.EncodedState.RedirectUri">
+            <summary>The redirect URI to return to after completing authentication.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.EncodedState.Bytes">
+            <summary>The encrypted bytes.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.EncodedState.#ctor(Goedel.Protocol.Web.EncryptedTokenManager,Goedel.Cryptography.Oauth.OauthHandleResolution,System.String)">
+            <summary>
+            Constructor, returns an instance under the token manager <paramref name="manager"/>
+            for the handle <paramref name="handle"/> and redirect <paramref name="redirectUri"/>.
+            </summary>
+            <param name="manager">The state manager.</param>
+            <param name="handle">The OAUTH handle and DID</param>
+            <param name="redirectUri">The redirect URI.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.EncodedState.#ctor(Goedel.Protocol.Web.EncryptedTokenManager,System.String)">
+            <summary>
+            Constructor returns an instance by decrypting the BASE64 encoded string 
+            <paramref name="encodedDataString"/>
+            </summary>
+            <param name="manager">The state manager.</param>
+            <param name="encodedDataString">The BASE64 encoded encrypted string.</param>
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.IKeyed">
+            <summary>
+            Interface permitting selection by key using <see cref="M:Goedel.Cryptography.Oauth.Extensions.TryGetValue``1(System.Collections.Generic.List{``0},System.String,``0@)"/>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.IKeyed.Id">
+            <summary>The keyed identifier</summary> 
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.Extensions">
+            <summary>
+            Extensions class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.Extensions.AddPath(System.String,System.String)">
+            <summary>
+            Append the path <paramref name="path"/> to the method/domain prefix
+            <paramref name="first"/> adding a slash separator if required.
+            </summary>
+            <param name="first">The method/domain prefix</param>
+            <param name="path">The path to append.</param>
+            <returns>The constructed URI</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.Extensions.TryGetValue``1(System.Collections.Generic.List{``0},System.String,``0@)">
+            <summary>
+            Search the list <paramref name="list"/> for the first instance matching the
+            condition <see cref="P:Goedel.Cryptography.Oauth.IKeyed.Id"/> == <paramref name="key"/>. If found, the 
+            instance is returned in <paramref name="value"/> and true is returned. Otherwise
+            <paramref name="value"/> is null and false is returned.
+            </summary>
+            <typeparam name="T">The type of the list items.</typeparam>
+            <param name="list">The list to search</param>
+            <param name="key">The key to find</param>
+            <param name="value">The value if found, otherwise null</param>
+            <returns>True if the value is found, otherwise false.</returns>
+        </member>
         <member name="T:Goedel.Cryptography.Oauth.JWK">
             <summary>
+            JOSE Web Key
             </summary>
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.JWK.Factory(Goedel.Cryptography.KeyPair)">
+            <summary>
+            Facotry method returning an instance for the key <paramref name="keyPair"/>
+            </summary>
+            <param name="keyPair">The key to return the JWK for.</param>
+            <returns>The created instance.</returns>
         </member>
         <member name="P:Goedel.Cryptography.Oauth.JWK.KeyType">
             <summary>
@@ -1189,7 +1290,14 @@
             be returned to the client via an HTTP redirect.)
              </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "P:Goedel.Cryptography.Oauth.ErrorResponse.ErrorDescription" -->
+        <member name="P:Goedel.Cryptography.Oauth.ErrorResponse.ErrorDescription">
+             <summary>
+             Human-readable ASCII [USASCII] text providing additional information, used to 
+            assist the client developer in understanding the error that occurred. Values for
+            the error_description parameter MUST NOT include characters outside the set 
+            %x20-21 %x23-5B / %x5D-7E.
+             </summary>
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.ErrorResponse.ErrorUri">
              <summary>
             A URI identifying a human-readable web page with information about the error, 

@@ -6,24 +6,35 @@ using System.Security.Cryptography;
 
 namespace Goedel.Cryptography.Oauth;
 
+/// <summary>
+/// An OAUTH client class.
+/// </summary>
 public class OauthClient {
 
 
-
+    ///<summary>Client description.</summary> 
     ClientMetadata ClientMetadata { get; }
+
+    ///<summary>ClientMetadata as byte array.</summary> 
     public byte[] ClientMetadataBytes { get; }
 
-    public KeyPair OauthClientSignature { get; }
-    public KeyPair OauthClientEncryption { get;  }
-
-    public JWKS JWKS { get;}
+    ///<summary>The session manager storing state between requests.</summary> 
     SessionManager SessionManager { get; }
 
+    ///<summary>Secret key used to construct challenge and verifier values.</summary> 
     byte[] SecretKey { get; }
 
+    ///<summary>Encrypted state token manager.</summary> 
     EncryptedTokenManager EncryptedTokenManager { get; } = new();
-    CryptoKeySymmetric CryptoKeySymmetric { get; }
-    HMAC HMAC { get; }
+
+
+    /// <summary>
+    /// Constructor, returns an instance with client URI <paramref name="clientId"/>, redirect
+    /// URI <paramref name="redirectUri"/> and keys <paramref name="keys"/>.
+    /// </summary>
+    /// <param name="clientId">The client identifier.</param>
+    /// <param name="redirectUri">The redirect URL</param>
+    /// <param name="keys">The keys for encryption and signature.</param>
     public OauthClient(
                 string clientId,
                 string redirectUri,
@@ -31,12 +42,8 @@ public class OauthClient {
         
         SessionManager = new();
         SecretKey = Platform.GetRandomBytes(32);
-        //HMAC
 
 
-        CryptoKeySymmetric = new(SecretKey);
-
-        JWKS = keys;
         ScopeTypes scope = ScopeTypes.Atproto;
         bool confidential = false;
 
@@ -45,28 +52,39 @@ public class OauthClient {
         ClientMetadataBytes = ClientMetadata.ToString().ToUTF8();
         }
 
-    public OauthClient(
-                ClientMetadata clientMetadata) {
-        ClientMetadata = clientMetadata;
-        ClientMetadataBytes = ClientMetadata.ToString().ToUTF8();
-        }
+
+    //public OauthClient(
+    //            ClientMetadata clientMetadata) {
+    //    ClientMetadata = clientMetadata;
+    //    ClientMetadataBytes = ClientMetadata.ToString().ToUTF8();
+    //    }
 
 
     #region // static methods
 
-    public static JWKS MakeKeys() {
+    ///// <summary>
+    ///// 
+    ///// </summary>
+    ///// <returns></returns>
+    //public static JWKS MakeKeys() {
 
-        var OauthClientSignature = OauthClient.GenKey(
-                    KeyUses.Sign);
-        var OauthClientEncryption = OauthClient.GenKey(KeyUses.Encrypt);
+    //    var OauthClientSignature = OauthClient.GenKey(
+    //                KeyUses.Sign);
+    //    var OauthClientEncryption = OauthClient.GenKey(KeyUses.Encrypt);
 
-        var JWKS = new JWKS {
-            Keys = [JWK.Factory(OauthClientSignature), JWK.Factory(OauthClientEncryption)]
-            };
+    //    var JWKS = new JWKS {
+    //        Keys = [JWK.Factory(OauthClientSignature), JWK.Factory(OauthClientEncryption)]
+    //        };
 
-        return JWKS;
-        }
+    //    return JWKS;
+    //    }
 
+    /// <summary>
+    /// Generate a key for use with OAUTH client.
+    /// </summary>
+    /// <param name="keyUses">Key uses, either <see cref="KeyUses.Sign"/> or 
+    /// <see cref="KeyUses.Encrypt"/>.</param>
+    /// <returns></returns>
     public static KeyPair GenKey(KeyUses keyUses = KeyUses.Sign) {
 
         var key = KeyPair.Factory(
@@ -91,6 +109,14 @@ public class OauthClient {
 
     #region // Methods
 
+    /// <summary>
+    /// Make a Pushed Authorization request for handle <paramref name="handle"/> with context
+    /// <paramref name="state"/>.
+    /// </summary>
+    /// <param name="handle">The ATprotocol handle.</param>
+    /// <param name="state">State to be preserved between pre request
+    /// and completion.</param>
+    /// <returns>A client result.</returns>
     public async Task<OauthClientResult> PreRequest(
             string handle,
             string state) {
@@ -109,9 +135,6 @@ public class OauthClient {
         var result = await UriClient.PostBinaryAsync(
                     oauth.AuthorizationServerMetadata.PushedAuthorizationRequestEndpoint,
                     parBytes, "application/x-www-form-urlencoded");
-
-
-
 
         // read back the response
         using var jsonReader = new JsonReader(result);
@@ -135,7 +158,7 @@ public class OauthClient {
     /// </summary>
     /// <param name="handle"></param>
     /// <param name="state"></param>
-    /// <returns></returns>
+    /// <returns>The authorization request instance.</returns>
     public AuthorizationRequest ConstructPar(
                         OauthHandleResolution handle,
                         string state) {
@@ -195,7 +218,11 @@ public class OauthClient {
 
 
 
-
+    /// <summary>
+    /// Pares a response URI to recover the data from the authorization server.
+    /// </summary>
+    /// <param name="responseUri">The response URI.</param>
+    /// <returns>The parsed result and recovered state.</returns>
     public OauthClientResult ParseResponse(
                 Uri responseUri) {
 
@@ -217,11 +244,16 @@ public class OauthClient {
             };
         }
 
+    /// <summary>
+    /// Trim an @nything handle to remove the leading @ if present and any trailing whitespace.
+    /// </summary>
+    /// <param name="handle">The handle to trim.</param>
+    /// <returns>The trimmed handle</returns>
     public static string TrimHandle(string handle) {
         if (handle is null || handle.Length == 0) {
             return null;
             }
-        return (handle[0] == '@') ? handle [1..] : handle;
+        return ((handle[0] == '@') ? handle [1..] : handle).Trim();
         }
 
 
@@ -231,26 +263,47 @@ public class OauthClient {
 
 
 
-
+/// <summary>
+/// OAUTH Client operation result
+/// </summary>
 public abstract record OauthClientResult {
 
     }
 
+
+/// <summary>
+/// OAUTH Client operation fail result
+/// </summary>
 public record OauthClientResultFail : OauthClientResult {
 
     }
 
+/// <summary>
+/// OAUTH Client operation successful pre request.
+/// </summary>
 public record OauthClientResultPreRequest : OauthClientResult {
 
+    ///<summary>The URI to which the user client is to be redirected.</summary> 
     public string RedirectUri { get; init;  } = null;
 
     }
 
+/// <summary>
+/// OAUTH Client operation successful auth request.
+/// </summary>
 public record OauthClientResultAuthRequest : OauthClientResult {
-    public string RedirectUri { get; init; } = null;
-    public string Handle { get; init; } = null;
-    public string DID { get; init; } = null;
 
+    ///<summary>The URI to redirect the client to on completion.</summary> 
+    public string? RedirectUri { get; init; } = null;
+
+    ///<summary>The user's handle</summary>     
+    public string? Handle { get; init; } = null;
+
+    ///<summary>The user's DID</summary> 
+    public string? DID { get; init; } = null;
+
+    ///<summary>The nonce value used to construct the PKCE verifier and 
+    ///challenge.</summary> 
     public byte[]? Nonce { get; init; } = null;
 
     }

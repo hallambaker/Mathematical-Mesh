@@ -30,34 +30,37 @@ namespace Goedel.Protocol.Web;
 /// </summary>
 public static partial class WebExtensions {
 
-
+    /// <summary>
+    /// Encode <paramref name="data"/> using the HTTP form encoding.
+    /// </summary>
+    /// <param name="data">The object to encode.</param>
+    /// <returns>The encoded data.</returns>
     public static byte[] GetAsFormEncoding(this JsonObject data) {
         using var buffer = new MemoryStream();
         using var writer = new StreamWriter(buffer);
 
         foreach (var item in data._Binding.Properties) {
             switch (item.Value) {
-
                 case PropertyString propertyString: {
                     var value = propertyString.Get(data);
-
                     writer.Write('&');
                     writer.Write(propertyString.Tag);
                     writer.Write('=');
                     writer.WriteLine(WebUtility.UrlEncode(value));
                     break;
                     }
-
-
                 }
-
-
             }
 
         return buffer.ToArray();
         }
 
-
+    /// <summary>
+    /// Extract non-null fields from <paramref name="data"/> and return a set of 
+    /// tag value pairs for encoding.
+    /// </summary>
+    /// <param name="data">The object to encode.</param>
+    /// <returns>The encoded data.</returns>
     public static IEnumerable<KeyValuePair<String, String>> GetAsKeyValue(this JsonObject data) {
         using var buffer = new MemoryStream();
         using var writer = new StreamWriter(buffer);
@@ -75,6 +78,13 @@ public static partial class WebExtensions {
             }
         }
 
+    /// <summary>
+    /// Extract non-null fields from <paramref name="data"/> and append the result
+    /// to <paramref name="uri"/> as a URI query string.
+    /// </summary>
+    /// <param name="data">The object to encode.</param>
+    /// <param name="uri">The base URI for the query.</param>
+    /// <returns>The encoded data.</returns>
     public static string GetAsUrlQuery(this JsonObject data, string uri=null) {
         var builder = new StringBuilder();
 

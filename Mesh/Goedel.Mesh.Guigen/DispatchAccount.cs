@@ -92,10 +92,11 @@ public partial class EverythingMaui {
             if (TryProcessException(exception, data, out var result)) {
                 return result!;
                 }
-            if (ExceptionDirectory.TryGetValue(exception.GetType().FullName, out var factory)) {
-                return factory();
+            if (exception.GetType()?.FullName is not null) {
+                if (ExceptionDirectory.TryGetValue(exception.GetType()?.FullName, out var factory)) {
+                    return factory();
+                    }
                 }
-
             return new ErrorResult(exception);
             }
 
@@ -288,7 +289,7 @@ public partial class EverythingMaui {
         }
 
 
-    public List<string> ParseRights(string text) => new List<string>() { text };
+    public static List<string> ParseRights(string? text) => text is null ? [] : [text];
 
     }
 

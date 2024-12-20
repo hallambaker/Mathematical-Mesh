@@ -12,10 +12,10 @@ using System.Xml;
 namespace Goedel.Cryptography.Oauth;
 
 
-public interface ICache {
-    }
-
-
+/// <summary>
+/// Generic cached data class.
+/// </summary>
+/// <typeparam name="T">The type of data to cache.</typeparam>
 public class CachedDocument<T>  {
 
     ///<summary>The value.</summary> 
@@ -32,12 +32,23 @@ public class CachedDocument<T>  {
 
     }
 
-
+/// <summary>
+/// Resolution delegate.
+/// </summary>
+/// <typeparam name="K">The key type</typeparam>
+/// <typeparam name="T">The resolved data type</typeparam>
+/// <param name="key">The key.</param>
+/// <param name="last">The previous value of the data or null if newly created.</param>
+/// <returns></returns>
 public delegate Task<T?> ResolutionDelegate<K,T> (
             K key, 
             CachedDocument<T>? last = null);
 
-
+/// <summary>
+/// A document cache.
+/// </summary>
+/// <typeparam name="K">The key type</typeparam>
+/// <typeparam name="T">The resolved data type</typeparam>
 public class DocumentCache<K,T> where T: class?{
 
     ///<summary>Time after which documents are considered expired</summary> 
@@ -62,6 +73,11 @@ public class DocumentCache<K,T> where T: class?{
         Resolver = resolver;
         }
 
+    /// <summary>
+    /// Attempt to obtain a document corresponding to the key <paramref name="key"/>
+    /// </summary>
+    /// <param name="key">The document key to resolve.</param>
+    /// <returns>The value if found, otherwise null.</returns>
     public async Task<T?> GetValueAsync(K key) {
         if (Dictionary.TryGetValue(key, out var handle)) {
             if (handle.Refreshed + Expire > DateTime.Now) { 
@@ -128,6 +144,10 @@ public class SessionManager : Disposable {
     #endregion
 
     #region // Constructors
+
+    /// <summary>
+    /// Constructor returning a new instance
+    /// </summary>
     public SessionManager() {
         DidDictionary = new(TryResolveDid);
         ResourceServerDictionary = new(TryResolveResourceServer);
@@ -138,28 +158,18 @@ public class SessionManager : Disposable {
     #region // Methods
 
     /// <summary>
-    /// Return the DID associated with the handle <paramref name="handle"/>.
+    /// Attempt resolution of the handle <paramref name="handle"/> to a DID Document.
     /// </summary>
     /// <param name="handle"></param>
     /// <returns></returns>
-    public  DidDocument HandleToDid(string handle) {
-        throw new NYI();
-        //if (DidDictionary.GetValueAsync(handle, out var didDocument)) {
-        //    return didDocument;
-        //    }
-
-        //var atproto = "_atproto." + handle;
-
-
-
-
-
-
-
-        }
-
     public async Task<DidDocument> TryResolveDid(string handle) => await DidDictionary.GetValueAsync(handle);
 
+    /// <summary>
+    /// Attempt resolution of the DID <paramref name="key"/>
+    /// </summary>
+    /// <param name="key">The DID to resolve</param>
+    /// <param name="last">The result of the last resolution, if existing.</param>
+    /// <returns>The DID document if found, otherwise null.</returns>
     async Task<DidDocument?> TryResolveDid(
                 string key, 
                 CachedDocument<DidDocument>? last) {
@@ -176,7 +186,11 @@ public class SessionManager : Disposable {
         return didDocument;
         }
 
-
+    /// <summary>
+    /// Attempt resolution of the resource server specified in  <paramref name="document"/>
+    /// </summary>
+    /// <param name="document">The DID Document to resolve</param>
+    /// <returns>The DID document if found, otherwise null.</returns>
     public async Task<ResourceServerMetadata?> TryResolveResourceServer(DidDocument document) {
 
         if (!document.Service.TryGetValue("#atproto_pds", out var service)) {
@@ -190,6 +204,12 @@ public class SessionManager : Disposable {
         return result;
         }
 
+    /// <summary>
+    /// Attempt resolution of the resource server specified by <paramref name="key"/>
+    /// </summary>
+    /// <param name="key">The URI to resolve</param>
+    /// <param name="last">The result of the last resolution, if existing.</param>
+    /// <returns>The Resource Server Metadata if found, otherwise null.</returns>
     async Task<ResourceServerMetadata?> TryResolveResourceServer(
             string key,
             CachedDocument<ResourceServerMetadata>? last) {
@@ -202,6 +222,11 @@ public class SessionManager : Disposable {
         return resourceMeta;
         }
 
+    /// <summary>
+    /// Attempt resolution of the auth server specified by <paramref name="key"/>
+    /// </summary>
+    /// <param name="key">The URI to resolve</param>
+    /// <returns>The Authorization Server Metadata if found, otherwise null.</returns>
     public async Task<AuthorizationServerMetadata?> TryResolveAuthServer(string key) => 
                     await AuthServerDictionary.GetValueAsync(key);
 
@@ -217,7 +242,11 @@ public class SessionManager : Disposable {
         return authMeta;
         }
 
-
+    /// <summary>
+    /// Attempt resolution of the handle <paramref name="handle"/> and return the result.
+    /// </summary>
+    /// <param name="handle">The handle to resolve.</param>
+    /// <returns>Object containing the result of the resolution.</returns>
     public async Task<OauthHandleResolution> TryResolveHandle(string handle) {
         var result = new OauthHandleResolution(handle);
 
@@ -237,51 +266,21 @@ public class SessionManager : Disposable {
     }
 
 
+/// <summary>
+/// Result of resolving the handle <paramref name="Handle"/>
+/// </summary>
+/// <param name="Handle">The handle resolved.</param>
 public record OauthHandleResolution(
             string Handle
             ) {
 
+    ///<summary>The DID document corresponding to the handle.</summary> 
     public DidDocument? DidDocument = null;
+
+    ///<summary>The resource server metadata</summary> 
     public ResourceServerMetadata? ResourceServerMetadata = null;
+
+    ///<summary>The authorization server metadata.</summary> 
     public AuthorizationServerMetadata? AuthorizationServerMetadata = null;
     }
 
-
-//public record OAuth {
-//    public DidService AtProtoService { get; }
-//    public ResourceServerMetadata ResourceServer { get; }
-//    public List<AuthorizationServerMetadata> AuthorizationServers { get; } = new();
-
-//    public string ResourceServerEndpoint =>
-//        AtProtoService?.ServiceEndpoint.AddPath(".well-known/oauth-protected-resource");
-//    public string AuthorizationServerEndpoint(string server) =>
-//        server.AddPath(".well-known/oauth-authorization-server");
-
-
-//    public OAuth(DidDocument document) {
-
-
-
-//        if (document.Service.TryGetValue("#atproto_pds", out var service)) {
-//            AtProtoService = service;
-//            }
-
-//        var client = UriClient.HttpClient;
-
-//        var result1 = client.GetStringAsync(ResourceServerEndpoint).Sync();
-//        ResourceServer = Serialization<ResourceServerMetadata>.Deserialize(result1);
-
-//        foreach (var authServer in ResourceServer.AuthorizationServers) {
-
-//            var endpoint = AuthorizationServerEndpoint(authServer);
-
-//            var result2 = client.GetStringAsync(endpoint).Sync();
-//            using var jsonReader = new JsonReader(result2);
-//            var authServerData = AuthorizationServerMetadata.FromJson(jsonReader, false);
-
-//            AuthorizationServers.Add(authServerData);
-//            }
-
-//        }
-
-    //}

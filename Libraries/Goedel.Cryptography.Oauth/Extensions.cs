@@ -5,6 +5,7 @@
 /// </summary>
 public interface IKeyed {
     
+    ///<summary>The keyed identifier</summary> 
     string? Id { get; }
     }
 

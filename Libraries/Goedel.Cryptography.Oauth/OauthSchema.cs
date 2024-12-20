@@ -934,8 +934,8 @@ public partial class ErrorResponse : Oauth {
         /// <summary>
         /// Human-readable ASCII [USASCII] text providing additional information, used to 
         ///assist the client developer in understanding the error that occurred. Values for
-        ///the error_description parameter MUST NOT include characters outside the set %x20-21 
-        //// %x23-5B / %x5D-7E.
+        ///the error_description parameter MUST NOT include characters outside the set 
+		///%x20-21 %x23-5B / %x5D-7E.
         /// </summary>
 
 	public virtual string?						ErrorDescription  {get; set;}
