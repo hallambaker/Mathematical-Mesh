@@ -810,8 +810,8 @@ public class GuigenFieldSetQr : GuigenFieldSetAction {
     private void OnCancel(object sender, EventArgs e) {
         Binding.CancelAction();
         }
-    private async void OnConfirm(object sender, EventArgs e) {
-        }
+    //private async void OnConfirm(object sender, EventArgs e) {
+    //    }
 
     }
 

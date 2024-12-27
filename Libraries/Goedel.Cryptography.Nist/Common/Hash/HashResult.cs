@@ -1,5 +1,16 @@
 ﻿namespace Goedel.Cryptography.Nist;
+
+/// <summary>
+/// Result of calculating a hash.
+/// </summary>
 public class HashResult {
+
+    private BitString _digest;
+
+
+    private readonly byte[] _digestBytes;
+
+    ///<summary></summary> 
     public BitString Digest {
         get {
             if (_digest != null) return _digest;
@@ -7,42 +18,18 @@ public class HashResult {
             _digest = new BitString(_digestBytes);
             return _digest;
             }
-
         private set => _digest = value;
         }
 
-    public string ErrorMessage { get; private set; }
-    private BitString _digest;
-    private readonly byte[] _digestBytes;
-
+    /// <summary>
+    /// Constructor, return an instance for <paramref name="digest"/>
+    /// </summary>
+    /// <param name="digest">The digest value.</param>
     public HashResult(BitString digest) {
         Digest = digest;
         }
 
-    public HashResult(string errorMessage) {
-        ErrorMessage = errorMessage;
-        }
 
-    public HashResult(byte[] digest) {
-        _digestBytes = digest;
-        }
 
-    public bool Success => string.IsNullOrEmpty(ErrorMessage);
-
-    public BigInteger ToBigInteger() {
-        if (!Success) {
-            return 0;
-            }
-
-        return Digest.ToPositiveBigInteger();
-        }
-
-    public override string ToString() {
-        if (!Success) {
-            return ErrorMessage;
-            }
-
-        return $"Digest: {Digest.ToHex()}";
-        }
     }
 

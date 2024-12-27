@@ -19,7 +19,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// MakeSchemaExamples
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Example"></param>
 	public void MakeSchemaExamples (CreateExamples Example) {
 		 SchemaAliceProfile(Example);
 		 SchemaProfileService(Example);
@@ -58,7 +58,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// DescribeMessage
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="message"></param>
 	public void DescribeMessage (Goedel.Mesh.Message message) {
 		 if (message == null) { ReportMissingExample(); return;}
 		 Format(message);

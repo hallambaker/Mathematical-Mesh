@@ -20,6 +20,13 @@
         <member name="P:Goedel.Protocol.Web.EncryptedTokenManager.NonceLength">
             <summary>The nonce length in bytes, defaults to 12.</summary> 
         </member>
+        <member name="M:Goedel.Protocol.Web.EncryptedTokenManager.#ctor(System.Byte[])">
+            <summary>
+            Constructor, return a new instance.
+            </summary>
+            <param name="secretKey">Optionally specify the secret key. If null, the 
+            <see cref="M:Goedel.Cryptography.Platform.GetRandomBytes(System.Int32,System.Int32)"/> delegate will be called to obtain one.</param>
+        </member>
         <member name="M:Goedel.Protocol.Web.EncryptedTokenManager.Encrypt(System.Byte[],System.Byte[])">
             <summary>
             Encrypt <paramref name="plaintext"/> with optional associated data <paramref name="associatedData"/>.
@@ -32,6 +39,34 @@
             <param name="plaintext">The data to encrypt.</param>
             <param name="associatedData">Optional associated data.</param>
             <returns></returns>
+        </member>
+        <member name="M:Goedel.Protocol.Web.EncryptedTokenManager.Decrypt(System.Byte[],System.Int32)">
+            <summary>
+            Decrypt the encrypted package <paramref name="ciphertext"/> with 
+            <paramref name="associatedDataLength"/> bytes of authenticated associated data.
+            </summary>
+            <param name="ciphertext">The encoded data package.</param>
+            <param name="associatedDataLength">The associated data.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Protocol.Web.EncryptedTokenManager.EncryptTimeStamped(System.Byte[],System.DateTime)">
+            <summary>
+            Encrypt the plaintext <paramref name="plaintext"/> with an appended date time stamp
+            as associated data.
+            </summary>
+            <param name="plaintext">The data to encrypt.</param>
+            <param name="dateTime">The time stamp to use. If the value default is specified, the
+            current time is used.</param>
+            <returns>The encrypted data package.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Web.EncryptedTokenManager.Decrypt(System.Byte[],System.DateTime@)">
+            <summary>
+            Decrypt the plaintext <paramref name="ciphertext"/> with an ap[pended date time stamp
+            as associated data.
+            </summary>
+            <param name="ciphertext">The data to encrypt.</param>
+            <param name="timeStamp">The timestamp.</param>
+            <returns>The decrypted data package.</returns>
         </member>
         <member name="T:Goedel.Protocol.Web.EventExtensions">
             <summary>
@@ -47,6 +82,30 @@
             <summary>
             Extensions class
             </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Web.WebExtensions.GetAsFormEncoding(Goedel.Protocol.JsonObject)">
+            <summary>
+            Encode <paramref name="data"/> using the HTTP form encoding.
+            </summary>
+            <param name="data">The object to encode.</param>
+            <returns>The encoded data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Web.WebExtensions.GetAsKeyValue(Goedel.Protocol.JsonObject)">
+            <summary>
+            Extract non-null fields from <paramref name="data"/> and return a set of 
+            tag value pairs for encoding.
+            </summary>
+            <param name="data">The object to encode.</param>
+            <returns>The encoded data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Web.WebExtensions.GetAsUrlQuery(Goedel.Protocol.JsonObject,System.String)">
+            <summary>
+            Extract non-null fields from <paramref name="data"/> and append the result
+            to <paramref name="uri"/> as a URI query string.
+            </summary>
+            <param name="data">The object to encode.</param>
+            <param name="uri">The base URI for the query.</param>
+            <returns>The encoded data.</returns>
         </member>
         <member name="T:Goedel.Protocol.Web.FieldData">
             <summary>

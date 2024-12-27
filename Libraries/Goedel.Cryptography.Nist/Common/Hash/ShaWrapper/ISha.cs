@@ -3,10 +3,10 @@
 /// Provides a SHA implementation for hashing 
 /// </summary>
 public interface ISha {
-    /// <summary>
-    /// The <see cref="HashFunction"/> attributed to the <see cref="ISha"/> instance
-    /// </summary>
-    HashFunction HashFunction { get; }
+    ///// <summary>
+    ///// The <see cref="HashFunction"/> attributed to the <see cref="ISha"/> instance
+    ///// </summary>
+    //HashFunction HashFunction { get; }
 
     /// <summary>
     /// Given a <paramref name="message"/>, return a hash of <paramref name="outLen"/> bytes

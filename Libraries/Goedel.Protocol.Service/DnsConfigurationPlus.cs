@@ -24,7 +24,7 @@
 
 using System.Net;
 
-namespace Goedel.Mesh.ServiceAdmin;
+namespace Goedel.Protocol.Service;
 
 /// <summary>
 /// DNS configuration generator class
@@ -49,7 +49,7 @@ public partial class DnsConfiguration {
     /// </summary>
     /// <param name="Configuration">The host/service configuration.</param>
     /// <param name="output">File to write the output to</param>
-    public static void BindConfig(Configuration Configuration,
+    public static void BindConfig(IServiceConfiguration Configuration,
                 string output) {
         using var outputWriter = output.OpenTextWriterNew();
         var dnsConfiguration = new DnsConfiguration() {
@@ -63,7 +63,7 @@ public partial class DnsConfiguration {
     /// </summary>
     /// <param name="Configuration">The host/service configuration.</param>
     /// <param name="output">File to write the output to</param>
-    public static void NetshConfig(Configuration Configuration,
+    public static void NetshConfig(IServiceConfiguration Configuration,
                 string output) {
         using var outputWriter = output.OpenTextWriterNew();
         var dnsConfiguration = new DnsConfiguration() {

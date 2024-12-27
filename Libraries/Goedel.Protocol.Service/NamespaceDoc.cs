@@ -23,10 +23,11 @@
 global using Goedel.Utilities;
 
 global using Microsoft.Extensions.Logging;
+global using Goedel.Registry;
 
 global using System;
 global using System.Collections.Generic;
-global using System.IO;
+global using Goedel.IO;
 global using System.Net;
 global using System.Net.Sockets;
 global using System.Security.Cryptography;

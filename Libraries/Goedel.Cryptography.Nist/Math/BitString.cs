@@ -133,21 +133,21 @@ public class BitString {
             }
         }
 
-    public BitString(byte[] bytesToConcatenate, int bitLengthToHit) {
-        var maxBytes = bitLengthToHit.CeilingDivide(BITSINBYTE);
-        var bytes = new byte[maxBytes];
+    //public BitString(byte[] bytesToConcatenate, int bitLengthToHit) {
+    //    var maxBytes = bitLengthToHit.CeilingDivide(BITSINBYTE);
+    //    var bytes = new byte[maxBytes];
 
-        for (var i = 0; i < maxBytes; i++) {
-            bytes[i] = bytesToConcatenate[i % bytesToConcatenate.Length];
-            }
+    //    for (var i = 0; i < maxBytes; i++) {
+    //        bytes[i] = bytesToConcatenate[i % bytesToConcatenate.Length];
+    //        }
 
-        var shortenedBits = Helper.MostSignificantByteArrayToLeastSignificantBitArray(bytes);
-        if (shortenedBits.Length > bitLengthToHit) {
-            shortenedBits = shortenedBits.SubArray(0, bitLengthToHit);
-            }
+    //    var shortenedBits = Helper.MostSignificantByteArrayToLeastSignificantBitArray(bytes);
+    //    if (shortenedBits.Length > bitLengthToHit) {
+    //        shortenedBits = shortenedBits.SubArray(0, bitLengthToHit);
+    //        }
 
-        _bits = shortenedBits;
-        }
+    //    _bits = shortenedBits;
+    //    }
     #endregion Constructors
 
     #region Conversions
@@ -181,6 +181,11 @@ public class BitString {
             }
         }
 
+    /// <summary>
+    /// return the bit string as padded bytes.
+    /// </summary>
+    /// <param name="flipLastByte">If true flip the last byte.</param>
+    /// <returns>The result</returns>
     public byte[] GetPaddedBytes(bool flipLastByte = false) {
         if (BitLength % 8 == 0) {
             return ToBytes();
@@ -198,64 +203,10 @@ public class BitString {
             }
         }
 
-    public static BitString To64BitString(long value) {
-        var bytesInLSB = BitConverter.GetBytes(value);
-        var bitArrayLSb = Helper.LeastSignificantByteArrayToLeastSignificantBitArray(bytesInLSB);
-
-        return new BitString(bitArrayLSb);
-        }
-
-    public static BitString To64BitString(ulong value) {
-        var bytesInLSB = BitConverter.GetBytes(value);
-        var bitArrayLSb = Helper.LeastSignificantByteArrayToLeastSignificantBitArray(bytesInLSB);
-
-        return new BitString(bitArrayLSb);
-        }
-
-    public static BitString To32BitString(int value) {
-        var bytesInLSB = BitConverter.GetBytes(value);
-        var bitArrayInLsb = Helper.LeastSignificantByteArrayToLeastSignificantBitArray(bytesInLSB);
-
-        return new BitString(bitArrayInLsb);
-        }
-
-    public static BitString To8BitString(byte value) {
-        return new BitString(new byte[] { value });
-        }
-
-    public static BitString To16BitString(short value) {
-        var bytesInLSB = BitConverter.GetBytes(value);
-        var bitArrayInLsb = Helper.LeastSignificantByteArrayToLeastSignificantBitArray(bytesInLSB);
-
-        return new BitString(bitArrayInLsb);
-        }
-
     /// <summary>
-    /// Returns <see cref="Bits"/> as a string in MSb
+    /// Convert to a positive big integer.
     /// </summary>
-    /// <returns>string representation of <see cref="Bits"/></returns>
-    public override string ToString() {
-        if (BitLength == 0) {
-            return "";
-            }
-
-        var builder = new StringBuilder();
-        var offset = BitLength % BITSINBYTE;
-
-        for (var bit = 0; bit < BitLength; bit++) {
-            // Add a space to the builder if the bit is a multiple of 8, but not the last character
-            if (bit % BITSINBYTE == offset && bit > 0) {
-                builder.Append(" ");
-                }
-
-            builder.Append(Bits[bit] ? "1" : "0");
-            }
-
-        // Note: reversing the string in order to represent a "most significant bit" order. 
-        // e.g. "3" is written as "00000011" rather than "11000000".
-        return new string(builder.ToString().Reverse().ToArray());
-        }
-
+    /// <returns>The result</returns>
     public BigInteger ToPositiveBigInteger() {
         //var padding = BITSINBYTE - (BitLength % BITSINBYTE) + BITSINBYTE;
         var padding = BITSINBYTE - (BitLength % BITSINBYTE);
@@ -265,6 +216,10 @@ public class BitString {
         return new BigInteger(paddedBitString.ToBytes(true));
         }
 
+    /// <summary>
+    /// Convert to a hex string.
+    /// </summary>
+    /// <returns>The result</returns>
     public string ToHex() {
         if (BitLength == 0) {
             return "";
@@ -295,202 +250,10 @@ public class BitString {
         return hex.ToString().ToUpper();
         }
 
-    /// <summary>
-    /// Only for use in SHA3
-    /// </summary>
-    /// <returns>Normal hex, but the last byte is truncated to match little endian format</returns>
-    public string ToLittleEndianHex() {
-        if (BitLength == 0) {
-            return "00";
-            }
-
-        var bytes = new byte[] { };
-
-        // Make a padded BitString if the length isn't % 8
-        if (BitLength % BITSINBYTE != 0) {
-            var padding = BITSINBYTE - BitLength % BITSINBYTE;
-            var extraBits = BitLength % BITSINBYTE;
-            var lastBits = this.Substring(0, extraBits);
-
-            var paddedBS = new BitString(0);
-            if (BitLength < BITSINBYTE) {
-                paddedBS = BitString.Zeroes(padding);
-                paddedBS = BitString.ConcatenateBits(paddedBS, lastBits);
-                }
-            else {
-                var firstBits = this.Substring(extraBits, BitLength - extraBits);
-                paddedBS = BitString.ConcatenateBits(paddedBS, firstBits);
-
-                paddedBS = BitString.ConcatenateBits(paddedBS, BitString.Zeroes(padding));
-                paddedBS = BitString.ConcatenateBits(paddedBS, lastBits);
-                }
-
-            bytes = paddedBS.ToBytes();
-            }
-        else {
-            bytes = ToBytes();
-            }
-
-        StringBuilder hex = new StringBuilder(bytes.Length * 2);
-        for (int index = 0; index < bytes.Length; index++) {
-            hex.AppendFormat("{0:x2}", bytes[index]);
-            }
-
-        return hex.ToString().ToUpper();
-        }
-
-    /// <summary>
-    /// Returns the MSb (or index of the LSb array) as a boolean value
-    /// </summary>
-    /// <param name="index">Index of the LSb BitArray to retrieve</param>
-    /// <returns>Boolean of a specific bit.</returns>
-    public bool ToBool(int index = -1) {
-        if (index < 0) {
-            index = Bits.Length - 1;
-            }
-        return Bits[index];
-        }
-
-    public BitString ToOddParityBitString() {
-        var bitStringAsBytes = ToBytes();
-        var oddParityBytes = bitStringAsBytes.SetOddParityBitInSuppliedBytes();
-        return new BitString(oddParityBytes);
-        }
     #endregion Conversions
 
     #region Logical Operators
-    public static BitString XOR(BitString sourceLeft, BitString sourceRight) {
-        // Deep copies to avoid accidental assignment
-        BitString left = sourceLeft.GetDeepCopy();
-        BitString right = sourceRight.GetDeepCopy();
 
-        // Pad shorter BitString with 0s to match longer BitString length
-        BitString.PadShorterBitStringWithZeroes(ref left, ref right);
-        BitArray xorArray = left.Bits.Xor(right.Bits);
-
-        return new BitString(new BitArray(xorArray));
-        }
-
-    public BitString XOR(BitString comparisonBitString) {
-        return XOR(this, comparisonBitString);
-        }
-
-    public static BitString OR(BitString sourceLeft, BitString sourceRight) {
-        // Deep copies to avoid accidental assignment
-        BitString left = sourceLeft.GetDeepCopy();
-        BitString right = sourceRight.GetDeepCopy();
-
-        BitString.PadShorterBitStringWithZeroes(ref left, ref right);
-        BitArray orArray = left.Bits.Or(right.Bits);
-
-        return new BitString(new BitArray(orArray));
-        }
-
-    public BitString OR(BitString comparisonBitString) {
-        return OR(this, comparisonBitString);
-        }
-
-    public static BitString AND(BitString sourceLeft, BitString sourceRight) {
-        BitString left = sourceLeft.GetDeepCopy();
-        BitString right = sourceRight.GetDeepCopy();
-
-        BitString.PadShorterBitStringWithZeroes(ref left, ref right);
-        BitArray andArray = left.Bits.And(right.Bits);
-
-        return new BitString(new BitArray(andArray));
-        }
-
-    public BitString AND(BitString comparisonBitString) {
-        return AND(this, comparisonBitString);
-        }
-
-    public static BitString NOT(BitString source) {
-        BitString val = source.GetDeepCopy();
-        return new BitString(val.Bits.Not());
-        }
-
-    public BitString NOT() {
-        return NOT(this);
-        }
-
-    /// <summary>
-    /// Rotates bits in the MSB direction. Rotate puts the bits that 'fall off' onto the end.
-    /// </summary>
-    /// <param name="shiftBitString">BitString to rotate</param>
-    /// <param name="distance">Amount the bits to rotate.</param>
-    /// <returns>Rotated BitString</returns>
-    public static BitString MSBRotate(BitString shiftBitString, int distance) {
-        var bits = shiftBitString.GetDeepCopy().GetBitsMSB();
-        var bitLength = shiftBitString.BitLength;
-        var newBits = new bool[bitLength];
-
-        for (var i = 0; i < bitLength; i++) {
-            newBits[i] = bits[(i + distance) % bitLength];
-            }
-
-        Array.Reverse(newBits);
-        return new BitString(new BitArray(newBits));
-        }
-
-    public BitString MSBRotate(int distance) {
-        return MSBRotate(this, distance);
-        }
-
-    /// <summary>
-    /// Rotates bist in the LSB direction. Rotate puts the bits that 'fall off' onto the end.
-    /// </summary>
-    /// <param name="bStr"></param>
-    /// <param name="distance">Amount the bits to rotate.</param>
-    /// <returns></returns>
-    public static BitString LSBRotate(BitString bStr, int distance) {
-        var minDistance = distance % bStr.BitLength;
-        return BitString.MSBRotate(bStr, bStr.BitLength - minDistance);
-        }
-
-    public BitString LSBRotate(int distance) {
-        return BitString.LSBRotate(this, distance);
-        }
-
-    /// <summary>
-    /// Shifts bits in the LSB direction. Shift adds 0s to the end.
-    /// </summary>
-    /// <remarks>Keeps output length same as input.</remarks>
-    /// <param name="bStr">THe bitstring to shift</param>
-    /// <returns></returns>
-    public static BitString LSBShift(BitString bStr) {
-        var block = bStr.ToBytes();
-        var output = new byte[block.Length];
-
-        int i = block.Length;
-        uint bit = 0;
-        while (--i >= 0) {
-            uint b = block[i];
-            output[i] = (byte)((b << 1) | bit);
-            bit = (b >> 7) & 1;
-            }
-
-        return new BitString(output).GetLeastSignificantBits(bStr.BitLength);
-        }
-
-    public BitString LSBShift() {
-        return BitString.LSBShift(this);
-        }
-
-    public static BitString BitStringSubtraction(BitString larger, BitString smaller) {
-        var largerVal = larger.ToPositiveBigInteger();
-        var smallerVal = smaller.ToPositiveBigInteger();
-
-        if (smallerVal > largerVal) {
-            throw new ArgumentException("Unable to subtract, leads to negative value");
-            }
-
-        var result = largerVal - smallerVal;
-        return new BitString(result, larger.BitLength);
-        }
-
-    public BitString BitStringSubtraction(BitString right) {
-        return BitStringSubtraction(this, right);
-        }
 
     /// <summary>
     /// Adds two bit strings together - e.g. "11" (3) + 111 (7) = 1010 (10).
@@ -528,45 +291,7 @@ public class BitString {
         return new BitString(new BitArray(bits.ToArray()));
         }
 
-    /// <summary>
-    /// Adds two bit strings together - e.g. "11" (3) + 111 (7) = 1010 (10).
-     /// </summary>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
-    /// <returns></returns>
-    public BitString BitStringAddition(BitString right) {
-        return BitStringAddition(this, right);
-        }
 
-    /// <summary>
-    /// Adds two BitStrings and truncates the result to fit within the limit.
-    /// </summary>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
-    /// <param name="moduloPower">Amount of bits kept in the result.</param>
-    /// <returns></returns>
-    public static BitString AddWithModulo(BitString left, BitString right, int moduloPower) {
-        var leftBits = left.GetDeepCopy().GetBitsMSB();
-        var rightBits = right.GetDeepCopy().GetBitsMSB();
-        var resultBits = new bool[moduloPower];
-        var carryOver = false;
-
-        for (var i = moduloPower - 1; i >= 0; i--) {
-            // Lack of implicit conversion here is gross
-            var bitResult = Convert.ToInt32(leftBits[i]) + Convert.ToInt32(rightBits[i]) + Convert.ToInt32(carryOver);
-
-            carryOver = (bitResult >= 2);
-            resultBits[i] = (bitResult % 2 == 1);
-            }
-
-        Array.Reverse(resultBits);
-
-        return new BitString(new BitArray(resultBits));
-        }
-
-    public BitString AddWithModulo(BitString right, int moduloPower) {
-        return AddWithModulo(this, right, moduloPower);
-        }
     #endregion Logical Operators
 
     #region Getters and Setters
@@ -577,43 +302,28 @@ public class BitString {
         get { return _bits; }
         }
 
+    /// <summary>
+    /// Return the length in bits.
+    /// </summary>
     public int BitLength {
         get { return _bits.Length; }
         }
 
+
     /// <summary>
-    /// Gets/Sets the byte at index specified.
-    /// Index 0 is the most significant byte.
+    /// Return a deep copy of this array
     /// </summary>
-    /// <param name="index">The index to get/set (index 0 is most significant byte)</param>
-    /// <returns></returns>
-    public byte this[int index] {
-        get {
-            // Get bits for index (bits are in LSb, whereas bytes as MSB).
-            // So byte index 0, is the last 8 bits of the BitArray
-            BitString bits = this.Substring(BitLength - ((index + 1) * 8), 8);
-
-            return bits.ToBytes().FirstOrDefault();
-            }
-        set {
-            // Put the single byte in a byte array
-            byte[] byteArray = new byte[1] { value };
-            // convert that byte array to a bit array
-            BitArray bits = new BitArray(byteArray);
-
-            // For each bit, set that bit in this, 
-            // noting that bits and bytes are in opposite endianness.
-            for (int i = 0; i < bits.Length; i++) {
-                var bitToSet = BitLength - ((index + 1) * 8) + i;
-                this.Set(bitToSet, bits[i]);
-                }
-            }
-        }
-
+    /// <returns>The copy.</returns>
     public BitString GetDeepCopy() {
         return new BitString(new BitArray(_bits));
         }
 
+    /// <summary>
+    /// Set the bit at index <paramref name="bitIndex"/> to <paramref name="value"/>.
+    /// </summary>
+    /// <param name="bitIndex">The index</param>
+    /// <param name="value">The value.</param>
+    /// <returns>True if successful, otherwise false.</returns>
     public bool Set(int bitIndex, bool value) {
         if ((bitIndex < 0) || (bitIndex >= BitLength)) {
             return false;
@@ -623,38 +333,56 @@ public class BitString {
         return true;
         }
 
+    /// <summary>
+    /// Get the most significant bits of the bit string <paramref name="bitString"/>.
+    /// </summary>
+    /// <param name="numBits">Number of bits</param>
+    /// <param name="bitString">Bit string to process.</param>
+    /// <returns>The bit string.</returns>
     public static BitString GetMostSignificantBits(int numBits, BitString bitString) {
-        return BitString.Substring(bitString, bitString.BitLength - numBits, numBits);
+        return Substring(bitString, bitString.BitLength - numBits, numBits);
         }
 
+    /// <summary>
+    /// Get the most significant bits of this bit string.
+    /// </summary>
+    /// <param name="numBits">Number of bits</param>
+    /// <returns>The bit string.</returns>
     public BitString GetMostSignificantBits(int numBits) {
         return BitString.GetMostSignificantBits(numBits, this);
         }
 
+    /// <summary>
+    /// Get the least significant bits of the bit string <paramref name="bitString"/>.
+    /// </summary>
+    /// <param name="numBits">Number of bits</param>
+    /// <param name="bitString">Bit string to process.</param>
+    /// <returns>The bit string.</returns>
     public static BitString GetLeastSignificantBits(int numBits, BitString bitString) {
         return BitString.Substring(bitString, 0, numBits);
         }
 
+    /// <summary>
+    /// Get the least significant bits of this bit string.
+    /// </summary>
+    /// <param name="numBits">Number of bits</param>
+    /// <returns>The bit string.</returns>
     public BitString GetLeastSignificantBits(int numBits) {
         return BitString.GetLeastSignificantBits(numBits, this);
         }
     #endregion Getters and Setters
 
     #region Concatenation
+
+    /// <summary>
+    /// Append bits from <paramref name="bitsToAppend"/>
+    /// </summary>
+    /// <param name="bitsToAppend">The bits to append.</param>
+    /// <returns>The appended bits.</returns>
     public BitString ConcatenateBits(BitString bitsToAppend) {
-        return BitString.ConcatenateBits(this, bitsToAppend);
+        return ConcatenateBits(this, bitsToAppend);
         }
 
-    public BitString ConcatenateBits(BitString bitsToAppend, int numberOfTimesToAppend) {
-        var bs = this;
-
-        while (numberOfTimesToAppend != 0) {
-            bs = bs.ConcatenateBits(bitsToAppend);
-            numberOfTimesToAppend--;
-            }
-
-        return bs;
-        }
 
     /// <summary>
     /// Concatenates two <see cref="BitString"/>.
@@ -699,21 +427,25 @@ public class BitString {
         return new BitString(new BitArray(newBits));
         }
 
-    public BitString Substring(int startIndex, int numberOfBits) {
-        return Substring(this, startIndex, numberOfBits);
-        }
+
 
     /// <summary>
     /// Gets a substring of bits from the MSB direction. 
     /// </summary>
-    /// <param name="bsToSub"></param>
+    /// <param name="bsToSub">BitString to pull bits from.</param>
     /// <param name="startIndex">Start index from the MSB side. Most significant bit is index 0.</param>
     /// <param name="numberOfBits"></param>
-    /// <returns></returns>
+    /// <returns>The result</returns>
     public static BitString MSBSubstring(BitString bsToSub, int startIndex, int numberOfBits) {
         return Substring(bsToSub, bsToSub.BitLength - startIndex - numberOfBits, numberOfBits);
         }
 
+    /// <summary>
+    /// Return the most significant bit string.
+    /// </summary>
+    /// <param name="startIndex">The start index</param>
+    /// <param name="numberOfBits">The number of bits.</param>
+    /// <returns>The result</returns>
     public BitString MSBSubstring(int startIndex, int numberOfBits) {
         return MSBSubstring(this, startIndex, numberOfBits);
         }
@@ -725,13 +457,15 @@ public class BitString {
     /// Returns the original BitString if already at a byte boundry.
     /// </summary>
     /// <param name="bs">The BitString to pad.</param>
+    /// <param name="padOntoLsb">Flag</param>
     /// <returns></returns>
     public static BitString PadToNextByteBoundry(BitString bs, bool padOntoLsb = true) {
         return PadToModulus(bs, BITSINBYTE, padOntoLsb);
         }
 
     /// <summary>
-    /// Takes a BitString and adds LSBs (or MSBs when <see cref="padOntoLsb"/> is false) to make the BitString hit (BitString % modulus = 0)
+    /// Takes a BitString and adds LSBs (or MSBs when <paramref name="padOntoLsb"/> is false) to make 
+    /// the BitString hit (BitString % modulus = 0)
     /// </summary>
     /// <param name="bs">The BitString to pad</param>
     /// <param name="modulus">The modulus to pad the bitstring such that BitString % modulusToHit = 0</param>
@@ -749,19 +483,14 @@ public class BitString {
             new BitString(bitsToAdd).ConcatenateBits(bs);
         }
 
-    public static BitString PadToModulusMsb(BitString bs, int modulus) {
-        return PadToModulus(bs, modulus, false);
-        }
 
-    public BitString PadToModulus(int modulus, bool padOntoLsb = true) {
-        return PadToModulus(this, modulus, padOntoLsb);
-        }
-
-    public BitString PadToModulusMsb(int modulus) {
-        return PadToModulusMsb(this, modulus);
-        }
     #endregion Padding
+    ///<inheritdoc/>
+    public override int GetHashCode() { // Must override this since we override equals.
+        return this.ToHex().GetHashCode();
+        }
 
+    ///<inheritdoc/>
     public override bool Equals(object obj) {
         var otherBitString = obj as BitString;
         if (otherBitString == null) {
@@ -784,76 +513,19 @@ public class BitString {
         return true;
         }
 
-    public override int GetHashCode() {
-        return this.ToHex().GetHashCode();
-        }
 
     /// <summary>
-    /// Get an empty bitstring, useful as a starting point of concatenation and/or to avoid null.
+    /// Return an array of zero bits.
     /// </summary>
-    /// <returns></returns>
-    public static BitString Empty() {
-        return new BitString(0);
-        }
-
-    public static BitString Zero() {
-        return Zeroes(1);
-        }
-
+    /// <param name="length">Length of the array.</param>
+    /// <returns>The result.</returns>
     public static BitString Zeroes(int length) {
         var bits = new BitArray(length);
         bits.SetAll(false);
         return new BitString(bits);
         }
 
-    public static BitString One() {
-        return Ones(1);
-        }
 
-    public static BitString Two() {
-        return new BitString("80", 2);
-        }
-
-    public static BitString Ones(int length) {
-        var bits = new BitArray(length);
-        bits.SetAll(true);
-        return new BitString(bits);
-        }
-
-    public static BitString ReverseByteOrder(BitString input) {
-        return new BitString(MsbLsbConversionHelpers.ReverseByteOrder(input.ToBytes()));
-        }
-
-    /// <summary>
-    /// Returns a zero length bitstring when passed a null, otherwise returns the bitstring
-    /// </summary>
-    /// <param name="bitString"></param>
-    /// <returns></returns>
-    public static BitString GetAtLeastZeroLengthBitString(BitString bitString) {
-        if (bitString == null)
-            return new BitString(0);
-
-        return bitString;
-        }
-
-    public static bool IsZeroLengthOrNull(BitString bitString) {
-        if (bitString == null) {
-            return true;
-            }
-
-        return bitString.BitLength == 0;
-        }
-
-    public int NumberOfZeros() {
-        int numberOfZeros = 0;
-        foreach (bool bit in _bits) {
-            if (!bit) {
-                numberOfZeros++;
-                }
-            }
-
-        return numberOfZeros;
-        }
 
     #region Private methods
     private static void PadShorterBitStringWithZeroes(ref BitString inputA, ref BitString inputB) {
@@ -878,16 +550,7 @@ public class BitString {
         return new BitString(newArray);
         }
 
-    // Return an array of bits with MSB in the first index
-    private bool[] GetBitsMSB() {
-        bool[] MSBBits = new bool[BitLength];
-        for (var i = 0; i < BitLength; i++) {
-            MSBBits[i] = Bits[i];
-            }
 
-        Array.Reverse(MSBBits);
-        return MSBBits;
-        }
     #endregion Private methods
     }
 

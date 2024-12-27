@@ -6,8 +6,8 @@ public static class ListExtensions {
     /// <summary>
     /// Adds a string to a <paramref name="list"/> when the string is not null or empty, otherwise do nothing.
     /// </summary>
-    /// <param name="list">The list to (potentially) add the <see cref="itemToAdd"/> too</param>
-    /// <param name="itemToAdd">The item that is evaluated for adding to <see cref="list"/></param>
+    /// <param name="list">The list to (potentially) add the <paramref name="itemToAdd"/> to.</param>
+    /// <param name="itemToAdd">The item that is evaluated for adding to <paramref name="list"/></param>
     /// <returns>True if item added, false otherwise.</returns>
     public static bool AddIfNotNullOrEmpty(this List<string> list, string itemToAdd) {
         if (!string.IsNullOrEmpty(itemToAdd)) {

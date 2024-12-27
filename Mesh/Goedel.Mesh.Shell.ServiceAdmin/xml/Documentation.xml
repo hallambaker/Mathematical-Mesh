@@ -400,7 +400,7 @@
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Netsh.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Netsh.DnsConfig">
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Netsh.NetshConfig">
             <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Netsh.HostConfig">

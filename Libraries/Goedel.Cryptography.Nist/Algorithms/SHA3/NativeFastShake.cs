@@ -5,15 +5,15 @@
 /// </summary>
 public class NativeFastShake : NativeFastKeccakBase, IShake {
     
-    ///<inheritdoc/>
-    public HashFunction HashFunction {
-        get {
-            var hashFunction = ShaAttributes.GetShaAttributes()
-                .FirstOrDefault(sha => sha.mode == ModeValues.SHAKE && sha.outputLen == _bitLength);
+    /////<inheritdoc/>
+    //public HashFunction HashFunction {
+    //    get {
+    //        var hashFunction = ShaAttributes.GetShaAttributes()
+    //            .FirstOrDefault(sha => sha.mode == ModeValues.SHAKE && sha.outputLen == _bitLength);
 
-            return new HashFunction(hashFunction.mode, hashFunction.digestSize);
-            }
-        }
+    //        return new HashFunction(hashFunction.mode, hashFunction.digestSize);
+    //        }
+    //    }
 
     private readonly int _bitLength;
     private BitString _cachedBits;

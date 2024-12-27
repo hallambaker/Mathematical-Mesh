@@ -426,13 +426,60 @@
             Support classes for OAuth, OpenID etc.
             </summary>
         </member>
+        <member name="T:Goedel.Cryptography.Oauth.OauthClient">
+            <summary>
+            An OAUTH client class.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.OauthClient.ClientMetadata">
+            <summary>Client description.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.OauthClient.ClientMetadataBytes">
+            <summary>ClientMetadata as byte array.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.OauthClient.SessionManager">
+            <summary>The session manager storing state between requests.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.OauthClient.SecretKey">
+            <summary>Secret key used to construct challenge and verifier values.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.OauthClient.EncryptedTokenManager">
+            <summary>Encrypted state token manager.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthClient.#ctor(System.String,System.String,Goedel.Cryptography.Oauth.JWKS)">
+            <summary>
+            Constructor, returns an instance with client URI <paramref name="clientId"/>, redirect
+            URI <paramref name="redirectUri"/> and keys <paramref name="keys"/>.
+            </summary>
+            <param name="clientId">The client identifier.</param>
+            <param name="redirectUri">The redirect URL</param>
+            <param name="keys">The keys for encryption and signature.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthClient.GenKey(Goedel.Cryptography.KeyUses)">
+            <summary>
+            Generate a key for use with OAUTH client.
+            </summary>
+            <param name="keyUses">Key uses, either <see cref="F:Goedel.Cryptography.KeyUses.Sign"/> or 
+            <see cref="F:Goedel.Cryptography.KeyUses.Encrypt"/>.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthClient.PreRequest(System.String,System.String)">
+            <summary>
+            Make a Pushed Authorization request for handle <paramref name="handle"/> with context
+            <paramref name="state"/>.
+            </summary>
+            <param name="handle">The ATprotocol handle.</param>
+            <param name="state">State to be preserved between pre request
+            and completion.</param>
+            <returns>A client result.</returns>
+        </member>
         <member name="M:Goedel.Cryptography.Oauth.OauthClient.ConstructPar(Goedel.Cryptography.Oauth.OauthHandleResolution,System.String)">
             <summary>
             Construct a Pushed Authorization Request as per RFC 9126
             </summary>
             <param name="handle"></param>
             <param name="state"></param>
-            <returns></returns>
+            <returns>The authorization request instance.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Oauth.OauthClient.GetCodeVerifier(Goedel.Cryptography.Oauth.EncodedState)">
             <summary>
@@ -452,6 +499,56 @@
             </summary>
             <param name="state">The state variable including nonce.</param>
             <returns>Base64URL encoded challenge string.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthClient.ParseResponse(System.Uri)">
+            <summary>
+            Pares a response URI to recover the data from the authorization server.
+            </summary>
+            <param name="responseUri">The response URI.</param>
+            <returns>The parsed result and recovered state.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthClient.TrimHandle(System.String)">
+            <summary>
+            Trim an @nything handle to remove the leading @ if present and any trailing whitespace.
+            </summary>
+            <param name="handle">The handle to trim.</param>
+            <returns>The trimmed handle</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.OauthClientResult">
+            <summary>
+            OAUTH Client operation result
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.OauthClientResultFail">
+            <summary>
+            OAUTH Client operation fail result
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.OauthClientResultPreRequest">
+            <summary>
+            OAUTH Client operation successful pre request.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.OauthClientResultPreRequest.RedirectUri">
+            <summary>The URI to which the user client is to be redirected.</summary> 
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.OauthClientResultAuthRequest">
+            <summary>
+            OAUTH Client operation successful auth request.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.OauthClientResultAuthRequest.RedirectUri">
+            <summary>The URI to redirect the client to on completion.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.OauthClientResultAuthRequest.Handle">
+            <summary>The user's handle</summary>     
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.OauthClientResultAuthRequest.DID">
+            <summary>The user's DID</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.OauthClientResultAuthRequest.Nonce">
+            <summary>The nonce value used to construct the PKCE verifier and 
+            challenge.</summary> 
         </member>
         <member name="T:Goedel.Cryptography.Oauth.ApplicationType">
             <summary>Application Types</summary>
@@ -1295,7 +1392,7 @@
              Human-readable ASCII [USASCII] text providing additional information, used to 
             assist the client developer in understanding the error that occurred. Values for
             the error_description parameter MUST NOT include characters outside the set 
-            %x20-21 %x23-5B / %x5D-7E.
+            %x20-21 / %x23-5B / %x5D-7E.
              </summary>
         </member>
         <member name="P:Goedel.Cryptography.Oauth.ErrorResponse.ErrorUri">
@@ -1481,6 +1578,12 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="T:Goedel.Cryptography.Oauth.CachedDocument`1">
+            <summary>
+            Generic cached data class.
+            </summary>
+            <typeparam name="T">The type of data to cache.</typeparam>
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.CachedDocument`1.Value">
             <summary>The value.</summary> 
         </member>
@@ -1492,6 +1595,23 @@
         </member>
         <member name="P:Goedel.Cryptography.Oauth.CachedDocument`1.AccessedThis">
             <summary>Number of times the item has been accessed this period so far.</summary> 
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.ResolutionDelegate`2">
+            <summary>
+            Resolution delegate.
+            </summary>
+            <typeparam name="K">The key type</typeparam>
+            <typeparam name="T">The resolved data type</typeparam>
+            <param name="key">The key.</param>
+            <param name="last">The previous value of the data or null if newly created.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.DocumentCache`2">
+            <summary>
+            A document cache.
+            </summary>
+            <typeparam name="K">The key type</typeparam>
+            <typeparam name="T">The resolved data type</typeparam>
         </member>
         <member name="F:Goedel.Cryptography.Oauth.DocumentCache`2.Expire">
             <summary>Time after which documents are considered expired</summary> 
@@ -1509,6 +1629,13 @@
             </summary>
             <param name="resolver">The resolver delegate.</param>
         </member>
+        <member name="M:Goedel.Cryptography.Oauth.DocumentCache`2.GetValueAsync(`0)">
+            <summary>
+            Attempt to obtain a document corresponding to the key <paramref name="key"/>
+            </summary>
+            <param name="key">The document key to resolve.</param>
+            <returns>The value if found, otherwise null.</returns>
+        </member>
         <member name="M:Goedel.Cryptography.Oauth.DocumentCache`2.Purge(System.Int32)">
             <summary>
             Purge the cache. This will require a locking mechanism. Best approach is probably
@@ -1525,12 +1652,78 @@
             Session manager class, supports OAUTH and other login modes.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Oauth.SessionManager.HandleToDid(System.String)">
+        <member name="M:Goedel.Cryptography.Oauth.SessionManager.#ctor">
             <summary>
-            Return the DID associated with the handle <paramref name="handle"/>.
+            Constructor returning a new instance
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.SessionManager.TryResolveDid(System.String)">
+            <summary>
+            Attempt resolution of the handle <paramref name="handle"/> to a DID Document.
             </summary>
             <param name="handle"></param>
             <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.SessionManager.TryResolveDid(System.String,Goedel.Cryptography.Oauth.CachedDocument{Goedel.Cryptography.Oauth.DidDocument})">
+            <summary>
+            Attempt resolution of the DID <paramref name="key"/>
+            </summary>
+            <param name="key">The DID to resolve</param>
+            <param name="last">The result of the last resolution, if existing.</param>
+            <returns>The DID document if found, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.SessionManager.TryResolveResourceServer(Goedel.Cryptography.Oauth.DidDocument)">
+            <summary>
+            Attempt resolution of the resource server specified in  <paramref name="document"/>
+            </summary>
+            <param name="document">The DID Document to resolve</param>
+            <returns>The DID document if found, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.SessionManager.TryResolveResourceServer(System.String,Goedel.Cryptography.Oauth.CachedDocument{Goedel.Cryptography.Oauth.ResourceServerMetadata})">
+            <summary>
+            Attempt resolution of the resource server specified by <paramref name="key"/>
+            </summary>
+            <param name="key">The URI to resolve</param>
+            <param name="last">The result of the last resolution, if existing.</param>
+            <returns>The Resource Server Metadata if found, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.SessionManager.TryResolveAuthServer(System.String)">
+            <summary>
+            Attempt resolution of the auth server specified by <paramref name="key"/>
+            </summary>
+            <param name="key">The URI to resolve</param>
+            <returns>The Authorization Server Metadata if found, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.SessionManager.TryResolveHandle(System.String)">
+            <summary>
+            Attempt resolution of the handle <paramref name="handle"/> and return the result.
+            </summary>
+            <param name="handle">The handle to resolve.</param>
+            <returns>Object containing the result of the resolution.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.OauthHandleResolution">
+            <summary>
+            Result of resolving the handle <paramref name="Handle"/>
+            </summary>
+            <param name="Handle">The handle resolved.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthHandleResolution.#ctor(System.String)">
+            <summary>
+            Result of resolving the handle <paramref name="Handle"/>
+            </summary>
+            <param name="Handle">The handle resolved.</param>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.OauthHandleResolution.Handle">
+            <summary>The handle resolved.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthHandleResolution.DidDocument">
+            <summary>The DID document corresponding to the handle.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthHandleResolution.ResourceServerMetadata">
+            <summary>The resource server metadata</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.OauthHandleResolution.AuthorizationServerMetadata">
+            <summary>The authorization server metadata.</summary> 
         </member>
     </members>
 </doc>

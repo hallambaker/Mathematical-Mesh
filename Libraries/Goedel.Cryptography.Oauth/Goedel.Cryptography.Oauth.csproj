@@ -22,10 +22,12 @@
 
 	<ItemGroup>
 	  <Compile Update="OauthSchema.cs">
+		  <DependentUpon>OauthSchema.Protocol</DependentUpon>
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	  </Compile>
 	  <Compile Update="OauthConstants.cs">
+		  <DependentUpon>OauthConstants.constant</DependentUpon>
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	  </Compile>

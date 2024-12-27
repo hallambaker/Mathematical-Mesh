@@ -13,7 +13,6 @@ public class GuigenFieldList : GuigenField, IWidget {
 
     Layout Layout { get; }
 
-    IBindable entryField;
     public ISelectList Collection { get; set; }
 
     public GuigenFieldList(

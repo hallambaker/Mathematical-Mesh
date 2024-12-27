@@ -10,9 +10,9 @@ public interface IEntropyProvider {
     /// <returns>Entropy as a <see cref="BitString"/></returns>
     BitString GetEntropy(int numberOfBits);
 
-    BigInteger GetEntropy(BigInteger minInclusive, BigInteger maxInclusive);
+    //BigInteger GetEntropy(BigInteger minInclusive, BigInteger maxInclusive);
 
-    void AddEntropy(BitString entropy);
-    void AddEntropy(BigInteger entropy);
+    //void AddEntropy(BitString entropy);
+    //void AddEntropy(BigInteger entropy);
     }
 

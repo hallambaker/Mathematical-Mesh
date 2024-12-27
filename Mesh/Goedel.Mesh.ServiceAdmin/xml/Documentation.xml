@@ -9,7 +9,7 @@
             Service/Host configuration.
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.ServiceAdmin.Configuration.Dictionary">
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.Dictionary">
             <summary>Maps configuration entry to configuration.</summary> 
         </member>
         <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.DareLogger">
@@ -71,59 +71,6 @@
             Write configuration to file.
             </summary>
             <param name="path">The output filename.</param>
-        </member>
-        <member name="T:Goedel.Mesh.ServiceAdmin.DnsConfiguration">
-            <summary>
-            DNS configuration generator class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.DnsConfiguration.BindConfig(Goedel.Mesh.ServiceAdmin.Configuration)">
-            <summary>	
-            BindConfig
-            </summary>
-            <param name="options"></param>
-        </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.DnsConfiguration.NetshConfig(Goedel.Mesh.ServiceAdmin.Configuration)">
-            <summary>	
-            NetshConfig
-            </summary>
-            <param name="options"></param>
-        </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.DnsConfiguration.BindConfig(Goedel.Mesh.ServiceAdmin.Configuration,System.String)">
-            <summary>
-            Generate a BIND configuration file for the service config.
-            </summary>
-            <param name="Configuration">The host/service configuration.</param>
-            <param name="output">File to write the output to</param>
-        </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.DnsConfiguration.NetshConfig(Goedel.Mesh.ServiceAdmin.Configuration,System.String)">
-            <summary>
-            Generate a Windows configuration file for the service config.
-            </summary>
-            <param name="Configuration">The host/service configuration.</param>
-            <param name="output">File to write the output to</param>
-        </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.DnsConfiguration.GetPort(System.String)">
-            <summary>
-            Returns the port component of the IP address <paramref name="address"/>
-            </summary>
-            <param name="address">The IP address to return the port component from.</param>
-            <returns>The port component</returns>
-        </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.DnsConfiguration.GetAddress(System.String)">
-            <summary>
-            Returns the address component of the IP address <paramref name="address"/>
-            </summary>
-            <param name="address">The IP address to return the address component from.</param>
-            <returns>The address component</returns>
-        </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.DnsConfiguration.GetAQuadA(System.String)">
-            <summary>
-            Returns the address component of the IP address  <paramref name="address"/> 
-            prefixed by A for IPV4 addresses and AAAA for IPv6 addresses
-            </summary>
-            <param name="address">The IP address to return the port component from.</param>
-            <returns>The port component</returns>
         </member>
         <member name="T:Goedel.Mesh.ServiceAdmin.InvalidConfiguration">
             <summary>

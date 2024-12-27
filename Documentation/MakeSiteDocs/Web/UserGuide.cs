@@ -16,7 +16,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// WebDocs
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Index"></param>
 	public void WebDocs (CreateExamples Index) {
 		 Web (Index);
 		 UserGuide (Index);
@@ -66,7 +66,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// ConsoleExample
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="exampleResults"></param>
 	public void ConsoleExample (List<ExampleResult> exampleResults) {
 		 if (exampleResults == null) { ReportMissingExample(); return;}
 		_Output.Write ("\n{0}", _Indent);
@@ -86,7 +86,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// DescribeRequest
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="trace"></param>
 	public void DescribeRequest (TraceTransaction trace) {
 		 if (trace == null) {ReportMissing(); return;}
 		_Output.Write ("\n{0}", _Indent);
@@ -97,7 +97,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// DescribeResponse
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="trace"></param>
 	public void DescribeResponse (TraceTransaction trace) {
 		 if (trace == null) {ReportMissing(); return;}
 		_Output.Write ("\n{0}", _Indent);
@@ -108,7 +108,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// DescribeRequestBinding
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="trace"></param>
 	public void DescribeRequestBinding (TraceTransaction trace) {
 		 if (trace == null) {ReportMissing(); return;}
 		_Output.Write ("~~~~\n{0}", _Indent);
@@ -122,7 +122,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// DescribeResponseBinding
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="trace"></param>
 	public void DescribeResponseBinding (TraceTransaction trace) {
 		 if (trace == null) {ReportMissing(); return;}
 		_Output.Write ("~~~~\n{0}", _Indent);
@@ -136,7 +136,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// Format
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="data"></param>
 	public void Format (JsonObject data) {
 		 if (data == null) {ReportMissing(); return;}
 		_Output.Write ("{1}\n{0}", _Indent, Preformat);
@@ -147,7 +147,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// ConsoleJSON
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="exampleResults"></param>
 	public void ConsoleJSON (List<ExampleResult> exampleResults) {
 		 if (exampleResults == null) {ReportMissing(); return;}
 		 var exampleResult = exampleResults[0];
@@ -163,7 +163,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// ConsoleReference
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="exampleResults"></param>
 	public void ConsoleReference (List<ExampleResult> exampleResults) {
 		 if (exampleResults == null) {ReportMissing(); return;}
 		 var exampleResult = exampleResults[0];
@@ -181,7 +181,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// ConsoleReference2
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="exampleResults"></param>
 	public void ConsoleReference2 (List<ExampleResult> exampleResults) {
 		 if (exampleResults == null) {ReportMissing(); return;}
 		 var exampleResult = exampleResults[0];
@@ -386,7 +386,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// Describe
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="CommandSet"></param>
 	public void Describe (DescribeCommandSet CommandSet) {
 		_Output.Write ("# {1}\n{0}", _Indent, CommandSet.Identifier);
 		_Output.Write ("\n{0}", _Indent);
@@ -402,8 +402,8 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// Describe
 	/// </summary>
-	/// <param name="options"></param>
-	/// <param name="options"></param>
+	/// <param name="CommandSet"></param>
+	/// <param name="Command"></param>
 	public void Describe (DescribeCommandSet CommandSet, DescribeCommand Command) {
 		_Output.Write ("# {1} {2}\n{0}", _Indent, CommandSet.Identifier, Command.Identifier);
 		_Output.Write ("\n{0}", _Indent);
@@ -419,7 +419,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// MakeTitle
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="title"></param>
 	public void MakeTitle (string title) {
 		_Output.Write ("<title>{1}\n{0}", _Indent, title);
 		_Output.Write ("# Using the {1} Command Set\n{0}", _Indent, title);

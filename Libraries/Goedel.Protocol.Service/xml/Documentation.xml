@@ -88,6 +88,59 @@
             </summary>
             <returns>The new connection identifier.</returns>
         </member>
+        <member name="T:Goedel.Protocol.Service.DnsConfiguration">
+            <summary>
+            DNS configuration generator class
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.DnsConfiguration.BindConfig(Goedel.Protocol.Service.IServiceConfiguration)">
+            <summary>	
+            BindConfig
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.DnsConfiguration.NetshConfig(Goedel.Protocol.Service.IServiceConfiguration)">
+            <summary>	
+            NetshConfig
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.DnsConfiguration.BindConfig(Goedel.Protocol.Service.IServiceConfiguration,System.String)">
+            <summary>
+            Generate a BIND configuration file for the service config.
+            </summary>
+            <param name="Configuration">The host/service configuration.</param>
+            <param name="output">File to write the output to</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.DnsConfiguration.NetshConfig(Goedel.Protocol.Service.IServiceConfiguration,System.String)">
+            <summary>
+            Generate a Windows configuration file for the service config.
+            </summary>
+            <param name="Configuration">The host/service configuration.</param>
+            <param name="output">File to write the output to</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.DnsConfiguration.GetPort(System.String)">
+            <summary>
+            Returns the port component of the IP address <paramref name="address"/>
+            </summary>
+            <param name="address">The IP address to return the port component from.</param>
+            <returns>The port component</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Service.DnsConfiguration.GetAddress(System.String)">
+            <summary>
+            Returns the address component of the IP address <paramref name="address"/>
+            </summary>
+            <param name="address">The IP address to return the address component from.</param>
+            <returns>The address component</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Service.DnsConfiguration.GetAQuadA(System.String)">
+            <summary>
+            Returns the address component of the IP address  <paramref name="address"/> 
+            prefixed by A for IPV4 addresses and AAAA for IPv6 addresses
+            </summary>
+            <param name="address">The IP address to return the port component from.</param>
+            <returns>The port component</returns>
+        </member>
         <member name="T:Goedel.Protocol.Service.FatEvent">
             <summary>
             Structure describing a complete event.
@@ -404,11 +457,11 @@
             Service configuration
             </summary>
         </member>
-        <member name="P:Goedel.Protocol.Service.IServiceConfiguration.WellKnown">
-            <summary>The IANA well known service name.</summary> 
+        <member name="P:Goedel.Protocol.Service.IServiceConfiguration.Dictionary">
+            <summary>Maps configuration entry to configuration.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Service.IServiceConfiguration.Addresses">
-            <summary>List of service addresses.</summary> 
+        <member name="P:Goedel.Protocol.Service.IServiceConfiguration.GenericHost">
+            <summary>The host configuration.</summary> 
         </member>
         <member name="T:Goedel.Protocol.Service.LogService">
             <summary>

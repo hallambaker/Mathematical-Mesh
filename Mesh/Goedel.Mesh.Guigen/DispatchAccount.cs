@@ -268,10 +268,10 @@ public partial class EverythingMaui {
         catch (ConnectionAccountUnknownException exception) {
             return new ErrorResult(exception);
             }
-        catch (ConnectionRefusedException exception) {
+        catch (ConnectionRefusedException ) {
             return new ConnectionRefused();
             }
-        catch (ConnectionPendingException exception) {
+        catch (ConnectionPendingException ) {
             return new ConnectionPending();
             }
         catch (ConnectionExpiredException exception) {
@@ -282,7 +282,7 @@ public partial class EverythingMaui {
             }
         catch (Exception exception) {
             if (TryProcessException(exception, boundAccountPending, out var result)) {
-                return result;
+                return result!;
                 }
             return new ErrorResult(exception);
             }

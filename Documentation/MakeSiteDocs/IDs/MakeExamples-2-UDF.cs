@@ -19,7 +19,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// MakeUDFExamples
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Example"></param>
 	public void MakeUDFExamples (CreateExamples Example) {
 		 UDFVariousUDF(Example);
 		 UDFNonce(Example);
@@ -52,8 +52,8 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// DescribeValueUDF
 	/// </summary>
-	/// <param name="options"></param>
-	/// <param name="options"></param>
+	/// <param name="tag"></param>
+	/// <param name="text"></param>
 	public void DescribeValueUDF (string tag, string text) {
 		 var ptag = (tag + ":").PadRight (12);
 		 var wrapped = text.Wrap(ptag, indent:8);
@@ -793,9 +793,9 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// MakeUTFExtendedExample
 	/// </summary>
-	/// <param name="options"></param>
-	/// <param name="options"></param>
-	/// <param name="options"></param>
+	/// <param name="DataString"></param>
+	/// <param name="CryptoAlgorithmId"></param>
+	/// <param name="key"></param>
 	public void MakeUTFExtendedExample (string DataString, CryptoAlgorithmId CryptoAlgorithmId, string key) {
 		 var DataBytes = DataString.ToUTF8();
 		 var ContentType = "text/plain";

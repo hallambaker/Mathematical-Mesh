@@ -342,7 +342,7 @@ public class GuigenBinding {
 
             return result;
             }
-        catch (Exception e) {
+        catch (Exception ) {
             PendingAction = null;
             throw new NYI();
             }

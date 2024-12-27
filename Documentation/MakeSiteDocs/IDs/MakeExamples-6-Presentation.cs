@@ -18,7 +18,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// MakePresentationExamples
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Example"></param>
 	public void MakePresentationExamples (CreateExamples Example) {
 		 PresentationFirstContact(Example);
 		 PresentationZeroRoundTrip(Example);

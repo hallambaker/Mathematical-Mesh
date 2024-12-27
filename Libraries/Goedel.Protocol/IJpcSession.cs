@@ -25,13 +25,6 @@
 using System.Net;
 namespace Goedel.Protocol;
 
-
-
-
-
-
-
-
 /// <summary>
 /// Service configuration
 /// </summary>

@@ -237,11 +237,11 @@ public partial class Shell : _Shell {
     ///<inheritdoc/>
     public override ShellResult Netsh(Netsh Options) {
         var multiConfig = GetMultiConfig(Options.MultiConfig);
-        var dnsConfig = Options.DnsConfig.Value;
+        var netshconfig = Options.NetshConfig.Value;
 
         var configuration = Configuration.FromFile(multiConfig);
 
-        DnsConfiguration.NetshConfig(configuration, dnsConfig);
+        DnsConfiguration.NetshConfig(configuration, netshconfig);
         return new ResultServiceConfiguration() {
             Configuration = configuration
             };

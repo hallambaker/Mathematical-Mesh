@@ -76,7 +76,7 @@
 	Command Netsh "netsh"
 		Include Reporting
 		Brief "Compute the netsh configuration from the service config."
-		Parameter DnsConfig "dnsconfig" NewFile
+		Parameter NetshConfig "netshconfig" NewFile
 			Brief "The file to write the netsh configuration to"
 
 		Parameter HostConfig "hostconfig" String

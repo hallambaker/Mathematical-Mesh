@@ -30,6 +30,7 @@ global using Goedel.Mesh.Server;
 global using Goedel.Mesh.ServiceAdmin;
 global using Goedel.Presence.Server;
 global using Goedel.Protocol;
+global using Goedel.Protocol.Service;
 global using Goedel.Registry;
 global using Goedel.Repository.Server;
 

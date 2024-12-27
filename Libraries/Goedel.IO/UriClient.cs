@@ -60,6 +60,9 @@ public static class UriClient {
         }
 
 
+    public static string DownloadString(this string uri) => DownloadStringAsync(uri).Sync();
+
+
     /// <summary>
     /// Perform a HTTP client GET on <paramref name="uri"/> and return the result as a string.
     /// If an exception is thrown, the value null is returned.

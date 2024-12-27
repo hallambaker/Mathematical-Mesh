@@ -61,7 +61,7 @@ public static class MsbLsbConversionHelpers {
         }
 
     /// <summary>
-    /// Convert the LSB array <paramref name="msBytes"/> a binary array in LSB order.
+    /// Convert the LSB array <paramref name="lsBytes"/> a binary array in LSB order.
     /// </summary>
     /// <param name="lsBytes">The MSB array.</param>
     /// <returns>The bit array.</returns>
@@ -70,7 +70,7 @@ public static class MsbLsbConversionHelpers {
         }
 
     /// <summary>
-    /// Convert the LSB array <paramref name="msBytes"/> a binary array in MSB order.
+    /// Convert the LSB array <paramref name="lsBytes"/> a binary array in MSB order.
     /// </summary>
     /// <param name="lsBytes">The MSB array.</param>
     /// <returns>The bit array.</returns>

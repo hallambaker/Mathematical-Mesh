@@ -17,11 +17,17 @@
   <ItemGroup>
     <ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
     <ProjectReference Include="..\Goedel.Protocol.Presentation\Goedel.Protocol.Presentation.csproj" />
+    <ProjectReference Include="..\Goedel.Registry\Goedel.Registry.csproj" />
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
     <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="DnsConfig.cs">
+      <DependentUpon>DnsConfig.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Exceptions.cs">
       <DependentUpon>Exceptions.exceptional</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -55,6 +61,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Update="DnsConfig.script">
+      <LastGenOutput>DnsConfig.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
     <None Update="Exceptions.exceptional">
       <Generator>exceptional</Generator>
     </None>

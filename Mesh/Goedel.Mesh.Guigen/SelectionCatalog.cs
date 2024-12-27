@@ -81,17 +81,20 @@ public abstract class SelectionCatalog<TCatalog, TPersist, TBindable> : Selectio
                     where TBindable : IBoundPresentation {
 
     public TCatalog Catalog => Store;
-    public ContextAccount ContextAccount { get; set; }
+    public ContextAccount? ContextAccount { get; set; }
 
     public SelectionCatalog(
-                    ContextAccount contextAccount,
+                    ContextAccount? contextAccount,
                     TCatalog store) : base(store) {
         ContextAccount = contextAccount;
         foreach (var item in store) {
+           
             if (Include(item)) {
-                var bound = ConvertToBindable(item);
-                bound.Bound = item;
-                Entries.Add(bound);
+                if (item is not null) {
+                    var bound = ConvertToBindable(item);
+                    bound.Bound = item;
+                    Entries.Add(bound);
+                    }
                 }
             }
         }
@@ -135,6 +138,7 @@ public abstract class SelectionCatalog<TCatalog, TPersist, TBindable> : Selectio
 
 
     public async Task<TransactResponse> AddAsync(IBoundPresentation item) {
+        ContextAccount.AssertNotNull(NYI.Throw);
         var entry = item.Bound as TPersist;
 
         var transaction = ContextAccount.TransactBegin();
@@ -146,6 +150,7 @@ public abstract class SelectionCatalog<TCatalog, TPersist, TBindable> : Selectio
         }
 
     public async Task<TransactResponse> RemoveAsync(IBoundPresentation item) {
+        ContextAccount.AssertNotNull(NYI.Throw);
         var entry = item.Bound as TPersist;
 
         var transaction = ContextAccount.TransactBegin();
@@ -158,6 +163,7 @@ public abstract class SelectionCatalog<TCatalog, TPersist, TBindable> : Selectio
 
 
     public async Task<TransactResponse> UpdateAsync(IBoundPresentation item) {
+        ContextAccount.AssertNotNull(NYI.Throw);
         UpdateWithBindable(item);
         var entry = item.Bound as TPersist;
 

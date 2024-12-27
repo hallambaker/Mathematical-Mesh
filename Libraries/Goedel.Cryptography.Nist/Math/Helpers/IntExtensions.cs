@@ -21,36 +21,36 @@ public static class IntExtensions {
         return result;
         }
 
-    /// <summary>
-    /// Return a/b rounding any remainder down.
-    /// </summary>
-    /// <param name="a">First parameter</param>
-    /// <param name="b">Second parameter</param>
-    /// <returns>a/b rounding any remainder down.</returns>
-    public static int FloorDivide(this int a, int b) {
-        if ((a < 0) ^ (b < 0) && a % b != 0) {
-            return (a / b - 1);
-            }
+    ///// <summary>
+    ///// Return a/b rounding any remainder down.
+    ///// </summary>
+    ///// <param name="a">First parameter</param>
+    ///// <param name="b">Second parameter</param>
+    ///// <returns>a/b rounding any remainder down.</returns>
+    //public static int FloorDivide(this int a, int b) {
+    //    if ((a < 0) ^ (b < 0) && a % b != 0) {
+    //        return (a / b - 1);
+    //        }
 
-        return a / b;
-        }
+    //    return a / b;
+    //    }
 
-    /// <summary>
-    /// Return a+increment unless a>max, in which case return min.
-    /// </summary>
-    /// <param name="a">Value to increment.</param>
-    /// <param name="min">Reset value returned if a+increment > max</param>
-    /// <param name="max">MNaximum value, a is returned if a+increment <= max.</param>
-    /// <param name="increment">Increment to add</param>
-    /// <returns>The value a+increment or min if the reult would be greater than max.</returns>
-    public static int IncrementOrReset(this int a, int min, int max, int increment = 1) {
-        a++;
-        if (a > max) {
-            a -= max - min;
-            }
+    ///// <summary>
+    ///// Return a+increment unless a>max, in which case return min.
+    ///// </summary>
+    ///// <param name="a">Value to increment.</param>
+    ///// <param name="min">Reset value returned if a+increment > max</param>
+    ///// <param name="max">MNaximum value, a is returned if a+increment <= max.</param>
+    ///// <param name="increment">Increment to add</param>
+    ///// <returns>The value a+increment or min if the reult would be greater than max.</returns>
+    //public static int IncrementOrReset(this int a, int min, int max, int increment = 1) {
+    //    a++;
+    //    if (a > max) {
+    //        a -= max - min;
+    //        }
 
-        return a;
-        }
+    //    return a;
+    //    }
 
     /// <summary>
     /// Get the exact bit length of <paramref name="a"/>
@@ -102,20 +102,20 @@ public static class IntExtensions {
             }
         }
 
-    /// <summary>
-    /// Gets the next number meeting the modulo (or the number itself if evenly divisible).
-    /// </summary>
-    /// <param name="value">The number to return or add to.</param>
-    /// <param name="modulo">The desired modulo.</param>
-    /// <returns>The value, or value + remainder of the value mod modulo.</returns>
-    public static int ValueToMod(this int value, int modulo) {
-        var remainder = value.PosMod(modulo);
-        if (remainder == 0) {
-            return value;
-            }
+    ///// <summary>
+    ///// Gets the next number meeting the modulo (or the number itself if evenly divisible).
+    ///// </summary>
+    ///// <param name="value">The number to return or add to.</param>
+    ///// <param name="modulo">The desired modulo.</param>
+    ///// <returns>The value, or value + remainder of the value mod modulo.</returns>
+    //public static int ValueToMod(this int value, int modulo) {
+    //    var remainder = value.PosMod(modulo);
+    //    if (remainder == 0) {
+    //        return value;
+    //        }
 
-        return value + modulo - remainder;
-        }
+    //    return value + modulo - remainder;
+    //    }
 
     /// <summary>
     /// Get 4 bytes for int.

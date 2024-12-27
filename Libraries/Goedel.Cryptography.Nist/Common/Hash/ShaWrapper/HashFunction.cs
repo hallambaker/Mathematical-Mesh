@@ -1,56 +1,33 @@
 ﻿namespace Goedel.Cryptography.Nist;
+
+/// <summary>
+/// Hash function class.
+/// </summary>
 public class HashFunction {
+
+    ///<summary>The mode</summary> 
     public ModeValues Mode { get; }
+
+    ///<summary>Sizes in bits</summary> 
     public DigestSizes DigestSize { get; }
 
     /// <summary>
-    /// Output length in bits.
+    /// Constructor, return an instance with parameters specified by <paramref name="mode"/> and
+    /// <paramref name="digestSize"/>.
     /// </summary>
-    //[JsonIgnore]
-    public int OutputLen { get; }
-
-    //[JsonIgnore]
-    public int BlockSize { get; }
-
-    //[JsonIgnore]
-    public BigInteger MaxMessageLen { get; }
-
-    //[JsonIgnore]
-    public int ProcessingLen { get; }
-
-    //[JsonIgnore]
-    public string Name { get; }
-
-    //[JsonIgnore]
-    public byte[] OID { get; }
-
-    public HashFunction(ModeValues mode, DigestSizes digestSize, bool isXofPss = false) {
+    /// <param name="mode">The mode.</param>
+    /// <param name="digestSize">Output size</param>
+    /// 
+    public HashFunction(ModeValues mode, DigestSizes digestSize) {
         Mode = mode;
         DigestSize = digestSize;
-
-        (ModeValues mode, DigestSizes digestSize, int outputLen, int blockSize, BigInteger maxMessageSize, int processingLen, byte[] OID, string name) attributes;
-        if (isXofPss && mode == ModeValues.SHAKE) {
-            attributes = ShaAttributes.GetXofPssAttributes(mode, digestSize);
-            }
-        else {
-            attributes = ShaAttributes.GetShaAttributes(mode, digestSize);
-            }
-
-        OutputLen = attributes.outputLen;
-        BlockSize = attributes.blockSize;
-        MaxMessageLen = attributes.maxMessageSize;
-        ProcessingLen = attributes.processingLen;
-        Name = attributes.name;
-        OID = attributes.OID;
         }
 
-
-
-    /// <summary>
-    /// Get the hash value.
-    /// </summary>
-    /// <returns></returns>
-    public override int GetHashCode() => HashCode.Combine(Mode, DigestSize);
+    ///// <summary>
+    ///// Get the hash value.
+    ///// </summary>
+    ///// <returns></returns>
+    //public override int GetHashCode() => HashCode.Combine(Mode, DigestSize);
     }
 
 /// <summary>

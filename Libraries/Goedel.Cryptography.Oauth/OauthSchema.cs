@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/17/2024 12:32:31 AM
+//  This file was automatically generated at 12/27/2024 4:53:04 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -935,7 +935,7 @@ public partial class ErrorResponse : Oauth {
         /// Human-readable ASCII [USASCII] text providing additional information, used to 
         ///assist the client developer in understanding the error that occurred. Values for
         ///the error_description parameter MUST NOT include characters outside the set 
-		///%x20-21 %x23-5B / %x5D-7E.
+        ///%x20-21 / %x23-5B / %x5D-7E.
         /// </summary>
 
 	public virtual string?						ErrorDescription  {get; set;}

@@ -10,12 +10,12 @@ public partial class TaskSection : IHeadedSelection {
     IAccountSelector? Account { get; }
     ContextUser? ContextUser => Account?.ContextUser;
 
-    TaskSelection TaskSelection { get; }
+    TaskSelection? TaskSelection { get; }
 
     GuigenCatalogTasks? Catalog { get; }
 
     ///<inheritdoc/>
-    public override ISelectCollection ChooseTask { get => TaskSelection; set { } }
+    public override ISelectCollection? ChooseTask { get => TaskSelection; set { } }
 
     ///<inheritdoc/>
     public GuiBinding SelectionBinding => _BoundTask.BaseBinding;
@@ -26,7 +26,7 @@ public partial class TaskSection : IHeadedSelection {
     /// <param name="account">The account whose contacts are to be used.</param>
     public TaskSection(IAccountSelector? account = null) {
         Account = account;
-        Catalog = ContextUser.GetStore(CatalogTask.Label, create: false) as GuigenCatalogTasks;
+        Catalog = ContextUser?.GetStore(CatalogTask.Label, create: false) as GuigenCatalogTasks;
         TaskSelection = Catalog is null ? null : new TaskSelection(ContextUser, Catalog);
         }
 

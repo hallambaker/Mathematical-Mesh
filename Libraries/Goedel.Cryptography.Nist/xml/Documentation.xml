@@ -1735,9 +1735,6 @@
             Fast SHA3
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Nist.NativeFastSha3.HashFunction">
-            <inheritdoc/>
-        </member>
         <member name="M:Goedel.Cryptography.Nist.NativeFastSha3.#ctor(System.Int32)">
             <summary>
             Constructor, return new instance for bit length <paramref name="bitLength"/>
@@ -1766,9 +1763,6 @@
             <summary>
             SHAKE implementation
             </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Nist.NativeFastShake.HashFunction">
-            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.Nist.NativeFastShake.#ctor(System.Int32)">
             <summary>
@@ -1866,6 +1860,11 @@
         <member name="M:Goedel.Cryptography.Nist.NativeShaFactory.GetShakeInstance(Goedel.Cryptography.Nist.HashFunction)">
             <inheritdoc/>
         </member>
+        <member name="T:Goedel.Cryptography.Nist.EntropyProviderTypes">
+            <summary>
+            The supported entropy providers.
+            </summary>
+        </member>
         <member name="F:Goedel.Cryptography.Nist.EntropyProviderTypes.Testable">
             <summary>
             Allows for the setting/injection of specific entropy for testing purposes
@@ -1900,17 +1899,6 @@
             <param name="providerType">The type of provider to retrieve</param>
             <returns></returns>
         </member>
-        <member name="T:Goedel.Cryptography.Nist.ITestableEntropyProvider">
-            <summary>
-            Allows for adding specific entropy to a provider
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.ITestableEntropyProvider.AddEntropy(Goedel.Cryptography.Nist.BitString)">
-            <summary>
-            Add entropy
-            </summary>
-            <param name="entropy">The <see cref="T:Goedel.Cryptography.Nist.BitString"/> to add</param>
-        </member>
         <member name="T:Goedel.Cryptography.Nist.IEnumerableExtensions">
             <summary>
             Extension methods for <see cref="T:System.Collections.Generic.IEnumerable`1"/>
@@ -1944,8 +1932,8 @@
             <summary>
             Adds a string to a <paramref name="list"/> when the string is not null or empty, otherwise do nothing.
             </summary>
-            <param name="list">The list to (potentially) add the <see cref="!:itemToAdd"/> too</param>
-            <param name="itemToAdd">The item that is evaluated for adding to <see cref="!:list"/></param>
+            <param name="list">The list to (potentially) add the <paramref name="itemToAdd"/> to.</param>
+            <param name="itemToAdd">The item that is evaluated for adding to <paramref name="list"/></param>
             <returns>True if item added, false otherwise.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Nist.ListExtensions.AddIfNotNull``1(System.Collections.Generic.List{``0},``0)">
@@ -1981,16 +1969,39 @@
             <typeparam name="T"></typeparam>
             <param name="list"></param>
         </member>
-        <member name="P:Goedel.Cryptography.Nist.HashFunction.OutputLen">
+        <member name="T:Goedel.Cryptography.Nist.HashResult">
             <summary>
-            Output length in bits.
+            Result of calculating a hash.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.HashFunction.GetHashCode">
+        <member name="P:Goedel.Cryptography.Nist.HashResult.Digest">
+            <summary></summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.HashResult.#ctor(Goedel.Cryptography.Nist.BitString)">
             <summary>
-            Get the hash value.
+            Constructor, return an instance for <paramref name="digest"/>
             </summary>
-            <returns></returns>
+            <param name="digest">The digest value.</param>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.HashFunction">
+            <summary>
+            Hash function class.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.HashFunction.Mode">
+            <summary>The mode</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.HashFunction.DigestSize">
+            <summary>Sizes in bits</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.HashFunction.#ctor(Goedel.Cryptography.Nist.ModeValues,Goedel.Cryptography.Nist.DigestSizes)">
+            <summary>
+            Constructor, return an instance with parameters specified by <paramref name="mode"/> and
+            <paramref name="digestSize"/>.
+            </summary>
+            <param name="mode">The mode.</param>
+            <param name="digestSize">Output size</param>
+            
         </member>
         <member name="T:Goedel.Cryptography.Nist.ModeValues">
             <summary>
@@ -2023,6 +2034,11 @@
         <member name="F:Goedel.Cryptography.Nist.DigestSizes.NONE">
             <summary>None</summary> 
         </member>
+        <member name="T:Goedel.Cryptography.Nist.HashFunctions">
+            <summary>
+            Hash function identifiers.
+            </summary>
+        </member>
         <member name="F:Goedel.Cryptography.Nist.HashFunctions.None">
             <summary>None</summary> 
         </member>
@@ -2038,11 +2054,6 @@
         <member name="T:Goedel.Cryptography.Nist.ISha">
             <summary>
             Provides a SHA implementation for hashing 
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Nist.ISha.HashFunction">
-            <summary>
-            The <see cref="P:Goedel.Cryptography.Nist.ISha.HashFunction"/> attributed to the <see cref="T:Goedel.Cryptography.Nist.ISha"/> instance
             </summary>
         </member>
         <member name="M:Goedel.Cryptography.Nist.ISha.HashMessage(Goedel.Cryptography.Nist.BitString,System.Int32)">
@@ -2106,6 +2117,11 @@
             <param name="hashFunction">Used to determine the <see cref="T:Goedel.Cryptography.Nist.IShake"/> instance to retrieve.</param>
             <returns></returns>
         </member>
+        <member name="T:Goedel.Cryptography.Nist.IShake">
+            <summary>
+            Shake interface
+            </summary>
+        </member>
         <member name="M:Goedel.Cryptography.Nist.IShake.Absorb(System.Byte[],System.Int32)">
             <summary>
             Absorb <paramref name="bitLength"/> bits from <paramref name="message"/>
@@ -2119,11 +2135,6 @@
             </summary>
             <param name="output">Destination</param>
             <param name="outputBitLength">Number of bits</param>
-        </member>
-        <member name="T:Goedel.Cryptography.Nist.ShaAttributes">
-            <summary>
-            Get SHA information
-            </summary>
         </member>
         <member name="T:Goedel.Cryptography.Nist.BigIntegerExtensions">
             <summary>
@@ -2185,32 +2196,6 @@
             </summary>
             <param name="a">value</param>
             <param name="m">modulo</param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.EnumHelpers.GetEnumDescriptionFromEnum(System.Enum)">
-            <summary>
-            Gets the description attribute from an enum.  
-            Returns the enum.ToString() when no description found.
-            </summary>
-            <param name="enumToGetDescriptionFrom">The enum to retrieve the description from.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.EnumHelpers.GetEnumFromEnumDescription``1(System.String,System.Boolean)">
-            <summary>
-            Gets the enum of type <see cref="!:T"/> matching the description.
-            </summary>
-            <typeparam name="T">The enum type to return/parse descriptions of.</typeparam>
-            <param name="enumDescription">The description to search the enum for.</param>
-            <param name="shouldThrow">Should the method throw if the enum is not found?</param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.EnumHelpers.GetEnumDescriptions``1">
-            <summary>
-            Gets the description attributes from an enum type.
-            If a description is not found for any items in the enum, 
-            the ToString representation of that item is returned.
-            </summary>
-            <typeparam name="T">The enum type to get descriptions from</typeparam>
             <returns></returns>
         </member>
         <member name="T:Goedel.Cryptography.Nist.ICryptoParameters">
@@ -2389,48 +2374,24 @@
             <param name="reverseBytes">Should the bytes be reverse in the array?  (Changes from MSB to LSB)</param>
             <returns>Byte array of <see cref="P:Goedel.Cryptography.Nist.BitString.Bits"/> bits.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.BitString.ToString">
+        <member name="M:Goedel.Cryptography.Nist.BitString.GetPaddedBytes(System.Boolean)">
             <summary>
-            Returns <see cref="P:Goedel.Cryptography.Nist.BitString.Bits"/> as a string in MSb
+            return the bit string as padded bytes.
             </summary>
-            <returns>string representation of <see cref="P:Goedel.Cryptography.Nist.BitString.Bits"/></returns>
+            <param name="flipLastByte">If true flip the last byte.</param>
+            <returns>The result</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.BitString.ToLittleEndianHex">
+        <member name="M:Goedel.Cryptography.Nist.BitString.ToPositiveBigInteger">
             <summary>
-            Only for use in SHA3
+            Convert to a positive big integer.
             </summary>
-            <returns>Normal hex, but the last byte is truncated to match little endian format</returns>
+            <returns>The result</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.BitString.ToBool(System.Int32)">
+        <member name="M:Goedel.Cryptography.Nist.BitString.ToHex">
             <summary>
-            Returns the MSb (or index of the LSb array) as a boolean value
+            Convert to a hex string.
             </summary>
-            <param name="index">Index of the LSb BitArray to retrieve</param>
-            <returns>Boolean of a specific bit.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.BitString.MSBRotate(Goedel.Cryptography.Nist.BitString,System.Int32)">
-            <summary>
-            Rotates bits in the MSB direction. Rotate puts the bits that 'fall off' onto the end.
-            </summary>
-            <param name="shiftBitString">BitString to rotate</param>
-            <param name="distance">Amount the bits to rotate.</param>
-            <returns>Rotated BitString</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.BitString.LSBRotate(Goedel.Cryptography.Nist.BitString,System.Int32)">
-            <summary>
-            Rotates bist in the LSB direction. Rotate puts the bits that 'fall off' onto the end.
-            </summary>
-            <param name="bStr"></param>
-            <param name="distance">Amount the bits to rotate.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.BitString.LSBShift(Goedel.Cryptography.Nist.BitString)">
-            <summary>
-            Shifts bits in the LSB direction. Shift adds 0s to the end.
-            </summary>
-            <remarks>Keeps output length same as input.</remarks>
-            <param name="bStr">THe bitstring to shift</param>
-            <returns></returns>
+            <returns>The result</returns>
         </member>
         <member name="M:Goedel.Cryptography.Nist.BitString.BitStringAddition(Goedel.Cryptography.Nist.BitString,Goedel.Cryptography.Nist.BitString)">
             <summary>
@@ -2440,35 +2401,66 @@
             <param name="right"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.BitString.BitStringAddition(Goedel.Cryptography.Nist.BitString)">
-            <summary>
-            Adds two bit strings together - e.g. "11" (3) + 111 (7) = 1010 (10).
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.BitString.AddWithModulo(Goedel.Cryptography.Nist.BitString,Goedel.Cryptography.Nist.BitString,System.Int32)">
-            <summary>
-            Adds two BitStrings and truncates the result to fit within the limit.
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <param name="moduloPower">Amount of bits kept in the result.</param>
-            <returns></returns>
-        </member>
         <member name="P:Goedel.Cryptography.Nist.BitString.Bits">
             <summary>
             In LSb
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Nist.BitString.Item(System.Int32)">
+        <member name="P:Goedel.Cryptography.Nist.BitString.BitLength">
             <summary>
-            Gets/Sets the byte at index specified.
-            Index 0 is the most significant byte.
+            Return the length in bits.
             </summary>
-            <param name="index">The index to get/set (index 0 is most significant byte)</param>
-            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.GetDeepCopy">
+            <summary>
+            Return a deep copy of this array
+            </summary>
+            <returns>The copy.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.Set(System.Int32,System.Boolean)">
+            <summary>
+            Set the bit at index <paramref name="bitIndex"/> to <paramref name="value"/>.
+            </summary>
+            <param name="bitIndex">The index</param>
+            <param name="value">The value.</param>
+            <returns>True if successful, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.GetMostSignificantBits(System.Int32,Goedel.Cryptography.Nist.BitString)">
+            <summary>
+            Get the most significant bits of the bit string <paramref name="bitString"/>.
+            </summary>
+            <param name="numBits">Number of bits</param>
+            <param name="bitString">Bit string to process.</param>
+            <returns>The bit string.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.GetMostSignificantBits(System.Int32)">
+            <summary>
+            Get the most significant bits of this bit string.
+            </summary>
+            <param name="numBits">Number of bits</param>
+            <returns>The bit string.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.GetLeastSignificantBits(System.Int32,Goedel.Cryptography.Nist.BitString)">
+            <summary>
+            Get the least significant bits of the bit string <paramref name="bitString"/>.
+            </summary>
+            <param name="numBits">Number of bits</param>
+            <param name="bitString">Bit string to process.</param>
+            <returns>The bit string.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.GetLeastSignificantBits(System.Int32)">
+            <summary>
+            Get the least significant bits of this bit string.
+            </summary>
+            <param name="numBits">Number of bits</param>
+            <returns>The bit string.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.ConcatenateBits(Goedel.Cryptography.Nist.BitString)">
+            <summary>
+            Append bits from <paramref name="bitsToAppend"/>
+            </summary>
+            <param name="bitsToAppend">The bits to append.</param>
+            <returns>The appended bits.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Nist.BitString.ConcatenateBits(Goedel.Cryptography.Nist.BitString,Goedel.Cryptography.Nist.BitString)">
             <summary>
@@ -2496,10 +2488,18 @@
             <summary>
             Gets a substring of bits from the MSB direction. 
             </summary>
-            <param name="bsToSub"></param>
+            <param name="bsToSub">BitString to pull bits from.</param>
             <param name="startIndex">Start index from the MSB side. Most significant bit is index 0.</param>
             <param name="numberOfBits"></param>
-            <returns></returns>
+            <returns>The result</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.MSBSubstring(System.Int32,System.Int32)">
+            <summary>
+            Return the most significant bit string.
+            </summary>
+            <param name="startIndex">The start index</param>
+            <param name="numberOfBits">The number of bits.</param>
+            <returns>The result</returns>
         </member>
         <member name="M:Goedel.Cryptography.Nist.BitString.PadToNextByteBoundry(Goedel.Cryptography.Nist.BitString,System.Boolean)">
             <summary>
@@ -2507,34 +2507,42 @@
             Returns the original BitString if already at a byte boundry.
             </summary>
             <param name="bs">The BitString to pad.</param>
+            <param name="padOntoLsb">Flag</param>
             <returns></returns>
         </member>
         <member name="M:Goedel.Cryptography.Nist.BitString.PadToModulus(Goedel.Cryptography.Nist.BitString,System.Int32,System.Boolean)">
             <summary>
-            Takes a BitString and adds LSBs (or MSBs when <see cref="!:padOntoLsb"/> is false) to make the BitString hit (BitString % modulus = 0)
+            Takes a BitString and adds LSBs (or MSBs when <paramref name="padOntoLsb"/> is false) to make 
+            the BitString hit (BitString % modulus = 0)
             </summary>
             <param name="bs">The BitString to pad</param>
             <param name="modulus">The modulus to pad the bitstring such that BitString % modulusToHit = 0</param>
             <param name="padOntoLsb">When true bits are added on the least significant end, the most significant end otherwise.</param>
             <returns>The padded BitString</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.BitString.Empty">
-            <summary>
-            Get an empty bitstring, useful as a starting point of concatenation and/or to avoid null.
-            </summary>
-            <returns></returns>
+        <member name="M:Goedel.Cryptography.Nist.BitString.GetHashCode">
+            <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.BitString.GetAtLeastZeroLengthBitString(Goedel.Cryptography.Nist.BitString)">
+        <member name="M:Goedel.Cryptography.Nist.BitString.Equals(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.BitString.Zeroes(System.Int32)">
             <summary>
-            Returns a zero length bitstring when passed a null, otherwise returns the bitstring
+            Return an array of zero bits.
             </summary>
-            <param name="bitString"></param>
-            <returns></returns>
+            <param name="length">Length of the array.</param>
+            <returns>The result.</returns>
         </member>
         <member name="T:Goedel.Cryptography.Nist.InvalidBitStringLengthException">
             <summary>
             Thrown when a <see cref="T:Goedel.Cryptography.Nist.BitString"/> as hex cannot be parsed due to invalid length.
             </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.InvalidBitStringLengthException.#ctor(System.String)">
+            <summary>
+            Constructor, return an instance for <paramref name="message"/>
+            </summary>
+            <param name="message">The message to display</param>
         </member>
         <member name="T:Goedel.Cryptography.Nist.BitArrayExtensions">
             <summary>
@@ -2578,29 +2586,21 @@
             also always want to return an array of the size of bArrayA, which means we might need to pad 
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.ByteArrayExtensions.GetKeyBit(System.Byte[],System.Int32)">
+        <member name="M:Goedel.Cryptography.Nist.ByteArrayExtensions.Concatenate(System.Byte[],System.Byte[])">
             <summary>
-            1-based
-            1-bit (bNum == 0) always returns 0 
+            
             </summary>
             <param name="bArrayA"></param>
-            <param name="bnum"></param>
+            <param name="bArrayB"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.ByteArrayExtensions.SetEachByteToValue(System.Byte[],System.Byte)">
+        <member name="M:Goedel.Cryptography.Nist.ByteArrayExtensions.Partition(System.Byte[],System.Int32)">
             <summary>
-            Set each byte in the provided array to the value of byteValue
+            
             </summary>
-            <param name="byteArray">The byteArray to set values on.</param>
-            <param name="byteValue">The value to set within the byte array.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.ByteArrayExtensions.BitLength(System.Byte[])">
-            <summary>
-            Return the bit length of the <see cref="!:byteArray"/>.
-            </summary>
-            <param name="byteArray">The byte array to determine the bit length of.</param>
-            <exception cref="T:System.ArgumentNullException">Thrown when the array is null.</exception>
-            <returns>The length in bits of the byte array (returned value always mod 8)</returns>
+            <param name="bArray"></param>
+            <param name="partitionLength"></param>
+            <returns></returns>
         </member>
         <member name="T:Goedel.Cryptography.Nist.IntExtensions">
             <summary>
@@ -2615,15 +2615,6 @@
             <param name="b">Second parameter</param>
             <returns>a/b rounding any remainder up.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.IntExtensions.FloorDivide(System.Int32,System.Int32)">
-            <summary>
-            Return a/b rounding any remainder down.
-            </summary>
-            <param name="a">First parameter</param>
-            <param name="b">Second parameter</param>
-            <returns>a/b rounding any remainder down.</returns>
-        </member>
-        <!-- Badly formed XML comment ignored for member "M:Goedel.Cryptography.Nist.IntExtensions.IncrementOrReset(System.Int32,System.Int32,System.Int32,System.Int32)" -->
         <member name="M:Goedel.Cryptography.Nist.IntExtensions.GetExactBitLength(System.Int32)">
             <summary>
             Get the exact bit length of <paramref name="a"/>
@@ -2654,14 +2645,6 @@
             <param name="modulo"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Nist.IntExtensions.ValueToMod(System.Int32,System.Int32)">
-            <summary>
-            Gets the next number meeting the modulo (or the number itself if evenly divisible).
-            </summary>
-            <param name="value">The number to return or add to.</param>
-            <param name="modulo">The desired modulo.</param>
-            <returns>The value, or value + remainder of the value mod modulo.</returns>
-        </member>
         <member name="M:Goedel.Cryptography.Nist.IntExtensions.GetBytes(System.Int32)">
             <summary>
             Get 4 bytes for int.
@@ -2685,17 +2668,14 @@
             <returns>The MSB 1 byte.</returns>
             <exception cref="T:System.ArgumentOutOfRangeException">Throws when the integer cannot be represented in a single byte.</exception>
         </member>
+        <member name="T:Goedel.Cryptography.Nist.LongExtensions">
+            <summary>
+            Extension class with helper functions for handling longs.
+            </summary>
+        </member>
         <member name="M:Goedel.Cryptography.Nist.LongExtensions.PosMod(System.Int64,System.Int64)">
             <summary>
             Takes the modulo of a value (or <see cref="T:System.Int64"/> expression) and ensures it is between [0, <paramref name="modulo"/> - 1]
-            </summary>
-            <param name="value"></param>
-            <param name="modulo"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Nist.LongExtensions.PlusMinusMod(System.Int64,System.Int64)">
-            <summary>
-            Takes the modulo of a value (or <see cref="T:System.Int32"/> expression) and ensures it is between (- <paramref name="modulo"/> / 2, <paramref name="modulo"/> / 2]
             </summary>
             <param name="value"></param>
             <param name="modulo"></param>
@@ -2736,14 +2716,14 @@
         </member>
         <member name="M:Goedel.Cryptography.Nist.MsbLsbConversionHelpers.LeastSignificantByteArrayToLeastSignificantBitArray(System.Byte[])">
             <summary>
-            Convert the LSB array <paramref name="msBytes"/> a binary array in LSB order.
+            Convert the LSB array <paramref name="lsBytes"/> a binary array in LSB order.
             </summary>
             <param name="lsBytes">The MSB array.</param>
             <returns>The bit array.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Nist.MsbLsbConversionHelpers.LeastSignificantByteArrayToMostSignificantBitArray(System.Byte[])">
             <summary>
-            Convert the LSB array <paramref name="msBytes"/> a binary array in MSB order.
+            Convert the LSB array <paramref name="lsBytes"/> a binary array in MSB order.
             </summary>
             <param name="lsBytes">The MSB array.</param>
             <returns>The bit array.</returns>
@@ -2779,6 +2759,19 @@
              <exception cref="T:System.ArgumentException">When input string has invalid characters.</exception>
         </member>
         <member name="T:Goedel.Cryptography.Nist.NonAdjacentBitString">
+            <summary>
+            Converts a <see cref="T:System.Numerics.BigInteger"/> into Non-Adjacent Form so that in {-1, 0, 1} 
+            there are no consecutive nonzero values. This reduces the number
+            of meaningful bits when applying multiplication over ECC.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.NonAdjacentBitString.Bits">
+            <summary>The bits</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Nist.NonAdjacentBitString.BitLength">
+            <summary>Length of bits</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.NonAdjacentBitString.#ctor(System.Numerics.BigInteger)">
             <summary>
             Converts a <see cref="T:System.Numerics.BigInteger"/> into Non-Adjacent Form so that in {-1, 0, 1} there are no consecutive nonzero values. This reduces the number
             of meaningful bits when applying multiplication over ECC.

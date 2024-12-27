@@ -6,15 +6,15 @@
 /// </summary>
 public class NativeFastSha3 : NativeFastKeccakBase, ISha {
 
-    ///<inheritdoc/>
-    public HashFunction HashFunction {
-        get {
-            var hashFunction = ShaAttributes.GetShaAttributes()
-                .FirstOrDefault(sha => sha.mode == ModeValues.SHA3 && sha.outputLen == _bitLength);
+    /////<inheritdoc/>
+    //public HashFunction HashFunction {
+    //    get {
+    //        var (mode, digestSize, outputLen, blockSize, maxMessageSize, processingLen, OID, name) = ShaAttributes.GetShaAttributes()
+    //            .FirstOrDefault(sha => sha.mode == ModeValues.SHA3 && sha.outputLen == _bitLength);
 
-            return new HashFunction(hashFunction.mode, hashFunction.digestSize);
-            }
-        }
+    //        return new HashFunction(mode, digestSize);
+    //        }
+    //    }
 
     private readonly int _bitLength;
     private BitString _cachedBits;

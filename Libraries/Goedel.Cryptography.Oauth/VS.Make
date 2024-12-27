@@ -21,15 +21,15 @@ LinkFiles = \
     Goedel.Cryptography.Identifiers.dll\
     Goedel.Cryptography.Nist.dll\
     Goedel.Discovery.dll\
-    Goedel.Serialization.dll\
+    Goedel.Protocol.Web.dll\
+    Goedel.Protocol.dll\
     Goedel.Utilities.dll
 
 ToolTargets = \
 	OauthSchema.cs\
 	OauthConstants.cs
-
-#OauthSchema.cs : OauthSchema.Protocol 
-#	protogen OauthSchema.Protocol  /cs  OauthSchema.cs
+OauthSchema.cs : OauthSchema.Protocol 
+	protogen OauthSchema.Protocol  /cs  OauthSchema.cs
 
 OauthConstants.cs : OauthConstants.constant 
 	constant OauthConstants.constant  /cs  OauthConstants.cs

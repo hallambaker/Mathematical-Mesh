@@ -21,6 +21,7 @@ LinkFiles = \
     Goedel.Discovery.dll\
     Goedel.FSR.dll\
     Goedel.IO.dll\
+    Goedel.Protocol.dll\
     Goedel.Utilities.dll
 
 ToolTargets = \

@@ -18,7 +18,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// MakeProtocolExamples
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Example"></param>
 	public void MakeProtocolExamples (CreateExamples Example) {
 		 ProtocolHello(Example);
 		 ProtocolAccountCreate(Example);

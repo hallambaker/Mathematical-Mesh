@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 12/20/2024 12:40:00 AM
+//  This file was automatically generated at 12/27/2024 4:50:54 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -709,12 +709,12 @@ public class _Netsh : Goedel.Command.Dispatch ,
 		set => _Data[2].Parameter (value);
 		}
 	/// <summary>Field accessor for parameter []</summary>
-	public virtual NewFile DnsConfig {
+	public virtual NewFile NetshConfig {
 		get => _Data[3] as NewFile;
 		set => _Data[3]  = value;
 		}
 
-	public virtual string _DnsConfig {
+	public virtual string _NetshConfig {
 		set => _Data[3].Parameter (value);
 		}
 	/// <summary>Field accessor for parameter []</summary>
@@ -765,7 +765,7 @@ public class _Netsh : Goedel.Command.Dispatch ,
 				Key = "json"
 				},
 			new DescribeEntryParameter () {
-				Identifier = "DnsConfig", 
+				Identifier = "NetshConfig", 
 				Default = null, // null if null
 				Brief = "The file to write the netsh configuration to",
 				Index = 3,

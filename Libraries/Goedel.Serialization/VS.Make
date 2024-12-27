@@ -17,12 +17,7 @@
 
 MSBuildThisFileDirectory = 
 
-LinkFiles = \
-    Goedel.Test.Core.dll\
-    Goedel.Utilities.dll\
-    Goedel.Test.dll\
-    Goedel.Cryptography.dll\
-    Goedel.Mesh.Test.dll
+LinkFiles = 
 
 ToolTargets = 
 
@@ -40,5 +35,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Scratchpad.exe $(LinkFiles) 
+	powershell publishtarget Goedel.Serialization.dll
 

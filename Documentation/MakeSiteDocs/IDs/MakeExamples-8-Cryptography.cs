@@ -17,7 +17,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// MakeCryptographyExamples
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Example"></param>
 	public void MakeCryptographyExamples (CreateExamples Example) {
 		 ExamplesAdvancedCoGeneration(Example);
 		 ExamplesAdvancedRecryption(Example);
@@ -112,7 +112,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// DescribeDecryptUse
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Decrypt"></param>
 	public void DescribeDecryptUse (Decrypt Decrypt) {
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("The means of encryption is unchanged. We begin by generating an ephemeral \n{0}", _Indent);
@@ -189,7 +189,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// DescribeDecryptSplitting
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Decrypt"></param>
 	public void DescribeDecryptSplitting (Decrypt Decrypt) {
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("The encryption key pair is\n{0}", _Indent);
@@ -223,7 +223,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// DescribeKeyGen
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="KeyGen"></param>
 	public void DescribeKeyGen (KeyGen KeyGen) {
 		_Output.Write ("The key parameters of the first key contribution are:\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
@@ -272,8 +272,8 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// DescribeResult
 	/// </summary>
-	/// <param name="options"></param>
-	/// <param name="options"></param>
+	/// <param name="tag"></param>
+	/// <param name="text"></param>
 	public void DescribeResult (string tag, string text) {
 		 var ptag = (tag + " = ").PadRight (8);
 		 var wrapped = text.Wrap(ptag, indent:12);
@@ -283,8 +283,8 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// DescribeResult
 	/// </summary>
-	/// <param name="options"></param>
-	/// <param name="options"></param>
+	/// <param name="tag"></param>
+	/// <param name="number"></param>
 	public void DescribeResult (string tag, BigInteger number) {
 		 DescribeResult (tag, number.ToString());
 		}
@@ -292,7 +292,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// DescribeResult
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="text"></param>
 	public void DescribeResult (string text) {
 		 var wrapped = text.Wrap("    =", indent:8);
 		_Output.Write ("{1}", _Indent, wrapped);
@@ -301,7 +301,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// DescribeResult
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="number"></param>
 	public void DescribeResult (BigInteger number) {
 		 DescribeResult (number.ToString());
 		}
@@ -309,8 +309,8 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// DescribeValue
 	/// </summary>
-	/// <param name="options"></param>
-	/// <param name="options"></param>
+	/// <param name="tag"></param>
+	/// <param name="text"></param>
 	public void DescribeValue (string tag, string text) {
 		 var ptag = ("    " + tag + ":").PadRight (20);
 		 var wrapped = text.Wrap(ptag, indent:8);
@@ -320,8 +320,8 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// DescribeValue
 	/// </summary>
-	/// <param name="options"></param>
-	/// <param name="options"></param>
+	/// <param name="tag"></param>
+	/// <param name="number"></param>
 	public void DescribeValue (string tag, BigInteger number) {
 		 DescribeValue (tag, number.ToString());
 		}
@@ -329,7 +329,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// DescribeKeyPrivate
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Key"></param>
 	public void DescribeKeyPrivate (CurveKey Key) {
 		_Output.Write ("{1} ({2})\n{0}", _Indent, Key.Name, Key.Curve);
 		 DescribeValue ("UDF", Key.UDF);
@@ -342,7 +342,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// DescribeKey
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Key"></param>
 	public void DescribeKey (CurveKey Key) {
 		DescribeKeyPrivate (Key);
 		 DescribeValue (Key.XTag, Key.X);
@@ -383,7 +383,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// Describe
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="sig"></param>
 	public void Describe (Quorate sig) {
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("The administrator creates the composite key pair\n{0}", _Indent);
@@ -480,7 +480,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// Describe
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="sig"></param>
 	public void Describe (Unanimous sig) {
 		_Output.Write ("The signers are Alice and Bob's Threshold Signature Service 'Bob'. Each creates a key pair:\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);

@@ -1,20 +1,21 @@
 ﻿namespace Goedel.Cryptography.Nist;
-public class EntropyProvider : IEntropyProvider {
-    private readonly IRandom800_90 _random;
+//public class EntropyProvider : IEntropyProvider {
+//    private readonly IRandom800_90 _random;
 
-    public EntropyProvider(IRandom800_90 random) {
-        _random = random;
-        }
+//    public EntropyProvider(IRandom800_90 random) {
+//        _random = random;
+//        }
 
-    public virtual BitString GetEntropy(int numberOfBits) {
-        return _random.GetRandomBitString(numberOfBits);
-        }
+//    ///<inheritdoc/>
+//    public virtual BitString GetEntropy(int numberOfBits) {
+//        return _random.GetRandomBitString(numberOfBits);
+//        }
 
-    public BigInteger GetEntropy(BigInteger minInclusive, BigInteger maxInclusive) {
-        return _random.GetRandomBigInteger(minInclusive, maxInclusive);
-        }
+//    //public BigInteger GetEntropy(BigInteger minInclusive, BigInteger maxInclusive) {
+//    //    return _random.GetRandomBigInteger(minInclusive, maxInclusive);
+//    //    }
 
-    public void AddEntropy(BitString entropy) { }
-    public void AddEntropy(BigInteger entropy) { }
-    }
+//    //public void AddEntropy(BitString entropy) { }
+//    //public void AddEntropy(BigInteger entropy) { }
+//    }
 

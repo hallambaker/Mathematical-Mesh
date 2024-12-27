@@ -11,13 +11,12 @@ public class MyViewCell : ViewCell {
     public IMainWindow MainWindow => Chooser.MainWindow;
     GuigenBinding Binding => MainWindow.Binding;
 
-    ISelectCollection SelectCollection => Chooser.SelectCollection;
+    //ISelectCollection SelectCollection => Chooser.SelectCollection;
 
-    public IBindable Data => BindingContext as IBindable;
+    //public IBindable Data => BindingContext as IBindable;
 
     //FieldBinding FieldBinding { get; set; }
 
-    SummaryView? SummaryView;
 
 
     SelectGrid SelectGrid { get; set; }

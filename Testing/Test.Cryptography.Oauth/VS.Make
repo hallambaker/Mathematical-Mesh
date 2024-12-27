@@ -19,11 +19,17 @@ MSBuildThisFileDirectory =
 
 LinkFiles = \
     Goedel.Cryptography.Oauth.dll\
+    Goedel.Debug.dll\
     Goedel.Discovery.dll\
+    Goedel.Protocol.Service.dll\
+    Goedel.Protocol.Web.dll\
     Goedel.Utilities.dll\
     Goedel.Cryptography.Core.dll\
     Goedel.Cryptography.dll\
     Goedel.Test.dll\
+    Goedel.Mesh.Client.dll\
+    Goedel.Mesh.Core.dll\
+    Goedel.Mesh.Server.dll\
     Goedel.Mesh.Test.dll
 
 ToolTargets = 

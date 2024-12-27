@@ -36,11 +36,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Compile Update="DnsConfig.cs">
-      <DependentUpon>DnsConfig.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Update="Exceptions.cs">
       <DependentUpon>Exceptions.exceptional</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -61,10 +56,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="DnsConfig.script">
-      <LastGenOutput>DnsConfig.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
     <None Update="Exceptions.exceptional">
       <LastGenOutput>Exceptions.cs</LastGenOutput>
       <Generator>exceptional</Generator>

@@ -18,7 +18,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// MakeDareExamples
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Example"></param>
 	public void MakeDareExamples (CreateExamples Example) {
 		 MeshExamplesMessageMail(Example);
 		 MeshExamplesMessageEDS(Example);
@@ -32,7 +32,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// WriteBytesHex
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="data"></param>
 	public void WriteBytesHex (byte[] data) {
 		if (  (data != null) ) {
 			_Output.Write ("{1}\n{0}", _Indent, data.ToStringBase16FormatHex());
@@ -163,7 +163,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// DumpHeaders
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Frames"></param>
 	public void DumpHeaders (List<SequenceFrame> Frames) {
 		 if (Frames == null) {ReportMissing(); return;}
 		foreach  (var Frame in Frames) {
@@ -174,7 +174,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// DumpHeader
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Frame"></param>
 	public void DumpHeader (SequenceFrame Frame) {
 		 if (Frame == null) {ReportMissing(); return;}
 		_Output.Write ("\n{0}", _Indent);

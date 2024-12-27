@@ -3,10 +3,10 @@
 /// <summary>
 /// Service/Host configuration.
 /// </summary>
-public class Configuration : Disposable {
+public class Configuration : Disposable, IServiceConfiguration {
 
     ///<summary>Maps configuration entry to configuration.</summary> 
-    public Dictionary<string, object> Dictionary = new();
+    public Dictionary<string, object> Dictionary { get; } = new();
 
     ///<summary>The logger service configuration.</summary> 
     public DareLoggerConfiguration DareLogger { get; set; }

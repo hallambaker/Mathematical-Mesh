@@ -1,9 +1,9 @@
 ﻿#script 1.0 
 #license MITLicense
 #% #pragma warning disable CS1591 
-#pclass Goedel.Mesh.ServiceAdmin DnsConfiguration
+#pclass Goedel.Protocol.Service DnsConfiguration
 
-#method BindConfig Configuration configuration
+#method BindConfig IServiceConfiguration configuration
 #!% configuration.PostProcess();
 ; PATH=/etc/bind/zones/db.meshService
 ;
@@ -36,10 +36,7 @@
 #end method
 
 
-
-
-
-#method NetshConfig Configuration configuration
+#method NetshConfig IServiceConfiguration configuration
 #% var hostConfig = configuration.GenericHost;
 #% var account = hostConfig.RunAs;
 #% var userdomain = Environment.UserDomainName;

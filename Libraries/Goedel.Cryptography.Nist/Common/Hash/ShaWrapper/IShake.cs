@@ -1,5 +1,8 @@
 ﻿namespace Goedel.Cryptography.Nist;
 
+/// <summary>
+/// Shake interface
+/// </summary>
 public interface IShake : ISha {
 
     /// <summary>
