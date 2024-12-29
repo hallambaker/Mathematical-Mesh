@@ -59,8 +59,13 @@ public static class UriClient {
         return bytes;
         }
 
-
-    public static string DownloadString(this string uri) => DownloadStringAsync(uri).Sync();
+    /// <summary>
+    /// Perform a synchronous GET on the URL <paramref name="uri"/> and return the result
+    /// as a string.
+    /// </summary>
+    /// <param name="uri">The URI toresolve.</param>
+    /// <returns>The result as a string or null if the operation failed.</returns>
+    public static string? DownloadString(this string uri) => DownloadStringAsync(uri).Sync();
 
 
     /// <summary>

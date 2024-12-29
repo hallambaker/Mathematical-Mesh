@@ -2758,6 +2758,18 @@
              <exception cref="T:System.ArgumentNullException">When input string is null.</exception>
              <exception cref="T:System.ArgumentException">When input string has invalid characters.</exception>
         </member>
+        <member name="T:Goedel.Cryptography.Nist.IRandom800_90">
+            <summary>
+            Random number generation.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.IRandom800_90.GetRandomBigInteger(System.Numerics.BigInteger)">
+            <summary>
+            Return a random big integer less than or equal to <paramref name="maxInclusive"/>
+            </summary>
+            <param name="maxInclusive">Maximum value.</param>
+            <returns>The random value.</returns>
+        </member>
         <member name="T:Goedel.Cryptography.Nist.NonAdjacentBitString">
             <summary>
             Converts a <see cref="T:System.Numerics.BigInteger"/> into Non-Adjacent Form so that in {-1, 0, 1} 
@@ -2778,6 +2790,14 @@
             </summary>
             <param name="value"></param>
             <returns>An array containing only {-1, 0, 1} values.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Nist.Random800_90">
+            <summary>
+            Random number generation.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Nist.Random800_90.GetRandomBigInteger(System.Numerics.BigInteger)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.Nist.NamespaceDoc">
             <summary>

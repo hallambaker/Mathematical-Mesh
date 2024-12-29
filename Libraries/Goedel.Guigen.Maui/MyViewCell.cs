@@ -183,7 +183,7 @@ class ArrayGrid {
 
         var binding = data.Binding;
 
-        var col = 0;
+
         foreach (var property in binding.BoundProperties) {
             }
 

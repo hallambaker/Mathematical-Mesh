@@ -463,6 +463,19 @@
         <member name="P:Goedel.Protocol.Service.IServiceConfiguration.GenericHost">
             <summary>The host configuration.</summary> 
         </member>
+        <member name="M:Goedel.Protocol.Service.IServiceConfiguration.Add(Goedel.Utilities.IConfigurationEntry)">
+            <summary>
+            Add a configuration entry to the configuration.
+            </summary>
+            <param name="entry">The entry.</param>
+            
+        </member>
+        <member name="M:Goedel.Protocol.Service.IServiceConfiguration.ToFile(System.String)">
+            <summary>
+            Write configuration to file.
+            </summary>
+            <param name="path">The output filename.</param>
+        </member>
         <member name="T:Goedel.Protocol.Service.LogService">
             <summary>
             Service level logging class.

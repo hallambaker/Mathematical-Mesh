@@ -115,7 +115,7 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
 
     public IHostBuilder DependencyInjectionHostMesh(MeshMachineTest hostMachine) {
 
-        var settings = PublicMeshService.GetService(hostMachine);
+        var settings = hostMachine.GetService(PublicMeshService.DefaultConfiguration);
 
         //var builder = Host.CreateDefaultBuilder();
         //var config = builder.ConfigureAppConfiguration((hostingContext, configuration) => {

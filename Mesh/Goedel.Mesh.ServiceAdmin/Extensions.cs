@@ -86,74 +86,6 @@ public static class Extensions {
         // At this point, all the services have been created on disk, none has been started.
         }
 
-    /// <summary>
-    /// Create a base service configuration file for use on <paramref name="meshMachine"/>.
-    /// </summary>
-    /// <param name="meshMachine">The mesh Machine on which the service is to run.</param>
-    /// <param name="serviceDns">The service DNS address to use.</param>
-    /// <param name="hostIp">The host IP addreess</param>
-    /// <param name="hostDns">The host DNS address,</param>
-    /// <param name="hostAccount">Optional host account.</param>
-    /// <returns>The configuration created.</returns>
-    public static Configuration CreateConfig(
-                this IMeshMachineClient meshMachine,
-                string serviceDns,
-                string hostIp = null,
-                string hostDns = null,
-                string? hostAccount = null
-                ) {
-
-        hostDns ??= Dns.GetHostName();
-        hostDns ??= serviceDns;
-
-        var localEndPoints = HostNetwork.GetLocalEndpoints();
-        var ip = new List<string>();
-
-        if (hostIp is null) {
-            foreach (var localEndpoint in localEndPoints) {
-                ip.Add(localEndpoint.ToString());
-                }
-            }
-        else {
-            ip.Add(hostIp);
-            }
-
-        var pathHost = GetHost(meshMachine, hostDns);
-        var pathLog = GetHost(meshMachine, "Logs");
-
-
-        var hostConfiguration = new GenericHostConfiguration {
-            // HostUdf later
-            // DeviceUdf later
-            Description = $"New service configuration created on {DateTime.Now.ToRFC3339()}",
-            HostDns = hostDns,
-            IP = ip,
-            RunAs = hostAccount,
-            HostPath = pathHost
-            };
-
-        var dareLogger = new DareLoggerConfiguration {
-            Path = pathLog,
-            };
-        var consoleLogger = new ConsoleLoggerConfiguration {
-            Default = LogLevel.Trace
-            };
-
-        var logging = new Dictionary<string, object> {
-                { "Default", "Trace" },
-                { "Dare", dareLogger },
-                { "Console", consoleLogger },
-            };
-
-
-        // Create the initial service application
-        var configuration = new Configuration();
-        configuration.Add(hostConfiguration);
-        configuration.Add(dareLogger);
-
-        return configuration;
-        }
-
 
     /// <summary>
     /// Create a new Mesh Service
@@ -250,7 +182,7 @@ public static class Extensions {
 
         // Write the configuration out to the file
         serviceConfig.MakePath();
-        configuration.ToFile(serviceConfig);
+        (configuration as IServiceConfiguration).ToFile(serviceConfig);
 
 
         return configuration;

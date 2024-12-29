@@ -8,6 +8,10 @@ public partial class EverythingMaui {
 
     ///<inheritdoc/>
     public override async Task<IResult> AddPerson(AddPerson data) {
+        if (CurrentAccount?.Contacts is null) {
+            return new ErrorResult();
+            }
+
         var uid = Udf.Nonce();
         var entry = new CatalogedContact() {
             Uid = uid
@@ -19,7 +23,9 @@ public partial class EverythingMaui {
         }
     ///<inheritdoc/>
     public override async Task<IResult> AddOrganization(AddOrganization data) {
-        CurrentAccount.AssertNotNull(NYI.Throw);
+        if (CurrentAccount?.Contacts is null) {
+            return new ErrorResult();
+            }
 
         var uid = Udf.Nonce();
         var entry = new CatalogedContact() {
@@ -35,7 +41,9 @@ public partial class EverythingMaui {
 
     ///<inheritdoc/>
     public override async Task<IResult> AddLocation(AddLocation data) {
-        CurrentAccount.AssertNotNull(NYI.Throw);
+        if (CurrentAccount?.Contacts is null) {
+            return new ErrorResult();
+            }
 
         var uid = Udf.Nonce();
         var entry = new CatalogedContact() {
@@ -46,30 +54,6 @@ public partial class EverythingMaui {
 
         return NullResult.Completed;
         }
-
-
-    /////<inheritdoc/>
-    //public override async Task<IResult> ContactUpdate(BoundContact entry) {
-    //    CurrentAccount.AssertNotNull(NYI.Throw);
-
-    //    entry.SetBound();
-
-    //    await CurrentAccount.Contacts.UpdateAsync(entry);
-
-    //    return NullResult.Completed;
-    //    }
-
-    /////<inheritdoc/>
-    //public override async Task<IResult> ContactDelete(BoundContact entry) {
-    //    CurrentAccount.AssertNotNull(NYI.Throw);
-
-    //    await CurrentAccount.Contacts.DeleteAsync(entry);
-
-    //    return NullResult.Completed;
-    //    }
-
-
-    // Focus: 020 Engage QR code dialogs
 
 
 
@@ -87,7 +71,7 @@ public partial class EverythingMaui {
                 ContactAddNetwork parameters) {
 
         var entry = new ContactNetworkIdentifier() {
-            Protocol = parameters.Protocol.ToLower(),
+            Protocol = parameters.Protocol?.ToLower(),
             Address = parameters.Address,
             Fingerprint = parameters.Fingerprint
             };
@@ -112,7 +96,7 @@ public partial class EverythingMaui {
 
     ///<inheritdoc/>
     public override async Task<IResult> ContactAddCredential(ContactAddCredential data) {
-
+        await Task.Delay(0);
 
         return NullResult.Completed;
         }
@@ -169,7 +153,7 @@ public partial class EverythingMaui {
             }
         catch (Exception exception) {
             if (TryProcessException(exception, null, out var result)) {
-                return result;
+                return result!;
                 }
             return new ErrorResult(exception);
             }

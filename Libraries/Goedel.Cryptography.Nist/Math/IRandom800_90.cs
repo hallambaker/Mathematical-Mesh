@@ -1,14 +1,18 @@
 ﻿namespace Goedel.Cryptography.Nist;
+
+
+/// <summary>
+/// Random number generation.
+/// </summary>
 public interface IRandom800_90 {
-    BitString GetRandomBitString(int length);
-    BitString GetDifferentBitStringOfSameSize(BitString original);
-    int GetRandomInt(int minInclusive, int maxExclusive);
+
+
+    /// <summary>
+    /// Return a random big integer less than or equal to <paramref name="maxInclusive"/>
+    /// </summary>
+    /// <param name="maxInclusive">Maximum value.</param>
+    /// <returns>The random value.</returns>
     BigInteger GetRandomBigInteger(BigInteger maxInclusive);
-    BigInteger GetRandomBigInteger(BigInteger minInclusive, BigInteger maxInclusive);
-    string GetRandomAlphaCharacters(int length);
-    string GetRandomString(int length);
-    decimal GetRandomDecimal();
-    int Next();
-    void NextBytes(byte[] buffer);
+
     }
 

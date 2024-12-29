@@ -200,7 +200,7 @@ public record ErrorResult : NullResult, IFail {
 
     public string? Error { get; }
     Exception? Exception { get; }
-    public ErrorResult(string error) {
+    public ErrorResult(string error = "Internal") {
         Error = error;
         }
 

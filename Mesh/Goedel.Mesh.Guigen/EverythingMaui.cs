@@ -434,7 +434,7 @@ public partial class EverythingMaui {
     /// <param name="parameters">The parameters.</param>
     /// <param name="result">The generated result.</param>
     /// <returns></returns>
-    public bool TryProcessException(Exception exception, IParameter parameters, out IResult? result) {
+    public bool TryProcessException(Exception exception, IParameter? parameters, out IResult? result) {
 
         switch (exception) {
             case HttpRequestException httpRequestException: {

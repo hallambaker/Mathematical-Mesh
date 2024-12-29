@@ -92,8 +92,10 @@ public partial class EverythingMaui {
             if (TryProcessException(exception, data, out var result)) {
                 return result!;
                 }
-            if (exception.GetType()?.FullName is not null) {
-                if (ExceptionDirectory.TryGetValue(exception.GetType()?.FullName, out var factory)) {
+            var fullname = exception.GetType()?.FullName;
+
+            if (fullname is not null) {
+                if (ExceptionDirectory.TryGetValue(fullname, out var factory)) {
                     return factory();
                     }
                 }
@@ -304,21 +306,22 @@ public partial class _AccountRequestConnect {
             }
 
         var everythingMaui = gui as EverythingMaui;
+        if (everythingMaui?.BoundAccounts is not null) {
         foreach (var account in everythingMaui.BoundAccounts) {
-            switch (account) {
-                case BoundAccountPending pending: {
-                    if (connectionString.ToLower() == pending.Service.ToLower()) {
-                        return true;
+                switch (account) {
+                    case BoundAccountPending pending: {
+                        if (connectionString.ToLower() == pending.Service?.ToLower()) {
+                            return true;
+                            }
+                        break;
                         }
-                    break;
-                    }
-                case BoundAccountUser user: {
-                    if (connectionString.ToLower() == user.Service.ToLower()) {
-                        return true;
+                    case BoundAccountUser user: {
+                        if (connectionString.ToLower() == user.Service?.ToLower()) {
+                            return true;
+                            }
+                        break;
                         }
-                    break;
                     }
-
                 }
             }
 

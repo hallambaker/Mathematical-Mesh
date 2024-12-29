@@ -153,7 +153,7 @@ public partial class Shell : _Shell {
     RudService RudService { get; set; }
 
     string GetMultiConfig(Command._File file) =>
-        PublicMeshService.GetService(MeshMachine, file.Value);
+        MeshMachine.GetService(PublicMeshService.DefaultConfiguration, file.Value);
 
     ///<summary>Delegate to set platform services</summary> 
     public Func<HostBuilderContext, IServiceCollection, HostBuilderContext>
@@ -172,7 +172,7 @@ public partial class Shell : _Shell {
     public override ShellResult HostStart(HostStart Options) {
         // ToDo: deal with 'args'
 
-        var settings = PublicMeshService.GetService(MeshMachine);
+        var settings = MeshMachine.GetService(PublicMeshService.DefaultConfiguration);
         using var host = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder()
             // read in the options file here.
             .ConfigureAppConfiguration((hostingContext, configuration) => {

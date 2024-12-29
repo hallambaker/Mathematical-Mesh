@@ -425,6 +425,14 @@
             property on the task object returns a Byte array containing the body of the 
             response received from the resource when the data buffer was uploaded.</returns>
         </member>
+        <member name="M:Goedel.IO.UriClient.DownloadString(System.String)">
+            <summary>
+            Perform a synchronous GET on the URL <paramref name="uri"/> and return the result
+            as a string.
+            </summary>
+            <param name="uri">The URI toresolve.</param>
+            <returns>The result as a string or null if the operation failed.</returns>
+        </member>
         <member name="M:Goedel.IO.UriClient.DownloadStringAsync(System.String)">
             <summary>
             Perform a HTTP client GET on <paramref name="uri"/> and return the result as a string.

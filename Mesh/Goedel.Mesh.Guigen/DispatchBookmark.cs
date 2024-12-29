@@ -21,6 +21,10 @@ public partial class EverythingMaui {
 
     ///<inheritdoc/>
     public override async Task<IResult> AddFeed(AddFeed data) {
+        if (CurrentAccount?.Feeds is null) {
+            return new ErrorResult();
+            }
+
         var uid = Udf.Nonce();
 
         var uri = data.Uri ??= $"{data.Site}:{data.Account}";
@@ -39,6 +43,10 @@ public partial class EverythingMaui {
         }
     ///<inheritdoc/>
     public override async Task<IResult> AddBookmark(AddBookmark data) {
+        if (CurrentAccount?.Bookmarks is null) {
+            return new ErrorResult();
+            }
+
         var uid = Udf.Nonce();
         var entry = new CatalogedBookmark() {
             Uri = data.Uri,
@@ -53,6 +61,10 @@ public partial class EverythingMaui {
         }
     ///<inheritdoc/>
     public override async Task<IResult> BookmarkUpdate(BoundBookmark entry) {
+        if (CurrentAccount?.Bookmarks is null) {
+            return new ErrorResult();
+            }
+
         entry.SetBound();
         await CurrentAccount.Bookmarks.UpdateAsync(entry);
 
@@ -61,6 +73,9 @@ public partial class EverythingMaui {
         }
     ///<inheritdoc/>
     public override async Task<IResult> BookmarkDelete(BoundBookmark entry) {
+        if (CurrentAccount?.Bookmarks is null) {
+            return new ErrorResult();
+            }
 
         await CurrentAccount.Bookmarks.DeleteAsync(entry);
 

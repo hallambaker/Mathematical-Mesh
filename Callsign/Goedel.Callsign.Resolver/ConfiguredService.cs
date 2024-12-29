@@ -14,20 +14,11 @@ public static class CallsignResolverExtensions {
     /// <returns>The value of <paramref name="host"/> for chaining.</returns>
 
     public static IHostBuilder AddResolverService(this IHostBuilder host) {
-
-        //host.ConfigureAppConfiguration((hostingContext, configuration) => {
-        //});
-
-        //Screen.WriteLine($"Add Mesh Service");
-
         host.ConfigureServices((hostContext, services) => {
             var serviceConfig = hostContext.Configuration.GetSection(CallsignResolverConfiguration.ConfigurationEntry.Name);
             services.AddSingleton<IConfguredService, ResolverConfiguredService>();
-            var configurationService = services.Configure<CallsignResolverConfiguration>(serviceConfig);
-            //var configurationHost = services.Configure<GenericHostConfiguration>(
-            //    hostContext.Configuration.GetSection(GenericHostConfiguration.ConfigurationEntry.Name));
-
-        });
+            services.Configure<CallsignResolverConfiguration>(serviceConfig);
+            });
 
         return host;
         }

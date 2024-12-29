@@ -1816,6 +1816,11 @@
             the default value for the type.</param>
             <returns>True if the parse succeeded, otherwise false.</returns>
         </member>
+        <member name="T:Goedel.Utilities.Enumerable">
+            <summary>
+            Extensions class relating to enumerable items
+            </summary>
+        </member>
         <member name="T:Goedel.Utilities.AssertionFail">
             <summary>
             An internal assertion check failed.

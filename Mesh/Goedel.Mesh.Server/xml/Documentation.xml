@@ -1295,9 +1295,6 @@
         <member name="F:Goedel.Mesh.Server.PublicMeshService.DefaultConfiguration">
             <summary>Name for the default hosts and Services configuration file.</summary> 
         </member>
-        <member name="F:Goedel.Mesh.Server.PublicMeshService.ConfigurationFileExtension">
-            <summary>Extension for hosts and services configuration files.</summary> 
-        </member>
         <member name="P:Goedel.Mesh.Server.PublicMeshService.MeshMachine">
             <summary>The Mesh Machine base</summary> 
         </member>
@@ -1342,20 +1339,6 @@
             <param name="meshServiceConfiguration">Service configuration.</param>
             <param name="logService">The transaction logging service.</param>
             <param name="presenceServiceProvider">Optional presence service.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.GetService(Goedel.Mesh.Client.IMeshMachineClient,System.String)">
-            <summary>
-            Return the file path for the service description <paramref name="fileSpec"/>.
-            <para>If <paramref name="fileSpec"/> contains no file path specifier, it is
-            interpreted as a named service description to be stored in the location 
-            specified by <paramref name="meshMachine"/>. Otherwise, the specified file
-            path is used.
-            </para>
-            </summary>
-            <param name="meshMachine">The Mesh machine specification (used to determine
-            the location of system configuration files).</param>
-            <param name="fileSpec">The service description specifier.</param>
-            <returns>The file path.</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.AddAdministrator(Goedel.Mesh.Client.IMeshMachineClient,System.String,Goedel.Mesh.Server.MeshServiceConfiguration,Goedel.Protocol.GenericHost.DareLoggerConfiguration)">
             <summary>

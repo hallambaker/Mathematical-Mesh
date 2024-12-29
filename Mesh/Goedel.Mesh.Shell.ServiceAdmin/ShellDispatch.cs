@@ -129,10 +129,7 @@ public partial class Shell : _Shell {
 
 
     string GetMultiConfig(Command._File file) =>
-        PublicMeshService.GetService(MeshMachine, file.Value);
-
-
-    //string GetFile(NewFile file) => MeshMachine.GetFilePath(file.Elements);
+        MeshMachine.GetService(PublicMeshService.DefaultConfiguration, file.Value);
 
     ///<summary>The Mesh Machine (Must support client catalog)</summary> 
     public IMeshMachineClient MeshMachine { get; init; }
@@ -160,8 +157,8 @@ public partial class Shell : _Shell {
 
         //var configuration = new Configuration();
 
-        var configuration = MeshMachine.CreateConfig(
-                serviceDns, hostIp, hostDns, runAs);
+        var configuration = new Configuration();
+        configuration.Initialize(MeshMachine, serviceDns, hostIp, hostDns, runAs);
         Console.WriteLine($" Description is {configuration.GenericHost.Description}");
         if (true) {
             configuration.Add(
@@ -210,7 +207,7 @@ public partial class Shell : _Shell {
         Console.WriteLine($" DeviceUdf is {configuration.GenericHost.DeviceUdf}");
 
         multiConfig.MakePath();
-        configuration.ToFile(multiConfig);
+        (configuration as IServiceConfiguration).ToFile(multiConfig);
 
         // here populate a status response from configuration
 

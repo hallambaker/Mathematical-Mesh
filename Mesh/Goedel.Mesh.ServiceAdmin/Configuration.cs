@@ -136,24 +136,23 @@ public class Configuration : Disposable, IServiceConfiguration {
             }
         }
 
-    /// <summary>
-    /// Write configuration to file.
-    /// </summary>
-    /// <param name="path">The output filename.</param>
-    public void ToFile(string path) {
-        using var stream = path.OpenFileNew();
+    ///// <summary>
+    ///// Write configuration to file.
+    ///// </summary>
+    ///// <param name="path">The output filename.</param>
+    //public void ToFile(string path) {
+    //    using var stream = path.OpenFileNew();
 
-        var jsonOptions = new JsonSerializerOptions() {
-            WriteIndented = true,
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-            //Converters = {
-            //    new JsonStringEnumConverter (JsonNamingPolicy.CamelCase, true)
-            //    }
-            };
+    //    var jsonOptions = new JsonSerializerOptions() {
+    //        WriteIndented = true,
+    //        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+    //        //Converters = {
+    //        //    new JsonStringEnumConverter (JsonNamingPolicy.CamelCase, true)
+    //        //    }
+    //        };
 
-        ////Console.WriteLine(JsonSerializer.Serialize<Dictionary<string, object>>(Dictionary, jsonOptions));
-        JsonSerializer.Serialize(stream, Dictionary, jsonOptions);
-        }
+    //    JsonSerializer.Serialize(stream, Dictionary, jsonOptions);
+    //    }
 
 
 

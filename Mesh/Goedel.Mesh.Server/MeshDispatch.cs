@@ -38,9 +38,6 @@ public class PublicMeshService : MeshService {
     ///<summary>Name for the default hosts and Services configuration file.</summary> 
     public const string DefaultConfiguration = "MeshService";
 
-    ///<summary>Extension for hosts and services configuration files.</summary> 
-    public const string ConfigurationFileExtension = ".json";
-
 
     ///<summary>The Mesh Machine base</summary> 
     public IMeshMachine MeshMachine { get; init; }
@@ -183,35 +180,7 @@ public class PublicMeshService : MeshService {
 
     #endregion
 
-    static string GetFilePath(
-            IMeshMachineClient meshMachine,
-            string fileSpec,
-            string type) {
-        var defaulted = fileSpec.ApplyExtensionDefault(ConfigurationFileExtension);
 
-        if (Path.IsPathRooted(fileSpec) | Path.HasExtension(fileSpec)) {
-            return defaulted;
-            }
-        return Path.Combine(meshMachine.DirectoryMesh, type, defaulted);
-
-
-        }
-
-    /// <summary>
-    /// Return the file path for the service description <paramref name="fileSpec"/>.
-    /// <para>If <paramref name="fileSpec"/> contains no file path specifier, it is
-    /// interpreted as a named service description to be stored in the location 
-    /// specified by <paramref name="meshMachine"/>. Otherwise, the specified file
-    /// path is used.
-    /// </para>
-    /// </summary>
-    /// <param name="meshMachine">The Mesh machine specification (used to determine
-    /// the location of system configuration files).</param>
-    /// <param name="fileSpec">The service description specifier.</param>
-    /// <returns>The file path.</returns>
-    public static string GetService(
-        IMeshMachineClient meshMachine, string fileSpec = null) => GetFilePath(
-            meshMachine, fileSpec ?? DefaultConfiguration, "Service");
 
 
 
