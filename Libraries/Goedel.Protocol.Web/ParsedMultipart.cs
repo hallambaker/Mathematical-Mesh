@@ -99,6 +99,14 @@ public class ParsedMultipart {
                     item.Setter(formData, text);
                     break;
                     }
+                case FormEntryType.Boolean: {
+                    if (!GetContent(out var content)) {
+                        return false;
+                        }
+                    var text = content.ToUTF8();
+                    item.Setter(formData, text);
+                    break;
+                    }
                 case FormEntryType.File: {
                     if (!GetContent(out var content)) {
                         return false;

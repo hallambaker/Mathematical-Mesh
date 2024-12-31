@@ -110,6 +110,19 @@ public class OauthClient {
     #region // Methods
 
     /// <summary>
+    /// Attempt resolution of the handle <paramref name="handle"/> and return the result.
+    /// </summary>
+    /// <param name="handle">The handle to resolve.</param>
+    /// <returns>Object containing the result of the resolution.</returns>
+    public async Task<OauthHandleResolution> TryResolveHandle(string handle) {
+        handle = TrimHandle(handle);
+        handle.AssertNotNull(NYI.Throw);
+        return await SessionManager.TryResolveHandle(handle);
+
+        }
+
+
+    /// <summary>
     /// Make a Pushed Authorization request for handle <paramref name="handle"/> with context
     /// <paramref name="state"/>.
     /// </summary>
@@ -117,15 +130,11 @@ public class OauthClient {
     /// <param name="state">State to be preserved between pre request
     /// and completion.</param>
     /// <returns>A client result.</returns>
+    /// <param name="handle">The ATprotocol handle.</param>
     public async Task<OauthClientResult> PreRequest(
             string handle,
             string state) {
-        handle = TrimHandle(handle);
-        handle.AssertNotNull(NYI.Throw);
-
-        // https://atproto.com/specs/oauth#summary-of-authorization-flow
-
-        var oauth = await SessionManager.TryResolveHandle(handle);
+        var oauth = await TryResolveHandle(handle);
 
         // construct the pre-request
         var par = ConstructPar(oauth, state);
@@ -139,7 +148,6 @@ public class OauthClient {
         // read back the response
         using var jsonReader = new JsonReader(result);
         var response = PushedAuthorizationResponse.FromJson(jsonReader, false);
-
 
         var redirectFields = new AuthorizationRequest2() {
             ClientId = ClientMetadata.ClientId,

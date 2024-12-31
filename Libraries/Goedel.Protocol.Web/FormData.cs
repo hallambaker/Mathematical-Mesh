@@ -9,7 +9,9 @@ public enum FormEntryType {
     ///<summary>File form entry</summary> 
     File,
     ///<summary>Binary data form entry</summary> 
-    Binary
+    Binary,
+    ///<summary>Boolean data form entry</summary> 
+    Boolean
     }
 
 
