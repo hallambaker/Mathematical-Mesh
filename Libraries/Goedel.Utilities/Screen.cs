@@ -20,12 +20,27 @@
 //  THE SOFTWARE.
 #endregion
 
+using static System.Net.Mime.MediaTypeNames;
+
 namespace Goedel.Utilities;
 
 /// <summary>
 /// Debug trace class
 /// </summary>
 public partial class Screen {
+
+    public static TextWriter? OutputFile { get; private set; } = null;
+
+
+    public static void ToFile(string filename) {
+
+        var stream = new FileStream(filename, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write);
+        OutputFile = new StreamWriter(stream);
+        }
+
+
+
+    public static void Flush() => OutputFile.Flush();
 
     ///<summary>Global default log level</summary> 
     public static LogLevel LogLevel { get; set; } = LogLevel.Information;
@@ -41,6 +56,25 @@ public partial class Screen {
 
 
     /// <summary>
+    /// Write a blank line to the output
+    /// </summary>
+    public static void WriteLine() {
+        Console.WriteLine();
+        OutputFile?.WriteLine();
+        }
+
+
+    /// <summary>
+    /// Write text to the console;
+    /// </summary>
+    /// <param name="text">The text to write.</param>
+    public static void Write(string text) {
+        Console.Write(text);
+        OutputFile?.Write(text);
+        }
+
+
+    /// <summary>
     /// Write debug output to current trace listener.
     /// </summary>
     /// <param name="format">The format string</param>
@@ -53,26 +87,12 @@ public partial class Screen {
             }
         if (arg == null || arg.Length == 0) {
             Console.WriteLine(format);
+            OutputFile?.WriteLine(format);
             }
         else {
             Console.WriteLine(format, arg);
+            OutputFile?.WriteLine(format, arg);
             }
-
-
-
-
         }
-
-    /// <summary>
-    /// Write a blank line to the output
-    /// </summary>
-    public static void WriteLine() => Console.WriteLine();
-
-
-    /// <summary>
-    /// Write text to the console;
-    /// </summary>
-    /// <param name="text">The text to write.</param>
-    public static void Write(string text) => Console.Write(text);
 
     }

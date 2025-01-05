@@ -22,6 +22,7 @@
 
 using Goedel.IO;
 
+using System;
 using System.Net.NetworkInformation;
 using System.Security.Cryptography.X509Certificates;
 
@@ -130,7 +131,7 @@ public abstract class DnsClient {
     public static async Task<Did?> ResolveAtHandleDNS(string domain) {
         domain = "_atproto." + domain;
 
-
+        Screen.WriteLine($"Resolve DNS {domain}");
         using var context = Default.GetContext();
         var records = await context.QueryRecord(domain, DNSTypeCode.TXT);
         if (records == null) {
@@ -170,9 +171,13 @@ public abstract class DnsClient {
     public static async Task<Did?> ResolveAtHandleHttp(string domain) {
         
         var uri = $"https://{domain}/.well-known/atproto-did";
+
+
+        Screen.WriteLine($"Resolve Web {uri}");
         var result = await UriClient.DownloadStringAsync(uri);
 
         if (result != null) {
+            Screen.WriteLine($"Web success {result}");
             return Did.Factory(result.Trim());
             }
 

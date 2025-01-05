@@ -135,6 +135,9 @@
         <member name="F:Goedel.Protocol.Web.FormEntryType.Binary">
             <summary>Binary data form entry</summary> 
         </member>
+        <member name="F:Goedel.Protocol.Web.FormEntryType.Boolean">
+            <summary>Boolean data form entry</summary> 
+        </member>
         <member name="T:Goedel.Protocol.Web.FormItem">
             <summary>
             Form item accessor describes the backer class for a form item.

@@ -1499,6 +1499,12 @@
             Key currently used to encrypt data under this profile
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CallsignBinding.PkixRoot">
+             <summary>
+            Self signed certificate signing certificate to be used as a root of
+            trust for PKIX certificates under this callsign.
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.CallsignBinding._Binding">
             <summary>Implement IBinding</summary> 
         </member>

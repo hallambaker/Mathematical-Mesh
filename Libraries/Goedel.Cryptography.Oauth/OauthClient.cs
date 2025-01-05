@@ -134,10 +134,19 @@ public class OauthClient {
     public async Task<OauthClientResult> PreRequest(
             string handle,
             string state) {
+
+        Screen.WriteLine("## Resolve Handle");
         var oauth = await TryResolveHandle(handle);
+
+        Screen.WriteLine("## Begin Pre-Request");
+
 
         // construct the pre-request
         var par = ConstructPar(oauth, state);
+        Screen.WriteLine("Pre Authorization Request");
+        Screen.WriteLine(par.ToString());
+
+
         var parBytes = par.GetAsKeyValue();
 
         // post to the auth service
@@ -149,13 +158,19 @@ public class OauthClient {
         using var jsonReader = new JsonReader(result);
         var response = PushedAuthorizationResponse.FromJson(jsonReader, false);
 
+        Screen.WriteLine("Pre Authorization Response");
+        Screen.WriteLine(response.ToString());
+
         var redirectFields = new AuthorizationRequest2() {
             ClientId = ClientMetadata.ClientId,
             RequestUri = response.RequestUri
             };
 
-        var redirect = redirectFields.GetAsUrlQuery(oauth.AuthorizationServerMetadata.AuthorizationEndpoint);
 
+        var redirect = redirectFields.GetAsUrlQuery(oauth.AuthorizationServerMetadata.AuthorizationEndpoint);
+        Screen.WriteLine("Redirect Uri");
+        Screen.WriteLine(redirect);
+        Screen.Flush();
 
         return new OauthClientResultPreRequest() {
             RedirectUri = redirect};
@@ -187,8 +202,10 @@ public class OauthClient {
 
             //ClientAssertionType = OauthConstants.AssertionTypesBearerTitle,
             ClientAssertion =null,
-            LoginHint = null
+            LoginHint = handle.Handle
             };
+
+
 
         return result;
         }
@@ -239,6 +256,16 @@ public class OauthClient {
         var state = fields["state"];
         var code = fields["code"];
 
+
+        var response = WebExtensions.FromUrlQuery<AuthenticationResponse>(responseUri);
+
+        Screen.WriteLine("# Redirect URI");
+        Screen.WriteLine($"{responseUri.Query}");
+        Screen.WriteLine($"iss= {iss}");
+        Screen.WriteLine($"state= {state}");
+        Screen.WriteLine($"code= {code}");
+        Screen.Flush();
+
         // ok unpack the state vector
 
         var encodedState = new EncodedState(EncryptedTokenManager, state);
@@ -248,9 +275,15 @@ public class OauthClient {
             RedirectUri = encodedState.RedirectUri,
             Handle = encodedState.Handle,
             DID = encodedState.DID,
-            Nonce = encodedState.Nonce
+            Nonce = encodedState.Nonce,
+            Code = code
             };
         }
+
+
+
+
+
 
     /// <summary>
     /// Trim an @nything handle to remove the leading @ if present and any trailing whitespace.
@@ -313,5 +346,8 @@ public record OauthClientResultAuthRequest : OauthClientResult {
     ///<summary>The nonce value used to construct the PKCE verifier and 
     ///challenge.</summary> 
     public byte[]? Nonce { get; init; } = null;
+
+
+    public string? Code { get; init; } = null;
 
     }

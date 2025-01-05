@@ -348,6 +348,10 @@
             <param name="keyPair">The key to return the JWK for.</param>
             <returns>The created instance.</returns>
         </member>
+        <member name="P:Goedel.Cryptography.Oauth.JWK.Kid">
+            <summary>
+            </summary>
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.JWK.KeyType">
             <summary>
             </summary>
@@ -369,10 +373,6 @@
             </summary>
         </member>
         <member name="P:Goedel.Cryptography.Oauth.JWK.D">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JWK.Kid">
             <summary>
             </summary>
         </member>
@@ -463,6 +463,13 @@
             <see cref="F:Goedel.Cryptography.KeyUses.Encrypt"/>.</param>
             <returns></returns>
         </member>
+        <member name="M:Goedel.Cryptography.Oauth.OauthClient.TryResolveHandle(System.String)">
+            <summary>
+            Attempt resolution of the handle <paramref name="handle"/> and return the result.
+            </summary>
+            <param name="handle">The handle to resolve.</param>
+            <returns>Object containing the result of the resolution.</returns>
+        </member>
         <member name="M:Goedel.Cryptography.Oauth.OauthClient.PreRequest(System.String,System.String)">
             <summary>
             Make a Pushed Authorization request for handle <paramref name="handle"/> with context
@@ -472,6 +479,7 @@
             <param name="state">State to be preserved between pre request
             and completion.</param>
             <returns>A client result.</returns>
+            <param name="handle">The ATprotocol handle.</param>
         </member>
         <member name="M:Goedel.Cryptography.Oauth.OauthClient.ConstructPar(Goedel.Cryptography.Oauth.OauthHandleResolution,System.String)">
             <summary>
@@ -1460,6 +1468,195 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="T:Goedel.Cryptography.Oauth.AuthorizationCodeGrant">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationCodeGrant.GrantType">
+             <summary>
+            "authorization_code"
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationCodeGrant.Code">
+             <summary>
+            The authorization code received from the authorization server.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationCodeGrant.CodeVerifier">
+             <summary>
+            REQUIRED, if the code_challenge parameter was included in the 
+            authorization request. MUST NOT be used otherwise. The original code 
+            verifier string.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationCodeGrant.ClientId">
+             <summary>
+            Identifies the client software
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationCodeGrant._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationCodeGrant._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationCodeGrant._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationCodeGrant._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationCodeGrant._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationCodeGrant._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationCodeGrant._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationCodeGrant._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationCodeGrant.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.AuthorizationCodeGrant._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.AuthorizationCodeGrant.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.ClientCredentialsGrant">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientCredentialsGrant.GrantType">
+             <summary>
+            REQUIRED. "client_credentials"
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientCredentialsGrant._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ClientCredentialsGrant._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ClientCredentialsGrant._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ClientCredentialsGrant._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientCredentialsGrant._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientCredentialsGrant._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientCredentialsGrant._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientCredentialsGrant._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ClientCredentialsGrant.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.ClientCredentialsGrant._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.ClientCredentialsGrant.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.RefreshTokenGrant">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.RefreshTokenGrant.GrantType">
+             <summary>
+            REQUIRED. "refresh_token"
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.RefreshTokenGrant.refresh_token">
+             <summary>
+            REQUIRED. "client_credentials"
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.RefreshTokenGrant.Scope">
+             <summary>
+            Must be a subset of the scopes declared in client metadata. Must include atproto
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.RefreshTokenGrant._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.RefreshTokenGrant._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.RefreshTokenGrant._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.RefreshTokenGrant._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.RefreshTokenGrant._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.RefreshTokenGrant._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.RefreshTokenGrant._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.RefreshTokenGrant._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.RefreshTokenGrant.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.RefreshTokenGrant._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.RefreshTokenGrant.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
         <member name="T:Goedel.Cryptography.Oauth.DidVerificationMethod">
             <summary>
             </summary>
@@ -1525,6 +1722,67 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="T:Goedel.Cryptography.Oauth.AuthenticationResponse">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthenticationResponse.Iss">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthenticationResponse.State">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthenticationResponse.Code">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthenticationResponse._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthenticationResponse._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthenticationResponse._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthenticationResponse._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthenticationResponse._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthenticationResponse._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthenticationResponse._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthenticationResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthenticationResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.AuthenticationResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.AuthenticationResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
         <member name="T:Goedel.Cryptography.Oauth.JWKS">
             <summary>
             </summary>
@@ -1571,6 +1829,283 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Cryptography.Oauth.JWKS.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.JwtHeader">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JwtHeader.Typ">
+             <summary>
+            Another IANA content type parameter
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JwtHeader.Alg">
+             <summary>
+            Key exchange algorithm
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JwtHeader.Jwk">
+             <summary>
+            JSON Web Key		
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JwtHeader._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.JwtHeader._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.JwtHeader._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.JwtHeader._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JwtHeader._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JwtHeader._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JwtHeader._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JwtHeader._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.JwtHeader.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.JwtHeader._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.JwtHeader.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.DpopPayload">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DpopPayload.JTI">
+             <summary>
+            Unique identifier for the DPoP proof JWT. The value MUST be assigned such 
+            that there is a negligible probability that the same value will be assigned 
+            to any other DPoP proof used in the same context during the time window of 
+            validity. Such uniqueness can be accomplished by encoding (base64url or any 
+            other suitable encoding) at least 96 bits of pseudorandom data or by using 
+            a version 4 Universally Unique Identifier (UUID) string according to 
+            [RFC4122]. The jti can be used by the server for replay detection and 
+            prevention; see Section 11.1.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DpopPayload.HTM">
+             <summary>
+            The value of the HTTP method (Section 9.1 of [RFC9110]) of the request to
+            which the JWT is attached.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DpopPayload.HTU">
+             <summary>
+            The HTTP target URI (Section 7.1 of [RFC9110]) of the request to which 
+            the JWT is attached, without query and fragment parts.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DpopPayload.IAT">
+             <summary>
+            Creation timestamp of the JWT (Section 4.1.6 of [RFC7519])
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DpopPayload.ATH">
+             <summary>
+            Hash of the access token. The value MUST be the result of a base64url encoding 
+            (as defined in Section 2 of [RFC7515]) the SHA-256 [SHS] hash of the ASCII 
+            encoding of the associated access token's value.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DpopPayload.Nonce">
+             <summary>
+            A recent nonce provided via the DPoP-Nonce HTTP header.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DpopPayload.Confirm">
+             <summary>
+            Confirmation
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DpopPayload._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DpopPayload._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DpopPayload._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DpopPayload._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DpopPayload._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DpopPayload._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DpopPayload._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DpopPayload._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DpopPayload.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.DpopPayload._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.DpopPayload.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.DpopConfirmation">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DpopConfirmation.JKT">
+             <summary>
+            JWK SHA-256 Thumbprint confirmation method. The value of the jkt member 
+            MUST be the base64url encoding (as defined in [RFC7515]) of the JWK SHA-256 
+            Thumbprint (according to [RFC7638]) of the DPoP public key (in JWK format) 
+            to which the access token is bound.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DpopConfirmation._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DpopConfirmation._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DpopConfirmation._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DpopConfirmation._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DpopConfirmation._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DpopConfirmation._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DpopConfirmation._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.DpopConfirmation._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DpopConfirmation.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.DpopConfirmation._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.DpopConfirmation.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Cryptography.Oauth.JwtDpop">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JwtDpop.Header">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JwtDpop.Payload">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JwtDpop.Signature">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JwtDpop._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.JwtDpop._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.JwtDpop._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.JwtDpop._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JwtDpop._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JwtDpop._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JwtDpop._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.JwtDpop._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.JwtDpop.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.JwtDpop._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.JwtDpop.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>

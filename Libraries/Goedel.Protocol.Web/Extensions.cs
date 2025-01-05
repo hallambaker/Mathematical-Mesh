@@ -21,6 +21,7 @@
 #endregion
 
 using System.Runtime.CompilerServices;
+using System.Web;
 
 namespace Goedel.Protocol.Web;
 
@@ -111,5 +112,33 @@ public static partial class WebExtensions {
 
         }
 
+    public static T FromUrlQuery<T>  (Uri uri) where T : JsonObject, new() {
+        var result = new T();
+        result.FillFromUrlQuery(uri);
+        return result;
+        }
+
+
+    public static void FillFromUrlQuery(
+            this JsonObject data,
+            Uri uri) {
+
+        var fields = HttpUtility.ParseQueryString(uri.Query);
+
+        foreach (var item in data._Binding.Properties) {
+            switch (item.Value) {
+
+                case PropertyString propertyString: {
+                    var value = fields [item.Key];
+
+                    propertyString.Set (data, value);
+                    break;
+                    }
+
+
+                }
+
+            }
+        }
 
     }

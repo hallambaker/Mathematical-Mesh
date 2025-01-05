@@ -178,6 +178,7 @@ public class SessionManager : Disposable {
 
         var uri = "https://plc.directory/" + did.Identifier;
 
+        Screen.WriteLine($"Resolve DID {uri}");
         var result = await UriClient.DownloadStringAsync(uri);
 
         using var jsonReader = new JsonReader(result);
@@ -250,6 +251,8 @@ public class SessionManager : Disposable {
     public async Task<OauthHandleResolution> TryResolveHandle(string handle) {
         var result = new OauthHandleResolution(handle);
 
+
+
         result.DidDocument = await TryResolveDid(handle);
         if (result.DidDocument is not null) {
             result.ResourceServerMetadata = await TryResolveResourceServer(result.DidDocument);
@@ -260,6 +263,15 @@ public class SessionManager : Disposable {
             result.AuthorizationServerMetadata = 
                 await TryResolveAuthServer(result.ResourceServerMetadata.AuthorizationServers[0]);
             }
+        Screen.WriteLine("# DidDocument");
+        Screen.WriteLine(result.DidDocument.ToString());
+
+        Screen.WriteLine("# ResourceServerMetadata");
+        Screen.WriteLine(result.ResourceServerMetadata.ToString());
+
+        Screen.WriteLine("# AuthorizationServerMetadata");
+        Screen.WriteLine(result.AuthorizationServerMetadata.ToString());
+
         return result;
         }
     #endregion

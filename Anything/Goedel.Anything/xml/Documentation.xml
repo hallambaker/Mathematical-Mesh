@@ -1,0 +1,853 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Anything</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Anything.AnythingProtocol">
+             <summary>
+            
+             Anything device naming and provisioning
+             </summary>
+        </member>
+        <member name="P:Goedel.Anything.AnythingProtocol._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Anything.AnythingProtocol.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.AnythingProtocol._TagDictionary">
+            <summary>
+            Dictionary mapping tags to factory methods
+            </summary>
+        </member>
+        <member name="M:Goedel.Anything.AnythingProtocol.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
+            <summary>
+            Construct an instance from the specified tagged JsonReader stream.
+            </summary>
+            <param name="jsonReader">Input stream</param>
+            <param name="result">The created object</param>
+        </member>
+        <member name="T:Goedel.Anything.CarnetService">
+            <summary>
+            The new base class for the client and service side APIs.
+            </summary>		
+        </member>
+        <member name="F:Goedel.Anything.CarnetService.WellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.CarnetService.GetWellKnown">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Anything.CarnetService.Discovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.CarnetService.GetDiscovery">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Anything.CarnetService.GetTagDictionary">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Anything.CarnetService.Dispatch(System.String,Goedel.Protocol.JsonObject,Goedel.Protocol.IJpcSession)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Anything.CarnetService.GetDirect(Goedel.Protocol.IJpcSession)">
+            <summary>
+            Return a client tapping the service API directly without serialization bound to
+            the session <paramref name="jpcSession"/>. This is intended for use in testing etc.
+            </summary>
+            <param name="jpcSession">Session to which requests are to be bound.</param>
+            <returns>The direct client instance.</returns>
+        </member>
+        <member name="T:Goedel.Anything.CarnetServiceClient">
+            <summary>
+            Client class for CarnetService.
+            </summary>		
+        </member>
+        <member name="F:Goedel.Anything.CarnetServiceClient.WellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.CarnetServiceClient.GetWellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="F:Goedel.Anything.CarnetServiceClient.Discovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.CarnetServiceClient.GetDiscovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="T:Goedel.Anything.CarnetServiceDirect">
+            <summary>
+            Direct API class for CarnetService.
+            </summary>		
+        </member>
+        <member name="P:Goedel.Anything.CarnetServiceDirect.Service">
+            <summary>
+            Interface object to dispatch requests to.
+            </summary>	
+        </member>
+        <member name="T:Goedel.Anything.ProfileAnything">
+             <summary>
+            
+             Describes a anything service provider
+             </summary>
+        </member>
+        <member name="P:Goedel.Anything.ProfileAnything._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.ProfileAnything._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.ProfileAnything._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Anything.ProfileAnything._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.ProfileAnything._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.ProfileAnything._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.ProfileAnything._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.ProfileAnything._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Anything.ProfileAnything.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Anything.ProfileAnything._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Anything.ProfileAnything.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Anything.ProfileAnything.GetEnvelopedProfileAccount">
+            <summary>Typed enveloped data</summary> 
+        </member>
+        <member name="M:Goedel.Anything.ProfileAnything.#ctor">
+            <summary>
+            Default constructor, returns an empty instance.
+            </summary>
+        </member>
+        <member name="M:Goedel.Anything.ProfileAnything.#ctor(System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean)">
+            <summary>
+            Construct a Profile Host instance  from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
+            </summary>
+            <param name="accountAddress">The account address.</param>
+            <param name="secretSeed">The secret seed value.</param>
+            <param name="keyCollection">The base key collection</param>
+            <param name="persist">If true, persist the service record to the local machine
+            store.</param>
+        </member>
+        <member name="M:Goedel.Anything.ProfileAnything.Generate">
+            <summary>
+            Generate profile specific keys.
+            </summary>
+        </member>
+        <member name="M:Goedel.Anything.ProfileAnything.Generate(System.String,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Int32,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Boolean)">
+            <summary>
+            Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
+            seed.
+            </summary>
+            <param name="serviceAddress">The service address</param>
+            <param name="secretSeed">The secret seed value.</param>
+            <param name="algorithmEncrypt">The encryption algorithm.</param>
+            <param name="algorithmSign">The signature algorithm</param>
+            <param name="algorithmAuthenticate">The signature algorithm</param>
+            <param name="bits">The size of key to generate in bits/</param>
+            <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
+            <param name="persist">If <see langword="true"/> persist the secret seed value to
+            <paramref name="keyCollection"/>.</param>
+            <returns>The created profile.</returns>
+        </member>
+        <member name="M:Goedel.Anything.ProfileAnything.Validate">
+            <summary>
+            Verify the profile to check that it is correctly signed and consistent.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Anything.CatalogedIdentity">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedIdentity.Identities">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedIdentity.Certificates">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedIdentity._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.CatalogedIdentity._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.CatalogedIdentity._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Anything.CatalogedIdentity._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.CatalogedIdentity._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedIdentity._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedIdentity._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedIdentity._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Anything.CatalogedIdentity.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Anything.CatalogedIdentity._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Anything.CatalogedIdentity.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Anything.Identity">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.Identity.Name">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.Identity._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.Identity._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.Identity._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Anything.Identity._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.Identity._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.Identity._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.Identity._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.Identity._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Anything.Identity.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Anything.Identity._Factory">
+            <summary>
+            Factory method. Throws exception as this is an abstract class.
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Anything.Identity.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Anything.DnsIdentity">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.DnsIdentity._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.DnsIdentity._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.DnsIdentity._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Anything.DnsIdentity._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.DnsIdentity._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.DnsIdentity._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.DnsIdentity._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.DnsIdentity._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Anything.DnsIdentity.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Anything.DnsIdentity._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Anything.DnsIdentity.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Anything.LocalIdentity">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.LocalIdentity._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.LocalIdentity._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.LocalIdentity._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Anything.LocalIdentity._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.LocalIdentity._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.LocalIdentity._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.LocalIdentity._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.LocalIdentity._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Anything.LocalIdentity.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Anything.LocalIdentity._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Anything.LocalIdentity.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Anything.CallsignIdentity">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.CallsignIdentity._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.CallsignIdentity._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.CallsignIdentity._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Anything.CallsignIdentity._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.CallsignIdentity._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.CallsignIdentity._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.CallsignIdentity._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.CallsignIdentity._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Anything.CallsignIdentity.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Anything.CallsignIdentity._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Anything.CallsignIdentity.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Anything.CatalogedThing">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedThing.DnsPrefix">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedThing._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.CatalogedThing._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.CatalogedThing._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Anything.CatalogedThing._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.CatalogedThing._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedThing._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedThing._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedThing._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Anything.CatalogedThing.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Anything.CatalogedThing._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Anything.CatalogedThing.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Anything.CatalogedAnything">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedAnything.Key">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedAnything.EnvelopedConnectionAddress">
+             <summary>
+            The connection allowing control of the registry.
+             </summary>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedAnything.EnvelopedProfileCarnet">
+             <summary>
+            The Mesh profile
+             </summary>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedAnything.EnvelopedActivationCommon">
+             <summary>
+            The activation data for the registry.
+             </summary>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedAnything._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.CatalogedAnything._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.CatalogedAnything._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Anything.CatalogedAnything._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.CatalogedAnything._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedAnything._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedAnything._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedAnything._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Anything.CatalogedAnything.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Anything.CatalogedAnything._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Anything.CatalogedAnything.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="P:Goedel.Anything.CatalogedAnything._PrimaryKey">
+            <summary>The primary key is protocol:site </summary>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedAnything.ProfileCarnet">
+            <summary>
+            the unwrapped carnet profile.
+            </summary>
+        </member>
+        <member name="M:Goedel.Anything.CatalogedAnything.#ctor">
+            <summary>
+            Create and return an empty instance.
+            </summary>
+        </member>
+        <member name="M:Goedel.Anything.CatalogedAnything.Describe(System.Text.StringBuilder,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Anything.CatalogedAnything.ItemToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Anything.AnythingRequest">
+             <summary>
+            
+             Base class for all requests made to a registrar
+             </summary>
+        </member>
+        <member name="P:Goedel.Anything.AnythingRequest._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.AnythingRequest._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.AnythingRequest._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Anything.AnythingRequest._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.AnythingRequest._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.AnythingRequest._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.AnythingRequest._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.AnythingRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Anything.AnythingRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Anything.AnythingRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Anything.AnythingRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Anything.AnythingResponse">
+             <summary>
+            
+             Base class for all response messages. Contains only the
+             status code and status description fields.
+             </summary>
+        </member>
+        <member name="P:Goedel.Anything.AnythingResponse._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.AnythingResponse._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.AnythingResponse._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Anything.AnythingResponse._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.AnythingResponse._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.AnythingResponse._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.AnythingResponse._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.AnythingResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Anything.AnythingResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Anything.AnythingResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Anything.AnythingResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Anything.CatalogAnything">
+            <summary>
+            Bookmark catalog. Describes the bookmarks in the user's Mesh account.
+            </summary>
+        </member>
+        <member name="F:Goedel.Anything.CatalogAnything.Label">
+            <summary>The canonical label for the catalog</summary>
+        </member>
+        <member name="P:Goedel.Anything.CatalogAnything.StoreType">
+            <inheritdocs/>
+        </member>
+        <member name="P:Goedel.Anything.CatalogAnything.SequenceDefault">
+            <summary>The catalog label</summary>
+        </member>
+        <member name="M:Goedel.Anything.CatalogAnything.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
+            <summary>
+            Factory delegate
+            </summary>
+            <param name="directory">Directory of store file on local machine.</param>
+            <param name="storeId">Store identifier.</param>
+            <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+            <param name="policy">The cryptographic policy to be applied to the catalog.</param>
+            <param name="keyCollection">Key collection to be used to resolve keys</param>
+            <param name="decrypt">If true, attempt decryption of payload contents./</param>
+            <param name="create">If true, create a new file if none exists.</param>
+            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+            <returns>The instance created.</returns>
+        </member>
+        <member name="M:Goedel.Anything.CatalogAnything.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[])">
+            <summary>
+            Constructor for a catalog named <paramref name="storeName"/> in directory
+            <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
+            and key collection <paramref name="keyCollection"/>.
+            </summary>
+            <param name="create">Create a new persistence store on disk if it does not already exist.</param>
+            <param name="decrypt">Attempt to decrypt the contents of the catalog if encrypted.</param>
+            <param name="directory">The directory in which the catalog persistence container is stored.</param>
+            <param name="storeName">The catalog persistence container file name.</param>
+            <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
+            <param name="policy">The cryptographic policy to be applied to the container.</param>
+            <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+        </member>
+        <member name="T:Goedel.Anything.ContextAnything">
+            <summary>
+            Context for managing the callsign Carnet account.
+            </summary>
+        </member>
+        <member name="F:Goedel.Anything.ContextAnything.ContextUser">
+            <summary>The enclosing user context.</summary>
+        </member>
+        <member name="P:Goedel.Anything.ContextAnything.Profile">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.ContextAnything.Connection">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Anything.ContextAnything.CatalogedCarnet">
+            <summary>The catalogued group description.</summary>
+        </member>
+        <member name="P:Goedel.Anything.ContextAnything.DictionaryCatalogDelegates">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.ContextAnything.ServiceAddress">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.ContextAnything.ServiceDns">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.ContextAnything.CatalogCarnet">
+            <summary>Returns the inbound spool for the account</summary>
+        </member>
+        <member name="M:Goedel.Anything.ContextAnything.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedService)">
+            <summary>
+            Constructor returning an instance of a resolver account context running on host
+            <paramref name="meshHost"/> using the description given in <paramref name="catalogedService"/>.
+            </summary>
+            <param name="meshHost">The mesh host.</param>
+            <param name="catalogedService">The resolver configuration description.</param>
+        </member>
+        <member name="M:Goedel.Anything.ContextAnything.Create(Goedel.Mesh.Client.MeshHost,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.List{System.String})">
+            <summary>
+            Create a new client resolver context.
+            </summary>
+            <param name="meshHost">The mesh host.</param>
+            <param name="resolverAddress">The address of the resolver account.</param>
+            <param name="accountSeed">Optional account seed.</param>
+            <param name="roles">The authorized roles.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Anything.ContextAnything.Issue(System.String,System.Int32)">
+            <summary>
+            Issue a carnet to <paramref name="recipient"/> with value <paramref name="tokens"/>.
+            </summary>
+            <param name="recipient">The recipient name.</param>
+            <param name="tokens">The number of tokens.</param>
+        </member>
+        <member name="T:Goedel.Anything.Internal">
+            <summary>
+            An internal assertion check failed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.Internal.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Anything.Internal.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Anything.Internal.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Anything.Internal._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Anything.Internal.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Anything.EventExtensions">
+            <summary>
+            Extensions class defining logging events and convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Anything.EventExtensions.#cctor">
+            <summary>
+            Static initializer, is called once when the module loads.
+            </summary>
+        </member>
+        <member name="T:Goedel.Anything.Extensions">
+            <summary>
+            Extensions class. Provides static convenience extensions.
+            </summary>
+        </member>
+        <member name="T:Goedel.Anything.NamespaceDoc">
+            <summary>
+            Desctiption of the 
+            </summary>
+        </member>
+    </members>
+</doc>

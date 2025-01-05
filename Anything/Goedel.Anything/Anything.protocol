@@ -1,0 +1,81 @@
+﻿Protocol Goedel.Anything AnythingProtocol AnythingProtocol
+	
+	Section 3 "Profile and account registration"
+
+	Structure ProfileAnything
+		External ProfileService
+		Description 
+			|Describes a anything service provider
+
+
+	Structure CatalogedIdentity
+		External CatalogedEntry
+		TStruct Identity Identities
+			Multiple
+		Binary Certificates
+			Multiple
+
+	Structure Identity
+		Abstract
+		String Name
+	
+	Structure DnsIdentity
+		Inherits Identity
+
+	Structure LocalIdentity
+		Inherits Identity
+
+	Structure CallsignIdentity
+		Inherits Identity
+
+
+
+	Structure CatalogedThing
+		External CatalogedEntry
+
+		String DnsPrefix
+		String InternalIp 
+			Multiple
+		String ExternalIp 
+			Multiple
+
+
+
+	Structure CatalogedAnything
+		External CatalogedEntry
+		String Key
+		Struct Enveloped<ConnectionStripped> EnvelopedConnectionAddress
+			Description
+				|The connection allowing control of the registry.
+		Struct Enveloped<ProfileAnything> EnvelopedProfileCarnet
+			Description
+				|The Mesh profile
+		Struct Enveloped<ActivationCommon> EnvelopedActivationCommon
+			Description
+				|The activation data for the registry.
+
+
+	Section 2 "Carnet service"
+
+	Description 
+		|Anything device naming and provisioning
+
+    Using Goedel.Cryptography.Jose
+    Using Goedel.Cryptography.Dare
+
+	Section 3 "Shared Classes"
+    Service CarnetService "_anything._tcp" "anything" AnythingRequest AnythingResponse
+		Description
+
+
+	Message AnythingRequest
+		External Goedel.Protocol.Request
+		Description
+			|Base class for all requests made to a registrar
+
+
+	Message AnythingResponse
+		External Goedel.Protocol.Response		
+		Description
+			|Base class for all response messages. Contains only the
+			|status code and status description fields.

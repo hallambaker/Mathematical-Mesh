@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/31/2024 5:24:29 PM
+//  This file was automatically generated at 1/4/2025 7:41:02 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1840,6 +1840,13 @@ public partial class CallsignBinding : Assertion {
 
 	public virtual KeyData?						CommonEncryption  {get; set;}
 
+        /// <summary>
+        ///Self signed certificate signing certificate to be used as a root of
+        ///trust for PKIX certificates under this callsign.
+        /// </summary>
+
+	public virtual byte[]?						PkixRoot  {get; set;}
+
 
 
     ///<summary>Implement IBinding</summary> 
@@ -1866,7 +1873,9 @@ public partial class CallsignBinding : Assertion {
 					(IBinding data, string? value) => {(data as CallsignBinding).ServiceAddress = value;}, (IBinding data) => (data as CallsignBinding).ServiceAddress )},
 			{ "CommonEncryption", new PropertyStruct ("CommonEncryption", 
 					(IBinding data, object? value) => {(data as CallsignBinding).CommonEncryption = value as KeyData;}, (IBinding data) => (data as CallsignBinding).CommonEncryption,
-					false, ()=>new  KeyData(), ()=>new KeyData())} 
+					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+			{ "PkixRoot", new PropertyBinary ("PkixRoot", 
+					(IBinding data, byte[]? value) => {(data as CallsignBinding).PkixRoot = value;}, (IBinding data) => (data as CallsignBinding).PkixRoot )}
         }, __Tag,() => new CallsignBinding(), Assertion._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 

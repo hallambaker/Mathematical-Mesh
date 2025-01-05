@@ -321,6 +321,11 @@
 		Struct KeyData CommonEncryption
 			Description
 				|Key currently used to encrypt data under this profile
+		Binary PkixRoot
+			Description
+				|Self signed certificate signing certificate to be used as a root of
+				|trust for PKIX certificates under this callsign.
+
 
 
 	Structure Accreditation

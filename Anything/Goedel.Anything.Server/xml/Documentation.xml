@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Anything.Server</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Anything.Server.AnythingServer">
+            <summary>
+            Carnet Service.
+            </summary>
+        </member>
+        <member name="M:Goedel.Anything.Server.AnythingServer.#ctor">
+            <summary>
+            Create and return an empty instance.
+            </summary>
+        </member>
+        <member name="T:Goedel.Anything.Server.AnythingServiceConfiguration">
+            <summary>
+            The Mesh service configuration.
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.Server.AnythingServiceConfiguration.AdminServiceAddress">
+            <summary>The administration account service address.</summary> 
+        </member>
+        <member name="F:Goedel.Anything.Server.AnythingServiceConfiguration.ConfigurationEntry">
+            <summary>The configuration entry.</summary> 
+        </member>
+        <member name="M:Goedel.Anything.Server.AnythingServiceConfiguration.GetConfigurationEntry">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Anything.Server.AnythingServiceConfiguration.Service">
+            <summary>The sevice address of the registry to resolve.</summary> 
+        </member>
+        <member name="M:Goedel.Anything.Server.AnythingServiceConfiguration.Create(Goedel.Mesh.Client.IMeshMachineClient,Goedel.Protocol.GenericHostConfiguration,System.String)">
+            <summary>
+            Create a new instance and return the corresponding configuration file.
+            </summary>
+            <param name="meshMachine">The mesh machine.</param>
+            <param name="GenericHostConfiguration">Generic service configuration.</param>
+            <param name="service">The service endpoing.</param>
+            <returns>The configuration setting,</returns>
+        </member>
+        <member name="T:Goedel.Anything.Server.TBS">
+            <summary>
+            TBS
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.Server.TBS.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Anything.Server.TBS.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Anything.Server.TBS.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Anything.Server.TBS._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Anything.Server.TBS.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Anything.Server.EventExtensions">
+            <summary>
+            Extensions class defining logging events and convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Anything.Server.EventExtensions.#cctor">
+            <summary>
+            Static initializer, is called once when the module loads.
+            </summary>
+        </member>
+        <member name="T:Goedel.Anything.Server.Extensions">
+            <summary>
+            Extensions class. Provides static convenience extensions.
+            </summary>
+        </member>
+        <member name="T:Goedel.Anything.Server.NamespaceDoc">
+            <summary>
+            Desctiption of the 
+            </summary>
+        </member>
+    </members>
+</doc>

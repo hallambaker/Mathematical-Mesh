@@ -40,6 +40,7 @@ public record Did {
         foreach (var text in record.Text) {
             var stripped = StripPrefix("did=", text);
             if (stripped != null) {
+                Screen.WriteLine($"DNS success {stripped}");
                 return (Factory(stripped));
                 }
             }

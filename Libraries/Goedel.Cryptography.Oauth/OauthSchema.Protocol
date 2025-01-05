@@ -250,6 +250,45 @@
 			Multiple
 
 
+	Structure AuthorizationCodeGrant
+		SnakeCase
+		String GrantType
+			Required
+			Description
+				|"authorization_code"
+		String Code
+			Required
+			Description
+				|The authorization code received from the authorization server.
+		String CodeVerifier
+			Description
+				|REQUIRED, if the code_challenge parameter was included in the 
+				|authorization request. MUST NOT be used otherwise. The original code 
+				|verifier string.
+		String ClientId
+			Required
+			Description
+				|Identifies the client software
+
+	Structure ClientCredentialsGrant
+		SnakeCase
+		String GrantType
+			Description
+				|REQUIRED. "client_credentials"
+
+
+	Structure RefreshTokenGrant
+		SnakeCase
+		String GrantType
+			Description
+				|REQUIRED. "refresh_token"
+		String refresh_token
+			Description
+				|REQUIRED. "client_credentials"
+		String Scope   
+			Description
+				|Must be a subset of the scopes declared in client metadata. Must include atproto
+
 
 	Structure DidVerificationMethod
 		CamelCase
@@ -266,6 +305,13 @@
 		String ServiceEndpoint 
 
 
+
+	Structure AuthenticationResponse
+		CamelCase
+		String Iss 
+		String State 
+		String Code 
+
 	Structure JWKS
 		CamelCase
 		Struct JWK Keys 
@@ -273,6 +319,7 @@
 
 	Structure JWK
 		CamelCase
+		String Kid 
 		String KeyType
 			Tag "kty"
 		String Use 
@@ -282,5 +329,76 @@
 		String X 
 		String Y 
 		String D 
-		String Kid 
+
+
+	Structure JwtHeader
+		String Typ
+			Tag "typ"
+			Description
+				|Another IANA content type parameter
+		String Alg
+			Tag "alg"
+			Description
+				|Key exchange algorithm
+		Struct JWK Jwk
+			Tag "jwk"	
+			Description
+				|JSON Web Key		
+
+	Structure DpopPayload
+		String JTI
+			Tag "jti"
+			Description
+				|Unique identifier for the DPoP proof JWT. The value MUST be assigned such 
+				|that there is a negligible probability that the same value will be assigned 
+				|to any other DPoP proof used in the same context during the time window of 
+				|validity. Such uniqueness can be accomplished by encoding (base64url or any 
+				|other suitable encoding) at least 96 bits of pseudorandom data or by using 
+				|a version 4 Universally Unique Identifier (UUID) string according to 
+				|[RFC4122]. The jti can be used by the server for replay detection and 
+				|prevention; see Section 11.1.
+		String HTM
+			Tag "htm"
+			Description
+				|The value of the HTTP method (Section 9.1 of [RFC9110]) of the request to
+				|which the JWT is attached.
+		String HTU
+			Tag "htu"
+			Description
+				|The HTTP target URI (Section 7.1 of [RFC9110]) of the request to which 
+				|the JWT is attached, without query and fragment parts.
+		String IAT
+			Tag "iat"
+			Description
+				|Creation timestamp of the JWT (Section 4.1.6 of [RFC7519])
+
+		// optional
+		String ATH
+			Tag "ath"
+			Description
+				|Hash of the access token. The value MUST be the result of a base64url encoding 
+				|(as defined in Section 2 of [RFC7515]) the SHA-256 [SHS] hash of the ASCII 
+				|encoding of the associated access token's value.
+		String Nonce
+			Tag "nonce"
+			Description
+				|A recent nonce provided via the DPoP-Nonce HTTP header.
+		Struct DpopConfirmation Confirm
+			Tag "cnf"
+			Description
+				|Confirmation
+
+	Structure DpopConfirmation
+		String JKT
+			Tag "jkt"
+			Description
+				|JWK SHA-256 Thumbprint confirmation method. The value of the jkt member 
+				|MUST be the base64url encoding (as defined in [RFC7515]) of the JWK SHA-256 
+				|Thumbprint (according to [RFC7638]) of the DPoP public key (in JWK format) 
+				|to which the access token is bound.
+
+	Structure JwtDpop
+		Struct JwtHeader Header
+		Struct DpopPayload Payload
+		Binary Signature
 
