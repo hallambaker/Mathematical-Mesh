@@ -25,12 +25,11 @@ namespace Goedel.Anything;
 
 public partial class CatalogedThing {
 
-
-
-    public List<string> InternalIp { get; set; }
-
-    public List<string> ExternalIp { get; set; }
-
+    /// <summary>
+    /// Process the request <paramref name="context"/>
+    /// </summary>
+    /// <param name="context">The request to process.</param>
+    /// <returns>Tru if processing advanced to the next stage.</returns>
     public bool Process(
                 AnythingRequestContext context) {
 

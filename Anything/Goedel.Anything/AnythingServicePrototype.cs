@@ -27,34 +27,41 @@ using System.Collections.Generic;
 
 namespace Goedel.Anything;
 
+/// <summary>
+/// Prototype of the Anything service
+/// </summary>
 public class AnythingServicePrototype {
 
-    public CatalogedIdentity Identity { get; init; }
-
-    public string Suffix { get; init; }
-
-    public List<DnsSecondary> LocalDns { get; init; }
-
-    public List<DnsSecondary> PublicDns { get; init; }
+    ///<summary>The set of names under which devices and services are to be registered</summary> 
+    public CatalogedIdentity Identity { get; }
 
 
+    //public string Suffix { get; init; }
 
-    public AnythingServicePrototype() {
+    ///<summary>List of DNS servers through which names are to be published on the local DNS.</summary> 
+    public List<DnsSecondary> LocalDns { get; }
 
-        AcmeCreateAccount();
-        }
+    ///<summary>List of DNS servers through which names are to be published on the public DNS.</summary> 
+    public List<DnsSecondary> PublicDns { get; }
 
 
     /// <summary>
-    /// Create a private CA root and self signed certificate.
+    /// Constructor.
     /// </summary>
-    /// <returns>The self signed certificate</returns>
-    public bool CreatePrivateRoots (
+    public AnythingServicePrototype(
+                    CatalogedIdentity identity,
+                    List<DnsSecondary> localDns,
+                    List<DnsSecondary> publicDns
                     ) {
+        Identity = identity;
+        LocalDns = localDns;
+        PublicDns = publicDns;
 
-        return true;
+        PublishZoneAuthority();
+        AcmeCreateAccount();
         }
 
+    #region // Device registration request
 
     /// <summary>
     /// Begin a registration request for <paramref name="thing"/>.
@@ -66,6 +73,7 @@ public class AnythingServicePrototype {
                     ) {
 
         var state = AnythingState.Complete;
+
         PublishDnsAddresses(thing);
         CreatePrivateCerts(thing);
 
@@ -131,6 +139,80 @@ public class AnythingServicePrototype {
         }
 
 
+    #endregion
+    #region // DNS host and service related
+
+    void PublishZoneAuthority() {
+        }
+
+
+
+    /// <summary>
+    /// Publish the dns addresses for <paramref name="thing"/>.
+    /// </summary>
+    /// <param name="thing"></param>
+    void PublishDnsAddresses(CatalogedThing thing) {
+        foreach (var identity in Identity.Identities) {
+            var name = thing.LocalName + "." + identity.Name;
+            switch (identity) {
+                case DnsIdentity dnsIdentity: {
+                    PublishIpAddress(name, LocalDns, thing.InternalIp);
+                    PublishIpAddress(name, PublicDns, thing.ExternalIp);
+                    break;
+                    }
+                case LocalIdentity localIdentity: {
+                    PublishIpAddress(name, LocalDns, thing.InternalIp);
+                    break;
+                    }
+                case CallsignIdentity callsignIdentity: {
+                    PublishIpAddress(name, LocalDns, thing.InternalIp);
+                    PublishIpAddress(name, PublicDns, thing.ExternalIp);
+                    break;
+                    }
+                }
+            }
+        }
+
+
+    /// <summary>
+    /// Publish DNS A and AAAA records for the <paramref name="name"/>.
+    /// </summary>
+    /// <param name="name">The names</param>
+    /// <param name="servers">The list of secondary servers to UPDATE</param>
+    /// <param name="addresses">The addresses to bind</param>
+    public void PublishIpAddress(
+            string name,
+            List<DnsSecondary> servers,
+            List<string> addresses
+            ) {
+
+        foreach (var server in servers) {
+            server.PublishIpAddress(name, addresses);
+            }
+
+        }
+
+    #endregion
+    #region // Private CA related
+
+    /// <summary>
+    /// Create a private CA root and self signed certificate.
+    /// </summary>
+    /// <returns>The self signed certificate</returns>
+    public bool CreatePrivateRoots(
+                    ) {
+
+        return true;
+        }
+
+
+
+
+
+    #endregion
+    #region // ACME related
+
+
     /// <summary>
     /// Create an acme account to the issuer endpoint
     /// </summary>
@@ -163,33 +245,6 @@ public class AnythingServicePrototype {
         }
 
     /// <summary>
-    /// Publish the dns addresses for <paramref name="thing"/>.
-    /// </summary>
-    /// <param name="thing"></param>
-    void PublishDnsAddresses(CatalogedThing thing) {
-        foreach (var identity in Identity.Identities) {
-            var name = thing.LocalName + "." + identity.Name;
-            switch (identity) {
-                case DnsIdentity dnsIdentity: {
-                    PublishIpAddress(name, LocalDns, thing.InternalIp);
-                    PublishIpAddress(name, PublicDns, thing.ExternalIp);
-                    break;
-                    }
-                case LocalIdentity localIdentity: {
-                    PublishIpAddress(name, LocalDns, thing.InternalIp);
-                    break;
-                    }
-                case CallsignIdentity callsignIdentity: {
-                    PublishIpAddress(name, LocalDns, thing.InternalIp);
-                    PublishIpAddress(name, PublicDns, thing.ExternalIp);
-                    break;
-                    }
-
-                }
-            }
-        }
-
-    /// <summary>
     /// Create the private certificates for <paramref name="thing"/>
     /// </summary>
     /// <param name="thing">The thing to create certificates for.</param>
@@ -218,32 +273,12 @@ public class AnythingServicePrototype {
     /// <param name="clear">If true, clear the challenge.</param>
     public void PublishAcmeChallenge(
                  List<AcmeChallenge> challenges,
-                 bool clear=false) {
-        }
-
-    /// <summary>
-    /// Publish DNS A and AAAA records for the <paramref name="name"/>.
-    /// </summary>
-    /// <param name="name">The names</param>
-    /// <param name="server">The list of secondary servers to UPDATE</param>
-    /// <param name="address">The addresses to bind</param>
-    public void PublishIpAddress(
-            string name,
-            List<DnsSecondary> server,
-            List<string> address
-            ) {
+                 bool clear = false) {
         }
 
 
-    }
+    #endregion
 
 
-
-
-public record DnsSecondary {
-
-    public string IpAddress { get; init; }
-
-    public byte[] TSig { get; init; }
     }
 

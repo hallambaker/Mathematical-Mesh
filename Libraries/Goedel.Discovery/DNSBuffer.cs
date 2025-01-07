@@ -172,32 +172,32 @@ public class DNSBufferIndex {
 
     /// <summary>Write 16 bit integer value</summary>
     /// <param name="data">Data to write</param>
-    public void Write(ushort data) => WriteInt16(data);
+    public virtual void Write(ushort data) => WriteInt16(data);
 
     /// <summary>Write string value with no length prefix (length specified otherwise)</summary>
     /// <param name="data">Data to write</param>
-    public void WriteString(string data) {
+    public virtual void WriteString(string data) {
         foreach (char c in data) {
             WriteByte((byte)c);
             }
         }
     /// <summary>Write string value with 8 bit length prefix</summary>
     /// <param name="data">Data to write</param>
-    public void WriteString8(string data) {
+    public virtual void WriteString8(string data) {
         WriteByte((byte)data.Length);
         WriteString(data);
         }
 
     /// <summary>Write byte value</summary>
     /// <param name="data">Data to write</param>
-    public void WriteByte(byte data) {
+    public virtual void WriteByte(byte data) {
         CheckSpaceWrite(1);
         Write(data);
         }
 
     /// <summary>Write IPv4 Address value</summary>
     /// <param name="data">Data to write</param>
-    public void WriteIPv4(IPAddress data) {
+    public virtual void WriteIPv4(IPAddress data) {
         byte[] bytes = data.GetAddressBytes();
         Assert.AssertTrue(bytes.Length == 4, InvalidIPv4.Throw);
         WriteData(bytes);
@@ -205,7 +205,7 @@ public class DNSBufferIndex {
 
     /// <summary>Write IPv6 value</summary>
     /// <param name="data">Data to write</param>
-    public void WriteIPv6(IPAddress data) {
+    public virtual void WriteIPv6(IPAddress data) {
         byte[] bytes = data.GetAddressBytes();
         Assert.AssertTrue(bytes.Length == 16, InvalidIPv6.Throw);
         WriteData(bytes);
@@ -213,7 +213,7 @@ public class DNSBufferIndex {
 
     /// <summary>Write 16 bit integer value.value</summary>
     /// <param name="data">Data to write</param>
-    public void WriteInt16(UInt16 data) {
+    public virtual void WriteInt16(UInt16 data) {
         CheckSpaceWrite(2);
         Write((byte)((data & 0xff00) >> 8));
         Write((byte)(data & 0xff));
@@ -221,23 +221,23 @@ public class DNSBufferIndex {
 
     /// <summary>Write DNS code value</summary>
     /// <param name="data">Data to write</param>
-    public void WriteInt16(DNSTypeCode data) => WriteInt16((UInt16)data);
+    public virtual void WriteInt16(DNSTypeCode data) => WriteInt16((UInt16)data);
 
     /// <summary>Write DNC Class value</summary>
     /// <param name="data">Data to write</param>
-    public void WriteInt16(DNSClass data) => WriteInt16((UInt16)data);
+    public virtual void WriteInt16(DNSClass data) => WriteInt16((UInt16)data);
 
     /// <summary>Write DNS Flags value</summary>
     /// <param name="data">Data to write</param>
-    public void WriteInt16(DNSFlags data) => WriteInt16((UInt16)data);
+    public virtual void WriteInt16(DNSFlags data) => WriteInt16((UInt16)data);
 
     /// <summary>Write int 16 value</summary>
     /// <param name="data">Data to write</param>
-    public void WriteInt16(int data) => WriteInt16((UInt16)data);
+    public virtual void WriteInt16(int data) => WriteInt16((UInt16)data);
 
     /// <summary>Write int 32 value</summary>
     /// <param name="data">Data to write</param>
-    public void WriteInt32(UInt32 data) {
+    public virtual void WriteInt32(UInt32 data) {
         CheckSpaceWrite(4);
         Write((byte)((data & 0xff000000) >> 24));
         Write((byte)((data & 0xff0000) >> 16));
@@ -247,7 +247,7 @@ public class DNSBufferIndex {
 
     /// <summary>Write int 48 value</summary>
     /// <param name="data">Data to write</param>
-    public void WriteInt48(ulong data) {
+    public virtual void WriteInt48(ulong data) {
         CheckSpaceWrite(6);
         Write((byte)((data & 0xff0000000000) >> 40));
         Write((byte)((data & 0xff00000000) >> 32));
@@ -259,7 +259,7 @@ public class DNSBufferIndex {
 
     /// <summary>Write int 64 value</summary>
     /// <param name="data">Data to write</param>
-    public void WriteInt64(ulong data) {
+    public virtual void WriteInt64(ulong data) {
         CheckSpaceWrite(8);
         Write((byte)((data & 0xff00000000000000) >> 56));
         Write((byte)((data & 0xff000000000000) >> 48));
@@ -273,15 +273,15 @@ public class DNSBufferIndex {
 
     /// <summary>Write domain name value</summary>
     /// <param name="Domain">Data to write</param>
-    public void WriteDomain(Domain Domain) => WriteName(Domain.Name);
+    public virtual void WriteDomain(Domain Domain) => WriteName(Domain.Name);
 
     /// <summary>Write Mail address value</summary>
     /// <param name="Data">Data to write</param>
-    public void WriteMail(string Data) => WriteName(Data);
+    public virtual void WriteMail(string Data) => WriteName(Data);
 
     /// <summary>Write DNS name value</summary>
     /// <param name="Name">Data to write</param>
-    public void WriteName(String Name) {
+    public virtual void WriteName(String Name) {
         int offset = Pointer, label = 0;
 
         WriteByte(0);
@@ -317,7 +317,7 @@ public class DNSBufferIndex {
 
     /// <summary>Write Tag value</summary>
     /// <param name="Tag">Data to write</param>
-    public void WriteTag(String Tag) {
+    public virtual void WriteTag(String Tag) {
         CheckSpaceWrite(Tag.Length);
         Assert.AssertFalse(Tag.Length > 255, TagTooLong.Throw);
         foreach (char c in Tag) {
@@ -327,21 +327,21 @@ public class DNSBufferIndex {
 
     /// <summary>Write data value with byte length prefix value</summary>
     /// <param name="data">Data to write</param>
-    public void WriteL8Data(byte[] data) {
+    public virtual void WriteL8Data(byte[] data) {
         WriteByte((byte)data.Length);
         WriteData(data);
         }
 
     /// <summary>Write value with 2 byte length prefix.</summary>
     /// <param name="data">Data to write</param>                  
-    public void WriteL16Data(byte[] data) {
+    public virtual void WriteL16Data(byte[] data) {
         WriteInt16((UInt16)data.Length);
         WriteData(data);
         }
 
     /// <summary>Write value with no length prefix</summary>
     /// <param name="data">Data to write</param>
-    public void WriteData(byte[] data) {
+    public virtual void WriteData(byte[] data) {
         CheckSpaceWrite(data.Length);
         Array.Copy(data, 0, Buffer.Buffer, Pointer, data.Length);
         Pointer += data.Length;

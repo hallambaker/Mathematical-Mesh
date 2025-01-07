@@ -131,9 +131,8 @@ public abstract partial class CarnetService : Goedel.Protocol.JpcInterface {
 
 	///<inheritdoc/>
 	public override Dictionary<string, JsonFactoryDelegate>  GetTagDictionary() => _TagDictionary;
-		
-	static Dictionary<string, JsonFactoryDelegate> _TagDictionary = new () {
-		};
+
+	static Dictionary<string, JsonFactoryDelegate> _TagDictionary = [];
 
     ///<inheritdoc/>
 	public override Goedel.Protocol.JsonObject Dispatch(

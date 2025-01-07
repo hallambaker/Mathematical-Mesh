@@ -79,21 +79,16 @@ public partial class ServiceAnything {
 
 
         var publicDns = new DnsSecondary() {
-            IpAddress = "192.168.1.200",
+            Primary = System.Net.IPAddress.Parse("127.0.0.1"),
             TSig = tsig
             };
 
         var localDns = new DnsSecondary() {
-            IpAddress = "192.168.1.201",
+            Primary = System.Net.IPAddress.Parse("127.0.0.1"),
             TSig = tsig
             };
 
-        var service = new AnythingServicePrototype() {
-            Identity = identity,
-            Suffix = "example.com",
-            LocalDns = localDns,
-            PublicDns = publicDns
-            };
+        var service = new AnythingServicePrototype(identity, [localDns], [publicDns]);
 
         var thing = new CatalogedThing() {
             LocalName = "coffee"
