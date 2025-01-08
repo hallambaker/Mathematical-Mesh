@@ -79,11 +79,11 @@ public class DnsSecondary {
 
 
 
-        var nameNs = $"{GlueRecordPrefix}.{name}";
+        var nameNs = $"{GlueRecordPrefix}1.{name}";
         var nameAdmin = $"{AdminRecordPrefix}.{name}";
 
         var domain = new Domain(name);
-        var domainNs = new Domain(nameNs+"1");
+        var domainNs = new Domain(nameNs);
         var domainAdmin = new Domain(nameAdmin);
 
         var serial = GetSerial();
@@ -108,15 +108,23 @@ public class DnsSecondary {
 
             // add the primary 
             nsRecords.Add(new DNSRecord_NS() {
-                Domain = domainNs,
+                Domain = domain,
+                NSDNAME = domainNs
                 });
-            aRecords.Add(GetRecord(Primary));
+            aRecords.Add(GetRecord(domainNs, Primary));
 
-            for (var i = 0; i < Additional.Count; i++) {
-                name = $"{GlueRecordPrefix}{i+1}";
-                nsRecords.Add(new DNSRecord_NS() {
-                    Domain = new Domain (name),
-                    });
+            if (Additional is not null) {
+                for (var i = 0; i < Additional.Count; i++) {
+
+                    name = $"{GlueRecordPrefix}{i + 1}";
+                    var aname = new Domain(name);
+
+                    nsRecords.Add(new DNSRecord_NS() {
+                        Domain = domain,
+                        NSDNAME = aname
+                        });
+                    aRecords.Add(GetRecord(aname, Additional[i]));
+                    }
                 }
             RecordUpdate(nsRecords);
             RecordUpdate(aRecords);
@@ -133,11 +141,14 @@ public class DnsSecondary {
     public void PublishIpAddress(
                     string name, 
                     List<string> addresses) {
-
+        if (addresses is null) {
+            return;
+            }
+        var domain = new Domain(name);
         var records = new List<DNSRecord>();
         foreach (var address in addresses) {
             var ipAddress = IPAddress.Parse (address);
-            records.Add(GetRecord(ipAddress));
+            records.Add(GetRecord(domain, ipAddress));
             }
         RecordUpdate(records);
         }
@@ -148,12 +159,14 @@ public class DnsSecondary {
     /// <param name="address">The address to return the record for.</param>
     /// <returns>The record.</returns>
     /// <exception cref="NotImplementedException">The address type is not supported.</exception>
-    public DNSRecord GetRecord(IPAddress address) =>
+    public DNSRecord GetRecord(Domain domain, IPAddress address) =>
         address.AddressFamily switch {
             AddressFamily.InterNetwork => new DNSRecord_A() {
+                Domain = domain,
                 Address = address
                 },
             AddressFamily.InterNetworkV6 => new DNSRecord_AAAA() {
+                Domain = domain,
                 Address = address
                 },
             _ => throw new NotImplementedException()

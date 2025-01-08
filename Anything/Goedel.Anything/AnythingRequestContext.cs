@@ -34,6 +34,10 @@ public record AnythingRequestContext {
     ///<summary>The current request state.</summary> 
     public AnythingState State { get; set; }
 
+    ///<summary>If true, processing of the request has finished either because it 
+    ///completed successfull or a non recoverable error occurred.</summary> 
+    public bool Finished => State == AnythingState.Complete | State == AnythingState.Fail;
+
     ///<summary>The thing being registered</summary> 
     public CatalogedThing Thing { get; init; }
 
@@ -44,7 +48,7 @@ public record AnythingRequestContext {
     public List<SignedObject> Signed { get; set; }
 
     ///<summary>Hint telling device not to bother retry before this time.</summary> 
-    public DateTime TryAfter { get; init; }
+    public DateTime TryAfter { get;  set; }
 
     ///<summary>List of ACME challenges to be provisioned.</summary> 
     public List<AcmeChallenge>? Challenges { get; set; }

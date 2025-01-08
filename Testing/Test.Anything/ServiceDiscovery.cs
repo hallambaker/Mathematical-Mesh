@@ -74,8 +74,8 @@ public partial class ServiceAnything {
             };
 
 
-        var tsig = SHAKE256.HashData("Test Data".ToBytes());
-        Console.WriteLine($"TSIG: [{tsig}]");
+        var tsig = SHAKE256.HashData("Anything TSIG Test Key".ToBytes());
+        Console.WriteLine($"TSIG: [{tsig.ToStringBase64()}]");
 
 
         var publicDns = new DnsSecondary() {
@@ -84,14 +84,16 @@ public partial class ServiceAnything {
             };
 
         var localDns = new DnsSecondary() {
-            Primary = System.Net.IPAddress.Parse("127.0.0.1"),
+            Primary = System.Net.IPAddress.Parse("192.168.0.21"),
             TSig = tsig
             };
 
         var service = new AnythingServicePrototype(identity, [localDns], [publicDns]);
 
         var thing = new CatalogedThing() {
-            LocalName = "coffee"
+            LocalName = "coffee",
+            InternalIp = ["10.0.0.1"],
+            ExternalIp = ["192.168.1.1"]
             };
 
         // Create the private roots
@@ -101,14 +103,11 @@ public partial class ServiceAnything {
         var context = service.RegistrationBegin(thing);
         var complete = thing.Process(context);
 
-
-        while (!complete) {
-            var delay = service.RegistrationContinue(context);
-            while (delay > TimeSpan.Zero) {
-                Task.Delay(delay);
-                delay = service.RegistrationContinue(context);
+        while (!context.Finished) {
+            while (!service.RegistrationContinue(context)) {
+                Task.Delay(context.TryAfter - DateTime.Now);
                 }
-            complete = thing.Process(context);
+            thing.Process(context);
             }
 
         }

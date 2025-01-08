@@ -734,6 +734,89 @@
             </summary>
             <returns>The first valid response received.</returns>
         </member>
+        <member name="T:Goedel.Discovery.DnsConfigWriter">
+            <summary>
+            DNS documentation class, outputs a config file entry corresponding to a record.
+            </summary>
+        </member>
+        <member name="P:Goedel.Discovery.DnsConfigWriter.Output">
+            <summary>The output, defaults to <see cref="P:System.Console.Out"/></summary> 
+        </member>
+        <member name="P:Goedel.Discovery.DnsConfigWriter.Spacer">
+            <summary>Spacer output between fields</summary> 
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.#ctor">
+            <summary>
+            Constructor, the values <see cref="P:Goedel.Discovery.DnsConfigWriter.Output"/> and <see cref="P:Goedel.Discovery.DnsConfigWriter.Spacer"/> can be set
+            as initalizations.
+            </summary>
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.Encode(Goedel.Discovery.DNSRecord)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.WriteInt16(Goedel.Discovery.DNSFlags)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.Write(System.UInt16)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.WriteByte(System.Byte)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.WriteData(System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.WriteDomain(Goedel.Discovery.Domain)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.WriteInt16(Goedel.Discovery.DNSClass)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.WriteInt16(Goedel.Discovery.DNSTypeCode)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.WriteInt16(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.WriteInt16(System.UInt16)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.WriteInt32(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.WriteInt48(System.UInt64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.WriteInt64(System.UInt64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.WriteIPv4(System.Net.IPAddress)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.WriteIPv6(System.Net.IPAddress)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.WriteL16Data(System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.WriteL8Data(System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.WriteMail(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.WriteName(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.WriteString(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.WriteString8(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Discovery.DnsConfigWriter.WriteTag(System.String)">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Discovery.DNSOption">
             <summary>Describe DNS Option</summary>
         </member>

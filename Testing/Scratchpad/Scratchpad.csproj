@@ -11,6 +11,7 @@
 		<ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
 		<ProjectReference Include="..\Goedel.Mesh.Test\Goedel.Mesh.Test.csproj" />
+		<ProjectReference Include="..\Test.Anything\Test.Anything.csproj" />
 	</ItemGroup>
 	
   <ItemGroup>

@@ -22,9 +22,46 @@
 
 
 namespace Goedel.Anything;
+public partial class Identity {
 
+    ///<summary>Suffix appended to the name of the things deployed to the identity.</summary> 
+    public abstract string DnsRoot { get; }
+
+    /// <summary>
+    /// Map the localname <paramref name="name"/> to the corresponding DNS name for this identity
+    /// </summary>
+    /// <param name="name">The local name to map</param>
+    /// <returns>The DNS name</returns>
+    public virtual string GetDnsName(string name) => $"{name}.{DnsRoot}";
+
+
+
+    public virtual void CreateCertificate(
+                CatalogedThing thing,
+                CryptoAlgorithmId cryptoAlgorithm = CryptoAlgorithmId.P384) {
+
+
+        }
+
+
+    }
 
 public partial class CatalogedIdentity {
+
+    public string GetPrivateName() {
+        foreach (var identity in Identities) {
+            if (identity is CallsignIdentity) {
+                return identity.Name;
+                }
+            }
+        foreach (var identity in Identities) {
+            if (identity is DnsIdentity) {
+                return identity.Name;
+                }
+            }
+        return Udf.Nonce(80);
+        }
+
 
 
     public void CreateRoot(CryptoAlgorithmId algorithmId = CryptoAlgorithmId.P384) {
@@ -46,13 +83,16 @@ public partial class CatalogedIdentity {
 
     }
 
-public partial class Identity {
+public partial class LocalIdentity {
+
+    ///<inheritdoc/>
+    public override string DnsRoot => Name + ".";
+
+    /////<inheritdoc/>
+    //public override string GetDnsName(string name) => $"{name}.local.";
 
 
-
-    public virtual void CreateCertificate(
-                CatalogedThing thing,
-                CryptoAlgorithmId cryptoAlgorithm = CryptoAlgorithmId.P384) {
+    public void CreateRoot(CryptoAlgorithmId cryptoAlgorithm = CryptoAlgorithmId.P384) {
 
 
         }
@@ -62,13 +102,24 @@ public partial class Identity {
 
 
 public partial class DnsIdentity {
+    ///<inheritdoc/>
+    public override string DnsRoot => Name + ".";
 
-
+    /////<inheritdoc/>
+    //public override string GetDnsName(string name) => $"{name}.{Name}.";
 
     public void CreateRoot(CryptoAlgorithmId cryptoAlgorithm = CryptoAlgorithmId.P384) {
 
 
         }
 
+
+    }
+
+public partial class CallsignIdentity {
+    ///<inheritdoc/>
+    public override string DnsRoot => Name + ".mesh.";
+
+    //public override string GetDnsName(string name) => $"{name}.{DnsRoot}";
 
     }

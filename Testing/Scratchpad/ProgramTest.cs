@@ -33,7 +33,7 @@ using Goedel.Mesh.Test;
 using Goedel.Test;
 using Goedel.Test.Core;
 using Goedel.Utilities;
-//using Goedel.XUnit;
+using Goedel.XUnit;
 
 using Microsoft.Extensions.Logging;
 
@@ -60,6 +60,11 @@ partial class Program {
         //Trace.Listeners.Add(new GoedelTraceListener());
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
+
+        ServiceAnything.Test().TestOnboadDevice();
+
+
+
         //MakeUdf.GenerateTests();
 
         //TestUdf.Test().TestUdfKeygenECC();

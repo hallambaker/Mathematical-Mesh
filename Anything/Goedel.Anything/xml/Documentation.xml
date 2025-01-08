@@ -308,6 +308,16 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="P:Goedel.Anything.Identity.DnsRoot">
+            <summary>Suffix appended to the name of the things deployed to the identity.</summary> 
+        </member>
+        <member name="M:Goedel.Anything.Identity.GetDnsName(System.String)">
+            <summary>
+            Map the localname <paramref name="name"/> to the corresponding DNS name for this identity
+            </summary>
+            <param name="name">The local name to map</param>
+            <returns>The DNS name</returns>
+        </member>
         <member name="T:Goedel.Anything.DnsIdentity">
             <summary>
             </summary>
@@ -356,6 +366,9 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
+        </member>
+        <member name="P:Goedel.Anything.DnsIdentity.DnsRoot">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Anything.LocalIdentity">
             <summary>
@@ -406,6 +419,9 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="P:Goedel.Anything.LocalIdentity.DnsRoot">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Anything.CallsignIdentity">
             <summary>
             </summary>
@@ -455,11 +471,22 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="P:Goedel.Anything.CallsignIdentity.DnsRoot">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Anything.CatalogedThing">
             <summary>
             </summary>
         </member>
         <member name="P:Goedel.Anything.CatalogedThing.DnsPrefix">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedThing.InternalIp">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedThing.ExternalIp">
             <summary>
             </summary>
         </member>
@@ -507,6 +534,13 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Anything.CatalogedThing.Process(Goedel.Anything.AnythingRequestContext)">
+            <summary>
+            Process the request <paramref name="context"/>
+            </summary>
+            <param name="context">The request to process.</param>
+            <returns>Tru if processing advanced to the next stage.</returns>
         </member>
         <member name="T:Goedel.Anything.CatalogedAnything">
             <summary>
@@ -698,6 +732,208 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="P:Goedel.Anything.AnythingCa.Identity">
+            <summary>The set of names under which devices and services are to be registered</summary> 
+        </member>
+        <member name="M:Goedel.Anything.AnythingCa.#ctor(Goedel.Anything.CatalogedIdentity)">
+            <summary>
+            Constructor, return a new private CA entity for the identity <paramref name="identity"/>.
+            </summary>
+            <param name="identity">The identity to provide services for.</param>
+        </member>
+        <member name="M:Goedel.Anything.AnythingCa.CreatePrivateRoot(System.Security.Cryptography.ECDsa)">
+            <summary>
+            Create a new private root certificate
+            </summary>
+        </member>
+        <member name="T:Goedel.Anything.AnythingRequestContext">
+            <summary>
+            Request context, saves state acropss multiple stage requests.
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.AnythingRequestContext.Id">
+            <summary>Unique transaction identifier</summary> 
+        </member>
+        <member name="P:Goedel.Anything.AnythingRequestContext.State">
+            <summary>The current request state.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.AnythingRequestContext.Finished">
+            <summary>If true, processing of the request has finished either because it 
+            completed successfull or a non recoverable error occurred.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.AnythingRequestContext.Thing">
+            <summary>The thing being registered</summary> 
+        </member>
+        <member name="P:Goedel.Anything.AnythingRequestContext.ToBeSigned">
+            <summary>List of object prototypes to be signed by the device.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.AnythingRequestContext.Signed">
+            <summary>List of signed objects.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.AnythingRequestContext.TryAfter">
+            <summary>Hint telling device not to bother retry before this time.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.AnythingRequestContext.Challenges">
+            <summary>List of ACME challenges to be provisioned.</summary> 
+        </member>
+        <member name="T:Goedel.Anything.AnythingState">
+            <summary>
+            The request states.
+            </summary>
+        </member>
+        <member name="F:Goedel.Anything.AnythingState.Initial">
+            <summary>Start state</summary> 
+        </member>
+        <member name="F:Goedel.Anything.AnythingState.WaitValidate">
+            <summary>Waiting on CA to perform validation of request</summary> 
+        </member>
+        <member name="F:Goedel.Anything.AnythingState.WaitCsr">
+            <summary>Waiting on device providing signed CSRs</summary> 
+        </member>
+        <member name="F:Goedel.Anything.AnythingState.CsrReady">
+            <summary>CSRs are ready, device waiting for presentment.</summary> 
+        </member>
+        <member name="F:Goedel.Anything.AnythingState.WaitCertificate">
+            <summary>Certificates requested by service, waiting for delivery.</summary> 
+        </member>
+        <member name="F:Goedel.Anything.AnythingState.Complete">
+            <summary>Request completed.</summary> 
+        </member>
+        <member name="F:Goedel.Anything.AnythingState.Fail">
+            <summary>The request failed for some reason.</summary> 
+        </member>
+        <member name="T:Goedel.Anything.SignedObjectType">
+            <summary>
+            Identifies objects that were signed or are to be signed.
+            </summary>
+        </member>
+        <member name="F:Goedel.Anything.SignedObjectType.PrivateCA">
+            <summary>Private CA certificate.</summary> 
+        </member>
+        <member name="F:Goedel.Anything.SignedObjectType.EndEntityPrivate">
+            <summary>End entity certificate chained to private CA.</summary> 
+        </member>
+        <member name="F:Goedel.Anything.SignedObjectType.EndEntityPublic">
+            <summary>End entity certificate chained to public CA.</summary> 
+        </member>
+        <member name="T:Goedel.Anything.SignedObject">
+            <summary>
+            An object that is either signed or to be signed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.SignedObject.Type">
+            <summary>The object type.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.SignedObject.Data">
+            <summary>The binary data.</summary> 
+        </member>
+        <member name="T:Goedel.Anything.AcmeChallenge">
+            <summary>
+            Acme challenge value.
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.AcmeChallenge.Value">
+            <summary>The challenge value.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.AcmeChallenge.Label">
+            <summary>The (prefixed) label to which the challenge is to be published.</summary> 
+        </member>
+        <member name="T:Goedel.Anything.AnythingServicePrototype">
+            <summary>
+            Prototype of the Anything service
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.AnythingServicePrototype.Identity">
+            <summary>The set of names under which devices and services are to be registered</summary> 
+        </member>
+        <member name="P:Goedel.Anything.AnythingServicePrototype.LocalDns">
+            <summary>List of DNS servers through which names are to be published on the local DNS.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.AnythingServicePrototype.PublicDns">
+            <summary>List of DNS servers through which names are to be published on the public DNS.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.AnythingServicePrototype.AnythingCa">
+            <summary>The captive private CA</summary> 
+        </member>
+        <member name="M:Goedel.Anything.AnythingServicePrototype.#ctor(Goedel.Anything.CatalogedIdentity,System.Collections.Generic.List{Goedel.Anything.DnsSecondary},System.Collections.Generic.List{Goedel.Anything.DnsSecondary})">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:Goedel.Anything.AnythingServicePrototype.RegistrationBegin(Goedel.Anything.CatalogedThing)">
+            <summary>
+            Begin a registration request for <paramref name="thing"/>.
+            </summary>
+            <param name="thing">The thing to be credentialed and published.</param>
+            <returns>The request context.</returns>
+        </member>
+        <member name="M:Goedel.Anything.AnythingServicePrototype.RegistrationContinue(Goedel.Anything.AnythingRequestContext)">
+            <summary>
+            Continue the registration request <paramref name="context"/>.
+            </summary>
+            <param name="context">Request to progress</param>
+            <returns>true if the request progressed to the next state.</returns>
+        </member>
+        <member name="M:Goedel.Anything.AnythingServicePrototype.PublishDnsAddresses(Goedel.Anything.CatalogedThing)">
+            <summary>
+            Publish the dns addresses for <paramref name="thing"/>.
+            </summary>
+            <param name="thing"></param>
+        </member>
+        <member name="M:Goedel.Anything.AnythingServicePrototype.PublishIpAddress(System.String,System.Collections.Generic.List{Goedel.Anything.DnsSecondary},System.Collections.Generic.List{System.String})">
+            <summary>
+            Publish DNS A and AAAA records for the <paramref name="name"/>.
+            </summary>
+            <param name="name">The names</param>
+            <param name="servers">The list of secondary servers to UPDATE</param>
+            <param name="addresses">The addresses to bind</param>
+        </member>
+        <member name="M:Goedel.Anything.AnythingServicePrototype.CreatePrivateRoots">
+            <summary>
+            Create a private CA root and self signed certificate.
+            </summary>
+            <returns>The self signed certificate</returns>
+        </member>
+        <member name="M:Goedel.Anything.AnythingServicePrototype.AcmeCreateAccount">
+            <summary>
+            Create an acme account to the issuer endpoint
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Anything.AnythingServicePrototype.AcmeTryGetCsr(Goedel.Anything.AnythingRequestContext)">
+            <summary>
+            Attempt to obtain CSRs for the request bundle <paramref name="context"/>
+            </summary>
+            <param name="context">The request to obtain CSRs in</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Anything.AnythingServicePrototype.AcmeTryGetCertificate(Goedel.Anything.AnythingRequestContext)">
+            <summary>
+            Try to get certificates for the request <paramref name="context"/>
+            </summary>
+            <param name="context">The request to obtain certificates for</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Anything.AnythingServicePrototype.CreatePrivateCerts(Goedel.Anything.CatalogedThing)">
+            <summary>
+            Create the private certificates for <paramref name="thing"/>
+            </summary>
+            <param name="thing">The thing to create certificates for.</param>
+        </member>
+        <member name="M:Goedel.Anything.AnythingServicePrototype.GetAcmeChallenge(System.Collections.Generic.List{System.String})">
+            <summary>
+            Get the acme challenges for <paramref name="names"/>
+            </summary>
+            <param name="names">The names to get challenges for</param>
+            <returns>The correspondiong challenge strings.</returns>
+        </member>
+        <member name="M:Goedel.Anything.AnythingServicePrototype.PublishAcmeChallenge(System.Collections.Generic.List{Goedel.Anything.AcmeChallenge},System.Boolean)">
+            <summary>
+            Publish or clear the acme challenge for <paramref name="challenges"/>
+            </summary>
+            <param name="challenges"></param>
+            <param name="clear">If true, clear the challenge.</param>
+        </member>
         <member name="T:Goedel.Anything.CatalogAnything">
             <summary>
             Bookmark catalog. Describes the bookmarks in the user's Mesh account.
@@ -796,6 +1032,85 @@
             </summary>
             <param name="recipient">The recipient name.</param>
             <param name="tokens">The number of tokens.</param>
+        </member>
+        <member name="T:Goedel.Anything.DnsSecondary">
+            <summary>
+            Manage a DNS secondary publishing data from a zone
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.DnsSecondary.GlueRecordPrefix">
+            <summary>Prefix used to construct glue records</summary> 
+        </member>
+        <member name="P:Goedel.Anything.DnsSecondary.AdminRecordPrefix">
+            <summary>Prefix for admin records</summary> 
+        </member>
+        <member name="P:Goedel.Anything.DnsSecondary.Primary">
+            <summary>The address of the primary DNS authoritative.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.DnsSecondary.Additional">
+            <summary>List od secondary DNS authoritative.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.DnsSecondary.TSig">
+            <summary>The TSIG shared secret (to be replaced with GSS API).</summary> 
+        </member>
+        <member name="F:Goedel.Anything.DnsSecondary.lastSerial">
+            <summary>Value of the last serial published.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.DnsSecondary.Refresh">
+            <summary>Number of seconds after which secondary name servers should query the 
+            master for the SOA record, to detect zone changes Recommendation for small and 
+            stable zones 86400 seconds (24 hours)</summary> 
+        </member>
+        <member name="P:Goedel.Anything.DnsSecondary.Retry">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Anything.DnsSecondary.Expire">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Anything.DnsSecondary.Minimum">
+            <summary></summary> 
+        </member>
+        <member name="M:Goedel.Anything.DnsSecondary.PublishSoa(System.String,System.Boolean)">
+            <summary>
+            Publish or update the start of authority record.
+            </summary>
+            <param name="name">The domain to update.</param>
+            <param name="initial">If true, this is an initial publication and the existing
+            records should be overwritten</param>
+        </member>
+        <member name="M:Goedel.Anything.DnsSecondary.PublishIpAddress(System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            Publish DNS A and AAAA records for the <paramref name="name"/>.
+            </summary>
+            <param name="name">The names</param>
+            <param name="addresses">The addresses to bind</param>
+        </member>
+        <member name="M:Goedel.Anything.DnsSecondary.GetRecord(Goedel.Discovery.Domain,System.Net.IPAddress)">
+            <summary>
+            Utility function, returns a A or AAAA record for the address <paramref name="address"/>.
+            </summary>
+            <param name="address">The address to return the record for.</param>
+            <returns>The record.</returns>
+            <exception cref="T:System.NotImplementedException">The address type is not supported.</exception>
+        </member>
+        <member name="M:Goedel.Anything.DnsSecondary.RecordUpdate(Goedel.Discovery.DNSRecord)">
+            <summary>
+            Push updates for the record <paramref name="record"/>.
+            </summary>
+            <param name="record">The record to push the update for.</param>
+        </member>
+        <member name="M:Goedel.Anything.DnsSecondary.RecordUpdate(System.Collections.Generic.List{Goedel.Discovery.DNSRecord})">
+            <summary>
+            Push updates for the record <paramref name="records"/>.
+            </summary>
+            <param name="records">The records to push the update for.</param>
+        </member>
+        <member name="M:Goedel.Anything.DnsSecondary.Canonicalize(System.String@)">
+            <summary>
+            Canonicalize the DNS name <paramref name="name"/> so that it is a fully qualified
+            lower case DNS name ending in a period.
+            </summary>
+            <param name="name">The DNS name to canonicalize.</param>
         </member>
         <member name="T:Goedel.Anything.Internal">
             <summary>

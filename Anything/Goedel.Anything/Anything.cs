@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 1/4/2025 7:41:04 PM
+//  This file was automatically generated at 1/8/2025 5:43:23 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -131,8 +131,9 @@ public abstract partial class CarnetService : Goedel.Protocol.JpcInterface {
 
 	///<inheritdoc/>
 	public override Dictionary<string, JsonFactoryDelegate>  GetTagDictionary() => _TagDictionary;
-
-	static Dictionary<string, JsonFactoryDelegate> _TagDictionary = [];
+		
+	static Dictionary<string, JsonFactoryDelegate> _TagDictionary = new () {
+		};
 
     ///<inheritdoc/>
 	public override Goedel.Protocol.JsonObject Dispatch(

@@ -26,7 +26,6 @@ using Goedel.Cryptography.PKIX;
 using System.Collections.Generic;
 
 namespace Goedel.Anything;
-
 /// <summary>
 /// Prototype of the Anything service
 /// </summary>
@@ -44,7 +43,8 @@ public class AnythingServicePrototype {
     ///<summary>List of DNS servers through which names are to be published on the public DNS.</summary> 
     public List<DnsSecondary> PublicDns { get; }
 
-
+    ///<summary>The captive private CA</summary> 
+    public AnythingCa AnythingCa { get; }
     /// <summary>
     /// Constructor.
     /// </summary>
@@ -59,6 +59,7 @@ public class AnythingServicePrototype {
 
         PublishZoneAuthority();
         AcmeCreateAccount();
+        AnythingCa = new(Identity);
         }
 
     #region // Device registration request
@@ -143,6 +144,35 @@ public class AnythingServicePrototype {
     #region // DNS host and service related
 
     void PublishZoneAuthority() {
+        foreach (var secondary in LocalDns) {
+
+            foreach (var identity in Identity.Identities) {
+                Console.WriteLine();
+                Console.WriteLine($"# Local for {identity.DnsRoot}");
+                switch (identity) {
+                    case CallsignIdentity callsignIdentity:
+                    case LocalIdentity localIdentity:
+                    case DnsIdentity dnsIdentity: {
+                        secondary.PublishSoa(identity.DnsRoot, true);
+                        break;
+                        }
+                    }
+                }
+            }
+
+        foreach (var secondary in PublicDns) {
+            foreach (var identity in Identity.Identities) {
+                Console.WriteLine();
+                Console.WriteLine($"# Public for {identity.DnsRoot}");
+                switch (identity) {
+                    case CallsignIdentity callsignIdentity:
+                    case DnsIdentity dnsIdentity: {
+                        secondary.PublishSoa(identity.DnsRoot, true);
+                        break;
+                        }
+                    }
+                }
+            }
         }
 
 
@@ -152,8 +182,9 @@ public class AnythingServicePrototype {
     /// </summary>
     /// <param name="thing"></param>
     void PublishDnsAddresses(CatalogedThing thing) {
+
         foreach (var identity in Identity.Identities) {
-            var name = thing.LocalName + "." + identity.Name;
+            var name = identity.GetDnsName(thing.LocalName);
             switch (identity) {
                 case DnsIdentity dnsIdentity: {
                     PublishIpAddress(name, LocalDns, thing.InternalIp);
@@ -201,7 +232,7 @@ public class AnythingServicePrototype {
     /// <returns>The self signed certificate</returns>
     public bool CreatePrivateRoots(
                     ) {
-
+        AnythingCa.CreatePrivateRoot();
         return true;
         }
 
