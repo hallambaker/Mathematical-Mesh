@@ -27,8 +27,10 @@ global using Goedel.Utilities;
 global using System.Text;
 
 
-[assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 
+#if !(_Github_)
+[assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
+#endif
 
 
 

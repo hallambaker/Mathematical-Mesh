@@ -27,7 +27,9 @@ global using System;
 global using System.Text;
 
 
+#if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
+#endif
 
 namespace Goedel.Anything;
 /// <summary>

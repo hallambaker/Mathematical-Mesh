@@ -387,6 +387,28 @@ public partial class SubjectAltName {
     public SubjectAltName(GeneralName GeneralName) => Names = new List<GeneralName> {
                 GeneralName
                 };
+
+
+    /// <summary>
+    /// Consrtuct from a list of DNS names.
+    /// </summary>
+    /// <param name="dnsNames"></param>
+    public SubjectAltName(IEnumerable<string> dnsNames) {
+
+        Names = [];
+
+        foreach (var name in dnsNames) {
+            var generalName = new GeneralName(name);
+            Names.Add(generalName);
+            }
+
+
+
+        }
+    //=> Names = new List<GeneralName> {
+    //            GeneralName
+    //            };
+
     }
 
 /// <summary>

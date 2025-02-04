@@ -181,6 +181,34 @@ public static class AssertTest {
     /// Condition is true</param>
     /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
 
+    public static void TestIsEqual(this string? test1, string? test2, ThrowDelegate throwDelegate = null,
+                params object[] args) {
+        if (test1 == test2) {
+            return;
+            }
+        if (test1 == null) {
+            throw throwDelegate(args);
+            }
+
+
+        if (FlagFailure) {
+            Assert.AssertEqual(test1, test2, throwDelegate ?? TestExpectedEqual.Throw, args);
+            }
+        else {
+            TestsFailed++;
+            }
+        }
+
+
+
+    /// <summary>Test to see if two values are equal.
+    /// </summary>
+    /// <param name="test1">First test value</param>
+    /// <param name="test2">Second test value</param>
+    /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
+    /// Condition is true</param>
+    /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
+
     public static void TestEqual<T>(this T test1, T test2, ThrowDelegate throwDelegate = null,
                 params object[] args) {
         if (FlagFailure) {

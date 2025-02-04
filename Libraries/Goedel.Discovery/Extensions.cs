@@ -46,4 +46,28 @@ public static class Extensions {
 
 
 
+
+    public static string FullText(this DNSRecord_TXT record) {
+        if (record?.Text == null) {
+            return null;
+            }
+        if (record.Text.Count == 1) {
+            return record.Text[0];
+            }
+        if (record.Text.Count == 0) {
+            return "";
+            }
+
+
+        var builder = new StringBuilder();
+        foreach (var text in record.Text) {
+            builder.Append(text);
+            }
+        return builder.ToString();
+
+
+        }
+
+
+
     }

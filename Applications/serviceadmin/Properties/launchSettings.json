@@ -1,5 +1,10 @@
 {
   "profiles": {
+    "cryptomesh": {
+      "commandName": "Project",
+      "commandLineArgs": "create cryptomesh.org /host=host1.cryptomesh.org /ip=192.168.1.21:15099 /admin=admin@cryptomesh.org",
+      "workingDirectory": "..\\..\\TestResults\\Service"
+    },
     "About": {
       "commandName": "Project",
       "commandLineArgs": "about /verbose",
@@ -7,7 +12,7 @@
     },
     "create": {
       "commandName": "Project",
-      "commandLineArgs": "create example.com /host=host1.example.com /ip=192.168.1.21:15099 /admin=admin@example.com",
+      "commandLineArgs": "create example.com /host=mmm.example.com /ip=192.168.1.21:15099 /admin=admin@example.com",
       "workingDirectory": "..\\..\\TestResults\\Service"
     },
     "dns": {

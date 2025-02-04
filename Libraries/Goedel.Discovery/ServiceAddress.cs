@@ -67,6 +67,8 @@ public record ParsedAddress {
         };
     }
 
+
+
 /// <summary>
 /// A parsed account/service address specifier. A callsign account address is 
 /// bound to its current service address through the registry registration.

@@ -26,7 +26,9 @@ global using Goedel.Utilities;
 global using System.Text;
 
 
+#if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
+#endif
 
 namespace Goedel.Carnet;
 /// <summary>

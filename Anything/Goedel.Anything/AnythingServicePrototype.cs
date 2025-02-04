@@ -22,6 +22,7 @@
 
 
 using Goedel.Cryptography.PKIX;
+using Goedel.IO;
 
 using System.Collections.Generic;
 
@@ -232,11 +233,27 @@ public class AnythingServicePrototype {
     /// <returns>The self signed certificate</returns>
     public bool CreatePrivateRoots(
                     ) {
+
         AnythingCa.CreatePrivateRoot();
+        "PrivateRoot.cer".WriteFileNew(AnythingCa.PrivateRoot.RawData);
+        
+
+        AnythingCa.CreatePrivateIntermediate();
+        "PrivateIssuer.cer".WriteFileNew(AnythingCa.PrivateIssuer.RawData);
+
         return true;
         }
 
 
+    /// <summary>
+    /// Create the private certificates for <paramref name="thing"/>
+    /// </summary>
+    /// <param name="thing">The thing to create certificates for.</param>
+    public void CreatePrivateCerts(CatalogedThing thing) {
+        var endEntity = AnythingCa.CreateEndEntity(thing);
+
+        "PrivateDevice.cer".WriteFileNew(endEntity.RawData);
+        }
 
 
 
@@ -275,12 +292,6 @@ public class AnythingServicePrototype {
         return true;
         }
 
-    /// <summary>
-    /// Create the private certificates for <paramref name="thing"/>
-    /// </summary>
-    /// <param name="thing">The thing to create certificates for.</param>
-    public void CreatePrivateCerts(CatalogedThing thing) {
-        }
 
     /// <summary>
     /// Get the acme challenges for <paramref name="names"/>

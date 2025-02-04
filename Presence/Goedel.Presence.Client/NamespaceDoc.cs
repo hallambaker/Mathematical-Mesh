@@ -23,8 +23,9 @@ global using Goedel.Utilities;
 
 global using System.Net;
 global using System.Net.Sockets;
+#if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
-
+#endif
 namespace Goedel.Presence.Client;
 /// <summary>
 /// Desctiption of the 

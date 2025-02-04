@@ -10138,6 +10138,12 @@
             </summary>
             <param name="GeneralName">General name to encode</param>
         </member>
+        <member name="M:Goedel.Cryptography.PKIX.SubjectAltName.#ctor(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Consrtuct from a list of DNS names.
+            </summary>
+            <param name="dnsNames"></param>
+        </member>
         <member name="T:Goedel.Cryptography.PKIX.GeneralName">
             <summary>
             GeneralName 

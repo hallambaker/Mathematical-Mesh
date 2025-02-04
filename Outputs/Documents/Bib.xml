@@ -697,3 +697,57 @@
 <seriesInfo name='DOI' value='10.17487/RFC6892'/>
 </reference>
 
+<reference anchor="atproto">
+	<front>
+		<title>
+			AT Protocol
+		</title>
+
+		<date month='January' year='2025' />
+	</front>
+	<format type="html" target="https://atproto.com/specs/atp"/>
+</reference>
+
+<reference anchor="did">
+	<front>
+		<title>
+			Decentralized Identifiers (DIDs) v1.0
+		</title>
+
+		<date day="19" month='July' year='2022' />
+	</front>
+	<format type="html" target="https://www.w3.org/TR/did-core/"/>
+</reference>
+
+<reference anchor="plc">
+	<front>
+		<title>
+			DID Method PLC
+		</title>
+
+		<date month='January' year='2025' />
+	</front>
+	<format type="html" target="https://github.com/did-method-plc/did-method-plc"/>
+</reference>
+
+
+<reference anchor="webmention">
+	<front>
+		<title>
+			Webmention
+		</title>
+
+		<date day="12" month='January' year='2017' />
+	</front>
+	<format type="html" target="https://www.w3.org/TR/webmention/"/>
+</reference>
+
+<reference anchor="microformats2">
+	<front>
+		<title>
+			Microformats2
+		</title>
+
+	</front>
+	<format type="html" target="https://microformats.org/wiki/microformats2"/>
+</reference>

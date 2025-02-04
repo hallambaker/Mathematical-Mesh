@@ -732,8 +732,48 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="T:Goedel.Anything.CertificateType">
+            <summary>
+            Certificate types, describes position in path.
+            </summary>
+        </member>
+        <member name="F:Goedel.Anything.CertificateType.Root">
+            <summary>Self signed root certificate.</summary> 
+        </member>
+        <member name="F:Goedel.Anything.CertificateType.Intermediate0">
+            <summary>Certificate signing certificate constrained to disallow signaing of
+            certificate signing certificates.</summary> 
+        </member>
+        <member name="F:Goedel.Anything.CertificateType.Intermediate1">
+            <summary>Certificate signing certificate constrained to allow signing of one
+            intermediate certificate signing certificate between it and an end-entity 
+            certificate.</summary> 
+        </member>
+        <member name="F:Goedel.Anything.CertificateType.EndEntity">
+            <summary>End entity certificate.</summary> 
+        </member>
+        <member name="T:Goedel.Anything.AnythingCa">
+            <summary>
+            Prototype captive CA for @nything.
+            </summary>
+        </member>
         <member name="P:Goedel.Anything.AnythingCa.Identity">
             <summary>The set of names under which devices and services are to be registered</summary> 
+        </member>
+        <member name="P:Goedel.Anything.AnythingCa.CallsignRoot">
+            <summary>Root of trust for callsign issue.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.AnythingCa.CallsignIssuer">
+            <summary>Online certificate issuer for callsign.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.AnythingCa.CallsignCross">
+            <summary>Cross certificate from callsign to private.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.AnythingCa.PrivateRoot">
+            <summary>Root for personal private issue CA.</summary> 
+        </member>
+        <member name="P:Goedel.Anything.AnythingCa.PrivateIssuer">
+            <summary>Online certificate issuer for personal private issue CA.</summary> 
         </member>
         <member name="M:Goedel.Anything.AnythingCa.#ctor(Goedel.Anything.CatalogedIdentity)">
             <summary>
@@ -741,10 +781,44 @@
             </summary>
             <param name="identity">The identity to provide services for.</param>
         </member>
+        <member name="M:Goedel.Anything.AnythingCa.CreateCallsignRoot(System.Security.Cryptography.ECDsa)">
+            <summary>
+            Create a callsign root certificate.
+            </summary>
+            <param name="key">The signature key.</param>
+            <returns>The root certificate created.</returns>
+        </member>
+        <member name="M:Goedel.Anything.AnythingCa.CreateCallsignIntermediate(System.Security.Cryptography.ECDsa)">
+            <summary>
+            Create a callsign online intermediate certificate used to issue cross certificates.
+            </summary>
+            <param name="key">The signature key.</param>
+            <returns>The root certificate created.</returns>
+        </member>
+        <member name="M:Goedel.Anything.AnythingCa.CreateCallsignCrossCertificate(System.Security.Cryptography.X509Certificates.X509Certificate2)">
+            <summary>
+            Create a callsign cross certificates.
+            </summary>
+            <param name="target">The private root to cross certify.</param>
+            <returns>The root certificate created.</returns>
+        </member>
         <member name="M:Goedel.Anything.AnythingCa.CreatePrivateRoot(System.Security.Cryptography.ECDsa)">
             <summary>
             Create a new private root certificate
             </summary>
+            <param name="key">The signature key.</param>
+        </member>
+        <member name="M:Goedel.Anything.AnythingCa.CreatePrivateIntermediate(System.Security.Cryptography.ECDsa)">
+            <summary>
+            Create a new private online issuer certificate
+            </summary>
+            <param name="key">The signature key.</param>
+        </member>
+        <member name="M:Goedel.Anything.AnythingCa.CreateEndEntity(Goedel.Anything.CatalogedThing,System.Security.Cryptography.ECDsa)">
+            <summary>
+            Create a new private end entity certificate
+            </summary>
+            <param name="key">The signature key.</param>
         </member>
         <member name="T:Goedel.Anything.AnythingRequestContext">
             <summary>
@@ -894,6 +968,12 @@
             </summary>
             <returns>The self signed certificate</returns>
         </member>
+        <member name="M:Goedel.Anything.AnythingServicePrototype.CreatePrivateCerts(Goedel.Anything.CatalogedThing)">
+            <summary>
+            Create the private certificates for <paramref name="thing"/>
+            </summary>
+            <param name="thing">The thing to create certificates for.</param>
+        </member>
         <member name="M:Goedel.Anything.AnythingServicePrototype.AcmeCreateAccount">
             <summary>
             Create an acme account to the issuer endpoint
@@ -913,12 +993,6 @@
             </summary>
             <param name="context">The request to obtain certificates for</param>
             <returns></returns>
-        </member>
-        <member name="M:Goedel.Anything.AnythingServicePrototype.CreatePrivateCerts(Goedel.Anything.CatalogedThing)">
-            <summary>
-            Create the private certificates for <paramref name="thing"/>
-            </summary>
-            <param name="thing">The thing to create certificates for.</param>
         </member>
         <member name="M:Goedel.Anything.AnythingServicePrototype.GetAcmeChallenge(System.Collections.Generic.List{System.String})">
             <summary>
@@ -1152,6 +1226,11 @@
         <member name="M:Goedel.Anything.EventExtensions.#cctor">
             <summary>
             Static initializer, is called once when the module loads.
+            </summary>
+        </member>
+        <member name="T:Goedel.Anything.Helper">
+            <summary>
+            Extensions class. Provides static convenience extensions.
             </summary>
         </member>
         <member name="T:Goedel.Anything.Extensions">

@@ -19,9 +19,9 @@
 //  THE SOFTWARE.
 global using Goedel.Protocol.Service;
 global using Goedel.Utilities;
-
+#if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
-
+#endif
 namespace Goedel.Repository.Server;
 /// <summary>
 /// Desctiption of the 

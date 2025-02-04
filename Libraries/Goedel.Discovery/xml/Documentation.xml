@@ -481,6 +481,13 @@
             <param name="fallback">The fallback mode to use if SRV lookup fails</param> 
             <returns>Description of the discovered services.</returns>
         </member>
+        <member name="M:Goedel.Discovery.DnsClient.GetPrefixedTXT(System.String,System.String)">
+            <summary>
+            Resolve an @nything handle using DNS.
+            </summary>
+            <param name="domain">TThe domain component of the handle.</param>
+            <returns>The resolved DID.</returns>
+        </member>
         <member name="M:Goedel.Discovery.DnsClient.ResolveAtHandleDNS(System.String)">
             <summary>
             Resolve an @nything handle using DNS.
@@ -4058,6 +4065,58 @@
         <member name="M:Goedel.Discovery.Parse.Hex16">
             <summary>Get Hex data with 8 bit length value</summary>
             <returns>The value returned</returns>
+        </member>
+        <member name="T:Goedel.Discovery.HandleType">
+            <summary>
+            Mesh handle types
+            </summary>
+        </member>
+        <member name="F:Goedel.Discovery.HandleType.Invalid">
+            <summary>Handle is not valid.</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.HandleType.Fingerprint">
+            <summary>Handle is just a fingerprint, 
+            e.g. maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.HandleType.AccountServiceAddress">
+            <summary>Account service address, 
+            e.g. alice@example.com</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.HandleType.DirectServiceAddress">
+            <summary>Direct Service Address, 
+            e.g. maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah@@example.com</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.HandleType.DirectAccountServiceAddress">
+            <summary>Direct Account Service Address, 
+            e.g. maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah@alice@example.com</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.HandleType.DnsHandle">
+            <summary>DNS Handle,
+            e.g. @alice.example.net</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.HandleType.DirectDnsHandle">
+            <summary>Direct DNS handle, 
+            e.g. @maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah@alice.example.net</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.HandleType.LocalName">
+            <summary>Local name, e.g. @alice</summary> 
+        </member>
+        <member name="T:Goedel.Discovery.ParsedHandle">
+            <summary>
+            A parsed representation of a Mesh/DNS handle.
+            </summary>
+        </member>
+        <member name="P:Goedel.Discovery.ParsedHandle.HandleType">
+            <summary>The handle type</summary> 
+        </member>
+        <member name="P:Goedel.Discovery.ParsedHandle.Fingerprint">
+            <summary>The fingerprint specification</summary> 
+        </member>
+        <member name="P:Goedel.Discovery.ParsedHandle.Name">
+            <summary>The name component</summary> 
+        </member>
+        <member name="P:Goedel.Discovery.ParsedHandle.Service">
+            <summary>The Service DNS address</summary> 
         </member>
         <member name="T:Goedel.Discovery.ParsedAddressType">
             <summary>

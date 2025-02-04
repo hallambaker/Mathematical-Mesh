@@ -392,7 +392,7 @@ public static class Assert {
     /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
 
     public static void AssertEqual<T>(this T test1, T test2, ThrowDelegate throwDelegate,
-                params object[] args) {
+                params object[] args)  {
         if (!test1.Equals(test2)) {
             throw throwDelegate(args);
             }

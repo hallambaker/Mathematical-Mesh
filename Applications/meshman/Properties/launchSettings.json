@@ -49,9 +49,37 @@
     },
     "Create": {
       "commandName": "Project",
+      "commandLineArgs": "account create phill@example.com ",
+      "workingDirectory": "..\\..\\TestResults\\Service"
+    },
+    "Alice": {
+      "commandName": "Project",
       "commandLineArgs": "account create alice@example.com ",
       "workingDirectory": "..\\..\\TestResults\\Service"
     },
+    "Bob": {
+      "commandName": "Project",
+      "commandLineArgs": "account create bob@example.com ",
+      "workingDirectory": "..\\..\\TestResults\\Service"
+    },
+    "Contact": {
+      "commandName": "Project",
+      "commandLineArgs": "contact request alice@example.com ",
+      "workingDirectory": "..\\..\\TestResults\\Service"
+    },
+    "ContactX": {
+      "commandName": "Project",
+      "commandLineArgs": "contact request MBQK-JSLT-BUU7-KTGA-BPTK-OPGG-UR63@example.com ",
+      "workingDirectory": "..\\..\\TestResults\\Service"
+    },
+
+    "ContactBad": {
+      "commandName": "Project",
+      "commandLineArgs": "contact request null@example.com ",
+      "workingDirectory": "..\\..\\TestResults\\Service"
+    },
+
+
     "Encode": {
       "commandName": "Project",
       "commandLineArgs": "dare encode foo.txt foo.dare /encrypt alice@example.com",

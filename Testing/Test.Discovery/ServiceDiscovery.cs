@@ -24,12 +24,219 @@ using Goedel.Discovery;
 using Goedel.Test;
 using Goedel.Utilities;
 
+using System.Linq;
+
 #pragma warning disable IDE0059
 
 namespace Goedel.XUnit;
 
 public partial class ServiceDiscovery {
     public static ServiceDiscovery Test() => new();
+
+    [Fact]
+    public void TestResoveServices() {
+
+
+        TestResolveService("@alice.example.net", [
+            new HandleServiceAtprotocol () { 
+                Did = "did:plc:k647x4n6h3jm347u3t5cm6ki"
+                },
+            new HandleServiceOauth (){
+                Did = "did:plc:k647x4n6h3jm347u3t5cm6ki",
+                ServiceUri ="https://example.com"
+                },
+            new HandleServiceMesh (){
+                Dsa = "maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah@@example.com"
+                },
+            new HandleServiceHttp (){
+                Domain ="alice.example.net"
+                }
+            ]);
+
+        TestResolveService("@bob.example.net",[
+            new HandleServiceOauth (){
+                Did = "did:mmm:mbqn-a3es-zbye-xp3o-w6et-pqug-go5v",
+                ServiceUri ="https://example.com"
+                },
+            new HandleServiceMesh (){
+                Dsa = "mbqn-a3es-zbye-xp3o-w6et-pqug-go5v@@example.com"
+                },
+            new HandleServiceHttp (){
+                Domain ="bob.example.net"
+                }
+            ]);
+
+        TestResolveService("@carol.example.net",[
+            new HandleServiceMesh (){
+                Dsa = "mbqn-a3es-zbye-xp3o-w6et-pqug-go5v@@example.com"
+                },
+            new HandleServiceHttp (){
+                Domain ="carol.example.net"
+                }
+            ]);
+
+        TestResolveService("@doug.example.net",[
+            new HandleServiceAtprotocol () {
+                Did = "did:plc:k647x4n6h3jm347u3t5cm6ki"
+                },
+            ]);
+
+        TestResolveService("@edward.example.net", [
+            new HandleServiceOauth (){
+                Did = "did:plc:k647x4n6h3jm347u3t5cm6ki",
+                ServiceUri ="https://example.com"
+                }
+            ]);
+        }
+
+
+    bool TestResolveService(
+            string handle,
+            HandleService[] servicesTest
+            ) {
+
+
+        var parsed = new ParsedHandle(handle);
+        var services = parsed.GetServices().Sync();
+        (services.Services.Count == servicesTest.Length).TestTrue();
+
+        for (var i = 0; i< services.Services.Count; i++) {
+            Check(services.Services[i], servicesTest[i]);
+            }
+
+
+        return true;
+        }
+
+    bool Check(HandleService t1, HandleService t2) => t1 switch {
+        HandleServiceHttp t1n => Check (t1n, t2),
+        HandleServiceOauth t1n => Check(t1n, t2),
+        HandleServiceAtprotocol t1n => Check(t1n, t2),
+        HandleServiceMesh t1n => Check(t1n, t2),
+        _ => throw new NYI()    
+        };
+
+    bool Check(HandleServiceMesh t1, HandleService t2in) {
+        var t2 = t2in as HandleServiceMesh;
+        t2in.TestNotNull();
+        (t1.Dsa == t2.Dsa).TestTrue();
+        return true;
+        }
+
+    bool Check(HandleServiceOauth t1, HandleService t2in) {
+        var t2 = t2in as HandleServiceOauth;
+        t2in.TestNotNull();
+        (t1.Did == t2.Did).TestTrue();
+        (t1.ServiceUri == t2.ServiceUri).TestTrue();
+        return true;
+        }
+
+    bool Check(HandleServiceAtprotocol t1, HandleService t2in) {
+        var t2 = t2in as HandleServiceAtprotocol;
+        t2in.TestNotNull();
+        (t1.Did == t2.Did).TestTrue();
+        (t1.ServiceUri == t2.ServiceUri).TestTrue();
+        return true;
+        }
+
+    bool Check(HandleServiceHttp t1, HandleService t2in) {
+        var t2 = t2in as HandleServiceHttp;
+        t2in.TestNotNull();
+        (t1.Domain == t2.Domain).TestTrue();
+
+        return true;
+        }
+
+    [Fact]
+    public void TestResoveHandles() {
+        // Service
+        TestResolve("alice@example.com", "alice@example.com");
+
+        TestResolve("maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah@@example.com",
+            "maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah@@example.com");
+        TestResolve("maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah@alice@example.com",
+            "maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah@@example.com");
+
+
+
+
+
+        // DNS handle
+        TestResolve("@alice.example.net",
+            "maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah@@example.com");
+
+        TestResolve("@maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah@alice.example.net",
+            "maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah@@example.com");
+
+
+
+
+        }
+
+    bool TestResolve(
+                string handle,
+                string address) {
+
+        var result = ParsedHandle.Resolve(handle);
+
+        result.TestIsEqual(address);
+
+
+        return true;
+        }
+
+
+
+    [Fact]
+    public void TestHandles() {
+
+        TestHandle("maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah", 
+            HandleType.Fingerprint, 
+            fingerprint: "maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah");
+        TestHandle("alice@example.com", 
+            HandleType.AccountServiceAddress, 
+            name: "alice", 
+            service: "example.com");
+        TestHandle("maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah@@example.com", 
+            HandleType.DirectServiceAddress, 
+            fingerprint: "maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah",
+            service: "example.com");
+        TestHandle("maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah@alice@example.com", 
+            HandleType.DirectAccountServiceAddress, 
+            fingerprint: "maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah",
+            name: "alice",
+            service: "example.com");
+        TestHandle("@alice.example.net", 
+            HandleType.DnsHandle, 
+            name: "alice.example.net");
+        TestHandle("@maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah@alice.example.net",
+            HandleType.DirectDnsHandle,
+            fingerprint: "maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah",
+            name: "alice.example.net");
+        TestHandle("@alice", 
+            HandleType.LocalName, 
+            name: "alice");
+        }
+
+    bool TestHandle(
+                string handle,
+                HandleType type,
+                string fingerprint=null,
+                string name=null,
+                string service=null) {
+
+        var parsed = new ParsedHandle(handle);
+
+        parsed.HandleType.TestEqual(type);
+        parsed.Fingerprint.TestIsEqual(fingerprint);
+        parsed.Name.TestIsEqual(name);
+        parsed.Service.TestIsEqual(service);
+
+        return true;
+        }
+
+
+
 
 
     [Fact]
@@ -107,6 +314,7 @@ public partial class ServiceDiscovery {
 
 
         }
+
 
 
     bool TestServiceAddress(

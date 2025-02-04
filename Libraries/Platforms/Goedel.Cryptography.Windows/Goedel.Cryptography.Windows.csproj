@@ -2,16 +2,15 @@
 	<!--<Import Project="$(SolutionDir)Settings/CommonSettingsWindows.xml" />-->
   <PropertyGroup>
 
-	  <TargetFrameworks>net9.0-windows</TargetFrameworks>
+    <TargetFrameworks>net9.0-windows</TargetFrameworks>
     <RootNamespace>Goedel.Cryptography.Windows</RootNamespace>
     <Product>Goedel.Cryptography.Windows</Product>
     <Description>Platform specific windows libraries.</Description>
     <Copyright>© 2020</Copyright>
     <Title>Goedel.Cryptography.Windows</Title>
+    <DefineConstants>_Github_</DefineConstants>
 
-
-	<!--<RuntimeIdentifiers>win-x64;win-arm;win-x86;win-arm64</RuntimeIdentifiers>-->
-	<DefineConstants>$(DefineConstants);USE_PLATFORM_WINDOWS</DefineConstants>
+    <DefineConstants>$(DefineConstants);USE_PLATFORM_WINDOWS</DefineConstants>
 
   </PropertyGroup>
 

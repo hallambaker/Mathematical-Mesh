@@ -123,6 +123,43 @@ public abstract class DnsClient {
         return task;
         }
 
+
+    /// <summary>
+    /// Resolve an @nything handle using DNS.
+    /// </summary>
+    /// <param name="domain">TThe domain component of the handle.</param>
+    /// <returns>The resolved DID.</returns>
+    public static async Task<DNSRecord_TXT?> GetPrefixedTXT(string domain, string prefix) {
+        domain = prefix + "." + domain;
+
+        //Screen.WriteLine($"Resolve DNS {domain}");
+        using var context = Default.GetContext();
+        var records = await context.QueryRecord(domain, DNSTypeCode.TXT);
+        if (records == null) {
+            return null;
+            }
+
+        // Check record exists
+        //records.AssertNotNull(NYI.Throw);
+
+        // Get the first record, must be TXT
+        var enumerator = records.GetEnumerator();
+        if (!enumerator.MoveNext()) {
+            return null;
+            }
+        var record = enumerator.Current as DNSRecord_TXT;
+        if (record?.Text == null) {
+            return null;
+            }
+        // Throw error if more than one.
+        if (enumerator.MoveNext()) {
+            return null;
+            }
+
+        return record;
+        }
+
+
     /// <summary>
     /// Resolve an @nything handle using DNS.
     /// </summary>

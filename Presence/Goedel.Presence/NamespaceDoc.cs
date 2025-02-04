@@ -20,7 +20,9 @@
 global using Goedel.Mesh;
 global using Goedel.Utilities;
 
+#if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
+#endif
 
 namespace Goedel.Presence;
 /// <summary>

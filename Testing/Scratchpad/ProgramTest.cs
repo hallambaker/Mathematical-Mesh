@@ -61,7 +61,8 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
-        ServiceAnything.Test().TestOnboadDevice();
+        ServiceDiscovery.Test().TestResoveServices();
+        //ServiceAnything.Test().TestOnboadDevice();
 
 
 
