@@ -103,7 +103,13 @@ public static class Utilities {
     public static string ToRFC3339(this System.DateTime? dateTime) => dateTime == null ? "null" :
         ((System.DateTime)dateTime).ToString("yyyy-MM-dd'T'HH:mm:ssZ");
 
-
+    /// <summary>
+    /// Format a dateTime value in RFC3339 format.
+    /// </summary>
+    /// <param name="dateTime">The time to convert.</param>
+    /// <returns>The converted date time</returns>
+    public static string ToFileSpec(this System.DateTime dateTime) => dateTime == null ? "null" :
+        ((System.DateTime)dateTime).ToString("yyyy-MM-dd--HH-mm");
 
     /// <summary>
     /// Parse an RFC3339 format date time value.

@@ -197,42 +197,42 @@ public class ParsedHandle {
         return new ParsedHandle(handle);
 
         }
+    public async Task<DnsHandleServices> GetServices() => await GetServices(Name);
 
+    public static async Task<DnsHandleServices> GetServices(string handle) {
+        var result = new DnsHandleServices(handle);
 
-    public async Task<DnsHandleServices> GetServices() {
-        var result = new DnsHandleServices();
+        var handleTxt = await DnsClient.GetPrefixedTXT(handle, "_handle");
 
-        var handle = await DnsClient.GetPrefixedTXT(Name, "_handle");
-
-        if (handle == null) {
-            result.Add(await HandleServiceMesh.Fetch(Name));
-            result.Add(await HandleServiceOauth.Fetch(Name));
-            result.Add(await HandleServiceAtprotocol.Fetch(Name));
-            result.Add(await HandleServiceHttp.Fetch(Name));
+        if (handleTxt == null) {
+            result.Add(await HandleServiceMesh.Fetch(handle));
+            result.Add(await HandleServiceOauth.Fetch(handle));
+            result.Add(await HandleServiceAtprotocol.Fetch(handle));
+            result.Add(await HandleServiceHttp.Fetch(handle));
             return result;
             }
 
         // collect up all the text into one bucket, that is our entry
-        var services = handle.FullText().Split (' ');
+        var services = handleTxt.FullText().Split (' ');
 
 
         foreach (var service in services) {
             switch (service) {
 
                 case "mesh": {
-                    result.Add (await HandleServiceMesh.Fetch (Name, true));
+                    result.Add (await HandleServiceMesh.Fetch (handle, true));
                     break;
                     }
                 case "oauth": {
-                    result.Add(await HandleServiceOauth.Fetch(Name, true));
+                    result.Add(await HandleServiceOauth.Fetch(handle, true));
                     break;
                     }
                 case "atproto": {
-                    result.Add(await HandleServiceAtprotocol.Fetch(Name, true));
+                    result.Add(await HandleServiceAtprotocol.Fetch(handle, true));
                     break;
                     }
                 case "https": {
-                    result.Add(await HandleServiceHttp.Fetch(Name, true));
+                    result.Add(await HandleServiceHttp.Fetch(handle, true));
                     break;
                     }
                 case "": {
@@ -249,14 +249,23 @@ public class ParsedHandle {
 
 
 
-public record DnsHandleServices {
+public record DnsHandleServices(
+                string Handle) {
     public List<HandleService> Services = [];
 
-
+    public HandleServiceMesh Mesh { get; set; }
+    public HandleServiceOauth Oauth { get; set; }
+    public HandleServiceAtprotocol Atprotocol { get; set; }
+    public HandleServiceHttp Http { get; set; }
 
     public void Add(HandleService service) {
         if (service != null) { 
-            Services.Add(service); 
+            Services.Add(service);
+            Mesh ??= service as HandleServiceMesh;
+            Oauth ??= service as HandleServiceOauth;
+            Atprotocol ??= service as HandleServiceAtprotocol;
+            Http ??= service as HandleServiceHttp;
+
             }
 
         }
