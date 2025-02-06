@@ -1,11 +1,8 @@
 ﻿
 
-using Goedel.Cryptography.Oauth;
 
-using static Goedel.Cryptography.Oauth.OauthClient;
 
-namespace Test.Cryptography.Oauth;
-
+namespace Goedel.XUnit;
 public class TestOauth {
 
     string PHB1 => "hallam.bsky.social";
@@ -56,13 +53,13 @@ public class TestOauth {
     [Fact]
     public void TestPAR() {
         var client = new OauthClient(null, null, null);
-        var manager = new EncryptedTokenManager();
+        //var manager = new EncryptedTokenManager();
         //var par = client.PreRequest(PHB1, "fatfreddy").Sync();
 
         SessionManager SessionManager = new();
         var oauth1 = SessionManager.TryResolveHandle(PHB1).Sync();
         var req = client.ConstructPar(oauth1, "fat freddy");
-        var state = new EncodedState(manager, req.State);
+        var state = new EncodedState(client.EncryptedTokenManager, req.State);
 
         }
 

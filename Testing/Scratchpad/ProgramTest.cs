@@ -61,7 +61,7 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
-        ServiceDiscovery.Test().TestResoveServices();
+        ShellTests.Test().TestAccountHandle();
         //ServiceAnything.Test().TestOnboadDevice();
 
 

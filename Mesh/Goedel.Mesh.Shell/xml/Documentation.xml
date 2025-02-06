@@ -1661,6 +1661,9 @@
         <member name="P:Goedel.Mesh.Shell._AccountCreate.Localname">
             <summary>Field accessor for option [localname]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._AccountCreate.DnsHandle">
+            <summary>Field accessor for option [handle]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._AccountCreate.Payment">
             <summary>Field accessor for option [payment]</summary>
         </member>

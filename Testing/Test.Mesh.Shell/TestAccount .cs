@@ -38,8 +38,31 @@ public partial class ShellTests {
     //public string AliceService2 = "alice@example.net";
 
 
+    [Fact]
+    public void TestAccountHandle() {
+
+        var h2 = Dispatch($"account hello @alice.example.com") as ResultHello;
 
 
+
+        var h1 = Dispatch($"account hello example.com") as ResultHello;
+
+
+        var c1 = Dispatch($"account create alice@example.com /localname=alice /handle=@alice.example.net") as ResultCreateAccount;
+        var h7 = Dispatch($"account hello @alice");
+
+
+        var h3 = Dispatch($"account hello alice@example.com");
+        var h4 = Dispatch($"account hello @alice.example.net");
+
+
+        var udf = c1.Account.ToLower();
+        var h5 = Dispatch($"account hello {udf}@@example.com");
+        var h6 = Dispatch($"account hello {udf}@alice@example.com");
+
+        // Local names - will be tricky!
+        //var h7 = Dispatch($"account hello @alice");
+        }
 
     [Fact]
     public void TestAccount() {

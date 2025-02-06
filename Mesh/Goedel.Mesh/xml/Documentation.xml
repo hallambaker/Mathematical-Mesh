@@ -3157,14 +3157,15 @@
             </summary>
             <param name="catalogedContact">The new catalog values.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogContact.TryAdd(Goedel.Mesh.Contact,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogContact.TryAdd(Goedel.Mesh.Contact,System.String,System.Boolean)">
             <summary>
             Add <paramref name="contact"/> to the catalog. If <paramref name="self"/> is true, this
             is the user's own contact.
             </summary>
             <param name="contact">The contact to add.</param>
-            <param name="self">If true, mark as the user's own contact.</param>
+            <param name="localname"></param>
             <returns>The CatalogedContact entry.</returns>
+            <param name="self">If true, mark as the user's own contact.</param>
         </member>
         <member name="M:Goedel.Mesh.CatalogContact.GetUpdated(Goedel.Mesh.Contact,System.Boolean)">
             <summary>
@@ -3350,11 +3351,6 @@
         <member name="P:Goedel.Mesh.Contact.Id">
              <summary>
             The globally unique contact identifier.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Contact.Local">
-             <summary>
-            The local name.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.Contact.Anchors">
@@ -15165,6 +15161,11 @@
         <member name="P:Goedel.Mesh.NetworkAddress.Address">
              <summary>
             The network address, e.g. alice@example.com
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkAddress.Aliases">
+             <summary>
+            Aliases that may be used in place of the Network address
              </summary>
         </member>
         <member name="P:Goedel.Mesh.NetworkAddress.Protocol">

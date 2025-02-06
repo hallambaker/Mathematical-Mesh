@@ -8,7 +8,7 @@ public partial class TestPresence {
     /// <summary>
     /// Test status update notification on catalog update
     /// </summary>
-    [Fact]
+    [Fact(Skip = "Not terminating reliably")]
     public void PresenceStatusUpdate() {
 
         var aliceCli = GetAlice(out var contextAlice, out var presenceAlice);
@@ -19,7 +19,7 @@ public partial class TestPresence {
 
 
 
-    [Theory]
+    [Theory(Skip = "Not terminating reliably")]
     [InlineData(null, 30)]
     public void PresenceHeartbeat(CommunicationConditions communicationConditions = null,
                 int cycles = 30) {

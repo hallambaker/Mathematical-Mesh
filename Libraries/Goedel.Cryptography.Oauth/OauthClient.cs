@@ -19,13 +19,13 @@ public class OauthClient {
     public byte[] ClientMetadataBytes { get; }
 
     ///<summary>The session manager storing state between requests.</summary> 
-    SessionManager SessionManager { get; }
+    public SessionManager SessionManager { get; }
 
     ///<summary>Secret key used to construct challenge and verifier values.</summary> 
     byte[] SecretKey { get; }
 
     ///<summary>Encrypted state token manager.</summary> 
-    EncryptedTokenManager EncryptedTokenManager { get; } = new();
+    public EncryptedTokenManager EncryptedTokenManager { get; } = new();
 
 
     /// <summary>

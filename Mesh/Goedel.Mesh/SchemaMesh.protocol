@@ -558,9 +558,7 @@
 		String Id
 			Description
 				|The globally unique contact identifier.
-		String Local
-			Description
-				|The local name.
+
 		Struct Anchor Anchors
 			Multiple
 			Description
@@ -690,6 +688,10 @@
 		String Address	
 			Description
 				|The network address, e.g. alice@example.com
+		String Aliases
+			Multiple
+			Description
+				|Aliases that may be used in place of the Network address
 		String Protocol
 			Description
 				|The IANA protocol|identifier of the network protocols by which 
@@ -714,10 +716,7 @@
 		Struct Enveloped<ProfileAccount> EnvelopedProfileAccount
 			Description
 				|The account profile
-		//String NetworkCapability
-		//	Multiple
-		//	Description
-		//		|The capabilities bound to this address.
+
 
 	Structure NetworkCapability
 		Inherits NetworkProfile

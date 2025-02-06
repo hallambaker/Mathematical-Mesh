@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 2/4/2025 5:43:21 PM
+//  This file was automatically generated at 2/6/2025 6:46:25 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -2043,6 +2043,7 @@ public class _AccountCreate : Goedel.Command.Dispatch ,
 		new String (),
 		new String (),
 		new String (),
+		new String (),
 		new Flag (),
 		new String (),
 		new String (),
@@ -2074,86 +2075,95 @@ public class _AccountCreate : Goedel.Command.Dispatch ,
 	public virtual string _Localname {
 		set => _Data[1].Parameter (value);
 		}
-	/// <summary>Field accessor for option [payment]</summary>
-	public virtual String Payment {
+	/// <summary>Field accessor for option [handle]</summary>
+	public virtual String DnsHandle {
 		get => _Data[2] as String;
 		set => _Data[2]  = value;
 		}
 
-	public virtual string _Payment {
+	public virtual string _DnsHandle {
 		set => _Data[2].Parameter (value);
 		}
-	/// <summary>Field accessor for option [new]</summary>
-	public virtual Flag DeviceNew {
-		get => _Data[3] as Flag;
+	/// <summary>Field accessor for option [payment]</summary>
+	public virtual String Payment {
+		get => _Data[3] as String;
 		set => _Data[3]  = value;
 		}
 
-	public virtual string _DeviceNew {
+	public virtual string _Payment {
 		set => _Data[3].Parameter (value);
 		}
-	/// <summary>Field accessor for option [dudf]</summary>
-	public virtual String DeviceUDF {
-		get => _Data[4] as String;
+	/// <summary>Field accessor for option [new]</summary>
+	public virtual Flag DeviceNew {
+		get => _Data[4] as Flag;
 		set => _Data[4]  = value;
 		}
 
-	public virtual string _DeviceUDF {
+	public virtual string _DeviceNew {
 		set => _Data[4].Parameter (value);
 		}
-	/// <summary>Field accessor for option [did]</summary>
-	public virtual String DeviceID {
+	/// <summary>Field accessor for option [dudf]</summary>
+	public virtual String DeviceUDF {
 		get => _Data[5] as String;
 		set => _Data[5]  = value;
 		}
 
-	public virtual string _DeviceID {
+	public virtual string _DeviceUDF {
 		set => _Data[5].Parameter (value);
 		}
-	/// <summary>Field accessor for option [dd]</summary>
-	public virtual String DeviceDescription {
+	/// <summary>Field accessor for option [did]</summary>
+	public virtual String DeviceID {
 		get => _Data[6] as String;
 		set => _Data[6]  = value;
 		}
 
-	public virtual string _DeviceDescription {
+	public virtual string _DeviceID {
 		set => _Data[6].Parameter (value);
 		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
-		get => _Data[7] as Flag;
+	/// <summary>Field accessor for option [dd]</summary>
+	public virtual String DeviceDescription {
+		get => _Data[7] as String;
 		set => _Data[7]  = value;
 		}
 
-	public virtual string _Verbose {
+	public virtual string _DeviceDescription {
 		set => _Data[7].Parameter (value);
 		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
 		get => _Data[8] as Flag;
 		set => _Data[8]  = value;
 		}
 
-	public virtual string _Report {
+	public virtual string _Verbose {
 		set => _Data[8].Parameter (value);
 		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
 		get => _Data[9] as Flag;
 		set => _Data[9]  = value;
 		}
 
-	public virtual string _Json {
+	public virtual string _Report {
 		set => _Data[9].Parameter (value);
 		}
-	/// <summary>Field accessor for option [alg]</summary>
-	public virtual String Algorithms {
-		get => _Data[10] as String;
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[10] as Flag;
 		set => _Data[10]  = value;
 		}
 
-	public virtual string _Algorithms {
+	public virtual string _Json {
 		set => _Data[10].Parameter (value);
+		}
+	/// <summary>Field accessor for option [alg]</summary>
+	public virtual String Algorithms {
+		get => _Data[11] as String;
+		set => _Data[11]  = value;
+		}
+
+	public virtual string _Algorithms {
+		set => _Data[11].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -2178,66 +2188,73 @@ public class _AccountCreate : Goedel.Command.Dispatch ,
 				Key = "localname"
 				},
 			new DescribeEntryOption () {
+				Identifier = "DnsHandle", 
+				Default = null, // null if null
+				Brief = "DNS handle",
+				Index = 2,
+				Key = "handle"
+				},
+			new DescribeEntryOption () {
 				Identifier = "Payment", 
 				Default = null, // null if null
 				Brief = "Optional payment token",
-				Index = 2,
+				Index = 3,
 				Key = "payment"
 				},
 			new DescribeEntryOption () {
 				Identifier = "DeviceNew", 
 				Default = "false", // null if null
 				Brief = "Force creation of new device profile",
-				Index = 3,
+				Index = 4,
 				Key = "new"
 				},
 			new DescribeEntryOption () {
 				Identifier = "DeviceUDF", 
 				Default = null, // null if null
 				Brief = "Device profile fingerprint",
-				Index = 4,
+				Index = 5,
 				Key = "dudf"
 				},
 			new DescribeEntryOption () {
 				Identifier = "DeviceID", 
 				Default = null, // null if null
 				Brief = "Device identifier",
-				Index = 5,
+				Index = 6,
 				Key = "did"
 				},
 			new DescribeEntryOption () {
 				Identifier = "DeviceDescription", 
 				Default = null, // null if null
 				Brief = "Device description",
-				Index = 6,
+				Index = 7,
 				Key = "dd"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
 				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
-				Index = 7,
+				Index = 8,
 				Key = "verbose"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Report", 
 				Default = "true", // null if null
 				Brief = "Report output (default)",
-				Index = 8,
+				Index = 9,
 				Key = "report"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Json", 
 				Default = "false", // null if null
 				Brief = "Report output in JSON format",
-				Index = 9,
+				Index = 10,
 				Key = "json"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Algorithms", 
 				Default = null, // null if null
 				Brief = "List of algorithm specifiers",
-				Index = 10,
+				Index = 11,
 				Key = "alg"
 				}
 			}

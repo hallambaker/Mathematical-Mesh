@@ -193,6 +193,8 @@
 				Brief "New account"				
 			Option Localname "localname" String
 				Brief "Account friendly name"
+			Option DnsHandle "handle" String
+				Brief "DNS handle"
 			Option Payment "payment" String
 				Brief "Optional payment token"
 			Include DeviceProfileInfo

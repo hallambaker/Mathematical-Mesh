@@ -21,6 +21,10 @@
 #endregion
 
 
+using Goedel.Discovery;
+
+using System.Security.Principal;
+
 namespace Goedel.Mesh;
 
 #region // The data classes CatalogContact, CatalogedContact
@@ -160,17 +164,25 @@ public class CatalogContact : Catalog<CatalogedContact> {
     /// is the user's own contact.
     /// </summary>
     /// <param name="contact">The contact to add.</param>
-    /// <param name="self">If true, mark as the user's own contact.</param>
+    /// <param name="localname"></param>
     /// <returns>The CatalogedContact entry.</returns>
-    public (CatalogedContact, bool) TryAdd(Contact contact, bool self = false) {
+    /// <param name="self">If true, mark as the user's own contact.</param>
+    public (CatalogedContact, bool) TryAdd(
+                    Contact contact,
+                    string localname = null,
+                    bool self = false) {
+
         if (contact.Id != null) {
             var existing = Locate(contact.Id);
             if (existing != null) {
-                return (existing as CatalogedContact, false);
+                return (existing, false);
                 }
-
             }
-        var cataloged = new CatalogedContact(contact, self);
+
+        var cataloged = new CatalogedContact(contact, self) {
+            Self = self,
+            LocalName = localname
+            };
         New(cataloged);
         return (cataloged, true);
         }
@@ -284,8 +296,9 @@ public class CatalogContact : Catalog<CatalogedContact> {
         }
 
 
-
-
+    public bool TryFindByLocalName(
+                    string key,
+                    out CatalogedContact contact) => DictionaryByLocalName.TryGetValue(key, out contact);
     #endregion
     }
 
@@ -329,7 +342,6 @@ public partial class CatalogedContact {
 
     public CatalogedContact(Contact contact, bool self = false) {
         Contact = contact;
-        Self = self;
         Key = contact.Id ?? Udf.Nonce();
         }
 
@@ -402,6 +414,43 @@ public partial class Contact {
     /// <returns>The cataloged contact.</returns>
     public CatalogedContact CatalogedContact(bool self = false) =>
         new(this, self);
+
+
+
+
+
+    public bool TryGetMeshAccount(out ParsedHandle? accountAddress, int maxRedirect = 5) {
+        while (maxRedirect-- > 0) {
+            if (!TryGetProtocol("mesh", out var address)) {
+                accountAddress = null;
+                return false;
+                }
+
+            accountAddress = new ParsedHandle(address.Address);
+            if (accountAddress.HandleType != HandleType.LocalName) {
+                return true;
+                }
+            }
+        accountAddress = null;
+        return false;
+        }
+
+
+    public bool TryGetProtocol(string protocol, out NetworkAddress result) {
+        result = null;
+        if (NetworkAddresses is null) {
+            return false;
+            }
+        foreach (var address in NetworkAddresses) {
+            if (address.Protocol == protocol) {
+                result = address;
+                return true;
+                }
+
+            }
+        return false;
+        }
+
 
     }
 

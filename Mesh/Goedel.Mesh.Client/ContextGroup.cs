@@ -230,7 +230,7 @@ public partial class ContextGroup : ContextAccount {
     /// </summary>
     /// <returns>The default contact.</returns>
     public override Contact CreateContact(
-                List<CryptographicCapability> capabilities = null, ContactPerson contact = null) {
+                List<CryptographicCapability> capabilities = null, ContactPerson contact = null, string dnsHandle = null) {
 
 
         var anchorAccount = new Anchor() {

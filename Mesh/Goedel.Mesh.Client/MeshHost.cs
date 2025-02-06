@@ -384,6 +384,7 @@ public class MeshHost : Disposable {
     /// </summary>
     ///<param name="accountAddress">Account address to bind to.</param>
     /// <param name="localName">Local name for easy reference.</param>
+    /// <param name="dnsHandle"></param>
     /// <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
     /// <param name="profileDevice">Specify the device profile. This allows use of a device 
     /// profile bound to the machine hardware.</param>
@@ -391,16 +392,18 @@ public class MeshHost : Disposable {
     /// <param name="create">If true, create a new mesh, otherwise attempt recovery from the
     /// service.</param>
     /// <param name="deviceDescription">User readable name for the group.</param>
-    /// <param name="personName">User's name.</param>
     /// <returns>Context for administering the Mesh</returns>
+    /// <param name="personName">User's name.</param>
     public virtual async Task<ContextUser> ConfigureMeshAsync(
             string accountAddress,
             string localName = null,
+            string dnsHandle = null,
             PrivateKeyUDF accountSeed = null,
             ProfileDevice profileDevice = null,
             List<string> rights = null,
-            bool create = true,
-                DeviceDescription deviceDescription = null, PersonName personName = null) {
+            bool create = true, 
+            DeviceDescription deviceDescription = null, 
+            PersonName personName = null) {
 
 
         using var contextUser = InitializeAdminContext(accountAddress, localName,
@@ -409,11 +412,13 @@ public class MeshHost : Disposable {
 
         // here we create the prototype contact.
         var contact = new ContactPerson {
-            Local = localName,
+            
+            //Local = localName,
             CommonNames = new List<PersonName> { personName }
             };
 
-        await contextUser.SetServiceAsync(accountAddress, contact: contact);
+        await contextUser.SetServiceAsync(
+                    accountAddress, contact: contact, localName: localName, dnsHandle: dnsHandle);
 
 
         if (create) {

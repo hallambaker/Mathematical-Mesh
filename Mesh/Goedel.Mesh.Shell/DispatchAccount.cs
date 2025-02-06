@@ -21,6 +21,7 @@
 #endregion
 
 
+using Goedel.Discovery;
 using Goedel.Registry;
 
 namespace Goedel.Mesh.Shell;
@@ -56,15 +57,34 @@ public partial class Shell {
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
     public override ShellResult AccountHello(AccountHello options) {
+        var account = options.Account.Value;
+        account.AssertNotNull(NYI.Throw);
 
-        // This dispatch uses a unique approach because it can be issued before the account
-        // or service is created.
+        string serviceAddress = null;
 
-        var meshClient = GetMeshClient(options, options.Account.Value);
+        var handle = new ParsedHandle(account);
+        if (handle.HandleType == HandleType.LocalName) {
+            var contextAccount = GetContextUser(options);
+            contextAccount.AssertNotNull(NYI.Throw); // Cannot have a local name without an account
+
+            if (!contextAccount.TryFindContactLocal(handle.Name, out var contact)) {
+                throw new NYI(); // Should report local name not found
+                }
+            // here we are going to do a local name lookup
+            if (contact.Contact?.TryGetMeshAccount(out  handle) != true) {
+                throw new NYI(); // Should report local name not found
+                }
+
+            // We have substituted the handle obtained from the local address
+            }
+
+        serviceAddress = handle.ResolveMeshService().Sync();
+        var meshClient = GetMeshClient(options, serviceAddress);
 
         var helloRequest = new HelloRequest();
         var response = meshClient.Hello(helloRequest);
 
+        // need to stuff additional information in here
         return new ResultHello() {
             Success = true,
             Response = response,
@@ -80,8 +100,9 @@ public partial class Shell {
     public override ShellResult AccountCreate(AccountCreate options) {
         var accountID = options.NewAccountID.Value;
         var localname = options.Localname.Value;
+        var dnsHandle = options.DnsHandle.Value;
 
-        var contextUser = MeshHost.ConfigureMeshAsync(accountID, localname).Sync();
+        var contextUser = MeshHost.ConfigureMeshAsync(accountID, localname, dnsHandle).Sync();
         return new ResultCreateAccount() {
             Success = true,
             ProfileAccount = contextUser.ProfileUser,

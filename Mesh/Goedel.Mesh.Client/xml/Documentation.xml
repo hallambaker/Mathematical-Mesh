@@ -665,7 +665,7 @@
             <param name="maxEnvelopes">The maximum number of envelopes to return.</param>
             <returns>If true, the synchronization has completed.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.CreateContact(System.Collections.Generic.List{Goedel.Mesh.CryptographicCapability},Goedel.Mesh.ContactPerson)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.CreateContact(System.Collections.Generic.List{Goedel.Mesh.CryptographicCapability},Goedel.Mesh.ContactPerson,System.String)">
             <summary>
             Get the default (i.e. minimum contact info). This has a single network 
             address entry for this mesh and mesh account. 
@@ -963,7 +963,7 @@
             <param name="text">Constrained text to be included in the invitation.</param>
             <returns>The member catalog entry.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextGroup.CreateContact(System.Collections.Generic.List{Goedel.Mesh.CryptographicCapability},Goedel.Mesh.ContactPerson)">
+        <member name="M:Goedel.Mesh.Client.ContextGroup.CreateContact(System.Collections.Generic.List{Goedel.Mesh.CryptographicCapability},Goedel.Mesh.ContactPerson,System.String)">
             <summary>
             Get the default (i.e. minimum contact info). This has a single network 
             address entry for this mesh and mesh account. 
@@ -1295,13 +1295,15 @@
             <exception cref="T:Goedel.Mesh.NoMeshSecret">Is thrown if the private key cannot be found.</exception>
             <returns>The encrypted escrow entry and the key shares.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.SetServiceAsync(System.String,Goedel.Mesh.ContactPerson)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.SetServiceAsync(System.String,Goedel.Mesh.ContactPerson,System.String,System.String)">
             <summary>
             Set the initial Mesh Service. This MUST be called before devices are added to the 
             personal mesh. This method does not support transfer of the Mesh Service.
             </summary>
             <param name="accountAddress">The account address</param>
             <param name="contact"></param>
+            <param name="localName"></param>
+            <param name="dnsHandle"></param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.BindServiceAsync(System.String)">
             <summary>
@@ -3344,12 +3346,13 @@
             </summary>
             <param name="key">The profile to delete</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.MeshHost.ConfigureMeshAsync(System.String,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.ProfileDevice,System.Collections.Generic.List{System.String},System.Boolean,Goedel.Mesh.DeviceDescription,Goedel.Mesh.PersonName)">
+        <member name="M:Goedel.Mesh.Client.MeshHost.ConfigureMeshAsync(System.String,System.String,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.ProfileDevice,System.Collections.Generic.List{System.String},System.Boolean,Goedel.Mesh.DeviceDescription,Goedel.Mesh.PersonName)">
              <summary>
              Create a new Mesh master profile and bind to a Mesh service at <paramref name="accountAddress"/>.
              </summary>
             <param name="accountAddress">Account address to bind to.</param>
              <param name="localName">Local name for easy reference.</param>
+             <param name="dnsHandle"></param>
              <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
              <param name="profileDevice">Specify the device profile. This allows use of a device 
              profile bound to the machine hardware.</param>
@@ -3357,8 +3360,8 @@
              <param name="create">If true, create a new mesh, otherwise attempt recovery from the
              service.</param>
              <param name="deviceDescription">User readable name for the group.</param>
-             <param name="personName">User's name.</param>
              <returns>Context for administering the Mesh</returns>
+             <param name="personName">User's name.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.GetContextMesh(System.String,System.Boolean)">
             <summary>

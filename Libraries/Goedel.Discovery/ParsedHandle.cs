@@ -22,6 +22,8 @@
 
 using Goedel.Cryptography.PKIX;
 
+using System.Reflection.Metadata;
+
 namespace Goedel.Discovery;
 
 
@@ -35,6 +37,9 @@ namespace Goedel.Discovery;
 public enum HandleType {
     ///<summary>Handle is not valid.</summary> 
     Invalid,
+
+    ///<summary>Handle is just a domain, e.g. example.com</summary> 
+    Domain,
 
     ///<summary>Handle is just a fingerprint, 
     ///e.g. maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah</summary> 
@@ -102,8 +107,14 @@ public class ParsedHandle {
 
         switch (at.Length) {
             case 1: {  // no @, can only be a fingerprint
-                HandleType = HandleType.Fingerprint;
-                Fingerprint = at[0];
+                if (at[0].IndexOf('.') < 0) {
+                    HandleType = HandleType.Fingerprint;
+                    Fingerprint = at[0];
+                    }
+                else {
+                    HandleType = HandleType.Domain;
+                    Service = at[0];
+                    }
                 return;
                 }
             case 2: {
@@ -183,18 +194,45 @@ public class ParsedHandle {
             }
         }
 
-    public async Task <ParsedHandle> ResolveDnsHandle() {
+    public async Task<string> ResolveMeshService() {
+        switch (HandleType) {
+            // Just return the service component
+            case HandleType.Domain: 
+            case HandleType.AccountServiceAddress:
+            case HandleType.DirectServiceAddress:
+            case HandleType.DirectAccountServiceAddress: {
+                return Service;
+                }
+
+            // For a DNS handle, we have to first resolve to get the DirectServiceAddress
+            case HandleType.DnsHandle:
+            case HandleType.DirectDnsHandle: {
+                var handle = await ResolveDnsHandle();
+                return handle?.Service;
+                }
+
+            // These all fail because there isn't enough information to resolve a service
+            case HandleType.LocalName:
+            case HandleType.Invalid:
+            case HandleType.Fingerprint: {
+                throw new NYI();
+                }
+            }
+
+        throw new NYI();
+        }
 
 
-        var mesh = await DnsClient.GetPrefixedTXT(Name, "_mesh");
-        // collect up all the text into one bucket, that is our entry
+    public async Task <ParsedHandle?> ResolveDnsHandle() {
 
-        var handle = mesh?.FullText();
-        if (handle == null) {
+        var meshService = await HandleServiceMesh.Fetch(Name);
+        if (meshService == null) {
             return null;
             }
 
-        return new ParsedHandle(handle);
+
+        return new ParsedHandle(meshService.Dsa);
+
 
         }
     public async Task<DnsHandleServices> GetServices() => await GetServices(Name);

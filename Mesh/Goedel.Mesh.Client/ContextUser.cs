@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Discovery;
+
 namespace Goedel.Mesh.Client;
 
 
@@ -119,7 +121,10 @@ public partial class ContextUser : ContextAccount {
     public KeyPairAdvanced AccountAuthentication => ActivationAccount?.AccountAuthentication;
 
     ///<summary>The contact catalog, used for key location of group keys.</summary>  
-    protected CatalogContact CatalogContact { get; set; }
+    protected CatalogContact CatalogContact => catalogContact ??
+        (GetStore(CatalogContact.Label, create: false) as CatalogContact).CacheValue(out catalogContact);
+    CatalogContact catalogContact;
+
 
     string? deviceSeedId;
 
@@ -303,9 +308,12 @@ public partial class ContextUser : ContextAccount {
     /// </summary>
     /// <param name="accountAddress">The account address</param>
     /// <param name="contact"></param>
+    /// <param name="localName"></param>
+    /// <param name="dnsHandle"></param>
     public async Task SetServiceAsync(
                 string accountAddress,
-                ContactPerson? contact = null) {
+                ContactPerson? contact = null,
+                string localName = null, string dnsHandle = null) {
 
         KeyProfileSigners.AssertNotNull(NotSuperAdministrator.Throw);
 
@@ -328,8 +336,8 @@ public partial class ContextUser : ContextAccount {
         ActivationCommon.BindService(ProfileService);
 
         // Generate a contact and self-sign
-        var contact2 = CreateContact(contact: contact);
-        await SetContactSelfAsync(contact2);
+        var contact2 = CreateContact(contact: contact, dnsHandle: dnsHandle);
+        await SetContactSelfAsync(contact2, localName);
         }
 
 
@@ -454,7 +462,9 @@ public partial class ContextUser : ContextAccount {
     /// </summary>
     /// <param name="contact">The contact parameters.</param>
     /// <param name="localname">Short name to apply to the signed contact info</param>
-    public async Task<CatalogedContact> SetContactSelfAsync(Contact contact, string localname = null) {
+    public async Task<CatalogedContact> SetContactSelfAsync(
+                Contact contact, 
+                string localname = null) {
         KeyCommonSignature.AssertNotNull(NotAdministrator.Throw);
         contact.Envelope(KeyCommonSignature);
 
@@ -471,7 +481,7 @@ public partial class ContextUser : ContextAccount {
         var transact = TransactBegin();
         var catalog = transact.GetCatalogContact();
 
-        var (cataloged, success) = catalog.TryAdd(contact, true);
+        var (cataloged, success) = catalog.TryAdd(contact, localname, true);
 
         if (!success) {
             cataloged.Contact = contact;
@@ -562,7 +572,7 @@ public partial class ContextUser : ContextAccount {
         if (ActivationCommon?.CommonEncryptionKey?.TryFindKeyDecryption(keyId, out cryptoKey) == true) {
             return true;
             }
-        CatalogContact ??= GetStore(CatalogContact.Label, create: false) as CatalogContact;
+        //CatalogContact ??= GetStore(CatalogContact.Label, create: false) as CatalogContact;
         if (CatalogContact != null) {
             return CatalogContact.TryFindKeyDecryption(keyId, out cryptoKey);
             }
@@ -1476,6 +1486,33 @@ public partial class ContextUser : ContextAccount {
     #endregion
     #region // ContactManagement
 
+
+
+    public bool TryFindContact(string handle, out CatalogedContact contact) => TryFindContact(
+                new ParsedHandle(handle), out contact);
+
+    public bool TryFindContact(ParsedHandle handle, out CatalogedContact contact) {
+        if (handle.HandleType == HandleType.LocalName) {
+            return TryFindContactLocal(handle.Name, out contact);
+            }
+
+
+
+        throw new NYI();
+        }
+
+    public bool TryFindContactLocal(string handle, out CatalogedContact contact) =>
+                CatalogContact.TryFindByLocalName(handle, out contact);
+
+
+    public bool TryFindContactNetwork(string handle, out CatalogedContact contact) {
+
+
+        throw new NYI();
+        }
+
+
+
     /// <summary>
     /// Get the user's own contact. There is only ever one contact entry but there MAY
     /// be multiple envelopes 
@@ -1809,7 +1846,6 @@ public partial class ContextUser : ContextAccount {
     #endregion
 
     #endregion
-
     #region // Application entries
 
     /// <summary>

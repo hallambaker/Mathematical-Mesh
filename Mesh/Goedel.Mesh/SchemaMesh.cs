@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/5/2025 12:38:30 PM
+//  This file was automatically generated at 2/6/2025 6:46:21 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -3665,12 +3665,6 @@ abstract public partial class Contact : Assertion {
 	public virtual string?						Id  {get; set;}
 
         /// <summary>
-        ///The local name.
-        /// </summary>
-
-	public virtual string?						Local  {get; set;}
-
-        /// <summary>
         ///Mesh fingerprints associated with the contact.
         /// </summary>
 
@@ -3711,8 +3705,6 @@ abstract public partial class Contact : Assertion {
 
 			{ "Id", new PropertyString ("Id", 
 					(IBinding data, string? value) => {(data as Contact).Id = value;}, (IBinding data) => (data as Contact).Id )},
-			{ "Local", new PropertyString ("Local", 
-					(IBinding data, string? value) => {(data as Contact).Local = value;}, (IBinding data) => (data as Contact).Local )},
 			{ "Anchors", new PropertyListStruct ("Anchors", 
 					(IBinding data, object? value) => {(data as Contact).Anchors = value as List<Anchor>;}, (IBinding data) => (data as Contact).Anchors,
 					false, ()=>new  List<Anchor>(), ()=>new Anchor())} ,
@@ -4484,6 +4476,11 @@ public partial class NetworkAddress : MeshItem {
 	public virtual string?						Address  {get; set;}
 
         /// <summary>
+        ///Aliases that may be used in place of the Network address
+        /// </summary>
+
+	public virtual List<string>?					Aliases  {get; set;}
+        /// <summary>
         ///The IANA protocol|identifier of the network protocols by which 
         ///the contact may be reached using the specified Address. 
         /// </summary>
@@ -4503,6 +4500,8 @@ public partial class NetworkAddress : MeshItem {
 					(IBinding data, bool? value) => {(data as NetworkAddress).Inactive = value;}, (IBinding data) => (data as NetworkAddress).Inactive )},
 			{ "Address", new PropertyString ("Address", 
 					(IBinding data, string? value) => {(data as NetworkAddress).Address = value;}, (IBinding data) => (data as NetworkAddress).Address )},
+			{ "Aliases", new PropertyListString ("Aliases", 
+					(IBinding data, List<string>? value) => {(data as NetworkAddress).Aliases = value;}, (IBinding data) => (data as NetworkAddress).Aliases )},
 			{ "Protocol", new PropertyString ("Protocol", 
 					(IBinding data, string? value) => {(data as NetworkAddress).Protocol = value;}, (IBinding data) => (data as NetworkAddress).Protocol )}
         }, __Tag,() => new NetworkAddress(), null);

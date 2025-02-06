@@ -21,6 +21,8 @@
 #endregion
 
 
+using System.Net;
+
 namespace Goedel.Mesh.Client;
 
 ///<summary>Track the synchronization status of an upload or download operation.</summary>
@@ -77,9 +79,6 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
     ///<summary>The service to which the account is bound.</summary> 
     public abstract string ServiceDns { get; }
-
-
-
 
     ///<summary>The device profile</summary>
     public virtual ProfileDevice ProfileDevice => CatalogedMachine?.ProfileDevice;
@@ -810,7 +809,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <returns>The default contact.</returns>
     public virtual Contact CreateContact(
             List<CryptographicCapability> capabilities = null,
-            ContactPerson? contact = null) {
+            ContactPerson? contact = null, string dnsHandle = null) {
 
         var anchorAccount = new Anchor() {
             Udf = Profile.UdfString,
@@ -831,7 +830,14 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
 
         if (capabilities is null) {
-            var address = new NetworkProfile(ServiceAddress, Profile as ProfileAccount);
+            var (primary, aliases) = GetAliases(ServiceAddress, ServiceDns, dnsHandle, Profile.UdfString);
+            var address = new NetworkProfile() {
+                EnvelopedProfileAccount = (Profile as ProfileAccount).GetEnvelopedProfileAccount(),
+                Address = primary,
+                Protocol = "mesh",
+                Aliases = aliases
+                };
+            //(ServiceAddress, Profile as ProfileAccount);
             contact.NetworkAddresses = new List<NetworkAddress>() { address };
             }
         else {
@@ -844,6 +850,31 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
         return contact;
         }
+
+    static (string, List<string>) GetAliases(
+            string serviceAddress,
+            string serviceDns,
+            string dnsHandle,
+            string fingerprint) {
+
+        fingerprint = fingerprint.ToLower();
+
+        var result = new List<string>() {
+            fingerprint + "@" + serviceAddress,         // DirectAccountServiceAddress
+            fingerprint + "@@" + serviceDns             // DirectServiceAddress
+            };
+
+        if (dnsHandle == null) {
+            return (serviceAddress, result);            // AccountServiceAddress
+            }
+
+        result.Add(serviceAddress);                     // AccountServiceAddress
+        result.Add("@" + fingerprint + dnsHandle);      // DirectAccountServiceAddress
+
+        return (dnsHandle, result);                     // DnsHandle
+        }
+
+
 
     #endregion
     #region // Store management

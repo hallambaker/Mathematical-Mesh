@@ -4074,6 +4074,9 @@
         <member name="F:Goedel.Discovery.HandleType.Invalid">
             <summary>Handle is not valid.</summary> 
         </member>
+        <member name="F:Goedel.Discovery.HandleType.Domain">
+            <summary>Handle is just a domain, e.g. example.com</summary> 
+        </member>
         <member name="F:Goedel.Discovery.HandleType.Fingerprint">
             <summary>Handle is just a fingerprint, 
             e.g. maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah</summary> 
