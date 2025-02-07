@@ -25,6 +25,16 @@
 	Structure ResultFail
 		Inherits		Result
 
+	Structure ResultHello
+		Inherits		Result
+		String			ServiceAddress
+		Struct MeshHelloResponse Response
+
+
+	Structure ResultInfo
+		Inherits		Result
+		TStruct Contact	Contact
+
 	Structure ResultKey
 		Inherits		Result
 		String			Key
@@ -173,9 +183,7 @@
 		Struct MessagePin			MessagePIN
 		String						Uri
 
-	Structure ResultHello
-		Inherits		Result
-		Struct MeshHelloResponse Response
+
 
 
 	// Catalog commands

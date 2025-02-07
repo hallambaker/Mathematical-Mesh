@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/6/2025 6:46:25 PM
+//  This file was automatically generated at 2/7/2025 4:33:35 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -80,6 +80,8 @@ public abstract partial class MeshmanShellResult : global::Goedel.Protocol.JsonO
 	    {"Result", Result._Factory},
 	    {"ResultAbout", ResultAbout._Factory},
 	    {"ResultFail", ResultFail._Factory},
+	    {"ResultHello", ResultHello._Factory},
+	    {"ResultInfo", ResultInfo._Factory},
 	    {"ResultKey", ResultKey._Factory},
 	    {"ResultDigest", ResultDigest._Factory},
 	    {"ResultFile", ResultFile._Factory},
@@ -105,7 +107,6 @@ public abstract partial class MeshmanShellResult : global::Goedel.Protocol.JsonO
 	    {"ResultEscrow", ResultEscrow._Factory},
 	    {"ResultMachine", ResultMachine._Factory},
 	    {"ResultPIN", ResultPIN._Factory},
-	    {"ResultHello", ResultHello._Factory},
 	    {"ResultSequence", ResultSequence._Factory},
 	    {"LogEntry", LogEntry._Factory},
 	    {"ResultEntry", ResultEntry._Factory},
@@ -418,6 +419,175 @@ public partial class ResultFail : Result {
 			return Out as ResultFail;
 			}
 		var Result = new ResultFail ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class ResultHello : Result {
+        /// <summary>
+        /// </summary>
+
+	public virtual string?						ServiceAddress  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual MeshHelloResponse?						Response  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+			{ "ServiceAddress", new PropertyString ("ServiceAddress", 
+					(IBinding data, string? value) => {(data as ResultHello).ServiceAddress = value;}, (IBinding data) => (data as ResultHello).ServiceAddress )},
+			{ "Response", new PropertyStruct ("Response", 
+					(IBinding data, object? value) => {(data as ResultHello).Response = value as MeshHelloResponse;}, (IBinding data) => (data as ResultHello).Response,
+					false, ()=>new  MeshHelloResponse(), ()=>new MeshHelloResponse())} 
+        }, __Tag,() => new ResultHello(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, Result._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ResultHello";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ResultHello();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ResultHello FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ResultHello;
+			}
+		var Result = new ResultHello ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class ResultInfo : Result {
+        /// <summary>
+        /// </summary>
+
+	public virtual Contact?						Contact  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+			{ "Contact", new PropertyStruct ("Contact", 
+					(IBinding data, object? value) => {(data as ResultInfo).Contact = value as Contact;}, (IBinding data) => (data as ResultInfo).Contact,
+					true)} 
+        }, __Tag,() => new ResultInfo(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, Result._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ResultInfo";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ResultInfo();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ResultInfo FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ResultInfo;
+			}
+		var Result = new ResultInfo ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -2603,87 +2773,6 @@ public partial class ResultPIN : Result {
 			return Out as ResultPIN;
 			}
 		var Result = new ResultPIN ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-
-
-	}
-
-	/// <summary>
-	/// </summary>
-public partial class ResultHello : Result {
-        /// <summary>
-        /// </summary>
-
-	public virtual MeshHelloResponse?						Response  {get; set;}
-
-
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
-			new() {
-
-			{ "Response", new PropertyStruct ("Response", 
-					(IBinding data, object? value) => {(data as ResultHello).Response = value as MeshHelloResponse;}, (IBinding data) => (data as ResultHello).Response,
-					false, ()=>new  MeshHelloResponse(), ()=>new MeshHelloResponse())} 
-        }, __Tag,() => new ResultHello(), Result._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "ResultHello";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new ResultHello();
-
-
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultHello FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultHello;
-			}
-		var Result = new ResultHello ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

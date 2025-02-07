@@ -87,6 +87,7 @@ public partial class Shell {
         // need to stuff additional information in here
         return new ResultHello() {
             Success = true,
+            ServiceAddress = serviceAddress,
             Response = response,
             };
         }
@@ -245,6 +246,14 @@ public partial class Shell {
             Shares = textShares
             };
 
+        }
+
+    public override ShellResult AccountInfo(AccountInfo Options) {
+
+
+        return new ResultInfo() {
+            Contact = null
+            };
         }
 
 

@@ -30,6 +30,67 @@ namespace Goedel.XUnit;
 
 public partial class RegistrationTests {
 
+    public string AliceDevice1 = "Alice";
+    public string AliceDevice2 = "Alice2";
+    public string AliceDevice3 = "Alice3";
+    public string AliceDevice4 = "Alice4";
+    public string AliceDevice5 = "Alice5";
+
+
+    [Fact]
+    public void TestHandleThingCallsign() {
+
+        var serviceCallsign = GetContextRegistry();
+
+        var admin = GetTestCLI(AliceDevice1);
+        var webserver = GetTestCLI(AliceDevice2);
+        var nas = GetTestCLI(AliceDevice2);
+
+        var c1 = admin.Example($"account create {AliceAccount} /localname=alice /handle=@alice.example.net");
+        var resultBind = admin.Dispatch($"callsign bind {AliceCallsign}") as ResultPublish;
+        serviceCallsign.ProcessAsync().Sync();
+
+
+
+        var resultSync = admin.Dispatch($"callsign status {AliceCallsign}");
+
+
+
+        // create an IOT management profile for the domain alice.example.com serviced by example.com
+        Dispatch($"dns bind aliceiot.iot.example@example.com /localname=aliceiot /callsign={AliceCallsign}");
+
+        ConnectDevice(admin, webserver, "webserver");
+
+        webserver.Example($"device service webserver http /dns=aliceiot /wildcard");
+        webserver.Example($"device credential webserver /public=fullchain.pem /private=privkey.pem");
+
+        ConnectDevice(admin, nas, "nas");
+
+        nas.Example($"device service webserver http /dns=aliceiot");
+        nas.Example($"device credential webserver /tls=cert.pem");
+
+        }
+
+    bool ConnectDevice(TestCLI admin, TestCLI device, string local) {
+
+        var ConnectRequest = device.Example($"device request {AliceAccount}");
+        var ConnectPending = admin.ExampleNoCatch($"device pending");
+
+        var resultPending = (ConnectPending[0].Result as ResultPending);
+        var id1 = resultPending.Messages[0].MessageId; // Alice device 2
+
+        var ConnectAccept = admin.Example($"device accept {id1} /thing=public localname=webserver");
+        var AliceDevice2Sync = device.ExampleNoCatch($"device complete");
+
+        // sync everything up
+        var AliceDevice2Sync1 = admin.ExampleNoCatch($"account sync");
+        var AliceDevice2Sync2 = device.ExampleNoCatch($"account sync");
+
+        return true;
+        }
+
+
+
 
     [Fact]
     public void CallsignBind() {
@@ -46,7 +107,7 @@ public partial class RegistrationTests {
         serviceCallsign.ProcessAsync().Sync();
 
 
-        // Replace this with some command that waits until a completion message is received.
+
         var resultSync = deviceA.Dispatch($"callsign status {AliceCallsign}");
 
         CheckCallsign(deviceA);

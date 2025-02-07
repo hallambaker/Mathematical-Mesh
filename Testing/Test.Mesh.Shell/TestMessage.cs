@@ -162,7 +162,7 @@ public partial class ShellTests {
         var result3 = deviceA.Dispatch("message pending") as ResultPending;
 
         // check there is exactly one pending message and accept it
-        var result4 = ProcessMessage(deviceA, true, 1);
+        var result4 = ProcealicessMessage(deviceA, true, 1);
 
         ValidContact(deviceA, AliceAccount, AccountB);
 
@@ -176,8 +176,11 @@ public partial class ShellTests {
         EndTest();
         }
 
-    Result MakeAccount(TestCLI device, string account) {
-        var result = device.Dispatch($"account create {account}");
+    Result MakeAccount(TestCLI device, string account, string handle=null) {
+
+        var handlebit = handle is null ? "" : $" /handle={handle}";
+
+        var result = device.Dispatch($"account create {account}{handlebit}");
 
         // check there is the correct contact entry for this account.
         ValidContact(device, account);

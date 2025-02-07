@@ -61,7 +61,7 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
-        ShellTests.Test().TestAccountHandle();
+        ShellTests.Test().TestHandleContactAlice();
         //ServiceAnything.Test().TestOnboadDevice();
 
 

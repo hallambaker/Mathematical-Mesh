@@ -74,6 +74,9 @@ public partial class RegistrationTests {
 
     public ResolverServiceClient ResolverServiceClient { get; set; }
 
+ 
+
+
     Result MakeAccount(TestCLI device, string account) {
         var result = device.Dispatch($"account create {account}");
 
