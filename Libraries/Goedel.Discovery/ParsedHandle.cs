@@ -65,6 +65,10 @@ public enum HandleType {
     ///e.g. @maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah@alice.example.net</summary> 
     DirectDnsHandle,
 
+    ///<summary>Handle Service Address, 
+    ///e.g. @alice.example.net@example.com</summary> 
+    HandleServiceAddress,
+
     ///<summary>Local name, e.g. @alice</summary> 
     LocalName
     }
@@ -138,10 +142,15 @@ public class ParsedHandle {
                 }
             case 3: {
                 if (at[0].Length == 0) {
-                    HandleType = HandleType.DirectDnsHandle;
-                    Fingerprint = at[1];
-                    Name = at[2];
-
+                    if (at[1].IndexOf('.') < 0) {
+                        HandleType = HandleType.DirectDnsHandle;
+                        Fingerprint = at[1];
+                        Name = at[2];
+                        return;
+                        }
+                    HandleType = HandleType.HandleServiceAddress;
+                    Name = at[1];
+                    Service = at[2];
                     return;
                     }
                 if (at[1].Length == 0) {

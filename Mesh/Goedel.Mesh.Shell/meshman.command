@@ -32,8 +32,6 @@
 	OptionSet AccountOptions
 		Option AccountAddress "account" String
 			Brief "Account identifier (e.g. alice@example.com) or profile fingerprint"
-		Option LocalName "local" String
-			Brief "Local name for account (e.g. personal)"
 		Option AutoSync "sync" Flag
 			Default "true"
 			Brief "If true, attempt to synchronize the account to the service before operation"
@@ -171,6 +169,25 @@
 				Brief "Message spool"
 			Case eCatalog "catalog"
 				Brief "Object catalog"
+
+	OptionSet ContactFilter
+		Option Name "name" String
+			Brief "Name to distinguish public contact records"
+
+		Option Ssh "ssh" Flag
+			Brief ""
+			Default "false"
+		Option mail "mail" Flag
+			Brief ""
+			Default "false"
+		Option dev "dev" Flag
+			Brief ""
+			Default "false"
+		Option place "place" Flag
+			Brief ""
+			Default "false"
+
+
 	Command About "about"		
 		Brief		"Report version and compilation date."
 		Include Reporting
@@ -191,7 +208,7 @@
 			Brief "Create new account profile"
 			Parameter NewAccountID "account" String
 				Brief "New account"				
-			Option Localname "localname" String
+			Option Localname "local" String
 				Brief "Account friendly name"
 			Option DnsHandle "handle" String
 				Brief "DNS handle"
@@ -218,10 +235,6 @@
 			Include Reporting
 
 
-		Command AccountInfo "Info"
-			Brief "Report the public keys of the specified account"
-			Include AccountOptions
-			Include Reporting
 		
 		Command AccountGetPIN "pin"
 			Brief "Get a pin value to pre-authorize a connection"
@@ -567,8 +580,61 @@
 				Brief "Local identifier"
 			Option Self "self" Flag
 				Brief "Contact is for self"
+		CommandSet Self "self"
+			Command ContactSelfAnywhere "anywhere"
+				Include AccountOptions
+				Include Reporting	
+				Brief "Add anywhere entry to contact"
+				Parameter Handle "handle" String
+					Brief "The handle"
+				Option Service "service" String
+					Brief "The Auth'n service"
+				Option Did "did" String
+					Brief "The DID used as the unique authentication ID at the service"
+				Include AccountOptions
+				Include Reporting	
+				
+			Command ContactSelfAnywhere "anyone"
+				Include AccountOptions
+				Include Reporting	
+				Brief "Add anyone entry to contact"
+				Parameter Handle "handle" String
+					Brief "The handle"
+				Option Service "service" String
+					Brief "The presence service"		
+
+			Command ContactSelfAnything "anything"
+				Include AccountOptions
+				Include Reporting	
+				Brief "Add anywhere entry to contact"
+				Parameter Handle "handle" String
+					Brief "The handle"
+				Option Service "service" String
+					Brief "The anything service"
+
+			Command ContactSelfService "service"
+				Include AccountOptions
+				Include Reporting	
+				Brief "Add service entry to contact"
+				Parameter Uri "uri" String
+					Brief "The web site uri"
+				Option Protocol "protocol" String
+					Brief "The protocol identifier"
 
 
+			Command ContactPublish "publish"
+				Brief "Create static contact retrieval URI"
+				Include ContactFilter
+				Include AccountOptions
+				Include Reporting
+
+		Command ContactQuery "query"
+			Brief "Attempt to provide the contact information for the specified handle"
+			Parameter Address "address" String
+				Brief "The user address"
+			Include ContactFilter
+			Include AccountOptions
+			Include Reporting
 
 		Command ContactStatic "static"
 			Brief "Create static contact retrieval URI"
@@ -1183,6 +1249,13 @@
 			Option ID "id" String
 				Brief "Key identifier"
 
+		Command SSHQuery "query"
+			Brief "Attempt to provide the ssh contact information for the specified handle"
+			Option Name "name" String
+				Brief "Name to distinguish public contact records"
+			Include AccountOptions
+			Include Reporting
+
 		Command SSHGet "get"
 			Brief "Get SSH account data"
 			Parameter Identifier "id" String
@@ -1274,6 +1347,30 @@
 			Include AccountOptions
 			Include Reporting
 		
+		Command CallsignList "list"
+			Brief "List callsign registrations."
+			Include AccountOptions
+			Include Reporting
+
+	CommandSet Identity "identity"
+		Command DnsRegister "register"
+			Brief "Request DNS name registration"
+			Parameter Identifier "id" String
+				Brief "The dns name to register"
+			Option Localname "local" String
+				Brief "Registration friendly name"
+			Option Callsign "callsign" String
+				Brief "Callsign"
+			Include AccountOptions
+			Include Reporting
+
+		Command DnsBind "bind"
+			Brief "Bind a DNS handle to a Mesh account"
+			Parameter Identifier "name" String
+				Brief "The DNS handle service address @handle@service"
+			Include AccountOptions
+			Include Reporting
+
 		Command CallsignList "list"
 			Brief "List callsign registrations."
 			Include AccountOptions

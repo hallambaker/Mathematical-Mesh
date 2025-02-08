@@ -248,13 +248,7 @@ public partial class Shell {
 
         }
 
-    public override ShellResult AccountInfo(AccountInfo Options) {
 
-
-        return new ResultInfo() {
-            Contact = null
-            };
-        }
 
 
     /// <summary>

@@ -29,16 +29,43 @@ namespace Goedel.XUnit;
 public partial class ShellTests {
 
 
+    [Fact]
+    public void TestHandleCallsign() {
+        var admin = GetTestCLI(AliceDevice1);
+        var webserver = GetTestCLI(AliceDevice2);
+        var nas = GetTestCLI(AliceDevice2);
 
 
+        var c1 = admin.Example($"account create {AliceAccount} /local=alice /handle=@alice.example.net");
+        Dispatch($"contact self anywhere");
+        Dispatch($"contact self anyone");
+        Dispatch($"contact self anything");
+        Dispatch($"contact self publish");
 
-    //public string AliceAccount1 = "personal";
-    //public string AliceAccount2 = "business";
-    //public string AliceService1 = "alice@example.com";
-
-    //public string AliceService2 = "alice@example.net";
+        // Create a new DNS zone for domain.example
+        Dispatch($"dns zone domain.example /group=iot");
+        Dispatch($"dns zone domain.mesh /group=iot");
 
 
+        // create a handle @alice.domain.example and publish the default contact information there
+        Dispatch($"dns handle alice.domain.example");
+
+
+        // Connect the device webserver with local name and give it the DNS name www.domain.example 
+        ConnectDevice(admin, webserver, "webserver");
+        webserver.Example($"device service webserver http /dns=@iot");
+
+        // Set the default service for the domain to www
+        Dispatch($"dns wildcard iot webserver");
+
+        // The Web server can now pull its TLS credentials
+        webserver.Example($"device credential webserver /public=fullchain.pem /private=privkey.pem");
+
+        ConnectDevice(admin, nas, "nas");
+        nas.Example($"device service nas http /dns=@iot");
+        nas.Example($"device credential nas /public=fullchain.pem /private=privkey.pem");
+
+        }
 
 
     [Fact]
@@ -47,20 +74,33 @@ public partial class ShellTests {
         var webserver = GetTestCLI(AliceDevice2);
         var nas = GetTestCLI(AliceDevice2);
 
-        var c1 = admin.Example($"account create {AliceAccount} /localname=alice /handle=@alice.example.net") ;
 
-        // create an IOT management profile for the domain alice.example.com serviced by example.com
-        Dispatch($"dns bind aliceiot.iot.example@example.com /localname=aliceiot");
+        var c1 = admin.Example($"account create {AliceAccount} /local=alice /handle=@alice.example.net") ;
+        Dispatch($"contact self anywhere");
+        Dispatch($"contact self anyone");
+        Dispatch($"contact self anything");
+        Dispatch($"contact self publish");
 
+        // Create a new DNS zone for domain.example
+        Dispatch($"dns zone domain.example /group=iot");
+
+        // create a handle @alice.domain.example and publish the default contact information there
+        Dispatch($"dns handle alice.domain.example");
+
+
+        // Connect the device webserver with local name and give it the DNS name www.domain.example 
         ConnectDevice(admin, webserver, "webserver");
+        webserver.Example($"device service webserver http /dns=www.domain.example");
 
-        webserver.Example($"device service webserver http /dns=aliceiot /wildcard");
+        // Set the default service for the domain to www
+        Dispatch($"dns wildcard iot webserver");
+
+        // The Web server can now pull its TLS credentials
         webserver.Example($"device credential webserver /public=fullchain.pem /private=privkey.pem");
 
         ConnectDevice(admin, nas, "nas");
-
-        nas.Example($"device service webserver http /dns=aliceiot");
-        nas.Example($"device credential webserver /tls=cert.pem");
+        nas.Example($"device service nas http /dns=nas.www.domain.example");
+        nas.Example($"device credential nas /public=fullchain.pem /private=privkey.pem");
 
         }
 
@@ -72,7 +112,7 @@ public partial class ShellTests {
         var resultPending = (ConnectPending[0].Result as ResultPending);
         var id1 = resultPending.Messages[0].MessageId; // Alice device 2
 
-        var ConnectAccept = admin.Example($"device accept {id1} /thing=public localname=webserver");
+        var ConnectAccept = admin.Example($"device accept {id1} /thing=public local=webserver");
         var AliceDevice2Sync = device.ExampleNoCatch($"device complete");
 
         // sync everything up
@@ -104,8 +144,8 @@ public partial class ShellTests {
     [Fact]
     public void TestHandleContactAlice() {
 
-        var c1 = Dispatch($"account create alice@example.com /localname=alice /handle=@alice.example.net") as ResultCreateAccount;
-        //var c2 = Dispatch($"account create bob@example.com /localname=bob /handle=@bob.example.net") as ResultCreateAccount;
+        var c1 = Dispatch($"account create alice@example.com /local=alice /handle=@alice.example.net") as ResultCreateAccount;
+        //var c2 = Dispatch($"account create bob@example.com /local=bob /handle=@bob.example.net") as ResultCreateAccount;
 
 
         var h1 = Dispatch($"account hello @alice") as ResultHello;
@@ -114,20 +154,28 @@ public partial class ShellTests {
         var h2 = Dispatch($"account hello alice@example.com") as ResultHello;
         (h2.ServiceAddress == "example.com").TestTrue();
 
-        var i1 = Dispatch($"account info alice@example.com") as ResultInfo;
-        var i2 = Dispatch($"account info @alice.example.net") as ResultInfo;
+        var i1 = Dispatch($"contact query alice@example.com") as ResultInfo;
+        // will fail because there is no public contact record published
+
+        var i2 = Dispatch($"contact publish") as ResultInfo;
+
+        var i2 = Dispatch($"contact query alice@example.com") as ResultInfo;
+        var i3 = Dispatch($"contact query @alice.example.net") as ResultInfo;
         // check the i1.Contact matches c1
 
+
+
+
         var ssh1 = Dispatch($"ssh create developer");
-        var i3 = Dispatch($"account info @alice.example.net") as ResultInfo;
-        var i4 = Dispatch($"ssh get @alice.example.net") as ResultInfo;
+        var i3 = Dispatch($"account query @alice.example.net") as ResultInfo;
+        var i4 = Dispatch($"account query @alice.example.net /ssh") as ResultInfo;
 
         var m1 = Dispatch($"mail add alice@example.com");
-        var i5 = Dispatch($"account info @alice.example.net") as ResultInfo;
+        var i5 = Dispatch($"account query @alice.example.net") as ResultInfo;
 
-        var d1 = Dispatch($"repo create");
+        var d1 = Dispatch($"dev add");
         var i6 = Dispatch($"account info @alice.example.net") as ResultInfo;
-        var i7 = Dispatch($"repo get @alice.example.net");
+        var i7 = Dispatch($"account query @alice.example.net /dev");
 
         }
 
@@ -137,7 +185,7 @@ public partial class ShellTests {
         var h1 = Dispatch($"account hello example.com") as ResultHello;
         (h1.ServiceAddress == "example.com").TestTrue();
 
-        var c1 = Dispatch($"account create alice@example.com /localname=alice /handle=@alice.example.net") as ResultCreateAccount;
+        var c1 = Dispatch($"account create alice@example.com /local=alice /handle=@alice.example.net") as ResultCreateAccount;
         var h7 = Dispatch($"account hello @alice") as ResultHello;
         (h7.ServiceAddress == "example.com").TestTrue();
 
@@ -149,7 +197,6 @@ public partial class ShellTests {
 
         var h4 = Dispatch($"account hello @alice.example.net") as ResultHello;
         (h4.ServiceAddress == "example.com").TestTrue();
-
 
         var udf = c1.Account.ToLower();
         var h5 = Dispatch($"account hello {udf}@@example.com") as ResultHello; ;

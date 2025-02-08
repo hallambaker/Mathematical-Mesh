@@ -30,6 +30,26 @@ public partial class Shell {
     /// </summary>
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
+    public override ShellResult ContactPublish(ContactPublish options) {
+        throw new NYI();
+        }
+
+
+    public override ShellResult ContactQuery(ContactQuery Options) {
+
+
+        return new ResultInfo() {
+            Contact = null
+            };
+        }
+
+
+
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
     public override ShellResult ContactStatic(ContactStatic options) {
         var contextUser = GetContextUser(options);
 

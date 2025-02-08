@@ -37,57 +37,58 @@ public partial class RegistrationTests {
     public string AliceDevice5 = "Alice5";
 
 
-    [Fact]
-    public void TestHandleThingCallsign() {
+    //[Fact]
+    //public void TestHandleThingCallsign() {
 
-        var serviceCallsign = GetContextRegistry();
+    //    var serviceCallsign = GetContextRegistry();
 
-        var admin = GetTestCLI(AliceDevice1);
-        var webserver = GetTestCLI(AliceDevice2);
-        var nas = GetTestCLI(AliceDevice2);
+    //    var admin = GetTestCLI(AliceDevice1);
+    //    var webserver = GetTestCLI(AliceDevice2);
+    //    var nas = GetTestCLI(AliceDevice2);
 
-        var c1 = admin.Example($"account create {AliceAccount} /localname=alice /handle=@alice.example.net");
-        var resultBind = admin.Dispatch($"callsign bind {AliceCallsign}") as ResultPublish;
-        serviceCallsign.ProcessAsync().Sync();
-
-
-
-        var resultSync = admin.Dispatch($"callsign status {AliceCallsign}");
+    //    var c1 = admin.Example($"account create {AliceAccount} /local=alice /handle=@alice.example.net");
+    //    var resultBind = admin.Dispatch($"callsign bind {AliceCallsign}") as ResultPublish;
+    //    serviceCallsign.ProcessAsync().Sync();
 
 
 
-        // create an IOT management profile for the domain alice.example.com serviced by example.com
-        Dispatch($"dns bind aliceiot.iot.example@example.com /localname=aliceiot /callsign={AliceCallsign}");
+    //    var resultSync = admin.Dispatch($"callsign status {AliceCallsign}");
 
-        ConnectDevice(admin, webserver, "webserver");
 
-        webserver.Example($"device service webserver http /dns=aliceiot /wildcard");
-        webserver.Example($"device credential webserver /public=fullchain.pem /private=privkey.pem");
 
-        ConnectDevice(admin, nas, "nas");
+    //    // create an IOT management profile for the domain alice.example.com serviced by example.com
+    //    Dispatch($"identity create @aliceiot.iot.example@example.com /local=aliceiot");
+    //    Dispatch($"identity add {AliceCallsign}");
 
-        nas.Example($"device service webserver http /dns=aliceiot");
-        nas.Example($"device credential webserver /tls=cert.pem");
+    //    ConnectDevice(admin, webserver, "webserver");
 
-        }
+    //    webserver.Example($"device service webserver http /dns=aliceiot /wildcard");
+    //    webserver.Example($"device credential webserver /public=fullchain.pem /private=privkey.pem");
 
-    bool ConnectDevice(TestCLI admin, TestCLI device, string local) {
+    //    ConnectDevice(admin, nas, "nas");
 
-        var ConnectRequest = device.Example($"device request {AliceAccount}");
-        var ConnectPending = admin.ExampleNoCatch($"device pending");
+    //    nas.Example($"device service webserver http /dns=aliceiot");
+    //    nas.Example($"device credential webserver /tls=cert.pem");
 
-        var resultPending = (ConnectPending[0].Result as ResultPending);
-        var id1 = resultPending.Messages[0].MessageId; // Alice device 2
+    //    }
 
-        var ConnectAccept = admin.Example($"device accept {id1} /thing=public localname=webserver");
-        var AliceDevice2Sync = device.ExampleNoCatch($"device complete");
+    //bool ConnectDevice(TestCLI admin, TestCLI device, string local) {
 
-        // sync everything up
-        var AliceDevice2Sync1 = admin.ExampleNoCatch($"account sync");
-        var AliceDevice2Sync2 = device.ExampleNoCatch($"account sync");
+    //    var ConnectRequest = device.Example($"device request {AliceAccount}");
+    //    var ConnectPending = admin.ExampleNoCatch($"device pending");
 
-        return true;
-        }
+    //    var resultPending = (ConnectPending[0].Result as ResultPending);
+    //    var id1 = resultPending.Messages[0].MessageId; // Alice device 2
+
+    //    var ConnectAccept = admin.Example($"device accept {id1} /thing=public localname=webserver");
+    //    var AliceDevice2Sync = device.ExampleNoCatch($"device complete");
+
+    //    // sync everything up
+    //    var AliceDevice2Sync1 = admin.ExampleNoCatch($"account sync");
+    //    var AliceDevice2Sync2 = device.ExampleNoCatch($"account sync");
+
+    //    return true;
+    //    }
 
 
 
