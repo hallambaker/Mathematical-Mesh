@@ -420,6 +420,31 @@
 				Brief "Length of PIN to generate in characters"
 				Default "24"
 
+
+		Command DeviceService "service"
+			Brief ""
+			Include AccountOptions
+			Include Reporting
+			Parameter Name "name" String
+				Brief "The device name"
+			Parameter Protocol "protocol" String
+				Brief "The protocol to serve"
+			Option Dns "dns" String
+				Brief "The DNS or group"
+
+		Command DeviceCredential "credential"
+			Brief ""
+			Include AccountOptions
+			Include Reporting
+			Parameter Protocol "protocol" String
+				Brief "The protocol to serve"
+			Option Name "public" String
+				Brief "File to store the public credential"
+			Option Device "private" String
+				Brief "File to store the private credential"
+			Option Dns "dns" String
+				Brief "The DNS or group"
+
 	CommandSet Message "message"
 		Brief "Contact and confirmation message options"
 		
@@ -1352,29 +1377,34 @@
 			Include AccountOptions
 			Include Reporting
 
-	CommandSet Identity "identity"
-		Command DnsRegister "register"
-			Brief "Request DNS name registration"
-			Parameter Identifier "id" String
-				Brief "The dns name to register"
+	CommandSet Dns "dns"
+		Command DnsZone "zone"
+			Brief "Publish the specified DNS zone"
+			Parameter Name "name" String
+				Brief "The dns name to publish"
+			Option Group "group" String
+				Brief "Named group used to publish names to multiple domains"
 			Option Localname "local" String
 				Brief "Registration friendly name"
-			Option Callsign "callsign" String
-				Brief "Callsign"
+			Option Service "service" String
+				Brief "The service responsible for publishing the zone"
 			Include AccountOptions
 			Include Reporting
 
-		Command DnsBind "bind"
-			Brief "Bind a DNS handle to a Mesh account"
-			Parameter Identifier "name" String
-				Brief "The DNS handle service address @handle@service"
-			Include AccountOptions
-			Include Reporting
+		Command DnsHandle "handle"
+			Parameter Name "name" String
+				Brief "The dns name to publish"
+			Option Name "name" String
+				Brief "Name to distinguish public contact records"
+		
+		Command DnsWildcard "wildcard"
+			Parameter Name "name" String
+				Brief "The dns name or group"
+			Parameter Device "device" String
+				Brief "The device or service to bind to the group."
+			Option Name "name" String
+				Brief "Name to distinguish public contact records"
 
-		Command CallsignList "list"
-			Brief "List callsign registrations."
-			Include AccountOptions
-			Include Reporting
 
 
 	CommandSet Wallet "wallet"

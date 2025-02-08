@@ -42,29 +42,28 @@ public partial class ShellTests {
         Dispatch($"contact self anything");
         Dispatch($"contact self publish");
 
-        // Create a new DNS zone for domain.example
+        // Create a new public DNS zone for domain.example
         Dispatch($"dns zone domain.example /group=iot");
-        Dispatch($"dns zone domain.mesh /group=iot");
 
+        // Create a new Mesh callsign, it is only distinguished by being in a non ICANN domain:
+        Dispatch($"dns zone domain.mesh /group=iot /private");
 
         // create a handle @alice.domain.example and publish the default contact information there
         Dispatch($"dns handle alice.domain.example");
 
-
         // Connect the device webserver with local name and give it the DNS name www.domain.example 
         ConnectDevice(admin, webserver, "webserver");
-        webserver.Example($"device service webserver http /dns=@iot");
+        admin.Example($"device service webserver http /dns=iot");
 
         // Set the default service for the domain to www
         Dispatch($"dns wildcard iot webserver");
 
         // The Web server can now pull its TLS credentials
-        webserver.Example($"device credential webserver /public=fullchain.pem /private=privkey.pem");
+        webserver.Example($"device credential  /public=fullchain.pem /private=privkey.pem");
 
         ConnectDevice(admin, nas, "nas");
-        nas.Example($"device service nas http /dns=@iot");
-        nas.Example($"device credential nas /public=fullchain.pem /private=privkey.pem");
-
+        admin.Example($"device service nas http /dns=iot");
+        nas.Example($"device credential  /public=fullchain.pem /private=privkey.pem");
         }
 
 
@@ -73,7 +72,6 @@ public partial class ShellTests {
         var admin = GetTestCLI(AliceDevice1);
         var webserver = GetTestCLI(AliceDevice2);
         var nas = GetTestCLI(AliceDevice2);
-
 
         var c1 = admin.Example($"account create {AliceAccount} /local=alice /handle=@alice.example.net") ;
         Dispatch($"contact self anywhere");
@@ -86,7 +84,6 @@ public partial class ShellTests {
 
         // create a handle @alice.domain.example and publish the default contact information there
         Dispatch($"dns handle alice.domain.example");
-
 
         // Connect the device webserver with local name and give it the DNS name www.domain.example 
         ConnectDevice(admin, webserver, "webserver");
