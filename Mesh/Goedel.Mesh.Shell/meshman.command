@@ -145,6 +145,24 @@
 		Option DigestKey "key" String
 			Brief "Encrypt data for specified recipient"
 
+
+	OptionSet ContactFilter
+		Option Name "name" String
+			Brief "Name to distinguish public contact records"
+
+		Option Ssh "ssh" Flag
+			Brief ""
+			Default "false"
+		Option mail "mail" Flag
+			Brief ""
+			Default "false"
+		Option dev "dev" Flag
+			Brief ""
+			Default "false"
+		Option place "place" Flag
+			Brief ""
+			Default "false"
+
 	OptionSet SequenceOptions
 		Option Type "type" String
 			Brief "The sequence type, plain/tree/digest/chain/tree"
@@ -170,22 +188,7 @@
 			Case eCatalog "catalog"
 				Brief "Object catalog"
 
-	OptionSet ContactFilter
-		Option Name "name" String
-			Brief "Name to distinguish public contact records"
 
-		Option Ssh "ssh" Flag
-			Brief ""
-			Default "false"
-		Option mail "mail" Flag
-			Brief ""
-			Default "false"
-		Option dev "dev" Flag
-			Brief ""
-			Default "false"
-		Option place "place" Flag
-			Brief ""
-			Default "false"
 
 
 	Command About "about"		
@@ -278,6 +281,10 @@
 		Command AccountRecover "recover"
 			Return ResultMasterCreate
 			Brief "Recover escrowed profile"
+
+			Option Localname "local" String
+				Brief "Account friendly name"
+
 			Include AccountOptions
 			Include Reporting
 			Parameter Share1 "s1" String
@@ -590,6 +597,55 @@
 			Include AccountOptions
 			Include Reporting
 
+
+		CommandSet Self "self"
+			Command SelfAnywhere "anywhere"
+				Include AccountOptions
+				Include Reporting	
+				Brief "Add anywhere entry to contact"
+				Parameter Handle "handle" String
+					Brief "The handle"
+				Option Service "service" String
+					Brief "The Auth'n service"
+				Option Did "did" String
+					Brief "The DID used as the unique authentication ID at the service"
+
+				
+			Command SelfAnyone "anyone"
+				Include AccountOptions
+				Include Reporting	
+				Brief "Add anyone entry to contact"
+				Parameter Handle "handle" String
+					Brief "The handle"
+				Option Service "service" String
+					Brief "The presence service"		
+
+			Command SelfAnything "anything"
+				Include AccountOptions
+				Include Reporting	
+				Brief "Add anywhere entry to contact"
+				Parameter Handle "handle" String
+					Brief "The handle"
+				Option Service "service" String
+					Brief "The anything service"
+
+			Command SelfService "service"
+				Include AccountOptions
+				Include Reporting	
+				Brief "Add service entry to contact"
+				Parameter Uri "uri" String
+					Brief "The web site uri"
+				Option Protocol "protocol" String
+					Brief "The protocol identifier"
+
+
+			Command SelfPublish "publish"
+				Brief "Create static contact retrieval URI"
+				Include ContactFilter
+				Include AccountOptions
+				Include Reporting
+
+
 	CommandSet Contact "contact"
 		Brief "Manage contact catalogs connected to an account"
 
@@ -605,53 +661,7 @@
 				Brief "Local identifier"
 			Option Self "self" Flag
 				Brief "Contact is for self"
-		CommandSet Self "self"
-			Command ContactSelfAnywhere "anywhere"
-				Include AccountOptions
-				Include Reporting	
-				Brief "Add anywhere entry to contact"
-				Parameter Handle "handle" String
-					Brief "The handle"
-				Option Service "service" String
-					Brief "The Auth'n service"
-				Option Did "did" String
-					Brief "The DID used as the unique authentication ID at the service"
-				Include AccountOptions
-				Include Reporting	
-				
-			Command ContactSelfAnywhere "anyone"
-				Include AccountOptions
-				Include Reporting	
-				Brief "Add anyone entry to contact"
-				Parameter Handle "handle" String
-					Brief "The handle"
-				Option Service "service" String
-					Brief "The presence service"		
 
-			Command ContactSelfAnything "anything"
-				Include AccountOptions
-				Include Reporting	
-				Brief "Add anywhere entry to contact"
-				Parameter Handle "handle" String
-					Brief "The handle"
-				Option Service "service" String
-					Brief "The anything service"
-
-			Command ContactSelfService "service"
-				Include AccountOptions
-				Include Reporting	
-				Brief "Add service entry to contact"
-				Parameter Uri "uri" String
-					Brief "The web site uri"
-				Option Protocol "protocol" String
-					Brief "The protocol identifier"
-
-
-			Command ContactPublish "publish"
-				Brief "Create static contact retrieval URI"
-				Include ContactFilter
-				Include AccountOptions
-				Include Reporting
 
 		Command ContactQuery "query"
 			Brief "Attempt to provide the contact information for the specified handle"
@@ -1274,13 +1284,6 @@
 			Option ID "id" String
 				Brief "Key identifier"
 
-		Command SSHQuery "query"
-			Brief "Attempt to provide the ssh contact information for the specified handle"
-			Option Name "name" String
-				Brief "Name to distinguish public contact records"
-			Include AccountOptions
-			Include Reporting
-
 		Command SSHGet "get"
 			Brief "Get SSH account data"
 			Parameter Identifier "id" String
@@ -1334,46 +1337,31 @@
 			Include AccountOptions
 			Include Reporting
 
-	CommandSet Callsign "callsign"
-		Command CallsignRegister "register"
-			Brief "Register a callsign"
-			Parameter Identifier "id" String
-				Brief "The callsign to register in requested presentation form"
-			Include AccountOptions
-			Include Reporting
+	CommandSet Dev "dev"
+		Brief "Manage Developer profiles"
 
-		Command CallsignBind "bind"
-			Brief "Bind a registered callsign to an account"
-			Parameter Identifier "id" String
-				Brief "The callsign to bind"
-			Include AccountOptions
-			Include Reporting
 
-		Command CallsignResolve "resolve"
-			Brief "Request callsign resolution."
-			Parameter Identifier "id" String
-				Brief "The callsign to resolve"
+		// Management of client key pairs
+		Command DevCreate "create"
+			Brief "Generate a new developer keyset and add to the personal profile"
 			Include AccountOptions
 			Include Reporting
-		
-		Command CallsignTransfer "transfer"
-			Brief "Transfer a callsign to another user."
+			Include CryptoOptions
+			Include DeviceAuthOptions
+			Option ID "id" String
+				Brief "Key identifier"
+
+		Command DevGet "get"
+			Brief "Get Developer keyset data"
 			Parameter Identifier "id" String
-				Brief "The callsign to bind"
-			Parameter Recipient "recipient" String
-				Brief "The recipient to send the callsign to"
+				Brief "The mail account address"
 			Include AccountOptions
 			Include Reporting
-		
-		Command CallsignStatus "status"
-			Brief "Report callsign registration status."
-			Parameter Identifier "id" String
-				Brief "The callsign to resolve"
-			Include AccountOptions
-			Include Reporting
-		
-		Command CallsignList "list"
-			Brief "List callsign registrations."
+			Include KeyFileOptions
+
+		Command DevList "list"
+			Brief "List Dev account information"
+			Include KeyFileOptions
 			Include AccountOptions
 			Include Reporting
 
@@ -1392,13 +1380,13 @@
 			Include Reporting
 
 		Command DnsHandle "handle"
-			Parameter Name "name" String
+			Parameter Dns "dns" String
 				Brief "The dns name to publish"
 			Option Name "name" String
 				Brief "Name to distinguish public contact records"
 		
 		Command DnsWildcard "wildcard"
-			Parameter Name "name" String
+			Parameter Dns "dns" String
 				Brief "The dns name or group"
 			Parameter Device "device" String
 				Brief "The device or service to bind to the group."
@@ -1407,98 +1395,7 @@
 
 
 
-	CommandSet Wallet "wallet"
-		Command WalletInvoice "invoice"
-			Brief "Send a request for payment."
-			Parameter Recipient "recipient" String
-				Brief "The recipient to send the confirmation request to"
-			Parameter Invoice "message" ExistingFile
-				Brief "The invoice text"
-			Parameter Currency "currency" String
-				Brief "The payment currency"
-			Parameter Amount "amount" String
-				Brief "The payment amount"
-			Parameter Reason "reason" String
-				Brief "The reason for the payment request"
-			Include AccountOptions
-			Include Reporting
 
-		Command WalletTransfer "transfer"
-			Brief "Transfer a token to another user."
-			Parameter Recipient "recipient" String
-				Brief "The recipient to send the confirmation request to"
-			Parameter Currency "currency" String
-				Brief "The payment currency"
-			Parameter Amount "amount" String
-				Brief "The payment amount"
-			Parameter Reason "reason" String
-				Brief "The reason for the transfer"
-			Include AccountOptions
-			Include Reporting
-
-		Command WalletAccept "accept"
-			Brief "Accept an invoice and make payment"
-			Parameter MessageId "message" String
-				Brief "The invoice message id"
-			Include AccountOptions
-			Include Reporting
-
-		Command WalletReject "reject"
-			Brief "Accept an invoice and make payment"
-			Parameter MessageId "message" String
-				Brief "The invoice message id"
-			Include AccountOptions
-			Include Reporting
-
-		Command WalletRedeem "redeem"
-			Brief "Redeem an invoice payment"
-			Parameter MessageId "message" String
-				Brief "The payment message id to redeem"
-			Include AccountOptions
-			Include Reporting
-
-		Command WalletList "list"
-			Brief "List wallet entries"
-			Include AccountOptions
-			Include Reporting
-
-		Command WalletDelete "delete"
-			Brief "Delete wallet entry"
-			Parameter Identifier "id" String
-				Brief "Wallet entry identifier"
-			Include AccountOptions
-			Include Reporting
-
-		Command WalletkGet "get"
-			Brief "Lookup wallet entry"
-			Parameter Identifier "id" String
-				Brief "Local identifier"
-			Include AccountOptions
-			Include Reporting
-
-	CommandSet Carnet "carnet"
-		Command CarnetMint "Mint"
-			Brief "Mint a carnet and send it to a user"
-			Parameter Amount "amount" String
-				Brief "The payment amount"
-			Option Recipient "to" String
-				Brief "The recipient to send the confirmation request to"
-
-			Option Currency "currency" String
-				Brief "The payment currency"
-			Option Tickets "tickets" Integer
-				Brief "The number of tickets to issue"			
-			Option Quantum "quantum" Integer
-				Brief "The value of each ticket"	
-			Include AccountOptions
-			Include Reporting
-
-		Command CarnetStatus "status"
-			Brief "Return status of a carnet entry"
-			Parameter Identifier "id" String
-				Brief "The carnet identifier"
-			Include AccountOptions
-			Include Reporting
 
 	CommandSet Chat "chat"
 		Command ChatMessage "message"

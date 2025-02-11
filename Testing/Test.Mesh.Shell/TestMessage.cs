@@ -162,7 +162,7 @@ public partial class ShellTests {
         var result3 = deviceA.Dispatch("message pending") as ResultPending;
 
         // check there is exactly one pending message and accept it
-        var result4 = ProcealicessMessage(deviceA, true, 1);
+        var result4 = ProcessMessage(deviceA, true, 1);
 
         ValidContact(deviceA, AliceAccount, AccountB);
 

@@ -78,6 +78,13 @@ public class ContextRegistry : ContextAccount {
 
     #endregion
     #region Constructors and factories
+
+
+    static ContextRegistry() {
+        Initialization.Initialized.AssertTrue(NYI.Throw);
+        
+        }
+
     /// <summary>
     /// Default constuctor, creates a Registry context for <paramref name="catalogedCallsign"/>
     /// </summary>

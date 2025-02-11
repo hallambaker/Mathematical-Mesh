@@ -25,17 +25,37 @@ namespace Goedel.Mesh.Shell;
 
 public partial class Shell {
 
-    /// <summary>
-    /// Dispatch method
-    /// </summary>
-    /// <param name="options">The command line options.</param>
-    /// <returns>Mesh result instance</returns>
-    public override ShellResult ContactPublish(ContactPublish options) {
-        throw new NYI();
-        }
 
 
-    public override ShellResult ContactQuery(ContactQuery Options) {
+
+    public override ShellResult ContactQuery(ContactQuery options) {
+
+        var address = options.Address.Value;
+
+        var all = options.Ssh.ByDefault & options.mail.ByDefault &
+                options.dev.ByDefault & options.place.ByDefault;
+
+
+        // Resolve to get the service and account
+
+
+        // construct protocol query for handle
+
+
+
+        // present to service, wait for a reply
+        var client = new MeshServiceClient();
+
+        var getRequest = new GetDataRequest() {
+            DocumentId = "fred"
+            };
+
+        var response = client.GetData(getRequest);
+
+        var contact = response.Data;
+
+
+        // 
 
 
         return new ResultInfo() {
@@ -43,14 +63,18 @@ public partial class Shell {
             };
         }
 
+    public override ShellResult ContactAdd(ContactAdd options) {
+        return base.ContactAdd(options);
+        }
 
 
-    /// <summary>
-    /// Dispatch method
-    /// </summary>
-    /// <param name="options">The command line options.</param>
-    /// <returns>Mesh result instance</returns>
-    public override ShellResult ContactStatic(ContactStatic options) {
+
+/// <summary>
+/// Dispatch method
+/// </summary>
+/// <param name="options">The command line options.</param>
+/// <returns>Mesh result instance</returns>
+public override ShellResult ContactStatic(ContactStatic options) {
         var contextUser = GetContextUser(options);
 
         var uri = contextUser.ContactUri(false, null).Sync();

@@ -3215,6 +3215,19 @@
             <param name="hostname">The host name.</param>
             <returns>The file path.</returns>
         </member>
+        <member name="T:Goedel.Mesh.Client.Initialization">
+            <summary>Static class whose only function is to contain the initialization 
+            routine.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.Initialization.Initialized">
+            <summary>Initialization witness flag. This may be used to force initialization
+            of the module prior to other modules being initialized.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Client.Initialization.Initialize">
+            <summary>
+            Initialization routine for cryptographic functions on the dotNet Core platform.
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.Client.MeshHost">
             <summary>
             Manages the host catalog, i.e. the catalog of Meshes that the device is 

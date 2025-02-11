@@ -615,6 +615,19 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="T:Goedel.Cryptography.Jose.Initialization">
+            <summary>Static class whose only function is to contain the initialization 
+            routine.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Initialization.Initialized">
+            <summary>Initialization witness flag. This may be used to force initialization
+            of the module prior to other modules being initialized.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.Initialization.Initialize">
+            <summary>
+            Initialization routine for cryptographic functions on the dotNet Core platform.
+            </summary>
+        </member>
         <member name="T:Goedel.Cryptography.Jose.Jose">
              <summary>
             

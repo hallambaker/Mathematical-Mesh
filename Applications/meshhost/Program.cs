@@ -22,6 +22,20 @@
 using Goedel.Mesh.Shell.Host;
 
 internal sealed class Program {
+
+    static Program() {
+        Goedel.Mesh.Client.Initialization.Initialized.AssertTrue(Goedel.Mesh.Internal.Throw);
+        Goedel.Mesh.Server.Initialization.Initialized.AssertTrue(Goedel.Mesh.Internal.Throw);
+
+#if USE_PLATFORM_WINDOWS
+        Goedel.Cryptography.Windows.Initialization.Initialized.AssertTrue(
+                Goedel.Mesh.Internal.Throw);
+#elif USE_PLATFORM_LINUX
+#endif
+
+        }
+
+
     static void Main(string[] args) {
         Shell shell = new() {
             MeshMachine = new MeshMachineCore(),

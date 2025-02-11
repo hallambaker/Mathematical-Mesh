@@ -610,6 +610,51 @@ public class PublicMeshService : MeshService {
 
 
         }
+
+
+
+    /// <summary>
+    /// Server method implementing the transaction  Post.
+    /// </summary>
+    /// <param name="request">The request object to send to the host.</param>
+    /// <param name="jpcSession">The connection authentication context.</param>
+    /// <returns>The response object from the service</returns>
+    public override UploadResponse Upload(
+            UploadRequest request, IJpcSession jpcSession) {
+
+        try {
+            return new UploadResponse();
+            }
+        catch (System.Exception exception) {
+            return new UploadResponse(exception);
+
+            }
+
+        }
+
+
+    /// <summary>
+    /// Server method implementing the transaction  Post.
+    /// </summary>
+    /// <param name="request">The request object to send to the host.</param>
+    /// <param name="jpcSession">The connection authentication context.</param>
+    /// <returns>The response object from the service</returns>
+    public override GetDataResponse GetData(
+            GetDataRequest request, IJpcSession jpcSession) {
+
+        try {
+            return new GetDataResponse();
+            }
+        catch (System.Exception exception) {
+            return new GetDataResponse(exception);
+
+            }
+
+        }
+
+
+
+
     /// <summary>
     /// Server method implementing the transaction  Post.
     /// </summary>

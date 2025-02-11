@@ -4101,6 +4101,10 @@
             <summary>Direct DNS handle, 
             e.g. @maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah@alice.example.net</summary> 
         </member>
+        <member name="F:Goedel.Discovery.HandleType.HandleServiceAddress">
+            <summary>Handle Service Address, 
+            e.g. @alice.example.net@example.com</summary> 
+        </member>
         <member name="F:Goedel.Discovery.HandleType.LocalName">
             <summary>Local name, e.g. @alice</summary> 
         </member>

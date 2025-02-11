@@ -24,7 +24,7 @@ using System.Runtime.CompilerServices;
 
 #pragma warning disable IDE0079
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
-namespace Goedel.Mesh;
+namespace Goedel.Mesh.Core;
 
 ///<summary>Static class whose only function is to contain the initialization 
 ///routine.</summary>
@@ -32,7 +32,7 @@ public static class Initialization {
 
     ///<summary>Initialization witness flag. This may be used to force initialization
     ///of the module prior to other modules being initialized.</summary> 
-    public static bool Initialized { get; private set; }
+    public static bool Initialized => true;
 
 
     /// <summary>
@@ -42,11 +42,13 @@ public static class Initialization {
 
     [ModuleInitializer]
     internal static void Initialize() {
-        // Force initialization of dependent modules.
-        Initialized = Goedel.Cryptography.Initialization.Initialized &
-            Goedel.Cryptography.Core.Initialization.Initialized;
 
-        //MeshMachine.IMeshMachineFactory = MeshMachineCore.GetMachine;
+        Goedel.Mesh.Initialization.Initialized.AssertTrue(NYI.Throw);
+        Goedel.Callsign.Initialization.Initialized.AssertTrue(NYI.Throw);
+        Goedel.Carnet.Initialization.Initialized.AssertTrue(NYI.Throw);
+        Goedel.Cryptography.Core.Initialization.Initialized.AssertTrue(NYI.Throw);
+
+
         }
 
     }

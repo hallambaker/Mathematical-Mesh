@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/7/2025 4:33:32 PM
+//  This file was automatically generated at 2/10/2025 6:59:02 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -101,6 +101,10 @@ public abstract partial class MeshProtocol : global::Goedel.Protocol.JsonObject 
 	    {"DeviceStatus", DeviceStatus._Factory},
 	    {"DownloadRequest", DownloadRequest._Factory},
 	    {"DownloadResponse", DownloadResponse._Factory},
+	    {"UploadRequest", UploadRequest._Factory},
+	    {"UploadResponse", UploadResponse._Factory},
+	    {"GetDataRequest", GetDataRequest._Factory},
+	    {"GetDataResponse", GetDataResponse._Factory},
 	    {"TransactRequest", TransactRequest._Factory},
 	    {"TransactResponse", TransactResponse._Factory},
 	    {"EntryResponse", EntryResponse._Factory},
@@ -123,7 +127,13 @@ public abstract partial class MeshProtocol : global::Goedel.Protocol.JsonObject 
 	    {"OperateResponse", OperateResponse._Factory}
 		};
 
-    [ModuleInitializer]
+    // [ModuleInitializer]
+	
+	public static bool _Initialized => true;
+
+	static MeshProtocol() {
+		_Initialize();
+		}
 
     internal static void _Initialize() => AddDictionary(ref _tagDictionary);
 
@@ -175,6 +185,8 @@ public abstract partial class MeshService : Goedel.Protocol.JpcInterface {
 				{"Complete", CompleteRequest._Factory},
 				{"Status", StatusRequest._Factory},
 				{"Download", DownloadRequest._Factory},
+				{"Upload", UploadRequest._Factory},
+				{"GetData", GetDataRequest._Factory},
 				{"Transact", TransactRequest._Factory},
 				{"PublicRead", PublicRequest._Factory},
 				{"Post", PostRequest._Factory},
@@ -195,6 +207,8 @@ public abstract partial class MeshService : Goedel.Protocol.JpcInterface {
 		"Complete" => Complete(request as CompleteRequest, session),
 		"Status" => Status(request as StatusRequest, session),
 		"Download" => Download(request as DownloadRequest, session),
+		"Upload" => Upload(request as UploadRequest, session),
+		"GetData" => GetData(request as GetDataRequest, session),
 		"Transact" => Transact(request as TransactRequest, session),
 		"PublicRead" => PublicRead(request as PublicRequest, session),
 		"Post" => Post(request as PostRequest, session),
@@ -283,6 +297,24 @@ public abstract partial class MeshService : Goedel.Protocol.JpcInterface {
 	/// <returns>The response object from the service</returns>
     public abstract DownloadResponse Download (
             DownloadRequest request, IJpcSession session);
+
+    /// <summary>
+	/// Base method for implementing the transaction Upload.
+    /// </summary>
+    /// <param name="request">The request object to send to the host.</param>
+	/// <param name="session">The request context.</param>
+	/// <returns>The response object from the service</returns>
+    public abstract UploadResponse Upload (
+            UploadRequest request, IJpcSession session);
+
+    /// <summary>
+	/// Base method for implementing the transaction GetData.
+    /// </summary>
+    /// <param name="request">The request object to send to the host.</param>
+	/// <param name="session">The request context.</param>
+	/// <returns>The response object from the service</returns>
+    public abstract GetDataResponse GetData (
+            GetDataRequest request, IJpcSession session);
 
     /// <summary>
 	/// Base method for implementing the transaction Transact.
@@ -478,6 +510,38 @@ public partial class MeshServiceClient : Goedel.Protocol.JpcClientInterface {
 			await JpcSession.PostAsync("Download", request) as DownloadResponse;
 
     /// <summary>
+	/// Implement the transaction Upload.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public UploadResponse Upload (UploadRequest request) =>
+			UploadAsync (request).Sync();
+
+    /// <summary>
+	/// Implement the transaction Upload asynchronously.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public virtual async Task<UploadResponse> UploadAsync (UploadRequest request) =>
+			await JpcSession.PostAsync("Upload", request) as UploadResponse;
+
+    /// <summary>
+	/// Implement the transaction GetData.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public GetDataResponse GetData (GetDataRequest request) =>
+			GetDataAsync (request).Sync();
+
+    /// <summary>
+	/// Implement the transaction GetData asynchronously.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public virtual async Task<GetDataResponse> GetDataAsync (GetDataRequest request) =>
+			await JpcSession.PostAsync("GetData", request) as GetDataResponse;
+
+    /// <summary>
 	/// Implement the transaction Transact.
     /// </summary>		
     /// <param name="request">The request object.</param>
@@ -648,6 +712,24 @@ public partial class MeshServiceDirect: MeshServiceClient {
 	/// <returns>The response object</returns>
     public override Task<DownloadResponse> DownloadAsync (DownloadRequest request) =>
 			Task.FromResult(Service.Download (request, JpcSession));
+
+
+    /// <summary>
+	/// Implement the transaction
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public override Task<UploadResponse> UploadAsync (UploadRequest request) =>
+			Task.FromResult(Service.Upload (request, JpcSession));
+
+
+    /// <summary>
+	/// Implement the transaction
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public override Task<GetDataResponse> GetDataAsync (GetDataRequest request) =>
+			Task.FromResult(Service.GetData (request, JpcSession));
 
 
     /// <summary>
@@ -3081,6 +3163,338 @@ public partial class DownloadResponse : MeshResponse {
 			return Out as DownloadResponse;
 			}
 		var Result = new DownloadResponse ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// Uploads a data object to be retrievable from the specified account
+	/// </summary>
+public partial class UploadRequest : MeshRequestUser {
+        /// <summary>
+        ///The document identifier	
+        /// </summary>
+
+	public virtual string?						DocumentId  {get; set;}
+
+        /// <summary>
+        ///The data to be uploaded
+        /// </summary>
+
+	public virtual byte[]?						Data  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+			{ "DocumentId", new PropertyString ("DocumentId", 
+					(IBinding data, string? value) => {(data as UploadRequest).DocumentId = value;}, (IBinding data) => (data as UploadRequest).DocumentId )},
+			{ "Data", new PropertyBinary ("Data", 
+					(IBinding data, byte[]? value) => {(data as UploadRequest).Data = value;}, (IBinding data) => (data as UploadRequest).Data )}
+        }, __Tag,() => new UploadRequest(), MeshRequestUser._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, MeshRequestUser._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "UploadRequest";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new UploadRequest();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new UploadRequest FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as UploadRequest;
+			}
+		var Result = new UploadRequest ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// Reports success or failure of an upload request
+	/// </summary>
+public partial class UploadResponse : MeshResponse {
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+        }, __Tag,() => new UploadResponse(), MeshResponse._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, MeshResponse._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "UploadResponse";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new UploadResponse();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new UploadResponse FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as UploadResponse;
+			}
+		var Result = new UploadResponse ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// Request object with specified identifier
+	/// </summary>
+public partial class GetDataRequest : MeshRequest {
+        /// <summary>
+        ///The document identifier	
+        /// </summary>
+
+	public virtual string?						DocumentId  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+			{ "DocumentId", new PropertyString ("DocumentId", 
+					(IBinding data, string? value) => {(data as GetDataRequest).DocumentId = value;}, (IBinding data) => (data as GetDataRequest).DocumentId )}
+        }, __Tag,() => new GetDataRequest(), MeshRequest._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, MeshRequest._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "GetDataRequest";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new GetDataRequest();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new GetDataRequest FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as GetDataRequest;
+			}
+		var Result = new GetDataRequest ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// Returns a data object uploaded to the specified account.
+	/// </summary>
+public partial class GetDataResponse : MeshResponse {
+        /// <summary>
+        ///The data retrieved
+        /// </summary>
+
+	public virtual byte[]?						Data  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+			{ "Data", new PropertyBinary ("Data", 
+					(IBinding data, byte[]? value) => {(data as GetDataResponse).Data = value;}, (IBinding data) => (data as GetDataResponse).Data )}
+        }, __Tag,() => new GetDataResponse(), MeshResponse._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, MeshResponse._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "GetDataResponse";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new GetDataResponse();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new GetDataResponse FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as GetDataResponse;
+			}
+		var Result = new GetDataResponse ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

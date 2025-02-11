@@ -383,3 +383,30 @@ public partial class OperateResponse {
     public OperateResponse(Exception exception = null) : base(exception) {
         }
     }
+
+
+public partial class UploadRequest {
+
+    }
+
+public partial class UploadResponse {
+    /// <summary>
+    /// Default constructor. 
+    /// </summary>
+    /// <param name="exception">Optional exception specifier.</param>
+    public UploadResponse(Exception exception = null) : base(exception) {
+        }
+    }
+
+public partial class GetDataRequest {
+
+    }
+
+public partial class GetDataResponse {
+    /// <summary>
+    /// Default constructor. 
+    /// </summary>
+    /// <param name="exception">Optional exception specifier.</param>
+    public GetDataResponse(Exception exception = null) : base(exception) {
+        }
+    }

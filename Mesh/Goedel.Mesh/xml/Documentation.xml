@@ -7353,6 +7353,19 @@
             Carnet payment interface.
             </summary>
         </member>
+        <member name="T:Goedel.Mesh.Initialization">
+            <summary>Static class whose only function is to contain the initialization 
+            routine.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Initialization.Initialized">
+            <summary>Initialization witness flag. This may be used to force initialization
+            of the module prior to other modules being initialized.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Initialization.Initialize">
+            <summary>
+            Initialization routine for cryptographic functions on the dotNet Core platform.
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.KeyShare">
             <summary>
             </summary>
@@ -10338,6 +10351,22 @@
             <param name="session">The request context.</param>
             <returns>The response object from the service</returns>
         </member>
+        <member name="M:Goedel.Mesh.MeshService.Upload(Goedel.Mesh.UploadRequest,Goedel.Protocol.IJpcSession)">
+            <summary>
+            Base method for implementing the transaction Upload.
+            </summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="session">The request context.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshService.GetData(Goedel.Mesh.GetDataRequest,Goedel.Protocol.IJpcSession)">
+            <summary>
+            Base method for implementing the transaction GetData.
+            </summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="session">The request context.</param>
+            <returns>The response object from the service</returns>
+        </member>
         <member name="M:Goedel.Mesh.MeshService.Transact(Goedel.Mesh.TransactRequest,Goedel.Protocol.IJpcSession)">
             <summary>
             Base method for implementing the transaction Transact.
@@ -10509,6 +10538,34 @@
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
+        <member name="M:Goedel.Mesh.MeshServiceClient.Upload(Goedel.Mesh.UploadRequest)">
+            <summary>
+            Implement the transaction Upload.
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceClient.UploadAsync(Goedel.Mesh.UploadRequest)">
+            <summary>
+            Implement the transaction Upload asynchronously.
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceClient.GetData(Goedel.Mesh.GetDataRequest)">
+            <summary>
+            Implement the transaction GetData.
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceClient.GetDataAsync(Goedel.Mesh.GetDataRequest)">
+            <summary>
+            Implement the transaction GetData asynchronously.
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
         <member name="M:Goedel.Mesh.MeshServiceClient.Transact(Goedel.Mesh.TransactRequest)">
             <summary>
             Implement the transaction Transact.
@@ -10646,6 +10703,20 @@
             <returns>The response object</returns>
         </member>
         <member name="M:Goedel.Mesh.MeshServiceDirect.DownloadAsync(Goedel.Mesh.DownloadRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceDirect.UploadAsync(Goedel.Mesh.UploadRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceDirect.GetDataAsync(Goedel.Mesh.GetDataRequest)">
             <summary>
             Implement the transaction
             </summary>		
@@ -12391,6 +12462,242 @@
             <returns>The store status.</returns>
         </member>
         <member name="M:Goedel.Mesh.DownloadResponse.#ctor(System.Exception)">
+            <summary>
+            Default constructor. 
+            </summary>
+            <param name="exception">Optional exception specifier.</param>
+        </member>
+        <member name="T:Goedel.Mesh.UploadRequest">
+             <summary>
+            
+             Uploads a data object to be retrievable from the specified account
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.UploadRequest.DocumentId">
+             <summary>
+            The document identifier	
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.UploadRequest.Data">
+             <summary>
+            The data to be uploaded
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.UploadRequest._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.UploadRequest._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.UploadRequest._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.UploadRequest._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.UploadRequest._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.UploadRequest._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.UploadRequest._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.UploadRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.UploadRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.UploadRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.UploadRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.UploadResponse">
+             <summary>
+            
+             Reports success or failure of an upload request
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.UploadResponse._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.UploadResponse._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.UploadResponse._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.UploadResponse._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.UploadResponse._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.UploadResponse._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.UploadResponse._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.UploadResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.UploadResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.UploadResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.UploadResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.UploadResponse.#ctor(System.Exception)">
+            <summary>
+            Default constructor. 
+            </summary>
+            <param name="exception">Optional exception specifier.</param>
+        </member>
+        <member name="T:Goedel.Mesh.GetDataRequest">
+             <summary>
+            
+             Request object with specified identifier
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.GetDataRequest.DocumentId">
+             <summary>
+            The document identifier	
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.GetDataRequest._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.GetDataRequest._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.GetDataRequest._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.GetDataRequest._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.GetDataRequest._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.GetDataRequest._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.GetDataRequest._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.GetDataRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.GetDataRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.GetDataRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.GetDataRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.GetDataResponse">
+             <summary>
+            
+             Returns a data object uploaded to the specified account.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.GetDataResponse.Data">
+             <summary>
+            The data retrieved
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.GetDataResponse._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.GetDataResponse._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.GetDataResponse._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.GetDataResponse._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.GetDataResponse._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.GetDataResponse._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.GetDataResponse._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.GetDataResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.GetDataResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.GetDataResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.GetDataResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.GetDataResponse.#ctor(System.Exception)">
             <summary>
             Default constructor. 
             </summary>

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/7/2025 4:33:35 PM
+//  This file was automatically generated at 2/10/2025 6:58:43 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -128,7 +128,13 @@ public abstract partial class MeshmanShellResult : global::Goedel.Protocol.JsonO
 	    {"ResultCallsignList", ResultCallsignList._Factory}
 		};
 
-    [ModuleInitializer]
+    // [ModuleInitializer]
+	
+	public static bool _Initialized => true;
+
+	static MeshmanShellResult() {
+		_Initialize();
+		}
 
     internal static void _Initialize() => AddDictionary(ref _tagDictionary);
 

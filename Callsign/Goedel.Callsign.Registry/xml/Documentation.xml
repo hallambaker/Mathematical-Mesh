@@ -534,6 +534,19 @@
             <param name="key">Key used to disambiguate multiple registries (why would you need that???).</param>
             <returns>The registry context.</returns>
         </member>
+        <member name="T:Goedel.Callsign.Registry.Initialization">
+            <summary>Static class whose only function is to contain the initialization 
+            routine.</summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.Initialization.Initialized">
+            <summary>Initialization witness flag. This may be used to force initialization
+            of the module prior to other modules being initialized.</summary> 
+        </member>
+        <member name="M:Goedel.Callsign.Registry.Initialization.Initialize">
+            <summary>
+            Initialization routine for cryptographic functions on the dotNet Core platform.
+            </summary>
+        </member>
         <member name="T:CallsignRegistry.NamespaceDoc">
             <summary>
             Desctiption of the 

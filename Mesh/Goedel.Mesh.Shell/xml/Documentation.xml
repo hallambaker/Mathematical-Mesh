@@ -234,24 +234,6 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.CallsignRegister(Goedel.Mesh.Shell.CallsignRegister)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.CallsignBind(Goedel.Mesh.Shell.CallsignBind)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.CallsignTransfer(Goedel.Mesh.Shell.CallsignTransfer)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.CallsignStatus(Goedel.Mesh.Shell.CallsignStatus)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.CallsignResolve(Goedel.Mesh.Shell.CallsignResolve)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.CallsignList(Goedel.Mesh.Shell.CallsignList)">
-            <inheritdoc/>
-        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.ContactStatic(Goedel.Mesh.Shell.ContactStatic)">
             <summary>
             Dispatch method
@@ -707,6 +689,13 @@
         <member name="M:Goedel.Mesh.Shell.Shell.PasswordDump(Goedel.Mesh.Shell.PasswordDump)">
             <summary>
             Dispatch method to dump the credential catalog. 
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.SelfPublish(Goedel.Mesh.Shell.SelfPublish)">
+            <summary>
+            Dispatch method
             </summary>
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
@@ -1643,9 +1632,6 @@
         <member name="P:Goedel.Mesh.Shell._AccountHello.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountHello.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._AccountHello.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -1659,7 +1645,7 @@
             <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountCreate.Localname">
-            <summary>Field accessor for option [localname]</summary>
+            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountCreate.DnsHandle">
             <summary>Field accessor for option [handle]</summary>
@@ -1706,9 +1692,6 @@
         <member name="P:Goedel.Mesh.Shell._AccountStatus.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountStatus.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._AccountStatus.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -1727,9 +1710,6 @@
         <member name="P:Goedel.Mesh.Shell._AccountSync.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountSync.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._AccountSync.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -1745,27 +1725,6 @@
         <member name="P:Goedel.Mesh.Shell._AccountSync.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountInfo.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountInfo.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountInfo.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountInfo.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountInfo.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountInfo.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountInfo.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._AccountGetPIN.Length">
             <summary>Field accessor for option [length]</summary>
         </member>
@@ -1777,9 +1736,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountGetPIN.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountGetPIN.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountGetPIN.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -1838,9 +1794,6 @@
         <member name="P:Goedel.Mesh.Shell._AccountConnect.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountConnect.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._AccountConnect.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -1898,9 +1851,6 @@
         <member name="P:Goedel.Mesh.Shell._AccountEscrow.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountEscrow.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._AccountEscrow.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -1925,9 +1875,6 @@
         <member name="P:Goedel.Mesh.Shell._AccountPurge.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountPurge.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._AccountPurge.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -1943,11 +1890,11 @@
         <member name="P:Goedel.Mesh.Shell._AccountPurge.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._AccountRecover.Localname">
+            <summary>Field accessor for option [local]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._AccountRecover.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountRecover.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountRecover.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -2006,9 +1953,6 @@
         <member name="P:Goedel.Mesh.Shell._AccountList.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountList.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._AccountList.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -2017,9 +1961,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountGet.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountGet.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountGet.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -2042,9 +1983,6 @@
         <member name="P:Goedel.Mesh.Shell._AccountExport.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountExport.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._AccountExport.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -2065,9 +2003,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountImport.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountImport.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountImport.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -2150,9 +2085,6 @@
         <member name="P:Goedel.Mesh.Shell._DevicePending.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePending.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._DevicePending.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -2170,9 +2102,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceComplete.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceComplete.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceComplete.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -2234,9 +2163,6 @@
         <member name="P:Goedel.Mesh.Shell._DeviceAccept.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceAccept.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAccept.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -2257,9 +2183,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceReject.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceReject.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceReject.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -2282,9 +2205,6 @@
         <member name="P:Goedel.Mesh.Shell._DeviceDelete.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceDelete.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._DeviceDelete.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -2302,9 +2222,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceList.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceList.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceList.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -2366,9 +2283,6 @@
         <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -2389,9 +2303,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceJoin.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceJoin.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceJoin.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -2414,9 +2325,6 @@
         <member name="P:Goedel.Mesh.Shell._DeviceInstall.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceInstall.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._DeviceInstall.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -2434,9 +2342,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DevicePreconfigure.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreconfigure.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DevicePreconfigure.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -2456,6 +2361,63 @@
         <member name="P:Goedel.Mesh.Shell._DevicePreconfigure.Length">
             <summary>Field accessor for option [length]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceService.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceService.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceService.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceService.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceService.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceService.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceService.Name">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceService.Protocol">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceService.Dns">
+            <summary>Field accessor for option [dns]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceCredential.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceCredential.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceCredential.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceCredential.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceCredential.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceCredential.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceCredential.Protocol">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceCredential.Name">
+            <summary>Field accessor for option [public]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceCredential.Device">
+            <summary>Field accessor for option [private]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceCredential.Dns">
+            <summary>Field accessor for option [dns]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._MessageConfirm.Recipient">
             <summary>Field accessor for parameter []</summary>
         </member>
@@ -2464,9 +2426,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageConfirm.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MessageConfirm.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageConfirm.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -2485,9 +2444,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._MessagePending.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MessagePending.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessagePending.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -2519,9 +2475,6 @@
         <member name="P:Goedel.Mesh.Shell._MessageStatus.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MessageStatus.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._MessageStatus.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -2542,9 +2495,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageAccept.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MessageAccept.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageAccept.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -2567,9 +2517,6 @@
         <member name="P:Goedel.Mesh.Shell._MessageReject.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MessageReject.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._MessageReject.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -2591,9 +2538,6 @@
         <member name="P:Goedel.Mesh.Shell._MessageBlock.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MessageBlock.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._MessageBlock.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -2611,9 +2555,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupCreate.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._GroupCreate.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupCreate.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -2681,9 +2622,6 @@
         <member name="P:Goedel.Mesh.Shell._GroupAdd.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._GroupAdd.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._GroupAdd.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -2707,9 +2645,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupGet.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._GroupGet.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupGet.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -2735,9 +2670,6 @@
         <member name="P:Goedel.Mesh.Shell._GroupDelete.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._GroupDelete.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._GroupDelete.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -2761,9 +2693,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupList.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._GroupList.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupList.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -2795,9 +2724,6 @@
         <member name="P:Goedel.Mesh.Shell._PasswordAdd.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._PasswordAdd.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._PasswordAdd.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -2818,9 +2744,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._PasswordGet.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._PasswordGet.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._PasswordGet.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -2843,9 +2766,6 @@
         <member name="P:Goedel.Mesh.Shell._PasswordDelete.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._PasswordDelete.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._PasswordDelete.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -2867,9 +2787,6 @@
         <member name="P:Goedel.Mesh.Shell._PasswordDump.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._PasswordDump.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._PasswordDump.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -2883,6 +2800,138 @@
             <summary>Field accessor for option [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._PasswordDump.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnywhere.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnywhere.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnywhere.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnywhere.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnywhere.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnywhere.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnywhere.Handle">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnywhere.Service">
+            <summary>Field accessor for option [service]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnywhere.Did">
+            <summary>Field accessor for option [did]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnyone.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnyone.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnyone.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnyone.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnyone.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnyone.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnyone.Handle">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnyone.Service">
+            <summary>Field accessor for option [service]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnything.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnything.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnything.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnything.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnything.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnything.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnything.Handle">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfAnything.Service">
+            <summary>Field accessor for option [service]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfService.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfService.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfService.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfService.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfService.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfService.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfService.Uri">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfService.Protocol">
+            <summary>Field accessor for option [protocol]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfPublish.Name">
+            <summary>Field accessor for option [name]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfPublish.Ssh">
+            <summary>Field accessor for option [ssh]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfPublish.mail">
+            <summary>Field accessor for option [mail]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfPublish.dev">
+            <summary>Field accessor for option [dev]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfPublish.place">
+            <summary>Field accessor for option [place]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfPublish.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfPublish.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfPublish.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfPublish.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfPublish.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SelfPublish.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactAdd.Address">
@@ -2900,11 +2949,44 @@
         <member name="P:Goedel.Mesh.Shell._ContactAdd.Self">
             <summary>Field accessor for option [self]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactStatic.AccountAddress">
+        <member name="P:Goedel.Mesh.Shell._ContactQuery.Address">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactQuery.Name">
+            <summary>Field accessor for option [name]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactQuery.Ssh">
+            <summary>Field accessor for option [ssh]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactQuery.mail">
+            <summary>Field accessor for option [mail]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactQuery.dev">
+            <summary>Field accessor for option [dev]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactQuery.place">
+            <summary>Field accessor for option [place]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactQuery.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactStatic.LocalName">
-            <summary>Field accessor for option [local]</summary>
+        <member name="P:Goedel.Mesh.Shell._ContactQuery.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactQuery.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactQuery.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactQuery.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactQuery.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactStatic.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactStatic.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -2923,9 +3005,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDynamic.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactDynamic.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDynamic.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -2948,9 +3027,6 @@
         <member name="P:Goedel.Mesh.Shell._ContactFetch.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactFetch.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._ContactFetch.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -2972,9 +3048,6 @@
         <member name="P:Goedel.Mesh.Shell._ContactExchange.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactExchange.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._ContactExchange.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -2995,9 +3068,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageContact.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MessageContact.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageContact.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -3023,9 +3093,6 @@
         <member name="P:Goedel.Mesh.Shell._ContactImport.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactImport.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._ContactImport.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -3050,9 +3117,6 @@
         <member name="P:Goedel.Mesh.Shell._ContactExport.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactExport.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._ContactExport.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -3073,9 +3137,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDelete.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactDelete.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDelete.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -3098,9 +3159,6 @@
         <member name="P:Goedel.Mesh.Shell._ContactGet.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactGet.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._ContactGet.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -3121,9 +3179,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDump.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactDump.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDump.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -3151,9 +3206,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkImport.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._BookmarkImport.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkImport.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -3194,9 +3246,6 @@
         <member name="P:Goedel.Mesh.Shell._BookmarkAdd.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._BookmarkAdd.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkAdd.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -3221,9 +3270,6 @@
         <member name="P:Goedel.Mesh.Shell._BookmarkDelete.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._BookmarkDelete.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkDelete.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -3245,9 +3291,6 @@
         <member name="P:Goedel.Mesh.Shell._BookmarkGet.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._BookmarkGet.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkGet.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -3265,9 +3308,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkDump.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._BookmarkDump.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkDump.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -3296,9 +3336,6 @@
         <member name="P:Goedel.Mesh.Shell._CalendarImport.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CalendarImport.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._CalendarImport.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -3323,9 +3360,6 @@
         <member name="P:Goedel.Mesh.Shell._CalendarAdd.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CalendarAdd.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._CalendarAdd.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -3346,9 +3380,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._CalendarGet.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CalendarGet.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._CalendarGet.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -3371,9 +3402,6 @@
         <member name="P:Goedel.Mesh.Shell._CalendarDelete.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CalendarDelete.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._CalendarDelete.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -3391,9 +3419,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._CalendarDump.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CalendarDump.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._CalendarDump.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -3418,9 +3443,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._NetworkImport.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkImport.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._NetworkImport.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -3449,9 +3471,6 @@
         <member name="P:Goedel.Mesh.Shell._NetworkAdd.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkAdd.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._NetworkAdd.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -3472,9 +3491,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._NetworkGet.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkGet.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._NetworkGet.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -3497,9 +3513,6 @@
         <member name="P:Goedel.Mesh.Shell._NetworkDelete.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkDelete.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._NetworkDelete.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -3517,9 +3530,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._NetworkList.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkList.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._NetworkList.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -3728,9 +3738,6 @@
         <member name="P:Goedel.Mesh.Shell._DareEncode.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareEncode.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._DareEncode.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -3754,9 +3761,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DareDecode.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DareDecode.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareDecode.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -3787,9 +3791,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DareVerify.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DareVerify.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareVerify.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -3836,9 +3837,6 @@
         <member name="P:Goedel.Mesh.Shell._DareEARL.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareEARL.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._DareEARL.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -3877,9 +3875,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveCreate.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ArchiveCreate.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveCreate.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -3938,9 +3933,6 @@
         <member name="P:Goedel.Mesh.Shell._ArchiveAppend.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ArchiveAppend.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveAppend.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -3970,9 +3962,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveDelete.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ArchiveDelete.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveDelete.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -4016,9 +4005,6 @@
         <member name="P:Goedel.Mesh.Shell._ArchiveIndex.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ArchiveIndex.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveIndex.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -4049,9 +4035,6 @@
         <member name="P:Goedel.Mesh.Shell._ArchiveDir.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ArchiveDir.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveDir.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -4078,9 +4061,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveExtract.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ArchiveExtract.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveExtract.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -4139,9 +4119,6 @@
         <member name="P:Goedel.Mesh.Shell._ArchiveCopy.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ArchiveCopy.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveCopy.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -4199,9 +4176,6 @@
         <member name="P:Goedel.Mesh.Shell._LogCreate.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._LogCreate.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._LogCreate.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -4244,9 +4218,6 @@
         <member name="P:Goedel.Mesh.Shell._LogAppend.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._LogAppend.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._LogAppend.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -4279,9 +4250,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._LogList.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._LogList.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._LogList.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -4337,9 +4305,6 @@
         <member name="P:Goedel.Mesh.Shell._MailAdd.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MailAdd.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._MailAdd.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -4382,9 +4347,6 @@
         <member name="P:Goedel.Mesh.Shell._MailGet.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MailGet.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._MailGet.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -4402,9 +4364,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._MailList.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MailList.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MailList.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -4430,9 +4389,6 @@
         <member name="P:Goedel.Mesh.Shell._MailImport.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MailImport.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._MailImport.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -4450,9 +4406,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._MailDelete.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MailDelete.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MailDelete.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -4474,9 +4427,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._SmimeSign.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SmimeSign.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SmimeSign.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -4511,9 +4461,6 @@
         <member name="P:Goedel.Mesh.Shell._SmimeEncrypt.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SmimeEncrypt.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._SmimeEncrypt.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -4546,9 +4493,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._OpenpgpSign.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._OpenpgpSign.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._OpenpgpSign.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -4583,9 +4527,6 @@
         <member name="P:Goedel.Mesh.Shell._OpenpgpEncrypt.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._OpenpgpEncrypt.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._OpenpgpEncrypt.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -4618,9 +4559,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHCreate.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHCreate.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHCreate.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -4685,9 +4623,6 @@
         <member name="P:Goedel.Mesh.Shell._SSHGet.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHGet.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._SSHGet.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -4730,9 +4665,6 @@
         <member name="P:Goedel.Mesh.Shell._SSHList.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHList.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._SSHList.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -4759,9 +4691,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHClient.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHClient.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHClient.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -4802,9 +4731,6 @@
         <member name="P:Goedel.Mesh.Shell._SSHHost.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHHost.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._SSHHost.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -4837,9 +4763,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHKnown.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHKnown.LocalName">
-            <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHKnown.AutoSync">
             <summary>Field accessor for option [sync]</summary>
@@ -4874,9 +4797,6 @@
         <member name="P:Goedel.Mesh.Shell._SSHDelete.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHDelete.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._SSHDelete.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
@@ -4892,419 +4812,173 @@
         <member name="P:Goedel.Mesh.Shell._SSHDelete.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignRegister.Identifier">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignRegister.AccountAddress">
+        <member name="P:Goedel.Mesh.Shell._DevCreate.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignRegister.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignRegister.AutoSync">
+        <member name="P:Goedel.Mesh.Shell._DevCreate.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignRegister.AutoApprove">
+        <member name="P:Goedel.Mesh.Shell._DevCreate.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignRegister.Verbose">
+        <member name="P:Goedel.Mesh.Shell._DevCreate.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignRegister.Report">
+        <member name="P:Goedel.Mesh.Shell._DevCreate.Report">
             <summary>Field accessor for option [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignRegister.Json">
+        <member name="P:Goedel.Mesh.Shell._DevCreate.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignBind.Identifier">
+        <member name="P:Goedel.Mesh.Shell._DevCreate.Algorithms">
+            <summary>Field accessor for option [alg]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevCreate.Auth">
+            <summary>Field accessor for option [auth]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevCreate.AuthSuper">
+            <summary>Field accessor for option [root]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevCreate.AuthAdmin">
+            <summary>Field accessor for option [admin]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevCreate.AuthMessage">
+            <summary>Field accessor for option [message]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevCreate.AuthWeb">
+            <summary>Field accessor for option [web]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevCreate.AuthDevice">
+            <summary>Field accessor for option [device]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevCreate.AuthThreshold">
+            <summary>Field accessor for option [threshold]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevCreate.AuthSSH">
+            <summary>Field accessor for option [ssh]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevCreate.AuthEmail">
+            <summary>Field accessor for option [email]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevCreate.AuthGroupMember">
+            <summary>Field accessor for option [member]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevCreate.AuthGroupAdmin">
+            <summary>Field accessor for option [group]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevCreate.AuthNone">
+            <summary>Field accessor for option [null]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevCreate.ID">
+            <summary>Field accessor for option [id]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevGet.Identifier">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignBind.AccountAddress">
+        <member name="P:Goedel.Mesh.Shell._DevGet.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignBind.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignBind.AutoSync">
+        <member name="P:Goedel.Mesh.Shell._DevGet.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignBind.AutoApprove">
+        <member name="P:Goedel.Mesh.Shell._DevGet.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignBind.Verbose">
+        <member name="P:Goedel.Mesh.Shell._DevGet.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignBind.Report">
+        <member name="P:Goedel.Mesh.Shell._DevGet.Report">
             <summary>Field accessor for option [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignBind.Json">
+        <member name="P:Goedel.Mesh.Shell._DevGet.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignResolve.Identifier">
-            <summary>Field accessor for parameter []</summary>
+        <member name="P:Goedel.Mesh.Shell._DevGet.Format">
+            <summary>Field accessor for option [format]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignResolve.AccountAddress">
+        <member name="P:Goedel.Mesh.Shell._DevGet.File">
+            <summary>Field accessor for option [file]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevGet.Password">
+            <summary>Field accessor for option [password]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevGet.Private">
+            <summary>Field accessor for option [private]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevList.Format">
+            <summary>Field accessor for option [format]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevList.File">
+            <summary>Field accessor for option [file]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevList.Password">
+            <summary>Field accessor for option [password]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevList.Private">
+            <summary>Field accessor for option [private]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevList.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignResolve.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignResolve.AutoSync">
+        <member name="P:Goedel.Mesh.Shell._DevList.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignResolve.AutoApprove">
+        <member name="P:Goedel.Mesh.Shell._DevList.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignResolve.Verbose">
+        <member name="P:Goedel.Mesh.Shell._DevList.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignResolve.Report">
+        <member name="P:Goedel.Mesh.Shell._DevList.Report">
             <summary>Field accessor for option [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignResolve.Json">
+        <member name="P:Goedel.Mesh.Shell._DevList.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignTransfer.Identifier">
+        <member name="P:Goedel.Mesh.Shell._DnsZone.Name">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignTransfer.Recipient">
-            <summary>Field accessor for parameter []</summary>
+        <member name="P:Goedel.Mesh.Shell._DnsZone.Group">
+            <summary>Field accessor for option [group]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignTransfer.AccountAddress">
+        <member name="P:Goedel.Mesh.Shell._DnsZone.Localname">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DnsZone.Service">
+            <summary>Field accessor for option [service]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DnsZone.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignTransfer.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignTransfer.AutoSync">
+        <member name="P:Goedel.Mesh.Shell._DnsZone.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignTransfer.AutoApprove">
+        <member name="P:Goedel.Mesh.Shell._DnsZone.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignTransfer.Verbose">
+        <member name="P:Goedel.Mesh.Shell._DnsZone.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignTransfer.Report">
+        <member name="P:Goedel.Mesh.Shell._DnsZone.Report">
             <summary>Field accessor for option [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignTransfer.Json">
+        <member name="P:Goedel.Mesh.Shell._DnsZone.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignStatus.Identifier">
+        <member name="P:Goedel.Mesh.Shell._DnsHandle.Dns">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignStatus.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
+        <member name="P:Goedel.Mesh.Shell._DnsHandle.Name">
+            <summary>Field accessor for option [name]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignStatus.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignStatus.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignStatus.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignStatus.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignStatus.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignStatus.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignList.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignList.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignList.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignList.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignList.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignList.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CallsignList.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletInvoice.Recipient">
+        <member name="P:Goedel.Mesh.Shell._DnsWildcard.Dns">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._WalletInvoice.Invoice">
+        <member name="P:Goedel.Mesh.Shell._DnsWildcard.Device">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._WalletInvoice.Currency">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletInvoice.Amount">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletInvoice.Reason">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletInvoice.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletInvoice.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletInvoice.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletInvoice.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletInvoice.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletInvoice.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletInvoice.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletTransfer.Recipient">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletTransfer.Currency">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletTransfer.Amount">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletTransfer.Reason">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletTransfer.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletTransfer.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletTransfer.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletTransfer.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletTransfer.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletTransfer.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletTransfer.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletAccept.MessageId">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletAccept.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletAccept.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletAccept.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletAccept.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletAccept.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletAccept.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletAccept.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletReject.MessageId">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletReject.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletReject.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletReject.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletReject.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletReject.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletReject.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletReject.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletRedeem.MessageId">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletRedeem.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletRedeem.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletRedeem.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletRedeem.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletRedeem.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletRedeem.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletRedeem.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletList.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletList.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletList.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletList.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletList.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletList.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletList.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletDelete.Identifier">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletDelete.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletDelete.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletDelete.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletDelete.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletDelete.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletDelete.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletDelete.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletkGet.Identifier">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletkGet.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletkGet.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletkGet.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletkGet.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletkGet.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletkGet.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._WalletkGet.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CarnetMint.Amount">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CarnetMint.Recipient">
-            <summary>Field accessor for option [to]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CarnetMint.Currency">
-            <summary>Field accessor for option [currency]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CarnetMint.Tickets">
-            <summary>Field accessor for option [tickets]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CarnetMint.Quantum">
-            <summary>Field accessor for option [quantum]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CarnetMint.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CarnetMint.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CarnetMint.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CarnetMint.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CarnetMint.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CarnetMint.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CarnetMint.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CarnetStatus.Identifier">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CarnetStatus.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CarnetStatus.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CarnetStatus.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CarnetStatus.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CarnetStatus.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CarnetStatus.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CarnetStatus.Json">
-            <summary>Field accessor for option [json]</summary>
+        <member name="P:Goedel.Mesh.Shell._DnsWildcard.Name">
+            <summary>Field accessor for option [name]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ChatListen.Quantum">
             <summary>Field accessor for option [quantum]</summary>

@@ -5,6 +5,13 @@
 /// </summary>
 public class CallsignRegistryConfiguration : IConfigurationEntry {
 
+    public CallsignRegistryConfiguration () {
+        Initialization.Initialized.AssertTrue(NYI.Throw);
+        }
+
+
+
+
     ///<summary>The configuration entry.</summary> 
     public static readonly ConfigurationEntry ConfigurationEntry =
         new("CallsignRegistry", typeof(CallsignRegistryConfiguration),

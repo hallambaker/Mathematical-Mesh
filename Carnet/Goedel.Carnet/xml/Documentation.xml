@@ -542,6 +542,19 @@
             <param name="amount">The number of tokens to spend.</param>
             <returns>The number of tokens spent??</returns>
         </member>
+        <member name="T:Goedel.Carnet.Initialization">
+            <summary>Static class whose only function is to contain the initialization 
+            routine.</summary>
+        </member>
+        <member name="P:Goedel.Carnet.Initialization.Initialized">
+            <summary>Initialization witness flag. This may be used to force initialization
+            of the module prior to other modules being initialized.</summary> 
+        </member>
+        <member name="M:Goedel.Carnet.Initialization.Initialize">
+            <summary>
+            Initialization routine for cryptographic functions on the dotNet Core platform.
+            </summary>
+        </member>
         <member name="T:Goedel.Carnet.NamespaceDoc">
             <summary>
             Desctiption of the 

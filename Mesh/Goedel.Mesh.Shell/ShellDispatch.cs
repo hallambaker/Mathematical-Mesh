@@ -248,9 +248,9 @@ public partial class Shell : _Shell {
 
         //throw new NYI();
         var accountAddress = options.AccountAddress.Value;
-        var local = options.LocalName.Value;
 
-        var result = MeshHost.GetContextMesh(accountAddress ?? local) as ContextUser;
+
+        var result = MeshHost.GetContextMesh(accountAddress ) as ContextUser;
 
 
         return result;
@@ -266,7 +266,7 @@ public partial class Shell : _Shell {
         var result = TryGetContextUser(options);
 
         if (result == null) {
-            var address = options.AccountAddress.Value ?? options.LocalName.Value;
+            var address = options.AccountAddress.Value;
             address.AssertNull(AccountNotFound.Throw, address);
             MeshHost.DefaultPending.AssertNull(ConnectionStillPending.Throw);
             throw (new NoAccountBound());

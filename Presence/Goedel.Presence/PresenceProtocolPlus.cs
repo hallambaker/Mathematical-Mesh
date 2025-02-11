@@ -27,9 +27,7 @@ namespace Goedel.Presence;
 
 public abstract partial class PresenceProtocol {
 
-    static PresenceProtocol() {
-        _Initialize();
-        }
+
 
 
     }

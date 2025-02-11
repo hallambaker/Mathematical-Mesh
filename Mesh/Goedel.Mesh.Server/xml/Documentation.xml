@@ -1187,6 +1187,19 @@
             <param name="authorized">Authorized</param>
             <param name="_exception">Exception (if thrown)</param>
         </member>
+        <member name="T:Goedel.Mesh.Server.Initialization">
+            <summary>Static class whose only function is to contain the initialization 
+            routine.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.Initialization.Initialized">
+            <summary>Initialization witness flag. This may be used to force initialization
+            of the module prior to other modules being initialized.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Server.Initialization.Initialize">
+            <summary>
+            Initialization routine for cryptographic functions on the dotNet Core platform.
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.Server.DeviceState">
             <summary>
             Tracks the state of a device connection.
@@ -1453,6 +1466,22 @@
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Transact(Goedel.Mesh.TransactRequest,Goedel.Protocol.IJpcSession)">
             <summary>
             Server method implementing the transaction  Upload.
+            </summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="jpcSession">The connection authentication context.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.Upload(Goedel.Mesh.UploadRequest,Goedel.Protocol.IJpcSession)">
+            <summary>
+            Server method implementing the transaction  Post.
+            </summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="jpcSession">The connection authentication context.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.GetData(Goedel.Mesh.GetDataRequest,Goedel.Protocol.IJpcSession)">
+            <summary>
+            Server method implementing the transaction  Post.
             </summary>
             <param name="request">The request object to send to the host.</param>
             <param name="jpcSession">The connection authentication context.</param>

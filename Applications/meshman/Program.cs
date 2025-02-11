@@ -38,15 +38,19 @@ namespace meshman;
 
 ///<summary>Main calling program.</summary> 
 public class Program {
-
+    static Program() {
+        Goedel.Mesh.Client.Initialization.Initialized.AssertTrue(Goedel.Mesh.Internal.Throw);
 
 #if USE_PLATFORM_WINDOWS
-    static Program() => Goedel.Cryptography.Windows.Initialization.Initialized.AssertTrue(
-        Goedel.Mesh.Internal.Throw);
+        Goedel.Cryptography.Windows.Initialization.Initialized.AssertTrue(
+                Goedel.Mesh.Internal.Throw);
 #elif USE_PLATFORM_LINUX
 #endif
 
+        }
+
     static void Main(string[] args) {
+
 
         var components = new List<IComponent> {
 #if USE_PLATFORM_WINDOWS

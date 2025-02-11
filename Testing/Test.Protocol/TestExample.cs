@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/7/2025 4:33:36 PM
+//  This file was automatically generated at 2/10/2025 6:34:22 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -79,7 +79,13 @@ public abstract partial class TestSchema : global::Goedel.Protocol.JsonObject {
 	    {"MultiStruct", MultiStruct._Factory}
 		};
 
-    [ModuleInitializer]
+    // [ModuleInitializer]
+	
+	public static bool _Initialized => true;
+
+	static TestSchema() {
+		_Initialize();
+		}
 
     internal static void _Initialize() => AddDictionary(ref _tagDictionary);
 

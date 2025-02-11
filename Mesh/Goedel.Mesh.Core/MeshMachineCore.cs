@@ -62,6 +62,15 @@ public class MeshMachineCoreServer : Disposable, IMeshMachine {
 
     #endregion
 
+
+    static MeshMachineCoreServer() {
+
+        Initialization.Initialized.AssertTrue(NYI.Throw);
+        }
+
+
+
+
     /// <summary>
     /// Default constructor
     /// </summary>

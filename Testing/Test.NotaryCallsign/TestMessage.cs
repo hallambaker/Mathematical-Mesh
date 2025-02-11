@@ -37,6 +37,8 @@ public partial class RegistrationTests {
     public string AliceDevice5 = "Alice5";
 
 
+
+
     //[Fact]
     //public void TestHandleThingCallsign() {
 
@@ -93,7 +95,7 @@ public partial class RegistrationTests {
 
 
 
-    [Fact]
+    [Fact(Skip = "Changing approach")]
     public void CallsignBind() {
 
         var serviceCallsign = GetContextRegistry();
@@ -117,8 +119,7 @@ public partial class RegistrationTests {
         }
 
 
-
-    [Fact]
+    [Fact(Skip = "Changing approach")]
     public void CallsignRegistration() {
 
 

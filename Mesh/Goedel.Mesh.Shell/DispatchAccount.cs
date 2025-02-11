@@ -276,7 +276,7 @@ public partial class Shell {
     /// <returns>Mesh result instance</returns>
     public override ShellResult AccountRecover(AccountRecover options) {
         var accountAddress = options.AccountAddress.Value;
-        var localName = options.LocalName.Value;
+        var localName = options.Localname.Value;
         // ToDo: this is going to need refactoring so that the localname and account tabs are filled.
         accountAddress.AssertNotNull(AccountNotSpecified.Throw);
 

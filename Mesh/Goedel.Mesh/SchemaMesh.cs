@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/7/2025 4:33:32 PM
+//  This file was automatically generated at 2/10/2025 6:59:03 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -191,7 +191,13 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"ProcessResultNotFound", ProcessResultNotFound._Factory}
 		};
 
-    [ModuleInitializer]
+    // [ModuleInitializer]
+	
+	public static bool _Initialized => true;
+
+	static MeshItem() {
+		_Initialize();
+		}
 
     internal static void _Initialize() => AddDictionary(ref _tagDictionary);
 

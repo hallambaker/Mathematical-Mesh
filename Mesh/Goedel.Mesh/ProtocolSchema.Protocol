@@ -228,6 +228,7 @@
 				|If the request specifies a callsign binding, returns a proposed binding for
 				|the requested callsign.
 
+
 	//Create account
 	Transaction Admin BindAccount BindRequest BindResponse
 		Description
@@ -425,6 +426,48 @@
 			Description
 				|The catalog device entry. This is only returned if the 
 
+	Transaction User Upload UploadRequest UploadResponse
+		Description
+			|ploads a data object to be retrievable from the specified account
+
+	Message UploadRequest
+		Inherits MeshRequestUser
+		Description
+			|Uploads a data object to be retrievable from the specified account
+		String DocumentId
+			Description
+				|The document identifier	
+		Binary Data
+			Description
+				|The data to be uploaded
+
+	Message UploadResponse
+		Inherits MeshResponse
+		Description
+			|Reports success or failure of an upload request
+
+
+	Transaction Public GetData GetDataRequest GetDataResponse
+		Description
+			|Request object with specified identifier
+
+	Message GetDataRequest
+		Inherits MeshRequest
+		Description
+			|Request object with specified identifier
+		String DocumentId
+			Description
+				|The document identifier	
+
+
+	Message GetDataResponse
+		Inherits MeshResponse
+		Description
+			|Returns a data object uploaded to the specified account.
+		Binary Data
+			Description
+				|The data retrieved
+
 
 	Transaction User Transact TransactRequest TransactResponse
 		Description
@@ -500,6 +543,7 @@
 				|If the entry was redacted, specifies constraints 
 				|that apply to the redacted entries as a group. Thus the total payloads
 				|of all the messages must not exceed the specified value.	
+
 
 
 	// Public requests

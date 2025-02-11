@@ -760,6 +760,11 @@ public partial class JsonReader : Reader {
 
         var Token = ReadToken();
 
+
+        if (!TagDictionary.TryGetValue(Token, out var _)) {
+            }
+        //var x = new ApplicationEntryRegistry();
+
         Assert.AssertTrue(TagDictionary.TryGetValue(Token, out var Delegate), UnknownTag.Throw);
         Out = Delegate();
         Out.Deserialize(this);

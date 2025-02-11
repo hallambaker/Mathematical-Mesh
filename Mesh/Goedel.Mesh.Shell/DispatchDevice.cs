@@ -24,7 +24,13 @@
 namespace Goedel.Mesh.Shell;
 
 public partial class Shell {
+    public override ShellResult DeviceCredential(DeviceCredential Options) {
+        return base.DeviceCredential(Options);
+        }
 
+    public override ShellResult DeviceService(DeviceService Options) {
+        return base.DeviceService(Options);
+        }
 
     /// <summary>
     /// Dispatch method

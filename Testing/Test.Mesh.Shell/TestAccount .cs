@@ -37,10 +37,10 @@ public partial class ShellTests {
 
 
         var c1 = admin.Example($"account create {AliceAccount} /local=alice /handle=@alice.example.net");
-        Dispatch($"contact self anywhere");
-        Dispatch($"contact self anyone");
-        Dispatch($"contact self anything");
-        Dispatch($"contact self publish");
+        Dispatch($"self anywhere");
+        Dispatch($"self anyone");
+        Dispatch($"self anything");
+        Dispatch($"self publish");
 
         // Create a new public DNS zone for domain.example
         Dispatch($"dns zone domain.example /group=iot");
@@ -74,10 +74,10 @@ public partial class ShellTests {
         var nas = GetTestCLI(AliceDevice2);
 
         var c1 = admin.Example($"account create {AliceAccount} /local=alice /handle=@alice.example.net") ;
-        Dispatch($"contact self anywhere");
-        Dispatch($"contact self anyone");
-        Dispatch($"contact self anything");
-        Dispatch($"contact self publish");
+        Dispatch($"self anywhere");
+        Dispatch($"self anyone");
+        Dispatch($"self anything");
+        Dispatch($"self publish");
 
         // Create a new DNS zone for domain.example
         Dispatch($"dns zone domain.example /group=iot");
@@ -154,25 +154,23 @@ public partial class ShellTests {
         var i1 = Dispatch($"contact query alice@example.com") as ResultInfo;
         // will fail because there is no public contact record published
 
-        var i2 = Dispatch($"contact publish") as ResultInfo;
+        var i2 = Dispatch($"self publish") as ResultInfo;
 
-        var i2 = Dispatch($"contact query alice@example.com") as ResultInfo;
-        var i3 = Dispatch($"contact query @alice.example.net") as ResultInfo;
+        var i3 = Dispatch($"contact query alice@example.com") as ResultInfo;
+        var i4 = Dispatch($"contact query @alice.example.net") as ResultInfo;
         // check the i1.Contact matches c1
 
 
-
-
         var ssh1 = Dispatch($"ssh create developer");
-        var i3 = Dispatch($"account query @alice.example.net") as ResultInfo;
-        var i4 = Dispatch($"account query @alice.example.net /ssh") as ResultInfo;
+        var i5 = Dispatch($"account query @alice.example.net") as ResultInfo;
+        var i6 = Dispatch($"account query @alice.example.net /ssh") as ResultInfo;
 
         var m1 = Dispatch($"mail add alice@example.com");
-        var i5 = Dispatch($"account query @alice.example.net") as ResultInfo;
+        var i7 = Dispatch($"account query @alice.example.net") as ResultInfo;
 
-        var d1 = Dispatch($"dev add");
-        var i6 = Dispatch($"account info @alice.example.net") as ResultInfo;
-        var i7 = Dispatch($"account query @alice.example.net /dev");
+        var d1 = Dispatch($"dev create");
+        var i8 = Dispatch($"account info @alice.example.net") as ResultInfo;
+        var i9 = Dispatch($"account query @alice.example.net /dev");
 
         }
 

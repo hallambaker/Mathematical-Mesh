@@ -29,6 +29,10 @@ namespace Goedel.XUnit;
 public partial class RegistrationTests : Disposable {
 
     static RegistrationTests() {
+        Goedel.Mesh.Client.Initialization.Initialized.AssertTrue(NYI.Throw);
+        Goedel.Mesh.Server.Initialization.Initialized.AssertTrue(NYI.Throw);
+        Goedel.Callsign.Initialization.Initialized.AssertTrue(NYI.Throw);
+        Goedel.Callsign.Registry.Initialization.Initialized.AssertTrue(NYI.Throw);
         }
 
     public static RegistrationTests Test() => new();

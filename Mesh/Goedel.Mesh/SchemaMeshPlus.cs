@@ -25,6 +25,25 @@ using Goedel.Cryptography.Jose;
 
 namespace Goedel.Mesh;
 
+
+//public partial class MeshItem {
+
+
+//    public bool Initialized => true;
+
+//    static MeshItem() {
+//        _Initialize();
+//        }
+
+
+//    }
+
+
+
+
+
+
+
 public partial class AccountHostAssignment {
     ///<summary>Typed enveloped data</summary> 
     public Enveloped<AccountHostAssignment> GetEnvelopedAccountHostAssignment() => new(DareEnvelope);
