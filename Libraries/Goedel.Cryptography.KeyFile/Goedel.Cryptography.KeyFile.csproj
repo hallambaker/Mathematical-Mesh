@@ -1,52 +1,54 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
-  <PropertyGroup>
-    <Product>Goedel.Cryptography.KeyFile</Product>
-    <Description>Cryptographic key management.</Description>
-    <Copyright>© 2020</Copyright>
-    <Title>Goedel.Cryptography.KeyFile</Title>
-  </PropertyGroup>
+	<PropertyGroup>
+		<Product>Goedel.Cryptography.KeyFile</Product>
+		<Description>Cryptographic key management.</Description>
+		<Title>Goedel.Cryptography.KeyFile</Title>
+		<Copyright>© 2020-2025 Threshold Secrets LLC</Copyright>
+		<OutputType>Library</OutputType>
+		<BuildPlatform>All</BuildPlatform>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Goedel.Cryptography.Identifiers\Goedel.Cryptography.Identifiers.csproj" />
-    <ProjectReference Include="..\Goedel.FSR\Goedel.FSR.csproj" />
-    <ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
-    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
-  </ItemGroup>
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+	<ItemGroup>
+		<ProjectReference Include="..\Goedel.Cryptography.Identifiers\Goedel.Cryptography.Identifiers.csproj" />
+		<ProjectReference Include="..\Goedel.FSR\Goedel.FSR.csproj" />
+		<ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
+		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Exceptions.cs">
-      <DependentUpon>Exceptions.Exceptional</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="HostsReader.cs">
-      <DependentUpon>HostsReader.fsm</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="KeyReader.cs">
-      <DependentUpon>KeyReader.fsm</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Exceptions.cs">
+			<DependentUpon>Exceptions.Exceptional</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="HostsReader.cs">
+			<DependentUpon>HostsReader.fsm</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="KeyReader.cs">
+			<DependentUpon>KeyReader.fsm</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="Exceptions.Exceptional">
-      <LastGenOutput>Exceptions.cs</LastGenOutput>
-      <Generator>Exceptional</Generator>
-    </None>
-    <None Update="HostsReader.fsm">
-      <LastGenOutput>HostsReader.cs</LastGenOutput>
-      <Generator>fsrcs</Generator>
-    </None>
-    <None Update="KeyReader.fsm">
-      <LastGenOutput>KeyReader.cs</LastGenOutput>
-      <Generator>fsrcs</Generator>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="Exceptions.Exceptional">
+			<LastGenOutput>Exceptions.cs</LastGenOutput>
+			<Generator>Exceptional</Generator>
+		</None>
+		<None Update="HostsReader.fsm">
+			<LastGenOutput>HostsReader.cs</LastGenOutput>
+			<Generator>fsrcs</Generator>
+		</None>
+		<None Update="KeyReader.fsm">
+			<LastGenOutput>KeyReader.cs</LastGenOutput>
+			<Generator>fsrcs</Generator>
+		</None>
+	</ItemGroup>
 
 
 </Project>

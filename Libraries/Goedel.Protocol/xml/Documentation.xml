@@ -625,6 +625,12 @@
             </summary>
             <returns>the URI prefix for the endpoint.</returns>
         </member>
+        <member name="M:Goedel.Protocol.HttpEndpoint.GetWellknown">
+            <summary>
+            Return the provider map entry for the endpoint.
+            </summary>
+            <returns>The provider map entry minus the scheme section.</returns>
+        </member>
         <member name="M:Goedel.Protocol.HttpEndpoint.GetServiceUri">
             <summary>
             Return the service URI for the endpoint.

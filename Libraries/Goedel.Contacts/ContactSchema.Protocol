@@ -1,0 +1,368 @@
+﻿Protocol Goedel.Contacts  Contacts Contacts
+
+
+	//  Uses some funky formatting, need to extend the serializer
+	// Where Multiple is marked // Funky
+	//  "member1", "member2"] is encoded as
+	// { "member1" : true, "member2" : true }
+
+
+
+
+	Structure ContactCard
+		Description
+			|Metadata, see section 2.1
+
+
+		String					Type
+			Tag "@type"
+			Required
+			Description
+				| If specified, value MUST be 'card'
+		String					Version
+			Required
+			Description
+				| If specified, value MUST be '1.0'
+		String					Uid // Required
+			Required
+
+		String					Created
+		String					Kind
+			Description
+				| individual: a single person
+				| group: a group of people or entities
+				| org: an organization
+				| location: a named location
+				| device: a device such as an appliance, a computer, or a network element
+				| application: a software application
+		String					Language
+		String					Members
+			Multiple
+			// Funky Tag
+			Description
+				|Uses some funky formatting, see 2.1.6. members
+				|[ "member1", "member2"] is encoded as
+				|{ "member1" : true, "member2" : true }
+		String					ProdId
+		Struct TaggedBoolean					RelatedTo
+			Multiple 
+			// Funky Tag
+			Description
+				| acquaintance agent child co-resident co-worker colleague 
+				| contact crush date emergency friend kin me met muse
+				| neighbor parent sibling spouse sweetheart
+
+		String					Updated
+
+		// The property sets
+		Struct Name				Name
+		Struct NickName			NickNames
+			Multiple
+			// Funky Tag
+		Struct Organization		Organizations
+			Multiple
+			// Funky Tag
+
+		// 2.2.4.  speakToAs
+		Struct SpeakToAs		SpeakToAs
+
+
+		// 2.2.5.  titles
+		Struct Title			Titles
+			Multiple
+			// Funky Tag
+
+		// 2.3.  Contact Properties
+		// 2.3.1.  emails
+		Struct EmailAddress		Emails
+			Multiple
+			// Funky Tag
+
+		// 2.3.2.  onlineServices
+		Struct OnlineService	OnlineServices
+			Multiple
+			// Funky Tag
+
+		// 2.3.3.  phones
+		Struct Phone			Phones
+			Multiple
+			// Funky Tag
+
+		// 2.3.4.  preferredLanguages
+		Struct LanguagePref		PreferredLanguages
+			Multiple
+			// Funky Tag
+
+		// 2.4.  Calendaring and Scheduling Properties
+		// 2.4.1.  calendars
+		Struct Calendar			Calendars
+			Multiple
+			// Funky Tag
+
+		// 2.4.2.  schedulingAddresses
+		Struct SchedulingAddress	SchedulingAddresses
+			Multiple
+			// Funky Tag
+
+		// 2.5.  Address and Location Properties
+		// 2.5.1.  addresses
+		Struct Address			Addresses
+			Multiple
+			// Funky Tag
+
+		// 2.6.  Resource Properties
+		// 2.6.1.  cryptoKeys
+		Struct CryptoKey		CryptoKeys
+			Multiple
+			// Funky Tag
+
+		// 2.6.2.  directories
+		Struct Directory		Directories
+			Multiple
+			// Funky Tag
+
+		// 2.6.3.  links
+		Struct Link				Links
+			Multiple
+			// Funky Tag
+
+		// 2.6.4.  media
+		Struct Media			Media
+			Multiple
+			// Funky Tag
+
+		// 2.7.  Multilingual Properties
+		// 2.7.1.  localizations
+		Struct ContactCard		Localizations
+			Multiple
+			// Funky Tag
+
+		// 2.8.  Additional Properties
+		// 2.8.1.  anniversaries
+		Struct Anniversary		 Anniversaries
+			Multiple
+			// Funky Tag
+
+		// 2.8.2.  keywords
+		Struct TaggedBoolean	Keywords
+			Multiple
+			// Funky Tag
+
+		// 2.8.3.  notes
+		Struct Note				Notes
+			Multiple
+			// Funky Tag
+
+		// 2.8.4.  personalInfo
+		Struct PersonalInfo		PersonalInfo
+			Multiple
+			// Funky Tag
+
+	Structure Resource
+		String					Type
+			Tag "@type" //  MUST NOT be "Resource" if set
+		String					Kind
+		String					Uri
+			Required
+		Struct TaggedBoolean	Contexts
+			Multiple 
+		Integer					Pref
+		String					Label
+
+
+	Structure TaggedBoolean
+		String					Tag
+		Boolean					Value // is always true
+
+
+	Structure Name
+		Struct NameComponent	Components 
+			Multiple
+		Boolean					IsOrdered
+		String					DefaultSeparator
+		String					Full
+		String					SortAs
+		String					PhoneticScript
+		String					PhoneticSystem
+
+
+	Structure NameComponent
+		Description
+			|As specified in 2.2.1.2. NameComponent
+		String					Type
+			Tag "@type" //  MUST be "NameComponent" if set
+		String					Value
+			Required
+		String					Kind
+			Required
+			Description
+				| title: an honorific title or prefix, e.g., "Mr.", "Ms.", or "Dr.".
+				| given: a given name, also known as "first name" or "personal name".
+				| given2: a name that appears between the given and surname such as a middle name or patronymic name.
+				| surname: a surname, also known as "last name" or "family name".
+				| surname2: a secondary surname (used in some cultures), also known as "maternal surname".
+				| credential: a credential, also known as "accreditation qualifier" or "honorific suffix", e.g., "B.A.", "Esq.".
+				| generation: a generation marker or qualifier, e.g., "Jr." or "III".
+				| separator: a formatting separator between two ordered name non-separator components. 
+		String Phonetic
+
+	Structure NickName
+		String					Type
+			Tag "@type" //  MUST be "Nickname" if set
+		String					Name
+		Struct TaggedBoolean	Contexts
+			Multiple
+		Integer					Pref
+
+
+	Structure Organization
+		String					Type
+			Tag "@type" //  MUST be "Organization" if set
+		String					Name
+		Struct OrgUnit			Units
+			Multiple
+		String					SortAs
+		Struct TaggedBoolean	Contexts
+			Multiple 
+
+	Structure OrgUnit
+		String					Name
+		String					SortAs
+
+	// 2.2.4.  speakToAs
+	Structure SpeakToAs
+		String					Type
+			Tag "@type" //  MUST be "SpeakToAs" if set
+
+	// 2.2.5.  titles
+	Structure Title
+		String					Type
+			Tag "@type" //  MUST be "Title" if set
+		String					grammaticalGender
+		Struct Pronouns			Pronouns
+			Multiple 
+
+
+	Structure Pronouns
+		String					Type
+			Tag "@type" //  MUST be "Pronouns" if set
+		String					Pronouns
+		Struct TaggedBoolean	Contexts
+			Multiple 
+		Integer					Pref
+
+
+
+	// 2.3.  Contact Properties
+	// 2.3.1.  emails
+	Structure EmailAddress
+		String					Type
+			Tag "@type" //  MUST be "EmailAddress" if set
+		String					Address
+		Struct TaggedBoolean	Contexts
+			Multiple 
+		Integer					Pref
+		String					Label
+
+	// 2.3.2.  onlineServices
+	Structure OnlineService
+		String					Type
+			Tag "@type" //  MUST be "OnlineService" if set
+		String					Service
+		String					Uri
+		String					User
+		Struct TaggedBoolean	Contexts
+			Multiple 
+		Integer					Pref
+		String					Label
+
+
+	// 2.3.3.  phones
+	Structure Phone
+		String					Type
+			Tag "@type" //  MUST be "Phone" if set
+		String					Number
+		Struct TaggedBoolean	Features
+			Multiple 
+		Struct TaggedBoolean	Contexts
+			Multiple 
+		Integer					Pref
+		String					Label
+
+
+	// 2.3.4.  preferredLanguages
+	Structure LanguagePref
+		String					Type
+			Tag "@type" //  MUST be "LanguagePref" if set
+		String					Language
+		Struct TaggedBoolean	Contexts
+			Multiple
+		Integer					Pref
+
+	// 2.4.  Calendaring and Scheduling Properties
+		// 2.4.1.  calendars
+	Structure Calendar
+		Inherits				Resource
+
+
+	// 2.4.2.  schedulingAddresses
+	Structure SchedulingAddress
+		String					Type
+			Tag "@type" //  MUST be "SchedulingAddress" if set
+		String					Uri
+			Required
+		Struct TaggedBoolean	Contexts
+			Multiple 
+		Integer					Pref
+		String					Label
+
+
+	// 2.5.  Address and Location Properties
+	// 2.5.1.  addresses
+	Structure Address
+		String					Type
+			Tag "@type" //  MUST be "Address" if set
+
+	Structure AddressComponent 
+		String					Type
+			Tag "@type" //  MUST be "AddressComponent" if set
+
+	// 2.6.  Resource Properties
+	// 2.6.1.  cryptoKeys
+	Structure CryptoKey
+		Inherits				Resource
+
+	// 2.6.2.  directories
+	Structure Directory
+		Inherits				Resource
+
+	// 2.6.3.  links
+	Structure Link
+		Inherits				Resource
+
+	// 2.6.4.  media
+	Structure Media
+		Inherits				Resource
+
+	// 2.7.  Multilingual Properties
+	// 2.7.1.  localizations
+	Structure PatchObject
+		String					Type
+			Tag "@type" //  MUST be "PatchObject" if set
+
+	// 2.8.  Additional Properties
+	// 2.8.1.  anniversaries
+	Structure Anniversary
+		String					Type
+			Tag "@type" //  MUST be "Anniversary" if set
+
+
+	// 2.8.3.  notes
+	Structure Note
+		String					Type
+			Tag "@type" //  MUST be "Note" if set
+
+	// 2.8.4.  personalInfo
+	Structure PersonalInfo
+		String					Type
+			Tag "@type" //  MUST be "PersonalInfo" if set

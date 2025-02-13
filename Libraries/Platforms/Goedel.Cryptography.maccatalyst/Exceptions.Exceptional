@@ -1,6 +1,6 @@
 ﻿
 
-Namespace Goedel.Cryptography.Windows
+Namespace Goedel.Cryptography.Macos
     
 	Exception DecryptionFailed
         Console "Could not decrypt user data"

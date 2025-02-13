@@ -1,12 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
 	<PropertyGroup>
 		<Product>Goedel.Cryptography.Nist</Product>
 		<Description>Cryptographic support libraries.</Description>
-		<Copyright>© 2024</Copyright>
 		<Title>Goedel.Cryptography.Nist</Title>
+		<Copyright>© 2020-2025 Threshold Secrets LLC</Copyright>
+		<OutputType>Library</OutputType>
+		<BuildPlatform>All</BuildPlatform>
 	</PropertyGroup>
 
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 	<ItemGroup>
 		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
 		<ProjectReference Include="..\Goedel.Cryptography.Identifiers\Goedel.Cryptography.Identifiers.csproj" />

@@ -1,42 +1,44 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
-  <PropertyGroup>
-    <Product>Goedel.Protocol</Product>
-    <Description>Support library for serializers/deserializers built using PROTOGEN.</Description>
-    <Copyright>© 2020</Copyright>
-    <Title>Goedel.Protocol</Title>
-  </PropertyGroup>
+	<PropertyGroup>
+		<Product>Goedel.Protocol</Product>
+		<Description>Support library for serializers/deserializers built using PROTOGEN.</Description>
+		<Title>Goedel.Protocol</Title>
+		<Copyright>© 2020-2025 Threshold Secrets LLC</Copyright>
+		<OutputType>Library</OutputType>
+		<BuildPlatform>All</BuildPlatform>
+	</PropertyGroup>
 
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 
-  <ItemGroup>
-    <ProjectReference Include="..\Goedel.Discovery\Goedel.Discovery.csproj" />
-    <ProjectReference Include="..\Goedel.FSR\Goedel.FSR.csproj" />
-    <ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
-    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Goedel.Discovery\Goedel.Discovery.csproj" />
+		<ProjectReference Include="..\Goedel.FSR\Goedel.FSR.csproj" />
+		<ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
+		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Exceptions.cs">
-      <DependentUpon>Exceptions.exceptional</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="MessageBase.cs">
-      <DependentUpon>MessageBase.protocol</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>  
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Exceptions.cs">
+			<DependentUpon>Exceptions.exceptional</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="MessageBase.cs">
+			<DependentUpon>MessageBase.protocol</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="Exceptions.exceptional">
-      <Generator>exceptional</Generator>
-    </None>
-    <None Update="MessageBase.protocol">
-      <LastGenOutput>MessageBase.cs</LastGenOutput>
-      <Generator>Protogen</Generator>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="Exceptions.exceptional">
+			<Generator>exceptional</Generator>
+		</None>
+		<None Update="MessageBase.protocol">
+			<LastGenOutput>MessageBase.cs</LastGenOutput>
+			<Generator>Protogen</Generator>
+		</None>
+	</ItemGroup>
 
 
 </Project>

@@ -1,40 +1,42 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(SolutionDir)Settings/CommonSettingsNoDocs.xml" />
-  <PropertyGroup>
-    <Product>Goedel.Test</Product>
-    <Description>Test library.</Description>
-    <Copyright>© 2020</Copyright>
-    <Title>Goedel.Test</Title>
-  </PropertyGroup>
+	<PropertyGroup>
+		<Product>Goedel.Test</Product>
+		<Description>Test library.</Description>
+		<Copyright>© 2020</Copyright>
+		<Title>Goedel.Test</Title>
+		<DefineConstants>_Github_</DefineConstants>
+		<Documents>false</Documents>
+	</PropertyGroup>
+
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+
+	<ItemGroup>
+		<PackageReference Include="xunit" Version="2.4.2" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
+		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
+		<ProjectReference Include="..\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
+		<ProjectReference Include="..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
+		<ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+
+	</ItemGroup>
 
 
 	<ItemGroup>
-	<PackageReference Include="xunit" Version="2.4.2" />
+		<Compile Update="Exceptions.cs">
+			<DependentUpon>Exceptions.exceptional</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 	</ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
-    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
 
-  </ItemGroup>
-  
-  
-  <ItemGroup>
-    <Compile Update="Exceptions.cs">
-      <DependentUpon>Exceptions.exceptional</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Exceptions.exceptional">
-      <LastGenOutput>Exceptions.cs</LastGenOutput>
-      <Generator>exceptional</Generator>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="Exceptions.exceptional">
+			<LastGenOutput>Exceptions.cs</LastGenOutput>
+			<Generator>exceptional</Generator>
+		</None>
+	</ItemGroup>
 
 </Project>

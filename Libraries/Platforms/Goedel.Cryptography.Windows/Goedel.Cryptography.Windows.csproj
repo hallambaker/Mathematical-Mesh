@@ -1,39 +1,36 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<!--<Import Project="$(SolutionDir)Settings/CommonSettingsWindows.xml" />-->
-  <PropertyGroup>
+	<PropertyGroup>
+		<Copyright>© 2020-2025</Copyright>
+		<RootNamespace>Goedel.Cryptography.Windows</RootNamespace>
+		<Product>Goedel.Cryptography.Windows</Product>
+		<Description>Platform specific windows libraries.</Description>
+		<Title>Goedel.Cryptography.Windows</Title>
+		<BuildPlatform>windows</BuildPlatform>
+	</PropertyGroup>
 
-    <TargetFrameworks>net9.0-windows</TargetFrameworks>
-    <RootNamespace>Goedel.Cryptography.Windows</RootNamespace>
-    <Product>Goedel.Cryptography.Windows</Product>
-    <Description>Platform specific windows libraries.</Description>
-    <Copyright>© 2020</Copyright>
-    <Title>Goedel.Cryptography.Windows</Title>
-    <DefineConstants>_Github_</DefineConstants>
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 
-    <DefineConstants>$(DefineConstants);USE_PLATFORM_WINDOWS</DefineConstants>
 
-  </PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
+		<ProjectReference Include="..\..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+		<ProjectReference Include="..\..\Goedel.Protocol\Goedel.Protocol.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Goedel.Utilities\Goedel.Utilities.csproj" />
-    <ProjectReference Include="..\..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
-    <ProjectReference Include="..\..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
-    <ProjectReference Include="..\..\Goedel.Protocol\Goedel.Protocol.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Exceptions.cs">
+			<DependentUpon>Exceptions.exceptional</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Exceptions.cs">
-      <DependentUpon>Exceptions.exceptional</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="Exceptions.Exceptional">
+			<LastGenOutput>Exceptions.cs</LastGenOutput>
+			<Generator>exceptional</Generator>
+		</None>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="Exceptions.Exceptional">
-      <LastGenOutput>Exceptions.cs</LastGenOutput>
-      <Generator>exceptional</Generator>
-    </None>
-  </ItemGroup>
-  
 </Project>

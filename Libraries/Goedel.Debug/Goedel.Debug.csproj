@@ -1,19 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
 
-  <PropertyGroup>
-    <RootNamespace>Goedel.Debug</RootNamespace>
-    <Product> Goedel.Debug</Product>
-    <Description>Debug library tools</Description>
-    <Copyright>© 2020</Copyright>
-    <Title>Goedel.Debug</Title>
-  </PropertyGroup>
+	<PropertyGroup>
+		<RootNamespace>Goedel.Debug</RootNamespace>
+		<Product> Goedel.Debug</Product>
+		<Description>Debug library tools</Description>
+		<Title>Goedel.Debug</Title>
+		<Copyright>© 2020-2025 Threshold Secrets LLC</Copyright>
+		<OutputType>Library</OutputType>
+		<BuildPlatform>All</BuildPlatform>
+	</PropertyGroup>
 
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 
-  <ItemGroup>
-    <ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
-    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
+		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+	</ItemGroup>
 
 </Project>

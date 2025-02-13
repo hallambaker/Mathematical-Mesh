@@ -1,19 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
-  <PropertyGroup>
 
-    <Product>Goedel.Cryptography.Core</Product>
-    <Description>Core crypto routines.</Description>
-    <Copyright>© 2020</Copyright>
-    <Title>Goedel.Cryptography.Core</Title>
-  </PropertyGroup>
+	<PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Goedel.Cryptography.Identifiers\Goedel.Cryptography.Identifiers.csproj" />
-    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
-  </ItemGroup>
+		<Product>Goedel.Cryptography.Core</Product>
+		<Description>Core crypto routines.</Description>
+		<Title>Goedel.Cryptography.Core</Title>
+		<Copyright>© 2020-2025 Threshold Secrets LLC</Copyright>
+		<OutputType>Library</OutputType>
+		<BuildPlatform>All</BuildPlatform>
+	</PropertyGroup>
+
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+
+	<ItemGroup>
+		<ProjectReference Include="..\Goedel.Cryptography.Identifiers\Goedel.Cryptography.Identifiers.csproj" />
+		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
+		<ProjectReference Include="..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
+		<ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+	</ItemGroup>
 
 </Project>

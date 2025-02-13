@@ -43,5 +43,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Cryptography.maccatalyst.dll
+	powershell publishtarget Goedel.Cryptography.Macos.dll
 

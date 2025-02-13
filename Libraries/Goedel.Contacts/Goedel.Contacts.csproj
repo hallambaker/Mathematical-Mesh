@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<Product>Goedel.Contacts</Product>
+		<Description>Contact exchange formats.</Description>
+		<Copyright>© 2020-2025 Threshold Secrets LLC</Copyright>
+		<Title>Goedel.Contacts</Title>
+		<OutputType>Library</OutputType>
+		<BuildPlatform>All</BuildPlatform>
+	</PropertyGroup>
+
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+
+	<ItemGroup>
+		<ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
+		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+
+		<Compile Update="ContactSchema.cs">
+			<DependentUpon>ContactSchema.Protocol</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Exceptions.cs">
+			<DependentUpon>Exceptions.exceptional</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="ContactConstants.cs">
+			<DependentUpon>ContactConstants.constant</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+
+		<None Update="ContactSchema.Protocol">
+			<LastGenOutput>ContactSchema.cs</LastGenOutput>
+			<Generator>PROTOGEN</Generator>
+		</None>
+		<None Update="Exceptions.exceptional">
+			<LastGenOutput>Exceptions.cs</LastGenOutput>
+			<Generator>exceptional</Generator>
+		</None>
+		<None Update="ContactConstants.constant">
+			<LastGenOutput>ContactConstants.cs</LastGenOutput>
+			<Generator>Constant</Generator>
+		</None>
+	</ItemGroup>
+
+</Project>

@@ -1,13 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
 	<PropertyGroup>
 
 		<Product>Goedel.Cryptography.Oauth</Product>
 		<Description>Oauth2 support libraries.</Description>
-		<Copyright>© 2024</Copyright>
 		<Title>Goedel.Cryptography.Oauth</Title>
 
+		<Copyright>© 2020-2025 Threshold Secrets LLC</Copyright>
+		<OutputType>Library</OutputType>
+		<BuildPlatform>All</BuildPlatform>
 	</PropertyGroup>
+
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 
 
 	<ItemGroup>
@@ -21,28 +24,28 @@
 
 
 	<ItemGroup>
-	  <Compile Update="OauthSchema.cs">
-		  <DependentUpon>OauthSchema.Protocol</DependentUpon>
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	  </Compile>
-	  <Compile Update="OauthConstants.cs">
-		  <DependentUpon>OauthConstants.constant</DependentUpon>
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	  </Compile>
+		<Compile Update="OauthSchema.cs">
+			<DependentUpon>OauthSchema.Protocol</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="OauthConstants.cs">
+			<DependentUpon>OauthConstants.constant</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 	</ItemGroup>
 
 
 	<ItemGroup>
-	  <None Update="OauthSchema.Protocol">
-	    <LastGenOutput>OauthSchema.cs</LastGenOutput>
-	    <Generator>ProtoGen</Generator>
-	  </None>
-	  <None Update="OauthConstants.constant">
-	    <LastGenOutput>OauthConstants.cs</LastGenOutput>
-	    <Generator>Constant</Generator>
-	  </None>
+		<None Update="OauthSchema.Protocol">
+			<LastGenOutput>OauthSchema.cs</LastGenOutput>
+			<Generator>ProtoGen</Generator>
+		</None>
+		<None Update="OauthConstants.constant">
+			<LastGenOutput>OauthConstants.cs</LastGenOutput>
+			<Generator>Constant</Generator>
+		</None>
 	</ItemGroup>
 
 

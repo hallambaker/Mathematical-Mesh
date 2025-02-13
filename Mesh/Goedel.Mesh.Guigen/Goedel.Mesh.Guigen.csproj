@@ -1,6 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-	<Import Project="$(SolutionDir)Settings/CommonSettingsNoDocs.xml" />
 	<PropertyGroup>
 		<Product>Goedel.Mesh.Guigen</Product>
 		<Description>Dispatch callbacks for Mesh Everything.</Description>
@@ -8,9 +7,11 @@
 		<Title>Goedel.Guigen</Title>
 
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
+		<Documents>false</Documents>
 		<!--<UseMaui>true</UseMaui>-->
 	</PropertyGroup>
+
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
@@ -24,6 +25,6 @@
 		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Core\Goedel.Mesh.Core.csproj" />
 		<ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
 	</ItemGroup>
-	
-	
+
+
 </Project>

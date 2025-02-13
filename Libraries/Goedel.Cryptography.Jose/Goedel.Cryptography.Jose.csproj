@@ -1,48 +1,49 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
-  <PropertyGroup>
-    <Product>Goedel.Cryptography.Jose</Product>
-    <Description>JOSE signature and encryption support.</Description>
-    <Copyright>© 2020</Copyright>
-    <Title>Goedel.Cryptography.Jose</Title>
+	<PropertyGroup>
+		<Product>Goedel.Cryptography.Jose</Product>
+		<Description>JOSE signature and encryption support.</Description>
+		<Title>Goedel.Cryptography.Jose</Title>
+		<Copyright>© 2020-2025 Threshold Secrets LLC</Copyright>
+		<OutputType>Library</OutputType>
+		<BuildPlatform>All</BuildPlatform>
+	</PropertyGroup>
 
-  </PropertyGroup>
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+
+	<ItemGroup>
+		<ProjectReference Include="..\Goedel.Cryptography.Identifiers\Goedel.Cryptography.Identifiers.csproj" />
+		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+		<ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="JoseSchema.cs">
+			<DependentUpon>JoseSchema.Protocol</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+
+		<Compile Update="Exceptions.cs">
+			<DependentUpon>Exceptions.exceptional</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 
 
-  <ItemGroup>
-    <ProjectReference Include="..\Goedel.Cryptography.Identifiers\Goedel.Cryptography.Identifiers.csproj" />
-    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
-    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj" />
-  </ItemGroup>
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="JoseSchema.cs">
-      <DependentUpon>JoseSchema.Protocol</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
+	<ItemGroup>
 
-    <Compile Update="Exceptions.cs">
-      <DependentUpon>Exceptions.exceptional</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
+		<None Update="Exceptions.exceptional">
+			<LastGenOutput>Exceptions.cs</LastGenOutput>
+			<Generator>Exceptional</Generator>
+		</None>
+		<None Update="JoseSchema.Protocol">
+			<LastGenOutput>JoseSchema.cs</LastGenOutput>
+			<Generator>ProtoGen</Generator>
+		</None>
 
-
-  </ItemGroup>
-
-  <ItemGroup>
-
-    <None Update="Exceptions.exceptional">
-      <LastGenOutput>Exceptions.cs</LastGenOutput>
-      <Generator>Exceptional</Generator>
-    </None>
-    <None Update="JoseSchema.Protocol">
-      <LastGenOutput>JoseSchema.cs</LastGenOutput>
-      <Generator>ProtoGen</Generator>
-    </None>
-
-  </ItemGroup>
+	</ItemGroup>
 
 </Project>

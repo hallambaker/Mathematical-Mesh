@@ -1,57 +1,59 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
-  <PropertyGroup>
+	<PropertyGroup>
 
-    <Product>Goedel.Cryptography</Product>
-    <Description>Cryptographic support libraries.</Description>
-    <Copyright>© 2020</Copyright>
-    <Title>Goedel.Cryptography</Title>
+		<Product>Goedel.Cryptography</Product>
+		<Description>Cryptographic support libraries.</Description>
+		<Title>Goedel.Cryptography</Title>
+		<Copyright>© 2020-2025 Threshold Secrets LLC</Copyright>
+		<OutputType>Library</OutputType>
+		<BuildPlatform>All</BuildPlatform>
+	</PropertyGroup>
 
-  </PropertyGroup>	
-	
-
-  <ItemGroup>
-    <ProjectReference Include="..\Goedel.ASN\Goedel.ASN.csproj" />
-    <ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
-    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
-  </ItemGroup>
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 
 
-	
-	  <ItemGroup>
-    <Compile Update="Exceptions.cs">
-      <DependentUpon>Exceptions.exceptional</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-	  <Compile Update="JoseConstants.cs">
-		  <DependentUpon>JoseConstants.Constant</DependentUpon>
-		  <DesignTime>True</DesignTime>
-		  <AutoGen>True</AutoGen>
-	  </Compile>
-    <Compile Update="UDFConstants.cs">
-      <DependentUpon>UDFConstants.Constant</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
+	<ItemGroup>
+		<ProjectReference Include="..\Goedel.ASN\Goedel.ASN.csproj" />
+		<ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
+		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+	</ItemGroup>
 
-  </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Exceptions.exceptional">
-      <LastGenOutput>Exceptions.cs</LastGenOutput>
-      <Generator>exceptional</Generator>
-    </None>
-	  <None Update="JoseConstants.constant">
-		  <LastGenOutput>JoseConstants.cs</LastGenOutput>
-		  <Generator>Constant</Generator>
-	  </None>
 
-      <None Update="UDFConstants.Constant">
-      <Generator>Constant</Generator>
-        <LastGenOutput>UDFConstants.cs</LastGenOutput>
-    </None>  
-</ItemGroup>
+	<ItemGroup>
+		<Compile Update="Exceptions.cs">
+			<DependentUpon>Exceptions.exceptional</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="JoseConstants.cs">
+			<DependentUpon>JoseConstants.Constant</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="UDFConstants.cs">
+			<DependentUpon>UDFConstants.Constant</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="Exceptions.exceptional">
+			<LastGenOutput>Exceptions.cs</LastGenOutput>
+			<Generator>exceptional</Generator>
+		</None>
+		<None Update="JoseConstants.constant">
+			<LastGenOutput>JoseConstants.cs</LastGenOutput>
+			<Generator>Constant</Generator>
+		</None>
+
+		<None Update="UDFConstants.Constant">
+			<Generator>Constant</Generator>
+			<LastGenOutput>UDFConstants.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
 
 
 </Project>

@@ -1,53 +1,55 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
-  <PropertyGroup>
-    <Product>Goedel.Utilities</Product>
-    <Description>Presentation layer for binding Goedel.Protocol messages to HTTP and UDP transport.</Description>
-    <Copyright>© 2021</Copyright>
-    <Title>Goedel.Utilities</Title>
+	<PropertyGroup>
+		<Product>Goedel.Utilities</Product>
+		<Description>Presentation layer for binding Goedel.Protocol messages to HTTP and UDP transport.</Description>
+		<Title>Goedel.Utilities</Title>
+		<Copyright>© 2020-2025 Threshold Secrets LLC</Copyright>
+		<OutputType>Library</OutputType>
+		<BuildPlatform>All</BuildPlatform>
+	</PropertyGroup>
 
-  </PropertyGroup>
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 
 
-  <ItemGroup>
-    <ProjectReference Include="..\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
-    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
+		<ProjectReference Include="..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
+		<ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+	</ItemGroup>
 
-  
-    <ItemGroup>
-    <Compile Update="Exceptions.cs">
-      <DependentUpon>Exceptions.exceptional</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-      <Compile Update="PacketSchema.cs">
-        <DependentUpon>PacketSchema.yaschema</DependentUpon>
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-      </Compile>
-    <Compile Update="PresentationConstants.cs">
-      <DependentUpon>PresentationConstants.constant</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
-      
-  <ItemGroup>
-    <None Update="Exceptions.exceptional">
-      <LastGenOutput>Exceptions.cs</LastGenOutput>
-      <Generator>exceptional</Generator>
-    </None>
-    <None Update="PresentationConstants.constant">
-      <LastGenOutput>PresentationConstants.cs</LastGenOutput>
-      <Generator>Constant</Generator>
-    </None>
-    <None Update="PacketSchema.yaschema">
-      <LastGenOutput>PacketSchema.cs</LastGenOutput>
-      <Generator>yaschema</Generator>
-    </None>   
-  </ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Exceptions.cs">
+			<DependentUpon>Exceptions.exceptional</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="PacketSchema.cs">
+			<DependentUpon>PacketSchema.yaschema</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="PresentationConstants.cs">
+			<DependentUpon>PresentationConstants.constant</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="Exceptions.exceptional">
+			<LastGenOutput>Exceptions.cs</LastGenOutput>
+			<Generator>exceptional</Generator>
+		</None>
+		<None Update="PresentationConstants.constant">
+			<LastGenOutput>PresentationConstants.cs</LastGenOutput>
+			<Generator>Constant</Generator>
+		</None>
+		<None Update="PacketSchema.yaschema">
+			<LastGenOutput>PacketSchema.cs</LastGenOutput>
+			<Generator>yaschema</Generator>
+		</None>
+	</ItemGroup>
 
 </Project>

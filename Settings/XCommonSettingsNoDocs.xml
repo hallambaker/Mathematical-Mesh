@@ -1,5 +1,7 @@
 <Project DefaultTargets="Build">
 
+
+	
 	<PropertyGroup>
 		<SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
 		<TargetFramework>net9.0</TargetFramework>

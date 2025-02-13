@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<Copyright>© 2020-2025</Copyright>
+		<RootNamespace>Goedel.Cryptography.Macos</RootNamespace>
+		<Product>Goedel.Cryptography.Macos</Product>
+		<Description>Platform specific Macos libraries.</Description>
+		<Title>Goedel.Cryptography.Macos</Title>
+		<BuildPlatform>macos</BuildPlatform>
+	</PropertyGroup>
+
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
+		<ProjectReference Include="..\..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+		<ProjectReference Include="..\..\Goedel.Protocol\Goedel.Protocol.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Exceptions.cs">
+			<DependentUpon>Exceptions.exceptional</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="Exceptions.Exceptional">
+			<LastGenOutput>Exceptions.cs</LastGenOutput>
+			<Generator>exceptional</Generator>
+		</None>
+	</ItemGroup>
+
+</Project>

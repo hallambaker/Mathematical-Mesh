@@ -1,35 +1,42 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<Copyright>© 2023-2025</Copyright>
+		<RootNamespace>Goedel.Cryptography.Android</RootNamespace>
+		<Product>Goedel.Cryptography.Android</Product>
+		<Description>Platform specific Android libraries.</Description>
+		<Title>Goedel.Cryptography.Android</Title>
+		<BuildPlatform>android</BuildPlatform>
+	</PropertyGroup>
+
+
 	<Import Project="$(SolutionDir)Settings/CommonSettingsAndroid.xml" />
-  <PropertyGroup>
-	<TargetFramework>net9.0-android</TargetFramework>
-    <RootNamespace>Goedel.Cryptography.Android</RootNamespace>
-    <Product>Goedel.Cryptography.Android</Product>
-    <Description>Platform specific Android libraries.</Description>
-    <Copyright>© 2023</Copyright>
-    <Title>Goedel.Cryptography.Android</Title>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net9.0-android</TargetFramework>
+
+	</PropertyGroup>
 
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Goedel.Utilities\Goedel.Utilities.csproj" />
-    <ProjectReference Include="..\..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
-    <ProjectReference Include="..\..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
-    <ProjectReference Include="..\..\Goedel.Protocol\Goedel.Protocol.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
+		<ProjectReference Include="..\..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+		<ProjectReference Include="..\..\Goedel.Protocol\Goedel.Protocol.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Exceptions.cs">
-      <DependentUpon>Exceptions.exceptional</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Exceptions.cs">
+			<DependentUpon>Exceptions.exceptional</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="Exceptions.Exceptional">
-      <LastGenOutput>Exceptions.cs</LastGenOutput>
-      <Generator>exceptional</Generator>
-    </None>
-  </ItemGroup>
-  
+	<ItemGroup>
+		<None Update="Exceptions.Exceptional">
+			<LastGenOutput>Exceptions.cs</LastGenOutput>
+			<Generator>exceptional</Generator>
+		</None>
+	</ItemGroup>
+
 </Project>

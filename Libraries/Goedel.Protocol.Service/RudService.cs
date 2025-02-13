@@ -165,11 +165,11 @@ public class RudService : Disposable {
 
 
                         var uri = httpEndpoint.GetUriPrefix();
-                        //uri = "http://+:15099/.well-known/";
-                        //Screen.WriteLine($"Connect to URI {uri}");
-
                         httpListener.Prefixes.Add(uri);
-                        providerMap.Add(uri, provider);
+
+
+                        var wellKnown = httpEndpoint.GetWellknown();
+                        providerMap.Add(wellKnown, provider);
 
                         Logger.LogInformation("Listen on URI {uri}", uri);
                         }
@@ -222,18 +222,20 @@ public class RudService : Disposable {
     /// <returns>The provider.</returns>
     public IConfguredService GetProvider(string domain, int port, string resource) {
 
-        var test = $"http://+:{port}{resource}";
+        //var test = $"http://+:{port}{resource}";
+
+        var test = $"{port}{resource}";
         if (providerMap.TryGetValue(test, out var provider)) {
             return provider;
             }
-        test = $"http://+:{port}{resource}/";
-        if (providerMap.TryGetValue(test, out provider)) {
-            return provider;
-            }
-        test = $"http://{domain}:{port}{resource}";
-        if (providerMap.TryGetValue(test, out provider)) {
-            return provider;
-            }
+        //test = $"http://+:{port}{resource}/";
+        //if (providerMap.TryGetValue(test, out provider)) {
+        //    return provider;
+        //    }
+        //test = $"http://{domain}:{port}{resource}";
+        //if (providerMap.TryGetValue(test, out provider)) {
+        //    return provider;
+        //    }
         return null;
         }
 

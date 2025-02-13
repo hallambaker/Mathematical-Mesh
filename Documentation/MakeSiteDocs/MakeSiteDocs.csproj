@@ -1,45 +1,48 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(SolutionDir)Settings/CommonSettingsNoDocs.xml" />
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <Product>Mesh Documentation</Product>
-    <Description>Make documentation for Mesh specifications.</Description>
-    <Copyright>© 2020</Copyright>
-    <Title>Mesh Documentation</Title>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;ide0161</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <NoWarn>1701;1702;ide0161</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Sandcastle|AnyCPU'">
-    <NoWarn>1701;1702;ide0161</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Github|AnyCPU'">
-    <NoWarn>1701;1702;ide0161</NoWarn>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<Product>Mesh Documentation</Product>
+		<Description>Make documentation for Mesh specifications.</Description>
+		<Copyright>© 2020</Copyright>
+		<Title>Mesh Documentation</Title>
+		<Documents>false</Documents>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Goedel.Command\Goedel.Command.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Discovery\Goedel.Discovery.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.IO\Goedel.IO.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Debug\Goedel.Debug.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Test.Core\Goedel.Test.Core.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj" />
-    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Core\Goedel.Mesh.Core.csproj" />
-    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj" />
-    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj" />
-    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Shell\Goedel.Mesh.Shell.csproj" />
-    <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
-    <ProjectReference Include="..\..\Testing\Goedel.Mesh.Test\Goedel.Mesh.Test.csproj" />
-  </ItemGroup>
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<NoWarn>1701;1702;ide0161</NoWarn>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<NoWarn>1701;1702;ide0161</NoWarn>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Sandcastle|AnyCPU'">
+		<NoWarn>1701;1702;ide0161</NoWarn>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Github|AnyCPU'">
+		<NoWarn>1701;1702;ide0161</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Libraries\Goedel.Command\Goedel.Command.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Discovery\Goedel.Discovery.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.IO\Goedel.IO.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Debug\Goedel.Debug.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Test.Core\Goedel.Test.Core.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj" />
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Core\Goedel.Mesh.Core.csproj" />
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj" />
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj" />
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Shell\Goedel.Mesh.Shell.csproj" />
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
+		<ProjectReference Include="..\..\Testing\Goedel.Mesh.Test\Goedel.Mesh.Test.csproj" />
+	</ItemGroup>
 
 	<ItemGroup>
 
@@ -92,8 +95,8 @@
 		</Compile>
 
 		<Compile Update="Web\CommandsetArchive.cs">
-		  <DesignTime>True</DesignTime>
-		  <AutoGen>True</AutoGen>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
 		</Compile>
 
 		<Compile Update="Web\ToDo.cs">
@@ -188,126 +191,126 @@
 		</Compile>
 	</ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
 
-    <None Update="Exceptions.exceptional">
-      <LastGenOutput>Exceptions.cs</LastGenOutput>
-      <Generator>exceptional</Generator>
-    </None>
+		<None Update="Exceptions.exceptional">
+			<LastGenOutput>Exceptions.cs</LastGenOutput>
+			<Generator>exceptional</Generator>
+		</None>
 
-    <None Update="IDs\MakeExamples-1-architecture.script">
-      <LastGenOutput>MakeExamples-4-schema.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
+		<None Update="IDs\MakeExamples-1-architecture.script">
+			<LastGenOutput>MakeExamples-4-schema.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
 
-    <None Update="IDs\MakeExamples-2-UDF.script">
-      <LastGenOutput>MakeExamples-2-UDF.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
+		<None Update="IDs\MakeExamples-2-UDF.script">
+			<LastGenOutput>MakeExamples-2-UDF.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
 
-    <None Update="IDs\MakeExamples-3-Dare.script">
-      <LastGenOutput>MakeExamples-3-Dare.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
+		<None Update="IDs\MakeExamples-3-Dare.script">
+			<LastGenOutput>MakeExamples-3-Dare.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
 
-    <None Update="IDs\MakeExamples-4-Schema.script">
-      <LastGenOutput>MakeExamples-4-schema.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
+		<None Update="IDs\MakeExamples-4-Schema.script">
+			<LastGenOutput>MakeExamples-4-schema.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
 
-    <None Update="IDs\MakeExamples-6-Presentation.script">
-      <LastGenOutput>MakeExamples-6-Presentation.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
+		<None Update="IDs\MakeExamples-6-Presentation.script">
+			<LastGenOutput>MakeExamples-6-Presentation.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
 
-    <None Update="IDs\MakeExamples-5-Protocol.script">
-      <LastGenOutput>MakeExamples-5-protocol.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
+		<None Update="IDs\MakeExamples-5-Protocol.script">
+			<LastGenOutput>MakeExamples-5-protocol.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
 
-    <None Update="IDs\MakeExamples-8-Cryptography.script">
-      <LastGenOutput>MakeExamples-8-Cryptography.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
+		<None Update="IDs\MakeExamples-8-Cryptography.script">
+			<LastGenOutput>MakeExamples-8-Cryptography.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
 
 
-    <None Update="Web\CommandsetLog.script">
-      <LastGenOutput>CommandsetLog.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
+		<None Update="Web\CommandsetLog.script">
+			<LastGenOutput>CommandsetLog.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
 
-    <None Update="Web\CommandsetArchive.script">
-      <LastGenOutput>CommandsetArchive.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
+		<None Update="Web\CommandsetArchive.script">
+			<LastGenOutput>CommandsetArchive.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
 
-    <None Update="Web\CommandsetKey.script">
-      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
+		<None Update="Web\CommandsetKey.script">
+			<LastGenOutput>CommandsetKey.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
 
-    <None Update="Web\ToDo.script">
-      <LastGenOutput>ToDo.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Web\UserGuide.script">
-      <LastGenOutput>UserGuide.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Web\CommandsetAccount.script">
-      <LastGenOutput>CommandsetAccount.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Web\CommandsetMail.script">
-      <LastGenOutput>CommandsetMail.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Web\CommandsetSSH.script">
-      <LastGenOutput>CommandsetSSH.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Web\CommandsetPassword.script">
-      <LastGenOutput>CommandsetPassword.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Web\CommandsetContact.script">
-      <LastGenOutput>CommandsetContact.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Web\CommandsetBookmark.script">
-      <LastGenOutput>CommandsetBookmark.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Web\CommandsetCalendar.script">
-      <LastGenOutput>CommandsetCalendar.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Web\CommandsetNetwork.script">
-      <LastGenOutput>CommandsetNetwork.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Web\CommandsetMessage.script">
-      <LastGenOutput>CommandsetMessage.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
+		<None Update="Web\ToDo.script">
+			<LastGenOutput>ToDo.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
+		<None Update="Web\UserGuide.script">
+			<LastGenOutput>UserGuide.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
+		<None Update="Web\CommandsetAccount.script">
+			<LastGenOutput>CommandsetAccount.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
+		<None Update="Web\CommandsetMail.script">
+			<LastGenOutput>CommandsetMail.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
+		<None Update="Web\CommandsetSSH.script">
+			<LastGenOutput>CommandsetSSH.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
+		<None Update="Web\CommandsetPassword.script">
+			<LastGenOutput>CommandsetPassword.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
+		<None Update="Web\CommandsetContact.script">
+			<LastGenOutput>CommandsetContact.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
+		<None Update="Web\CommandsetBookmark.script">
+			<LastGenOutput>CommandsetBookmark.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
+		<None Update="Web\CommandsetCalendar.script">
+			<LastGenOutput>CommandsetCalendar.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
+		<None Update="Web\CommandsetNetwork.script">
+			<LastGenOutput>CommandsetNetwork.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
+		<None Update="Web\CommandsetMessage.script">
+			<LastGenOutput>CommandsetMessage.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
 
-    <None Update="Web\CommandsetGroup.script">
-      <LastGenOutput>CommandsetGroup.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Web\CommandsetDare.script">
-      <LastGenOutput>CommandsetDare.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Web\CommandsetHash.script">
-      <LastGenOutput>CommandsetHash.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Web\CommandsetDevice.script">
-      <LastGenOutput>CommandsetDevice.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>  
-  </ItemGroup>
-<!--sadsdaffse-->
+		<None Update="Web\CommandsetGroup.script">
+			<LastGenOutput>CommandsetGroup.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
+		<None Update="Web\CommandsetDare.script">
+			<LastGenOutput>CommandsetDare.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
+		<None Update="Web\CommandsetHash.script">
+			<LastGenOutput>CommandsetHash.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
+		<None Update="Web\CommandsetDevice.script">
+			<LastGenOutput>CommandsetDevice.cs</LastGenOutput>
+			<Generator>gscript</Generator>
+		</None>
+	</ItemGroup>
+
 
 </Project>

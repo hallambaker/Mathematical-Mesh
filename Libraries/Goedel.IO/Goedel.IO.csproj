@@ -1,15 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
-  <PropertyGroup>
-    <Product>Goedel.IO</Product>
-    <Description>Input/Output support classes.</Description>
-    <Copyright>© 2020</Copyright>
-    <Title>Goedel.IO</Title>
-  </PropertyGroup>
+	<PropertyGroup>
+		<Product>Goedel.IO</Product>
+		<Description>Input/Output support classes.</Description>
+		<Title>Goedel.IO</Title>
+		<Copyright>© 2020-2025 Threshold Secrets LLC</Copyright>
+		<OutputType>Library</OutputType>
+		<BuildPlatform>All</BuildPlatform>
+	</PropertyGroup>
 
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 
-  <ItemGroup>
-    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+	</ItemGroup>
 
 </Project>

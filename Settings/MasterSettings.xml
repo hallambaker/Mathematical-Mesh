@@ -1,0 +1,85 @@
+<Project DefaultTargets="Build">
+
+	<PropertyGroup>
+		<SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Company>Threshold Secrets LLC.</Company>
+		<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+		<Configurations>Debug;Release;Sandcastle;Github</Configurations>
+		
+		
+
+		<DefineConstants>_Github_</DefineConstants>
+	</PropertyGroup>
+
+	<!-- Create a documentation file unless Documents is false -->
+	<PropertyGroup Condition=" '$(Documents)' != 'false' ">
+		<DocumentationFile>xml\Documentation.xml</DocumentationFile>
+	</PropertyGroup>		
+
+
+	<Choose>
+		<When Condition=" '$(BuildPlatform)' == 'windows' ">
+			<PropertyGroup>
+				<TargetFramework>net9.0-windows</TargetFramework>
+				<DefineConstants>$(DefineConstants);USE_PLATFORM_WINDOWS</DefineConstants>
+
+			</PropertyGroup>
+		</When>
+		<When Condition=" '$(BuildPlatform)' == 'linux' ">
+			<PropertyGroup>
+				<TargetFramework>net9.0</TargetFramework>
+			</PropertyGroup>
+			</When>
+			<When Condition=" '$(BuildPlatform)' == 'macos' ">
+				<PropertyGroup>
+				<TargetFramework>net9.0-macos</TargetFramework>
+				<RuntimeIdentifiers>osx-x64;osx-arm64</RuntimeIdentifiers>
+				</PropertyGroup>
+			</When>
+			<When Condition=" '$(BuildPlatform)' == 'android' ">
+				<PropertyGroup>
+				<TargetFramework>net9.0-android</TargetFramework>
+				</PropertyGroup>
+			</When>
+			<When Condition=" '$(BuildPlatform)' == 'ios' ">
+				<PropertyGroup>
+				<TargetFramework>net9.0-ios</TargetFramework>
+				</PropertyGroup>
+			</When>	
+			<When Condition=" '$(BuildPlatform)' == 'tizen' ">
+				<PropertyGroup>
+				<TargetFramework>net9.0-tizen</TargetFramework>
+				</PropertyGroup>
+			</When>
+			<When Condition=" '$(BuildPlatform)' == 'tvos' ">
+				<PropertyGroup>
+				<TargetFramework>net9.0-tvos</TargetFramework>
+				</PropertyGroup>
+			</When>
+		<Otherwise>
+			<PropertyGroup>
+				<TargetFramework>net9.0</TargetFramework>
+			</PropertyGroup>
+		</Otherwise>
+	</Choose>
+
+
+
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">
+		<Exec Command="VSPreBuild" />
+	</Target>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'!='Github'">
+		<Exec Command="VSPostBuild" />
+	</Target>
+
+	<PropertyGroup Condition="'$(Configuration)'=='Github'">
+		<DefineConstants>TRACE;_Github_</DefineConstants>
+	</PropertyGroup>
+
+
+	<PropertyGroup>
+		<NoWarn>1701;1702;cs8632</NoWarn>
+	</PropertyGroup>
+</Project>

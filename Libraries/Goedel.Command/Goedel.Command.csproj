@@ -1,55 +1,59 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
-  <PropertyGroup>
-    <Product>Goedel.Command</Product>
-    <Description>Support library for command line parsers generated with Goedel Command tool.</Description>
-    <Copyright>© 2020</Copyright>
-    <Title>Goedel.Command</Title>
 
-  </PropertyGroup>
+	<PropertyGroup>
+		<Product>Goedel.Command</Product>
+		<Description>Support library for command line parsers generated with Goedel Command tool.</Description>
+		<Copyright>© 2020-2025 Threshold Secrets LLC</Copyright>
+		<Title>Goedel.Command</Title>
+		<OutputType>Library</OutputType>
+		<BuildPlatform>All</BuildPlatform>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Goedel.FSR\Goedel.FSR.csproj" />
-    <ProjectReference Include="..\Goedel.Registry\Goedel.Registry.csproj" />
-    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
-  </ItemGroup>
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 
-  <ItemGroup>
-    <Compile Update="Exceptions.cs">
-      <DependentUpon>Exceptions.exceptional</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
 
-    <Compile Update="CommandSplit.cs">
-      <DependentUpon>CommandSplit.fsm</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
+	<ItemGroup>
+		<ProjectReference Include="..\Goedel.FSR\Goedel.FSR.csproj" />
+		<ProjectReference Include="..\Goedel.Registry\Goedel.Registry.csproj" />
+		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+	</ItemGroup>
 
-    <Compile Update="CommandLex.cs">
-      <DependentUpon>CommandLex.fsm</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
+	<ItemGroup>
+		<Compile Update="Exceptions.cs">
+			<DependentUpon>Exceptions.exceptional</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 
-  </ItemGroup>
+		<Compile Update="CommandSplit.cs">
+			<DependentUpon>CommandSplit.fsm</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 
-  <ItemGroup>
-    <None Update="Exceptions.exceptional">
-      <LastGenOutput>Exceptions.cs</LastGenOutput>
-      <Generator>exceptional</Generator>
-    </None>
+		<Compile Update="CommandLex.cs">
+			<DependentUpon>CommandLex.fsm</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 
-    <None Update="CommandSplit.fsm">
-      <LastGenOutput>CommandSplit.cs</LastGenOutput>
-      <Generator>fsrcs</Generator>
-    </None>
-    <None Update="CommandLex.fsm">
-      <LastGenOutput>CommandLex.cs</LastGenOutput>
-      <Generator>fsrcs</Generator>
-    </None>
+	</ItemGroup>
 
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="Exceptions.exceptional">
+			<LastGenOutput>Exceptions.cs</LastGenOutput>
+			<Generator>exceptional</Generator>
+		</None>
+
+		<None Update="CommandSplit.fsm">
+			<LastGenOutput>CommandSplit.cs</LastGenOutput>
+			<Generator>fsrcs</Generator>
+		</None>
+		<None Update="CommandLex.fsm">
+			<LastGenOutput>CommandLex.cs</LastGenOutput>
+			<Generator>fsrcs</Generator>
+		</None>
+
+	</ItemGroup>
 
 </Project>

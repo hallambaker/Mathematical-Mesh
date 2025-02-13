@@ -30,11 +30,7 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="meshman - Copy.cs">
-      <DependentUpon>meshman.command</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
+
     <Compile Update="Resources.Designer.cs">
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -57,21 +53,12 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-  </ItemGroup>
 
-  <ItemGroup>
     <None Update="Exceptions.Exceptional">
       <LastGenOutput>Exceptions.cs</LastGenOutput>
       <Generator>Exceptional</Generator>
     </None>
-    <None Update="meshman - Copy.command">
-      <LastGenOutput>meshman - Copy (2).cs</LastGenOutput>
-      <Generator>CommandCS</Generator>
-    </None>
-    <None Update="meshmanplus.cmd">
-      <LastGenOutput>meshman - Copy.cs</LastGenOutput>
-      <Generator>CommandCS</Generator>
-    </None>
+
     <None Update="meshman.command">
       <LastGenOutput>meshman.cs</LastGenOutput>
       <Generator>CommandCS</Generator>

@@ -1,12 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
 	<PropertyGroup>
 		<Product>Goedel.Command.Json</Product>
 		<Description>Additional support library for command line parsers generated with Goedel Command tool.</Description>
-		<Copyright>© 2022</Copyright>
 		<Title>Goedel.Command.Json</Title>
-
+		<Copyright>© 2020-2025 Threshold Secrets LLC</Copyright>
+		<OutputType>Library</OutputType>
+		<BuildPlatform>All</BuildPlatform>
 	</PropertyGroup>
+
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+	
 	<ItemGroup>
 		<ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj" />
 		<ProjectReference Include="..\Goedel.Command\Goedel.Command.csproj" />

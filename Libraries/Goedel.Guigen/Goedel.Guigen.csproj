@@ -1,15 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettingsNoDocs.xml" />
 	<PropertyGroup>
 		<Product>Goedel.Guigen</Product>
 		<Description>Support library for GUI generator.</Description>
-		<Copyright>© 2023</Copyright>
 		<Title>Goedel.Guigen</Title>
-
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
+		<Documents>false</Documents>
 		<!--<UseMaui>true</UseMaui>-->
+		<Copyright>© 2020-2025 Threshold Secrets LLC</Copyright>
+		<OutputType>Library</OutputType>
+		<BuildPlatform>All</BuildPlatform>
 	</PropertyGroup>
+
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 
 	<ItemGroup>
 		<ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj" />

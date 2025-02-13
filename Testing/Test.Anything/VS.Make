@@ -18,8 +18,14 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
+    Goedel.Anything.Server.dll\
+    Goedel.Anything.dll\
+    Goedel.Cryptography.dll\
+    Goedel.Debug.dll\
     Goedel.Discovery.dll\
-    Goedel.Test.dll
+    Goedel.IO.dll\
+    Goedel.Test.dll\
+    Goedel.Utilities.dll
 
 ToolTargets = 
 

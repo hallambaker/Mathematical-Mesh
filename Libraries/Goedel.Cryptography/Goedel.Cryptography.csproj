@@ -1,35 +1,38 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
-  <PropertyGroup>
 
-    <Product>Goedel.Cryptography</Product>
-    <Description>Cryptographic support libraries.</Description>
-    <Copyright>© 2020-2024</Copyright>
-    <Title>Goedel.Cryptography</Title>
+	<PropertyGroup>
 
-  </PropertyGroup>
+		<Product>Goedel.Cryptography</Product>
+		<Description>Cryptographic support libraries.</Description>
 
+		<Title>Goedel.Cryptography</Title>
+		<Copyright>© 2020-2025 Threshold Secrets LLC</Copyright>
+		<OutputType>Library</OutputType>
+		<BuildPlatform>All</BuildPlatform>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Goedel.ASN\Goedel.ASN.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography.Identifiers\Goedel.Cryptography.Identifiers.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography.Nist\Goedel.Cryptography.Nist.csproj" />
-    <ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
-    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
-  </ItemGroup>
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 
-  <ItemGroup>
-    <Compile Update="PKIX\PKIX.cs">
-      <DependentUpon>PKIX.asn2</DependentUpon>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Goedel.ASN\Goedel.ASN.csproj" />
+		<ProjectReference Include="..\Goedel.Cryptography.Identifiers\Goedel.Cryptography.Identifiers.csproj" />
+		<ProjectReference Include="..\Goedel.Cryptography.Nist\Goedel.Cryptography.Nist.csproj" />
+		<ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
+		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-	  <None Update="PKIX\PKIX.asn2">
-		  <Generator>ASN2CS</Generator>
-		  <LastGenOutput>PKIX.cs</LastGenOutput>
-	  </None>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="PKIX\PKIX.cs">
+			<DependentUpon>PKIX.asn2</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="PKIX\PKIX.asn2">
+			<Generator>ASN2CS</Generator>
+			<LastGenOutput>PKIX.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
 
 
 </Project>

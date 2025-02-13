@@ -125,18 +125,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Settings", "Settings", "{5A
 	ProjectSection(SolutionItems) = preProject
 		Settings\BaseSettings.xml = Settings\BaseSettings.xml
 		Settings\CommonSettings.xml = Settings\CommonSettings.xml
-		Settings\CommonSettingsAndroid.xml = Settings\CommonSettingsAndroid.xml
 		Settings\CommonSettingsExecutable.xml = Settings\CommonSettingsExecutable.xml
-		Settings\CommonSettingsIos.xml = Settings\CommonSettingsIos.xml
 		Settings\CommonSettingsLinemode.xml = Settings\CommonSettingsLinemode.xml
-		Settings\CommonSettingsLinux.xml = Settings\CommonSettingsLinux.xml
-		Settings\CommonSettingsMaccatalyst.xml = Settings\CommonSettingsMaccatalyst.xml
-		Settings\CommonSettingsMacos.xml = Settings\CommonSettingsMacos.xml
 		Settings\CommonSettingsMaui.xml = Settings\CommonSettingsMaui.xml
-		Settings\CommonSettingsNoDocs.xml = Settings\CommonSettingsNoDocs.xml
 		Settings\CommonSettingsPlatform.xml = Settings\CommonSettingsPlatform.xml
 		Settings\CommonSettingsTest.xml = Settings\CommonSettingsTest.xml
-		Settings\CommonSettingsWindows.xml = Settings\CommonSettingsWindows.xml
+		Settings\MasterSettings.xml = Settings\MasterSettings.xml
 		Settings\Nuget.xml = Settings\Nuget.xml
 		Settings\TestSettings.xml = Settings\TestSettings.xml
 		Settings\Version.xml = Settings\Version.xml
@@ -228,7 +222,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Cryptography.Ios", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Cryptography.Linux", "Libraries\Platforms\Goedel.Cryptography.Linux\Goedel.Cryptography.Linux.csproj", "{38EDC890-CD2A-4D82-A53D-93579E27FEA5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Cryptography.maccatalyst", "Libraries\Platforms\Goedel.Cryptography.maccatalyst\Goedel.Cryptography.maccatalyst.csproj", "{3CF00FCF-9166-4AC8-ACF3-ADCE2799FB11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Cryptography.Macos", "Libraries\Platforms\Goedel.Cryptography.maccatalyst\Goedel.Cryptography.Macos.csproj", "{3CF00FCF-9166-4AC8-ACF3-ADCE2799FB11}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Cryptography.Windows", "Libraries\Platforms\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj", "{9A15C0A7-A728-47E9-AA68-4749681E2F6C}"
 EndProject
@@ -275,6 +269,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Anything.Server", "Anything\Goedel.Anything.Server\Goedel.Anything.Server.csproj", "{3AE530F6-308D-4FE4-A2AD-B73A01835668}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Anything", "Testing\Test.Anything\Test.Anything.csproj", "{2E2D1F8C-EFA5-46D8-8412-537E5449EE22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Contacts", "Libraries\Goedel.Contacts\Goedel.Contacts.csproj", "{49B32B81-47A8-472C-9407-238FFD9C16C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -6100,6 +6096,66 @@ Global
 		{2E2D1F8C-EFA5-46D8-8412-537E5449EE22}.Windows|x64.Build.0 = Debug|Any CPU
 		{2E2D1F8C-EFA5-46D8-8412-537E5449EE22}.Windows|x86.ActiveCfg = Debug|Any CPU
 		{2E2D1F8C-EFA5-46D8-8412-537E5449EE22}.Windows|x86.Build.0 = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Debug|ARM.Build.0 = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Debug|x64.Build.0 = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Debug|x86.Build.0 = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Focus|Any CPU.ActiveCfg = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Focus|Any CPU.Build.0 = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Focus|ARM.ActiveCfg = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Focus|ARM.Build.0 = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Focus|ARM64.ActiveCfg = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Focus|ARM64.Build.0 = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Focus|x64.ActiveCfg = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Focus|x64.Build.0 = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Focus|x86.ActiveCfg = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Focus|x86.Build.0 = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Github|Any CPU.ActiveCfg = Github|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Github|Any CPU.Build.0 = Github|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Github|ARM.ActiveCfg = Github|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Github|ARM.Build.0 = Github|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Github|ARM64.ActiveCfg = Github|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Github|ARM64.Build.0 = Github|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Github|x64.ActiveCfg = Github|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Github|x64.Build.0 = Github|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Github|x86.ActiveCfg = Github|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Github|x86.Build.0 = Github|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Release|ARM.ActiveCfg = Release|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Release|ARM.Build.0 = Release|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Release|ARM64.Build.0 = Release|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Release|x64.ActiveCfg = Release|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Release|x64.Build.0 = Release|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Release|x86.ActiveCfg = Release|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Release|x86.Build.0 = Release|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Sandcastle|Any CPU.ActiveCfg = Sandcastle|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Sandcastle|Any CPU.Build.0 = Sandcastle|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Sandcastle|ARM.ActiveCfg = Sandcastle|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Sandcastle|ARM.Build.0 = Sandcastle|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Sandcastle|ARM64.ActiveCfg = Sandcastle|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Sandcastle|ARM64.Build.0 = Sandcastle|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Sandcastle|x64.ActiveCfg = Sandcastle|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Sandcastle|x64.Build.0 = Sandcastle|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Sandcastle|x86.ActiveCfg = Sandcastle|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Sandcastle|x86.Build.0 = Sandcastle|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Windows|Any CPU.ActiveCfg = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Windows|Any CPU.Build.0 = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Windows|ARM.ActiveCfg = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Windows|ARM.Build.0 = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Windows|ARM64.ActiveCfg = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Windows|ARM64.Build.0 = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Windows|x64.ActiveCfg = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Windows|x64.Build.0 = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Windows|x86.ActiveCfg = Debug|Any CPU
+		{49B32B81-47A8-472C-9407-238FFD9C16C6}.Windows|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -6211,6 +6267,7 @@ Global
 		{A8837814-072D-4434-8055-C9AC65782B0B} = {D449BAA8-F46B-4981-865F-AAF759A0E016}
 		{3AE530F6-308D-4FE4-A2AD-B73A01835668} = {D449BAA8-F46B-4981-865F-AAF759A0E016}
 		{2E2D1F8C-EFA5-46D8-8412-537E5449EE22} = {6319D855-7BE8-4691-9638-2183778EE5B7}
+		{49B32B81-47A8-472C-9407-238FFD9C16C6} = {3ACD6B64-8887-4B9C-AABC-7A170E8F9EF1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F733C7ED-9AFC-48BA-A90C-AF02B1085A00}

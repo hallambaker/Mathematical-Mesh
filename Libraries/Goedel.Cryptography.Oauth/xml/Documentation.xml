@@ -334,6 +334,19 @@
             <param name="value">The value if found, otherwise null</param>
             <returns>True if the value is found, otherwise false.</returns>
         </member>
+        <member name="T:Goedel.Cryptography.Oauth.Initialization">
+            <summary>Static class whose only function is to contain the initialization 
+            routine.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.Initialization.Initialized">
+            <summary>Initialization witness flag. This may be used to force initialization
+            of the module prior to other modules being initialized.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Oauth.Initialization.Initialize">
+            <summary>
+            Initialization routine for cryptographic functions on the dotNet Core platform.
+            </summary>
+        </member>
         <member name="T:Goedel.Cryptography.Oauth.JWK">
             <summary>
             JOSE Web Key

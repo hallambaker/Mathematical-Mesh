@@ -129,6 +129,12 @@ public record HttpEndpoint(
     public string GetUriPrefix() => GetUriBase("+", Port, Protocol, Instance);
 
     /// <summary>
+    /// Return the provider map entry for the endpoint.
+    /// </summary>
+    /// <returns>The provider map entry minus the scheme section.</returns>
+    public string GetWellknown() => $"{Port}/.well-known/{Protocol}/{Specializer(Instance)}";
+
+    /// <summary>
     /// Return the service URI for the endpoint.
     /// </summary>
     /// <returns>The service URI.</returns>
