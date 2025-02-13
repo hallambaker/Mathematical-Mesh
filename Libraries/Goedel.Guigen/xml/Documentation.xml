@@ -18,6 +18,9 @@
         <member name="P:Goedel.Guigen.Gui.Actions">
             <summary>List of all the Action Descriptions</summary> 
         </member>
+        <member name="P:Goedel.Guigen.Gui.Selections">
+            <summary>List of all the Action Descriptions</summary> 
+        </member>
         <member name="P:Goedel.Guigen.Gui.Dialogs">
             <summary>List of all the Dialog Descriptions</summary> 
         </member>
@@ -27,14 +30,163 @@
         <member name="P:Goedel.Guigen.IBindable.Binding">
             <summary>Returns the binding for the data type</summary> 
         </member>
+        <member name="P:Goedel.Guigen.IHeadedSelection.SelectionBinding">
+            <summary>The binding used to select items for display in a selector box.</summary> 
+        </member>
+        <member name="T:Goedel.Guigen.NullResult">
+            <summary>
+            Null result class
+            </summary>
+        </member>
+        <member name="P:Goedel.Guigen.NullResult.ResourceId">
+            <summary>The resource ID</summary> 
+        </member>
+        <member name="P:Goedel.Guigen.NullResult.Message">
+            <summary>Message to return</summary> 
+        </member>
+        <member name="P:Goedel.Guigen.NullResult.ReturnResult">
+            <summary>The return result.</summary> 
+        </member>
+        <member name="P:Goedel.Guigen.NullResult.Binding">
+            <summary>The Gui Binding</summary> 
+        </member>
+        <member name="P:Goedel.Guigen.NullResult.Teardown">
+            <summary>Teardown result</summary> 
+        </member>
         <member name="P:Goedel.Guigen.NullResult.Initialized">
-            <summary></summary> 
+            <summary>Initialized result.</summary> 
+        </member>
+        <member name="P:Goedel.Guigen.NullResult.Valid">
+            <summary>Entry is valid.</summary> 
+        </member>
+        <member name="P:Goedel.Guigen.NullResult.Completed">
+            <summary>Operation has completed.</summary> 
+        </member>
+        <member name="P:Goedel.Guigen.NullResult.HomeResult">
+            <summary>Operation has completed and GUI should return to home state.</summary> 
+        </member>
+        <member name="M:Goedel.Guigen.NullResult.GetValues">
+            <summary>
+            Get the result values.
+            </summary>
+            <returns>The result values.</returns>
+        </member>
+        <member name="T:Goedel.Guigen.HomeResult">
+            <summary>
+            Home result
+            </summary>
+        </member>
+        <member name="T:Goedel.Guigen.CompletedResult">
+            <summary>
+            Completed result
+            </summary>
+        </member>
+        <member name="T:Goedel.Guigen.InitializedResult">
+            <summary>
+            Initialized result
+            </summary>
+        </member>
+        <member name="T:Goedel.Guigen.TeardownResult">
+            <summary>
+            Teardown result
+            </summary>
+        </member>
+        <member name="T:Goedel.Guigen.ValidResult">
+            <summary>
+            Valid result
+            </summary>
+        </member>
+        <member name="T:Goedel.Guigen.ErrorResult">
+            <summary>
+            Error result
+            </summary>
         </member>
         <member name="T:Goedel.Guigen.GuiImage">
             <summary></summary> 
         </member>
         <member name="M:Goedel.Guigen.GuiImage.#ctor(System.String)">
             <summary></summary> 
+        </member>
+        <member name="T:Goedel.Guigen.GuiItem">
+            <summary>
+            Backing class for a GUI item.
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:Goedel.Guigen.GuiItem.#ctor(System.String)">
+            <summary>
+            Backing class for a GUI item.
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="P:Goedel.Guigen.GuiItem.Id">
+            <summary></summary>
+        </member>
+        <member name="T:Goedel.Guigen.GuiPrompt">
+            <summary>
+            Backing class for a GUI element that has a prompt.
+            </summary>
+            <param name="Id">The unique identifier</param>
+            <param name="Prompt">The prompt.</param>
+        </member>
+        <member name="M:Goedel.Guigen.GuiPrompt.#ctor(System.String,System.String)">
+            <summary>
+            Backing class for a GUI element that has a prompt.
+            </summary>
+            <param name="Id">The unique identifier</param>
+            <param name="Prompt">The prompt.</param>
+        </member>
+        <member name="P:Goedel.Guigen.GuiPrompt.Prompt">
+            <summary>The prompt.</summary>
+        </member>
+        <member name="T:Goedel.Guigen.GuiFieldSet">
+            <summary>
+            Backing class for a GUI element that presents a set of bound fields.
+            </summary>
+            <param name="Id"></param>
+            <param name="Prompt"></param>
+            <param name="Binding"></param>
+        </member>
+        <member name="M:Goedel.Guigen.GuiFieldSet.#ctor(System.String,System.String,Goedel.Guigen.GuiBinding)">
+            <summary>
+            Backing class for a GUI element that presents a set of bound fields.
+            </summary>
+            <param name="Id"></param>
+            <param name="Prompt"></param>
+            <param name="Binding"></param>
+        </member>
+        <member name="P:Goedel.Guigen.GuiFieldSet.Binding">
+            <summary></summary>
+        </member>
+        <member name="T:Goedel.Guigen.GuiDialog">
+            <summary>
+            Backing class for a GUI Dialog 
+            </summary>
+            <param name="Id"></param>
+            <param name="Prompt"></param>
+            <param name="Icon"></param>
+            <param name="Factory"></param>
+        </member>
+        <member name="M:Goedel.Guigen.GuiDialog.#ctor(System.String,System.String,System.String,Goedel.Guigen.GuiBinding,Goedel.Guigen.FactoryCallback)">
+            <summary>
+            Backing class for a GUI Dialog 
+            </summary>
+            <param name="Id"></param>
+            <param name="Prompt"></param>
+            <param name="Icon"></param>
+            <param name="Factory"></param>
+        </member>
+        <member name="P:Goedel.Guigen.GuiDialog.Icon">
+            <summary></summary>
+        </member>
+        <member name="P:Goedel.Guigen.GuiDialog.Factory">
+            <summary></summary>
+        </member>
+        <member name="P:Goedel.Guigen.GuiDialog.Entries">
+            <summary>The action entries</summary> 
+        </member>
+        <member name="P:Goedel.Guigen.GuiSection.Entries">
+            <summary>The action entries</summary> 
         </member>
         <member name="M:Goedel.Guigen.GuiResultInvalid.#ctor(Goedel.Guigen.IParameter,System.String[])">
             <summary>
@@ -53,6 +205,11 @@
             </summary>
             <param name="field">The name of the field to set the error result for.</param>
             <param name="error">The error result to be set.</param>
+        </member>
+        <member name="T:Goedel.Discovery.NamespaceDoc">
+            <summary>
+            Support classes for implementing GUIGen UI 
+            </summary>
         </member>
     </members>
 </doc>

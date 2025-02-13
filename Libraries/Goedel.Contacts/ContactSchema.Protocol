@@ -6,193 +6,305 @@
 	//  "member1", "member2"] is encoded as
 	// { "member1" : true, "member2" : true }
 
-
-
-
+	// 2. Card
 	Structure ContactCard
 		Description
-			|Metadata, see section 2.1
-
-
+			| Metadata, see section 2.1
 		String					Type
 			Tag "@type"
 			Required
 			Description
-				| If specified, value MUST be 'card'
+				| The JSContact type of the Card object. If specified, value MUST be 'card'
+
 		String					Version
 			Required
 			Description
-				| If specified, value MUST be '1.0'
-		String					Uid // Required
-			Required
+				| The JSContact version of this Card. If specified, value MUST be '1.0'
 
-		String					Created
+
+
+		DateTime				Created
+			Description
+				| The date and time when the Card was created.
+
 		String					Kind
 			Description
+				| The kind of the entity the Card represents.
 				| individual: a single person
 				| group: a group of people or entities
 				| org: an organization
 				| location: a named location
 				| device: a device such as an appliance, a computer, or a network element
 				| application: a software application
+		
 		String					Language
-		String					Members
-			Multiple
-			// Funky Tag
 			Description
-				|Uses some funky formatting, see 2.1.6. members
-				|[ "member1", "member2"] is encoded as
-				|{ "member1" : true, "member2" : true }
+				| The language tag, as defined in [RFC5646], that best describes the language 
+				| used for text in the Card, optionally including additional information such 
+				| as the script. Note that values MAY be localized in the localizations 
+				| property.
+
+		String					Members
+			Dictionary
+			Description
+				| The set of Cards that are members of this group Card. Each key in the set is 
+				| the uid property value of the member, and each boolean value MUST be "true".
+				| If this property is set, then the value of the kind property MUST be "group"
 		String					ProdId
-		Struct TaggedBoolean					RelatedTo
-			Multiple 
-			// Funky Tag
+			Description
+				| The identifier for the product that created the Card. If set, the value MUST 
+				| be at least one character long.
+
+		Struct Relation			RelatedTo
+			Dictionary
 			Description
 				| acquaintance agent child co-resident co-worker colleague 
 				| contact crush date emergency friend kin me met muse
 				| neighbor parent sibling spouse sweetheart
 
-		String					Updated
+		String					Uid // Required
+			Required
+			Description
+				| An identifier that associates the object as the same across different systems, 
+				| address books, and views. The value SHOULD be a URN [RFC8141], but for 
+				| compatibility with [RFC6350], it MAY also be a URI [RFC3986] or free-text value.
 
-		// The property sets
+		String					Updated
+			Description
+				|The date and time when the data in the Card was last modified.
+
+		// Name and Organization Properties
+		// 2.2.1. name
 		Struct Name				Name
+			Description
+				| The name of the entity represented by the Card. This can be any type of name, 
+				| e.g., it can, but need not, be the legal name of a person.
+		
+		
 		Struct NickName			NickNames
-			Multiple
-			// Funky Tag
+			Dictionary
+			Description
+				| The nicknames of the entity represented by the Card.
+			
+		
+		// 2.2.3. organizations
 		Struct Organization		Organizations
-			Multiple
-			// Funky Tag
+			Dictionary
+			Description
+				| The company or organization names and units associated with the Card.
+			
 
 		// 2.2.4.  speakToAs
 		Struct SpeakToAs		SpeakToAs
+			Description
+				| The information that directs how to address, speak to, or refer to the
+				| entity that is represented by the Card.
 
 
 		// 2.2.5.  titles
 		Struct Title			Titles
-			Multiple
-			// Funky Tag
+			Dictionary
+			Description
+				| The job titles or functional positions of the entity represented by the Card.
 
 		// 2.3.  Contact Properties
 		// 2.3.1.  emails
 		Struct EmailAddress		Emails
-			Multiple
-			// Funky Tag
+			Dictionary
+			Description
+				| The email addresses in which to contact the entity represented by the Card.
 
 		// 2.3.2.  onlineServices
 		Struct OnlineService	OnlineServices
-			Multiple
-			// Funky Tag
+			Dictionary
+			Description
+				| The online services that are associated with the entity represented by the Card.
+				| This can be messaging services, social media profiles, and other.
 
 		// 2.3.3.  phones
 		Struct Phone			Phones
-			Multiple
-			// Funky Tag
+			Dictionary
+			Description
+				| The phone numbers by which to contact the entity represented by the Card.
 
 		// 2.3.4.  preferredLanguages
 		Struct LanguagePref		PreferredLanguages
-			Multiple
-			// Funky Tag
+			Dictionary
+			Description
+				| The preferred languages for contacting the entity associated with the Card.
 
 		// 2.4.  Calendaring and Scheduling Properties
 		// 2.4.1.  calendars
 		Struct Calendar			Calendars
-			Multiple
-			// Funky Tag
+			Dictionary
+			Description
+				| The calendaring resources of the entity represented by the Card, such as 
+				| to look up free-busy information.
 
 		// 2.4.2.  schedulingAddresses
 		Struct SchedulingAddress	SchedulingAddresses
-			Multiple
-			// Funky Tag
+			Dictionary
+			Description
+				| The scheduling addresses by which the entity may receive calendar scheduling invitations.
 
 		// 2.5.  Address and Location Properties
 		// 2.5.1.  addresses
 		Struct Address			Addresses
-			Multiple
-			// Funky Tag
+			Dictionary
+			Description
+				| The addresses of the entity represented by the Card, such as postal addresses 
+				| or geographic locations.
 
 		// 2.6.  Resource Properties
 		// 2.6.1.  cryptoKeys
 		Struct CryptoKey		CryptoKeys
-			Multiple
-			// Funky Tag
+			Dictionary
+			Description
+				|The cryptographic resources such as public keys and certificates associated 
+				| with the entity represented by the Card.
 
 		// 2.6.2.  directories
 		Struct Directory		Directories
-			Multiple
-			// Funky Tag
+			Dictionary
+			Description
+				| The directories containing information about the entity represented by the Card.
 
 		// 2.6.3.  links
 		Struct Link				Links
-			Multiple
-			// Funky Tag
+			Dictionary
+			Description
+				| The links to resources that do not fit any of the other use-case-specific resource properties.
 
 		// 2.6.4.  media
 		Struct Media			Media
-			Multiple
-			// Funky Tag
+			Dictionary
+			Description
+				| The media resources such as photographs, avatars, or sounds that are associated 
+				| with the entity represented by the Card.
 
 		// 2.7.  Multilingual Properties
 		// 2.7.1.  localizations
-		Struct ContactCard		Localizations
-			Multiple
-			// Funky Tag
+		Struct PatchObject		Localizations
+			Dictionary
+			Description
+				| The property values localized to languages other than the main language 
+				| (Section 2.1.5) of the Card. Localizations provide language-specific alternatives 
+				| for existing property values and SHOULD NOT add new properties. The keys in 
+				| the localizations property value are language tags [RFC5646]; the values 
+				| are of type PatchObject and localize the Card in that language tag. The paths 
+				| in the PatchObject are relative to the Card that includes the localizations
+				| property. A patch MUST NOT target the localizations property.
 
 		// 2.8.  Additional Properties
 		// 2.8.1.  anniversaries
 		Struct Anniversary		 Anniversaries
-			Multiple
-			// Funky Tag
+			Dictionary
+			Description
+				| The memorable dates and events for the entity represented by the Card.
 
 		// 2.8.2.  keywords
 		Struct TaggedBoolean	Keywords
-			Multiple
-			// Funky Tag
+			Dictionary
+			Description
+				| The set of free-text keywords, also known as tags.
 
 		// 2.8.3.  notes
 		Struct Note				Notes
-			Multiple
-			// Funky Tag
+			Dictionary
+			Description
+				| The free-text notes that are associated with the Card.
 
 		// 2.8.4.  personalInfo
 		Struct PersonalInfo		PersonalInfo
-			Multiple
-			// Funky Tag
+			Dictionary
+			Description
+				| The personal information of the entity represented by the Card.
+
+	Structure Relation
+		Boolean					Relationships
+			Dictionary
+			Description
+				| The relationships, each one MUST have the value true.
+
 
 	Structure Resource
 		String					Type
 			Tag "@type" //  MUST NOT be "Resource" if set
 		String					Kind
+			Description
+				| 
 		String					Uri
+			Description
+				| 
 			Required
-		Struct TaggedBoolean	Contexts
-			Multiple 
+		Boolean					Contexts
+			Dictionary 
+			Description
+				| 
 		Integer					Pref
+			Description
+				| 
 		String					Label
+			Description
+				| 
 
 
-	Structure TaggedBoolean
-		String					Tag
-		Boolean					Value // is always true
 
-
+	// 2.2.1.1. Name Object
 	Structure Name
+		Description
+			|A Name object
+		String					Type
+			Tag "@type" //  MUST be "Name" if set
 		Struct NameComponent	Components 
 			Multiple
+			Description
+				| The components (Section 2.2.1.2) making up this name. The components property 
+				| MUST be set if the full property is not set; otherwise, it SHOULD be set. 
+				| The component list MUST have at least one entry having a different kind 
+				| property value than "separator".
 		Boolean					IsOrdered
+			Description
+				| The indicator if the name components in the components property are ordered.
 		String					DefaultSeparator
+			Description
+				| The default separator to insert between name component values when 
+				| concatenating all name component values to a single String. Also see 
+				| the definition of the kind property value "separator" for the 
+				| NameComponent (Section 2.2.1.2) object. The defaultSeparator property 
+				| MUST NOT be set if the Name isOrdered property value is "false" or 
+				| if the components property is not set.
 		String					Full
+			Description
+				| The full name representation of the Name. The full property MUST be set 
+				| if the components property is not set.
 		String					SortAs
+			Description
+				| The value to lexicographically sort the name in relation to other names 
+				| when compared by a name component type. The keys in the map define the 
+				| name component type. The values define the verbatim string to compare 
+				| when sorting by the name component type. Absence of a key indicates that 
+				| the name component type SHOULD NOT be considered during sort. Sorting by 
+				| that missing name component type, or if the sortAs property is not set, 
+				| is implementation-specific. The sortAs property MUST NOT be set if the 
+				| components property is not set.
 		String					PhoneticScript
+			Description
+				| The script used in the value of the NameComponent phonetic property.
 		String					PhoneticSystem
+			Description
+				| The phonetic system used in the NameComponent phonetic property.
 
-
+	//  2.2.1.2. NameComponent
 	Structure NameComponent
 		Description
-			|As specified in 2.2.1.2. NameComponent
+			|A NameComponent object
 		String					Type
 			Tag "@type" //  MUST be "NameComponent" if set
 		String					Value
 			Required
+			Description
+				| 
 		String					Kind
 			Required
 			Description
@@ -210,48 +322,101 @@
 		String					Type
 			Tag "@type" //  MUST be "Nickname" if set
 		String					Name
-		Struct TaggedBoolean	Contexts
-			Multiple
+			Description
+				| The nickname.
+		Boolean					Contexts
+			Dictionary 
+			Description
+				| The contexts in which to use the nickname.
 		Integer					Pref
+			Description
+				| The preference of the nickname in relation to other nicknames. 
 
 
 	Structure Organization
 		String					Type
 			Tag "@type" //  MUST be "Organization" if set
 		String					Name
+			Description
+				| The name of the organization.
 		Struct OrgUnit			Units
 			Multiple
+			Description
+				| A list of organizational units, ordered as descending by hierarchy 
+				| (e.g., a geographic or functional division sorts before a department 
+				| within that division). If set, the list MUST contain at least one entry.
 		String					SortAs
-		Struct TaggedBoolean	Contexts
-			Multiple 
+			Description
+				| The value to lexicographically sort the organization in relation to 
+				| other organizations when compared by name. The value defines the 
+				| verbatim string value to compare. In absence of this property, 
+				| the name property value MAY be used for comparison.
+		Boolean					Contexts
+			Dictionary 
+			Description
+				| The contexts in which association with the organization applies. For 
+				| example, membership in a choir may only apply in a private context.
 
 	Structure OrgUnit
 		String					Name
+			Description
+				| The name of the organizational unit.
 		String					SortAs
+			Description
+				| The value to lexicographically sort the organizational unit in relation 
+				| to other organizational units of the same level when compared by name. 
+				| The level is defined by the array index of the organizational unit in 
+				| the units property of the Organization object. The property value 
+				| defines the verbatim string value to compare. In absence of this 
+				| property, the name property value MAY be used for comparison.
 
 	// 2.2.4.  speakToAs
 	Structure SpeakToAs
 		String					Type
 			Tag "@type" //  MUST be "SpeakToAs" if set
-
-	// 2.2.5.  titles
-	Structure Title
-		String					Type
-			Tag "@type" //  MUST be "Title" if set
 		String					grammaticalGender
+			Description
+				| The grammatical gender to use in salutations and other grammatical 
+				| constructs. For example, the German language distinguishes by grammatical
+				| gender in salutations such as "Sehr geehrte" (feminine) and "Sehr geehrter"
+				| (masculine)
 		Struct Pronouns			Pronouns
-			Multiple 
-
+			Dictionary 
+			Description
+				| The pronouns that the contact chooses to use for themselves.
 
 	Structure Pronouns
 		String					Type
 			Tag "@type" //  MUST be "Pronouns" if set
 		String					Pronouns
-		Struct TaggedBoolean	Contexts
-			Multiple 
+			Description
+				| The pronouns. Any value or form is allowed. Examples in English include "she/her"
+				| and "they/them/theirs". The value MAY be overridden in the localizations 
+				| property.
+
+		Boolean					Contexts
+			Dictionary 
+			Description
+				| The contexts in which to use the pronouns.
 		Integer					Pref
+			Description
+				| The preference of the pronouns in relation to other pronouns in the same context.
 
-
+	// 2.2.5.  titles
+	Structure Title
+		String					Type
+			Tag "@type" //  MUST be "Title" if set
+		String					Name
+			Description
+				| The title or role name of the entity represented by the Card.
+		String					Kind
+			Description
+				| The organizational or situational kind of the title. Some organizations and 
+				| individuals distinguish between titles as organizational positions and roles
+				| as more temporary assignments such as in project management.
+		String					OrganizationId
+			Description
+				| 
 
 	// 2.3.  Contact Properties
 	// 2.3.1.  emails
@@ -259,22 +424,48 @@
 		String					Type
 			Tag "@type" //  MUST be "EmailAddress" if set
 		String					Address
-		Struct TaggedBoolean	Contexts
-			Multiple 
+			Description
+				| The email address. This MUST be an addr-spec value as defined in Section 3.4.1 of [RFC5322].
+		Boolean					Contexts
+			Dictionary 
+			Description
+				| The contexts in which to use this email address. Also see Section 1.5.1.
 		Integer					Pref
+			Description
+				| The preference of the email address in relation to other email addresses. Also 
+				| see Section 1.5.3.
 		String					Label
+			Description
+				| A custom label for the value. 
 
 	// 2.3.2.  onlineServices
 	Structure OnlineService
 		String					Type
 			Tag "@type" //  MUST be "OnlineService" if set
 		String					Service
+			Description
+				| The name of the online service or protocol. The name MAY be capitalized the 
+				| same as on the service's website, app, or publishing material, but names MUST 
+				| be considered equal if they match case-insensitively. Examples are "GitHub", 
+				| "kakao", and "Mastodon"
 		String					Uri
+			Description
+				| he identifier for the entity represented by the Card at the online service. 
+				| This MUST be a URI as defined in Section 3 of [RFC3986].
 		String					User
-		Struct TaggedBoolean	Contexts
-			Multiple 
+			Description
+				| The name the entity represented by the Card at the online service. Any 
+				| free-text value is allowed. The service property SHOULD be set.
+		Boolean					Contexts
+			Dictionary 
+			Description
+				| The contexts in which to use the service.
 		Integer					Pref
+			Description
+				| The preference of the service in relation to other services.
 		String					Label
+			Description
+				| A custom label for the value. 
 
 
 	// 2.3.3.  phones
@@ -282,12 +473,35 @@
 		String					Type
 			Tag "@type" //  MUST be "Phone" if set
 		String					Number
-		Struct TaggedBoolean	Features
-			Multiple 
-		Struct TaggedBoolean	Contexts
-			Multiple 
+			Description
+				| The phone number as either a URI or free text. Typical URI schemes are 
+				| "tel" [RFC3966] or "sip" [RFC3261], but any URI scheme is allowed.
+		Boolean					Features
+			Description
+				| The set of contact features that the phone number may be used for. The set is 
+				| represented as an object, with each key being a method type. The boolean value 
+				| MUST be "true". The enumerated method type values are:
+				|
+				| mobile: this number is for a mobile phone.
+				| voice: this number supports calling by voice.
+				| text: this number supports text messages (SMS).
+				| video: this number supports video conferencing.
+				| main-number: this number is a main phone number such as the number of the front desk 
+				|   at a company, as opposed to a direct-dial number of an individual employee.
+				| textphone: this number is for a device for people with hearing or speech difficulties.
+				| fax: this number supports sending faxes.
+				| pager: this number is for a pager or beeper.
+			Dictionary 
+		Boolean					Contexts
+			Dictionary 
+			Description
+				| The contexts in which to use the number. 
 		Integer					Pref
+			Description
+				| The preference of the number in relation to other numbers.
 		String					Label
+			Description
+				| A custom label for the value.
 
 
 	// 2.3.4.  preferredLanguages
@@ -295,74 +509,265 @@
 		String					Type
 			Tag "@type" //  MUST be "LanguagePref" if set
 		String					Language
-		Struct TaggedBoolean	Contexts
-			Multiple
+			Description
+				| The preferred language. This MUST be a language tag as defined in [RFC5646] .
+		Boolean					Contexts
+			Dictionary 
+			Description
+				| The contexts in which to use the language.
 		Integer					Pref
+			Description
+				| The preference of the language in relation to other languages of the same contexts. 
 
 	// 2.4.  Calendaring and Scheduling Properties
 		// 2.4.1.  calendars
 	Structure Calendar
 		Inherits				Resource
+			Description
+				| The calendaring resources of the entity represented by the Card, such as 
+				| to look up free-busy information.
 
 
 	// 2.4.2.  schedulingAddresses
 	Structure SchedulingAddress
+		Description
+			| The scheduling addresses by which the entity may receive calendar scheduling invitations.
 		String					Type
 			Tag "@type" //  MUST be "SchedulingAddress" if set
 		String					Uri
 			Required
+			Description
+				| The address to use for calendar scheduling with the contact. This MUST 
+				| be a URI as defined in Section 3 of [RFC3986].
 		Struct TaggedBoolean	Contexts
 			Multiple 
+			Description
+				| The contexts in which to use the scheduling address. 
 		Integer					Pref
+			Description
+				| The preference of the scheduling address in relation to other scheduling addresses.
 		String					Label
+			Description
+				| A custom label for the scheduling address. 
 
 
 	// 2.5.  Address and Location Properties
 	// 2.5.1.  addresses
 	Structure Address
+		Description
+			| The addresses of the entity represented by the Card, such as postal 
+			| addresses or geographic locations.
 		String					Type
 			Tag "@type" //  MUST be "Address" if set
+		Struct AddressComponent Components
+			Multiple
+			Description
+				| The components (Section 2.5.1.2) that make up the address. The component 
+				| list MUST have at least one entry that has a kind property value other 
+				| than "separator".
+		String					IsOrdered
+			Description
+				| The indicator if the address components in the components property are ordered.
+		String					CountryCode
+			Description
+				| The Alpha-2 country code [ISO.3166-1].
+		String					Coordinates
+			Description
+				| A "geo:" URI [RFC5870] for the address.
+		String					TimeZone
+			Description
+				| The time zone in which the address is located. This MUST be a time zone 
+				| name registered in the IANA Time Zone Database [IANA-TZ].
+		Boolean					Contexts
+			Dictionary 
+			Description
+				| The contexts in which to use this address. 
+		String					Full
+			Description
+				| The full address, including street, region, or country. The purpose of 
+				| this property is to define an address, even if the individual address 
+				| components are not known.
+		String					DefaultSeparator
+			Description
+				| The default separator to insert between address component values when 
+				| concatenating all address component values to a single String. Also see 
+				| the definition of the kind property value "separator" for the AddressComponent
+				| (Section 2.5.1.2) object. The defaultSeparator property MUST NOT be set 
+				| if the Address isOrdered property value is "false" or if the components 
+				| property is not set.
+		Integer					Pref
+			Description
+				| The preference of the address in relation to other addresses. 
+		String					PhoneticScript
+			Description
+				| The script used in the value of the AddressComponent phonetic property.
+		String					PhoneticSystem
+			Description
+				| The phonetic system used in the AddressComponent phonetic property.
+
 
 	Structure AddressComponent 
+		Description
+			| 
 		String					Type
 			Tag "@type" //  MUST be "AddressComponent" if set
+		String					Value
+			Description
+				| The value of the address component.
+		String					Kind
+			Description
+				| The kind of the address component. 
+		String					Phonetic
+			Description
+				| The pronunciation of the name component. If this property is set, then 
+				| at least one of the Address object phoneticSystem or phoneticScript 
+				| properties MUST be set. 
+
 
 	// 2.6.  Resource Properties
 	// 2.6.1.  cryptoKeys
 	Structure CryptoKey
 		Inherits				Resource
-
+		Description
+			|The cryptographic resources such as public keys and certificates associated 
+			| with the entity represented by the Card.
+		
 	// 2.6.2.  directories
 	Structure Directory
 		Inherits				Resource
+		Description
+			| The directories containing information about the entity represented by the Card.
+		Integer					ListAs
+		Description
+			| The position of the directory resource in the list of all Directory objects 
+			| having the same kind property value in the Card. If set, the listAs value 
+			| MUST be higher than zero. Multiple directory resources MAY have the same 
+			| listAs property value or none. Sorting such same-valued entries is 
+			| implementation-specific.
 
 	// 2.6.3.  links
 	Structure Link
 		Inherits				Resource
+		Description
+			| The links to resources that do not fit any of the other use-case-specific resource properties.
 
 	// 2.6.4.  media
 	Structure Media
 		Inherits				Resource
+		Description
+			| The media resources such as photographs, avatars, or sounds that are associated 
+			| with the entity represented by the Card.
 
 	// 2.7.  Multilingual Properties
 	// 2.7.1.  localizations
 	Structure PatchObject
-		String					Type
-			Tag "@type" //  MUST be "PatchObject" if set
+		Inherits				Resource
+		Description
+			| A ContactCard used to overwrite parts of a contact card.
+
 
 	// 2.8.  Additional Properties
 	// 2.8.1.  anniversaries
 	Structure Anniversary
+		Description
+			| The memorable dates and events for the entity represented by the Card.
 		String					Type
 			Tag "@type" //  MUST be "Anniversary" if set
+		String					Kind
+			Description
+				| The kind of anniversary.
+		Struct TimeStamp		Date
+			Description
+				| Timestamp (mandatory; defaultType: PartialDate).
+				| The date of the anniversary in the Gregorian calendar. This MUST be 
+				| either a whole or partial calendar date or a complete UTC timestamp 
+				| (see the definition of the Timestamp and PartialDate object types below).
+		Struct Address			Place
+			Description
+				| An address associated with this anniversary, e.g., the place of birth or death.
 
+	Structure TimeStamp
+		Description
+			| 
+		String					Type
+			Tag "@type" //  MUST be "PartialDate" or "Timestamp" if set
+
+		Integer					Year
+			Description
+				| The calendar year.
+		Integer					Month
+			Description
+				| The calendar month, represented as the integers 1 <= month <= 12. If 
+				| this property is set, then either the year or the day property MUST be set.
+		Integer					Day
+			Description
+				| The calendar month day, represented as the integers 1 <= day <= 31, 
+				| depending on the validity within the month and year. If this property 
+				| is set, then the month property MUST be set.
+		String					CalendarScale
+			Description
+				| The calendar system in which this date occurs, in lowercase. This 
+				| MUST be either a calendar system name registered as a Common Locale 
+				| Data Repository (CLDR) [RFC7529] or a vendor-specific value. The year,
+				| month, and day still MUST be represented in the Gregorian calendar. 
+				| Note that the year property might be required to convert the date 
+				| between the Gregorian calendar and the respective calendar system.
+		String					Utc
+			Description
+				| The point in time in UTC time.
 
 	// 2.8.3.  notes
 	Structure Note
+		Description
+			| A free-text note that is associated with the Card.
 		String					Type
 			Tag "@type" //  MUST be "Note" if set
+		String					Note
+			Description
+				| The free-text value of this note.
+		String					Created
+			Description
+				| The date and time when this note was created.
+		Struct Author			Author
+			Description
+				| The author of this note.
+
+	Structure Author
+		Description
+			| The author of a note.
+		String					Type
+			Description
+				| The JSContact type of the object. The value MUST be "Author", if set.
+		String					Name
+			Description
+				| The name of this author.
+		String					Uri
+			Description
+				| The URI value that identifies the author.
 
 	// 2.8.4.  personalInfo
 	Structure PersonalInfo
+		Description
+			| The personal information of the entity represented by the Card.
 		String					Type
 			Tag "@type" //  MUST be "PersonalInfo" if set
+		String					Kind
+			Description
+				| The kind of personal information
+		String					Value
+			Description
+				| The actual information
+		String					Level
+			Description
+				| The level of expertise or engagement in hobby or interest. 
+		Integer					ListAs
+			Description
+				| The position of the personal information in the list of all PersonalInfo
+				| objects that have the same kind property value in the Card. If set, the 
+				| listAs value MUST be higher than zero. Multiple personal information entries
+				| MAY have the same listAs property value or none. Sorting such same-valued 
+				| entries is implementation-specific.
+		String					Label
+			Description
+				| A custom label. 
+
