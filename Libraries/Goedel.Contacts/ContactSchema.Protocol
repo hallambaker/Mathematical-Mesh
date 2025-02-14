@@ -1,4 +1,5 @@
 ﻿Protocol Goedel.Contacts  Contacts Contacts
+	Extern JmapBase
 
 
 	//  Uses some funky formatting, need to extend the serializer
@@ -42,15 +43,10 @@
 		//	Description
 		//		|The date and time when the data in the Card was last modified.
 
-
-
 		String					Version
 			Required
 			Description
 				| The JSContact version of this Card. If specified, value MUST be '1.0'
-
-
-
 
 
 		String					Kind
@@ -156,7 +152,8 @@
 		Struct SchedulingAddress	SchedulingAddresses
 			Dictionary
 			Description
-				| The scheduling addresses by which the entity may receive calendar scheduling invitations.
+				| The scheduling addresses by which the entity may receive calendar  
+				| scheduling invitations.
 
 		// 2.5.  Address and Location Properties
 		// 2.5.1.  addresses
@@ -171,26 +168,29 @@
 		Struct CryptoKey		CryptoKeys
 			Dictionary
 			Description
-				|The cryptographic resources such as public keys and certificates associated 
+				| The cryptographic resources such as public keys and certificates associated 
 				| with the entity represented by the Card.
 
 		// 2.6.2.  directories
 		Struct Directory		Directories
 			Dictionary
 			Description
-				| The directories containing information about the entity represented by the Card.
+				| The directories containing information about the entity represented  
+				| by the Card.
 
 		// 2.6.3.  links
-		Struct Link				Links
+		Struct ResourceLink				Links
 			Dictionary
 			Description
-				| The links to resources that do not fit any of the other use-case-specific resource properties.
+				| The links to resources that do not fit any of the other  
+				| use-case-specific resource properties.
 
 		// 2.6.4.  media
 		Struct Media			Media
 			Dictionary
 			Description
-				| The media resources such as photographs, avatars, or sounds that are associated 
+				| The media resources such as photographs, avatars, or sounds that 
+				|  are associated 
 				| with the entity represented by the Card.
 
 		// 2.7.  Multilingual Properties
@@ -214,7 +214,7 @@
 				| The memorable dates and events for the entity represented by the Card.
 
 		// 2.8.2.  keywords
-		Struct TaggedBoolean	Keywords
+		Boolean			Keywords
 			Dictionary
 			Description
 				| The set of free-text keywords, also known as tags.
@@ -399,7 +399,8 @@
 	Structure Pronouns
 		String					Type
 			Tag "@type" //  MUST be "Pronouns" if set
-		String					Pronouns
+		String					Values
+			Tag "Pronouns"
 			Description
 				| The pronouns. Any value or form is allowed. Examples in English include "she/her"
 				| and "they/them/theirs". The value MAY be overridden in the localizations 
@@ -551,7 +552,7 @@
 			Description
 				| The address to use for calendar scheduling with the contact. This MUST 
 				| be a URI as defined in Section 3 of [RFC3986].
-		Struct TaggedBoolean	Contexts
+		Struct Boolean			Contexts
 			Multiple 
 			Description
 				| The contexts in which to use the scheduling address. 
@@ -658,7 +659,7 @@
 			| implementation-specific.
 
 	// 2.6.3.  links
-	Structure Link
+	Structure ResourceLink
 		Inherits				Resource
 		Description
 			| The links to resources that do not fit any of the other use-case-specific resource properties.
@@ -734,7 +735,8 @@
 			| A free-text note that is associated with the Card.
 		String					Type
 			Tag "@type" //  MUST be "Note" if set
-		String					Note
+		String					Value
+			Tag "Note"
 			Description
 				| The free-text value of this note.
 		String					Created

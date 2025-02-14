@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/13/2025 3:59:14 PM
+//  This file was automatically generated at 2/14/2025 1:04:10 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -93,7 +93,7 @@ public abstract partial class Contacts : global::Goedel.Protocol.JsonObject {
 	    {"AddressComponent", AddressComponent._Factory},
 	    {"CryptoKey", CryptoKey._Factory},
 	    {"Directory", Directory._Factory},
-	    {"Link", Link._Factory},
+	    {"ResourceLink", ResourceLink._Factory},
 	    {"Media", Media._Factory},
 	    {"PatchObject", PatchObject._Factory},
 	    {"Anniversary", Anniversary._Factory},
@@ -103,8 +103,7 @@ public abstract partial class Contacts : global::Goedel.Protocol.JsonObject {
 	    {"PersonalInfo", PersonalInfo._Factory}
 		};
 
-    // [ModuleInitializer]
-	
+	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
 	static Contacts() {
@@ -135,24 +134,12 @@ public abstract partial class Contacts : global::Goedel.Protocol.JsonObject {
 	///
 	///  Metadata, see section 2.1
 	/// </summary>
-public partial class ContactCard : Contacts {
-        /// <summary>
-        /// The JSContact type of the Card object. If specified, value MUST be 'card'
-        /// </summary>
-
-	public virtual string?						Type  {get; set;}
-
+public partial class ContactCard : JmapBase {
         /// <summary>
         /// The JSContact version of this Card. If specified, value MUST be '1.0'
         /// </summary>
 
-	public virtual string?						Version  {get; set;}
-
-        /// <summary>
-        /// The date and time when the Card was created.
-        /// </summary>
-
-	public virtual DateTime?						Created  {get; set;}
+	public virtual string?					Version  {get; set;}
 
         /// <summary>
         /// The kind of the entity the Card represents.
@@ -164,7 +151,7 @@ public partial class ContactCard : Contacts {
         /// application: a software application
         /// </summary>
 
-	public virtual string?						Kind  {get; set;}
+	public virtual string?					Kind  {get; set;}
 
         /// <summary>
         /// The language tag, as defined in [RFC5646], that best describes the language 
@@ -173,7 +160,7 @@ public partial class ContactCard : Contacts {
         /// property.
         /// </summary>
 
-	public virtual string?						Language  {get; set;}
+	public virtual string?					Language  {get; set;}
 
         /// <summary>
         /// The set of Cards that are members of this group Card. Each key in the set is 
@@ -181,139 +168,114 @@ public partial class ContactCard : Contacts {
         /// If this property is set, then the value of the kind property MUST be "group"
         /// </summary>
 
-	public virtual string?						Members  {get; set;}
-
-        /// <summary>
-        /// The identifier for the product that created the Card. If set, the value MUST 
-        /// be at least one character long.
-        /// </summary>
-
-	public virtual string?						ProdId  {get; set;}
-
-        /// <summary>
-        /// acquaintance agent child co-resident co-worker colleague 
-        /// contact crush date emergency friend kin me met muse
-        /// neighbor parent sibling spouse sweetheart
-        /// </summary>
-
-	public virtual Relation?						RelatedTo  {get; set;}
-
-        /// <summary>
-        /// An identifier that associates the object as the same across different systems, 
-        /// address books, and views. The value SHOULD be a URN [RFC8141], but for 
-        /// compatibility with [RFC6350], it MAY also be a URI [RFC3986] or free-text value.
-        /// </summary>
-
-	public virtual string?						Uid  {get; set;}
-
-        /// <summary>
-        ///The date and time when the data in the Card was last modified.
-        /// </summary>
-
-	public virtual string?						Updated  {get; set;}
+	public virtual Dictionary<string,string>?					Members  {get; set;}
 
         /// <summary>
         /// The name of the entity represented by the Card. This can be any type of name, 
         /// e.g., it can, but need not, be the legal name of a person.
         /// </summary>
 
-	public virtual Name?						Name  {get; set;}
+	public virtual Name?					Name  {get; set;}
 
         /// <summary>
         /// The nicknames of the entity represented by the Card.
         /// </summary>
 
-	public virtual NickName?						NickNames  {get; set;}
+	public virtual Dictionary<string,NickName>?					NickNames  {get; set;}
 
         /// <summary>
         /// The company or organization names and units associated with the Card.
         /// </summary>
 
-	public virtual Organization?						Organizations  {get; set;}
+	public virtual Dictionary<string,Organization>?					Organizations  {get; set;}
 
         /// <summary>
         /// The information that directs how to address, speak to, or refer to the
         /// entity that is represented by the Card.
         /// </summary>
 
-	public virtual SpeakToAs?						SpeakToAs  {get; set;}
+	public virtual SpeakToAs?					SpeakToAs  {get; set;}
 
         /// <summary>
         /// The job titles or functional positions of the entity represented by the Card.
         /// </summary>
 
-	public virtual Title?						Titles  {get; set;}
+	public virtual Dictionary<string,Title>?					Titles  {get; set;}
 
         /// <summary>
         /// The email addresses in which to contact the entity represented by the Card.
         /// </summary>
 
-	public virtual EmailAddress?						Emails  {get; set;}
+	public virtual Dictionary<string,EmailAddress>?					Emails  {get; set;}
 
         /// <summary>
         /// The online services that are associated with the entity represented by the Card.
         /// This can be messaging services, social media profiles, and other.
         /// </summary>
 
-	public virtual OnlineService?						OnlineServices  {get; set;}
+	public virtual Dictionary<string,OnlineService>?					OnlineServices  {get; set;}
 
         /// <summary>
         /// The phone numbers by which to contact the entity represented by the Card.
         /// </summary>
 
-	public virtual Phone?						Phones  {get; set;}
+	public virtual Dictionary<string,Phone>?					Phones  {get; set;}
 
         /// <summary>
         /// The preferred languages for contacting the entity associated with the Card.
         /// </summary>
 
-	public virtual LanguagePref?						PreferredLanguages  {get; set;}
+	public virtual Dictionary<string,LanguagePref>?					PreferredLanguages  {get; set;}
 
         /// <summary>
         /// The calendaring resources of the entity represented by the Card, such as 
         /// to look up free-busy information.
         /// </summary>
 
-	public virtual Calendar?						Calendars  {get; set;}
+	public virtual Dictionary<string,Calendar>?					Calendars  {get; set;}
 
         /// <summary>
-        /// The scheduling addresses by which the entity may receive calendar scheduling invitations.
+        /// The scheduling addresses by which the entity may receive calendar  
+        /// scheduling invitations.
         /// </summary>
 
-	public virtual SchedulingAddress?						SchedulingAddresses  {get; set;}
+	public virtual Dictionary<string,SchedulingAddress>?					SchedulingAddresses  {get; set;}
 
         /// <summary>
         /// The addresses of the entity represented by the Card, such as postal addresses 
         /// or geographic locations.
         /// </summary>
 
-	public virtual Address?						Addresses  {get; set;}
+	public virtual Dictionary<string,Address>?					Addresses  {get; set;}
 
         /// <summary>
-        ///The cryptographic resources such as public keys and certificates associated 
+        /// The cryptographic resources such as public keys and certificates associated 
         /// with the entity represented by the Card.
         /// </summary>
 
-	public virtual CryptoKey?						CryptoKeys  {get; set;}
+	public virtual Dictionary<string,CryptoKey>?					CryptoKeys  {get; set;}
 
         /// <summary>
-        /// The directories containing information about the entity represented by the Card.
+        /// The directories containing information about the entity represented  
+        /// by the Card.
         /// </summary>
 
-	public virtual Directory?						Directories  {get; set;}
+	public virtual Dictionary<string,Directory>?					Directories  {get; set;}
 
         /// <summary>
-        /// The links to resources that do not fit any of the other use-case-specific resource properties.
+        /// The links to resources that do not fit any of the other  
+        /// use-case-specific resource properties.
         /// </summary>
 
-	public virtual Link?						Links  {get; set;}
+	public virtual Dictionary<string,ResourceLink>?					Links  {get; set;}
 
         /// <summary>
-        /// The media resources such as photographs, avatars, or sounds that are associated 
+        /// The media resources such as photographs, avatars, or sounds that 
+        ///  are associated 
         /// with the entity represented by the Card.
         /// </summary>
 
-	public virtual Media?						Media  {get; set;}
+	public virtual Dictionary<string,Media>?					Media  {get; set;}
 
         /// <summary>
         /// The property values localized to languages other than the main language 
@@ -325,31 +287,31 @@ public partial class ContactCard : Contacts {
         /// property. A patch MUST NOT target the localizations property.
         /// </summary>
 
-	public virtual PatchObject?						Localizations  {get; set;}
+	public virtual Dictionary<string,PatchObject>?					Localizations  {get; set;}
 
         /// <summary>
         /// The memorable dates and events for the entity represented by the Card.
         /// </summary>
 
-	public virtual Anniversary?						Anniversaries  {get; set;}
+	public virtual Dictionary<string,Anniversary>?					Anniversaries  {get; set;}
 
         /// <summary>
         /// The set of free-text keywords, also known as tags.
         /// </summary>
 
-	public virtual TaggedBoolean?						Keywords  {get; set;}
+	public virtual Dictionary<string,bool>?					Keywords  {get; set;}
 
         /// <summary>
         /// The free-text notes that are associated with the Card.
         /// </summary>
 
-	public virtual Note?						Notes  {get; set;}
+	public virtual Dictionary<string,Note>?					Notes  {get; set;}
 
         /// <summary>
         /// The personal information of the entity represented by the Card.
         /// </summary>
 
-	public virtual PersonalInfo?						PersonalInfo  {get; set;}
+	public virtual Dictionary<string,PersonalInfo>?					PersonalInfo  {get; set;}
 
 
 
@@ -360,97 +322,84 @@ public partial class ContactCard : Contacts {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "@type", new PropertyString ("@type", 
-					(IBinding data, string? value) => {(data as ContactCard).Type = value;}, (IBinding data) => (data as ContactCard).Type )},
 			{ "Version", new PropertyString ("Version", 
 					(IBinding data, string? value) => {(data as ContactCard).Version = value;}, (IBinding data) => (data as ContactCard).Version )},
-			{ "Created", new PropertyDateTime ("Created", 
-					(IBinding data, DateTime? value) => {(data as ContactCard).Created = value;}, (IBinding data) => (data as ContactCard).Created )},
 			{ "Kind", new PropertyString ("Kind", 
 					(IBinding data, string? value) => {(data as ContactCard).Kind = value;}, (IBinding data) => (data as ContactCard).Kind )},
 			{ "Language", new PropertyString ("Language", 
 					(IBinding data, string? value) => {(data as ContactCard).Language = value;}, (IBinding data) => (data as ContactCard).Language )},
-			{ "Members", new PropertyListString ("Members", 
-					(IBinding data, string? value) => {(data as ContactCard).Members = value;}, (IBinding data) => (data as ContactCard).Members )},
-			{ "ProdId", new PropertyString ("ProdId", 
-					(IBinding data, string? value) => {(data as ContactCard).ProdId = value;}, (IBinding data) => (data as ContactCard).ProdId )},
-			{ "RelatedTo", new PropertyListStruct ("RelatedTo", 
-					(IBinding data, object? value) => {(data as ContactCard).RelatedTo = value as Relation?;}, (IBinding data) => (data as ContactCard).RelatedTo,
-					false, ()=>new  Relation?(), ()=>new Relation())} ,
-			{ "Uid", new PropertyString ("Uid", 
-					(IBinding data, string? value) => {(data as ContactCard).Uid = value;}, (IBinding data) => (data as ContactCard).Uid )},
-			{ "Updated", new PropertyString ("Updated", 
-					(IBinding data, string? value) => {(data as ContactCard).Updated = value;}, (IBinding data) => (data as ContactCard).Updated )},
+			{ "Members", new PropertyDictionaryString ("Members", 
+					(IBinding data, Dictionary<string,string>? value) => {(data as ContactCard).Members = value;}, (IBinding data) => (data as ContactCard).Members )},
 			{ "Name", new PropertyStruct ("Name", 
-					(IBinding data, object? value) => {(data as ContactCard).Name = value as Name?;}, (IBinding data) => (data as ContactCard).Name,
-					false, ()=>new  Name?(), ()=>new Name())} ,
-			{ "NickNames", new PropertyListStruct ("NickNames", 
-					(IBinding data, object? value) => {(data as ContactCard).NickNames = value as NickName?;}, (IBinding data) => (data as ContactCard).NickNames,
-					false, ()=>new  NickName?(), ()=>new NickName())} ,
-			{ "Organizations", new PropertyListStruct ("Organizations", 
-					(IBinding data, object? value) => {(data as ContactCard).Organizations = value as Organization?;}, (IBinding data) => (data as ContactCard).Organizations,
-					false, ()=>new  Organization?(), ()=>new Organization())} ,
+					(IBinding data, object? value) => {(data as ContactCard).Name = value as Name;}, (IBinding data) => (data as ContactCard).Name,
+					false, ()=>new  Name(), ()=>new Name())} ,
+			{ "NickNames", new PropertyDictionaryStruct ("NickNames", 
+					(IBinding data, object? value) => {(data as ContactCard).NickNames = value as Dictionary<string,NickName>;}, (IBinding data) => (data as ContactCard).NickNames,
+					false, ()=>new  Dictionary<string,NickName>(), ()=>new NickName())} ,
+			{ "Organizations", new PropertyDictionaryStruct ("Organizations", 
+					(IBinding data, object? value) => {(data as ContactCard).Organizations = value as Dictionary<string,Organization>;}, (IBinding data) => (data as ContactCard).Organizations,
+					false, ()=>new  Dictionary<string,Organization>(), ()=>new Organization())} ,
 			{ "SpeakToAs", new PropertyStruct ("SpeakToAs", 
-					(IBinding data, object? value) => {(data as ContactCard).SpeakToAs = value as SpeakToAs?;}, (IBinding data) => (data as ContactCard).SpeakToAs,
-					false, ()=>new  SpeakToAs?(), ()=>new SpeakToAs())} ,
-			{ "Titles", new PropertyListStruct ("Titles", 
-					(IBinding data, object? value) => {(data as ContactCard).Titles = value as Title?;}, (IBinding data) => (data as ContactCard).Titles,
-					false, ()=>new  Title?(), ()=>new Title())} ,
-			{ "Emails", new PropertyListStruct ("Emails", 
-					(IBinding data, object? value) => {(data as ContactCard).Emails = value as EmailAddress?;}, (IBinding data) => (data as ContactCard).Emails,
-					false, ()=>new  EmailAddress?(), ()=>new EmailAddress())} ,
-			{ "OnlineServices", new PropertyListStruct ("OnlineServices", 
-					(IBinding data, object? value) => {(data as ContactCard).OnlineServices = value as OnlineService?;}, (IBinding data) => (data as ContactCard).OnlineServices,
-					false, ()=>new  OnlineService?(), ()=>new OnlineService())} ,
-			{ "Phones", new PropertyListStruct ("Phones", 
-					(IBinding data, object? value) => {(data as ContactCard).Phones = value as Phone?;}, (IBinding data) => (data as ContactCard).Phones,
-					false, ()=>new  Phone?(), ()=>new Phone())} ,
-			{ "PreferredLanguages", new PropertyListStruct ("PreferredLanguages", 
-					(IBinding data, object? value) => {(data as ContactCard).PreferredLanguages = value as LanguagePref?;}, (IBinding data) => (data as ContactCard).PreferredLanguages,
-					false, ()=>new  LanguagePref?(), ()=>new LanguagePref())} ,
-			{ "Calendars", new PropertyListStruct ("Calendars", 
-					(IBinding data, object? value) => {(data as ContactCard).Calendars = value as Calendar?;}, (IBinding data) => (data as ContactCard).Calendars,
-					false, ()=>new  Calendar?(), ()=>new Calendar())} ,
-			{ "SchedulingAddresses", new PropertyListStruct ("SchedulingAddresses", 
-					(IBinding data, object? value) => {(data as ContactCard).SchedulingAddresses = value as SchedulingAddress?;}, (IBinding data) => (data as ContactCard).SchedulingAddresses,
-					false, ()=>new  SchedulingAddress?(), ()=>new SchedulingAddress())} ,
-			{ "Addresses", new PropertyListStruct ("Addresses", 
-					(IBinding data, object? value) => {(data as ContactCard).Addresses = value as Address?;}, (IBinding data) => (data as ContactCard).Addresses,
-					false, ()=>new  Address?(), ()=>new Address())} ,
-			{ "CryptoKeys", new PropertyListStruct ("CryptoKeys", 
-					(IBinding data, object? value) => {(data as ContactCard).CryptoKeys = value as CryptoKey?;}, (IBinding data) => (data as ContactCard).CryptoKeys,
-					false, ()=>new  CryptoKey?(), ()=>new CryptoKey())} ,
-			{ "Directories", new PropertyListStruct ("Directories", 
-					(IBinding data, object? value) => {(data as ContactCard).Directories = value as Directory?;}, (IBinding data) => (data as ContactCard).Directories,
-					false, ()=>new  Directory?(), ()=>new Directory())} ,
-			{ "Links", new PropertyListStruct ("Links", 
-					(IBinding data, object? value) => {(data as ContactCard).Links = value as Link?;}, (IBinding data) => (data as ContactCard).Links,
-					false, ()=>new  Link?(), ()=>new Link())} ,
-			{ "Media", new PropertyListStruct ("Media", 
-					(IBinding data, object? value) => {(data as ContactCard).Media = value as Media?;}, (IBinding data) => (data as ContactCard).Media,
-					false, ()=>new  Media?(), ()=>new Media())} ,
-			{ "Localizations", new PropertyListStruct ("Localizations", 
-					(IBinding data, object? value) => {(data as ContactCard).Localizations = value as PatchObject?;}, (IBinding data) => (data as ContactCard).Localizations,
-					false, ()=>new  PatchObject?(), ()=>new PatchObject())} ,
-			{ "Anniversaries", new PropertyListStruct ("Anniversaries", 
-					(IBinding data, object? value) => {(data as ContactCard).Anniversaries = value as Anniversary?;}, (IBinding data) => (data as ContactCard).Anniversaries,
-					false, ()=>new  Anniversary?(), ()=>new Anniversary())} ,
-			{ "Keywords", new PropertyListStruct ("Keywords", 
-					(IBinding data, object? value) => {(data as ContactCard).Keywords = value as TaggedBoolean?;}, (IBinding data) => (data as ContactCard).Keywords,
-					false, ()=>new  TaggedBoolean?(), ()=>new TaggedBoolean())} ,
-			{ "Notes", new PropertyListStruct ("Notes", 
-					(IBinding data, object? value) => {(data as ContactCard).Notes = value as Note?;}, (IBinding data) => (data as ContactCard).Notes,
-					false, ()=>new  Note?(), ()=>new Note())} ,
-			{ "PersonalInfo", new PropertyListStruct ("PersonalInfo", 
-					(IBinding data, object? value) => {(data as ContactCard).PersonalInfo = value as PersonalInfo?;}, (IBinding data) => (data as ContactCard).PersonalInfo,
-					false, ()=>new  PersonalInfo?(), ()=>new PersonalInfo())} 
-        }, __Tag,() => new ContactCard(), null);
+					(IBinding data, object? value) => {(data as ContactCard).SpeakToAs = value as SpeakToAs;}, (IBinding data) => (data as ContactCard).SpeakToAs,
+					false, ()=>new  SpeakToAs(), ()=>new SpeakToAs())} ,
+			{ "Titles", new PropertyDictionaryStruct ("Titles", 
+					(IBinding data, object? value) => {(data as ContactCard).Titles = value as Dictionary<string,Title>;}, (IBinding data) => (data as ContactCard).Titles,
+					false, ()=>new  Dictionary<string,Title>(), ()=>new Title())} ,
+			{ "Emails", new PropertyDictionaryStruct ("Emails", 
+					(IBinding data, object? value) => {(data as ContactCard).Emails = value as Dictionary<string,EmailAddress>;}, (IBinding data) => (data as ContactCard).Emails,
+					false, ()=>new  Dictionary<string,EmailAddress>(), ()=>new EmailAddress())} ,
+			{ "OnlineServices", new PropertyDictionaryStruct ("OnlineServices", 
+					(IBinding data, object? value) => {(data as ContactCard).OnlineServices = value as Dictionary<string,OnlineService>;}, (IBinding data) => (data as ContactCard).OnlineServices,
+					false, ()=>new  Dictionary<string,OnlineService>(), ()=>new OnlineService())} ,
+			{ "Phones", new PropertyDictionaryStruct ("Phones", 
+					(IBinding data, object? value) => {(data as ContactCard).Phones = value as Dictionary<string,Phone>;}, (IBinding data) => (data as ContactCard).Phones,
+					false, ()=>new  Dictionary<string,Phone>(), ()=>new Phone())} ,
+			{ "PreferredLanguages", new PropertyDictionaryStruct ("PreferredLanguages", 
+					(IBinding data, object? value) => {(data as ContactCard).PreferredLanguages = value as Dictionary<string,LanguagePref>;}, (IBinding data) => (data as ContactCard).PreferredLanguages,
+					false, ()=>new  Dictionary<string,LanguagePref>(), ()=>new LanguagePref())} ,
+			{ "Calendars", new PropertyDictionaryStruct ("Calendars", 
+					(IBinding data, object? value) => {(data as ContactCard).Calendars = value as Dictionary<string,Calendar>;}, (IBinding data) => (data as ContactCard).Calendars,
+					false, ()=>new  Dictionary<string,Calendar>(), ()=>new Calendar())} ,
+			{ "SchedulingAddresses", new PropertyDictionaryStruct ("SchedulingAddresses", 
+					(IBinding data, object? value) => {(data as ContactCard).SchedulingAddresses = value as Dictionary<string,SchedulingAddress>;}, (IBinding data) => (data as ContactCard).SchedulingAddresses,
+					false, ()=>new  Dictionary<string,SchedulingAddress>(), ()=>new SchedulingAddress())} ,
+			{ "Addresses", new PropertyDictionaryStruct ("Addresses", 
+					(IBinding data, object? value) => {(data as ContactCard).Addresses = value as Dictionary<string,Address>;}, (IBinding data) => (data as ContactCard).Addresses,
+					false, ()=>new  Dictionary<string,Address>(), ()=>new Address())} ,
+			{ "CryptoKeys", new PropertyDictionaryStruct ("CryptoKeys", 
+					(IBinding data, object? value) => {(data as ContactCard).CryptoKeys = value as Dictionary<string,CryptoKey>;}, (IBinding data) => (data as ContactCard).CryptoKeys,
+					false, ()=>new  Dictionary<string,CryptoKey>(), ()=>new CryptoKey())} ,
+			{ "Directories", new PropertyDictionaryStruct ("Directories", 
+					(IBinding data, object? value) => {(data as ContactCard).Directories = value as Dictionary<string,Directory>;}, (IBinding data) => (data as ContactCard).Directories,
+					false, ()=>new  Dictionary<string,Directory>(), ()=>new Directory())} ,
+			{ "Links", new PropertyDictionaryStruct ("Links", 
+					(IBinding data, object? value) => {(data as ContactCard).Links = value as Dictionary<string,ResourceLink>;}, (IBinding data) => (data as ContactCard).Links,
+					false, ()=>new  Dictionary<string,ResourceLink>(), ()=>new ResourceLink())} ,
+			{ "Media", new PropertyDictionaryStruct ("Media", 
+					(IBinding data, object? value) => {(data as ContactCard).Media = value as Dictionary<string,Media>;}, (IBinding data) => (data as ContactCard).Media,
+					false, ()=>new  Dictionary<string,Media>(), ()=>new Media())} ,
+			{ "Localizations", new PropertyDictionaryStruct ("Localizations", 
+					(IBinding data, object? value) => {(data as ContactCard).Localizations = value as Dictionary<string,PatchObject>;}, (IBinding data) => (data as ContactCard).Localizations,
+					false, ()=>new  Dictionary<string,PatchObject>(), ()=>new PatchObject())} ,
+			{ "Anniversaries", new PropertyDictionaryStruct ("Anniversaries", 
+					(IBinding data, object? value) => {(data as ContactCard).Anniversaries = value as Dictionary<string,Anniversary>;}, (IBinding data) => (data as ContactCard).Anniversaries,
+					false, ()=>new  Dictionary<string,Anniversary>(), ()=>new Anniversary())} ,
+			{ "Keywords", new PropertyDictionaryBoolean ("Keywords", 
+					(IBinding data, Dictionary<string,bool>? value) => {(data as ContactCard).Keywords = value;}, (IBinding data) => (data as ContactCard).Keywords )},
+			{ "Notes", new PropertyDictionaryStruct ("Notes", 
+					(IBinding data, object? value) => {(data as ContactCard).Notes = value as Dictionary<string,Note>;}, (IBinding data) => (data as ContactCard).Notes,
+					false, ()=>new  Dictionary<string,Note>(), ()=>new Note())} ,
+			{ "PersonalInfo", new PropertyDictionaryStruct ("PersonalInfo", 
+					(IBinding data, object? value) => {(data as ContactCard).PersonalInfo = value as Dictionary<string,PersonalInfo>;}, (IBinding data) => (data as ContactCard).PersonalInfo,
+					false, ()=>new  Dictionary<string,PersonalInfo>(), ()=>new PersonalInfo())} 
+        }, __Tag,() => new ContactCard(), JmapBase._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, JmapBase._StaticAllProperties);
 
 
     ///<inheritdoc/>
@@ -511,7 +460,7 @@ public partial class Relation : Contacts {
         /// The relationships, each one MUST have the value true.
         /// </summary>
 
-	public virtual bool?						Relationships  {get; set;}
+	public virtual Dictionary<string,bool>?					Relationships  {get; set;}
 
 
 
@@ -522,8 +471,8 @@ public partial class Relation : Contacts {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "Relationships", new PropertyListBoolean ("Relationships", 
-					(IBinding data, bool? value) => {(data as Relation).Relationships = value;}, (IBinding data) => (data as Relation).Relationships )}
+			{ "Relationships", new PropertyDictionaryBoolean ("Relationships", 
+					(IBinding data, Dictionary<string,bool>? value) => {(data as Relation).Relationships = value;}, (IBinding data) => (data as Relation).Relationships )}
         }, __Tag,() => new Relation(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -590,37 +539,37 @@ public partial class Resource : Contacts {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// 
         /// </summary>
 
-	public virtual string?						Kind  {get; set;}
+	public virtual string?					Kind  {get; set;}
 
         /// <summary>
         /// 
         /// </summary>
 
-	public virtual string?						Uri  {get; set;}
+	public virtual string?					Uri  {get; set;}
 
         /// <summary>
         /// 
         /// </summary>
 
-	public virtual bool?						Contexts  {get; set;}
+	public virtual Dictionary<string,bool>?					Contexts  {get; set;}
 
         /// <summary>
         /// 
         /// </summary>
 
-	public virtual int?						Pref  {get; set;}
+	public virtual int?					Pref  {get; set;}
 
         /// <summary>
         /// 
         /// </summary>
 
-	public virtual string?						Label  {get; set;}
+	public virtual string?					Label  {get; set;}
 
 
 
@@ -637,8 +586,8 @@ public partial class Resource : Contacts {
 					(IBinding data, string? value) => {(data as Resource).Kind = value;}, (IBinding data) => (data as Resource).Kind )},
 			{ "Uri", new PropertyString ("Uri", 
 					(IBinding data, string? value) => {(data as Resource).Uri = value;}, (IBinding data) => (data as Resource).Uri )},
-			{ "Contexts", new PropertyListBoolean ("Contexts", 
-					(IBinding data, bool? value) => {(data as Resource).Contexts = value;}, (IBinding data) => (data as Resource).Contexts )},
+			{ "Contexts", new PropertyDictionaryBoolean ("Contexts", 
+					(IBinding data, Dictionary<string,bool>? value) => {(data as Resource).Contexts = value;}, (IBinding data) => (data as Resource).Contexts )},
 			{ "Pref", new PropertyInteger32 ("Pref", 
 					(IBinding data, int? value) => {(data as Resource).Pref = value;}, (IBinding data) => (data as Resource).Pref )},
 			{ "Label", new PropertyString ("Label", 
@@ -711,7 +660,7 @@ public partial class Name : Contacts {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The components (Section 2.2.1.2) making up this name. The components property 
@@ -725,7 +674,7 @@ public partial class Name : Contacts {
         /// The indicator if the name components in the components property are ordered.
         /// </summary>
 
-	public virtual bool?						IsOrdered  {get; set;}
+	public virtual bool?					IsOrdered  {get; set;}
 
         /// <summary>
         /// The default separator to insert between name component values when 
@@ -736,14 +685,14 @@ public partial class Name : Contacts {
         /// if the components property is not set.
         /// </summary>
 
-	public virtual string?						DefaultSeparator  {get; set;}
+	public virtual string?					DefaultSeparator  {get; set;}
 
         /// <summary>
         /// The full name representation of the Name. The full property MUST be set 
         /// if the components property is not set.
         /// </summary>
 
-	public virtual string?						Full  {get; set;}
+	public virtual string?					Full  {get; set;}
 
         /// <summary>
         /// The value to lexicographically sort the name in relation to other names 
@@ -756,19 +705,19 @@ public partial class Name : Contacts {
         /// components property is not set.
         /// </summary>
 
-	public virtual string?						SortAs  {get; set;}
+	public virtual string?					SortAs  {get; set;}
 
         /// <summary>
         /// The script used in the value of the NameComponent phonetic property.
         /// </summary>
 
-	public virtual string?						PhoneticScript  {get; set;}
+	public virtual string?					PhoneticScript  {get; set;}
 
         /// <summary>
         /// The phonetic system used in the NameComponent phonetic property.
         /// </summary>
 
-	public virtual string?						PhoneticSystem  {get; set;}
+	public virtual string?					PhoneticSystem  {get; set;}
 
 
 
@@ -782,8 +731,8 @@ public partial class Name : Contacts {
 			{ "@type", new PropertyString ("@type", 
 					(IBinding data, string? value) => {(data as Name).Type = value;}, (IBinding data) => (data as Name).Type )},
 			{ "Components", new PropertyListStruct ("Components", 
-					(IBinding data, object? value) => {(data as Name).Components = value as List<NameComponent>?;}, (IBinding data) => (data as Name).Components,
-					false, ()=>new  List<NameComponent>?(), ()=>new NameComponent())} ,
+					(IBinding data, object? value) => {(data as Name).Components = value as List<NameComponent>;}, (IBinding data) => (data as Name).Components,
+					false, ()=>new  List<NameComponent>(), ()=>new NameComponent())} ,
 			{ "IsOrdered", new PropertyBoolean ("IsOrdered", 
 					(IBinding data, bool? value) => {(data as Name).IsOrdered = value;}, (IBinding data) => (data as Name).IsOrdered )},
 			{ "DefaultSeparator", new PropertyString ("DefaultSeparator", 
@@ -864,13 +813,13 @@ public partial class NameComponent : Contacts {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// 
         /// </summary>
 
-	public virtual string?						Value  {get; set;}
+	public virtual string?					Value  {get; set;}
 
         /// <summary>
         /// title: an honorific title or prefix, e.g., "Mr.", "Ms.", or "Dr.".
@@ -883,12 +832,12 @@ public partial class NameComponent : Contacts {
         /// separator: a formatting separator between two ordered name non-separator components. 
         /// </summary>
 
-	public virtual string?						Kind  {get; set;}
+	public virtual string?					Kind  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Phonetic  {get; set;}
+	public virtual string?					Phonetic  {get; set;}
 
 
 
@@ -973,25 +922,25 @@ public partial class NickName : Contacts {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The nickname.
         /// </summary>
 
-	public virtual string?						Name  {get; set;}
+	public virtual string?					Name  {get; set;}
 
         /// <summary>
         /// The contexts in which to use the nickname.
         /// </summary>
 
-	public virtual bool?						Contexts  {get; set;}
+	public virtual Dictionary<string,bool>?					Contexts  {get; set;}
 
         /// <summary>
         /// The preference of the nickname in relation to other nicknames. 
         /// </summary>
 
-	public virtual int?						Pref  {get; set;}
+	public virtual int?					Pref  {get; set;}
 
 
 
@@ -1006,8 +955,8 @@ public partial class NickName : Contacts {
 					(IBinding data, string? value) => {(data as NickName).Type = value;}, (IBinding data) => (data as NickName).Type )},
 			{ "Name", new PropertyString ("Name", 
 					(IBinding data, string? value) => {(data as NickName).Name = value;}, (IBinding data) => (data as NickName).Name )},
-			{ "Contexts", new PropertyListBoolean ("Contexts", 
-					(IBinding data, bool? value) => {(data as NickName).Contexts = value;}, (IBinding data) => (data as NickName).Contexts )},
+			{ "Contexts", new PropertyDictionaryBoolean ("Contexts", 
+					(IBinding data, Dictionary<string,bool>? value) => {(data as NickName).Contexts = value;}, (IBinding data) => (data as NickName).Contexts )},
 			{ "Pref", new PropertyInteger32 ("Pref", 
 					(IBinding data, int? value) => {(data as NickName).Pref = value;}, (IBinding data) => (data as NickName).Pref )}
         }, __Tag,() => new NickName(), null);
@@ -1076,13 +1025,13 @@ public partial class Organization : Contacts {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The name of the organization.
         /// </summary>
 
-	public virtual string?						Name  {get; set;}
+	public virtual string?					Name  {get; set;}
 
         /// <summary>
         /// A list of organizational units, ordered as descending by hierarchy 
@@ -1098,14 +1047,14 @@ public partial class Organization : Contacts {
         /// the name property value MAY be used for comparison.
         /// </summary>
 
-	public virtual string?						SortAs  {get; set;}
+	public virtual string?					SortAs  {get; set;}
 
         /// <summary>
         /// The contexts in which association with the organization applies. For 
         /// example, membership in a choir may only apply in a private context.
         /// </summary>
 
-	public virtual bool?						Contexts  {get; set;}
+	public virtual Dictionary<string,bool>?					Contexts  {get; set;}
 
 
 
@@ -1121,12 +1070,12 @@ public partial class Organization : Contacts {
 			{ "Name", new PropertyString ("Name", 
 					(IBinding data, string? value) => {(data as Organization).Name = value;}, (IBinding data) => (data as Organization).Name )},
 			{ "Units", new PropertyListStruct ("Units", 
-					(IBinding data, object? value) => {(data as Organization).Units = value as List<OrgUnit>?;}, (IBinding data) => (data as Organization).Units,
-					false, ()=>new  List<OrgUnit>?(), ()=>new OrgUnit())} ,
+					(IBinding data, object? value) => {(data as Organization).Units = value as List<OrgUnit>;}, (IBinding data) => (data as Organization).Units,
+					false, ()=>new  List<OrgUnit>(), ()=>new OrgUnit())} ,
 			{ "SortAs", new PropertyString ("SortAs", 
 					(IBinding data, string? value) => {(data as Organization).SortAs = value;}, (IBinding data) => (data as Organization).SortAs )},
-			{ "Contexts", new PropertyListBoolean ("Contexts", 
-					(IBinding data, bool? value) => {(data as Organization).Contexts = value;}, (IBinding data) => (data as Organization).Contexts )}
+			{ "Contexts", new PropertyDictionaryBoolean ("Contexts", 
+					(IBinding data, Dictionary<string,bool>? value) => {(data as Organization).Contexts = value;}, (IBinding data) => (data as Organization).Contexts )}
         }, __Tag,() => new Organization(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1194,7 +1143,7 @@ public partial class OrgUnit : Contacts {
         /// The name of the organizational unit.
         /// </summary>
 
-	public virtual string?						Name  {get; set;}
+	public virtual string?					Name  {get; set;}
 
         /// <summary>
         /// The value to lexicographically sort the organizational unit in relation 
@@ -1205,7 +1154,7 @@ public partial class OrgUnit : Contacts {
         /// property, the name property value MAY be used for comparison.
         /// </summary>
 
-	public virtual string?						SortAs  {get; set;}
+	public virtual string?					SortAs  {get; set;}
 
 
 
@@ -1286,7 +1235,7 @@ public partial class SpeakToAs : Contacts {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The grammatical gender to use in salutations and other grammatical 
@@ -1295,13 +1244,13 @@ public partial class SpeakToAs : Contacts {
         /// (masculine)
         /// </summary>
 
-	public virtual string?						grammaticalGender  {get; set;}
+	public virtual string?					grammaticalGender  {get; set;}
 
         /// <summary>
         /// The pronouns that the contact chooses to use for themselves.
         /// </summary>
 
-	public virtual Pronouns?						Pronouns  {get; set;}
+	public virtual Dictionary<string,Pronouns>?					Pronouns  {get; set;}
 
 
 
@@ -1316,9 +1265,9 @@ public partial class SpeakToAs : Contacts {
 					(IBinding data, string? value) => {(data as SpeakToAs).Type = value;}, (IBinding data) => (data as SpeakToAs).Type )},
 			{ "grammaticalGender", new PropertyString ("grammaticalGender", 
 					(IBinding data, string? value) => {(data as SpeakToAs).grammaticalGender = value;}, (IBinding data) => (data as SpeakToAs).grammaticalGender )},
-			{ "Pronouns", new PropertyListStruct ("Pronouns", 
-					(IBinding data, object? value) => {(data as SpeakToAs).Pronouns = value as Pronouns?;}, (IBinding data) => (data as SpeakToAs).Pronouns,
-					false, ()=>new  Pronouns?(), ()=>new Pronouns())} 
+			{ "Pronouns", new PropertyDictionaryStruct ("Pronouns", 
+					(IBinding data, object? value) => {(data as SpeakToAs).Pronouns = value as Dictionary<string,Pronouns>;}, (IBinding data) => (data as SpeakToAs).Pronouns,
+					false, ()=>new  Dictionary<string,Pronouns>(), ()=>new Pronouns())} 
         }, __Tag,() => new SpeakToAs(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1385,7 +1334,7 @@ public partial class Pronouns : Contacts {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The pronouns. Any value or form is allowed. Examples in English include "she/her"
@@ -1393,19 +1342,19 @@ public partial class Pronouns : Contacts {
         /// property.
         /// </summary>
 
-	public virtual string?						Pronouns  {get; set;}
+	public virtual string?					Values  {get; set;}
 
         /// <summary>
         /// The contexts in which to use the pronouns.
         /// </summary>
 
-	public virtual bool?						Contexts  {get; set;}
+	public virtual Dictionary<string,bool>?					Contexts  {get; set;}
 
         /// <summary>
         /// The preference of the pronouns in relation to other pronouns in the same context.
         /// </summary>
 
-	public virtual int?						Pref  {get; set;}
+	public virtual int?					Pref  {get; set;}
 
 
 
@@ -1419,9 +1368,9 @@ public partial class Pronouns : Contacts {
 			{ "@type", new PropertyString ("@type", 
 					(IBinding data, string? value) => {(data as Pronouns).Type = value;}, (IBinding data) => (data as Pronouns).Type )},
 			{ "Pronouns", new PropertyString ("Pronouns", 
-					(IBinding data, string? value) => {(data as Pronouns).Pronouns = value;}, (IBinding data) => (data as Pronouns).Pronouns )},
-			{ "Contexts", new PropertyListBoolean ("Contexts", 
-					(IBinding data, bool? value) => {(data as Pronouns).Contexts = value;}, (IBinding data) => (data as Pronouns).Contexts )},
+					(IBinding data, string? value) => {(data as Pronouns).Values = value;}, (IBinding data) => (data as Pronouns).Values )},
+			{ "Contexts", new PropertyDictionaryBoolean ("Contexts", 
+					(IBinding data, Dictionary<string,bool>? value) => {(data as Pronouns).Contexts = value;}, (IBinding data) => (data as Pronouns).Contexts )},
 			{ "Pref", new PropertyInteger32 ("Pref", 
 					(IBinding data, int? value) => {(data as Pronouns).Pref = value;}, (IBinding data) => (data as Pronouns).Pref )}
         }, __Tag,() => new Pronouns(), null);
@@ -1490,13 +1439,13 @@ public partial class Title : Contacts {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The title or role name of the entity represented by the Card.
         /// </summary>
 
-	public virtual string?						Name  {get; set;}
+	public virtual string?					Name  {get; set;}
 
         /// <summary>
         /// The organizational or situational kind of the title. Some organizations and 
@@ -1504,13 +1453,13 @@ public partial class Title : Contacts {
         /// as more temporary assignments such as in project management.
         /// </summary>
 
-	public virtual string?						Kind  {get; set;}
+	public virtual string?					Kind  {get; set;}
 
         /// <summary>
         /// 
         /// </summary>
 
-	public virtual string?						OrganizationId  {get; set;}
+	public virtual string?					OrganizationId  {get; set;}
 
 
 
@@ -1595,32 +1544,32 @@ public partial class EmailAddress : Contacts {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The email address. This MUST be an addr-spec value as defined in Section 3.4.1 of [RFC5322].
         /// </summary>
 
-	public virtual string?						Address  {get; set;}
+	public virtual string?					Address  {get; set;}
 
         /// <summary>
         /// The contexts in which to use this email address. Also see Section 1.5.1.
         /// </summary>
 
-	public virtual bool?						Contexts  {get; set;}
+	public virtual Dictionary<string,bool>?					Contexts  {get; set;}
 
         /// <summary>
         /// The preference of the email address in relation to other email addresses. Also 
         /// see Section 1.5.3.
         /// </summary>
 
-	public virtual int?						Pref  {get; set;}
+	public virtual int?					Pref  {get; set;}
 
         /// <summary>
         /// A custom label for the value. 
         /// </summary>
 
-	public virtual string?						Label  {get; set;}
+	public virtual string?					Label  {get; set;}
 
 
 
@@ -1635,8 +1584,8 @@ public partial class EmailAddress : Contacts {
 					(IBinding data, string? value) => {(data as EmailAddress).Type = value;}, (IBinding data) => (data as EmailAddress).Type )},
 			{ "Address", new PropertyString ("Address", 
 					(IBinding data, string? value) => {(data as EmailAddress).Address = value;}, (IBinding data) => (data as EmailAddress).Address )},
-			{ "Contexts", new PropertyListBoolean ("Contexts", 
-					(IBinding data, bool? value) => {(data as EmailAddress).Contexts = value;}, (IBinding data) => (data as EmailAddress).Contexts )},
+			{ "Contexts", new PropertyDictionaryBoolean ("Contexts", 
+					(IBinding data, Dictionary<string,bool>? value) => {(data as EmailAddress).Contexts = value;}, (IBinding data) => (data as EmailAddress).Contexts )},
 			{ "Pref", new PropertyInteger32 ("Pref", 
 					(IBinding data, int? value) => {(data as EmailAddress).Pref = value;}, (IBinding data) => (data as EmailAddress).Pref )},
 			{ "Label", new PropertyString ("Label", 
@@ -1707,7 +1656,7 @@ public partial class OnlineService : Contacts {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The name of the online service or protocol. The name MAY be capitalized the 
@@ -1716,39 +1665,39 @@ public partial class OnlineService : Contacts {
         /// "kakao", and "Mastodon"
         /// </summary>
 
-	public virtual string?						Service  {get; set;}
+	public virtual string?					Service  {get; set;}
 
         /// <summary>
         /// he identifier for the entity represented by the Card at the online service. 
         /// This MUST be a URI as defined in Section 3 of [RFC3986].
         /// </summary>
 
-	public virtual string?						Uri  {get; set;}
+	public virtual string?					Uri  {get; set;}
 
         /// <summary>
         /// The name the entity represented by the Card at the online service. Any 
         /// free-text value is allowed. The service property SHOULD be set.
         /// </summary>
 
-	public virtual string?						User  {get; set;}
+	public virtual string?					User  {get; set;}
 
         /// <summary>
         /// The contexts in which to use the service.
         /// </summary>
 
-	public virtual bool?						Contexts  {get; set;}
+	public virtual Dictionary<string,bool>?					Contexts  {get; set;}
 
         /// <summary>
         /// The preference of the service in relation to other services.
         /// </summary>
 
-	public virtual int?						Pref  {get; set;}
+	public virtual int?					Pref  {get; set;}
 
         /// <summary>
         /// A custom label for the value. 
         /// </summary>
 
-	public virtual string?						Label  {get; set;}
+	public virtual string?					Label  {get; set;}
 
 
 
@@ -1767,8 +1716,8 @@ public partial class OnlineService : Contacts {
 					(IBinding data, string? value) => {(data as OnlineService).Uri = value;}, (IBinding data) => (data as OnlineService).Uri )},
 			{ "User", new PropertyString ("User", 
 					(IBinding data, string? value) => {(data as OnlineService).User = value;}, (IBinding data) => (data as OnlineService).User )},
-			{ "Contexts", new PropertyListBoolean ("Contexts", 
-					(IBinding data, bool? value) => {(data as OnlineService).Contexts = value;}, (IBinding data) => (data as OnlineService).Contexts )},
+			{ "Contexts", new PropertyDictionaryBoolean ("Contexts", 
+					(IBinding data, Dictionary<string,bool>? value) => {(data as OnlineService).Contexts = value;}, (IBinding data) => (data as OnlineService).Contexts )},
 			{ "Pref", new PropertyInteger32 ("Pref", 
 					(IBinding data, int? value) => {(data as OnlineService).Pref = value;}, (IBinding data) => (data as OnlineService).Pref )},
 			{ "Label", new PropertyString ("Label", 
@@ -1839,14 +1788,14 @@ public partial class Phone : Contacts {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The phone number as either a URI or free text. Typical URI schemes are 
         /// "tel" [RFC3966] or "sip" [RFC3261], but any URI scheme is allowed.
         /// </summary>
 
-	public virtual string?						Number  {get; set;}
+	public virtual string?					Number  {get; set;}
 
         /// <summary>
         /// The set of contact features that the phone number may be used for. The set is 
@@ -1864,25 +1813,25 @@ public partial class Phone : Contacts {
         /// pager: this number is for a pager or beeper.
         /// </summary>
 
-	public virtual bool?						Features  {get; set;}
+	public virtual Dictionary<string,bool>?					Features  {get; set;}
 
         /// <summary>
         /// The contexts in which to use the number. 
         /// </summary>
 
-	public virtual bool?						Contexts  {get; set;}
+	public virtual Dictionary<string,bool>?					Contexts  {get; set;}
 
         /// <summary>
         /// The preference of the number in relation to other numbers.
         /// </summary>
 
-	public virtual int?						Pref  {get; set;}
+	public virtual int?					Pref  {get; set;}
 
         /// <summary>
         /// A custom label for the value.
         /// </summary>
 
-	public virtual string?						Label  {get; set;}
+	public virtual string?					Label  {get; set;}
 
 
 
@@ -1897,10 +1846,10 @@ public partial class Phone : Contacts {
 					(IBinding data, string? value) => {(data as Phone).Type = value;}, (IBinding data) => (data as Phone).Type )},
 			{ "Number", new PropertyString ("Number", 
 					(IBinding data, string? value) => {(data as Phone).Number = value;}, (IBinding data) => (data as Phone).Number )},
-			{ "Features", new PropertyListBoolean ("Features", 
-					(IBinding data, bool? value) => {(data as Phone).Features = value;}, (IBinding data) => (data as Phone).Features )},
-			{ "Contexts", new PropertyListBoolean ("Contexts", 
-					(IBinding data, bool? value) => {(data as Phone).Contexts = value;}, (IBinding data) => (data as Phone).Contexts )},
+			{ "Features", new PropertyDictionaryBoolean ("Features", 
+					(IBinding data, Dictionary<string,bool>? value) => {(data as Phone).Features = value;}, (IBinding data) => (data as Phone).Features )},
+			{ "Contexts", new PropertyDictionaryBoolean ("Contexts", 
+					(IBinding data, Dictionary<string,bool>? value) => {(data as Phone).Contexts = value;}, (IBinding data) => (data as Phone).Contexts )},
 			{ "Pref", new PropertyInteger32 ("Pref", 
 					(IBinding data, int? value) => {(data as Phone).Pref = value;}, (IBinding data) => (data as Phone).Pref )},
 			{ "Label", new PropertyString ("Label", 
@@ -1971,25 +1920,25 @@ public partial class LanguagePref : Contacts {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The preferred language. This MUST be a language tag as defined in [RFC5646] .
         /// </summary>
 
-	public virtual string?						Language  {get; set;}
+	public virtual string?					Language  {get; set;}
 
         /// <summary>
         /// The contexts in which to use the language.
         /// </summary>
 
-	public virtual bool?						Contexts  {get; set;}
+	public virtual Dictionary<string,bool>?					Contexts  {get; set;}
 
         /// <summary>
         /// The preference of the language in relation to other languages of the same contexts. 
         /// </summary>
 
-	public virtual int?						Pref  {get; set;}
+	public virtual int?					Pref  {get; set;}
 
 
 
@@ -2004,8 +1953,8 @@ public partial class LanguagePref : Contacts {
 					(IBinding data, string? value) => {(data as LanguagePref).Type = value;}, (IBinding data) => (data as LanguagePref).Type )},
 			{ "Language", new PropertyString ("Language", 
 					(IBinding data, string? value) => {(data as LanguagePref).Language = value;}, (IBinding data) => (data as LanguagePref).Language )},
-			{ "Contexts", new PropertyListBoolean ("Contexts", 
-					(IBinding data, bool? value) => {(data as LanguagePref).Contexts = value;}, (IBinding data) => (data as LanguagePref).Contexts )},
+			{ "Contexts", new PropertyDictionaryBoolean ("Contexts", 
+					(IBinding data, Dictionary<string,bool>? value) => {(data as LanguagePref).Contexts = value;}, (IBinding data) => (data as LanguagePref).Contexts )},
 			{ "Pref", new PropertyInteger32 ("Pref", 
 					(IBinding data, int? value) => {(data as LanguagePref).Pref = value;}, (IBinding data) => (data as LanguagePref).Pref )}
         }, __Tag,() => new LanguagePref(), null);
@@ -2152,31 +2101,31 @@ public partial class SchedulingAddress : Contacts {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The address to use for calendar scheduling with the contact. This MUST 
         /// be a URI as defined in Section 3 of [RFC3986].
         /// </summary>
 
-	public virtual string?						Uri  {get; set;}
+	public virtual string?					Uri  {get; set;}
 
         /// <summary>
         /// The contexts in which to use the scheduling address. 
         /// </summary>
 
-	public virtual List<TaggedBoolean>?					Contexts  {get; set;}
+	public virtual List<Boolean>?					Contexts  {get; set;}
         /// <summary>
         /// The preference of the scheduling address in relation to other scheduling addresses.
         /// </summary>
 
-	public virtual int?						Pref  {get; set;}
+	public virtual int?					Pref  {get; set;}
 
         /// <summary>
         /// A custom label for the scheduling address. 
         /// </summary>
 
-	public virtual string?						Label  {get; set;}
+	public virtual string?					Label  {get; set;}
 
 
 
@@ -2192,8 +2141,8 @@ public partial class SchedulingAddress : Contacts {
 			{ "Uri", new PropertyString ("Uri", 
 					(IBinding data, string? value) => {(data as SchedulingAddress).Uri = value;}, (IBinding data) => (data as SchedulingAddress).Uri )},
 			{ "Contexts", new PropertyListStruct ("Contexts", 
-					(IBinding data, object? value) => {(data as SchedulingAddress).Contexts = value as List<TaggedBoolean>?;}, (IBinding data) => (data as SchedulingAddress).Contexts,
-					false, ()=>new  List<TaggedBoolean>?(), ()=>new TaggedBoolean())} ,
+					(IBinding data, object? value) => {(data as SchedulingAddress).Contexts = value as List<Boolean>;}, (IBinding data) => (data as SchedulingAddress).Contexts,
+					false, ()=>new  List<Boolean>(), ()=>new Boolean())} ,
 			{ "Pref", new PropertyInteger32 ("Pref", 
 					(IBinding data, int? value) => {(data as SchedulingAddress).Pref = value;}, (IBinding data) => (data as SchedulingAddress).Pref )},
 			{ "Label", new PropertyString ("Label", 
@@ -2267,7 +2216,7 @@ public partial class Address : Contacts {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The components (Section 2.5.1.2) that make up the address. The component 
@@ -2280,32 +2229,32 @@ public partial class Address : Contacts {
         /// The indicator if the address components in the components property are ordered.
         /// </summary>
 
-	public virtual string?						IsOrdered  {get; set;}
+	public virtual string?					IsOrdered  {get; set;}
 
         /// <summary>
         /// The Alpha-2 country code [ISO.3166-1].
         /// </summary>
 
-	public virtual string?						CountryCode  {get; set;}
+	public virtual string?					CountryCode  {get; set;}
 
         /// <summary>
         /// A "geo:" URI [RFC5870] for the address.
         /// </summary>
 
-	public virtual string?						Coordinates  {get; set;}
+	public virtual string?					Coordinates  {get; set;}
 
         /// <summary>
         /// The time zone in which the address is located. This MUST be a time zone 
         /// name registered in the IANA Time Zone Database [IANA-TZ].
         /// </summary>
 
-	public virtual string?						TimeZone  {get; set;}
+	public virtual string?					TimeZone  {get; set;}
 
         /// <summary>
         /// The contexts in which to use this address. 
         /// </summary>
 
-	public virtual bool?						Contexts  {get; set;}
+	public virtual Dictionary<string,bool>?					Contexts  {get; set;}
 
         /// <summary>
         /// The full address, including street, region, or country. The purpose of 
@@ -2313,7 +2262,7 @@ public partial class Address : Contacts {
         /// components are not known.
         /// </summary>
 
-	public virtual string?						Full  {get; set;}
+	public virtual string?					Full  {get; set;}
 
         /// <summary>
         /// The default separator to insert between address component values when 
@@ -2324,25 +2273,25 @@ public partial class Address : Contacts {
         /// property is not set.
         /// </summary>
 
-	public virtual string?						DefaultSeparator  {get; set;}
+	public virtual string?					DefaultSeparator  {get; set;}
 
         /// <summary>
         /// The preference of the address in relation to other addresses. 
         /// </summary>
 
-	public virtual int?						Pref  {get; set;}
+	public virtual int?					Pref  {get; set;}
 
         /// <summary>
         /// The script used in the value of the AddressComponent phonetic property.
         /// </summary>
 
-	public virtual string?						PhoneticScript  {get; set;}
+	public virtual string?					PhoneticScript  {get; set;}
 
         /// <summary>
         /// The phonetic system used in the AddressComponent phonetic property.
         /// </summary>
 
-	public virtual string?						PhoneticSystem  {get; set;}
+	public virtual string?					PhoneticSystem  {get; set;}
 
 
 
@@ -2356,8 +2305,8 @@ public partial class Address : Contacts {
 			{ "@type", new PropertyString ("@type", 
 					(IBinding data, string? value) => {(data as Address).Type = value;}, (IBinding data) => (data as Address).Type )},
 			{ "Components", new PropertyListStruct ("Components", 
-					(IBinding data, object? value) => {(data as Address).Components = value as List<AddressComponent>?;}, (IBinding data) => (data as Address).Components,
-					false, ()=>new  List<AddressComponent>?(), ()=>new AddressComponent())} ,
+					(IBinding data, object? value) => {(data as Address).Components = value as List<AddressComponent>;}, (IBinding data) => (data as Address).Components,
+					false, ()=>new  List<AddressComponent>(), ()=>new AddressComponent())} ,
 			{ "IsOrdered", new PropertyString ("IsOrdered", 
 					(IBinding data, string? value) => {(data as Address).IsOrdered = value;}, (IBinding data) => (data as Address).IsOrdered )},
 			{ "CountryCode", new PropertyString ("CountryCode", 
@@ -2366,8 +2315,8 @@ public partial class Address : Contacts {
 					(IBinding data, string? value) => {(data as Address).Coordinates = value;}, (IBinding data) => (data as Address).Coordinates )},
 			{ "TimeZone", new PropertyString ("TimeZone", 
 					(IBinding data, string? value) => {(data as Address).TimeZone = value;}, (IBinding data) => (data as Address).TimeZone )},
-			{ "Contexts", new PropertyListBoolean ("Contexts", 
-					(IBinding data, bool? value) => {(data as Address).Contexts = value;}, (IBinding data) => (data as Address).Contexts )},
+			{ "Contexts", new PropertyDictionaryBoolean ("Contexts", 
+					(IBinding data, Dictionary<string,bool>? value) => {(data as Address).Contexts = value;}, (IBinding data) => (data as Address).Contexts )},
 			{ "Full", new PropertyString ("Full", 
 					(IBinding data, string? value) => {(data as Address).Full = value;}, (IBinding data) => (data as Address).Full )},
 			{ "DefaultSeparator", new PropertyString ("DefaultSeparator", 
@@ -2446,19 +2395,19 @@ public partial class AddressComponent : Contacts {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The value of the address component.
         /// </summary>
 
-	public virtual string?						Value  {get; set;}
+	public virtual string?					Value  {get; set;}
 
         /// <summary>
         /// The kind of the address component. 
         /// </summary>
 
-	public virtual string?						Kind  {get; set;}
+	public virtual string?					Kind  {get; set;}
 
         /// <summary>
         /// The pronunciation of the name component. If this property is set, then 
@@ -2466,7 +2415,7 @@ public partial class AddressComponent : Contacts {
         /// properties MUST be set. 
         /// </summary>
 
-	public virtual string?						Phonetic  {get; set;}
+	public virtual string?					Phonetic  {get; set;}
 
 
 
@@ -2634,7 +2583,7 @@ public partial class Directory : Resource {
         /// <summary>
         /// </summary>
 
-	public virtual int?						ListAs  {get; set;}
+	public virtual int?					ListAs  {get; set;}
 
 
 
@@ -2712,7 +2661,7 @@ public partial class Directory : Resource {
 	///
 	///  The links to resources that do not fit any of the other use-case-specific resource properties.
 	/// </summary>
-public partial class Link : Resource {
+public partial class ResourceLink : Resource {
 
 
     ///<summary>Implement IBinding</summary> 
@@ -2722,7 +2671,7 @@ public partial class Link : Resource {
 	static protected new Binding _binding = new (
 			new() {
 
-        }, __Tag,() => new Link(), Resource._binding);
+        }, __Tag,() => new ResourceLink(), Resource._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2751,13 +2700,13 @@ public partial class Link : Resource {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "Link";
+	public new const string __Tag = "ResourceLink";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new Link();
+	public static new JsonObject _Factory () => new ResourceLink();
 
 
     /// <summary>
@@ -2766,15 +2715,15 @@ public partial class Link : Resource {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new Link FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new ResourceLink FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Link;
+			return Out as ResourceLink;
 			}
-		var Result = new Link ();
+		var Result = new ResourceLink ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -2863,7 +2812,7 @@ public partial class Media : Resource {
 	///
 	///  A ContactCard used to overwrite parts of a contact card.
 	/// </summary>
-public partial class PatchObject : Resource {
+public partial class PatchObject : JmapBase {
 
 
     ///<summary>Implement IBinding</summary> 
@@ -2873,14 +2822,14 @@ public partial class PatchObject : Resource {
 	static protected new Binding _binding = new (
 			new() {
 
-        }, __Tag,() => new PatchObject(), Resource._binding);
+        }, __Tag,() => new PatchObject(), JmapBase._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Resource._StaticAllProperties);
+			Combine(_StaticProperties, JmapBase._StaticAllProperties);
 
 
     ///<inheritdoc/>
@@ -2942,13 +2891,13 @@ public partial class Anniversary : Contacts {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The kind of anniversary.
         /// </summary>
 
-	public virtual string?						Kind  {get; set;}
+	public virtual string?					Kind  {get; set;}
 
         /// <summary>
         /// Timestamp (mandatory; defaultType: PartialDate).
@@ -2957,13 +2906,13 @@ public partial class Anniversary : Contacts {
         /// (see the definition of the Timestamp and PartialDate object types below).
         /// </summary>
 
-	public virtual TimeStamp?						Date  {get; set;}
+	public virtual TimeStamp?					Date  {get; set;}
 
         /// <summary>
         /// An address associated with this anniversary, e.g., the place of birth or death.
         /// </summary>
 
-	public virtual Address?						Place  {get; set;}
+	public virtual Address?					Place  {get; set;}
 
 
 
@@ -2979,11 +2928,11 @@ public partial class Anniversary : Contacts {
 			{ "Kind", new PropertyString ("Kind", 
 					(IBinding data, string? value) => {(data as Anniversary).Kind = value;}, (IBinding data) => (data as Anniversary).Kind )},
 			{ "Date", new PropertyStruct ("Date", 
-					(IBinding data, object? value) => {(data as Anniversary).Date = value as TimeStamp?;}, (IBinding data) => (data as Anniversary).Date,
-					false, ()=>new  TimeStamp?(), ()=>new TimeStamp())} ,
+					(IBinding data, object? value) => {(data as Anniversary).Date = value as TimeStamp;}, (IBinding data) => (data as Anniversary).Date,
+					false, ()=>new  TimeStamp(), ()=>new TimeStamp())} ,
 			{ "Place", new PropertyStruct ("Place", 
-					(IBinding data, object? value) => {(data as Anniversary).Place = value as Address?;}, (IBinding data) => (data as Anniversary).Place,
-					false, ()=>new  Address?(), ()=>new Address())} 
+					(IBinding data, object? value) => {(data as Anniversary).Place = value as Address;}, (IBinding data) => (data as Anniversary).Place,
+					false, ()=>new  Address(), ()=>new Address())} 
         }, __Tag,() => new Anniversary(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3052,20 +3001,20 @@ public partial class TimeStamp : Contacts {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The calendar year.
         /// </summary>
 
-	public virtual int?						Year  {get; set;}
+	public virtual int?					Year  {get; set;}
 
         /// <summary>
         /// The calendar month, represented as the integers 1 <= month <= 12. If 
         /// this property is set, then either the year or the day property MUST be set.
         /// </summary>
 
-	public virtual int?						Month  {get; set;}
+	public virtual int?					Month  {get; set;}
 
         /// <summary>
         /// The calendar month day, represented as the integers 1 <= day <= 31, 
@@ -3073,7 +3022,7 @@ public partial class TimeStamp : Contacts {
         /// is set, then the month property MUST be set.
         /// </summary>
 
-	public virtual int?						Day  {get; set;}
+	public virtual int?					Day  {get; set;}
 
         /// <summary>
         /// The calendar system in which this date occurs, in lowercase. This 
@@ -3084,13 +3033,13 @@ public partial class TimeStamp : Contacts {
         /// between the Gregorian calendar and the respective calendar system.
         /// </summary>
 
-	public virtual string?						CalendarScale  {get; set;}
+	public virtual string?					CalendarScale  {get; set;}
 
         /// <summary>
         /// The point in time in UTC time.
         /// </summary>
 
-	public virtual string?						Utc  {get; set;}
+	public virtual string?					Utc  {get; set;}
 
 
 
@@ -3181,25 +3130,25 @@ public partial class Note : Contacts {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The free-text value of this note.
         /// </summary>
 
-	public virtual string?						Note  {get; set;}
+	public virtual string?					Value  {get; set;}
 
         /// <summary>
         /// The date and time when this note was created.
         /// </summary>
 
-	public virtual string?						Created  {get; set;}
+	public virtual string?					Created  {get; set;}
 
         /// <summary>
         /// The author of this note.
         /// </summary>
 
-	public virtual Author?						Author  {get; set;}
+	public virtual Author?					Author  {get; set;}
 
 
 
@@ -3213,12 +3162,12 @@ public partial class Note : Contacts {
 			{ "@type", new PropertyString ("@type", 
 					(IBinding data, string? value) => {(data as Note).Type = value;}, (IBinding data) => (data as Note).Type )},
 			{ "Note", new PropertyString ("Note", 
-					(IBinding data, string? value) => {(data as Note).Note = value;}, (IBinding data) => (data as Note).Note )},
+					(IBinding data, string? value) => {(data as Note).Value = value;}, (IBinding data) => (data as Note).Value )},
 			{ "Created", new PropertyString ("Created", 
 					(IBinding data, string? value) => {(data as Note).Created = value;}, (IBinding data) => (data as Note).Created )},
 			{ "Author", new PropertyStruct ("Author", 
-					(IBinding data, object? value) => {(data as Note).Author = value as Author?;}, (IBinding data) => (data as Note).Author,
-					false, ()=>new  Author?(), ()=>new Author())} 
+					(IBinding data, object? value) => {(data as Note).Author = value as Author;}, (IBinding data) => (data as Note).Author,
+					false, ()=>new  Author(), ()=>new Author())} 
         }, __Tag,() => new Note(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3288,19 +3237,19 @@ public partial class Author : Contacts {
         /// The JSContact type of the object. The value MUST be "Author", if set.
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The name of this author.
         /// </summary>
 
-	public virtual string?						Name  {get; set;}
+	public virtual string?					Name  {get; set;}
 
         /// <summary>
         /// The URI value that identifies the author.
         /// </summary>
 
-	public virtual string?						Uri  {get; set;}
+	public virtual string?					Uri  {get; set;}
 
 
 
@@ -3385,25 +3334,25 @@ public partial class PersonalInfo : Contacts {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The kind of personal information
         /// </summary>
 
-	public virtual string?						Kind  {get; set;}
+	public virtual string?					Kind  {get; set;}
 
         /// <summary>
         /// The actual information
         /// </summary>
 
-	public virtual string?						Value  {get; set;}
+	public virtual string?					Value  {get; set;}
 
         /// <summary>
         /// The level of expertise or engagement in hobby or interest. 
         /// </summary>
 
-	public virtual string?						Level  {get; set;}
+	public virtual string?					Level  {get; set;}
 
         /// <summary>
         /// The position of the personal information in the list of all PersonalInfo
@@ -3413,13 +3362,13 @@ public partial class PersonalInfo : Contacts {
         /// entries is implementation-specific.
         /// </summary>
 
-	public virtual int?						ListAs  {get; set;}
+	public virtual int?					ListAs  {get; set;}
 
         /// <summary>
         /// A custom label. 
         /// </summary>
 
-	public virtual string?						Label  {get; set;}
+	public virtual string?					Label  {get; set;}
 
 
 

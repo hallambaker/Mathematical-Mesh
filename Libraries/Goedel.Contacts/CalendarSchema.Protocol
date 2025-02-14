@@ -42,6 +42,7 @@
 			Description
 				|The date and time when the data in the Card was last modified.
 
+
 	Structure CalendarEntry
 		Inherits JmapBase
 
@@ -74,16 +75,27 @@
 		// 4.2.3. descriptionContentType
 		String					DescriptionContentType
 			Description
-				| This describes the media type [RFC6838] of the contents of the description property. Media types MUST be subtypes of type text and SHOULD be text/plain or text/html [MEDIATYPES]. They MAY include parameters, and the charset parameter value MUST be utf-8, if specified. Descriptions of type text/html MAY contain cid URLs [RFC2392] to reference links in the calendar object by use of the cid property of the Link object.
+				| This describes the media type [RFC6838] of the contents of the 
+				| description property. Media types MUST be subtypes of type text
+				|  and SHOULD be text/plain or text/html [MEDIATYPES]. They MAY
+				|  include parameters, and the charset parameter value MUST be 
+				| utf-8, if specified. Descriptions of type text/html MAY contain
+				|  cid URLs [RFC2392] to reference links in the calendar object 
+				| by use of the cid property of the Link object.
 
 		// 4.2.4. showWithoutTime
 		Boolean					ShowWithoutTime
 			Description
-				| This indicates that the time is not important to display to the user when rendering this calendar object. An example of this is an event that conceptually occurs all day or across multiple days, such as "New Year's Day" or "Italy Vacation". While the time component is important for free-busy calculations and checking for scheduling clashes, calendars may choose to omit displaying it and/or display the object separately to other objects to enhance the user's view of their schedule.
+				| This indicates that the time is not important to display to the user
+				|  when rendering this calendar object. An example of this is an event
+				|  that conceptually occurs all day or across multiple days, such as 
+				| "New Year's Day" or "Italy Vacation". While the time component is 
+				| important for free-busy calculations and checking for scheduling 
+				| clashes, calendars may choose to omit displaying it and/or display
+				|  the object separately to other objects to enhance the user's 
+				| view of their schedule.
 
-Such events are also commonly known as "all-day" events.
-
-// 4.2.5. locations
+		// 4.2.5. locations
 		Struct Location			Locations
 			Dictionary
 			Description
@@ -106,7 +118,7 @@ Such events are also commonly known as "all-day" events.
 
 
 		// 4.2.8. locale
-		String					Method
+		String					Locale
 			Description
 				| This is the language tag, as defined in [RFC5646], that best describes the 
 				| locale used for the text in the calendar object, if known.
@@ -136,16 +148,15 @@ Such events are also commonly known as "all-day" events.
 				| in hexadecimal notation, as defined in Section 4.2.1 of CSS Color 
 				| Module Level 3.
 
-	// 4.3. Recurrence Properties
-
-	// 4.3.1. recurrenceId
+		// 4.3. Recurrence Properties
+		// 4.3.1. recurrenceId
 		String					RecurrenceId
 			Description
 				| If present, this JSCalendar object represents one occurrence of a 
 				| recurring JSCalendar object. If present, the recurrenceRules and 
 				| recurrenceOverrides properties MUST NOT be present.
 
-	// 4.3.2. recurrenceIdTimeZone
+		// 4.3.2. recurrenceIdTimeZone
 		String					RecurrenceIdTimeZone
 			Description
 				| Identifies the time zone of the main JSCalendar object, of which 
@@ -153,7 +164,7 @@ Such events are also commonly known as "all-day" events.
 				| MUST be set if the recurrenceId property is set. It MUST NOT be 
 				| set if the recurrenceId property is not set.
 
-	// 4.3.3. recurrenceRules
+		// 4.3.3. recurrenceRules
 		Struct RecurrenceRule	RecurrenceRules
 			Multiple
 			Description
@@ -284,7 +295,7 @@ Such events are also commonly known as "all-day" events.
 				| set to false.
 
 		// 4.5.2. alerts
-		Alert					Alerts
+		Struct Alert			Alerts
 			Dictionary
 			Description
 				| This is a map of alert ids to Alert objects, representing 
@@ -295,6 +306,7 @@ Such events are also commonly known as "all-day" events.
 		// 4.6.1. localizations
 		Struct PatchObject		Localizations
 			Dictionary
+			Description
 				| A map where each key is a language tag [RFC5646], and the 
 				| corresponding value is a set of patches to apply to the 
 				| calendar object in order to localize it into that locale.
@@ -380,8 +392,8 @@ Such events are also commonly known as "all-day" events.
 		String					Progress
 			Description
 				| This defines the progress of this task. If omitted, the default 
-				progress (Section 4.4) of a Task is defined as follows (in order 
-				of evaluation):
+				| progress (Section 4.4) of a Task is defined as follows (in order 
+				| of evaluation):
 
 		// 5.2.6. progressUpdated
 		DateTime				ProgressUpdated
@@ -625,211 +637,270 @@ Such events are also commonly known as "all-day" events.
 
 	Structure RecurrenceRule
 		String					Type
-			Tag "@type" //  MUST  be "RecurrenceRule" if set
+			Tag "@type" 
+			Description
+				| This specifies the type of this object. This MUST be RecurrenceRule.
+		String					frequency
+			Description
+				| This is the time span covered by each iteration of this recurrence 
+				| rule (see Section 4.3.3.1 for full semantics). 
+		Integer					interval
+			Description
+				| This is the interval of iteration periods at which the recurrence
+				| repeats. If included, it MUST be an integer >= 1.
+		String					rscale
+			Description
+				| This is the calendar system in which this recurrence rule operates, 
+				| in lowercase. This MUST be either a CLDR-registered calendar system 
+				| name [CLDR] or a vendor-specific value (see Section 3.3).
+		String					skip
+			Description
+				| This is the behavior to use when the expansion of the recurrence 
+				| produces invalid dates. This property only has an effect if the 
+				| frequency is "yearly" or "monthly". It MUST be one of the following 
+				| values:
+		String					firstDayOfWeek
+			Description
+				| This is the day on which the week is considered to start, 
+				| represented as a lowercase, abbreviated, and two-letter English 
+				| day of the week. If included, it MUST be one of the following 
+				| values:
+		Struct NDay				byDay
+			Multiple
+			Description
+				| These are days of the week on which to repeat. 
+		Integer					nthOfPeriod
+			Description
+				| If present, rather than representing every occurrence of the weekday 
+				| defined in the day property, it represents only a specific instance 
+				| within the recurrence period. The value can be positive or negative
+				|  but MUST NOT be zero. A negative integer means the nth-last 
+				| occurrence within that period (i.e., -1 is the last occurrence, 
+				| -2 the one before that, etc.).
+		Integer					byMonthDay
+			Multiple
+			Description
+				| These are the days of the month on which to repeat. Valid values are between 
+				| 1 and the maximum number of days any month may have in the calendar given 
+				| by the rscale property and the negative values of these numbers. For 
+				| example, in the Gregorian calendar, valid values are 1 to 31 and -31
+				|  to -1. Negative values offset from the end of the month. The array 
+				| MUST have at least one entry if included.
+		String					byMonth
+			Multiple
+			Description
+				| These are the months in which to repeat. Each entry is a string representation 
+				| of a number, starting from "1" for the first month in the calendar (e.g., 
+				| "1" means January with the Gregorian calendar), with an optional "L" 
+				| suffix (see [RFC7529]) for leap months (this MUST be uppercase, e.g., 
+				| "3L"). The array MUST have at least one entry if included.
+		Integer					byYearDay
+			Multiple
+			Description
+				| These are the days of the year on which to repeat. Valid values are between
+				|  1 and the maximum number of days any year may have in the calendar given 
+				| by the rscale property and the negative values of these numbers. For example, 
+				| in the Gregorian calendar, valid values are 1 to 366 and -366 to -1. Negative 
+				| values offset from the end of the year. The array MUST have at least one 
+				| entry if included.
+		Integer					byWeekNo
+			Multiple
+			Description
+				| These are the weeks of the year in which to repeat. Valid values are between 
+				| 1 and the maximum number of weeks any year may have in the calendar given by 
+				| the rscale property and the negative values of these numbers. For example, 
+				| in the Gregorian calendar, valid values are 1 to 53 and -53 to -1. The array 
+				| MUST have at least one entry if included.
+		Integer					byHour
+			Multiple
+			Description
+				| These are the hours of the day in which to repeat. Valid values are 0 to 23. 
+				| The array MUST have at least one entry if included. This is the BYHOUR part 
+				| from iCalendar.
+		Integer					byMinute
+			Multiple
+			Description
+				| These are the minutes of the hour in which to repeat. Valid values are 
+				| 0 to 59. The array MUST have at least one entry if included.
+		Integer					bySecond
+			Multiple
+			Description
+				| These are the seconds of the minute in which to repeat. Valid values 
+				| are 0 to 60. The array MUST have at least one entry if included.
+		Integer					bySetPosition
+			Multiple
+			Description
+				| These are the occurrences within the recurrence interval to include in 
+				| the final results. Negative values offset from the end of the list of
+				| occurrences. The array MUST have at least one entry if included. 
+				| This is the BYSETPOS part from iCalendar.
+		Integer					count
+			Description
+				| These are the number of occurrences at which to range-bound the recurrence. 
+				| This MUST NOT be included if an until property is specified.
+		DateTime				until
+			Description
+				| These are the date-time at which to finish recurring. The last 
+				| occurrence is on or before this date-time. This MUST NOT be included 
+				| if a count property is specified. Note that if not specified otherwise 
+				| for a specific JSCalendar object, this date is to be interpreted in the 
+				| time zone specified in the JSCalendar object's timeZone property.
 
-@type: String (mandatory)
-This specifies the type of this object. This MUST be RecurrenceRule.
-frequency: String (mandatory)
-This is the time span covered by each iteration of this recurrence rule (see Section 4.3.3.1 for full semantics). This MUST be one of the following values:
 
-yearly
-monthly
-weekly
-daily
-hourly
-minutely
-secondly
-This is the FREQ part from iCalendar, converted to lowercase.
-
-interval: UnsignedInt (optional, default: 1)
-This is the interval of iteration periods at which the recurrence repeats. If included, it MUST be an integer >= 1.
-
-This is the INTERVAL part from iCalendar.
-
-rscale: String (optional, default: "gregorian")
-This is the calendar system in which this recurrence rule operates, in lowercase. This MUST be either a CLDR-registered calendar system name [CLDR] or a vendor-specific value (see Section 3.3).
-
-This is the RSCALE part from iCalendar RSCALE [RFC7529], converted to lowercase.
-
-skip: String (optional, default: "omit")
-This is the behavior to use when the expansion of the recurrence produces invalid dates. This property only has an effect if the frequency is "yearly" or "monthly". It MUST be one of the following values:
-
-omit
-backward
-forward
-This is the SKIP part from iCalendar RSCALE [RFC7529], converted to lowercase.
-
-firstDayOfWeek: String (optional, default: "mo")
-This is the day on which the week is considered to start, represented as a lowercase, abbreviated, and two-letter English day of the week. If included, it MUST be one of the following values:
-
-mo
-tu
-we
-th
-fr
-sa
-su
-This is the WKST part from iCalendar.
-
-byDay: NDay[] (optional)
-These are days of the week on which to repeat. An NDay object has the following properties:
-
-@type: String (mandatory)
-This specifies the type of this object. This MUST be NDay.
-day: String (mandatory)
-This is a day of the week on which to repeat; the allowed values are the same as for the firstDayOfWeek recurrenceRule property.
-
-This is the day of the week of the BYDAY part in iCalendar, converted to lowercase.
-
-nthOfPeriod: Int (optional)
-If present, rather than representing every occurrence of the weekday defined in the day property, it represents only a specific instance within the recurrence period. The value can be positive or negative but MUST NOT be zero. A negative integer means the nth-last occurrence within that period (i.e., -1 is the last occurrence, -2 the one before that, etc.).
-
-This is the ordinal part of the BYDAY value in iCalendar (e.g., 1 or -3).
-
-byMonthDay: Int[] (optional)
-These are the days of the month on which to repeat. Valid values are between 1 and the maximum number of days any month may have in the calendar given by the rscale property and the negative values of these numbers. For example, in the Gregorian calendar, valid values are 1 to 31 and -31 to -1. Negative values offset from the end of the month. The array MUST have at least one entry if included.
-
-This is the BYMONTHDAY part in iCalendar.
-
-byMonth: String[] (optional)
-These are the months in which to repeat. Each entry is a string representation of a number, starting from "1" for the first month in the calendar (e.g., "1" means January with the Gregorian calendar), with an optional "L" suffix (see [RFC7529]) for leap months (this MUST be uppercase, e.g., "3L"). The array MUST have at least one entry if included.
-
-This is the BYMONTH part from iCalendar.
-
-byYearDay: Int[] (optional)
-These are the days of the year on which to repeat. Valid values are between 1 and the maximum number of days any year may have in the calendar given by the rscale property and the negative values of these numbers. For example, in the Gregorian calendar, valid values are 1 to 366 and -366 to -1. Negative values offset from the end of the year. The array MUST have at least one entry if included.
-
-This is the BYYEARDAY part from iCalendar.
-
-byWeekNo: Int[] (optional)
-These are the weeks of the year in which to repeat. Valid values are between 1 and the maximum number of weeks any year may have in the calendar given by the rscale property and the negative values of these numbers. For example, in the Gregorian calendar, valid values are 1 to 53 and -53 to -1. The array MUST have at least one entry if included.
-
-This is the BYWEEKNO part from iCalendar.
-
-byHour: UnsignedInt[] (optional)
-These are the hours of the day in which to repeat. Valid values are 0 to 23. The array MUST have at least one entry if included. This is the BYHOUR part from iCalendar.
-
-byMinute: UnsignedInt[] (optional)
-These are the minutes of the hour in which to repeat. Valid values are 0 to 59. The array MUST have at least one entry if included.
-
-This is the BYMINUTE part from iCalendar.
-
-bySecond: UnsignedInt[] (optional)
-These are the seconds of the minute in which to repeat. Valid values are 0 to 60. The array MUST have at least one entry if included.
-
-This is the BYSECOND part from iCalendar.
-
-bySetPosition: Int[] (optional)
-These are the occurrences within the recurrence interval to include in the final results. Negative values offset from the end of the list of occurrences. The array MUST have at least one entry if included. This is the BYSETPOS part from iCalendar.
-count: UnsignedInt (optional)
-These are the number of occurrences at which to range-bound the recurrence. This MUST NOT be included if an until property is specified.
-
-This is the COUNT part from iCalendar.
-
-until: LocalDateTime (optional)
-These are the date-time at which to finish recurring. The last occurrence is on or before this date-time. This MUST NOT be included if a count property is specified. Note that if not specified otherwise for a specific JSCalendar object, this date is to be interpreted in the time zone specified in the JSCalendar object's timeZone property.
-
-This is the UNTIL part from iCalendar.
+	Structure NDay
+		String					Type
+			Tag "@type"
+			Description
+				| This specifies the type of this object. This MUST be NDay.
+		String					day
+			Description
+				| This is a day of the week on which to repeat; the allowed values are the same
+				| as for the firstDayOfWeek recurrenceRule property.
 
 
 	// 4.5.2. alerts
 	Structure Alert
+		Description
+			| An Alert object has the following properties:
+		String					Type
+			Tag "@type"
+			Description
+				| This specifies the type of this object. This MUST be Alert.
+		Struct Trigger			Trigger
+			Description
+				| This defines when to trigger the alert. New types may be 
+				| defined in future documents.
+		DateTime				acknowledged
+			Description
+				| This records when an alert was last acknowledged. This is set
+				| when the user has dismissed the alert; other clients that sync 
+				| this property SHOULD automatically dismiss or suppress duplicate 
+				| alerts (alerts with the same alert id that triggered on or before
+				| this date-time).
+		Struct Relation			relatedTo
+			Dictionary
+			Description
+				| This relates this alert to other alerts in the same JSCalendar 
+				| object. If the user wishes to snooze an alert, the application 
+				| MUST create an alert to trigger after snoozing. This new snooze 
+				| alert MUST set a parent relation to the identifier of the original 
+				|alert.
+		String					action
+			Description
+				| This describes how to alert the user.
 
 
+	Structure Trigger
+		String					Type
+			Tag "@type"
+			Description
+				| This specifies the type of this object. This MUST be OffsetTrigger,
+				| AbsoluteTrigger or UnknownTrigger .
+		// OffsetTrigger
+		String					offset
+			Description
+				| This defines the offset at which to trigger the alert relative to 
+				| the time property defined in the relativeTo property of the alert. 
+				| Negative durations signify alerts before the time property; positive 
+				| durations signify alerts after the time property.
+		String					relativeTo
+			Description
+				| This specifies the time property that the alert offset is relative to.
 
-An Alert object has the following properties:
-
-@type: String (mandatory)
-This specifies the type of this object. This MUST be Alert.
-trigger: OffsetTrigger|AbsoluteTrigger|UnknownTrigger (mandatory)
-This defines when to trigger the alert. New types may be defined in future documents.
-
-An OffsetTrigger object has the following properties:
-
-@type: String (mandatory)
-This specifies the type of this object. This MUST be OffsetTrigger.
-offset: SignedDuration (mandatory)
-This defines the offset at which to trigger the alert relative to the time property defined in the relativeTo property of the alert. Negative durations signify alerts before the time property; positive durations signify alerts after the time property.
-relativeTo: String (optional, default: start)
-This specifies the time property that the alert offset is relative to. The value MUST be one of the following:
-
-start:
-triggers the alert relative to the start of the calendar object
-end:
-triggers the alert relative to the end/due time of the calendar object
-An AbsoluteTrigger object has the following properties:
-
-@type: String (mandatory)
-This specifies the type of this object. This MUST be AbsoluteTrigger.
-when: UTCDateTime (mandatory)
-This defines a specific UTC date-time when the alert is triggered.
-An UnknownTrigger object is an object that contains an @type property whose value is not recognized (i.e., not OffsetTrigger or AbsoluteTrigger) plus zero or more other properties. This is for compatibility with client extensions and future specifications. Implementations SHOULD NOT trigger for trigger types they do not understand but MUST preserve them.
-
-acknowledged: UTCDateTime (optional)
-This records when an alert was last acknowledged. This is set when the user has dismissed the alert; other clients that sync this property SHOULD automatically dismiss or suppress duplicate alerts (alerts with the same alert id that triggered on or before this date-time).
-
-For a recurring calendar object, setting the acknowledged property MUST NOT add a new override to the recurrenceOverrides property. If the alert is not already overridden, the acknowledged property MUST be set on the alert in the base event/task.
-
-Certain kinds of alert action may not provide feedback as to when the user sees them, for example, email-based alerts. For those kinds of alerts, this property MUST be set immediately when the alert is triggered and the action is successfully carried out.
-
-relatedTo: String[Relation] (optional)
-This relates this alert to other alerts in the same JSCalendar object. If the user wishes to snooze an alert, the application MUST create an alert to trigger after snoozing. This new snooze alert MUST set a parent relation to the identifier of the original alert.
-action: String (optional, default: display)
-This describes how to alert the user.
-
-The value MUST be at most one of the following values, a value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see Section 3.3):
-
-display:
-The alert should be displayed as appropriate for the current device and user context.
-email:
-The alert should trigger an email sent out to the user, notifying them of the alert. This action is typically only appropriate for server implementations.
+		// Absolute Trigger
+		DateTime				when
+			Description
+				| This defines a specific UTC date-time when the alert is triggered.
 
 
-
-		// 4.7.2. timeZones
-
+	// 4.7.2. timeZones
 	Structure TimeZone
-
-
-
-A TimeZone object maps a VTIMEZONE component from iCalendar, and the semantics are as defined in [RFC5545]. A valid time zone MUST define at least one transition rule in the standard or daylight property. Its properties are:
-
-@type: String (mandatory)
-This specifies the type of this object. This MUST be TimeZone.
-tzId: String (mandatory)
-This is the TZID property from iCalendar. Note that this implies that the value MUST be a valid paramtext value as specified in Section 3.1. of [RFC5545].
-updated: UTCDateTime (optional)
-This is the LAST-MODIFIED property from iCalendar.
-url: String (optional)
-This is the TZURL property from iCalendar.
-validUntil: UTCDateTime (optional)
-This is the TZUNTIL property from iCalendar, specified in [RFC7808].
-aliases: String[Boolean] (optional)
-This maps the TZID-ALIAS-OF properties from iCalendar, specified in [RFC7808], to a JSON set of aliases. The set is represented as an object, with the keys being the aliases. The value for each key in the map MUST be true.
-standard: TimeZoneRule[] (optional)
-This the STANDARD sub-components from iCalendar. The order MUST be preserved during conversion.
-daylight: TimeZoneRule[] (optional)
-This the DAYLIGHT sub-components from iCalendar. The order MUST be preserved during conversion.
-
+		Description
+			| A TimeZone object maps a VTIMEZONE component from iCalendar, and 
+			| the semantics are as defined in [RFC5545]. A valid time zone MUST 
+			| define at least one transition rule in the standard or daylight 
+			| property. Its properties are:
+		String					Type
+			Tag "@type" 
+			Description
+				| This specifies the type of this object. This MUST be TimeZone.
+		String					tzId
+			Description
+				| This is the TZID property from iCalendar. Note that this implies that the value MUST be a valid paramtext value as specified in Section 3.1. of [RFC5545].
+		DateTime				updated
+			Description
+				| This is the LAST-MODIFIED property from iCalendar.
+		String					url
+			Description
+				| This is the TZURL property from iCalendar.
+		DateTime				validUntil
+			Description
+				| This is the TZUNTIL property from iCalendar, specified in [RFC7808].
+		Boolean					aliases
+			Dictionary
+			Description
+				| This maps the TZID-ALIAS-OF properties from iCalendar, specified 
+				| in [RFC7808], to a JSON set of aliases. The set is represented 
+				| as an object, with the keys being the aliases. The value for 
+				| each key in the map MUST be true.
+		Struct	TimeZoneRule	standard
+			Multiple
+			Description
+				| This the STANDARD sub-components from iCalendar. The order 
+				| MUST be preserved during conversion.
+		Struct	TimeZoneRule	daylight
+			Multiple
+			Description
+				| This the DAYLIGHT sub-components from iCalendar. The order 
+				| MUST be preserved during conversion.
 
 	Structure TimeZoneRule
+		Description
+			| A TimeZoneRule object maps a STANDARD or DAYLIGHT sub-component 
+			| from iCalendar, with the restriction that, at most, one recurrence 
+			| rule is allowed per rule. It has the following properties:
+		String					Type
+			Tag "@type" 
+			Description
+				| This specifies the type of this object. This MUST be TimeZoneRule.
+		String					Start
+			Description
+				| This is the DTSTART property from iCalendar.
+		String					OffsetFrom
+			Description
+				| This is the TZOFFSETFROM property from iCalendar.
+		String					OffsetTo
+			Description
+				| This is the TZOFFSETTO property from iCalendar.
+		Struct RecurrenceRule	RecurrenceRules
+			Multiple
+			Description
+				| This is the RRULE property mapped, as specified in Section 4.3.3. 
+				| During recurrence rule evaluation, the until property 
+				| value MUST be interpreted as a local time in the UTC time zone.
+		Struct EmptyPatchObject	RecurrenceOverrides
+			Dictionary
+			Description
+				| This maps the RDATE properties from iCalendar. The set is 
+				| represented as an object, with the keys being the recurrence 
+				| dates. The patch object MUST be the empty JSON object ({}).
+		Boolean					Names
+			Dictionary
+			Description
+				| This maps the TZNAME properties from iCalendar to a JSON set.
+				| The set is represented as an object, with the keys being the 
+				| names, excluding any tznparam component from iCalendar. The 
+				| value for each key in the map MUST be true.
+		String					Comments
+			Multiple
+			Description
+				| This maps the COMMENT properties from iCalendar. The order 
+				| MUST be preserved during conversion.
 
 
-	A TimeZoneRule object maps a STANDARD or DAYLIGHT sub-component from iCalendar, with the restriction that, at most, one recurrence rule is allowed per rule. It has the following properties:
+	Structure EmptyPatchObject
+		Description
+			| Empty object used in recurrenceOverrides
 
-@type: String (mandatory)
-This specifies the type of this object. This MUST be TimeZoneRule.
-start: LocalDateTime (mandatory)
-This is the DTSTART property from iCalendar.
-offsetFrom: String (mandatory)
-This is the TZOFFSETFROM property from iCalendar.
-offsetTo: String (mandatory)
-This is the TZOFFSETTO property from iCalendar.
-recurrenceRules: RecurrenceRule[] (optional)
-This is the RRULE property mapped, as specified in Section 4.3.3. During recurrence rule evaluation, the until property value MUST be interpreted as a local time in the UTC time zone.
-recurrenceOverrides: LocalDateTime[PatchObject] (optional)
-This maps the RDATE properties from iCalendar. The set is represented as an object, with the keys being the recurrence dates. The patch object MUST be the empty JSON object ({}).
-names: String[Boolean] optional)
-This maps the TZNAME properties from iCalendar to a JSON set. The set is represented as an object, with the keys being the names, excluding any tznparam component from iCalendar. The value for each key in the map MUST be true.
-comments: String[] (optional)
-This maps the COMMENT properties from iCalendar. The order MUST be preserved during conversion.
+
+

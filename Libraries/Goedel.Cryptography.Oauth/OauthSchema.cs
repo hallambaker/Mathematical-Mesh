@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/13/2025 1:01:51 PM
+//  This file was automatically generated at 2/14/2025 12:09:03 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1159,8 +1159,8 @@ public partial class ClientMetadata : Oauth {
 			{ "token_endpoint_auth_signing_alg", new PropertyString ("token_endpoint_auth_signing_alg", 
 					(IBinding data, string? value) => {(data as ClientMetadata).TokenEndpointAuthSigningAlg = value;}, (IBinding data) => (data as ClientMetadata).TokenEndpointAuthSigningAlg )},
 			{ "jwks", new PropertyStruct ("jwks", 
-					(IBinding data, object? value) => {(data as ClientMetadata).Jwks = value as JWKS?;}, (IBinding data) => (data as ClientMetadata).Jwks,
-					false, ()=>new  JWKS?(), ()=>new JWKS())} ,
+					(IBinding data, object? value) => {(data as ClientMetadata).Jwks = value as JWKS;}, (IBinding data) => (data as ClientMetadata).Jwks,
+					false, ()=>new  JWKS(), ()=>new JWKS())} ,
 			{ "client_name", new PropertyString ("client_name", 
 					(IBinding data, string? value) => {(data as ClientMetadata).ClientName = value;}, (IBinding data) => (data as ClientMetadata).ClientName )},
 			{ "client_uri", new PropertyString ("client_uri", 
@@ -1271,11 +1271,11 @@ public partial class DidDocument : Oauth {
 			{ "alsoKnownAs", new PropertyListString ("alsoKnownAs", 
 					(IBinding data, List<string>? value) => {(data as DidDocument).AlsoKnownAs = value;}, (IBinding data) => (data as DidDocument).AlsoKnownAs )},
 			{ "verificationMethod", new PropertyListStruct ("verificationMethod", 
-					(IBinding data, object? value) => {(data as DidDocument).VerificationMethod = value as List<DidVerificationMethod>?;}, (IBinding data) => (data as DidDocument).VerificationMethod,
-					false, ()=>new  List<DidVerificationMethod>?(), ()=>new DidVerificationMethod())} ,
+					(IBinding data, object? value) => {(data as DidDocument).VerificationMethod = value as List<DidVerificationMethod>;}, (IBinding data) => (data as DidDocument).VerificationMethod,
+					false, ()=>new  List<DidVerificationMethod>(), ()=>new DidVerificationMethod())} ,
 			{ "service", new PropertyListStruct ("service", 
-					(IBinding data, object? value) => {(data as DidDocument).Service = value as List<DidService>?;}, (IBinding data) => (data as DidDocument).Service,
-					false, ()=>new  List<DidService>?(), ()=>new DidService())} 
+					(IBinding data, object? value) => {(data as DidDocument).Service = value as List<DidService>;}, (IBinding data) => (data as DidDocument).Service,
+					false, ()=>new  List<DidService>(), ()=>new DidService())} 
         }, __Tag,() => new DidDocument(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1921,8 +1921,8 @@ public partial class JWKS : Oauth {
 			new() {
 
 			{ "keys", new PropertyListStruct ("keys", 
-					(IBinding data, object? value) => {(data as JWKS).Keys = value as List<JWK>?;}, (IBinding data) => (data as JWKS).Keys,
-					false, ()=>new  List<JWK>?(), ()=>new JWK())} 
+					(IBinding data, object? value) => {(data as JWKS).Keys = value as List<JWK>;}, (IBinding data) => (data as JWKS).Keys,
+					false, ()=>new  List<JWK>(), ()=>new JWK())} 
         }, __Tag,() => new JWKS(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -2139,8 +2139,8 @@ public partial class JwtHeader : Oauth {
 			{ "alg", new PropertyString ("alg", 
 					(IBinding data, string? value) => {(data as JwtHeader).Alg = value;}, (IBinding data) => (data as JwtHeader).Alg )},
 			{ "jwk", new PropertyStruct ("jwk", 
-					(IBinding data, object? value) => {(data as JwtHeader).Jwk = value as JWK?;}, (IBinding data) => (data as JwtHeader).Jwk,
-					false, ()=>new  JWK?(), ()=>new JWK())} 
+					(IBinding data, object? value) => {(data as JwtHeader).Jwk = value as JWK;}, (IBinding data) => (data as JwtHeader).Jwk,
+					false, ()=>new  JWK(), ()=>new JWK())} 
         }, __Tag,() => new JwtHeader(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -2279,8 +2279,8 @@ public partial class DpopPayload : Oauth {
 			{ "nonce", new PropertyString ("nonce", 
 					(IBinding data, string? value) => {(data as DpopPayload).Nonce = value;}, (IBinding data) => (data as DpopPayload).Nonce )},
 			{ "cnf", new PropertyStruct ("cnf", 
-					(IBinding data, object? value) => {(data as DpopPayload).Confirm = value as DpopConfirmation?;}, (IBinding data) => (data as DpopPayload).Confirm,
-					false, ()=>new  DpopConfirmation?(), ()=>new DpopConfirmation())} 
+					(IBinding data, object? value) => {(data as DpopPayload).Confirm = value as DpopConfirmation;}, (IBinding data) => (data as DpopPayload).Confirm,
+					false, ()=>new  DpopConfirmation(), ()=>new DpopConfirmation())} 
         }, __Tag,() => new DpopPayload(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -2452,11 +2452,11 @@ public partial class JwtDpop : Oauth {
 			new() {
 
 			{ "header", new PropertyStruct ("header", 
-					(IBinding data, object? value) => {(data as JwtDpop).Header = value as JwtHeader?;}, (IBinding data) => (data as JwtDpop).Header,
-					false, ()=>new  JwtHeader?(), ()=>new JwtHeader())} ,
+					(IBinding data, object? value) => {(data as JwtDpop).Header = value as JwtHeader;}, (IBinding data) => (data as JwtDpop).Header,
+					false, ()=>new  JwtHeader(), ()=>new JwtHeader())} ,
 			{ "payload", new PropertyStruct ("payload", 
-					(IBinding data, object? value) => {(data as JwtDpop).Payload = value as DpopPayload?;}, (IBinding data) => (data as JwtDpop).Payload,
-					false, ()=>new  DpopPayload?(), ()=>new DpopPayload())} ,
+					(IBinding data, object? value) => {(data as JwtDpop).Payload = value as DpopPayload;}, (IBinding data) => (data as JwtDpop).Payload,
+					false, ()=>new  DpopPayload(), ()=>new DpopPayload())} ,
 			{ "signature", new PropertyBinary ("signature", 
 					(IBinding data, byte[]? value) => {(data as JwtDpop).Signature = value;}, (IBinding data) => (data as JwtDpop).Signature )}
         }, __Tag,() => new JwtDpop(), null);
