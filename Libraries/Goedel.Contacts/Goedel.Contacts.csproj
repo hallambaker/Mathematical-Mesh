@@ -38,6 +38,11 @@
 
 	<ItemGroup>
 
+		<None Update="CalendarSchema.Protocol">
+		  <LastGenOutput>ContactSchema - Copy.cs</LastGenOutput>
+		  <Generator>PROTOGEN</Generator>
+		</None>
+
 		<None Update="ContactSchema.Protocol">
 			<LastGenOutput>ContactSchema.cs</LastGenOutput>
 			<Generator>PROTOGEN</Generator>

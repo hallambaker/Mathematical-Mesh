@@ -8,13 +8,41 @@
 
 	// 2. Card
 	Structure ContactCard
+		Inherits JmapBase
+
 		Description
 			| Metadata, see section 2.1
-		String					Type
-			Tag "@type"
-			Required
-			Description
-				| The JSContact type of the Card object. If specified, value MUST be 'card'
+		//String					Type
+		//	Tag "@type"
+		//	Required
+		//	Description
+		//		| The JSContact type of the Card object. If specified, value MUST be 'card'
+		//
+		//String					Uid 
+		//	Required
+		//	Description
+		//		| An identifier that associates the object as the same across different systems, 
+		//		| address books, and views. The value SHOULD be a URN [RFC8141], but for 
+		//		| compatibility with [RFC6350], it MAY also be a URI [RFC3986] or free-text value.
+		//Struct Relation			RelatedTo
+		//	Dictionary
+		//	Description
+		//		| acquaintance agent child co-resident co-worker colleague 
+		//		| contact crush date emergency friend kin me met muse
+		//		| neighbor parent sibling spouse sweetheart
+		//String					ProdId
+		//	Description
+		//		| The identifier for the product that created the Card. If set, the value MUST 
+		//		| be at least one character long.
+		//DateTime				Created
+		//	Description
+		//		| The date and time when the Card was created.
+		//
+		//String					Updated
+		//	Description
+		//		|The date and time when the data in the Card was last modified.
+
+
 
 		String					Version
 			Required
@@ -23,9 +51,7 @@
 
 
 
-		DateTime				Created
-			Description
-				| The date and time when the Card was created.
+
 
 		String					Kind
 			Description
@@ -50,28 +76,13 @@
 				| The set of Cards that are members of this group Card. Each key in the set is 
 				| the uid property value of the member, and each boolean value MUST be "true".
 				| If this property is set, then the value of the kind property MUST be "group"
-		String					ProdId
-			Description
-				| The identifier for the product that created the Card. If set, the value MUST 
-				| be at least one character long.
 
-		Struct Relation			RelatedTo
-			Dictionary
-			Description
-				| acquaintance agent child co-resident co-worker colleague 
-				| contact crush date emergency friend kin me met muse
-				| neighbor parent sibling spouse sweetheart
 
-		String					Uid // Required
-			Required
-			Description
-				| An identifier that associates the object as the same across different systems, 
-				| address books, and views. The value SHOULD be a URN [RFC8141], but for 
-				| compatibility with [RFC6350], it MAY also be a URI [RFC3986] or free-text value.
 
-		String					Updated
-			Description
-				|The date and time when the data in the Card was last modified.
+
+
+
+
 
 		// Name and Organization Properties
 		// 2.2.1. name
@@ -520,12 +531,13 @@
 				| The preference of the language in relation to other languages of the same contexts. 
 
 	// 2.4.  Calendaring and Scheduling Properties
-		// 2.4.1.  calendars
+	// 2.4.1.  calendars
+
 	Structure Calendar
 		Inherits				Resource
-			Description
-				| The calendaring resources of the entity represented by the Card, such as 
-				| to look up free-busy information.
+		Description
+			| The calendaring resources of the entity represented by the Card, such as 
+			| to look up free-busy information.
 
 
 	// 2.4.2.  schedulingAddresses
@@ -661,7 +673,7 @@
 	// 2.7.  Multilingual Properties
 	// 2.7.1.  localizations
 	Structure PatchObject
-		Inherits				Resource
+		Inherits				JmapBase
 		Description
 			| A ContactCard used to overwrite parts of a contact card.
 
