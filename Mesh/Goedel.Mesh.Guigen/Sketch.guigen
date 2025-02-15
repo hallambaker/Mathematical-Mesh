@@ -639,7 +639,7 @@ Dialog BoundDevice "Message" "plug"
 	Text DeviceType		"Platform"  // Readonly
 	Text Rights			"Rights"  // editable
 	Text LocalName		"Name" // editable
-	Text Udf			"Udf" // readonly
+	Text DeviceUdf		"Udf" // readonly
 		Readonly
 	Text Path			"Path" // editable
 	Text Description	"Description"

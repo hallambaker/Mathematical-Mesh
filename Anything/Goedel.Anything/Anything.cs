@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/14/2025 12:09:08 AM
+//  This file was automatically generated at 2/15/2025 3:10:47 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -88,8 +88,7 @@ public abstract partial class AnythingProtocol : global::Goedel.Protocol.JsonObj
 	    {"AnythingResponse", AnythingResponse._Factory}
 		};
 
-    // [ModuleInitializer]
-	
+	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
 	static AnythingProtocol() {
@@ -381,7 +380,7 @@ abstract public partial class Identity : AnythingProtocol {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Name  {get; set;}
+	public virtual string?					Name  {get; set;}
 
 
 
@@ -676,7 +675,7 @@ public partial class CatalogedThing : CatalogedEntry {
         /// <summary>
         /// </summary>
 
-	public virtual string?						DnsPrefix  {get; set;}
+	public virtual string?					DnsPrefix  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -768,25 +767,25 @@ public partial class CatalogedAnything : CatalogedEntry {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Key  {get; set;}
+	public virtual string?					Key  {get; set;}
 
         /// <summary>
         ///The connection allowing control of the registry.
         /// </summary>
 
-	public virtual Enveloped<ConnectionStripped>?						EnvelopedConnectionAddress  {get; set;}
+	public virtual Enveloped<ConnectionStripped>?					EnvelopedConnectionAddress  {get; set;}
 
         /// <summary>
         ///The Mesh profile
         /// </summary>
 
-	public virtual Enveloped<ProfileAnything>?						EnvelopedProfileCarnet  {get; set;}
+	public virtual Enveloped<ProfileAnything>?					EnvelopedProfileCarnet  {get; set;}
 
         /// <summary>
         ///The activation data for the registry.
         /// </summary>
 
-	public virtual Enveloped<ActivationCommon>?						EnvelopedActivationCommon  {get; set;}
+	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;}
 
 
 

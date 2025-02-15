@@ -29,9 +29,13 @@ namespace Goedel.Utilities;
 /// </summary>
 public partial class Screen {
 
+    ///<summary>The output file.</summary> 
     public static TextWriter? OutputFile { get; private set; } = null;
 
-
+    /// <summary>
+    /// Direct output to the file <paramref name="filename"/>
+    /// </summary>
+    /// <param name="filename">File to direct output to.</param>
     public static void ToFile(string filename) {
 
         var stream = new FileStream(filename, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write);
@@ -39,7 +43,9 @@ public partial class Screen {
         }
 
 
-
+    /// <summary>
+    /// Flush the output data.
+    /// </summary>
     public static void Flush() => OutputFile.Flush();
 
     ///<summary>Global default log level</summary> 

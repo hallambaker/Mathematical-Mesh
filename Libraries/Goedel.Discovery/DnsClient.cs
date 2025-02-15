@@ -128,6 +128,7 @@ public abstract class DnsClient {
     /// Resolve an @nything handle using DNS.
     /// </summary>
     /// <param name="domain">TThe domain component of the handle.</param>
+    /// <param name="prefix">The protocol prefix (including underscore)</param>
     /// <returns>The resolved DID.</returns>
     public static async Task<DNSRecord_TXT?> GetPrefixedTXT(string domain, string prefix) {
         domain = prefix + "." + domain;

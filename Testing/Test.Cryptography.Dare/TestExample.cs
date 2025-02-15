@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/14/2025 12:09:14 AM
+//  This file was automatically generated at 2/15/2025 3:10:51 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -81,8 +81,7 @@ public abstract partial class TestSchema : global::Goedel.Protocol.JsonObject {
 	    {"CatalogEntryTest", CatalogEntryTest._Factory}
 		};
 
-    // [ModuleInitializer]
-	
+	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
 	static TestSchema() {
@@ -118,13 +117,13 @@ abstract public partial class TestEntry : TestSchema {
         ///Time the pending item was created.
         /// </summary>
 
-	public virtual DateTime?						Created  {get; set;}
+	public virtual DateTime?					Created  {get; set;}
 
         /// <summary>
         ///Time the pending item was last modified.
         /// </summary>
 
-	public virtual DateTime?						Modified  {get; set;}
+	public virtual DateTime?					Modified  {get; set;}
 
 
 
@@ -206,20 +205,20 @@ public partial class TestItem : TestEntry {
         ///not case sensitive.
         /// </summary>
 
-	public virtual string?						AccountID  {get; set;}
+	public virtual string?					AccountID  {get; set;}
 
         /// <summary>
         ///Fingerprint of associated user profile
         /// </summary>
 
-	public virtual string?						UserProfileUDF  {get; set;}
+	public virtual string?					UserProfileUDF  {get; set;}
 
         /// <summary>
         ///Status of the account, valid values are 'Open', 'Closed',
         ///'Suspended'
         /// </summary>
 
-	public virtual string?						Status  {get; set;}
+	public virtual string?					Status  {get; set;}
 
 
 
@@ -306,38 +305,38 @@ public partial class MessageTest : Goedel.Mesh.Message {
         /// <summary>
         /// </summary>
 
-	public virtual string?						UniqueId  {get; set;}
+	public virtual string?					UniqueId  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						VersionId  {get; set;}
+	public virtual string?					VersionId  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Seed  {get; set;}
+	public virtual string?					Seed  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual int?						Serial  {get; set;}
+	public virtual int?					Serial  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual int?						Version  {get; set;}
+	public virtual int?					Version  {get; set;}
 
         /// <summary>
         ///If specified, the entry was generated with random length setting.
         /// </summary>
 
-	public virtual int?						Length  {get; set;}
+	public virtual int?					Length  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual byte[]?						Data  {get; set;}
+	public virtual byte[]?					Data  {get; set;}
 
 
 
@@ -432,38 +431,38 @@ public partial class CatalogEntryTest : Goedel.Mesh.CatalogedEntry {
         /// <summary>
         /// </summary>
 
-	public virtual string?						UniqueId  {get; set;}
+	public virtual string?					UniqueId  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						VersionId  {get; set;}
+	public virtual string?					VersionId  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Seed  {get; set;}
+	public virtual string?					Seed  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual int?						Serial  {get; set;}
+	public virtual int?					Serial  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual int?						Version  {get; set;}
+	public virtual int?					Version  {get; set;}
 
         /// <summary>
         ///If specified, the 
         /// </summary>
 
-	public virtual int?						Length  {get; set;}
+	public virtual int?					Length  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual byte[]?						Data  {get; set;}
+	public virtual byte[]?					Data  {get; set;}
 
 
 

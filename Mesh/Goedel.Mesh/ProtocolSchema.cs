@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/14/2025 12:09:05 AM
+//  This file was automatically generated at 2/15/2025 3:10:45 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -127,8 +127,7 @@ public abstract partial class MeshProtocol : global::Goedel.Protocol.JsonObject 
 	    {"OperateResponse", OperateResponse._Factory}
 		};
 
-    // [ModuleInitializer]
-	
+	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
 	static MeshProtocol() {
@@ -877,19 +876,19 @@ public partial class MeshRequestUser : MeshRequest {
         ///request is directed.
         /// </summary>
 
-	public virtual string?						Account  {get; set;}
+	public virtual string?					Account  {get; set;}
 
         /// <summary>
         ///The identifier of the capability under which access is claimed.
         /// </summary>
 
-	public virtual string?						Capability  {get; set;}
+	public virtual string?					Capability  {get; set;}
 
         /// <summary>
         ///Device profile of the device making the request.
         /// </summary>
 
-	public virtual Enveloped<ProfileDevice>?						EnvelopedProfileDevice  {get; set;}
+	public virtual Enveloped<ProfileDevice>?					EnvelopedProfileDevice  {get; set;}
 
 
 
@@ -1054,13 +1053,13 @@ public partial class KeyValue : MeshProtocol {
         ///The data retrieval key.
         /// </summary>
 
-	public virtual string?						Key  {get; set;}
+	public virtual string?					Key  {get; set;}
 
         /// <summary>
         ///The data value to match.
         /// </summary>
 
-	public virtual string?						Value  {get; set;}
+	public virtual string?					Value  {get; set;}
 
 
 
@@ -1146,35 +1145,35 @@ public partial class ConstraintsSelect : MeshProtocol {
         ///The container to be searched.
         /// </summary>
 
-	public virtual string?						Store  {get; set;}
+	public virtual string?					Store  {get; set;}
 
         /// <summary>
         ///Only return objects with an index value that is equal to or
         ///higher than the value specified.
         /// </summary>
 
-	public virtual long?						IndexMin  {get; set;}
+	public virtual long?					IndexMin  {get; set;}
 
         /// <summary>
         ///Only return objects with an index value that is equal to or
         ///lower than the value specified.
         /// </summary>
 
-	public virtual long?						IndexMax  {get; set;}
+	public virtual long?					IndexMax  {get; set;}
 
         /// <summary>
         ///Only data published on or after the specified time instant 
         ///is requested.
         /// </summary>
 
-	public virtual DateTime?						NotBefore  {get; set;}
+	public virtual DateTime?					NotBefore  {get; set;}
 
         /// <summary>
         ///Only data published before the specified time instant is
         ///requested. This excludes data published at the specified time instant.
         /// </summary>
 
-	public virtual DateTime?						Before  {get; set;}
+	public virtual DateTime?					Before  {get; set;}
 
         /// <summary>
         ///Specifies a page key returned in a previous search operation
@@ -1184,7 +1183,7 @@ public partial class ConstraintsSelect : MeshProtocol {
         ///returns the next set of data responding to the earlier query.
         /// </summary>
 
-	public virtual string?						PageKey  {get; set;}
+	public virtual string?					PageKey  {get; set;}
 
 
 
@@ -1276,38 +1275,38 @@ public partial class ConstraintsData : MeshProtocol {
         ///Maximum number of entries to send.
         /// </summary>
 
-	public virtual long?						MaxEntries  {get; set;}
+	public virtual long?					MaxEntries  {get; set;}
 
         /// <summary>
         ///Specifies an offset to be applied to the payload data before it is sent. 
         ///This allows large payloads to be transferred incrementally.
         /// </summary>
 
-	public virtual long?						BytesOffset  {get; set;}
+	public virtual long?					BytesOffset  {get; set;}
 
         /// <summary>
         ///Maximum number of payload bytes to send.
         /// </summary>
 
-	public virtual long?						BytesMax  {get; set;}
+	public virtual long?					BytesMax  {get; set;}
 
         /// <summary>
         ///Return the entry header
         /// </summary>
 
-	public virtual bool?						Header  {get; set;}
+	public virtual bool?					Header  {get; set;}
 
         /// <summary>
         ///Return the entry payload
         /// </summary>
 
-	public virtual bool?						Payload  {get; set;}
+	public virtual bool?					Payload  {get; set;}
 
         /// <summary>
         ///Return the entry trailer
         /// </summary>
 
-	public virtual bool?						Trailer  {get; set;}
+	public virtual bool?					Trailer  {get; set;}
 
 
 
@@ -1400,13 +1399,13 @@ public partial class PolicyAccount : MeshProtocol {
         ///Specifies the minimum length of an account name.
         /// </summary>
 
-	public virtual int?						Minimum  {get; set;}
+	public virtual int?					Minimum  {get; set;}
 
         /// <summary>
         ///Specifies the maximum length of an account name.
         /// </summary>
 
-	public virtual int?						Maximum  {get; set;}
+	public virtual int?					Maximum  {get; set;}
 
         /// <summary>
         ///A list of characters that the service 
@@ -1415,7 +1414,7 @@ public partial class PolicyAccount : MeshProtocol {
         ///in the proposed account name.
         /// </summary>
 
-	public virtual string?						InvalidCharacters  {get; set;}
+	public virtual string?					InvalidCharacters  {get; set;}
 
 
 
@@ -1498,19 +1497,19 @@ public partial class StoreStatus : MeshProtocol {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Store  {get; set;}
+	public virtual string?					Store  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual long?						Index  {get; set;}
+	public virtual long?					Index  {get; set;}
 
         /// <summary>
         ///In a status response, the apex digest value of the store 
         ///whose status is reported.
         /// </summary>
 
-	public virtual byte[]?						Digest  {get; set;}
+	public virtual byte[]?					Digest  {get; set;}
 
 
 
@@ -1600,14 +1599,14 @@ public partial class StoreUpdate : StoreStatus {
         ///in the store.
         /// </summary>
 
-	public virtual bool?						Partial  {get; set;}
+	public virtual bool?					Partial  {get; set;}
 
         /// <summary>
         ///If the value Partial is true, this value MUST specify the index
         ///value of the last entry in the store.
         /// </summary>
 
-	public virtual long?						FinalIndex  {get; set;}
+	public virtual long?					FinalIndex  {get; set;}
 
 
 
@@ -1693,7 +1692,7 @@ public partial class MeshHelloRequest : Goedel.Protocol.HelloRequest {
         ///Contains a proposed callsign binding to the account.
         /// </summary>
 
-	public virtual CallsignBinding?						CallsignBinding  {get; set;}
+	public virtual CallsignBinding?					CallsignBinding  {get; set;}
 
 
 
@@ -1775,32 +1774,32 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
         ///Specifies the default data constraints for updates.
         /// </summary>
 
-	public virtual ConstraintsData?						ConstraintsUpdate  {get; set;}
+	public virtual ConstraintsData?					ConstraintsUpdate  {get; set;}
 
         /// <summary>
         ///Specifies the default data constraints for message senders.
         /// </summary>
 
-	public virtual ConstraintsData?						ConstraintsPost  {get; set;}
+	public virtual ConstraintsData?					ConstraintsPost  {get; set;}
 
         /// <summary>
         ///Specifies the account creation policy
         /// </summary>
 
-	public virtual PolicyAccount?						PolicyAccount  {get; set;}
+	public virtual PolicyAccount?					PolicyAccount  {get; set;}
 
         /// <summary>
         ///The enveloped master profile of the service.
         /// </summary>
 
-	public virtual Enveloped<ProfileService>?						EnvelopedProfileService  {get; set;}
+	public virtual Enveloped<ProfileService>?					EnvelopedProfileService  {get; set;}
 
         /// <summary>
         ///If the request specifies a callsign binding, returns a proposed binding for
         ///the requested callsign.
         /// </summary>
 
-	public virtual CallsignBinding?						CallsignBinding  {get; set;}
+	public virtual CallsignBinding?					CallsignBinding  {get; set;}
 
 
 
@@ -1896,13 +1895,13 @@ public partial class BindRequest : MeshRequest {
         ///The service account to bind to.
         /// </summary>
 
-	public virtual string?						AccountAddress  {get; set;}
+	public virtual string?					AccountAddress  {get; set;}
 
         /// <summary>
         ///The signed assertion describing the account.
         /// </summary>
 
-	public virtual Enveloped<ProfileAccount>?						EnvelopedProfileAccount  {get; set;}
+	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileAccount  {get; set;}
 
         /// <summary>
         ///Contains one or more bindings of a callsign to the account.
@@ -1996,21 +1995,21 @@ public partial class BindResponse : MeshResponse {
         ///Text explaining the status of the creation request.
         /// </summary>
 
-	public virtual string?						Reason  {get; set;}
+	public virtual string?					Reason  {get; set;}
 
         /// <summary>
         ///A URL to which the user is directed to complete the account creation 
         ///request.
         /// </summary>
 
-	public virtual string?						URL  {get; set;}
+	public virtual string?					URL  {get; set;}
 
         /// <summary>
         ///The enveloped assignment describing how the client should
         ///discover the host and encrypt data to it.
         /// </summary>
 
-	public virtual Enveloped<AccountHostAssignment>?						EnvelopedAccountHostAssignment  {get; set;}
+	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;}
 
 
 
@@ -2248,7 +2247,7 @@ public partial class ConnectRequest : MeshRequest {
         ///The connection request generated by the client 
         /// </summary>
 
-	public virtual Enveloped<RequestConnection>?						EnvelopedRequestConnection  {get; set;}
+	public virtual Enveloped<RequestConnection>?					EnvelopedRequestConnection  {get; set;}
 
         /// <summary>
         ///List of named access rights.
@@ -2337,13 +2336,13 @@ public partial class ConnectResponse : MeshResponse {
         ///The connection request generated by the client
         /// </summary>
 
-	public virtual Enveloped<AcknowledgeConnection>?						EnvelopedAcknowledgeConnection  {get; set;}
+	public virtual Enveloped<AcknowledgeConnection>?					EnvelopedAcknowledgeConnection  {get; set;}
 
         /// <summary>
         ///The user profile that provides the root of trust for this Mesh
         /// </summary>
 
-	public virtual Enveloped<ProfileAccount>?						EnvelopedProfileAccount  {get; set;}
+	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileAccount  {get; set;}
 
 
 
@@ -2427,12 +2426,12 @@ public partial class CompleteRequest : StatusRequest {
         /// <summary>
         /// </summary>
 
-	public virtual string?						AccountAddress  {get; set;}
+	public virtual string?					AccountAddress  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						ResponseID  {get; set;}
+	public virtual string?					ResponseID  {get; set;}
 
 
 
@@ -2515,14 +2514,14 @@ public partial class CompleteResponse : MeshResponse {
         ///The signed assertion describing the result of the connect request
         /// </summary>
 
-	public virtual Enveloped<RespondConnection>?						EnvelopedRespondConnection  {get; set;}
+	public virtual Enveloped<RespondConnection>?					EnvelopedRespondConnection  {get; set;}
 
         /// <summary>
         ///The enveloped assignment describing how the client should
         ///discover the host and encrypt data to it.
         /// </summary>
 
-	public virtual Enveloped<AccountHostAssignment>?						EnvelopedAccountHostAssignment  {get; set;}
+	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;}
 
 
 
@@ -2606,12 +2605,12 @@ public partial class StatusRequest : MeshRequestUser {
         /// <summary>
         /// </summary>
 
-	public virtual string?						DeviceUDF  {get; set;}
+	public virtual string?					DeviceUDF  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						CatalogedDeviceDigest  {get; set;}
+	public virtual string?					CatalogedDeviceDigest  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -2628,7 +2627,7 @@ public partial class StatusRequest : MeshRequestUser {
         /// <summary>
         /// </summary>
 
-	public virtual bool?						DeviceStatus  {get; set;}
+	public virtual bool?					DeviceStatus  {get; set;}
 
 
 
@@ -2718,24 +2717,24 @@ public partial class StatusResponse : MeshResponse {
         /// <summary>
         /// </summary>
 
-	public virtual byte[]?						Bitmask  {get; set;}
+	public virtual byte[]?					Bitmask  {get; set;}
 
         /// <summary>
         ///The account profile providing the root of trust for this account.
         /// </summary>
 
-	public virtual Enveloped<ProfileAccount>?						EnvelopedProfileAccount  {get; set;}
+	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileAccount  {get; set;}
 
         /// <summary>
         ///The catalog device entry
         /// </summary>
 
-	public virtual Enveloped<CatalogedDevice>?						EnvelopedCatalogedDevice  {get; set;}
+	public virtual Enveloped<CatalogedDevice>?					EnvelopedCatalogedDevice  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						CatalogedDeviceDigest  {get; set;}
+	public virtual string?					CatalogedDeviceDigest  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -2746,7 +2745,7 @@ public partial class StatusResponse : MeshResponse {
         ///discover the host and encrypt data to it.
         /// </summary>
 
-	public virtual Enveloped<AccountHostAssignment>?						EnvelopedAccountHostAssignment  {get; set;}
+	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;}
 
         /// <summary>
         ///A series of access tokens for the requested services.
@@ -2855,22 +2854,22 @@ public partial class DeviceStatus : MeshProtocol {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Id  {get; set;}
+	public virtual string?					Id  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Status  {get; set;}
+	public virtual string?					Status  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Comment  {get; set;}
+	public virtual string?					Comment  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual DateTime?						LastConnected  {get; set;}
+	public virtual DateTime?					LastConnected  {get; set;}
 
 
 
@@ -2961,17 +2960,17 @@ public partial class DownloadRequest : MeshRequestUser {
         ///The maximum number of results to be returned.
         /// </summary>
 
-	public virtual int?						MaxResults  {get; set;}
+	public virtual int?					MaxResults  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						DeviceUDF  {get; set;}
+	public virtual string?					DeviceUDF  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						CatalogedDeviceDigest  {get; set;}
+	public virtual string?					CatalogedDeviceDigest  {get; set;}
 
         /// <summary>
         ///Specifies constraints to be applied to a search result. These 
@@ -2984,7 +2983,7 @@ public partial class DownloadRequest : MeshRequestUser {
         ///Specifies the data constraints to be applied to the responses.
         /// </summary>
 
-	public virtual ConstraintsData?						ConstraintsPost  {get; set;}
+	public virtual ConstraintsData?					ConstraintsPost  {get; set;}
 
 
 
@@ -3085,13 +3084,13 @@ public partial class DownloadResponse : MeshResponse {
         /// <summary>
         /// </summary>
 
-	public virtual string?						CatalogedDeviceDigest  {get; set;}
+	public virtual string?					CatalogedDeviceDigest  {get; set;}
 
         /// <summary>
         ///The catalog device entry. This is only returned if the 
         /// </summary>
 
-	public virtual Enveloped<CatalogedDevice>?						EnvelopedCatalogedDevice  {get; set;}
+	public virtual Enveloped<CatalogedDevice>?					EnvelopedCatalogedDevice  {get; set;}
 
 
 
@@ -3180,13 +3179,13 @@ public partial class UploadRequest : MeshRequestUser {
         ///The document identifier	
         /// </summary>
 
-	public virtual string?						DocumentId  {get; set;}
+	public virtual string?					DocumentId  {get; set;}
 
         /// <summary>
         ///The data to be uploaded
         /// </summary>
 
-	public virtual byte[]?						Data  {get; set;}
+	public virtual byte[]?					Data  {get; set;}
 
 
 
@@ -3346,7 +3345,7 @@ public partial class GetDataRequest : MeshRequest {
         ///The document identifier	
         /// </summary>
 
-	public virtual string?						DocumentId  {get; set;}
+	public virtual string?					DocumentId  {get; set;}
 
 
 
@@ -3429,7 +3428,7 @@ public partial class GetDataResponse : MeshResponse {
         ///The data retrieved
         /// </summary>
 
-	public virtual byte[]?						Data  {get; set;}
+	public virtual byte[]?					Data  {get; set;}
 
 
 
@@ -3629,7 +3628,7 @@ public partial class TransactResponse : MeshResponse {
         /// <summary>
         /// </summary>
 
-	public virtual byte[]?						Bitmask  {get; set;}
+	public virtual byte[]?					Bitmask  {get; set;}
 
         /// <summary>
         ///The responses to the entries.
@@ -3642,7 +3641,7 @@ public partial class TransactResponse : MeshResponse {
         ///of all the messages must not exceed the specified value.
         /// </summary>
 
-	public virtual ConstraintsData?						ConstraintsData  {get; set;}
+	public virtual ConstraintsData?					ConstraintsData  {get; set;}
 
 
 
@@ -3729,13 +3728,13 @@ public partial class EntryResponse : MeshProtocol {
         ///The index value of the entry in the request.
         /// </summary>
 
-	public virtual long?						IndexRequest  {get; set;}
+	public virtual long?					IndexRequest  {get; set;}
 
         /// <summary>
         ///The index value assigned to the entry in the container.
         /// </summary>
 
-	public virtual long?						IndexContainer  {get; set;}
+	public virtual long?					IndexContainer  {get; set;}
 
         /// <summary>
         ///Specifies the result of attempting to add the entry to a catalog
@@ -3743,7 +3742,7 @@ public partial class EntryResponse : MeshProtocol {
         ///values for an entry are 'Accept', 'Reject' and 'Conflict'.
         /// </summary>
 
-	public virtual string?						Result  {get; set;}
+	public virtual string?					Result  {get; set;}
 
         /// <summary>
         ///If the entry was redacted, specifies constraints 
@@ -3751,7 +3750,7 @@ public partial class EntryResponse : MeshProtocol {
         ///of all the messages must not exceed the specified value.	
         /// </summary>
 
-	public virtual ConstraintsData?						ConstraintsData  {get; set;}
+	public virtual ConstraintsData?					ConstraintsData  {get; set;}
 
 
 
@@ -4078,7 +4077,7 @@ public partial class ClaimRequest : MeshRequest {
         ///The claim message
         /// </summary>
 
-	public virtual Enveloped<MessageClaim>?						EnvelopedMessageClaim  {get; set;}
+	public virtual Enveloped<MessageClaim>?					EnvelopedMessageClaim  {get; set;}
 
 
 
@@ -4160,7 +4159,7 @@ public partial class ClaimResponse : MeshResponse {
         ///The encrypted device profile
         /// </summary>
 
-	public virtual CatalogedPublication?						CatalogedPublication  {get; set;}
+	public virtual CatalogedPublication?					CatalogedPublication  {get; set;}
 
 
 
@@ -4242,13 +4241,13 @@ public partial class PollClaimRequest : MeshRequest {
         ///The envelope identifier formed from the PublicationId.
         /// </summary>
 
-	public virtual string?						PublicationId  {get; set;}
+	public virtual string?					PublicationId  {get; set;}
 
         /// <summary>
         ///Account to which the claim is directed
         /// </summary>
 
-	public virtual string?						TargetAccountAddress  {get; set;}
+	public virtual string?					TargetAccountAddress  {get; set;}
 
 
 
@@ -4331,7 +4330,7 @@ public partial class PollClaimResponse : MeshResponse {
         ///The claim message
         /// </summary>
 
-	public virtual Enveloped<Message>?						EnvelopedMessage  {get; set;}
+	public virtual Enveloped<Message>?					EnvelopedMessage  {get; set;}
 
 
 
@@ -4413,13 +4412,13 @@ abstract public partial class CryptographicOperation : MeshProtocol {
         ///The key identifier			
         /// </summary>
 
-	public virtual string?						KeyId  {get; set;}
+	public virtual string?					KeyId  {get; set;}
 
         /// <summary>
         ///Lagrange coefficient multiplier to be applied to the private key
         /// </summary>
 
-	public virtual byte[]?						KeyCoefficient  {get; set;}
+	public virtual byte[]?					KeyCoefficient  {get; set;}
 
 
 
@@ -4498,13 +4497,13 @@ public partial class CryptographicOperationSign : CryptographicOperation {
         ///The data to sign
         /// </summary>
 
-	public virtual byte[]?						Data  {get; set;}
+	public virtual byte[]?					Data  {get; set;}
 
         /// <summary>
         ///Contribution to the R offset.
         /// </summary>
 
-	public virtual byte[]?						PartialR  {get; set;}
+	public virtual byte[]?					PartialR  {get; set;}
 
 
 
@@ -4587,7 +4586,7 @@ public partial class CryptographicOperationKeyAgreement : CryptographicOperation
         ///The public key value to perform the agreement on.
         /// </summary>
 
-	public virtual Key?						PublicKey  {get; set;}
+	public virtual Key?					PublicKey  {get; set;}
 
 
 
@@ -4741,12 +4740,12 @@ public partial class CryptographicOperationShare : CryptographicOperation {
         /// <summary>
         /// </summary>
 
-	public virtual int?						Threshold  {get; set;}
+	public virtual int?					Threshold  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual int?						Shares  {get; set;}
+	public virtual int?					Shares  {get; set;}
 
 
 
@@ -4828,7 +4827,7 @@ public partial class CryptographicResult : MeshProtocol {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Error  {get; set;}
+	public virtual string?					Error  {get; set;}
 
 
 
@@ -4907,7 +4906,7 @@ public partial class CryptographicResultKeyAgreement : CryptographicResult {
         /// <summary>
         /// </summary>
 
-	public virtual KeyAgreement?						KeyAgreement  {get; set;}
+	public virtual KeyAgreement?					KeyAgreement  {get; set;}
 
 
 
@@ -5062,7 +5061,7 @@ public partial class OperateRequest : MeshRequest {
         ///The service account the capability is bound to
         /// </summary>
 
-	public virtual string?						AccountAddress  {get; set;}
+	public virtual string?					AccountAddress  {get; set;}
 
         /// <summary>
         /// </summary>

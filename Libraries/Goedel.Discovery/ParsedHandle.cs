@@ -94,14 +94,18 @@ public class ParsedHandle {
     ///<summary>The Service DNS address</summary> 
     public string Service { get; init; } = null;
 
+    ///<summary>The account address component</summary> 
     public string AccountAddress {get; private set;}
 
+    ///<summary>Handle obtained by resolving the handle.</summary> 
     public ParsedHandle ResolvedHandle { get; private set; } = null;
 
-    protected ParsedHandle() {
-        }
 
-
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="handle">The string to parse.</param>
+    /// <exception cref="NYI"></exception>
     public ParsedHandle(string handle) {
 
         handle.AssertNotNull(NYI.Throw);
@@ -173,12 +177,24 @@ public class ParsedHandle {
 
         }
 
+    /// <summary>
+    /// Convenience method, resolve the handle <paramref name="handle"/> and
+    /// return the the corresponding account service address as a text string.
+    /// </summary>
+    /// <param name="handle"></param>
+    /// <returns></returns>
     public static string Resolve(string handle) {
         var parsed = new ParsedHandle(handle);
         return parsed.Resolve().Sync();
         }
 
 
+    /// <summary>
+    /// Resolve the handle to return the account service address for the corresponding
+    /// Mesh account.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="NYI"></exception>
     public async Task<string> Resolve() {
 
         switch (HandleType) {
@@ -203,6 +219,11 @@ public class ParsedHandle {
             }
         }
 
+    /// <summary>
+    /// Return the Mesh service provider associated with the handle.
+    /// </summary>
+    /// <returns>The service provider.</returns>
+    /// <exception cref="NYI"></exception>
     public async Task<string> ResolveMeshService() {
         switch (HandleType) {
             // Just return the service component
@@ -231,21 +252,29 @@ public class ParsedHandle {
         throw new NYI();
         }
 
-
-    public async Task <ParsedHandle?> ResolveDnsHandle() {
+    /// <summary>
+    /// Return the Account Service handle associated with the handle.
+    /// </summary>
+    /// <returns>The account service handle</returns>
+    public async Task<ParsedHandle?> ResolveDnsHandle() {
 
         var meshService = await HandleServiceMesh.Fetch(Name);
         if (meshService == null) {
             return null;
             }
-
-
         return new ParsedHandle(meshService.Dsa);
-
-
         }
+
+    /// <summary>
+    /// Fetch the services associated with this handle.
+    /// </summary>
+    /// <returns>The services</returns>
     public async Task<DnsHandleServices> GetServices() => await GetServices(Name);
 
+    /// <summary>
+    /// Fetch the services associated with the handle <paramref name="handle"/>.
+    /// </summary>
+    /// <returns>The services</returns>
     public static async Task<DnsHandleServices> GetServices(string handle) {
         var result = new DnsHandleServices(handle);
 
@@ -295,16 +324,38 @@ public class ParsedHandle {
 
 
 
-
+/// <summary>
+/// Services associated with a DNS handle
+/// </summary>
+/// <param name="Handle"></param>
 public record DnsHandleServices(
                 string Handle) {
+
+    ///<summary>The set of supported services</summary> 
     public List<HandleService> Services = [];
 
+    ///<summary>Contact service declaration.</summary> 
+    public HandleServiceContact Contact { get; set; }
+
+    ///<summary>Calendar service declaration.</summary> 
+    public HandleServiceCalendar Calendar { get; set; }
+
+    ///<summary>Mesh service declaration.</summary> 
     public HandleServiceMesh Mesh { get; set; }
+
+    ///<summary>Oauth service declaration.</summary> 
     public HandleServiceOauth Oauth { get; set; }
+
+    ///<summary>ATprotocol service declaration.</summary> 
     public HandleServiceAtprotocol Atprotocol { get; set; }
+
+    ///<summary>Http service declaration.</summary> 
     public HandleServiceHttp Http { get; set; }
 
+    /// <summary>
+    /// Add the service <paramref name="service"/> to the services.
+    /// </summary>
+    /// <param name="service">The service to add.</param>
     public void Add(HandleService service) {
         if (service != null) { 
             Services.Add(service);
@@ -312,22 +363,28 @@ public record DnsHandleServices(
             Oauth ??= service as HandleServiceOauth;
             Atprotocol ??= service as HandleServiceAtprotocol;
             Http ??= service as HandleServiceHttp;
-
+            Contact ??= service as HandleServiceContact;
+            Calendar ??= service as HandleServiceCalendar;
             }
-
         }
-
-
 
     }
 
-
+/// <summary>
+/// Base class for handle service records.
+/// </summary>
 public abstract record HandleService {
 
+    ///<summary>The text value of the handle.</summary> 
     public string? Text { get; }
 
+    ///<summary>Dictionary mapping tag entries to the corresponding values.</summary> 
     public Dictionary<string, string> Tags = [];
 
+    /// <summary>
+    /// Constructor, create an entry from <paramref name="text"/>
+    /// </summary>
+    /// <param name="text">The text to create the entry.</param>
     protected HandleService(string? text) {
         Text = text;
         if (text is null) {
@@ -335,7 +392,6 @@ public abstract record HandleService {
             }
 
         var parts = text.Split(' ');
-
         foreach (var part in parts) {
             var index = part.IndexOf('=');
 
@@ -343,24 +399,37 @@ public abstract record HandleService {
                 var tag = part.Substring(0, index);
                 var rest = part.Substring(index + 1);
                 Tags.Add(tag, rest);
-
                 }
-
             }
         }
-
-
-
-
     }
 
+
+/// <summary>
+/// Mesh service description.
+/// </summary>
 public record HandleServiceMesh : HandleService {
 
+    ///<summary>The Direct Service Address</summary> 
     public string Dsa { get; set; }
 
+    /// <summary>
+    /// Constructor, create an instance from <paramref name="text"/>
+    /// </summary>
+    /// <param name="text">The TXT record text</param>
     public HandleServiceMesh(string? text = null) : base(text) {
+        Tags.TryGetValue("dsa", out var did);
+        Dsa = did;
         }
 
+    /// <summary>
+    /// Attempt to fetch the Mesh record associated with the handle 
+    /// <paramref name="domain"/>.
+    /// </summary>
+    /// <param name="domain">The domain to query.</param>
+    /// <param name="dummy">If true return a dummy result if there is no 
+    /// TXT record published, otherwise return null.</param>
+    /// <returns>The service description.</returns>
     public static async Task<HandleServiceMesh> Fetch(string domain, bool dummy=false) {
         var handle = await DnsClient.GetPrefixedTXT(domain, "_mesh");
         var text = handle.FullText();
@@ -368,24 +437,42 @@ public record HandleServiceMesh : HandleService {
             return dummy ?  new HandleServiceMesh((string) null): null;
             }
 
-        var result = new HandleServiceMesh(text);
-        result.Tags.TryGetValue("dsa", out var did);
-        result.Dsa = did;
-
-
-        return result;
+        return new HandleServiceMesh(text);
         }
 
 
     }
 
+/// <summary>
+/// Oauth service description.
+/// </summary>
 public record HandleServiceOauth : HandleService {
+
+    ///<summary>The Oauth unique identifier.</summary> 
     public string Did { get; set; }
+
+    ///<summary>The Oauth service URI</summary> 
     public string ServiceUri { get; set; }
 
+    /// <summary>
+    /// Constructor, create an instance from <paramref name="text"/>
+    /// </summary>
+    /// <param name="text">The TXT record text</param>
     public HandleServiceOauth(string text = null) : base(text) {
+        Tags.TryGetValue("did", out var did);
+        Did = did;
+        Tags.TryGetValue("sm", out var serviceUri);
+        ServiceUri = serviceUri;
         }
 
+    /// <summary>
+    /// Attempt to fetch the Oauth record associated with the handle 
+    /// <paramref name="domain"/>.
+    /// </summary>
+    /// <param name="domain">The domain to query.</param>
+    /// <param name="dummy">If true return a dummy result if there is no 
+    /// TXT record published, otherwise return null.</param>
+    /// <returns>The service description.</returns>
     public static async Task<HandleServiceOauth> Fetch(string domain, bool dummy = false) {
         var handle = await DnsClient.GetPrefixedTXT(domain, "_oauth");
         var text = handle.FullText();
@@ -393,45 +480,75 @@ public record HandleServiceOauth : HandleService {
             return dummy ? new HandleServiceOauth((string)null): null;
             }
 
-        var result = new HandleServiceOauth(text);
-        result.Tags.TryGetValue("did", out var did);
-        result.Did = did;
-        result.Tags.TryGetValue("sm", out var serviceUri);
-        result.ServiceUri = serviceUri;
-
-        return result;
+        return new HandleServiceOauth(text);
         }
 
     }
+
+/// <summary>
+/// Http service description.
+/// </summary>
 public record HandleServiceHttp : HandleService {
 
-
+    ///<summary>The HTTP Domain.</summary> 
     public string Domain { get; set; }
 
+    /// <summary>
+    /// Constructor, create an instance from <paramref name="text"/>
+    /// </summary>
+    /// <param name="text">The TXT record text</param>
     public HandleServiceHttp(string text = null) : base(text) {
         }
 
+    /// <summary>
+    /// Attempt to fetch the Http record associated with the handle 
+    /// <paramref name="domain"/>.
+    /// </summary>
+    /// <param name="domain">The domain to query.</param>
+    /// <param name="dummy">If true return a dummy result if there is no 
+    /// TXT record published, otherwise return null.</param>
+    /// <returns>The service description.</returns>
     public static async Task<HandleServiceHttp> Fetch(string domain, bool dummy = false) {
         var handle = await DnsClient.GetPrefixedTXT(domain, "_https");
         var text = handle.FullText();
         if (text is null) {
             return dummy ? new HandleServiceHttp((string)null) { Domain =domain} : null;
             }
-        var result = new HandleServiceHttp(text);
-
-        return result;
+        return new HandleServiceHttp(text);
         }
 
     }
 
+/// <summary>
+/// ATProtocol service description.
+/// </summary>
 public record HandleServiceAtprotocol : HandleService {
 
+    ///<summary>The ATProtocol unique identifier.</summary> 
     public string Did { get; set; }
+
+    ///<summary>The ATProtocol service URI</summary> 
     public string ServiceUri { get; set; }
 
+    /// <summary>
+    /// Constructor, create an instance from <paramref name="text"/>
+    /// </summary>
+    /// <param name="text">The TXT record text</param>
     public HandleServiceAtprotocol(string text=null) : base(text) {
+        Tags.TryGetValue("did", out var did);
+        Did = did;
+        Tags.TryGetValue("sm", out var serviceUri);
+        ServiceUri = serviceUri;
         }
 
+    /// <summary>
+    /// Attempt to fetch the ATProtocol record associated with the handle 
+    /// <paramref name="domain"/>.
+    /// </summary>
+    /// <param name="domain">The domain to query.</param>
+    /// <param name="dummy">If true return a dummy result if there is no 
+    /// TXT record published, otherwise return null.</param>
+    /// <returns>The service description.</returns>
     public static async Task<HandleServiceAtprotocol> Fetch(string domain, bool dummy = false) {
         var handle = await DnsClient.GetPrefixedTXT(domain, "_atproto");
         var text = handle.FullText();
@@ -440,13 +557,93 @@ public record HandleServiceAtprotocol : HandleService {
             return dummy ? new HandleServiceAtprotocol((string)null): null;
             }
 
-        var result = new HandleServiceAtprotocol(text);
-        result.Tags.TryGetValue("did", out var did);
-        result.Did = did;
-        result.Tags.TryGetValue("sm", out var serviceUri);
-        result.ServiceUri = serviceUri;
+        return new HandleServiceAtprotocol(text);
+        }
 
-        return result;
+    }
+
+
+/// <summary>
+/// Contact service description.
+/// </summary>
+public record HandleServiceContact : HandleService {
+
+    ///<summary>Link to the Contact data</summary> 
+    public string Uri { get; set; }
+
+    ///<summary>Update notification service</summary> 
+    public string Update { get; set; }
+
+    /// <summary>
+    /// Constructor, create an instance from <paramref name="text"/>
+    /// </summary>
+    /// <param name="text">The TXT record text</param>
+    public HandleServiceContact(string text = null) : base(text) {
+        Tags.TryGetValue("uri", out var uri);
+        Uri = uri;
+        Tags.TryGetValue("update", out var update);
+        Update = update;
+        }
+
+    /// <summary>
+    /// Attempt to fetch the Contact record associated with the handle 
+    /// <paramref name="domain"/>.
+    /// </summary>
+    /// <param name="domain">The domain to query.</param>
+    /// <param name="dummy">If true return a dummy result if there is no 
+    /// TXT record published, otherwise return null.</param>
+    /// <returns>The service description.</returns>
+    public static async Task<HandleServiceContact> Fetch(string domain, bool dummy = false) {
+        var handle = await DnsClient.GetPrefixedTXT(domain, "_jscontact");
+        var text = handle.FullText();
+
+        if (text is null) {
+            return dummy ? new HandleServiceContact((string)null) : null;
+            }
+
+        return new HandleServiceContact(text);
+        }
+
+    }
+
+/// <summary>
+/// ATProtocol service description.
+/// </summary>
+public record HandleServiceCalendar : HandleService {
+
+    ///<summary>Link to the calendar data</summary> 
+    public string Uri { get; set; }
+
+    ///<summary>Update notification service</summary> 
+    public string Update { get; set; }
+
+    /// <summary>
+    /// Constructor, create an instance from <paramref name="text"/>
+    /// </summary>
+    /// <param name="text">The TXT record text</param>
+    public HandleServiceCalendar(string text = null) : base(text) {
+        Tags.TryGetValue("uri", out var uri);
+        Uri = uri;
+        Tags.TryGetValue("update", out var update);
+        Update = update;
+        }
+
+    /// <summary>
+    /// Attempt to fetch the calendar record associated with the handle 
+    /// <paramref name="domain"/>.
+    /// </summary>
+    /// <param name="domain">The domain to query.</param>
+    /// <param name="dummy">If true return a dummy result if there is no 
+    /// TXT record published, otherwise return null.</param>
+    /// <returns>The service description.</returns>
+    public static async Task<HandleServiceCalendar?> Fetch(string domain, bool dummy = false) {
+        var handle = await DnsClient.GetPrefixedTXT(domain, "_jscalendar");
+        var text = handle.FullText();
+
+        if (text is null) {
+            return dummy ? new HandleServiceCalendar((string)null) : null;
+            }
+        return new HandleServiceCalendar(text);
         }
 
     }

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/14/2025 12:09:05 AM
+//  This file was automatically generated at 2/15/2025 3:10:45 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -191,8 +191,7 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"ProcessResultNotFound", ProcessResultNotFound._Factory}
 		};
 
-    // [ModuleInitializer]
-	
+	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
 	static MeshItem() {
@@ -229,13 +228,13 @@ public partial class KeyData : MeshItem {
         ///UDF fingerprint of the public key parameters
         /// </summary>
 
-	public virtual string?						Udf  {get; set;}
+	public virtual string?					Udf  {get; set;}
 
         /// <summary>
         ///List of X.509 Certificates
         /// </summary>
 
-	public virtual byte[]?						X509Certificate  {get; set;}
+	public virtual byte[]?					X509Certificate  {get; set;}
 
         /// <summary>
         ///X.509 Certificate chain.
@@ -246,33 +245,33 @@ public partial class KeyData : MeshItem {
         ///X.509 Certificate Signing Request.
         /// </summary>
 
-	public virtual byte[]?						X509CSR  {get; set;}
+	public virtual byte[]?					X509CSR  {get; set;}
 
         /// <summary>
         ///If present specifies a time instant that use of the private key
         ///is not valid before.
         /// </summary>
 
-	public virtual DateTime?						NotBefore  {get; set;}
+	public virtual DateTime?					NotBefore  {get; set;}
 
         /// <summary>
         ///If present specifies a time instant that use of the private key
         ///is not valid on or after.
         /// </summary>
 
-	public virtual DateTime?						NotOnOrAfter  {get; set;}
+	public virtual DateTime?					NotOnOrAfter  {get; set;}
 
         /// <summary>
         ///The public key parameters as defined in the JOSE specification.
         /// </summary>
 
-	public virtual Key?						PublicParameters  {get; set;}
+	public virtual Key?					PublicParameters  {get; set;}
 
         /// <summary>
         ///The private key parameters as defined in the JOSE specification.
         /// </summary>
 
-	public virtual Key?						PrivateParameters  {get; set;}
+	public virtual Key?					PrivateParameters  {get; set;}
 
 
 
@@ -368,27 +367,27 @@ public partial class KeyShare : Key {
         ///The public key parameters of the primary key.
         /// </summary>
 
-	public virtual Key?						PublicPrimary  {get; set;}
+	public virtual Key?					PublicPrimary  {get; set;}
 
         /// <summary>
         ///The private key parameters of the share as defined in the JOSE specification.		
         /// </summary>
 
-	public virtual Key?						Share  {get; set;}
+	public virtual Key?					Share  {get; set;}
 
         /// <summary>
         ///The identifier used to claim the capability from the service.[Only present for
         ///a partial key.]
         /// </summary>
 
-	public virtual string?						ServiceId  {get; set;}
+	public virtual string?					ServiceId  {get; set;}
 
         /// <summary>
         ///The service account that supports a serviced capability. [Only present for
         ///a partial key.]	
         /// </summary>
 
-	public virtual string?						ServiceAddress  {get; set;}
+	public virtual string?					ServiceAddress  {get; set;}
 
 
 
@@ -477,19 +476,19 @@ public partial class CompositePrivate : Key {
         ///UDF fingerprint of the bound device key (if used).
         /// </summary>
 
-	public virtual string?						DeviceKeyUdf  {get; set;}
+	public virtual string?					DeviceKeyUdf  {get; set;}
 
         /// <summary>
         ///Private parameters of additive key
         /// </summary>
 
-	public virtual Key?						PrivateSalt  {get; set;}
+	public virtual Key?					PrivateSalt  {get; set;}
 
         /// <summary>
         ///Private parameters of serviced share
         /// </summary>
 
-	public virtual Key?						ServiceShare  {get; set;}
+	public virtual Key?					ServiceShare  {get; set;}
 
 
 
@@ -585,21 +584,21 @@ abstract public partial class Assertion : MeshItem {
         ///The time instant the profile was last modified.
         /// </summary>
 
-	public virtual DateTime?						Updated  {get; set;}
+	public virtual DateTime?					Updated  {get; set;}
 
         /// <summary>
         ///A Uniform Notary Token providing evidence that a signature
         ///was performed after the notary token was created.
         /// </summary>
 
-	public virtual string?						NotaryToken  {get; set;}
+	public virtual string?					NotaryToken  {get; set;}
 
         /// <summary>
         ///Conditional clause(s) that MAY be verified to evaluate the validity of the
         ///assertion. At present no condition classes are specified.
         /// </summary>
 
-	public virtual Condition?						Conditions  {get; set;}
+	public virtual Condition?					Conditions  {get; set;}
 
 
 
@@ -757,7 +756,7 @@ public partial class Activation : Assertion {
         ///Secret seed used to derive keys that are not explicitly specified.
         /// </summary>
 
-	public virtual string?						ActivationKey  {get; set;}
+	public virtual string?					ActivationKey  {get; set;}
 
         /// <summary>
         ///Activation of named account resource activations. These are separate from
@@ -847,27 +846,27 @@ public partial class ActivationEntry : MeshItem {
         ///Name of the activated resource
         /// </summary>
 
-	public virtual string?						Resource  {get; set;}
+	public virtual string?					Resource  {get; set;}
 
         /// <summary>
         ///The activation key or key share
         /// </summary>
 
-	public virtual KeyData?						Key  {get; set;}
+	public virtual KeyData?					Key  {get; set;}
 
         /// <summary>
         ///The identifier used to claim the capability from the service.[Only present for
         ///a partial capability.]
         /// </summary>
 
-	public virtual string?						ServiceId  {get; set;}
+	public virtual string?					ServiceId  {get; set;}
 
         /// <summary>
         ///The service account that supports a serviced capability. [Only present for
         ///a partial capability.]
         /// </summary>
 
-	public virtual string?						ServiceAddress  {get; set;}
+	public virtual string?					ServiceAddress  {get; set;}
 
 
 
@@ -956,7 +955,7 @@ abstract public partial class Profile : Assertion {
         ///Description of the profile
         /// </summary>
 
-	public virtual string?						Description  {get; set;}
+	public virtual string?					Description  {get; set;}
 
         /// <summary>
         ///A list of binary UDF fingerprints of accepted root signature keys for the profile.
@@ -1047,13 +1046,13 @@ public partial class ProfileDevice : Profile {
         ///during connection to an account.
         /// </summary>
 
-	public virtual KeyData?						Encryption  {get; set;}
+	public virtual KeyData?					Encryption  {get; set;}
 
         /// <summary>
         ///Base key contribution for signature keys. 
         /// </summary>
 
-	public virtual KeyData?						Signature  {get; set;}
+	public virtual KeyData?					Signature  {get; set;}
 
         /// <summary>
         ///Base key contribution for authentication keys. 
@@ -1061,7 +1060,7 @@ public partial class ProfileDevice : Profile {
         ///during connection to an account.
         /// </summary>
 
-	public virtual KeyData?						Authentication  {get; set;}
+	public virtual KeyData?					Authentication  {get; set;}
 
 
 
@@ -1153,32 +1152,32 @@ public partial class ProfileAccount : Profile {
         ///(e.g. alice@example.com) or a Mesh Name (@alice).
         /// </summary>
 
-	public virtual string?						AccountAddress  {get; set;}
+	public virtual string?					AccountAddress  {get; set;}
 
         /// <summary>
         ///The fingerprint of the service profile to which the account is
         ///currently bound.
         /// </summary>
 
-	public virtual string?						ServiceUdf  {get; set;}
+	public virtual string?					ServiceUdf  {get; set;}
 
         /// <summary>
         ///Escrow key associated with the account.
         /// </summary>
 
-	public virtual KeyData?						EscrowEncryption  {get; set;}
+	public virtual KeyData?					EscrowEncryption  {get; set;}
 
         /// <summary>
         ///Key used to sign connection assertions to the account.
         /// </summary>
 
-	public virtual KeyData?						AdministratorSignature  {get; set;}
+	public virtual KeyData?					AdministratorSignature  {get; set;}
 
         /// <summary>
         ///Key currently used to encrypt data under this profile
         /// </summary>
 
-	public virtual KeyData?						CommonEncryption  {get; set;}
+	public virtual KeyData?					CommonEncryption  {get; set;}
 
         /// <summary>
         ///Key used to authenticate requests made under this user account.
@@ -1186,7 +1185,7 @@ public partial class ProfileAccount : Profile {
         ///purpose of enabling account recovery.
         /// </summary>
 
-	public virtual KeyData?						CommonAuthentication  {get; set;}
+	public virtual KeyData?					CommonAuthentication  {get; set;}
 
 
 
@@ -1283,7 +1282,7 @@ public partial class ProfileUser : ProfileAccount {
         ///Key used to sign data under the account.
         /// </summary>
 
-	public virtual KeyData?						CommonSignature  {get; set;}
+	public virtual KeyData?					CommonSignature  {get; set;}
 
 
 
@@ -1370,7 +1369,7 @@ public partial class ProfileGroup : ProfileAccount {
         ///encrypted under the group key cannot be decrypted.
         /// </summary>
 
-	public virtual byte[]?						Cover  {get; set;}
+	public virtual byte[]?					Cover  {get; set;}
 
 
 
@@ -1453,19 +1452,19 @@ public partial class ProfileService : Profile {
         ///Key used to authenticate service connections.
         /// </summary>
 
-	public virtual KeyData?						ServiceAuthentication  {get; set;}
+	public virtual KeyData?					ServiceAuthentication  {get; set;}
 
         /// <summary>
         ///Key used to encrypt data under this profile
         /// </summary>
 
-	public virtual KeyData?						ServiceEncryption  {get; set;}
+	public virtual KeyData?					ServiceEncryption  {get; set;}
 
         /// <summary>
         ///Key used to sign data under the account.
         /// </summary>
 
-	public virtual KeyData?						ServiceSignature  {get; set;}
+	public virtual KeyData?					ServiceSignature  {get; set;}
 
 
 
@@ -1703,19 +1702,19 @@ public partial class Connection : Assertion {
         ///UDF of the connection target.
         /// </summary>
 
-	public virtual string?						Subject  {get; set;}
+	public virtual string?					Subject  {get; set;}
 
         /// <summary>
         ///UDF of the connection source.
         /// </summary>
 
-	public virtual string?						Authority  {get; set;}
+	public virtual string?					Authority  {get; set;}
 
         /// <summary>
         ///The authentication key for use of the device under the profile
         /// </summary>
 
-	public virtual KeyData?						Authentication  {get; set;}
+	public virtual KeyData?					Authentication  {get; set;}
 
 
 
@@ -1801,32 +1800,32 @@ public partial class CallsignBinding : Assertion {
         ///The canonical form of the callsign.
         /// </summary>
 
-	public virtual string?						Canonical  {get; set;}
+	public virtual string?					Canonical  {get; set;}
 
         /// <summary>
         ///The display form of the callsign. This MAY include characters such as whitespace,
         ///trademark signifiers, etc. that are omitted of trranslated in the canonical form.
         /// </summary>
 
-	public virtual string?						Display  {get; set;}
+	public virtual string?					Display  {get; set;}
 
         /// <summary>
         ///Specifies the page to which the Description"CharacterPageLatin"
         /// </summary>
 
-	public virtual string?						CharacterPage  {get; set;}
+	public virtual string?					CharacterPage  {get; set;}
 
         /// <summary>
         ///The profile to which the name is bound.
         /// </summary>
 
-	public virtual string?						ProfileUdf  {get; set;}
+	public virtual string?					ProfileUdf  {get; set;}
 
         /// <summary>
         ///The profile to which the name has been transfered.
         /// </summary>
 
-	public virtual string?						TransferUdf  {get; set;}
+	public virtual string?					TransferUdf  {get; set;}
 
         /// <summary>
         ///List of named services. If multiple service providers are specified for a given 
@@ -1838,20 +1837,20 @@ public partial class CallsignBinding : Assertion {
         ///The Mesh service address. 
         /// </summary>
 
-	public virtual string?						ServiceAddress  {get; set;}
+	public virtual string?					ServiceAddress  {get; set;}
 
         /// <summary>
         ///Key currently used to encrypt data under this profile
         /// </summary>
 
-	public virtual KeyData?						CommonEncryption  {get; set;}
+	public virtual KeyData?					CommonEncryption  {get; set;}
 
         /// <summary>
         ///Self signed certificate signing certificate to be used as a root of
         ///trust for PKIX certificates under this callsign.
         /// </summary>
 
-	public virtual byte[]?						PkixRoot  {get; set;}
+	public virtual byte[]?					PkixRoot  {get; set;}
 
 
 
@@ -1952,13 +1951,13 @@ public partial class Accreditation : Assertion {
         ///The callsign to which the accreditation applies
         /// </summary>
 
-	public virtual string?						Callsign  {get; set;}
+	public virtual string?					Callsign  {get; set;}
 
         /// <summary>
         ///The profile to which the accreditation applies.
         /// </summary>
 
-	public virtual string?						ProfileUdf  {get; set;}
+	public virtual string?					ProfileUdf  {get; set;}
 
         /// <summary>
         ///The validated names of the subject
@@ -1975,25 +1974,25 @@ public partial class Accreditation : Assertion {
         ///The time the assertion was issued.
         /// </summary>
 
-	public virtual DateTime?						Issued  {get; set;}
+	public virtual DateTime?					Issued  {get; set;}
 
         /// <summary>
         ///The time the assertion is due to expire
         /// </summary>
 
-	public virtual DateTime?						Expires  {get; set;}
+	public virtual DateTime?					Expires  {get; set;}
 
         /// <summary>
         ///The issuing policy under which the validation was performed.
         /// </summary>
 
-	public virtual string?						Policy  {get; set;}
+	public virtual string?					Policy  {get; set;}
 
         /// <summary>
         ///The issuing practices under which the validation was performed.
         /// </summary>
 
-	public virtual string?						Practice  {get; set;}
+	public virtual string?					Practice  {get; set;}
 
 
 
@@ -2091,7 +2090,7 @@ public partial class ConnectionStripped : Connection {
         ///To be removed
         /// </summary>
 
-	public virtual string?						Account  {get; set;}
+	public virtual string?					Account  {get; set;}
 
 
 
@@ -2174,7 +2173,7 @@ public partial class ConnectionService : Connection {
         ///The account address
         /// </summary>
 
-	public virtual string?						ProfileUdf  {get; set;}
+	public virtual string?					ProfileUdf  {get; set;}
 
 
 
@@ -2261,13 +2260,13 @@ public partial class ConnectionDevice : ConnectionService {
         ///The signature key for use of the device under the profile
         /// </summary>
 
-	public virtual KeyData?						Signature  {get; set;}
+	public virtual KeyData?					Signature  {get; set;}
 
         /// <summary>
         ///The encryption key for use of the device under the profile
         /// </summary>
 
-	public virtual KeyData?						Encryption  {get; set;}
+	public virtual KeyData?					Encryption  {get; set;}
 
 
 
@@ -2504,7 +2503,7 @@ public partial class AccountHostAssignment : Assertion {
         ///The account being bound
         /// </summary>
 
-	public virtual string?						AccountAddess  {get; set;}
+	public virtual string?					AccountAddess  {get; set;}
 
         /// <summary>
         ///Host address in Callsign, DNS or IP format in order of preference.
@@ -2515,19 +2514,19 @@ public partial class AccountHostAssignment : Assertion {
         ///Encryption key to be used to encrypt data for the service to use.
         /// </summary>
 
-	public virtual KeyData?						AccessEncrypt  {get; set;}
+	public virtual KeyData?					AccessEncrypt  {get; set;}
 
         /// <summary>
         ///Profile of the callsign registry used by the service.
         /// </summary>
 
-	public virtual ProfileAccount?						CallsignServiceProfile  {get; set;}
+	public virtual ProfileAccount?					CallsignServiceProfile  {get; set;}
 
         /// <summary>
         ///Profile of the service.
         /// </summary>
 
-	public virtual Enveloped<ProfileService>?						EnvelopedProfileService  {get; set;}
+	public virtual Enveloped<ProfileService>?					EnvelopedProfileService  {get; set;}
 
 
 
@@ -2695,7 +2694,7 @@ public partial class ActivationAccount : Activation {
         ///The UDF of the account
         /// </summary>
 
-	public virtual string?						AccountUdf  {get; set;}
+	public virtual string?					AccountUdf  {get; set;}
 
 
 
@@ -2859,25 +2858,25 @@ public partial class ActivationCommon : Activation {
         ///administrator catalogs.
         /// </summary>
 
-	public virtual KeyData?						AdministratorSignature  {get; set;}
+	public virtual KeyData?					AdministratorSignature  {get; set;}
 
         /// <summary>
         ///Grant access to ProfileUser account encryption key
         /// </summary>
 
-	public virtual KeyData?						Encryption  {get; set;}
+	public virtual KeyData?					Encryption  {get; set;}
 
         /// <summary>
         ///Grant access to ProfileUser account authentication key
         /// </summary>
 
-	public virtual KeyData?						Authentication  {get; set;}
+	public virtual KeyData?					Authentication  {get; set;}
 
         /// <summary>
         ///Grant access to ProfileUser account signature key
         /// </summary>
 
-	public virtual KeyData?						Signature  {get; set;}
+	public virtual KeyData?					Signature  {get; set;}
 
 
 
@@ -3044,7 +3043,7 @@ public partial class ActivationApplicationSsh : ActivationApplication {
         ///The SSH client key.
         /// </summary>
 
-	public virtual KeyData?						ClientKey  {get; set;}
+	public virtual KeyData?					ClientKey  {get; set;}
 
 
 
@@ -3126,25 +3125,25 @@ public partial class ActivationApplicationMail : ActivationApplication {
         ///The S/Mime signature key
         /// </summary>
 
-	public virtual KeyData?						SmimeSign  {get; set;}
+	public virtual KeyData?					SmimeSign  {get; set;}
 
         /// <summary>
         ///The S/Mime encryption key
         /// </summary>
 
-	public virtual KeyData?						SmimeEncrypt  {get; set;}
+	public virtual KeyData?					SmimeEncrypt  {get; set;}
 
         /// <summary>
         ///The OpenPGP signature key
         /// </summary>
 
-	public virtual KeyData?						OpenpgpSign  {get; set;}
+	public virtual KeyData?					OpenpgpSign  {get; set;}
 
         /// <summary>
         ///The OpenPGP encryption key
         /// </summary>
 
-	public virtual KeyData?						OpenpgpEncrypt  {get; set;}
+	public virtual KeyData?					OpenpgpEncrypt  {get; set;}
 
 
 
@@ -3236,27 +3235,27 @@ public partial class ActivationApplicationGroup : ActivationApplication {
         ///for new members.
         /// </summary>
 
-	public virtual KeyData?						AccountEncryption  {get; set;}
+	public virtual KeyData?					AccountEncryption  {get; set;}
 
         /// <summary>
         ///Key or capability allowing account updates, connection assertions
         ///etc to be signed.
         /// </summary>
 
-	public virtual KeyData?						AdministratorSignature  {get; set;}
+	public virtual KeyData?					AdministratorSignature  {get; set;}
 
         /// <summary>
         ///Key or capability allowing administration of the group.
         /// </summary>
 
-	public virtual KeyData?						AccountAuthentication  {get; set;}
+	public virtual KeyData?					AccountAuthentication  {get; set;}
 
         /// <summary>
         ///Signed connection service delegation allowing the device to
         ///access the account.
         /// </summary>
 
-	public virtual Enveloped<ConnectionService>?						EnvelopedConnectionService  {get; set;}
+	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;}
 
 
 
@@ -3346,7 +3345,7 @@ abstract public partial class ApplicationEntry : MeshItem {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Identifier  {get; set;}
+	public virtual string?					Identifier  {get; set;}
 
 
 
@@ -3422,7 +3421,7 @@ public partial class ApplicationEntrySsh : ApplicationEntry {
         /// <summary>
         /// </summary>
 
-	public virtual Enveloped<ActivationApplicationSsh>?						EnvelopedActivation  {get; set;}
+	public virtual Enveloped<ActivationApplicationSsh>?					EnvelopedActivation  {get; set;}
 
 
 
@@ -3503,7 +3502,7 @@ public partial class ApplicationEntryGroup : ApplicationEntry {
         /// <summary>
         /// </summary>
 
-	public virtual Enveloped<ActivationApplicationGroup>?						EnvelopedActivation  {get; set;}
+	public virtual Enveloped<ActivationApplicationGroup>?					EnvelopedActivation  {get; set;}
 
 
 
@@ -3584,7 +3583,7 @@ public partial class ApplicationEntryMail : ApplicationEntry {
         /// <summary>
         /// </summary>
 
-	public virtual Enveloped<ActivationApplicationMail>?						EnvelopedActivation  {get; set;}
+	public virtual Enveloped<ActivationApplicationMail>?					EnvelopedActivation  {get; set;}
 
 
 
@@ -3668,7 +3667,7 @@ abstract public partial class Contact : Assertion {
         ///The globally unique contact identifier.
         /// </summary>
 
-	public virtual string?						Id  {get; set;}
+	public virtual string?					Id  {get; set;}
 
         /// <summary>
         ///Mesh fingerprints associated with the contact.
@@ -3797,13 +3796,13 @@ public partial class Anchor : MeshItem {
         ///The trust anchor.
         /// </summary>
 
-	public virtual string?						Udf  {get; set;}
+	public virtual string?					Udf  {get; set;}
 
         /// <summary>
         ///The means of validation.
         /// </summary>
 
-	public virtual string?						Validation  {get; set;}
+	public virtual string?					Validation  {get; set;}
 
 
 
@@ -3887,26 +3886,26 @@ public partial class TaggedSource : MeshItem {
         ///Short name for the contact information.
         /// </summary>
 
-	public virtual string?						LocalName  {get; set;}
+	public virtual string?					LocalName  {get; set;}
 
         /// <summary>
         ///The means of validation.		
         /// </summary>
 
-	public virtual string?						Validation  {get; set;}
+	public virtual string?					Validation  {get; set;}
 
         /// <summary>
         ///The contact data in binary form.
         /// </summary>
 
-	public virtual byte[]?						BinarySource  {get; set;}
+	public virtual byte[]?					BinarySource  {get; set;}
 
         /// <summary>
         ///The contact data in enveloped form. If present, the BinarySource property
         ///is ignored.
         /// </summary>
 
-	public virtual Enveloped<Contact>?						EnvelopedSource  {get; set;}
+	public virtual Enveloped<Contact>?					EnvelopedSource  {get; set;}
 
 
 
@@ -4236,20 +4235,20 @@ public partial class OrganizationName : MeshItem {
         ///If true, the name is not in current use.
         /// </summary>
 
-	public virtual bool?						Inactive  {get; set;}
+	public virtual bool?					Inactive  {get; set;}
 
         /// <summary>
         ///The registered name.
         /// </summary>
 
-	public virtual string?						RegisteredName  {get; set;}
+	public virtual string?					RegisteredName  {get; set;}
 
         /// <summary>
         ///Names that the organization uses including trading names
         ///and doing business as names.
         /// </summary>
 
-	public virtual string?						DBA  {get; set;}
+	public virtual string?					DBA  {get; set;}
 
 
 
@@ -4335,25 +4334,25 @@ public partial class PersonName : MeshItem {
         ///If true, the name is not in current use.
         /// </summary>
 
-	public virtual bool?						Inactive  {get; set;}
+	public virtual bool?					Inactive  {get; set;}
 
         /// <summary>
         ///The preferred presentation of the full name.
         /// </summary>
 
-	public virtual string?						FullName  {get; set;}
+	public virtual string?					FullName  {get; set;}
 
         /// <summary>
         ///Honorific or title, E.g. Sir, Lord, Dr., Mr.
         /// </summary>
 
-	public virtual string?						Prefix  {get; set;}
+	public virtual string?					Prefix  {get; set;}
 
         /// <summary>
         ///First name.
         /// </summary>
 
-	public virtual string?						First  {get; set;}
+	public virtual string?					First  {get; set;}
 
         /// <summary>
         ///Middle names or initials.
@@ -4364,19 +4363,19 @@ public partial class PersonName : MeshItem {
         ///Last name.
         /// </summary>
 
-	public virtual string?						Last  {get; set;}
+	public virtual string?					Last  {get; set;}
 
         /// <summary>
         ///Nominal suffix, e.g. Jr., III, etc.
         /// </summary>
 
-	public virtual string?						Suffix  {get; set;}
+	public virtual string?					Suffix  {get; set;}
 
         /// <summary>
         ///Post nominal letters (if used).
         /// </summary>
 
-	public virtual string?						PostNominal  {get; set;}
+	public virtual string?					PostNominal  {get; set;}
 
 
 
@@ -4473,13 +4472,13 @@ public partial class NetworkAddress : MeshItem {
         ///If true, the name is not in current use.
         /// </summary>
 
-	public virtual bool?						Inactive  {get; set;}
+	public virtual bool?					Inactive  {get; set;}
 
         /// <summary>
         ///The network address, e.g. alice@example.com
         /// </summary>
 
-	public virtual string?						Address  {get; set;}
+	public virtual string?					Address  {get; set;}
 
         /// <summary>
         ///Aliases that may be used in place of the Network address
@@ -4491,7 +4490,7 @@ public partial class NetworkAddress : MeshItem {
         ///the contact may be reached using the specified Address. 
         /// </summary>
 
-	public virtual string?						Protocol  {get; set;}
+	public virtual string?					Protocol  {get; set;}
 
 
 
@@ -4577,13 +4576,13 @@ public partial class NetworkCredential : NetworkAddress {
         ///The IANA credential type
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         ///The credential
         /// </summary>
 
-	public virtual byte[]?						Credential  {get; set;}
+	public virtual byte[]?					Credential  {get; set;}
 
 
 
@@ -4666,7 +4665,7 @@ public partial class NetworkProfile : NetworkAddress {
         ///The account profile
         /// </summary>
 
-	public virtual Enveloped<ProfileAccount>?						EnvelopedProfileAccount  {get; set;}
+	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileAccount  {get; set;}
 
 
 
@@ -4831,7 +4830,7 @@ public partial class NetworkProtocol : MeshItem {
         ///the contact may be reached using the specified Address. 
         /// </summary>
 
-	public virtual string?						Protocol  {get; set;}
+	public virtual string?					Protocol  {get; set;}
 
 
 
@@ -4911,7 +4910,7 @@ public partial class Role : MeshItem {
         ///The organization at which the role is held
         /// </summary>
 
-	public virtual string?						OrganizationName  {get; set;}
+	public virtual string?					OrganizationName  {get; set;}
 
         /// <summary>
         ///The titles held with respect to that organization.
@@ -5005,37 +5004,37 @@ public partial class Location : MeshItem {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Appartment  {get; set;}
+	public virtual string?					Appartment  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Street  {get; set;}
+	public virtual string?					Street  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						District  {get; set;}
+	public virtual string?					District  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Locality  {get; set;}
+	public virtual string?					Locality  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						County  {get; set;}
+	public virtual string?					County  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Postcode  {get; set;}
+	public virtual string?					Postcode  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Country  {get; set;}
+	public virtual string?					Country  {get; set;}
 
 
 
@@ -5126,12 +5125,12 @@ public partial class Bookmark : MeshItem {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Uri  {get; set;}
+	public virtual string?					Uri  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Title  {get; set;}
+	public virtual string?					Title  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -5219,19 +5218,19 @@ public partial class Reference : MeshItem {
         ///The received message to which this is a response
         /// </summary>
 
-	public virtual string?						MessageId  {get; set;}
+	public virtual string?					MessageId  {get; set;}
 
         /// <summary>
         ///Message that was generated in response to the original (optional).
         /// </summary>
 
-	public virtual string?						ResponseId  {get; set;}
+	public virtual string?					ResponseId  {get; set;}
 
         /// <summary>
         ///The relationship type. This can be Read, Unread, Accept, Reject.
         /// </summary>
 
-	public virtual string?						Relationship  {get; set;}
+	public virtual string?					Relationship  {get; set;}
 
 
 
@@ -5315,47 +5314,47 @@ public partial class Engagement : MeshItem {
         ///Unique key.
         /// </summary>
 
-	public virtual string?						Key  {get; set;}
+	public virtual string?					Key  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual DateTime?						Start  {get; set;}
+	public virtual DateTime?					Start  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual DateTime?						Finish  {get; set;}
+	public virtual DateTime?					Finish  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						StartTravel  {get; set;}
+	public virtual string?					StartTravel  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						FinishTravel  {get; set;}
+	public virtual string?					FinishTravel  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						TimeZone  {get; set;}
+	public virtual string?					TimeZone  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Title  {get; set;}
+	public virtual string?					Title  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Description  {get; set;}
+	public virtual string?					Description  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Location  {get; set;}
+	public virtual string?					Location  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -5368,12 +5367,12 @@ public partial class Engagement : MeshItem {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Repeat  {get; set;}
+	public virtual string?					Repeat  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual bool?						Busy  {get; set;}
+	public virtual bool?					Busy  {get; set;}
 
 
 
@@ -5558,25 +5557,25 @@ abstract public partial class CatalogedEntry : MeshItem {
         ///Globaly unique identifier
         /// </summary>
 
-	public virtual string?						Uid  {get; set;}
+	public virtual string?					Uid  {get; set;}
 
         /// <summary>
         ///User specified identifier.
         /// </summary>
 
-	public virtual string?						LocalName  {get; set;}
+	public virtual string?					LocalName  {get; set;}
 
         /// <summary>
         ///The set of labels describing the entry
         /// </summary>
 
-	public virtual string?						Path  {get; set;}
+	public virtual string?					Path  {get; set;}
 
         /// <summary>
         ///Description
         /// </summary>
 
-	public virtual string?						Description  {get; set;}
+	public virtual string?					Description  {get; set;}
 
 
 
@@ -5661,74 +5660,74 @@ public partial class CatalogedDevice : CatalogedEntry {
         ///Timestamp, allows 
         /// </summary>
 
-	public virtual DateTime?						Updated  {get; set;}
+	public virtual DateTime?					Updated  {get; set;}
 
         /// <summary>
         ///UDF of the signature key of the device in the Mesh
         /// </summary>
 
-	public virtual string?						Udf  {get; set;}
+	public virtual string?					Udf  {get; set;}
 
         /// <summary>
         ///Device Platform
         /// </summary>
 
-	public virtual string?						Platform  {get; set;}
+	public virtual string?					Platform  {get; set;}
 
         /// <summary>
         ///UDF of the offline signature key of the device
         /// </summary>
 
-	public virtual string?						DeviceUdf  {get; set;}
+	public virtual string?					DeviceUdf  {get; set;}
 
         /// <summary>
         ///UDF of the account online signature key
         /// </summary>
 
-	public virtual string?						SignatureUdf  {get; set;}
+	public virtual string?					SignatureUdf  {get; set;}
 
         /// <summary>
         ///The Mesh profile. Why is this still here? This is not 
         ///specific to the device.
         /// </summary>
 
-	public virtual Enveloped<ProfileAccount>?						EnvelopedProfileUser  {get; set;}
+	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileUser  {get; set;}
 
         /// <summary>
         ///The device profile
         /// </summary>
 
-	public virtual Enveloped<ProfileDevice>?						EnvelopedProfileDevice  {get; set;}
+	public virtual Enveloped<ProfileDevice>?					EnvelopedProfileDevice  {get; set;}
 
         /// <summary>
         ///Description of the device
         /// </summary>
 
-	public virtual DeviceDescription?						DeviceDescription  {get; set;}
+	public virtual DeviceDescription?					DeviceDescription  {get; set;}
 
         /// <summary>
         ///Slim version of ConnectionDevice used by the presentation layer
         /// </summary>
 
-	public virtual Enveloped<ConnectionService>?						EnvelopedConnectionService  {get; set;}
+	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;}
 
         /// <summary>
         ///The public assertion demonstrating connection of the Device to the Mesh
         /// </summary>
 
-	public virtual Enveloped<ConnectionDevice>?						EnvelopedConnectionDevice  {get; set;}
+	public virtual Enveloped<ConnectionDevice>?					EnvelopedConnectionDevice  {get; set;}
 
         /// <summary>
         ///The activation of the device within the Mesh account
         /// </summary>
 
-	public virtual Enveloped<ActivationAccount>?						EnvelopedActivationAccount  {get; set;}
+	public virtual Enveloped<ActivationAccount>?					EnvelopedActivationAccount  {get; set;}
 
         /// <summary>
         ///The activation of the device within the Mesh account
         /// </summary>
 
-	public virtual Enveloped<ActivationCommon>?						EnvelopedActivationCommon  {get; set;}
+	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;}
 
         /// <summary>
         ///Application activations granted to the device.
@@ -5847,43 +5846,43 @@ public partial class DeviceDescription : MeshItem {
         ///The device form factor, valid values are Desktop, Phone, Tablet, TV, Watch
         /// </summary>
 
-	public virtual string?						Idiom  {get; set;}
+	public virtual string?					Idiom  {get; set;}
 
         /// <summary>
         ///Manufacturer name
         /// </summary>
 
-	public virtual string?						Manufacturer  {get; set;}
+	public virtual string?					Manufacturer  {get; set;}
 
         /// <summary>
         ///Manufacturer defined model
         /// </summary>
 
-	public virtual string?						Model  {get; set;}
+	public virtual string?					Model  {get; set;}
 
         /// <summary>
         ///Name of the device as specified by the user
         /// </summary>
 
-	public virtual string?						Name  {get; set;}
+	public virtual string?					Name  {get; set;}
 
         /// <summary>
         ///The device platform or operating system: Android / iOS / macOS / Tizen / watchOS / Windows
         /// </summary>
 
-	public virtual string?						Platform  {get; set;}
+	public virtual string?					Platform  {get; set;}
 
         /// <summary>
         ///Platform version in format Major.Minor.Build.Revision
         /// </summary>
 
-	public virtual string?						Version  {get; set;}
+	public virtual string?					Version  {get; set;}
 
         /// <summary>
         ///EARL specifying an image of the device.
         /// </summary>
 
-	public virtual string?						ImageLocator  {get; set;}
+	public virtual string?					ImageLocator  {get; set;}
 
 
 
@@ -6052,56 +6051,56 @@ public partial class CatalogedDocument : CatalogedEntry {
         ///Document fingerprint.
         /// </summary>
 
-	public virtual string?						Udf  {get; set;}
+	public virtual string?					Udf  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Filename  {get; set;}
+	public virtual string?					Filename  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Title  {get; set;}
+	public virtual string?					Title  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Version  {get; set;}
+	public virtual string?					Version  {get; set;}
 
         /// <summary>
         ///Locator to be used to retrieve the data.
         /// </summary>
 
-	public virtual string?						URI  {get; set;}
+	public virtual string?					URI  {get; set;}
 
         /// <summary>
         ///IANA content type of the encoded content.
         /// </summary>
 
-	public virtual string?						ContentType  {get; set;}
+	public virtual string?					ContentType  {get; set;}
 
         /// <summary>
         ///Content encoding, typically DARE envelope.
         /// </summary>
 
-	public virtual string?						Encoding  {get; set;}
+	public virtual string?					Encoding  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual DateTime?						Created  {get; set;}
+	public virtual DateTime?					Created  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual DateTime?						Updated  {get; set;}
+	public virtual DateTime?					Updated  {get; set;}
 
         /// <summary>
         ///Encoded document length in bytes.
         /// </summary>
 
-	public virtual int?						Length  {get; set;}
+	public virtual int?					Length  {get; set;}
 
 
 
@@ -6202,26 +6201,26 @@ public partial class CatalogedPublication : CatalogedEntry {
         ///Unique identifier code
         /// </summary>
 
-	public virtual string?						Id  {get; set;}
+	public virtual string?					Id  {get; set;}
 
         /// <summary>
         ///The witness key value to use to request access to the record.	
         /// </summary>
 
-	public virtual string?						Authenticator  {get; set;}
+	public virtual string?					Authenticator  {get; set;}
 
         /// <summary>
         ///Dare Envelope containing the entry data. The data type is specified
         ///by the envelope metadata.
         /// </summary>
 
-	public virtual DareEnvelope?						EnvelopedData  {get; set;}
+	public virtual DareEnvelope?					EnvelopedData  {get; set;}
 
         /// <summary>
         ///Epiration time (inclusive)
         /// </summary>
 
-	public virtual DateTime?						NotOnOrAfter  {get; set;}
+	public virtual DateTime?					NotOnOrAfter  {get; set;}
 
 
 
@@ -6308,22 +6307,22 @@ public partial class CatalogedCredential : CatalogedEntry {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Protocol  {get; set;}
+	public virtual string?					Protocol  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Service  {get; set;}
+	public virtual string?					Service  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Username  {get; set;}
+	public virtual string?					Username  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Password  {get; set;}
+	public virtual string?					Password  {get; set;}
 
         /// <summary>
         ///Specifies the client identification key
@@ -6425,22 +6424,22 @@ public partial class CatalogedNetwork : CatalogedEntry {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Protocol  {get; set;}
+	public virtual string?					Protocol  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Service  {get; set;}
+	public virtual string?					Service  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Username  {get; set;}
+	public virtual string?					Username  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Password  {get; set;}
+	public virtual string?					Password  {get; set;}
 
 
 
@@ -6527,19 +6526,19 @@ public partial class CatalogedContact : CatalogedEntry {
         ///Unique key. 
         /// </summary>
 
-	public virtual string?						Key  {get; set;}
+	public virtual string?					Key  {get; set;}
 
         /// <summary>
         ///If true, this catalog entry is for the user who created the catalog.
         /// </summary>
 
-	public virtual bool?						Self  {get; set;}
+	public virtual bool?					Self  {get; set;}
 
         /// <summary>
         ///The contact information as edited by the catalog owner.
         /// </summary>
 
-	public virtual Contact?						Contact  {get; set;}
+	public virtual Contact?					Contact  {get; set;}
 
 
 
@@ -6627,7 +6626,7 @@ public partial class CatalogedAccess : CatalogedEntry {
         ///The cataloged capability.
         /// </summary>
 
-	public virtual Capability?						Capability  {get; set;}
+	public virtual Capability?					Capability  {get; set;}
 
 
 
@@ -6712,36 +6711,36 @@ abstract public partial class Capability : MeshItem {
         ///key being authorized for access.
         /// </summary>
 
-	public virtual string?						Id  {get; set;}
+	public virtual string?					Id  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual bool?						Active  {get; set;}
+	public virtual bool?					Active  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual int?						Issued  {get; set;}
+	public virtual int?					Issued  {get; set;}
 
         /// <summary>
         ///The authentication mode: Device, Account, PIN
         /// </summary>
 
-	public virtual string?						Mode  {get; set;}
+	public virtual string?					Mode  {get; set;}
 
         /// <summary>
         ///Identifies the authentication credential. For a device, this is the authentication key identifier, 
         ///for an account, the profile identifier, for a PIN, the locator value of the PIN.
         /// </summary>
 
-	public virtual string?						Udf  {get; set;}
+	public virtual string?					Udf  {get; set;}
 
         /// <summary>
         ///The verification value used to perform proof of knowledge of the secret.
         /// </summary>
 
-	public virtual string?						Witness  {get; set;}
+	public virtual string?					Witness  {get; set;}
 
 
 
@@ -6906,13 +6905,13 @@ public partial class AccessCapability : Capability {
         ///
         /// </summary>
 
-	public virtual Enveloped<CatalogedDevice>?						EnvelopedCatalogedDevice  {get; set;}
+	public virtual Enveloped<CatalogedDevice>?					EnvelopedCatalogedDevice  {get; set;}
 
         /// <summary>
         ///Digest value used to signal updates to envelope		
         /// </summary>
 
-	public virtual string?						CatalogedDeviceDigest  {get; set;}
+	public virtual string?					CatalogedDeviceDigest  {get; set;}
 
 
 
@@ -7000,7 +6999,7 @@ public partial class PublicationCapability : Capability {
         ///Selector allowing a specific document to be requested.
         /// </summary>
 
-	public virtual string?						Identifier  {get; set;}
+	public virtual string?					Identifier  {get; set;}
 
         /// <summary>
         ///Document digest, this allows a status/claim request to 
@@ -7008,13 +7007,13 @@ public partial class PublicationCapability : Capability {
         ///has changed.
         /// </summary>
 
-	public virtual string?						Digest  {get; set;}
+	public virtual string?					Digest  {get; set;}
 
         /// <summary>
         ///The published document.
         /// </summary>
 
-	public virtual byte[]?						Data  {get; set;}
+	public virtual byte[]?					Data  {get; set;}
 
 
 
@@ -7099,23 +7098,23 @@ abstract public partial class CryptographicCapability : Capability {
         ///The key that enables the capability
         /// </summary>
 
-	public virtual KeyData?						KeyData  {get; set;}
+	public virtual KeyData?					KeyData  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						GranteeAccount  {get; set;}
+	public virtual string?					GranteeAccount  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						GranteeUdf  {get; set;}
+	public virtual string?					GranteeUdf  {get; set;}
 
         /// <summary>
         ///One or more enveloped key shares.
         /// </summary>
 
-	public virtual Enveloped<KeyData>?						EnvelopedKeyShare  {get; set;}
+	public virtual Enveloped<KeyData>?					EnvelopedKeyShare  {get; set;}
 
 
 
@@ -7354,7 +7353,7 @@ public partial class CapabilityDecryptServiced : CapabilityDecrypt {
         ///authorized. [Only present for a serviced capability]
         /// </summary>
 
-	public virtual string?						AuthenticationId  {get; set;}
+	public virtual string?					AuthenticationId  {get; set;}
 
 
 
@@ -7662,13 +7661,13 @@ public partial class NamedService : MeshItem {
         ///The IANA service name (e.g. dns)
         /// </summary>
 
-	public virtual string?						Prefix  {get; set;}
+	public virtual string?					Prefix  {get; set;}
 
         /// <summary>
         ///Optional name mapping, (e.g. alice@example.com -> alice.mesh)
         /// </summary>
 
-	public virtual string?						Mapping  {get; set;}
+	public virtual string?					Mapping  {get; set;}
 
         /// <summary>
         ///The service endpoints. This MAY be specified as a callsign (@alice),
@@ -7759,13 +7758,13 @@ public partial class ServiceAccessToken : NamedService {
         ///Session initiation token
         /// </summary>
 
-	public virtual byte[]?						Token  {get; set;}
+	public virtual byte[]?					Token  {get; set;}
 
         /// <summary>
         ///Session shared secret
         /// </summary>
 
-	public virtual byte[]?						SharedSecret  {get; set;}
+	public virtual byte[]?					SharedSecret  {get; set;}
 
 
 
@@ -7847,12 +7846,12 @@ public partial class CatalogedBookmark : CatalogedEntry {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Uri  {get; set;}
+	public virtual string?					Uri  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Title  {get; set;}
+	public virtual string?					Title  {get; set;}
 
         /// <summary>
         ///User comments on bookmark entry
@@ -7941,12 +7940,12 @@ public partial class CatalogedTask : CatalogedEntry {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Title  {get; set;}
+	public virtual string?					Title  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual Enveloped<Engagement>?						EnvelopedTask  {get; set;}
+	public virtual Enveloped<Engagement>?					EnvelopedTask  {get; set;}
 
 
 
@@ -8029,12 +8028,12 @@ abstract public partial class CatalogedApplication : CatalogedEntry {
         /// <summary>
         /// </summary>
 
-	public virtual int?						Default  {get; set;}
+	public virtual int?					Default  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Key  {get; set;}
+	public virtual string?					Key  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -8141,17 +8140,17 @@ public partial class CatalogedMember : CatalogedEntry {
         /// <summary>
         /// </summary>
 
-	public virtual string?						ContactAddress  {get; set;}
+	public virtual string?					ContactAddress  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						MemberCapabilityId  {get; set;}
+	public virtual string?					MemberCapabilityId  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						ServiceCapabilityId  {get; set;}
+	public virtual string?					ServiceCapabilityId  {get; set;}
 
 
 
@@ -8236,19 +8235,19 @@ public partial class CatalogedGroup : CatalogedApplication {
         ///The connection allowing control of the group.
         /// </summary>
 
-	public virtual Enveloped<ConnectionStripped>?						EnvelopedConnectionAddress  {get; set;}
+	public virtual Enveloped<ConnectionStripped>?					EnvelopedConnectionAddress  {get; set;}
 
         /// <summary>
         ///The Mesh profile
         /// </summary>
 
-	public virtual Enveloped<ProfileAccount>?						EnvelopedProfileGroup  {get; set;}
+	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileGroup  {get; set;}
 
         /// <summary>
         ///The activation of the device within the Mesh account
         /// </summary>
 
-	public virtual Enveloped<ActivationCommon>?						EnvelopedActivationCommon  {get; set;}
+	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;}
 
 
 
@@ -8335,7 +8334,7 @@ public partial class CatalogedFeed : CatalogedBookmark {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Protocol  {get; set;}
+	public virtual string?					Protocol  {get; set;}
 
 
 
@@ -8415,41 +8414,41 @@ public partial class CatalogedApplicationMail : CatalogedApplication {
         /// <summary>
         /// </summary>
 
-	public virtual string?						AccountAddress  {get; set;}
+	public virtual string?					AccountAddress  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						InboundConnect  {get; set;}
+	public virtual string?					InboundConnect  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						OutboundConnect  {get; set;}
+	public virtual string?					OutboundConnect  {get; set;}
 
         /// <summary>
         ///The S/Mime signature key
         /// </summary>
 
-	public virtual KeyData?						SmimeSign  {get; set;}
+	public virtual KeyData?					SmimeSign  {get; set;}
 
         /// <summary>
         ///The S/Mime encryption key
         /// </summary>
 
-	public virtual KeyData?						SmimeEncrypt  {get; set;}
+	public virtual KeyData?					SmimeEncrypt  {get; set;}
 
         /// <summary>
         ///The OpenPGP signature key
         /// </summary>
 
-	public virtual KeyData?						OpenpgpSign  {get; set;}
+	public virtual KeyData?					OpenpgpSign  {get; set;}
 
         /// <summary>
         ///The OpenPGP encryption key
         /// </summary>
 
-	public virtual KeyData?						OpenpgpEncrypt  {get; set;}
+	public virtual KeyData?					OpenpgpEncrypt  {get; set;}
 
 
 
@@ -8692,7 +8691,7 @@ public partial class CatalogedApplicationSsh : CatalogedApplication {
         ///The S/Mime encryption key
         /// </summary>
 
-	public virtual KeyData?						ClientKey  {get; set;}
+	public virtual KeyData?					ClientKey  {get; set;}
 
 
 
@@ -9139,7 +9138,7 @@ public partial class DevicePreconfigurationPublic : MeshItem {
         ///The device profile
         /// </summary>
 
-	public virtual Enveloped<ProfileDevice>?						EnvelopedProfileDevice  {get; set;}
+	public virtual Enveloped<ProfileDevice>?					EnvelopedProfileDevice  {get; set;}
 
         /// <summary>
         ///A list of URIs specifying hailing transports that may be used to
@@ -9232,26 +9231,26 @@ public partial class DevicePreconfigurationPrivate : DevicePreconfigurationPubli
         ///The device connection
         /// </summary>
 
-	public virtual Enveloped<ConnectionDevice>?						EnvelopedConnectionDevice  {get; set;}
+	public virtual Enveloped<ConnectionDevice>?					EnvelopedConnectionDevice  {get; set;}
 
         /// <summary>
         ///The device connection
         /// </summary>
 
-	public virtual Enveloped<ConnectionService>?						EnvelopedConnectionService  {get; set;}
+	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;}
 
         /// <summary>
         ///The device private key
         /// </summary>
 
-	public virtual Key?						PrivateKey  {get; set;}
+	public virtual Key?					PrivateKey  {get; set;}
 
         /// <summary>
         ///The connection URI. This would normally be printed on the device as a 
         ///QR code.
         /// </summary>
 
-	public virtual string?						ConnectUri  {get; set;}
+	public virtual string?					ConnectUri  {get; set;}
 
 
 
@@ -9343,17 +9342,17 @@ public partial class Message : MeshItem {
         ///value. 
         /// </summary>
 
-	public virtual string?						MessageId  {get; set;}
+	public virtual string?					MessageId  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Sender  {get; set;}
+	public virtual string?					Sender  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Recipient  {get; set;}
+	public virtual string?					Recipient  {get; set;}
 
 
 
@@ -9436,7 +9435,7 @@ public partial class MessageError : Message {
         /// <summary>
         /// </summary>
 
-	public virtual string?						ErrorCode  {get; set;}
+	public virtual string?					ErrorCode  {get; set;}
 
 
 
@@ -9597,25 +9596,25 @@ public partial class MessageValidated : Message {
         ///Enveloped data that is authenticated by means of the PIN
         /// </summary>
 
-	public virtual DareEnvelope?						AuthenticatedData  {get; set;}
+	public virtual DareEnvelope?					AuthenticatedData  {get; set;}
 
         /// <summary>
         ///Nonce provided by the client to validate the PIN
         /// </summary>
 
-	public virtual byte[]?						ClientNonce  {get; set;}
+	public virtual byte[]?					ClientNonce  {get; set;}
 
         /// <summary>
         ///Pin identifier value calculated from the PIN code, action and account address.
         /// </summary>
 
-	public virtual string?						PinId  {get; set;}
+	public virtual string?					PinId  {get; set;}
 
         /// <summary>
         ///Witness value calculated as KDF (Device.Udf + AccountAddress, ClientNonce)
         /// </summary>
 
-	public virtual byte[]?						PinWitness  {get; set;}
+	public virtual byte[]?					PinWitness  {get; set;}
 
 
 
@@ -9702,31 +9701,31 @@ public partial class MessagePin : Message {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Account  {get; set;}
+	public virtual string?					Account  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual DateTime?						Expires  {get; set;}
+	public virtual DateTime?					Expires  {get; set;}
 
         /// <summary>
         ///If true, authentication against the PIN code is sufficient to complete
         ///the associated action without further authorization.
         /// </summary>
 
-	public virtual bool?						Automatic  {get; set;}
+	public virtual bool?					Automatic  {get; set;}
 
         /// <summary>
         ///PIN code bound to the specified action.
         /// </summary>
 
-	public virtual string?						SaltedPin  {get; set;}
+	public virtual string?					SaltedPin  {get; set;}
 
         /// <summary>
         ///The action to which this PIN code is bound.
         /// </summary>
 
-	public virtual string?						Action  {get; set;}
+	public virtual string?					Action  {get; set;}
 
         /// <summary>
         ///The set of rights bound to the PIN grant.
@@ -9824,7 +9823,7 @@ public partial class RequestConnection : MessageValidated {
         ///
         /// </summary>
 
-	public virtual string?						AccountAddress  {get; set;}
+	public virtual string?					AccountAddress  {get; set;}
 
 
 
@@ -9908,19 +9907,19 @@ public partial class AcknowledgeConnection : Message {
         ///The client connection request.
         /// </summary>
 
-	public virtual Enveloped<RequestConnection>?						EnvelopedRequestConnection  {get; set;}
+	public virtual Enveloped<RequestConnection>?					EnvelopedRequestConnection  {get; set;}
 
         /// <summary>
         ///
         /// </summary>
 
-	public virtual byte[]?						ServerNonce  {get; set;}
+	public virtual byte[]?					ServerNonce  {get; set;}
 
         /// <summary>
         ///
         /// </summary>
 
-	public virtual string?						Witness  {get; set;}
+	public virtual string?					Witness  {get; set;}
 
 
 
@@ -10009,14 +10008,14 @@ public partial class RespondConnection : Message {
         ///The response to the request. One of "Accept", "Reject" or "Pending".
         /// </summary>
 
-	public virtual string?						Result  {get; set;}
+	public virtual string?					Result  {get; set;}
 
         /// <summary>
         ///The device information. MUST be present if the value of Result is
         ///"Accept". MUST be absent or null otherwise.
         /// </summary>
 
-	public virtual CatalogedDevice?						CatalogedDevice  {get; set;}
+	public virtual CatalogedDevice?					CatalogedDevice  {get; set;}
 
 
 
@@ -10101,20 +10100,20 @@ public partial class MessageContact : MessageValidated {
         ///in reply.
         /// </summary>
 
-	public virtual bool?						Reply  {get; set;}
+	public virtual bool?					Reply  {get; set;}
 
         /// <summary>
         ///Optional explanation of the reason for the request.
         /// </summary>
 
-	public virtual string?						Subject  {get; set;}
+	public virtual string?					Subject  {get; set;}
 
         /// <summary>
         ///One time authentication code supplied to a recipient to allow authentication
         ///of the response.
         /// </summary>
 
-	public virtual string?						PIN  {get; set;}
+	public virtual string?					PIN  {get; set;}
 
 
 
@@ -10198,13 +10197,13 @@ public partial class GroupInvitation : Message {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Text  {get; set;}
+	public virtual string?					Text  {get; set;}
 
         /// <summary>
         ///The contact data.
         /// </summary>
 
-	public virtual Contact?						Contact  {get; set;}
+	public virtual Contact?					Contact  {get; set;}
 
 
 
@@ -10287,7 +10286,7 @@ public partial class MessageMail : Message {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Text  {get; set;}
+	public virtual string?					Text  {get; set;}
 
 
 
@@ -10367,7 +10366,7 @@ public partial class RequestConfirmation : Message {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Text  {get; set;}
+	public virtual string?					Text  {get; set;}
 
 
 
@@ -10447,12 +10446,12 @@ public partial class ResponseConfirmation : Message {
         /// <summary>
         /// </summary>
 
-	public virtual Enveloped<RequestConfirmation>?						Request  {get; set;}
+	public virtual Enveloped<RequestConfirmation>?					Request  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual bool?						Accept  {get; set;}
+	public virtual bool?					Accept  {get; set;}
 
 
 
@@ -10608,22 +10607,22 @@ public partial class MessageClaim : Message {
         /// <summary>
         /// </summary>
 
-	public virtual string?						PublicationId  {get; set;}
+	public virtual string?					PublicationId  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						ServiceAuthenticate  {get; set;}
+	public virtual string?					ServiceAuthenticate  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						DeviceAuthenticate  {get; set;}
+	public virtual string?					DeviceAuthenticate  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual DateTime?						Expires  {get; set;}
+	public virtual DateTime?					Expires  {get; set;}
 
 
 
@@ -10711,13 +10710,13 @@ public partial class ProcessResult : Message {
         /// <summary>
         /// </summary>
 
-	public virtual bool?						Success  {get; set;}
+	public virtual bool?					Success  {get; set;}
 
         /// <summary>
         ///The error report code.
         /// </summary>
 
-	public virtual string?						ErrorReport  {get; set;}
+	public virtual string?					ErrorReport  {get; set;}
 
 
 

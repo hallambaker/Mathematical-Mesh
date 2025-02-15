@@ -486,6 +486,7 @@
             Resolve an @nything handle using DNS.
             </summary>
             <param name="domain">TThe domain component of the handle.</param>
+            <param name="prefix">The protocol prefix (including underscore)</param>
             <returns>The resolved DID.</returns>
         </member>
         <member name="M:Goedel.Discovery.DnsClient.ResolveAtHandleDNS(System.String)">
@@ -3839,6 +3840,14 @@
             <returns><code>true</code> if <paramref name="identifier"/> is a valid service address 
             and <code>false</code> otherwise.</returns>
         </member>
+        <member name="M:Goedel.Discovery.Extensions.FullText(Goedel.Discovery.DNSRecord_TXT,System.Boolean)">
+            <summary>
+            Extract the full text from a DNS TXT record by concatenating the strings
+            </summary>
+            <param name="record">The record to extract text from.</param>
+            <param name="space">If true, insert a space between the text segments.</param>
+            <returns>The concatenated string.</returns>
+        </member>
         <member name="T:Goedel.Discovery.NamespaceDoc">
             <summary>
             Provides a hook 
@@ -4124,6 +4133,275 @@
         </member>
         <member name="P:Goedel.Discovery.ParsedHandle.Service">
             <summary>The Service DNS address</summary> 
+        </member>
+        <member name="P:Goedel.Discovery.ParsedHandle.AccountAddress">
+            <summary>The account address component</summary> 
+        </member>
+        <member name="P:Goedel.Discovery.ParsedHandle.ResolvedHandle">
+            <summary>Handle obtained by resolving the handle.</summary> 
+        </member>
+        <member name="M:Goedel.Discovery.ParsedHandle.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="handle">The string to parse.</param>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="M:Goedel.Discovery.ParsedHandle.Resolve(System.String)">
+            <summary>
+            Convenience method, resolve the handle <paramref name="handle"/> and
+            return the the corresponding account service address as a text string.
+            </summary>
+            <param name="handle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Discovery.ParsedHandle.Resolve">
+            <summary>
+            Resolve the handle to return the account service address for the corresponding
+            Mesh account.
+            </summary>
+            <returns></returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="M:Goedel.Discovery.ParsedHandle.ResolveMeshService">
+            <summary>
+            Return the Mesh service provider associated with the handle.
+            </summary>
+            <returns>The service provider.</returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="M:Goedel.Discovery.ParsedHandle.ResolveDnsHandle">
+            <summary>
+            Return the Account Service handle associated with the handle.
+            </summary>
+            <returns>The account service handle</returns>
+        </member>
+        <member name="M:Goedel.Discovery.ParsedHandle.GetServices">
+            <summary>
+            Fetch the services associated with this handle.
+            </summary>
+            <returns>The services</returns>
+        </member>
+        <member name="M:Goedel.Discovery.ParsedHandle.GetServices(System.String)">
+            <summary>
+            Fetch the services associated with the handle <paramref name="handle"/>.
+            </summary>
+            <returns>The services</returns>
+        </member>
+        <member name="T:Goedel.Discovery.DnsHandleServices">
+            <summary>
+            Services associated with a DNS handle
+            </summary>
+            <param name="Handle"></param>
+        </member>
+        <member name="M:Goedel.Discovery.DnsHandleServices.#ctor(System.String)">
+            <summary>
+            Services associated with a DNS handle
+            </summary>
+            <param name="Handle"></param>
+        </member>
+        <member name="P:Goedel.Discovery.DnsHandleServices.Handle">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Discovery.DnsHandleServices.Services">
+            <summary>The set of supported services</summary> 
+        </member>
+        <member name="P:Goedel.Discovery.DnsHandleServices.Contact">
+            <summary>Contact service declaration.</summary> 
+        </member>
+        <member name="P:Goedel.Discovery.DnsHandleServices.Calendar">
+            <summary>Calendar service declaration.</summary> 
+        </member>
+        <member name="P:Goedel.Discovery.DnsHandleServices.Mesh">
+            <summary>Mesh service declaration.</summary> 
+        </member>
+        <member name="P:Goedel.Discovery.DnsHandleServices.Oauth">
+            <summary>Oauth service declaration.</summary> 
+        </member>
+        <member name="P:Goedel.Discovery.DnsHandleServices.Atprotocol">
+            <summary>ATprotocol service declaration.</summary> 
+        </member>
+        <member name="P:Goedel.Discovery.DnsHandleServices.Http">
+            <summary>Http service declaration.</summary> 
+        </member>
+        <member name="M:Goedel.Discovery.DnsHandleServices.Add(Goedel.Discovery.HandleService)">
+            <summary>
+            Add the service <paramref name="service"/> to the services.
+            </summary>
+            <param name="service">The service to add.</param>
+        </member>
+        <member name="T:Goedel.Discovery.HandleService">
+            <summary>
+            Base class for handle service records.
+            </summary>
+        </member>
+        <member name="P:Goedel.Discovery.HandleService.Text">
+            <summary>The text value of the handle.</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.HandleService.Tags">
+            <summary>Dictionary mapping tag entries to the corresponding values.</summary> 
+        </member>
+        <member name="M:Goedel.Discovery.HandleService.#ctor(System.String)">
+            <summary>
+            Constructor, create an entry from <paramref name="text"/>
+            </summary>
+            <param name="text">The text to create the entry.</param>
+        </member>
+        <member name="T:Goedel.Discovery.HandleServiceMesh">
+            <summary>
+            Mesh service description.
+            </summary>
+        </member>
+        <member name="P:Goedel.Discovery.HandleServiceMesh.Dsa">
+            <summary>The Direct Service Address</summary> 
+        </member>
+        <member name="M:Goedel.Discovery.HandleServiceMesh.#ctor(System.String)">
+            <summary>
+            Constructor, create an instance from <paramref name="text"/>
+            </summary>
+            <param name="text">The TXT record text</param>
+        </member>
+        <member name="M:Goedel.Discovery.HandleServiceMesh.Fetch(System.String,System.Boolean)">
+            <summary>
+            Attempt to fetch the Mesh record associated with the handle 
+            <paramref name="domain"/>.
+            </summary>
+            <param name="domain">The domain to query.</param>
+            <param name="dummy">If true return a dummy result if there is no 
+            TXT record published, otherwise return null.</param>
+            <returns>The service description.</returns>
+        </member>
+        <member name="T:Goedel.Discovery.HandleServiceOauth">
+            <summary>
+            Oauth service description.
+            </summary>
+        </member>
+        <member name="P:Goedel.Discovery.HandleServiceOauth.Did">
+            <summary>The Oauth unique identifier.</summary> 
+        </member>
+        <member name="P:Goedel.Discovery.HandleServiceOauth.ServiceUri">
+            <summary>The Oauth service URI</summary> 
+        </member>
+        <member name="M:Goedel.Discovery.HandleServiceOauth.#ctor(System.String)">
+            <summary>
+            Constructor, create an instance from <paramref name="text"/>
+            </summary>
+            <param name="text">The TXT record text</param>
+        </member>
+        <member name="M:Goedel.Discovery.HandleServiceOauth.Fetch(System.String,System.Boolean)">
+            <summary>
+            Attempt to fetch the Oauth record associated with the handle 
+            <paramref name="domain"/>.
+            </summary>
+            <param name="domain">The domain to query.</param>
+            <param name="dummy">If true return a dummy result if there is no 
+            TXT record published, otherwise return null.</param>
+            <returns>The service description.</returns>
+        </member>
+        <member name="T:Goedel.Discovery.HandleServiceHttp">
+            <summary>
+            Http service description.
+            </summary>
+        </member>
+        <member name="P:Goedel.Discovery.HandleServiceHttp.Domain">
+            <summary>The HTTP Domain.</summary> 
+        </member>
+        <member name="M:Goedel.Discovery.HandleServiceHttp.#ctor(System.String)">
+            <summary>
+            Constructor, create an instance from <paramref name="text"/>
+            </summary>
+            <param name="text">The TXT record text</param>
+        </member>
+        <member name="M:Goedel.Discovery.HandleServiceHttp.Fetch(System.String,System.Boolean)">
+            <summary>
+            Attempt to fetch the Http record associated with the handle 
+            <paramref name="domain"/>.
+            </summary>
+            <param name="domain">The domain to query.</param>
+            <param name="dummy">If true return a dummy result if there is no 
+            TXT record published, otherwise return null.</param>
+            <returns>The service description.</returns>
+        </member>
+        <member name="T:Goedel.Discovery.HandleServiceAtprotocol">
+            <summary>
+            ATProtocol service description.
+            </summary>
+        </member>
+        <member name="P:Goedel.Discovery.HandleServiceAtprotocol.Did">
+            <summary>The ATProtocol unique identifier.</summary> 
+        </member>
+        <member name="P:Goedel.Discovery.HandleServiceAtprotocol.ServiceUri">
+            <summary>The ATProtocol service URI</summary> 
+        </member>
+        <member name="M:Goedel.Discovery.HandleServiceAtprotocol.#ctor(System.String)">
+            <summary>
+            Constructor, create an instance from <paramref name="text"/>
+            </summary>
+            <param name="text">The TXT record text</param>
+        </member>
+        <member name="M:Goedel.Discovery.HandleServiceAtprotocol.Fetch(System.String,System.Boolean)">
+            <summary>
+            Attempt to fetch the ATProtocol record associated with the handle 
+            <paramref name="domain"/>.
+            </summary>
+            <param name="domain">The domain to query.</param>
+            <param name="dummy">If true return a dummy result if there is no 
+            TXT record published, otherwise return null.</param>
+            <returns>The service description.</returns>
+        </member>
+        <member name="T:Goedel.Discovery.HandleServiceContact">
+            <summary>
+            Contact service description.
+            </summary>
+        </member>
+        <member name="P:Goedel.Discovery.HandleServiceContact.Uri">
+            <summary>Link to the Contact data</summary> 
+        </member>
+        <member name="P:Goedel.Discovery.HandleServiceContact.Update">
+            <summary>Update notification service</summary> 
+        </member>
+        <member name="M:Goedel.Discovery.HandleServiceContact.#ctor(System.String)">
+            <summary>
+            Constructor, create an instance from <paramref name="text"/>
+            </summary>
+            <param name="text">The TXT record text</param>
+        </member>
+        <member name="M:Goedel.Discovery.HandleServiceContact.Fetch(System.String,System.Boolean)">
+            <summary>
+            Attempt to fetch the Contact record associated with the handle 
+            <paramref name="domain"/>.
+            </summary>
+            <param name="domain">The domain to query.</param>
+            <param name="dummy">If true return a dummy result if there is no 
+            TXT record published, otherwise return null.</param>
+            <returns>The service description.</returns>
+        </member>
+        <member name="T:Goedel.Discovery.HandleServiceCalendar">
+            <summary>
+            ATProtocol service description.
+            </summary>
+        </member>
+        <member name="P:Goedel.Discovery.HandleServiceCalendar.Uri">
+            <summary>Link to the calendar data</summary> 
+        </member>
+        <member name="P:Goedel.Discovery.HandleServiceCalendar.Update">
+            <summary>Update notification service</summary> 
+        </member>
+        <member name="M:Goedel.Discovery.HandleServiceCalendar.#ctor(System.String)">
+            <summary>
+            Constructor, create an instance from <paramref name="text"/>
+            </summary>
+            <param name="text">The TXT record text</param>
+        </member>
+        <member name="M:Goedel.Discovery.HandleServiceCalendar.Fetch(System.String,System.Boolean)">
+            <summary>
+            Attempt to fetch the calendar record associated with the handle 
+            <paramref name="domain"/>.
+            </summary>
+            <param name="domain">The domain to query.</param>
+            <param name="dummy">If true return a dummy result if there is no 
+            TXT record published, otherwise return null.</param>
+            <returns>The service description.</returns>
         </member>
         <member name="T:Goedel.Discovery.ParsedAddressType">
             <summary>

@@ -2621,6 +2621,20 @@
             Debug trace class
             </summary>
         </member>
+        <member name="P:Goedel.Utilities.Screen.OutputFile">
+            <summary>The output file.</summary> 
+        </member>
+        <member name="M:Goedel.Utilities.Screen.ToFile(System.String)">
+            <summary>
+            Direct output to the file <paramref name="filename"/>
+            </summary>
+            <param name="filename">File to direct output to.</param>
+        </member>
+        <member name="M:Goedel.Utilities.Screen.Flush">
+            <summary>
+            Flush the output data.
+            </summary>
+        </member>
         <member name="P:Goedel.Utilities.Screen.LogLevel">
             <summary>Global default log level</summary> 
         </member>

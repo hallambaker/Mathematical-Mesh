@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/14/2025 12:09:03 AM
+//  This file was automatically generated at 2/15/2025 3:10:43 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -98,8 +98,7 @@ public abstract partial class Jose : global::Goedel.Protocol.JsonObject {
 	    {"PrivateKeyBinary", PrivateKeyBinary._Factory}
 		};
 
-    // [ModuleInitializer]
-	
+	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
 	static Jose() {
@@ -136,13 +135,13 @@ public partial class JoseWebSignature : Jose {
         ///Data not protected by the signature
         /// </summary>
 
-	public virtual Header?						Unprotected  {get; set;}
+	public virtual Header?					Unprotected  {get; set;}
 
         /// <summary>
         ///The signed data
         /// </summary>
 
-	public virtual byte[]?						Payload  {get; set;}
+	public virtual byte[]?					Payload  {get; set;}
 
         /// <summary>
         ///The signature value
@@ -235,13 +234,13 @@ public partial class JoseWebEncryption : JoseWebSignature {
         ///Data protected by the signature
         /// </summary>
 
-	public virtual byte[]?						Protected  {get; set;}
+	public virtual byte[]?					Protected  {get; set;}
 
         /// <summary>
         ///The initialization vector for the bulk cipher.
         /// </summary>
 
-	public virtual byte[]?						IV  {get; set;}
+	public virtual byte[]?					IV  {get; set;}
 
         /// <summary>
         ///Per recipient decryption data.
@@ -252,25 +251,25 @@ public partial class JoseWebEncryption : JoseWebSignature {
         ///The decryption data for use by this recipient.
         /// </summary>
 
-	public virtual byte[]?						EncryptedKey  {get; set;}
+	public virtual byte[]?					EncryptedKey  {get; set;}
 
         /// <summary>
         ///Additional data that is included in the authentication scope but not the encryption
         /// </summary>
 
-	public virtual byte[]?						AdditionalAuthenticatedData  {get; set;}
+	public virtual byte[]?					AdditionalAuthenticatedData  {get; set;}
 
         /// <summary>
         ///The encrypted data
         /// </summary>
 
-	public virtual byte[]?						CipherText  {get; set;}
+	public virtual byte[]?					CipherText  {get; set;}
 
         /// <summary>
         ///Authentication tag
         /// </summary>
 
-	public virtual byte[]?						JTag  {get; set;}
+	public virtual byte[]?					JTag  {get; set;}
 
 
 
@@ -366,19 +365,19 @@ public partial class Signed : Jose {
         ///Data protected by the signature
         /// </summary>
 
-	public virtual byte[]?						Protected  {get; set;}
+	public virtual byte[]?					Protected  {get; set;}
 
         /// <summary>
         ///The authenticated data
         /// </summary>
 
-	public virtual byte[]?						Payload  {get; set;}
+	public virtual byte[]?					Payload  {get; set;}
 
         /// <summary>
         ///The signature data
         /// </summary>
 
-	public virtual byte[]?						Signature  {get; set;}
+	public virtual byte[]?					Signature  {get; set;}
 
 
 
@@ -464,25 +463,25 @@ public partial class Encrypted : Jose {
         ///Header
         /// </summary>
 
-	public virtual Header?						Header  {get; set;}
+	public virtual Header?					Header  {get; set;}
 
         /// <summary>
         ///The initialization vector for the cipher
         /// </summary>
 
-	public virtual byte[]?						IV  {get; set;}
+	public virtual byte[]?					IV  {get; set;}
 
         /// <summary>
         ///The encrypted data 
         /// </summary>
 
-	public virtual byte[]?						CipherText  {get; set;}
+	public virtual byte[]?					CipherText  {get; set;}
 
         /// <summary>
         ///The signature data
         /// </summary>
 
-	public virtual byte[]?						Signature  {get; set;}
+	public virtual byte[]?					Signature  {get; set;}
 
 
 
@@ -571,50 +570,50 @@ public partial class KeyCore : Jose {
         ///Bulk encryption algorithm for content
         /// </summary>
 
-	public virtual string?						Enc  {get; set;}
+	public virtual string?					Enc  {get; set;}
 
         /// <summary>
         ///Digest algorithm hint
         /// </summary>
 
-	public virtual string?						Dig  {get; set;}
+	public virtual string?					Dig  {get; set;}
 
         /// <summary>
         ///Key exchange algorithm
         /// </summary>
 
-	public virtual string?						Alg  {get; set;}
+	public virtual string?					Alg  {get; set;}
 
         /// <summary>
         ///Key identifier. If a UDF fingerprint is used to identify the 
         ///key it is placed in this field.
         /// </summary>
 
-	public virtual string?						Kid  {get; set;}
+	public virtual string?					Kid  {get; set;}
 
         /// <summary>
         ///URL identifying an X.509 public key certificate
         /// </summary>
 
-	public virtual string?						X5u  {get; set;}
+	public virtual string?					X5u  {get; set;}
 
         /// <summary>
         ///An X.509 public key certificate
         /// </summary>
 
-	public virtual byte[]?						X5c  {get; set;}
+	public virtual byte[]?					X5c  {get; set;}
 
         /// <summary>
         ///SHA-1 fingerprint of X.509 certificate
         /// </summary>
 
-	public virtual byte[]?						X5t  {get; set;}
+	public virtual byte[]?					X5t  {get; set;}
 
         /// <summary>
         ///SHA-2-256 fingerprint of X.509 certificate
         /// </summary>
 
-	public virtual byte[]?						X5tS256  {get; set;}
+	public virtual byte[]?					X5tS256  {get; set;}
 
 
 
@@ -710,37 +709,37 @@ public partial class Header : KeyCore {
         ///JWK Set URL
         /// </summary>
 
-	public virtual string?						Jku  {get; set;}
+	public virtual string?					Jku  {get; set;}
 
         /// <summary>
         ///The key parameters
         /// </summary>
 
-	public virtual Key?						Jwk  {get; set;}
+	public virtual Key?					Jwk  {get; set;}
 
         /// <summary>
         ///The key parameters of the ephemeral key
         /// </summary>
 
-	public virtual Key?						Epk  {get; set;}
+	public virtual Key?					Epk  {get; set;}
 
         /// <summary>
         ///Binary cryptographic exchange parameters
         /// </summary>
 
-	public virtual byte[]?						Ek  {get; set;}
+	public virtual byte[]?					Ek  {get; set;}
 
         /// <summary>
         ///Another IANA content type parameter
         /// </summary>
 
-	public virtual string?						Typ  {get; set;}
+	public virtual string?					Typ  {get; set;}
 
         /// <summary>
         ///Content type parameter
         /// </summary>
 
-	public virtual string?						Cty  {get; set;}
+	public virtual string?					Cty  {get; set;}
 
         /// <summary>
         ///List of header parameters that a recipient MUST understand to interpret
@@ -752,7 +751,7 @@ public partial class Header : KeyCore {
         ///The digest value
         /// </summary>
 
-	public virtual byte[]?						Val  {get; set;}
+	public virtual byte[]?					Val  {get; set;}
 
 
 
@@ -851,19 +850,19 @@ public partial class Signature : Jose {
         ///The signature header
         /// </summary>
 
-	public virtual Header?						Header  {get; set;}
+	public virtual Header?					Header  {get; set;}
 
         /// <summary>
         ///Data protected by the signature
         /// </summary>
 
-	public virtual byte[]?						Protected  {get; set;}
+	public virtual byte[]?					Protected  {get; set;}
 
         /// <summary>
         ///The signature value
         /// </summary>
 
-	public virtual byte[]?						SignatureValue  {get; set;}
+	public virtual byte[]?					SignatureValue  {get; set;}
 
 
 
@@ -950,13 +949,13 @@ public partial class KeyContainer : Jose {
         ///If false a handler library MUST NOT permit the private key to be exported.
         /// </summary>
 
-	public virtual bool?						Exportable  {get; set;}
+	public virtual bool?					Exportable  {get; set;}
 
         /// <summary>
         ///The key data.
         /// </summary>
 
-	public virtual byte[]?						KeyCore  {get; set;}
+	public virtual byte[]?					KeyCore  {get; set;}
 
 
 
@@ -1042,31 +1041,31 @@ public partial class Key : KeyCore {
         ///which it is stored.
         /// </summary>
 
-	public virtual bool?						Exportable  {get; set;}
+	public virtual bool?					Exportable  {get; set;}
 
         /// <summary>
         ///Key type
         /// </summary>
 
-	public virtual string?						Kty  {get; set;}
+	public virtual string?					Kty  {get; set;}
 
         /// <summary>
         ///Public Key use
         /// </summary>
 
-	public virtual string?						Use  {get; set;}
+	public virtual string?					Use  {get; set;}
 
         /// <summary>
         ///Key operations
         /// </summary>
 
-	public virtual string?						Key_ops  {get; set;}
+	public virtual string?					Key_ops  {get; set;}
 
         /// <summary>
         ///Symmetric key value.
         /// </summary>
 
-	public virtual byte[]?						K  {get; set;}
+	public virtual byte[]?					K  {get; set;}
 
 
 
@@ -1157,13 +1156,13 @@ public partial class Recipient : Jose {
         ///Specify the recipient and per recipient data
         /// </summary>
 
-	public virtual Header?						Header  {get; set;}
+	public virtual Header?					Header  {get; set;}
 
         /// <summary>
         ///The decryption data for use by this recipient.
         /// </summary>
 
-	public virtual byte[]?						EncryptedKey  {get; set;}
+	public virtual byte[]?					EncryptedKey  {get; set;}
 
 
 
@@ -1248,13 +1247,13 @@ public partial class PublicKeyRSA : Key {
         ///The public modulus
         /// </summary>
 
-	public virtual byte[]?						N  {get; set;}
+	public virtual byte[]?					N  {get; set;}
 
         /// <summary>
         ///The public exponent
         /// </summary>
 
-	public virtual byte[]?						E  {get; set;}
+	public virtual byte[]?					E  {get; set;}
 
 
 
@@ -1339,37 +1338,37 @@ public partial class PrivateKeyRSA : PublicKeyRSA {
         ///The parameter d
         /// </summary>
 
-	public virtual byte[]?						D  {get; set;}
+	public virtual byte[]?					D  {get; set;}
 
         /// <summary>
         ///The parameter p
         /// </summary>
 
-	public virtual byte[]?						P  {get; set;}
+	public virtual byte[]?					P  {get; set;}
 
         /// <summary>
         ///The parameter q
         /// </summary>
 
-	public virtual byte[]?						Q  {get; set;}
+	public virtual byte[]?					Q  {get; set;}
 
         /// <summary>
         ///The parameter dp
         /// </summary>
 
-	public virtual byte[]?						DP  {get; set;}
+	public virtual byte[]?					DP  {get; set;}
 
         /// <summary>
         ///The parameter dq
         /// </summary>
 
-	public virtual byte[]?						DQ  {get; set;}
+	public virtual byte[]?					DQ  {get; set;}
 
         /// <summary>
         ///The parameter QInverse
         /// </summary>
 
-	public virtual byte[]?						QI  {get; set;}
+	public virtual byte[]?					QI  {get; set;}
 
 
 
@@ -1462,13 +1461,13 @@ public partial class PublicKeyDH : Key {
         ///The fingerprint of the domain
         /// </summary>
 
-	public virtual byte[]?						Domain  {get; set;}
+	public virtual byte[]?					Domain  {get; set;}
 
         /// <summary>
         ///The public key
         /// </summary>
 
-	public virtual byte[]?						Public  {get; set;}
+	public virtual byte[]?					Public  {get; set;}
 
 
 
@@ -1553,7 +1552,7 @@ public partial class PrivateKeyDH : PublicKeyDH {
         ///The private key.
         /// </summary>
 
-	public virtual byte[]?						Private  {get; set;}
+	public virtual byte[]?					Private  {get; set;}
 
 
 
@@ -1636,13 +1635,13 @@ public partial class PublicKeyECDH : Key {
         ///The curve specifier (X25519, Ed25519, X448, Ed448), etc.
         /// </summary>
 
-	public virtual string?						Curve  {get; set;}
+	public virtual string?					Curve  {get; set;}
 
         /// <summary>
         ///The public key
         /// </summary>
 
-	public virtual byte[]?						Public  {get; set;}
+	public virtual byte[]?					Public  {get; set;}
 
 
 
@@ -1727,7 +1726,7 @@ public partial class PrivateKeyECDH : PublicKeyECDH {
         ///The private key
         /// </summary>
 
-	public virtual byte[]?						Private  {get; set;}
+	public virtual byte[]?					Private  {get; set;}
 
 
 
@@ -1810,13 +1809,13 @@ public partial class PrivateKeyUDF : Key {
         ///The private value
         /// </summary>
 
-	public virtual string?						PrivateValue  {get; set;}
+	public virtual string?					PrivateValue  {get; set;}
 
         /// <summary>
         ///The UDF key identifier
         /// </summary>
 
-	public virtual string?						KeyType  {get; set;}
+	public virtual string?					KeyType  {get; set;}
 
         /// <summary>
         ///List of algorithms used to derrive root signature keys.
@@ -1827,19 +1826,19 @@ public partial class PrivateKeyUDF : Key {
         ///The algorithm used to derrive the encryption key
         /// </summary>
 
-	public virtual string?						AlgorithmEncrypt  {get; set;}
+	public virtual string?					AlgorithmEncrypt  {get; set;}
 
         /// <summary>
         ///The algorithm used to derrive the signature key
         /// </summary>
 
-	public virtual string?						AlgorithmSign  {get; set;}
+	public virtual string?					AlgorithmSign  {get; set;}
 
         /// <summary>
         ///The algorithm used to derrive the authentication key
         /// </summary>
 
-	public virtual string?						AlgorithmAuthenticate  {get; set;}
+	public virtual string?					AlgorithmAuthenticate  {get; set;}
 
 
 
@@ -2006,7 +2005,7 @@ public partial class KeyAgreementDH : KeyAgreement {
         ///The result
         /// </summary>
 
-	public virtual byte[]?						Result  {get; set;}
+	public virtual byte[]?					Result  {get; set;}
 
 
 
@@ -2089,13 +2088,13 @@ public partial class KeyAgreementECDH : KeyAgreement {
         ///The curve name
         /// </summary>
 
-	public virtual string?						Curve  {get; set;}
+	public virtual string?					Curve  {get; set;}
 
         /// <summary>
         ///The result
         /// </summary>
 
-	public virtual byte[]?						Result  {get; set;}
+	public virtual byte[]?					Result  {get; set;}
 
 
 
@@ -2181,7 +2180,7 @@ public partial class PublicKeyBinary : Key {
         ///The public key value
         /// </summary>
 
-	public virtual byte[]?						Public  {get; set;}
+	public virtual byte[]?					Public  {get; set;}
 
 
 
@@ -2265,7 +2264,7 @@ public partial class PrivateKeyBinary : Key {
         ///The private key value
         /// </summary>
 
-	public virtual byte[]?						Public  {get; set;}
+	public virtual byte[]?					Public  {get; set;}
 
 
 

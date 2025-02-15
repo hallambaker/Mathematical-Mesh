@@ -4,6 +4,1779 @@
         <name>Goedel.Contacts</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Contacts.Calandars">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Calandars._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Calandars.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Calandars._TagDictionary">
+            <summary>
+            Dictionary mapping tags to factory methods
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Calandars._Initialized">
+            <summary>Variable used to force static initialization</summary> 
+        </member>
+        <member name="M:Goedel.Contacts.Calandars.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
+            <summary>
+            Construct an instance from the specified tagged JsonReader stream.
+            </summary>
+            <param name="jsonReader">Input stream</param>
+            <param name="result">The created object</param>
+        </member>
+        <member name="T:Goedel.Contacts.JmapBase">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JmapBase.Type">
+            <summary>
+            This specifies the type that this object represents. The allowed value 
+            differs by object type and is defined in Sections 2.1, 2.2, and 2.3.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JmapBase.Uid">
+            <summary>
+            This is a globally unique identifier used to associate objects representing
+            the same event, task, group, or other object across different systems, 
+            calendars, and views. For recurring events and tasks, the UID is associated 
+            with the base object and therefore is the same for all occurrences; the 
+            combination of the UID with a recurrenceId identifies a particular instance.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JmapBase.RelatedTo">
+            <summary>
+            This relates the object to other JSCalendar objects. This is represented as 
+            a map of the UIDs of the related objects to information about the relation.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JmapBase.ProdId">
+            <summary>
+            This is the identifier for the product that last updated the JSCalendar 
+            object. This should be set whenever the data in the object is modified 
+            (i.e., whenever the updated property is set).
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JmapBase.Created">
+            <summary>
+            This is the date and time this object was initially created.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JmapBase.Updated">
+             <summary>
+            The date and time when the data in the Card was last modified.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JmapBase._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.JmapBase._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.JmapBase._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.JmapBase._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.JmapBase._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.JmapBase._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.JmapBase._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.JmapBase._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.JmapBase.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.JmapBase._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.JmapBase.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.CalendarEntry">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.Sequence">
+            <summary>
+            Initially zero, this MUST be incremented by one every time a change is 
+            made to the object, except if the change only modifies the participants 
+            property (see Section 4.4.6).
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.Method">
+            <summary>
+            This is the iTIP [RFC5546] method, in lowercase. This MUST only be 
+            present if the JSCalendar object represents an iTIP scheduling message.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.Title">
+            <summary>
+            This is a short summary of the object.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.Description">
+            <summary>
+            This is a longer-form text description of the object. The content is 
+            formatted according to the descriptionContentType property.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.DescriptionContentType">
+            <summary>
+            This describes the media type [RFC6838] of the contents of the 
+            description property. Media types MUST be subtypes of type text
+             and SHOULD be text/plain or text/html [MEDIATYPES]. They MAY
+             include parameters, and the charset parameter value MUST be 
+            utf-8, if specified. Descriptions of type text/html MAY contain
+             cid URLs [RFC2392] to reference links in the calendar object 
+            by use of the cid property of the Link object.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.ShowWithoutTime">
+            <summary>
+            This indicates that the time is not important to display to the user
+             when rendering this calendar object. An example of this is an event
+             that conceptually occurs all day or across multiple days, such as 
+            "New Year's Day" or "Italy Vacation". While the time component is 
+            important for free-busy calculations and checking for scheduling 
+            clashes, calendars may choose to omit displaying it and/or display
+             the object separately to other objects to enhance the user's 
+            view of their schedule.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.Locations">
+            <summary>
+            This is a map of location ids to Location objects, representing locations associated 
+            with the object.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.VirtualLocations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.links">
+            <summary>
+            This is a map of link ids to Link objects, representing external resources 
+            associated with the object.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.Locale">
+            <summary>
+            This is the language tag, as defined in [RFC5646], that best describes the 
+            locale used for the text in the calendar object, if known.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.Keywords">
+            <summary>
+            This is a set of keywords or tags that relate to the object. The set is 
+            represented as a map, with the keys being the keywords. The value for 
+            each key in the map MUST be true.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.Categories">
+            <summary>
+            This is a set of categories that relate to the calendar object. The set 
+            is represented as a map, with the keys being the categories specified 
+            as URIs. The value for each key in the map MUST be true.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.Color">
+            <summary>
+            This is a color clients MAY use when displaying this calendar object. 
+            The value is a color name taken from the set of names defined in 
+            Section 4.3 of CSS Color Module Level 3 [COLORS] or an RGB value 
+            in hexadecimal notation, as defined in Section 4.2.1 of CSS Color 
+            Module Level 3.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.RecurrenceId">
+            <summary>
+            If present, this JSCalendar object represents one occurrence of a 
+            recurring JSCalendar object. If present, the recurrenceRules and 
+            recurrenceOverrides properties MUST NOT be present.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.RecurrenceIdTimeZone">
+            <summary>
+            Identifies the time zone of the main JSCalendar object, of which 
+            this JSCalendar object is a recurrence instance. This property 
+            MUST be set if the recurrenceId property is set. It MUST NOT be 
+            set if the recurrenceId property is not set.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.RecurrenceRules">
+            <summary>
+            This defines a set of recurrence rules (repeating patterns) for 
+            recurring calendar objects.
+            An Event recurs by applying the recurrence rules to the start date-time.
+            A Task recurs by applying the recurrence rules to the start date-time, 
+            if defined; otherwise, it recurs by the due date-time, if defined. 
+            If the task defines neither a start nor due date-time, it MUST NOT 
+            define a recurrenceRules property.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.ExcludedRecurrenceRules">
+            <summary>
+            This defines a set of recurrence rules (repeating patterns) for 
+            date-times on which the object will not occur. The rules are 
+            interpreted the same as for the recurrenceRules property 
+            (see Section 4.3.3), with the exception that the initial date-time 
+            to which the rule is applied (the "start" date-time for events 
+            or the "start" or "due" date-time for tasks) is only considered 
+            part of the expansion if it matches the rule. The resulting 
+            set of date-times is then removed from those generated by the 
+            recurrenceRules property, as described in Section 4.3.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.RecurrenceOverrides">
+            <summary>
+            Maps recurrence ids (the date-time produced by the recurrence rule) 
+            to the overridden properties of the recurrence instance.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.Excluded">
+            <summary>
+            This defines if this object is an overridden, excluded instance 
+            of a recurring JSCalendar object (see Section 4.3.5). If this 
+            property value is true, this calendar object instance MUST be 
+            removed from the occurrence expansion. The absence of this 
+            property, or the presence of its default value as false, 
+            indicates that this instance MUST be included in the occurrence 
+            expansion.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.Priority">
+             <summary>
+             This specifies a priority for the calendar object. This may 
+            be used as part of scheduling systems to help resolve conflicts 
+             for a time period.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.FreeBusyStatus">
+            <summary>
+            This specifies how this calendar object should be treated when 
+            calculating free-busy state. This MUST be one of the following 
+            values, another value registered in the IANA "JSCalendar Enum 
+            Values" registry, or a vendor-specific value (see Section 3.3):
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.Privacy">
+            <summary>
+            Calendar objects are normally collected together and may be 
+            shared with other users. The privacy property allows the 
+            object owner to indicate that it should not be shared or 
+            should only have the time information shared but the details 
+            withheld. Enforcement of the restrictions indicated by this 
+            property is up to the API via which this object is accessed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.ReplyTo">
+            <summary>
+            This represents methods by which participants may submit their 
+            response to the organizer of the calendar object. The keys in 
+            the property value are the available methods and MUST only 
+            contain ASCII alphanumeric characters (A-Za-z0-9). The value 
+            is a URI for the method specified in the key. Future methods 
+            may be defined in future specifications and registered with 
+            IANA; a calendar client MUST ignore any method it does not 
+            understand but MUST preserve the method key and URI. This 
+            property MUST be omitted if no method is defined (rather 
+            than being specified as an empty object).
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.SentBy">
+            <summary>
+            This is the email address in the "From" header of the email 
+            in which this calendar object was received. This is only relevant 
+            if the calendar object is received via iMIP or as an attachment to
+            a message. If set, the value MUST be a valid addr-spec value as 
+            defined in Section 3.4.1 of [RFC5322].
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.Participants">
+            <summary>
+            This is a map of participant ids to participants, describing 
+            their participation in the calendar object.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.RequestStatus">
+            <summary>
+            A request status as returned from processing the most recent 
+            scheduling request for this JSCalendar object. The allowed 
+            values are defined by the ABNF definitions of statcode, 
+            statdesc and extdata in Section 3.8.8.3 of [RFC5545] and 
+            the following ABNF [RFC5234]:
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.UseDefaultAlerts">
+            <summary>
+            If true, use the user's default alerts and ignore the value 
+            of the alerts property. Fetching user defaults is dependent 
+            on the API from which this JSCalendar object is being fetched 
+            and is not defined in this specification. If an implementation 
+            cannot determine the user's default alerts, or none are set, 
+            it MUST process the alerts property as if useDefaultAlerts is 
+            set to false.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.Alerts">
+            <summary>
+            This is a map of alert ids to Alert objects, representing 
+            alerts/reminders to display or send to the user for this calendar 
+            object.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.Localizations">
+            <summary>
+            A map where each key is a language tag [RFC5646], and the 
+            corresponding value is a set of patches to apply to the 
+            calendar object in order to localize it into that locale.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.TimeZone">
+            <summary>
+            This identifies the time zone the object is scheduled in or
+            is null for floating time. This is either a name from the IANA
+            Time Zone Database [TZDB] or the TimeZoneId of a custom time 
+            zone from the timeZones property (Section 4.7.2). If omitted, 
+            this MUST be presumed to be null (i.e., floating time).
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry.TimeZones">
+             <summary>
+             This maps identifiers of custom time zones to their time zone 
+             definitions. The following restrictions apply for each key in 
+            the map:
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.CalendarEntry._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.CalendarEntry._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.CalendarEntry._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.CalendarEntry._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.CalendarEntry.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.CalendarEntry._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.CalendarEntry.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Event">
+             <summary>
+            
+              In addition to the common JSCalendar object properties (Section 4), 
+              an Event has the following properties:
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Event.Start">
+            <summary>
+            This is the date/time the event starts in the event's time 
+            zone (as specified in the timeZone property, see Section 4.7.1).
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Event.Duration">
+            <summary>
+            This is the zero or positive duration of the event in the 
+            event's start time zone. The end time of an event can be 
+            found by adding the duration to the event's start time.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Event.Status">
+            <summary>
+            This is the scheduling status (Section 4.4) of an Event. 
+            If set, it MUST be one of the following values, another 
+            value registered in the IANA "JSCalendar Enum Values" registry,
+            or a vendor-specific value (see Section 3.3):
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Event._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Event._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Event._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Event._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Event._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Event._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Event._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Event._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Event.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Event._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Event.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Task">
+             <summary>
+            
+              In addition to the common JSCalendar object properties (Section 4), 
+              a Task has the following properties
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Task.Due">
+            <summary>
+            This is the date/time the task is due in the task's time zone.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Task.Start">
+            <summary>
+            This the date/time the task should start in the task's time zone.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Task.EstimatedDuration">
+            <summary>
+            This specifies the estimated positive duration of time the task
+            takes to complete.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Task.PercentComplete">
+            <summary>
+            This represents the percent completion of the task overall. 
+            The property value MUST be a positive integer between 0 and 100.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Task.Progress">
+            <summary>
+            This defines the progress of this task. If omitted, the default 
+            progress (Section 4.4) of a Task is defined as follows (in order 
+            of evaluation):
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Task.ProgressUpdated">
+            <summary>
+            This specifies the date/time the progress property of either 
+            the task overall (Section 5.2.5) or a specific participant 
+            (Section 4.4.6) was last updated.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Task._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Task._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Task._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Task._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Task._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Task._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Task._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Task._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Task.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Task._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Task.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Group">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Group.Entries">
+            <summary>
+            This is a collection of group members. Implementations MUST 
+            ignore entries of unknown type.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Group.Source">
+            <summary>
+            This is the source from which updated versions of this group 
+            may be retrieved. The value MUST be a URI.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Group._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Group._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Group._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Group._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Group._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Group._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Group._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Group._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Group.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Group._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Group.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Location">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Location.Type">
+            <summary>
+            A Location object has the following properties. It MUST have at least 
+            one property other than the relativeTo property.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Location.Name">
+            <summary>
+            This is the human-readable name of the location.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Location.Description">
+            <summary>
+            This is the human-readable, plain-text instructions for accessing this location. 
+            This may be an address, set of directions, door access code, etc.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Location.LocationTypes">
+            <summary>
+            This is a set of one or more location types that describe this location. All 
+            types MUST be from the "Location Types Registry" [LOCATIONTYPES], as defined 
+            in [RFC4589]. The set is represented as a map, with the keys being the
+            location types. The value for each key in the map MUST be true.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Location.RelativeTo">
+            <summary>
+            This specifies the relation between this location and the time of the JSCalendar 
+            object. This is primarily to allow events representing travel to specify the 
+            location of departure (at the start of the event) and location of arrival
+            (at the end); this is particularly important if these locations are in 
+            different time zones, as a client may wish to highlight this information 
+            for the user.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Location.TimeZone">
+            <summary>
+            This is a time zone for this location.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Location.Coordinates">
+            <summary>
+            This is a geo: URI [RFC5870] for the location.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Location.Link">
+            <summary>
+            This is a map of link ids to Link objects, representing external resources 
+            associated with this location, for example, a vCard or image. If there are 
+            no links, this MUST be omitted (rather than specified as an empty set).
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Location._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Location._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Location._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Location._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Location._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Location._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Location._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Location._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Location.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Location._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Location.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Link">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Link.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Link.Cid">
+            <summary>
+            This MUST be a valid content-id value according to the definition of 
+            Section 2 of [RFC2392]. The value MUST be unique within this Link object
+            but has no meaning beyond that. It MAY be different from the link id for 
+            this Link object.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Link.ContentType">
+            <summary>
+            This is the media type [RFC6838] of the resource, if known.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Link.Size">
+            <summary>
+            This is the size, in octets, of the resource when fully decoded (i.e., 
+            the number of octets in the file the user would download), if known. 
+            Note that this is an informational estimate, and implementations must 
+            be prepared to handle the actual size being quite different when the 
+            resource is fetched.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Link.Rel">
+            <summary>
+            This identifies the relation of the linked resource to the object. 
+            If set, the value MUST be a relation type from the IANA "Link 
+            Relations" registry [LINKRELS], as established in [RFC8288].
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Link.Display">
+            <summary>
+            This describes the intended purpose of a link to an image. If set, 
+            the rel property MUST be set to icon. The value MUST be one of the 
+            following values, another value registered in the IANA "JSCalendar 
+            Enum Values" registry, or a vendor-specific value (see Section 3.3):
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Link.Title">
+            <summary>
+            This is a human-readable, plain-text description of the resource.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Link._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Link._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Link._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Link._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Link._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Link._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Link._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Link._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Link.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Link._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Link.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.VirtualLocation">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.VirtualLocation.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.VirtualLocation.Name">
+            <summary>
+            This is the human-readable name of the virtual location.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.VirtualLocation.Description">
+            <summary>
+            These are human-readable plain-text instructions for accessing this virtual 
+            location. This may be a conference access code, etc.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.VirtualLocation.Uri">
+            <summary>
+            This is a URI [RFC3986] that represents how to connect to this virtual location.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.VirtualLocation.Features">
+            <summary>
+            A set of features supported by this virtual location. The set is represented 
+            as a map, with the keys being the feature. The value for each key in the map 
+            MUST be true.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.VirtualLocation._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.VirtualLocation._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.VirtualLocation._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.VirtualLocation._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.VirtualLocation._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.VirtualLocation._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.VirtualLocation._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.VirtualLocation._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.VirtualLocation.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.VirtualLocation._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.VirtualLocation.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Participant">
+             <summary>
+            
+              A Participant object has the following properties:
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.Type">
+            <summary>
+            This specifies the type of this object. This MUST be Participant.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.name">
+            <summary>
+            This is the display name of the participant (e.g., "Joe Bloggs").
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.email">
+            <summary>
+            This is the email address to use to contact the participant or, 
+            for example, match with an address book entry. If set, the value 
+            MUST be a valid addr-spec value as defined in Section 3.4.1 of [RFC5322].
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.description">
+            <summary>
+            This is a plain-text description of this participant. For example,
+            this may include more information about their role in the event 
+            or how best to contact them.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.sendTo">
+            <summary>
+            This represents methods by which the participant may receive the 
+            invitation and updates to the calendar object.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.individual">
+            <summary>
+            a single person
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.group">
+            <summary>
+            a collection of people invited as a whole
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.location">
+            <summary>
+            a physical location that needs to be scheduled, e.g., a conference room
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.resource">
+            <summary>
+            a non-human resource other than a location, such as a projector
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.roles">
+            <summary>
+            This is a set of roles that this participant fulfills.
+            At least one role MUST be specified for the participant. The keys 
+            in the set MUST be one of the following values, another value registered
+            in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value 
+            (see Section 3.3):
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.locationId">
+            <summary>
+            This is the location at which this participant is expected to be attending.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.language">
+            <summary>
+            This is the language tag, as defined in [RFC5646], that best describes the 
+            participant's preferred language, if known.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.participationStatus">
+            <summary>
+            This is the participation status, if any, of this participant.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.participationComment">
+            <summary>
+            This is a note from the participant to explain their participation status.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.expectReply">
+            <summary>
+            If true, the organizer is expecting the participant to notify them of their 
+            participation status.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.scheduleAgent">
+            <summary>
+            This is who is responsible for sending scheduling messages with this 
+            calendar object to the participant.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.scheduleForceSend">
+            <summary>
+            A client may set the property on a participant to true to request that the server send a scheduling message to the participant when it would not normally do so (e.g., if no significant change is made the object or the scheduleAgent is set to client). The property MUST NOT be stored in the JSCalendar object on the server or appear in a scheduling message.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.scheduleSequence">
+            <summary>
+            This is the sequence number of the last response from the participant. If defined, this MUST be a nonnegative integer.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.scheduleStatus">
+            <summary>
+            This is a list of status codes, returned from the processing of the most recent scheduling message sent to this participant. The status codes MUST be valid statcode values as defined in the ABNF in Section 3.8.8.3 of [RFC5545].
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.scheduleUpdated">
+            <summary>
+            This is the timestamp for the most recent response from this participant.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.sentBy">
+            <summary>
+            This is the email address in the "From" header of the email that last updated this participant via iMIP. This SHOULD only be set if the email address is different to that in the mailto URI of this participant's imip method in the sendTo property (i.e., the response was received from a different address to that which the invitation was sent to). If set, the value MUST be a valid addr-spec value as defined in Section 3.4.1 of [RFC5322].
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.invitedBy">
+            <summary>
+            This is the id of the participant who added this participant to the event/task, if known.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.delegatedTo">
+            <summary>
+            This is set of participant ids that this participant has delegated their participation to. Each key in the set MUST be the id of a participant. The value for each key in the map MUST be true. If there are no delegates, this MUST be omitted (rather than specified as an empty set).
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.delegatedFrom">
+            <summary>
+            This is a set of participant ids that this participant is acting as a delegate for. Each key in the set MUST be the id of a participant. The value for each key in the map MUST be true. If there are no delegators, this MUST be omitted (rather than specified as an empty set).
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.memberOf">
+            <summary>
+            This is a set of group participants that were invited to this calendar object, which caused this participant to be invited due to their membership in the group(s). Each key in the set MUST be the id of a participant. The value for each key in the map MUST be true. If there are no groups, this MUST be omitted (rather than specified as an empty set).
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.links">
+            <summary>
+            This is a map of link ids to Link objects, representing external resources associated with this participant, for example, a vCard or image. If there are no links, this MUST be omitted (rather than specified as an empty set).
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.progress">
+            <summary>
+            This represents the progress of the participant for this task. It MUST NOT be set if the participationStatus of this participant is any value other than accepted. See Section 5.2.5 for allowed values and semantics.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.progressUpdated">
+            <summary>
+            This specifies the date-time the progress property was last set on this participant. See Section 5.2.6 for allowed values and semantics.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant.percentComplete">
+            <summary>
+            This represents the percent completion of the participant for this task. The property value MUST be a positive integer between 0 and 100.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Participant._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Participant._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Participant._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Participant._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Participant._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Participant._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Participant._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Participant._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Participant.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Participant._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Participant.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.RecurrenceRule">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule.Type">
+            <summary>
+            This specifies the type of this object. This MUST be RecurrenceRule.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule.frequency">
+            <summary>
+            This is the time span covered by each iteration of this recurrence 
+            rule (see Section 4.3.3.1 for full semantics). 
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule.interval">
+            <summary>
+            This is the interval of iteration periods at which the recurrence
+            repeats. If included, it MUST be an integer >= 1.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule.rscale">
+            <summary>
+            This is the calendar system in which this recurrence rule operates, 
+            in lowercase. This MUST be either a CLDR-registered calendar system 
+            name [CLDR] or a vendor-specific value (see Section 3.3).
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule.skip">
+            <summary>
+            This is the behavior to use when the expansion of the recurrence 
+            produces invalid dates. This property only has an effect if the 
+            frequency is "yearly" or "monthly". It MUST be one of the following 
+            values:
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule.firstDayOfWeek">
+            <summary>
+            This is the day on which the week is considered to start, 
+            represented as a lowercase, abbreviated, and two-letter English 
+            day of the week. If included, it MUST be one of the following 
+            values:
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule.byDay">
+            <summary>
+            These are days of the week on which to repeat. 
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule.nthOfPeriod">
+            <summary>
+            If present, rather than representing every occurrence of the weekday 
+            defined in the day property, it represents only a specific instance 
+            within the recurrence period. The value can be positive or negative
+             but MUST NOT be zero. A negative integer means the nth-last 
+            occurrence within that period (i.e., -1 is the last occurrence, 
+            -2 the one before that, etc.).
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule.byMonthDay">
+            <summary>
+            These are the days of the month on which to repeat. Valid values are between 
+            1 and the maximum number of days any month may have in the calendar given 
+            by the rscale property and the negative values of these numbers. For 
+            example, in the Gregorian calendar, valid values are 1 to 31 and -31
+             to -1. Negative values offset from the end of the month. The array 
+            MUST have at least one entry if included.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule.byMonth">
+            <summary>
+            These are the months in which to repeat. Each entry is a string representation 
+            of a number, starting from "1" for the first month in the calendar (e.g., 
+            "1" means January with the Gregorian calendar), with an optional "L" 
+            suffix (see [RFC7529]) for leap months (this MUST be uppercase, e.g., 
+            "3L"). The array MUST have at least one entry if included.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule.byYearDay">
+            <summary>
+            These are the days of the year on which to repeat. Valid values are between
+             1 and the maximum number of days any year may have in the calendar given 
+            by the rscale property and the negative values of these numbers. For example, 
+            in the Gregorian calendar, valid values are 1 to 366 and -366 to -1. Negative 
+            values offset from the end of the year. The array MUST have at least one 
+            entry if included.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule.byWeekNo">
+            <summary>
+            These are the weeks of the year in which to repeat. Valid values are between 
+            1 and the maximum number of weeks any year may have in the calendar given by 
+            the rscale property and the negative values of these numbers. For example, 
+            in the Gregorian calendar, valid values are 1 to 53 and -53 to -1. The array 
+            MUST have at least one entry if included.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule.byHour">
+            <summary>
+            These are the hours of the day in which to repeat. Valid values are 0 to 23. 
+            The array MUST have at least one entry if included. This is the BYHOUR part 
+            from iCalendar.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule.byMinute">
+            <summary>
+            These are the minutes of the hour in which to repeat. Valid values are 
+            0 to 59. The array MUST have at least one entry if included.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule.bySecond">
+            <summary>
+            These are the seconds of the minute in which to repeat. Valid values 
+            are 0 to 60. The array MUST have at least one entry if included.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule.bySetPosition">
+            <summary>
+            These are the occurrences within the recurrence interval to include in 
+            the final results. Negative values offset from the end of the list of
+            occurrences. The array MUST have at least one entry if included. 
+            This is the BYSETPOS part from iCalendar.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule.count">
+            <summary>
+            These are the number of occurrences at which to range-bound the recurrence. 
+            This MUST NOT be included if an until property is specified.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule.until">
+            <summary>
+            These are the date-time at which to finish recurring. The last 
+            occurrence is on or before this date-time. This MUST NOT be included 
+            if a count property is specified. Note that if not specified otherwise 
+            for a specific JSCalendar object, this date is to be interpreted in the 
+            time zone specified in the JSCalendar object's timeZone property.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.RecurrenceRule._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.RecurrenceRule._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.RecurrenceRule._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.RecurrenceRule.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.RecurrenceRule._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.RecurrenceRule.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.NDay">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.NDay.Type">
+            <summary>
+            This specifies the type of this object. This MUST be NDay.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.NDay.day">
+            <summary>
+            This is a day of the week on which to repeat; the allowed values are the same
+            as for the firstDayOfWeek recurrenceRule property.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.NDay._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.NDay._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.NDay._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.NDay._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.NDay._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.NDay._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.NDay._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.NDay._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.NDay.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.NDay._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.NDay.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Alert">
+             <summary>
+            
+              An Alert object has the following properties:
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Alert.Type">
+            <summary>
+            This specifies the type of this object. This MUST be Alert.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Alert.Trigger">
+            <summary>
+            This defines when to trigger the alert. New types may be 
+            defined in future documents.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Alert.acknowledged">
+            <summary>
+            This records when an alert was last acknowledged. This is set
+            when the user has dismissed the alert; other clients that sync 
+            this property SHOULD automatically dismiss or suppress duplicate 
+            alerts (alerts with the same alert id that triggered on or before
+            this date-time).
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Alert.relatedTo">
+             <summary>
+             This relates this alert to other alerts in the same JSCalendar 
+             object. If the user wishes to snooze an alert, the application 
+             MUST create an alert to trigger after snoozing. This new snooze 
+             alert MUST set a parent relation to the identifier of the original 
+            alert.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Alert.action">
+            <summary>
+            This describes how to alert the user.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Alert._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Alert._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Alert._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Alert._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Alert._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Alert._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Alert._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Alert._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Alert.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Alert._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Alert.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Trigger">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Trigger.Type">
+            <summary>
+            This specifies the type of this object. This MUST be OffsetTrigger,
+            AbsoluteTrigger or UnknownTrigger .
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Trigger.offset">
+            <summary>
+            This defines the offset at which to trigger the alert relative to 
+            the time property defined in the relativeTo property of the alert. 
+            Negative durations signify alerts before the time property; positive 
+            durations signify alerts after the time property.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Trigger.relativeTo">
+            <summary>
+            This specifies the time property that the alert offset is relative to.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Trigger.when">
+            <summary>
+            This defines a specific UTC date-time when the alert is triggered.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Trigger._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Trigger._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Trigger._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Trigger._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Trigger._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Trigger._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Trigger._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Trigger._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Trigger.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Trigger._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Trigger.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.TimeZone">
+             <summary>
+            
+              A TimeZone object maps a VTIMEZONE component from iCalendar, and 
+              the semantics are as defined in [RFC5545]. A valid time zone MUST 
+              define at least one transition rule in the standard or daylight 
+              property. Its properties are:
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZone.Type">
+            <summary>
+            This specifies the type of this object. This MUST be TimeZone.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZone.tzId">
+            <summary>
+            This is the TZID property from iCalendar. Note that this implies that the value MUST be a valid paramtext value as specified in Section 3.1. of [RFC5545].
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZone.updated">
+            <summary>
+            This is the LAST-MODIFIED property from iCalendar.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZone.url">
+            <summary>
+            This is the TZURL property from iCalendar.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZone.validUntil">
+            <summary>
+            This is the TZUNTIL property from iCalendar, specified in [RFC7808].
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZone.aliases">
+            <summary>
+            This maps the TZID-ALIAS-OF properties from iCalendar, specified 
+            in [RFC7808], to a JSON set of aliases. The set is represented 
+            as an object, with the keys being the aliases. The value for 
+            each key in the map MUST be true.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZone.standard">
+            <summary>
+            This the STANDARD sub-components from iCalendar. The order 
+            MUST be preserved during conversion.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZone.daylight">
+            <summary>
+            This the DAYLIGHT sub-components from iCalendar. The order 
+            MUST be preserved during conversion.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZone._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.TimeZone._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.TimeZone._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.TimeZone._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.TimeZone._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZone._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZone._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZone._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.TimeZone.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.TimeZone._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.TimeZone.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.TimeZoneRule">
+             <summary>
+            
+              A TimeZoneRule object maps a STANDARD or DAYLIGHT sub-component 
+              from iCalendar, with the restriction that, at most, one recurrence 
+              rule is allowed per rule. It has the following properties:
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZoneRule.Type">
+            <summary>
+            This specifies the type of this object. This MUST be TimeZoneRule.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZoneRule.Start">
+            <summary>
+            This is the DTSTART property from iCalendar.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZoneRule.OffsetFrom">
+            <summary>
+            This is the TZOFFSETFROM property from iCalendar.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZoneRule.OffsetTo">
+            <summary>
+            This is the TZOFFSETTO property from iCalendar.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZoneRule.RecurrenceRules">
+            <summary>
+            This is the RRULE property mapped, as specified in Section 4.3.3. 
+            During recurrence rule evaluation, the until property 
+            value MUST be interpreted as a local time in the UTC time zone.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZoneRule.RecurrenceOverrides">
+            <summary>
+            This maps the RDATE properties from iCalendar. The set is 
+            represented as an object, with the keys being the recurrence 
+            dates. The patch object MUST be the empty JSON object ({}).
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZoneRule.Names">
+            <summary>
+            This maps the TZNAME properties from iCalendar to a JSON set.
+            The set is represented as an object, with the keys being the 
+            names, excluding any tznparam component from iCalendar. The 
+            value for each key in the map MUST be true.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZoneRule.Comments">
+            <summary>
+            This maps the COMMENT properties from iCalendar. The order 
+            MUST be preserved during conversion.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZoneRule._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.TimeZoneRule._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.TimeZoneRule._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.TimeZoneRule._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.TimeZoneRule._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZoneRule._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZoneRule._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.TimeZoneRule._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.TimeZoneRule.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.TimeZoneRule._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.TimeZoneRule.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.EmptyPatchObject">
+             <summary>
+            
+              Empty object used in recurrenceOverrides
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.EmptyPatchObject._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.EmptyPatchObject._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.EmptyPatchObject._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.EmptyPatchObject._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.EmptyPatchObject._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.EmptyPatchObject._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.EmptyPatchObject._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.EmptyPatchObject._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.EmptyPatchObject.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.EmptyPatchObject._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.EmptyPatchObject.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
         <member name="T:Goedel.Contacts.ContactConstant">
             <summary>
             Constants used to define contact formats
@@ -28,12 +1801,2228 @@
             Dictionary mapping tags to factory methods
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.Contacts._Initialized">
+            <summary>Variable used to force static initialization</summary> 
+        </member>
         <member name="M:Goedel.Contacts.Contacts.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
             <summary>
             Construct an instance from the specified tagged JsonReader stream.
             </summary>
             <param name="jsonReader">Input stream</param>
             <param name="result">The created object</param>
+        </member>
+        <member name="T:Goedel.Contacts.ContactCard">
+             <summary>
+            
+              Metadata, see section 2.1
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.Version">
+            <summary>
+            The JSContact version of this Card. If specified, value MUST be '1.0'
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.Kind">
+            <summary>
+            The kind of the entity the Card represents.
+            individual: a single person
+            group: a group of people or entities
+            org: an organization
+            location: a named location
+            device: a device such as an appliance, a computer, or a network element
+            application: a software application
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.Language">
+            <summary>
+            The language tag, as defined in [RFC5646], that best describes the language 
+            used for text in the Card, optionally including additional information such 
+            as the script. Note that values MAY be localized in the localizations 
+            property.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.Members">
+            <summary>
+            The set of Cards that are members of this group Card. Each key in the set is 
+            the uid property value of the member, and each boolean value MUST be "true".
+            If this property is set, then the value of the kind property MUST be "group"
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.Name">
+            <summary>
+            The name of the entity represented by the Card. This can be any type of name, 
+            e.g., it can, but need not, be the legal name of a person.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.NickNames">
+            <summary>
+            The nicknames of the entity represented by the Card.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.Organizations">
+            <summary>
+            The company or organization names and units associated with the Card.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.SpeakToAs">
+            <summary>
+            The information that directs how to address, speak to, or refer to the
+            entity that is represented by the Card.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.Titles">
+            <summary>
+            The job titles or functional positions of the entity represented by the Card.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.Emails">
+            <summary>
+            The email addresses in which to contact the entity represented by the Card.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.OnlineServices">
+            <summary>
+            The online services that are associated with the entity represented by the Card.
+            This can be messaging services, social media profiles, and other.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.Phones">
+            <summary>
+            The phone numbers by which to contact the entity represented by the Card.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.PreferredLanguages">
+            <summary>
+            The preferred languages for contacting the entity associated with the Card.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.Calendars">
+            <summary>
+            The calendaring resources of the entity represented by the Card, such as 
+            to look up free-busy information.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.SchedulingAddresses">
+            <summary>
+            The scheduling addresses by which the entity may receive calendar  
+            scheduling invitations.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.Addresses">
+            <summary>
+            The addresses of the entity represented by the Card, such as postal addresses 
+            or geographic locations.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.CryptoKeys">
+            <summary>
+            The cryptographic resources such as public keys and certificates associated 
+            with the entity represented by the Card.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.Directories">
+            <summary>
+            The directories containing information about the entity represented  
+            by the Card.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.Links">
+            <summary>
+            The links to resources that do not fit any of the other  
+            use-case-specific resource properties.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.Media">
+            <summary>
+            The media resources such as photographs, avatars, or sounds that 
+             are associated 
+            with the entity represented by the Card.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.Localizations">
+            <summary>
+            The property values localized to languages other than the main language 
+            (Section 2.1.5) of the Card. Localizations provide language-specific alternatives 
+            for existing property values and SHOULD NOT add new properties. The keys in 
+            the localizations property value are language tags [RFC5646]; the values 
+            are of type PatchObject and localize the Card in that language tag. The paths 
+            in the PatchObject are relative to the Card that includes the localizations
+            property. A patch MUST NOT target the localizations property.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.Anniversaries">
+            <summary>
+            The memorable dates and events for the entity represented by the Card.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.Keywords">
+            <summary>
+            The set of free-text keywords, also known as tags.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.Notes">
+            <summary>
+            The free-text notes that are associated with the Card.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard.PersonalInfo">
+            <summary>
+            The personal information of the entity represented by the Card.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.ContactCard._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.ContactCard._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.ContactCard._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.ContactCard._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.ContactCard.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.ContactCard._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.ContactCard.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Relation">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Relation.Relationships">
+            <summary>
+            The relationships, each one MUST have the value true.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Relation._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Relation._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Relation._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Relation._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Relation._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Relation._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Relation._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Relation._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Relation.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Relation._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Relation.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Resource">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Resource.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Resource.Kind">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Resource.Uri">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Resource.Contexts">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Resource.Pref">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Resource.Label">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Resource._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Resource._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Resource._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Resource._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Resource._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Resource._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Resource._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Resource._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Resource.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Resource._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Resource.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Name">
+             <summary>
+            
+             A Name object
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Name.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Name.Components">
+            <summary>
+            The components (Section 2.2.1.2) making up this name. The components property 
+            MUST be set if the full property is not set; otherwise, it SHOULD be set. 
+            The component list MUST have at least one entry having a different kind 
+            property value than "separator".
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Name.IsOrdered">
+            <summary>
+            The indicator if the name components in the components property are ordered.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Name.DefaultSeparator">
+            <summary>
+            The default separator to insert between name component values when 
+            concatenating all name component values to a single String. Also see 
+            the definition of the kind property value "separator" for the 
+            NameComponent (Section 2.2.1.2) object. The defaultSeparator property 
+            MUST NOT be set if the Name isOrdered property value is "false" or 
+            if the components property is not set.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Name.Full">
+            <summary>
+            The full name representation of the Name. The full property MUST be set 
+            if the components property is not set.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Name.SortAs">
+            <summary>
+            The value to lexicographically sort the name in relation to other names 
+            when compared by a name component type. The keys in the map define the 
+            name component type. The values define the verbatim string to compare 
+            when sorting by the name component type. Absence of a key indicates that 
+            the name component type SHOULD NOT be considered during sort. Sorting by 
+            that missing name component type, or if the sortAs property is not set, 
+            is implementation-specific. The sortAs property MUST NOT be set if the 
+            components property is not set.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Name.PhoneticScript">
+            <summary>
+            The script used in the value of the NameComponent phonetic property.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Name.PhoneticSystem">
+            <summary>
+            The phonetic system used in the NameComponent phonetic property.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Name._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Name._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Name._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Name._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Name._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Name._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Name._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Name._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Name.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Name._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Name.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.NameComponent">
+             <summary>
+            
+             A NameComponent object
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.NameComponent.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.NameComponent.Value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.NameComponent.Kind">
+            <summary>
+            title: an honorific title or prefix, e.g., "Mr.", "Ms.", or "Dr.".
+            given: a given name, also known as "first name" or "personal name".
+            given2: a name that appears between the given and surname such as a middle name or patronymic name.
+            surname: a surname, also known as "last name" or "family name".
+            surname2: a secondary surname (used in some cultures), also known as "maternal surname".
+            credential: a credential, also known as "accreditation qualifier" or "honorific suffix", e.g., "B.A.", "Esq.".
+            generation: a generation marker or qualifier, e.g., "Jr." or "III".
+            separator: a formatting separator between two ordered name non-separator components. 
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.NameComponent.Phonetic">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.NameComponent._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.NameComponent._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.NameComponent._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.NameComponent._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.NameComponent._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.NameComponent._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.NameComponent._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.NameComponent._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.NameComponent.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.NameComponent._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.NameComponent.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.NickName">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.NickName.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.NickName.Name">
+            <summary>
+            The nickname.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.NickName.Contexts">
+            <summary>
+            The contexts in which to use the nickname.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.NickName.Pref">
+            <summary>
+            The preference of the nickname in relation to other nicknames. 
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.NickName._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.NickName._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.NickName._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.NickName._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.NickName._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.NickName._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.NickName._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.NickName._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.NickName.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.NickName._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.NickName.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Organization">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Organization.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Organization.Name">
+            <summary>
+            The name of the organization.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Organization.Units">
+            <summary>
+            A list of organizational units, ordered as descending by hierarchy 
+            (e.g., a geographic or functional division sorts before a department 
+            within that division). If set, the list MUST contain at least one entry.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Organization.SortAs">
+            <summary>
+            The value to lexicographically sort the organization in relation to 
+            other organizations when compared by name. The value defines the 
+            verbatim string value to compare. In absence of this property, 
+            the name property value MAY be used for comparison.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Organization.Contexts">
+            <summary>
+            The contexts in which association with the organization applies. For 
+            example, membership in a choir may only apply in a private context.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Organization._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Organization._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Organization._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Organization._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Organization._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Organization._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Organization._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Organization._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Organization.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Organization._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Organization.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.OrgUnit">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.OrgUnit.Name">
+            <summary>
+            The name of the organizational unit.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.OrgUnit.SortAs">
+            <summary>
+            The value to lexicographically sort the organizational unit in relation 
+            to other organizational units of the same level when compared by name. 
+            The level is defined by the array index of the organizational unit in 
+            the units property of the Organization object. The property value 
+            defines the verbatim string value to compare. In absence of this 
+            property, the name property value MAY be used for comparison.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.OrgUnit._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.OrgUnit._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.OrgUnit._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.OrgUnit._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.OrgUnit._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.OrgUnit._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.OrgUnit._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.OrgUnit._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.OrgUnit.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.OrgUnit._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.OrgUnit.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.SpeakToAs">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.SpeakToAs.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.SpeakToAs.grammaticalGender">
+            <summary>
+            The grammatical gender to use in salutations and other grammatical 
+            constructs. For example, the German language distinguishes by grammatical
+            gender in salutations such as "Sehr geehrte" (feminine) and "Sehr geehrter"
+            (masculine)
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.SpeakToAs.Pronouns">
+            <summary>
+            The pronouns that the contact chooses to use for themselves.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.SpeakToAs._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.SpeakToAs._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.SpeakToAs._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.SpeakToAs._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.SpeakToAs._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.SpeakToAs._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.SpeakToAs._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.SpeakToAs._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.SpeakToAs.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.SpeakToAs._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.SpeakToAs.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Pronouns">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Pronouns.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Pronouns.Values">
+            <summary>
+            The pronouns. Any value or form is allowed. Examples in English include "she/her"
+            and "they/them/theirs". The value MAY be overridden in the localizations 
+            property.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Pronouns.Contexts">
+            <summary>
+            The contexts in which to use the pronouns.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Pronouns.Pref">
+            <summary>
+            The preference of the pronouns in relation to other pronouns in the same context.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Pronouns._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Pronouns._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Pronouns._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Pronouns._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Pronouns._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Pronouns._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Pronouns._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Pronouns._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Pronouns.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Pronouns._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Pronouns.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Title">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Title.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Title.Name">
+            <summary>
+            The title or role name of the entity represented by the Card.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Title.Kind">
+            <summary>
+            The organizational or situational kind of the title. Some organizations and 
+            individuals distinguish between titles as organizational positions and roles
+            as more temporary assignments such as in project management.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Title.OrganizationId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Title._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Title._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Title._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Title._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Title._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Title._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Title._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Title._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Title.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Title._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Title.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.EmailAddress">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.EmailAddress.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.EmailAddress.Address">
+            <summary>
+            The email address. This MUST be an addr-spec value as defined in Section 3.4.1 of [RFC5322].
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.EmailAddress.Contexts">
+            <summary>
+            The contexts in which to use this email address. Also see Section 1.5.1.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.EmailAddress.Pref">
+            <summary>
+            The preference of the email address in relation to other email addresses. Also 
+            see Section 1.5.3.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.EmailAddress.Label">
+            <summary>
+            A custom label for the value. 
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.EmailAddress._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.EmailAddress._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.EmailAddress._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.EmailAddress._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.EmailAddress._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.EmailAddress._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.EmailAddress._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.EmailAddress._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.EmailAddress.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.EmailAddress._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.EmailAddress.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.OnlineService">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.OnlineService.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.OnlineService.Service">
+            <summary>
+            The name of the online service or protocol. The name MAY be capitalized the 
+            same as on the service's website, app, or publishing material, but names MUST 
+            be considered equal if they match case-insensitively. Examples are "GitHub", 
+            "kakao", and "Mastodon"
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.OnlineService.Uri">
+            <summary>
+            he identifier for the entity represented by the Card at the online service. 
+            This MUST be a URI as defined in Section 3 of [RFC3986].
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.OnlineService.User">
+            <summary>
+            The name the entity represented by the Card at the online service. Any 
+            free-text value is allowed. The service property SHOULD be set.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.OnlineService.Contexts">
+            <summary>
+            The contexts in which to use the service.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.OnlineService.Pref">
+            <summary>
+            The preference of the service in relation to other services.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.OnlineService.Label">
+            <summary>
+            A custom label for the value. 
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.OnlineService._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.OnlineService._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.OnlineService._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.OnlineService._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.OnlineService._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.OnlineService._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.OnlineService._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.OnlineService._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.OnlineService.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.OnlineService._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.OnlineService.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Phone">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Phone.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Phone.Number">
+            <summary>
+            The phone number as either a URI or free text. Typical URI schemes are 
+            "tel" [RFC3966] or "sip" [RFC3261], but any URI scheme is allowed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Phone.Features">
+             <summary>
+             The set of contact features that the phone number may be used for. The set is 
+             represented as an object, with each key being a method type. The boolean value 
+             MUST be "true". The enumerated method type values are:
+            
+             mobile: this number is for a mobile phone.
+             voice: this number supports calling by voice.
+             text: this number supports text messages (SMS).
+             video: this number supports video conferencing.
+             main-number: this number is a main phone number such as the number of the front desk 
+               at a company, as opposed to a direct-dial number of an individual employee.
+             textphone: this number is for a device for people with hearing or speech difficulties.
+             fax: this number supports sending faxes.
+             pager: this number is for a pager or beeper.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Phone.Contexts">
+            <summary>
+            The contexts in which to use the number. 
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Phone.Pref">
+            <summary>
+            The preference of the number in relation to other numbers.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Phone.Label">
+            <summary>
+            A custom label for the value.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Phone._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Phone._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Phone._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Phone._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Phone._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Phone._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Phone._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Phone._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Phone.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Phone._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Phone.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.LanguagePref">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.LanguagePref.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.LanguagePref.Language">
+            <summary>
+            The preferred language. This MUST be a language tag as defined in [RFC5646] .
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.LanguagePref.Contexts">
+            <summary>
+            The contexts in which to use the language.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.LanguagePref.Pref">
+            <summary>
+            The preference of the language in relation to other languages of the same contexts. 
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.LanguagePref._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.LanguagePref._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.LanguagePref._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.LanguagePref._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.LanguagePref._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.LanguagePref._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.LanguagePref._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.LanguagePref._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.LanguagePref.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.LanguagePref._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.LanguagePref.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Calendar">
+             <summary>
+            
+              The calendaring resources of the entity represented by the Card, such as 
+              to look up free-busy information.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Calendar._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Calendar._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Calendar._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Calendar._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Calendar._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Calendar._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Calendar._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Calendar._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Calendar.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Calendar._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Calendar.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.SchedulingAddress">
+             <summary>
+            
+              The scheduling addresses by which the entity may receive calendar scheduling invitations.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.SchedulingAddress.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.SchedulingAddress.Uri">
+            <summary>
+            The address to use for calendar scheduling with the contact. This MUST 
+            be a URI as defined in Section 3 of [RFC3986].
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.SchedulingAddress.Contexts">
+            <summary>
+            The contexts in which to use the scheduling address. 
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.SchedulingAddress.Pref">
+            <summary>
+            The preference of the scheduling address in relation to other scheduling addresses.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.SchedulingAddress.Label">
+            <summary>
+            A custom label for the scheduling address. 
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.SchedulingAddress._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.SchedulingAddress._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.SchedulingAddress._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.SchedulingAddress._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.SchedulingAddress._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.SchedulingAddress._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.SchedulingAddress._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.SchedulingAddress._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.SchedulingAddress.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.SchedulingAddress._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.SchedulingAddress.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Address">
+             <summary>
+            
+              The addresses of the entity represented by the Card, such as postal 
+              addresses or geographic locations.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Address.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Address.Components">
+            <summary>
+            The components (Section 2.5.1.2) that make up the address. The component 
+            list MUST have at least one entry that has a kind property value other 
+            than "separator".
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Address.IsOrdered">
+            <summary>
+            The indicator if the address components in the components property are ordered.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Address.CountryCode">
+            <summary>
+            The Alpha-2 country code [ISO.3166-1].
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Address.Coordinates">
+            <summary>
+            A "geo:" URI [RFC5870] for the address.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Address.TimeZone">
+            <summary>
+            The time zone in which the address is located. This MUST be a time zone 
+            name registered in the IANA Time Zone Database [IANA-TZ].
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Address.Contexts">
+            <summary>
+            The contexts in which to use this address. 
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Address.Full">
+            <summary>
+            The full address, including street, region, or country. The purpose of 
+            this property is to define an address, even if the individual address 
+            components are not known.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Address.DefaultSeparator">
+            <summary>
+            The default separator to insert between address component values when 
+            concatenating all address component values to a single String. Also see 
+            the definition of the kind property value "separator" for the AddressComponent
+            (Section 2.5.1.2) object. The defaultSeparator property MUST NOT be set 
+            if the Address isOrdered property value is "false" or if the components 
+            property is not set.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Address.Pref">
+            <summary>
+            The preference of the address in relation to other addresses. 
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Address.PhoneticScript">
+            <summary>
+            The script used in the value of the AddressComponent phonetic property.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Address.PhoneticSystem">
+            <summary>
+            The phonetic system used in the AddressComponent phonetic property.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Address._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Address._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Address._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Address._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Address._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Address._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Address._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Address._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Address.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Address._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Address.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.AddressComponent">
+             <summary>
+            
+              
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.AddressComponent.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.AddressComponent.Value">
+            <summary>
+            The value of the address component.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.AddressComponent.Kind">
+            <summary>
+            The kind of the address component. 
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.AddressComponent.Phonetic">
+            <summary>
+            The pronunciation of the name component. If this property is set, then 
+            at least one of the Address object phoneticSystem or phoneticScript 
+            properties MUST be set. 
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.AddressComponent._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.AddressComponent._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.AddressComponent._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.AddressComponent._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.AddressComponent._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.AddressComponent._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.AddressComponent._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.AddressComponent._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.AddressComponent.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.AddressComponent._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.AddressComponent.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.CryptoKey">
+             <summary>
+            
+             The cryptographic resources such as public keys and certificates associated 
+              with the entity represented by the Card.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.CryptoKey._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.CryptoKey._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.CryptoKey._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.CryptoKey._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.CryptoKey._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.CryptoKey._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.CryptoKey._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.CryptoKey._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.CryptoKey.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.CryptoKey._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.CryptoKey.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Directory">
+             <summary>
+            
+              The directories containing information about the entity represented by the Card.
+              The position of the directory resource in the list of all Directory objects 
+              having the same kind property value in the Card. If set, the listAs value 
+              MUST be higher than zero. Multiple directory resources MAY have the same 
+              listAs property value or none. Sorting such same-valued entries is 
+              implementation-specific.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Directory.ListAs">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Directory._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Directory._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Directory._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Directory._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Directory._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Directory._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Directory._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Directory._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Directory.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Directory._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Directory.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.ResourceLink">
+             <summary>
+            
+              The links to resources that do not fit any of the other use-case-specific resource properties.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.ResourceLink._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.ResourceLink._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.ResourceLink._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.ResourceLink._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.ResourceLink._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.ResourceLink._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.ResourceLink._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.ResourceLink._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.ResourceLink.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.ResourceLink._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.ResourceLink.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Media">
+             <summary>
+            
+              The media resources such as photographs, avatars, or sounds that are associated 
+              with the entity represented by the Card.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Media._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Media._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Media._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Media._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Media._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Media._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Media._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Media._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Media.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Media._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Media.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.PatchObject">
+             <summary>
+            
+              A ContactCard used to overwrite parts of a contact card.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.PatchObject._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.PatchObject._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.PatchObject._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.PatchObject._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.PatchObject._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.PatchObject._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.PatchObject._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.PatchObject._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.PatchObject.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.PatchObject._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.PatchObject.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Anniversary">
+             <summary>
+            
+              The memorable dates and events for the entity represented by the Card.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Anniversary.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Anniversary.Kind">
+            <summary>
+            The kind of anniversary.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Anniversary.Date">
+            <summary>
+            Timestamp (mandatory; defaultType: PartialDate).
+            The date of the anniversary in the Gregorian calendar. This MUST be 
+            either a whole or partial calendar date or a complete UTC timestamp 
+            (see the definition of the Timestamp and PartialDate object types below).
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Anniversary.Place">
+            <summary>
+            An address associated with this anniversary, e.g., the place of birth or death.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Anniversary._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Anniversary._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Anniversary._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Anniversary._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Anniversary._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Anniversary._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Anniversary._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Anniversary._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Anniversary.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Anniversary._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Anniversary.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.TimeStamp">
+             <summary>
+            
+              
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeStamp.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeStamp.Year">
+            <summary>
+            The calendar year.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:Goedel.Contacts.TimeStamp.Month" -->
+        <!-- Badly formed XML comment ignored for member "P:Goedel.Contacts.TimeStamp.Day" -->
+        <member name="P:Goedel.Contacts.TimeStamp.CalendarScale">
+            <summary>
+            The calendar system in which this date occurs, in lowercase. This 
+            MUST be either a calendar system name registered as a Common Locale 
+            Data Repository (CLDR) [RFC7529] or a vendor-specific value. The year,
+            month, and day still MUST be represented in the Gregorian calendar. 
+            Note that the year property might be required to convert the date 
+            between the Gregorian calendar and the respective calendar system.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeStamp.Utc">
+            <summary>
+            The point in time in UTC time.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeStamp._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.TimeStamp._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.TimeStamp._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.TimeStamp._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.TimeStamp._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.TimeStamp._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.TimeStamp._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.TimeStamp._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.TimeStamp.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.TimeStamp._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.TimeStamp.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Note">
+             <summary>
+            
+              A free-text note that is associated with the Card.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Note.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Note.Value">
+            <summary>
+            The free-text value of this note.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Note.Created">
+            <summary>
+            The date and time when this note was created.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Note.Author">
+            <summary>
+            The author of this note.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Note._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Note._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Note._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Note._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Note._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Note._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Note._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Note._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Note.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Note._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Note.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Author">
+             <summary>
+            
+              The author of a note.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Author.Type">
+            <summary>
+            The JSContact type of the object. The value MUST be "Author", if set.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Author.Name">
+            <summary>
+            The name of this author.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Author.Uri">
+            <summary>
+            The URI value that identifies the author.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Author._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Author._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Author._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Author._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Author._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Author._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Author._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Author._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Author.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Author._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Author.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.PersonalInfo">
+             <summary>
+            
+              The personal information of the entity represented by the Card.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.PersonalInfo.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.PersonalInfo.Kind">
+            <summary>
+            The kind of personal information
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.PersonalInfo.Value">
+            <summary>
+            The actual information
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.PersonalInfo.Level">
+            <summary>
+            The level of expertise or engagement in hobby or interest. 
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.PersonalInfo.ListAs">
+            <summary>
+            The position of the personal information in the list of all PersonalInfo
+            objects that have the same kind property value in the Card. If set, the 
+            listAs value MUST be higher than zero. Multiple personal information entries
+            MAY have the same listAs property value or none. Sorting such same-valued 
+            entries is implementation-specific.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.PersonalInfo.Label">
+            <summary>
+            A custom label. 
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.PersonalInfo._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.PersonalInfo._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.PersonalInfo._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.PersonalInfo._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.PersonalInfo._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.PersonalInfo._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.PersonalInfo._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.PersonalInfo._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.PersonalInfo.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.PersonalInfo._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.PersonalInfo.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Contacts.Extension">
             <summary>

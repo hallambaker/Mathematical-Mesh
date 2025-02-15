@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/14/2025 12:09:12 AM
+//  This file was automatically generated at 2/15/2025 3:10:50 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -82,8 +82,7 @@ public abstract partial class ServiceAdminShellResult : global::Goedel.Protocol.
 	    {"ResultAbout", ResultAbout._Factory}
 		};
 
-    // [ModuleInitializer]
-	
+	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
 	static ServiceAdminShellResult() {
@@ -264,42 +263,42 @@ public partial class ResultAbout : Result {
         /// <summary>
         /// </summary>
 
-	public virtual string?						DirectoryKeys  {get; set;}
+	public virtual string?					DirectoryKeys  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						DirectoryMesh  {get; set;}
+	public virtual string?					DirectoryMesh  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						AssemblyTitle  {get; set;}
+	public virtual string?					AssemblyTitle  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						AssemblyDescription  {get; set;}
+	public virtual string?					AssemblyDescription  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						AssemblyCopyright  {get; set;}
+	public virtual string?					AssemblyCopyright  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						AssemblyCompany  {get; set;}
+	public virtual string?					AssemblyCompany  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						AssemblyVersion  {get; set;}
+	public virtual string?					AssemblyVersion  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Build  {get; set;}
+	public virtual string?					Build  {get; set;}
 
 
 

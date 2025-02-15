@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/14/2025 12:09:08 AM
+//  This file was automatically generated at 2/15/2025 3:10:47 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -86,8 +86,7 @@ public abstract partial class CallsignResolver : global::Goedel.Protocol.JsonObj
 	    {"SyncResponse", SyncResponse._Factory}
 		};
 
-    // [ModuleInitializer]
-	
+	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
 	static CallsignResolver() {
@@ -443,20 +442,20 @@ public partial class QueryRequest : ResolverRequest {
         ///The callsign being requested in canonical form.
         /// </summary>
 
-	public virtual string?						CallSign  {get; set;}
+	public virtual string?					CallSign  {get; set;}
 
         /// <summary>
         ///The registration identifier of a registration in the log.
         /// </summary>
 
-	public virtual string?						RegistrationId  {get; set;}
+	public virtual string?					RegistrationId  {get; set;}
 
         /// <summary>
         ///The unique identifier of an append only log whose signed Notarization
         ///entry is requested.
         /// </summary>
 
-	public virtual string?						LogId  {get; set;}
+	public virtual string?					LogId  {get; set;}
 
 
 
@@ -543,13 +542,13 @@ public partial class QueryResponse : ResolverResponse {
         ///The registration specified in the result (if found).	
         /// </summary>
 
-	public virtual Enveloped<Registration>?						Result  {get; set;}
+	public virtual Enveloped<Registration>?					Result  {get; set;}
 
         /// <summary>
         ///The latest notarization entry corresponding to the specified log.
         /// </summary>
 
-	public virtual Enveloped<Notarization>?						Notarization  {get; set;}
+	public virtual Enveloped<Notarization>?					Notarization  {get; set;}
 
 
 

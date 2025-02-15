@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/14/2025 12:09:08 AM
+//  This file was automatically generated at 2/15/2025 3:10:47 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -97,8 +97,7 @@ public abstract partial class PresenceProtocol : global::Goedel.Protocol.JsonObj
 	    {"UdpEndpoint", UdpEndpoint._Factory}
 		};
 
-    // [ModuleInitializer]
-	
+	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
 	static PresenceProtocol() {
@@ -232,12 +231,12 @@ public partial class PresenceFromClient : Goedel.Protocol.Request {
         ///attacks on client request.
         /// </summary>
 
-	public virtual int?						Serial  {get; set;}
+	public virtual int?					Serial  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual int?						Acknowledge  {get; set;}
+	public virtual int?					Acknowledge  {get; set;}
 
 
 
@@ -613,7 +612,7 @@ public partial class PresenceResolveRequest : PresenceFromClient {
         /// <summary>
         /// </summary>
 
-	public virtual byte[]?						DnsRequest  {get; set;}
+	public virtual byte[]?					DnsRequest  {get; set;}
 
 
 
@@ -696,17 +695,17 @@ public partial class PresenceFromService : Goedel.Protocol.Response {
         /// <summary>
         /// </summary>
 
-	public virtual UdpEndpoint?						EndPoint  {get; set;}
+	public virtual UdpEndpoint?					EndPoint  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual DateTime?						Now  {get; set;}
+	public virtual DateTime?					Now  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual int?						Acknowledge  {get; set;}
+	public virtual int?					Acknowledge  {get; set;}
 
 
 
@@ -795,7 +794,7 @@ public partial class PresenceConnectResponse : PresenceFromService {
         ///assume the device has disconnected in milliseconds.
         /// </summary>
 
-	public virtual int?						ConnectionTimeout  {get; set;}
+	public virtual int?					ConnectionTimeout  {get; set;}
 
 
 
@@ -875,7 +874,7 @@ public partial class PresenceErrorInvalidSerial : PresenceFromService {
         /// <summary>
         /// </summary>
 
-	public virtual int?						Serial  {get; set;}
+	public virtual int?					Serial  {get; set;}
 
 
 
@@ -1101,12 +1100,12 @@ public partial class PresenceNotify : PresenceFromService {
         /// <summary>
         /// </summary>
 
-	public virtual byte[]?						Bitmask  {get; set;}
+	public virtual byte[]?					Bitmask  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual int?						Serial  {get; set;}
+	public virtual int?					Serial  {get; set;}
 
 
 
@@ -1188,7 +1187,7 @@ public partial class PresenceResolveResponse : PresenceFromService {
         /// <summary>
         /// </summary>
 
-	public virtual byte[]?						DnsResponse  {get; set;}
+	public virtual byte[]?					DnsResponse  {get; set;}
 
 
 
@@ -1268,7 +1267,7 @@ public partial class SessionRequest : Message {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Protocol  {get; set;}
+	public virtual string?					Protocol  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -1277,12 +1276,12 @@ public partial class SessionRequest : Message {
         /// <summary>
         /// </summary>
 
-	public virtual UdpEndpoint?						Inbound  {get; set;}
+	public virtual UdpEndpoint?					Inbound  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual DateTime?						Expires  {get; set;}
+	public virtual DateTime?					Expires  {get; set;}
 
 
 
@@ -1369,12 +1368,12 @@ public partial class SessionResponse : Message {
         /// <summary>
         /// </summary>
 
-	public virtual bool?						Accept  {get; set;}
+	public virtual bool?					Accept  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Protocol  {get; set;}
+	public virtual string?					Protocol  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -1383,7 +1382,7 @@ public partial class SessionResponse : Message {
         /// <summary>
         /// </summary>
 
-	public virtual UdpEndpoint?						Inbound  {get; set;}
+	public virtual UdpEndpoint?					Inbound  {get; set;}
 
 
 
@@ -1470,17 +1469,17 @@ public partial class SessionEndpoint : PresenceProtocol {
         /// <summary>
         /// </summary>
 
-	public virtual byte[]?						IpAddress  {get; set;}
+	public virtual byte[]?					IpAddress  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual int?						Port  {get; set;}
+	public virtual int?					Port  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Protocol  {get; set;}
+	public virtual string?					Protocol  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -1569,12 +1568,12 @@ public partial class UdpEndpoint : PresenceProtocol {
         /// <summary>
         /// </summary>
 
-	public virtual byte[]?						IpAddress  {get; set;}
+	public virtual byte[]?					IpAddress  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual int?						Port  {get; set;}
+	public virtual int?					Port  {get; set;}
 
 
 

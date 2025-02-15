@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/14/2025 12:09:12 AM
+//  This file was automatically generated at 2/15/2025 3:10:50 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -86,8 +86,7 @@ public abstract partial class ServiceManagement : global::Goedel.Protocol.JsonOb
 	    {"ServiceStatusResponse", ServiceStatusResponse._Factory}
 		};
 
-    // [ModuleInitializer]
-	
+	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
 	static ServiceManagement() {
@@ -659,27 +658,27 @@ public partial class ServiceStatusResponse : WsmpResponse {
         /// <summary>
         /// </summary>
 
-	public virtual DateTime?						Start  {get; set;}
+	public virtual DateTime?					Start  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual DateTime?						End  {get; set;}
+	public virtual DateTime?					End  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual int?						Started  {get; set;}
+	public virtual int?					Started  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual int?						Completed  {get; set;}
+	public virtual int?					Completed  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual int?						Pending  {get; set;}
+	public virtual int?					Pending  {get; set;}
 
 
 

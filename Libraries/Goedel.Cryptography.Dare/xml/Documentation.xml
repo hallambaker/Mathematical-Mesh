@@ -2621,6 +2621,9 @@
             Dictionary mapping tags to factory methods
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.Dare._Initialized">
+            <summary>Variable used to force static initialization</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.Dare.Dare.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
             <summary>
             Construct an instance from the specified tagged JsonReader stream.
@@ -5883,6 +5886,9 @@
             <summary>
             Dictionary mapping tags to factory methods
             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceData._Initialized">
+            <summary>Variable used to force static initialization</summary> 
         </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceData.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
             <summary>

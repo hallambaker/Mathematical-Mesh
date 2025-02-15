@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/14/2025 12:09:08 AM
+//  This file was automatically generated at 2/15/2025 3:10:47 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -97,8 +97,7 @@ public abstract partial class CallsignEntry : global::Goedel.Protocol.JsonObject
 	    {"ProcessResultCallsign", ProcessResultCallsign._Factory}
 		};
 
-    // [ModuleInitializer]
-	
+	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
 	static CallsignEntry() {
@@ -209,7 +208,7 @@ public partial class ProfileResolver : ProfileService {
         ///The registry that this resolver resolves.
         /// </summary>
 
-	public virtual Enveloped<ProfileAccount>?						EnvelopedProfileRegistry  {get; set;}
+	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileRegistry  {get; set;}
 
 
 
@@ -293,38 +292,38 @@ public partial class Registration : CallsignEntry {
         ///Unique registration identifier
         /// </summary>
 
-	public virtual string?						Id  {get; set;}
+	public virtual string?					Id  {get; set;}
 
         /// <summary>
         ///The signed callsign binding
         /// </summary>
 
-	public virtual Enveloped<CallsignBinding>?						Entry  {get; set;}
+	public virtual Enveloped<CallsignBinding>?					Entry  {get; set;}
 
         /// <summary>
         ///The UTC time instant that the claim was submitted.
         /// </summary>
 
-	public virtual DateTime?						Submitted  {get; set;}
+	public virtual DateTime?					Submitted  {get; set;}
 
         /// <summary>
         ///Callsign of the registrar that made the registration request
         /// </summary>
 
-	public virtual string?						Registrar  {get; set;}
+	public virtual string?					Registrar  {get; set;}
 
         /// <summary>
         ///If present, specifies a previous registration with the same identifier.
         /// </summary>
 
-	public virtual string?						PriorId  {get; set;}
+	public virtual string?					PriorId  {get; set;}
 
         /// <summary>
         ///Reason for creating a registration:
         ///Initial/ Update/ Voluntary/ Administrative/ Revoke
         /// </summary>
 
-	public virtual string?						Reason  {get; set;}
+	public virtual string?					Reason  {get; set;}
 
 
 
@@ -415,19 +414,19 @@ public partial class CatalogedRegistration : CatalogedEntry {
         ///The canonical form of the callsign.
         /// </summary>
 
-	public virtual string?						Canonical  {get; set;}
+	public virtual string?					Canonical  {get; set;}
 
         /// <summary>
         ///Unique registration identifier
         /// </summary>
 
-	public virtual string?						Id  {get; set;}
+	public virtual string?					Id  {get; set;}
 
         /// <summary>
         ///The registration entry for the item.
         /// </summary>
 
-	public virtual Enveloped<Registration>?						EnvelopedRegistration  {get; set;}
+	public virtual Enveloped<Registration>?					EnvelopedRegistration  {get; set;}
 
 
 
@@ -513,7 +512,7 @@ public partial class Page : CallsignEntry {
         ///Character page identifier
         /// </summary>
 
-	public virtual string?						Id  {get; set;}
+	public virtual string?					Id  {get; set;}
 
         /// <summary>
         ///Additional allowed pages.
@@ -609,14 +608,14 @@ public partial class CharacterSpan : CallsignEntry {
         ///The first character in the range (inclusive)
         /// </summary>
 
-	public virtual int?						First  {get; set;}
+	public virtual int?					First  {get; set;}
 
         /// <summary>
         ///The last character in the range (inclusive), if ommitted or
         ///equal to zero, this is the same as Last.
         /// </summary>
 
-	public virtual int?						Last  {get; set;}
+	public virtual int?					Last  {get; set;}
 
 
 
@@ -776,7 +775,7 @@ public partial class MapChar : CharacterSpan {
         ///The character that First is mapped to.
         /// </summary>
 
-	public virtual int?						Target  {get; set;}
+	public virtual int?					Target  {get; set;}
 
 
 
@@ -861,7 +860,7 @@ public partial class MapString : CharacterSpan {
         ///If count is greater than 1, all the characters map to the same string.
         /// </summary>
 
-	public virtual string?						Target  {get; set;}
+	public virtual string?					Target  {get; set;}
 
 
 
@@ -948,7 +947,7 @@ public partial class Notarization : CallsignEntry {
         ///log.
         /// </summary>
 
-	public virtual Proof?						Proof  {get; set;}
+	public virtual Proof?					Proof  {get; set;}
 
 
 
@@ -1123,7 +1122,7 @@ public partial class CallsignRegistrationRequest : MessageValidated {
         ///The enveloped binnding of the callsign to the profile.
         /// </summary>
 
-	public virtual Enveloped<CallsignBinding>?						EnvelopedCallsignBinding  {get; set;}
+	public virtual Enveloped<CallsignBinding>?					EnvelopedCallsignBinding  {get; set;}
 
         /// <summary>
         ///One or more profiles under which the EnvelopedCallsignBinding is 
@@ -1214,26 +1213,26 @@ public partial class CallsignRegistrationResponse : Message {
         ///True if and only if a new registration was created.
         /// </summary>
 
-	public virtual bool?						Registered  {get; set;}
+	public virtual bool?					Registered  {get; set;}
 
         /// <summary>
         ///The resulting catalog entry if accepted or the prior registration otherwise.
         /// </summary>
 
-	public virtual CatalogedRegistration?						CatalogedRegistration  {get; set;}
+	public virtual CatalogedRegistration?					CatalogedRegistration  {get; set;}
 
         /// <summary>
         ///Reason for refusing the registration (if refused)
         /// </summary>
 
-	public virtual string?						Reason  {get; set;}
+	public virtual string?					Reason  {get; set;}
 
         /// <summary>
         ///The value specified as the Canonical field in the callsign request if present,
         ///otherwise the value specified in the Display field, otherwise null.
         /// </summary>
 
-	public virtual string?						Callsign  {get; set;}
+	public virtual string?					Callsign  {get; set;}
 
 
 
@@ -1320,7 +1319,7 @@ public partial class ProcessResultCallsignRegistration : ProcessResult {
         /// <summary>
         /// </summary>
 
-	public virtual CallsignRegistrationResponse?						CallsignRegistrationResponse  {get; set;}
+	public virtual CallsignRegistrationResponse?					CallsignRegistrationResponse  {get; set;}
 
 
 
@@ -1404,31 +1403,31 @@ public partial class CatalogedApplicationCallsign : CatalogedApplication {
         ///The registered callsign in canonical form.		
         /// </summary>
 
-	public virtual string?						CallSign  {get; set;}
+	public virtual string?					CallSign  {get; set;}
 
         /// <summary>
         ///The MessageId of the request message
         /// </summary>
 
-	public virtual string?						RequestId  {get; set;}
+	public virtual string?					RequestId  {get; set;}
 
         /// <summary>
         ///The callsign binding  
         /// </summary>
 
-	public virtual Enveloped<CallsignBinding>?						EnvelopedCallsignBinding  {get; set;}
+	public virtual Enveloped<CallsignBinding>?					EnvelopedCallsignBinding  {get; set;}
 
         /// <summary>
         ///The resulting catalog entry if accepted or the prior registration otherwise.
         /// </summary>
 
-	public virtual CatalogedRegistration?						CatalogedRegistration  {get; set;}
+	public virtual CatalogedRegistration?					CatalogedRegistration  {get; set;}
 
         /// <summary>
         ///Reason for refusing the registration (if refused)
         /// </summary>
 
-	public virtual string?						Reason  {get; set;}
+	public virtual string?					Reason  {get; set;}
 
 
 
@@ -1519,7 +1518,7 @@ public partial class ProcessResultCallsign : ProcessResult {
         ///The cataloged application
         /// </summary>
 
-	public virtual CatalogedApplicationCallsign?						CatalogedApplicationCallsign  {get; set;}
+	public virtual CatalogedApplicationCallsign?					CatalogedApplicationCallsign  {get; set;}
 
 
 

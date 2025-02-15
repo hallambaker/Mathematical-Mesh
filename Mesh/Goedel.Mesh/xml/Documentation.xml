@@ -10253,6 +10253,9 @@
             Dictionary mapping tags to factory methods
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.MeshProtocol._Initialized">
+            <summary>Variable used to force static initialization</summary> 
+        </member>
         <member name="M:Goedel.Mesh.MeshProtocol.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
             <summary>
             Construct an instance from the specified tagged JsonReader stream.
@@ -14409,6 +14412,9 @@
             <summary>
             Dictionary mapping tags to factory methods
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshItem._Initialized">
+            <summary>Variable used to force static initialization</summary> 
         </member>
         <member name="M:Goedel.Mesh.MeshItem.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
             <summary>

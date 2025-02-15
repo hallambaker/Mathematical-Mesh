@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/14/2025 12:09:09 AM
+//  This file was automatically generated at 2/15/2025 3:10:47 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -83,8 +83,7 @@ public abstract partial class CallsignRegistry : global::Goedel.Protocol.JsonObj
 	    {"ApplicationEntryRegistry", ApplicationEntryRegistry._Factory}
 		};
 
-    // [ModuleInitializer]
-	
+	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
 	static CallsignRegistry() {
@@ -117,30 +116,30 @@ public partial class CatalogedRegistry : CatalogedApplication {
         /// <summary>
         /// </summary>
 
-	public virtual int?						MaximumRequestLength  {get; set;}
+	public virtual int?					MaximumRequestLength  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual int?						MaximumCallsignLength  {get; set;}
+	public virtual int?					MaximumCallsignLength  {get; set;}
 
         /// <summary>
         ///The connection allowing control of the registry.
         /// </summary>
 
-	public virtual Enveloped<ConnectionStripped>?						EnvelopedConnectionAddress  {get; set;}
+	public virtual Enveloped<ConnectionStripped>?					EnvelopedConnectionAddress  {get; set;}
 
         /// <summary>
         ///The Mesh profile
         /// </summary>
 
-	public virtual Enveloped<ProfileAccount>?						EnvelopedProfileRegistry  {get; set;}
+	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileRegistry  {get; set;}
 
         /// <summary>
         ///The activation data for the registry.
         /// </summary>
 
-	public virtual Enveloped<ActivationCommon>?						EnvelopedActivationCommon  {get; set;}
+	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;}
 
 
 
@@ -232,13 +231,13 @@ public partial class ActivationApplicationRegistry : ActivationApplication {
         ///Key used to decrypt registry messages.
         /// </summary>
 
-	public virtual KeyData?						AccountEncryption  {get; set;}
+	public virtual KeyData?					AccountEncryption  {get; set;}
 
         /// <summary>
         ///Key or capability used to sign the registry log
         /// </summary>
 
-	public virtual KeyData?						AdministratorSignature  {get; set;}
+	public virtual KeyData?					AdministratorSignature  {get; set;}
 
 
 
@@ -322,14 +321,14 @@ public partial class ApplicationEntryRegistry : ApplicationEntry {
         /// <summary>
         /// </summary>
 
-	public virtual Enveloped<ActivationApplicationRegistry>?						EnvelopedActivation  {get; set;}
+	public virtual Enveloped<ActivationApplicationRegistry>?					EnvelopedActivation  {get; set;}
 
         /// <summary>
         ///Signed connection service delegation allowing the device to
         ///access the account.
         /// </summary>
 
-	public virtual Enveloped<ConnectionService>?						EnvelopedConnectionService  {get; set;}
+	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;}
 
 
 

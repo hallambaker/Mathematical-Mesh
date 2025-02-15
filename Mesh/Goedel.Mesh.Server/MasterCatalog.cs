@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/14/2025 12:09:09 AM
+//  This file was automatically generated at 2/15/2025 3:10:48 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -80,8 +80,7 @@ public abstract partial class CatalogItem : global::Goedel.Protocol.JsonObject {
 	    {"AccountUser", AccountUser._Factory}
 		};
 
-    // [ModuleInitializer]
-	
+	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
 	static CatalogItem() {
@@ -117,31 +116,31 @@ abstract public partial class AccountEntry : CatalogedEntry {
         ///Subdirectory containing the catalogs and spools for the account.
         /// </summary>
 
-	public virtual string?						Directory  {get; set;}
+	public virtual string?					Directory  {get; set;}
 
         /// <summary>
         ///The fingerprint of the profile
         /// </summary>
 
-	public virtual string?						ProfileUdf  {get; set;}
+	public virtual string?					ProfileUdf  {get; set;}
 
         /// <summary>
         ///The quota assigned to this user in KB
         /// </summary>
 
-	public virtual int?						Quota  {get; set;}
+	public virtual int?					Quota  {get; set;}
 
         /// <summary>
         ///The profile status. Valid values are "Pending", "Connected", "Blocked"
         /// </summary>
 
-	public virtual string?						Status  {get; set;}
+	public virtual string?					Status  {get; set;}
 
         /// <summary>
         ///Account address in user@domain format
         /// </summary>
 
-	public virtual string?						LocalAddress  {get; set;}
+	public virtual string?					LocalAddress  {get; set;}
 
 
 
@@ -229,14 +228,14 @@ public partial class AccountUser : AccountEntry {
         ///The signed assertion describing the account.
         /// </summary>
 
-	public virtual Enveloped<ProfileAccount>?						EnvelopedProfileUser  {get; set;}
+	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileUser  {get; set;}
 
         /// <summary>
         ///The enveloped assignment describing how the client should
         ///discover the host and encrypt data to it.
         /// </summary>
 
-	public virtual Enveloped<AccountHostAssignment>?						EnvelopedAccountHostAssignment  {get; set;}
+	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;}
 
 
 

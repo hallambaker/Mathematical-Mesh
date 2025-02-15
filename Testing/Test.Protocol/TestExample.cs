@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/14/2025 12:09:12 AM
+//  This file was automatically generated at 2/15/2025 3:10:49 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -79,8 +79,7 @@ public abstract partial class TestSchema : global::Goedel.Protocol.JsonObject {
 	    {"MultiStruct", MultiStruct._Factory}
 		};
 
-    // [ModuleInitializer]
-	
+	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
 	static TestSchema() {
@@ -115,27 +114,27 @@ public partial class MultiInstance : TestSchema {
         /// <summary>
         /// </summary>
 
-	public virtual bool?						FieldBoolean  {get; set;}
+	public virtual bool?					FieldBoolean  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual int?						FieldInteger  {get; set;}
+	public virtual int?					FieldInteger  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual DateTime?						FieldDateTime  {get; set;}
+	public virtual DateTime?					FieldDateTime  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						FieldString  {get; set;}
+	public virtual string?					FieldString  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual byte[]?						FieldBinary  {get; set;}
+	public virtual byte[]?					FieldBinary  {get; set;}
 
 
 
@@ -325,7 +324,7 @@ public partial class MultiStruct : MultiArray {
         /// <summary>
         /// </summary>
 
-	public virtual MultiInstance?						FieldMultiInstance  {get; set;}
+	public virtual MultiInstance?					FieldMultiInstance  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -334,7 +333,7 @@ public partial class MultiStruct : MultiArray {
         /// <summary>
         /// </summary>
 
-	public virtual MultiInstance?						TFieldMultiInstance  {get; set;}
+	public virtual MultiInstance?					TFieldMultiInstance  {get; set;}
 
         /// <summary>
         /// </summary>

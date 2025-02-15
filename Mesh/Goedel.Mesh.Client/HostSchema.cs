@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/14/2025 12:09:07 AM
+//  This file was automatically generated at 2/15/2025 3:10:46 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -85,8 +85,7 @@ public abstract partial class HostCatalogItem : global::Goedel.Protocol.JsonObje
 	    {"ShellAction", ShellAction._Factory}
 		};
 
-    // [ModuleInitializer]
-	
+	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
 	static HostCatalogItem() {
@@ -122,44 +121,44 @@ public partial class CatalogedMachine : HostCatalogItem {
         ///Unique object instance identifier.
         /// </summary>
 
-	public virtual string?						Id  {get; set;}
+	public virtual string?					Id  {get; set;}
 
         /// <summary>
         ///Local short name for the profile
         /// </summary>
 
-	public virtual string?						Local  {get; set;}
+	public virtual string?					Local  {get; set;}
 
         /// <summary>
         ///If true, this is the default for the profile type (master, account)
         /// </summary>
 
-	public virtual bool?						Default  {get; set;}
+	public virtual bool?					Default  {get; set;}
 
         /// <summary>
         ///The master profile that provides the root of trust for this Mesh
         /// </summary>
 
-	public virtual Enveloped<ProfileAccount>?						EnvelopedProfileAccount  {get; set;}
+	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileAccount  {get; set;}
 
         /// <summary>
         ///The cataloged device profile
         /// </summary>
 
-	public virtual CatalogedDevice?						CatalogedDevice  {get; set;}
+	public virtual CatalogedDevice?					CatalogedDevice  {get; set;}
 
         /// <summary>
         ///The digest of the cataloged device.
         /// </summary>
 
-	public virtual string?						CatalogedDeviceDigest  {get; set;}
+	public virtual string?					CatalogedDeviceDigest  {get; set;}
 
         /// <summary>
         ///The enveloped assignment describing how the client should
         ///discover the host and encrypt data to it.
         /// </summary>
 
-	public virtual Enveloped<AccountHostAssignment>?						EnvelopedAccountHostAssignment  {get; set;}
+	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;}
 
 
 
@@ -256,37 +255,37 @@ public partial class CatalogedService : CatalogedMachine {
         ///The service profile
         /// </summary>
 
-	public virtual Enveloped<ProfileService>?						EnvelopedProfileService  {get; set;}
+	public virtual Enveloped<ProfileService>?					EnvelopedProfileService  {get; set;}
 
         /// <summary>
         ///The host profile
         /// </summary>
 
-	public virtual Enveloped<ProfileHost>?						EnvelopedProfileHost  {get; set;}
+	public virtual Enveloped<ProfileHost>?					EnvelopedProfileHost  {get; set;}
 
         /// <summary>
         ///The activation record for the service client (if used)
         /// </summary>
 
-	public virtual Enveloped<ActivationCommon>?						EnvelopedActivationCommon  {get; set;}
+	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;}
 
         /// <summary>
         ///The activation record for this host
         /// </summary>
 
-	public virtual Enveloped<ActivationHost>?						EnvelopedActivationHost  {get; set;}
+	public virtual Enveloped<ActivationHost>?					EnvelopedActivationHost  {get; set;}
 
         /// <summary>
         ///The connection of the host to the service
         /// </summary>
 
-	public virtual Enveloped<ConnectionService>?						EnvelopedConnectionService  {get; set;}
+	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;}
 
         /// <summary>
         ///Specifies the type of service 
         /// </summary>
 
-	public virtual string?						ServiceIdentifier  {get; set;}
+	public virtual string?					ServiceIdentifier  {get; set;}
 
 
 
@@ -460,25 +459,25 @@ public partial class CatalogedPending : CatalogedMachine {
         ///UDF of the connected device
         /// </summary>
 
-	public virtual string?						DeviceUDF  {get; set;}
+	public virtual string?					DeviceUDF  {get; set;}
 
         /// <summary>
         ///The device profile presented to the service.
         /// </summary>
 
-	public virtual Enveloped<ProfileDevice>?						EnvelopedProfileDevice  {get; set;}
+	public virtual Enveloped<ProfileDevice>?					EnvelopedProfileDevice  {get; set;}
 
         /// <summary>
         ///The response returned by the service when the registration was requested.
         /// </summary>
 
-	public virtual Enveloped<AcknowledgeConnection>?						EnvelopedAcknowledgeConnection  {get; set;}
+	public virtual Enveloped<AcknowledgeConnection>?					EnvelopedAcknowledgeConnection  {get; set;}
 
         /// <summary>
         ///The account at which the request is pending.
         /// </summary>
 
-	public virtual string?						AccountAddress  {get; set;}
+	public virtual string?					AccountAddress  {get; set;}
 
 
 
@@ -570,43 +569,43 @@ public partial class CatalogedPreconfigured : CatalogedMachine {
         ///The device profile presented to the service.
         /// </summary>
 
-	public virtual Enveloped<ProfileDevice>?						EnvelopedProfileDevice  {get; set;}
+	public virtual Enveloped<ProfileDevice>?					EnvelopedProfileDevice  {get; set;}
 
         /// <summary>
         ///The device connection used to authenticate to the service.
         /// </summary>
 
-	public virtual Enveloped<ConnectionService>?						EnvelopedConnectionService  {get; set;}
+	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;}
 
         /// <summary>
         ///The device connection used to authenticate to the service.
         /// </summary>
 
-	public virtual Enveloped<ConnectionDevice>?						EnvelopedConnectionDevice  {get; set;}
+	public virtual Enveloped<ConnectionDevice>?					EnvelopedConnectionDevice  {get; set;}
 
         /// <summary>
         ///The account to which claims will be posted
         /// </summary>
 
-	public virtual string?						AccountAddress  {get; set;}
+	public virtual string?					AccountAddress  {get; set;}
 
         /// <summary>
         ///The publication identifier
         /// </summary>
 
-	public virtual string?						PublicationId  {get; set;}
+	public virtual string?					PublicationId  {get; set;}
 
         /// <summary>
         ///Authenticator key used to authenticate claim to the service.
         /// </summary>
 
-	public virtual string?						ServiceAuthenticator  {get; set;}
+	public virtual string?					ServiceAuthenticator  {get; set;}
 
         /// <summary>
         ///Authenticator key used to authenticate claim to the device.
         /// </summary>
 
-	public virtual string?						DeviceAuthenticator  {get; set;}
+	public virtual string?					DeviceAuthenticator  {get; set;}
 
 
 
@@ -702,13 +701,13 @@ public partial class ShellDispatch : HostCatalogItem {
         ///The protocol to dispatch
         /// </summary>
 
-	public virtual string?						Protocol  {get; set;}
+	public virtual string?					Protocol  {get; set;}
 
         /// <summary>
         ///The Icon to display
         /// </summary>
 
-	public virtual string?						Icon  {get; set;}
+	public virtual string?					Icon  {get; set;}
 
         /// <summary>
         ///The supported by the protocol
@@ -798,25 +797,25 @@ public partial class ShellAction : HostCatalogItem {
         ///The protocol to dispatch
         /// </summary>
 
-	public virtual string?						Id  {get; set;}
+	public virtual string?					Id  {get; set;}
 
         /// <summary>
         ///The Icon to display
         /// </summary>
 
-	public virtual string?						Icon  {get; set;}
+	public virtual string?					Icon  {get; set;}
 
         /// <summary>
         ///The Action to perform
         /// </summary>
 
-	public virtual string?						Mode  {get; set;}
+	public virtual string?					Mode  {get; set;}
 
         /// <summary>
         ///The Action to perform
         /// </summary>
 
-	public virtual string?						Parameter  {get; set;}
+	public virtual string?					Parameter  {get; set;}
 
 
 

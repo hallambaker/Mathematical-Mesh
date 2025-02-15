@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/14/2025 12:09:02 AM
+//  This file was automatically generated at 2/15/2025 3:10:43 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -77,8 +77,7 @@ public abstract partial class JsonShellResult : global::Goedel.Protocol.JsonObje
 	    {"ShellResult", ShellResult._Factory}
 		};
 
-    // [ModuleInitializer]
-	
+	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
 	static JsonShellResult() {
@@ -111,12 +110,12 @@ public partial class ShellResult : JsonShellResult {
         /// <summary>
         /// </summary>
 
-	public virtual bool?						Success  {get; set;}
+	public virtual bool?					Success  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Reason  {get; set;}
+	public virtual string?					Reason  {get; set;}
 
 
 

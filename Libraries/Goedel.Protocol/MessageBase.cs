@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/14/2025 1:03:22 AM
+//  This file was automatically generated at 2/15/2025 4:27:21 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -82,8 +82,7 @@ public abstract partial class BaseMessage : global::Goedel.Protocol.JsonObject {
 	    {"HelloResponse", HelloResponse._Factory}
 		};
 
-    // [ModuleInitializer]
-	
+	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
 	static BaseMessage() {
@@ -119,14 +118,14 @@ abstract public partial class Request : BaseMessage {
         ///Name of the Service to which the request is directed.
         /// </summary>
 
-	public virtual string?						Service  {get; set;}
+	public virtual string?					Service  {get; set;}
 
         /// <summary>
         ///Optional unique transaction request used to detect replay attacks and 
         ///duplicates.
         /// </summary>
 
-	public virtual byte[]?						ID  {get; set;}
+	public virtual byte[]?					ID  {get; set;}
 
 
 
@@ -213,26 +212,26 @@ abstract public partial class Response : BaseMessage {
         ///3xx = incomplete, 4xx = failure is followed.
         /// </summary>
 
-	public virtual int?						Status  {get; set;}
+	public virtual int?					Status  {get; set;}
 
         /// <summary>
         ///Application level status report giving additional information.
         /// </summary>
 
-	public virtual int?						StatusExtended  {get; set;}
+	public virtual int?					StatusExtended  {get; set;}
 
         /// <summary>
         ///Text description of the status return code for debugging 
         ///and log file use.
         /// </summary>
 
-	public virtual string?						StatusDescription  {get; set;}
+	public virtual string?					StatusDescription  {get; set;}
 
         /// <summary>
         ///The request to which the response corresponds.
         /// </summary>
 
-	public virtual byte[]?						ID  {get; set;}
+	public virtual byte[]?					ID  {get; set;}
 
 
 
@@ -317,13 +316,13 @@ public partial class Version : BaseMessage {
         ///Major version number of the service protocol. A higher
         /// </summary>
 
-	public virtual int?						Major  {get; set;}
+	public virtual int?					Major  {get; set;}
 
         /// <summary>
         ///Minor version number of the service protocol.
         /// </summary>
 
-	public virtual int?						Minor  {get; set;}
+	public virtual int?					Minor  {get; set;}
 
         /// <summary>
         ///Enumerates alternative encodings (e.g. ASN.1, XML, JSON-B)
@@ -590,7 +589,7 @@ public partial class HelloResponse : Response {
         ///Enumerates the protocol versions supported
         /// </summary>
 
-	public virtual Version?						Version  {get; set;}
+	public virtual Version?					Version  {get; set;}
 
         /// <summary>
         ///Enumerates alternate protocol version(s) supported

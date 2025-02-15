@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/14/2025 12:09:03 AM
+//  This file was automatically generated at 2/15/2025 3:10:44 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -82,8 +82,7 @@ public abstract partial class SequenceData : global::Goedel.Protocol.JsonObject 
 	    {"ProofChain", ProofChain._Factory}
 		};
 
-    // [ModuleInitializer]
-	
+	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
 	static SequenceData() {
@@ -121,21 +120,21 @@ public partial class SequenceInfo : SequenceData {
         ///This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
         /// </summary>
 
-	public virtual string?						DataEncoding  {get; set;}
+	public virtual string?					DataEncoding  {get; set;}
 
         /// <summary>
         ///Specifies the container type for the following records.
         ///This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
         /// </summary>
 
-	public virtual string?						ContainerType  {get; set;}
+	public virtual string?					ContainerType  {get; set;}
 
         /// <summary>
         ///The record index within the file. This MUST be unique and 
         ///satisfy any additional requirements determined by the ContainerType.
         /// </summary>
 
-	public virtual long?						Index  {get; set;}
+	public virtual long?					Index  {get; set;}
 
         /// <summary>
         ///If true, the current frame is a meta frame and does not contain a payload.
@@ -144,34 +143,34 @@ public partial class SequenceInfo : SequenceData {
         ///Applications MUST NOT interpret a meta frame as a data frame with an enpty payload.
         /// </summary>
 
-	public virtual bool?						IsMeta  {get; set;}
+	public virtual bool?					IsMeta  {get; set;}
 
         /// <summary>
         ///If set true in a persistent container, specifies that this record contains
         ///the default object for the container.
         /// </summary>
 
-	public virtual bool?						Default  {get; set;}
+	public virtual bool?					Default  {get; set;}
 
         /// <summary>
         ///Position of the frame containing the apex of the preceding sub-tree.
         /// </summary>
 
-	public virtual long?						TreePosition  {get; set;}
+	public virtual long?					TreePosition  {get; set;}
 
         /// <summary>
         ///Specifies the position in the file at which the last index entry is
         ///to be found
         /// </summary>
 
-	public virtual long?						IndexPosition  {get; set;}
+	public virtual long?					IndexPosition  {get; set;}
 
         /// <summary>
         ///Specifies the position in the file at which the key exchange data is
         ///to be found
         /// </summary>
 
-	public virtual long?						ExchangePosition  {get; set;}
+	public virtual long?					ExchangePosition  {get; set;}
 
 
 
@@ -270,7 +269,7 @@ public partial class SequenceIndex : SequenceData {
         ///frame containing a ContainerIndex.
         /// </summary>
 
-	public virtual bool?						Full  {get; set;}
+	public virtual bool?					Full  {get; set;}
 
         /// <summary>
         ///List of container position entries
@@ -360,19 +359,19 @@ public partial class IndexPosition : SequenceData {
         ///The record index within the file.
         /// </summary>
 
-	public virtual long?						Index  {get; set;}
+	public virtual long?					Index  {get; set;}
 
         /// <summary>
         ///The record position within the file relative to the index base.
         /// </summary>
 
-	public virtual long?						Position  {get; set;}
+	public virtual long?					Position  {get; set;}
 
         /// <summary>
         ///Unique object identifier
         /// </summary>
 
-	public virtual string?						UniqueId  {get; set;}
+	public virtual string?					UniqueId  {get; set;}
 
 
 
@@ -458,13 +457,13 @@ public partial class KeyValue : SequenceData {
         ///The key
         /// </summary>
 
-	public virtual string?						Key  {get; set;}
+	public virtual string?					Key  {get; set;}
 
         /// <summary>
         ///The value corresponding to the key
         /// </summary>
 
-	public virtual string?						Value  {get; set;}
+	public virtual string?					Value  {get; set;}
 
 
 

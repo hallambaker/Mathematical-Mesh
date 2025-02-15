@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/14/2025 12:09:11 AM
+//  This file was automatically generated at 2/15/2025 3:10:49 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -128,8 +128,7 @@ public abstract partial class MeshmanShellResult : global::Goedel.Protocol.JsonO
 	    {"ResultCallsignList", ResultCallsignList._Factory}
 		};
 
-    // [ModuleInitializer]
-	
+	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
 	static MeshmanShellResult() {
@@ -237,42 +236,42 @@ public partial class ResultAbout : Result {
         /// <summary>
         /// </summary>
 
-	public virtual string?						DirectoryKeys  {get; set;}
+	public virtual string?					DirectoryKeys  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						DirectoryMesh  {get; set;}
+	public virtual string?					DirectoryMesh  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						AssemblyTitle  {get; set;}
+	public virtual string?					AssemblyTitle  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						AssemblyDescription  {get; set;}
+	public virtual string?					AssemblyDescription  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						AssemblyCopyright  {get; set;}
+	public virtual string?					AssemblyCopyright  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						AssemblyCompany  {get; set;}
+	public virtual string?					AssemblyCompany  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						AssemblyVersion  {get; set;}
+	public virtual string?					AssemblyVersion  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Build  {get; set;}
+	public virtual string?					Build  {get; set;}
 
 
 
@@ -439,12 +438,12 @@ public partial class ResultHello : Result {
         /// <summary>
         /// </summary>
 
-	public virtual string?						ServiceAddress  {get; set;}
+	public virtual string?					ServiceAddress  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual MeshHelloResponse?						Response  {get; set;}
+	public virtual MeshHelloResponse?					Response  {get; set;}
 
 
 
@@ -527,7 +526,7 @@ public partial class ResultInfo : Result {
         /// <summary>
         /// </summary>
 
-	public virtual Contact?						Contact  {get; set;}
+	public virtual Contact?					Contact  {get; set;}
 
 
 
@@ -608,12 +607,12 @@ public partial class ResultKey : Result {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Key  {get; set;}
+	public virtual string?					Key  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Identifier  {get; set;}
+	public virtual string?					Identifier  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -701,17 +700,17 @@ public partial class ResultDigest : Result {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Digest  {get; set;}
+	public virtual string?					Digest  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Key  {get; set;}
+	public virtual string?					Key  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual bool?						Verified  {get; set;}
+	public virtual bool?					Verified  {get; set;}
 
 
 
@@ -795,17 +794,17 @@ public partial class ResultFile : Result {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Filename  {get; set;}
+	public virtual string?					Filename  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual int?						TotalBytes  {get; set;}
+	public virtual int?					TotalBytes  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual bool?						Verified  {get; set;}
+	public virtual bool?					Verified  {get; set;}
 
 
 
@@ -889,22 +888,22 @@ public partial class ResultKeyFile : ResultFile {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Udf  {get; set;}
+	public virtual string?					Udf  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual bool?						Private  {get; set;}
+	public virtual bool?					Private  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Algorithm  {get; set;}
+	public virtual string?					Algorithm  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Format  {get; set;}
+	public virtual string?					Format  {get; set;}
 
 
 
@@ -990,12 +989,12 @@ public partial class ResultListLog : Result {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Filename  {get; set;}
+	public virtual string?					Filename  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual int?						Count  {get; set;}
+	public virtual int?					Count  {get; set;}
 
 
 
@@ -1077,7 +1076,7 @@ public partial class ResultLog : Result {
         /// <summary>
         /// </summary>
 
-	public virtual int?						Count  {get; set;}
+	public virtual int?					Count  {get; set;}
 
 
 
@@ -1161,17 +1160,17 @@ public partial class ResultArchive : Result {
         /// <summary>
         /// </summary>
 
-	public virtual int?						Frames  {get; set;}
+	public virtual int?					Frames  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual int?						Deleted  {get; set;}
+	public virtual int?					Deleted  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual int?						IndexFrame  {get; set;}
+	public virtual int?					IndexFrame  {get; set;}
 
 
 
@@ -1258,7 +1257,7 @@ public partial class ResultFileDare : ResultFile {
         /// <summary>
         /// </summary>
 
-	public virtual DareEnvelope?						Envelope  {get; set;}
+	public virtual DareEnvelope?					Envelope  {get; set;}
 
 
 
@@ -1339,17 +1338,17 @@ public partial class ResultFileEARL : Result {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Source  {get; set;}
+	public virtual string?					Source  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Created  {get; set;}
+	public virtual string?					Created  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						URI  {get; set;}
+	public virtual string?					URI  {get; set;}
 
 
 
@@ -1602,7 +1601,7 @@ public partial class ResultAccountConnect : Result {
         /// <summary>
         /// </summary>
 
-	public virtual ProfileDevice?						ProfileDevice  {get; set;}
+	public virtual ProfileDevice?					ProfileDevice  {get; set;}
 
 
 
@@ -1683,7 +1682,7 @@ public partial class ResultPublish : ResultCreateDevice {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Uri  {get; set;}
+	public virtual string?					Uri  {get; set;}
 
 
 
@@ -1763,22 +1762,22 @@ public partial class ResultPublishDevice : ResultCreateDevice {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Uri  {get; set;}
+	public virtual string?					Uri  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						FileName  {get; set;}
+	public virtual string?					FileName  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual DevicePreconfigurationPublic?						DevicePreconfigurationPublic  {get; set;}
+	public virtual DevicePreconfigurationPublic?					DevicePreconfigurationPublic  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual DevicePreconfigurationPrivate?						DevicePreconfigurationPrivate  {get; set;}
+	public virtual DevicePreconfigurationPrivate?					DevicePreconfigurationPrivate  {get; set;}
 
 
 
@@ -1866,17 +1865,17 @@ public partial class ResultCreateDevice : Result {
         /// <summary>
         /// </summary>
 
-	public virtual bool?						Default  {get; set;}
+	public virtual bool?					Default  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						DeviceUDF  {get; set;}
+	public virtual string?					DeviceUDF  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual CatalogedDevice?						CatalogedDevice  {get; set;}
+	public virtual CatalogedDevice?					CatalogedDevice  {get; set;}
 
 
 
@@ -1961,7 +1960,7 @@ public partial class ResultCreatePersonal : ResultCreateAccount {
         /// <summary>
         /// </summary>
 
-	public virtual string?						MeshUDF  {get; set;}
+	public virtual string?					MeshUDF  {get; set;}
 
 
 
@@ -2041,12 +2040,12 @@ public partial class ResultCreateAccount : ResultCreateDevice {
         /// <summary>
         /// </summary>
 
-	public virtual ProfileAccount?						ProfileAccount  {get; set;}
+	public virtual ProfileAccount?					ProfileAccount  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual ActivationAccount?						ActivationAccount  {get; set;}
+	public virtual ActivationAccount?					ActivationAccount  {get; set;}
 
 
 
@@ -2130,7 +2129,7 @@ public partial class ResultDeleteAccount : ResultCreateDevice {
         /// <summary>
         /// </summary>
 
-	public virtual string?						UDF  {get; set;}
+	public virtual string?					UDF  {get; set;}
 
 
 
@@ -2210,7 +2209,7 @@ public partial class ResultRegisterService : ResultCreateAccount {
         /// <summary>
         /// </summary>
 
-	public virtual string?						AccountAddress  {get; set;}
+	public virtual string?					AccountAddress  {get; set;}
 
 
 
@@ -2363,7 +2362,7 @@ public partial class ResultStatus : Result {
         /// <summary>
         /// </summary>
 
-	public virtual StatusResponse?						StatusResponse  {get; set;}
+	public virtual StatusResponse?					StatusResponse  {get; set;}
 
 
 
@@ -2444,12 +2443,12 @@ public partial class ResultSync : Result {
         /// <summary>
         /// </summary>
 
-	public virtual long?						Fetched  {get; set;}
+	public virtual long?					Fetched  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual int?						ProcessedResults  {get; set;}
+	public virtual int?					ProcessedResults  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -2539,7 +2538,7 @@ public partial class ResultEscrow : Result {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Service  {get; set;}
+	public virtual string?					Service  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -2705,12 +2704,12 @@ public partial class ResultPIN : Result {
         /// <summary>
         /// </summary>
 
-	public virtual MessagePin?						MessagePIN  {get; set;}
+	public virtual MessagePin?					MessagePIN  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Uri  {get; set;}
+	public virtual string?					Uri  {get; set;}
 
 
 
@@ -2793,7 +2792,7 @@ public partial class ResultSequence : Result {
         /// <summary>
         /// </summary>
 
-	public virtual LogEntry?						Entries  {get; set;}
+	public virtual LogEntry?					Entries  {get; set;}
 
 
 
@@ -2874,37 +2873,37 @@ public partial class LogEntry : MeshmanShellResult {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Key  {get; set;}
+	public virtual string?					Key  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual int?						Length  {get; set;}
+	public virtual int?					Length  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual byte[]?						Digest  {get; set;}
+	public virtual byte[]?					Digest  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual DateTime?						Recorded  {get; set;}
+	public virtual DateTime?					Recorded  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual bool?						Encrypted  {get; set;}
+	public virtual bool?					Encrypted  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual bool?						Signed  {get; set;}
+	public virtual bool?					Signed  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual bool?						KeyExchange  {get; set;}
+	public virtual bool?					KeyExchange  {get; set;}
 
 
 
@@ -2995,7 +2994,7 @@ public partial class ResultEntry : Result {
         /// <summary>
         /// </summary>
 
-	public virtual CatalogedEntry?						CatalogEntry  {get; set;}
+	public virtual CatalogedEntry?					CatalogEntry  {get; set;}
 
 
 
@@ -3076,12 +3075,12 @@ public partial class ResultEntrySent : Result {
         /// <summary>
         /// </summary>
 
-	public virtual CatalogedEntry?						CatalogEntry  {get; set;}
+	public virtual CatalogedEntry?					CatalogEntry  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual Message?						Message  {get; set;}
+	public virtual Message?					Message  {get; set;}
 
 
 
@@ -3384,12 +3383,12 @@ public partial class ResultSent : Result {
         /// <summary>
         /// </summary>
 
-	public virtual Message?						Message  {get; set;}
+	public virtual Message?					Message  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Status  {get; set;}
+	public virtual string?					Status  {get; set;}
 
 
 
@@ -3633,7 +3632,7 @@ public partial class ResultProcess : Result {
         /// <summary>
         /// </summary>
 
-	public virtual Message?						ProcessResult  {get; set;}
+	public virtual Message?					ProcessResult  {get; set;}
 
 
 
@@ -3714,37 +3713,37 @@ public partial class ResultConnect : Result {
         /// <summary>
         /// </summary>
 
-	public virtual Profile?						Profile  {get; set;}
+	public virtual Profile?					Profile  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual CatalogedMachine?						CatalogedMachine  {get; set;}
+	public virtual CatalogedMachine?					CatalogedMachine  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual ActivationAccount?						ActivationAccount  {get; set;}
+	public virtual ActivationAccount?					ActivationAccount  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual ActivationCommon?						ActivationCommon  {get; set;}
+	public virtual ActivationCommon?					ActivationCommon  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual RequestConnection?						RequestConnection  {get; set;}
+	public virtual RequestConnection?					RequestConnection  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual AcknowledgeConnection?						AcknowledgeConnection  {get; set;}
+	public virtual AcknowledgeConnection?					AcknowledgeConnection  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual RespondConnection?						RespondConnection  {get; set;}
+	public virtual RespondConnection?					RespondConnection  {get; set;}
 
 
 
@@ -3843,7 +3842,7 @@ public partial class ResultTransactionRequest : Result {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Identifier  {get; set;}
+	public virtual string?					Identifier  {get; set;}
 
 
 
@@ -3923,12 +3922,12 @@ public partial class ResultReceived : Result {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Status  {get; set;}
+	public virtual string?					Status  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual Message?						Message  {get; set;}
+	public virtual Message?					Message  {get; set;}
 
 
 
@@ -4011,7 +4010,7 @@ public partial class ResultApplication : Result {
         /// <summary>
         /// </summary>
 
-	public virtual CatalogedApplication?						Application  {get; set;}
+	public virtual CatalogedApplication?					Application  {get; set;}
 
 
 
@@ -4173,12 +4172,12 @@ public partial class ResultCallsign : Result {
         /// <summary>
         /// </summary>
 
-	public virtual CatalogedApplicationCallsign?						CallsignApplication  {get; set;}
+	public virtual CatalogedApplicationCallsign?					CallsignApplication  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual Message?						Message  {get; set;}
+	public virtual Message?					Message  {get; set;}
 
 
 
@@ -4262,12 +4261,12 @@ public partial class ResultCallsignResolution : Result {
         /// <summary>
         /// </summary>
 
-	public virtual Registration?						CallsignRegistration  {get; set;}
+	public virtual Registration?					CallsignRegistration  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual Message?						Message  {get; set;}
+	public virtual Message?					Message  {get; set;}
 
 
 

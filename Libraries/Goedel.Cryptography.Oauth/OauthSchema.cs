@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/14/2025 12:09:03 AM
+//  This file was automatically generated at 2/15/2025 3:10:43 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -97,8 +97,7 @@ public abstract partial class Oauth : global::Goedel.Protocol.JsonObject {
 	    {"JwtDpop", JwtDpop._Factory}
 		};
 
-    // [ModuleInitializer]
-	
+	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
 	static Oauth() {
@@ -131,7 +130,7 @@ public partial class ResourceServerMetadata : Oauth {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Resource  {get; set;}
+	public virtual string?					Resource  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -148,7 +147,7 @@ public partial class ResourceServerMetadata : Oauth {
         /// <summary>
         /// </summary>
 
-	public virtual string?						ResourceDocumentation  {get; set;}
+	public virtual string?					ResourceDocumentation  {get; set;}
 
 
 
@@ -237,7 +236,7 @@ public partial class AuthorizationServerMetadata : Oauth {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Issuer  {get; set;}
+	public virtual string?					Issuer  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -274,7 +273,7 @@ public partial class AuthorizationServerMetadata : Oauth {
         /// <summary>
         /// </summary>
 
-	public virtual bool?						AuthorizationResponseIssParameterSupported  {get; set;}
+	public virtual bool?					AuthorizationResponseIssParameterSupported  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -291,32 +290,32 @@ public partial class AuthorizationServerMetadata : Oauth {
         /// <summary>
         /// </summary>
 
-	public virtual bool?						RequestParameterSupported  {get; set;}
+	public virtual bool?					RequestParameterSupported  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual bool?						RequestUriParameterSupported  {get; set;}
+	public virtual bool?					RequestUriParameterSupported  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual bool?						RequireRequestUriRegistration  {get; set;}
+	public virtual bool?					RequireRequestUriRegistration  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						JwksUri  {get; set;}
+	public virtual string?					JwksUri  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						AuthorizationEndpoint  {get; set;}
+	public virtual string?					AuthorizationEndpoint  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						TokenEndpoint  {get; set;}
+	public virtual string?					TokenEndpoint  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -329,22 +328,22 @@ public partial class AuthorizationServerMetadata : Oauth {
         /// <summary>
         /// </summary>
 
-	public virtual string?						RevocationEndpoint  {get; set;}
+	public virtual string?					RevocationEndpoint  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						IntrospectionEndpoint  {get; set;}
+	public virtual string?					IntrospectionEndpoint  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						PushedAuthorizationRequestEndpoint  {get; set;}
+	public virtual string?					PushedAuthorizationRequestEndpoint  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual bool?						RequirePushedAuthorizationRequests  {get; set;}
+	public virtual bool?					RequirePushedAuthorizationRequests  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -353,7 +352,7 @@ public partial class AuthorizationServerMetadata : Oauth {
         /// <summary>
         /// </summary>
 
-	public virtual bool?						ClientIdMetadataDocumentSupported  {get; set;}
+	public virtual bool?					ClientIdMetadataDocumentSupported  {get; set;}
 
 
 
@@ -487,62 +486,62 @@ public partial class AuthorizationRequest : Oauth {
         ///Identifies the client software
         /// </summary>
 
-	public virtual string?						ClientId  {get; set;}
+	public virtual string?					ClientId  {get; set;}
 
         /// <summary>
         /// must be code
         /// </summary>
 
-	public virtual string?						ResponseType  {get; set;}
+	public virtual string?					ResponseType  {get; set;}
 
         /// <summary>
         /// the PKCE challenge value. 
         /// </summary>
 
-	public virtual string?						CodeChallenge  {get; set;}
+	public virtual string?					CodeChallenge  {get; set;}
 
         /// <summary>
         ///which code challenge method is used, for example S256
         /// </summary>
 
-	public virtual string?						CodeChallengeMethod  {get; set;}
+	public virtual string?					CodeChallengeMethod  {get; set;}
 
         /// <summary>
         ///random token used to verify the authorization request against the response
         /// </summary>
 
-	public virtual string?						State  {get; set;}
+	public virtual string?					State  {get; set;}
 
         /// <summary>
         ///Must match against URIs declared in client metadata and have a format consistent 
         ///with the application_type declared in the client metadata
         /// </summary>
 
-	public virtual string?						RedirectUri  {get; set;}
+	public virtual string?					RedirectUri  {get; set;}
 
         /// <summary>
         ///Must be a subset of the scopes declared in client metadata. Must include atproto
         /// </summary>
 
-	public virtual string?						Scope  {get; set;}
+	public virtual string?					Scope  {get; set;}
 
         /// <summary>
         ///Used by confidential clients to describe the client authentication mechanism
         /// </summary>
 
-	public virtual string?						ClientAssertionType  {get; set;}
+	public virtual string?					ClientAssertionType  {get; set;}
 
         /// <summary>
         ///Only used for confidential clients
         /// </summary>
 
-	public virtual string?						ClientAssertion  {get; set;}
+	public virtual string?					ClientAssertion  {get; set;}
 
         /// <summary>
         ///Account identifier to be used for login
         /// </summary>
 
-	public virtual string?						LoginHint  {get; set;}
+	public virtual string?					LoginHint  {get; set;}
 
 
 
@@ -640,13 +639,13 @@ public partial class AuthorizationRequest2 : Oauth {
         ///Identifies the client software
         /// </summary>
 
-	public virtual string?						ClientId  {get; set;}
+	public virtual string?					ClientId  {get; set;}
 
         /// <summary>
         ///The RequestUri returned by the server
         /// </summary>
 
-	public virtual string?						RequestUri  {get; set;}
+	public virtual string?					RequestUri  {get; set;}
 
 
 
@@ -731,7 +730,7 @@ public partial class PushedAuthorizationResponse : Oauth {
         ///5 and 600 seconds).
         /// </summary>
 
-	public virtual int?						ExpiresIn  {get; set;}
+	public virtual int?					ExpiresIn  {get; set;}
 
         /// <summary>
         ///REQUIRED The request URI corresponding to the authorization request posted. 
@@ -742,7 +741,7 @@ public partial class PushedAuthorizationResponse : Oauth {
         ///the authorization request data available to other parties via this URI.
         /// </summary>
 
-	public virtual string?						RequestUri  {get; set;}
+	public virtual string?					RequestUri  {get; set;}
 
 
 
@@ -830,21 +829,21 @@ public partial class AuthorizationResponse : Oauth {
         ///code challenge and redirect URI.
         /// </summary>
 
-	public virtual string?						Code  {get; set;}
+	public virtual string?					Code  {get; set;}
 
         /// <summary>
         ///REQUIRED if the state parameter was present in the client authorization request.
         ///The exact value received from the client.
         /// </summary>
 
-	public virtual string?						State  {get; set;}
+	public virtual string?					State  {get; set;}
 
         /// <summary>
         ///The identifier of the authorization server which the client can use to prevent
         ///mix-up attacks, if the client interacts with more than one authorization server.
         /// </summary>
 
-	public virtual string?						Iss  {get; set;}
+	public virtual string?					Iss  {get; set;}
 
 
 
@@ -943,7 +942,7 @@ public partial class ErrorResponse : Oauth {
         ///be returned to the client via an HTTP redirect.)
         /// </summary>
 
-	public virtual string?						Error  {get; set;}
+	public virtual string?					Error  {get; set;}
 
         /// <summary>
         /// Human-readable ASCII [USASCII] text providing additional information, used to 
@@ -952,7 +951,7 @@ public partial class ErrorResponse : Oauth {
         ///%x20-21 / %x23-5B / %x5D-7E.
         /// </summary>
 
-	public virtual string?						ErrorDescription  {get; set;}
+	public virtual string?					ErrorDescription  {get; set;}
 
         /// <summary>
         ///A URI identifying a human-readable web page with information about the error, 
@@ -961,21 +960,21 @@ public partial class ErrorResponse : Oauth {
         ///thus MUST NOT include characters outside the set %x21 / %x23-5B / %x5D-7E
         /// </summary>
 
-	public virtual string?						ErrorUri  {get; set;}
+	public virtual string?					ErrorUri  {get; set;}
 
         /// <summary>
         ///REQUIRED if a state parameter was present in the client authorization request. 
         ///The exact value received from the client
         /// </summary>
 
-	public virtual string?						State  {get; set;}
+	public virtual string?					State  {get; set;}
 
         /// <summary>
         ///The identifier of the authorization server which the client can use to prevent
         ///mix-up attacks, if the client interacts with more than one authorization server.
         /// </summary>
 
-	public virtual string?						Iss  {get; set;}
+	public virtual string?					Iss  {get; set;}
 
 
 
@@ -1062,12 +1061,12 @@ public partial class ClientMetadata : Oauth {
         /// <summary>
         /// </summary>
 
-	public virtual string?						ClientId  {get; set;}
+	public virtual string?					ClientId  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						ApplicationType  {get; set;}
+	public virtual string?					ApplicationType  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -1076,7 +1075,7 @@ public partial class ClientMetadata : Oauth {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Scope  {get; set;}
+	public virtual string?					Scope  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -1089,47 +1088,47 @@ public partial class ClientMetadata : Oauth {
         /// <summary>
         /// </summary>
 
-	public virtual bool?						DpopBoundAccessTokens  {get; set;}
+	public virtual bool?					DpopBoundAccessTokens  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						TokenEndpointAuthMethod  {get; set;}
+	public virtual string?					TokenEndpointAuthMethod  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						TokenEndpointAuthSigningAlg  {get; set;}
+	public virtual string?					TokenEndpointAuthSigningAlg  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual JWKS?						Jwks  {get; set;}
+	public virtual JWKS?					Jwks  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						ClientName  {get; set;}
+	public virtual string?					ClientName  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						ClientUri  {get; set;}
+	public virtual string?					ClientUri  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						LogoUri  {get; set;}
+	public virtual string?					LogoUri  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						TosUri  {get; set;}
+	public virtual string?					TosUri  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						PolicyUri  {get; set;}
+	public virtual string?					PolicyUri  {get; set;}
 
 
 
@@ -1241,7 +1240,7 @@ public partial class DidDocument : Oauth {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Id  {get; set;}
+	public virtual string?					Id  {get; set;}
 
         /// <summary>
         /// </summary>
@@ -1343,13 +1342,13 @@ public partial class AuthorizationCodeGrant : Oauth {
         ///"authorization_code"
         /// </summary>
 
-	public virtual string?						GrantType  {get; set;}
+	public virtual string?					GrantType  {get; set;}
 
         /// <summary>
         ///The authorization code received from the authorization server.
         /// </summary>
 
-	public virtual string?						Code  {get; set;}
+	public virtual string?					Code  {get; set;}
 
         /// <summary>
         ///REQUIRED, if the code_challenge parameter was included in the 
@@ -1357,13 +1356,13 @@ public partial class AuthorizationCodeGrant : Oauth {
         ///verifier string.
         /// </summary>
 
-	public virtual string?						CodeVerifier  {get; set;}
+	public virtual string?					CodeVerifier  {get; set;}
 
         /// <summary>
         ///Identifies the client software
         /// </summary>
 
-	public virtual string?						ClientId  {get; set;}
+	public virtual string?					ClientId  {get; set;}
 
 
 
@@ -1449,7 +1448,7 @@ public partial class ClientCredentialsGrant : Oauth {
         ///REQUIRED. "client_credentials"
         /// </summary>
 
-	public virtual string?						GrantType  {get; set;}
+	public virtual string?					GrantType  {get; set;}
 
 
 
@@ -1529,19 +1528,19 @@ public partial class RefreshTokenGrant : Oauth {
         ///REQUIRED. "refresh_token"
         /// </summary>
 
-	public virtual string?						GrantType  {get; set;}
+	public virtual string?					GrantType  {get; set;}
 
         /// <summary>
         ///REQUIRED. "client_credentials"
         /// </summary>
 
-	public virtual string?						refresh_token  {get; set;}
+	public virtual string?					refresh_token  {get; set;}
 
         /// <summary>
         ///Must be a subset of the scopes declared in client metadata. Must include atproto
         /// </summary>
 
-	public virtual string?						Scope  {get; set;}
+	public virtual string?					Scope  {get; set;}
 
 
 
@@ -1624,22 +1623,22 @@ public partial class DidVerificationMethod : Oauth {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Id  {get; set;}
+	public virtual string?					Id  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Controller  {get; set;}
+	public virtual string?					Controller  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						PublicKeyMultibase  {get; set;}
+	public virtual string?					PublicKeyMultibase  {get; set;}
 
 
 
@@ -1724,17 +1723,17 @@ public partial class DidService : Oauth {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Id  {get; set;}
+	public virtual string?					Id  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Type  {get; set;}
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						ServiceEndpoint  {get; set;}
+	public virtual string?					ServiceEndpoint  {get; set;}
 
 
 
@@ -1817,17 +1816,17 @@ public partial class AuthenticationResponse : Oauth {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Iss  {get; set;}
+	public virtual string?					Iss  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						State  {get; set;}
+	public virtual string?					State  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Code  {get; set;}
+	public virtual string?					Code  {get; set;}
 
 
 
@@ -1989,37 +1988,37 @@ public partial class JWK : Oauth {
         /// <summary>
         /// </summary>
 
-	public virtual string?						Kid  {get; set;}
+	public virtual string?					Kid  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						KeyType  {get; set;}
+	public virtual string?					KeyType  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Use  {get; set;}
+	public virtual string?					Use  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Curve  {get; set;}
+	public virtual string?					Curve  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						X  {get; set;}
+	public virtual string?					X  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						Y  {get; set;}
+	public virtual string?					Y  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual string?						D  {get; set;}
+	public virtual string?					D  {get; set;}
 
 
 
@@ -2111,19 +2110,19 @@ public partial class JwtHeader : Oauth {
         ///Another IANA content type parameter
         /// </summary>
 
-	public virtual string?						Typ  {get; set;}
+	public virtual string?					Typ  {get; set;}
 
         /// <summary>
         ///Key exchange algorithm
         /// </summary>
 
-	public virtual string?						Alg  {get; set;}
+	public virtual string?					Alg  {get; set;}
 
         /// <summary>
         ///JSON Web Key		
         /// </summary>
 
-	public virtual JWK?						Jwk  {get; set;}
+	public virtual JWK?					Jwk  {get; set;}
 
 
 
@@ -2215,27 +2214,27 @@ public partial class DpopPayload : Oauth {
         ///prevention; see Section 11.1.
         /// </summary>
 
-	public virtual string?						JTI  {get; set;}
+	public virtual string?					JTI  {get; set;}
 
         /// <summary>
         ///The value of the HTTP method (Section 9.1 of [RFC9110]) of the request to
         ///which the JWT is attached.
         /// </summary>
 
-	public virtual string?						HTM  {get; set;}
+	public virtual string?					HTM  {get; set;}
 
         /// <summary>
         ///The HTTP target URI (Section 7.1 of [RFC9110]) of the request to which 
         ///the JWT is attached, without query and fragment parts.
         /// </summary>
 
-	public virtual string?						HTU  {get; set;}
+	public virtual string?					HTU  {get; set;}
 
         /// <summary>
         ///Creation timestamp of the JWT (Section 4.1.6 of [RFC7519])
         /// </summary>
 
-	public virtual string?						IAT  {get; set;}
+	public virtual string?					IAT  {get; set;}
 
         /// <summary>
         ///Hash of the access token. The value MUST be the result of a base64url encoding 
@@ -2243,19 +2242,19 @@ public partial class DpopPayload : Oauth {
         ///encoding of the associated access token's value.
         /// </summary>
 
-	public virtual string?						ATH  {get; set;}
+	public virtual string?					ATH  {get; set;}
 
         /// <summary>
         ///A recent nonce provided via the DPoP-Nonce HTTP header.
         /// </summary>
 
-	public virtual string?						Nonce  {get; set;}
+	public virtual string?					Nonce  {get; set;}
 
         /// <summary>
         ///Confirmation
         /// </summary>
 
-	public virtual DpopConfirmation?						Confirm  {get; set;}
+	public virtual DpopConfirmation?					Confirm  {get; set;}
 
 
 
@@ -2351,7 +2350,7 @@ public partial class DpopConfirmation : Oauth {
         ///to which the access token is bound.
         /// </summary>
 
-	public virtual string?						JKT  {get; set;}
+	public virtual string?					JKT  {get; set;}
 
 
 
@@ -2430,17 +2429,17 @@ public partial class JwtDpop : Oauth {
         /// <summary>
         /// </summary>
 
-	public virtual JwtHeader?						Header  {get; set;}
+	public virtual JwtHeader?					Header  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual DpopPayload?						Payload  {get; set;}
+	public virtual DpopPayload?					Payload  {get; set;}
 
         /// <summary>
         /// </summary>
 
-	public virtual byte[]?						Signature  {get; set;}
+	public virtual byte[]?					Signature  {get; set;}
 
 
 

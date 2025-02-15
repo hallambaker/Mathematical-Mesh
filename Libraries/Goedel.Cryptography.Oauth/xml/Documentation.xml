@@ -849,6 +849,9 @@
             Dictionary mapping tags to factory methods
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Oauth.Oauth._Initialized">
+            <summary>Variable used to force static initialization</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.Oauth.Oauth.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
             <summary>
             Construct an instance from the specified tagged JsonReader stream.

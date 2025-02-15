@@ -38,6 +38,9 @@
             Dictionary mapping tags to factory methods
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Management.ServiceManagement._Initialized">
+            <summary>Variable used to force static initialization</summary> 
+        </member>
         <member name="M:Goedel.Mesh.Management.ServiceManagement.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
             <summary>
             Construct an instance from the specified tagged JsonReader stream.

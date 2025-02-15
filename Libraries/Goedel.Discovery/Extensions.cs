@@ -46,8 +46,13 @@ public static class Extensions {
 
 
 
-
-    public static string FullText(this DNSRecord_TXT record) {
+    /// <summary>
+    /// Extract the full text from a DNS TXT record by concatenating the strings
+    /// </summary>
+    /// <param name="record">The record to extract text from.</param>
+    /// <param name="space">If true, insert a space between the text segments.</param>
+    /// <returns>The concatenated string.</returns>
+    public static string FullText(this DNSRecord_TXT record, bool space=false) {
         if (record?.Text == null) {
             return null;
             }
@@ -62,6 +67,9 @@ public static class Extensions {
         var builder = new StringBuilder();
         foreach (var text in record.Text) {
             builder.Append(text);
+            if (space) {
+                builder.Append(' ');
+                }
             }
         return builder.ToString();
 
