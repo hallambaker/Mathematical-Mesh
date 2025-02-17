@@ -21,6 +21,7 @@
 #endregion
 
 using Goedel.Contacts;
+using Goedel.Cryptography;
 using Goedel.Discovery;
 using Goedel.Protocol;
 using Goedel.Test;
@@ -31,6 +32,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 
 #pragma warning disable IDE0059
 
@@ -42,7 +44,7 @@ public partial class Jmap {
     public static Jmap Test() => new();
     [Fact]
     public void TestContactAlice() {
-        JsonReader.Trace = true;
+        //JsonReader.Trace = true;
 
         var contact = new JsContact() {
             Version = "1.0",
@@ -62,7 +64,7 @@ public partial class Jmap {
                     },
                 },
             Titles = new() {
-                { 
+                {
                     "t1", new() {
                         Kind = "title",
                         Name = "Research Scientist"
@@ -81,11 +83,51 @@ public partial class Jmap {
                 }
             };
 
-        var asBytes = contact.GetJson();
-        Console.WriteLine(asBytes.ToUTF8());
+        Verify(contact);
+        }
 
-        var parsed = JsContact.FromJson(new JsonReader (asBytes));
 
+
+    bool Verify (JsContact contact) {
+
+        var asBytes = contact.GetJson(false);
+        var asString = asBytes.ToUTF8();
+        Console.WriteLine(asString);
+
+        var parsed = JsContact.FromJson(new JsonReader (asString), false);
+        var parsedAsString = parsed.GetJson(false).ToUTF8();
+
+        Console.WriteLine(parsedAsString);
+        (asString == parsedAsString).TestTrue();
+
+
+        var earl = Udf.AuthenticatedEncryptionKey(asBytes);
+        Console.WriteLine($"Earl: udf://example.com/{earl}");
+
+        var key = Udf.GetEncryptionKey(earl);
+
+        Console.WriteLine($"Key: {key.ToStringBase16FormatHex()}");
+        //Console.WriteLine($"IV: {iv.ToStringBase16FormatHex()}");
+
+
+        var encryptedContact = Udf.GetEncryptedData(asBytes, earl);
+
+        var decryptedContact = Udf.GetDecryptedData(encryptedContact, earl);
+        Console.WriteLine(decryptedContact.ToUTF8());
+
+        asBytes.TestEqual(decryptedContact);
+
+        // corrupt the contact data
+        encryptedContact[0] ^= 0x01;
+        Xunit.Assert.Throws<AuthenticationTagMismatchException>(() => Udf.GetDecryptedData(encryptedContact, earl));
+
+
+        asBytes[0] ^= 0x01;
+        encryptedContact = Udf.GetEncryptedData(asBytes, earl);
+
+        Xunit.Assert.Throws<EarlContentInvalid>(() => Udf.GetDecryptedData(encryptedContact, earl));
+
+        return true;
         }
 
 

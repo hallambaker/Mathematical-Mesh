@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 2/17/2025 12:48:02 PM
+//  This file was automatically generated at 2/17/2025 5:48:52 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -30,10 +30,12 @@ public enum UdfTypeIdentifier {
     Authenticator_HMAC_SHA_2_512 = 0,
     ///<summary>Authenticator HMAC_SHA_3_512</summary>
     Authenticator_HMAC_SHA_3_512 = 1,
-    ///<summary>Encryption HKDF_AES_512</summary>
-    Encryption_HKDF_AES_512 = 32,
-    ///<summary>EncryptionSignature HKDF_AES_512</summary>
-    EncryptionSignature_HKDF_AES_512 = 33,
+    ///<summary>Encryption HKDF_AES_256</summary>
+    Encryption_HKDF_AES_256 = 32,
+    ///<summary>EncryptionSignature HKDF_AES_256</summary>
+    EncryptionSignature_HKDF_AES_256 = 33,
+    ///<summary>AuthenticatedEncryption SHA3_AES_256</summary>
+    AuthenticatedEncryption_SHA3_AES_256 = 33,
     ///<summary>Digest SHA_3_512</summary>
     Digest_SHA_3_512 = 80,
     ///<summary>Digest SHA_3_512 (20 bits compressed)</summary>

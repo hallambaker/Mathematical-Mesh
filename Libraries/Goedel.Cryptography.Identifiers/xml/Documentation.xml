@@ -1148,6 +1148,37 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Cryptography.EarlContentInvalid">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.EarlContentInvalid.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.EarlContentInvalid.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.EarlContentInvalid.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.EarlContentInvalid._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.EarlContentInvalid.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
         <member name="T:Goedel.Cryptography.InvalidFrameIndex">
             <summary>
             The container specified a reference to an invalid frame"		
@@ -2684,11 +2715,14 @@
         <member name="F:Goedel.Cryptography.UdfTypeIdentifier.Authenticator_HMAC_SHA_3_512">
             <summary>Authenticator HMAC_SHA_3_512</summary>
         </member>
-        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.Encryption_HKDF_AES_512">
-            <summary>Encryption HKDF_AES_512</summary>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.Encryption_HKDF_AES_256">
+            <summary>Encryption HKDF_AES_256</summary>
         </member>
-        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512">
-            <summary>EncryptionSignature HKDF_AES_512</summary>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.EncryptionSignature_HKDF_AES_256">
+            <summary>EncryptionSignature HKDF_AES_256</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.AuthenticatedEncryption_SHA3_AES_256">
+            <summary>AuthenticatedEncryption SHA3_AES_256</summary>
         </member>
         <member name="F:Goedel.Cryptography.UdfTypeIdentifier.Digest_SHA_3_512">
             <summary>Digest SHA_3_512</summary>

@@ -10,9 +10,11 @@ File TypeIdentifier
 		UDF 1 Authenticator 
 			Algorithm  HMAC_SHA_3_512 
 		UDF 32 Encryption 
-			Algorithm  HKDF_AES_512 
+			Algorithm  HKDF_AES_256 
 		UDF 33 EncryptionSignature 
-			Algorithm  HKDF_AES_512 
+			Algorithm  HKDF_AES_256
+		UDF 33 AuthenticatedEncryption
+			Algorithm  SHA3_AES_256  
 		UDF 80 Digest 
 			Algorithm  SHA_3_512
 			Compress 0

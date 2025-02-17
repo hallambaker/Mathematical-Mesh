@@ -24,6 +24,8 @@
 
 #pragma warning disable IDE1006
 
+using System.Collections.Generic;
+
 namespace Goedel.Protocol;
 
 
@@ -453,6 +455,19 @@ public abstract partial class JsonObject : IBinding {
                     propertyTyped.Set(this, array);
                     break;
                     }
+                case PropertyDictionaryBoolean propertyTyped: {
+                    var dictionary = new Dictionary<string, bool>();
+                    bool going = jsonReader.StartObject();
+                    while (going) {
+                        string Token = jsonReader.ReadToken();
+                        var value = jsonReader.ReadBoolean();
+                        dictionary.Add(Token, value);
+                        going = jsonReader.NextObject();
+                        }
+                    propertyTyped.Set(this, dictionary);
+                    break;
+                    }
+
 
                 // String
                 case PropertyString propertyTyped: {
@@ -469,6 +484,18 @@ public abstract partial class JsonObject : IBinding {
                         going = jsonReader.NextArray();
                         }
                     propertyTyped.Set(this, array);
+                    break;
+                    }
+                case PropertyDictionaryString propertyTyped: {
+                    var dictionary = new Dictionary<string, string>();
+                    bool going = jsonReader.StartObject();
+                    while (going) {
+                        string Token = jsonReader.ReadToken();
+                        var value = jsonReader.ReadString();
+                        dictionary.Add(Token, value);
+                        going = jsonReader.NextObject();
+                        }
+                    propertyTyped.Set(this, dictionary);
                     break;
                     }
 
@@ -489,6 +516,18 @@ public abstract partial class JsonObject : IBinding {
                     propertyTyped.Set(this, array);
                     break;
                     }
+                case PropertyDictionaryBinary propertyTyped: {
+                    var dictionary = new Dictionary<string, byte[]>();
+                    bool going = jsonReader.StartObject();
+                    while (going) {
+                        string Token = jsonReader.ReadToken();
+                        var value = jsonReader.ReadBinary();
+                        dictionary.Add(Token, value);
+                        going = jsonReader.NextObject();
+                        }
+                    propertyTyped.Set(this, dictionary);
+                    break;
+                    }
 
                 // DateTime
                 case PropertyDateTime propertyTyped: {
@@ -505,6 +544,18 @@ public abstract partial class JsonObject : IBinding {
                         going = jsonReader.NextArray();
                         }
                     propertyTyped.Set(this, array);
+                    break;
+                    }
+                case PropertyDictionaryDateTime propertyTyped: {
+                    var dictionary = new Dictionary<string, System.DateTime>();
+                    bool going = jsonReader.StartObject();
+                    while (going) {
+                        string Token = jsonReader.ReadToken();
+                        var value = jsonReader.ReadDateTime();
+                        dictionary.Add(Token, value);
+                        going = jsonReader.NextObject();
+                        }
+                    propertyTyped.Set(this, dictionary);
                     break;
                     }
 
@@ -525,6 +576,18 @@ public abstract partial class JsonObject : IBinding {
                     propertyTyped.Set(this, array);
                     break;
                     }
+                case PropertyDictionaryInteger32 propertyTyped: {
+                    var dictionary = new Dictionary<string, int>();
+                    bool going = jsonReader.StartObject();
+                    while (going) {
+                        string Token = jsonReader.ReadToken();
+                        var value = jsonReader.ReadInteger32();
+                        dictionary.Add(Token, value);
+                        going = jsonReader.NextObject();
+                        }
+
+                    break;
+                    }
 
                 // Integer64
                 case PropertyInteger64 propertyTyped: {
@@ -541,6 +604,18 @@ public abstract partial class JsonObject : IBinding {
                         going = jsonReader.NextArray();
                         }
                     propertyTyped.Set(this, array);
+                    break;
+                    }
+                case PropertyDictionaryInteger64 propertyTyped: {
+                    var dictionary = new Dictionary<string, long>();
+                    bool going = jsonReader.StartObject();
+                    while (going) {
+                        string Token = jsonReader.ReadToken();
+                        var value = jsonReader.ReadInteger64();
+                        dictionary.Add(Token, value);
+                        going = jsonReader.NextObject();
+                        }
+                    propertyTyped.Set(this, dictionary);
                     break;
                     }
 
@@ -561,6 +636,18 @@ public abstract partial class JsonObject : IBinding {
                     propertyTyped.Set(this, array);
                     break;
                     }
+                case PropertyDictionaryReal32 propertyTyped: {
+                    var dictionary = new Dictionary<string, float>();
+                    bool going = jsonReader.StartObject();
+                    while (going) {
+                        string Token = jsonReader.ReadToken();
+                        var value = jsonReader.ReadFloat32();
+                        dictionary.Add(Token, value);
+                        going = jsonReader.NextObject();
+                        }
+                    propertyTyped.Set(this, dictionary);
+                    break;
+                    }
 
                 // Real64
                 case PropertyReal64 propertyTyped: {
@@ -579,6 +666,18 @@ public abstract partial class JsonObject : IBinding {
                     propertyTyped.Set(this, array);
                     break;
                     }
+                case PropertyDictionaryReal64 propertyTyped: {
+                    var dictionary = new Dictionary<string, double>();
+                    bool going = jsonReader.StartObject();
+                    while (going) {
+                        string Token = jsonReader.ReadToken();
+                        var value = jsonReader.ReadFloat64();
+                        dictionary.Add(Token, value);
+                        going = jsonReader.NextObject();
+                        }
+                    propertyTyped.Set(this, dictionary);
+                    break;
+                    }
 
                 // Struct
                 case PropertyStruct propertyTyped: {
@@ -591,9 +690,7 @@ public abstract partial class JsonObject : IBinding {
                         value.Deserialize(jsonReader);
                         propertyTyped.Set(this, value);
                         }
-                    //var value = propertyTyped.Factory() as JsonObject;
-                    //value.Deserialize(jsonReader);
-                    //propertyTyped.Set(this, value);
+
                     break;
                     }
                 case PropertyListStruct propertyTyped: {
@@ -627,7 +724,7 @@ public abstract partial class JsonObject : IBinding {
 
                         going = jsonReader.NextObject();
                         }
-
+                    propertyTyped.Set(this, dictionary);
                     break;
                     }
 

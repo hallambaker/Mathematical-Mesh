@@ -25,6 +25,8 @@ using Goedel.ASN;
 
 using System.Security.Cryptography;
 
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 namespace Goedel.Cryptography;
 
 /// <summary>
@@ -87,6 +89,9 @@ public record Udf(
             _ => UdfTypeIdentifier.Unknown
             };
 
+    const int KeyLength256 = 32;
+    const int AesNonceLength = 12;
+    const int AesTagLength = 16;
     #endregion
 
     ///<summary>The UDF in presentation form.</summary> 
@@ -570,7 +575,7 @@ public record Udf(
                 byte[] key,
                 int bits = 0,
                 CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.SHA_2_512,
-                UdfTypeIdentifier udfTypeIdentifier = UdfTypeIdentifier.Encryption_HKDF_AES_512) =>
+                UdfTypeIdentifier udfTypeIdentifier = UdfTypeIdentifier.Encryption_HKDF_AES_256) =>
         TypeBDSToString(udfTypeIdentifier,
             SymetricKeyIdBytes(key, bits, cryptoAlgorithmId));
 
@@ -599,8 +604,8 @@ public record Udf(
     public static byte[] SymmetricKeyData(string udf) {
 
         var result = Parse(udf, out var code);
-        (code == (byte)UdfTypeIdentifier.Encryption_HKDF_AES_512 |
-            code == (byte)UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512
+        (code == (byte)UdfTypeIdentifier.Encryption_HKDF_AES_256 |
+            code == (byte)UdfTypeIdentifier.EncryptionSignature_HKDF_AES_256
             ).AssertTrue(OperationNotSupported.Throw);
 
         return result;
@@ -672,8 +677,8 @@ public record Udf(
         var (code, key) = Parse(udf);
         var algorithm = code switch {
             UdfTypeIdentifier.Authenticator_HMAC_SHA_2_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
-            UdfTypeIdentifier.Encryption_HKDF_AES_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
-            UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
+            UdfTypeIdentifier.Encryption_HKDF_AES_256 => CryptoAlgorithmId.HMAC_SHA_2_512,
+            UdfTypeIdentifier.EncryptionSignature_HKDF_AES_256 => CryptoAlgorithmId.HMAC_SHA_2_512,
             UdfTypeIdentifier.Authenticator_HMAC_SHA_3_512 => CryptoAlgorithmId.HMAC_SHA_3_512,
             _ => throw new InvalidAlgorithm()
             };
@@ -705,8 +710,8 @@ public record Udf(
         var (code, key) = Parse(udf);
         var algorithm = code switch {
             UdfTypeIdentifier.Authenticator_HMAC_SHA_2_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
-            UdfTypeIdentifier.Encryption_HKDF_AES_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
-            UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
+            UdfTypeIdentifier.Encryption_HKDF_AES_256 => CryptoAlgorithmId.HMAC_SHA_2_512,
+            UdfTypeIdentifier.EncryptionSignature_HKDF_AES_256 => CryptoAlgorithmId.HMAC_SHA_2_512,
             UdfTypeIdentifier.Authenticator_HMAC_SHA_3_512 => CryptoAlgorithmId.HMAC_SHA_3_512,
             _ => throw new InvalidAlgorithm()
             };
@@ -817,7 +822,7 @@ public record Udf(
     /// <param name="bits">Number of random bits in the string</param>
     /// <returns>A randomly generated UDF string.</returns>
     public static string EncryptionKey(int bits = 0) =>
-        SymmetricKey(UdfTypeIdentifier.Encryption_HKDF_AES_512, bits);
+        SymmetricKey(UdfTypeIdentifier.Encryption_HKDF_AES_256, bits);
 
     /// <summary>
     /// Return the key value <paramref name="data"/> in UDF form.
@@ -825,7 +830,75 @@ public record Udf(
     /// <param name="data">The data to convert to key form</param>
     /// <returns>A randomly generated UDF string.</returns>
     public static string EncryptionKey(byte[] data) =>
-        SymmetricKey(UdfTypeIdentifier.Encryption_HKDF_AES_512, data);
+        SymmetricKey(UdfTypeIdentifier.Encryption_HKDF_AES_256, data);
+
+
+    public static string AuthenticatedEncryptionKey(byte[] data, int bits = 0) {
+
+        var digest = SHAKE256.HashData(data);
+        return AuthenticatedEncryptionKeyDigest(digest, bits);
+
+        throw new NYI();
+        }
+
+    public static string AuthenticatedEncryptionKeyDigest(byte[] digest, int bits = 0) {
+        bits = bits < 128 ? 128 : bits;
+
+        var truncated = digest[..(bits/8)];
+        return SymmetricKey(UdfTypeIdentifier.AuthenticatedEncryption_SHA3_AES_256, digest);
+        }
+
+    public static byte[] GetEncryptionKey(string udf) {
+        var bytes = udf.ToUTF8();
+        var key = SHAKE256.HashData(bytes, KeyLength256 + AesNonceLength);
+        //var iv = SHAKE256.HashData(key, 96);
+        return key;
+        }
+
+    public static byte[] GetEncryptedData(byte[] plaintext, string earl) {
+
+        var keyIv = GetEncryptionKey(earl);
+
+        var result = new byte[plaintext.Length + AesTagLength];
+
+        var key = new ReadOnlySpan<byte>(keyIv, 0, 32);
+        var nonce = new ReadOnlySpan<byte>(keyIv, 32, AesNonceLength);
+
+        var ciphertext = new Span<byte>(result, 0, plaintext.Length);
+        var tag = new Span<byte>(result, plaintext.Length, AesTagLength);
+
+
+        var provider = new AesGcm(key, AesTagLength);
+        provider.Encrypt(nonce, plaintext, ciphertext, tag);
+
+        return result;
+        }
+
+    public static byte[] GetDecryptedData(byte[] ciphertextTag, string earl) {
+        var keyIv = GetEncryptionKey(earl);
+
+        var plaintextLength = ciphertextTag.Length - AesTagLength;
+        (plaintextLength > 0).AssertTrue(NYI.Throw);
+
+        var key = new ReadOnlySpan<byte>(keyIv, 0, 32);
+        var nonce = new ReadOnlySpan<byte>(keyIv, 32, AesNonceLength);
+
+        var plaintext = new byte[ciphertextTag.Length - AesTagLength];
+
+        var ciphertext = new ReadOnlySpan<byte>(ciphertextTag, 0, plaintextLength);
+        var tag = new ReadOnlySpan<byte>(ciphertextTag, plaintextLength, AesTagLength);
+
+        var provider = new AesGcm(key, AesTagLength);
+        provider.Decrypt(nonce, ciphertext, tag, plaintext);
+
+        var digest = AuthenticatedEncryptionKey(plaintext);
+
+        (earl == digest).AssertTrue(EarlContentInvalid.Throw);
+
+        return plaintext;
+        }
+
+
 
     #endregion
     #region // Key Share
@@ -972,7 +1045,7 @@ public record Udf(
     /// <returns>The key value.</returns>
     public static byte[] SymmetricKey(string udf) {
         var result = Parse(udf, out var code);
-        return code == (byte)UdfTypeIdentifier.Encryption_HKDF_AES_512 ? result : null;
+        return code == (byte)UdfTypeIdentifier.Encryption_HKDF_AES_256 ? result : null;
         }
 
     /// <summary>

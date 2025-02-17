@@ -7,6 +7,10 @@ Namespace Goedel.Cryptography
 		Description
 			|Base class for cryptographic exceptions.
 
+
+		Exception EarlContentInvalid
+			Console "Content authentication failed."
+
 		Exception InvalidFrameIndex
 			Console "The container specified a reference to an invalid frame"
 			Description

@@ -52,10 +52,10 @@ public class CryptoKeySymmetric : CryptoKey {
     /// </summary>
     /// <param name="secretValue">The secret value.</param>
     /// <param name="udfTypeIdentifier">The UDF type identifier to create. This
-    /// is either <see cref="UdfTypeIdentifier.Encryption_HKDF_AES_512"/> or
-    /// <see cref="UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512"/></param>
+    /// is either <see cref="UdfTypeIdentifier.Encryption_HKDF_AES_256"/> or
+    /// <see cref="UdfTypeIdentifier.EncryptionSignature_HKDF_AES_256"/></param>
     public CryptoKeySymmetric(byte[] secretValue,
-                UdfTypeIdentifier udfTypeIdentifier = UdfTypeIdentifier.Encryption_HKDF_AES_512) {
+                UdfTypeIdentifier udfTypeIdentifier = UdfTypeIdentifier.Encryption_HKDF_AES_256) {
 
         // Create the presentation of the secret value.
         SecretValue = secretValue;
@@ -190,7 +190,7 @@ public class CryptoKeySymmetricSigner : CryptoKeySymmetric {
             int bits = 0,
             CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.HMAC_SHA_2_256) :
                 base(CreateKey(keySecurity, bits, algorithmSign),
-                    UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512) {
+                    UdfTypeIdentifier.EncryptionSignature_HKDF_AES_256) {
         AlgorithmSign = algorithmSign;
         }
 
@@ -213,7 +213,7 @@ public class CryptoKeySymmetricSigner : CryptoKeySymmetric {
     /// <param name="keyIdentifier">The decryption/verification key.</param>
     public CryptoKeySymmetricSigner(
             string keyIdentifier) :
-                base(Udf.SymmetricKeyData(keyIdentifier), UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512) {
+                base(Udf.SymmetricKeyData(keyIdentifier), UdfTypeIdentifier.EncryptionSignature_HKDF_AES_256) {
 
         }
 

@@ -1,5 +1,5 @@
 ﻿Protocol Goedel.Contacts  Calandars Calandars
-
+	CamelCase
 	Structure JmapBase
 		// 4.1. Metadata Properties
 		// 4.1.1. @type

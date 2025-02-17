@@ -92,7 +92,6 @@ Namespace Goedel.Mesh
 		Console "The operation timed out waiting to acquire a lock."
 
 
-
 	Trace 100 ActivatePublic "Activate Seed {Seed} + Key {Base} for {Actor}-{Operation} = {Result}"
 		seed string "Seed value identifier"
 		baseKey string "Base key"

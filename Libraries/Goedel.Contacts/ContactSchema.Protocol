@@ -1,6 +1,6 @@
 ﻿Protocol Goedel.Contacts  Contacts Contacts
 	Extern JmapBase
-
+	CamelCase
 
 	//  Uses some funky formatting, need to extend the serializer
 	// Where Multiple is marked // Funky
@@ -394,7 +394,7 @@
 		String					Type
 			Tag "@type" //  MUST be "Pronouns" if set
 		String					Values
-			Tag "Pronouns"
+			Tag "pronouns"
 			Description
 				| The pronouns. Any value or form is allowed. Examples in English include "she/her"
 				| and "they/them/theirs". The value MAY be overridden in the localizations 

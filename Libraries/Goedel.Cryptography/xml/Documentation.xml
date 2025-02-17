@@ -6459,8 +6459,8 @@
             </summary>
             <param name="secretValue">The secret value.</param>
             <param name="udfTypeIdentifier">The UDF type identifier to create. This
-            is either <see cref="F:Goedel.Cryptography.UdfTypeIdentifier.Encryption_HKDF_AES_512"/> or
-            <see cref="F:Goedel.Cryptography.UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512"/></param>
+            is either <see cref="F:Goedel.Cryptography.UdfTypeIdentifier.Encryption_HKDF_AES_256"/> or
+            <see cref="F:Goedel.Cryptography.UdfTypeIdentifier.EncryptionSignature_HKDF_AES_256"/></param>
         </member>
         <member name="M:Goedel.Cryptography.CryptoKeySymmetric.#ctor(System.String)">
             <summary>
