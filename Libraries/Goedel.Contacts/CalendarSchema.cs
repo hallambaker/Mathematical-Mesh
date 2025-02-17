@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/14/2025 1:04:29 AM
+//  This file was automatically generated at 2/16/2025 6:04:41 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -162,7 +162,7 @@ public partial class JmapBase : Calandars {
         ///The date and time when the data in the Card was last modified.
         /// </summary>
 
-	public virtual string?					Updated  {get; set;}
+	public virtual DateTime?					Updated  {get; set;}
 
 
 
@@ -184,8 +184,8 @@ public partial class JmapBase : Calandars {
 					(IBinding data, string? value) => {(data as JmapBase).ProdId = value;}, (IBinding data) => (data as JmapBase).ProdId )},
 			{ "Created", new PropertyDateTime ("Created", 
 					(IBinding data, DateTime? value) => {(data as JmapBase).Created = value;}, (IBinding data) => (data as JmapBase).Created )},
-			{ "Updated", new PropertyString ("Updated", 
-					(IBinding data, string? value) => {(data as JmapBase).Updated = value;}, (IBinding data) => (data as JmapBase).Updated )}
+			{ "Updated", new PropertyDateTime ("Updated", 
+					(IBinding data, DateTime? value) => {(data as JmapBase).Updated = value;}, (IBinding data) => (data as JmapBase).Updated )}
         }, __Tag,() => new JmapBase(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 

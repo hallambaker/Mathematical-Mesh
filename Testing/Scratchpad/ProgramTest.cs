@@ -61,12 +61,11 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
-        RegistrationTests.Test().CallsignBind();
 
 
-        ShellTests.Test().TestHandleContactAlice();
-        ShellTests.Test().TestHandleThing();
-        ShellTests.Test().TestHandleCallsign();
+        Jmap.Test().TestContactAlice();
+        //ShellTests.Test().TestHandleThing();
+        //ShellTests.Test().TestHandleCallsign();
         //ServiceAnything.Test().TestOnboadDevice();
 
 

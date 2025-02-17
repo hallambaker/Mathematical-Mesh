@@ -29,6 +29,13 @@ namespace Goedel.XUnit;
 public partial class ShellTests {
 
 
+
+
+
+
+
+
+
     [Fact]
     public void TestHandleCallsign() {
         var admin = GetTestCLI(AliceDevice1);

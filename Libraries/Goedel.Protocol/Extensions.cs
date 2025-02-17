@@ -20,6 +20,9 @@
 //  THE SOFTWARE.
 #endregion
 
+using System.Collections;
+using System.Security.Cryptography.X509Certificates;
+
 namespace Goedel.Protocol;
 
 /// <summary>Data encoding forms</summary>
@@ -229,6 +232,60 @@ public static partial class Extensions {
         JsonWriter JSONWriter = new JSONCWriter(TagDictionary: TagDictionary);
         Object.Serialize(JSONWriter, Tagged);
         return JSONWriter.GetBytes;
+        }
+
+    public static IEnumerable<KeyValuePair<string, object?>> GetEnumerable<T>(this Dictionary<string, T> dict) =>
+        new KeyValueEnumerable<T>(dict);
+
+    private class KeyValueEnumerable<T> : IEnumerable<KeyValuePair<string, object?>> {
+        IEnumerable<KeyValuePair<string, T?>> Typed { get; }
+
+        public KeyValueEnumerable(IEnumerable<KeyValuePair<string, T?>> typed){
+            Typed = typed;
+            }
+
+        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => 
+                    new KeyValueEnumeration<T>(Typed.GetEnumerator());
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+
+    public static IEnumerator<KeyValuePair<string,object?>> GetEnumerator<T>(this Dictionary<string,T> dict) {
+        return new KeyValueEnumeration<T>(dict.GetEnumerator());
+        }
+
+    private abstract class KeyValueEnumeration : IEnumerator<KeyValuePair<string, object?>> {
+        public abstract KeyValuePair<string, object> Current { get; }
+
+        object IEnumerator.Current => Current;
+
+        public void Dispose() {
+            }
+
+        public abstract bool MoveNext();
+
+        public void Reset() {
+            throw new InvalidOperationException();
+            }
+        }
+
+    private class KeyValueEnumeration<T> : KeyValueEnumeration {
+        IEnumerator<KeyValuePair<string, T?>> Typed { get; }
+
+        public override KeyValuePair<string, object> Current => current;
+        KeyValuePair<string, object> current;
+
+        public KeyValueEnumeration(IEnumerator<KeyValuePair<string, T?>> typed) {
+            Typed = typed;
+            }
+
+        public override bool MoveNext() {
+            var result = Typed.MoveNext();
+            current = new KeyValuePair<string, object>(Typed.Current.Key, Typed.Current.Value);
+            return result;
+            }
+
         }
 
 

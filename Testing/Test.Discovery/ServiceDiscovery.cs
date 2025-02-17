@@ -20,15 +20,76 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Contacts;
 using Goedel.Discovery;
+using Goedel.Protocol;
 using Goedel.Test;
 using Goedel.Utilities;
 
+using Newtonsoft.Json.Linq;
+
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 #pragma warning disable IDE0059
 
 namespace Goedel.XUnit;
+
+
+
+public partial class Jmap {
+    public static Jmap Test() => new();
+    [Fact]
+    public void TestContactAlice() {
+
+        var contact = new JsContact() {
+            Version = "1.0",
+            Type = "card",
+            Created = DateTime.Now,
+            Updated = DateTime.Now,
+
+            Kind = "individual",
+            Language = "en",
+            SpeakToAs = new() {
+                grammaticalGender = "feminine",
+                Pronouns = new() {
+                    { "p1", new() {
+                        Values = "she/her"
+                            }
+                        }
+                    },
+                },
+            Titles = new() {
+                { 
+                    "t1", new() {
+                        Kind = "title",
+                        Name = "Research Scientist"
+                        }
+                    }
+                },
+            Emails = new() {
+                {
+                    "e1", new() {
+                        Contexts = new () {
+                            { "work", true }
+                            },
+                        Address = "jqpublic@xyz.example.com"
+                        }
+                    }
+                }
+            };
+
+        var asBytes = contact.GetJson();
+        Console.WriteLine(asBytes.ToUTF8());
+
+        var parsed = JsContact.FromJson(new JsonReader (asBytes));
+
+        }
+
+
+    
+    }
 
 public partial class ServiceDiscovery {
     public static ServiceDiscovery Test() => new();

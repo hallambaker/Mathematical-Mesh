@@ -8,7 +8,7 @@
 	// { "member1" : true, "member2" : true }
 
 	// 2. Card
-	Structure ContactCard
+	Structure JsContact
 		Inherits JmapBase
 
 		Description
@@ -72,12 +72,6 @@
 				| The set of Cards that are members of this group Card. Each key in the set is 
 				| the uid property value of the member, and each boolean value MUST be "true".
 				| If this property is set, then the value of the kind property MUST be "group"
-
-
-
-
-
-
 
 
 		// Name and Organization Properties
@@ -710,11 +704,11 @@
 				| The calendar year.
 		Integer					Month
 			Description
-				| The calendar month, represented as the integers 1 <= month <= 12. If 
+				| The calendar month, represented as the integers 1 &lt;= month &lt;= 12. If 
 				| this property is set, then either the year or the day property MUST be set.
 		Integer					Day
 			Description
-				| The calendar month day, represented as the integers 1 <= day <= 31, 
+				| The calendar month day, represented as the integers 1 &lt;= day &lt;= 31, 
 				| depending on the validity within the month and year. If this property 
 				| is set, then the month property MUST be set.
 		String					CalendarScale

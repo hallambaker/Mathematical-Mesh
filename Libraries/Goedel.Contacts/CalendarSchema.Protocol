@@ -38,7 +38,7 @@
 				| This is the date and time this object was initially created.
 
 		// 4.1.6. updated
-		String					Updated
+		DateTime				Updated
 			Description
 				|The date and time when the data in the Card was last modified.
 

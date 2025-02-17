@@ -23,6 +23,8 @@
 
 using System.Collections;
 
+using static System.Diagnostics.Activity;
+
 namespace Goedel.Protocol;
 
 
@@ -149,17 +151,17 @@ public record PropertyDictionaryBoolean(
 
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
-        //var value = Get(data);
-        //if (value != null) {
-        //    var first = true;
-
-        //    writer.WriteArrayStart();
-        //    foreach (var entry in value) {
-        //        writer.WriteArraySeparator(ref first);
-        //        writer.WriteBoolean(entry);
-        //        }
-        //    writer.WriteArrayEnd();
-        //    }
+        var pair = Get(data);
+        if (pair != null) {
+            var first = true;
+            writer.WriteObjectStart();
+            foreach (var entry in pair) {
+                writer.WriteObjectSeparator(ref first);
+                writer.WriteToken(entry.Key, 1);
+                writer.WriteBoolean(entry.Value);
+                }
+            writer.WriteObjectEnd();
+            }
         }
 
     ///<inheritdoc/>
@@ -234,17 +236,17 @@ public record PropertyDictionaryString(
 
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
-        //var value = Get(data);
-        //if (value != null) {
-        //    var first = true;
-
-        //    writer.WriteArrayStart();
-        //    foreach (var entry in value) {
-        //        writer.WriteArraySeparator(ref first);
-        //        writer.WriteBoolean(entry);
-        //        }
-        //    writer.WriteArrayEnd();
-        //    }
+        var pair = Get(data);
+        if (pair != null) {
+            var first = true;
+            writer.WriteObjectStart();
+            foreach (var entry in pair) {
+                writer.WriteObjectSeparator(ref first);
+                writer.WriteToken(entry.Key, 1);
+                writer.WriteString(entry.Value);
+                }
+            writer.WriteObjectEnd();
+            }
         }
 
     ///<inheritdoc/>
@@ -318,17 +320,17 @@ public record PropertyDictionaryBinary(
 
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
-        //var value = Get(data);
-        //if (value != null) {
-        //    var first = true;
-
-        //    writer.WriteArrayStart();
-        //    foreach (var entry in value) {
-        //        writer.WriteArraySeparator(ref first);
-        //        writer.WriteBoolean(entry);
-        //        }
-        //    writer.WriteArrayEnd();
-        //    }
+        var pair = Get(data);
+        if (pair != null) {
+            var first = true;
+            writer.WriteObjectStart();
+            foreach (var entry in pair) {
+                writer.WriteObjectSeparator(ref first);
+                writer.WriteToken(entry.Key, 1);
+                writer.WriteBinary(entry.Value);
+                }
+            writer.WriteObjectEnd();
+            }
         }
 
     ///<inheritdoc/>
@@ -400,17 +402,17 @@ public record PropertyDictionaryDateTime(
 
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
-        //var value = Get(data);
-        //if (value != null) {
-        //    var first = true;
-
-        //    writer.WriteArrayStart();
-        //    foreach (var entry in value) {
-        //        writer.WriteArraySeparator(ref first);
-        //        writer.WriteBoolean(entry);
-        //        }
-        //    writer.WriteArrayEnd();
-        //    }
+        var pair = Get(data);
+        if (pair != null) {
+            var first = true;
+            writer.WriteObjectStart();
+            foreach (var entry in pair) {
+                writer.WriteObjectSeparator(ref first);
+                writer.WriteToken(entry.Key, 1);
+                writer.WriteDateTime(entry.Value);
+                }
+            writer.WriteObjectEnd();
+            }
         }
 
     ///<inheritdoc/>
@@ -482,17 +484,17 @@ public record PropertyDictionaryInteger32(
 
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
-        //var value = Get(data);
-        //if (value != null) {
-        //    var first = true;
-
-        //    writer.WriteArrayStart();
-        //    foreach (var entry in value) {
-        //        writer.WriteArraySeparator(ref first);
-        //        writer.WriteBoolean(entry);
-        //        }
-        //    writer.WriteArrayEnd();
-        //    }
+        var pair = Get(data);
+        if (pair != null) {
+            var first = true;
+            writer.WriteObjectStart();
+            foreach (var entry in pair) {
+                writer.WriteObjectSeparator(ref first);
+                writer.WriteToken(entry.Key, 1);
+                writer.WriteInteger32(entry.Value);
+                }
+            writer.WriteObjectEnd();
+            }
         }
 
     ///<inheritdoc/>
@@ -566,17 +568,17 @@ public record PropertyDictionaryInteger64(
 
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
-        //var value = Get(data);
-        //if (value != null) {
-        //    var first = true;
-
-        //    writer.WriteArrayStart();
-        //    foreach (var entry in value) {
-        //        writer.WriteArraySeparator(ref first);
-        //        writer.WriteBoolean(entry);
-        //        }
-        //    writer.WriteArrayEnd();
-        //    }
+        var pair = Get(data);
+        if (pair != null) {
+            var first = true;
+            writer.WriteObjectStart();
+            foreach (var entry in pair) {
+                writer.WriteObjectSeparator(ref first);
+                writer.WriteToken(entry.Key, 1);
+                writer.WriteInteger64(entry.Value);
+                }
+            writer.WriteObjectEnd();
+            }
         }
 
     ///<inheritdoc/>
@@ -649,17 +651,17 @@ public record PropertyDictionaryReal32(
 
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
-        //var value = Get(data);
-        //if (value != null) {
-        //    var first = true;
-
-        //    writer.WriteArrayStart();
-        //    foreach (var entry in value) {
-        //        writer.WriteArraySeparator(ref first);
-        //        writer.WriteBoolean(entry);
-        //        }
-        //    writer.WriteArrayEnd();
-        //    }
+        var pair = Get(data);
+        if (pair != null) {
+            var first = true;
+            writer.WriteObjectStart();
+            foreach (var entry in pair) {
+                writer.WriteObjectSeparator(ref first);
+                writer.WriteToken(entry.Key, 1);
+                writer.WriteFloat32(entry.Value);
+                }
+            writer.WriteObjectEnd();
+            }
         }
 
     ///<inheritdoc/>
@@ -735,17 +737,17 @@ public record PropertyDictionaryReal64(
 
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
-        //var value = Get(data);
-        //if (value != null) {
-        //    var first = true;
-
-        //    writer.WriteArrayStart();
-        //    foreach (var entry in value) {
-        //        writer.WriteArraySeparator(ref first);
-        //        writer.WriteBoolean(entry);
-        //        }
-        //    writer.WriteArrayEnd();
-        //    }
+        var pair = Get(data);
+        if (pair != null) {
+            var first = true;
+            writer.WriteObjectStart();
+            foreach (var entry in pair) {
+                writer.WriteObjectSeparator(ref first);
+                writer.WriteToken(entry.Key, 1);
+                writer.WriteFloat64(entry.Value);
+                }
+            writer.WriteObjectEnd();
+            }
         }
 
     ///<inheritdoc/>
@@ -827,27 +829,40 @@ public record PropertyListStruct(
 /// <param name="Tag">Tag identifying this property in JSON serialization</param>
 /// <param name="Set">Set the property to the specified value.</param>
 /// <param name="Get">Return the value of the property.</param>
+/// <param name="Factory">Factory returning an instance of the object.</param>
+/// <param name="IFactory">For a collection object, factory returning an instance of an
+/// object in the collection.</param>
+/// <param name="Tagged">If true, the property should be tagged.</param>
 public record PropertyDictionaryStruct(
             string Tag,
             Action<IBinding, object?> Set,
             Func<IBinding, object?> Get,
             bool Tagged = false,
             Func<object> Factory = null,
-            Func<object> IFactory = null) : Property(Tag, true) {
+            Func<object> IFactory = null,
+            Func<IBinding, IEnumerable<KeyValuePair<string, object?>>> Enumerator=null
+    
+    
+    ) : Property(Tag, true) {
 
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
-        //var value = Get(data);
-        //if (value != null) {
-        //    var first = true;
+        if (Get(data) is IEnumerable value) {
+            var first = true;
+            writer.WriteObjectStart();
 
-        //    writer.WriteArrayStart();
-        //    foreach (var entry in value) {
-        //        writer.WriteArraySeparator(ref first);
-        //        writer.WriteBoolean(entry);
-        //        }
-        //    writer.WriteArrayEnd();
-        //    }
+            if (Enumerator is not null) {
+                foreach (var entry in Enumerator(data)) {
+                    if (entry.Value is JsonObject typed) {
+                        writer.WriteToken(entry.Key, 1);
+                        typed.Serialize(writer, Tagged);
+                        }
+                    }
+                }
+
+            writer.WriteObjectEnd();
+            }
+
         }
 
     ///<inheritdoc/>

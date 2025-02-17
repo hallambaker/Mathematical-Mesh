@@ -5423,20 +5423,35 @@
             <param name="Tag">Tag identifying this property in JSON serialization</param>
             <param name="Set">Set the property to the specified value.</param>
             <param name="Get">Return the value of the property.</param>
+            <param name="Factory">Factory returning an instance of the object.</param>
+            <param name="IFactory">For a collection object, factory returning an instance of an
+            object in the collection.</param>
+            <param name="Tagged">If true, the property should be tagged.</param>
         </member>
-        <member name="M:Goedel.Protocol.PropertyDictionaryStruct.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Object},System.Func{Goedel.Protocol.IBinding,System.Object},System.Boolean,System.Func{System.Object},System.Func{System.Object})">
+        <member name="M:Goedel.Protocol.PropertyDictionaryStruct.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Object},System.Func{Goedel.Protocol.IBinding,System.Object},System.Boolean,System.Func{System.Object},System.Func{System.Object},System.Func{Goedel.Protocol.IBinding,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}}})">
             <summary>
             Metadata record representing a property.
             </summary>
             <param name="Tag">Tag identifying this property in JSON serialization</param>
             <param name="Set">Set the property to the specified value.</param>
             <param name="Get">Return the value of the property.</param>
+            <param name="Factory">Factory returning an instance of the object.</param>
+            <param name="IFactory">For a collection object, factory returning an instance of an
+            object in the collection.</param>
+            <param name="Tagged">If true, the property should be tagged.</param>
         </member>
         <member name="P:Goedel.Protocol.PropertyDictionaryStruct.Set">
             <summary>Set the property to the specified value.</summary>
         </member>
         <member name="P:Goedel.Protocol.PropertyDictionaryStruct.Get">
             <summary>Return the value of the property.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyDictionaryStruct.Factory">
+            <summary>Factory returning an instance of the object.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyDictionaryStruct.IFactory">
+            <summary>For a collection object, factory returning an instance of an
+            object in the collection.</summary>
         </member>
         <member name="M:Goedel.Protocol.PropertyDictionaryStruct.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
             <inheritdoc/>

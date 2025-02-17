@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/15/2025 3:10:43 PM
+//  This file was automatically generated at 2/17/2025 11:38:56 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -72,7 +72,7 @@ public abstract partial class Contacts : global::Goedel.Protocol.JsonObject {
 	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
 			new () {
 
-	    {"ContactCard", ContactCard._Factory},
+	    {"JsContact", JsContact._Factory},
 	    {"Relation", Relation._Factory},
 	    {"Resource", Resource._Factory},
 	    {"Name", Name._Factory},
@@ -134,7 +134,7 @@ public abstract partial class Contacts : global::Goedel.Protocol.JsonObject {
 	///
 	///  Metadata, see section 2.1
 	/// </summary>
-public partial class ContactCard : JmapBase {
+public partial class JsContact : JmapBase {
         /// <summary>
         /// The JSContact version of this Card. If specified, value MUST be '1.0'
         /// </summary>
@@ -323,76 +323,94 @@ public partial class ContactCard : JmapBase {
 			new() {
 
 			{ "Version", new PropertyString ("Version", 
-					(IBinding data, string? value) => {(data as ContactCard).Version = value;}, (IBinding data) => (data as ContactCard).Version )},
+					(IBinding data, string? value) => {(data as JsContact).Version = value;}, (IBinding data) => (data as JsContact).Version )},
 			{ "Kind", new PropertyString ("Kind", 
-					(IBinding data, string? value) => {(data as ContactCard).Kind = value;}, (IBinding data) => (data as ContactCard).Kind )},
+					(IBinding data, string? value) => {(data as JsContact).Kind = value;}, (IBinding data) => (data as JsContact).Kind )},
 			{ "Language", new PropertyString ("Language", 
-					(IBinding data, string? value) => {(data as ContactCard).Language = value;}, (IBinding data) => (data as ContactCard).Language )},
+					(IBinding data, string? value) => {(data as JsContact).Language = value;}, (IBinding data) => (data as JsContact).Language )},
 			{ "Members", new PropertyDictionaryString ("Members", 
-					(IBinding data, Dictionary<string,string>? value) => {(data as ContactCard).Members = value;}, (IBinding data) => (data as ContactCard).Members )},
+					(IBinding data, Dictionary<string,string>? value) => {(data as JsContact).Members = value;}, (IBinding data) => (data as JsContact).Members )},
 			{ "Name", new PropertyStruct ("Name", 
-					(IBinding data, object? value) => {(data as ContactCard).Name = value as Name;}, (IBinding data) => (data as ContactCard).Name,
-					false, ()=>new  Name(), ()=>new Name())} ,
+					(IBinding data, object? value) => {(data as JsContact).Name = value as Name;}, (IBinding data) => (data as JsContact).Name,
+					false, ()=>new  Name(), ()=>new Name())},
 			{ "NickNames", new PropertyDictionaryStruct ("NickNames", 
-					(IBinding data, object? value) => {(data as ContactCard).NickNames = value as Dictionary<string,NickName>;}, (IBinding data) => (data as ContactCard).NickNames,
-					false, ()=>new  Dictionary<string,NickName>(), ()=>new NickName())} ,
+					(IBinding data, object? value) => {(data as JsContact).NickNames = value as Dictionary<string,NickName>;}, (IBinding data) => (data as JsContact).NickNames,
+					false, ()=>new  Dictionary<string,NickName>(), ()=>new NickName(),
+					(IBinding data) => (data as JsContact).NickNames.GetEnumerable())},
 			{ "Organizations", new PropertyDictionaryStruct ("Organizations", 
-					(IBinding data, object? value) => {(data as ContactCard).Organizations = value as Dictionary<string,Organization>;}, (IBinding data) => (data as ContactCard).Organizations,
-					false, ()=>new  Dictionary<string,Organization>(), ()=>new Organization())} ,
+					(IBinding data, object? value) => {(data as JsContact).Organizations = value as Dictionary<string,Organization>;}, (IBinding data) => (data as JsContact).Organizations,
+					false, ()=>new  Dictionary<string,Organization>(), ()=>new Organization(),
+					(IBinding data) => (data as JsContact).Organizations.GetEnumerable())},
 			{ "SpeakToAs", new PropertyStruct ("SpeakToAs", 
-					(IBinding data, object? value) => {(data as ContactCard).SpeakToAs = value as SpeakToAs;}, (IBinding data) => (data as ContactCard).SpeakToAs,
-					false, ()=>new  SpeakToAs(), ()=>new SpeakToAs())} ,
+					(IBinding data, object? value) => {(data as JsContact).SpeakToAs = value as SpeakToAs;}, (IBinding data) => (data as JsContact).SpeakToAs,
+					false, ()=>new  SpeakToAs(), ()=>new SpeakToAs())},
 			{ "Titles", new PropertyDictionaryStruct ("Titles", 
-					(IBinding data, object? value) => {(data as ContactCard).Titles = value as Dictionary<string,Title>;}, (IBinding data) => (data as ContactCard).Titles,
-					false, ()=>new  Dictionary<string,Title>(), ()=>new Title())} ,
+					(IBinding data, object? value) => {(data as JsContact).Titles = value as Dictionary<string,Title>;}, (IBinding data) => (data as JsContact).Titles,
+					false, ()=>new  Dictionary<string,Title>(), ()=>new Title(),
+					(IBinding data) => (data as JsContact).Titles.GetEnumerable())},
 			{ "Emails", new PropertyDictionaryStruct ("Emails", 
-					(IBinding data, object? value) => {(data as ContactCard).Emails = value as Dictionary<string,EmailAddress>;}, (IBinding data) => (data as ContactCard).Emails,
-					false, ()=>new  Dictionary<string,EmailAddress>(), ()=>new EmailAddress())} ,
+					(IBinding data, object? value) => {(data as JsContact).Emails = value as Dictionary<string,EmailAddress>;}, (IBinding data) => (data as JsContact).Emails,
+					false, ()=>new  Dictionary<string,EmailAddress>(), ()=>new EmailAddress(),
+					(IBinding data) => (data as JsContact).Emails.GetEnumerable())},
 			{ "OnlineServices", new PropertyDictionaryStruct ("OnlineServices", 
-					(IBinding data, object? value) => {(data as ContactCard).OnlineServices = value as Dictionary<string,OnlineService>;}, (IBinding data) => (data as ContactCard).OnlineServices,
-					false, ()=>new  Dictionary<string,OnlineService>(), ()=>new OnlineService())} ,
+					(IBinding data, object? value) => {(data as JsContact).OnlineServices = value as Dictionary<string,OnlineService>;}, (IBinding data) => (data as JsContact).OnlineServices,
+					false, ()=>new  Dictionary<string,OnlineService>(), ()=>new OnlineService(),
+					(IBinding data) => (data as JsContact).OnlineServices.GetEnumerable())},
 			{ "Phones", new PropertyDictionaryStruct ("Phones", 
-					(IBinding data, object? value) => {(data as ContactCard).Phones = value as Dictionary<string,Phone>;}, (IBinding data) => (data as ContactCard).Phones,
-					false, ()=>new  Dictionary<string,Phone>(), ()=>new Phone())} ,
+					(IBinding data, object? value) => {(data as JsContact).Phones = value as Dictionary<string,Phone>;}, (IBinding data) => (data as JsContact).Phones,
+					false, ()=>new  Dictionary<string,Phone>(), ()=>new Phone(),
+					(IBinding data) => (data as JsContact).Phones.GetEnumerable())},
 			{ "PreferredLanguages", new PropertyDictionaryStruct ("PreferredLanguages", 
-					(IBinding data, object? value) => {(data as ContactCard).PreferredLanguages = value as Dictionary<string,LanguagePref>;}, (IBinding data) => (data as ContactCard).PreferredLanguages,
-					false, ()=>new  Dictionary<string,LanguagePref>(), ()=>new LanguagePref())} ,
+					(IBinding data, object? value) => {(data as JsContact).PreferredLanguages = value as Dictionary<string,LanguagePref>;}, (IBinding data) => (data as JsContact).PreferredLanguages,
+					false, ()=>new  Dictionary<string,LanguagePref>(), ()=>new LanguagePref(),
+					(IBinding data) => (data as JsContact).PreferredLanguages.GetEnumerable())},
 			{ "Calendars", new PropertyDictionaryStruct ("Calendars", 
-					(IBinding data, object? value) => {(data as ContactCard).Calendars = value as Dictionary<string,Calendar>;}, (IBinding data) => (data as ContactCard).Calendars,
-					false, ()=>new  Dictionary<string,Calendar>(), ()=>new Calendar())} ,
+					(IBinding data, object? value) => {(data as JsContact).Calendars = value as Dictionary<string,Calendar>;}, (IBinding data) => (data as JsContact).Calendars,
+					false, ()=>new  Dictionary<string,Calendar>(), ()=>new Calendar(),
+					(IBinding data) => (data as JsContact).Calendars.GetEnumerable())},
 			{ "SchedulingAddresses", new PropertyDictionaryStruct ("SchedulingAddresses", 
-					(IBinding data, object? value) => {(data as ContactCard).SchedulingAddresses = value as Dictionary<string,SchedulingAddress>;}, (IBinding data) => (data as ContactCard).SchedulingAddresses,
-					false, ()=>new  Dictionary<string,SchedulingAddress>(), ()=>new SchedulingAddress())} ,
+					(IBinding data, object? value) => {(data as JsContact).SchedulingAddresses = value as Dictionary<string,SchedulingAddress>;}, (IBinding data) => (data as JsContact).SchedulingAddresses,
+					false, ()=>new  Dictionary<string,SchedulingAddress>(), ()=>new SchedulingAddress(),
+					(IBinding data) => (data as JsContact).SchedulingAddresses.GetEnumerable())},
 			{ "Addresses", new PropertyDictionaryStruct ("Addresses", 
-					(IBinding data, object? value) => {(data as ContactCard).Addresses = value as Dictionary<string,Address>;}, (IBinding data) => (data as ContactCard).Addresses,
-					false, ()=>new  Dictionary<string,Address>(), ()=>new Address())} ,
+					(IBinding data, object? value) => {(data as JsContact).Addresses = value as Dictionary<string,Address>;}, (IBinding data) => (data as JsContact).Addresses,
+					false, ()=>new  Dictionary<string,Address>(), ()=>new Address(),
+					(IBinding data) => (data as JsContact).Addresses.GetEnumerable())},
 			{ "CryptoKeys", new PropertyDictionaryStruct ("CryptoKeys", 
-					(IBinding data, object? value) => {(data as ContactCard).CryptoKeys = value as Dictionary<string,CryptoKey>;}, (IBinding data) => (data as ContactCard).CryptoKeys,
-					false, ()=>new  Dictionary<string,CryptoKey>(), ()=>new CryptoKey())} ,
+					(IBinding data, object? value) => {(data as JsContact).CryptoKeys = value as Dictionary<string,CryptoKey>;}, (IBinding data) => (data as JsContact).CryptoKeys,
+					false, ()=>new  Dictionary<string,CryptoKey>(), ()=>new CryptoKey(),
+					(IBinding data) => (data as JsContact).CryptoKeys.GetEnumerable())},
 			{ "Directories", new PropertyDictionaryStruct ("Directories", 
-					(IBinding data, object? value) => {(data as ContactCard).Directories = value as Dictionary<string,Directory>;}, (IBinding data) => (data as ContactCard).Directories,
-					false, ()=>new  Dictionary<string,Directory>(), ()=>new Directory())} ,
+					(IBinding data, object? value) => {(data as JsContact).Directories = value as Dictionary<string,Directory>;}, (IBinding data) => (data as JsContact).Directories,
+					false, ()=>new  Dictionary<string,Directory>(), ()=>new Directory(),
+					(IBinding data) => (data as JsContact).Directories.GetEnumerable())},
 			{ "Links", new PropertyDictionaryStruct ("Links", 
-					(IBinding data, object? value) => {(data as ContactCard).Links = value as Dictionary<string,ResourceLink>;}, (IBinding data) => (data as ContactCard).Links,
-					false, ()=>new  Dictionary<string,ResourceLink>(), ()=>new ResourceLink())} ,
+					(IBinding data, object? value) => {(data as JsContact).Links = value as Dictionary<string,ResourceLink>;}, (IBinding data) => (data as JsContact).Links,
+					false, ()=>new  Dictionary<string,ResourceLink>(), ()=>new ResourceLink(),
+					(IBinding data) => (data as JsContact).Links.GetEnumerable())},
 			{ "Media", new PropertyDictionaryStruct ("Media", 
-					(IBinding data, object? value) => {(data as ContactCard).Media = value as Dictionary<string,Media>;}, (IBinding data) => (data as ContactCard).Media,
-					false, ()=>new  Dictionary<string,Media>(), ()=>new Media())} ,
+					(IBinding data, object? value) => {(data as JsContact).Media = value as Dictionary<string,Media>;}, (IBinding data) => (data as JsContact).Media,
+					false, ()=>new  Dictionary<string,Media>(), ()=>new Media(),
+					(IBinding data) => (data as JsContact).Media.GetEnumerable())},
 			{ "Localizations", new PropertyDictionaryStruct ("Localizations", 
-					(IBinding data, object? value) => {(data as ContactCard).Localizations = value as Dictionary<string,PatchObject>;}, (IBinding data) => (data as ContactCard).Localizations,
-					false, ()=>new  Dictionary<string,PatchObject>(), ()=>new PatchObject())} ,
+					(IBinding data, object? value) => {(data as JsContact).Localizations = value as Dictionary<string,PatchObject>;}, (IBinding data) => (data as JsContact).Localizations,
+					false, ()=>new  Dictionary<string,PatchObject>(), ()=>new PatchObject(),
+					(IBinding data) => (data as JsContact).Localizations.GetEnumerable())},
 			{ "Anniversaries", new PropertyDictionaryStruct ("Anniversaries", 
-					(IBinding data, object? value) => {(data as ContactCard).Anniversaries = value as Dictionary<string,Anniversary>;}, (IBinding data) => (data as ContactCard).Anniversaries,
-					false, ()=>new  Dictionary<string,Anniversary>(), ()=>new Anniversary())} ,
+					(IBinding data, object? value) => {(data as JsContact).Anniversaries = value as Dictionary<string,Anniversary>;}, (IBinding data) => (data as JsContact).Anniversaries,
+					false, ()=>new  Dictionary<string,Anniversary>(), ()=>new Anniversary(),
+					(IBinding data) => (data as JsContact).Anniversaries.GetEnumerable())},
 			{ "Keywords", new PropertyDictionaryBoolean ("Keywords", 
-					(IBinding data, Dictionary<string,bool>? value) => {(data as ContactCard).Keywords = value;}, (IBinding data) => (data as ContactCard).Keywords )},
+					(IBinding data, Dictionary<string,bool>? value) => {(data as JsContact).Keywords = value;}, (IBinding data) => (data as JsContact).Keywords )},
 			{ "Notes", new PropertyDictionaryStruct ("Notes", 
-					(IBinding data, object? value) => {(data as ContactCard).Notes = value as Dictionary<string,Note>;}, (IBinding data) => (data as ContactCard).Notes,
-					false, ()=>new  Dictionary<string,Note>(), ()=>new Note())} ,
+					(IBinding data, object? value) => {(data as JsContact).Notes = value as Dictionary<string,Note>;}, (IBinding data) => (data as JsContact).Notes,
+					false, ()=>new  Dictionary<string,Note>(), ()=>new Note(),
+					(IBinding data) => (data as JsContact).Notes.GetEnumerable())},
 			{ "PersonalInfo", new PropertyDictionaryStruct ("PersonalInfo", 
-					(IBinding data, object? value) => {(data as ContactCard).PersonalInfo = value as Dictionary<string,PersonalInfo>;}, (IBinding data) => (data as ContactCard).PersonalInfo,
-					false, ()=>new  Dictionary<string,PersonalInfo>(), ()=>new PersonalInfo())} 
-        }, __Tag,() => new ContactCard(), JmapBase._binding);
+					(IBinding data, object? value) => {(data as JsContact).PersonalInfo = value as Dictionary<string,PersonalInfo>;}, (IBinding data) => (data as JsContact).PersonalInfo,
+					false, ()=>new  Dictionary<string,PersonalInfo>(), ()=>new PersonalInfo(),
+					(IBinding data) => (data as JsContact).PersonalInfo.GetEnumerable())}
+        }, __Tag,() => new JsContact(), JmapBase._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -421,13 +439,13 @@ public partial class ContactCard : JmapBase {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "ContactCard";
+	public new const string __Tag = "JsContact";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new ContactCard();
+	public static new JsonObject _Factory () => new JsContact();
 
 
     /// <summary>
@@ -436,15 +454,15 @@ public partial class ContactCard : JmapBase {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new ContactCard FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new JsContact FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ContactCard;
+			return Out as JsContact;
 			}
-		var Result = new ContactCard ();
+		var Result = new JsContact ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -732,7 +750,7 @@ public partial class Name : Contacts {
 					(IBinding data, string? value) => {(data as Name).Type = value;}, (IBinding data) => (data as Name).Type )},
 			{ "Components", new PropertyListStruct ("Components", 
 					(IBinding data, object? value) => {(data as Name).Components = value as List<NameComponent>;}, (IBinding data) => (data as Name).Components,
-					false, ()=>new  List<NameComponent>(), ()=>new NameComponent())} ,
+					false, ()=>new  List<NameComponent>(), ()=>new NameComponent())},
 			{ "IsOrdered", new PropertyBoolean ("IsOrdered", 
 					(IBinding data, bool? value) => {(data as Name).IsOrdered = value;}, (IBinding data) => (data as Name).IsOrdered )},
 			{ "DefaultSeparator", new PropertyString ("DefaultSeparator", 
@@ -1071,7 +1089,7 @@ public partial class Organization : Contacts {
 					(IBinding data, string? value) => {(data as Organization).Name = value;}, (IBinding data) => (data as Organization).Name )},
 			{ "Units", new PropertyListStruct ("Units", 
 					(IBinding data, object? value) => {(data as Organization).Units = value as List<OrgUnit>;}, (IBinding data) => (data as Organization).Units,
-					false, ()=>new  List<OrgUnit>(), ()=>new OrgUnit())} ,
+					false, ()=>new  List<OrgUnit>(), ()=>new OrgUnit())},
 			{ "SortAs", new PropertyString ("SortAs", 
 					(IBinding data, string? value) => {(data as Organization).SortAs = value;}, (IBinding data) => (data as Organization).SortAs )},
 			{ "Contexts", new PropertyDictionaryBoolean ("Contexts", 
@@ -1267,7 +1285,8 @@ public partial class SpeakToAs : Contacts {
 					(IBinding data, string? value) => {(data as SpeakToAs).grammaticalGender = value;}, (IBinding data) => (data as SpeakToAs).grammaticalGender )},
 			{ "Pronouns", new PropertyDictionaryStruct ("Pronouns", 
 					(IBinding data, object? value) => {(data as SpeakToAs).Pronouns = value as Dictionary<string,Pronouns>;}, (IBinding data) => (data as SpeakToAs).Pronouns,
-					false, ()=>new  Dictionary<string,Pronouns>(), ()=>new Pronouns())} 
+					false, ()=>new  Dictionary<string,Pronouns>(), ()=>new Pronouns(),
+					(IBinding data) => (data as SpeakToAs).Pronouns.GetEnumerable())}
         }, __Tag,() => new SpeakToAs(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1370,7 +1389,8 @@ public partial class Pronouns : Contacts {
 			{ "Pronouns", new PropertyString ("Pronouns", 
 					(IBinding data, string? value) => {(data as Pronouns).Values = value;}, (IBinding data) => (data as Pronouns).Values )},
 			{ "Contexts", new PropertyDictionaryBoolean ("Contexts", 
-					(IBinding data, Dictionary<string,bool>? value) => {(data as Pronouns).Contexts = value;}, (IBinding data) => (data as Pronouns).Contexts )},
+					(IBinding data, Dictionary<string,bool>? value) => {(data as Pronouns).Contexts = value;}, 
+					(IBinding data) => (data as Pronouns).Contexts )},
 			{ "Pref", new PropertyInteger32 ("Pref", 
 					(IBinding data, int? value) => {(data as Pronouns).Pref = value;}, (IBinding data) => (data as Pronouns).Pref )}
         }, __Tag,() => new Pronouns(), null);
@@ -2142,7 +2162,7 @@ public partial class SchedulingAddress : Contacts {
 					(IBinding data, string? value) => {(data as SchedulingAddress).Uri = value;}, (IBinding data) => (data as SchedulingAddress).Uri )},
 			{ "Contexts", new PropertyListStruct ("Contexts", 
 					(IBinding data, object? value) => {(data as SchedulingAddress).Contexts = value as List<Boolean>;}, (IBinding data) => (data as SchedulingAddress).Contexts,
-					false, ()=>new  List<Boolean>(), ()=>new Boolean())} ,
+					false, ()=>new  List<Boolean>(), ()=>new Boolean())},
 			{ "Pref", new PropertyInteger32 ("Pref", 
 					(IBinding data, int? value) => {(data as SchedulingAddress).Pref = value;}, (IBinding data) => (data as SchedulingAddress).Pref )},
 			{ "Label", new PropertyString ("Label", 
@@ -2306,7 +2326,7 @@ public partial class Address : Contacts {
 					(IBinding data, string? value) => {(data as Address).Type = value;}, (IBinding data) => (data as Address).Type )},
 			{ "Components", new PropertyListStruct ("Components", 
 					(IBinding data, object? value) => {(data as Address).Components = value as List<AddressComponent>;}, (IBinding data) => (data as Address).Components,
-					false, ()=>new  List<AddressComponent>(), ()=>new AddressComponent())} ,
+					false, ()=>new  List<AddressComponent>(), ()=>new AddressComponent())},
 			{ "IsOrdered", new PropertyString ("IsOrdered", 
 					(IBinding data, string? value) => {(data as Address).IsOrdered = value;}, (IBinding data) => (data as Address).IsOrdered )},
 			{ "CountryCode", new PropertyString ("CountryCode", 
@@ -2929,10 +2949,10 @@ public partial class Anniversary : Contacts {
 					(IBinding data, string? value) => {(data as Anniversary).Kind = value;}, (IBinding data) => (data as Anniversary).Kind )},
 			{ "Date", new PropertyStruct ("Date", 
 					(IBinding data, object? value) => {(data as Anniversary).Date = value as TimeStamp;}, (IBinding data) => (data as Anniversary).Date,
-					false, ()=>new  TimeStamp(), ()=>new TimeStamp())} ,
+					false, ()=>new  TimeStamp(), ()=>new TimeStamp())},
 			{ "Place", new PropertyStruct ("Place", 
 					(IBinding data, object? value) => {(data as Anniversary).Place = value as Address;}, (IBinding data) => (data as Anniversary).Place,
-					false, ()=>new  Address(), ()=>new Address())} 
+					false, ()=>new  Address(), ()=>new Address())}
         }, __Tag,() => new Anniversary(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3010,14 +3030,14 @@ public partial class TimeStamp : Contacts {
 	public virtual int?					Year  {get; set;}
 
         /// <summary>
-        /// The calendar month, represented as the integers 1 <= month <= 12. If 
+        /// The calendar month, represented as the integers 1 &lt;= month &lt;= 12. If 
         /// this property is set, then either the year or the day property MUST be set.
         /// </summary>
 
 	public virtual int?					Month  {get; set;}
 
         /// <summary>
-        /// The calendar month day, represented as the integers 1 <= day <= 31, 
+        /// The calendar month day, represented as the integers 1 &lt;= day &lt;= 31, 
         /// depending on the validity within the month and year. If this property 
         /// is set, then the month property MUST be set.
         /// </summary>
@@ -3167,7 +3187,7 @@ public partial class Note : Contacts {
 					(IBinding data, string? value) => {(data as Note).Created = value;}, (IBinding data) => (data as Note).Created )},
 			{ "Author", new PropertyStruct ("Author", 
 					(IBinding data, object? value) => {(data as Note).Author = value as Author;}, (IBinding data) => (data as Note).Author,
-					false, ()=>new  Author(), ()=>new Author())} 
+					false, ()=>new  Author(), ()=>new Author())}
         }, __Tag,() => new Note(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 

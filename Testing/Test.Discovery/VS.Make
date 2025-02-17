@@ -18,6 +18,7 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
+    Goedel.Contacts.dll\
     Goedel.Discovery.dll\
     Goedel.Test.dll
 

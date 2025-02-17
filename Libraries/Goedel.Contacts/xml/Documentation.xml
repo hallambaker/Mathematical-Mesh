@@ -1811,18 +1811,18 @@
             <param name="jsonReader">Input stream</param>
             <param name="result">The created object</param>
         </member>
-        <member name="T:Goedel.Contacts.ContactCard">
+        <member name="T:Goedel.Contacts.JsContact">
              <summary>
             
               Metadata, see section 2.1
              </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.Version">
+        <member name="P:Goedel.Contacts.JsContact.Version">
             <summary>
             The JSContact version of this Card. If specified, value MUST be '1.0'
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.Kind">
+        <member name="P:Goedel.Contacts.JsContact.Kind">
             <summary>
             The kind of the entity the Card represents.
             individual: a single person
@@ -1833,7 +1833,7 @@
             application: a software application
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.Language">
+        <member name="P:Goedel.Contacts.JsContact.Language">
             <summary>
             The language tag, as defined in [RFC5646], that best describes the language 
             used for text in the Card, optionally including additional information such 
@@ -1841,105 +1841,105 @@
             property.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.Members">
+        <member name="P:Goedel.Contacts.JsContact.Members">
             <summary>
             The set of Cards that are members of this group Card. Each key in the set is 
             the uid property value of the member, and each boolean value MUST be "true".
             If this property is set, then the value of the kind property MUST be "group"
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.Name">
+        <member name="P:Goedel.Contacts.JsContact.Name">
             <summary>
             The name of the entity represented by the Card. This can be any type of name, 
             e.g., it can, but need not, be the legal name of a person.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.NickNames">
+        <member name="P:Goedel.Contacts.JsContact.NickNames">
             <summary>
             The nicknames of the entity represented by the Card.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.Organizations">
+        <member name="P:Goedel.Contacts.JsContact.Organizations">
             <summary>
             The company or organization names and units associated with the Card.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.SpeakToAs">
+        <member name="P:Goedel.Contacts.JsContact.SpeakToAs">
             <summary>
             The information that directs how to address, speak to, or refer to the
             entity that is represented by the Card.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.Titles">
+        <member name="P:Goedel.Contacts.JsContact.Titles">
             <summary>
             The job titles or functional positions of the entity represented by the Card.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.Emails">
+        <member name="P:Goedel.Contacts.JsContact.Emails">
             <summary>
             The email addresses in which to contact the entity represented by the Card.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.OnlineServices">
+        <member name="P:Goedel.Contacts.JsContact.OnlineServices">
             <summary>
             The online services that are associated with the entity represented by the Card.
             This can be messaging services, social media profiles, and other.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.Phones">
+        <member name="P:Goedel.Contacts.JsContact.Phones">
             <summary>
             The phone numbers by which to contact the entity represented by the Card.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.PreferredLanguages">
+        <member name="P:Goedel.Contacts.JsContact.PreferredLanguages">
             <summary>
             The preferred languages for contacting the entity associated with the Card.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.Calendars">
+        <member name="P:Goedel.Contacts.JsContact.Calendars">
             <summary>
             The calendaring resources of the entity represented by the Card, such as 
             to look up free-busy information.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.SchedulingAddresses">
+        <member name="P:Goedel.Contacts.JsContact.SchedulingAddresses">
             <summary>
             The scheduling addresses by which the entity may receive calendar  
             scheduling invitations.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.Addresses">
+        <member name="P:Goedel.Contacts.JsContact.Addresses">
             <summary>
             The addresses of the entity represented by the Card, such as postal addresses 
             or geographic locations.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.CryptoKeys">
+        <member name="P:Goedel.Contacts.JsContact.CryptoKeys">
             <summary>
             The cryptographic resources such as public keys and certificates associated 
             with the entity represented by the Card.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.Directories">
+        <member name="P:Goedel.Contacts.JsContact.Directories">
             <summary>
             The directories containing information about the entity represented  
             by the Card.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.Links">
+        <member name="P:Goedel.Contacts.JsContact.Links">
             <summary>
             The links to resources that do not fit any of the other  
             use-case-specific resource properties.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.Media">
+        <member name="P:Goedel.Contacts.JsContact.Media">
             <summary>
             The media resources such as photographs, avatars, or sounds that 
              are associated 
             with the entity represented by the Card.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.Localizations">
+        <member name="P:Goedel.Contacts.JsContact.Localizations">
             <summary>
             The property values localized to languages other than the main language 
             (Section 2.1.5) of the Card. Localizations provide language-specific alternatives 
@@ -1950,64 +1950,64 @@
             property. A patch MUST NOT target the localizations property.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.Anniversaries">
+        <member name="P:Goedel.Contacts.JsContact.Anniversaries">
             <summary>
             The memorable dates and events for the entity represented by the Card.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.Keywords">
+        <member name="P:Goedel.Contacts.JsContact.Keywords">
             <summary>
             The set of free-text keywords, also known as tags.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.Notes">
+        <member name="P:Goedel.Contacts.JsContact.Notes">
             <summary>
             The free-text notes that are associated with the Card.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard.PersonalInfo">
+        <member name="P:Goedel.Contacts.JsContact.PersonalInfo">
             <summary>
             The personal information of the entity represented by the Card.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard._Binding">
+        <member name="P:Goedel.Contacts.JsContact._Binding">
             <summary>Implement IBinding</summary> 
         </member>
-        <member name="F:Goedel.Contacts.ContactCard._binding">
+        <member name="F:Goedel.Contacts.JsContact._binding">
             <summary>Binding</summary> 
         </member>
-        <member name="F:Goedel.Contacts.ContactCard._StaticProperties">
+        <member name="F:Goedel.Contacts.JsContact._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="F:Goedel.Contacts.ContactCard._StaticAllProperties">
+        <member name="F:Goedel.Contacts.JsContact._StaticAllProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="P:Goedel.Contacts.ContactCard._AllProperties">
+        <member name="P:Goedel.Contacts.JsContact._AllProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard._Properties">
+        <member name="P:Goedel.Contacts.JsContact._Properties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard._ParentProperties">
+        <member name="P:Goedel.Contacts.JsContact._ParentProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.ContactCard._Tag">
+        <member name="P:Goedel.Contacts.JsContact._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Contacts.ContactCard.__Tag">
+        <member name="F:Goedel.Contacts.JsContact.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Contacts.ContactCard._Factory">
+        <member name="M:Goedel.Contacts.JsContact._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.ContactCard.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Contacts.JsContact.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -3742,8 +3742,19 @@
             The calendar year.
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "P:Goedel.Contacts.TimeStamp.Month" -->
-        <!-- Badly formed XML comment ignored for member "P:Goedel.Contacts.TimeStamp.Day" -->
+        <member name="P:Goedel.Contacts.TimeStamp.Month">
+            <summary>
+            The calendar month, represented as the integers 1 &lt;= month &lt;= 12. If 
+            this property is set, then either the year or the day property MUST be set.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.TimeStamp.Day">
+            <summary>
+            The calendar month day, represented as the integers 1 &lt;= day &lt;= 31, 
+            depending on the validity within the month and year. If this property 
+            is set, then the month property MUST be set.
+            </summary>
+        </member>
         <member name="P:Goedel.Contacts.TimeStamp.CalendarScale">
             <summary>
             The calendar system in which this date occurs, in lowercase. This 
