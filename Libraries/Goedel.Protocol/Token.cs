@@ -837,12 +837,13 @@ public record PropertyDictionaryStruct(
             string Tag,
             Action<IBinding, object?> Set,
             Func<IBinding, object?> Get,
-            bool Tagged = false,
-            Func<object> Factory = null,
-            Func<object> IFactory = null,
-            Func<IBinding, IEnumerable<KeyValuePair<string, object?>>> Enumerator=null
-    
-    
+            bool Tagged,
+            Func<object> Factory,
+            Func<object> IFactory,
+            Func<IBinding, IEnumerable<KeyValuePair<string, object?>>> Enumerator,
+            Action<object, object, object> Add = null
+
+
     ) : Property(Tag, true) {
 
     ///<inheritdoc/>

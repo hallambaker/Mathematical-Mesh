@@ -42,6 +42,7 @@ public partial class Jmap {
     public static Jmap Test() => new();
     [Fact]
     public void TestContactAlice() {
+        JsonReader.Trace = true;
 
         var contact = new JsContact() {
             Version = "1.0",

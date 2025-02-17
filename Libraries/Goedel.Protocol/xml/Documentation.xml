@@ -5428,7 +5428,7 @@
             object in the collection.</param>
             <param name="Tagged">If true, the property should be tagged.</param>
         </member>
-        <member name="M:Goedel.Protocol.PropertyDictionaryStruct.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Object},System.Func{Goedel.Protocol.IBinding,System.Object},System.Boolean,System.Func{System.Object},System.Func{System.Object},System.Func{Goedel.Protocol.IBinding,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}}})">
+        <member name="M:Goedel.Protocol.PropertyDictionaryStruct.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Object},System.Func{Goedel.Protocol.IBinding,System.Object},System.Boolean,System.Func{System.Object},System.Func{System.Object},System.Func{Goedel.Protocol.IBinding,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}}},System.Action{System.Object,System.Object,System.Object})">
             <summary>
             Metadata record representing a property.
             </summary>

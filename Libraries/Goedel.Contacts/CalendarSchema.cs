@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/16/2025 6:04:41 PM
+//  This file was automatically generated at 2/17/2025 12:42:06 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -179,7 +179,10 @@ public partial class JmapBase : Calandars {
 					(IBinding data, string? value) => {(data as JmapBase).Uid = value;}, (IBinding data) => (data as JmapBase).Uid )},
 			{ "RelatedTo", new PropertyDictionaryStruct ("RelatedTo", 
 					(IBinding data, object? value) => {(data as JmapBase).RelatedTo = value as Dictionary<string,Relation>;}, (IBinding data) => (data as JmapBase).RelatedTo,
-					false, ()=>new  Dictionary<string,Relation>(), ()=>new Relation())} ,
+					false, ()=>new  Dictionary<string,Relation>(), ()=>new Relation(),
+					(IBinding data) => (data as JmapBase).RelatedTo.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,Relation>).Add (key as string,value as Relation);})},
 			{ "ProdId", new PropertyString ("ProdId", 
 					(IBinding data, string? value) => {(data as JmapBase).ProdId = value;}, (IBinding data) => (data as JmapBase).ProdId )},
 			{ "Created", new PropertyDateTime ("Created", 
@@ -554,13 +557,22 @@ public partial class CalendarEntry : JmapBase {
 					(IBinding data, bool? value) => {(data as CalendarEntry).ShowWithoutTime = value;}, (IBinding data) => (data as CalendarEntry).ShowWithoutTime )},
 			{ "Locations", new PropertyDictionaryStruct ("Locations", 
 					(IBinding data, object? value) => {(data as CalendarEntry).Locations = value as Dictionary<string,Location>;}, (IBinding data) => (data as CalendarEntry).Locations,
-					false, ()=>new  Dictionary<string,Location>(), ()=>new Location())} ,
+					false, ()=>new  Dictionary<string,Location>(), ()=>new Location(),
+					(IBinding data) => (data as CalendarEntry).Locations.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,Location>).Add (key as string,value as Location);})},
 			{ "VirtualLocations", new PropertyDictionaryStruct ("VirtualLocations", 
 					(IBinding data, object? value) => {(data as CalendarEntry).VirtualLocations = value as Dictionary<string,VirtualLocation>;}, (IBinding data) => (data as CalendarEntry).VirtualLocations,
-					false, ()=>new  Dictionary<string,VirtualLocation>(), ()=>new VirtualLocation())} ,
+					false, ()=>new  Dictionary<string,VirtualLocation>(), ()=>new VirtualLocation(),
+					(IBinding data) => (data as CalendarEntry).VirtualLocations.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,VirtualLocation>).Add (key as string,value as VirtualLocation);})},
 			{ "links", new PropertyDictionaryStruct ("links", 
 					(IBinding data, object? value) => {(data as CalendarEntry).links = value as Dictionary<string,Link>;}, (IBinding data) => (data as CalendarEntry).links,
-					false, ()=>new  Dictionary<string,Link>(), ()=>new Link())} ,
+					false, ()=>new  Dictionary<string,Link>(), ()=>new Link(),
+					(IBinding data) => (data as CalendarEntry).links.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,Link>).Add (key as string,value as Link);})},
 			{ "Locale", new PropertyString ("Locale", 
 					(IBinding data, string? value) => {(data as CalendarEntry).Locale = value;}, (IBinding data) => (data as CalendarEntry).Locale )},
 			{ "Keywords", new PropertyDictionaryBoolean ("Keywords", 
@@ -575,13 +587,16 @@ public partial class CalendarEntry : JmapBase {
 					(IBinding data, string? value) => {(data as CalendarEntry).RecurrenceIdTimeZone = value;}, (IBinding data) => (data as CalendarEntry).RecurrenceIdTimeZone )},
 			{ "RecurrenceRules", new PropertyListStruct ("RecurrenceRules", 
 					(IBinding data, object? value) => {(data as CalendarEntry).RecurrenceRules = value as List<RecurrenceRule>;}, (IBinding data) => (data as CalendarEntry).RecurrenceRules,
-					false, ()=>new  List<RecurrenceRule>(), ()=>new RecurrenceRule())} ,
+					false, ()=>new  List<RecurrenceRule>(), ()=>new RecurrenceRule())},
 			{ "ExcludedRecurrenceRules", new PropertyListStruct ("ExcludedRecurrenceRules", 
 					(IBinding data, object? value) => {(data as CalendarEntry).ExcludedRecurrenceRules = value as List<RecurrenceRule>;}, (IBinding data) => (data as CalendarEntry).ExcludedRecurrenceRules,
-					false, ()=>new  List<RecurrenceRule>(), ()=>new RecurrenceRule())} ,
+					false, ()=>new  List<RecurrenceRule>(), ()=>new RecurrenceRule())},
 			{ "RecurrenceOverrides", new PropertyDictionaryStruct ("RecurrenceOverrides", 
 					(IBinding data, object? value) => {(data as CalendarEntry).RecurrenceOverrides = value as Dictionary<string,PatchObject>;}, (IBinding data) => (data as CalendarEntry).RecurrenceOverrides,
-					false, ()=>new  Dictionary<string,PatchObject>(), ()=>new PatchObject())} ,
+					false, ()=>new  Dictionary<string,PatchObject>(), ()=>new PatchObject(),
+					(IBinding data) => (data as CalendarEntry).RecurrenceOverrides.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,PatchObject>).Add (key as string,value as PatchObject);})},
 			{ "Excluded", new PropertyBoolean ("Excluded", 
 					(IBinding data, bool? value) => {(data as CalendarEntry).Excluded = value;}, (IBinding data) => (data as CalendarEntry).Excluded )},
 			{ "Priority", new PropertyInteger32 ("Priority", 
@@ -596,22 +611,34 @@ public partial class CalendarEntry : JmapBase {
 					(IBinding data, string? value) => {(data as CalendarEntry).SentBy = value;}, (IBinding data) => (data as CalendarEntry).SentBy )},
 			{ "Participants", new PropertyDictionaryStruct ("Participants", 
 					(IBinding data, object? value) => {(data as CalendarEntry).Participants = value as Dictionary<string,Participant>;}, (IBinding data) => (data as CalendarEntry).Participants,
-					false, ()=>new  Dictionary<string,Participant>(), ()=>new Participant())} ,
+					false, ()=>new  Dictionary<string,Participant>(), ()=>new Participant(),
+					(IBinding data) => (data as CalendarEntry).Participants.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,Participant>).Add (key as string,value as Participant);})},
 			{ "RequestStatus", new PropertyString ("RequestStatus", 
 					(IBinding data, string? value) => {(data as CalendarEntry).RequestStatus = value;}, (IBinding data) => (data as CalendarEntry).RequestStatus )},
 			{ "UseDefaultAlerts", new PropertyBoolean ("UseDefaultAlerts", 
 					(IBinding data, bool? value) => {(data as CalendarEntry).UseDefaultAlerts = value;}, (IBinding data) => (data as CalendarEntry).UseDefaultAlerts )},
 			{ "Alerts", new PropertyDictionaryStruct ("Alerts", 
 					(IBinding data, object? value) => {(data as CalendarEntry).Alerts = value as Dictionary<string,Alert>;}, (IBinding data) => (data as CalendarEntry).Alerts,
-					false, ()=>new  Dictionary<string,Alert>(), ()=>new Alert())} ,
+					false, ()=>new  Dictionary<string,Alert>(), ()=>new Alert(),
+					(IBinding data) => (data as CalendarEntry).Alerts.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,Alert>).Add (key as string,value as Alert);})},
 			{ "Localizations", new PropertyDictionaryStruct ("Localizations", 
 					(IBinding data, object? value) => {(data as CalendarEntry).Localizations = value as Dictionary<string,PatchObject>;}, (IBinding data) => (data as CalendarEntry).Localizations,
-					false, ()=>new  Dictionary<string,PatchObject>(), ()=>new PatchObject())} ,
+					false, ()=>new  Dictionary<string,PatchObject>(), ()=>new PatchObject(),
+					(IBinding data) => (data as CalendarEntry).Localizations.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,PatchObject>).Add (key as string,value as PatchObject);})},
 			{ "TimeZone", new PropertyString ("TimeZone", 
 					(IBinding data, string? value) => {(data as CalendarEntry).TimeZone = value;}, (IBinding data) => (data as CalendarEntry).TimeZone )},
 			{ "TimeZones", new PropertyDictionaryStruct ("TimeZones", 
 					(IBinding data, object? value) => {(data as CalendarEntry).TimeZones = value as Dictionary<string,TimeZone>;}, (IBinding data) => (data as CalendarEntry).TimeZones,
-					false, ()=>new  Dictionary<string,TimeZone>(), ()=>new TimeZone())} 
+					false, ()=>new  Dictionary<string,TimeZone>(), ()=>new TimeZone(),
+					(IBinding data) => (data as CalendarEntry).TimeZones.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,TimeZone>).Add (key as string,value as TimeZone);})}
         }, __Tag,() => new CalendarEntry(), JmapBase._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -936,7 +963,7 @@ public partial class Group : JmapBase {
 
 			{ "Entries", new PropertyListStruct ("Entries", 
 					(IBinding data, object? value) => {(data as Group).Entries = value as List<JmapBase>;}, (IBinding data) => (data as Group).Entries,
-					false, ()=>new  List<JmapBase>(), ()=>new JmapBase())} ,
+					false, ()=>new  List<JmapBase>(), ()=>new JmapBase())},
 			{ "Source", new PropertyString ("Source", 
 					(IBinding data, string? value) => {(data as Group).Source = value;}, (IBinding data) => (data as Group).Source )}
         }, __Tag,() => new Group(), JmapBase._binding);
@@ -1088,7 +1115,10 @@ public partial class Location : Calandars {
 					(IBinding data, string? value) => {(data as Location).Coordinates = value;}, (IBinding data) => (data as Location).Coordinates )},
 			{ "Link", new PropertyDictionaryStruct ("Link", 
 					(IBinding data, object? value) => {(data as Location).Link = value as Dictionary<string,Link>;}, (IBinding data) => (data as Location).Link,
-					false, ()=>new  Dictionary<string,Link>(), ()=>new Link())} 
+					false, ()=>new  Dictionary<string,Link>(), ()=>new Link(),
+					(IBinding data) => (data as Location).Link.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,Link>).Add (key as string,value as Link);})}
         }, __Tag,() => new Location(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1653,7 +1683,10 @@ public partial class Participant : Calandars {
 					(IBinding data, Dictionary<string,bool>? value) => {(data as Participant).memberOf = value;}, (IBinding data) => (data as Participant).memberOf )},
 			{ "links", new PropertyDictionaryStruct ("links", 
 					(IBinding data, object? value) => {(data as Participant).links = value as Dictionary<string,Link>;}, (IBinding data) => (data as Participant).links,
-					false, ()=>new  Dictionary<string,Link>(), ()=>new Link())} ,
+					false, ()=>new  Dictionary<string,Link>(), ()=>new Link(),
+					(IBinding data) => (data as Participant).links.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,Link>).Add (key as string,value as Link);})},
 			{ "progress", new PropertyString ("progress", 
 					(IBinding data, string? value) => {(data as Participant).progress = value;}, (IBinding data) => (data as Participant).progress )},
 			{ "progressUpdated", new PropertyDateTime ("progressUpdated", 
@@ -1890,7 +1923,7 @@ public partial class RecurrenceRule : Calandars {
 					(IBinding data, string? value) => {(data as RecurrenceRule).firstDayOfWeek = value;}, (IBinding data) => (data as RecurrenceRule).firstDayOfWeek )},
 			{ "byDay", new PropertyListStruct ("byDay", 
 					(IBinding data, object? value) => {(data as RecurrenceRule).byDay = value as List<NDay>;}, (IBinding data) => (data as RecurrenceRule).byDay,
-					false, ()=>new  List<NDay>(), ()=>new NDay())} ,
+					false, ()=>new  List<NDay>(), ()=>new NDay())},
 			{ "nthOfPeriod", new PropertyInteger32 ("nthOfPeriod", 
 					(IBinding data, int? value) => {(data as RecurrenceRule).nthOfPeriod = value;}, (IBinding data) => (data as RecurrenceRule).nthOfPeriod )},
 			{ "byMonthDay", new PropertyListInteger32 ("byMonthDay", 
@@ -2119,12 +2152,15 @@ public partial class Alert : Calandars {
 					(IBinding data, string? value) => {(data as Alert).Type = value;}, (IBinding data) => (data as Alert).Type )},
 			{ "Trigger", new PropertyStruct ("Trigger", 
 					(IBinding data, object? value) => {(data as Alert).Trigger = value as Trigger;}, (IBinding data) => (data as Alert).Trigger,
-					false, ()=>new  Trigger(), ()=>new Trigger())} ,
+					false, ()=>new  Trigger(), ()=>new Trigger())},
 			{ "acknowledged", new PropertyDateTime ("acknowledged", 
 					(IBinding data, DateTime? value) => {(data as Alert).acknowledged = value;}, (IBinding data) => (data as Alert).acknowledged )},
 			{ "relatedTo", new PropertyDictionaryStruct ("relatedTo", 
 					(IBinding data, object? value) => {(data as Alert).relatedTo = value as Dictionary<string,Relation>;}, (IBinding data) => (data as Alert).relatedTo,
-					false, ()=>new  Dictionary<string,Relation>(), ()=>new Relation())} ,
+					false, ()=>new  Dictionary<string,Relation>(), ()=>new Relation(),
+					(IBinding data) => (data as Alert).relatedTo.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,Relation>).Add (key as string,value as Relation);})},
 			{ "action", new PropertyString ("action", 
 					(IBinding data, string? value) => {(data as Alert).action = value;}, (IBinding data) => (data as Alert).action )}
         }, __Tag,() => new Alert(), null);
@@ -2377,10 +2413,10 @@ public partial class TimeZone : Calandars {
 					(IBinding data, Dictionary<string,bool>? value) => {(data as TimeZone).aliases = value;}, (IBinding data) => (data as TimeZone).aliases )},
 			{ "standard", new PropertyListStruct ("standard", 
 					(IBinding data, object? value) => {(data as TimeZone).standard = value as List<TimeZoneRule>;}, (IBinding data) => (data as TimeZone).standard,
-					false, ()=>new  List<TimeZoneRule>(), ()=>new TimeZoneRule())} ,
+					false, ()=>new  List<TimeZoneRule>(), ()=>new TimeZoneRule())},
 			{ "daylight", new PropertyListStruct ("daylight", 
 					(IBinding data, object? value) => {(data as TimeZone).daylight = value as List<TimeZoneRule>;}, (IBinding data) => (data as TimeZone).daylight,
-					false, ()=>new  List<TimeZoneRule>(), ()=>new TimeZoneRule())} 
+					false, ()=>new  List<TimeZoneRule>(), ()=>new TimeZoneRule())}
         }, __Tag,() => new TimeZone(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -2521,10 +2557,13 @@ public partial class TimeZoneRule : Calandars {
 					(IBinding data, string? value) => {(data as TimeZoneRule).OffsetTo = value;}, (IBinding data) => (data as TimeZoneRule).OffsetTo )},
 			{ "RecurrenceRules", new PropertyListStruct ("RecurrenceRules", 
 					(IBinding data, object? value) => {(data as TimeZoneRule).RecurrenceRules = value as List<RecurrenceRule>;}, (IBinding data) => (data as TimeZoneRule).RecurrenceRules,
-					false, ()=>new  List<RecurrenceRule>(), ()=>new RecurrenceRule())} ,
+					false, ()=>new  List<RecurrenceRule>(), ()=>new RecurrenceRule())},
 			{ "RecurrenceOverrides", new PropertyDictionaryStruct ("RecurrenceOverrides", 
 					(IBinding data, object? value) => {(data as TimeZoneRule).RecurrenceOverrides = value as Dictionary<string,EmptyPatchObject>;}, (IBinding data) => (data as TimeZoneRule).RecurrenceOverrides,
-					false, ()=>new  Dictionary<string,EmptyPatchObject>(), ()=>new EmptyPatchObject())} ,
+					false, ()=>new  Dictionary<string,EmptyPatchObject>(), ()=>new EmptyPatchObject(),
+					(IBinding data) => (data as TimeZoneRule).RecurrenceOverrides.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,EmptyPatchObject>).Add (key as string,value as EmptyPatchObject);})},
 			{ "Names", new PropertyDictionaryBoolean ("Names", 
 					(IBinding data, Dictionary<string,bool>? value) => {(data as TimeZoneRule).Names = value;}, (IBinding data) => (data as TimeZoneRule).Names )},
 			{ "Comments", new PropertyListString ("Comments", 

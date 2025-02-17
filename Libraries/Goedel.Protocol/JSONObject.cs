@@ -615,6 +615,26 @@ public abstract partial class JsonObject : IBinding {
                     propertyTyped.Set(this, array);
                     break;
                     }
+                case PropertyDictionaryStruct propertyTyped: {
+                    var dictionary = propertyTyped.Factory();
+                    bool going = jsonReader.StartObject();
+                    while (going) {
+                        string Token = jsonReader.ReadToken();
+                        var value = propertyTyped.IFactory() as JsonObject;
+                        value.Deserialize(jsonReader);
+
+                        propertyTyped.Add(dictionary, Token, value);
+
+                        going = jsonReader.NextObject();
+                        }
+
+                    break;
+                    }
+
+                default: {
+
+                    break;
+                    }
                 }
             }
         else {
