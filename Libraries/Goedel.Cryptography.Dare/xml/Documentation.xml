@@ -80,7 +80,7 @@
             Default constructor.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.CryptoParameters.#ctor(Goedel.Cryptography.IKeyLocate,System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Cryptography.Dare.CryptoParameters.#ctor(Goedel.Cryptography.IKeyLocate,System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Create a CryptoParameters instance to encode data for the specified recipients and
             signers using the specified KeyCollection to resolve the identifiers.
@@ -95,7 +95,7 @@
             <param name="digestID">The digest algorithm to be applied to the message
             encoding.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.CryptoParameters.#ctor(System.Collections.Generic.List{Goedel.Cryptography.CryptoKey},System.Collections.Generic.List{Goedel.Cryptography.CryptoKey},Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Cryptography.Dare.CryptoParameters.#ctor(System.Collections.Generic.List{Goedel.Cryptography.CryptographicKey},System.Collections.Generic.List{Goedel.Cryptography.CryptographicKey},Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Constructor, return an instance with the set of recipients <paramref name="recipients"/>,
             signers <paramref name="signers"/>, encryption algorithm <paramref name="encryptID"/> and
@@ -1206,7 +1206,7 @@
             Default constructor. Used for serializatrion.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareRecipient.#ctor(System.Byte[],Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Cryptography.Dare.DareRecipient.#ctor(System.Byte[],Goedel.Cryptography.CryptographicKey)">
             <summary>
             Create a DARERecipient using the specified cryptographic parameters.
             </summary>
@@ -1415,7 +1415,7 @@
             <param name="contentType">The content type.</param>
             <returns>The new envelope</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Encode(System.Byte[],Goedel.Cryptography.Dare.ContentMeta,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey,System.Byte[],System.Collections.Generic.List{System.Byte[]})">
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Encode(System.Byte[],Goedel.Cryptography.Dare.ContentMeta,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,System.Byte[],System.Collections.Generic.List{System.Byte[]})">
             <summary>
             Create a new DARE Message from the specified parameters.
             </summary>
@@ -1637,7 +1637,7 @@
             <exception cref="T:Goedel.Cryptography.Dare.EnvelopeSignatureMissing">The specified
             signature could not be found.</exception>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.FindSignature(Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.FindSignature(Goedel.Cryptography.CryptographicKey)">
             <summary>
             Find a signature whose key identifier matches <paramref name="key"/>
             </summary>
@@ -2493,7 +2493,7 @@
             <param name="encrypt">The bulk encryption algorithm.</param>
             <param name="digest">The bulk digest algorithm.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DarePolicy.#ctor(Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Cryptography.Dare.DarePolicy.#ctor(Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Convenience constructor to create a policy to be used to encode a Sequence.
             </summary>
@@ -2883,7 +2883,7 @@
             Default constructor for use in deserialization.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareSignature.#ctor(Goedel.Cryptography.CryptoKey,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Boolean)">
+        <member name="M:Goedel.Cryptography.Dare.DareSignature.#ctor(Goedel.Cryptography.CryptographicKey,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Boolean)">
             <summary>
             Sign the digest value <paramref name="ManifestValue"/> with 
             <paramref name="signerKey"/> and create a DARESignature
@@ -2895,7 +2895,7 @@
             <paramref name="ManifestValue"/> (if required).</param>
             <param name="includeSignatureKey">If true, include the public key of the signer.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareSignature.Verify(Goedel.Cryptography.CryptoKey,System.Byte[])">
+        <member name="M:Goedel.Cryptography.Dare.DareSignature.Verify(Goedel.Cryptography.CryptographicKey,System.Byte[])">
             <summary>
             Verify the signature with manifest value <paramref name="ManifestValue"/> under
             <paramref name="signerKey"/>
@@ -3406,7 +3406,7 @@
             <param name="dataSequences">Data sequences to be converted to an EDS and presented 
                 as an EDSS header entry.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Enveloped`1.#ctor(`0,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.ObjectEncoding)">
+        <member name="M:Goedel.Cryptography.Dare.Enveloped`1.#ctor(`0,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.ObjectEncoding)">
             <summary>
             Constructor returining an envelope containing the object <paramref name="data"/>
             optionally encrypted under <paramref name="encryptionKey"/> and signed under
@@ -4145,7 +4145,7 @@
             Extension methods
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Extension.Enveloped``1(``0,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.ObjectEncoding)">
+        <member name="M:Goedel.Cryptography.Dare.Extension.Enveloped``1(``0,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.ObjectEncoding)">
             <summary>
             Returns a new typed envelope containing the object <paramref name="data"/>
             optionally encrypted under <paramref name="encryptionKey"/> and signed under
@@ -5051,7 +5051,7 @@
             </summary>
             <param name="jsonObject">Object to create</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.PrepareUpdate(Goedel.Cryptography.Dare.PersistentIndexEntry@,Goedel.Protocol.JsonObject,System.Boolean,Goedel.Cryptography.CryptoKey,System.Collections.Generic.List{Goedel.Cryptography.KeyPair})">
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.PrepareUpdate(Goedel.Cryptography.Dare.PersistentIndexEntry@,Goedel.Protocol.JsonObject,System.Boolean,Goedel.Cryptography.CryptographicKey,System.Collections.Generic.List{Goedel.Cryptography.KeyPair})">
             <summary>
             Create a Sequence header to update an existing persistence entry
             </summary>

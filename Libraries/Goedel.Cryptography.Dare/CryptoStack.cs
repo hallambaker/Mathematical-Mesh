@@ -65,7 +65,7 @@ public abstract partial class CryptoStack {
     /// <summary>
     /// The Keys to be used to sign the message. 
     /// </summary>
-    public abstract List<CryptoKey> SignerKeys { get; }
+    public abstract List<CryptographicKey> SignerKeys { get; }
 
     /// <summary>
     /// The base seed provided as a verbatim value or provided through a key exchange to be 

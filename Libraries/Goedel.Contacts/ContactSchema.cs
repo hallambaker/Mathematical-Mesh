@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/17/2025 2:14:55 PM
+//  This file was automatically generated at 2/18/2025 12:54:14 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -130,6 +130,7 @@ public abstract partial class Contacts : global::Goedel.Protocol.JsonObject {
 
 
 	// Transaction Classes
+
 	/// <summary>
 	///
 	///  Metadata, see section 2.1
@@ -507,6 +508,7 @@ public partial class JsContact : JmapBase {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class Relation : Contacts {
@@ -587,6 +589,7 @@ public partial class Relation : Contacts {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class Resource : Contacts {
@@ -634,7 +637,7 @@ public partial class Resource : Contacts {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "@type", new PropertyString ("@type", 
+			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as Resource).Type = value;}, (IBinding data) => (data as Resource).Type )},
 			{ "kind", new PropertyString ("kind", 
 					(IBinding data, string? value) => {(data as Resource).Kind = value;}, (IBinding data) => (data as Resource).Kind )},
@@ -705,6 +708,7 @@ public partial class Resource : Contacts {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -859,6 +863,7 @@ public partial class Name : Contacts {
 
 	}
 
+
 	/// <summary>
 	///
 	/// A NameComponent object
@@ -970,6 +975,7 @@ public partial class NameComponent : Contacts {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class NickName : Contacts {
@@ -1072,6 +1078,7 @@ public partial class NickName : Contacts {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1190,6 +1197,7 @@ public partial class Organization : Contacts {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class OrgUnit : Contacts {
@@ -1282,6 +1290,7 @@ public partial class OrgUnit : Contacts {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1384,6 +1393,7 @@ public partial class SpeakToAs : Contacts {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1490,6 +1500,7 @@ public partial class Pronouns : Contacts {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class Title : Contacts {
@@ -1594,6 +1605,7 @@ public partial class Title : Contacts {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1706,6 +1718,7 @@ public partial class EmailAddress : Contacts {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1839,6 +1852,7 @@ public partial class OnlineService : Contacts {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class Phone : Contacts {
@@ -1971,6 +1985,7 @@ public partial class Phone : Contacts {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class LanguagePref : Contacts {
@@ -2074,6 +2089,7 @@ public partial class LanguagePref : Contacts {
 
 	}
 
+
 	/// <summary>
 	///
 	///  The calendaring resources of the entity represented by the Card, such as 
@@ -2149,6 +2165,7 @@ public partial class Calendar : Resource {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -2263,6 +2280,7 @@ public partial class SchedulingAddress : Contacts {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -2444,6 +2462,7 @@ public partial class Address : Contacts {
 
 	}
 
+
 	/// <summary>
 	///
 	///  
@@ -2551,6 +2570,7 @@ public partial class AddressComponent : Contacts {
 
 	}
 
+
 	/// <summary>
 	///
 	/// The cryptographic resources such as public keys and certificates associated 
@@ -2626,6 +2646,7 @@ public partial class CryptoKey : Resource {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -2714,6 +2735,7 @@ public partial class Directory : Resource {
 
 	}
 
+
 	/// <summary>
 	///
 	///  The links to resources that do not fit any of the other use-case-specific resource properties.
@@ -2788,6 +2810,7 @@ public partial class ResourceLink : Resource {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -2865,6 +2888,7 @@ public partial class Media : Resource {
 
 	}
 
+
 	/// <summary>
 	///
 	///  A ContactCard used to overwrite parts of a contact card.
@@ -2939,6 +2963,7 @@ public partial class PatchObject : JmapBase {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -3049,6 +3074,7 @@ public partial class Anniversary : Contacts {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -3179,6 +3205,7 @@ public partial class TimeStamp : Contacts {
 
 	}
 
+
 	/// <summary>
 	///
 	///  A free-text note that is associated with the Card.
@@ -3285,6 +3312,7 @@ public partial class Note : Contacts {
 
 	}
 
+
 	/// <summary>
 	///
 	///  The author of a note.
@@ -3382,6 +3410,7 @@ public partial class Author : Contacts {
 
 
 	}
+
 
 	/// <summary>
 	///

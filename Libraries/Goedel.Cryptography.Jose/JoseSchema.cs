@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/17/2025 5:48:54 PM
+//  This file was automatically generated at 2/18/2025 10:46:20 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -159,12 +159,12 @@ public partial class JoseWebSignature : Jose {
 
 			{ "unprotected", new PropertyStruct ("unprotected", 
 					(IBinding data, object? value) => {(data as JoseWebSignature).Unprotected = value as Header;}, (IBinding data) => (data as JoseWebSignature).Unprotected,
-					false, ()=>new  Header(), ()=>new Header())} ,
+					false, ()=>new  Header(), ()=>new Header())},
 			{ "payload", new PropertyBinary ("payload", 
 					(IBinding data, byte[]? value) => {(data as JoseWebSignature).Payload = value;}, (IBinding data) => (data as JoseWebSignature).Payload )},
 			{ "signatures", new PropertyListStruct ("signatures", 
 					(IBinding data, object? value) => {(data as JoseWebSignature).Signatures = value as List<Signature>;}, (IBinding data) => (data as JoseWebSignature).Signatures,
-					false, ()=>new  List<Signature>(), ()=>new Signature())} 
+					false, ()=>new  List<Signature>(), ()=>new Signature())}
         }, __Tag,() => new JoseWebSignature(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -286,7 +286,7 @@ public partial class JoseWebEncryption : JoseWebSignature {
 					(IBinding data, byte[]? value) => {(data as JoseWebEncryption).IV = value;}, (IBinding data) => (data as JoseWebEncryption).IV )},
 			{ "recipients", new PropertyListStruct ("recipients", 
 					(IBinding data, object? value) => {(data as JoseWebEncryption).Recipients = value as List<Recipient>;}, (IBinding data) => (data as JoseWebEncryption).Recipients,
-					false, ()=>new  List<Recipient>(), ()=>new Recipient())} ,
+					false, ()=>new  List<Recipient>(), ()=>new Recipient())},
 			{ "encrypted_key", new PropertyBinary ("encrypted_key", 
 					(IBinding data, byte[]? value) => {(data as JoseWebEncryption).EncryptedKey = value;}, (IBinding data) => (data as JoseWebEncryption).EncryptedKey )},
 			{ "aad", new PropertyBinary ("aad", 
@@ -494,7 +494,7 @@ public partial class Encrypted : Jose {
 
 			{ "header", new PropertyStruct ("header", 
 					(IBinding data, object? value) => {(data as Encrypted).Header = value as Header;}, (IBinding data) => (data as Encrypted).Header,
-					false, ()=>new  Header(), ()=>new Header())} ,
+					false, ()=>new  Header(), ()=>new Header())},
 			{ "iv", new PropertyBinary ("iv", 
 					(IBinding data, byte[]? value) => {(data as Encrypted).IV = value;}, (IBinding data) => (data as Encrypted).IV )},
 			{ "ciphertext", new PropertyBinary ("ciphertext", 
@@ -875,7 +875,7 @@ public partial class Signature : Jose {
 
 			{ "header", new PropertyStruct ("header", 
 					(IBinding data, object? value) => {(data as Signature).Header = value as Header;}, (IBinding data) => (data as Signature).Header,
-					false, ()=>new  Header(), ()=>new Header())} ,
+					false, ()=>new  Header(), ()=>new Header())},
 			{ "protected", new PropertyBinary ("protected", 
 					(IBinding data, byte[]? value) => {(data as Signature).Protected = value;}, (IBinding data) => (data as Signature).Protected )},
 			{ "signature", new PropertyBinary ("signature", 
@@ -1175,7 +1175,7 @@ public partial class Recipient : Jose {
 
 			{ "Header", new PropertyStruct ("Header", 
 					(IBinding data, object? value) => {(data as Recipient).Header = value as Header;}, (IBinding data) => (data as Recipient).Header,
-					false, ()=>new  Header(), ()=>new Header())} ,
+					false, ()=>new  Header(), ()=>new Header())},
 			{ "encrypted_key", new PropertyBinary ("encrypted_key", 
 					(IBinding data, byte[]? value) => {(data as Recipient).EncryptedKey = value;}, (IBinding data) => (data as Recipient).EncryptedKey )}
         }, __Tag,() => new Recipient(), null);

@@ -153,7 +153,7 @@ public static partial class Extensions {
     /// <returns>KeyData for the public parameters of the derrived key.</returns>
     /// <param name="info">Additional info.</param>
     /// <returns>The key set.</returns>
-    public static List<CryptoKey> GenerateKeySet(
+    public static List<CryptographicKey> GenerateKeySet(
                 this PrivateKeyUDF secretSeed,
                 MeshKeyType type,
                 MeshActor actor,
@@ -162,7 +162,7 @@ public static partial class Extensions {
                 KeySecurity keySecurity = KeySecurity.Ephemeral,
                 string info = null
                 ) {
-        var result = new List<CryptoKey>();
+        var result = new List<CryptographicKey>();
         var keyName = type.ToLabel() + actor.ToLabel() + operation.ToLabel() + (info ?? "");
         var keyUses = GetMeshKeyType(operation);
         var x = secretSeed.AlgorithmRootSignIds;

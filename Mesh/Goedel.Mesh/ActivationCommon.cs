@@ -86,7 +86,7 @@ public partial class ActivationCommon {
     // Properties providing access to account-wide keys.
 
     ///<summary>List of profile signature keys.</summary> 
-    public List<CryptoKey> KeyProfileSigners { get; private set; }
+    public List<CryptographicKey> KeyProfileSigners { get; private set; }
 
     ///<summary>The device identifier.</summary> 
     public string AccountDeviceId => CommonAuthenticationKey.KeyIdentifier;

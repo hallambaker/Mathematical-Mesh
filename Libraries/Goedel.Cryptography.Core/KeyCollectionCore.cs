@@ -179,7 +179,7 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
         }
 
     ///<inheritdoc/>
-    public override bool LocatePrivateKeyPair(string udf, out CryptoKey cryptoKey) {
+    public override bool LocatePrivateKeyPair(string udf, out CryptographicKey cryptoKey) {
         if (base.LocatePrivateKeyPair (udf, out cryptoKey)) {
             return true;
             }

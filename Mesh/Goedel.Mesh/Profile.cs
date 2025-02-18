@@ -36,7 +36,7 @@ public partial class Profile {
     #region // Properties
 
     ///<summary>List of signing keys used to sign the profile.</summary> 
-    public List<CryptoKey> KeyProfileSigners { get; protected set; } 
+    public List<CryptographicKey> KeyProfileSigners { get; protected set; } 
 
     ///<summary>The key contribution type</summary> 
     public virtual MeshKeyType MeshKeyType => Goedel.Mesh.MeshKeyType.Base;

@@ -213,7 +213,7 @@ public abstract class Catalog<T> : Store, IEnumerable<T>, INotifyCollectionChang
     /// </summary>
     /// <param name="catalogEntry">The entry to update.</param>
     /// <param name="encryptionKey">Key under which the item is to be encrypted.</param>
-    public void Update(T catalogEntry, CryptoKey encryptionKey = null) {
+    public void Update(T catalogEntry, CryptographicKey encryptionKey = null) {
         Validate(catalogEntry, false);
         var envelope = PersistenceStore.PrepareUpdate(out _, catalogEntry, encryptionKey: encryptionKey);
         PersistenceStore.Apply(envelope);

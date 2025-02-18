@@ -1071,7 +1071,7 @@
             <returns>The matching keypair</returns>
             <param name="keyCollection">The key collection that keys are to be persisted to </param>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.JoseWebEncryption.Decrypt(Goedel.Cryptography.CryptoKey,Goedel.Cryptography.Jose.Recipient)">
+        <member name="M:Goedel.Cryptography.Jose.JoseWebEncryption.Decrypt(Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.Jose.Recipient)">
             <summary>
             Decrypt the content using the specified private key.
             </summary>
@@ -1096,7 +1096,7 @@
             <param name="Info">Recipient information</param>
             <returns>The decrypted data</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.JoseWebEncryption.MatchRecipient(Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Cryptography.Jose.JoseWebEncryption.MatchRecipient(Goedel.Cryptography.CryptographicKey)">
             <summary>
             Match a recipient header by key.
             </summary>
@@ -1591,14 +1591,14 @@
             <param name="keyCollection">The key collection to add the key to.</param>
             <returns>The extracted key pair</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.Key.GetPublic(Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Cryptography.Jose.Key.GetPublic(Goedel.Cryptography.CryptographicKey)">
             <summary>
             Return the public portion of the key pair.
             </summary>
             <param name="keyPair">The key pair.</param>
             <returns>Public portion.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.Key.GetPrivate(Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Cryptography.Jose.Key.GetPrivate(Goedel.Cryptography.CryptographicKey)">
             <summary>
             Return the private portion of the keypair.
             </summary>

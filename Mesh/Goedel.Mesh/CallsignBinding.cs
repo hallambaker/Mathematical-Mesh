@@ -75,7 +75,7 @@ public partial class CallsignBinding {
     /// </summary>
     /// <returns>The mesh encryption key.</returns>
     /// <exception cref="NYI"></exception>
-    public CryptoKey GetEncryptionKey() => CommonEncryption?.CryptoKey;
+    public CryptographicKey GetEncryptionKey() => CommonEncryption?.CryptoKey;
 
     }
 

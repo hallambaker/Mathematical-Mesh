@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/17/2025 5:48:55 PM
+//  This file was automatically generated at 2/18/2025 10:46:21 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -159,12 +159,12 @@ public partial class DareEnvelopeSequence : Dare {
 
 			{ "Header", new PropertyStruct ("Header", 
 					(IBinding data, object? value) => {(data as DareEnvelopeSequence).Header = value as DareHeader;}, (IBinding data) => (data as DareEnvelopeSequence).Header,
-					false, ()=>new  DareHeader(), ()=>new DareHeader())} ,
+					false, ()=>new  DareHeader(), ()=>new DareHeader())},
 			{ "Body", new PropertyBinary ("Body", 
 					(IBinding data, byte[]? value) => {(data as DareEnvelopeSequence).Body = value;}, (IBinding data) => (data as DareEnvelopeSequence).Body )},
 			{ "Trailer", new PropertyStruct ("Trailer", 
 					(IBinding data, object? value) => {(data as DareEnvelopeSequence).Trailer = value as DareTrailer;}, (IBinding data) => (data as DareEnvelopeSequence).Trailer,
-					false, ()=>new  DareTrailer(), ()=>new DareTrailer())} 
+					false, ()=>new  DareTrailer(), ()=>new DareTrailer())}
         }, __Tag,() => new DareEnvelopeSequence(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -397,10 +397,10 @@ public partial class DareTrailer : DareSignatureHeader {
 
 			{ "signatures", new PropertyListStruct ("signatures", 
 					(IBinding data, object? value) => {(data as DareTrailer).Signatures = value as List<DareSignature>;}, (IBinding data) => (data as DareTrailer).Signatures,
-					false, ()=>new  List<DareSignature>(), ()=>new DareSignature())} ,
+					false, ()=>new  List<DareSignature>(), ()=>new DareSignature())},
 			{ "seqsignatures", new PropertyListStruct ("seqsignatures", 
 					(IBinding data, object? value) => {(data as DareTrailer).SequenceSignatures = value as List<DareSignature>;}, (IBinding data) => (data as DareTrailer).SequenceSignatures,
-					false, ()=>new  List<DareSignature>(), ()=>new DareSignature())} ,
+					false, ()=>new  List<DareSignature>(), ()=>new DareSignature())},
 			{ "ApplicationContextValue", new PropertyBinary ("ApplicationContextValue", 
 					(IBinding data, byte[]? value) => {(data as DareTrailer).ApplicationContextValue = value;}, (IBinding data) => (data as DareTrailer).ApplicationContextValue )},
 			{ "SignedData", new PropertyBinary ("SignedData", 
@@ -608,18 +608,18 @@ public partial class DareHeader : DareTrailer {
 					(IBinding data, List<byte[]>? value) => {(data as DareHeader).EDSS = value;}, (IBinding data) => (data as DareHeader).EDSS )},
 			{ "recipients", new PropertyListStruct ("recipients", 
 					(IBinding data, object? value) => {(data as DareHeader).Recipients = value as List<DareRecipient>;}, (IBinding data) => (data as DareHeader).Recipients,
-					false, ()=>new  List<DareRecipient>(), ()=>new DareRecipient())} ,
+					false, ()=>new  List<DareRecipient>(), ()=>new DareRecipient())},
 			{ "policy", new PropertyStruct ("policy", 
 					(IBinding data, object? value) => {(data as DareHeader).Policy = value as DarePolicy;}, (IBinding data) => (data as DareHeader).Policy,
-					false, ()=>new  DarePolicy(), ()=>new DarePolicy())} ,
+					false, ()=>new  DarePolicy(), ()=>new DarePolicy())},
 			{ "ContentMetaData", new PropertyBinary ("ContentMetaData", 
 					(IBinding data, byte[]? value) => {(data as DareHeader).ContentMetaData = value;}, (IBinding data) => (data as DareHeader).ContentMetaData )},
 			{ "SequenceInfo", new PropertyStruct ("SequenceInfo", 
 					(IBinding data, object? value) => {(data as DareHeader).SequenceInfo = value as SequenceInfo;}, (IBinding data) => (data as DareHeader).SequenceInfo,
-					false, ()=>new  SequenceInfo(), ()=>new SequenceInfo())} ,
+					false, ()=>new  SequenceInfo(), ()=>new SequenceInfo())},
 			{ "SequenceIndex", new PropertyStruct ("SequenceIndex", 
 					(IBinding data, object? value) => {(data as DareHeader).SequenceIndex = value as SequenceIndex;}, (IBinding data) => (data as DareHeader).SequenceIndex,
-					false, ()=>new  SequenceIndex(), ()=>new SequenceIndex())} ,
+					false, ()=>new  SequenceIndex(), ()=>new SequenceIndex())},
 			{ "Received", new PropertyDateTime ("Received", 
 					(IBinding data, DateTime? value) => {(data as DareHeader).Received = value;}, (IBinding data) => (data as DareHeader).Received )},
 			{ "Cover", new PropertyBinary ("Cover", 
@@ -788,7 +788,7 @@ public partial class ContentMeta : Dare {
 					(IBinding data, List<string>? value) => {(data as ContentMeta).Labels = value;}, (IBinding data) => (data as ContentMeta).Labels )},
 			{ "KeyValues", new PropertyListStruct ("KeyValues", 
 					(IBinding data, object? value) => {(data as ContentMeta).KeyValues = value as List<KeyValue>;}, (IBinding data) => (data as ContentMeta).KeyValues,
-					false, ()=>new  List<KeyValue>(), ()=>new KeyValue())} ,
+					false, ()=>new  List<KeyValue>(), ()=>new KeyValue())},
 			{ "MessageType", new PropertyString ("MessageType", 
 					(IBinding data, string? value) => {(data as ContentMeta).MessageType = value;}, (IBinding data) => (data as ContentMeta).MessageType )},
 			{ "cty", new PropertyString ("cty", 
@@ -811,7 +811,7 @@ public partial class ContentMeta : Dare {
 					(IBinding data, long? value) => {(data as ContentMeta).Previous = value;}, (IBinding data) => (data as ContentMeta).Previous )},
 			{ "FileEntry", new PropertyStruct ("FileEntry", 
 					(IBinding data, object? value) => {(data as ContentMeta).FileEntry = value as FileEntry;}, (IBinding data) => (data as ContentMeta).FileEntry,
-					false, ()=>new  FileEntry(), ()=>new FileEntry())} 
+					false, ()=>new  FileEntry(), ()=>new FileEntry())}
         }, __Tag,() => new ContentMeta(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -943,10 +943,10 @@ public partial class DareSignature : Dare {
 					(IBinding data, string? value) => {(data as DareSignature).KeyIdentifier = value;}, (IBinding data) => (data as DareSignature).KeyIdentifier )},
 			{ "cert", new PropertyStruct ("cert", 
 					(IBinding data, object? value) => {(data as DareSignature).Certificate = value as X509Certificate;}, (IBinding data) => (data as DareSignature).Certificate,
-					false, ()=>new  X509Certificate(), ()=>new X509Certificate())} ,
+					false, ()=>new  X509Certificate(), ()=>new X509Certificate())},
 			{ "path", new PropertyStruct ("path", 
 					(IBinding data, object? value) => {(data as DareSignature).Path = value as X509Certificate;}, (IBinding data) => (data as DareSignature).Path,
-					false, ()=>new  X509Certificate(), ()=>new X509Certificate())} ,
+					false, ()=>new  X509Certificate(), ()=>new X509Certificate())},
 			{ "Manifest", new PropertyBinary ("Manifest", 
 					(IBinding data, byte[]? value) => {(data as DareSignature).Manifest = value;}, (IBinding data) => (data as DareSignature).Manifest )},
 			{ "SignatureKey", new PropertyStruct ("SignatureKey", 
@@ -1044,7 +1044,7 @@ public partial class IntervalSignature : Dare {
 					(IBinding data, long? value) => {(data as IntervalSignature).Index = value;}, (IBinding data) => (data as IntervalSignature).Index )},
 			{ "Envelopes", new PropertyStruct ("Envelopes", 
 					(IBinding data, object? value) => {(data as IntervalSignature).Envelopes = value as SignedEnvelope;}, (IBinding data) => (data as IntervalSignature).Envelopes,
-					false, ()=>new  SignedEnvelope(), ()=>new SignedEnvelope())} 
+					false, ()=>new  SignedEnvelope(), ()=>new SignedEnvelope())}
         }, __Tag,() => new IntervalSignature(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1806,7 +1806,7 @@ public partial class Proof : Dare {
 
 			{ "SignedWitness", new PropertyStruct ("SignedWitness", 
 					(IBinding data, object? value) => {(data as Proof).SignedWitness = value as DareEnvelope;}, (IBinding data) => (data as Proof).SignedWitness,
-					false, ()=>new  DareEnvelope(), ()=>new DareEnvelope())} ,
+					false, ()=>new  DareEnvelope(), ()=>new DareEnvelope())},
 			{ "Hash", new PropertyBinary ("Hash", 
 					(IBinding data, byte[]? value) => {(data as Proof).Hash = value;}, (IBinding data) => (data as Proof).Hash )},
 			{ "Index", new PropertyInteger64 ("Index", 

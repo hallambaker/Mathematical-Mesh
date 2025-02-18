@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/17/2025 5:48:57 PM
+//  This file was automatically generated at 2/18/2025 10:46:23 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -177,15 +177,15 @@ public partial class CatalogedMachine : HostCatalogItem {
 					(IBinding data, bool? value) => {(data as CatalogedMachine).Default = value;}, (IBinding data) => (data as CatalogedMachine).Default )},
 			{ "EnvelopedProfileAccount", new PropertyStruct ("EnvelopedProfileAccount", 
 					(IBinding data, object? value) => {(data as CatalogedMachine).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as CatalogedMachine).EnvelopedProfileAccount,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())} ,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())},
 			{ "CatalogedDevice", new PropertyStruct ("CatalogedDevice", 
 					(IBinding data, object? value) => {(data as CatalogedMachine).CatalogedDevice = value as CatalogedDevice;}, (IBinding data) => (data as CatalogedMachine).CatalogedDevice,
-					false, ()=>new  CatalogedDevice(), ()=>new CatalogedDevice())} ,
+					false, ()=>new  CatalogedDevice(), ()=>new CatalogedDevice())},
 			{ "CatalogedDeviceDigest", new PropertyString ("CatalogedDeviceDigest", 
 					(IBinding data, string? value) => {(data as CatalogedMachine).CatalogedDeviceDigest = value;}, (IBinding data) => (data as CatalogedMachine).CatalogedDeviceDigest )},
 			{ "EnvelopedAccountHostAssignment", new PropertyStruct ("EnvelopedAccountHostAssignment", 
 					(IBinding data, object? value) => {(data as CatalogedMachine).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, (IBinding data) => (data as CatalogedMachine).EnvelopedAccountHostAssignment,
-					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())} 
+					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())}
         }, __Tag,() => new CatalogedMachine(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -298,19 +298,19 @@ public partial class CatalogedService : CatalogedMachine {
 
 			{ "EnvelopedProfileService", new PropertyStruct ("EnvelopedProfileService", 
 					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedProfileService = value as Enveloped<ProfileService>;}, (IBinding data) => (data as CatalogedService).EnvelopedProfileService,
-					false, ()=>new  Enveloped<ProfileService>(), ()=>new Enveloped<ProfileService>())} ,
+					false, ()=>new  Enveloped<ProfileService>(), ()=>new Enveloped<ProfileService>())},
 			{ "EnvelopedProfileHost", new PropertyStruct ("EnvelopedProfileHost", 
 					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedProfileHost = value as Enveloped<ProfileHost>;}, (IBinding data) => (data as CatalogedService).EnvelopedProfileHost,
-					false, ()=>new  Enveloped<ProfileHost>(), ()=>new Enveloped<ProfileHost>())} ,
+					false, ()=>new  Enveloped<ProfileHost>(), ()=>new Enveloped<ProfileHost>())},
 			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", 
 					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, (IBinding data) => (data as CatalogedService).EnvelopedActivationCommon,
-					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())} ,
+					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())},
 			{ "EnvelopedActivationHost", new PropertyStruct ("EnvelopedActivationHost", 
 					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedActivationHost = value as Enveloped<ActivationHost>;}, (IBinding data) => (data as CatalogedService).EnvelopedActivationHost,
-					false, ()=>new  Enveloped<ActivationHost>(), ()=>new Enveloped<ActivationHost>())} ,
+					false, ()=>new  Enveloped<ActivationHost>(), ()=>new Enveloped<ActivationHost>())},
 			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", 
 					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as CatalogedService).EnvelopedConnectionService,
-					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())} ,
+					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())},
 			{ "ServiceIdentifier", new PropertyString ("ServiceIdentifier", 
 					(IBinding data, string? value) => {(data as CatalogedService).ServiceIdentifier = value;}, (IBinding data) => (data as CatalogedService).ServiceIdentifier )}
         }, __Tag,() => new CatalogedService(), CatalogedMachine._binding);
@@ -492,10 +492,10 @@ public partial class CatalogedPending : CatalogedMachine {
 					(IBinding data, string? value) => {(data as CatalogedPending).DeviceUDF = value;}, (IBinding data) => (data as CatalogedPending).DeviceUDF )},
 			{ "EnvelopedProfileDevice", new PropertyStruct ("EnvelopedProfileDevice", 
 					(IBinding data, object? value) => {(data as CatalogedPending).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;}, (IBinding data) => (data as CatalogedPending).EnvelopedProfileDevice,
-					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())} ,
+					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())},
 			{ "EnvelopedAcknowledgeConnection", new PropertyStruct ("EnvelopedAcknowledgeConnection", 
 					(IBinding data, object? value) => {(data as CatalogedPending).EnvelopedAcknowledgeConnection = value as Enveloped<AcknowledgeConnection>;}, (IBinding data) => (data as CatalogedPending).EnvelopedAcknowledgeConnection,
-					false, ()=>new  Enveloped<AcknowledgeConnection>(), ()=>new Enveloped<AcknowledgeConnection>())} ,
+					false, ()=>new  Enveloped<AcknowledgeConnection>(), ()=>new Enveloped<AcknowledgeConnection>())},
 			{ "AccountAddress", new PropertyString ("AccountAddress", 
 					(IBinding data, string? value) => {(data as CatalogedPending).AccountAddress = value;}, (IBinding data) => (data as CatalogedPending).AccountAddress )}
         }, __Tag,() => new CatalogedPending(), CatalogedMachine._binding);
@@ -618,13 +618,13 @@ public partial class CatalogedPreconfigured : CatalogedMachine {
 
 			{ "EnvelopedProfileDevice", new PropertyStruct ("EnvelopedProfileDevice", 
 					(IBinding data, object? value) => {(data as CatalogedPreconfigured).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;}, (IBinding data) => (data as CatalogedPreconfigured).EnvelopedProfileDevice,
-					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())} ,
+					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())},
 			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", 
 					(IBinding data, object? value) => {(data as CatalogedPreconfigured).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as CatalogedPreconfigured).EnvelopedConnectionService,
-					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())} ,
+					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())},
 			{ "EnvelopedConnectionDevice", new PropertyStruct ("EnvelopedConnectionDevice", 
 					(IBinding data, object? value) => {(data as CatalogedPreconfigured).EnvelopedConnectionDevice = value as Enveloped<ConnectionDevice>;}, (IBinding data) => (data as CatalogedPreconfigured).EnvelopedConnectionDevice,
-					false, ()=>new  Enveloped<ConnectionDevice>(), ()=>new Enveloped<ConnectionDevice>())} ,
+					false, ()=>new  Enveloped<ConnectionDevice>(), ()=>new Enveloped<ConnectionDevice>())},
 			{ "AccountAddress", new PropertyString ("AccountAddress", 
 					(IBinding data, string? value) => {(data as CatalogedPreconfigured).AccountAddress = value;}, (IBinding data) => (data as CatalogedPreconfigured).AccountAddress )},
 			{ "PublicationId", new PropertyString ("PublicationId", 
@@ -729,7 +729,7 @@ public partial class ShellDispatch : HostCatalogItem {
 					(IBinding data, string? value) => {(data as ShellDispatch).Icon = value;}, (IBinding data) => (data as ShellDispatch).Icon )},
 			{ "Actions", new PropertyListStruct ("Actions", 
 					(IBinding data, object? value) => {(data as ShellDispatch).Actions = value as List<ShellAction>;}, (IBinding data) => (data as ShellDispatch).Actions,
-					false, ()=>new  List<ShellAction>(), ()=>new ShellAction())} 
+					false, ()=>new  List<ShellAction>(), ()=>new ShellAction())}
         }, __Tag,() => new ShellDispatch(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 

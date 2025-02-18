@@ -83,7 +83,7 @@ public partial class CryptoParametersSequence : CryptoParameters {
         else {
             EncryptId = digest.FromJoseIDEncryption(true);
             if (policy.EncryptKeys != null) {
-                EncryptionKeys = new List<CryptoKey>();
+                EncryptionKeys = new List<CryptographicKey>();
                 foreach (var key in policy.EncryptKeys) {
                     var keyPair = key.KeyPair;
                     EncryptionKeys.Add(keyPair);
@@ -111,7 +111,7 @@ public partial class CryptoParametersSequence : CryptoParameters {
             }
         if (PolicySignature != PolicySignature.None) {
             if (policy.SignKeys != null) {
-                SignerKeys = new List<CryptoKey>();
+                SignerKeys = new List<CryptographicKey>();
                 if (policy.SignatureKeys is not null) {
                     foreach (var keyPair in policy.SignatureKeys) {
                         SignerKeys.Add(keyPair);

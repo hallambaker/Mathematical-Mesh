@@ -65,7 +65,7 @@
         <member name="M:Goedel.Cryptography.Core.KeyCollectionCore.LocatePrivateKey(System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.Core.KeyCollectionCore.LocatePrivateKeyPair(System.String,Goedel.Cryptography.CryptoKey@)">
+        <member name="M:Goedel.Cryptography.Core.KeyCollectionCore.LocatePrivateKeyPair(System.String,Goedel.Cryptography.CryptographicKey@)">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.Core.KeyCollectionCore.ValidateTrustPath(Goedel.Cryptography.Dare.DareSignature,System.String)">

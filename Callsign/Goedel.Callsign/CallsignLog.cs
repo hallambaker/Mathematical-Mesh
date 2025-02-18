@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/17/2025 5:48:58 PM
+//  This file was automatically generated at 2/18/2025 10:46:24 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -221,7 +221,7 @@ public partial class ProfileResolver : ProfileService {
 
 			{ "EnvelopedProfileRegistry", new PropertyStruct ("EnvelopedProfileRegistry", 
 					(IBinding data, object? value) => {(data as ProfileResolver).EnvelopedProfileRegistry = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as ProfileResolver).EnvelopedProfileRegistry,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())} 
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())}
         }, __Tag,() => new ProfileResolver(), ProfileService._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -338,7 +338,7 @@ public partial class Registration : CallsignEntry {
 					(IBinding data, string? value) => {(data as Registration).Id = value;}, (IBinding data) => (data as Registration).Id )},
 			{ "Entry", new PropertyStruct ("Entry", 
 					(IBinding data, object? value) => {(data as Registration).Entry = value as Enveloped<CallsignBinding>;}, (IBinding data) => (data as Registration).Entry,
-					false, ()=>new  Enveloped<CallsignBinding>(), ()=>new Enveloped<CallsignBinding>())} ,
+					false, ()=>new  Enveloped<CallsignBinding>(), ()=>new Enveloped<CallsignBinding>())},
 			{ "Submitted", new PropertyDateTime ("Submitted", 
 					(IBinding data, DateTime? value) => {(data as Registration).Submitted = value;}, (IBinding data) => (data as Registration).Submitted )},
 			{ "Registrar", new PropertyString ("Registrar", 
@@ -443,7 +443,7 @@ public partial class CatalogedRegistration : CatalogedEntry {
 					(IBinding data, string? value) => {(data as CatalogedRegistration).Id = value;}, (IBinding data) => (data as CatalogedRegistration).Id )},
 			{ "EnvelopedRegistration", new PropertyStruct ("EnvelopedRegistration", 
 					(IBinding data, object? value) => {(data as CatalogedRegistration).EnvelopedRegistration = value as Enveloped<Registration>;}, (IBinding data) => (data as CatalogedRegistration).EnvelopedRegistration,
-					false, ()=>new  Enveloped<Registration>(), ()=>new Enveloped<Registration>())} 
+					false, ()=>new  Enveloped<Registration>(), ()=>new Enveloped<Registration>())}
         }, __Tag,() => new CatalogedRegistration(), CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -960,10 +960,10 @@ public partial class Notarization : CallsignEntry {
 
 			{ "Entries", new PropertyListStruct ("Entries", 
 					(IBinding data, object? value) => {(data as Notarization).Entries = value as List<Enveloped<Witness>>;}, (IBinding data) => (data as Notarization).Entries,
-					false, ()=>new  List<Enveloped<Witness>>(), ()=>new Enveloped<Witness>())} ,
+					false, ()=>new  List<Enveloped<Witness>>(), ()=>new Enveloped<Witness>())},
 			{ "Proof", new PropertyStruct ("Proof", 
 					(IBinding data, object? value) => {(data as Notarization).Proof = value as Proof;}, (IBinding data) => (data as Notarization).Proof,
-					false, ()=>new  Proof(), ()=>new Proof())} 
+					false, ()=>new  Proof(), ()=>new Proof())}
         }, __Tag,() => new Notarization(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1141,10 +1141,10 @@ public partial class CallsignRegistrationRequest : MessageValidated {
 
 			{ "EnvelopedCallsignBinding", new PropertyStruct ("EnvelopedCallsignBinding", 
 					(IBinding data, object? value) => {(data as CallsignRegistrationRequest).EnvelopedCallsignBinding = value as Enveloped<CallsignBinding>;}, (IBinding data) => (data as CallsignRegistrationRequest).EnvelopedCallsignBinding,
-					false, ()=>new  Enveloped<CallsignBinding>(), ()=>new Enveloped<CallsignBinding>())} ,
+					false, ()=>new  Enveloped<CallsignBinding>(), ()=>new Enveloped<CallsignBinding>())},
 			{ "Profiles", new PropertyListStruct ("Profiles", 
 					(IBinding data, object? value) => {(data as CallsignRegistrationRequest).Profiles = value as List<Enveloped<Profile>>;}, (IBinding data) => (data as CallsignRegistrationRequest).Profiles,
-					false, ()=>new  List<Enveloped<Profile>>(), ()=>new Enveloped<Profile>())} 
+					false, ()=>new  List<Enveloped<Profile>>(), ()=>new Enveloped<Profile>())}
         }, __Tag,() => new CallsignRegistrationRequest(), MessageValidated._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1247,7 +1247,7 @@ public partial class CallsignRegistrationResponse : Message {
 					(IBinding data, bool? value) => {(data as CallsignRegistrationResponse).Registered = value;}, (IBinding data) => (data as CallsignRegistrationResponse).Registered )},
 			{ "CatalogedRegistration", new PropertyStruct ("CatalogedRegistration", 
 					(IBinding data, object? value) => {(data as CallsignRegistrationResponse).CatalogedRegistration = value as CatalogedRegistration;}, (IBinding data) => (data as CallsignRegistrationResponse).CatalogedRegistration,
-					false, ()=>new  CatalogedRegistration(), ()=>new CatalogedRegistration())} ,
+					false, ()=>new  CatalogedRegistration(), ()=>new CatalogedRegistration())},
 			{ "Reason", new PropertyString ("Reason", 
 					(IBinding data, string? value) => {(data as CallsignRegistrationResponse).Reason = value;}, (IBinding data) => (data as CallsignRegistrationResponse).Reason )},
 			{ "Callsign", new PropertyString ("Callsign", 
@@ -1332,7 +1332,7 @@ public partial class ProcessResultCallsignRegistration : ProcessResult {
 
 			{ "CallsignRegistrationResponse", new PropertyStruct ("CallsignRegistrationResponse", 
 					(IBinding data, object? value) => {(data as ProcessResultCallsignRegistration).CallsignRegistrationResponse = value as CallsignRegistrationResponse;}, (IBinding data) => (data as ProcessResultCallsignRegistration).CallsignRegistrationResponse,
-					false, ()=>new  CallsignRegistrationResponse(), ()=>new CallsignRegistrationResponse())} 
+					false, ()=>new  CallsignRegistrationResponse(), ()=>new CallsignRegistrationResponse())}
         }, __Tag,() => new ProcessResultCallsignRegistration(), ProcessResult._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1444,10 +1444,10 @@ public partial class CatalogedApplicationCallsign : CatalogedApplication {
 					(IBinding data, string? value) => {(data as CatalogedApplicationCallsign).RequestId = value;}, (IBinding data) => (data as CatalogedApplicationCallsign).RequestId )},
 			{ "EnvelopedCallsignBinding", new PropertyStruct ("EnvelopedCallsignBinding", 
 					(IBinding data, object? value) => {(data as CatalogedApplicationCallsign).EnvelopedCallsignBinding = value as Enveloped<CallsignBinding>;}, (IBinding data) => (data as CatalogedApplicationCallsign).EnvelopedCallsignBinding,
-					false, ()=>new  Enveloped<CallsignBinding>(), ()=>new Enveloped<CallsignBinding>())} ,
+					false, ()=>new  Enveloped<CallsignBinding>(), ()=>new Enveloped<CallsignBinding>())},
 			{ "CatalogedRegistration", new PropertyStruct ("CatalogedRegistration", 
 					(IBinding data, object? value) => {(data as CatalogedApplicationCallsign).CatalogedRegistration = value as CatalogedRegistration;}, (IBinding data) => (data as CatalogedApplicationCallsign).CatalogedRegistration,
-					false, ()=>new  CatalogedRegistration(), ()=>new CatalogedRegistration())} ,
+					false, ()=>new  CatalogedRegistration(), ()=>new CatalogedRegistration())},
 			{ "Reason", new PropertyString ("Reason", 
 					(IBinding data, string? value) => {(data as CatalogedApplicationCallsign).Reason = value;}, (IBinding data) => (data as CatalogedApplicationCallsign).Reason )}
         }, __Tag,() => new CatalogedApplicationCallsign(), CatalogedApplication._binding);
@@ -1531,7 +1531,7 @@ public partial class ProcessResultCallsign : ProcessResult {
 
 			{ "CatalogedApplicationCallsign", new PropertyStruct ("CatalogedApplicationCallsign", 
 					(IBinding data, object? value) => {(data as ProcessResultCallsign).CatalogedApplicationCallsign = value as CatalogedApplicationCallsign;}, (IBinding data) => (data as ProcessResultCallsign).CatalogedApplicationCallsign,
-					false, ()=>new  CatalogedApplicationCallsign(), ()=>new CatalogedApplicationCallsign())} 
+					false, ()=>new  CatalogedApplicationCallsign(), ()=>new CatalogedApplicationCallsign())}
         }, __Tag,() => new ProcessResultCallsign(), ProcessResult._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 

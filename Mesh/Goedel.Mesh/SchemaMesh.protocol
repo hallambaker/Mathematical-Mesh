@@ -5,6 +5,12 @@
     Using Goedel.Cryptography.Jose
     Using Goedel.Cryptography.Dare
 	Extern Key
+	Extern JmapBase
+	Extern JsContact
+	Extern JsEvent
+	Extern JsTask
+	Extern JsGroup
+
 
 	Section 2 "Shared Classes"
 		Description
@@ -973,7 +979,7 @@
 		Boolean Self
 			Description
 				|If true, this catalog entry is for the user who created the catalog.
-		TStruct Contact Contact
+		Struct JsContact Contact
 			Description
 				|The contact information as edited by the catalog owner.
 

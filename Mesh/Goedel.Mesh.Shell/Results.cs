@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/17/2025 5:49:00 PM
+//  This file was automatically generated at 2/18/2025 10:46:25 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -458,7 +458,7 @@ public partial class ResultHello : Result {
 					(IBinding data, string? value) => {(data as ResultHello).ServiceAddress = value;}, (IBinding data) => (data as ResultHello).ServiceAddress )},
 			{ "Response", new PropertyStruct ("Response", 
 					(IBinding data, object? value) => {(data as ResultHello).Response = value as MeshHelloResponse;}, (IBinding data) => (data as ResultHello).Response,
-					false, ()=>new  MeshHelloResponse(), ()=>new MeshHelloResponse())} 
+					false, ()=>new  MeshHelloResponse(), ()=>new MeshHelloResponse())}
         }, __Tag,() => new ResultHello(), Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1183,7 +1183,7 @@ public partial class ResultArchive : Result {
 
 			{ "Entries", new PropertyListStruct ("Entries", 
 					(IBinding data, object? value) => {(data as ResultArchive).Entries = value as List<FileEntry>;}, (IBinding data) => (data as ResultArchive).Entries,
-					false, ()=>new  List<FileEntry>(), ()=>new FileEntry())} ,
+					false, ()=>new  List<FileEntry>(), ()=>new FileEntry())},
 			{ "Frames", new PropertyInteger32 ("Frames", 
 					(IBinding data, int? value) => {(data as ResultArchive).Frames = value;}, (IBinding data) => (data as ResultArchive).Frames )},
 			{ "Deleted", new PropertyInteger32 ("Deleted", 
@@ -1270,7 +1270,7 @@ public partial class ResultFileDare : ResultFile {
 
 			{ "Envelope", new PropertyStruct ("Envelope", 
 					(IBinding data, object? value) => {(data as ResultFileDare).Envelope = value as DareEnvelope;}, (IBinding data) => (data as ResultFileDare).Envelope,
-					false, ()=>new  DareEnvelope(), ()=>new DareEnvelope())} 
+					false, ()=>new  DareEnvelope(), ()=>new DareEnvelope())}
         }, __Tag,() => new ResultFileDare(), ResultFile._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1529,7 +1529,7 @@ public partial class ResultList : Result {
 
 			{ "CatalogedDevices", new PropertyListStruct ("CatalogedDevices", 
 					(IBinding data, object? value) => {(data as ResultList).CatalogedDevices = value as List<CatalogedDevice>;}, (IBinding data) => (data as ResultList).CatalogedDevices,
-					false, ()=>new  List<CatalogedDevice>(), ()=>new CatalogedDevice())} ,
+					false, ()=>new  List<CatalogedDevice>(), ()=>new CatalogedDevice())},
 			{ "Profiles", new PropertyListStruct ("Profiles", 
 					(IBinding data, object? value) => {(data as ResultList).Profiles = value as List<Assertion>;}, (IBinding data) => (data as ResultList).Profiles,
 					true, ()=>new List<Assertion>()
@@ -1614,7 +1614,7 @@ public partial class ResultAccountConnect : Result {
 
 			{ "ProfileDevice", new PropertyStruct ("ProfileDevice", 
 					(IBinding data, object? value) => {(data as ResultAccountConnect).ProfileDevice = value as ProfileDevice;}, (IBinding data) => (data as ResultAccountConnect).ProfileDevice,
-					false, ()=>new  ProfileDevice(), ()=>new ProfileDevice())} 
+					false, ()=>new  ProfileDevice(), ()=>new ProfileDevice())}
         }, __Tag,() => new ResultAccountConnect(), Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1794,10 +1794,10 @@ public partial class ResultPublishDevice : ResultCreateDevice {
 					(IBinding data, string? value) => {(data as ResultPublishDevice).FileName = value;}, (IBinding data) => (data as ResultPublishDevice).FileName )},
 			{ "DevicePreconfigurationPublic", new PropertyStruct ("DevicePreconfigurationPublic", 
 					(IBinding data, object? value) => {(data as ResultPublishDevice).DevicePreconfigurationPublic = value as DevicePreconfigurationPublic;}, (IBinding data) => (data as ResultPublishDevice).DevicePreconfigurationPublic,
-					false, ()=>new  DevicePreconfigurationPublic(), ()=>new DevicePreconfigurationPublic())} ,
+					false, ()=>new  DevicePreconfigurationPublic(), ()=>new DevicePreconfigurationPublic())},
 			{ "DevicePreconfigurationPrivate", new PropertyStruct ("DevicePreconfigurationPrivate", 
 					(IBinding data, object? value) => {(data as ResultPublishDevice).DevicePreconfigurationPrivate = value as DevicePreconfigurationPrivate;}, (IBinding data) => (data as ResultPublishDevice).DevicePreconfigurationPrivate,
-					false, ()=>new  DevicePreconfigurationPrivate(), ()=>new DevicePreconfigurationPrivate())} 
+					false, ()=>new  DevicePreconfigurationPrivate(), ()=>new DevicePreconfigurationPrivate())}
         }, __Tag,() => new ResultPublishDevice(), ResultCreateDevice._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1892,7 +1892,7 @@ public partial class ResultCreateDevice : Result {
 					(IBinding data, string? value) => {(data as ResultCreateDevice).DeviceUDF = value;}, (IBinding data) => (data as ResultCreateDevice).DeviceUDF )},
 			{ "CatalogedDevice", new PropertyStruct ("CatalogedDevice", 
 					(IBinding data, object? value) => {(data as ResultCreateDevice).CatalogedDevice = value as CatalogedDevice;}, (IBinding data) => (data as ResultCreateDevice).CatalogedDevice,
-					false, ()=>new  CatalogedDevice(), ()=>new CatalogedDevice())} 
+					false, ()=>new  CatalogedDevice(), ()=>new CatalogedDevice())}
         }, __Tag,() => new ResultCreateDevice(), Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -2058,10 +2058,10 @@ public partial class ResultCreateAccount : ResultCreateDevice {
 
 			{ "ProfileAccount", new PropertyStruct ("ProfileAccount", 
 					(IBinding data, object? value) => {(data as ResultCreateAccount).ProfileAccount = value as ProfileAccount;}, (IBinding data) => (data as ResultCreateAccount).ProfileAccount,
-					false, ()=>new  ProfileAccount(), ()=>new ProfileAccount())} ,
+					false, ()=>new  ProfileAccount(), ()=>new ProfileAccount())},
 			{ "ActivationAccount", new PropertyStruct ("ActivationAccount", 
 					(IBinding data, object? value) => {(data as ResultCreateAccount).ActivationAccount = value as ActivationAccount;}, (IBinding data) => (data as ResultCreateAccount).ActivationAccount,
-					false, ()=>new  ActivationAccount(), ()=>new ActivationAccount())} 
+					false, ()=>new  ActivationAccount(), ()=>new ActivationAccount())}
         }, __Tag,() => new ResultCreateAccount(), ResultCreateDevice._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -2375,7 +2375,7 @@ public partial class ResultStatus : Result {
 
 			{ "StatusResponse", new PropertyStruct ("StatusResponse", 
 					(IBinding data, object? value) => {(data as ResultStatus).StatusResponse = value as StatusResponse;}, (IBinding data) => (data as ResultStatus).StatusResponse,
-					false, ()=>new  StatusResponse(), ()=>new StatusResponse())} 
+					false, ()=>new  StatusResponse(), ()=>new StatusResponse())}
         }, __Tag,() => new ResultStatus(), Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -2636,7 +2636,7 @@ public partial class ResultMachine : Result {
 
 			{ "CatalogedMachines", new PropertyListStruct ("CatalogedMachines", 
 					(IBinding data, object? value) => {(data as ResultMachine).CatalogedMachines = value as List<CatalogedMachine>;}, (IBinding data) => (data as ResultMachine).CatalogedMachines,
-					false, ()=>new  List<CatalogedMachine>(), ()=>new CatalogedMachine())} 
+					false, ()=>new  List<CatalogedMachine>(), ()=>new CatalogedMachine())}
         }, __Tag,() => new ResultMachine(), Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -2722,7 +2722,7 @@ public partial class ResultPIN : Result {
 
 			{ "MessagePIN", new PropertyStruct ("MessagePIN", 
 					(IBinding data, object? value) => {(data as ResultPIN).MessagePIN = value as MessagePin;}, (IBinding data) => (data as ResultPIN).MessagePIN,
-					false, ()=>new  MessagePin(), ()=>new MessagePin())} ,
+					false, ()=>new  MessagePin(), ()=>new MessagePin())},
 			{ "Uri", new PropertyString ("Uri", 
 					(IBinding data, string? value) => {(data as ResultPIN).Uri = value;}, (IBinding data) => (data as ResultPIN).Uri )}
         }, __Tag,() => new ResultPIN(), Result._binding);
@@ -2805,7 +2805,7 @@ public partial class ResultSequence : Result {
 
 			{ "Entries", new PropertyStruct ("Entries", 
 					(IBinding data, object? value) => {(data as ResultSequence).Entries = value as LogEntry;}, (IBinding data) => (data as ResultSequence).Entries,
-					false, ()=>new  LogEntry(), ()=>new LogEntry())} 
+					false, ()=>new  LogEntry(), ()=>new LogEntry())}
         }, __Tag,() => new ResultSequence(), Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3096,7 +3096,7 @@ public partial class ResultEntrySent : Result {
 					true)} ,
 			{ "Message", new PropertyStruct ("Message", 
 					(IBinding data, object? value) => {(data as ResultEntrySent).Message = value as Message;}, (IBinding data) => (data as ResultEntrySent).Message,
-					false, ()=>new  Message(), ()=>new Message())} 
+					false, ()=>new  Message(), ()=>new Message())}
         }, __Tag,() => new ResultEntrySent(), Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3401,7 +3401,7 @@ public partial class ResultSent : Result {
 
 			{ "Message", new PropertyStruct ("Message", 
 					(IBinding data, object? value) => {(data as ResultSent).Message = value as Message;}, (IBinding data) => (data as ResultSent).Message,
-					false, ()=>new  Message(), ()=>new Message())} ,
+					false, ()=>new  Message(), ()=>new Message())},
 			{ "Status", new PropertyString ("Status", 
 					(IBinding data, string? value) => {(data as ResultSent).Status = value;}, (IBinding data) => (data as ResultSent).Status )}
         }, __Tag,() => new ResultSent(), Result._binding);
@@ -3483,7 +3483,7 @@ public partial class ResultPending : Result {
 
 			{ "Messages", new PropertyListStruct ("Messages", 
 					(IBinding data, object? value) => {(data as ResultPending).Messages = value as List<Message>;}, (IBinding data) => (data as ResultPending).Messages,
-					false, ()=>new  List<Message>(), ()=>new Message())} 
+					false, ()=>new  List<Message>(), ()=>new Message())}
         }, __Tag,() => new ResultPending(), Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3645,7 +3645,7 @@ public partial class ResultProcess : Result {
 
 			{ "ProcessResult", new PropertyStruct ("ProcessResult", 
 					(IBinding data, object? value) => {(data as ResultProcess).ProcessResult = value as Message;}, (IBinding data) => (data as ResultProcess).ProcessResult,
-					false, ()=>new  Message(), ()=>new Message())} 
+					false, ()=>new  Message(), ()=>new Message())}
         }, __Tag,() => new ResultProcess(), Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3759,22 +3759,22 @@ public partial class ResultConnect : Result {
 					true)} ,
 			{ "CatalogedMachine", new PropertyStruct ("CatalogedMachine", 
 					(IBinding data, object? value) => {(data as ResultConnect).CatalogedMachine = value as CatalogedMachine;}, (IBinding data) => (data as ResultConnect).CatalogedMachine,
-					false, ()=>new  CatalogedMachine(), ()=>new CatalogedMachine())} ,
+					false, ()=>new  CatalogedMachine(), ()=>new CatalogedMachine())},
 			{ "ActivationAccount", new PropertyStruct ("ActivationAccount", 
 					(IBinding data, object? value) => {(data as ResultConnect).ActivationAccount = value as ActivationAccount;}, (IBinding data) => (data as ResultConnect).ActivationAccount,
-					false, ()=>new  ActivationAccount(), ()=>new ActivationAccount())} ,
+					false, ()=>new  ActivationAccount(), ()=>new ActivationAccount())},
 			{ "ActivationCommon", new PropertyStruct ("ActivationCommon", 
 					(IBinding data, object? value) => {(data as ResultConnect).ActivationCommon = value as ActivationCommon;}, (IBinding data) => (data as ResultConnect).ActivationCommon,
-					false, ()=>new  ActivationCommon(), ()=>new ActivationCommon())} ,
+					false, ()=>new  ActivationCommon(), ()=>new ActivationCommon())},
 			{ "RequestConnection", new PropertyStruct ("RequestConnection", 
 					(IBinding data, object? value) => {(data as ResultConnect).RequestConnection = value as RequestConnection;}, (IBinding data) => (data as ResultConnect).RequestConnection,
-					false, ()=>new  RequestConnection(), ()=>new RequestConnection())} ,
+					false, ()=>new  RequestConnection(), ()=>new RequestConnection())},
 			{ "AcknowledgeConnection", new PropertyStruct ("AcknowledgeConnection", 
 					(IBinding data, object? value) => {(data as ResultConnect).AcknowledgeConnection = value as AcknowledgeConnection;}, (IBinding data) => (data as ResultConnect).AcknowledgeConnection,
-					false, ()=>new  AcknowledgeConnection(), ()=>new AcknowledgeConnection())} ,
+					false, ()=>new  AcknowledgeConnection(), ()=>new AcknowledgeConnection())},
 			{ "RespondConnection", new PropertyStruct ("RespondConnection", 
 					(IBinding data, object? value) => {(data as ResultConnect).RespondConnection = value as RespondConnection;}, (IBinding data) => (data as ResultConnect).RespondConnection,
-					false, ()=>new  RespondConnection(), ()=>new RespondConnection())} 
+					false, ()=>new  RespondConnection(), ()=>new RespondConnection())}
         }, __Tag,() => new ResultConnect(), Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3942,7 +3942,7 @@ public partial class ResultReceived : Result {
 					(IBinding data, string? value) => {(data as ResultReceived).Status = value;}, (IBinding data) => (data as ResultReceived).Status )},
 			{ "Message", new PropertyStruct ("Message", 
 					(IBinding data, object? value) => {(data as ResultReceived).Message = value as Message;}, (IBinding data) => (data as ResultReceived).Message,
-					false, ()=>new  Message(), ()=>new Message())} 
+					false, ()=>new  Message(), ()=>new Message())}
         }, __Tag,() => new ResultReceived(), Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4190,10 +4190,10 @@ public partial class ResultCallsign : Result {
 
 			{ "CallsignApplication", new PropertyStruct ("CallsignApplication", 
 					(IBinding data, object? value) => {(data as ResultCallsign).CallsignApplication = value as CatalogedApplicationCallsign;}, (IBinding data) => (data as ResultCallsign).CallsignApplication,
-					false, ()=>new  CatalogedApplicationCallsign(), ()=>new CatalogedApplicationCallsign())} ,
+					false, ()=>new  CatalogedApplicationCallsign(), ()=>new CatalogedApplicationCallsign())},
 			{ "Message", new PropertyStruct ("Message", 
 					(IBinding data, object? value) => {(data as ResultCallsign).Message = value as Message;}, (IBinding data) => (data as ResultCallsign).Message,
-					false, ()=>new  Message(), ()=>new Message())} 
+					false, ()=>new  Message(), ()=>new Message())}
         }, __Tag,() => new ResultCallsign(), Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4279,10 +4279,10 @@ public partial class ResultCallsignResolution : Result {
 
 			{ "CallsignRegistration", new PropertyStruct ("CallsignRegistration", 
 					(IBinding data, object? value) => {(data as ResultCallsignResolution).CallsignRegistration = value as Registration;}, (IBinding data) => (data as ResultCallsignResolution).CallsignRegistration,
-					false, ()=>new  Registration(), ()=>new Registration())} ,
+					false, ()=>new  Registration(), ()=>new Registration())},
 			{ "Message", new PropertyStruct ("Message", 
 					(IBinding data, object? value) => {(data as ResultCallsignResolution).Message = value as Message;}, (IBinding data) => (data as ResultCallsignResolution).Message,
-					false, ()=>new  Message(), ()=>new Message())} 
+					false, ()=>new  Message(), ()=>new Message())}
         }, __Tag,() => new ResultCallsignResolution(), Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4362,7 +4362,7 @@ public partial class ResultCallsignList : Result {
 
 			{ "CallsignApplication", new PropertyListStruct ("CallsignApplication", 
 					(IBinding data, object? value) => {(data as ResultCallsignList).CallsignApplication = value as List<CatalogedApplicationCallsign>;}, (IBinding data) => (data as ResultCallsignList).CallsignApplication,
-					false, ()=>new  List<CatalogedApplicationCallsign>(), ()=>new CatalogedApplicationCallsign())} 
+					false, ()=>new  List<CatalogedApplicationCallsign>(), ()=>new CatalogedApplicationCallsign())}
         }, __Tag,() => new ResultCallsignList(), Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 

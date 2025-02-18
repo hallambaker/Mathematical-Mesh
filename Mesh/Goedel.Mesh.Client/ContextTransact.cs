@@ -258,7 +258,7 @@ public abstract class Transaction<TAccount> : Disposable
     public ConnectionDevice ConnectionDevice => (ContextAccount as ContextUser)?.ConnectionAccount;
 
 
-    bool TryFindKeyEncryption(string recipient, out CryptoKey cryptoKey) =>
+    bool TryFindKeyEncryption(string recipient, out CryptographicKey cryptoKey) =>
             ContextAccount.TryFindKeyEncryption(recipient, out cryptoKey);
 
     /// <summary>The transaction request message being assembled</summary>
@@ -358,7 +358,7 @@ public abstract class Transaction<TAccount> : Disposable
     /// key rather than the account key.</param>
     public void OutboundMessage(
             string recipientAddress,
-            CryptoKey recipientEncryptionKey,
+            CryptographicKey recipientEncryptionKey,
             Message message,
             bool admin = true) {
         TransactRequest.Outbound ??= new List<Enveloped<Message>>();
@@ -405,7 +405,7 @@ public abstract class Transaction<TAccount> : Disposable
     /// <param name="keyEncrypt">The message encryption key.</param>
     public void LocalMessage(
             Message message,
-            CryptoKey keyEncrypt) {
+            CryptographicKey keyEncrypt) {
         TransactRequest.Local ??= new List<Enveloped<Message>>();
 
         //"Fix the encryption of local messages".TaskFunctionality(true);

@@ -27,6 +27,7 @@ global using Goedel.Cryptography.PKIX;
 global using Goedel.IO;
 global using Goedel.Mesh;
 global using Goedel.Protocol;
+global using Goedel.Contacts;
 global using Goedel.Protocol.Presentation;
 global using Goedel.Utilities;
 

@@ -120,35 +120,35 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="T:Goedel.Contacts.CalendarEntry">
+        <member name="T:Goedel.Contacts.JsCalendarEntry">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.Sequence">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.Sequence">
             <summary>
             Initially zero, this MUST be incremented by one every time a change is 
             made to the object, except if the change only modifies the participants 
             property (see Section 4.4.6).
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.Method">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.Method">
             <summary>
             This is the iTIP [RFC5546] method, in lowercase. This MUST only be 
             present if the JSCalendar object represents an iTIP scheduling message.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.Title">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.Title">
             <summary>
             This is a short summary of the object.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.Description">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.Description">
             <summary>
             This is a longer-form text description of the object. The content is 
             formatted according to the descriptionContentType property.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.DescriptionContentType">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.DescriptionContentType">
             <summary>
             This describes the media type [RFC6838] of the contents of the 
             description property. Media types MUST be subtypes of type text
@@ -159,7 +159,7 @@
             by use of the cid property of the Link object.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.ShowWithoutTime">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.ShowWithoutTime">
             <summary>
             This indicates that the time is not important to display to the user
              when rendering this calendar object. An example of this is an event
@@ -171,44 +171,44 @@
             view of their schedule.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.Locations">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.Locations">
             <summary>
             This is a map of location ids to Location objects, representing locations associated 
             with the object.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.VirtualLocations">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.VirtualLocations">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.links">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.links">
             <summary>
             This is a map of link ids to Link objects, representing external resources 
             associated with the object.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.Locale">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.Locale">
             <summary>
             This is the language tag, as defined in [RFC5646], that best describes the 
             locale used for the text in the calendar object, if known.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.Keywords">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.Keywords">
             <summary>
             This is a set of keywords or tags that relate to the object. The set is 
             represented as a map, with the keys being the keywords. The value for 
             each key in the map MUST be true.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.Categories">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.Categories">
             <summary>
             This is a set of categories that relate to the calendar object. The set 
             is represented as a map, with the keys being the categories specified 
             as URIs. The value for each key in the map MUST be true.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.Color">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.Color">
             <summary>
             This is a color clients MAY use when displaying this calendar object. 
             The value is a color name taken from the set of names defined in 
@@ -217,14 +217,14 @@
             Module Level 3.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.RecurrenceId">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.RecurrenceId">
             <summary>
             If present, this JSCalendar object represents one occurrence of a 
             recurring JSCalendar object. If present, the recurrenceRules and 
             recurrenceOverrides properties MUST NOT be present.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.RecurrenceIdTimeZone">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.RecurrenceIdTimeZone">
             <summary>
             Identifies the time zone of the main JSCalendar object, of which 
             this JSCalendar object is a recurrence instance. This property 
@@ -232,7 +232,7 @@
             set if the recurrenceId property is not set.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.RecurrenceRules">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.RecurrenceRules">
             <summary>
             This defines a set of recurrence rules (repeating patterns) for 
             recurring calendar objects.
@@ -243,7 +243,7 @@
             define a recurrenceRules property.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.ExcludedRecurrenceRules">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.ExcludedRecurrenceRules">
             <summary>
             This defines a set of recurrence rules (repeating patterns) for 
             date-times on which the object will not occur. The rules are 
@@ -256,13 +256,13 @@
             recurrenceRules property, as described in Section 4.3.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.RecurrenceOverrides">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.RecurrenceOverrides">
             <summary>
             Maps recurrence ids (the date-time produced by the recurrence rule) 
             to the overridden properties of the recurrence instance.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.Excluded">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.Excluded">
             <summary>
             This defines if this object is an overridden, excluded instance 
             of a recurring JSCalendar object (see Section 4.3.5). If this 
@@ -273,14 +273,14 @@
             expansion.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.Priority">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.Priority">
              <summary>
              This specifies a priority for the calendar object. This may 
             be used as part of scheduling systems to help resolve conflicts 
              for a time period.
              </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.FreeBusyStatus">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.FreeBusyStatus">
             <summary>
             This specifies how this calendar object should be treated when 
             calculating free-busy state. This MUST be one of the following 
@@ -288,7 +288,7 @@
             Values" registry, or a vendor-specific value (see Section 3.3):
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.Privacy">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.Privacy">
             <summary>
             Calendar objects are normally collected together and may be 
             shared with other users. The privacy property allows the 
@@ -298,7 +298,7 @@
             property is up to the API via which this object is accessed.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.ReplyTo">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.ReplyTo">
             <summary>
             This represents methods by which participants may submit their 
             response to the organizer of the calendar object. The keys in 
@@ -312,7 +312,7 @@
             than being specified as an empty object).
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.SentBy">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.SentBy">
             <summary>
             This is the email address in the "From" header of the email 
             in which this calendar object was received. This is only relevant 
@@ -321,13 +321,13 @@
             defined in Section 3.4.1 of [RFC5322].
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.Participants">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.Participants">
             <summary>
             This is a map of participant ids to participants, describing 
             their participation in the calendar object.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.RequestStatus">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.RequestStatus">
             <summary>
             A request status as returned from processing the most recent 
             scheduling request for this JSCalendar object. The allowed 
@@ -336,7 +336,7 @@
             the following ABNF [RFC5234]:
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.UseDefaultAlerts">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.UseDefaultAlerts">
             <summary>
             If true, use the user's default alerts and ignore the value 
             of the alerts property. Fetching user defaults is dependent 
@@ -347,21 +347,21 @@
             set to false.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.Alerts">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.Alerts">
             <summary>
             This is a map of alert ids to Alert objects, representing 
             alerts/reminders to display or send to the user for this calendar 
             object.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.Localizations">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.Localizations">
             <summary>
             A map where each key is a language tag [RFC5646], and the 
             corresponding value is a set of patches to apply to the 
             calendar object in order to localize it into that locale.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.TimeZone">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.TimeZone">
             <summary>
             This identifies the time zone the object is scheduled in or
             is null for floating time. This is either a name from the IANA
@@ -370,51 +370,51 @@
             this MUST be presumed to be null (i.e., floating time).
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry.TimeZones">
+        <member name="P:Goedel.Contacts.JsCalendarEntry.TimeZones">
              <summary>
              This maps identifiers of custom time zones to their time zone 
              definitions. The following restrictions apply for each key in 
             the map:
              </summary>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry._Binding">
+        <member name="P:Goedel.Contacts.JsCalendarEntry._Binding">
             <summary>Implement IBinding</summary> 
         </member>
-        <member name="F:Goedel.Contacts.CalendarEntry._binding">
+        <member name="F:Goedel.Contacts.JsCalendarEntry._binding">
             <summary>Binding</summary> 
         </member>
-        <member name="F:Goedel.Contacts.CalendarEntry._StaticProperties">
+        <member name="F:Goedel.Contacts.JsCalendarEntry._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="F:Goedel.Contacts.CalendarEntry._StaticAllProperties">
+        <member name="F:Goedel.Contacts.JsCalendarEntry._StaticAllProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry._AllProperties">
+        <member name="P:Goedel.Contacts.JsCalendarEntry._AllProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry._Properties">
+        <member name="P:Goedel.Contacts.JsCalendarEntry._Properties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry._ParentProperties">
+        <member name="P:Goedel.Contacts.JsCalendarEntry._ParentProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.CalendarEntry._Tag">
+        <member name="P:Goedel.Contacts.JsCalendarEntry._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Contacts.CalendarEntry.__Tag">
+        <member name="F:Goedel.Contacts.JsCalendarEntry.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Contacts.CalendarEntry._Factory">
+        <member name="M:Goedel.Contacts.JsCalendarEntry._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.CalendarEntry.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Contacts.JsCalendarEntry.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -422,27 +422,27 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="T:Goedel.Contacts.Event">
+        <member name="T:Goedel.Contacts.JsEvent">
              <summary>
             
               In addition to the common JSCalendar object properties (Section 4), 
               an Event has the following properties:
              </summary>
         </member>
-        <member name="P:Goedel.Contacts.Event.Start">
+        <member name="P:Goedel.Contacts.JsEvent.Start">
             <summary>
             This is the date/time the event starts in the event's time 
             zone (as specified in the timeZone property, see Section 4.7.1).
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.Event.Duration">
+        <member name="P:Goedel.Contacts.JsEvent.Duration">
             <summary>
             This is the zero or positive duration of the event in the 
             event's start time zone. The end time of an event can be 
             found by adding the duration to the event's start time.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.Event.Status">
+        <member name="P:Goedel.Contacts.JsEvent.Status">
             <summary>
             This is the scheduling status (Section 4.4) of an Event. 
             If set, it MUST be one of the following values, another 
@@ -450,44 +450,44 @@
             or a vendor-specific value (see Section 3.3):
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.Event._Binding">
+        <member name="P:Goedel.Contacts.JsEvent._Binding">
             <summary>Implement IBinding</summary> 
         </member>
-        <member name="F:Goedel.Contacts.Event._binding">
+        <member name="F:Goedel.Contacts.JsEvent._binding">
             <summary>Binding</summary> 
         </member>
-        <member name="F:Goedel.Contacts.Event._StaticProperties">
+        <member name="F:Goedel.Contacts.JsEvent._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="F:Goedel.Contacts.Event._StaticAllProperties">
+        <member name="F:Goedel.Contacts.JsEvent._StaticAllProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="P:Goedel.Contacts.Event._AllProperties">
+        <member name="P:Goedel.Contacts.JsEvent._AllProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.Event._Properties">
+        <member name="P:Goedel.Contacts.JsEvent._Properties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.Event._ParentProperties">
+        <member name="P:Goedel.Contacts.JsEvent._ParentProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.Event._Tag">
+        <member name="P:Goedel.Contacts.JsEvent._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Contacts.Event.__Tag">
+        <member name="F:Goedel.Contacts.JsEvent.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Contacts.Event._Factory">
+        <member name="M:Goedel.Contacts.JsEvent._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.Event.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Contacts.JsEvent.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -495,87 +495,87 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="T:Goedel.Contacts.Task">
+        <member name="T:Goedel.Contacts.JsTask">
              <summary>
             
               In addition to the common JSCalendar object properties (Section 4), 
               a Task has the following properties
              </summary>
         </member>
-        <member name="P:Goedel.Contacts.Task.Due">
+        <member name="P:Goedel.Contacts.JsTask.Due">
             <summary>
             This is the date/time the task is due in the task's time zone.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.Task.Start">
+        <member name="P:Goedel.Contacts.JsTask.Start">
             <summary>
             This the date/time the task should start in the task's time zone.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.Task.EstimatedDuration">
+        <member name="P:Goedel.Contacts.JsTask.EstimatedDuration">
             <summary>
             This specifies the estimated positive duration of time the task
             takes to complete.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.Task.PercentComplete">
+        <member name="P:Goedel.Contacts.JsTask.PercentComplete">
             <summary>
             This represents the percent completion of the task overall. 
             The property value MUST be a positive integer between 0 and 100.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.Task.Progress">
+        <member name="P:Goedel.Contacts.JsTask.Progress">
             <summary>
             This defines the progress of this task. If omitted, the default 
             progress (Section 4.4) of a Task is defined as follows (in order 
             of evaluation):
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.Task.ProgressUpdated">
+        <member name="P:Goedel.Contacts.JsTask.ProgressUpdated">
             <summary>
             This specifies the date/time the progress property of either 
             the task overall (Section 5.2.5) or a specific participant 
             (Section 4.4.6) was last updated.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.Task._Binding">
+        <member name="P:Goedel.Contacts.JsTask._Binding">
             <summary>Implement IBinding</summary> 
         </member>
-        <member name="F:Goedel.Contacts.Task._binding">
+        <member name="F:Goedel.Contacts.JsTask._binding">
             <summary>Binding</summary> 
         </member>
-        <member name="F:Goedel.Contacts.Task._StaticProperties">
+        <member name="F:Goedel.Contacts.JsTask._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="F:Goedel.Contacts.Task._StaticAllProperties">
+        <member name="F:Goedel.Contacts.JsTask._StaticAllProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="P:Goedel.Contacts.Task._AllProperties">
+        <member name="P:Goedel.Contacts.JsTask._AllProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.Task._Properties">
+        <member name="P:Goedel.Contacts.JsTask._Properties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.Task._ParentProperties">
+        <member name="P:Goedel.Contacts.JsTask._ParentProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.Task._Tag">
+        <member name="P:Goedel.Contacts.JsTask._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Contacts.Task.__Tag">
+        <member name="F:Goedel.Contacts.JsTask.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Contacts.Task._Factory">
+        <member name="M:Goedel.Contacts.JsTask._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.Task.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Contacts.JsTask.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -583,60 +583,60 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="T:Goedel.Contacts.Group">
+        <member name="T:Goedel.Contacts.JsGroup">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.Group.Entries">
+        <member name="P:Goedel.Contacts.JsGroup.Entries">
             <summary>
             This is a collection of group members. Implementations MUST 
             ignore entries of unknown type.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.Group.Source">
+        <member name="P:Goedel.Contacts.JsGroup.Source">
             <summary>
             This is the source from which updated versions of this group 
             may be retrieved. The value MUST be a URI.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.Group._Binding">
+        <member name="P:Goedel.Contacts.JsGroup._Binding">
             <summary>Implement IBinding</summary> 
         </member>
-        <member name="F:Goedel.Contacts.Group._binding">
+        <member name="F:Goedel.Contacts.JsGroup._binding">
             <summary>Binding</summary> 
         </member>
-        <member name="F:Goedel.Contacts.Group._StaticProperties">
+        <member name="F:Goedel.Contacts.JsGroup._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="F:Goedel.Contacts.Group._StaticAllProperties">
+        <member name="F:Goedel.Contacts.JsGroup._StaticAllProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="P:Goedel.Contacts.Group._AllProperties">
+        <member name="P:Goedel.Contacts.JsGroup._AllProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.Group._Properties">
+        <member name="P:Goedel.Contacts.JsGroup._Properties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.Group._ParentProperties">
+        <member name="P:Goedel.Contacts.JsGroup._ParentProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.Group._Tag">
+        <member name="P:Goedel.Contacts.JsGroup._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Contacts.Group.__Tag">
+        <member name="F:Goedel.Contacts.JsGroup.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Contacts.Group._Factory">
+        <member name="M:Goedel.Contacts.JsGroup._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.Group.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Contacts.JsGroup.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -3388,51 +3388,51 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="T:Goedel.Contacts.CryptoKey">
+        <member name="T:Goedel.Contacts.CryptoResource">
              <summary>
             
              The cryptographic resources such as public keys and certificates associated 
               with the entity represented by the Card.
              </summary>
         </member>
-        <member name="P:Goedel.Contacts.CryptoKey._Binding">
+        <member name="P:Goedel.Contacts.CryptoResource._Binding">
             <summary>Implement IBinding</summary> 
         </member>
-        <member name="F:Goedel.Contacts.CryptoKey._binding">
+        <member name="F:Goedel.Contacts.CryptoResource._binding">
             <summary>Binding</summary> 
         </member>
-        <member name="F:Goedel.Contacts.CryptoKey._StaticProperties">
+        <member name="F:Goedel.Contacts.CryptoResource._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="F:Goedel.Contacts.CryptoKey._StaticAllProperties">
+        <member name="F:Goedel.Contacts.CryptoResource._StaticAllProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="P:Goedel.Contacts.CryptoKey._AllProperties">
+        <member name="P:Goedel.Contacts.CryptoResource._AllProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.CryptoKey._Properties">
+        <member name="P:Goedel.Contacts.CryptoResource._Properties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.CryptoKey._ParentProperties">
+        <member name="P:Goedel.Contacts.CryptoResource._ParentProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.CryptoKey._Tag">
+        <member name="P:Goedel.Contacts.CryptoResource._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Contacts.CryptoKey.__Tag">
+        <member name="F:Goedel.Contacts.CryptoResource.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Contacts.CryptoKey._Factory">
+        <member name="M:Goedel.Contacts.CryptoResource._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.CryptoKey.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Contacts.CryptoResource.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -4035,6 +4035,16 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="T:Goedel.Contacts.EventExtensions">
+            <summary>
+            Extensions class defining logging events and convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.EventExtensions.#cctor">
+            <summary>
+            Static initializer, is called once when the module loads.
+            </summary>
+        </member>
         <member name="T:Goedel.Contacts.Extension">
             <summary>
             Extension methods
@@ -4043,708 +4053,6 @@
         <member name="T:Goedel.Contacts.NamespaceDoc">
             <summary>
             Additional support library for command line parsers generated with Goedel Command tool.
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.StreamDataCorrupt">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.StreamDataCorrupt.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.StreamDataCorrupt.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.StreamDataCorrupt.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.StreamDataCorrupt._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.StreamDataCorrupt.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.SequenceDataCorrupt">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceDataCorrupt.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceDataCorrupt.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceDataCorrupt.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceDataCorrupt._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceDataCorrupt.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.EnvelopeDataCorrupt">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.EnvelopeDataCorrupt.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.EnvelopeDataCorrupt.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.EnvelopeDataCorrupt.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.EnvelopeDataCorrupt._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.EnvelopeDataCorrupt.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.EnvelopeDigestCorrupt">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.EnvelopeDigestCorrupt.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.EnvelopeDigestCorrupt.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.EnvelopeDigestCorrupt.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.EnvelopeDigestCorrupt._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.EnvelopeDigestCorrupt.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.EnvelopeSignatureMissing">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.EnvelopeSignatureMissing.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.EnvelopeSignatureMissing.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.EnvelopeSignatureMissing.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.EnvelopeSignatureMissing._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.EnvelopeSignatureMissing.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.EnvelopeSignatureInvalid">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.EnvelopeSignatureInvalid.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.EnvelopeSignatureInvalid.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.EnvelopeSignatureInvalid.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.EnvelopeSignatureInvalid._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.EnvelopeSignatureInvalid.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.InvalidContainerTypeException">
-            <summary>
-            An attempt was made to access a container type that is not supported by the
-            class.
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.InvalidContainerTypeException.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.InvalidContainerTypeException.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.InvalidContainerTypeException.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.InvalidContainerTypeException._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.InvalidContainerTypeException.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.FrameTooLargeException">
-            <summary>
-            An attempt was made to create a frame that is larger than the maximum frame size allowed by
-            the application
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.FrameTooLargeException.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.FrameTooLargeException.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.FrameTooLargeException.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.FrameTooLargeException._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.FrameTooLargeException.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.InvalidFileModeException">
-            <summary>
-            An attempt was made to create a new container file in a mode that did not
-            allow creation of a new file.
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.InvalidFileModeException.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.InvalidFileModeException.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.InvalidFileModeException.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.InvalidFileModeException._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.InvalidFileModeException.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.InvalidFileFormatException">
-            <summary>
-            The file format was found to be invalid or otherwise corrupt.
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.InvalidFileFormatException.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.InvalidFileFormatException.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.InvalidFileFormatException.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.InvalidFileFormatException._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.InvalidFileFormatException.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.ObjectIdentifierNotUnique">
-            <summary>
-            An attempt was made to create an object with an existing object identifier
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.ObjectIdentifierNotUnique.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.ObjectIdentifierNotUnique.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ObjectIdentifierNotUnique.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ObjectIdentifierNotUnique._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.ObjectIdentifierNotUnique.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.AccessRefused">
-            <summary>
-            Access was refused
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.AccessRefused.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.AccessRefused.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.AccessRefused.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.AccessRefused._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.AccessRefused.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.DataRecordTruncated">
-            <summary>
-            A data record could not be read because it was incomplete.
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DataRecordTruncated.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DataRecordTruncated.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DataRecordTruncated.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DataRecordTruncated._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DataRecordTruncated.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.ArchiveEntryMissingFileName">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.ArchiveEntryMissingFileName.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.ArchiveEntryMissingFileName.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ArchiveEntryMissingFileName.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ArchiveEntryMissingFileName._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.ArchiveEntryMissingFileName.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.EntryNotFound">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.EntryNotFound.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.EntryNotFound.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.EntryNotFound.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.EntryNotFound._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.EntryNotFound.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.EntryAlreadyExists">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.EntryAlreadyExists.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.EntryAlreadyExists.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.EntryAlreadyExists.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.EntryAlreadyExists._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.EntryAlreadyExists.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.UndefinedStoreAction">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.UndefinedStoreAction.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.UndefinedStoreAction.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.UndefinedStoreAction.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.UndefinedStoreAction._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.UndefinedStoreAction.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.TaggingNotSupported">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.TaggingNotSupported.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.TaggingNotSupported.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.TaggingNotSupported.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.TaggingNotSupported._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.TaggingNotSupported.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.FileNotFound">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.FileNotFound.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.FileNotFound.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.FileNotFound.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.FileNotFound._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.FileNotFound.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.DirectoryNotFound">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DirectoryNotFound.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DirectoryNotFound.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DirectoryNotFound.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DirectoryNotFound._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DirectoryNotFound.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.NotInDecryptionMode">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.NotInDecryptionMode.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.NotInDecryptionMode.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.NotInDecryptionMode.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.NotInDecryptionMode._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.NotInDecryptionMode.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.RelativeDirectoryInvalid">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.RelativeDirectoryInvalid.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.RelativeDirectoryInvalid.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.RelativeDirectoryInvalid.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.RelativeDirectoryInvalid._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.RelativeDirectoryInvalid.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.EventExtensions">
-            <summary>
-            Extensions class defining logging events and convenience methods.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.EventExtensions.#cctor">
-            <summary>
-            Static initializer, is called once when the module loads.
             </summary>
         </member>
         <member name="T:Goedel.Cryptography.Dare.Initialization">

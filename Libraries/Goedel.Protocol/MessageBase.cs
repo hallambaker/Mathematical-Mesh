@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/17/2025 5:48:54 PM
+//  This file was automatically generated at 2/18/2025 12:30:18 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -352,7 +352,7 @@ public partial class Version : BaseMessage {
 					(IBinding data, int? value) => {(data as Version).Minor = value;}, (IBinding data) => (data as Version).Minor )},
 			{ "Encodings", new PropertyListStruct ("Encodings", 
 					(IBinding data, object? value) => {(data as Version).Encodings = value as List<Encoding>;}, (IBinding data) => (data as Version).Encodings,
-					false, ()=>new  List<Encoding>(), ()=>new Encoding())} ,
+					false, ()=>new  List<Encoding>(), ()=>new Encoding())},
 			{ "URI", new PropertyListString ("URI", 
 					(IBinding data, List<string>? value) => {(data as Version).URI = value;}, (IBinding data) => (data as Version).URI )}
         }, __Tag,() => new Version(), null);
@@ -607,10 +607,10 @@ public partial class HelloResponse : Response {
 
 			{ "Version", new PropertyStruct ("Version", 
 					(IBinding data, object? value) => {(data as HelloResponse).Version = value as Version;}, (IBinding data) => (data as HelloResponse).Version,
-					false, ()=>new  Version(), ()=>new Version())} ,
+					false, ()=>new  Version(), ()=>new Version())},
 			{ "Alternates", new PropertyListStruct ("Alternates", 
 					(IBinding data, object? value) => {(data as HelloResponse).Alternates = value as List<Version>;}, (IBinding data) => (data as HelloResponse).Alternates,
-					false, ()=>new  List<Version>(), ()=>new Version())} 
+					false, ()=>new  List<Version>(), ()=>new Version())}
         }, __Tag,() => new HelloResponse(), Response._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 

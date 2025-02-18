@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/17/2025 5:48:58 PM
+//  This file was automatically generated at 2/18/2025 10:46:23 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -561,10 +561,10 @@ public partial class QueryResponse : ResolverResponse {
 
 			{ "Result", new PropertyStruct ("Result", 
 					(IBinding data, object? value) => {(data as QueryResponse).Result = value as Enveloped<Registration>;}, (IBinding data) => (data as QueryResponse).Result,
-					false, ()=>new  Enveloped<Registration>(), ()=>new Enveloped<Registration>())} ,
+					false, ()=>new  Enveloped<Registration>(), ()=>new Enveloped<Registration>())},
 			{ "Notarization", new PropertyStruct ("Notarization", 
 					(IBinding data, object? value) => {(data as QueryResponse).Notarization = value as Enveloped<Notarization>;}, (IBinding data) => (data as QueryResponse).Notarization,
-					false, ()=>new  Enveloped<Notarization>(), ()=>new Enveloped<Notarization>())} 
+					false, ()=>new  Enveloped<Notarization>(), ()=>new Enveloped<Notarization>())}
         }, __Tag,() => new QueryResponse(), ResolverResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 

@@ -40,7 +40,7 @@ public interface IKeyLocate {
     /// <param name="UDF">fingerprint of key to locate.</param>
     /// <param name="cryptoKey">The key (if found)</param>
     /// <returns>A KeyPair instance bound to the private key.</returns>
-    bool LocatePrivateKeyPair(string UDF, out CryptoKey cryptoKey);
+    bool LocatePrivateKeyPair(string UDF, out CryptographicKey cryptoKey);
 
     /// <summary>
     /// Resolve a public key by identifier. This may be a UDF fingerprint of the key,
@@ -49,7 +49,7 @@ public interface IKeyLocate {
     /// <param name="keyID">The identifier to resolve.</param>
     /// <param name="cryptoKey">The key (if found)</param>
     /// <returns>true if a key is found, otherwise, false.</returns>
-    bool TryFindKeyEncryption(string keyID, out CryptoKey cryptoKey);
+    bool TryFindKeyEncryption(string keyID, out CryptographicKey cryptoKey);
 
     /// <summary>
     /// Resolve a private key by identifier. This may be a UDF fingerprint of the key,
@@ -58,7 +58,7 @@ public interface IKeyLocate {
     /// <param name="signingKey">The identifier to resolve.</param>
     /// <param name="cryptoKey">The key (if found)</param>
     /// <returns>The identifier.</returns>
-    bool TryFindKeySignature(string signingKey, out CryptoKey cryptoKey);
+    bool TryFindKeySignature(string signingKey, out CryptographicKey cryptoKey);
 
     /// <summary>
     /// Resolve a public key by identifier. This may be a UDF fingerprint of the key,
@@ -67,7 +67,7 @@ public interface IKeyLocate {
     /// <param name="keyId">The identifier to resolve.</param>
     /// <param name="cryptoKey">The key (if found)</param>
     /// <returns>The identifier.</returns>
-    bool TryFindPublicKey(string keyId, out CryptoKey cryptoKey);
+    bool TryFindPublicKey(string keyId, out CryptographicKey cryptoKey);
 
 
     /// <summary>

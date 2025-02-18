@@ -115,7 +115,7 @@ public partial class CatalogedRepository {
     public CatalogedRepository(
                     ProfileRepository profileGroup,
                     ActivationCommon activationAccount,
-                    CryptoKey encryptionKey
+                    CryptographicKey encryptionKey
                     //,
                     //            ConnectionStripped connectionAddress
                     ) {

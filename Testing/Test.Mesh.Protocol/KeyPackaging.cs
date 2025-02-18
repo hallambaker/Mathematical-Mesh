@@ -115,7 +115,7 @@ public partial class TestService {
 
     /// <summary>
     /// Check round tripping of all KeyPairAdvanced types
-    /// to and from JOSE <see cref="KeyData"/> format using the  <see cref="CryptoKey"/>
+    /// to and from JOSE <see cref="KeyData"/> format using the  <see cref="CryptographicKey"/>
     /// and <see cref="IKeyAdvancedPrivate"/> entry points.
     /// </summary>
     /// <param name="repeat">Number of times to repeat the test.</param>
@@ -133,7 +133,7 @@ public partial class TestService {
 
     /// <summary>
     /// Check round tripping of KeyPairAdvanced of type <paramref name="cryptoAlgorithmId"/>
-    /// to and from JOSE <see cref="KeyData"/> format using the  <see cref="CryptoKey"/>
+    /// to and from JOSE <see cref="KeyData"/> format using the  <see cref="CryptographicKey"/>
     /// and <see cref="IKeyAdvancedPrivate"/> entry points.
     /// </summary>
     /// <param name="cryptoAlgorithmId">Algorithm to test</param>

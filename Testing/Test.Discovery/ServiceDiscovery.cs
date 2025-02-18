@@ -104,6 +104,9 @@ public partial class Jmap {
         var earl = Udf.AuthenticatedEncryptionKey(asBytes);
         Console.WriteLine($"Earl: udf://example.com/{earl}");
 
+        var locator = Udf.Locator(earl);
+        Console.WriteLine($"URL: https://example.com/.well-known/mmm-udf/{locator}");
+
         var key = Udf.GetEncryptionKey(earl);
 
         Console.WriteLine($"Key: {key.ToStringBase16FormatHex()}");
@@ -126,6 +129,9 @@ public partial class Jmap {
         encryptedContact = Udf.GetEncryptedData(asBytes, earl);
 
         Xunit.Assert.Throws<EarlContentInvalid>(() => Udf.GetDecryptedData(encryptedContact, earl));
+
+
+
 
         return true;
         }

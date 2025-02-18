@@ -40,7 +40,7 @@ public partial class DareSignature {
     /// <param name="digestId">The digest algorithm used to process 
     /// <paramref name="ManifestValue"/> (if required).</param>
     /// <param name="includeSignatureKey">If true, include the public key of the signer.</param>
-    public DareSignature(CryptoKey signerKey,
+    public DareSignature(CryptographicKey signerKey,
                 byte[] ManifestValue,
                 CryptoAlgorithmId digestId = CryptoAlgorithmId.Default,
                 bool includeSignatureKey = false) {
@@ -63,7 +63,7 @@ public partial class DareSignature {
     /// <param name="ManifestValue">The manifest value.</param>
     /// <returns>True if the signature is valid, otherwise false.</returns>
     public bool Verify(
-                CryptoKey signerKey,
+                CryptographicKey signerKey,
                 byte[] ManifestValue) {
         var digest = Alg.ToCryptoAlgorithmID();
         return signerKey.VerifyManifest(ManifestValue, SignatureValue, digest);

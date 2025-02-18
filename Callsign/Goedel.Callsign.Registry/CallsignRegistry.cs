@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/17/2025 5:48:59 PM
+//  This file was automatically generated at 2/18/2025 10:46:24 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -156,13 +156,13 @@ public partial class CatalogedRegistry : CatalogedApplication {
 					(IBinding data, int? value) => {(data as CatalogedRegistry).MaximumCallsignLength = value;}, (IBinding data) => (data as CatalogedRegistry).MaximumCallsignLength )},
 			{ "EnvelopedConnectionAddress", new PropertyStruct ("EnvelopedConnectionAddress", 
 					(IBinding data, object? value) => {(data as CatalogedRegistry).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, (IBinding data) => (data as CatalogedRegistry).EnvelopedConnectionAddress,
-					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>())} ,
+					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>())},
 			{ "EnvelopedProfileRegistry", new PropertyStruct ("EnvelopedProfileRegistry", 
 					(IBinding data, object? value) => {(data as CatalogedRegistry).EnvelopedProfileRegistry = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as CatalogedRegistry).EnvelopedProfileRegistry,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())} ,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())},
 			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", 
 					(IBinding data, object? value) => {(data as CatalogedRegistry).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, (IBinding data) => (data as CatalogedRegistry).EnvelopedActivationCommon,
-					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())} 
+					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())}
         }, __Tag,() => new CatalogedRegistry(), CatalogedApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -250,10 +250,10 @@ public partial class ActivationApplicationRegistry : ActivationApplication {
 
 			{ "AccountEncryption", new PropertyStruct ("AccountEncryption", 
 					(IBinding data, object? value) => {(data as ActivationApplicationRegistry).AccountEncryption = value as KeyData;}, (IBinding data) => (data as ActivationApplicationRegistry).AccountEncryption,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "AdministratorSignature", new PropertyStruct ("AdministratorSignature", 
 					(IBinding data, object? value) => {(data as ActivationApplicationRegistry).AdministratorSignature = value as KeyData;}, (IBinding data) => (data as ActivationApplicationRegistry).AdministratorSignature,
-					false, ()=>new  KeyData(), ()=>new KeyData())} 
+					false, ()=>new  KeyData(), ()=>new KeyData())}
         }, __Tag,() => new ActivationApplicationRegistry(), ActivationApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -341,10 +341,10 @@ public partial class ApplicationEntryRegistry : ApplicationEntry {
 
 			{ "EnvelopedActivation", new PropertyStruct ("EnvelopedActivation", 
 					(IBinding data, object? value) => {(data as ApplicationEntryRegistry).EnvelopedActivation = value as Enveloped<ActivationApplicationRegistry>;}, (IBinding data) => (data as ApplicationEntryRegistry).EnvelopedActivation,
-					false, ()=>new  Enveloped<ActivationApplicationRegistry>(), ()=>new Enveloped<ActivationApplicationRegistry>())} ,
+					false, ()=>new  Enveloped<ActivationApplicationRegistry>(), ()=>new Enveloped<ActivationApplicationRegistry>())},
 			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", 
 					(IBinding data, object? value) => {(data as ApplicationEntryRegistry).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as ApplicationEntryRegistry).EnvelopedConnectionService,
-					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())} 
+					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())}
         }, __Tag,() => new ApplicationEntryRegistry(), ApplicationEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 

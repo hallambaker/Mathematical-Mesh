@@ -37,13 +37,13 @@ public partial class KeyData {
     /// The cryptolib representation of the Key Pair. This is the point of access
     /// for all cryptolib operations. 
     /// </summary>
-    CryptoKey keyPair;
+    CryptographicKey keyPair;
 
     /// <summary>
     /// The cryptolib representation of the Key Pair. This is the point of access
     /// for all cryptolib operations. 
     /// </summary>
-    public virtual CryptoKey CryptoKey {
+    public virtual CryptographicKey CryptoKey {
         get {
             if (keyPair == null) {
                 keyPair = GetKeyPair();
@@ -138,7 +138,7 @@ public partial class KeyData {
     /// <param name="export">If true, export the private parameters as well
     /// as the public.</param>
     /// <returns>The generated key pair</returns>
-    public KeyData(CryptoKey cryptoKey, bool export = false) {
+    public KeyData(CryptographicKey cryptoKey, bool export = false) {
         CryptoKey = cryptoKey;
         if (cryptoKey is KeyPair keyPair) {
             PublicParameters = Key.GetPublic(keyPair);

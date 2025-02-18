@@ -76,7 +76,7 @@ public partial class CryptographicCapability {
 
     ///<summary>If not null, specifies a key to which key shares MUST be encrypted
     ///when creating.</summary>
-    public CryptoKey KeyDataEncryptionKey;
+    public CryptographicKey KeyDataEncryptionKey;
 
     ///<summary>The primary key is the value of the <see cref="Capability.Id"/> property.</summary>
     public override string _PrimaryKey => Id;

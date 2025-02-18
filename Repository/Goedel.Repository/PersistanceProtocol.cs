@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/17/2025 5:48:58 PM
+//  This file was automatically generated at 2/18/2025 10:46:23 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -354,13 +354,13 @@ public partial class CatalogedRepository : CatalogedApplication {
 
 			{ "EnvelopedConnectionAddress", new PropertyStruct ("EnvelopedConnectionAddress", 
 					(IBinding data, object? value) => {(data as CatalogedRepository).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, (IBinding data) => (data as CatalogedRepository).EnvelopedConnectionAddress,
-					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>())} ,
+					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>())},
 			{ "EnvelopedProfileRepository", new PropertyStruct ("EnvelopedProfileRepository", 
 					(IBinding data, object? value) => {(data as CatalogedRepository).EnvelopedProfileRepository = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as CatalogedRepository).EnvelopedProfileRepository,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())} ,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())},
 			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", 
 					(IBinding data, object? value) => {(data as CatalogedRepository).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, (IBinding data) => (data as CatalogedRepository).EnvelopedActivationCommon,
-					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())} 
+					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())}
         }, __Tag,() => new CatalogedRepository(), CatalogedApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -455,13 +455,13 @@ public partial class ActivationApplicationRepository : ActivationApplication {
 
 			{ "AccountEncryption", new PropertyStruct ("AccountEncryption", 
 					(IBinding data, object? value) => {(data as ActivationApplicationRepository).AccountEncryption = value as KeyData;}, (IBinding data) => (data as ActivationApplicationRepository).AccountEncryption,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "AdministratorSignature", new PropertyStruct ("AdministratorSignature", 
 					(IBinding data, object? value) => {(data as ActivationApplicationRepository).AdministratorSignature = value as KeyData;}, (IBinding data) => (data as ActivationApplicationRepository).AdministratorSignature,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", 
 					(IBinding data, object? value) => {(data as ActivationApplicationRepository).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as ActivationApplicationRepository).EnvelopedConnectionService,
-					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())} 
+					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())}
         }, __Tag,() => new ActivationApplicationRepository(), ActivationApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -542,7 +542,7 @@ public partial class ApplicationEntryRepository : ApplicationEntry {
 
 			{ "EnvelopedActivation", new PropertyStruct ("EnvelopedActivation", 
 					(IBinding data, object? value) => {(data as ApplicationEntryRepository).EnvelopedActivation = value as Enveloped<ActivationApplicationRepository>;}, (IBinding data) => (data as ApplicationEntryRepository).EnvelopedActivation,
-					false, ()=>new  Enveloped<ActivationApplicationRepository>(), ()=>new Enveloped<ActivationApplicationRepository>())} 
+					false, ()=>new  Enveloped<ActivationApplicationRepository>(), ()=>new Enveloped<ActivationApplicationRepository>())}
         }, __Tag,() => new ApplicationEntryRepository(), ApplicationEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 

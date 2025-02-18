@@ -250,7 +250,7 @@ public class CatalogAccess : Catalog<CatalogedAccess> {
     /// <returns></returns>
     public KeyData MakeKeyData(
                 Right right,
-                CryptoKey keyPair,
+                CryptographicKey keyPair,
                 string keyIdentifier, ITransactContextAccount transactContextAccount = null) {
         switch (right.Degree) {
             case Degree.Direct: {

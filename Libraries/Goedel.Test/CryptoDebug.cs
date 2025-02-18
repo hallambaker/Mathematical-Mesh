@@ -306,8 +306,8 @@ public class CryptoParametersDebug : CryptoParameters {
     public CryptoParametersDebug(IKeyLocate keyCollection = null,
                     List<string> recipients = null,
                     List<string> signers = null,
-                    CryptoKey recipient = null,
-                    CryptoKey signer = null,
+                    CryptographicKey recipient = null,
+                    CryptographicKey signer = null,
                     CryptoAlgorithmId encryptID = CryptoAlgorithmId.NULL,
                     CryptoAlgorithmId digestID = CryptoAlgorithmId.NULL) :
                 base(keyCollection, recipients, signers, recipient, signer, encryptID, digestID) {
@@ -348,7 +348,7 @@ public class DareRecipientDebug : DareRecipient {
     /// <param name="MasterKey">The master key</param>
     /// <param name="PublicKey">The recipient public key.</param>
     /// <returns>The recipient informatin object.</returns>
-    public DareRecipientDebug(byte[] MasterKey, CryptoKey PublicKey) {
+    public DareRecipientDebug(byte[] MasterKey, CryptographicKey PublicKey) {
 
         var secret = Platform.GetRandomBytes(32);
         var privateKey = new CurveEdwards25519Private();

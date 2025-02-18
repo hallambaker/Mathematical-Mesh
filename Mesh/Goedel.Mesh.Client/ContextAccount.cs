@@ -167,7 +167,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     public string AccountDeviceId => ActivationCommon.AccountDeviceId;
 
     ///<summary>The account profile key</summary>
-    public List<CryptoKey> KeyProfileSigners  => ActivationCommon?.KeyProfileSigners;
+    public List<CryptographicKey> KeyProfileSigners  => ActivationCommon?.KeyProfileSigners;
     ///<summary>The administration signature key</summary>
     public virtual KeyPair KeyAdministratorSign => ActivationCommon?.AdministratorSignatureKey;
     ///<summary>The administration signature key</summary>
@@ -328,7 +328,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <returns>A <see cref="MessagePin"/> instance describing the created parameters.</returns>
     public async Task<MessagePin> GetPinAsync(string action, bool automatic = true,
                         int bits = 120, long validity = MeshConstants.DayInTicks,
-                        bool register = true, CryptoKey encryptKey = null,
+                        bool register = true, CryptographicKey encryptKey = null,
                         List<string> roles = null) {
 
 
@@ -1067,7 +1067,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="keyId">The identifier to resolve.</param>
     /// <param name="cryptoKey">The found key </param>
     /// <returns>The identifier.</returns>
-    public virtual bool TryFindKeyEncryption(string keyId, out CryptoKey cryptoKey) =>
+    public virtual bool TryFindKeyEncryption(string keyId, out CryptographicKey cryptoKey) =>
                 KeyCollection.TryFindKeyEncryption(keyId, out cryptoKey);
 
     /// <summary>
@@ -1077,7 +1077,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="keyId">The identifier to resolve.</param>
     /// <param name="cryptoKey">The found key </param>
     /// <returns>The identifier.</returns>
-    public virtual bool TryFindPublicKey(string keyId, out CryptoKey cryptoKey) =>
+    public virtual bool TryFindPublicKey(string keyId, out CryptographicKey cryptoKey) =>
                 KeyCollection.TryFindPublicKey(keyId, out cryptoKey);
 
 
@@ -1087,7 +1087,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="keyId">The key identifier to match.</param>
     /// <param name="cryptoKey">The found key </param>
     /// <returns>The key pair if found.</returns>
-    public virtual bool LocatePrivateKeyPair(string keyId, out CryptoKey cryptoKey) =>
+    public virtual bool LocatePrivateKeyPair(string keyId, out CryptographicKey cryptoKey) =>
                 KeyCollection.LocatePrivateKeyPair(keyId, out cryptoKey);
 
     /// <summary>
@@ -1106,7 +1106,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="signingKey">The identifier to resolve.</param>
     /// <param name="cryptoKey">The found key </param>
     /// <returns>The identifier.</returns>
-    public virtual bool TryFindKeySignature(string signingKey, out CryptoKey cryptoKey) =>
+    public virtual bool TryFindKeySignature(string signingKey, out CryptographicKey cryptoKey) =>
                 KeyCollection.TryFindKeySignature(signingKey, out cryptoKey);
 
     /// <summary>
@@ -1130,7 +1130,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// </summary>
     /// <param name="cryptoKey">The key to validate.</param>
     /// <returns>The identifier.</returns>
-    public virtual bool ValidateTrustAnchor(CryptoKey cryptoKey) => throw new NYI();
+    public virtual bool ValidateTrustAnchor(CryptographicKey cryptoKey) => throw new NYI();
 
 
     ///<inheritdoc cref="IKeyLocate.RemoteAgreement"/>
@@ -1198,12 +1198,12 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
                 bool sign = false) {
 
         KeyPair signingKey = sign ? KeyCommonSignature : null;
-        List<CryptoKey> encryptionKeys;
+        List<CryptographicKey> encryptionKeys;
 
         // probably going to fail here unless we have a way to pull keys out of the contacts catalog 
         // for the group.
         if (recipients != null) {
-            encryptionKeys = new List<CryptoKey>();
+            encryptionKeys = new List<CryptographicKey>();
             foreach (var recipient in recipients) {
                 TryFindKeyEncryption(recipient, out var key);
                 encryptionKeys.Add(key);

@@ -82,10 +82,10 @@ public class MeshPersist : Disposable {
     public string DirectoryRoot;
 
     ///<summary>The service encryption key.</summary>  
-    public static CryptoKey ServiceEncryptionKey => null;
+    public static CryptographicKey ServiceEncryptionKey => null;
 
     ///<summary>The service signature key.</summary> 
-    public static CryptoKey ServiceSignatureKey => null;
+    public static CryptographicKey ServiceSignatureKey => null;
 
     ///<summary>The key collection.</summary> 
     public IKeyCollection KeyCollection { get; }

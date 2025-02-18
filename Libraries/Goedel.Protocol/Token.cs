@@ -194,6 +194,29 @@ public record PropertyString(
     public override bool IsNull(IBinding data) => Get(data) == null;
     }
 
+
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
+public record PropertyStringTag(
+            string Tag,
+            Action<IBinding, string?> Set,
+            Func<IBinding, string?> Get) : PropertyString(Tag, Set, Get) {
+
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+        writer.WriteString(Get(data) ?? data._Binding.Tag);
+        }
+
+
+
+    }
+
+
+
 /// <summary>
 /// Metadata record representing a property.
 /// </summary>

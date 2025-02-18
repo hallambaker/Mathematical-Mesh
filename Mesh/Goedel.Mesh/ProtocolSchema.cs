@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/17/2025 5:48:56 PM
+//  This file was automatically generated at 2/18/2025 10:46:22 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -905,7 +905,7 @@ public partial class MeshRequestUser : MeshRequest {
 					(IBinding data, string? value) => {(data as MeshRequestUser).Capability = value;}, (IBinding data) => (data as MeshRequestUser).Capability )},
 			{ "EnvelopedProfileDevice", new PropertyStruct ("EnvelopedProfileDevice", 
 					(IBinding data, object? value) => {(data as MeshRequestUser).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;}, (IBinding data) => (data as MeshRequestUser).EnvelopedProfileDevice,
-					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())} 
+					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())}
         }, __Tag,() => new MeshRequestUser(), MeshRequest._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1619,7 +1619,7 @@ public partial class StoreUpdate : StoreStatus {
 
 			{ "Envelopes", new PropertyListStruct ("Envelopes", 
 					(IBinding data, object? value) => {(data as StoreUpdate).Envelopes = value as List<DareEnvelope>;}, (IBinding data) => (data as StoreUpdate).Envelopes,
-					false, ()=>new  List<DareEnvelope>(), ()=>new DareEnvelope())} ,
+					false, ()=>new  List<DareEnvelope>(), ()=>new DareEnvelope())},
 			{ "Partial", new PropertyBoolean ("Partial", 
 					(IBinding data, bool? value) => {(data as StoreUpdate).Partial = value;}, (IBinding data) => (data as StoreUpdate).Partial )},
 			{ "FinalIndex", new PropertyInteger64 ("FinalIndex", 
@@ -1705,7 +1705,7 @@ public partial class MeshHelloRequest : Goedel.Protocol.HelloRequest {
 
 			{ "CallsignBinding", new PropertyStruct ("CallsignBinding", 
 					(IBinding data, object? value) => {(data as MeshHelloRequest).CallsignBinding = value as CallsignBinding;}, (IBinding data) => (data as MeshHelloRequest).CallsignBinding,
-					false, ()=>new  CallsignBinding(), ()=>new CallsignBinding())} 
+					false, ()=>new  CallsignBinding(), ()=>new CallsignBinding())}
         }, __Tag,() => new MeshHelloRequest(), Goedel.Protocol.HelloRequest._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1812,19 +1812,19 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
 
 			{ "ConstraintsUpdate", new PropertyStruct ("ConstraintsUpdate", 
 					(IBinding data, object? value) => {(data as MeshHelloResponse).ConstraintsUpdate = value as ConstraintsData;}, (IBinding data) => (data as MeshHelloResponse).ConstraintsUpdate,
-					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())} ,
+					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())},
 			{ "ConstraintsPost", new PropertyStruct ("ConstraintsPost", 
 					(IBinding data, object? value) => {(data as MeshHelloResponse).ConstraintsPost = value as ConstraintsData;}, (IBinding data) => (data as MeshHelloResponse).ConstraintsPost,
-					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())} ,
+					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())},
 			{ "PolicyAccount", new PropertyStruct ("PolicyAccount", 
 					(IBinding data, object? value) => {(data as MeshHelloResponse).PolicyAccount = value as PolicyAccount;}, (IBinding data) => (data as MeshHelloResponse).PolicyAccount,
-					false, ()=>new  PolicyAccount(), ()=>new PolicyAccount())} ,
+					false, ()=>new  PolicyAccount(), ()=>new PolicyAccount())},
 			{ "EnvelopedProfileService", new PropertyStruct ("EnvelopedProfileService", 
 					(IBinding data, object? value) => {(data as MeshHelloResponse).EnvelopedProfileService = value as Enveloped<ProfileService>;}, (IBinding data) => (data as MeshHelloResponse).EnvelopedProfileService,
-					false, ()=>new  Enveloped<ProfileService>(), ()=>new Enveloped<ProfileService>())} ,
+					false, ()=>new  Enveloped<ProfileService>(), ()=>new Enveloped<ProfileService>())},
 			{ "CallsignBinding", new PropertyStruct ("CallsignBinding", 
 					(IBinding data, object? value) => {(data as MeshHelloResponse).CallsignBinding = value as CallsignBinding;}, (IBinding data) => (data as MeshHelloResponse).CallsignBinding,
-					false, ()=>new  CallsignBinding(), ()=>new CallsignBinding())} 
+					false, ()=>new  CallsignBinding(), ()=>new CallsignBinding())}
         }, __Tag,() => new MeshHelloResponse(), Goedel.Protocol.HelloResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1921,10 +1921,10 @@ public partial class BindRequest : MeshRequest {
 					(IBinding data, string? value) => {(data as BindRequest).AccountAddress = value;}, (IBinding data) => (data as BindRequest).AccountAddress )},
 			{ "EnvelopedProfileAccount", new PropertyStruct ("EnvelopedProfileAccount", 
 					(IBinding data, object? value) => {(data as BindRequest).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as BindRequest).EnvelopedProfileAccount,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())} ,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())},
 			{ "EnvelopedCallsignBinding", new PropertyListStruct ("EnvelopedCallsignBinding", 
 					(IBinding data, object? value) => {(data as BindRequest).EnvelopedCallsignBinding = value as List<Enveloped<CallsignBinding>>;}, (IBinding data) => (data as BindRequest).EnvelopedCallsignBinding,
-					false, ()=>new  List<Enveloped<CallsignBinding>>(), ()=>new Enveloped<CallsignBinding>())} 
+					false, ()=>new  List<Enveloped<CallsignBinding>>(), ()=>new Enveloped<CallsignBinding>())}
         }, __Tag,() => new BindRequest(), MeshRequest._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -2026,7 +2026,7 @@ public partial class BindResponse : MeshResponse {
 					(IBinding data, string? value) => {(data as BindResponse).URL = value;}, (IBinding data) => (data as BindResponse).URL )},
 			{ "EnvelopedAccountHostAssignment", new PropertyStruct ("EnvelopedAccountHostAssignment", 
 					(IBinding data, object? value) => {(data as BindResponse).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, (IBinding data) => (data as BindResponse).EnvelopedAccountHostAssignment,
-					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())} 
+					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())}
         }, __Tag,() => new BindResponse(), MeshResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -2265,7 +2265,7 @@ public partial class ConnectRequest : MeshRequest {
 
 			{ "EnvelopedRequestConnection", new PropertyStruct ("EnvelopedRequestConnection", 
 					(IBinding data, object? value) => {(data as ConnectRequest).EnvelopedRequestConnection = value as Enveloped<RequestConnection>;}, (IBinding data) => (data as ConnectRequest).EnvelopedRequestConnection,
-					false, ()=>new  Enveloped<RequestConnection>(), ()=>new Enveloped<RequestConnection>())} ,
+					false, ()=>new  Enveloped<RequestConnection>(), ()=>new Enveloped<RequestConnection>())},
 			{ "Rights", new PropertyListString ("Rights", 
 					(IBinding data, List<string>? value) => {(data as ConnectRequest).Rights = value;}, (IBinding data) => (data as ConnectRequest).Rights )}
         }, __Tag,() => new ConnectRequest(), MeshRequest._binding);
@@ -2355,10 +2355,10 @@ public partial class ConnectResponse : MeshResponse {
 
 			{ "EnvelopedAcknowledgeConnection", new PropertyStruct ("EnvelopedAcknowledgeConnection", 
 					(IBinding data, object? value) => {(data as ConnectResponse).EnvelopedAcknowledgeConnection = value as Enveloped<AcknowledgeConnection>;}, (IBinding data) => (data as ConnectResponse).EnvelopedAcknowledgeConnection,
-					false, ()=>new  Enveloped<AcknowledgeConnection>(), ()=>new Enveloped<AcknowledgeConnection>())} ,
+					false, ()=>new  Enveloped<AcknowledgeConnection>(), ()=>new Enveloped<AcknowledgeConnection>())},
 			{ "EnvelopedProfileAccount", new PropertyStruct ("EnvelopedProfileAccount", 
 					(IBinding data, object? value) => {(data as ConnectResponse).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as ConnectResponse).EnvelopedProfileAccount,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())} 
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())}
         }, __Tag,() => new ConnectResponse(), MeshResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -2534,10 +2534,10 @@ public partial class CompleteResponse : MeshResponse {
 
 			{ "EnvelopedRespondConnection", new PropertyStruct ("EnvelopedRespondConnection", 
 					(IBinding data, object? value) => {(data as CompleteResponse).EnvelopedRespondConnection = value as Enveloped<RespondConnection>;}, (IBinding data) => (data as CompleteResponse).EnvelopedRespondConnection,
-					false, ()=>new  Enveloped<RespondConnection>(), ()=>new Enveloped<RespondConnection>())} ,
+					false, ()=>new  Enveloped<RespondConnection>(), ()=>new Enveloped<RespondConnection>())},
 			{ "EnvelopedAccountHostAssignment", new PropertyStruct ("EnvelopedAccountHostAssignment", 
 					(IBinding data, object? value) => {(data as CompleteResponse).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, (IBinding data) => (data as CompleteResponse).EnvelopedAccountHostAssignment,
-					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())} 
+					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())}
         }, __Tag,() => new CompleteResponse(), MeshResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -2769,24 +2769,24 @@ public partial class StatusResponse : MeshResponse {
 					(IBinding data, byte[]? value) => {(data as StatusResponse).Bitmask = value;}, (IBinding data) => (data as StatusResponse).Bitmask )},
 			{ "EnvelopedProfileAccount", new PropertyStruct ("EnvelopedProfileAccount", 
 					(IBinding data, object? value) => {(data as StatusResponse).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as StatusResponse).EnvelopedProfileAccount,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())} ,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())},
 			{ "EnvelopedCatalogedDevice", new PropertyStruct ("EnvelopedCatalogedDevice", 
 					(IBinding data, object? value) => {(data as StatusResponse).EnvelopedCatalogedDevice = value as Enveloped<CatalogedDevice>;}, (IBinding data) => (data as StatusResponse).EnvelopedCatalogedDevice,
-					false, ()=>new  Enveloped<CatalogedDevice>(), ()=>new Enveloped<CatalogedDevice>())} ,
+					false, ()=>new  Enveloped<CatalogedDevice>(), ()=>new Enveloped<CatalogedDevice>())},
 			{ "CatalogedDeviceDigest", new PropertyString ("CatalogedDeviceDigest", 
 					(IBinding data, string? value) => {(data as StatusResponse).CatalogedDeviceDigest = value;}, (IBinding data) => (data as StatusResponse).CatalogedDeviceDigest )},
 			{ "StoreStatus", new PropertyListStruct ("StoreStatus", 
 					(IBinding data, object? value) => {(data as StatusResponse).StoreStatus = value as List<StoreStatus>;}, (IBinding data) => (data as StatusResponse).StoreStatus,
-					false, ()=>new  List<StoreStatus>(), ()=>new StoreStatus())} ,
+					false, ()=>new  List<StoreStatus>(), ()=>new StoreStatus())},
 			{ "EnvelopedAccountHostAssignment", new PropertyStruct ("EnvelopedAccountHostAssignment", 
 					(IBinding data, object? value) => {(data as StatusResponse).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, (IBinding data) => (data as StatusResponse).EnvelopedAccountHostAssignment,
-					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())} ,
+					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())},
 			{ "Services", new PropertyListStruct ("Services", 
 					(IBinding data, object? value) => {(data as StatusResponse).Services = value as List<ServiceAccessToken>;}, (IBinding data) => (data as StatusResponse).Services,
-					false, ()=>new  List<ServiceAccessToken>(), ()=>new ServiceAccessToken())} ,
+					false, ()=>new  List<ServiceAccessToken>(), ()=>new ServiceAccessToken())},
 			{ "DeviceStatuses", new PropertyListStruct ("DeviceStatuses", 
 					(IBinding data, object? value) => {(data as StatusResponse).DeviceStatuses = value as List<DeviceStatus>;}, (IBinding data) => (data as StatusResponse).DeviceStatuses,
-					false, ()=>new  List<DeviceStatus>(), ()=>new DeviceStatus())} 
+					false, ()=>new  List<DeviceStatus>(), ()=>new DeviceStatus())}
         }, __Tag,() => new StatusResponse(), MeshResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3002,10 +3002,10 @@ public partial class DownloadRequest : MeshRequestUser {
 					(IBinding data, string? value) => {(data as DownloadRequest).CatalogedDeviceDigest = value;}, (IBinding data) => (data as DownloadRequest).CatalogedDeviceDigest )},
 			{ "Select", new PropertyListStruct ("Select", 
 					(IBinding data, object? value) => {(data as DownloadRequest).Select = value as List<ConstraintsSelect>;}, (IBinding data) => (data as DownloadRequest).Select,
-					false, ()=>new  List<ConstraintsSelect>(), ()=>new ConstraintsSelect())} ,
+					false, ()=>new  List<ConstraintsSelect>(), ()=>new ConstraintsSelect())},
 			{ "ConstraintsPost", new PropertyStruct ("ConstraintsPost", 
 					(IBinding data, object? value) => {(data as DownloadRequest).ConstraintsPost = value as ConstraintsData;}, (IBinding data) => (data as DownloadRequest).ConstraintsPost,
-					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())} 
+					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())}
         }, __Tag,() => new DownloadRequest(), MeshRequestUser._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3103,12 +3103,12 @@ public partial class DownloadResponse : MeshResponse {
 
 			{ "Updates", new PropertyListStruct ("Updates", 
 					(IBinding data, object? value) => {(data as DownloadResponse).Updates = value as List<StoreUpdate>;}, (IBinding data) => (data as DownloadResponse).Updates,
-					false, ()=>new  List<StoreUpdate>(), ()=>new StoreUpdate())} ,
+					false, ()=>new  List<StoreUpdate>(), ()=>new StoreUpdate())},
 			{ "CatalogedDeviceDigest", new PropertyString ("CatalogedDeviceDigest", 
 					(IBinding data, string? value) => {(data as DownloadResponse).CatalogedDeviceDigest = value;}, (IBinding data) => (data as DownloadResponse).CatalogedDeviceDigest )},
 			{ "EnvelopedCatalogedDevice", new PropertyStruct ("EnvelopedCatalogedDevice", 
 					(IBinding data, object? value) => {(data as DownloadResponse).EnvelopedCatalogedDevice = value as Enveloped<CatalogedDevice>;}, (IBinding data) => (data as DownloadResponse).EnvelopedCatalogedDevice,
-					false, ()=>new  Enveloped<CatalogedDevice>(), ()=>new Enveloped<CatalogedDevice>())} 
+					false, ()=>new  Enveloped<CatalogedDevice>(), ()=>new Enveloped<CatalogedDevice>())}
         }, __Tag,() => new DownloadResponse(), MeshResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3547,18 +3547,18 @@ public partial class TransactRequest : MeshRequestUser {
 
 			{ "Updates", new PropertyListStruct ("Updates", 
 					(IBinding data, object? value) => {(data as TransactRequest).Updates = value as List<StoreUpdate>;}, (IBinding data) => (data as TransactRequest).Updates,
-					false, ()=>new  List<StoreUpdate>(), ()=>new StoreUpdate())} ,
+					false, ()=>new  List<StoreUpdate>(), ()=>new StoreUpdate())},
 			{ "Accounts", new PropertyListString ("Accounts", 
 					(IBinding data, List<string>? value) => {(data as TransactRequest).Accounts = value;}, (IBinding data) => (data as TransactRequest).Accounts )},
 			{ "Outbound", new PropertyListStruct ("Outbound", 
 					(IBinding data, object? value) => {(data as TransactRequest).Outbound = value as List<Enveloped<Message>>;}, (IBinding data) => (data as TransactRequest).Outbound,
-					false, ()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>())} ,
+					false, ()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>())},
 			{ "Inbound", new PropertyListStruct ("Inbound", 
 					(IBinding data, object? value) => {(data as TransactRequest).Inbound = value as List<Enveloped<Message>>;}, (IBinding data) => (data as TransactRequest).Inbound,
-					false, ()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>())} ,
+					false, ()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>())},
 			{ "Local", new PropertyListStruct ("Local", 
 					(IBinding data, object? value) => {(data as TransactRequest).Local = value as List<Enveloped<Message>>;}, (IBinding data) => (data as TransactRequest).Local,
-					false, ()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>())} 
+					false, ()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>())}
         }, __Tag,() => new TransactRequest(), MeshRequestUser._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3656,10 +3656,10 @@ public partial class TransactResponse : MeshResponse {
 					(IBinding data, byte[]? value) => {(data as TransactResponse).Bitmask = value;}, (IBinding data) => (data as TransactResponse).Bitmask )},
 			{ "Entries", new PropertyListStruct ("Entries", 
 					(IBinding data, object? value) => {(data as TransactResponse).Entries = value as List<EntryResponse>;}, (IBinding data) => (data as TransactResponse).Entries,
-					false, ()=>new  List<EntryResponse>(), ()=>new EntryResponse())} ,
+					false, ()=>new  List<EntryResponse>(), ()=>new EntryResponse())},
 			{ "ConstraintsData", new PropertyStruct ("ConstraintsData", 
 					(IBinding data, object? value) => {(data as TransactResponse).ConstraintsData = value as ConstraintsData;}, (IBinding data) => (data as TransactResponse).ConstraintsData,
-					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())} 
+					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())}
         }, __Tag,() => new TransactResponse(), MeshResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3769,7 +3769,7 @@ public partial class EntryResponse : MeshProtocol {
 					(IBinding data, string? value) => {(data as EntryResponse).Result = value;}, (IBinding data) => (data as EntryResponse).Result )},
 			{ "ConstraintsData", new PropertyStruct ("ConstraintsData", 
 					(IBinding data, object? value) => {(data as EntryResponse).ConstraintsData = value as ConstraintsData;}, (IBinding data) => (data as EntryResponse).ConstraintsData,
-					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())} 
+					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())}
         }, __Tag,() => new EntryResponse(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3933,7 +3933,7 @@ public partial class PostRequest : MeshRequest {
 					(IBinding data, List<string>? value) => {(data as PostRequest).Accounts = value;}, (IBinding data) => (data as PostRequest).Accounts )},
 			{ "Messages", new PropertyListStruct ("Messages", 
 					(IBinding data, object? value) => {(data as PostRequest).Messages = value as List<Enveloped<Message>>;}, (IBinding data) => (data as PostRequest).Messages,
-					false, ()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>())} 
+					false, ()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>())}
         }, __Tag,() => new PostRequest(), MeshRequest._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4090,7 +4090,7 @@ public partial class ClaimRequest : MeshRequest {
 
 			{ "EnvelopedMessageClaim", new PropertyStruct ("EnvelopedMessageClaim", 
 					(IBinding data, object? value) => {(data as ClaimRequest).EnvelopedMessageClaim = value as Enveloped<MessageClaim>;}, (IBinding data) => (data as ClaimRequest).EnvelopedMessageClaim,
-					false, ()=>new  Enveloped<MessageClaim>(), ()=>new Enveloped<MessageClaim>())} 
+					false, ()=>new  Enveloped<MessageClaim>(), ()=>new Enveloped<MessageClaim>())}
         }, __Tag,() => new ClaimRequest(), MeshRequest._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4172,7 +4172,7 @@ public partial class ClaimResponse : MeshResponse {
 
 			{ "CatalogedPublication", new PropertyStruct ("CatalogedPublication", 
 					(IBinding data, object? value) => {(data as ClaimResponse).CatalogedPublication = value as CatalogedPublication;}, (IBinding data) => (data as ClaimResponse).CatalogedPublication,
-					false, ()=>new  CatalogedPublication(), ()=>new CatalogedPublication())} 
+					false, ()=>new  CatalogedPublication(), ()=>new CatalogedPublication())}
         }, __Tag,() => new ClaimResponse(), MeshResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4343,7 +4343,7 @@ public partial class PollClaimResponse : MeshResponse {
 
 			{ "EnvelopedMessage", new PropertyStruct ("EnvelopedMessage", 
 					(IBinding data, object? value) => {(data as PollClaimResponse).EnvelopedMessage = value as Enveloped<Message>;}, (IBinding data) => (data as PollClaimResponse).EnvelopedMessage,
-					false, ()=>new  Enveloped<Message>(), ()=>new Enveloped<Message>())} 
+					false, ()=>new  Enveloped<Message>(), ()=>new Enveloped<Message>())}
         }, __Tag,() => new PollClaimResponse(), MeshResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 

@@ -27,10 +27,10 @@ ToolTargets = \
 	ContactSchema.cs\
 	Exceptions.cs\
 	ContactConstants.cs
-#CalendarSchema.cs : CalendarSchema.Protocol 
-#	protogen CalendarSchema.Protocol  /cs  CalendarSchema.cs
+CalendarSchema.cs : CalendarSchema.Protocol 
+	protogen CalendarSchema.Protocol  /cs  CalendarSchema.cs
 
-#ContactSchema.cs : ContactSchema.Protocol 
+ContactSchema.cs : ContactSchema.Protocol 
 #	protogen ContactSchema.Protocol  /cs  ContactSchema.cs
 
 Exceptions.cs : Exceptions.exceptional 

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/17/2025 2:16:18 PM
+//  This file was automatically generated at 2/18/2025 10:46:20 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -73,10 +73,10 @@ public abstract partial class Calandars : global::Goedel.Protocol.JsonObject {
 			new () {
 
 	    {"JmapBase", JmapBase._Factory},
-	    {"CalendarEntry", CalendarEntry._Factory},
-	    {"Event", Event._Factory},
-	    {"Task", Task._Factory},
-	    {"Group", Group._Factory},
+	    {"JsCalendarEntry", JsCalendarEntry._Factory},
+	    {"JsEvent", JsEvent._Factory},
+	    {"JsTask", JsTask._Factory},
+	    {"JsGroup", JsGroup._Factory},
 	    {"Location", Location._Factory},
 	    {"Link", Link._Factory},
 	    {"VirtualLocation", VirtualLocation._Factory},
@@ -251,7 +251,7 @@ public partial class JmapBase : Calandars {
 
 	/// <summary>
 	/// </summary>
-public partial class CalendarEntry : JmapBase {
+public partial class JsCalendarEntry : JmapBase {
         /// <summary>
         /// Initially zero, this MUST be incremented by one every time a change is 
         /// made to the object, except if the change only modifies the participants 
@@ -544,102 +544,102 @@ public partial class CalendarEntry : JmapBase {
 			new() {
 
 			{ "sequence", new PropertyInteger32 ("sequence", 
-					(IBinding data, int? value) => {(data as CalendarEntry).Sequence = value;}, (IBinding data) => (data as CalendarEntry).Sequence )},
+					(IBinding data, int? value) => {(data as JsCalendarEntry).Sequence = value;}, (IBinding data) => (data as JsCalendarEntry).Sequence )},
 			{ "method", new PropertyString ("method", 
-					(IBinding data, string? value) => {(data as CalendarEntry).Method = value;}, (IBinding data) => (data as CalendarEntry).Method )},
+					(IBinding data, string? value) => {(data as JsCalendarEntry).Method = value;}, (IBinding data) => (data as JsCalendarEntry).Method )},
 			{ "title", new PropertyString ("title", 
-					(IBinding data, string? value) => {(data as CalendarEntry).Title = value;}, (IBinding data) => (data as CalendarEntry).Title )},
+					(IBinding data, string? value) => {(data as JsCalendarEntry).Title = value;}, (IBinding data) => (data as JsCalendarEntry).Title )},
 			{ "description", new PropertyString ("description", 
-					(IBinding data, string? value) => {(data as CalendarEntry).Description = value;}, (IBinding data) => (data as CalendarEntry).Description )},
+					(IBinding data, string? value) => {(data as JsCalendarEntry).Description = value;}, (IBinding data) => (data as JsCalendarEntry).Description )},
 			{ "descriptionContentType", new PropertyString ("descriptionContentType", 
-					(IBinding data, string? value) => {(data as CalendarEntry).DescriptionContentType = value;}, (IBinding data) => (data as CalendarEntry).DescriptionContentType )},
+					(IBinding data, string? value) => {(data as JsCalendarEntry).DescriptionContentType = value;}, (IBinding data) => (data as JsCalendarEntry).DescriptionContentType )},
 			{ "showWithoutTime", new PropertyBoolean ("showWithoutTime", 
-					(IBinding data, bool? value) => {(data as CalendarEntry).ShowWithoutTime = value;}, (IBinding data) => (data as CalendarEntry).ShowWithoutTime )},
+					(IBinding data, bool? value) => {(data as JsCalendarEntry).ShowWithoutTime = value;}, (IBinding data) => (data as JsCalendarEntry).ShowWithoutTime )},
 			{ "locations", new PropertyDictionaryStruct ("locations", 
-					(IBinding data, object? value) => {(data as CalendarEntry).Locations = value as Dictionary<string,Location>;}, (IBinding data) => (data as CalendarEntry).Locations,
+					(IBinding data, object? value) => {(data as JsCalendarEntry).Locations = value as Dictionary<string,Location>;}, (IBinding data) => (data as JsCalendarEntry).Locations,
 					false, ()=>new  Dictionary<string,Location>(), ()=>new Location(),
-					(IBinding data) => (data as CalendarEntry).Locations.GetEnumerable(),
+					(IBinding data) => (data as JsCalendarEntry).Locations.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Location>).Add (key as string,value as Location);})},
 			{ "virtualLocations", new PropertyDictionaryStruct ("virtualLocations", 
-					(IBinding data, object? value) => {(data as CalendarEntry).VirtualLocations = value as Dictionary<string,VirtualLocation>;}, (IBinding data) => (data as CalendarEntry).VirtualLocations,
+					(IBinding data, object? value) => {(data as JsCalendarEntry).VirtualLocations = value as Dictionary<string,VirtualLocation>;}, (IBinding data) => (data as JsCalendarEntry).VirtualLocations,
 					false, ()=>new  Dictionary<string,VirtualLocation>(), ()=>new VirtualLocation(),
-					(IBinding data) => (data as CalendarEntry).VirtualLocations.GetEnumerable(),
+					(IBinding data) => (data as JsCalendarEntry).VirtualLocations.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,VirtualLocation>).Add (key as string,value as VirtualLocation);})},
 			{ "links", new PropertyDictionaryStruct ("links", 
-					(IBinding data, object? value) => {(data as CalendarEntry).links = value as Dictionary<string,Link>;}, (IBinding data) => (data as CalendarEntry).links,
+					(IBinding data, object? value) => {(data as JsCalendarEntry).links = value as Dictionary<string,Link>;}, (IBinding data) => (data as JsCalendarEntry).links,
 					false, ()=>new  Dictionary<string,Link>(), ()=>new Link(),
-					(IBinding data) => (data as CalendarEntry).links.GetEnumerable(),
+					(IBinding data) => (data as JsCalendarEntry).links.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Link>).Add (key as string,value as Link);})},
 			{ "locale", new PropertyString ("locale", 
-					(IBinding data, string? value) => {(data as CalendarEntry).Locale = value;}, (IBinding data) => (data as CalendarEntry).Locale )},
+					(IBinding data, string? value) => {(data as JsCalendarEntry).Locale = value;}, (IBinding data) => (data as JsCalendarEntry).Locale )},
 			{ "keywords", new PropertyDictionaryBoolean ("keywords", 
-					(IBinding data, Dictionary<string,bool>? value) => {(data as CalendarEntry).Keywords = value;}, (IBinding data) => (data as CalendarEntry).Keywords )},
+					(IBinding data, Dictionary<string,bool>? value) => {(data as JsCalendarEntry).Keywords = value;}, (IBinding data) => (data as JsCalendarEntry).Keywords )},
 			{ "categories", new PropertyDictionaryBoolean ("categories", 
-					(IBinding data, Dictionary<string,bool>? value) => {(data as CalendarEntry).Categories = value;}, (IBinding data) => (data as CalendarEntry).Categories )},
+					(IBinding data, Dictionary<string,bool>? value) => {(data as JsCalendarEntry).Categories = value;}, (IBinding data) => (data as JsCalendarEntry).Categories )},
 			{ "color", new PropertyString ("color", 
-					(IBinding data, string? value) => {(data as CalendarEntry).Color = value;}, (IBinding data) => (data as CalendarEntry).Color )},
+					(IBinding data, string? value) => {(data as JsCalendarEntry).Color = value;}, (IBinding data) => (data as JsCalendarEntry).Color )},
 			{ "recurrenceId", new PropertyString ("recurrenceId", 
-					(IBinding data, string? value) => {(data as CalendarEntry).RecurrenceId = value;}, (IBinding data) => (data as CalendarEntry).RecurrenceId )},
+					(IBinding data, string? value) => {(data as JsCalendarEntry).RecurrenceId = value;}, (IBinding data) => (data as JsCalendarEntry).RecurrenceId )},
 			{ "recurrenceIdTimeZone", new PropertyString ("recurrenceIdTimeZone", 
-					(IBinding data, string? value) => {(data as CalendarEntry).RecurrenceIdTimeZone = value;}, (IBinding data) => (data as CalendarEntry).RecurrenceIdTimeZone )},
+					(IBinding data, string? value) => {(data as JsCalendarEntry).RecurrenceIdTimeZone = value;}, (IBinding data) => (data as JsCalendarEntry).RecurrenceIdTimeZone )},
 			{ "recurrenceRules", new PropertyListStruct ("recurrenceRules", 
-					(IBinding data, object? value) => {(data as CalendarEntry).RecurrenceRules = value as List<RecurrenceRule>;}, (IBinding data) => (data as CalendarEntry).RecurrenceRules,
+					(IBinding data, object? value) => {(data as JsCalendarEntry).RecurrenceRules = value as List<RecurrenceRule>;}, (IBinding data) => (data as JsCalendarEntry).RecurrenceRules,
 					false, ()=>new  List<RecurrenceRule>(), ()=>new RecurrenceRule())},
 			{ "excludedRecurrenceRules", new PropertyListStruct ("excludedRecurrenceRules", 
-					(IBinding data, object? value) => {(data as CalendarEntry).ExcludedRecurrenceRules = value as List<RecurrenceRule>;}, (IBinding data) => (data as CalendarEntry).ExcludedRecurrenceRules,
+					(IBinding data, object? value) => {(data as JsCalendarEntry).ExcludedRecurrenceRules = value as List<RecurrenceRule>;}, (IBinding data) => (data as JsCalendarEntry).ExcludedRecurrenceRules,
 					false, ()=>new  List<RecurrenceRule>(), ()=>new RecurrenceRule())},
 			{ "recurrenceOverrides", new PropertyDictionaryStruct ("recurrenceOverrides", 
-					(IBinding data, object? value) => {(data as CalendarEntry).RecurrenceOverrides = value as Dictionary<string,PatchObject>;}, (IBinding data) => (data as CalendarEntry).RecurrenceOverrides,
+					(IBinding data, object? value) => {(data as JsCalendarEntry).RecurrenceOverrides = value as Dictionary<string,PatchObject>;}, (IBinding data) => (data as JsCalendarEntry).RecurrenceOverrides,
 					false, ()=>new  Dictionary<string,PatchObject>(), ()=>new PatchObject(),
-					(IBinding data) => (data as CalendarEntry).RecurrenceOverrides.GetEnumerable(),
+					(IBinding data) => (data as JsCalendarEntry).RecurrenceOverrides.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,PatchObject>).Add (key as string,value as PatchObject);})},
 			{ "excluded", new PropertyBoolean ("excluded", 
-					(IBinding data, bool? value) => {(data as CalendarEntry).Excluded = value;}, (IBinding data) => (data as CalendarEntry).Excluded )},
+					(IBinding data, bool? value) => {(data as JsCalendarEntry).Excluded = value;}, (IBinding data) => (data as JsCalendarEntry).Excluded )},
 			{ "priority", new PropertyInteger32 ("priority", 
-					(IBinding data, int? value) => {(data as CalendarEntry).Priority = value;}, (IBinding data) => (data as CalendarEntry).Priority )},
+					(IBinding data, int? value) => {(data as JsCalendarEntry).Priority = value;}, (IBinding data) => (data as JsCalendarEntry).Priority )},
 			{ "freeBusyStatus", new PropertyString ("freeBusyStatus", 
-					(IBinding data, string? value) => {(data as CalendarEntry).FreeBusyStatus = value;}, (IBinding data) => (data as CalendarEntry).FreeBusyStatus )},
+					(IBinding data, string? value) => {(data as JsCalendarEntry).FreeBusyStatus = value;}, (IBinding data) => (data as JsCalendarEntry).FreeBusyStatus )},
 			{ "privacy", new PropertyString ("privacy", 
-					(IBinding data, string? value) => {(data as CalendarEntry).Privacy = value;}, (IBinding data) => (data as CalendarEntry).Privacy )},
+					(IBinding data, string? value) => {(data as JsCalendarEntry).Privacy = value;}, (IBinding data) => (data as JsCalendarEntry).Privacy )},
 			{ "replyTo", new PropertyDictionaryString ("replyTo", 
-					(IBinding data, Dictionary<string,string>? value) => {(data as CalendarEntry).ReplyTo = value;}, (IBinding data) => (data as CalendarEntry).ReplyTo )},
+					(IBinding data, Dictionary<string,string>? value) => {(data as JsCalendarEntry).ReplyTo = value;}, (IBinding data) => (data as JsCalendarEntry).ReplyTo )},
 			{ "sentBy", new PropertyString ("sentBy", 
-					(IBinding data, string? value) => {(data as CalendarEntry).SentBy = value;}, (IBinding data) => (data as CalendarEntry).SentBy )},
+					(IBinding data, string? value) => {(data as JsCalendarEntry).SentBy = value;}, (IBinding data) => (data as JsCalendarEntry).SentBy )},
 			{ "participants", new PropertyDictionaryStruct ("participants", 
-					(IBinding data, object? value) => {(data as CalendarEntry).Participants = value as Dictionary<string,Participant>;}, (IBinding data) => (data as CalendarEntry).Participants,
+					(IBinding data, object? value) => {(data as JsCalendarEntry).Participants = value as Dictionary<string,Participant>;}, (IBinding data) => (data as JsCalendarEntry).Participants,
 					false, ()=>new  Dictionary<string,Participant>(), ()=>new Participant(),
-					(IBinding data) => (data as CalendarEntry).Participants.GetEnumerable(),
+					(IBinding data) => (data as JsCalendarEntry).Participants.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Participant>).Add (key as string,value as Participant);})},
 			{ "requestStatus", new PropertyString ("requestStatus", 
-					(IBinding data, string? value) => {(data as CalendarEntry).RequestStatus = value;}, (IBinding data) => (data as CalendarEntry).RequestStatus )},
+					(IBinding data, string? value) => {(data as JsCalendarEntry).RequestStatus = value;}, (IBinding data) => (data as JsCalendarEntry).RequestStatus )},
 			{ "useDefaultAlerts", new PropertyBoolean ("useDefaultAlerts", 
-					(IBinding data, bool? value) => {(data as CalendarEntry).UseDefaultAlerts = value;}, (IBinding data) => (data as CalendarEntry).UseDefaultAlerts )},
+					(IBinding data, bool? value) => {(data as JsCalendarEntry).UseDefaultAlerts = value;}, (IBinding data) => (data as JsCalendarEntry).UseDefaultAlerts )},
 			{ "alerts", new PropertyDictionaryStruct ("alerts", 
-					(IBinding data, object? value) => {(data as CalendarEntry).Alerts = value as Dictionary<string,Alert>;}, (IBinding data) => (data as CalendarEntry).Alerts,
+					(IBinding data, object? value) => {(data as JsCalendarEntry).Alerts = value as Dictionary<string,Alert>;}, (IBinding data) => (data as JsCalendarEntry).Alerts,
 					false, ()=>new  Dictionary<string,Alert>(), ()=>new Alert(),
-					(IBinding data) => (data as CalendarEntry).Alerts.GetEnumerable(),
+					(IBinding data) => (data as JsCalendarEntry).Alerts.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Alert>).Add (key as string,value as Alert);})},
 			{ "localizations", new PropertyDictionaryStruct ("localizations", 
-					(IBinding data, object? value) => {(data as CalendarEntry).Localizations = value as Dictionary<string,PatchObject>;}, (IBinding data) => (data as CalendarEntry).Localizations,
+					(IBinding data, object? value) => {(data as JsCalendarEntry).Localizations = value as Dictionary<string,PatchObject>;}, (IBinding data) => (data as JsCalendarEntry).Localizations,
 					false, ()=>new  Dictionary<string,PatchObject>(), ()=>new PatchObject(),
-					(IBinding data) => (data as CalendarEntry).Localizations.GetEnumerable(),
+					(IBinding data) => (data as JsCalendarEntry).Localizations.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,PatchObject>).Add (key as string,value as PatchObject);})},
 			{ "timeZone", new PropertyString ("timeZone", 
-					(IBinding data, string? value) => {(data as CalendarEntry).TimeZone = value;}, (IBinding data) => (data as CalendarEntry).TimeZone )},
+					(IBinding data, string? value) => {(data as JsCalendarEntry).TimeZone = value;}, (IBinding data) => (data as JsCalendarEntry).TimeZone )},
 			{ "timeZones", new PropertyDictionaryStruct ("timeZones", 
-					(IBinding data, object? value) => {(data as CalendarEntry).TimeZones = value as Dictionary<string,TimeZone>;}, (IBinding data) => (data as CalendarEntry).TimeZones,
+					(IBinding data, object? value) => {(data as JsCalendarEntry).TimeZones = value as Dictionary<string,TimeZone>;}, (IBinding data) => (data as JsCalendarEntry).TimeZones,
 					false, ()=>new  Dictionary<string,TimeZone>(), ()=>new TimeZone(),
-					(IBinding data) => (data as CalendarEntry).TimeZones.GetEnumerable(),
+					(IBinding data) => (data as JsCalendarEntry).TimeZones.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,TimeZone>).Add (key as string,value as TimeZone);})}
-        }, __Tag,() => new CalendarEntry(), JmapBase._binding);
+        }, __Tag,() => new JsCalendarEntry(), JmapBase._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -668,13 +668,13 @@ public partial class CalendarEntry : JmapBase {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "CalendarEntry";
+	public new const string __Tag = "JsCalendarEntry";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new CalendarEntry();
+	public static new JsonObject _Factory () => new JsCalendarEntry();
 
 
     /// <summary>
@@ -683,15 +683,15 @@ public partial class CalendarEntry : JmapBase {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new CalendarEntry FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new JsCalendarEntry FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CalendarEntry;
+			return Out as JsCalendarEntry;
 			}
-		var Result = new CalendarEntry ();
+		var Result = new JsCalendarEntry ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -705,7 +705,7 @@ public partial class CalendarEntry : JmapBase {
 	///  In addition to the common JSCalendar object properties (Section 4), 
 	///  an Event has the following properties:
 	/// </summary>
-public partial class Event : JmapBase {
+public partial class JsEvent : JsCalendarEntry {
         /// <summary>
         /// This is the date/time the event starts in the event's time 
         /// zone (as specified in the timeZone property, see Section 4.7.1).
@@ -740,19 +740,19 @@ public partial class Event : JmapBase {
 			new() {
 
 			{ "start", new PropertyString ("start", 
-					(IBinding data, string? value) => {(data as Event).Start = value;}, (IBinding data) => (data as Event).Start )},
+					(IBinding data, string? value) => {(data as JsEvent).Start = value;}, (IBinding data) => (data as JsEvent).Start )},
 			{ "duration", new PropertyString ("duration", 
-					(IBinding data, string? value) => {(data as Event).Duration = value;}, (IBinding data) => (data as Event).Duration )},
+					(IBinding data, string? value) => {(data as JsEvent).Duration = value;}, (IBinding data) => (data as JsEvent).Duration )},
 			{ "status", new PropertyString ("status", 
-					(IBinding data, string? value) => {(data as Event).Status = value;}, (IBinding data) => (data as Event).Status )}
-        }, __Tag,() => new Event(), JmapBase._binding);
+					(IBinding data, string? value) => {(data as JsEvent).Status = value;}, (IBinding data) => (data as JsEvent).Status )}
+        }, __Tag,() => new JsEvent(), JsCalendarEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, JmapBase._StaticAllProperties);
+			Combine(_StaticProperties, JsCalendarEntry._StaticAllProperties);
 
 
     ///<inheritdoc/>
@@ -774,13 +774,13 @@ public partial class Event : JmapBase {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "Event";
+	public new const string __Tag = "JsEvent";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new Event();
+	public static new JsonObject _Factory () => new JsEvent();
 
 
     /// <summary>
@@ -789,15 +789,15 @@ public partial class Event : JmapBase {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new Event FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new JsEvent FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Event;
+			return Out as JsEvent;
 			}
-		var Result = new Event ();
+		var Result = new JsEvent ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -811,7 +811,7 @@ public partial class Event : JmapBase {
 	///  In addition to the common JSCalendar object properties (Section 4), 
 	///  a Task has the following properties
 	/// </summary>
-public partial class Task : JmapBase {
+public partial class JsTask : JsCalendarEntry {
         /// <summary>
         /// This is the date/time the task is due in the task's time zone.
         /// </summary>
@@ -864,25 +864,25 @@ public partial class Task : JmapBase {
 			new() {
 
 			{ "due", new PropertyString ("due", 
-					(IBinding data, string? value) => {(data as Task).Due = value;}, (IBinding data) => (data as Task).Due )},
+					(IBinding data, string? value) => {(data as JsTask).Due = value;}, (IBinding data) => (data as JsTask).Due )},
 			{ "start", new PropertyString ("start", 
-					(IBinding data, string? value) => {(data as Task).Start = value;}, (IBinding data) => (data as Task).Start )},
+					(IBinding data, string? value) => {(data as JsTask).Start = value;}, (IBinding data) => (data as JsTask).Start )},
 			{ "estimatedDuration", new PropertyString ("estimatedDuration", 
-					(IBinding data, string? value) => {(data as Task).EstimatedDuration = value;}, (IBinding data) => (data as Task).EstimatedDuration )},
+					(IBinding data, string? value) => {(data as JsTask).EstimatedDuration = value;}, (IBinding data) => (data as JsTask).EstimatedDuration )},
 			{ "percentComplete", new PropertyInteger32 ("percentComplete", 
-					(IBinding data, int? value) => {(data as Task).PercentComplete = value;}, (IBinding data) => (data as Task).PercentComplete )},
+					(IBinding data, int? value) => {(data as JsTask).PercentComplete = value;}, (IBinding data) => (data as JsTask).PercentComplete )},
 			{ "progress", new PropertyString ("progress", 
-					(IBinding data, string? value) => {(data as Task).Progress = value;}, (IBinding data) => (data as Task).Progress )},
+					(IBinding data, string? value) => {(data as JsTask).Progress = value;}, (IBinding data) => (data as JsTask).Progress )},
 			{ "progressUpdated", new PropertyDateTime ("progressUpdated", 
-					(IBinding data, DateTime? value) => {(data as Task).ProgressUpdated = value;}, (IBinding data) => (data as Task).ProgressUpdated )}
-        }, __Tag,() => new Task(), JmapBase._binding);
+					(IBinding data, DateTime? value) => {(data as JsTask).ProgressUpdated = value;}, (IBinding data) => (data as JsTask).ProgressUpdated )}
+        }, __Tag,() => new JsTask(), JsCalendarEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, JmapBase._StaticAllProperties);
+			Combine(_StaticProperties, JsCalendarEntry._StaticAllProperties);
 
 
     ///<inheritdoc/>
@@ -904,13 +904,13 @@ public partial class Task : JmapBase {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "Task";
+	public new const string __Tag = "JsTask";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new Task();
+	public static new JsonObject _Factory () => new JsTask();
 
 
     /// <summary>
@@ -919,15 +919,15 @@ public partial class Task : JmapBase {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new Task FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new JsTask FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Task;
+			return Out as JsTask;
 			}
-		var Result = new Task ();
+		var Result = new JsTask ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -938,7 +938,7 @@ public partial class Task : JmapBase {
 
 	/// <summary>
 	/// </summary>
-public partial class Group : JmapBase {
+public partial class JsGroup : JsCalendarEntry {
         /// <summary>
         /// This is a collection of group members. Implementations MUST 
         /// ignore entries of unknown type.
@@ -962,18 +962,18 @@ public partial class Group : JmapBase {
 			new() {
 
 			{ "entries", new PropertyListStruct ("entries", 
-					(IBinding data, object? value) => {(data as Group).Entries = value as List<JmapBase>;}, (IBinding data) => (data as Group).Entries,
+					(IBinding data, object? value) => {(data as JsGroup).Entries = value as List<JmapBase>;}, (IBinding data) => (data as JsGroup).Entries,
 					false, ()=>new  List<JmapBase>(), ()=>new JmapBase())},
 			{ "source", new PropertyString ("source", 
-					(IBinding data, string? value) => {(data as Group).Source = value;}, (IBinding data) => (data as Group).Source )}
-        }, __Tag,() => new Group(), JmapBase._binding);
+					(IBinding data, string? value) => {(data as JsGroup).Source = value;}, (IBinding data) => (data as JsGroup).Source )}
+        }, __Tag,() => new JsGroup(), JsCalendarEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, JmapBase._StaticAllProperties);
+			Combine(_StaticProperties, JsCalendarEntry._StaticAllProperties);
 
 
     ///<inheritdoc/>
@@ -995,13 +995,13 @@ public partial class Group : JmapBase {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "Group";
+	public new const string __Tag = "JsGroup";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new Group();
+	public static new JsonObject _Factory () => new JsGroup();
 
 
     /// <summary>
@@ -1010,15 +1010,15 @@ public partial class Group : JmapBase {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new Group FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new JsGroup FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Group;
+			return Out as JsGroup;
 			}
-		var Result = new Group ();
+		var Result = new JsGroup ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

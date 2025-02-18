@@ -72,7 +72,7 @@ public static partial class Extensions {
     /// <param name="keyCollection">The key collection to search.</param>
     /// <param name="publicKeys">The list of public keys to match</param>
     /// <returns>The key pair if found, otherwise <see langword="false"/></returns>
-    public static CryptoKey LocatePrivate(this IKeyCollection keyCollection, List<KeyData> publicKeys) {
+    public static CryptographicKey LocatePrivate(this IKeyCollection keyCollection, List<KeyData> publicKeys) {
 
         foreach (var publicKey in publicKeys) {
             if (keyCollection.LocatePrivateKeyPair(publicKey.Udf, out var keyPair)) {

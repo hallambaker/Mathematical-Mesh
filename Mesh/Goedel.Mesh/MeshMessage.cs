@@ -56,8 +56,8 @@ public partial class Message {
 
     ///<inheritdoc/>
     public override DareEnvelope Envelope(
-                CryptoKey signingKey = null,
-                CryptoKey encryptionKey = null,
+                CryptographicKey signingKey = null,
+                CryptographicKey encryptionKey = null,
                 ObjectEncoding objectEncoding = ObjectEncoding.JSON) {
 
         MessageId ??= Udf.Nonce(); // Add a message ID unless one is already defined.

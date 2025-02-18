@@ -43,7 +43,7 @@
 				|The date and time when the data in the Card was last modified.
 
 
-	Structure CalendarEntry
+	Structure JsCalendarEntry
 		Inherits JmapBase
 
 		// 4.1.7. sequence
@@ -330,8 +330,8 @@
 				| definitions. The following restrictions apply for each key in 
 				|the map:
 
-	Structure Event
-		Inherits JmapBase
+	Structure JsEvent
+		Inherits JsCalendarEntry
 		Description
 			| In addition to the common JSCalendar object properties (Section 4), 
 			| an Event has the following properties:
@@ -359,8 +359,8 @@
 
 
 
-	Structure Task
-		Inherits JmapBase
+	Structure JsTask
+		Inherits JsCalendarEntry
 		Description
 			| In addition to the common JSCalendar object properties (Section 4), 
 			| a Task has the following properties
@@ -403,10 +403,9 @@
 				| (Section 4.4.6) was last updated.
 
 
-
-	// 5.3. Group Properties
-	Structure Group
-		Inherits JmapBase
+	// 5.3. JsGroup Properties
+	Structure JsGroup
+		Inherits JsCalendarEntry
 
 		// 5.3.1. entries
 		Struct JmapBase			Entries
@@ -420,6 +419,7 @@
 			Description
 				| This is the source from which updated versions of this group 
 				| may be retrieved. The value MUST be a URI.
+
 
 	// 4.2.5. locations
 	Structure Location

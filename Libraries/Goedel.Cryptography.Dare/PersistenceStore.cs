@@ -394,7 +394,7 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
     public virtual DareEnvelope PrepareUpdate(
                 out PersistentIndexEntry previous,
                 JsonObject jsonObject,
-                bool create = true, CryptoKey encryptionKey = null,
+                bool create = true, CryptographicKey encryptionKey = null,
                 List<KeyPair> additionalRecipients = null) {
 
         encryptionKey.Future();

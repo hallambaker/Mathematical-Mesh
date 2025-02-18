@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/17/2025 5:48:59 PM
+//  This file was automatically generated at 2/18/2025 10:46:25 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -248,10 +248,10 @@ public partial class AccountUser : AccountEntry {
 
 			{ "EnvelopedProfileUser", new PropertyStruct ("EnvelopedProfileUser", 
 					(IBinding data, object? value) => {(data as AccountUser).EnvelopedProfileUser = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as AccountUser).EnvelopedProfileUser,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())} ,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())},
 			{ "EnvelopedAccountHostAssignment", new PropertyStruct ("EnvelopedAccountHostAssignment", 
 					(IBinding data, object? value) => {(data as AccountUser).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, (IBinding data) => (data as AccountUser).EnvelopedAccountHostAssignment,
-					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())} 
+					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())}
         }, __Tag,() => new AccountUser(), AccountEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 

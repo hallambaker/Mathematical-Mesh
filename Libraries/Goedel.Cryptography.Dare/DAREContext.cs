@@ -49,7 +49,7 @@ public partial class DareRecipient {
     /// <returns>The recipient informatin object.</returns>
     public DareRecipient(
                     byte[] masterKey, 
-                    CryptoKey encryptionKey) {
+                    CryptographicKey encryptionKey) {
         //var ExchangeProvider = PublicKey.ExchangeProvider();
         //ExchangeProvider.Encrypt(MasterKey, out var Exchange, out var Ephemeral, Salt: KDFSalt);
 

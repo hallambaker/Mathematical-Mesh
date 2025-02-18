@@ -4139,7 +4139,7 @@
             <param name="cryptoKey">The key (if found)</param>
             <returns>True if a match is found, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.IKeyLocate.LocatePrivateKeyPair(System.String,Goedel.Cryptography.CryptoKey@)">
+        <member name="M:Goedel.Cryptography.IKeyLocate.LocatePrivateKeyPair(System.String,Goedel.Cryptography.CryptographicKey@)">
             <summary>
             Locate a private key
             </summary>
@@ -4147,7 +4147,7 @@
             <param name="cryptoKey">The key (if found)</param>
             <returns>A KeyPair instance bound to the private key.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.IKeyLocate.TryFindKeyEncryption(System.String,Goedel.Cryptography.CryptoKey@)">
+        <member name="M:Goedel.Cryptography.IKeyLocate.TryFindKeyEncryption(System.String,Goedel.Cryptography.CryptographicKey@)">
             <summary>
             Resolve a public key by identifier. This may be a UDF fingerprint of the key,
             an account identifier or strong account identifier.
@@ -4156,7 +4156,7 @@
             <param name="cryptoKey">The key (if found)</param>
             <returns>true if a key is found, otherwise, false.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.IKeyLocate.TryFindKeySignature(System.String,Goedel.Cryptography.CryptoKey@)">
+        <member name="M:Goedel.Cryptography.IKeyLocate.TryFindKeySignature(System.String,Goedel.Cryptography.CryptographicKey@)">
             <summary>
             Resolve a private key by identifier. This may be a UDF fingerprint of the key,
             an account identifier or strong account identifier.
@@ -4165,7 +4165,7 @@
             <param name="cryptoKey">The key (if found)</param>
             <returns>The identifier.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.IKeyLocate.TryFindPublicKey(System.String,Goedel.Cryptography.CryptoKey@)">
+        <member name="M:Goedel.Cryptography.IKeyLocate.TryFindPublicKey(System.String,Goedel.Cryptography.CryptographicKey@)">
             <summary>
             Resolve a public key by identifier. This may be a UDF fingerprint of the key,
             an account identifier or strong account identifier.
@@ -4253,7 +4253,7 @@
             <param name="keyDecrypt">The key, (if found).</param>
             <returns>True if a match is found, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.KeyCollection.TryMatchRecipientKeyPair(System.String,Goedel.Cryptography.CryptoKey@)">
+        <member name="M:Goedel.Cryptography.KeyCollection.TryMatchRecipientKeyPair(System.String,Goedel.Cryptography.CryptographicKey@)">
             <summary>
             Attempt to find a private key for the specified recipient entry.
             </summary>
@@ -4269,7 +4269,7 @@
             <param name="udf">Key to locate</param>
             <returns>The JSON description (if found).</returns>
         </member>
-        <member name="M:Goedel.Cryptography.KeyCollection.LocatePrivateKeyPair(System.String,Goedel.Cryptography.CryptoKey@)">
+        <member name="M:Goedel.Cryptography.KeyCollection.LocatePrivateKeyPair(System.String,Goedel.Cryptography.CryptographicKey@)">
             <summary>
             Locate a private key
             </summary>
@@ -4301,7 +4301,7 @@
             <param name="joseKey">The private key parameters.</param>
             <param name="exportable">If true, the key is exportable.</param>
         </member>
-        <member name="M:Goedel.Cryptography.KeyCollection.TryFindKeyEncryption(System.String,Goedel.Cryptography.CryptoKey@)">
+        <member name="M:Goedel.Cryptography.KeyCollection.TryFindKeyEncryption(System.String,Goedel.Cryptography.CryptographicKey@)">
             <summary>
             Resolve a public key by identifier. This may be a UDF fingerprint of the key,
             an account identifier or strong account identifier.
@@ -4310,7 +4310,7 @@
             <param name="cryptoKey">The found key </param>
             <returns>The identifier.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.KeyCollection.TryFindKeySignature(System.String,Goedel.Cryptography.CryptoKey@)">
+        <member name="M:Goedel.Cryptography.KeyCollection.TryFindKeySignature(System.String,Goedel.Cryptography.CryptographicKey@)">
             <summary>
             Resolve a private key by identifier. This may be a UDF fingerprint of the key,
             an account identifier or strong account identifier.
@@ -4319,7 +4319,7 @@
              <param name="cryptoKey">The key, (if found).</param>
             <returns>The identifier.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.KeyCollection.TryFindPublicKey(System.String,Goedel.Cryptography.CryptoKey@)">
+        <member name="M:Goedel.Cryptography.KeyCollection.TryFindPublicKey(System.String,Goedel.Cryptography.CryptographicKey@)">
             <summary>
             Resolve a public key by identifier. This may be a UDF fingerprint of the key,
             an account identifier or strong account identifier.
@@ -6882,35 +6882,35 @@
             on the encrypt API.
             </summary>
         </member>
-        <member name="T:Goedel.Cryptography.CryptoKey">
+        <member name="T:Goedel.Cryptography.CryptographicKey">
             <summary>
             Base class for all cryptographic keys.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.CryptoKey.CryptoAlgorithmId">
+        <member name="P:Goedel.Cryptography.CryptographicKey.CryptoAlgorithmId">
             <summary>
             Cryptographic Algorithm Identifier
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.CryptoKey.AssuranceLevel">
+        <member name="P:Goedel.Cryptography.CryptographicKey.AssuranceLevel">
             <summary>The assurance level provided by the algorithm.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.CryptoKey.KeyIdentifier">
+        <member name="P:Goedel.Cryptography.CryptographicKey.KeyIdentifier">
             <summary>
             UDF fingerprint of the key
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.CryptoKey.UDFBytes">
+        <member name="P:Goedel.Cryptography.CryptographicKey.UDFBytes">
             <summary>
             UDF fingerprint of the key
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.CryptoKey.Name">
+        <member name="P:Goedel.Cryptography.CryptographicKey.Name">
             <summary>
             The key name.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.TryFindPublicKey(System.String,Goedel.Cryptography.CryptoKey@)">
+        <member name="M:Goedel.Cryptography.CryptographicKey.TryFindPublicKey(System.String,Goedel.Cryptography.CryptographicKey@)">
             <summary>
             Attempt to find a private key for the specified recipient entry.
             </summary>
@@ -6918,7 +6918,7 @@
              <param name="cryptoKey">The key, (if found).</param>
             <returns>True if a match is found, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.TryFindKeyDecryption(System.String,Goedel.Cryptography.IKeyDecrypt@)">
+        <member name="M:Goedel.Cryptography.CryptographicKey.TryFindKeyDecryption(System.String,Goedel.Cryptography.IKeyDecrypt@)">
             <summary>
             Attempt to find a private key for the specified recipient entry.
             </summary>
@@ -6926,7 +6926,7 @@
              <param name="cryptoKey">The key, (if found).</param>
             <returns>True if a match is found, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.TryFindKeyEncryption(System.String,Goedel.Cryptography.CryptoKey@)">
+        <member name="M:Goedel.Cryptography.CryptographicKey.TryFindKeyEncryption(System.String,Goedel.Cryptography.CryptographicKey@)">
             <summary>
             Resolve a public key by identifier. This always returns null because the collection
             cannot contain a <see cref="T:Goedel.Cryptography.KeyPair"/>
@@ -6935,7 +6935,7 @@
             <param name="cryptoKey">The found key </param>
             <returns>The identifier.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.TryFindKeySignature(System.String,Goedel.Cryptography.CryptoKey@)">
+        <member name="M:Goedel.Cryptography.CryptographicKey.TryFindKeySignature(System.String,Goedel.Cryptography.CryptographicKey@)">
             <summary>
             Resolve a private key by identifier.  This always returns null because the collection
             cannot contain a <see cref="T:Goedel.Cryptography.KeyPair"/>
@@ -6944,7 +6944,7 @@
              <param name="cryptoKey">The key, (if found).</param>
             <returns>The identifier.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.LocatePrivateKeyPair(System.String,Goedel.Cryptography.CryptoKey@)">
+        <member name="M:Goedel.Cryptography.CryptographicKey.LocatePrivateKeyPair(System.String,Goedel.Cryptography.CryptographicKey@)">
             <summary>
             Locate the private key.
             </summary>
@@ -6952,16 +6952,16 @@
              <param name="cryptoKey">The key, (if found).</param>
             <returns>A KeyPair instance bound to the private key.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.Add(Goedel.Cryptography.KeyPair,System.Collections.Generic.List{System.String})">
+        <member name="M:Goedel.Cryptography.CryptographicKey.Add(Goedel.Cryptography.KeyPair,System.Collections.Generic.List{System.String})">
             <inheritdoc cref="M:Goedel.Cryptography.IKeyLocate.Add(Goedel.Cryptography.KeyPair,System.Collections.Generic.List{System.String})"/>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.Persist(Goedel.Cryptography.KeyPair)">
+        <member name="M:Goedel.Cryptography.CryptographicKey.Persist(Goedel.Cryptography.KeyPair)">
             <inheritdoc cref="M:Goedel.Cryptography.IKeyLocate.Persist(Goedel.Cryptography.KeyPair)"/>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.RemoteAgreement(System.String,Goedel.Cryptography.KeyPairAdvanced,System.String)">
+        <member name="M:Goedel.Cryptography.CryptographicKey.RemoteAgreement(System.String,Goedel.Cryptography.KeyPairAdvanced,System.String)">
             <inheritdoc cref="M:Goedel.Cryptography.IKeyLocate.RemoteAgreement(System.String,Goedel.Cryptography.KeyPairAdvanced,System.String)"/>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.MatchKeyIdentifier(System.String)">
+        <member name="M:Goedel.Cryptography.CryptographicKey.MatchKeyIdentifier(System.String)">
             <summary>
             Check to see if <paramref name="keyId"/> is a valid name for this key using the
             extended value from the public key parameters if known;
@@ -6970,7 +6970,7 @@
             <returns>True if keyId is sufficiently long and matches the leading characters of the
             key identifier.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.IAgreementData@,System.Byte[])">
+        <member name="M:Goedel.Cryptography.CryptographicKey.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.IAgreementData@,System.Byte[])">
             <summary>
             Encrypt a bulk key.
             </summary>
@@ -6980,7 +6980,7 @@
             <param name="exchange">The private key to use for the exchange.</param>
             <param name="salt">Optional salt value for use in key derivation.</param>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.Decrypt(System.Byte[],Goedel.Cryptography.IAgreementData,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
+        <member name="M:Goedel.Cryptography.CryptographicKey.Decrypt(System.Byte[],Goedel.Cryptography.IAgreementData,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
             <summary>
             Perform a key exchange to encrypt a bulk or wrapped key under this one.
             </summary>
@@ -6993,7 +6993,7 @@
             <returns>The decoded data instance</returns>
             
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.SignManifest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.CryptographicKey.SignManifest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
             Sign data directly.
             </summary>
@@ -7003,7 +7003,7 @@
             for protocol isolation.</param>
             <returns>The signature data</returns>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.VerifyManifest(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.CryptographicKey.VerifyManifest(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
             Verify a signature over the purported data digest.
             </summary>
@@ -7014,7 +7014,7 @@
             <param name="data">The data value to be verified.</param>
             <returns>True if the signature is valid, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.SignDigest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.CryptographicKey.SignDigest(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
             Sign a precomputed digest
             </summary>
@@ -7024,7 +7024,7 @@
             for protocol isolation.</param>
             <returns>The signature data</returns>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.VerifyDigest(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Cryptography.CryptographicKey.VerifyDigest(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
             Verify a signature over the purported data digest.
             </summary>
@@ -7035,14 +7035,14 @@
             <param name="digest">The digest value to be verified.</param>
             <returns>True if the signature is valid, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.SignatureAlgorithmID(Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Cryptography.CryptographicKey.SignatureAlgorithmID(Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Return the CryptoAlgorithmID that would be used with the specified base parameters.
             </summary>
             <param name="baseID">The base identifier.</param>
             <returns>The computed CryptoAlgorithmID</returns>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.Agreement(Goedel.Cryptography.KeyPair)">
+        <member name="M:Goedel.Cryptography.CryptographicKey.Agreement(Goedel.Cryptography.KeyPair)">
             <summary>
             Perform a partial key agreement.
             </summary>

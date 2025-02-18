@@ -116,7 +116,7 @@ public partial class CatalogedGroup {
     public CatalogedGroup(
                     ProfileGroup profileGroup,
                     ActivationCommon activationAccount,
-                    CryptoKey encryptionKey
+                    CryptographicKey encryptionKey
                     //,
                     //            ConnectionStripped connectionAddress
                     ) {

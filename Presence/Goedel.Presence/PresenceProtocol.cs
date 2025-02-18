@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/17/2025 5:48:58 PM
+//  This file was automatically generated at 2/18/2025 10:46:23 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -718,7 +718,7 @@ public partial class PresenceFromService : Goedel.Protocol.Response {
 
 			{ "EndPoint", new PropertyStruct ("EndPoint", 
 					(IBinding data, object? value) => {(data as PresenceFromService).EndPoint = value as UdpEndpoint;}, (IBinding data) => (data as PresenceFromService).EndPoint,
-					false, ()=>new  UdpEndpoint(), ()=>new UdpEndpoint())} ,
+					false, ()=>new  UdpEndpoint(), ()=>new UdpEndpoint())},
 			{ "Now", new PropertyDateTime ("Now", 
 					(IBinding data, DateTime? value) => {(data as PresenceFromService).Now = value;}, (IBinding data) => (data as PresenceFromService).Now )},
 			{ "Acknowledge", new PropertyInteger32 ("Acknowledge", 
@@ -1298,7 +1298,7 @@ public partial class SessionRequest : Message {
 					(IBinding data, List<string>? value) => {(data as SessionRequest).Options = value;}, (IBinding data) => (data as SessionRequest).Options )},
 			{ "Inbound", new PropertyStruct ("Inbound", 
 					(IBinding data, object? value) => {(data as SessionRequest).Inbound = value as UdpEndpoint;}, (IBinding data) => (data as SessionRequest).Inbound,
-					false, ()=>new  UdpEndpoint(), ()=>new UdpEndpoint())} ,
+					false, ()=>new  UdpEndpoint(), ()=>new UdpEndpoint())},
 			{ "Expires", new PropertyDateTime ("Expires", 
 					(IBinding data, DateTime? value) => {(data as SessionRequest).Expires = value;}, (IBinding data) => (data as SessionRequest).Expires )}
         }, __Tag,() => new SessionRequest(), Message._binding);
@@ -1401,7 +1401,7 @@ public partial class SessionResponse : Message {
 					(IBinding data, List<string>? value) => {(data as SessionResponse).Options = value;}, (IBinding data) => (data as SessionResponse).Options )},
 			{ "Inbound", new PropertyStruct ("Inbound", 
 					(IBinding data, object? value) => {(data as SessionResponse).Inbound = value as UdpEndpoint;}, (IBinding data) => (data as SessionResponse).Inbound,
-					false, ()=>new  UdpEndpoint(), ()=>new UdpEndpoint())} 
+					false, ()=>new  UdpEndpoint(), ()=>new UdpEndpoint())}
         }, __Tag,() => new SessionResponse(), Message._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 

@@ -235,6 +235,7 @@
 	Structure Resource
 		String					Type
 			Tag "@type" //  MUST NOT be "Resource" if set
+			TypeTag
 		String					Kind
 			Description
 				| 
@@ -634,6 +635,7 @@
 	// 2.6.  Resource Properties
 	// 2.6.1.  cryptoKeys
 	Structure CryptoKey
+		Tag "CryptoKey"
 		Inherits				Resource
 		Description
 			|The cryptographic resources such as public keys and certificates associated 

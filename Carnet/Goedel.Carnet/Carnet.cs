@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/17/2025 5:48:58 PM
+//  This file was automatically generated at 2/18/2025 10:46:23 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -320,13 +320,13 @@ public partial class CatalogedCarnet : CatalogedEntry {
 					(IBinding data, string? value) => {(data as CatalogedCarnet).Key = value;}, (IBinding data) => (data as CatalogedCarnet).Key )},
 			{ "EnvelopedConnectionAddress", new PropertyStruct ("EnvelopedConnectionAddress", 
 					(IBinding data, object? value) => {(data as CatalogedCarnet).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, (IBinding data) => (data as CatalogedCarnet).EnvelopedConnectionAddress,
-					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>())} ,
+					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>())},
 			{ "EnvelopedProfileCarnet", new PropertyStruct ("EnvelopedProfileCarnet", 
 					(IBinding data, object? value) => {(data as CatalogedCarnet).EnvelopedProfileCarnet = value as Enveloped<ProfileCarnet>;}, (IBinding data) => (data as CatalogedCarnet).EnvelopedProfileCarnet,
-					false, ()=>new  Enveloped<ProfileCarnet>(), ()=>new Enveloped<ProfileCarnet>())} ,
+					false, ()=>new  Enveloped<ProfileCarnet>(), ()=>new Enveloped<ProfileCarnet>())},
 			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", 
 					(IBinding data, object? value) => {(data as CatalogedCarnet).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, (IBinding data) => (data as CatalogedCarnet).EnvelopedActivationCommon,
-					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())} 
+					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())}
         }, __Tag,() => new CatalogedCarnet(), CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 

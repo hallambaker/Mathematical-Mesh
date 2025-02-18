@@ -31,7 +31,7 @@ public partial class CryptoStackEncode : CryptoStack {
     /// <summary>
     /// The Keys to be used to sign the message. 
     /// </summary>
-    public override List<CryptoKey> SignerKeys => CryptoParameters.SignerKeys;
+    public override List<CryptographicKey> SignerKeys => CryptoParameters.SignerKeys;
 
     /// <summary>
     /// The base seed provided as a verbatim value or provided through a key exchange to be 

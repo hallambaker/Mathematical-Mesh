@@ -83,8 +83,8 @@ public partial class MeshItem {
     /// <returns>Envelope containing the signed profile. Also updates the property
     /// <see cref="DareEnvelope"/></returns>
     public virtual DareEnvelope Envelope(
-                CryptoKey signingKey = null,
-                CryptoKey encryptionKey = null,
+                CryptographicKey signingKey = null,
+                CryptographicKey encryptionKey = null,
                 ObjectEncoding objectEncoding = ObjectEncoding.JSON
                 ) {
 
@@ -115,8 +115,8 @@ public partial class MeshItem {
     /// <returns>Envelope containing the signed profile. Also updates the property
     /// <see cref="DareEnvelope"/></returns>
     public virtual DareEnvelope Envelope(
-                List<CryptoKey> signingKeys,
-                List<CryptoKey> encryptionKeys = null,
+                List<CryptographicKey> signingKeys,
+                List<CryptographicKey> encryptionKeys = null,
                 ObjectEncoding objectEncoding = ObjectEncoding.JSON,
                 bool includeSignatureKey = false
                 ) {

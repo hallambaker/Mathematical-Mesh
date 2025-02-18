@@ -529,7 +529,7 @@ public partial class ContextUser : ContextAccount {
     /// <param name="keyId">The identifier to resolve.</param>
     /// <param name="cryptoKey">The found key </param>
     /// <returns>The identifier.</returns>
-    public override bool TryFindKeyEncryption(string keyId, out CryptoKey cryptoKey) {
+    public override bool TryFindKeyEncryption(string keyId, out CryptographicKey cryptoKey) {
         if (base.TryFindKeyEncryption(keyId, out cryptoKey)) {
             return true;
             }
@@ -545,7 +545,7 @@ public partial class ContextUser : ContextAccount {
     /// <param name="keyId">The identifier to resolve.</param>
     /// <param name="cryptoKey">The found key </param>
     /// <returns>The identifier.</returns>
-    public override bool TryFindKeySignature(string keyId, out CryptoKey cryptoKey) {
+    public override bool TryFindKeySignature(string keyId, out CryptographicKey cryptoKey) {
         if (keyId == ServiceAddress) {
             cryptoKey = KeyCommonSignature;
             return true;
@@ -1591,7 +1591,7 @@ public partial class ContextUser : ContextAccount {
 
         // process the recipient to get the service, unless known.
 
-        CryptoKey recipientEncryptionKey = null;
+        CryptographicKey recipientEncryptionKey = null;
 
         var addressType = recipient.SplitAccountAddress(out var service, out var account);
         switch (addressType) {
@@ -1840,7 +1840,7 @@ public partial class ContextUser : ContextAccount {
     /// </summary>
     /// <param name="networkAddress">The address to return the entry for.</param>
     /// <returns>The mesh account encryption key if found, otherwise, null.</returns>
-    public CryptoKey GetByAccountEncrypt(string networkAddress) =>
+    public CryptographicKey GetByAccountEncrypt(string networkAddress) =>
         (GetStore(CatalogContact.Label) as CatalogContact).GetByAccountEncrypt(networkAddress);
 
     #endregion

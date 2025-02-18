@@ -27,7 +27,7 @@ namespace Goedel.Cryptography;
 /// <summary>
 /// Wrapper around a partial key pair.
 /// </summary>
-public class CryptoKeySymmetric : CryptoKey {
+public class CryptoKeySymmetric : CryptographicKey {
 
 
     ///<inheritdoc/>

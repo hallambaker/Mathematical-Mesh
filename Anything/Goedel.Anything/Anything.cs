@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/17/2025 5:48:58 PM
+//  This file was automatically generated at 2/18/2025 10:46:23 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -800,13 +800,13 @@ public partial class CatalogedAnything : CatalogedEntry {
 					(IBinding data, string? value) => {(data as CatalogedAnything).Key = value;}, (IBinding data) => (data as CatalogedAnything).Key )},
 			{ "EnvelopedConnectionAddress", new PropertyStruct ("EnvelopedConnectionAddress", 
 					(IBinding data, object? value) => {(data as CatalogedAnything).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, (IBinding data) => (data as CatalogedAnything).EnvelopedConnectionAddress,
-					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>())} ,
+					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>())},
 			{ "EnvelopedProfileCarnet", new PropertyStruct ("EnvelopedProfileCarnet", 
 					(IBinding data, object? value) => {(data as CatalogedAnything).EnvelopedProfileCarnet = value as Enveloped<ProfileAnything>;}, (IBinding data) => (data as CatalogedAnything).EnvelopedProfileCarnet,
-					false, ()=>new  Enveloped<ProfileAnything>(), ()=>new Enveloped<ProfileAnything>())} ,
+					false, ()=>new  Enveloped<ProfileAnything>(), ()=>new Enveloped<ProfileAnything>())},
 			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", 
 					(IBinding data, object? value) => {(data as CatalogedAnything).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, (IBinding data) => (data as CatalogedAnything).EnvelopedActivationCommon,
-					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())} 
+					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())}
         }, __Tag,() => new CatalogedAnything(), CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 

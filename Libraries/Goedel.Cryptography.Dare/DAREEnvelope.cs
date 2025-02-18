@@ -220,8 +220,8 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     public static DareEnvelope Encode(
         byte[] plaintext,
         ContentMeta contentMeta = null,
-        CryptoKey signingKey = null,
-        CryptoKey encryptionKey = null,
+        CryptographicKey signingKey = null,
+        CryptographicKey encryptionKey = null,
         byte[] cloaked = null,
         List<byte[]> dataSequences = null) {
         var cryptoParameters = new CryptoParameters(signer: signingKey, recipient: encryptionKey);
@@ -884,7 +884,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     /// </summary>
     /// <param name="key">The key</param>
     /// <returns>The signature entry.</returns>
-    public DareSignature FindSignature(CryptoKey key) {
+    public DareSignature FindSignature(CryptographicKey key) {
 
         if (Trailer.Signatures != null) {
             foreach (var signature in Trailer.Signatures) {

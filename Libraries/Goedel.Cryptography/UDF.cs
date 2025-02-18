@@ -23,6 +23,7 @@
 
 using Goedel.ASN;
 
+using System.Net.Mime;
 using System.Security.Cryptography;
 
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -833,19 +834,33 @@ public record Udf(
         SymmetricKey(UdfTypeIdentifier.Encryption_HKDF_AES_256, data);
 
 
+
+
     public static string AuthenticatedEncryptionKey(byte[] data, int bits = 0) {
 
         var digest = SHAKE256.HashData(data);
+
+
         return AuthenticatedEncryptionKeyDigest(digest, bits);
 
         throw new NYI();
+        }
+
+    public static string Locator(string earl) {
+        var source = earl.FromBase32();
+        var bits = source.Length * 16;
+
+        var buffer = DataToUDFBinary(source, "application/udf", bits, CryptoAlgorithmId.SHA_3_512);
+        return PresentationBase32(buffer, bits);
         }
 
     public static string AuthenticatedEncryptionKeyDigest(byte[] digest, int bits = 0) {
         bits = bits < 128 ? 128 : bits;
 
         var truncated = digest[..(bits/8)];
-        return SymmetricKey(UdfTypeIdentifier.AuthenticatedEncryption_SHA3_AES_256, digest);
+        Console.WriteLine($"Digest: {digest.ToStringBase16FormatHex()}");
+        Console.WriteLine($"Trunc: {truncated.ToStringBase16FormatHex()}  {UdfTypeIdentifier.AuthenticatedEncryption_SHA3_AES_256}");
+        return SymmetricKey(UdfTypeIdentifier.AuthenticatedEncryption_SHA3_AES_256, truncated);
         }
 
     public static byte[] GetEncryptionKey(string udf) {

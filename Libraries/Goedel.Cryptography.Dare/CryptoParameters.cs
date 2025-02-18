@@ -56,7 +56,7 @@ public partial class CryptoParameters {
     ///<summary>The set of encryption keys under which key exchanges are to be performed.</summary> 
     ///<remarks>If the value <see cref="EncryptId"/> is to be overriden, this should be done
     ///first so as to avoid recalculating the parameters.</remarks>
-    public List<CryptoKey> EncryptionKeys {
+    public List<CryptographicKey> EncryptionKeys {
         get => encryptionKeys;
         set {
             encryptionKeys = value;
@@ -65,19 +65,19 @@ public partial class CryptoParameters {
                 }
             }
         }
-    List<CryptoKey> encryptionKeys;
+    List<CryptographicKey> encryptionKeys;
 
     /// <summary>The set of keys to use to sign</summary>
     ///<remarks>If the value <see cref="DigestId"/> is to be overriden, this should be done
     ///first so as to avoid recalculating the parameters.</remarks>
-    public List<CryptoKey> SignerKeys {
+    public List<CryptographicKey> SignerKeys {
         get => signerKeys;
         set {
             signerKeys = value;
             SetDigest();
             }
         }
-    List<CryptoKey> signerKeys;
+    List<CryptographicKey> signerKeys;
 
     ///<summary>If true, include the signature public key value in the signature,
     ///this is used for deferred key signature.</summary> 
@@ -154,8 +154,8 @@ public partial class CryptoParameters {
                     IKeyLocate keyCollection = null,
                     IEnumerable<string> recipients = null,
                     IEnumerable<string> signers = null,
-                    CryptoKey recipient = null,
-                    CryptoKey signer = null,
+                    CryptographicKey recipient = null,
+                    CryptographicKey signer = null,
                     CryptoAlgorithmId encryptID = CryptoAlgorithmId.NULL,
                     CryptoAlgorithmId digestID = CryptoAlgorithmId.NULL) {
         DigestId = digestID;
@@ -164,26 +164,26 @@ public partial class CryptoParameters {
         KeyLocate = keyCollection;
 
         if (recipients != null) {
-            EncryptionKeys = new List<CryptoKey>();
+            EncryptionKeys = new List<CryptographicKey>();
             foreach (var entry in recipients) {
                 AddEncrypt(entry);
                 }
             SetEncrypt();
             }
         else if (recipient != null) {
-            EncryptionKeys = new List<CryptoKey>() { recipient };
+            EncryptionKeys = new List<CryptographicKey>() { recipient };
             SetEncrypt();
             }
         EncryptId = EncryptId == CryptoAlgorithmId.Default ? CryptoID.DefaultEncryptionId : EncryptId;
 
         if (signers != null) {
-            SignerKeys = new List<CryptoKey>();
+            SignerKeys = new List<CryptographicKey>();
             foreach (var Entry in signers) {
                 AddSign(Entry);
                 }
             }
         else if (signer != null) {
-            SignerKeys = new List<CryptoKey>() { signer };
+            SignerKeys = new List<CryptographicKey>() { signer };
             }
 
         DigestId = DigestId == CryptoAlgorithmId.Default ? CryptoID.DefaultDigestId : DigestId;
@@ -199,8 +199,8 @@ public partial class CryptoParameters {
     /// <param name="encryptID">The bulk encryption algorithm.</param>
     /// <param name="digestID">The digest algorithm.</param>
     public CryptoParameters(
-                    List<CryptoKey> recipients = null,
-                    List<CryptoKey> signers = null,
+                    List<CryptographicKey> recipients = null,
+                    List<CryptographicKey> signers = null,
                     CryptoAlgorithmId encryptID = CryptoAlgorithmId.NULL,
                     CryptoAlgorithmId digestID = CryptoAlgorithmId.NULL) {
         DigestId = digestID;
@@ -224,7 +224,7 @@ public partial class CryptoParameters {
         KeyLocate.TryFindKeyEncryption(AccountId, out var key).AssertTrue(
                     NoAvailableEncryptionKey.Throw);
 
-        EncryptionKeys ??= new List<CryptoKey>();
+        EncryptionKeys ??= new List<CryptographicKey>();
         EncryptionKeys.Add(key);
         }
 
@@ -233,7 +233,7 @@ public partial class CryptoParameters {
     /// </summary>
     /// <param name="AccountId">Identifier of the key to add.</param>
     protected virtual void AddSign(string AccountId) {
-        SignerKeys ??= new List<CryptoKey>();
+        SignerKeys ??= new List<CryptographicKey>();
         if (KeyLocate.TryFindKeySignature(AccountId, out var key)) {
             SignerKeys.Add(key);
             }

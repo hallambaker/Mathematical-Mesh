@@ -39,8 +39,8 @@ public static partial class Extension {
     /// <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
     /// <returns>The enveloped data</returns>
     public static Enveloped<T> Enveloped<T>(this T data,
-                CryptoKey signingKey = null,
-                CryptoKey encryptionKey = null,
+                CryptographicKey signingKey = null,
+                CryptographicKey encryptionKey = null,
                 ContentMeta contentMeta = null,
                 ObjectEncoding objectEncoding = ObjectEncoding.JSON) where T : JsonObject =>
         new Enveloped<T>(data, signingKey, encryptionKey, contentMeta, objectEncoding);

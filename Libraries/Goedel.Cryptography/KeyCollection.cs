@@ -131,7 +131,7 @@ public abstract class KeyCollection : IKeyLocate {
     /// <param name="keyId">The key identifier to match</param>
     /// <param name="cryptoKey">The key, (if found).</param>
     /// <returns>True if a match is found, otherwise false.</returns>
-    protected bool TryMatchRecipientKeyPair(string keyId, out CryptoKey cryptoKey) {
+    protected bool TryMatchRecipientKeyPair(string keyId, out CryptographicKey cryptoKey) {
         // Search our this.SessionPersonal = SessionPersonal;
         if (DictionaryKeyPairByUDF.TryGetValue(keyId, out var keyPair)) {
             cryptoKey = keyPair;
@@ -164,7 +164,7 @@ public abstract class KeyCollection : IKeyLocate {
     /// <param name="udf">fingerprint of key to locate.</param>
     /// <param name="key">The key, (if found).</param>
     /// <returns>A KeyPair instance bound to the private key.</returns>
-    public virtual bool LocatePrivateKeyPair(string udf, out CryptoKey key) {
+    public virtual bool LocatePrivateKeyPair(string udf, out CryptographicKey key) {
         if (KeyPairRSA.Locate(udf, out var keyPair)) {
             key = keyPair;
             return true;
@@ -214,7 +214,7 @@ public abstract class KeyCollection : IKeyLocate {
     /// <param name="keyId">The identifier to resolve.</param>
     /// <param name="cryptoKey">The found key </param>
     /// <returns>The identifier.</returns>
-    public virtual bool TryFindKeyEncryption(string keyId, out CryptoKey cryptoKey) {
+    public virtual bool TryFindKeyEncryption(string keyId, out CryptographicKey cryptoKey) {
 
         if (DictionaryKeyPairByUDF.TryGetValue(keyId, out var keyPair)) {
             cryptoKey = keyPair;
@@ -235,7 +235,7 @@ public abstract class KeyCollection : IKeyLocate {
     /// <param name="keyId">The identifier to resolve.</param>
     ///  <param name="cryptoKey">The key, (if found).</param>
     /// <returns>The identifier.</returns>
-    public virtual bool TryFindKeySignature(string keyId, out CryptoKey cryptoKey) {
+    public virtual bool TryFindKeySignature(string keyId, out CryptographicKey cryptoKey) {
 
         if (DictionaryKeyPairByAccountSign.TryGetValue(keyId, out var keyPair)) {
             cryptoKey = keyPair;
@@ -259,7 +259,7 @@ public abstract class KeyCollection : IKeyLocate {
     /// <returns>The identifier.</returns>
     public virtual bool TryFindPublicKey(
                 string keyId,
-                out CryptoKey cryptoKey) => TryMatchRecipientKeyPair(keyId, out cryptoKey);
+                out CryptographicKey cryptoKey) => TryMatchRecipientKeyPair(keyId, out cryptoKey);
 
     /// <summary>
     /// Perform a remote key agreement.

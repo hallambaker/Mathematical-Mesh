@@ -258,7 +258,7 @@ public class CatalogContact : Catalog<CatalogedContact> {
     /// </summary>
     /// <param name="networkAddress">The address to return the entry for.</param>
     /// <returns>The mesh account encryption key if found, otherwise, null.</returns>
-    public CryptoKey GetByAccountEncrypt(string networkAddress) {
+    public CryptographicKey GetByAccountEncrypt(string networkAddress) {
 
         if (!DictionaryByNetworkAddress.TryGetValue(networkAddress, out var catalogedContact)) {
             return null;
@@ -273,7 +273,7 @@ public class CatalogContact : Catalog<CatalogedContact> {
     /// </summary>
     /// <param name="keyId">The key identifier to match.</param>
     /// <returns>The key pair if found.</returns>
-    public CryptoKey TryMatchRecipient(string keyId) {
+    public CryptographicKey TryMatchRecipient(string keyId) {
         if (!DictionaryByNetworkAddress.TryGetValue(keyId, out var catalogedContact)) {
             return null;
             }
@@ -652,15 +652,15 @@ public class NetworkProtocolEntry {
 
 
     ///<summary>The encryption key to use for this contact.</summary>
-    public CryptoKey MeshKeyEncryption => Expire.Expired(meshKeyEncryption) ??
+    public Cryptography.CryptographicKey MeshKeyEncryption => Expire.Expired(meshKeyEncryption) ??
          SetKeys(ref meshKeyEncryption);
 
-    CryptoKey meshKeyEncryption;
+    CryptographicKey meshKeyEncryption;
 
     ///<summary>The signature root of trust to use for this contact.</summary>
-    public CryptoKey MeshKeyAdministrator => Expire.Expired(meshKeyAdministrator) ??
+    public CryptographicKey MeshKeyAdministrator => Expire.Expired(meshKeyAdministrator) ??
          SetKeys(ref meshKeyAdministrator);
-    CryptoKey meshKeyAdministrator;
+    CryptographicKey meshKeyAdministrator;
 
     ///<summary>The expiry time for the derived keys.</summary>
     public System.DateTime? Expire { get; private set; }
@@ -677,7 +677,7 @@ public class NetworkProtocolEntry {
         NetworkAddress = networkAddress;
         }
 
-    CryptoKey SetKeys(ref CryptoKey keyPair) {
+    CryptographicKey SetKeys(ref CryptographicKey keyPair) {
         if (NetworkAddress is NetworkProfile networkProfile) {
             var profileAccount = networkProfile.EnvelopedProfileAccount.Decode();
             meshKeyEncryption = profileAccount.CommonEncryption.CryptoKey;

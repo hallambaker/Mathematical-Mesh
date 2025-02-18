@@ -30,7 +30,7 @@ public partial class CryptoStackDecode : CryptoStack {
     /// <summary>
     /// The Keys to be used to sign the message. 
     /// </summary>
-    public override List<CryptoKey> SignerKeys { get; }
+    public override List<CryptographicKey> SignerKeys { get; }
 
 
     /// <summary>

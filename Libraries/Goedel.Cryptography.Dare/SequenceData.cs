@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/17/2025 5:48:55 PM
+//  This file was automatically generated at 2/18/2025 10:46:21 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -289,7 +289,7 @@ public partial class SequenceIndex : SequenceData {
 					(IBinding data, bool? value) => {(data as SequenceIndex).Full = value;}, (IBinding data) => (data as SequenceIndex).Full )},
 			{ "Positions", new PropertyListStruct ("Positions", 
 					(IBinding data, object? value) => {(data as SequenceIndex).Positions = value as List<IndexPosition>;}, (IBinding data) => (data as SequenceIndex).Positions,
-					false, ()=>new  List<IndexPosition>(), ()=>new IndexPosition())} 
+					false, ()=>new  List<IndexPosition>(), ()=>new IndexPosition())}
         }, __Tag,() => new SequenceIndex(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 

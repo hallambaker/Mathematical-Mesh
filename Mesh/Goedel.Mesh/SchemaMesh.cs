@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/17/2025 5:48:56 PM
+//  This file was automatically generated at 2/18/2025 10:46:22 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -777,7 +777,7 @@ public partial class Activation : Assertion {
 					(IBinding data, string? value) => {(data as Activation).ActivationKey = value;}, (IBinding data) => (data as Activation).ActivationKey )},
 			{ "Entries", new PropertyListStruct ("Entries", 
 					(IBinding data, object? value) => {(data as Activation).Entries = value as List<ActivationEntry>;}, (IBinding data) => (data as Activation).Entries,
-					false, ()=>new  List<ActivationEntry>(), ()=>new ActivationEntry())} 
+					false, ()=>new  List<ActivationEntry>(), ()=>new ActivationEntry())}
         }, __Tag,() => new Activation(), Assertion._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -881,7 +881,7 @@ public partial class ActivationEntry : MeshItem {
 					(IBinding data, string? value) => {(data as ActivationEntry).Resource = value;}, (IBinding data) => (data as ActivationEntry).Resource )},
 			{ "Key", new PropertyStruct ("Key", 
 					(IBinding data, object? value) => {(data as ActivationEntry).Key = value as KeyData;}, (IBinding data) => (data as ActivationEntry).Key,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "ServiceId", new PropertyString ("ServiceId", 
 					(IBinding data, string? value) => {(data as ActivationEntry).ServiceId = value;}, (IBinding data) => (data as ActivationEntry).ServiceId )},
 			{ "ServiceAddress", new PropertyString ("ServiceAddress", 
@@ -1073,13 +1073,13 @@ public partial class ProfileDevice : Profile {
 
 			{ "Encryption", new PropertyStruct ("Encryption", 
 					(IBinding data, object? value) => {(data as ProfileDevice).Encryption = value as KeyData;}, (IBinding data) => (data as ProfileDevice).Encryption,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "Signature", new PropertyStruct ("Signature", 
 					(IBinding data, object? value) => {(data as ProfileDevice).Signature = value as KeyData;}, (IBinding data) => (data as ProfileDevice).Signature,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "Authentication", new PropertyStruct ("Authentication", 
 					(IBinding data, object? value) => {(data as ProfileDevice).Authentication = value as KeyData;}, (IBinding data) => (data as ProfileDevice).Authentication,
-					false, ()=>new  KeyData(), ()=>new KeyData())} 
+					false, ()=>new  KeyData(), ()=>new KeyData())}
         }, __Tag,() => new ProfileDevice(), Profile._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1202,16 +1202,16 @@ public partial class ProfileAccount : Profile {
 					(IBinding data, string? value) => {(data as ProfileAccount).ServiceUdf = value;}, (IBinding data) => (data as ProfileAccount).ServiceUdf )},
 			{ "EscrowEncryption", new PropertyStruct ("EscrowEncryption", 
 					(IBinding data, object? value) => {(data as ProfileAccount).EscrowEncryption = value as KeyData;}, (IBinding data) => (data as ProfileAccount).EscrowEncryption,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "AdministratorSignature", new PropertyStruct ("AdministratorSignature", 
 					(IBinding data, object? value) => {(data as ProfileAccount).AdministratorSignature = value as KeyData;}, (IBinding data) => (data as ProfileAccount).AdministratorSignature,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "CommonEncryption", new PropertyStruct ("CommonEncryption", 
 					(IBinding data, object? value) => {(data as ProfileAccount).CommonEncryption = value as KeyData;}, (IBinding data) => (data as ProfileAccount).CommonEncryption,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "CommonAuthentication", new PropertyStruct ("CommonAuthentication", 
 					(IBinding data, object? value) => {(data as ProfileAccount).CommonAuthentication = value as KeyData;}, (IBinding data) => (data as ProfileAccount).CommonAuthentication,
-					false, ()=>new  KeyData(), ()=>new KeyData())} 
+					false, ()=>new  KeyData(), ()=>new KeyData())}
         }, __Tag,() => new ProfileAccount(), Profile._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1295,7 +1295,7 @@ public partial class ProfileUser : ProfileAccount {
 
 			{ "CommonSignature", new PropertyStruct ("CommonSignature", 
 					(IBinding data, object? value) => {(data as ProfileUser).CommonSignature = value as KeyData;}, (IBinding data) => (data as ProfileUser).CommonSignature,
-					false, ()=>new  KeyData(), ()=>new KeyData())} 
+					false, ()=>new  KeyData(), ()=>new KeyData())}
         }, __Tag,() => new ProfileUser(), ProfileAccount._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1477,13 +1477,13 @@ public partial class ProfileService : Profile {
 
 			{ "ServiceAuthentication", new PropertyStruct ("ServiceAuthentication", 
 					(IBinding data, object? value) => {(data as ProfileService).ServiceAuthentication = value as KeyData;}, (IBinding data) => (data as ProfileService).ServiceAuthentication,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "ServiceEncryption", new PropertyStruct ("ServiceEncryption", 
 					(IBinding data, object? value) => {(data as ProfileService).ServiceEncryption = value as KeyData;}, (IBinding data) => (data as ProfileService).ServiceEncryption,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "ServiceSignature", new PropertyStruct ("ServiceSignature", 
 					(IBinding data, object? value) => {(data as ProfileService).ServiceSignature = value as KeyData;}, (IBinding data) => (data as ProfileService).ServiceSignature,
-					false, ()=>new  KeyData(), ()=>new KeyData())} 
+					false, ()=>new  KeyData(), ()=>new KeyData())}
         }, __Tag,() => new ProfileService(), Profile._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1731,7 +1731,7 @@ public partial class Connection : Assertion {
 					(IBinding data, string? value) => {(data as Connection).Authority = value;}, (IBinding data) => (data as Connection).Authority )},
 			{ "Authentication", new PropertyStruct ("Authentication", 
 					(IBinding data, object? value) => {(data as Connection).Authentication = value as KeyData;}, (IBinding data) => (data as Connection).Authentication,
-					false, ()=>new  KeyData(), ()=>new KeyData())} 
+					false, ()=>new  KeyData(), ()=>new KeyData())}
         }, __Tag,() => new Connection(), Assertion._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1873,12 +1873,12 @@ public partial class CallsignBinding : Assertion {
 					(IBinding data, string? value) => {(data as CallsignBinding).TransferUdf = value;}, (IBinding data) => (data as CallsignBinding).TransferUdf )},
 			{ "Services", new PropertyListStruct ("Services", 
 					(IBinding data, object? value) => {(data as CallsignBinding).Services = value as List<NamedService>;}, (IBinding data) => (data as CallsignBinding).Services,
-					false, ()=>new  List<NamedService>(), ()=>new NamedService())} ,
+					false, ()=>new  List<NamedService>(), ()=>new NamedService())},
 			{ "ServiceAddress", new PropertyString ("ServiceAddress", 
 					(IBinding data, string? value) => {(data as CallsignBinding).ServiceAddress = value;}, (IBinding data) => (data as CallsignBinding).ServiceAddress )},
 			{ "CommonEncryption", new PropertyStruct ("CommonEncryption", 
 					(IBinding data, object? value) => {(data as CallsignBinding).CommonEncryption = value as KeyData;}, (IBinding data) => (data as CallsignBinding).CommonEncryption,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "PkixRoot", new PropertyBinary ("PkixRoot", 
 					(IBinding data, byte[]? value) => {(data as CallsignBinding).PkixRoot = value;}, (IBinding data) => (data as CallsignBinding).PkixRoot )}
         }, __Tag,() => new CallsignBinding(), Assertion._binding);
@@ -2281,10 +2281,10 @@ public partial class ConnectionDevice : ConnectionService {
 					(IBinding data, List<string>? value) => {(data as ConnectionDevice).Roles = value;}, (IBinding data) => (data as ConnectionDevice).Roles )},
 			{ "Signature", new PropertyStruct ("Signature", 
 					(IBinding data, object? value) => {(data as ConnectionDevice).Signature = value as KeyData;}, (IBinding data) => (data as ConnectionDevice).Signature,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "Encryption", new PropertyStruct ("Encryption", 
 					(IBinding data, object? value) => {(data as ConnectionDevice).Encryption = value as KeyData;}, (IBinding data) => (data as ConnectionDevice).Encryption,
-					false, ()=>new  KeyData(), ()=>new KeyData())} 
+					false, ()=>new  KeyData(), ()=>new KeyData())}
         }, __Tag,() => new ConnectionDevice(), ConnectionService._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -2543,13 +2543,13 @@ public partial class AccountHostAssignment : Assertion {
 					(IBinding data, List<string>? value) => {(data as AccountHostAssignment).HostAddresses = value;}, (IBinding data) => (data as AccountHostAssignment).HostAddresses )},
 			{ "AccessEncrypt", new PropertyStruct ("AccessEncrypt", 
 					(IBinding data, object? value) => {(data as AccountHostAssignment).AccessEncrypt = value as KeyData;}, (IBinding data) => (data as AccountHostAssignment).AccessEncrypt,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "CallsignServiceProfile", new PropertyStruct ("CallsignServiceProfile", 
 					(IBinding data, object? value) => {(data as AccountHostAssignment).CallsignServiceProfile = value as ProfileAccount;}, (IBinding data) => (data as AccountHostAssignment).CallsignServiceProfile,
-					false, ()=>new  ProfileAccount(), ()=>new ProfileAccount())} ,
+					false, ()=>new  ProfileAccount(), ()=>new ProfileAccount())},
 			{ "EnvelopedProfileService", new PropertyStruct ("EnvelopedProfileService", 
 					(IBinding data, object? value) => {(data as AccountHostAssignment).EnvelopedProfileService = value as Enveloped<ProfileService>;}, (IBinding data) => (data as AccountHostAssignment).EnvelopedProfileService,
-					false, ()=>new  Enveloped<ProfileService>(), ()=>new Enveloped<ProfileService>())} 
+					false, ()=>new  Enveloped<ProfileService>(), ()=>new Enveloped<ProfileService>())}
         }, __Tag,() => new AccountHostAssignment(), Assertion._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -2889,19 +2889,19 @@ public partial class ActivationCommon : Activation {
 
 			{ "ProfileSignatures", new PropertyListStruct ("ProfileSignatures", 
 					(IBinding data, object? value) => {(data as ActivationCommon).ProfileSignatures = value as List<KeyData>;}, (IBinding data) => (data as ActivationCommon).ProfileSignatures,
-					false, ()=>new  List<KeyData>(), ()=>new KeyData())} ,
+					false, ()=>new  List<KeyData>(), ()=>new KeyData())},
 			{ "AdministratorSignature", new PropertyStruct ("AdministratorSignature", 
 					(IBinding data, object? value) => {(data as ActivationCommon).AdministratorSignature = value as KeyData;}, (IBinding data) => (data as ActivationCommon).AdministratorSignature,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "Encryption", new PropertyStruct ("Encryption", 
 					(IBinding data, object? value) => {(data as ActivationCommon).Encryption = value as KeyData;}, (IBinding data) => (data as ActivationCommon).Encryption,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "Authentication", new PropertyStruct ("Authentication", 
 					(IBinding data, object? value) => {(data as ActivationCommon).Authentication = value as KeyData;}, (IBinding data) => (data as ActivationCommon).Authentication,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "Signature", new PropertyStruct ("Signature", 
 					(IBinding data, object? value) => {(data as ActivationCommon).Signature = value as KeyData;}, (IBinding data) => (data as ActivationCommon).Signature,
-					false, ()=>new  KeyData(), ()=>new KeyData())} 
+					false, ()=>new  KeyData(), ()=>new KeyData())}
         }, __Tag,() => new ActivationCommon(), Activation._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3056,7 +3056,7 @@ public partial class ActivationApplicationSsh : ActivationApplication {
 
 			{ "ClientKey", new PropertyStruct ("ClientKey", 
 					(IBinding data, object? value) => {(data as ActivationApplicationSsh).ClientKey = value as KeyData;}, (IBinding data) => (data as ActivationApplicationSsh).ClientKey,
-					false, ()=>new  KeyData(), ()=>new KeyData())} 
+					false, ()=>new  KeyData(), ()=>new KeyData())}
         }, __Tag,() => new ActivationApplicationSsh(), ActivationApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3156,16 +3156,16 @@ public partial class ActivationApplicationMail : ActivationApplication {
 
 			{ "SmimeSign", new PropertyStruct ("SmimeSign", 
 					(IBinding data, object? value) => {(data as ActivationApplicationMail).SmimeSign = value as KeyData;}, (IBinding data) => (data as ActivationApplicationMail).SmimeSign,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "SmimeEncrypt", new PropertyStruct ("SmimeEncrypt", 
 					(IBinding data, object? value) => {(data as ActivationApplicationMail).SmimeEncrypt = value as KeyData;}, (IBinding data) => (data as ActivationApplicationMail).SmimeEncrypt,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "OpenpgpSign", new PropertyStruct ("OpenpgpSign", 
 					(IBinding data, object? value) => {(data as ActivationApplicationMail).OpenpgpSign = value as KeyData;}, (IBinding data) => (data as ActivationApplicationMail).OpenpgpSign,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "OpenpgpEncrypt", new PropertyStruct ("OpenpgpEncrypt", 
 					(IBinding data, object? value) => {(data as ActivationApplicationMail).OpenpgpEncrypt = value as KeyData;}, (IBinding data) => (data as ActivationApplicationMail).OpenpgpEncrypt,
-					false, ()=>new  KeyData(), ()=>new KeyData())} 
+					false, ()=>new  KeyData(), ()=>new KeyData())}
         }, __Tag,() => new ActivationApplicationMail(), ActivationApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3268,16 +3268,16 @@ public partial class ActivationApplicationGroup : ActivationApplication {
 
 			{ "AccountEncryption", new PropertyStruct ("AccountEncryption", 
 					(IBinding data, object? value) => {(data as ActivationApplicationGroup).AccountEncryption = value as KeyData;}, (IBinding data) => (data as ActivationApplicationGroup).AccountEncryption,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "AdministratorSignature", new PropertyStruct ("AdministratorSignature", 
 					(IBinding data, object? value) => {(data as ActivationApplicationGroup).AdministratorSignature = value as KeyData;}, (IBinding data) => (data as ActivationApplicationGroup).AdministratorSignature,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "AccountAuthentication", new PropertyStruct ("AccountAuthentication", 
 					(IBinding data, object? value) => {(data as ActivationApplicationGroup).AccountAuthentication = value as KeyData;}, (IBinding data) => (data as ActivationApplicationGroup).AccountAuthentication,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", 
 					(IBinding data, object? value) => {(data as ActivationApplicationGroup).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as ActivationApplicationGroup).EnvelopedConnectionService,
-					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())} 
+					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())}
         }, __Tag,() => new ActivationApplicationGroup(), ActivationApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3434,7 +3434,7 @@ public partial class ApplicationEntrySsh : ApplicationEntry {
 
 			{ "EnvelopedActivation", new PropertyStruct ("EnvelopedActivation", 
 					(IBinding data, object? value) => {(data as ApplicationEntrySsh).EnvelopedActivation = value as Enveloped<ActivationApplicationSsh>;}, (IBinding data) => (data as ApplicationEntrySsh).EnvelopedActivation,
-					false, ()=>new  Enveloped<ActivationApplicationSsh>(), ()=>new Enveloped<ActivationApplicationSsh>())} 
+					false, ()=>new  Enveloped<ActivationApplicationSsh>(), ()=>new Enveloped<ActivationApplicationSsh>())}
         }, __Tag,() => new ApplicationEntrySsh(), ApplicationEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3515,7 +3515,7 @@ public partial class ApplicationEntryGroup : ApplicationEntry {
 
 			{ "EnvelopedActivation", new PropertyStruct ("EnvelopedActivation", 
 					(IBinding data, object? value) => {(data as ApplicationEntryGroup).EnvelopedActivation = value as Enveloped<ActivationApplicationGroup>;}, (IBinding data) => (data as ApplicationEntryGroup).EnvelopedActivation,
-					false, ()=>new  Enveloped<ActivationApplicationGroup>(), ()=>new Enveloped<ActivationApplicationGroup>())} 
+					false, ()=>new  Enveloped<ActivationApplicationGroup>(), ()=>new Enveloped<ActivationApplicationGroup>())}
         }, __Tag,() => new ApplicationEntryGroup(), ApplicationEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3596,7 +3596,7 @@ public partial class ApplicationEntryMail : ApplicationEntry {
 
 			{ "EnvelopedActivation", new PropertyStruct ("EnvelopedActivation", 
 					(IBinding data, object? value) => {(data as ApplicationEntryMail).EnvelopedActivation = value as Enveloped<ActivationApplicationMail>;}, (IBinding data) => (data as ApplicationEntryMail).EnvelopedActivation,
-					false, ()=>new  Enveloped<ActivationApplicationMail>(), ()=>new Enveloped<ActivationApplicationMail>())} 
+					false, ()=>new  Enveloped<ActivationApplicationMail>(), ()=>new Enveloped<ActivationApplicationMail>())}
         }, __Tag,() => new ApplicationEntryMail(), ApplicationEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3712,23 +3712,23 @@ abstract public partial class Contact : Assertion {
 					(IBinding data, string? value) => {(data as Contact).Id = value;}, (IBinding data) => (data as Contact).Id )},
 			{ "Anchors", new PropertyListStruct ("Anchors", 
 					(IBinding data, object? value) => {(data as Contact).Anchors = value as List<Anchor>;}, (IBinding data) => (data as Contact).Anchors,
-					false, ()=>new  List<Anchor>(), ()=>new Anchor())} ,
+					false, ()=>new  List<Anchor>(), ()=>new Anchor())},
 			{ "NetworkAddresses", new PropertyListStruct ("NetworkAddresses", 
 					(IBinding data, object? value) => {(data as Contact).NetworkAddresses = value as List<NetworkAddress>;}, (IBinding data) => (data as Contact).NetworkAddresses,
 					true, ()=>new List<NetworkAddress>()
 )} ,
 			{ "Locations", new PropertyListStruct ("Locations", 
 					(IBinding data, object? value) => {(data as Contact).Locations = value as List<Location>;}, (IBinding data) => (data as Contact).Locations,
-					false, ()=>new  List<Location>(), ()=>new Location())} ,
+					false, ()=>new  List<Location>(), ()=>new Location())},
 			{ "Roles", new PropertyListStruct ("Roles", 
 					(IBinding data, object? value) => {(data as Contact).Roles = value as List<Role>;}, (IBinding data) => (data as Contact).Roles,
-					false, ()=>new  List<Role>(), ()=>new Role())} ,
+					false, ()=>new  List<Role>(), ()=>new Role())},
 			{ "Bookmark", new PropertyListStruct ("Bookmark", 
 					(IBinding data, object? value) => {(data as Contact).Bookmark = value as List<Bookmark>;}, (IBinding data) => (data as Contact).Bookmark,
-					false, ()=>new  List<Bookmark>(), ()=>new Bookmark())} ,
+					false, ()=>new  List<Bookmark>(), ()=>new Bookmark())},
 			{ "Sources", new PropertyListStruct ("Sources", 
 					(IBinding data, object? value) => {(data as Contact).Sources = value as List<TaggedSource>;}, (IBinding data) => (data as Contact).Sources,
-					false, ()=>new  List<TaggedSource>(), ()=>new TaggedSource())} 
+					false, ()=>new  List<TaggedSource>(), ()=>new TaggedSource())}
         }, __Tag,null, Assertion._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3924,7 +3924,7 @@ public partial class TaggedSource : MeshItem {
 					(IBinding data, byte[]? value) => {(data as TaggedSource).BinarySource = value;}, (IBinding data) => (data as TaggedSource).BinarySource )},
 			{ "EnvelopedSource", new PropertyStruct ("EnvelopedSource", 
 					(IBinding data, object? value) => {(data as TaggedSource).EnvelopedSource = value as Enveloped<Contact>;}, (IBinding data) => (data as TaggedSource).EnvelopedSource,
-					false, ()=>new  Enveloped<Contact>(), ()=>new Enveloped<Contact>())} 
+					false, ()=>new  Enveloped<Contact>(), ()=>new Enveloped<Contact>())}
         }, __Tag,() => new TaggedSource(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4081,7 +4081,7 @@ public partial class ContactPerson : Contact {
 
 			{ "CommonNames", new PropertyListStruct ("CommonNames", 
 					(IBinding data, object? value) => {(data as ContactPerson).CommonNames = value as List<PersonName>;}, (IBinding data) => (data as ContactPerson).CommonNames,
-					false, ()=>new  List<PersonName>(), ()=>new PersonName())} 
+					false, ()=>new  List<PersonName>(), ()=>new PersonName())}
         }, __Tag,() => new ContactPerson(), Contact._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4164,7 +4164,7 @@ public partial class ContactOrganization : Contact {
 
 			{ "CommonNames", new PropertyListStruct ("CommonNames", 
 					(IBinding data, object? value) => {(data as ContactOrganization).CommonNames = value as List<OrganizationName>;}, (IBinding data) => (data as ContactOrganization).CommonNames,
-					false, ()=>new  List<OrganizationName>(), ()=>new OrganizationName())} 
+					false, ()=>new  List<OrganizationName>(), ()=>new OrganizationName())}
         }, __Tag,() => new ContactOrganization(), Contact._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4678,7 +4678,7 @@ public partial class NetworkProfile : NetworkAddress {
 
 			{ "EnvelopedProfileAccount", new PropertyStruct ("EnvelopedProfileAccount", 
 					(IBinding data, object? value) => {(data as NetworkProfile).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as NetworkProfile).EnvelopedProfileAccount,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())} 
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())}
         }, __Tag,() => new NetworkProfile(), NetworkAddress._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4937,7 +4937,7 @@ public partial class Role : MeshItem {
 					(IBinding data, List<string>? value) => {(data as Role).Titles = value;}, (IBinding data) => (data as Role).Titles )},
 			{ "Locations", new PropertyListStruct ("Locations", 
 					(IBinding data, object? value) => {(data as Role).Locations = value as List<Location>;}, (IBinding data) => (data as Role).Locations,
-					false, ()=>new  List<Location>(), ()=>new Location())} 
+					false, ()=>new  List<Location>(), ()=>new Location())}
         }, __Tag,() => new Role(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -5755,25 +5755,25 @@ public partial class CatalogedDevice : CatalogedEntry {
 					(IBinding data, string? value) => {(data as CatalogedDevice).SignatureUdf = value;}, (IBinding data) => (data as CatalogedDevice).SignatureUdf )},
 			{ "EnvelopedProfileUser", new PropertyStruct ("EnvelopedProfileUser", 
 					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedProfileUser = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as CatalogedDevice).EnvelopedProfileUser,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())} ,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())},
 			{ "EnvelopedProfileDevice", new PropertyStruct ("EnvelopedProfileDevice", 
 					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;}, (IBinding data) => (data as CatalogedDevice).EnvelopedProfileDevice,
-					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())} ,
+					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())},
 			{ "DeviceDescription", new PropertyStruct ("DeviceDescription", 
 					(IBinding data, object? value) => {(data as CatalogedDevice).DeviceDescription = value as DeviceDescription;}, (IBinding data) => (data as CatalogedDevice).DeviceDescription,
-					false, ()=>new  DeviceDescription(), ()=>new DeviceDescription())} ,
+					false, ()=>new  DeviceDescription(), ()=>new DeviceDescription())},
 			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", 
 					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as CatalogedDevice).EnvelopedConnectionService,
-					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())} ,
+					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())},
 			{ "EnvelopedConnectionDevice", new PropertyStruct ("EnvelopedConnectionDevice", 
 					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedConnectionDevice = value as Enveloped<ConnectionDevice>;}, (IBinding data) => (data as CatalogedDevice).EnvelopedConnectionDevice,
-					false, ()=>new  Enveloped<ConnectionDevice>(), ()=>new Enveloped<ConnectionDevice>())} ,
+					false, ()=>new  Enveloped<ConnectionDevice>(), ()=>new Enveloped<ConnectionDevice>())},
 			{ "EnvelopedActivationAccount", new PropertyStruct ("EnvelopedActivationAccount", 
 					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedActivationAccount = value as Enveloped<ActivationAccount>;}, (IBinding data) => (data as CatalogedDevice).EnvelopedActivationAccount,
-					false, ()=>new  Enveloped<ActivationAccount>(), ()=>new Enveloped<ActivationAccount>())} ,
+					false, ()=>new  Enveloped<ActivationAccount>(), ()=>new Enveloped<ActivationAccount>())},
 			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", 
 					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, (IBinding data) => (data as CatalogedDevice).EnvelopedActivationCommon,
-					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())} ,
+					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())},
 			{ "ApplicationEntries", new PropertyListStruct ("ApplicationEntries", 
 					(IBinding data, object? value) => {(data as CatalogedDevice).ApplicationEntries = value as List<ApplicationEntry>;}, (IBinding data) => (data as CatalogedDevice).ApplicationEntries,
 					true, ()=>new List<ApplicationEntry>()
@@ -6237,7 +6237,7 @@ public partial class CatalogedPublication : CatalogedEntry {
 					(IBinding data, string? value) => {(data as CatalogedPublication).Authenticator = value;}, (IBinding data) => (data as CatalogedPublication).Authenticator )},
 			{ "EnvelopedData", new PropertyStruct ("EnvelopedData", 
 					(IBinding data, object? value) => {(data as CatalogedPublication).EnvelopedData = value as DareEnvelope;}, (IBinding data) => (data as CatalogedPublication).EnvelopedData,
-					false, ()=>new  DareEnvelope(), ()=>new DareEnvelope())} ,
+					false, ()=>new  DareEnvelope(), ()=>new DareEnvelope())},
 			{ "NotOnOrAfter", new PropertyDateTime ("NotOnOrAfter", 
 					(IBinding data, DateTime? value) => {(data as CatalogedPublication).NotOnOrAfter = value;}, (IBinding data) => (data as CatalogedPublication).NotOnOrAfter )}
         }, __Tag,() => new CatalogedPublication(), CatalogedEntry._binding);
@@ -6353,10 +6353,10 @@ public partial class CatalogedCredential : CatalogedEntry {
 					(IBinding data, string? value) => {(data as CatalogedCredential).Password = value;}, (IBinding data) => (data as CatalogedCredential).Password )},
 			{ "ClientAuthentication", new PropertyListStruct ("ClientAuthentication", 
 					(IBinding data, object? value) => {(data as CatalogedCredential).ClientAuthentication = value as List<KeyData>;}, (IBinding data) => (data as CatalogedCredential).ClientAuthentication,
-					false, ()=>new  List<KeyData>(), ()=>new KeyData())} ,
+					false, ()=>new  List<KeyData>(), ()=>new KeyData())},
 			{ "HostAuthentication", new PropertyListStruct ("HostAuthentication", 
 					(IBinding data, object? value) => {(data as CatalogedCredential).HostAuthentication = value as List<KeyData>;}, (IBinding data) => (data as CatalogedCredential).HostAuthentication,
-					false, ()=>new  List<KeyData>(), ()=>new KeyData())} 
+					false, ()=>new  List<KeyData>(), ()=>new KeyData())}
         }, __Tag,() => new CatalogedCredential(), CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -6538,7 +6538,7 @@ public partial class CatalogedContact : CatalogedEntry {
         ///The contact information as edited by the catalog owner.
         /// </summary>
 
-	public virtual Contact?					Contact  {get; set;}
+	public virtual JsContact?					Contact  {get; set;}
 
 
 
@@ -6554,8 +6554,8 @@ public partial class CatalogedContact : CatalogedEntry {
 			{ "Self", new PropertyBoolean ("Self", 
 					(IBinding data, bool? value) => {(data as CatalogedContact).Self = value;}, (IBinding data) => (data as CatalogedContact).Self )},
 			{ "Contact", new PropertyStruct ("Contact", 
-					(IBinding data, object? value) => {(data as CatalogedContact).Contact = value as Contact;}, (IBinding data) => (data as CatalogedContact).Contact,
-					true)} 
+					(IBinding data, object? value) => {(data as CatalogedContact).Contact = value as JsContact;}, (IBinding data) => (data as CatalogedContact).Contact,
+					false, ()=>new  JsContact(), ()=>new JsContact())}
         }, __Tag,() => new CatalogedContact(), CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -6926,7 +6926,7 @@ public partial class AccessCapability : Capability {
 					(IBinding data, List<string>? value) => {(data as AccessCapability).Rights = value;}, (IBinding data) => (data as AccessCapability).Rights )},
 			{ "EnvelopedCatalogedDevice", new PropertyStruct ("EnvelopedCatalogedDevice", 
 					(IBinding data, object? value) => {(data as AccessCapability).EnvelopedCatalogedDevice = value as Enveloped<CatalogedDevice>;}, (IBinding data) => (data as AccessCapability).EnvelopedCatalogedDevice,
-					false, ()=>new  Enveloped<CatalogedDevice>(), ()=>new Enveloped<CatalogedDevice>())} ,
+					false, ()=>new  Enveloped<CatalogedDevice>(), ()=>new Enveloped<CatalogedDevice>())},
 			{ "CatalogedDeviceDigest", new PropertyString ("CatalogedDeviceDigest", 
 					(IBinding data, string? value) => {(data as AccessCapability).CatalogedDeviceDigest = value;}, (IBinding data) => (data as AccessCapability).CatalogedDeviceDigest )}
         }, __Tag,() => new AccessCapability(), Capability._binding);
@@ -7127,14 +7127,14 @@ abstract public partial class CryptographicCapability : Capability {
 
 			{ "KeyData", new PropertyStruct ("KeyData", 
 					(IBinding data, object? value) => {(data as CryptographicCapability).KeyData = value as KeyData;}, (IBinding data) => (data as CryptographicCapability).KeyData,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "GranteeAccount", new PropertyString ("GranteeAccount", 
 					(IBinding data, string? value) => {(data as CryptographicCapability).GranteeAccount = value;}, (IBinding data) => (data as CryptographicCapability).GranteeAccount )},
 			{ "GranteeUdf", new PropertyString ("GranteeUdf", 
 					(IBinding data, string? value) => {(data as CryptographicCapability).GranteeUdf = value;}, (IBinding data) => (data as CryptographicCapability).GranteeUdf )},
 			{ "EnvelopedKeyShare", new PropertyStruct ("EnvelopedKeyShare", 
 					(IBinding data, object? value) => {(data as CryptographicCapability).EnvelopedKeyShare = value as Enveloped<KeyData>;}, (IBinding data) => (data as CryptographicCapability).EnvelopedKeyShare,
-					false, ()=>new  Enveloped<KeyData>(), ()=>new Enveloped<KeyData>())} 
+					false, ()=>new  Enveloped<KeyData>(), ()=>new Enveloped<KeyData>())}
         }, __Tag,null, Capability._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -7960,7 +7960,7 @@ public partial class CatalogedTask : CatalogedEntry {
 					(IBinding data, string? value) => {(data as CatalogedTask).Title = value;}, (IBinding data) => (data as CatalogedTask).Title )},
 			{ "EnvelopedTask", new PropertyStruct ("EnvelopedTask", 
 					(IBinding data, object? value) => {(data as CatalogedTask).EnvelopedTask = value as Enveloped<Engagement>;}, (IBinding data) => (data as CatalogedTask).EnvelopedTask,
-					false, ()=>new  Enveloped<Engagement>(), ()=>new Enveloped<Engagement>())} 
+					false, ()=>new  Enveloped<Engagement>(), ()=>new Enveloped<Engagement>())}
         }, __Tag,() => new CatalogedTask(), CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -8072,10 +8072,10 @@ abstract public partial class CatalogedApplication : CatalogedEntry {
 					(IBinding data, List<string>? value) => {(data as CatalogedApplication).Deny = value;}, (IBinding data) => (data as CatalogedApplication).Deny )},
 			{ "EnvelopedCapabilities", new PropertyListStruct ("EnvelopedCapabilities", 
 					(IBinding data, object? value) => {(data as CatalogedApplication).EnvelopedCapabilities = value as List<DareEnvelope>;}, (IBinding data) => (data as CatalogedApplication).EnvelopedCapabilities,
-					false, ()=>new  List<DareEnvelope>(), ()=>new DareEnvelope())} ,
+					false, ()=>new  List<DareEnvelope>(), ()=>new DareEnvelope())},
 			{ "EnvelopedEscrow", new PropertyListStruct ("EnvelopedEscrow", 
 					(IBinding data, object? value) => {(data as CatalogedApplication).EnvelopedEscrow = value as List<Enveloped<KeyData>>;}, (IBinding data) => (data as CatalogedApplication).EnvelopedEscrow,
-					false, ()=>new  List<Enveloped<KeyData>>(), ()=>new Enveloped<KeyData>())} 
+					false, ()=>new  List<Enveloped<KeyData>>(), ()=>new Enveloped<KeyData>())}
         }, __Tag,null, CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -8260,13 +8260,13 @@ public partial class CatalogedGroup : CatalogedApplication {
 
 			{ "EnvelopedConnectionAddress", new PropertyStruct ("EnvelopedConnectionAddress", 
 					(IBinding data, object? value) => {(data as CatalogedGroup).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, (IBinding data) => (data as CatalogedGroup).EnvelopedConnectionAddress,
-					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>())} ,
+					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>())},
 			{ "EnvelopedProfileGroup", new PropertyStruct ("EnvelopedProfileGroup", 
 					(IBinding data, object? value) => {(data as CatalogedGroup).EnvelopedProfileGroup = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as CatalogedGroup).EnvelopedProfileGroup,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())} ,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())},
 			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", 
 					(IBinding data, object? value) => {(data as CatalogedGroup).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, (IBinding data) => (data as CatalogedGroup).EnvelopedActivationCommon,
-					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())} 
+					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())}
         }, __Tag,() => new CatalogedGroup(), CatalogedApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -8467,16 +8467,16 @@ public partial class CatalogedApplicationMail : CatalogedApplication {
 					(IBinding data, string? value) => {(data as CatalogedApplicationMail).OutboundConnect = value;}, (IBinding data) => (data as CatalogedApplicationMail).OutboundConnect )},
 			{ "SmimeSign", new PropertyStruct ("SmimeSign", 
 					(IBinding data, object? value) => {(data as CatalogedApplicationMail).SmimeSign = value as KeyData;}, (IBinding data) => (data as CatalogedApplicationMail).SmimeSign,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "SmimeEncrypt", new PropertyStruct ("SmimeEncrypt", 
 					(IBinding data, object? value) => {(data as CatalogedApplicationMail).SmimeEncrypt = value as KeyData;}, (IBinding data) => (data as CatalogedApplicationMail).SmimeEncrypt,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "OpenpgpSign", new PropertyStruct ("OpenpgpSign", 
 					(IBinding data, object? value) => {(data as CatalogedApplicationMail).OpenpgpSign = value as KeyData;}, (IBinding data) => (data as CatalogedApplicationMail).OpenpgpSign,
-					false, ()=>new  KeyData(), ()=>new KeyData())} ,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
 			{ "OpenpgpEncrypt", new PropertyStruct ("OpenpgpEncrypt", 
 					(IBinding data, object? value) => {(data as CatalogedApplicationMail).OpenpgpEncrypt = value as KeyData;}, (IBinding data) => (data as CatalogedApplicationMail).OpenpgpEncrypt,
-					false, ()=>new  KeyData(), ()=>new KeyData())} 
+					false, ()=>new  KeyData(), ()=>new KeyData())}
         }, __Tag,() => new CatalogedApplicationMail(), CatalogedApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -8704,7 +8704,7 @@ public partial class CatalogedApplicationSsh : CatalogedApplication {
 
 			{ "ClientKey", new PropertyStruct ("ClientKey", 
 					(IBinding data, object? value) => {(data as CatalogedApplicationSsh).ClientKey = value as KeyData;}, (IBinding data) => (data as CatalogedApplicationSsh).ClientKey,
-					false, ()=>new  KeyData(), ()=>new KeyData())} 
+					false, ()=>new  KeyData(), ()=>new KeyData())}
         }, __Tag,() => new CatalogedApplicationSsh(), CatalogedApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -9159,7 +9159,7 @@ public partial class DevicePreconfigurationPublic : MeshItem {
 
 			{ "EnvelopedProfileDevice", new PropertyStruct ("EnvelopedProfileDevice", 
 					(IBinding data, object? value) => {(data as DevicePreconfigurationPublic).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;}, (IBinding data) => (data as DevicePreconfigurationPublic).EnvelopedProfileDevice,
-					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())} ,
+					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())},
 			{ "Hailing", new PropertyListString ("Hailing", 
 					(IBinding data, List<string>? value) => {(data as DevicePreconfigurationPublic).Hailing = value;}, (IBinding data) => (data as DevicePreconfigurationPublic).Hailing )}
         }, __Tag,() => new DevicePreconfigurationPublic(), null);
@@ -9263,10 +9263,10 @@ public partial class DevicePreconfigurationPrivate : DevicePreconfigurationPubli
 
 			{ "EnvelopedConnectionDevice", new PropertyStruct ("EnvelopedConnectionDevice", 
 					(IBinding data, object? value) => {(data as DevicePreconfigurationPrivate).EnvelopedConnectionDevice = value as Enveloped<ConnectionDevice>;}, (IBinding data) => (data as DevicePreconfigurationPrivate).EnvelopedConnectionDevice,
-					false, ()=>new  Enveloped<ConnectionDevice>(), ()=>new Enveloped<ConnectionDevice>())} ,
+					false, ()=>new  Enveloped<ConnectionDevice>(), ()=>new Enveloped<ConnectionDevice>())},
 			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", 
 					(IBinding data, object? value) => {(data as DevicePreconfigurationPrivate).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as DevicePreconfigurationPrivate).EnvelopedConnectionService,
-					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())} ,
+					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())},
 			{ "PrivateKey", new PropertyStruct ("PrivateKey", 
 					(IBinding data, object? value) => {(data as DevicePreconfigurationPrivate).PrivateKey = value as Key;}, (IBinding data) => (data as DevicePreconfigurationPrivate).PrivateKey,
 					true)} ,
@@ -9527,7 +9527,7 @@ public partial class MessageComplete : Message {
 
 			{ "References", new PropertyListStruct ("References", 
 					(IBinding data, object? value) => {(data as MessageComplete).References = value as List<Reference>;}, (IBinding data) => (data as MessageComplete).References,
-					false, ()=>new  List<Reference>(), ()=>new Reference())} 
+					false, ()=>new  List<Reference>(), ()=>new Reference())}
         }, __Tag,() => new MessageComplete(), Message._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -9627,7 +9627,7 @@ public partial class MessageValidated : Message {
 
 			{ "AuthenticatedData", new PropertyStruct ("AuthenticatedData", 
 					(IBinding data, object? value) => {(data as MessageValidated).AuthenticatedData = value as DareEnvelope;}, (IBinding data) => (data as MessageValidated).AuthenticatedData,
-					false, ()=>new  DareEnvelope(), ()=>new DareEnvelope())} ,
+					false, ()=>new  DareEnvelope(), ()=>new DareEnvelope())},
 			{ "ClientNonce", new PropertyBinary ("ClientNonce", 
 					(IBinding data, byte[]? value) => {(data as MessageValidated).ClientNonce = value;}, (IBinding data) => (data as MessageValidated).ClientNonce )},
 			{ "PinId", new PropertyString ("PinId", 
@@ -9932,7 +9932,7 @@ public partial class AcknowledgeConnection : Message {
 
 			{ "EnvelopedRequestConnection", new PropertyStruct ("EnvelopedRequestConnection", 
 					(IBinding data, object? value) => {(data as AcknowledgeConnection).EnvelopedRequestConnection = value as Enveloped<RequestConnection>;}, (IBinding data) => (data as AcknowledgeConnection).EnvelopedRequestConnection,
-					false, ()=>new  Enveloped<RequestConnection>(), ()=>new Enveloped<RequestConnection>())} ,
+					false, ()=>new  Enveloped<RequestConnection>(), ()=>new Enveloped<RequestConnection>())},
 			{ "ServerNonce", new PropertyBinary ("ServerNonce", 
 					(IBinding data, byte[]? value) => {(data as AcknowledgeConnection).ServerNonce = value;}, (IBinding data) => (data as AcknowledgeConnection).ServerNonce )},
 			{ "Witness", new PropertyString ("Witness", 
@@ -10030,7 +10030,7 @@ public partial class RespondConnection : Message {
 					(IBinding data, string? value) => {(data as RespondConnection).Result = value;}, (IBinding data) => (data as RespondConnection).Result )},
 			{ "CatalogedDevice", new PropertyStruct ("CatalogedDevice", 
 					(IBinding data, object? value) => {(data as RespondConnection).CatalogedDevice = value as CatalogedDevice;}, (IBinding data) => (data as RespondConnection).CatalogedDevice,
-					false, ()=>new  CatalogedDevice(), ()=>new CatalogedDevice())} 
+					false, ()=>new  CatalogedDevice(), ()=>new CatalogedDevice())}
         }, __Tag,() => new RespondConnection(), Message._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -10464,7 +10464,7 @@ public partial class ResponseConfirmation : Message {
 
 			{ "Request", new PropertyStruct ("Request", 
 					(IBinding data, object? value) => {(data as ResponseConfirmation).Request = value as Enveloped<RequestConfirmation>;}, (IBinding data) => (data as ResponseConfirmation).Request,
-					false, ()=>new  Enveloped<RequestConfirmation>(), ()=>new Enveloped<RequestConfirmation>())} ,
+					false, ()=>new  Enveloped<RequestConfirmation>(), ()=>new Enveloped<RequestConfirmation>())},
 			{ "Accept", new PropertyBoolean ("Accept", 
 					(IBinding data, bool? value) => {(data as ResponseConfirmation).Accept = value;}, (IBinding data) => (data as ResponseConfirmation).Accept )}
         }, __Tag,() => new ResponseConfirmation(), Message._binding);

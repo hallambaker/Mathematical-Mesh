@@ -86,7 +86,7 @@ public interface IAgreementData {
 /// <summary>
 /// Base class for all cryptographic keys.
 /// </summary>
-public abstract class CryptoKey : IKeyLocate, IKeyDecrypt, IKeySign {
+public abstract class CryptographicKey : IKeyLocate, IKeyDecrypt, IKeySign {
 
     /// <summary>
     /// Cryptographic Algorithm Identifier
@@ -125,7 +125,7 @@ public abstract class CryptoKey : IKeyLocate, IKeyDecrypt, IKeySign {
     /// <param name="keyId">The key identifier to match</param>
     ///  <param name="cryptoKey">The key, (if found).</param>
     /// <returns>True if a match is found, otherwise false.</returns>
-    public virtual bool TryFindPublicKey(string keyId, out CryptoKey cryptoKey) {
+    public virtual bool TryFindPublicKey(string keyId, out CryptographicKey cryptoKey) {
         if (keyId == KeyIdentifier) {
             cryptoKey = this;
             return true;
@@ -158,7 +158,7 @@ public abstract class CryptoKey : IKeyLocate, IKeyDecrypt, IKeySign {
     /// <param name="keyId">The identifier to resolve.</param>
     /// <param name="cryptoKey">The found key </param>
     /// <returns>The identifier.</returns>
-    public bool TryFindKeyEncryption(string keyId, out CryptoKey cryptoKey) {
+    public bool TryFindKeyEncryption(string keyId, out CryptographicKey cryptoKey) {
         if (keyId == KeyIdentifier) {
             cryptoKey = this;
             return true;
@@ -174,7 +174,7 @@ public abstract class CryptoKey : IKeyLocate, IKeyDecrypt, IKeySign {
     /// <param name="keyId">The identifier to resolve.</param>
     ///  <param name="cryptoKey">The key, (if found).</param>
     /// <returns>The identifier.</returns>
-    public bool TryFindKeySignature(string keyId, out CryptoKey cryptoKey) {
+    public bool TryFindKeySignature(string keyId, out CryptographicKey cryptoKey) {
         if (keyId == KeyIdentifier) {
             cryptoKey = this;
             return true;
@@ -190,7 +190,7 @@ public abstract class CryptoKey : IKeyLocate, IKeyDecrypt, IKeySign {
     /// <param name="keyId">fingerprint of key to locate.</param>
     ///  <param name="cryptoKey">The key, (if found).</param>
     /// <returns>A KeyPair instance bound to the private key.</returns>
-    public bool LocatePrivateKeyPair(string keyId, out CryptoKey cryptoKey) {
+    public bool LocatePrivateKeyPair(string keyId, out CryptographicKey cryptoKey) {
         if (keyId == KeyIdentifier) {
             cryptoKey = this;
             return true;

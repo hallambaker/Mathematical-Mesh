@@ -103,8 +103,8 @@ public partial class DarePolicy {
     /// <param name="encrypt">The bulk encryption algorithm.</param>
     /// <param name="digest">The bulk digest algorithm.</param>
     public DarePolicy(IKeyLocate keyLocate,
-            CryptoKey signer = null,
-            CryptoKey recipient = null,
+            CryptographicKey signer = null,
+            CryptographicKey recipient = null,
             CryptoAlgorithmId encrypt = CryptoAlgorithmId.NULL,
             CryptoAlgorithmId digest = CryptoAlgorithmId.NULL) {
 

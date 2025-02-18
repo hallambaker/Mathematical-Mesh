@@ -117,8 +117,8 @@ public partial class Enveloped<T> : DareEnvelope where T : JsonObject {
     /// <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
     public Enveloped(
                 T data,
-                CryptoKey signingKey = null,
-                CryptoKey encryptionKey = null,
+                CryptographicKey signingKey = null,
+                CryptographicKey encryptionKey = null,
                 ContentMeta contentMeta = null,
                 ObjectEncoding objectEncoding = ObjectEncoding.JSON) : base(
                     new CryptoParameters(signer: signingKey, recipient: encryptionKey),

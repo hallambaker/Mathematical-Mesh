@@ -51,7 +51,7 @@ public partial class Key : IJson {
     /// </summary>
     /// <param name="keyPair">The key pair.</param>
     /// <returns>Public portion.</returns>
-    public static Key GetPublic(CryptoKey keyPair) => keyPair switch {
+    public static Key GetPublic(CryptographicKey keyPair) => keyPair switch {
         KeyPairBaseRSA keyPairBaseRSA => new PublicKeyRSA(keyPairBaseRSA),
         KeyPairBaseDH keyPairBaseDH => new PublicKeyDH(keyPairBaseDH),
         KeyPairECDH keyPairECDH => new PublicKeyECDH(keyPairECDH),
@@ -64,7 +64,7 @@ public partial class Key : IJson {
     /// </summary>
     /// <param name="keyPair">The key pair.</param>
     /// <returns>The private data.</returns>
-    public static Key GetPrivate(CryptoKey keyPair) => keyPair switch {
+    public static Key GetPrivate(CryptographicKey keyPair) => keyPair switch {
         KeyPairBaseRSA keyPairBaseRSA => new PrivateKeyRSA(keyPairBaseRSA),
         KeyPairBaseDH keyPairBaseDH => new PrivateKeyDH(keyPairBaseDH),
         KeyPairECDH keyPairECDH => new PrivateKeyECDH(keyPairECDH),

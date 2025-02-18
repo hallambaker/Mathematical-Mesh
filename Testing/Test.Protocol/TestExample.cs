@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/17/2025 5:49:00 PM
+//  This file was automatically generated at 2/18/2025 10:46:26 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -350,10 +350,10 @@ public partial class MultiStruct : MultiArray {
 
 			{ "FieldMultiInstance", new PropertyStruct ("FieldMultiInstance", 
 					(IBinding data, object? value) => {(data as MultiStruct).FieldMultiInstance = value as MultiInstance;}, (IBinding data) => (data as MultiStruct).FieldMultiInstance,
-					false, ()=>new  MultiInstance(), ()=>new MultiInstance())} ,
+					false, ()=>new  MultiInstance(), ()=>new MultiInstance())},
 			{ "ArrayMultiInstance", new PropertyListStruct ("ArrayMultiInstance", 
 					(IBinding data, object? value) => {(data as MultiStruct).ArrayMultiInstance = value as List<MultiInstance>;}, (IBinding data) => (data as MultiStruct).ArrayMultiInstance,
-					false, ()=>new  List<MultiInstance>(), ()=>new MultiInstance())} ,
+					false, ()=>new  List<MultiInstance>(), ()=>new MultiInstance())},
 			{ "TFieldMultiInstance", new PropertyStruct ("TFieldMultiInstance", 
 					(IBinding data, object? value) => {(data as MultiStruct).TFieldMultiInstance = value as MultiInstance;}, (IBinding data) => (data as MultiStruct).TFieldMultiInstance,
 					true)} ,
